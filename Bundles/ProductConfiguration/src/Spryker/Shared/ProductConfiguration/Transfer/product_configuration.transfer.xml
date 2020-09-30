@@ -79,13 +79,34 @@
 
     <transfer name="ProductConfiguratorRequest">
         <property name="productConfiguratorRequestData" type="ProductConfiguratorRequestData"/>
+        <property name="accessTokenRequestUrl" type="string"/>
     </transfer>
 
     <transfer name="ProductConfiguratorRedirect">
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="array" singular="message"/>
+        <property name="configuratorRedirectUrl" type="string"/>
     </transfer>
 
     <transfer name="ProductConfiguratorRequestData">
         <property name="configuratorKey" type="string"/>
+        <property name="customerReference" type="string"/>
+        <property name="storeName" type="string"/>
+        <property name="localeName" type="string"/>
+        <property name="priceMode" type="string"/>
+        <property name="currencyCode" type="string"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
     </transfer>
 
 </transfers>

@@ -15,26 +15,27 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 class ProductConfiguratorMandatoryFieldsResponseValidator implements ProductConfiguratorResponseValidatorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
-     *
      * @param \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
      */
     public function validate(
-        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer,
         ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
     ): ProductConfiguratorResponseProcessorResponseTransfer {
+        $productConfiguratorResponseProcessorResponseTransfer->requireProductConfiguratorResponse();
+
+        $productConfiguratorResponseTransfer = $productConfiguratorResponseProcessorResponseTransfer
+            ->getProductConfiguratorResponse();
+
         try {
             $this->assertMandatoryFields($productConfiguratorResponseTransfer);
-        } catch (RequiredTransferPropertyException $requiredTransferPropertyException){
-            return  $productConfiguratorResponseProcessorResponseTransfer
+        } catch (RequiredTransferPropertyException $requiredTransferPropertyException) {
+            return $productConfiguratorResponseProcessorResponseTransfer
                 ->addMessage(
                     (new MessageTransfer())
                         ->setMessage($requiredTransferPropertyException->getMessage())
                 )->setIsSuccessful(false);
         }
-
 
         return $productConfiguratorResponseProcessorResponseTransfer;
     }

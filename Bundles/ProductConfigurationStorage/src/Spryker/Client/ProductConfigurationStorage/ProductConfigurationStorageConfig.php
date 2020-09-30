@@ -23,6 +23,8 @@ class ProductConfigurationStorageConfig extends AbstractBundleConfig
     protected const PRODUCT_CONFIGURATION_RESPONSE_MAX_VALID_SECONDS = 60;
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getProductConfigurationResponseMaxValidSeconds(): int
@@ -31,6 +33,8 @@ class ProductConfigurationStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getProductConfigurationEncryptionKey(): string

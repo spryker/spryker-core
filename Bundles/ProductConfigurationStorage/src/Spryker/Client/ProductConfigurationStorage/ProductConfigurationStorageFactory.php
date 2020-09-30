@@ -15,6 +15,7 @@ use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigur
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToProductStorageClientInterface;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToSessionClientInterface;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToStorageClientInterface;
+use Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToProductConfigurationDataChecksumGeneratorInterface;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductConfigurationStorage\Expander\PriceProductFilterExpander;
 use Spryker\Client\ProductConfigurationStorage\Expander\PriceProductFilterExpanderInterface as PriceProductFilterExpanderInterfaceAlias;
@@ -41,6 +42,7 @@ use Spryker\Client\ProductConfigurationStorage\Storage\ProductConfigurationStora
 use Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorCheckSumResponseValidator;
 use Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorItemGroupKeyResponseValidator;
 use Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorMandatoryFieldsResponseValidator;
+use Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorResponseValidatorInterface;
 use Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorTimestampResponseValidator;
 use Spryker\Client\ProductConfigurationStorage\Writer\ProductConfigurationInstanceWriter;
 use Spryker\Client\ProductConfigurationStorage\Writer\ProductConfigurationInstanceWriterInterface;
@@ -146,6 +148,7 @@ class ProductConfigurationStorageFactory extends AbstractFactory
         return new ProductConfiguratorCheckSumResponseProcessor(
             $this->createProductConfigurationInstanceWriter(),
             $this->getCartClient(),
+            $this->createProductConfigurationInstanceMapper(),
             $this->createProductConfiguratorCheckSumResponseValidators()
         );
     }
@@ -186,11 +189,54 @@ class ProductConfigurationStorageFactory extends AbstractFactory
     public function createProductConfiguratorCheckSumResponseValidators(): array
     {
         return [
-            new ProductConfiguratorMandatoryFieldsResponseValidator(),
-            new ProductConfiguratorItemGroupKeyResponseValidator(),
-            new ProductConfiguratorTimestampResponseValidator($this->getConfig()),
-            new ProductConfiguratorCheckSumResponseValidator($this->getConfig()),
+            $this->createProductConfiguratorMandatoryFieldsResponseValidator(),
+            $this->createProductConfiguratorItemGroupKeyResponseValidator(),
+            $this->createProductConfiguratorTimestampResponseValidator(),
+            $this->createProductConfiguratorCheckSumResponseValidator(),
         ];
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorResponseValidatorInterface
+     */
+    public function createProductConfiguratorMandatoryFieldsResponseValidator(): ProductConfiguratorResponseValidatorInterface
+    {
+        return new ProductConfiguratorMandatoryFieldsResponseValidator();
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorResponseValidatorInterface
+     */
+    public function createProductConfiguratorItemGroupKeyResponseValidator(): ProductConfiguratorResponseValidatorInterface
+    {
+        return new ProductConfiguratorItemGroupKeyResponseValidator();
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorResponseValidatorInterface
+     */
+    public function createProductConfiguratorTimestampResponseValidator(): ProductConfiguratorResponseValidatorInterface
+    {
+        return new ProductConfiguratorTimestampResponseValidator($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorResponseValidatorInterface
+     */
+    public function createProductConfiguratorCheckSumResponseValidator(): ProductConfiguratorResponseValidatorInterface
+    {
+        return new ProductConfiguratorCheckSumResponseValidator(
+            $this->getConfig(),
+            $this->getProductConfigurationDataChecksumGenerator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToProductConfigurationDataChecksumGeneratorInterface
+     */
+    public function getProductConfigurationDataChecksumGenerator(): ProductConfigurationStorageToProductConfigurationDataChecksumGeneratorInterface
+    {
+        return $this->getProvidedDependency(ProductConfigurationStorageDependencyProvider::SERVICE_PRODUCT_CONFIGURATION_DATA_CHECKSUM_GENERATOR);
     }
 
     /**

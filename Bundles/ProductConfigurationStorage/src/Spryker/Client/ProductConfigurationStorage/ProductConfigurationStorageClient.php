@@ -227,7 +227,7 @@ class ProductConfigurationStorageClient extends AbstractClient implements Produc
         ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer,
         array $configuratorResponseData
     ): ProductConfiguratorResponseProcessorResponseTransfer {
-        $this->getFactory()
+        return $this->getFactory()
             ->createProductConfiguratorCheckSumResponseProcessor()
             ->processProductConfiguratorCheckSumResponse($productConfiguratorResponseTransfer, $configuratorResponseData);
     }

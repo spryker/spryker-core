@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductConfigurationStorage\Validator;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer;
-use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
 use Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageConfig;
 
 class ProductConfiguratorTimestampResponseValidator implements ProductConfiguratorResponseValidatorInterface
@@ -30,20 +29,22 @@ class ProductConfiguratorTimestampResponseValidator implements ProductConfigurat
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
-     *
      * @param \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
      */
     public function validate(
-        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer,
         ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
     ): ProductConfiguratorResponseProcessorResponseTransfer {
+        $productConfiguratorResponseProcessorResponseTransfer->requireProductConfiguratorResponse();
+
+        $productConfiguratorResponseTransfer = $productConfiguratorResponseProcessorResponseTransfer
+            ->getProductConfiguratorResponse();
+
         $timestampDiff = time() - $productConfiguratorResponseTransfer->getTimestamp();
 
-        if ($timestampDiff > $this->config->getProductConfigurationResponseMaxValidSeconds() ) {
-            return  $productConfiguratorResponseProcessorResponseTransfer
+        if ($timestampDiff > $this->config->getProductConfigurationResponseMaxValidSeconds()) {
+            return $productConfiguratorResponseProcessorResponseTransfer
                 ->addMessage(
                     (new MessageTransfer())
                         ->setMessage(static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_STORAGE_EXPIRED_TIMESTAMP)

@@ -7,13 +7,15 @@
 
 namespace Spryker\Client\ProductConfiguration;
 
+use GuzzleHttp\ClientInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductConfiguration\Checker\QuoteProductConfigurationChecker;
 use Spryker\Client\ProductConfiguration\Checker\QuoteProductConfigurationCheckerInterface;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToCurrencyClientInterface;
+use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToCustomerClientInterface;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToLocaleInterface;
-use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToStoreClientInterface;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToPriceClientInterface;
+use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToStoreClientInterface;
 use Spryker\Client\ProductConfiguration\Http\ProductConfigurationGuzzleHttpClient;
 use Spryker\Client\ProductConfiguration\Http\ProductConfigurationGuzzleHttpClientInterface;
 use Spryker\Client\ProductConfiguration\Processor\ProductConfiguratorResponseProcessor;
@@ -22,11 +24,8 @@ use Spryker\Client\ProductConfiguration\Resolver\ProductConfiguratorAccessTokenR
 use Spryker\Client\ProductConfiguration\Resolver\ProductConfiguratorAccessTokenRedirectResolverInterface;
 use Spryker\Client\ProductConfiguration\Resolver\ProductConfiguratorRedirectResolver;
 use Spryker\Client\ProductConfiguration\Resolver\ProductConfiguratorRedirectResolverInterface;
-use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestExpanderInterface;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorResponsePluginInterface;
-use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToCustomerClientInterface;
-use GuzzleHttp\ClientInterface;
 
 class ProductConfigurationFactory extends AbstractFactory
 {
@@ -52,7 +51,7 @@ class ProductConfigurationFactory extends AbstractFactory
     public function createProductConfigurationAccessTokenRedirectResolver(): ProductConfiguratorAccessTokenRedirectResolverInterface
     {
         return new ProductConfiguratorAccessTokenRedirectResolver(
-           $this->getProductConfiguratorRequestExpanderPlugin(),
+            $this->getProductConfiguratorRequestExpanderPlugin(),
             $this->createProductConfigurationGuzzleHttpClient()
         );
     }

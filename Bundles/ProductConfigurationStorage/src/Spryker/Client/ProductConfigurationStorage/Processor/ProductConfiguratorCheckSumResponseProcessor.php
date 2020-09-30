@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToCartClientInterface;
+use Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstanceMapperInterface;
 use Spryker\Client\ProductConfigurationStorage\Writer\ProductConfigurationInstanceWriterInterface;
 use Spryker\Shared\ProductConfiguration\ProductConfigurationConfig;
 
@@ -26,26 +27,34 @@ class ProductConfiguratorCheckSumResponseProcessor implements ProductConfigurato
      * @var \Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToCartClientInterface
      */
     protected $cartClient;
+
     /**
      * @var \Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorResponseValidatorInterface[]
      */
     protected $validators;
 
+    /**
+     * @var \Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstanceMapperInterface
+     */
+    protected $productConfigurationInstanceMapper;
 
     /**
      * @param \Spryker\Client\ProductConfigurationStorage\Writer\ProductConfigurationInstanceWriterInterface $productConfigurationInstanceWriter
      * @param \Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToCartClientInterface $cartClient
-     * @param \Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorResponseValidatorInterface[]
+     * @param \Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstanceMapperInterface $productConfigurationInstanceMapper
+     * @param \Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorResponseValidatorInterface[] $validators
      */
     public function __construct(
         ProductConfigurationInstanceWriterInterface $productConfigurationInstanceWriter,
         ProductConfigurationStorageToCartClientInterface $cartClient,
+        ProductConfigurationInstanceMapperInterface $productConfigurationInstanceMapper,
         array $validators
     ) {
 
         $this->productConfigurationInstanceWriter = $productConfigurationInstanceWriter;
         $this->cartClient = $cartClient;
         $this->validators = $validators;
+        $this->productConfigurationInstanceMapper = $productConfigurationInstanceMapper;
     }
 
     /**
@@ -58,7 +67,6 @@ class ProductConfiguratorCheckSumResponseProcessor implements ProductConfigurato
         ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer,
         array $configuratorResponseData
     ): ProductConfiguratorResponseProcessorResponseTransfer {
-
         $productConfiguratorResponseProcessorResponseTransfer = $this->validateResponse(
             $productConfiguratorResponseTransfer
         );
@@ -66,6 +74,15 @@ class ProductConfiguratorCheckSumResponseProcessor implements ProductConfigurato
         if (!$productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful()) {
             return $productConfiguratorResponseProcessorResponseTransfer;
         }
+
+        $productConfigurationInstance = $productConfiguratorResponseTransfer->getProductConfigurationInstance();
+
+        $productConfigurationInstance = $this->productConfigurationInstanceMapper->
+            mapProductConfigurationInstancePricesToProductConfigurationInstancePriceProductTransfer(
+                $productConfigurationInstance
+            );
+
+        $productConfiguratorResponseTransfer->setProductConfigurationInstance($productConfigurationInstance);
 
         $this->storeProductConfigurationInstance($productConfiguratorResponseTransfer);
 
@@ -80,15 +97,15 @@ class ProductConfiguratorCheckSumResponseProcessor implements ProductConfigurato
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
      */
-    protected function validateResponse(ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer)
-    {
-        $productConfiguratorResponseProcessorResponseTransfer =  (new ProductConfiguratorResponseProcessorResponseTransfer())
+    protected function validateResponse(
+        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
+    ): ProductConfiguratorResponseProcessorResponseTransfer {
+        $productConfiguratorResponseProcessorResponseTransfer = (new ProductConfiguratorResponseProcessorResponseTransfer())
             ->setProductConfiguratorResponse($productConfiguratorResponseTransfer)
             ->setIsSuccessful(true);
 
         foreach ($this->validators as $validator) {
             $productConfiguratorResponseProcessorResponseTransfer = $validator->validate(
-                $productConfiguratorResponseTransfer,
                 $productConfiguratorResponseProcessorResponseTransfer
             );
         }
@@ -124,7 +141,7 @@ class ProductConfiguratorCheckSumResponseProcessor implements ProductConfigurato
         ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer,
         ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
     ): ProductConfiguratorResponseProcessorResponseTransfer {
-        if ($productConfiguratorResponseTransfer->getSourceType() !== ProductConfigurationConfig::SOURCE_TYPE_CART ) {
+        if ($productConfiguratorResponseTransfer->getSourceType() !== ProductConfigurationConfig::SOURCE_TYPE_CART) {
             return $productConfiguratorResponseProcessorResponseTransfer;
         }
 
@@ -154,5 +171,4 @@ class ProductConfiguratorCheckSumResponseProcessor implements ProductConfigurato
         return $productConfiguratorResponseProcessorResponseTransfer
             ->setIsSuccessful($quoteResponseTransfer->getIsSuccessful());
     }
-
 }

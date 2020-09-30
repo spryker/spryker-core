@@ -14,7 +14,10 @@ use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigur
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToProductStorageClientBridge;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToSessionClientBridge;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToStorageClientBridge;
+use Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToProductConfigurationDataChecksumGeneratorBridge;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToSynchronizationServiceBridge;
+use SprykerSdk\ProductConfigurationSdk\Service\ProductConfigurationDataChecksumGenerator;
+use SprykerSdk\ProductConfigurationSdk\Service\ProductConfigurationDataChecksumGeneratorInterface;
 
 /**
  * @method \Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageConfig getConfig()
@@ -27,6 +30,7 @@ class ProductConfigurationStorageDependencyProvider extends AbstractDependencyPr
     public const CLIENT_CART = 'CLIENT_CART';
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    public const SERVICE_PRODUCT_CONFIGURATION_DATA_CHECKSUM_GENERATOR = 'SERVICE_PRODUCT_CONFIGURATION_DATA_CHECKSUM_GENERATOR';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -132,5 +136,29 @@ class ProductConfigurationStorageDependencyProvider extends AbstractDependencyPr
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addProductConfigurationDataChecksumGenerator(Container $container): Container
+    {
+        $container->set(static::SERVICE_PRODUCT_CONFIGURATION_DATA_CHECKSUM_GENERATOR, function (Container $container) {
+            return new ProductConfigurationStorageToProductConfigurationDataChecksumGeneratorBridge(
+                $this->getProductConfigurationDataChecksumGenerator()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \SprykerSdk\ProductConfigurationSdk\Service\ProductConfigurationDataChecksumGeneratorInterface
+     */
+    protected function getProductConfigurationDataChecksumGenerator(): ProductConfigurationDataChecksumGeneratorInterface
+    {
+        return new ProductConfigurationDataChecksumGenerator();
     }
 }

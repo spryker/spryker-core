@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductConfigurationStorage\Validator;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer;
-use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
 use Spryker\Shared\ProductConfiguration\ProductConfigurationConfig;
 
 class ProductConfiguratorItemGroupKeyResponseValidator implements ProductConfiguratorResponseValidatorInterface
@@ -17,21 +16,23 @@ class ProductConfiguratorItemGroupKeyResponseValidator implements ProductConfigu
     protected const GLOSSARY_KEY_PRODUCT_CONFIGURATION_STORAGE_GROUP_KEY_IS_NOT_PROVIDED = 'product_configuration_storage.validation.error.group_key_is_not_provided';
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
-     *
      * @param \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
      */
     public function validate(
-        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer,
         ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
     ): ProductConfiguratorResponseProcessorResponseTransfer {
+        $productConfiguratorResponseProcessorResponseTransfer->requireProductConfiguratorResponse();
+
+        $productConfiguratorResponseTransfer = $productConfiguratorResponseProcessorResponseTransfer
+            ->getProductConfiguratorResponse();
+
         if (
             $productConfiguratorResponseTransfer->getSourceType() === ProductConfigurationConfig::SOURCE_TYPE_CART &&
             !$productConfiguratorResponseTransfer->getItemGroupKey()
         ) {
-            return  $productConfiguratorResponseProcessorResponseTransfer
+            return $productConfiguratorResponseProcessorResponseTransfer
                 ->addMessage(
                     (new MessageTransfer())
                         ->setMessage(static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_STORAGE_GROUP_KEY_IS_NOT_PROVIDED)

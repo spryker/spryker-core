@@ -78,20 +78,19 @@ class ProductConfiguratorAccessTokenRedirectResolver implements ProductConfigura
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer
      */
-    protected function sendAccessTokenRequest(ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
-    ): ProductConfiguratorRedirectTransfer {
+    protected function sendAccessTokenRequest(ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer): ProductConfiguratorRedirectTransfer
+    {
         try {
             $response = $this->httpClient->request(
-                    static::ASSESS_TOKEN_REQUEST_METHOD,
-                    $productConfiguratorRequestTransfer->getAccessTokenRequestUrl(),
-                    $this->buildAccessTokenRequestOptions($productConfiguratorRequestTransfer)
-                );
+                static::ASSESS_TOKEN_REQUEST_METHOD,
+                $productConfiguratorRequestTransfer->getAccessTokenRequestUrl(),
+                $this->buildAccessTokenRequestOptions($productConfiguratorRequestTransfer)
+            );
         } catch (ProductConfigurationHttpRequestException $configurationHttpRequestException) {
             return (new ProductConfiguratorRedirectTransfer())
                 ->setIsSuccessful(false)
                 ->addMessage($configurationHttpRequestException->getMessage());
         }
-
 
         return (new ProductConfiguratorRedirectTransfer())
             ->setIsSuccessful(true)
@@ -106,7 +105,7 @@ class ProductConfiguratorAccessTokenRedirectResolver implements ProductConfigura
     protected function buildAccessTokenRequestOptions(
         ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
     ): array {
-        return  [
+        return [
             'json' => $productConfiguratorRequestTransfer->getProductConfiguratorRequestData()->toArray(),
             'headers' => static::ASSESS_TOKEN_REQUEST_HEADERS,
         ];

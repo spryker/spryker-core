@@ -29,9 +29,9 @@ interface ProductConfigurationStorageToCartClientInterface
     public function getQuote();
 
     /**
-    * @param \Generated\Shared\Transfer\ItemReplaceTransfer $itemReplaceTransfer
-    *
-    * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-    */
+     * @param \Generated\Shared\Transfer\ItemReplaceTransfer $itemReplaceTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
     public function replaceItem(ItemReplaceTransfer $itemReplaceTransfer): QuoteResponseTransfer;
 }

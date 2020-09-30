@@ -32,6 +32,4 @@ class ProductConfiguratorAccessTokenRequestPlugin extends AbstractPlugin impleme
         return $this->getClient()
             ->resolveProductConfiguratorAccessTokenRedirect($productConfiguratorRequestTransfer);
     }
-
-
 }

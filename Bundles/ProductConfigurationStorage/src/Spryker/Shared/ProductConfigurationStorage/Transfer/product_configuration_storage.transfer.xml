@@ -45,6 +45,7 @@
 
     <transfer name="PriceProductDimension">
         <property name="productConfigurationConfiguratorKey" type="string"/>
+        <property name="type" type="string"/>
     </transfer>
 
     <transfer name="ProductView">
@@ -56,6 +57,9 @@
 
     <transfer name="PriceProduct">
         <property name="priceDimension" type="PriceProductDimension"/>
+        <property name="priceTypeName" type="string"/>
+        <property name="isMergeable" type="bool"/>
+        <property name="moneyValue" type="MoneyValue"/>
     </transfer>
 
     <transfer name="ProductConfiguration">
@@ -87,5 +91,45 @@
     </transfer>
 
     <transfer name="Quote">
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="netAmount" type="int"/>
+        <property name="grossAmount" type="int"/>
+        <property name="priceData" type="string"/>
+        <property name="currency" type="Currency"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ProductConfiguratorResponseProcessorResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="productConfiguratorResponse" type="ProductConfiguratorResponse"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="ProductConfiguratorResponse">
+        <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
+        <property name="sourceType" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="itemGroupKey" type="string"/>
+        <property name="checkSum" type="string"/>
+        <property name="timestamp" type="int"/>
+    </transfer>
+
+    <transfer name="ItemReplace">
+        <property name="itemToBeReplaced" type="Item"/>
+        <property name="newItem" type="Item"/>
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="QuoteResponse">
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="message" type="string"/>
     </transfer>
 </transfers>
