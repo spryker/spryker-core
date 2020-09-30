@@ -181,7 +181,7 @@ class MyOrderTable extends AbstractTable
                 SpyMerchantSalesOrderTableMap::COL_ID_MERCHANT_SALES_ORDER,
             ])
             ->withColumn(
-                sprintf('GROUP_CONCAT(%s)', SpyStateMachineItemStateTableMap::COL_NAME),
+                sprintf('GROUP_CONCAT(DISTINCT %s)', SpyStateMachineItemStateTableMap::COL_NAME),
                 static::COL_ORDER_STATE
             )
             ->withColumn(
