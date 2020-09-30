@@ -62,7 +62,7 @@ class GlueRouterTest extends Unit
         $this->assertArrayHasKey('_controller', $routeConfiguration);
         $this->assertArrayHasKey('_route', $routeConfiguration);
 
-        $this->assertEquals(self::ERROR_ROUTE, $routeConfiguration['_route']);
+        $this->assertSame(static::ERROR_ROUTE, $routeConfiguration['_route']);
     }
 
     /**
@@ -79,7 +79,7 @@ class GlueRouterTest extends Unit
         $this->assertArrayHasKey('_controller', $routeConfiguration);
         $this->assertArrayHasKey('_route', $routeConfiguration);
 
-        $this->assertEquals(self::ERROR_ROUTE, $routeConfiguration['_route']);
+        $this->assertSame(static::ERROR_ROUTE, $routeConfiguration['_route']);
     }
 
     /**
@@ -93,8 +93,8 @@ class GlueRouterTest extends Unit
 
         $routeConfiguration = $glueRouterPlugin->matchRequest($request);
 
-        $this->assertEquals(1, $routeConfiguration[RequestConstantsInterface::ATTRIBUTE_ID]);
-        $this->assertEquals('tests', $routeConfiguration[RequestConstantsInterface::ATTRIBUTE_TYPE]);
+        $this->assertSame(1, $routeConfiguration[RequestConstantsInterface::ATTRIBUTE_ID]);
+        $this->assertSame('tests', $routeConfiguration[RequestConstantsInterface::ATTRIBUTE_TYPE]);
         $this->assertArrayHasKey(RequestConstantsInterface::ATTRIBUTE_RESOURCE_FQCN, $routeConfiguration);
         $this->assertArrayHasKey(RequestConstantsInterface::ATTRIBUTE_ALL_RESOURCES, $routeConfiguration);
         $this->assertArrayHasKey('_controller', $routeConfiguration);

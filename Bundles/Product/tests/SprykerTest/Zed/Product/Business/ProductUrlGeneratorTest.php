@@ -187,7 +187,7 @@ class ProductUrlGeneratorTest extends Unit
         $urlGenerator = new ProductUrlGenerator($this->productAbstractNameGenerator, $this->localeFacade, $this->utilTextService);
         $productUrl = $urlGenerator->generateProductUrl($this->productAbstractTransfer);
 
-        $this->assertEquals($productUrlExpected->getAbstractSku(), $productUrl->getAbstractSku());
+        $this->assertSame($productUrlExpected->getAbstractSku(), $productUrl->getAbstractSku());
         $this->assertEquals($productUrlExpected, $productUrl);
     }
 }

@@ -237,9 +237,9 @@ class MerchantOmsFacadeTest extends Unit
         $stateMachineProcessTransfer = $this->tester->getFacade()->getMerchantOmsProcessByMerchant(new MerchantCriteriaTransfer());
 
         // Assert
-        $this->assertEquals(static::TEST_STATE_NAMES, $stateMachineProcessTransfer->getStateNames());
-        $this->assertEquals(static::TEST_PROCESS_NAME, $stateMachineProcessTransfer->getProcessName());
-        $this->assertEquals(static::TEST_STATE_MACHINE, $stateMachineProcessTransfer->getStateMachineName());
+        $this->assertSame(static::TEST_STATE_NAMES, $stateMachineProcessTransfer->getStateNames());
+        $this->assertSame(static::TEST_PROCESS_NAME, $stateMachineProcessTransfer->getProcessName());
+        $this->assertSame(static::TEST_STATE_MACHINE, $stateMachineProcessTransfer->getStateMachineName());
     }
 
     /**
@@ -257,9 +257,9 @@ class MerchantOmsFacadeTest extends Unit
         $stateMachineProcessTransfer = $this->tester->getFacade()->getMerchantOmsProcessByMerchant(new MerchantCriteriaTransfer());
 
         // Assert
-        $this->assertEquals(static::TEST_STATE_NAMES, $stateMachineProcessTransfer->getStateNames());
-        $this->assertEquals($merchantOmsConfig->getMerchantOmsDefaultProcessName(), $stateMachineProcessTransfer->getProcessName());
-        $this->assertEquals($merchantOmsConfig::MERCHANT_OMS_STATE_MACHINE_NAME, $stateMachineProcessTransfer->getStateMachineName());
+        $this->assertSame(static::TEST_STATE_NAMES, $stateMachineProcessTransfer->getStateNames());
+        $this->assertSame($merchantOmsConfig->getMerchantOmsDefaultProcessName(), $stateMachineProcessTransfer->getProcessName());
+        $this->assertSame($merchantOmsConfig::MERCHANT_OMS_STATE_MACHINE_NAME, $stateMachineProcessTransfer->getStateMachineName());
     }
 
     /**
@@ -386,7 +386,7 @@ class MerchantOmsFacadeTest extends Unit
         $expandedMerchantOrderItemCollectionTransfer = $this->tester->getFacade()->expandMerchantOrderItemsWithManualEvents($merchantOrderItemCollectionTransfer);
 
         // Assert
-        $this->assertEquals(static::TEST_MANUAL_EVENTS, $expandedMerchantOrderItemCollectionTransfer->getMerchantOrderItems()[0]->getManualEvents());
+        $this->assertSame(static::TEST_MANUAL_EVENTS, $expandedMerchantOrderItemCollectionTransfer->getMerchantOrderItems()[0]->getManualEvents());
     }
 
     /**

@@ -48,7 +48,7 @@ class ProductOfferSalesFacadeTest extends Unit
             ->expandOrderItemWithProductOffer($salesOrderItemEntityTransfer, $itemTransfer);
 
         // Assert
-        $this->assertEquals($newSalesOrderItemEntityTransfer->getProductOfferReference(), $productOfferReference);
+        $this->assertSame($newSalesOrderItemEntityTransfer->getProductOfferReference(), $productOfferReference);
     }
 
     /**

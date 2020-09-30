@@ -108,7 +108,7 @@ class QuoteRequestConverterTest extends Unit
 
         // Assert
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
-        $this->assertEquals(
+        $this->assertSame(
             static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS,
             $quoteResponseTransfer->getErrors()[0]->getMessage()
         );
@@ -130,7 +130,7 @@ class QuoteRequestConverterTest extends Unit
 
         // Assert
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
-        $this->assertEquals(
+        $this->assertSame(
             static::GLOSSARY_KEY_WRONG_CONVERT_QUOTE_REQUEST_VALID_UNTIL,
             $quoteResponseTransfer->getErrors()[0]->getMessage()
         );
@@ -164,7 +164,7 @@ class QuoteRequestConverterTest extends Unit
 
         // Assert
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
-        $this->assertEquals(
+        $this->assertSame(
             static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS,
             $quoteResponseTransfer->getErrors()[0]->getMessage()
         );
