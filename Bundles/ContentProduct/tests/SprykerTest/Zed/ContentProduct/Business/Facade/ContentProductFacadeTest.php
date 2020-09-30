@@ -65,7 +65,7 @@ class ContentProductFacadeTest extends Test
         $parameter = $contentValidationResponseTransfer->getParameterMessages()
             ->offsetGet(0)
             ->getParameter();
-        $this->assertEquals($parameter, ContentProductAbstractListTermTransfer::ID_PRODUCT_ABSTRACTS);
+        $this->assertSame($parameter, ContentProductAbstractListTermTransfer::ID_PRODUCT_ABSTRACTS);
     }
 
     /**

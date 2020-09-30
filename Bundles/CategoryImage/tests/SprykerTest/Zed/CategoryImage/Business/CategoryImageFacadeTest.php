@@ -50,7 +50,7 @@ class CategoryImageFacadeTest extends Test
         );
 
         // Assert
-        $this->assertEquals(count($categoryImageSetTransferCollection), count($dbCategoryImageSetCollection));
+        $this->assertSame(count($categoryImageSetTransferCollection), count($dbCategoryImageSetCollection));
         $this->assertEmpty(array_diff(
             $this->getIdCategoryImageSetCollection($dbCategoryImageSetCollection),
             $this->getIdCategoryImageSetCollection($categoryImageSetTransferCollection)
@@ -75,7 +75,7 @@ class CategoryImageFacadeTest extends Test
 
         // Assert
         $this->assertNotEmpty($dbCategoryImageSetCollection);
-        $this->assertEquals(static::DEFAULT_CATEGORY_IMAGE_SET_COUNT, count($dbCategoryImageSetCollection));
+        $this->assertSame(static::DEFAULT_CATEGORY_IMAGE_SET_COUNT, count($dbCategoryImageSetCollection));
         $this->assertEquals(
             reset($categoryImageSetCollection)->getIdCategoryImageSet(),
             reset($dbCategoryImageSetCollection)->getIdCategoryImageSet()
@@ -185,7 +185,7 @@ class CategoryImageFacadeTest extends Test
         $dbCategoryImageSetCollection = $categoryTransfer->getImageSets()->getArrayCopy();
 
         // Assert
-        $this->assertEquals(count($categoryImageSetCollection), count($dbCategoryImageSetCollection));
+        $this->assertSame(count($categoryImageSetCollection), count($dbCategoryImageSetCollection));
         $this->assertEmpty(array_diff(
             $this->getIdCategoryImageSetCollection($dbCategoryImageSetCollection),
             $this->getIdCategoryImageSetCollection($categoryImageSetCollection)

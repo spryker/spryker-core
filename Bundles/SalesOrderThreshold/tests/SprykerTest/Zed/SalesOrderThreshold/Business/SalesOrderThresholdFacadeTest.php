@@ -74,8 +74,8 @@ class SalesOrderThresholdFacadeTest extends SalesOrderThresholdMocks
         $returnedTypeTransfer = $this->getFacade()->saveSalesOrderThresholdType($testType->toTransfer());
 
         // Assert
-        $this->assertEquals($testType->toTransfer()->getKey(), $returnedTypeTransfer->getKey());
-        $this->assertEquals($testType->toTransfer()->getThresholdGroup(), $returnedTypeTransfer->getThresholdGroup());
+        $this->assertSame($testType->toTransfer()->getKey(), $returnedTypeTransfer->getKey());
+        $this->assertSame($testType->toTransfer()->getThresholdGroup(), $returnedTypeTransfer->getThresholdGroup());
     }
 
     /**
@@ -159,7 +159,7 @@ class SalesOrderThresholdFacadeTest extends SalesOrderThresholdMocks
         );
 
         // Assert
-        $this->assertEquals($hardThreshold1->getIdSalesOrderThreshold(), $hardThreshold2->getIdSalesOrderThreshold());
+        $this->assertSame($hardThreshold1->getIdSalesOrderThreshold(), $hardThreshold2->getIdSalesOrderThreshold());
         $this->assertNotNull($hardMaxThreshold->getIdSalesOrderThreshold());
         $this->assertNotEquals($hardThreshold1->getIdSalesOrderThreshold(), $softThreshold1->getIdSalesOrderThreshold());
         $this->assertNotEquals($softThreshold1->getIdSalesOrderThreshold(), $softThreshold2->getIdSalesOrderThreshold());

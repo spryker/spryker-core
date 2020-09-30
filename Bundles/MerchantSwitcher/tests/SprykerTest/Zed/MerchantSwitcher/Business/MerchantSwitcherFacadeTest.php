@@ -79,8 +79,8 @@ class MerchantSwitcherFacadeTest extends Unit
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
         $itemTransfer = $quoteTransfer->getItems()->getIterator()->current();
 
-        $this->assertEquals($itemTransfer->getProductOfferReference(), $productOfferTransfer2->getProductOfferReference());
-        $this->assertEquals($itemTransfer->getMerchantReference(), $merchantTransfer2->getMerchantReference());
+        $this->assertSame($itemTransfer->getProductOfferReference(), $productOfferTransfer2->getProductOfferReference());
+        $this->assertSame($itemTransfer->getMerchantReference(), $merchantTransfer2->getMerchantReference());
     }
 
     /**
@@ -122,8 +122,8 @@ class MerchantSwitcherFacadeTest extends Unit
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
         $itemTransfer = $quoteTransfer->getItems()->getIterator()->current();
 
-        $this->assertEquals($itemTransfer->getProductOfferReference(), $productOfferTransfer->getProductOfferReference());
-        $this->assertEquals($itemTransfer->getMerchantReference(), $merchantTransfer->getMerchantReference());
+        $this->assertSame($itemTransfer->getProductOfferReference(), $productOfferTransfer->getProductOfferReference());
+        $this->assertSame($itemTransfer->getMerchantReference(), $merchantTransfer->getMerchantReference());
     }
 
     /**
@@ -159,7 +159,7 @@ class MerchantSwitcherFacadeTest extends Unit
         $quoteTransfer = $this->tester->getFacade()->switchMerchantInQuote($merchantSwitchRequestTransfer)->getQuote();
 
         // Assert
-        $this->assertEquals($quoteTransfer->getMerchantReference(), $merchantTransfer->getMerchantReference());
+        $this->assertSame($quoteTransfer->getMerchantReference(), $merchantTransfer->getMerchantReference());
     }
 
     /**

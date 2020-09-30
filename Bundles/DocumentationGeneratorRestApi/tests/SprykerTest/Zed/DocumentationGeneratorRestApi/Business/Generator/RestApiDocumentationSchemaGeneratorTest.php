@@ -76,7 +76,7 @@ class RestApiDocumentationSchemaGeneratorTest extends Unit
     {
         $errorSchemaRef = $this->schemaGenerator->getRestErrorSchemaData();
 
-        $this->assertEquals(static::SCHEMA_REF_REST_ERROR_MESSAGE, $errorSchemaRef);
+        $this->assertSame(static::SCHEMA_REF_REST_ERROR_MESSAGE, $errorSchemaRef);
     }
 
     /**

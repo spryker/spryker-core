@@ -78,7 +78,7 @@ class ProductCartConnectorFacadeTest extends Unit
         $this->tester->getFacade()->expandItemTransfersWithUrls($cartChangeTransfer);
 
         // Assert
-        $this->assertEquals($productUrl->getUrl(), $cartChangeTransfer->getItems()->offsetGet(0)->getUrl());
+        $this->assertSame($productUrl->getUrl(), $cartChangeTransfer->getItems()->offsetGet(0)->getUrl());
     }
 
     /**

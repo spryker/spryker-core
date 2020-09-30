@@ -56,7 +56,7 @@ class ProductConfigurationFacadeTest extends Unit
 
         //Assert
         $this->assertNotEmpty($productConfigurationCollectionTransfer->getProductConfigurations());
-        $this->assertEquals($productTransfer->getIdProductConcrete(), $createdProductConfigurationTransfer->getFkProduct());
+        $this->assertSame($productTransfer->getIdProductConcrete(), $createdProductConfigurationTransfer->getFkProduct());
     }
 
     /**

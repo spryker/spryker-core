@@ -96,7 +96,7 @@ class CmsBlockFacadeTest extends Unit
         $cmsBlockTransfer = $this->createCmsBlockFacade()
             ->findCmsBlockById($cmsBlockTransfer->getIdCmsBlock());
 
-        $this->assertEquals('Test name', $cmsBlockTransfer->getName());
+        $this->assertSame('Test name', $cmsBlockTransfer->getName());
     }
 
     /**
@@ -143,7 +143,7 @@ class CmsBlockFacadeTest extends Unit
             ->findGlossary($cmsBlockTransfer->getIdCmsBlock());
 
         foreach ($glossary->getGlossaryPlaceholders() as $placeholder) {
-            $this->assertEquals('placeholder', $placeholder->getPlaceholder());
+            $this->assertSame('placeholder', $placeholder->getPlaceholder());
         }
     }
 
@@ -201,7 +201,7 @@ class CmsBlockFacadeTest extends Unit
         $cmsBlockTemplateTransfer = $this->createCmsBlockFacade()
             ->findTemplate('test path');
 
-        $this->assertEquals('test name', $cmsBlockTemplateTransfer->getTemplateName());
+        $this->assertSame('test name', $cmsBlockTemplateTransfer->getTemplateName());
     }
 
     /**

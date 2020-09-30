@@ -102,7 +102,7 @@ class WriterTest extends Unit
         $taxSetQuery = SpyTaxSetQuery::create()->filterByIdTaxSet($taxSetTransfer->getIdTaxSet())->findOne();
 
         $this->assertNotEmpty($taxSetQuery);
-        $this->assertEquals($taxSetTransfer->getName(), $taxSetQuery->getName());
+        $this->assertSame($taxSetTransfer->getName(), $taxSetQuery->getName());
         $this->assertNotEmpty($taxSetQuery->getSpyTaxRates());
     }
 
@@ -226,7 +226,7 @@ class WriterTest extends Unit
 
         $taxSetEntity = $taxSetQuery->findOne();
         $this->assertCount(1, $taxSetEntity->getSpyTaxRates());
-        $this->assertEquals($rate1Id, $taxSetEntity->getSpyTaxRates()[0]->getIdTaxRate());
+        $this->assertSame($rate1Id, $taxSetEntity->getSpyTaxRates()[0]->getIdTaxRate());
     }
 
     /**
