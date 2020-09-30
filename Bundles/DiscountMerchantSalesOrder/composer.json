@@ -1,5 +1,6 @@
 {
   "name": "spryker/discount-merchant-sales-order",
+  "type": "library",
   "description": "DiscountMerchantSalesOrder module",
   "license": "proprietary",
   "require": {
@@ -17,7 +18,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "scripts": {},
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"
