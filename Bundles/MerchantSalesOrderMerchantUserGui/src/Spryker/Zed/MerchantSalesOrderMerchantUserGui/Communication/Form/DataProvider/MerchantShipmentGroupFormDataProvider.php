@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\Shipment\MerchantShipmentGroupFormType;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToCustomerFacadeInterface;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToShipmentFacadeInterface;
 
@@ -23,6 +22,41 @@ class MerchantShipmentGroupFormDataProvider
 
     protected const VALUE_ADD_NEW_ADDRESS = '';
     protected const ADDRESS_CHOICE_NEW_ADDRESS_LABEL = 'New address';
+
+    /**
+     * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\Shipment\MerchantShipmentGroupFormType::OPTION_SHIPMENT_METHOD_CHOICES
+     */
+    protected const OPTION_SHIPMENT_METHOD_CHOICES = 'method_choices';
+
+    /**
+     * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\Shipment\MerchantShipmentGroupFormType::OPTION_SALUTATION_CHOICES
+     */
+    protected const OPTION_SALUTATION_CHOICES = 'salutation_choices';
+
+    /**
+     * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\Shipment\MerchantShipmentGroupFormType::OPTION_SHIPMENT_ADDRESS_CHOICES
+     */
+    protected const OPTION_SHIPMENT_ADDRESS_CHOICES = 'address_choices';
+
+    /**
+     * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\Shipment\MerchantShipmentGroupFormType::OPTION_ORDER_ITEMS_CHOICES
+     */
+    protected const OPTION_ORDER_ITEMS_CHOICES = 'items_choices';
+
+    /**
+     * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\Shipment\MerchantShipmentGroupFormType::FIELD_ID_SHIPMENT_METHOD
+     */
+    protected const FIELD_ID_SHIPMENT_METHOD = 'idShipmentMethod';
+
+    /**
+     * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\Shipment\MerchantShipmentGroupFormType::FIELD_ID_SALES_SHIPMENT
+     */
+    protected const FIELD_ID_SALES_SHIPMENT = 'idSalesShipment';
+
+    /**
+     * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\Shipment\MerchantShipmentGroupFormType::FIELD_SHIPMENT_SELECTED_ITEMS
+     */
+    protected const FIELD_SHIPMENT_SELECTED_ITEMS = 'selected_items';
 
     /**
      * @var \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToCustomerFacadeInterface
@@ -121,12 +155,12 @@ class MerchantShipmentGroupFormDataProvider
     public function getOptions(MerchantOrderTransfer $merchantOrderTransfer, ?ShipmentTransfer $shipmentTransfer = null): array
     {
         $options = [
-            MerchantShipmentGroupFormType::OPTION_SHIPMENT_ADDRESS_CHOICES => $this->getShippingAddressesOptions($merchantOrderTransfer),
-            MerchantShipmentGroupFormType::OPTION_SHIPMENT_METHOD_CHOICES => $this->getShippingMethodsOptions(),
-            MerchantShipmentGroupFormType::OPTION_SALUTATION_CHOICES => $this->getSalutationOptions(),
-            MerchantShipmentGroupFormType::OPTION_ORDER_ITEMS_CHOICES => [],
-            MerchantShipmentGroupFormType::FIELD_ID_SHIPMENT_METHOD => null,
-            MerchantShipmentGroupFormType::FIELD_ID_SALES_SHIPMENT => null,
+            static::OPTION_SHIPMENT_ADDRESS_CHOICES => $this->getShippingAddressesOptions($merchantOrderTransfer),
+            static::OPTION_SHIPMENT_METHOD_CHOICES => $this->getShippingMethodsOptions(),
+            static::OPTION_SALUTATION_CHOICES => $this->getSalutationOptions(),
+            static::OPTION_ORDER_ITEMS_CHOICES => [],
+            static::FIELD_ID_SHIPMENT_METHOD => null,
+            static::FIELD_ID_SALES_SHIPMENT => null,
         ];
 
         $shipmentSelectedItemsIds = [];
@@ -134,8 +168,8 @@ class MerchantShipmentGroupFormDataProvider
             $shipmentSelectedItemsIds = $this->getShipmentSelectedItemsIds($merchantOrderTransfer, $shipmentTransfer);
         }
 
-        $options[MerchantShipmentGroupFormType::FIELD_SHIPMENT_SELECTED_ITEMS] = $shipmentSelectedItemsIds;
-        $options[MerchantShipmentGroupFormType::OPTION_ORDER_ITEMS_CHOICES] = $merchantOrderTransfer->getOrder()->getItems();
+        $options[static::FIELD_SHIPMENT_SELECTED_ITEMS] = $shipmentSelectedItemsIds;
+        $options[static::OPTION_ORDER_ITEMS_CHOICES] = $merchantOrderTransfer->getOrder()->getItems();
 
         return $options;
     }

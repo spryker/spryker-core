@@ -9,10 +9,6 @@ namespace Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\Shipm
 
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Spryker\Zed\ShipmentGui\Communication\Form\Address\AddressFormType;
-use Spryker\Zed\ShipmentGui\Communication\Form\Item\ItemFormType;
-use Spryker\Zed\ShipmentGui\Communication\Form\Shipment\ShipmentFormType;
-use Spryker\Zed\ShipmentGui\Communication\Form\Shipment\ShipmentMethodFormType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,16 +21,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class MerchantShipmentGroupFormType extends AbstractType
 {
     protected const FIELD_SHIPMENT_FORM = 'shipment';
-    public const FIELD_ID_SHIPMENT_METHOD = 'idShipmentMethod';
+    protected const FIELD_ID_SHIPMENT_METHOD = 'idShipmentMethod';
+    protected const FIELD_SALES_ORDER_ITEMS_FORM = 'items';
+    protected const FIELD_ID_SALES_SHIPMENT = 'idSalesShipment';
+    protected const FIELD_SHIPMENT_SELECTED_ITEMS = 'selected_items';
 
-    public const OPTION_SHIPMENT_METHOD_CHOICES = 'method_choices';
-    public const OPTION_SALUTATION_CHOICES = 'salutation_choices';
-    public const OPTION_SHIPMENT_ADDRESS_CHOICES = 'address_choices';
-    public const OPTION_ORDER_ITEMS_CHOICES = 'items_choices';
-
-    public const FIELD_SALES_ORDER_ITEMS_FORM = 'items';
-    public const FIELD_ID_SALES_SHIPMENT = 'idSalesShipment';
-    public const FIELD_SHIPMENT_SELECTED_ITEMS = 'selected_items';
+    protected const OPTION_SHIPMENT_METHOD_CHOICES = 'method_choices';
+    protected const OPTION_SALUTATION_CHOICES = 'salutation_choices';
+    protected const OPTION_SHIPMENT_ADDRESS_CHOICES = 'address_choices';
+    protected const OPTION_ORDER_ITEMS_CHOICES = 'items_choices';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -83,12 +78,14 @@ class MerchantShipmentGroupFormType extends AbstractType
      */
     protected function addShipmentFormType(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_SHIPMENT_FORM, ShipmentFormType::class, [
-            ShipmentFormType::FIELD_ID_SALES_SHIPMENT => $options[static::FIELD_ID_SALES_SHIPMENT],
-            ShipmentFormType::OPTION_SHIPMENT_ADDRESS_CHOICES => $options[static::OPTION_SHIPMENT_ADDRESS_CHOICES],
-            ShipmentMethodFormType::OPTION_SHIPMENT_METHOD_CHOICES => $options[static::OPTION_SHIPMENT_METHOD_CHOICES],
-            ShipmentMethodFormType::FIELD_ID_SHIPMENT_METHOD => $options[static::FIELD_ID_SHIPMENT_METHOD],
-            AddressFormType::OPTION_SALUTATION_CHOICES => $options[static::OPTION_SALUTATION_CHOICES],
+        /** @var \Spryker\Zed\ShipmentGui\Communication\Plugin\Form\ShipmentFormTypePlugin $shipmentFormTypePlugin */
+        $shipmentFormTypePlugin = $this->getFactory()->getShipmentFormTypePlugin();
+        $builder->add(static::FIELD_SHIPMENT_FORM, $shipmentFormTypePlugin->getType(), [
+            static::FIELD_ID_SALES_SHIPMENT => $options[static::FIELD_ID_SALES_SHIPMENT],
+            static::OPTION_SHIPMENT_ADDRESS_CHOICES => $options[static::OPTION_SHIPMENT_ADDRESS_CHOICES],
+            static::OPTION_SHIPMENT_METHOD_CHOICES => $options[static::OPTION_SHIPMENT_METHOD_CHOICES],
+            static::FIELD_ID_SHIPMENT_METHOD => $options[static::FIELD_ID_SHIPMENT_METHOD],
+            static::OPTION_SALUTATION_CHOICES => $options[static::OPTION_SALUTATION_CHOICES],
         ]);
 
         return $this;
@@ -105,12 +102,14 @@ class MerchantShipmentGroupFormType extends AbstractType
      */
     protected function addOrderItemsFormType(FormBuilderInterface $builder, array $options = [])
     {
+        /** @var \Spryker\Zed\ShipmentGui\Communication\Plugin\Form\ItemFormTypePlugin $itemFormTypePlugin */
+        $itemFormTypePlugin = $this->getFactory()->getItemFormTypePlugin()->getType();
         $builder->add(static::FIELD_SALES_ORDER_ITEMS_FORM, CollectionType::class, [
-            'entry_type' => ItemFormType::class,
+            'entry_type' => $itemFormTypePlugin->getType(),
             'entry_options' => [
                 'label' => false,
-                ItemFormType::FIELD_SHIPMENT_SELECTED_ITEMS => $options[static::FIELD_SHIPMENT_SELECTED_ITEMS],
-                ItemFormType::OPTION_ORDER_ITEMS_CHOICES => $options[static::OPTION_ORDER_ITEMS_CHOICES],
+                static::FIELD_SHIPMENT_SELECTED_ITEMS => $options[static::FIELD_SHIPMENT_SELECTED_ITEMS],
+                static::OPTION_ORDER_ITEMS_CHOICES => $options[static::OPTION_ORDER_ITEMS_CHOICES],
             ],
         ]);
 

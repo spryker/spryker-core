@@ -13,10 +13,7 @@ use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\Shipment\MerchantShipmentGroupFormType;
-use Spryker\Zed\ShipmentGui\Communication\Form\Item\ItemFormType;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
@@ -33,6 +30,16 @@ class MerchantShipmentCreateController extends AbstractController
     protected const MESSAGE_SHIPMENT_CREATE_SUCCESS = 'Shipment has been successfully created.';
     protected const MESSAGE_SHIPMENT_CREATE_FAIL = 'Shipment has not been created.';
     protected const MESSAGE_ORDER_NOT_FOUND_ERROR = 'Merchant sales order #%d not found.';
+
+    /**
+     * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\Shipment\MerchantShipmentGroupFormType::FIELD_SALES_ORDER_ITEMS_FORM
+     */
+    protected const FIELD_SALES_ORDER_ITEMS_FORM = 'items';
+
+    /**
+     * @uses \Spryker\Zed\ShipmentGui\Communication\Form\Item\ItemFormType::FIELD_IS_UPDATED
+     */
+    protected const FIELD_IS_UPDATED = 'is_updated';
 
     /**
      * @phpstan-return array<mixed>|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -73,7 +80,14 @@ class MerchantShipmentCreateController extends AbstractController
             ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            return $this->saveMerchantOrderShipment($merchantOrderTransfer, $form);
+            $this->saveMerchantOrderShipment($merchantOrderTransfer, $form);
+
+            $redirectUrl = Url::generate(
+                static::REDIRECT_URL_DEFAULT,
+                [static::PARAM_ID_MERCHANT_SALES_ORDER => $merchantOrderTransfer->getIdMerchantOrder()]
+            )->build();
+
+            return $this->redirectResponse($redirectUrl);
         }
 
         $groupedMerchantOrderItems = [];
@@ -114,9 +128,9 @@ class MerchantShipmentCreateController extends AbstractController
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      * @param \Symfony\Component\Form\FormInterface $form
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return void
      */
-    protected function saveMerchantOrderShipment(MerchantOrderTransfer $merchantOrderTransfer, FormInterface $form): RedirectResponse
+    protected function saveMerchantOrderShipment(MerchantOrderTransfer $merchantOrderTransfer, FormInterface $form): void
     {
         $shipmentGroupTransfer = $this->getFactory()
             ->getShipmentFacade()
@@ -127,13 +141,6 @@ class MerchantShipmentCreateController extends AbstractController
             ->saveShipment($shipmentGroupTransfer, $merchantOrderTransfer->getOrder());
 
         $this->addStatusMessage($responseTransfer);
-
-        $redirectUrl = Url::generate(
-            static::REDIRECT_URL_DEFAULT,
-            [static::PARAM_ID_MERCHANT_SALES_ORDER => $merchantOrderTransfer->getIdMerchantOrder()]
-        )->build();
-
-        return $this->redirectResponse($redirectUrl);
     }
 
     /**
@@ -145,16 +152,16 @@ class MerchantShipmentCreateController extends AbstractController
      */
     protected function getItemListUpdatedStatus(FormInterface $form): array
     {
-        if (!$form->offsetExists(MerchantShipmentGroupFormType::FIELD_SALES_ORDER_ITEMS_FORM)) {
+        if (!$form->offsetExists(static::FIELD_SALES_ORDER_ITEMS_FORM)) {
             return [];
         }
 
-        $itemFormTypeCollection = $form->get(MerchantShipmentGroupFormType::FIELD_SALES_ORDER_ITEMS_FORM);
+        $itemFormTypeCollection = $form->get(static::FIELD_SALES_ORDER_ITEMS_FORM);
         $requestedItems = [];
         foreach ($itemFormTypeCollection as $itemFormType) {
             $itemTransfer = $itemFormType->getData();
             /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
-            $requestedItems[$itemTransfer->getIdSalesOrderItem()] = $itemFormType->get(ItemFormType::FIELD_IS_UPDATED)->getData();
+            $requestedItems[$itemTransfer->getIdSalesOrderItem()] = $itemFormType->get(static::FIELD_IS_UPDATED)->getData();
         }
 
         return $requestedItems;
