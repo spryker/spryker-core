@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
-use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
@@ -86,26 +85,14 @@ class ProductConfigurationStorageClient extends AbstractClient implements Produc
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param array $productData
-     * @param string $localeName
-     * @param \Generated\Shared\Transfer\ProductStorageCriteriaTransfer|null $productStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function expandProductViewWithProductConfigurationInstance(
-        ProductViewTransfer $productViewTransfer,
-        array $productData,
-        $localeName,
-        ?ProductStorageCriteriaTransfer $productStorageCriteriaTransfer = null
-    ): ProductViewTransfer {
+    public function expandProductViewWithProductConfigurationInstance(ProductViewTransfer $productViewTransfer): ProductViewTransfer
+    {
         return $this->getFactory()
             ->createProductViewExpander()
-            ->expandProductViewWithProductConfigurationInstance(
-                $productViewTransfer,
-                $productData,
-                $localeName,
-                $productStorageCriteriaTransfer
-            );
+            ->expandProductViewWithProductConfigurationInstance($productViewTransfer);
     }
 
     /**

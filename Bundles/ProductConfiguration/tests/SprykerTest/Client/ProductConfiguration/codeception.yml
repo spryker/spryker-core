@@ -1,4 +1,4 @@
-namespace: SprykerTest\Zed\ProductConfiguration
+namespace: SprykerTest\Client\ProductConfiguration
 
 paths:
     tests: .
@@ -12,9 +12,9 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-    Business:
-        path: Business
-        class_name: ProductConfigurationBusinessTester
+    Client:
+        path: Client
+        class_name: ProductConfigurationClientTester
         modules:
             enabled:
                 - Asserts
@@ -22,8 +22,5 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
-                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
-                - \SprykerTest\Shared\Product\Helper\ProductDataHelper
-                - \SprykerTest\Shared\ProductConfiguration\Helper\ProductConfigurationHelper
+                - \SprykerTest\Client\Testify\Helper\ClientHelper
 
