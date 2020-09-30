@@ -19,7 +19,7 @@ class ShipmentFormTypePlugin extends AbstractPlugin implements FormTypeInterface
 {
     /**
      * {@inheritDoc}
-     * - Returns ItemFormType class name resolution.
+     * - Returns ShipmentFormType class name resolution.
      *
      * @api
      *
