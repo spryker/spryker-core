@@ -62,18 +62,21 @@ class ProductAttributeRepository extends AbstractRepository implements ProductAt
     ): ProductManagementAttributeCollectionTransfer {
         $productManagementAttributeQuery = $this->getFactory()
             ->createProductManagementAttributeQuery()
-            ->innerJoinSpyProductAttributeKey();
+            ->innerJoinWithSpyProductAttributeKey();
 
         $paginationTransfer = (new PaginationTransfer())->setNbResults($productManagementAttributeQuery->count());
 
-        $productManagementAttributeQuery = $this->setProductManagementAttributeFilters(
+        $productManagementAttributeQuery = $this->applyFilters(
             $productManagementAttributeQuery,
             $productManagementAttributeFilterTransfer
         );
 
         return $this->getFactory()
             ->createProductManagementAttributeMapper()
-            ->mapProductManagementAttributeEntityCollectionToTransferCollection($productManagementAttributeQuery->find())
+            ->mapProductManagementAttributeEntityCollectionToTransferCollection(
+                $productManagementAttributeQuery->find(),
+                new ProductManagementAttributeCollectionTransfer()
+            )
             ->setPagination($paginationTransfer);
     }
 
@@ -82,7 +85,7 @@ class ProductAttributeRepository extends AbstractRepository implements ProductAt
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer[]
      */
-    public function getProductManagementAttributeValuesByProductManagementAttributeIds(array $productManagementAttributeIds): array
+    public function getProductManagementAttributeValues(array $productManagementAttributeIds): array
     {
         if (!$productManagementAttributeIds) {
             return [];
@@ -91,9 +94,9 @@ class ProductAttributeRepository extends AbstractRepository implements ProductAt
         $productManagementAttributeValueQuery = $this->getFactory()
             ->createProductManagementAttributeValueQuery()
             ->filterByFkProductManagementAttribute_In($productManagementAttributeIds)
+            ->leftJoinWithSpyProductManagementAttributeValueTranslation()
             ->useSpyProductManagementAttributeValueTranslationQuery(null, Criteria::LEFT_JOIN)
-                ->useSpyLocaleQuery(null, Criteria::LEFT_JOIN)
-                ->endUse()
+                ->leftJoinWithSpyLocale()
             ->endUse()
             ->groupByIdProductManagementAttributeValue();
 
@@ -108,7 +111,7 @@ class ProductAttributeRepository extends AbstractRepository implements ProductAt
      *
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery
      */
-    protected function setProductManagementAttributeFilters(
+    protected function applyFilters(
         SpyProductManagementAttributeQuery $productManagementAttributeQuery,
         ProductManagementAttributeFilterTransfer $productManagementAttributeFilterTransfer
     ): SpyProductManagementAttributeQuery {

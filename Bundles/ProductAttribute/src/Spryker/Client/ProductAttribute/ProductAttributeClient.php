@@ -10,7 +10,6 @@ namespace Spryker\Client\ProductAttribute;
 use Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer;
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Client\ProductAttribute\Zed\ProductAttributeStubInterface;
 
 /**
  * @method \Spryker\Client\ProductAttribute\ProductAttributeFactory getFactory()
@@ -29,14 +28,8 @@ class ProductAttributeClient extends AbstractClient implements ProductAttributeC
     public function getProductManagementAttributes(
         ProductManagementAttributeFilterTransfer $productManagementAttributeFilterTransfer
     ): ProductManagementAttributeCollectionTransfer {
-        return $this->getZedStub()->getProductManagementAttributes($productManagementAttributeFilterTransfer);
-    }
-
-    /**
-     * @return \Spryker\Client\ProductAttribute\Zed\ProductAttributeStubInterface
-     */
-    protected function getZedStub(): ProductAttributeStubInterface
-    {
-        return $this->getFactory()->createProductAttributeStub();
+        return $this->getFactory()
+            ->createProductAttributeStub()
+            ->getProductManagementAttributes($productManagementAttributeFilterTransfer);
     }
 }

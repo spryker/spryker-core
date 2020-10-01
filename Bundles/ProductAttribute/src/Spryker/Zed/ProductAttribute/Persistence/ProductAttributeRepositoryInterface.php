@@ -33,5 +33,5 @@ interface ProductAttributeRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer[]
      */
-    public function getProductManagementAttributeValuesByProductManagementAttributeIds(array $productManagementAttributeIds): array;
+    public function getProductManagementAttributeValues(array $productManagementAttributeIds): array;
 }

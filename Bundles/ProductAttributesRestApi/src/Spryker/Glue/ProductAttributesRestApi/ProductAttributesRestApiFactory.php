@@ -28,14 +28,14 @@ class ProductAttributesRestApiFactory extends AbstractFactory
     {
         return new ProductAttributeReader(
             $this->getProductAttributeClient(),
-            $this->createRestReturnResponseBuilder()
+            $this->createRestProductAttributeResponseBuilder()
         );
     }
 
     /**
      * @return \Spryker\Glue\ProductAttributesRestApi\Processor\Builder\RestProductAttributeResponseBuilderInterface
      */
-    public function createRestReturnResponseBuilder(): RestProductAttributeResponseBuilderInterface
+    public function createRestProductAttributeResponseBuilder(): RestProductAttributeResponseBuilderInterface
     {
         return new RestProductAttributeResponseBuilder(
             $this->getResourceBuilder(),

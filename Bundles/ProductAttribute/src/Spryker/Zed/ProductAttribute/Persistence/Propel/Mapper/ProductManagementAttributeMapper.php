@@ -18,14 +18,14 @@ class ProductManagementAttributeMapper
 {
     /**
      * @param \Propel\Runtime\Collection\Collection $productManagementAttributeEntities
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer $productManagementAttributeCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer
      */
     public function mapProductManagementAttributeEntityCollectionToTransferCollection(
-        Collection $productManagementAttributeEntities
+        Collection $productManagementAttributeEntities,
+        ProductManagementAttributeCollectionTransfer $productManagementAttributeCollectionTransfer
     ): ProductManagementAttributeCollectionTransfer {
-        $productManagementAttributeCollectionTransfer = new ProductManagementAttributeCollectionTransfer();
-
         foreach ($productManagementAttributeEntities as $productManagementAttributeEntity) {
             $productManagementAttributeTransfer = $this->mapProductManagementAttributeEntityToTransfer(
                 $productManagementAttributeEntity,
@@ -40,14 +40,14 @@ class ProductManagementAttributeMapper
 
     /**
      * @param \Propel\Runtime\Collection\Collection $productManagementAttributeValueEntities
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer[] $productManagementAttributeValueTransfers
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer[]
      */
     public function mapProductManagementAttributeValueEntityCollectionToTransferCollection(
-        Collection $productManagementAttributeValueEntities
+        Collection $productManagementAttributeValueEntities,
+        array $productManagementAttributeValueTransfers = []
     ): array {
-        $productManagementAttributeValueTransfers = [];
-
         foreach ($productManagementAttributeValueEntities as $productManagementAttributeValueEntity) {
             $productManagementAttributeValueTransfer = (new ProductManagementAttributeValueTransfer())
                 ->fromArray($productManagementAttributeValueEntity->toArray(), true);

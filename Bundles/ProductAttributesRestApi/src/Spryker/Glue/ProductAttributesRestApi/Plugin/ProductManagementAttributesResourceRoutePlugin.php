@@ -17,6 +17,7 @@ class ProductManagementAttributesResourceRoutePlugin extends AbstractPlugin impl
 {
     /**
      * {@inheritDoc}
+     * - Configures available actions for `product-management-attributes` resource.
      *
      * @api
      *

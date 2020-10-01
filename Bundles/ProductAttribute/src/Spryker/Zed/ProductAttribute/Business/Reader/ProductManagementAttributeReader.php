@@ -78,6 +78,10 @@ class ProductManagementAttributeReader implements ProductManagementAttributeRead
         $productManagementAttributeCollectionTransfer = $this->productAttributeRepository
             ->getProductManagementAttributes($productManagementAttributeFilterTransfer);
 
+        if (!$productManagementAttributeCollectionTransfer->getProductManagementAttributes()->count()) {
+            return $productManagementAttributeCollectionTransfer;
+        }
+
         $productManagementAttributeTransfers = $productManagementAttributeCollectionTransfer->getProductManagementAttributes();
 
         $productManagementAttributeTransfers = $this->expandProductManagementAttributesWithValues($productManagementAttributeTransfers);
@@ -96,7 +100,7 @@ class ProductManagementAttributeReader implements ProductManagementAttributeRead
     {
         $productManagementAttributeIds = $this->extractProductManagementAttributeIds($productManagementAttributeTransfers);
         $productManagementAttributeValueTransfers = $this->productAttributeRepository
-            ->getProductManagementAttributeValuesByProductManagementAttributeIds($productManagementAttributeIds);
+            ->getProductManagementAttributeValues($productManagementAttributeIds);
 
         $indexedProductManagementAttributeValueTransfers = $this->indexProductManagementAttributeValues($productManagementAttributeValueTransfers);
 
@@ -152,7 +156,7 @@ class ProductManagementAttributeReader implements ProductManagementAttributeRead
     ): ProductManagementAttributeTransfer {
         foreach ($localeTransfers as $localeTransfer) {
             $glossaryKey = $this->glossaryKeyBuilder->buildGlossaryKey($productManagementAttributeTransfer->getKey());
-            $keyTranslation = $translationsByLocaleNameAndGlossaryKey[$glossaryKey][$localeTransfer->getLocaleName()] ?? $this->findTranslationByGlossaryKeyAndLocaleTransfer($glossaryKey, $localeTransfer);
+            $keyTranslation = $translationsByLocaleNameAndGlossaryKey[$glossaryKey][$localeTransfer->getLocaleName()] ?? null;
 
             $localizedAttributeKeyTransfer = (new LocalizedProductManagementAttributeKeyTransfer())
                 ->setLocaleName($localeTransfer->getLocaleName())
