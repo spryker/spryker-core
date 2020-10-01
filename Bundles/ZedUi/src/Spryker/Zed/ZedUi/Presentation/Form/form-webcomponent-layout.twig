@@ -57,7 +57,7 @@ For more information on this topic, see
             attrs="{{ additionalAttributes | json_encode }}"
             {% if name != '' %} name="{{ name }}"{% endif %}
             {% if action != '' %} action="{{ action }}"{% endif %}
-            {% if attr.withMonitor is defined and attr.withMonitor %} with-monitor="true"{% endif %}
+            {% if attr.withMonitor is defined and attr.withMonitor %} with-monitor{% endif %}
         >
     {% endif %}
 
