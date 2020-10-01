@@ -64,7 +64,7 @@ class ProductPageSearchFacadeTest extends Unit
         $this->productPageSearchFacade->publishProductConcretePageSearchesByProductAbstractIds([$productAbstractTransfer->getIdProductAbstract()]);
 
         $productConcretePageSearchTransfers = $this->productPageSearchFacade->getProductConcretePageSearchTransfersByProductIds([$productConcreteTransfer->getIdProductConcrete()]);
-        $this->assertEquals(count($storeNames), count($productConcretePageSearchTransfers));
+        $this->assertSame(count($storeNames), count($productConcretePageSearchTransfers));
 
         $productAbstractStoreMap = [
             $productAbstractTransfer->getIdProductAbstract() => [$storeNames[0]],
@@ -74,10 +74,10 @@ class ProductPageSearchFacadeTest extends Unit
 
         $productConcretePageSearchTransfers = $this->productPageSearchFacade->getProductConcretePageSearchTransfersByProductIds([$productConcreteTransfer->getIdProductConcrete()]);
 
-        $this->assertEquals(count($storeNames), count($productConcretePageSearchTransfers));
+        $this->assertSame(count($storeNames), count($productConcretePageSearchTransfers));
 
         foreach ($productConcretePageSearchTransfers as $productConcretePageSearchTransfer) {
-            $this->assertEquals($productConcreteTransfer->getIdProductConcrete(), $productConcretePageSearchTransfer->getFkProduct());
+            $this->assertSame($productConcreteTransfer->getIdProductConcrete(), $productConcretePageSearchTransfer->getFkProduct());
             $this->assertContains($productConcretePageSearchTransfer->getStore(), $storeNames);
         }
     }
@@ -95,10 +95,10 @@ class ProductPageSearchFacadeTest extends Unit
 
         $productConcretePageSearchTransfers = $this->productPageSearchFacade->getProductConcretePageSearchTransfersByProductIds([$productConcreteTransfer->getIdProductConcrete()]);
 
-        $this->assertEquals(count($storeNames), count($productConcretePageSearchTransfers));
+        $this->assertSame(count($storeNames), count($productConcretePageSearchTransfers));
 
         foreach ($productConcretePageSearchTransfers as $productConcretePageSearchTransfer) {
-            $this->assertEquals($productConcreteTransfer->getIdProductConcrete(), $productConcretePageSearchTransfer->getFkProduct());
+            $this->assertSame($productConcreteTransfer->getIdProductConcrete(), $productConcretePageSearchTransfer->getFkProduct());
             $this->assertContains($productConcretePageSearchTransfer->getStore(), $storeNames);
         }
     }

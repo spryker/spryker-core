@@ -22,7 +22,7 @@ class MerchantProfileAddressDataImportHelper extends Module
     {
         $query = $this->getMerchantProfileAddressQuery();
 
-        $this->assertEquals(0, $query->count(), 'Found at least one entry in the database table but database table was expected to be empty.');
+        $this->assertSame(0, $query->count(), 'Found at least one entry in the database table but database table was expected to be empty.');
     }
 
     /**

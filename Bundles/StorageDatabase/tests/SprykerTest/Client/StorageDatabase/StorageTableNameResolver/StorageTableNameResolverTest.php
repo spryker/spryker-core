@@ -52,7 +52,7 @@ class StorageTableNameResolverTest extends Unit
     public function testTableNamesAreResolvedCorrectly(string $resourcePrefix, string $tableName, bool $isCorrect): void
     {
         $resolvedTableName = $this->storageTableNameResolver->resolveByResourceKey($resourcePrefix);
-        $this->assertEquals($isCorrect, $resolvedTableName === $tableName);
+        $this->assertSame($isCorrect, $resolvedTableName === $tableName);
     }
 
     /**

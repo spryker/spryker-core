@@ -166,10 +166,10 @@ class SalesDataExportFacadeTest extends Unit
 
         /** @var \Generated\Shared\Transfer\DataExportResultTransfer $dataExportResultTransfer */
         $dataExportResultTransfer = $dataExportReportTransfer->getDataExportResults()->offsetGet(0);
-        $this->assertEquals(1, $dataExportResultTransfer->getExportCount(), 'Export count does not equals to an expected value.');
+        $this->assertSame(1, $dataExportResultTransfer->getExportCount(), 'Export count does not equals to an expected value.');
 
         $fileName = $dataExportResultTransfer->getFileName();
-        $this->assertEquals(
+        $this->assertSame(
             sprintf($dataExportResultFileTemplate, $this->timestamp),
             $fileName,
             'File name does not equals to an expected value'

@@ -286,7 +286,7 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
         /** @var \Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer $attributes */
         $attributes = $restResource->getAttributes();
         $concreteProductsResourceList = $this->concreteProductsReader
-            ->findProductConcretesByProductConcreteSkus(
+            ->getProductConcretesBySkus(
                 $attributes->getAttributeMap()[static::PRODUCT_CONCRETE_IDS_KEY],
                 $restRequest
             );

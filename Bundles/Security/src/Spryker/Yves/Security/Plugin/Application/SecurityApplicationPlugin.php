@@ -764,6 +764,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                 return null;
             }
 
+            /** @var \Symfony\Component\HttpFoundation\Session\SessionInterface $session */
             $session = $request->getSession();
 
             if ($session->has(Security::AUTHENTICATION_ERROR)) {

@@ -59,7 +59,7 @@ class OauthPermissionFacadeTest extends Unit
         //Assert
         $this->assertNotNull($customerIdentifierTransfer->getPermissions());
         $this->assertCount(1, $customerIdentifierTransfer->getPermissions()->getPermissions());
-        $this->assertEquals(
+        $this->assertSame(
             static::PERMISSION_PLUGIN_KEY,
             $customerIdentifierTransfer->getPermissions()->getPermissions()->offsetGet(0)->getKey()
         );

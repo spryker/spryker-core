@@ -79,7 +79,7 @@ class IndexDefinitionLoaderTest extends Unit
 
         $this->assertArrayHasKey(static::INDEX_DEFINITION_KEY_NAME, $result[0]);
         $this->assertArrayHasKey(static::INDEX_DEFINITION_KEY_DEFINITION, $result[0]);
-        $this->assertEquals(static::SCHEMA_DEFINITION_FILE_NAME, $result[0][static::INDEX_DEFINITION_KEY_NAME]);
+        $this->assertSame(static::SCHEMA_DEFINITION_FILE_NAME, $result[0][static::INDEX_DEFINITION_KEY_NAME]);
     }
 
     /**

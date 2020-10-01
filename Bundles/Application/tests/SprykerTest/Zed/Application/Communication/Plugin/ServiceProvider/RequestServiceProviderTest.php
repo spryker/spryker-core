@@ -13,6 +13,8 @@ use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RequestServiceP
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * Auto-generated group annotations
  *
  * @group SprykerTest

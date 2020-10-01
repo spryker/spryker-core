@@ -34,6 +34,16 @@ class DataCleanupHelper extends Module
     }
 
     /**
+     * @param \Closure $closure
+     *
+     * @return void
+     */
+    public function addCleanup(Closure $closure): void
+    {
+        $this->_addCleanup($closure);
+    }
+
+    /**
      * Cleans up inserted data
      *
      * @return void
