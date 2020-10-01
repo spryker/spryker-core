@@ -24,6 +24,58 @@ For more information on this topic, see
     {{- form_rest(form) -}}
 {%- endblock form_widget_compound -%}
 
+{%- block form_start -%}
+    {%- do form.setMethodRendered() -%}
+    {% set additionalAttributes = attr %}
+    {% set method = method|upper %}
+
+    {%- if method in ["GET", "POST"] -%}
+        {% set form_method = method %}
+    {%- else -%}
+        {% set form_method = "POST" %}
+    {%- endif -%}
+
+    {% if multipart %}
+        {% set additionalAttributes = attr | merge({
+            enctype: 'multipart/form-data',
+        }) %}
+    {%- endif -%}
+
+    {%- for attrname, attrvalue in attr -%}
+        {%- if attrname == 'title' -%}
+            {% set additionalAttributes = additionalAttributes | merge({
+                title: translation_domain is same as(false)
+                    ? attrvalue
+                    : attrvalue | trans(attr_translation_parameters, translation_domain),
+            }) %}
+        {%- endif -%}
+    {%- endfor -%}
+
+    {% if attr.excludeForm is not defined or not attr.excludeForm %}
+        <web-mp-form
+            method="{{ form_method | lower }}"
+            attrs="{{ additionalAttributes | json_encode }}"
+            {% if name != '' %} name="{{ name }}"{% endif %}
+            {% if action != '' %} action="{{ action }}"{% endif %}
+            {% if attr.withMonitor is defined and attr.withMonitor %} with-monitor{% endif %}
+        >
+    {% endif %}
+
+    {%- if form_method != method -%}
+        <input type="hidden" name="_method" value="{{ method }}" />
+    {%- endif -%}
+{%- endblock form_start -%}
+
+{%- block form_end -%}
+        {%- if not render_rest is defined or render_rest -%}
+            {{ form_rest(form) }}
+        {%- endif -%}
+
+    {% if attr.excludeForm is not defined or not attr.excludeForm %}
+        </web-mp-form>
+    {% endif %}
+{%- endblock form_end -%}
+
 {%- block form_errors -%}
     {%- if errors|length > 0 -%}
         {%- for error in errors -%}
