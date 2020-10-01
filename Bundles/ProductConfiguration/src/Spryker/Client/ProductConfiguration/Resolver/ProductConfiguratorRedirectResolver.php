@@ -113,9 +113,11 @@ class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirect
     protected function expandProductConfigurationData(
         ProductConfiguratorRequestDataTransfer $productConfiguratorRequestDataTransfer
     ): ProductConfiguratorRequestDataTransfer {
-        $productConfiguratorRequestDataTransfer->setCustomerReference(
-            $this->customerClient->getCustomer()->getCustomerReference()
-        );
+        if ($this->customerClient->getCustomer()) {
+            $productConfiguratorRequestDataTransfer->setCustomerReference(
+                $this->customerClient->getCustomer()->getCustomerReference()
+            );
+        }
 
         $productConfiguratorRequestDataTransfer->setStoreName(
             $this->storeClient->getCurrentStore()->getName()

@@ -17,10 +17,13 @@ class ProductConfiguratorMandatoryFieldsResponseValidator implements ProductConf
     /**
      * @param \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
      *
+     * @param array $configuratorResponseData
+     *
      * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
      */
     public function validate(
-        ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
+        ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer,
+        array $configuratorResponseData
     ): ProductConfiguratorResponseProcessorResponseTransfer {
         $productConfiguratorResponseProcessorResponseTransfer->requireProductConfiguratorResponse();
 

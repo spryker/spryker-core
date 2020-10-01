@@ -68,7 +68,8 @@ class ProductConfiguratorCheckSumResponseProcessor implements ProductConfigurato
         array $configuratorResponseData
     ): ProductConfiguratorResponseProcessorResponseTransfer {
         $productConfiguratorResponseProcessorResponseTransfer = $this->validateResponse(
-            $productConfiguratorResponseTransfer
+            $productConfiguratorResponseTransfer,
+            $configuratorResponseData
         );
 
         if (!$productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful()) {
@@ -95,10 +96,13 @@ class ProductConfiguratorCheckSumResponseProcessor implements ProductConfigurato
     /**
      * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
      *
+     * @param array $configuratorResponseData
+     *
      * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
      */
     protected function validateResponse(
-        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
+        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer,
+        array $configuratorResponseData
     ): ProductConfiguratorResponseProcessorResponseTransfer {
         $productConfiguratorResponseProcessorResponseTransfer = (new ProductConfiguratorResponseProcessorResponseTransfer())
             ->setProductConfiguratorResponse($productConfiguratorResponseTransfer)
@@ -106,7 +110,8 @@ class ProductConfiguratorCheckSumResponseProcessor implements ProductConfigurato
 
         foreach ($this->validators as $validator) {
             $productConfiguratorResponseProcessorResponseTransfer = $validator->validate(
-                $productConfiguratorResponseProcessorResponseTransfer
+                $productConfiguratorResponseProcessorResponseTransfer,
+                $configuratorResponseData
             );
         }
 
