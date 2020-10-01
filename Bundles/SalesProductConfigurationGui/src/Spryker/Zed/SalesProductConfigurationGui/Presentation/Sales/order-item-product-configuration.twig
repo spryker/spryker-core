@@ -1,12 +1,7 @@
 {# @var template \Generated\Shared\Transfer\SalesProductConfigurationTemplateTransfer #}
 {# @var orderItem \Generated\Shared\Transfer\ItemTransfer #}
 
-{% define data = {
-    template: _view.template | default,
-    orderItem: _view.orderItem,
-} %}
-
-{% if template is defined %}
+{% if template is not null %}
     {% include template.templatePath with {'data': template.data} only %}
 {% else %}
     {{ orderItem.salesOrderItemConfiguration.displayData }}
