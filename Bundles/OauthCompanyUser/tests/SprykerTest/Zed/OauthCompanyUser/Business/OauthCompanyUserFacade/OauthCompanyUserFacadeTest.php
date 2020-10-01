@@ -207,7 +207,7 @@ class OauthCompanyUserFacadeTest extends Unit
 
         // Assert
         $this->assertTrue($customerResponseTransfer->getIsSuccess());
-        $this->assertEquals(
+        $this->assertSame(
             $customerTransfer->getIdCustomer(),
             $customerResponseTransfer->getCustomerTransfer()->getIdCustomer()
         );

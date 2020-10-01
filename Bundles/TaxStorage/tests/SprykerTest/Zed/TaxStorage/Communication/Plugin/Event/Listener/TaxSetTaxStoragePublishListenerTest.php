@@ -95,6 +95,6 @@ class TaxSetTaxStoragePublishListenerTest extends Unit
         $this->assertCount(1, $synchronizationDataTransfers);
         /** @var array $synchronizationDataTransfersDataArray */
         $synchronizationDataTransfersDataArray = $synchronizationDataTransfers[0]->getData();
-        $this->assertEquals($idTaxSet, $synchronizationDataTransfersDataArray['id_tax_set']);
+        $this->assertSame($idTaxSet, $synchronizationDataTransfersDataArray['id_tax_set']);
     }
 }

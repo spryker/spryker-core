@@ -809,8 +809,8 @@ class ProductImageFacadeTest extends Unit
         $defaultProductImages = $defaultImageSetTransfer->getProductImages();
         $localizedProductImages = $localizedImageSetTransfer->getProductImages();
 
-        $this->assertEquals(1, count($defaultProductImages));
-        $this->assertEquals(1, count($localizedProductImages));
+        $this->assertSame(1, count($defaultProductImages));
+        $this->assertSame(1, count($localizedProductImages));
     }
 
     /**
@@ -835,8 +835,8 @@ class ProductImageFacadeTest extends Unit
         $defaultProductImages = $defaultImageSetTransfer->getProductImages();
         $localizedProductImages = $localizedImageSetTransfer->getProductImages();
 
-        $this->assertEquals(1, count($defaultProductImages));
-        $this->assertEquals(1, count($localizedProductImages));
+        $this->assertSame(1, count($defaultProductImages));
+        $this->assertSame(1, count($localizedProductImages));
     }
 
     /**
@@ -851,8 +851,8 @@ class ProductImageFacadeTest extends Unit
             ->findOne();
 
         $this->assertNotNull($productImage);
-        $this->assertEquals($productImageTransfer->getExternalUrlSmall(), $productImage->getExternalUrlSmall());
-        $this->assertEquals($productImageTransfer->getExternalUrlLarge(), $productImage->getExternalUrlLarge());
+        $this->assertSame($productImageTransfer->getExternalUrlSmall(), $productImage->getExternalUrlSmall());
+        $this->assertSame($productImageTransfer->getExternalUrlLarge(), $productImage->getExternalUrlLarge());
     }
 
     /**
@@ -867,8 +867,8 @@ class ProductImageFacadeTest extends Unit
             ->findOne();
 
         $this->assertNotNull($productImage);
-        $this->assertEquals(self::SET_NAME, $productImageSetTransfer->getName());
-        $this->assertEquals($this->productAbstractEntity->getIdProductAbstract(), $productImageSetTransfer->getIdProductAbstract());
+        $this->assertSame(static::SET_NAME, $productImageSetTransfer->getName());
+        $this->assertSame($this->productAbstractEntity->getIdProductAbstract(), $productImageSetTransfer->getIdProductAbstract());
     }
 
     /**

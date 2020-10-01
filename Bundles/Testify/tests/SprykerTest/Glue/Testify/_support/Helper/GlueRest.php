@@ -104,7 +104,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
             HttpCode::getDescription($this->grabResponseCode()),
             strlen($rawResponse) > $responseLimit ? substr($rawResponse, 0, $responseLimit) . '...' : $rawResponse
         );
-        $this->assertEquals($code, $this->grabResponseCode(), $failureMessage);
+        $this->assertSame($code, $this->grabResponseCode(), $failureMessage);
     }
 
     /**

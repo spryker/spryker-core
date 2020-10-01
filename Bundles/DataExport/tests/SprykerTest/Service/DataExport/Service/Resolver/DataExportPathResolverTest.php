@@ -66,7 +66,7 @@ class DataExportPathResolverTest extends Unit
             static::EXTENSION
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $expectedDestination,
             $resultDestination,
             'Resolved path does not equals to an expected value.'

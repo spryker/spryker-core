@@ -49,7 +49,7 @@ class PermissionContextProviderTest extends Unit
 
         // Assert
         $this->assertArrayHasKey(SharedQuoteApprovalConfig::PERMISSION_CONTEXT_CENT_AMOUNT, $context);
-        $this->assertEquals(static::QUOTE_GRAND_TOTAL, $context[SharedQuoteApprovalConfig::PERMISSION_CONTEXT_CENT_AMOUNT]);
+        $this->assertSame(static::QUOTE_GRAND_TOTAL, $context[SharedQuoteApprovalConfig::PERMISSION_CONTEXT_CENT_AMOUNT]);
     }
 
     /**
@@ -69,7 +69,7 @@ class PermissionContextProviderTest extends Unit
 
         // Assert
         $this->assertArrayHasKey(SharedQuoteApprovalConfig::PERMISSION_CONTEXT_CENT_AMOUNT, $context);
-        $this->assertEquals(static::QUOTE_GRAND_TOTAL - static::QUOTE_SHIPMENT_PRICE, $context[SharedQuoteApprovalConfig::PERMISSION_CONTEXT_CENT_AMOUNT]);
+        $this->assertSame(static::QUOTE_GRAND_TOTAL - static::QUOTE_SHIPMENT_PRICE, $context[SharedQuoteApprovalConfig::PERMISSION_CONTEXT_CENT_AMOUNT]);
     }
 
     /**

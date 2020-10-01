@@ -84,11 +84,11 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListResponseTransfer = $shoppingListsRestApiFacade->createShoppingList($shoppingListTransfer);
 
         $this->assertTrue($shoppingListResponseTransfer->getIsSuccess());
-        $this->assertEquals(
+        $this->assertSame(
             $this->tester::GOOD_SHOPPING_LIST_NAME,
             $shoppingListResponseTransfer->getShoppingList()->getName()
         );
-        $this->assertEquals($this->tester::OWNER_NAME, $shoppingListResponseTransfer->getShoppingList()->getOwner());
+        $this->assertSame($this->tester::OWNER_NAME, $shoppingListResponseTransfer->getShoppingList()->getOwner());
     }
 
     /**
@@ -108,7 +108,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListResponseTransfer = $shoppingListsRestApiFacade->createShoppingList($shoppingListTransfer);
 
         $this->assertFalse($shoppingListResponseTransfer->getIsSuccess());
-        $this->assertEquals([
+        $this->assertSame([
             SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_DUPLICATE_NAME,
         ], $shoppingListResponseTransfer->getErrors());
     }
@@ -131,15 +131,15 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListResponseTransfer = $shoppingListsRestApiFacade->updateShoppingList($shoppingListTransfer);
 
         $this->assertTrue($shoppingListResponseTransfer->getIsSuccess());
-        $this->assertEquals(
+        $this->assertSame(
             $this->tester::GOOD_SHOPPING_LIST_NAME,
             $shoppingListResponseTransfer->getShoppingList()->getName()
         );
-        $this->assertEquals(
+        $this->assertSame(
             $this->tester::GOOD_SHOPPING_LIST_UUID,
             $shoppingListResponseTransfer->getShoppingList()->getUuid()
         );
-        $this->assertEquals($this->tester::OWNER_NAME, $shoppingListResponseTransfer->getShoppingList()->getOwner());
+        $this->assertSame($this->tester::OWNER_NAME, $shoppingListResponseTransfer->getShoppingList()->getOwner());
     }
 
     /**
@@ -160,7 +160,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListResponseTransfer = $shoppingListsRestApiFacade->updateShoppingList($shoppingListTransfer);
 
         $this->assertFalse($shoppingListResponseTransfer->getIsSuccess());
-        $this->assertEquals([
+        $this->assertSame([
             SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_DUPLICATE_NAME,
         ], $shoppingListResponseTransfer->getErrors());
     }
@@ -183,7 +183,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListResponseTransfer = $shoppingListsRestApiFacade->updateShoppingList($shoppingListTransfer);
 
         $this->assertFalse($shoppingListResponseTransfer->getIsSuccess());
-        $this->assertEquals([
+        $this->assertSame([
             SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_NOT_FOUND,
         ], $shoppingListResponseTransfer->getErrors());
     }
@@ -225,7 +225,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListResponseTransfer = $shoppingListsRestApiFacade->deleteShoppingList($shoppingListTransfer);
 
         $this->assertFalse($shoppingListResponseTransfer->getIsSuccess());
-        $this->assertEquals([
+        $this->assertSame([
             SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED,
         ], $shoppingListResponseTransfer->getErrors());
     }
@@ -247,7 +247,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListResponseTransfer = $shoppingListsRestApiFacade->deleteShoppingList($shoppingListTransfer);
 
         $this->assertFalse($shoppingListResponseTransfer->getIsSuccess());
-        $this->assertEquals([
+        $this->assertSame([
             SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_NOT_FOUND,
         ], $shoppingListResponseTransfer->getErrors());
     }
@@ -274,16 +274,16 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListItemResponseTransfer = $shoppingListsRestApiFacade->addShoppingListItem($restShoppingListRequestTransfer);
 
         $this->assertTrue($shoppingListItemResponseTransfer->getIsSuccess());
-        $this->assertEquals($this->tester::GOOD_SKU, $shoppingListItemResponseTransfer->getShoppingListItem()->getSku());
-        $this->assertEquals(
+        $this->assertSame($this->tester::GOOD_SKU, $shoppingListItemResponseTransfer->getShoppingListItem()->getSku());
+        $this->assertSame(
             $this->tester::GOOD_QUANTITY,
             $shoppingListItemResponseTransfer->getShoppingListItem()->getQuantity()
         );
-        $this->assertEquals(
+        $this->assertSame(
             $this->tester::SHOPPING_LIST_ITEM_UUID,
             $shoppingListItemResponseTransfer->getShoppingListItem()->getUuid()
         );
-        $this->assertEquals(
+        $this->assertSame(
             $this->tester::SHOPPING_LIST_ITEM_ID,
             $shoppingListItemResponseTransfer->getShoppingListItem()->getIdShoppingListItem()
         );
@@ -311,7 +311,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListItemResponseTransfer = $shoppingListsRestApiFacade->addShoppingListItem($restShoppingListRequestTransfer);
 
         $this->assertFalse($shoppingListItemResponseTransfer->getIsSuccess());
-        $this->assertEquals([
+        $this->assertSame([
             SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_WRONG_QUANTITY,
         ], $shoppingListItemResponseTransfer->getErrors());
     }
@@ -338,7 +338,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListItemResponseTransfer = $shoppingListsRestApiFacade->addShoppingListItem($restShoppingListRequestTransfer);
 
         $this->assertFalse($shoppingListItemResponseTransfer->getIsSuccess());
-        $this->assertEquals([
+        $this->assertSame([
             SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_PRODUCT_NOT_FOUND,
         ], $shoppingListItemResponseTransfer->getErrors());
     }
@@ -383,11 +383,11 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListItemResponseTransfer = $shoppingListsRestApiFacade->updateShoppingListItem($restShoppingListRequestTransfer);
 
         $this->assertTrue($shoppingListItemResponseTransfer->getIsSuccess());
-        $this->assertEquals(
+        $this->assertSame(
             $this->tester::GOOD_QUANTITY,
             $shoppingListItemResponseTransfer->getShoppingListItem()->getQuantity()
         );
-        $this->assertEquals(
+        $this->assertSame(
             $this->tester::SHOPPING_LIST_ID,
             $shoppingListItemResponseTransfer->getShoppingListItem()->getFkShoppingList()
         );
@@ -416,7 +416,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListItemResponseTransfer = $shoppingListsRestApiFacade->updateShoppingListItem($restShoppingListRequestTransfer);
 
         $this->assertFalse($shoppingListItemResponseTransfer->getIsSuccess());
-        $this->assertEquals([
+        $this->assertSame([
             SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_NOT_FOUND,
         ], $shoppingListItemResponseTransfer->getErrors());
     }
@@ -444,7 +444,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $shoppingListItemResponseTransfer = $shoppingListsRestApiFacade->updateShoppingListItem($restShoppingListRequestTransfer);
 
         $this->assertFalse($shoppingListItemResponseTransfer->getIsSuccess());
-        $this->assertEquals([
+        $this->assertSame([
             SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_ITEM_NOT_FOUND,
         ], $shoppingListItemResponseTransfer->getErrors());
     }

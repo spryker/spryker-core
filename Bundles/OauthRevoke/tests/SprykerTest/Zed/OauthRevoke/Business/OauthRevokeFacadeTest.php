@@ -70,7 +70,7 @@ class OauthRevokeFacadeTest extends Unit
         $count = $this->oauthRevokeFacade->deleteExpiredRefreshTokens($criteriaTransfer);
 
         // Assert
-        $this->assertEquals(1, $count);
+        $this->assertSame(1, $count);
     }
 
     /**
@@ -90,7 +90,7 @@ class OauthRevokeFacadeTest extends Unit
         $refreshToken = $this->oauthRevokeFacade->findRefreshToken($criteriaTransfer);
 
         // Assert
-        $this->assertEquals($expectedOauthRefreshToken->getIdentifier(), $refreshToken->getIdentifier());
+        $this->assertSame($expectedOauthRefreshToken->getIdentifier(), $refreshToken->getIdentifier());
     }
 
     /**
@@ -111,7 +111,7 @@ class OauthRevokeFacadeTest extends Unit
         $refreshTokens = $this->oauthRevokeFacade->getRefreshTokens($criteriaTransfer);
 
         // Assert
-        $this->assertEquals(2, $refreshTokens->getOauthRefreshTokens()->count());
+        $this->assertSame(2, $refreshTokens->getOauthRefreshTokens()->count());
     }
 
     /**
@@ -136,7 +136,7 @@ class OauthRevokeFacadeTest extends Unit
             ->filterByIdentifier($oauthRefreshTokenTransfer->getIdentifier())
             ->findOne();
 
-        $this->assertEquals($expectedOauthRefreshToken->getIdentifier(), $oauthRefreshTokenEntity->getIdentifier());
+        $this->assertSame($expectedOauthRefreshToken->getIdentifier(), $oauthRefreshTokenEntity->getIdentifier());
         $this->assertNotNull($oauthRefreshTokenEntity->getRevokedAt());
     }
 
@@ -167,7 +167,7 @@ class OauthRevokeFacadeTest extends Unit
             ->filterByRevokedAt(null, Criteria::ISNOTNULL)
             ->find();
 
-        $this->assertEquals(2, $oauthRefreshTokenEntity->count());
+        $this->assertSame(2, $oauthRefreshTokenEntity->count());
     }
 
     /**
@@ -256,7 +256,7 @@ class OauthRevokeFacadeTest extends Unit
             ->findOne();
 
         $this->assertNotEmpty($oauthRefreshTokenEntity);
-        $this->assertEquals($refreshToken->getIdentifier(), $oauthRefreshTokenEntity->getIdentifier());
+        $this->assertSame($refreshToken->getIdentifier(), $oauthRefreshTokenEntity->getIdentifier());
     }
 
     /**
@@ -283,6 +283,6 @@ class OauthRevokeFacadeTest extends Unit
             ->findOne();
 
         $this->assertNotEmpty($oauthRefreshTokenEntity);
-        $this->assertEquals('identifier1', $oauthRefreshTokenEntity->getIdentifier());
+        $this->assertSame('identifier1', $oauthRefreshTokenEntity->getIdentifier());
     }
 }

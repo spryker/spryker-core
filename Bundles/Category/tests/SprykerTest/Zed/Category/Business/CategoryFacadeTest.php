@@ -81,7 +81,7 @@ class CategoryFacadeTest extends Unit
             ->filterByFkParentCategoryNode($categoryTransfer1->getCategoryNode()->getIdCategoryNode())
             ->find();
 
-        $this->assertEquals(1, $resultNodes->count(), 'If parent already contains a moving child category OR it is the same category, then they should be skipped');
+        $this->assertSame(1, $resultNodes->count(), 'If parent already contains a moving child category OR it is the same category, then they should be skipped');
         $this->assertEquals($categoryTransfer3->getCategoryNode()->getIdCategoryNode(), $resultNodes->getFirst()->getIdCategoryNode());
     }
 

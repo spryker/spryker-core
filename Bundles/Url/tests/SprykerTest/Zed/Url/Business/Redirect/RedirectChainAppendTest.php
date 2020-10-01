@@ -61,7 +61,7 @@ class RedirectChainAppendTest extends Unit
 
         $actualRedirectEntity = SpyUrlRedirectQuery::create()->findOneByIdUrlRedirect($fooUrlRedirectTransfer->getIdUrlRedirect());
 
-        $this->assertEquals(
+        $this->assertSame(
             $barUrlRedirectTransfer->getToUrl(),
             $actualRedirectEntity->getToUrl(),
             'Redirects that has the same target as a newly created source of a redirect should point to the new target.'
