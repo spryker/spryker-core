@@ -64,7 +64,7 @@ class ContentStorageClientTest extends Unit
             ->findContentTypeContextByKey(static::CONTENT_ITEM_KEY, static::LOCALE);
 
         // Assert
-        $this->assertEquals(ContentTypeContextTransfer::class, get_class($systemUnderTest));
+        $this->assertSame(ContentTypeContextTransfer::class, get_class($systemUnderTest));
     }
 
     /**

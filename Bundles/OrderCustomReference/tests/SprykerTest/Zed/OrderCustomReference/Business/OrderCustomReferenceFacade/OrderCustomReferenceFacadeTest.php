@@ -100,7 +100,7 @@ class OrderCustomReferenceFacadeTest extends Unit
         $orderTransfer = $this->findOrder($this->saveOrderTransfer);
 
         // Assert
-        $this->assertEquals($this->quoteTransfer->getOrderCustomReference(), $orderTransfer->getOrderCustomReference());
+        $this->assertSame($this->quoteTransfer->getOrderCustomReference(), $orderTransfer->getOrderCustomReference());
     }
 
     /**

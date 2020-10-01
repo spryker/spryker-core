@@ -141,7 +141,7 @@ class CompanyUserInvitationFacadeWithoutUserPermissionTest extends Test
         $companyUserInvitationCollectionTransfer = $this->getFacade()
             ->getCompanyUserInvitationCollection($companyUserInvitationGetCollectionRequestTransfer);
 
-        $this->assertEquals(0, $companyUserInvitationCollectionTransfer->getCompanyUserInvitations()->count());
+        $this->assertSame(0, $companyUserInvitationCollectionTransfer->getCompanyUserInvitations()->count());
     }
 
     /**

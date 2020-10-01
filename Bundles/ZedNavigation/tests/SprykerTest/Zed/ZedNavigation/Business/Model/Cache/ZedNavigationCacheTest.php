@@ -148,7 +148,7 @@ class ZedNavigationCacheTest extends ZedNavigationBusinessTester
         //assert
         $rawData = file_get_contents($cacheFile);
         $this->assertEquals($navigationData, $utilEncodingService->decodeJson($rawData, true));
-        $this->assertEquals($rawData, $utilEncodingService->encodeJson($navigationData));
+        $this->assertSame($rawData, $utilEncodingService->encodeJson($navigationData));
     }
 
     /**

@@ -209,7 +209,7 @@ class ShoppingListNoteFacadeTest extends Unit
             ->mapItemCartNoteToShoppingListItemNote($itemTransfer, new ShoppingListItemTransfer());
 
         // Assert
-        $this->assertEquals(static::CART_TEST_NOTE, $mappedShoppingListItemTransfer->getShoppingListItemNote()->getNote());
+        $this->assertSame(static::CART_TEST_NOTE, $mappedShoppingListItemTransfer->getShoppingListItemNote()->getNote());
     }
 
     /**

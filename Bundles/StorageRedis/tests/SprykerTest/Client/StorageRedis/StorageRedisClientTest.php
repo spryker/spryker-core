@@ -60,7 +60,7 @@ class StorageRedisClientTest extends Unit
     {
         $this->storageRedisClient->set(static::DUMMY_KEY, static::DUMMY_VALUE);
 
-        $this->assertEquals(static::DUMMY_VALUE, $this->storageRedisClient->get(static::DUMMY_KEY));
+        $this->assertSame(static::DUMMY_VALUE, $this->storageRedisClient->get(static::DUMMY_KEY));
     }
 
     /**
@@ -69,8 +69,8 @@ class StorageRedisClientTest extends Unit
     public function testCanSetValuesForMultipleKeys(): void
     {
         $this->storageRedisClient->setMulti($this->dummyMultiData);
-        $this->assertEquals(static::DUMMY_VALUE, $this->storageRedisClient->get(static::DUMMY_KEY));
-        $this->assertEquals(static::ANOTHER_DUMMY_VALUE, $this->storageRedisClient->get(static::ANOTHER_DUMMY_KEY));
+        $this->assertSame(static::DUMMY_VALUE, $this->storageRedisClient->get(static::DUMMY_KEY));
+        $this->assertSame(static::ANOTHER_DUMMY_VALUE, $this->storageRedisClient->get(static::ANOTHER_DUMMY_KEY));
     }
 
     /**
@@ -148,7 +148,7 @@ class StorageRedisClientTest extends Unit
     {
         $this->storageRedisClient->set(static::DUMMY_KEY, static::DUMMY_VALUE, 1);
 
-        $this->assertEquals(static::DUMMY_VALUE, $this->storageRedisClient->get(static::DUMMY_KEY));
+        $this->assertSame(static::DUMMY_VALUE, $this->storageRedisClient->get(static::DUMMY_KEY));
 
         sleep(2);
 

@@ -62,8 +62,8 @@ class RequestTest extends Unit
     public function testDefaultTransferIsNull(): void
     {
         $response = new Request();
-        $this->assertEquals(null, $response->getTransfer());
-        $this->assertEquals(null, $response->getMetaTransfer('asd'));
+        $this->assertNull($response->getTransfer());
+        $this->assertNull($response->getMetaTransfer('asd'));
     }
 
     /**

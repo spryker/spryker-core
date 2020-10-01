@@ -214,10 +214,10 @@ class QueryContainerTest extends Unit
 
         $query = $this->queryContainer->createQuery($this->query, $criteriaTransfer);
 
-        $this->assertEquals(self::EXPECTED_OFFSET, $query->getOffset());
-        $this->assertEquals(self::LIMIT, $query->getLimit());
-        $this->assertEquals(self::LIMIT, $query->count());
-        $this->assertEquals($this->getFirstProductIdOnSecondPage(), $query->find()->getFirst()->getIdProduct());
+        $this->assertSame(static::EXPECTED_OFFSET, $query->getOffset());
+        $this->assertSame(static::LIMIT, $query->getLimit());
+        $this->assertSame(static::LIMIT, $query->count());
+        $this->assertSame($this->getFirstProductIdOnSecondPage(), $query->find()->getFirst()->getIdProduct());
     }
 
     /**
@@ -229,10 +229,10 @@ class QueryContainerTest extends Unit
 
         $query = $this->queryContainer->createQuery($this->query, $criteriaTransfer);
 
-        $this->assertEquals(self::EXPECTED_OFFSET, $query->getOffset());
-        $this->assertEquals(self::LIMIT, $query->getLimit());
-        $this->assertEquals(self::LIMIT, $query->count());
-        $this->assertEquals($this->getFirstProductIdOnSecondPage(), $query->find()->getFirst()->getIdProduct());
+        $this->assertSame(static::EXPECTED_OFFSET, $query->getOffset());
+        $this->assertSame(static::LIMIT, $query->getLimit());
+        $this->assertSame(static::LIMIT, $query->count());
+        $this->assertSame($this->getFirstProductIdOnSecondPage(), $query->find()->getFirst()->getIdProduct());
     }
 
     /**
