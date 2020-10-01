@@ -8,8 +8,14 @@
 namespace SprykerTest\Zed\ProductConfiguration\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConfigurationFilterTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\ProductConfigurationTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
  * Auto-generated group annotations
@@ -28,6 +34,10 @@ class ProductConfigurationFacadeTest extends Unit
      * @var \SprykerTest\Zed\ProductConfiguration\ProductConfigurationBusinessTester
      */
     protected $tester;
+
+    protected const TEST_GROUP_KEY = 'test_group_key';
+    protected const TEST_PRODUCT_CONFIGURATION_ARRAY = ['test_group_key'];
+    protected const TEST_PRODUCT_CONFIGURATION_HASH = '0146dbdb9eb9a1d17dc66478f869f556';
 
     /**
      * @return void
@@ -56,7 +66,7 @@ class ProductConfigurationFacadeTest extends Unit
 
         //Assert
         $this->assertNotEmpty($productConfigurationCollectionTransfer->getProductConfigurations());
-        $this->assertEquals($productTransfer->getIdProductConcrete(), $createdProductConfigurationTransfer->getFkProduct());
+        $this->assertSame($productTransfer->getIdProductConcrete(), $createdProductConfigurationTransfer->getFkProduct());
     }
 
     /**
@@ -74,5 +84,130 @@ class ProductConfigurationFacadeTest extends Unit
 
         //Assert
         $this->assertEmpty($productConfigurationCollectionTransfer->getProductConfigurations());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandProductConfigurationItemsWithGroupKeyWillAddProductConfigurationHash(): void
+    {
+        //Arrange
+        $productConfigurationInstanceMock = $this->getMockBuilder(ProductConfigurationInstanceTransfer::class)
+            ->onlyMethods(['toArray'])
+            ->getMock();
+
+        $productConfigurationInstanceMock->method('toArray')->willReturn(static::TEST_PRODUCT_CONFIGURATION_ARRAY);
+
+        $itemTransfer = (new ItemBuilder([
+            ItemTransfer::GROUP_KEY => static::TEST_GROUP_KEY,
+            ItemTransfer::PRODUCT_CONFIGURATION_INSTANCE => $productConfigurationInstanceMock,
+        ]))->build();
+
+        $cartChangeTransfer = (new CartChangeTransfer())->addItem($itemTransfer);
+
+        $itemProductConfigurationGroupKey = sprintf(
+            '%s-%s',
+            $itemTransfer->getGroupKey(),
+            static::TEST_PRODUCT_CONFIGURATION_HASH
+        );
+
+        //Act
+        $expandedCartChangeTransfer = $this->tester->getFacade()
+            ->expandProductConfigurationItemsWithGroupKey($cartChangeTransfer);
+
+        /** @var \Generated\Shared\Transfer\ItemTransfer $expandedItemTransfer */
+        $expandedItemTransfer = $expandedCartChangeTransfer->getItems()->getIterator()->current();
+
+        //Assert
+        $this->assertSame($itemProductConfigurationGroupKey, $expandedItemTransfer->getGroupKey());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandProductConfigurationItemsWithGroupKeyWithoutProductConfigurationDoNothing(): void
+    {
+        //Arrange
+        $itemTransfer = (new ItemBuilder([
+            ItemTransfer::GROUP_KEY => static::TEST_GROUP_KEY,
+            ]))->build();
+
+        $cartChangeTransfer = (new CartChangeTransfer())->addItem($itemTransfer);
+
+        //Act
+        $expandedCartChangeTransfer = $this->tester->getFacade()
+            ->expandProductConfigurationItemsWithGroupKey($cartChangeTransfer);
+
+        /** @var \Generated\Shared\Transfer\ItemTransfer $expandedItemTransfer */
+        $expandedItemTransfer = $expandedCartChangeTransfer->getItems()->getIterator()->current();
+
+        //Assert
+        $this->assertSame(static::TEST_GROUP_KEY, $expandedItemTransfer->getGroupKey());
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsQuoteProductConfigurationValidWithValidProductConfiguration(): void
+    {
+        //Arrange
+        $productConfigurationInstance = (new ProductConfigurationInstanceTransfer())->setIsComplete(true);
+
+        $itemTransfer = (new ItemBuilder([
+            ItemTransfer::GROUP_KEY => static::TEST_GROUP_KEY,
+            ItemTransfer::PRODUCT_CONFIGURATION_INSTANCE => $productConfigurationInstance,
+        ]))->build();
+
+        $quoteTransfer = (new QuoteTransfer())->addItem($itemTransfer);
+
+        //Act
+        $isQuoteProductConfigurationValid = $this->tester->getFacade()
+            ->isQuoteProductConfigurationValid($quoteTransfer, new CheckoutResponseTransfer());
+
+        //Assert
+        $this->assertTrue($isQuoteProductConfigurationValid);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsQuoteProductConfigurationValidWithNotValidProductConfiguration(): void
+    {
+        //Arrange
+        $productConfigurationInstance = (new ProductConfigurationInstanceTransfer())->setIsComplete(false);
+
+        $itemTransfer = (new ItemBuilder([
+            ItemTransfer::GROUP_KEY => static::TEST_GROUP_KEY,
+            ItemTransfer::PRODUCT_CONFIGURATION_INSTANCE => $productConfigurationInstance,
+        ]))->build();
+
+        $quoteTransfer = (new QuoteTransfer())->addItem($itemTransfer);
+
+        //Act
+        $isQuoteProductConfigurationValid = $this->tester->getFacade()
+            ->isQuoteProductConfigurationValid($quoteTransfer, new CheckoutResponseTransfer());
+
+        //Assert
+        $this->assertFalse($isQuoteProductConfigurationValid);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsQuoteProductConfigurationValidWithoutProductConfigurationInstance(): void
+    {
+        //Arrange
+        $itemTransfer = (new ItemBuilder([
+            ItemTransfer::GROUP_KEY => static::TEST_GROUP_KEY,
+        ]))->build();
+
+        $quoteTransfer = (new QuoteTransfer())->addItem($itemTransfer);
+
+        //Act
+        $isQuoteProductConfigurationValid = $this->tester->getFacade()
+            ->isQuoteProductConfigurationValid($quoteTransfer, new CheckoutResponseTransfer());
+
+        //Assert
+        $this->assertTrue($isQuoteProductConfigurationValid);
     }
 }

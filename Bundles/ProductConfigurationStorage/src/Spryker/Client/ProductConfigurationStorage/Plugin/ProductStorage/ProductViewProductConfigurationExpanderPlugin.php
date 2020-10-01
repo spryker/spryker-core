@@ -35,11 +35,6 @@ class ProductViewProductConfigurationExpanderPlugin extends AbstractPlugin imple
         $localeName,
         ?ProductStorageCriteriaTransfer $productStorageCriteriaTransfer = null
     ): ProductViewTransfer {
-        return $this->getClient()->expandProductViewWithProductConfigurationInstance(
-            $productViewTransfer,
-            $productData,
-            $localeName,
-            $productStorageCriteriaTransfer
-        );
+        return $this->getClient()->expandProductViewWithProductConfigurationInstance($productViewTransfer);
     }
 }

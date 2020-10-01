@@ -5,10 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\ProductConfigurationStorage;
+namespace SprykerTest\Zed\SalesProductConfiguration;
 
 use Codeception\Actor;
-use Orm\Zed\ProductConfigurationStorage\Persistence\SpyProductConfigurationStorageQuery;
 
 /**
  * Inherited Methods
@@ -23,19 +22,15 @@ use Orm\Zed\ProductConfigurationStorage\Persistence\SpyProductConfigurationStora
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
- * @method \Spryker\Zed\ProductConfigurationStorage\Business\ProductConfigurationStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\SalesProductConfiguration\Business\SalesProductConfigurationFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
-class ProductConfigurationStorageBusinessTester extends Actor
+class SalesProductConfigurationBusinessTester extends Actor
 {
-    use _generated\ProductConfigurationStorageBusinessTesterActions;
+    use _generated\SalesProductConfigurationBusinessTesterActions;
 
-    /**
-     * @return int
-     */
-    public function countProductConfigurationStorageEntities(): int
-    {
-        return SpyProductConfigurationStorageQuery::create()->count();
-    }
+   /**
+    * Define custom actions here
+    */
 }
