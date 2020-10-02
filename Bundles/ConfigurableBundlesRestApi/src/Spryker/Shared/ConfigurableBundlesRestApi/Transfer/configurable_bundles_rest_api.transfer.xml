@@ -50,4 +50,8 @@
     <transfer name="ConfigurableBundleTemplatePageSearchRequest">
     </transfer>
 
+    <transfer name="ConfigurableBundleTemplateStorageFilter">
+        <property name="configurableBundleTemplateIds" type="int[]" singular="idConfigurableBundleTemplate"/>
+    </transfer>
+
 </transfers>

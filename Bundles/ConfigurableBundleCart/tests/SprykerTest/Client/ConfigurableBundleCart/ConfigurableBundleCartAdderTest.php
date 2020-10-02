@@ -17,7 +17,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Client\ConfigurableBundleCart\Adder\ConfiguredBundleCartAdder;
 use Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientBridge;
-use Spryker\Client\ConfigurableBundleCart\Generator\ConfiguredBundleGroupKeyGenerator;
+use Spryker\Client\ConfigurableBundleCart\Dependency\Service\ConfigurableBundleCartToConfigurableBundleCartServiceBridge;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 
 /**
@@ -37,6 +37,11 @@ class ConfigurableBundleCartAdderTest extends Unit
 
     protected const FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1 = 'FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1';
     protected const FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_2 = 'FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_2';
+
+    /**
+     * @var \SprykerTest\Client\ConfigurableBundleCart\ConfigurableBundleCartClientTester
+     */
+    protected $tester;
 
     /**
      * @return void
@@ -180,19 +185,10 @@ class ConfigurableBundleCartAdderTest extends Unit
         return $this->getMockBuilder(ConfiguredBundleCartAdder::class)
             ->setConstructorArgs([
                 $cartClientMock,
-                $this->createConfiguredBundleGroupKeyGeneratorMock(),
+                new ConfigurableBundleCartToConfigurableBundleCartServiceBridge(
+                    $this->tester->getLocator()->configurableBundleCart()->service()
+                ),
             ])
-            ->setMethods(null)
-            ->getMock();
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ConfigurableBundleCart\Generator\ConfiguredBundleGroupKeyGenerator
-     */
-    protected function createConfiguredBundleGroupKeyGeneratorMock(): ConfiguredBundleGroupKeyGenerator
-    {
-        return $this->getMockBuilder(ConfiguredBundleGroupKeyGenerator::class)
-            ->disableOriginalConstructor()
             ->setMethods(null)
             ->getMock();
     }
