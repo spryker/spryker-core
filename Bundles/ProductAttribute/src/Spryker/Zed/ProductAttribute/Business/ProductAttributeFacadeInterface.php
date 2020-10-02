@@ -325,7 +325,7 @@ interface ProductAttributeFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves product management attributes from Persistence that match the given criteria.
+     * - Retrieves product management attributes from Persistence by the given criteria.
      *
      * @api
      *

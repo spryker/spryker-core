@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductAttribute\Business\Reader;
 
 use ArrayObject;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedProductManagementAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer;
@@ -183,23 +182,6 @@ class ProductManagementAttributeReader implements ProductManagementAttributeRead
         }
 
         return $glossaryKeys;
-    }
-
-    /**
-     * @param string $glossaryKey
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return string|null
-     */
-    protected function findTranslationByGlossaryKeyAndLocaleTransfer(string $glossaryKey, LocaleTransfer $localeTransfer): ?string
-    {
-        if ($this->glossaryFacade->hasTranslation($glossaryKey, $localeTransfer)) {
-            return $this->glossaryFacade
-                ->getTranslation($glossaryKey, $localeTransfer)
-                ->getValue();
-        }
-
-        return null;
     }
 
     /**

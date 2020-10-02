@@ -25,7 +25,6 @@ class ProductManagementAttributesResourceController extends AbstractController
      *          "parameters": [{
      *              "ref": "acceptLanguage"
      *          }],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestProductManagementAttributeAttributesTransfer",
      *          "responses": {
      *              "404": "Attribute not found."
      *          }

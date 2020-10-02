@@ -15,7 +15,7 @@ interface ProductAttributeClientInterface
     /**
      * Specification:
      * - Makes Zed request.
-     * - Retrieves product management attributes from Persistence that match the given criteria.
+     * - Retrieves product management attributes from Persistence by the given criteria.
      *
      * @api
      *
