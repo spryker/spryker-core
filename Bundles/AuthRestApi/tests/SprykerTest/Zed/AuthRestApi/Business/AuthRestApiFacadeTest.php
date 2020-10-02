@@ -52,7 +52,7 @@ class AuthRestApiFacadeTest extends Unit
         $oauthResponseTransfer = $authRestApiFacade->createAccessToken($oauthRequestTransfer);
 
         // Assert
-        $this->assertEquals($oauthResponseTransfer->getAnonymousCustomerReference(), $oauthRequestTransfer->getCustomerReference());
+        $this->assertSame($oauthResponseTransfer->getAnonymousCustomerReference(), $oauthRequestTransfer->getCustomerReference());
         $this->assertTrue($oauthResponseTransfer->getIsValid());
         $this->assertNotEmpty($oauthResponseTransfer->getAccessToken());
     }

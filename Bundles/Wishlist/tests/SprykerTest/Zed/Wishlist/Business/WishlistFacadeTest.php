@@ -129,7 +129,7 @@ class WishlistFacadeTest extends Test
         $wishlistTransfer = $this->wishlistFacade->getWishlistByName($wishlistTransfer);
 
         $this->assertInstanceOf(WishlistTransfer::class, $wishlistTransfer);
-        $this->assertEquals($this->wishlist->getName(), $wishlistTransfer->getName());
+        $this->assertSame($this->wishlist->getName(), $wishlistTransfer->getName());
     }
 
     /**
@@ -306,8 +306,8 @@ class WishlistFacadeTest extends Test
 
         $wishlistTransfer = $this->wishlistFacade->updateWishlist($wishlistTransfer);
 
-        $this->assertEquals('new name', $wishlistTransfer->getName());
-        $this->assertEquals($this->wishlist->getIdWishlist(), $wishlistTransfer->getIdWishlist());
+        $this->assertSame('new name', $wishlistTransfer->getName());
+        $this->assertSame($this->wishlist->getIdWishlist(), $wishlistTransfer->getIdWishlist());
         $this->assertWishlistItemCount(2, $wishlistTransfer->getIdWishlist());
     }
 
@@ -329,8 +329,8 @@ class WishlistFacadeTest extends Test
         $this->assertTrue($wishlistTransferResponseTransfer->getIsSuccess());
 
         $wishlistTransfer = $wishlistTransferResponseTransfer->getWishlist();
-        $this->assertEquals('new name', $wishlistTransfer->getName());
-        $this->assertEquals($this->wishlist->getIdWishlist(), $wishlistTransfer->getIdWishlist());
+        $this->assertSame('new name', $wishlistTransfer->getName());
+        $this->assertSame($this->wishlist->getIdWishlist(), $wishlistTransfer->getIdWishlist());
         $this->assertWishlistItemCount(2, $wishlistTransfer->getIdWishlist());
     }
 
@@ -492,10 +492,10 @@ class WishlistFacadeTest extends Test
         $wishlistOverviewResponse = $this->wishlistFacade->getWishlistOverview($wishlistOverviewRequest);
 
         $this->assertInstanceOf(WishlistOverviewResponseTransfer::class, $wishlistOverviewResponse);
-        $this->assertEquals($this->wishlist->getName(), $wishlistTransfer->getName());
-        $this->assertEquals($pageNumber, $wishlistOverviewResponse->getPagination()->getPage());
-        $this->assertEquals($itemsPerPage, $wishlistOverviewResponse->getPagination()->getItemsPerPage());
-        $this->assertEquals($itemsTotal, $wishlistOverviewResponse->getPagination()->getItemsTotal());
+        $this->assertSame($this->wishlist->getName(), $wishlistTransfer->getName());
+        $this->assertSame($pageNumber, $wishlistOverviewResponse->getPagination()->getPage());
+        $this->assertSame($itemsPerPage, $wishlistOverviewResponse->getPagination()->getItemsPerPage());
+        $this->assertSame($itemsTotal, $wishlistOverviewResponse->getPagination()->getItemsTotal());
     }
 
     /**
@@ -537,9 +537,9 @@ class WishlistFacadeTest extends Test
         $this->assertEmpty($wishlistResponseTransfer->getErrors(), 'Unexpected errors returned in response.');
         $this->assertNull($wishlistResponseTransfer->getErrorIdentifier(), 'Error identifier is supposed to be empty.');
         $this->assertNotNull($wishlistResponseTransfer->getWishlist(), 'No wishlist returned.');
-        $this->assertEquals($wishlistTransfer->getName(), $wishlistResponseTransfer->getWishlist()->getName(), 'Wishlist name is different.');
+        $this->assertSame($wishlistTransfer->getName(), $wishlistResponseTransfer->getWishlist()->getName(), 'Wishlist name is different.');
         $this->assertCount(1, $wishlistResponseTransfer->getWishlist()->getWishlistItems(), 'Returned wishlist items amount is not expected.');
-        $this->assertEquals($this->product_1->getSku(), $wishlistResponseTransfer->getWishlist()->getWishlistItems()[0]->getSku(), 'Wishlist item sku is unexpected.');
+        $this->assertSame($this->product_1->getSku(), $wishlistResponseTransfer->getWishlist()->getWishlistItems()[0]->getSku(), 'Wishlist item sku is unexpected.');
     }
 
     /**
@@ -578,7 +578,7 @@ class WishlistFacadeTest extends Test
             ->queryItemsByWishlistId($idWishlist)
             ->count();
 
-        $this->assertEquals($expected, $count);
+        $this->assertSame($expected, $count);
     }
 
     /**
@@ -593,6 +593,6 @@ class WishlistFacadeTest extends Test
             ->filterByFkCustomer($this->customer->getIdCustomer())
             ->count();
 
-        $this->assertEquals($expected, $count);
+        $this->assertSame($expected, $count);
     }
 }

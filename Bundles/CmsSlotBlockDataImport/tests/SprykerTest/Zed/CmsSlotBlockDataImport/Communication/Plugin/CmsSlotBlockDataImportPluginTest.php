@@ -147,8 +147,8 @@ class CmsSlotBlockDataImportPluginTest extends Unit
 
         //Assert
         $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
-        $this->assertEquals($cmsSlotBlockTransferFromDb->getIdCmsBlock(), $cmsBlockTransfer->getIdCmsBlock());
-        $this->assertEquals($cmsSlotBlockTransferFromDb->getPosition(), 1);
+        $this->assertSame($cmsSlotBlockTransferFromDb->getIdCmsBlock(), $cmsBlockTransfer->getIdCmsBlock());
+        $this->assertSame(1, $cmsSlotBlockTransferFromDb->getPosition());
         $this->assertEquals($cmsSlotBlockConditions, $cmsSlotBlockTransferFromDb->getConditions());
     }
 

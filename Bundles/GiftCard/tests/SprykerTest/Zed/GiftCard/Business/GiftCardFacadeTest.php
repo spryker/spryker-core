@@ -140,7 +140,7 @@ class GiftCardFacadeTest extends Test
 
         // Assert
         $this->assertCount(1, $quoteTransfer->getGiftCards());
-        $this->assertEquals(
+        $this->assertSame(
             $this->tester::GIFT_CARD_CODE,
             $resultQuoteTransfer->getGiftCards()[0]->getCode()
         );
