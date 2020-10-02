@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
+use Orm\Zed\MerchantSalesOrder\Persistence\Map\SpyMerchantSalesOrderItemTableMap;
 use Orm\Zed\MerchantSalesOrder\Persistence\Map\SpyMerchantSalesOrderTableMap;
 use Orm\Zed\MerchantSalesOrder\Persistence\Map\SpyMerchantSalesOrderTotalsTableMap;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery;
@@ -143,7 +144,10 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
         }
 
         if ($merchantOrderCriteriaTransfer->getWithItems()) {
-            $merchantSalesOrderEntity->getMerchantSalesOrderItems();
+            $criteria = new Criteria();
+            $criteria->addAscendingOrderByColumn(SpyMerchantSalesOrderItemTableMap::COL_ID_MERCHANT_SALES_ORDER_ITEM);
+
+            $merchantSalesOrderEntity->getMerchantSalesOrderItems($criteria);
         }
 
         return $this->getFactory()
