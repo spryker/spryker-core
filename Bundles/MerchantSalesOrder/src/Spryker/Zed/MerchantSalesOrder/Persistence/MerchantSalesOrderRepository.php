@@ -147,7 +147,8 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             $criteria = new Criteria();
             $criteria->addAscendingOrderByColumn(SpyMerchantSalesOrderItemTableMap::COL_ID_MERCHANT_SALES_ORDER_ITEM);
 
-            $merchantSalesOrderEntity->getMerchantSalesOrderItems($criteria);
+            $merchantSalesOrderItems = $merchantSalesOrderEntity->getMerchantSalesOrderItems($criteria);
+            $merchantSalesOrderEntity->setMerchantSalesOrderItems($merchantSalesOrderItems);
         }
 
         return $this->getFactory()
