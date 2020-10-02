@@ -122,7 +122,7 @@ class ShippingAddressSaveTest extends Test
     {
         $quoteTransfer = (new QuoteBuilder())
             ->withShippingAddress()
-            ->withBillingAddress()
+            ->withAnotherBillingAddress()
             ->withItem()
             ->withTotals()
             ->withCustomer()
