@@ -18,8 +18,23 @@
                         <action>index</action>
                         <visible>0</visible>
                     </detail>
-                </pages>
 
+                    <merchant-shipment-create>
+                        <title>Create Shipment</title>
+                        <bundle>merchant-sales-order-merchant-user-gui</bundle>
+                        <controller>merchant-shipment-create</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </merchant-shipment-create>
+
+                    <merchant-shipment-edit>
+                        <title>Edit Shipment</title>
+                        <bundle>merchant-sales-order-merchant-user-gui</bundle>
+                        <controller>merchant-shipment-edit</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </merchant-shipment-edit>
+                </pages>
             </merchant-sales-order>
         </pages>
     </sales>

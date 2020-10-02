@@ -193,6 +193,10 @@ class MerchantShipmentGroupFormDataProvider
                 continue;
             }
 
+            if ($shipmentTransfer->getIdSalesShipment() !== $salesOrderItemTransfer->getShipment()->getIdSalesShipment()) {
+                continue;
+            }
+
             $itemsIds[] = $salesOrderItemTransfer->getIdSalesOrderItem();
         }
 
