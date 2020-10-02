@@ -54,6 +54,7 @@ use Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint;
 use Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint;
 use Symfony\Component\Security\Http\Event\LogoutEvent;
 use Symfony\Component\Security\Http\EventListener\DefaultLogoutListener;
+use Symfony\Component\Security\Http\EventListener\RememberMeLogoutListener;
 use Symfony\Component\Security\Http\EventListener\SessionLogoutListener;
 use Symfony\Component\Security\Http\Firewall;
 use Symfony\Component\Security\Http\Firewall\AbstractAuthenticationListener;
@@ -574,6 +575,10 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                 }
                 if ($listener instanceof LogoutListener && !class_exists(LogoutEvent::class)) {
                     $listener->addHandler($container->get('security.remember_me.service.' . $firewallName));
+                }
+
+                if (class_exists(LogoutEvent::class)) {
+                    $this->getDispatcher($container)->addSubscriber(new RememberMeLogoutListener($container->get('security.remember_me.service.' . $firewallName)));
                 }
             }
 
