@@ -46,10 +46,19 @@
 
     <transfer name="RestErrorMessage">
         <property name="status" type="int"/>
+        <property name="code" type="string"/>
     </transfer>
 
     <transfer name="ProductManagementAttribute">
         <property name="localizedKeys" type="LocalizedProductManagementAttributeKey[]" singular="localizedKey"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="nbResults" type="int"/>
+    </transfer>
+
+    <transfer name="LocalizedProductManagementAttributeKey">
+        <property name="keyTranslation" type="string"/>
     </transfer>
 
 </transfers>
