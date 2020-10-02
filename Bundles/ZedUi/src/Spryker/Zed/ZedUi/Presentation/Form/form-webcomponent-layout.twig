@@ -62,7 +62,7 @@ For more information on this topic, see
     {%- if type == 'hidden' -%}
         <input type="{{ type }}" id="{{ id }}" name="{{ full_name }}" {{ block('attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
     {%- else -%}
-        <web-spy-input control type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} cloak/>
+        <web-spy-input control type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} cloak></web-spy-input>
     {%- endif -%}
 
 {%- endblock form_widget_simple -%}
