@@ -97,8 +97,7 @@ class ProductAttributeRepository extends AbstractRepository implements ProductAt
             ->leftJoinWithSpyProductManagementAttributeValueTranslation()
             ->useSpyProductManagementAttributeValueTranslationQuery(null, Criteria::LEFT_JOIN)
                 ->leftJoinWithSpyLocale()
-            ->endUse()
-            ->groupByIdProductManagementAttributeValue();
+            ->endUse();
 
         return $this->getFactory()
             ->createProductManagementAttributeMapper()
