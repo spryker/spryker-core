@@ -35,6 +35,7 @@
         <property name="uuid" type="string"/>
         <property name="idQuote" type="int"/>
         <property name="store" type="Store"/>
+        <property name="currency" type="Currency"/>
     </transfer>
 
     <transfer name="Customer">
@@ -166,6 +167,11 @@
     </transfer>
 
     <transfer name="SalesOrderConfiguredBundle">
+        <property name="translations" type="SalesOrderConfiguredBundleTranslation[]" singular="translation"/>
+    </transfer>
+
+    <transfer name="SalesOrderConfiguredBundleTranslation">
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="SalesOrderConfiguredBundleItem">

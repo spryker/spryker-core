@@ -52,6 +52,7 @@
 
     <transfer name="ConfigurableBundleTemplateStorageFilter">
         <property name="configurableBundleTemplateIds" type="int[]" singular="idConfigurableBundleTemplate"/>
+        <property name="localeName" type="string"/>
     </transfer>
 
 </transfers>
