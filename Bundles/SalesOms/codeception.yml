@@ -1,7 +1,6 @@
-namespace: QuoteApprovalShipmentConnector
+namespace: SalesOms
 include:
-    - tests/SprykerTest/Client/QuoteApprovalShipmentConnector
-    - tests/SprykerTest/Zed/QuoteApprovalShipmentConnector
+    - tests/SprykerTest/Zed/SalesOms
 paths:
     tests: tests
     log: tests/_output

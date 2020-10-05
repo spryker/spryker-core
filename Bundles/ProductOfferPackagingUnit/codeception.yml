@@ -1,7 +1,6 @@
-namespace: QuoteApprovalShipmentConnector
+namespace: ProductOfferPackagingUnit
 include:
-    - tests/SprykerTest/Client/QuoteApprovalShipmentConnector
-    - tests/SprykerTest/Zed/QuoteApprovalShipmentConnector
+    - tests/SprykerTest/Zed/ProductOfferPackagingUnit
 paths:
     tests: tests
     log: tests/_output

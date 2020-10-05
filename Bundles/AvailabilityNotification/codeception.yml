@@ -1,4 +1,6 @@
 namespace: AvailabilityNotification
+include:
+    - tests/SprykerTest/Zed/AvailabilityNotification
 paths:
     tests: tests
     log: tests/_output

@@ -201,10 +201,6 @@ class Environment extends Module
             return getenv('APPLICATION_STORE');
         }
 
-        if (isset($_SERVER['APPLICATION_STORE'])) {
-            return getenv('APPLICATION_STORE');
-        }
-
         $defaultStore = $this->getDefaultStore();
         if ($defaultStore) {
             return $defaultStore;

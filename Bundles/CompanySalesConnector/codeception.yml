@@ -1,5 +1,6 @@
 namespace: CompanySalesConnector
-actor: Tester
+include:
+    - tests/SprykerTest/Zed/CompanySalesConnector
 paths:
     tests: tests
     log: tests/_output
