@@ -63,24 +63,32 @@ class ShoppingListReader implements ShoppingListReaderInterface
     protected $messengerFacade;
 
     /**
+     * @var \Spryker\Zed\ShoppingList\ShoppingListConfig
+     */
+    protected $config;
+
+    /**
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface $shoppingListRepository
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeInterface $customerFacade
      * @param \Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface $pluginExecutor
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface $messengerFacade
+     * @param \Spryker\Zed\ShoppingList\ShoppingListConfig $config
      */
     public function __construct(
         ShoppingListRepositoryInterface $shoppingListRepository,
         ShoppingListToProductFacadeInterface $productFacade,
         ShoppingListToCompanyUserFacadeInterface $customerFacade,
         ShoppingListItemPluginExecutorInterface $pluginExecutor,
-        ShoppingListToMessengerFacadeInterface $messengerFacade
+        ShoppingListToMessengerFacadeInterface $messengerFacade,
+        \Spryker\Zed\ShoppingList\ShoppingListConfig $config
     ) {
         $this->shoppingListRepository = $shoppingListRepository;
         $this->productFacade = $productFacade;
         $this->companyUserFacade = $customerFacade;
         $this->pluginExecutor = $pluginExecutor;
         $this->messengerFacade = $messengerFacade;
+        $this->config = $config;
     }
 
     /**
@@ -165,26 +173,11 @@ class ShoppingListReader implements ShoppingListReaderInterface
         $customerTransfer->setCompanyUserTransfer($requestCompanyUserTransfer);
 
         $shoppingListOverviewResponseTransfer->setShoppingList($shoppingListTransfer);
-        $shoppingListOverviewResponseTransfer->setIsSuccess(true);
 
-        return $shoppingListOverviewResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer
-     * @param bool $isShoppingListOverviewWithShoppingLists
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer
-     */
-    public function getShoppingListOverviewByConfig(
-        ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer,
-        bool $isShoppingListOverviewWithShoppingLists = true
-    ): ShoppingListOverviewResponseTransfer {
-        $shoppingListOverviewResponseTransfer = $this->getShoppingListOverview($shoppingListOverviewRequestTransfer);
-
-        if ($isShoppingListOverviewWithShoppingLists) {
+        if ($this->config->isShoppingListOverviewWithShoppingLists()) {
             $shoppingListOverviewResponseTransfer->setShoppingLists($this->getCustomerShoppingListCollection($customerTransfer));
         }
+        $shoppingListOverviewResponseTransfer->setIsSuccess(true);
 
         return $shoppingListOverviewResponseTransfer;
     }
