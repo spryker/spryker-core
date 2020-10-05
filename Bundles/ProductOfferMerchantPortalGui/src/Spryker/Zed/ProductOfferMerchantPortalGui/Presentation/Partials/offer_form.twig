@@ -113,7 +113,7 @@
     </div>
 
     <div>
-        {{ form_start(form, {attr: {excludeForm: true}}) }}
+        {{ form_start(form, {attr: {excludeFormTag: true}}) }}
 
             <web-spy-card spy-title="{{ "Offer visibility" | trans }}">
                 <div class="mp-edit-offer__visibility">
@@ -186,6 +186,6 @@
 
             {% do form.children.productOfferValidity.setRendered %}
 
-        {{ form_end(form, {attr: {excludeForm: true}}) }}
+        {{ form_end(form, {attr: {excludeFormTag: true}}) }}
     </div>
 </web-mp-edit-offer>

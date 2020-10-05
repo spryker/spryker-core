@@ -51,7 +51,7 @@ For more information on this topic, see
         {%- endif -%}
     {%- endfor -%}
 
-    {% if attr.excludeForm is not defined or not attr.excludeForm %}
+    {% if attr.excludeFormTag is not defined or not attr.excludeFormTag %}
         <web-mp-form
             method="{{ form_method | lower }}"
             attrs="{{ additionalAttributes | json_encode }}"
@@ -71,7 +71,7 @@ For more information on this topic, see
             {{ form_rest(form) }}
         {%- endif -%}
 
-    {% if attr.excludeForm is not defined or not attr.excludeForm %}
+    {% if attr.excludeFormTag is not defined or not attr.excludeFormTag %}
         </web-mp-form>
     {% endif %}
 {%- endblock form_end -%}
