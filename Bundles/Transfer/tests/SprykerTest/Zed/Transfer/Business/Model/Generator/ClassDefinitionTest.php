@@ -25,6 +25,7 @@ use Spryker\Zed\Transfer\TransferConfig;
  * @group Generator
  * @group ClassDefinitionTest
  * Add your own group annotations below this line
+ * @property \SprykerTest\Zed\Transfer\TransferBusinessTester $tester
  */
 class ClassDefinitionTest extends Unit
 {
@@ -624,13 +625,135 @@ class ClassDefinitionTest extends Unit
     }
 
     /**
+     * @dataProvider transferDefinitionTypeIsCorrectlyShimmedDataProvider
+     *
+     * @param array $shimConfig
+     * @param string[] $expectedTypesTypes
+     *
+     * @return void
+     */
+    public function testTransferDefinitionTypeIsCorrectlyShimmed(array $shimConfig, array $expectedTypesTypes): void
+    {
+        // Arrange
+        $transferConfigMock = $this->getTransferConfigMock();
+        $transferConfigMock->method('getTypeShims')->willReturn($shimConfig);
+        $definition = [
+            'name' => 'FooBar',
+            'property' => [
+                'property1' => [
+                    'name' => 'property1',
+                    'type' => 'int',
+                    'is_typed_array' => false,
+                    'bundles' => [],
+                    'is_associative' => false,
+                ],
+                'property2' => [
+                    'name' => 'property2',
+                    'type' => 'string[]',
+                    'is_typed_array' => true,
+                    'bundles' => [],
+                    'is_associative' => false,
+                ],
+                'property3' => [
+                    'name' => 'property3',
+                    'type' => 'Dummy',
+                    'is_transfer' => true,
+                    'is_typed_array' => false,
+                    'bundles' => [],
+                    'is_associative' => false,
+                ],
+            ],
+        ];
+        $classDefinition = $this->createClassDefinition($transferConfigMock);
+
+        // Act
+        $classDefinition->setDefinition($definition);
+
+        // Assert
+        $this->assertMethodHasCorrectTypeShim($classDefinition, $expectedTypesTypes);
+    }
+
+    /**
+     * @return array
+     */
+    public function transferDefinitionTypeIsCorrectlyShimmedDataProvider(): array
+    {
+        return [
+            'scalar type' => [
+                'shim config' => [
+                    'FooBar' => [
+                        'property1' => [
+                            'int' => 'string',
+                        ],
+                    ],
+                ],
+                'expected types' => [
+                    'property1',
+                    'int|string|null',
+                ],
+            ],
+            'typed array type' => [
+                'shim config' => [
+                    'FooBar' => [
+                        'property2' => [
+                            'string[]' => 'bool',
+                        ],
+                    ],
+                ],
+                'expected types' => [
+                    'property2',
+                    'string[]|bool',
+                ],
+            ],
+            'transfer type' => [
+                'shim config' => [
+                    'FooBar' => [
+                        'property3' => [
+                            'Dummy' => 'int',
+                        ],
+                    ],
+                ],
+                'expected types' => [
+                    'property3',
+                    '\Generated\Shared\Transfer\DummyTransfer|int',
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @param \Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition $classDefinition
+     * @param string[] $expectedTypes
+     *
+     * @return void
+     */
+    protected function assertMethodHasCorrectTypeShim(ClassDefinition $classDefinition, array $expectedTypes): void
+    {
+        $methods = $classDefinition->getMethods();
+        [$propertyName, $expectedVarTypes] = $expectedTypes;
+        $methodName = 'set' . ucfirst($propertyName);
+        $this->assertTrue(isset($methods[$methodName]));
+        $this->assertTrue(isset($methods[$methodName]['typeShim']));
+        $this->assertEquals($expectedVarTypes, $methods[$methodName]['var']);
+    }
+
+    /**
+     * @return \Spryker\Zed\Transfer\TransferConfig|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getTransferConfigMock(): TransferConfig
+    {
+        return $this->createMock(TransferConfig::class);
+    }
+
+    /**
+     * @param \Spryker\Zed\Transfer\TransferConfig|null $configMock
+     *
      * @return \Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition
      */
-    protected function createClassDefinition(): ClassDefinition
+    protected function createClassDefinition(?TransferConfig $configMock = null): ClassDefinition
     {
-        $classDefinition = new ClassDefinition(
-            new TransferConfig()
-        );
+        $config = $configMock ?? new TransferConfig();
+        $classDefinition = new ClassDefinition($config);
 
         return $classDefinition;
     }

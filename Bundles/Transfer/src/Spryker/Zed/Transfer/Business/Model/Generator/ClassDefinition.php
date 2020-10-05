@@ -108,6 +108,7 @@ class ClassDefinition implements ClassDefinitionInterface
         $this->addEntityNamespace($definition);
 
         if (isset($definition['property'])) {
+            $definition = $this->shimTransferDefinitionPropertyTypes($definition);
             $properties = $this->normalizePropertyTypes($definition['property']);
             $this->addConstants($properties);
             $this->addProperties($properties);
@@ -226,7 +227,7 @@ class ClassDefinition implements ClassDefinitionInterface
         $property['name'] = lcfirst($property['name']);
         $propertyInfo = [
             'name' => $property['name'],
-            'type' => $this->getPropertyType($property),
+            'type' => $this->buildPropertyType($property),
             'is_typed_array' => $property['is_typed_array'],
             'bundles' => $property['bundles'],
             'is_associative' => $property['is_associative'],
@@ -725,7 +726,8 @@ class ClassDefinition implements ClassDefinitionInterface
             'name' => $methodName,
             'property' => $propertyName,
             'propertyConst' => $this->getPropertyConstantName($property),
-            'var' => $this->getSetVar($property),
+            'var' => $this->buildVar($property),
+            'typeShim' => $property['typeShim'] ?? null,
             'valueObject' => false,
             'bundles' => $property['bundles'],
             'typeHint' => null,
@@ -992,5 +994,101 @@ class ClassDefinition implements ClassDefinitionInterface
 
         $this->useStatements[$fullyQualifiedClassName] = $fullyQualifiedClassName;
         ksort($this->useStatements, SORT_STRING);
+    }
+
+    /**
+     * @param array $transferDefinition
+     *
+     * @return array
+     */
+    protected function shimTransferDefinitionPropertyTypes(array $transferDefinition): array
+    {
+        $transferName = $transferDefinition['name'];
+        $shim = $this->transferConfig->getTypeShims()[$transferName] ?? null;
+
+        if (!isset($transferDefinition['property']) || !$shim) {
+            return $transferDefinition;
+        }
+
+        foreach ($shim as $propertyName => $shimChange) {
+            foreach ($transferDefinition['property'] as $propertyKey => $propertyDefinition) {
+                if ($propertyDefinition['name'] !== $propertyName) {
+                    continue;
+                }
+
+                $propertyDefinition = $this->shimPropertyType($propertyDefinition, $shimChange);
+                $transferDefinition['property'][$propertyKey] = $propertyDefinition;
+            }
+        }
+
+        return $transferDefinition;
+    }
+
+    /**
+     * @param array $propertyDefinition
+     * @param string[] $shimChange
+     *
+     * @return array
+     */
+    protected function shimPropertyType(array $propertyDefinition, array $shimChange): array
+    {
+        foreach ($shimChange as $fromType => $toType) {
+            if ($propertyDefinition['type'] !== $fromType) {
+                continue;
+            }
+
+            $propertyDefinition['typeShim'] = $toType;
+        }
+
+        return $propertyDefinition;
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string
+     */
+    protected function buildPropertyType(array $property): string
+    {
+        $propertyType = $this->getPropertyType($property);
+        $typeShim = $property['typeShim'] ?? null;
+
+        if (!$typeShim) {
+            return $propertyType;
+        }
+
+        return $this->addShimmedType($propertyType, $typeShim);
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string
+     */
+    protected function buildVar(array $property): string
+    {
+        $varType = $this->getSetVar($property);
+        $typeShim = $property['typeShim'] ?? null;
+
+        if (!$typeShim) {
+            return $varType;
+        }
+
+        return $this->addShimmedType($varType, $typeShim);
+    }
+
+    /**
+     * @param string $originalType
+     * @param string $typeShim
+     *
+     * @return string
+     */
+    protected function addShimmedType(string $originalType, string $typeShim): string
+    {
+        if (substr($originalType, -4) === 'null') {
+            return substr_replace($originalType, $typeShim . '|', -4, 0);
+        }
+
+        return sprintf('%s|%s', $originalType, $typeShim);
     }
 }
