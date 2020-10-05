@@ -9,10 +9,10 @@ namespace SprykerTest\Shared\Testify\Helper;
 
 use Codeception\Event\SuiteEvent;
 use Codeception\Events;
-use Codeception\Extension;
+use Codeception\Extension\Phantoman;
 use Codeception\Module\WebDriver;
 
-class WebDriverHelper extends Extension
+class WebDriverHelper extends Phantoman
 {
     protected const MODULE_NAME_WEBDRIVER = 'WebDriver';
 
@@ -25,6 +25,8 @@ class WebDriverHelper extends Extension
     protected const DEFAULT_HOST = '0.0.0.0';
     protected const DEFAULT_PORT = 4444;
     protected const DEFAULT_BROWSER = 'chrome';
+
+    protected const PHANTOMJS_NAME = 'phantomjs';
 
     /**
      * @var string[]
@@ -41,7 +43,7 @@ class WebDriverHelper extends Extension
      */
     public function suiteInit(SuiteEvent $e): void
     {
-        if (!$this->isRemoteEnabled()) {
+        if (!$this->isRemoteEnabled() and $this->isPhantomBrowser()) {
             parent::suiteInit($e);
         }
     }
@@ -95,5 +97,15 @@ class WebDriverHelper extends Extension
         }
 
         return (bool)$isRemoteEnabled;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isPhantomBrowser()
+    {
+        $browser = $this->config[static::KEY_BROWSER] ?? null;
+
+        return ($browser === static::PHANTOMJS_NAME);
     }
 }
