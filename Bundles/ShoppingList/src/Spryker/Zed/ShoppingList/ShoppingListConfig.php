@@ -46,6 +46,9 @@ class ShoppingListConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Сonfig whether to transfer all shopping lists data to responce or null.
+     *
      * @api
      *
      *
