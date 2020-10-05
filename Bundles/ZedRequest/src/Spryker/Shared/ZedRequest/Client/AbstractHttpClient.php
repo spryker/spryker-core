@@ -474,7 +474,6 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
      */
     protected function addCookie(array $config, string $name): array
     {
-        $_COOKIE[$name] = 'XDEBUG_ECLIPSE';
         if (!isset($_COOKIE[$name])) {
             return $config;
         }
