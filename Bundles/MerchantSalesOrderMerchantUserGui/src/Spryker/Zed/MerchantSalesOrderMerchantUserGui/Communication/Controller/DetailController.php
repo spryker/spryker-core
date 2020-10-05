@@ -26,14 +26,14 @@ class DetailController extends AbstractController
 {
     protected const PARAM_ID_MERCHANT_SALES_ORDER = 'id-merchant-sales-order';
 
-    public const ROUTE_REDIRECT = '/merchant-sales-order-merchant-user-gui/detail';
+    protected const ROUTE_REDIRECT = '/merchant-sales-order-merchant-user-gui/detail';
 
     /**
      * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_SUB_REQUEST
      */
     protected const SERVICE_SUB_REQUEST = 'sub_request';
 
-    protected const MASSAGE_MERCHANT_ORDER_EXIST = 'Merchant order doesn\'t exist.';
+    protected const MASSAGE_MERCHANT_ORDER_DOES_NOT_EXIST = 'Merchant order doesn\'t exist.';
 
     /**
      * @phpstan-return array<string, mixed>
@@ -57,7 +57,7 @@ class DetailController extends AbstractController
                 ->setWithOrder(true)
         );
         if (!$merchantOrderTransfer) {
-            throw new AccessDeniedHttpException(static::MASSAGE_MERCHANT_ORDER_EXIST);
+            throw new AccessDeniedHttpException(static::MASSAGE_MERCHANT_ORDER_DOES_NOT_EXIST);
         }
 
         $merchantOrderTransfer = $this->getFactory()
@@ -105,9 +105,9 @@ class DetailController extends AbstractController
 
     /**
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\ShipmentGroupTransfer> $groupedMerchantOrderItemsByShipment
-     * @phpstan-param array<int, \Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItemsWithOrderItemIdKey
+     * @phpstan-param array<int|string, \Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItemsWithOrderItemIdKey
      *
-     * @phpstan-return array<int|string, array<int, string>>
+     * @phpstan-return array<int|string, array<int|string, string>>
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $groupedMerchantOrderItemsByShipment
      * @param array $merchantOrderItemsWithOrderItemIdKey

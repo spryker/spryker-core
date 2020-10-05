@@ -175,11 +175,9 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
      */
     protected function filterOrder(OrderTransfer $orderTransfer, MerchantOrderTransfer $merchantOrderTransfer): OrderTransfer
     {
-        $merchantOrderItemIds = [];
         $orderItemTransfers = new ArrayObject();
 
         foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItem) {
-            $merchantOrderItemIds[] = $merchantOrderItem->getIdOrderItem();
             $orderItemTransfers->append($merchantOrderItem->getOrderItem());
         }
 

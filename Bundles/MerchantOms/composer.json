@@ -16,9 +16,11 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/customer": "*",
     "spryker/oms": "*",
     "spryker/propel": "*",
     "spryker/sales": "*",
+    "spryker/store": "*",
     "spryker/testify": "*"
   },
   "autoload": {

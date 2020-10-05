@@ -14,13 +14,18 @@
     "spryker/money": "^2.0.0",
     "spryker/sales": "^11.0.0",
     "spryker/shipment": "^8.0.0",
+    "spryker/state-machine": "*",
     "spryker/symfony": "^3.0.0",
     "spryker/util-date-time": "^1.0.0",
     "spryker/util-sanitize": "^2.0.0",
     "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/merchant": "*",
+    "spryker/oms": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {

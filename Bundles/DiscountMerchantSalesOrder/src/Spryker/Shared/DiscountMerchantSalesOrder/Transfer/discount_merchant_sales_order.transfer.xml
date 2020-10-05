@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="MerchantOrder">
+        <property name="order" type="Order"/>
+        <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
+    </transfer>
+
+    <transfer name="CalculatedDiscount">
+        <property name="fkSalesOrderItem" type="int"/>
+
+    </transfer>
+
+    <transfer name="MerchantOrderItem">
+        <property name="idOrderItem" type="int"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
+    </transfer>
+
+</transfers>
