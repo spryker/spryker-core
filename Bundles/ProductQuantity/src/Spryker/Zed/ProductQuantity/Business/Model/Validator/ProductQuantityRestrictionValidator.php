@@ -184,7 +184,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
     {
         $quoteQuantityMap = [];
         foreach ($cartChangeTransfer->getQuote()->getItems() as $itemTransfer) {
-            $quoteQuantityMap[$itemTransfer->getGroupKey() ?? $itemTransfer->getSku()] = $itemTransfer->getQuantity();
+            $quoteQuantityMap[$itemTransfer->getGroupKey()] = $itemTransfer->getQuantity();
         }
 
         return $quoteQuantityMap;

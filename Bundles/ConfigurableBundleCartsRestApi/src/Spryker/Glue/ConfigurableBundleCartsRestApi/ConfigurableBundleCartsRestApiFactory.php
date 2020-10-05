@@ -16,8 +16,6 @@ use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\ConfiguredBundl
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\ConfiguredBundleMapperInterface;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\ItemMapper;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\ItemMapperInterface;
-use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\OrderItemMapper;
-use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\OrderItemMapperInterface;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\RestResponseBuilder\ConfiguredBundleRestResponseBuilder;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\RestResponseBuilder\ConfiguredBundleRestResponseBuilderInterface;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Writer\ConfiguredBundleWriter;
@@ -94,14 +92,6 @@ class ConfigurableBundleCartsRestApiFactory extends AbstractFactory
     public function createItemMapper(): ItemMapperInterface
     {
         return new ItemMapper($this->getGlossaryStorageClient());
-    }
-
-    /**
-     * @return \Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\OrderItemMapperInterface
-     */
-    public function createOrderItemMapper(): OrderItemMapperInterface
-    {
-        return new OrderItemMapper();
     }
 
     /**

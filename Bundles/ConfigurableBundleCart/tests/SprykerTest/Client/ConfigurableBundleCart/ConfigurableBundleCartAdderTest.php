@@ -17,7 +17,6 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Client\ConfigurableBundleCart\Adder\ConfiguredBundleCartAdder;
 use Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientBridge;
-use Spryker\Client\ConfigurableBundleCart\Dependency\Service\ConfigurableBundleCartToConfigurableBundleCartServiceBridge;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 
 /**
@@ -185,9 +184,7 @@ class ConfigurableBundleCartAdderTest extends Unit
         return $this->getMockBuilder(ConfiguredBundleCartAdder::class)
             ->setConstructorArgs([
                 $cartClientMock,
-                new ConfigurableBundleCartToConfigurableBundleCartServiceBridge(
-                    $this->tester->getLocator()->configurableBundleCart()->service()
-                ),
+                $this->tester->getLocator()->configurableBundleCart()->service(),
             ])
             ->setMethods(null)
             ->getMock();

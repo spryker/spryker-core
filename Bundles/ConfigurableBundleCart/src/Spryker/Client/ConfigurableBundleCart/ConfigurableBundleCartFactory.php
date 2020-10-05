@@ -10,7 +10,6 @@ namespace Spryker\Client\ConfigurableBundleCart;
 use Spryker\Client\ConfigurableBundleCart\Adder\ConfiguredBundleCartAdder;
 use Spryker\Client\ConfigurableBundleCart\Adder\ConfiguredBundleCartAdderInterface;
 use Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientInterface;
-use Spryker\Client\ConfigurableBundleCart\Dependency\Service\ConfigurableBundleCartToConfigurableBundleCartServiceInterface;
 use Spryker\Client\ConfigurableBundleCart\Reader\QuoteItemReader;
 use Spryker\Client\ConfigurableBundleCart\Reader\QuoteItemReaderInterface;
 use Spryker\Client\ConfigurableBundleCart\Updater\QuoteItemUpdater;
@@ -18,6 +17,7 @@ use Spryker\Client\ConfigurableBundleCart\Updater\QuoteItemUpdaterInterface;
 use Spryker\Client\ConfigurableBundleCart\Writer\CartWriter;
 use Spryker\Client\ConfigurableBundleCart\Writer\CartWriterInterface;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Service\ConfigurableBundleCart\ConfigurableBundleCartServiceInterface;
 
 /**
  * @method \Spryker\Client\ConfigurableBundleCart\ConfigurableBundleCartConfig getConfig()
@@ -74,9 +74,9 @@ class ConfigurableBundleCartFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ConfigurableBundleCart\Dependency\Service\ConfigurableBundleCartToConfigurableBundleCartServiceInterface
+     * @return \Spryker\Service\ConfigurableBundleCart\ConfigurableBundleCartServiceInterface
      */
-    public function getConfigurableBundleCartService(): ConfigurableBundleCartToConfigurableBundleCartServiceInterface
+    public function getConfigurableBundleCartService(): ConfigurableBundleCartServiceInterface
     {
         return $this->getProvidedDependency(ConfigurableBundleCartDependencyProvider::SERVICE_CONFIGURED_BUNDLE_CART);
     }

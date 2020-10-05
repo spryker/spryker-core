@@ -55,4 +55,37 @@
         <property name="localeName" type="string"/>
     </transfer>
 
+    <transfer name="Item">
+        <property name="salesOrderConfiguredBundle" type="SalesOrderConfiguredBundle"/>
+        <property name="salesOrderConfiguredBundleItem" type="SalesOrderConfiguredBundleItem"/>
+    </transfer>
+
+    <transfer name="RestSalesOrderConfiguredBundle">
+        <property name="idSalesOrderConfiguredBundle" type="int"/>
+        <property name="configurableBundleTemplateUuid" type="string"/>
+        <property name="name" type="string"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="RestSalesOrderConfiguredBundleItem">
+        <property name="idSalesOrderConfiguredBundle" type="int"/>
+        <property name="configurableBundleTemplateSlotUuid" type="string"/>
+    </transfer>
+
+    <transfer name="RestOrderItemsAttributes">
+        <property name="salesOrderConfiguredBundle" type="RestSalesOrderConfiguredBundle"/>
+        <property name="salesOrderConfiguredBundleItem" type="RestSalesOrderConfiguredBundleItem"/>
+    </transfer>
+
+    <transfer name="SalesOrderConfiguredBundle">
+        <property name="translations" type="SalesOrderConfiguredBundleTranslation[]" singular="translation"/>
+    </transfer>
+
+    <transfer name="SalesOrderConfiguredBundleTranslation">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="SalesOrderConfiguredBundleItem">
+    </transfer>
+
 </transfers>

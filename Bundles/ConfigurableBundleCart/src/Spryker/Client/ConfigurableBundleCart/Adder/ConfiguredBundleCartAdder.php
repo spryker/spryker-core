@@ -17,7 +17,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientInterface;
-use Spryker\Client\ConfigurableBundleCart\Dependency\Service\ConfigurableBundleCartToConfigurableBundleCartServiceInterface;
+use Spryker\Service\ConfigurableBundleCart\ConfigurableBundleCartServiceInterface;
 
 class ConfiguredBundleCartAdder implements ConfiguredBundleCartAdderInterface
 {
@@ -27,17 +27,17 @@ class ConfiguredBundleCartAdder implements ConfiguredBundleCartAdderInterface
     protected $cartClient;
 
     /**
-     * @var \Spryker\Client\ConfigurableBundleCart\Dependency\Service\ConfigurableBundleCartToConfigurableBundleCartServiceInterface
+     * @var \Spryker\Service\ConfigurableBundleCart\ConfigurableBundleCartServiceInterface
      */
     protected $configurableBundleCartService;
 
     /**
      * @param \Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientInterface $cartClient
-     * @param \Spryker\Client\ConfigurableBundleCart\Dependency\Service\ConfigurableBundleCartToConfigurableBundleCartServiceInterface $configurableBundleCartService
+     * @param \Spryker\Service\ConfigurableBundleCart\ConfigurableBundleCartServiceInterface $configurableBundleCartService
      */
     public function __construct(
         ConfigurableBundleCartToCartClientInterface $cartClient,
-        ConfigurableBundleCartToConfigurableBundleCartServiceInterface $configurableBundleCartService
+        ConfigurableBundleCartServiceInterface $configurableBundleCartService
     ) {
         $this->cartClient = $cartClient;
         $this->configurableBundleCartService = $configurableBundleCartService;

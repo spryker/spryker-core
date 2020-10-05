@@ -27,6 +27,7 @@ class ConfiguredBundleQuantityUpdater implements ConfiguredBundleQuantityUpdater
             $itemTransfer->getConfiguredBundleItem()
                 ->requireQuantityPerSlot();
 
+            // For BC, when quantityPerSlot is zero, we use the item quantity.
             if (!$itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot()) {
                 continue;
             }

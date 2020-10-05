@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper;
+namespace Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\RestOrderItemsAttributesTransfer;

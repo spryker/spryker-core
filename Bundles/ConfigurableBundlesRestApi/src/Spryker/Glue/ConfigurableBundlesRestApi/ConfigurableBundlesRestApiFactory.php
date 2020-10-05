@@ -15,6 +15,8 @@ use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Expander\ConfigurableBundl
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Expander\ConfigurableBundleTemplateSlotExpander;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\ConfigurableBundleMapper;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\ConfigurableBundleMapperInterface;
+use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\OrderItemMapper;
+use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\OrderItemMapperInterface;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Reader\ConfigurableBundleTemplateReader;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Reader\ConfigurableBundleTemplateReaderInterface;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResourceBuilder\ConfigurableBundleTemplateImageSetRestResourceBuilder;
@@ -120,6 +122,14 @@ class ConfigurableBundlesRestApiFactory extends AbstractFactory
     public function createConfigurableBundleTranslator(): ConfigurableBundleTranslatorInterface
     {
         return new ConfigurableBundleTranslator($this->getGlossaryStorageClient());
+    }
+
+    /**
+     * @return \Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\OrderItemMapperInterface
+     */
+    public function createOrderItemMapper(): OrderItemMapperInterface
+    {
+        return new OrderItemMapper();
     }
 
     /**
