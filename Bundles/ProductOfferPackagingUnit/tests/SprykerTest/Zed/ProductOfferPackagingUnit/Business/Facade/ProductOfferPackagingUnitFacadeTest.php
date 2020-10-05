@@ -94,7 +94,7 @@ class ProductOfferPackagingUnitFacadeTest extends Unit
         $this->assertContainsOnlyInstancesOf(SalesOrderItemStateAggregationTransfer::class, $salesAggregationTransfers);
         $result = $this->tester->sumSalesAggregationTransfers($salesAggregationTransfers);
         // SUM(amount in PU) + SUM(quantity)
-        $this->assertEquals(
+        $this->assertSame(
             $result->toString(),
             $amountForPackagingUnit->multiply($itemsCountInPackagingUnit)->add($quantity * $itemsCount)->toString()
         );

@@ -146,14 +146,14 @@ JSON;
     {
         $jsonEncodeValue = $this->utilEncodingService->decodeJson('true');
 
-        $this->assertEquals(true, $jsonEncodeValue);
+        $this->assertTrue($jsonEncodeValue);
 
         $jsonEncodeValue = $this->utilEncodingService->decodeJson('false');
 
-        $this->assertEquals(false, $jsonEncodeValue);
+        $this->assertFalse($jsonEncodeValue);
 
         $jsonEncodeValue = $this->utilEncodingService->decodeJson('null');
 
-        $this->assertEquals(null, $jsonEncodeValue);
+        $this->assertNull($jsonEncodeValue);
     }
 }

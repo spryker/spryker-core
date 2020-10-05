@@ -42,7 +42,7 @@ class ProductPackagingUnitDataImportHelper extends Module
     public function assertProductPackagingUnitTableHasRecords(int $expectedCount): void
     {
         $foundCount = $this->getProductPackagingUnitQuery()->count();
-        $this->assertEquals($expectedCount, $foundCount, sprintf(static::ERROR_MESSAGE_EXPECTED_COUNT, $expectedCount, SpyProductPackagingUnitTableMap::TABLE_NAME, $foundCount));
+        $this->assertSame($expectedCount, $foundCount, sprintf(static::ERROR_MESSAGE_EXPECTED_COUNT, $expectedCount, SpyProductPackagingUnitTableMap::TABLE_NAME, $foundCount));
     }
 
     /**

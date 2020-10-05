@@ -64,12 +64,12 @@ class SalesFacadeTest extends Unit
         $this->assertCount(2, $orderTransfer->getItems());
 
         $itemTransfer = $orderTransfer->getItems()[0];
-        $this->assertEquals(static::DEFAULT_ITEM_STATE, $itemTransfer->getState()->getName());
-        $this->assertEquals(static::DEFAULT_OMS_PROCESS_NAME, $itemTransfer->getProcess());
+        $this->assertSame(static::DEFAULT_ITEM_STATE, $itemTransfer->getState()->getName());
+        $this->assertSame(static::DEFAULT_OMS_PROCESS_NAME, $itemTransfer->getProcess());
 
         $itemTransfer = $orderTransfer->getItems()[1];
-        $this->assertEquals(static::DEFAULT_ITEM_STATE, $itemTransfer->getState()->getName());
-        $this->assertEquals(static::DEFAULT_OMS_PROCESS_NAME, $itemTransfer->getProcess());
+        $this->assertSame(static::DEFAULT_ITEM_STATE, $itemTransfer->getState()->getName());
+        $this->assertSame(static::DEFAULT_OMS_PROCESS_NAME, $itemTransfer->getProcess());
 
         $this->assertInstanceOf(AddressTransfer::class, $orderTransfer->getBillingAddress());
         $this->assertInstanceOf(AddressTransfer::class, $orderTransfer->getShippingAddress());
@@ -157,7 +157,7 @@ class SalesFacadeTest extends Unit
         $this->assertNotNull($orderListTransfer);
         $this->assertInstanceOf(OrderListTransfer::class, $orderListTransfer);
         $this->assertNotEmpty($orderListTransfer->getOrders());
-        $this->assertEquals($orderEntity->getOrderReference(), $orderListTransfer->getOrders()[0]->getOrderReference());
+        $this->assertSame($orderEntity->getOrderReference(), $orderListTransfer->getOrders()[0]->getOrderReference());
     }
 
     /**
@@ -180,7 +180,7 @@ class SalesFacadeTest extends Unit
         $this->assertNotNull($orderListTransfer);
         $this->assertInstanceOf(OrderListTransfer::class, $orderListTransfer);
         $this->assertNotEmpty($orderListTransfer->getOrders());
-        $this->assertEquals($orderEntity->getOrderReference(), $orderListTransfer->getOrders()[0]->getOrderReference());
+        $this->assertSame($orderEntity->getOrderReference(), $orderListTransfer->getOrders()[0]->getOrderReference());
     }
 
     /**

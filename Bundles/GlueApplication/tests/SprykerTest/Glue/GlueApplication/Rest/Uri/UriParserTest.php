@@ -35,8 +35,8 @@ class UriParserTest extends Unit
 
         $resources = $uriParser->parse($request);
 
-        $this->assertEquals('carts', $resources[0][RequestConstantsInterface::ATTRIBUTE_TYPE]);
-        $this->assertEquals('1', $resources[0][RequestConstantsInterface::ATTRIBUTE_ID]);
+        $this->assertSame('carts', $resources[0][RequestConstantsInterface::ATTRIBUTE_TYPE]);
+        $this->assertSame('1', $resources[0][RequestConstantsInterface::ATTRIBUTE_ID]);
     }
 
     /**
@@ -50,11 +50,11 @@ class UriParserTest extends Unit
 
         $resources = $uriParser->parse($request);
 
-        $this->assertEquals('carts', $resources[0][RequestConstantsInterface::ATTRIBUTE_TYPE]);
-        $this->assertEquals('1', $resources[0][RequestConstantsInterface::ATTRIBUTE_ID]);
+        $this->assertSame('carts', $resources[0][RequestConstantsInterface::ATTRIBUTE_TYPE]);
+        $this->assertSame('1', $resources[0][RequestConstantsInterface::ATTRIBUTE_ID]);
 
-        $this->assertEquals('items', $resources[1][RequestConstantsInterface::ATTRIBUTE_TYPE]);
-        $this->assertEquals('sku123', $resources[1][RequestConstantsInterface::ATTRIBUTE_ID]);
+        $this->assertSame('items', $resources[1][RequestConstantsInterface::ATTRIBUTE_TYPE]);
+        $this->assertSame('sku123', $resources[1][RequestConstantsInterface::ATTRIBUTE_ID]);
     }
 
     /**

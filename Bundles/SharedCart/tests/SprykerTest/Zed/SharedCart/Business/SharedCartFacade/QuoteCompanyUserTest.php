@@ -100,7 +100,7 @@ class QuoteCompanyUserTest extends Unit
         $this->assertCount(1, $shareDetailCollectionTransfer->getShareDetails());
         /** @var \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer */
         $shareDetailTransfer = $shareDetailCollectionTransfer->getShareDetails()->offsetGet(0);
-        $this->assertEquals($quoteCompanyUserTransfer->getIdQuoteCompanyUser(), $shareDetailTransfer->getIdQuoteCompanyUser());
+        $this->assertSame($quoteCompanyUserTransfer->getIdQuoteCompanyUser(), $shareDetailTransfer->getIdQuoteCompanyUser());
     }
 
     /**

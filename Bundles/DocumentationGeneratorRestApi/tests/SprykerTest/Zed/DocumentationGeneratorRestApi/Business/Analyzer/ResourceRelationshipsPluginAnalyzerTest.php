@@ -42,7 +42,7 @@ class ResourceRelationshipsPluginAnalyzerTest extends Unit
         $this->assertNotEmpty($relationships);
         $this->assertCount(1, $relationships);
         $relationship = array_shift($relationships);
-        $this->assertEquals(static::RELATIONSHIP_VALUE, $relationship->getRelationshipResourceType());
+        $this->assertSame(static::RELATIONSHIP_VALUE, $relationship->getRelationshipResourceType());
     }
 
     /**
