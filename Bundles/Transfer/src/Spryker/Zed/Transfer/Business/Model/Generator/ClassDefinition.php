@@ -726,7 +726,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'name' => $methodName,
             'property' => $propertyName,
             'propertyConst' => $this->getPropertyConstantName($property),
-            'var' => $this->buildVar($property),
+            'var' => $this->buildSetVar($property),
             'typeShim' => $property['typeShim'] ?? null,
             'valueObject' => false,
             'bundles' => $property['bundles'],
@@ -1065,7 +1065,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return string
      */
-    protected function buildVar(array $property): string
+    protected function buildSetVar(array $property): string
     {
         $varType = $this->getSetVar($property);
         $typeShim = $property['typeShim'] ?? null;
