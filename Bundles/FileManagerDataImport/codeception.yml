@@ -1,4 +1,6 @@
 namespace: FileManagerDataImport
+include:
+    - tests/SprykerTest/Zed/FileManagerDataImport
 paths:
     tests: tests
     log: tests/_output

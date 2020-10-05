@@ -1,4 +1,6 @@
 namespace: SalesQuantity
+include:
+    - tests/SprykerTest/Zed/SalesQuantity
 paths:
     tests: tests
     log: tests/_output
