@@ -33,7 +33,7 @@
 {# property #}
 {% macro addProperty(property) %}
     /**
-     * @var {% if property.typeShim is defined -%}{{ property.typeShim }}|{% endif -%}{{ property.type }}
+     * @var {{ property.type }}
      */
     protected ${{ property.name }}{% if property.type == 'array' or property.is_typed_array %} = []{% endif %};
 {% endmacro %}
@@ -75,13 +75,8 @@
      * @deprecated {{ method.deprecationDescription }}
      *
      {% endif -%}
-     {% if method.typeShim is defined -%}
-     * @param {{ method.typeShim ~ '|' ~ method.var }}{% if method.hasDefaultNull %}|null{% endif %} ${{ method.property }} Forward compatibility warning: {{ method.typeShim }} is the actual type (please use that, old type is kept for BC).
+     * @param {{ method.var }}{% if method.hasDefaultNull %}|null{% endif %} ${{ method.property }}{% if method.shimNotice %} {{ method.shimNotice }}{% endif ~%}
      *
-     {% else -%}
-     * @param {{ method.var }}{% if method.hasDefaultNull %}|null{% endif %} ${{ method.property }}
-     *
-     {% endif -%}
      * @return $this
      */
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }}{% if method.hasDefaultNull %} = null{% endif %})

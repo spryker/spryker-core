@@ -29,6 +29,8 @@ class ClassDefinition implements ClassDefinitionInterface
         ],
     ];
 
+    protected const SHIM_NOTICE_TEMPLATE = 'Forward compatibility warning: %s is the actual type (please use that, %s is kept for BC).';
+
     /**
      * @var string
      */
@@ -227,13 +229,11 @@ class ClassDefinition implements ClassDefinitionInterface
         $property['name'] = lcfirst($property['name']);
         $propertyInfo = [
             'name' => $property['name'],
-            'type' => $this->getPropertyType($property),
+            'type' => $this->buildPropertyType($property),
             'is_typed_array' => $property['is_typed_array'],
             'bundles' => $property['bundles'],
             'is_associative' => $property['is_associative'],
         ];
-
-        $propertyInfo = $this->addTypeShim($propertyInfo, $property);
 
         $this->properties[$property['name']] = $propertyInfo;
     }
@@ -728,15 +728,15 @@ class ClassDefinition implements ClassDefinitionInterface
             'name' => $methodName,
             'property' => $propertyName,
             'propertyConst' => $this->getPropertyConstantName($property),
-            'var' => $this->getSetVar($property),
+            'var' => $this->buildSetVar($property),
             'valueObject' => false,
             'bundles' => $property['bundles'],
             'typeHint' => null,
             'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
+            'shimNotice' => $this->getShimNotice($property),
         ];
         $method = $this->addTypeHint($property, $method);
         $method = $this->addDefaultNull($method, $property);
-        $method = $this->addTypeShim($method, $property);
 
         if ($this->isValueObject($property)) {
             $method['valueObject'] = $this->getShortClassName(
@@ -1038,26 +1038,23 @@ class ClassDefinition implements ClassDefinitionInterface
 
         if ($toType !== null) {
             $propertyDefinition['typeShim'] = $toType;
+            $propertyDefinition = $this->addShimNotice($toType, $propertyDefinition);
         }
 
         return $propertyDefinition;
     }
 
     /**
-     * @param array $classMemberData
-     * @param array $property
+     * @param string $typeShim
+     * @param array $propertyDefinition
      *
      * @return array
      */
-    protected function addTypeShim(array $classMemberData, array $property): array
+    protected function addShimNotice(string $typeShim, array $propertyDefinition): array
     {
-        $typeShim = $this->getTypeShim($property);
+        $propertyDefinition['shimNotice'] = sprintf(static::SHIM_NOTICE_TEMPLATE, $typeShim, $propertyDefinition['type']);
 
-        if ($typeShim !== null) {
-            $classMemberData['typeShim'] = $typeShim;
-        }
-
-        return $classMemberData;
+        return $propertyDefinition;
     }
 
     /**
@@ -1068,5 +1065,54 @@ class ClassDefinition implements ClassDefinitionInterface
     protected function getTypeShim(array $property): ?string
     {
         return $property['typeShim'] ?? null;
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string
+     */
+    protected function buildPropertyType(array $property): string
+    {
+        $propertyType = $this->getPropertyType($property);
+
+        return $this->buildShimmedType($propertyType, $this->getTypeShim($property));
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string
+     */
+    protected function buildSetVar(array $property): string
+    {
+        $varType = $this->getSetVar($property);
+
+        return $this->buildShimmedType($varType, $this->getTypeShim($property));
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string|null
+     */
+    protected function getShimNotice(array $property): ?string
+    {
+        return $property['shimNotice'] ?? null;
+    }
+
+    /**
+     * @param string $originalType
+     * @param string|null $typeShim
+     *
+     * @return string
+     */
+    protected function buildShimmedType(string $originalType, ?string $typeShim = null): string
+    {
+        if ($typeShim === null) {
+            return $originalType;
+        }
+
+        return sprintf('%s|%s', $typeShim, $originalType);
     }
 }
