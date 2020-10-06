@@ -1,4 +1,6 @@
 namespace: SalesReturn
+include:
+    - tests/SprykerTest/Zed/SalesReturn
 actor: Tester
 paths:
     tests: tests

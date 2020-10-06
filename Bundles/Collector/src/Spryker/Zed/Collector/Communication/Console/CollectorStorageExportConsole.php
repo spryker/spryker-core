@@ -34,9 +34,9 @@ class CollectorStorageExportConsole extends AbstractCollectorConsole
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|null|void
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $enabledCollectors = $this->getFacade()->getEnabledCollectorTypes();
         $allCollectors = $this->getFacade()->getAllCollectorTypes();
@@ -55,5 +55,7 @@ class CollectorStorageExportConsole extends AbstractCollectorConsole
         $message = '<info>' . $message . '</info>';
 
         $output->write($message);
+
+        return static::CODE_SUCCESS;
     }
 }

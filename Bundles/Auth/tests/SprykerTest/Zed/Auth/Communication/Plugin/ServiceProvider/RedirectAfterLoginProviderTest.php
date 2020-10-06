@@ -12,7 +12,7 @@ use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Communication\Plugin\ServiceProvider\RedirectAfterLoginProvider;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
@@ -55,7 +55,7 @@ class RedirectAfterLoginProviderTest extends Unit
         $request->server->set(static::REQUEST_URI, static::REDIRECT_URL_VALID);
         $response = new RedirectResponse(AuthConfig::DEFAULT_URL_LOGIN);
 
-        $event = new FilterResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
+        $event = new ResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
 
         $redirectAfterLoginProvider = $this->getRedirectAfterLoginProvider(['isAuthenticated']);
         $redirectAfterLoginProvider->expects($this->never())
@@ -76,7 +76,7 @@ class RedirectAfterLoginProviderTest extends Unit
         $request->server->set(static::REQUEST_URI, static::REDIRECT_URL_VALID);
         $response = new RedirectResponse(AuthConfig::DEFAULT_URL_LOGIN);
 
-        $event = new FilterResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
+        $event = new ResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
 
         $redirectAfterLoginProvider = $this->getRedirectAfterLoginProvider(['isAuthenticated']);
         $redirectAfterLoginProvider->expects($this->never())
@@ -95,7 +95,7 @@ class RedirectAfterLoginProviderTest extends Unit
         $request = new Request();
         $request->server->set(static::REQUEST_URI, AuthConfig::DEFAULT_URL_LOGIN);
         $response = new RedirectResponse(AuthConfig::DEFAULT_URL_REDIRECT);
-        $event = new FilterResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
+        $event = new ResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
 
         $redirectAfterLoginProvider = $this->getRedirectAfterLoginProvider(['isAuthenticated']);
         $redirectAfterLoginProvider->expects($this->once())
@@ -117,7 +117,7 @@ class RedirectAfterLoginProviderTest extends Unit
         $request->server->set(static::REQUEST_URI, AuthConfig::DEFAULT_URL_LOGIN);
         $request->query->set(RedirectAfterLoginProvider::REFERER, static::REDIRECT_URL_INVALID);
         $response = new RedirectResponse(AuthConfig::DEFAULT_URL_REDIRECT);
-        $event = new FilterResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
+        $event = new ResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
 
         $redirectAfterLoginProvider = $this->getRedirectAfterLoginProvider(['isAuthenticated']);
         $redirectAfterLoginProvider->expects($this->once())
@@ -139,7 +139,7 @@ class RedirectAfterLoginProviderTest extends Unit
         $request->server->set(static::REQUEST_URI, AuthConfig::DEFAULT_URL_LOGIN);
         $request->query->set(RedirectAfterLoginProvider::REFERER, static::REDIRECT_URL_VALID);
         $response = new RedirectResponse(AuthConfig::DEFAULT_URL_REDIRECT);
-        $event = new FilterResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
+        $event = new ResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
 
         $redirectAfterLoginProvider = $this->getRedirectAfterLoginProvider(['isAuthenticated']);
         $redirectAfterLoginProvider->expects($this->once())
@@ -161,7 +161,7 @@ class RedirectAfterLoginProviderTest extends Unit
         $request->server->set(static::REQUEST_URI, AuthConfig::DEFAULT_URL_LOGIN);
         $request->query->set(RedirectAfterLoginProvider::REFERER, static::REDIRECT_URL_VALID);
         $response = new RedirectResponse(AuthConfig::DEFAULT_URL_REDIRECT);
-        $event = new FilterResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
+        $event = new ResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
 
         $redirectAfterLoginProvider = $this->getRedirectAfterLoginProvider(['isAuthenticated']);
         $redirectAfterLoginProvider->expects($this->once())

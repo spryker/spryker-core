@@ -85,8 +85,7 @@ class GatewayControllerEventDispatcherPluginTest extends Unit
         $controller = new GatewayController();
         $action = 'goodAction';
 
-        $event = $this->tester->createFilterControllerEvent([$controller, $action]);
-        /** @var \SprykerTest\Zed\ZedRequest\Communication\Plugin\Fixture\FilterControllerEvent $event */
+        $event = $this->tester->createControllerEvent([$controller, $action]);
         $event = $this->dispatchEvent($event, KernelEvents::CONTROLLER);
 
         $controllerCallable = $event->getController();
@@ -102,8 +101,7 @@ class GatewayControllerEventDispatcherPluginTest extends Unit
         $action = 'badAction';
         $controller = new NotGatewayController();
 
-        $event = $this->tester->createFilterControllerEvent([$controller, $action]);
-        /** @var \SprykerTest\Zed\ZedRequest\Communication\Plugin\Fixture\FilterControllerEvent $event */
+        $event = $this->tester->createControllerEvent([$controller, $action]);
         $event = $this->dispatchEvent($event, KernelEvents::CONTROLLER);
 
         $controllerCallable = $event->getController();
@@ -304,8 +302,7 @@ class GatewayControllerEventDispatcherPluginTest extends Unit
 
         $this->initTransferServer($transfer);
 
-        $event = $this->tester->createFilterControllerEvent([$controller, $action]);
-        /** @var \SprykerTest\Zed\ZedRequest\Communication\Plugin\Fixture\FilterControllerEvent $event */
+        $event = $this->tester->createControllerEvent([$controller, $action]);
         $event = $this->dispatchEvent($event, KernelEvents::CONTROLLER);
 
         $controllerCallable = $event->getController();
