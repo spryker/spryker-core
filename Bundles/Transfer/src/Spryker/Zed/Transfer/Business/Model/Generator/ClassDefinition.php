@@ -733,15 +733,12 @@ class ClassDefinition implements ClassDefinitionInterface
             'bundles' => $property['bundles'],
             'typeHint' => null,
             'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
-            'typeAssertion' => false,
             'propertyType' => $property['type'],
         ];
         $method = $this->addTypeHint($property, $method);
         $method = $this->addDefaultNull($method, $property);
         $method = $this->addTypeShim($method, $property);
-        if ($this->transferConfig->isSetterTypeAssertionEnabled() && !$method['typeHint']) {
-            $method['typeAssertion'] = true;
-        }
+        $method = $this->addTypeAssertion($method);
 
         if ($this->isValueObject($property)) {
             $method['valueObject'] = $this->getShortClassName(
@@ -1073,5 +1070,21 @@ class ClassDefinition implements ClassDefinitionInterface
     protected function getTypeShim(array $property): ?string
     {
         return $property['typeShim'] ?? null;
+    }
+
+    /**
+     * @param array $method
+     *
+     * @return array
+     */
+    protected function addTypeAssertion(array $method): array
+    {
+        $method['typeAssertion'] = false;
+
+        if ($this->transferConfig->isSetterTypeAssertionEnabled() && !$method['typeHint']) {
+            $method['typeAssertion'] = true;
+        }
+
+        return $method;
     }
 }
