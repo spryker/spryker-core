@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Creator;
 
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ConfiguredBundleTransfer;
@@ -80,6 +81,15 @@ class ConfiguredBundleRequestCreator implements ConfiguredBundleRequestCreatorIn
         $customerTransfer = (new CustomerTransfer())
             ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier())
             ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
+
+        // For BC reasons
+        if ($restRequest->getRestUser()->getIdCompanyUser() !== null && $restRequest->getRestUser()->getIdCompany() !== null) {
+            $companyUserTransfer = (new CompanyUserTransfer())
+                ->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser())
+                ->setFkCompany($restRequest->getRestUser()->getIdCompany());
+
+            $customerTransfer->setCompanyUserTransfer($companyUserTransfer);
+        }
 
         $quoteTransfer = (new QuoteTransfer())
             ->setCustomer($customerTransfer)

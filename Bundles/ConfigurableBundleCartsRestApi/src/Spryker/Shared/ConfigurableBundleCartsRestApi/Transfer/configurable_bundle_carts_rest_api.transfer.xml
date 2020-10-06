@@ -115,6 +115,8 @@
     <transfer name="RestUser">
         <property name="surrogateIdentifier" type="int"/>
         <property name="naturalIdentifier" type="string"/>
+        <property name="idCompany" type="int"/>
+        <property name="idCompanyUser" type="int"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateStorage">
@@ -129,6 +131,7 @@
 
     <transfer name="CompanyUser">
         <property name="idCompanyUser" type="int"/>
+        <property name="fkCompany" type="int"/>
     </transfer>
 
     <transfer name="QuoteCriteriaFilter">
