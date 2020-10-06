@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\ProductConfiguration\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer;
@@ -17,11 +18,14 @@ use Generated\Shared\Transfer\ProductConfiguratorRequestTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Psr\Http\Message\ResponseInterface;
-use Pyz\Client\ProductConfiguration\Plugin\ProductConfiguration\DemoProductConfiguratorRequestExpanderPlugin;
+use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToCurrencyClientInterface;
+use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToStoreClientInterface;
 use Spryker\Client\ProductConfiguration\Http\Exception\ProductConfigurationHttpRequestException;
 use Spryker\Client\ProductConfiguration\Http\ProductConfigurationGuzzleHttpClient;
 use Spryker\Client\ProductConfiguration\ProductConfigurationFactory;
+use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestExpanderInterface;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorResponsePluginInterface;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
@@ -87,8 +91,25 @@ class ProductConfigurationClientTest extends Unit
                 'createProductConfiguratorResponseProcessor',
                 'createQuoteProductConfigurationChecker',
                 'createProductConfigurationAccessTokenRedirectResolver',
+                'createProductConfiguratorDataExpander'
             ])
             ->getMock();
+
+        $storeClientMock = $this->getMockBuilder(ProductConfigurationToStoreClientInterface::class)
+            ->onlyMethods(['getCurrentStore'])->getMockForAbstractClass();
+
+        $storeClientMock->method('getCurrentStore')->willReturn(new StoreTransfer());
+
+        $this->productConfigurationFactoryMock->method('getStoreClient')
+            ->willReturn($storeClientMock);
+
+        $currencyClientMock = $this->getMockBuilder(ProductConfigurationToCurrencyClientInterface::class)
+            ->onlyMethods(['getCurrent'])->getMockForAbstractClass();
+
+        $currencyClientMock->method('getCurrent')->willReturn(new CurrencyTransfer());
+
+        $this->productConfigurationFactoryMock->method('getCurrencyClient')
+            ->willReturn($currencyClientMock);
 
         $this->productConfigurationClient = $this->tester->getClient()->setFactory($this->productConfigurationFactoryMock);
 
@@ -302,8 +323,8 @@ class ProductConfigurationClientTest extends Unit
             );
 
         $productConfiguratorRequestExpanderPluginMock = $this->getMockBuilder(
-            DemoProductConfiguratorRequestExpanderPlugin::class
-        )->onlyMethods(['expand'])->getMock();
+            ProductConfiguratorRequestExpanderInterface::class
+        )->onlyMethods(['expand'])->getMockForAbstractClass();
 
         $productConfiguratorRequestExpanderPluginMock->expects($this->once())->method('expand')
             ->with($productConfigurationRequestTransfer)
@@ -313,7 +334,7 @@ class ProductConfigurationClientTest extends Unit
                 )
             );
 
-        $this->productConfigurationFactoryMock->method('getProductConfiguratorRequestExpanderPlugin')
+        $this->productConfigurationFactoryMock->method('getProductConfiguratorRequestExpanderPlugins')
             ->willReturn([
                 static::TEST_PRODUCT_CONFIGURATOR_REQUEST_KEY => $productConfiguratorRequestExpanderPluginMock,
             ]);
@@ -355,7 +376,7 @@ class ProductConfigurationClientTest extends Unit
                     ->setConfiguratorKey(static::TEST_PRODUCT_CONFIGURATOR_REQUEST_KEY)
             );
 
-        $this->productConfigurationFactoryMock->method('getProductConfiguratorRequestExpanderPlugin')
+        $this->productConfigurationFactoryMock->method('getProductConfiguratorRequestExpanderPlugins')
             ->willReturn([]);
 
         //Assert
@@ -379,7 +400,7 @@ class ProductConfigurationClientTest extends Unit
             );
 
         $productConfiguratorRequestExpanderPluginMock = $this->getMockBuilder(
-            DemoProductConfiguratorRequestExpanderPlugin::class
+            ProductConfiguratorRequestExpanderInterface::class
         )->onlyMethods(['expand'])->getMock();
 
         $productConfiguratorRequestExpanderPluginMock->expects($this->once())->method('expand')
@@ -390,7 +411,7 @@ class ProductConfigurationClientTest extends Unit
                 )
             );
 
-        $this->productConfigurationFactoryMock->method('getProductConfiguratorRequestExpanderPlugin')
+        $this->productConfigurationFactoryMock->method('getProductConfiguratorRequestExpanderPlugins')
             ->willReturn([
                 static::TEST_PRODUCT_CONFIGURATOR_REQUEST_KEY => $productConfiguratorRequestExpanderPluginMock,
             ]);

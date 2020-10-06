@@ -14,12 +14,12 @@ use Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageConfig
 
 class ProductConfiguratorCheckSumResponseValidator implements ProductConfiguratorResponseValidatorInterface
 {
-    protected const GLOSSARY_KEY_PRODUCT_CONFIGURATION_NOT_VALID_RESPONSE_CHECKSUM = 'product_configuration.validation.error.not_valid_response_checksum';
+    protected const GLOSSARY_KEY_PRODUCT_CONFIGURATION_NOT_VALID_RESPONSE_CHECKSUM = 'product_configuration_storage.validation.error.not_valid_response_checksum';
 
     /**
      * @var \Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageConfig
      */
-    protected $config;
+    protected $productConfigurationStorageConfig;
 
     /**
      * @var \Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToProductConfigurationDataChecksumGeneratorInterface
@@ -27,20 +27,19 @@ class ProductConfiguratorCheckSumResponseValidator implements ProductConfigurato
     protected $productConfigurationDataChecksumGenerator;
 
     /**
-     * @param \Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageConfig $config
+     * @param \Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageConfig $productConfigurationStorageConfig
      * @param \Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToProductConfigurationDataChecksumGeneratorInterface $productConfigurationDataChecksumGenerator
      */
     public function __construct(
-        ProductConfigurationStorageConfig $config,
+        ProductConfigurationStorageConfig $productConfigurationStorageConfig,
         ProductConfigurationStorageToProductConfigurationDataChecksumGeneratorInterface $productConfigurationDataChecksumGenerator
     ) {
-        $this->config = $config;
+        $this->productConfigurationStorageConfig = $productConfigurationStorageConfig;
         $this->productConfigurationDataChecksumGenerator = $productConfigurationDataChecksumGenerator;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
-     *
      * @param array $configuratorResponseData
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
@@ -53,21 +52,20 @@ class ProductConfiguratorCheckSumResponseValidator implements ProductConfigurato
 
         $productConfiguratorResponseTransfer = $productConfiguratorResponseProcessorResponseTransfer
             ->getProductConfiguratorResponse();
-        $key = $this->config->getProductConfigurationEncryptionKey();
+        $key = $this->productConfigurationStorageConfig->getProductConfigurationEncryptionKey();
 
         $responseChecksum = $this->productConfigurationDataChecksumGenerator->generateProductConfigurationDataChecksum(
             $productConfiguratorResponseTransfer->toArray(),
             $key
         );
 
-        if ($responseChecksum !== $productConfiguratorResponseTransfer->getCheckSum()) {
-            return $productConfiguratorResponseProcessorResponseTransfer
-                ->addMessage(
-                    (new MessageTransfer())
-                        ->setMessage(static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_NOT_VALID_RESPONSE_CHECKSUM)
-                )->setIsSuccessful(false);
+        if ($responseChecksum === $productConfiguratorResponseTransfer->getCheckSum()) {
+            return $productConfiguratorResponseProcessorResponseTransfer;
         }
 
-        return $productConfiguratorResponseProcessorResponseTransfer;
+        return $productConfiguratorResponseProcessorResponseTransfer->addMessage(
+            (new MessageTransfer())
+                    ->setMessage(static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_NOT_VALID_RESPONSE_CHECKSUM)
+        )->setIsSuccessful(false);
     }
 }

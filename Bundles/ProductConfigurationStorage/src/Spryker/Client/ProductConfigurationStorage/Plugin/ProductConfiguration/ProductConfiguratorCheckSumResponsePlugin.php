@@ -20,6 +20,9 @@ class ProductConfiguratorCheckSumResponsePlugin extends AbstractPlugin implement
 {
     /**
      * {@inheritDoc}
+     * - Validates response.
+     * - Saves product configuration instance depending on source type.
+     * - Replaces quote item product configuration with new one.
      *
      * @api
      *

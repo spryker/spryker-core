@@ -7,7 +7,7 @@
     "php": ">=7.2",
     "spryker-sdk/product-configuration-sdk": "^0.1.0",
     "spryker/availability-storage-extension": "^1.0.0",
-    "spryker/cart": "^7.0.0",
+    "spryker/cart": "^7.8.0",
     "spryker/cart-extension": "^4.0.0",
     "spryker/event-behavior": "^1.0.0",
     "spryker/kernel": "^3.30.0",

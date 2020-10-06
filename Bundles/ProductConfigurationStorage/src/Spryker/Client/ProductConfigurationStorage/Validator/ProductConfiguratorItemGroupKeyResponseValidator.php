@@ -17,7 +17,6 @@ class ProductConfiguratorItemGroupKeyResponseValidator implements ProductConfigu
 
     /**
      * @param \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
-     *
      * @param array $configuratorResponseData
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer

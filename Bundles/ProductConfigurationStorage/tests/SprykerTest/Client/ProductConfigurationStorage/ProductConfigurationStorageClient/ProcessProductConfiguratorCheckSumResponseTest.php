@@ -8,11 +8,8 @@
 namespace SprykerTest\Client\ProductConfigurationStorage\ProductConfigurationStorageClient;
 
 use Codeception\Test\Unit;
-use Generated\Shared\DataBuilder\ProductConcreteBuilder;
-use Generated\Shared\DataBuilder\ProductConfigurationInstanceBuilder;
 use Generated\Shared\DataBuilder\ProductConfiguratorResponseBuilder;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
@@ -57,7 +54,7 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
             ->onlyMethods([
                 'getCartClient',
                 'createProductConfigurationInstanceWriter',
-                'createProductConfiguratorCheckSumResponseValidators'
+                'createProductConfiguratorCheckSumResponseValidators',
             ])->getMock();
 
         $productConfigurationStorageFactoryMock
@@ -112,7 +109,7 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
             ->onlyMethods([
                 'getCartClient',
                 'createProductConfigurationInstanceWriter',
-                'createProductConfiguratorCheckSumResponseValidators'
+                'createProductConfiguratorCheckSumResponseValidators',
             ])->getMock();
 
         $productConfigurationStorageFactoryMock
@@ -128,7 +125,7 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
             ->willReturn([]);
 
         $productConfiguratorResponseTransfer = (new ProductConfiguratorResponseBuilder([
-            ProductConfiguratorResponseTransfer::SOURCE_TYPE => 'SOURCE_TYPE_CART'
+            ProductConfiguratorResponseTransfer::SOURCE_TYPE => 'SOURCE_TYPE_CART',
             ]))
             ->withProductConfigurationInstance()
             ->build();
@@ -155,18 +152,18 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
         )->onlyMethods(['validate'])->getMock();
 
         $productConfiguratorResponseValidatorMock->expects($this->once())->method('validate')
-            ->willReturn((new ProductConfiguratorResponseProcessorResponseTransfer)->setIsSuccessful(false));
+            ->willReturn((new ProductConfiguratorResponseProcessorResponseTransfer())->setIsSuccessful(false));
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageFactory $productConfigurationStorageFactoryMock */
         $productConfigurationStorageFactoryMock = $this->getMockBuilder(ProductConfigurationStorageFactory::class)
             ->onlyMethods([
-                'createProductConfiguratorCheckSumResponseValidators'
+                'createProductConfiguratorCheckSumResponseValidators',
             ])->getMock();
 
         $productConfigurationStorageFactoryMock
             ->method('createProductConfiguratorCheckSumResponseValidators')
             ->willReturn([
-                $productConfiguratorResponseValidatorMock
+                $productConfiguratorResponseValidatorMock,
             ]);
 
         $productConfiguratorResponseTransfer = (new ProductConfiguratorResponseBuilder())
@@ -206,7 +203,7 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
             ->onlyMethods([
                 'getCartClient',
                 'createProductConfigurationInstanceWriter',
-                'createProductConfiguratorCheckSumResponseValidators'
+                'createProductConfiguratorCheckSumResponseValidators',
             ])->getMock();
 
         $productConfigurationStorageFactoryMock
@@ -222,7 +219,7 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
             ->willReturn([]);
 
         $productConfiguratorResponseTransfer = (new ProductConfiguratorResponseBuilder([
-            ProductConfiguratorResponseTransfer::SOURCE_TYPE => 'SOURCE_TYPE_CART'
+            ProductConfiguratorResponseTransfer::SOURCE_TYPE => 'SOURCE_TYPE_CART',
         ]))
             ->withProductConfigurationInstance()
             ->build();

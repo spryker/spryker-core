@@ -31,7 +31,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     public const PLUGINS_PRODUCT_CONFIGURATOR_RESPONSE = 'PLUGINS_PRODUCT_CONFIGURATOR_RESPONSE';
     public const PLUGIN_DEFAULT_PRODUCT_CONFIGURATOR_RESPONSE = 'PLUGIN_DEFAULT_PRODUCT_CONFIGURATOR_RESPONSE';
 
-    public const PLUGIN_PRODUCT_CONFIGURATOR_REQUEST_EXPANDER = 'PLUGIN_PRODUCT_CONFIGURATOR_REQUEST_EXPANDER';
+    public const PLUGINS_PRODUCT_CONFIGURATOR_REQUEST_EXPANDER = 'PLUGINS_PRODUCT_CONFIGURATOR_REQUEST_EXPANDER';
 
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_STORE = 'CLIENT_STORE';
@@ -84,7 +84,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addCurrencyClient(Container $container)
+    protected function addCurrencyClient(Container $container): Container
     {
         $container->set(static::CLIENT_CURRENCY, function (Container $container) {
             return new ProductConfigurationToCurrencyClientBridge($container->getLocator()->currency()->client());
@@ -98,7 +98,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addPriceClient(Container $container)
+    protected function addPriceClient(Container $container): Container
     {
         $container->set(static::CLIENT_PRICE, function (Container $container) {
             return new ProductConfigurationToPriceClientBridge($container->getLocator()->price()->client());
@@ -112,7 +112,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addLocaleClient(Container $container)
+    protected function addLocaleClient(Container $container): Container
     {
         $container->set(static::CLIENT_LOCALE, function (Container $container) {
             return new ProductConfigurationToLocaleBridge($container->getLocator()->locale()->client());
@@ -230,7 +230,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
      */
     protected function addProductConfigurationRequestExpanderPlugins(Container $container): Container
     {
-        $container->set(static::PLUGIN_PRODUCT_CONFIGURATOR_REQUEST_EXPANDER, function () {
+        $container->set(static::PLUGINS_PRODUCT_CONFIGURATOR_REQUEST_EXPANDER, function () {
             return $this->getProductConfigurationRequestExpanderPlugins();
         });
 

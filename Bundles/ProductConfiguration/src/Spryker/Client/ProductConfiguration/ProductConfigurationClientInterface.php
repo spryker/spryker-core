@@ -33,7 +33,7 @@ interface ProductConfigurationClientInterface
      * Specification:
      * - Expands product configurator request with additional data.
      * - Sends access token request to configurator.
-     * - Build product configuration redirect from configurator response.
+     * - Builds product configuration redirect from configurator response.
      *
      * @api
      *

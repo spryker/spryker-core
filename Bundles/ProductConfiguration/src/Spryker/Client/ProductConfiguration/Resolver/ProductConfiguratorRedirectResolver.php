@@ -8,13 +8,8 @@
 namespace Spryker\Client\ProductConfiguration\Resolver;
 
 use Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer;
-use Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorRequestTransfer;
-use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToCurrencyClientInterface;
-use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToCustomerClientInterface;
-use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToLocaleInterface;
-use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToPriceClientInterface;
-use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToStoreClientInterface;
+use Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorDataExpanderInterface;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface;
 
 class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirectResolverInterface
@@ -30,55 +25,23 @@ class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirect
     protected $productConfiguratorRequestDefaultPlugin;
 
     /**
-     * @var \Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToCustomerClientInterface
+     * @var \Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorDataExpanderInterface
      */
-    protected $customerClient;
-
-    /**
-     * @var \Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToStoreClientInterface
-     */
-    protected $storeClient;
-
-    /**
-     * @var \Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToLocaleInterface
-     */
-    protected $localeClient;
-
-    /**
-     * @var \Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToPriceClientInterface
-     */
-    protected $priceClient;
-
-    /**
-     * @var \Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToCurrencyClientInterface
-     */
-    protected $currencyClient;
+    protected $productConfiguratorDataExpander;
 
     /**
      * @param \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface[] $productConfiguratorRequestPlugins
      * @param \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface $productConfiguratorRequestDefaultPlugin
-     * @param \Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToCustomerClientInterface $customerClient
-     * @param \Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToStoreClientInterface $storeClient
-     * @param \Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToLocaleInterface $localeClient
-     * @param \Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToPriceClientInterface $priceClient
-     * @param \Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToCurrencyClientInterface $currencyClient
+     * @param \Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorDataExpanderInterface $productConfiguratorDataExpander
      */
     public function __construct(
         array $productConfiguratorRequestPlugins,
         ProductConfiguratorRequestPluginInterface $productConfiguratorRequestDefaultPlugin,
-        ProductConfigurationToCustomerClientInterface $customerClient,
-        ProductConfigurationToStoreClientInterface $storeClient,
-        ProductConfigurationToLocaleInterface $localeClient,
-        ProductConfigurationToPriceClientInterface $priceClient,
-        ProductConfigurationToCurrencyClientInterface $currencyClient
+        ProductConfiguratorDataExpanderInterface $productConfiguratorDataExpander
     ) {
         $this->productConfiguratorRequestPlugins = $productConfiguratorRequestPlugins;
         $this->productConfiguratorRequestDefaultPlugin = $productConfiguratorRequestDefaultPlugin;
-        $this->customerClient = $customerClient;
-        $this->storeClient = $storeClient;
-        $this->localeClient = $localeClient;
-        $this->priceClient = $priceClient;
-        $this->currencyClient = $currencyClient;
+        $this->productConfiguratorDataExpander = $productConfiguratorDataExpander;
     }
 
     /**
@@ -89,7 +52,7 @@ class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirect
     public function prepareProductConfiguratorRedirect(
         ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
     ): ProductConfiguratorRedirectTransfer {
-        $productConfigurationRequestDataTransfer = $this->expandProductConfigurationData(
+        $productConfigurationRequestDataTransfer = $this->productConfiguratorDataExpander->expand(
             $productConfiguratorRequestTransfer->getProductConfiguratorRequestData()
         );
 
@@ -103,38 +66,5 @@ class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirect
 
         return $this->productConfiguratorRequestDefaultPlugin
             ->resolveProductConfiguratorRedirect($productConfiguratorRequestTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer $productConfiguratorRequestDataTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer
-     */
-    protected function expandProductConfigurationData(
-        ProductConfiguratorRequestDataTransfer $productConfiguratorRequestDataTransfer
-    ): ProductConfiguratorRequestDataTransfer {
-        if ($this->customerClient->getCustomer()) {
-            $productConfiguratorRequestDataTransfer->setCustomerReference(
-                $this->customerClient->getCustomer()->getCustomerReference()
-            );
-        }
-
-        $productConfiguratorRequestDataTransfer->setStoreName(
-            $this->storeClient->getCurrentStore()->getName()
-        );
-
-        $productConfiguratorRequestDataTransfer->setLocaleName(
-            $this->localeClient->getCurrentLocale()
-        );
-
-        $productConfiguratorRequestDataTransfer->setPriceMode(
-            $this->priceClient->getCurrentPriceMode()
-        );
-
-        $productConfiguratorRequestDataTransfer->setCurrencyCode(
-            $this->currencyClient->getCurrent()->getCode()
-        );
-
-        return $productConfiguratorRequestDataTransfer;
     }
 }
