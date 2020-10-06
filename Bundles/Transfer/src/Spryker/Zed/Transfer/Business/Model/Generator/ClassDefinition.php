@@ -733,10 +733,15 @@ class ClassDefinition implements ClassDefinitionInterface
             'bundles' => $property['bundles'],
             'typeHint' => null,
             'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
+            'typeAssertion' => false,
+            'propertyType' => $property['type'],
         ];
         $method = $this->addTypeHint($property, $method);
         $method = $this->addDefaultNull($method, $property);
         $method = $this->addTypeShim($method, $property);
+        if ($this->transferConfig->isSetterTypeAssertionEnabled() && !$method['typeHint']) {
+            $method['typeAssertion'] = true;
+        }
 
         if ($this->isValueObject($property)) {
             $method['valueObject'] = $this->getShortClassName(

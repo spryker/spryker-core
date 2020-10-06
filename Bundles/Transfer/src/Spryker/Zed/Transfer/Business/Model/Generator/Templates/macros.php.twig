@@ -86,6 +86,12 @@
      */
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }}{% if method.hasDefaultNull %} = null{% endif %})
     {
+        {% if method.typeAssertion -%}
+        if (!$this->assertCorrectVarType(${{ method.property }}, '{{ method.propertyType }}')) {
+            trigger_error(sprintf('Argument `{{ method.property }}` of method `%s::{{ method.name }}()` is expected to be of type {{ method.var }}. %s is given.', static::class, gettype(${{ method.property }})), E_USER_WARNING);
+        }
+
+        {% endif -%}
         {% if method.typeHint == "array" -%}
         if (${{ method.property }} === null) {
             ${{ method.property }} = [];

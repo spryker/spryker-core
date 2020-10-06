@@ -248,4 +248,18 @@ class TransferConfig extends AbstractBundleConfig
             ],
         ];
     }
+
+    /**
+     * Specification:
+     * - When enabled, an extra-code is added to the setter method of every generated transfer that checks the type of a value to be set for correctness.
+     * - Must not be adjusted on project level.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isSetterTypeAssertionEnabled(): bool
+    {
+        return true;
+    }
 }

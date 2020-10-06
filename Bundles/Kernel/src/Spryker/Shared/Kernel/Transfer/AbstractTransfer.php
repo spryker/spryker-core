@@ -408,4 +408,29 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     {
         throw new ArrayAccessReadyOnlyException('Transfer object as an array is available only for read');
     }
+
+    /**
+     * @param mixed $var
+     * @param string $varType
+     *
+     * @return bool
+     */
+    protected function assertCorrectVarType($var, string $varType): bool
+    {
+        if (is_null($var)) {
+            return true;
+        }
+
+        if (!is_scalar($var) && !is_array($var)) {
+            return true;
+        }
+
+        $assertFunctionName = 'is_' . $varType;
+
+        if (!function_exists($assertFunctionName)) {
+            return false;
+        }
+
+        return $assertFunctionName($var);
+    }
 }
