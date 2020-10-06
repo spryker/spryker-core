@@ -1032,11 +1032,9 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function shimPropertyType(array $propertyDefinition, array $shimChange): array
     {
-        foreach ($shimChange as $fromType => $toType) {
-            if ($propertyDefinition['type'] !== $fromType) {
-                continue;
-            }
+        $toType = $shimChange[$propertyDefinition['type']] ?? null;
 
+        if ($toType !== null) {
             $propertyDefinition['typeShim'] = $toType;
         }
 
@@ -1053,11 +1051,7 @@ class ClassDefinition implements ClassDefinitionInterface
         $propertyType = $this->getPropertyType($property);
         $typeShim = $property['typeShim'] ?? null;
 
-        if (!$typeShim) {
-            return $propertyType;
-        }
-
-        return $this->addShimmedType($propertyType, $typeShim);
+        return $this->buildType($propertyType, $typeShim);
     }
 
     /**
@@ -1070,21 +1064,21 @@ class ClassDefinition implements ClassDefinitionInterface
         $varType = $this->getSetVar($property);
         $typeShim = $property['typeShim'] ?? null;
 
-        if (!$typeShim) {
-            return $varType;
-        }
-
-        return $this->addShimmedType($varType, $typeShim);
+        return $this->buildType($varType, $typeShim);
     }
 
     /**
      * @param string $originalType
-     * @param string $typeShim
+     * @param string|null $typeShim
      *
      * @return string
      */
-    protected function addShimmedType(string $originalType, string $typeShim): string
+    protected function buildType(string $originalType, ?string $typeShim = null): string
     {
+        if (!$typeShim) {
+            return $originalType;
+        }
+
         if (substr($originalType, -4) === 'null') {
             return substr_replace($originalType, $typeShim . '|', -4, 0);
         }
