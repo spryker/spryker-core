@@ -71,8 +71,7 @@ class ProductConfigurationInstanceMapper implements ProductConfigurationInstance
                 ->setPriceTypeName(static::DEFAULT_PRICE_TYPE_NAME)
                 ->setIsMergeable(static::IS_PRICE_MERGEABLE)
                 ->setPriceDimension($priceProductDimensionTransfer)
-                ->setMoneyValue($moneyValue)
-            );
+                ->setMoneyValue($moneyValue));
         }
 
         $productConfigurationInstanceTransfer->setPrices($priceProductTransfers);
