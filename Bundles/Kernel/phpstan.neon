@@ -1,10 +1,11 @@
 parameters:
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false
     dynamicConstantNames:
         - APPLICATION
         - APPLICATION_ENV
         - APPLICATION_STORE
         - APPLICATION_CODE_BUCKET
-
     ignoreErrors:
         - '#Unsafe usage of new static\(\).#'
         - '#Call to an undefined method .+ActiveRecordInterface::save\(\)#'

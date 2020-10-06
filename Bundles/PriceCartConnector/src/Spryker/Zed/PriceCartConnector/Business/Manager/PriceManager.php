@@ -53,21 +53,29 @@ class PriceManager implements PriceManagerInterface
     protected $priceProductService;
 
     /**
+     * @var \Spryker\Zed\PriceCartConnectorExtension\Dependency\Plugin\PriceProductExpanderPluginInterface[]
+     */
+    protected $priceProductExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface $priceProductFacade
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface $priceFacade
      * @param \Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilterInterface $priceProductFilter
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToPriceProductServiceInterface $priceProductService
+     * @param \Spryker\Zed\PriceCartConnectorExtension\Dependency\Plugin\PriceProductExpanderPluginInterface[] $priceProductExpanderPlugins
      */
     public function __construct(
         PriceCartToPriceProductInterface $priceProductFacade,
         PriceCartToPriceInterface $priceFacade,
         PriceProductFilterInterface $priceProductFilter,
-        PriceCartConnectorToPriceProductServiceInterface $priceProductService
+        PriceCartConnectorToPriceProductServiceInterface $priceProductService,
+        array $priceProductExpanderPlugins
     ) {
         $this->priceProductFacade = $priceProductFacade;
         $this->priceFacade = $priceFacade;
         $this->priceProductFilter = $priceProductFilter;
         $this->priceProductService = $priceProductService;
+        $this->priceProductExpanderPlugins = $priceProductExpanderPlugins;
     }
 
     /**
@@ -84,6 +92,7 @@ class PriceManager implements PriceManagerInterface
 
         $priceProductFilterTransfers = $this->createPriceProductFilterTransfers($cartChangeTransfer);
         $priceProductTransfers = $this->priceProductFacade->getValidPrices($priceProductFilterTransfers);
+        $priceProductTransfers = $this->executePriceProductExpanderPlugins($priceProductTransfers, $cartChangeTransfer);
 
         foreach ($cartChangeTransfer->getItems() as $key => $itemTransfer) {
             $priceProductTransfer = $this->resolveProductPriceByPriceProductFilter(
@@ -121,7 +130,10 @@ class PriceManager implements PriceManagerInterface
         array $priceProductTransfers,
         PriceProductFilterTransfer $priceFilterTransfer
     ): PriceProductTransfer {
-        $priceProductTransfer = $this->priceProductService->resolveProductPriceByPriceProductFilter($priceProductTransfers, $priceFilterTransfer);
+        $priceProductTransfer = $this->priceProductService->resolveProductPriceByPriceProductFilter(
+            $priceProductTransfers,
+            $priceFilterTransfer
+        );
 
         if (!$priceProductTransfer) {
             throw new PriceMissingException(
@@ -144,7 +156,10 @@ class PriceManager implements PriceManagerInterface
     {
         $priceProductFilterTransfers = [];
         foreach ($cartChangeTransfer->getItems() as $key => $itemTransfer) {
-            $priceProductFilterTransfers[$key] = $this->priceProductFilter->createPriceProductFilterTransfer($cartChangeTransfer, $itemTransfer);
+            $priceProductFilterTransfers[$key] = $this->priceProductFilter->createPriceProductFilterTransfer(
+                $cartChangeTransfer,
+                $itemTransfer
+            );
         }
 
         return $priceProductFilterTransfers;
@@ -157,8 +172,11 @@ class PriceManager implements PriceManagerInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function setOriginUnitPrices(ItemTransfer $itemTransfer, PriceProductTransfer $priceProductTransfer, string $priceMode): ItemTransfer
-    {
+    protected function setOriginUnitPrices(
+        ItemTransfer $itemTransfer,
+        PriceProductTransfer $priceProductTransfer,
+        string $priceMode
+    ): ItemTransfer {
         $itemTransfer->setPriceProduct($priceProductTransfer);
         if ($priceMode === $this->getNetPriceModeIdentifier()) {
             return $this->setOriginUnitNetPrice($itemTransfer, $priceProductTransfer);
@@ -173,8 +191,10 @@ class PriceManager implements PriceManagerInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function setOriginUnitGrossPrice(ItemTransfer $itemTransfer, PriceProductTransfer $priceProductTransfer): ItemTransfer
-    {
+    protected function setOriginUnitGrossPrice(
+        ItemTransfer $itemTransfer,
+        PriceProductTransfer $priceProductTransfer
+    ): ItemTransfer {
         $itemTransfer->setOriginUnitNetPrice(0);
         $itemTransfer->setOriginUnitGrossPrice($priceProductTransfer->getMoneyValue()->getGrossAmount());
         $itemTransfer->setSumNetPrice(0);
@@ -188,8 +208,10 @@ class PriceManager implements PriceManagerInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function setOriginUnitNetPrice(ItemTransfer $itemTransfer, PriceProductTransfer $priceProductTransfer): ItemTransfer
-    {
+    protected function setOriginUnitNetPrice(
+        ItemTransfer $itemTransfer,
+        PriceProductTransfer $priceProductTransfer
+    ): ItemTransfer {
         $itemTransfer->setOriginUnitNetPrice($priceProductTransfer->getMoneyValue()->getNetAmount());
         $itemTransfer->setOriginUnitGrossPrice(0);
         $itemTransfer->setSumGrossPrice(0);
@@ -288,5 +310,20 @@ class PriceManager implements PriceManagerInterface
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function executePriceProductExpanderPlugins(array $priceProductTransfers, CartChangeTransfer $cartChangeTransfer): array
+    {
+        foreach ($this->priceProductExpanderPlugins as $priceProductExpanderPlugin) {
+            $priceProductTransfers = $priceProductExpanderPlugin->expandPriceProductTransfers($priceProductTransfers, $cartChangeTransfer);
+        }
+
+        return $priceProductTransfers;
     }
 }

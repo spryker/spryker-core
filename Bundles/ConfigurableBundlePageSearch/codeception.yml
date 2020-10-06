@@ -1,4 +1,6 @@
 namespace: ConfigurableBundlePageSearch
+include:
+    - tests/SprykerTest/Zed/ConfigurableBundlePageSearch
 paths:
     tests: tests
     log: tests/_output

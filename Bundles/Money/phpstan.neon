@@ -1,3 +1,5 @@
 parameters:
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Parameter \#1 \$left_operand of function bcdiv expects string, int given.#'

@@ -1,4 +1,5 @@
 parameters:
+    checkMissingIterableValueType: false
     dynamicConstantNames:
         - APPLICATION
         - APPLICATION_ENV
@@ -6,7 +7,4 @@ parameters:
     ignoreErrors:
         - '#Class .+HttpClient constructor invoked with 3 parameters, 5-7 required.#'
         - '#Unsafe usage of new static\(\)#'
-        -
-            message: '#Unreachable statement - code above always terminates#'
-            path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/ZedRequest/src/Spryker/Shared/ZedRequest/Client/AbstractHttpClient.php'
-
+        - { message: '#Unreachable statement - code above always terminates#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/ZedRequest/src/Spryker/Shared/ZedRequest/Client/AbstractHttpClient.php' }

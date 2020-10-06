@@ -140,7 +140,7 @@ class LocatorHelper extends Module
     }
 
     /**
-     * @deprecated Use {@link \SprykerTest\Zed\Testify\Helper\BusinessHelper::getFacade()} instead.
+     * @deprecated Use {@link \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper::getFacade()} instead.
      *
      * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */

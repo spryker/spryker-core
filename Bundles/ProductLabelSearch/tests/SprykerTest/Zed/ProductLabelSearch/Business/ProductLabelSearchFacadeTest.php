@@ -307,6 +307,7 @@ class ProductLabelSearchFacadeTest extends Unit
             ->expandProductPageDataTransferWithProductLabelIds($productPageLoadTransfer);
 
         // Assert
+        /** @var \Generated\Shared\Transfer\ProductPayloadTransfer $payloadTransfer */
         foreach ($expandedProductPageLoadTransfer->getPayloadTransfers() as $payloadTransfer) {
             $this->assertNotEmpty($payloadTransfer->getLabelIds());
             $this->assertEquals(

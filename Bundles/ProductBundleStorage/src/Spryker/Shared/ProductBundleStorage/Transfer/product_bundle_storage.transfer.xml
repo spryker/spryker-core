@@ -11,6 +11,7 @@
 
     <transfer name="ProductForProductBundleStorage">
         <property name="idProductConcrete" type="int"/>
+        <property name="sku" type="string"/>
         <property name="quantity" type="int"/>
     </transfer>
 
@@ -25,6 +26,10 @@
         <property name="applyGrouped" type="bool"/>
         <property name="isProductConcreteActive" type="bool"/>
         <property name="isBundledProductActive" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductBundleStorageCriteria">
+        <property name="productConcreteIds" type="int[]" singular="idProductConcrete"/>
     </transfer>
 
     <transfer name="ProductBundleCollection">

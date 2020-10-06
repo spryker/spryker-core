@@ -423,7 +423,8 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         $productOfferQuery = $this->getFactory()->getProductOfferPropelQuery();
 
         $productOfferQuery = $this->joinProductLocalizedAttributesToProductOfferQuery($productOfferQuery, $idLocale);
-        $productOfferQuery->leftJoinSpyProductOfferValidity()
+        $productOfferQuery->filterByFkMerchant($idMerchant)
+            ->leftJoinSpyProductOfferValidity()
             ->leftJoinProductOfferStock()
             ->useProductOfferStockQuery(null, Criteria::LEFT_JOIN)
                 ->useStockQuery()
@@ -447,7 +448,6 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             ->addAsColumn(ProductOfferValidityTransfer::VALID_TO, SpyProductOfferValidityTableMap::COL_VALID_TO)
             ->addAsColumn(ProductOfferTransfer::CREATED_AT, SpyProductOfferTableMap::COL_CREATED_AT)
             ->addAsColumn(ProductOfferTransfer::UPDATED_AT, SpyProductOfferTableMap::COL_UPDATED_AT)
-            ->filterByFkMerchant($idMerchant)
             ->select([
                 ProductOfferTransfer::PRODUCT_OFFER_REFERENCE,
                 ProductOfferTransfer::MERCHANT_SKU,

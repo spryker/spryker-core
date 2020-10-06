@@ -150,7 +150,7 @@ class SendOrderInvoicesTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
         $twigEnvironmentMock->method('getExtension')
-            ->with('translator')
+            ->with(TwigTranslatorPlugin::class)
             ->willReturn(new TwigTranslatorPlugin());
         $twigEnvironmentMock->method('render')
             ->willReturn('Rendered page');

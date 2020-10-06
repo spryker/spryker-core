@@ -15,6 +15,7 @@ interface PriceCartConnectorFacadeInterface
     /**
      * Specification:
      *  - Adds product prices to item, based on currency, price mode and price type.
+     *  - Executes PriceProductExpanderPluginInterface plugin stack.
      *
      * @api
      *

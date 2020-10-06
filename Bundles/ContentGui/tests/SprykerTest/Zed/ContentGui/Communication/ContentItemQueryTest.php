@@ -45,6 +45,6 @@ class ContentItemQueryTest extends Unit
 
         // Assert
         $this->assertNotEmpty($result);
-        $this->assertEquals($selectedContentItem->getKey(), $result[0][ContentTableConstants::COL_KEY]);
+        $this->assertSame($selectedContentItem->getKey(), $result[0][ContentTableConstants::COL_KEY]);
     }
 }

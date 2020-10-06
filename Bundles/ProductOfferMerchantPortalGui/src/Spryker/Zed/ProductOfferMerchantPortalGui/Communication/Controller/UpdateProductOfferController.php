@@ -46,24 +46,24 @@ class UpdateProductOfferController extends AbstractProductOfferController
         $productAbstractTransfer = $this->getFactory()->getProductFacade()->findProductAbstractById(
             $productConcreteTransfer->getFkProductAbstract()
         );
-        $productOfferUpdateForm = $this->getFactory()->createProductOfferUpdateForm(
+        $productOfferForm = $this->getFactory()->createProductOfferForm(
             $productOfferTransfer,
             $productOfferUpdateFormDataProvider->getOptions($productAbstractTransfer)
         );
-        $productOfferUpdateForm->handleRequest($request);
+        $productOfferForm->handleRequest($request);
 
-        if ($productOfferUpdateForm->isSubmitted() && $productOfferUpdateForm->isValid()) {
-            $productOfferResponseTransfer = $this->getFactory()->getProductOfferFacade()->update($productOfferUpdateForm->getData());
+        if ($productOfferForm->isSubmitted() && $productOfferForm->isValid()) {
+            $productOfferResponseTransfer = $this->getFactory()->getProductOfferFacade()->update($productOfferForm->getData());
         }
 
         $productOfferResponseTransfer = $productOfferResponseTransfer ?? new ProductOfferResponseTransfer();
         $productOfferResponseTransfer->setProductOffer($productOfferTransfer);
 
-        return $this->getResponse($productOfferUpdateForm, $productConcreteTransfer, $productAbstractTransfer, $productOfferResponseTransfer);
+        return $this->getResponse($productOfferForm, $productConcreteTransfer, $productAbstractTransfer, $productOfferResponseTransfer);
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $productOfferUpdateForm
+     * @param \Symfony\Component\Form\FormInterface $productOfferForm
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\ProductOfferResponseTransfer $productOfferResponseTransfer
@@ -71,7 +71,7 @@ class UpdateProductOfferController extends AbstractProductOfferController
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     protected function getResponse(
-        FormInterface $productOfferUpdateForm,
+        FormInterface $productOfferForm,
         ProductConcreteTransfer $productConcreteTransfer,
         ProductAbstractTransfer $productAbstractTransfer,
         ProductOfferResponseTransfer $productOfferResponseTransfer
@@ -82,7 +82,7 @@ class UpdateProductOfferController extends AbstractProductOfferController
 
         $responseData = [
             'form' => $this->renderView('@ProductOfferMerchantPortalGui/Partials/offer_form.twig', [
-                'form' => $productOfferUpdateForm->createView(),
+                'form' => $productOfferForm->createView(),
                 'product' => $productConcreteTransfer,
                 'productName' => $this->getFactory()->createProductNameBuilder()->buildProductConcreteName($productConcreteTransfer, $localeTransfer),
                 'productAttributes' => $this->getProductAttributes($localeTransfer, $productConcreteTransfer, $productAbstractTransfer),
@@ -90,11 +90,11 @@ class UpdateProductOfferController extends AbstractProductOfferController
             ])->getContent(),
         ];
 
-        if (!$productOfferUpdateForm->isSubmitted()) {
+        if (!$productOfferForm->isSubmitted()) {
             return new JsonResponse($responseData);
         }
 
-        if ($productOfferUpdateForm->isValid() && $productOfferResponseTransfer->getIsSuccessful()) {
+        if ($productOfferForm->isValid() && $productOfferResponseTransfer->getIsSuccessful()) {
             $responseData['postActions'] = [
                 [
                     'type' => 'close_overlay',

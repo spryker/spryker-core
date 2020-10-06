@@ -81,7 +81,7 @@ class CacheKeyGeneratorTest extends Unit
         $cacheKey = $this->cacheKeyGenerator->generateCacheKey($request);
 
         // Assert
-        $this->assertEquals($expectedResult, empty($cacheKey));
+        $this->assertSame($expectedResult, empty($cacheKey));
     }
 
     /**
