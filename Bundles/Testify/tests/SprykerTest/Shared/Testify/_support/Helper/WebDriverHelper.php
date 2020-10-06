@@ -65,10 +65,6 @@ class WebDriverHelper extends Extension
             $this->config['path'] = static::DEFAULT_PATH;
         }
 
-        if (!file_exists(realpath($this->config['path']))) {
-            throw new ExtensionException($this, "Webdriver executable not found: {$this->config['path']}");
-        }
-
         if (!isset($this->config['port'])) {
             $this->config['port'] = static::DEFAULT_PORT;
         }
@@ -93,6 +89,10 @@ class WebDriverHelper extends Extension
     public function suiteInit(SuiteEvent $e): void
     {
         if (!$this->isRemoteEnabled()) {
+
+            if (!file_exists(realpath($this->config['path']))) {
+                throw new ExtensionException($this, "Webdriver executable not found: {$this->config['path']}");
+            }
 
             if (isset($this->config['suites'])) {
                 if (is_string($this->config['suites'])) {
