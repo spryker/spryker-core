@@ -19,6 +19,7 @@ class ProductConfigurationGuiRepository extends AbstractRepository implements Pr
 {
     /**
      * @module Product
+     * @module ProductConfiguration
      *
      * @param string $abstractProductSku
      *
