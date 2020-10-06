@@ -227,11 +227,13 @@ class ClassDefinition implements ClassDefinitionInterface
         $property['name'] = lcfirst($property['name']);
         $propertyInfo = [
             'name' => $property['name'],
-            'type' => $this->buildPropertyType($property),
+            'type' => $this->getPropertyType($property),
             'is_typed_array' => $property['is_typed_array'],
             'bundles' => $property['bundles'],
             'is_associative' => $property['is_associative'],
         ];
+
+        $propertyInfo = $this->addTypeShim($propertyInfo, $property);
 
         $this->properties[$property['name']] = $propertyInfo;
     }
@@ -726,8 +728,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'name' => $methodName,
             'property' => $propertyName,
             'propertyConst' => $this->getPropertyConstantName($property),
-            'var' => $this->buildSetVar($property),
-            'typeShim' => $property['typeShim'] ?? null,
+            'var' => $this->getSetVar($property),
             'valueObject' => false,
             'bundles' => $property['bundles'],
             'typeHint' => null,
@@ -735,6 +736,7 @@ class ClassDefinition implements ClassDefinitionInterface
         ];
         $method = $this->addTypeHint($property, $method);
         $method = $this->addDefaultNull($method, $property);
+        $method = $this->addTypeShim($method, $property);
 
         if ($this->isValueObject($property)) {
             $method['valueObject'] = $this->getShortClassName(
@@ -1042,47 +1044,29 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
+     * @param array $classMemberData
      * @param array $property
      *
-     * @return string
+     * @return array
      */
-    protected function buildPropertyType(array $property): string
+    protected function addTypeShim(array $classMemberData, array $property): array
     {
-        $propertyType = $this->getPropertyType($property);
-        $typeShim = $property['typeShim'] ?? null;
+        $typeShim = $this->getTypeShim($property);
 
-        return $this->buildType($propertyType, $typeShim);
+        if ($typeShim !== null) {
+            $classMemberData['typeShim'] = $typeShim;
+        }
+
+        return $classMemberData;
     }
 
     /**
      * @param array $property
      *
-     * @return string
+     * @return string|null
      */
-    protected function buildSetVar(array $property): string
+    protected function getTypeShim(array $property): ?string
     {
-        $varType = $this->getSetVar($property);
-        $typeShim = $property['typeShim'] ?? null;
-
-        return $this->buildType($varType, $typeShim);
-    }
-
-    /**
-     * @param string $originalType
-     * @param string|null $typeShim
-     *
-     * @return string
-     */
-    protected function buildType(string $originalType, ?string $typeShim = null): string
-    {
-        if (!$typeShim) {
-            return $originalType;
-        }
-
-        if (substr($originalType, -4) === 'null') {
-            return substr_replace($originalType, $typeShim . '|', -4, 0);
-        }
-
-        return sprintf('%s|%s', $originalType, $typeShim);
+        return $property['typeShim'] ?? null;
     }
 }

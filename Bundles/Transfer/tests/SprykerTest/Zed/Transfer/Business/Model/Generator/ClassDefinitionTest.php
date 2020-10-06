@@ -689,7 +689,7 @@ class ClassDefinitionTest extends Unit
                 ],
                 'expected types' => [
                     'property1',
-                    'int|string|null',
+                    'string|int|null',
                 ],
             ],
             'typed array type' => [
@@ -702,7 +702,7 @@ class ClassDefinitionTest extends Unit
                 ],
                 'expected types' => [
                     'property2',
-                    'string[]|bool',
+                    'bool|string[]',
                 ],
             ],
             'transfer type' => [
@@ -715,7 +715,7 @@ class ClassDefinitionTest extends Unit
                 ],
                 'expected types' => [
                     'property3',
-                    '\Generated\Shared\Transfer\DummyTransfer|int',
+                    'int|\Generated\Shared\Transfer\DummyTransfer',
                 ],
             ],
         ];
@@ -734,7 +734,10 @@ class ClassDefinitionTest extends Unit
         $methodName = 'set' . ucfirst($propertyName);
         $this->assertTrue(isset($methods[$methodName]));
         $this->assertTrue(isset($methods[$methodName]['typeShim']));
-        $this->assertEquals($expectedVarTypes, $methods[$methodName]['var']);
+        $this->assertEquals(
+            $expectedVarTypes,
+            sprintf('%s|%s', $methods[$methodName]['typeShim'], $methods[$methodName]['var'])
+        );
     }
 
     /**
