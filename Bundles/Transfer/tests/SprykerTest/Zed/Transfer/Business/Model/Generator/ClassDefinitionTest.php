@@ -379,6 +379,7 @@ class ClassDefinitionTest extends Unit
             'property' => $property,
             'bundles' => $bundles,
             'deprecationDescription' => null,
+            'shimNotice' => null,
         ];
 
         if ($var !== null) {
@@ -430,6 +431,7 @@ class ClassDefinitionTest extends Unit
     ): array {
         $method = $this->getMethod($method, $property, $var, $return, $typeHint, $constant, $bundles, $hasDefaultNull);
         unset($method['typeHint']);
+        unset($method['shimNotice']);
 
         return $method;
     }
@@ -459,6 +461,7 @@ class ClassDefinitionTest extends Unit
         $method = $this->getMethod($method, $property, $var, $return, $typeHint, $constant, $bundles);
         $method['parent'] = $parent;
         $method['is_associative'] = false;
+        unset($method['shimNotice']);
 
         return $method;
     }
@@ -733,11 +736,7 @@ class ClassDefinitionTest extends Unit
         [$propertyName, $expectedVarTypes] = $expectedTypes;
         $methodName = 'set' . ucfirst($propertyName);
         $this->assertTrue(isset($methods[$methodName]));
-        $this->assertTrue(isset($methods[$methodName]['typeShim']));
-        $this->assertEquals(
-            $expectedVarTypes,
-            sprintf('%s|%s', $methods[$methodName]['typeShim'], $methods[$methodName]['var'])
-        );
+        $this->assertEquals($expectedVarTypes, $methods[$methodName]['var']);
     }
 
     /**
