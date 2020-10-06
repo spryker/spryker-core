@@ -147,9 +147,9 @@ class CmsSlotBlockRepository extends AbstractRepository implements CmsSlotBlockR
     ): array {
         $cmsBlockQuery = $this->getFactory()->getCmsBlockQuery();
 
-        $cmsBlockName = trim($cmsBlockCriteriaTransfer->getNamePattern() ?? '');
-        if ($cmsBlockName !== '') {
-            $nameTerm = '%' . mb_strtoupper($cmsBlockName) . '%';
+        $cmsBlockNamePattern = trim($cmsBlockCriteriaTransfer->getNamePattern() ?? '');
+        if ($cmsBlockNamePattern !== '') {
+            $nameTerm = '%' . mb_strtoupper($cmsBlockNamePattern) . '%';
             $cmsBlockQuery->where('UPPER(' . SpyCmsBlockTableMap::COL_NAME . ') LIKE ?', $nameTerm);
         }
 
