@@ -746,9 +746,9 @@ class ProductImageStorageListenerTest extends Unit
         $productImages = $this->getProductAbstractImages();
 
         // Assert
-        $this->assertEquals($productImageTransferSortedFirst->getIdProductImage(), $productImages[0]['id_product_image']);
-        $this->assertEquals($productImageTransferSortedSecond->getIdProductImage(), $productImages[1]['id_product_image']);
-        $this->assertEquals($productImageTransferSortedThird->getIdProductImage(), $productImages[2]['id_product_image']);
+        $this->assertSame($productImageTransferSortedFirst->getIdProductImage(), $productImages[0]['id_product_image']);
+        $this->assertSame($productImageTransferSortedSecond->getIdProductImage(), $productImages[1]['id_product_image']);
+        $this->assertSame($productImageTransferSortedThird->getIdProductImage(), $productImages[2]['id_product_image']);
     }
 
     /**
@@ -824,9 +824,9 @@ class ProductImageStorageListenerTest extends Unit
         $productImages = $this->getProductConcreteImages();
 
         // Assert
-        $this->assertEquals($productImageTransferSortedFirst->getIdProductImage(), $productImages[0]['id_product_image']);
-        $this->assertEquals($productImageTransferSortedSecond->getIdProductImage(), $productImages[1]['id_product_image']);
-        $this->assertEquals($productImageTransferSortedThird->getIdProductImage(), $productImages[2]['id_product_image']);
+        $this->assertSame($productImageTransferSortedFirst->getIdProductImage(), $productImages[0]['id_product_image']);
+        $this->assertSame($productImageTransferSortedSecond->getIdProductImage(), $productImages[1]['id_product_image']);
+        $this->assertSame($productImageTransferSortedThird->getIdProductImage(), $productImages[2]['id_product_image']);
     }
 
     /**

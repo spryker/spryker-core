@@ -66,7 +66,7 @@ class SchedulerFacadeTest extends Unit
         $this->assertNotEmpty($responseCollectionTransfer->getResponses());
 
         foreach ($responseCollectionTransfer->getResponses() as $responseTransfer) {
-            $this->assertEquals(static::TEST_SCHEDULER, $responseTransfer->getSchedule()->getIdScheduler());
+            $this->assertSame(static::TEST_SCHEDULER, $responseTransfer->getSchedule()->getIdScheduler());
         }
     }
 
@@ -81,7 +81,7 @@ class SchedulerFacadeTest extends Unit
         $this->assertNotEmpty($responseCollectionTransfer->getResponses());
 
         foreach ($responseCollectionTransfer->getResponses() as $responseTransfer) {
-            $this->assertEquals(static::TEST_SCHEDULER, $responseTransfer->getSchedule()->getIdScheduler());
+            $this->assertSame(static::TEST_SCHEDULER, $responseTransfer->getSchedule()->getIdScheduler());
         }
     }
 
@@ -96,7 +96,7 @@ class SchedulerFacadeTest extends Unit
         $this->assertNotEmpty($responseCollectionTransfer->getResponses());
 
         foreach ($responseCollectionTransfer->getResponses() as $responseTransfer) {
-            $this->assertEquals(static::TEST_SCHEDULER, $responseTransfer->getSchedule()->getIdScheduler());
+            $this->assertSame(static::TEST_SCHEDULER, $responseTransfer->getSchedule()->getIdScheduler());
         }
     }
 
@@ -111,7 +111,7 @@ class SchedulerFacadeTest extends Unit
         $this->assertNotEmpty($responseCollectionTransfer->getResponses());
 
         foreach ($responseCollectionTransfer->getResponses() as $responseTransfer) {
-            $this->assertEquals(static::TEST_SCHEDULER, $responseTransfer->getSchedule()->getIdScheduler());
+            $this->assertSame(static::TEST_SCHEDULER, $responseTransfer->getSchedule()->getIdScheduler());
         }
     }
 

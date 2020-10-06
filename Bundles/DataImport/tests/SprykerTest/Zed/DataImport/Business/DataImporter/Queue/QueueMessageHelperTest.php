@@ -62,7 +62,7 @@ class QueueMessageHelperTest extends Unit
     {
         $queueReceiveMessageTransfer = $this->getQueueReceiveMessageTransfer();
 
-        $this->assertEquals(static::DUMMY_MESSAGE_BODY, $this->queueMessageHelper->getDecodedMessageBody($queueReceiveMessageTransfer));
+        $this->assertSame(static::DUMMY_MESSAGE_BODY, $this->queueMessageHelper->getDecodedMessageBody($queueReceiveMessageTransfer));
     }
 
     /**

@@ -77,7 +77,7 @@ class ContentProductClientTest extends Unit
             ->executeProductAbstractListTypeByKey(static::CONTENT_KEY, static::LOCALE);
 
         // Assert
-        $this->assertEquals(ContentProductAbstractListTypeTransfer::class, get_class($systemUnderTest));
+        $this->assertSame(ContentProductAbstractListTypeTransfer::class, get_class($systemUnderTest));
     }
 
     /**

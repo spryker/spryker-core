@@ -40,7 +40,7 @@ class PriceChangeExpanderTest extends Unit
         $cartChangeTransfer = $priceChangeExpander->setCustomAmountPrice($this->tester->getCartChangeTransfer());
 
         foreach ($cartChangeTransfer->getItems() as $item) {
-            $this->assertEquals(static::EXPECTED_UNIT_NET_PRICE, $item->getUnitNetPrice());
+            $this->assertSame(static::EXPECTED_UNIT_NET_PRICE, $item->getUnitNetPrice());
         }
     }
 }

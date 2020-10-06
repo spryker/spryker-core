@@ -1,4 +1,6 @@
 namespace: CompanyUserStorage
+include:
+    - tests/SprykerTest/Zed/CompanyUserStorage
 paths:
     tests: tests
     log: tests/_output

@@ -22,7 +22,7 @@ class MerchantRelationshipDataImportHelper extends Module
     public function assertDatabaseTableIsEmpty(): void
     {
         $query = $this->getMerchantRelationshipQuery();
-        $this->assertEquals(0, $query->count(), 'Found at least one entry in the database table but database table was expected to be empty.');
+        $this->assertSame(0, $query->count(), 'Found at least one entry in the database table but database table was expected to be empty.');
     }
 
     /**

@@ -216,7 +216,7 @@ class SharedCartsRestApiFacadeTest extends Test
 
         //Assert
         $this->assertCount(0, $shareCartResponseTransfer->getShareDetails());
-        $this->assertEquals(SharedCartsRestApiConfig::ERROR_IDENTIFIER_QUOTE_NOT_FOUND, $shareCartResponseTransfer->getErrorIdentifier());
+        $this->assertSame(SharedCartsRestApiConfig::ERROR_IDENTIFIER_QUOTE_NOT_FOUND, $shareCartResponseTransfer->getErrorIdentifier());
     }
 
     /**
@@ -259,7 +259,7 @@ class SharedCartsRestApiFacadeTest extends Test
 
         //Assert
         $this->assertCount(0, $shareCartResponseTransfer->getShareDetails());
-        $this->assertEquals(SharedCartsRestApiConfig::ERROR_IDENTIFIER_ACTION_FORBIDDEN, $shareCartResponseTransfer->getErrorIdentifier());
+        $this->assertSame(SharedCartsRestApiConfig::ERROR_IDENTIFIER_ACTION_FORBIDDEN, $shareCartResponseTransfer->getErrorIdentifier());
     }
 
     /**
@@ -327,7 +327,7 @@ class SharedCartsRestApiFacadeTest extends Test
 
         //Assert
         $this->assertCount(0, $shareCartResponseTransfer->getShareDetails());
-        $this->assertEquals(SharedCartsRestApiConfig::ERROR_IDENTIFIER_SHARED_CART_NOT_FOUND, $shareCartResponseTransfer->getErrorIdentifier());
+        $this->assertSame(SharedCartsRestApiConfig::ERROR_IDENTIFIER_SHARED_CART_NOT_FOUND, $shareCartResponseTransfer->getErrorIdentifier());
     }
 
     /**
@@ -362,7 +362,7 @@ class SharedCartsRestApiFacadeTest extends Test
 
         //Assert
         $this->assertCount(0, $shareCartResponseTransfer->getShareDetails());
-        $this->assertEquals(SharedCartsRestApiConfig::ERROR_IDENTIFIER_ACTION_FORBIDDEN, $shareCartResponseTransfer->getErrorIdentifier());
+        $this->assertSame(SharedCartsRestApiConfig::ERROR_IDENTIFIER_ACTION_FORBIDDEN, $shareCartResponseTransfer->getErrorIdentifier());
     }
 
     /**
@@ -411,7 +411,7 @@ class SharedCartsRestApiFacadeTest extends Test
 
         //Assert
         $this->assertCount(0, $shareCartResponseTransfer->getShareDetails());
-        $this->assertEquals(SharedCartsRestApiConfig::ERROR_IDENTIFIER_SHARED_CART_NOT_FOUND, $shareCartResponseTransfer->getErrorIdentifier());
+        $this->assertSame(SharedCartsRestApiConfig::ERROR_IDENTIFIER_SHARED_CART_NOT_FOUND, $shareCartResponseTransfer->getErrorIdentifier());
     }
 
     /**
@@ -437,7 +437,7 @@ class SharedCartsRestApiFacadeTest extends Test
 
         //Assert
         $this->assertCount(0, $shareCartResponseTransfer->getShareDetails());
-        $this->assertEquals(SharedCartsRestApiConfig::ERROR_IDENTIFIER_ACTION_FORBIDDEN, $shareCartResponseTransfer->getErrorIdentifier());
+        $this->assertSame(SharedCartsRestApiConfig::ERROR_IDENTIFIER_ACTION_FORBIDDEN, $shareCartResponseTransfer->getErrorIdentifier());
     }
 
     /**
@@ -473,7 +473,7 @@ class SharedCartsRestApiFacadeTest extends Test
 
         // Assert
         $this->assertNotNull($quoteTransfer->getQuotePermissionGroup());
-        $this->assertEquals(
+        $this->assertSame(
             $quoteTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup(),
             $this->readOnlyQuotePermissionGroup->getIdQuotePermissionGroup()
         );
