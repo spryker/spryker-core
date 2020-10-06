@@ -25,7 +25,7 @@ class TranslatorFactory extends AbstractFactory
     }
 
     /**
-     * @return \Symfony\Component\Translation\TranslatorInterface|\Symfony\Contracts\Translation\TranslatorInterface
+     * @return \Symfony\Contracts\Translation\TranslatorInterface
      */
     public function createTranslator()
     {

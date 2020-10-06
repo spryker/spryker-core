@@ -66,7 +66,7 @@ abstract class AbstractTransferValidator
         /** @var \Symfony\Component\Validator\ConstraintViolation $violation */
         foreach ($violations as $violation) {
             $constraintViolationTransfer->addMessage(
-                (new MessageTransfer())->setValue($violation->getMessage())
+                (new MessageTransfer())->setValue((string)$violation->getMessage())
             );
         }
 

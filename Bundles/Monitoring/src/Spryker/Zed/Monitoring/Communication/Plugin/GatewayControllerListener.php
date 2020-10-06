@@ -10,7 +10,7 @@ namespace Spryker\Zed\Monitoring\Communication\Plugin;
 use Spryker\Service\Monitoring\MonitoringServiceInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -34,11 +34,11 @@ class GatewayControllerListener extends AbstractPlugin implements EventSubscribe
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
      *
      * @return void
      */
-    public function onKernelController(FilterControllerEvent $event): void
+    public function onKernelController(ControllerEvent $event): void
     {
         $request = $event->getRequest();
 

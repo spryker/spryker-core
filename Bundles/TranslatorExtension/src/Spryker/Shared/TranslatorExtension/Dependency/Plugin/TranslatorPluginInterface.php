@@ -9,6 +9,9 @@ namespace Spryker\Shared\TranslatorExtension\Dependency\Plugin;
 
 use Spryker\Shared\Translator\TranslatorInterface;
 
+/**
+ * @deprecated Use {@link \Spryker\Shared\TranslatorExtension\Dependency\Plugin\Translator\TranslatorPluginInterface} instead.
+ */
 interface TranslatorPluginInterface extends TranslatorInterface
 {
     /**
@@ -24,7 +27,7 @@ interface TranslatorPluginInterface extends TranslatorInterface
      *
      * @return string
      */
-    public function trans($id, array $parameters = [], $domain = null, $locale = null): string;
+    public function trans(string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string;
 
     /**
      * Specification:
@@ -40,7 +43,7 @@ interface TranslatorPluginInterface extends TranslatorInterface
      *
      * @return string
      */
-    public function transChoice($id, $number, array $parameters = [], $domain = null, $locale = null): string;
+    public function transChoice(string $id, int $number, array $parameters = [], ?string $domain = null, ?string $locale = null): string;
 
     /**
      * Specification:
@@ -52,7 +55,7 @@ interface TranslatorPluginInterface extends TranslatorInterface
      *
      * @return void
      */
-    public function setLocale($locale): void;
+    public function setLocale(string $locale): void;
 
     /**
      * Specification:

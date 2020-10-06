@@ -6,7 +6,9 @@
             {% do productImageSet.setRendered %}
         {% endif %}
 
-        {{ form_widget(productImageSet) }}
+        {% if not productImageSet.isRendered %}
+            {{ form_widget(productImageSet) }}
+        {% endif %}
     {% endfor %}
 
     <a href="#" class="btn btn-outline btn-primary add-another-image-set m-t-md">

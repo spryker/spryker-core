@@ -141,7 +141,7 @@ class RouterHelper extends Module
         $defaults['_controller'] = $controller;
         $route = new Route($path, $defaults, $requirements, $options, $host, $schemes, $methods, $condition);
 
-        $this->getRouteCollection()->add($name, $route);
+        $this->getRouteCollection()->add($name, $route, 0);
 
         /** @var \Spryker\Zed\Router\Business\Router\ChainRouter $chainRouter */
         $chainRouter = $this->getContainer()->get(static::SERVICE_ROUTER);
