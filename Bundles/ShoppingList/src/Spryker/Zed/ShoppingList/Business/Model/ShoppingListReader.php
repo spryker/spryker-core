@@ -28,6 +28,7 @@ use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeIn
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface;
 use Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface;
+use Spryker\Zed\ShoppingList\ShoppingListConfig as ModuleShoppingListConfig;
 
 class ShoppingListReader implements ShoppingListReaderInterface
 {
@@ -81,7 +82,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
         ShoppingListToCompanyUserFacadeInterface $customerFacade,
         ShoppingListItemPluginExecutorInterface $pluginExecutor,
         ShoppingListToMessengerFacadeInterface $messengerFacade,
-        \Spryker\Zed\ShoppingList\ShoppingListConfig $config
+        ModuleShoppingListConfig $config
     ) {
         $this->shoppingListRepository = $shoppingListRepository;
         $this->productFacade = $productFacade;
