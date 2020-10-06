@@ -1,4 +1,7 @@
-namespace: SprykerTest
+namespace: ConfigurableBundleCart
+include:
+    - tests/SprykerTest/Client/ConfigurableBundleCart
+    - tests/SprykerTest/Zed/ConfigurableBundleCart
 paths:
     tests: tests
     support: .
