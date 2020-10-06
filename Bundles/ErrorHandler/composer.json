@@ -13,12 +13,14 @@
     "spryker/monitoring": "^1.0.0 || ^2.0.0"
   },
   "require-dev": {
+    "filp/whoops": "^2.1",
     "spryker/code-sniffer": "*",
     "spryker/container": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
+    "filp/whoops": "When you want to use the ErrorHandler plugins.",
     "spryker/container": "If you want to use Container.",
     "spryker/silex": "If you want to use ServiceProvider."
   },

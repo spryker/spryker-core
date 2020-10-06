@@ -9,17 +9,31 @@ namespace Spryker\Zed\Development\Business\Dependency\DependencyFinder;
 
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContextInterface;
+use Spryker\Zed\Development\DevelopmentConfig;
 
-class CodeceptionDependencyFinder extends AbstractFileDependencyFinder
+class MappedDependencyFinder extends AbstractFileDependencyFinder
 {
-    public const TYPE_CODECEPTION = 'codeception';
+    public const TYPE_MAPPED = 'mapped';
+
+    /**
+     * @var \Spryker\Zed\Development\DevelopmentConfig
+     */
+    protected $config;
+
+    /**
+     * @param \Spryker\Zed\Development\DevelopmentConfig $config
+     */
+    public function __construct(DevelopmentConfig $config)
+    {
+        $this->config = $config;
+    }
 
     /**
      * @return string
      */
     public function getType(): string
     {
-        return static::TYPE_CODECEPTION;
+        return static::TYPE_MAPPED;
     }
 
     /**
@@ -33,7 +47,7 @@ class CodeceptionDependencyFinder extends AbstractFileDependencyFinder
             return false;
         }
 
-        if ($context->getFileInfo()->getFilename() !== 'codeception.yml') {
+        if ($context->getFileInfo()->getFilename() !== 'composer.json') {
             return false;
         }
 
@@ -48,9 +62,13 @@ class CodeceptionDependencyFinder extends AbstractFileDependencyFinder
      */
     public function findDependencies(DependencyFinderContextInterface $context, DependencyContainerInterface $dependencyContainer): DependencyContainerInterface
     {
-        if (preg_match_all('/SprykerTest\\\\(.*?)\\\\(.*?)\\\\/', $context->getFileInfo()->getContents(), $matches, PREG_SET_ORDER)) {
-            foreach ($matches as $match) {
-                $dependencyContainer->addDependency(sprintf('spryker/%s', $this->getFilter()->filter($match[2])), $this->getType(), false, true);
+        $fileContent = $context->getFileInfo()->getContents();
+        $composerJsonAsArray = json_decode($fileContent, true);
+        $composerName = $composerJsonAsArray['name'];
+
+        foreach ($this->config->getExternalToInternalMap() as $externalPackageName => $internalModulePackageName) {
+            if ($internalModulePackageName === $composerName) {
+                $dependencyContainer->addDependency($externalPackageName, $this->getType());
             }
         }
 

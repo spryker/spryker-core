@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Development\Business\Dependency\DependencyFinder;
 
 use Exception;
+use Spryker\Zed\Development\Business\Dependency\ComposerParser\ExternalDependencyParserInterface;
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContextInterface;
 use Spryker\Zed\Development\Business\Dependency\ModuleParser\UseStatementParserInterface;
@@ -24,17 +25,32 @@ class ExternalDependencyFinder extends AbstractFileDependencyFinder
     protected $useStatementParser;
 
     /**
+     * @var \Spryker\Zed\Development\Business\Dependency\ComposerParser\ExternalDependencyParserInterface
+     */
+    protected $externalDependencyParser;
+
+    /**
      * @var \Spryker\Zed\Development\DevelopmentConfig
      */
     protected $config;
 
     /**
+     * @var array
+     */
+    protected $foundPackagesByUseStatement = [];
+
+    /**
      * @param \Spryker\Zed\Development\Business\Dependency\ModuleParser\UseStatementParserInterface $useStatementParser
+     * @param \Spryker\Zed\Development\Business\Dependency\ComposerParser\ExternalDependencyParserInterface $externalDependencyParser
      * @param \Spryker\Zed\Development\DevelopmentConfig $config
      */
-    public function __construct(UseStatementParserInterface $useStatementParser, DevelopmentConfig $config)
-    {
+    public function __construct(
+        UseStatementParserInterface $useStatementParser,
+        ExternalDependencyParserInterface $externalDependencyParser,
+        DevelopmentConfig $config
+    ) {
         $this->useStatementParser = $useStatementParser;
+        $this->externalDependencyParser = $externalDependencyParser;
         $this->config = $config;
     }
 
@@ -116,8 +132,18 @@ class ExternalDependencyFinder extends AbstractFileDependencyFinder
     {
         $dependentModules = [];
         foreach ($useStatements as $useStatement) {
-            if ($this->isExternalDependency($useStatement)) {
+            if ($this->isMappedExternalDependency($useStatement)) {
                 $dependentModules[] = $this->getDependentModule($useStatement);
+
+                continue;
+            }
+
+            if ($this->isInternalNamespace($useStatement)) {
+                continue;
+            }
+
+            if ($this->isUnMappedExternalDependency($useStatement)) {
+                $dependentModules[] = $this->externalDependencyParser->findPackageNameByNamespace($useStatement);
             }
         }
 
@@ -129,12 +155,48 @@ class ExternalDependencyFinder extends AbstractFileDependencyFinder
      *
      * @return bool
      */
-    protected function isExternalDependency(string $useStatement): bool
+    protected function isInternalNamespace(string $useStatement): bool
+    {
+        if (strpos($useStatement, '\\') === false) {
+            return true;
+        }
+
+        foreach ($this->config->getInternalNamespaces() as $namespace) {
+            if (strpos($useStatement, $namespace) === 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $useStatement
+     *
+     * @return bool
+     */
+    protected function isMappedExternalDependency(string $useStatement): bool
     {
         foreach ($this->config->getExternalToInternalNamespaceMap() as $namespace => $package) {
             if (strpos($useStatement, $namespace) === 0) {
                 return true;
             }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $useStatement
+     *
+     * @return bool
+     */
+    protected function isUnMappedExternalDependency(string $useStatement): bool
+    {
+        $packageName = $this->externalDependencyParser->findPackageNameByNamespace($useStatement);
+
+        if ($packageName !== null) {
+            return true;
         }
 
         return false;
@@ -155,7 +217,11 @@ class ExternalDependencyFinder extends AbstractFileDependencyFinder
             }
         }
 
-        throw new Exception('Could not map external to internal dependency!');
+        throw new Exception(sprintf(
+            'Could not map "%s" to a internal dependency! Please update "%s" and add a new mapping.',
+            $useStatement,
+            '\Spryker\Zed\Development\DevelopmentConfig::getExternalToInternalNamespaceMap()'
+        ));
     }
 
     /**
