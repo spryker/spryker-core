@@ -62,7 +62,7 @@
     </transfer>
 
     <transfer name="CmsBlockCriteria">
-        <property name="name" type="string"/>
+        <property name="namePattern" type="string"/>
         <property name="pagination" type="Pagination"/>
     </transfer>
 

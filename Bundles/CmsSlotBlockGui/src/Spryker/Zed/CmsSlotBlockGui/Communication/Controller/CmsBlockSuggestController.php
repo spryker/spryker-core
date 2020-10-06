@@ -38,51 +38,22 @@ class CmsBlockSuggestController extends AbstractController
         $idCmsSlotTemplate = $request->query->getInt(static::PARAM_ID_CMS_SLOT_TEMPLATE);
         $idCmsSlot = $request->query->getInt(static::PARAM_ID_CMS_SLOT);
 
-        $cmsBlockCriteriaTransfer = $this->buildCmsBlockCriteriaTransfer($searchTerm, $page);
-        $cmsSlotBlockCriteriaTransfer = $this->buildCmsSlotBlockCriteriaTransfer($idCmsSlotTemplate, $idCmsSlot);
-
-        return $this->jsonResponse(
-            $this->getFacade()->getCmsBlockSuggestions($cmsBlockCriteriaTransfer, $cmsSlotBlockCriteriaTransfer)
-        );
-    }
-
-    /**
-     * @param string $searchTerm
-     * @param int $page
-     *
-     * @return \Generated\Shared\Transfer\CmsBlockCriteriaTransfer
-     */
-    protected function buildCmsBlockCriteriaTransfer(string $searchTerm, int $page): CmsBlockCriteriaTransfer
-    {
-        $paginationTransfer = $this->buildPaginationTransfer($page);
-
-        return (new CmsBlockCriteriaTransfer())
-            ->setName($searchTerm)
-            ->setPagination($paginationTransfer);
-    }
-
-    /**
-     * @param int $idCmsSlotTemplate
-     * @param int $idCmsSlot
-     *
-     * @return \Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer
-     */
-    protected function buildCmsSlotBlockCriteriaTransfer(int $idCmsSlotTemplate, int $idCmsSlot): CmsSlotBlockCriteriaTransfer
-    {
-        return (new CmsSlotBlockCriteriaTransfer())
-            ->setIdCmsSlotTemplate($idCmsSlotTemplate)
-            ->setIdCmsSlot($idCmsSlot);
-    }
-
-    /**
-     * @param int $page
-     *
-     * @return \Generated\Shared\Transfer\PaginationTransfer
-     */
-    protected function buildPaginationTransfer(int $page): PaginationTransfer
-    {
-        return (new PaginationTransfer())
+        $paginationTransfer = (new PaginationTransfer())
             ->setPage($page)
             ->setMaxPerPage(static::DEFAULT_MAX_PER_PAGE);
+
+        $cmsBlockCriteriaTransfer = (new CmsBlockCriteriaTransfer())
+            ->setNamePattern($searchTerm)
+            ->setPagination($paginationTransfer);
+
+        $cmsSlotBlockCriteriaTransfer = (new CmsSlotBlockCriteriaTransfer())
+            ->setIdCmsSlotTemplate($idCmsSlotTemplate)
+            ->setIdCmsSlot($idCmsSlot);
+
+        return $this->jsonResponse(
+            $this->getFactory()
+                ->createCmsBlockSuggestionFinder()
+                ->getCmsBlockSuggestions($cmsBlockCriteriaTransfer, $cmsSlotBlockCriteriaTransfer)
+        );
     }
 }

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsSlotBlockGui\Business\Finder;
+namespace Spryker\Zed\CmsSlotBlockGui\Communication\Finder;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CmsBlockCriteriaTransfer;
@@ -59,7 +59,7 @@ class CmsBlockSuggestionFinder implements CmsBlockSuggestionFinderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\CmsBlockTransfer[]> $cmsBlockTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\CmsBlockTransfer[] $cmsBlockTransfers
      * @param \Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
      *
      * @return array

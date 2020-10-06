@@ -5,22 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsSlotBlockGui\Business;
+namespace Spryker\Zed\CmsSlotBlockGui\Communication\Finder;
 
 use Generated\Shared\Transfer\CmsBlockCriteriaTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 
-/**
- * @method \Spryker\Zed\CmsSlotBlockGui\Business\CmsSlotBlockGuiBusinessFactory getFactory()
- */
-class CmsSlotBlockGuiFacade extends AbstractFacade implements CmsSlotBlockGuiFacadeInterface
+interface CmsBlockSuggestionFinderInterface
 {
     /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer
      * @param \Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
      *
@@ -29,9 +21,5 @@ class CmsSlotBlockGuiFacade extends AbstractFacade implements CmsSlotBlockGuiFac
     public function getCmsBlockSuggestions(
         CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer,
         CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
-    ): array {
-        return $this->getFactory()
-            ->createCmsBlockSuggestionFinder()
-            ->getCmsBlockSuggestions($cmsBlockCriteriaTransfer, $cmsSlotBlockCriteriaTransfer);
-    }
+    ): array;
 }

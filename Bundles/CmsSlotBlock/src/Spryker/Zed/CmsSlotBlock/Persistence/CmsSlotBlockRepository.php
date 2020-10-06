@@ -95,10 +95,12 @@ class CmsSlotBlockRepository extends AbstractRepository implements CmsSlotBlockR
      */
     public function getPaginatedCmsBlocks(CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer): CmsBlockCollectionTransfer
     {
-        $cmsBlockCollectionTransfer = new CmsBlockCollectionTransfer();
         $paginationTransfer = $cmsBlockCriteriaTransfer
             ->requirePagination()
             ->getPagination();
+
+        $cmsBlockCollectionTransfer = (new CmsBlockCollectionTransfer())
+            ->setPagination($paginationTransfer);
 
         $cmsBlockIds = $this->getPaginatedCmsBlockIds($cmsBlockCriteriaTransfer, $paginationTransfer);
         if (!$cmsBlockIds) {
@@ -112,8 +114,7 @@ class CmsSlotBlockRepository extends AbstractRepository implements CmsSlotBlockR
 
         return $this->getFactory()
             ->createCmsSlotBlockMapper()
-            ->mapCmsBlockEntitiesToCmsBlockCollectionTransfer($cmsBlockEntities, $cmsBlockCollectionTransfer)
-            ->setPagination($paginationTransfer);
+            ->mapCmsBlockEntitiesToCmsBlockCollectionTransfer($cmsBlockEntities, $cmsBlockCollectionTransfer);
     }
 
     /**
@@ -146,7 +147,7 @@ class CmsSlotBlockRepository extends AbstractRepository implements CmsSlotBlockR
     ): array {
         $cmsBlockQuery = $this->getFactory()->getCmsBlockQuery();
 
-        $cmsBlockName = trim($cmsBlockCriteriaTransfer->getName() ?? '');
+        $cmsBlockName = trim($cmsBlockCriteriaTransfer->getNamePattern() ?? '');
         if ($cmsBlockName !== '') {
             $nameTerm = '%' . mb_strtoupper($cmsBlockName) . '%';
             $cmsBlockQuery->where('UPPER(' . SpyCmsBlockTableMap::COL_NAME . ') LIKE ?', $nameTerm);
