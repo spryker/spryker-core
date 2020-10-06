@@ -46,6 +46,7 @@ class ProductConfigurationStorageDependencyProvider extends AbstractDependencyPr
         $container = $this->addLocaleClient($container);
         $container = $this->addProductStorageClient($container);
         $container = $this->addCartClient($container);
+        $container = $this->addProductConfigurationDataChecksumGenerator($container);
 
         return $container;
     }

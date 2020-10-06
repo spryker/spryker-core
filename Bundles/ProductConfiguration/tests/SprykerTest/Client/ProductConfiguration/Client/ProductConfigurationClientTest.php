@@ -91,7 +91,7 @@ class ProductConfigurationClientTest extends Unit
                 'createProductConfiguratorResponseProcessor',
                 'createQuoteProductConfigurationChecker',
                 'createProductConfigurationAccessTokenRedirectResolver',
-                'createProductConfiguratorDataExpander'
+                'createProductConfiguratorDataExpander',
             ])
             ->getMock();
 

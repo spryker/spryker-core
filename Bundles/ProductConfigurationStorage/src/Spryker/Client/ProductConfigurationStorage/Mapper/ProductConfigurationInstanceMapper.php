@@ -51,6 +51,8 @@ class ProductConfigurationInstanceMapper implements ProductConfigurationInstance
     public function mapProductConfigurationInstancePricesToProductConfigurationInstancePriceProductTransfer(
         ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
     ): ProductConfigurationInstanceTransfer {
+        $priceProductTransfers = [];
+
         foreach ($productConfigurationInstanceTransfer->getPrices() as $currencyName => $priceData) {
             $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
                 ->setType(ProductConfigurationConfig::PRICE_DIMENSION_PRODUCT_CONFIGURATION)
@@ -64,14 +66,14 @@ class ProductConfigurationInstanceMapper implements ProductConfigurationInstance
                     (new CurrencyTransfer())->setName($currencyName)
                 );
 
-            $priceProductTransfer = (new PriceProductTransfer())
+            $priceProductTransfers[] = (new PriceProductTransfer())
                 ->setPriceTypeName(static::DEFAULT_PRICE_TYPE_NAME)
                 ->setIsMergeable(static::IS_PRICE_MERGEABLE)
                 ->setPriceDimension($priceProductDimensionTransfer)
                 ->setMoneyValue($moneyValue);
-
-            $productConfigurationInstanceTransfer->addPrice($priceProductTransfer);
         }
+
+        $productConfigurationInstanceTransfer->setPrices($priceProductTransfers);
 
         return $productConfigurationInstanceTransfer;
     }

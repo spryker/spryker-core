@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ProductConfigurationExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorRequestTransfer;
 
 /**
