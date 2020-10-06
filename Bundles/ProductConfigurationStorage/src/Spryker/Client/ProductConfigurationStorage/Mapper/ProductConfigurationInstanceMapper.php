@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductConfigurationStorage\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
@@ -51,7 +52,7 @@ class ProductConfigurationInstanceMapper implements ProductConfigurationInstance
     public function mapProductConfigurationInstancePricesToProductConfigurationInstancePriceProductTransfer(
         ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
     ): ProductConfigurationInstanceTransfer {
-        $priceProductTransfers = [];
+        $priceProductTransfers = new ArrayObject();
 
         foreach ($productConfigurationInstanceTransfer->getPrices() as $currencyName => $priceData) {
             $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
@@ -66,11 +67,12 @@ class ProductConfigurationInstanceMapper implements ProductConfigurationInstance
                     (new CurrencyTransfer())->setName($currencyName)
                 );
 
-            $priceProductTransfers[] = (new PriceProductTransfer())
+            $priceProductTransfers->append((new PriceProductTransfer())
                 ->setPriceTypeName(static::DEFAULT_PRICE_TYPE_NAME)
                 ->setIsMergeable(static::IS_PRICE_MERGEABLE)
                 ->setPriceDimension($priceProductDimensionTransfer)
-                ->setMoneyValue($moneyValue);
+                ->setMoneyValue($moneyValue)
+            );
         }
 
         $productConfigurationInstanceTransfer->setPrices($priceProductTransfers);

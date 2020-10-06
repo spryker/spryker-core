@@ -107,8 +107,8 @@ class ProductConfiguratorCheckSumResponseProcessor implements ProductConfigurato
             ->setProductConfiguratorResponse($productConfiguratorResponseTransfer)
             ->setIsSuccessful(true);
 
-        foreach ($this->productConfiguratorResponseValidators as $validator) {
-            $productConfiguratorResponseProcessorResponseTransfer = $validator->validate(
+        foreach ($this->productConfiguratorResponseValidators as $productConfiguratorResponseValidator) {
+            $productConfiguratorResponseProcessorResponseTransfer = $productConfiguratorResponseValidator->validate(
                 $productConfiguratorResponseProcessorResponseTransfer,
                 $configuratorResponseData
             );
