@@ -46,7 +46,7 @@ class QueueTaskConsole extends Console
      *
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $options = [
             QueueConfig::CONFIG_QUEUE_OPTION_NO_ACK => $input->getOption(static::OPTION_NO_ACK),

@@ -12,8 +12,8 @@ use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\TransferServer;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -37,11 +37,11 @@ class GatewayControllerEventDispatcherPlugin extends AbstractPlugin implements E
      */
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
-        $eventDispatcher->addListener(KernelEvents::CONTROLLER, function (FilterControllerEvent $event) {
+        $eventDispatcher->addListener(KernelEvents::CONTROLLER, function (ControllerEvent $event) {
             return $this->getFactory()->createControllerListener()->onKernelController($event);
         });
 
-        $eventDispatcher->addListener(KernelEvents::REQUEST, function (GetResponseEvent $event): void {
+        $eventDispatcher->addListener(KernelEvents::REQUEST, function (RequestEvent $event): void {
             TransferServer::getInstance()->setRequest($event->getRequest());
         });
 

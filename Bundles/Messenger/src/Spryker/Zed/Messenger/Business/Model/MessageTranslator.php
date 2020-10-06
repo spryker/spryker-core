@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\Messenger\Business\Model;
 
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class MessageTranslator implements MessageTranslatorInterface
 {
     /**
-     * @var \Symfony\Component\Translation\TranslatorInterface
+     * @var \Symfony\Contracts\Translation\TranslatorInterface
      */
     protected $fallbackTranslator;
 
@@ -23,7 +23,7 @@ class MessageTranslator implements MessageTranslatorInterface
 
     /**
      * @param \Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface[] $translationPlugins
-     * @param \Symfony\Component\Translation\TranslatorInterface $fallbackTranslator
+     * @param \Symfony\Contracts\Translation\TranslatorInterface $fallbackTranslator
      */
     public function __construct(array $translationPlugins, TranslatorInterface $fallbackTranslator)
     {

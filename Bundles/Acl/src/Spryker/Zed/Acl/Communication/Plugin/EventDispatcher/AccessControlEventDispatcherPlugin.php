@@ -12,7 +12,7 @@ use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -36,7 +36,7 @@ class AccessControlEventDispatcherPlugin extends AbstractPlugin implements Event
      */
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
-        $eventDispatcher->addListener(KernelEvents::REQUEST, function (GetResponseEvent $event): GetResponseEvent {
+        $eventDispatcher->addListener(KernelEvents::REQUEST, function (RequestEvent $event): RequestEvent {
             return $this->onKernelRequest($event);
         });
 
@@ -44,11 +44,11 @@ class AccessControlEventDispatcherPlugin extends AbstractPlugin implements Event
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
      *
-     * @return \Symfony\Component\HttpKernel\Event\GetResponseEvent
+     * @return \Symfony\Component\HttpKernel\Event\RequestEvent
      */
-    protected function onKernelRequest(GetResponseEvent $event): GetResponseEvent
+    protected function onKernelRequest(RequestEvent $event): RequestEvent
     {
         $aclFacade = $this->getFacade();
         $config = $this->getFactory()->getConfig();

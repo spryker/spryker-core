@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Translator\Communication;
 
 use Spryker\Shared\Kernel\Communication\Application;
-use Spryker\Shared\TranslatorExtension\Dependency\Plugin\TranslatorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Translator\Dependency\Facade\TranslatorToLocaleFacadeInterface;
 use Spryker\Zed\Translator\TranslatorDependencyProvider;
@@ -34,7 +33,7 @@ class TranslatorCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Shared\TranslatorExtension\Dependency\Plugin\TranslatorPluginInterface
      */
-    public function getTranslator(): TranslatorPluginInterface
+    public function getTranslator()
     {
         return $this->getProvidedDependency(TranslatorDependencyProvider::SERVICE_TRANSLATOR);
     }
@@ -58,7 +57,7 @@ class TranslatorCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Shared\TranslatorExtension\Dependency\Plugin\TranslatorPluginInterface
      */
-    public function getTranslatorPlugin(): TranslatorPluginInterface
+    public function getTranslatorPlugin()
     {
         return $this->getProvidedDependency(TranslatorDependencyProvider::PLUGIN_TRANSLATOR);
     }

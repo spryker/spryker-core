@@ -1,4 +1,8 @@
 parameters:
     checkMissingIterableValueType: false
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Function twig_escape_filter not found.#'
+        - '#Method .+ParameterBag::all\(\) invoked with 1 parameter, 0 required.#'
+        - '#Method .+AbstractTable::getOrderParameter\(\) should return array|null but returns string|null#'
+        - '#Method .+AbstractTable::getSearchParameter\(\) should return array|null but returns string|null#'
