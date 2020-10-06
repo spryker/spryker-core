@@ -193,7 +193,7 @@ class MyOrderTable extends AbstractTable
     }
 
     /**
-     * @phpstan-return array<int, array<string, mixed>>
+     * @phpstan-return array<int, array<int|string, mixed>>
      *
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
