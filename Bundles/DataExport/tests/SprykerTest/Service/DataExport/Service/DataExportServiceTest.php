@@ -82,7 +82,7 @@ class DataExportServiceTest extends Unit
         );
 
         //Assert
-        $this->assertEquals(static::DATA_ENTITY_PRIMARY, $dataExportConfigurationTransfer->getDataEntity());
+        $this->assertSame(static::DATA_ENTITY_PRIMARY, $dataExportConfigurationTransfer->getDataEntity());
     }
 
     /**
@@ -171,7 +171,7 @@ class DataExportServiceTest extends Unit
         $extension = $this->tester->getService()->getFormatExtension($dataExportConfigurationTransfer);
 
         //Assert
-        $this->assertEquals('csv', $extension, 'Expected extension is "csv"');
+        $this->assertSame('csv', $extension, 'Expected extension is "csv"');
     }
 
     /**

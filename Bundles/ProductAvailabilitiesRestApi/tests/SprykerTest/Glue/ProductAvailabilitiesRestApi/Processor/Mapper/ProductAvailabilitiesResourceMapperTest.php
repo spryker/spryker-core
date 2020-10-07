@@ -60,8 +60,8 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
 
         $this->assertInstanceOf(RestConcreteProductAvailabilityAttributesTransfer::class, $attributesTransfer);
         $this->assertTrue($attributesTransfer->getAvailability());
-        $this->assertEquals($attributesTransfer->getIsNeverOutOfStock(), static::PRODUCTS_AVAILABILITY_IS_NEVER_OUT_OF_STOCK);
-        $this->assertEquals($attributesTransfer->getQuantity(), new Decimal(static::PRODUCTS_AVAILABILITY_QUANTITY));
+        $this->assertFalse($attributesTransfer->getIsNeverOutOfStock());
+        $this->assertEquals(new Decimal(static::PRODUCTS_AVAILABILITY_QUANTITY), $attributesTransfer->getQuantity());
     }
 
     /**
@@ -81,7 +81,7 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
 
         $this->assertInstanceOf(RestConcreteProductAvailabilityAttributesTransfer::class, $attributesTransfer);
         $this->assertFalse($attributesTransfer->getAvailability());
-        $this->assertEquals($attributesTransfer->getIsNeverOutOfStock(), static::PRODUCTS_AVAILABILITY_IS_NEVER_OUT_OF_STOCK);
+        $this->assertFalse($attributesTransfer->getIsNeverOutOfStock());
         $this->assertTrue($attributesTransfer->getQuantity()->isZero());
     }
 

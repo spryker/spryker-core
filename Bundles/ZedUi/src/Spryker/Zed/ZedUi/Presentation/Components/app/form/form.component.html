@@ -1,0 +1,13 @@
+<form
+    [method]="method"
+    [action]="action"
+    [name]="name"
+    [spyApplyAttrs]="attrs"
+    [spyUnsavedChangesFormMonitor]="withMonitor"
+    (submit)="sumbitHandler()"
+>
+    <span spyCustomElementBoundary>
+        <ng-content></ng-content>
+    </span>
+</form>
+

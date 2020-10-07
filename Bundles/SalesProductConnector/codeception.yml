@@ -1,4 +1,6 @@
 namespace: SalesProductConnector
+include:
+    - tests/SprykerTest/Zed/SalesProductConnector
 actor: Tester
 paths:
     tests: tests

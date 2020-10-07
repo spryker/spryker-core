@@ -34,6 +34,8 @@ use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 
 class Customer implements CustomerInterface
 {
@@ -827,15 +829,29 @@ class Customer implements CustomerInterface
     }
 
     /**
-     * @param string $currentPassword
+     * @param string|null $currentPassword
      *
-     * @return string
+     * @return string|null
      */
     protected function getEncodedPassword($currentPassword)
     {
-        $encoder = new BCryptPasswordEncoder(self::BCRYPT_FACTOR);
+        if ($currentPassword === null) {
+            return $currentPassword;
+        }
 
-        return $encoder->encodePassword($currentPassword, self::BCRYPT_SALT);
+        return $this->getPasswordEncoder()->encodePassword($currentPassword, self::BCRYPT_SALT);
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface
+     */
+    protected function getPasswordEncoder(): PasswordEncoderInterface
+    {
+        if (class_exists(NativePasswordEncoder::class)) {
+            return new NativePasswordEncoder(null, null, static::BCRYPT_FACTOR);
+        }
+
+        return new BCryptPasswordEncoder(static::BCRYPT_FACTOR);
     }
 
     /**
@@ -846,9 +862,7 @@ class Customer implements CustomerInterface
      */
     protected function isValidPassword($hash, $rawPassword)
     {
-        $encoder = new BCryptPasswordEncoder(self::BCRYPT_FACTOR);
-
-        return $encoder->isPasswordValid($hash, $rawPassword, self::BCRYPT_SALT);
+        return $this->getPasswordEncoder()->isPasswordValid($hash, $rawPassword, static::BCRYPT_SALT);
     }
 
     /**

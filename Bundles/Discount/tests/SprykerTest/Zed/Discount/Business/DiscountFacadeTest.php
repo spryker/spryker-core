@@ -412,8 +412,8 @@ class DiscountFacadeTest extends Unit
         $checkoutErrorTransfer = $checkoutResponseTransfer->getErrors()[0];
 
         $this->assertCount(1, $checkoutResponseTransfer->getErrors());
-        $this->assertEquals(399, $checkoutErrorTransfer->getErrorCode());
-        $this->assertEquals(VoucherValidator::REASON_VOUCHER_CODE_LIMIT_REACHED, $checkoutErrorTransfer->getMessage());
+        $this->assertSame(399, $checkoutErrorTransfer->getErrorCode());
+        $this->assertSame(VoucherValidator::REASON_VOUCHER_CODE_LIMIT_REACHED, $checkoutErrorTransfer->getMessage());
         $this->assertFalse($result);
         $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
     }
@@ -452,8 +452,8 @@ class DiscountFacadeTest extends Unit
         // Assert
         $this->assertCount(2, $checkoutResponseTransfer->getErrors());
         foreach ($checkoutResponseTransfer->getErrors() as $checkoutErrorTransfer) {
-            $this->assertEquals(399, $checkoutErrorTransfer->getErrorCode());
-            $this->assertEquals(VoucherValidator::REASON_VOUCHER_CODE_LIMIT_REACHED, $checkoutErrorTransfer->getMessage());
+            $this->assertSame(399, $checkoutErrorTransfer->getErrorCode());
+            $this->assertSame(VoucherValidator::REASON_VOUCHER_CODE_LIMIT_REACHED, $checkoutErrorTransfer->getMessage());
         }
         $this->assertFalse($result);
         $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
@@ -805,7 +805,7 @@ class DiscountFacadeTest extends Unit
 
         $amount = $discountFacade->calculatePercentageDiscount($discountableItems, $discountTransfer);
 
-        $this->assertEquals(9, $amount);
+        $this->assertSame(9, $amount);
     }
 
     /**
@@ -825,7 +825,7 @@ class DiscountFacadeTest extends Unit
         $discountTransfer->addMoneyValue($moneyValueTransfer);
         $amount = $discountFacade->calculateFixedDiscount([], $discountTransfer);
 
-        $this->assertEquals(50, $amount);
+        $this->assertSame(50, $amount);
     }
 
     /**
@@ -862,9 +862,9 @@ class DiscountFacadeTest extends Unit
         $firstItemDistributedAmount = $discountableItems[0]->getOriginalItemCalculatedDiscounts()[0]->getUnitAmount();
         $secondItemDistributedAmount = $discountableItems[1]->getOriginalItemCalculatedDiscounts()[0]->getUnitAmount();
 
-        $this->assertEquals(14, $firstItemDistributedAmount);
-        $this->assertEquals(86, $secondItemDistributedAmount);
-        $this->assertEquals($totalDiscountAmount, $firstItemDistributedAmount + $secondItemDistributedAmount);
+        $this->assertSame(14, $firstItemDistributedAmount);
+        $this->assertSame(86, $secondItemDistributedAmount);
+        $this->assertSame($totalDiscountAmount, $firstItemDistributedAmount + $secondItemDistributedAmount);
     }
 
     /**
@@ -899,7 +899,7 @@ class DiscountFacadeTest extends Unit
 
         $released = $discountFacade->releaseUsedVoucherCodes($voucherCodeList);
 
-        $this->assertEquals(1, $released);
+        $this->assertSame(1, $released);
     }
 
     /**
@@ -936,7 +936,7 @@ class DiscountFacadeTest extends Unit
         $voucherCodes = $voucherPoolEntity->getDiscountVouchers();
         $voucherCodeEntity = $voucherCodes[0];
 
-        $this->assertEquals(1, $voucherCodeEntity->getNumberOfUses());
+        $this->assertSame(1, $voucherCodeEntity->getNumberOfUses());
     }
 
     /**
@@ -952,7 +952,7 @@ class DiscountFacadeTest extends Unit
 
         // Assert
         $this->assertCount(1, $quoteTransfer->getVoucherDiscounts());
-        $this->assertEquals(
+        $this->assertSame(
             $this->tester::VOUCHER_CODE,
             $resultQuoteTransfer->getVoucherDiscounts()[0]->getVoucherCode()
         );

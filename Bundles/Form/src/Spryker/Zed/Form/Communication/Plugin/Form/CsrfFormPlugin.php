@@ -12,7 +12,7 @@ use Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Form\Extension\Csrf\CsrfExtension;
 use Symfony\Component\Form\FormFactoryBuilderInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @method \Spryker\Zed\Form\FormConfig getConfig()
@@ -66,7 +66,7 @@ class CsrfFormPlugin extends AbstractPlugin implements FormPluginInterface
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @return \Symfony\Component\Translation\TranslatorInterface|null
+     * @return \Symfony\Contracts\Translation\TranslatorInterface|null
      */
     protected function getTranslator(ContainerInterface $container): ?TranslatorInterface
     {

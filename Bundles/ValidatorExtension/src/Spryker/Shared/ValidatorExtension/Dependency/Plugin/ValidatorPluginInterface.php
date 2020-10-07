@@ -8,7 +8,7 @@
 namespace Spryker\Shared\ValidatorExtension\Dependency\Plugin;
 
 use Spryker\Service\Container\ContainerInterface;
-use Symfony\Component\Validator\ValidatorBuilderInterface;
+use Symfony\Component\Validator\ValidatorBuilder;
 
 interface ValidatorPluginInterface
 {
@@ -18,10 +18,10 @@ interface ValidatorPluginInterface
      *
      * @api
      *
-     * @param \Symfony\Component\Validator\ValidatorBuilderInterface $validatorBuilder
+     * @param \Symfony\Component\Validator\ValidatorBuilder $validatorBuilder
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @return \Symfony\Component\Validator\ValidatorBuilderInterface
+     * @return \Symfony\Component\Validator\ValidatorBuilder
      */
-    public function extend(ValidatorBuilderInterface $validatorBuilder, ContainerInterface $container): ValidatorBuilderInterface;
+    public function extend(ValidatorBuilder $validatorBuilder, ContainerInterface $container): ValidatorBuilder;
 }

@@ -82,7 +82,7 @@ class StoreFacadeTest extends Unit
 
         $this->assertInstanceOf(StoreTransfer::class, $storeTransfer);
 
-        $this->assertEquals(static::DEFAULT_STORE_NAME, $storeTransfer->getName());
+        $this->assertSame(static::DEFAULT_STORE_NAME, $storeTransfer->getName());
         $this->assertNotEmpty($storeTransfer->getIdStore());
     }
 

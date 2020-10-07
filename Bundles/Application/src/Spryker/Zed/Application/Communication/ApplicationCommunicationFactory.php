@@ -15,10 +15,10 @@ use Spryker\Shared\Kernel\Container\ContainerProxy;
 use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Shared\Twig\TwigFunctionProvider;
 use Spryker\Zed\Application\ApplicationDependencyProvider;
+use Spryker\Zed\Application\Communication\EventListener\SaveSessionListener;
 use Spryker\Zed\Application\Communication\Twig\YvesUrlFunctionProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\EventListener\SaveSessionListener;
 use Twig\TwigFunction;
 
 /**
@@ -64,6 +64,8 @@ class ApplicationCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface
      */
     public function createSaveSessionEventSubscriber(): EventSubscriberInterface

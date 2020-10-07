@@ -132,7 +132,7 @@ class CreateRedirectOnUrlUpdateTest extends Unit
      */
     protected function assertUrlUpdated(UrlTransfer $urlTransfer, UrlTransfer $updatedUrlTransfer): void
     {
-        $this->assertEquals($urlTransfer->getIdUrl(), $updatedUrlTransfer->getIdUrl(), 'Ids of url should match after update.');
+        $this->assertSame($urlTransfer->getIdUrl(), $updatedUrlTransfer->getIdUrl(), 'Ids of url should match after update.');
         $this->assertNotEquals($urlTransfer->getUrl(), $updatedUrlTransfer->getUrl(), 'Url should change after update.');
     }
 
@@ -154,6 +154,6 @@ class CreateRedirectOnUrlUpdateTest extends Unit
         $redirectEntity = $urlEntity->getSpyUrlRedirect();
 
         $this->assertInstanceOf(SpyUrlRedirect::class, $redirectEntity, 'Url entity should have associated redirect entity.');
-        $this->assertEquals($updatedUrlTransfer->getUrl(), $redirectEntity->getToUrl(), 'Redirect url should match the new url after update.');
+        $this->assertSame($updatedUrlTransfer->getUrl(), $redirectEntity->getToUrl(), 'Redirect url should match the new url after update.');
     }
 }

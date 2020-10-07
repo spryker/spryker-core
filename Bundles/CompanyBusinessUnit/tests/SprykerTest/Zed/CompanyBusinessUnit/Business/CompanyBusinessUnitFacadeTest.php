@@ -148,7 +148,7 @@ class CompanyBusinessUnitFacadeTest extends Test
             ->getCustomerCompanyBusinessUnitTree($customerTransfer);
 
         // Assert
-        $this->assertEquals(1, count($companyBusinessUnitTreeNodeCollectionTransfer->getCompanyBusinessUnitTreeNodes()));
+        $this->assertSame(1, count($companyBusinessUnitTreeNodeCollectionTransfer->getCompanyBusinessUnitTreeNodes()));
     }
 
     /**
@@ -172,7 +172,7 @@ class CompanyBusinessUnitFacadeTest extends Test
 
         // Assert
         $this->assertTrue($companyBusinessUnitResponseTransfer->getIsSuccessful());
-        $this->assertEquals(static::TEST_NAME, $actualCompanyBusinessUnitTransfer->getName());
+        $this->assertSame(static::TEST_NAME, $actualCompanyBusinessUnitTransfer->getName());
     }
 
     /**
@@ -213,7 +213,7 @@ class CompanyBusinessUnitFacadeTest extends Test
             ->assignDefaultBusinessUnitToCompanyUser($companyUserResponseTransfer);
 
         // Assert
-        $this->assertEquals(
+        $this->assertSame(
             $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
             $companyUserResponseTransfer->getCompanyUser()->getFkCompanyBusinessUnit()
         );

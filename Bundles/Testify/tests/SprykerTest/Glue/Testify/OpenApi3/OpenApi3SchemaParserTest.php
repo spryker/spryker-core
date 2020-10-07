@@ -32,28 +32,28 @@ class OpenApi3SchemaParserTest extends Unit
         $parser = new OpenApiSchemaParser();
         $document = $parser->parse($reader);
 
-        $this->assertEquals('3.0.0', $document->openapi);
-        $this->assertEquals('Swagger Petstore', $document->info->title);
-        $this->assertEquals('Swagger API Team', $document->info->contact->name);
-        $this->assertEquals('http://petstore.swagger.io/api', $document->servers[0]->url);
+        $this->assertSame('3.0.0', $document->openapi);
+        $this->assertSame('Swagger Petstore', $document->info->title);
+        $this->assertSame('Swagger API Team', $document->info->contact->name);
+        $this->assertSame('http://petstore.swagger.io/api', $document->servers[0]->url);
 
-        $this->assertEquals(
+        $this->assertSame(
             ['name'],
             $document->paths['/pets']->post->responses[200]->content['application/json']->schema->allOf[0]->required->toArray()
         );
-        $this->assertEquals(
+        $this->assertSame(
             'string',
             $document->paths['/pets']->post->responses[200]->content['application/json']->schema->allOf[0]->properties['name']->type
         );
-        $this->assertEquals(
+        $this->assertSame(
             ['id'],
             $document->paths['/pets']->post->responses[200]->content['application/json']->schema->allOf[1]->required->toArray()
         );
-        $this->assertEquals(
+        $this->assertSame(
             'integer',
             $document->paths['/pets']->post->responses[200]->content['application/json']->schema->allOf[1]->properties['id']->type
         );
-        $this->assertEquals(
+        $this->assertSame(
             'string',
             $document->paths['/pets']->get->parameters[0]->schema->items->type
         );

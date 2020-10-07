@@ -34,7 +34,7 @@ interface CartsRestApiResourceInterface
      * Specification:
      * - Create `guest-carts` REST response from `QuoteTransfer`.
      * - Sets payload to the `guest-carts` resource.
-     * - Adds `guest-cart-items` resource as relationship if `CartsRestApiConfig::getAllowedCartItemEagerRelationship()` is `true`.
+     * - Adds `guest-cart-items` resource as relationship if `CartsRestApiConfig::getAllowedGuestCartItemEagerRelationship()` is `true`.
      *
      * @api
      *

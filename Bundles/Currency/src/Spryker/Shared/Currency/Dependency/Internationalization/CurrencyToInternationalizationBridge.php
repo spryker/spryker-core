@@ -7,21 +7,11 @@
 
 namespace Spryker\Shared\Currency\Dependency\Internationalization;
 
+use Symfony\Component\Intl\Currencies;
+use Symfony\Component\Intl\Intl;
+
 class CurrencyToInternationalizationBridge implements CurrencyToInternationalizationInterface
 {
-    /**
-     * @var \Symfony\Component\Intl\ResourceBundle\CurrencyBundleInterface
-     */
-    protected $currencyBundle;
-
-    /**
-     * @param \Symfony\Component\Intl\ResourceBundle\CurrencyBundleInterface $currencyBundle
-     */
-    public function __construct($currencyBundle)
-    {
-        $this->currencyBundle = $currencyBundle;
-    }
-
     /**
      * @param string $isoCode
      *
@@ -29,7 +19,11 @@ class CurrencyToInternationalizationBridge implements CurrencyToInternationaliza
      */
     public function getSymbolByIsoCode($isoCode)
     {
-        return $this->currencyBundle->getCurrencySymbol($isoCode);
+        if (method_exists(Intl::class, 'getCurrencyBundle')) {
+            return Intl::getCurrencyBundle()->getCurrencySymbol($isoCode);
+        }
+
+        return Currencies::getSymbol($isoCode);
     }
 
     /**
@@ -39,7 +33,11 @@ class CurrencyToInternationalizationBridge implements CurrencyToInternationaliza
      */
     public function getNameByIsoCode($isoCode)
     {
-        return $this->currencyBundle->getCurrencyName($isoCode);
+        if (method_exists(Intl::class, 'getCurrencyBundle')) {
+            return Intl::getCurrencyBundle()->getCurrencyName($isoCode);
+        }
+
+        return Currencies::getName($isoCode);
     }
 
     /**
@@ -49,6 +47,10 @@ class CurrencyToInternationalizationBridge implements CurrencyToInternationaliza
      */
     public function getFractionDigits($isoCode)
     {
-        return $this->currencyBundle->getFractionDigits($isoCode);
+        if (method_exists(Intl::class, 'getCurrencyBundle')) {
+            return Intl::getCurrencyBundle()->getFractionDigits($isoCode);
+        }
+
+        return Currencies::getFractionDigits($isoCode);
     }
 }

@@ -111,7 +111,7 @@ class AbstractManagementTest extends FacadeTestAbstract
         $productAbstract = $this->productFacade->findProductAbstractById($idProductAbstract);
 
         $this->assertInstanceOf(ProductAbstractTransfer::class, $productAbstract);
-        $this->assertEquals(self::ABSTRACT_SKU, $productAbstract->getSku());
+        $this->assertSame(static::ABSTRACT_SKU, $productAbstract->getSku());
     }
 
     /**
@@ -135,7 +135,7 @@ class AbstractManagementTest extends FacadeTestAbstract
 
         $abstractSku = $this->productFacade->getAbstractSkuFromProductConcrete(self::CONCRETE_SKU);
 
-        $this->assertEquals(self::ABSTRACT_SKU, $abstractSku);
+        $this->assertSame(static::ABSTRACT_SKU, $abstractSku);
     }
 
     /**
@@ -166,8 +166,8 @@ class AbstractManagementTest extends FacadeTestAbstract
             $this->locales['de_DE']
         );
 
-        $this->assertEquals(self::PRODUCT_ABSTRACT_NAME['en_US'], $nameEN);
-        $this->assertEquals(self::PRODUCT_ABSTRACT_NAME['de_DE'], $nameDE);
+        $this->assertSame(static::PRODUCT_ABSTRACT_NAME['en_US'], $nameEN);
+        $this->assertSame(static::PRODUCT_ABSTRACT_NAME['de_DE'], $nameDE);
     }
 
     /**
@@ -251,7 +251,7 @@ class AbstractManagementTest extends FacadeTestAbstract
         $createdProductEntity = $this->getProductAbstractEntityById($productAbstractTransfer->getIdProductAbstract());
 
         $this->assertNotNull($createdProductEntity);
-        $this->assertEquals($productAbstractTransfer->getSku(), $createdProductEntity->getSku());
+        $this->assertSame($productAbstractTransfer->getSku(), $createdProductEntity->getSku());
     }
 
     /**
@@ -264,12 +264,12 @@ class AbstractManagementTest extends FacadeTestAbstract
         $updatedProductEntity = $this->getProductAbstractEntityById($productAbstractTransfer->getIdProductAbstract());
 
         $this->assertNotNull($updatedProductEntity);
-        $this->assertEquals($this->productAbstractTransfer->getSku(), $updatedProductEntity->getSku());
+        $this->assertSame($this->productAbstractTransfer->getSku(), $updatedProductEntity->getSku());
 
         foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttribute) {
             $expectedProductName = self::UPDATED_PRODUCT_ABSTRACT_NAME[$localizedAttribute->getLocale()->getLocaleName()];
 
-            $this->assertEquals($expectedProductName, $localizedAttribute->getName());
+            $this->assertSame($expectedProductName, $localizedAttribute->getName());
         }
     }
 

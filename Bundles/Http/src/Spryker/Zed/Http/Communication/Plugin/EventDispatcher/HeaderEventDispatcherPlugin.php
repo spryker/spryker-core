@@ -11,7 +11,7 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -34,7 +34,7 @@ class HeaderEventDispatcherPlugin extends AbstractPlugin implements EventDispatc
      */
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
-        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event): void {
+        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (ResponseEvent $event): void {
             $this->onKernelResponse($event);
         });
 
@@ -42,11 +42,11 @@ class HeaderEventDispatcherPlugin extends AbstractPlugin implements EventDispatc
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event A FilterResponseEvent instance
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event A ResponseEvent instance
      *
      * @return void
      */
-    protected function onKernelResponse(FilterResponseEvent $event): void
+    protected function onKernelResponse(ResponseEvent $event): void
     {
         if (!$event->isMasterRequest()) {
             return;

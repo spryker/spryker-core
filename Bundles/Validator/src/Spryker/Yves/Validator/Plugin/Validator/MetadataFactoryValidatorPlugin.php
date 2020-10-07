@@ -10,7 +10,7 @@ namespace Spryker\Yves\Validator\Plugin\Validator;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ValidatorExtension\Dependency\Plugin\ValidatorPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Symfony\Component\Validator\ValidatorBuilderInterface;
+use Symfony\Component\Validator\ValidatorBuilder;
 
 /**
  * @method \Spryker\Yves\Validator\ValidatorFactory getFactory()
@@ -23,12 +23,12 @@ class MetadataFactoryValidatorPlugin extends AbstractPlugin implements Validator
      *
      * @api
      *
-     * @param \Symfony\Component\Validator\ValidatorBuilderInterface $validatorBuilder
+     * @param \Symfony\Component\Validator\ValidatorBuilder $validatorBuilder
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @return \Symfony\Component\Validator\ValidatorBuilderInterface
+     * @return \Symfony\Component\Validator\ValidatorBuilder
      */
-    public function extend(ValidatorBuilderInterface $validatorBuilder, ContainerInterface $container): ValidatorBuilderInterface
+    public function extend(ValidatorBuilder $validatorBuilder, ContainerInterface $container): ValidatorBuilder
     {
         $validatorBuilder->setMetadataFactory($this->getFactory()->createValidatorMappingMetadataFactory());
 
