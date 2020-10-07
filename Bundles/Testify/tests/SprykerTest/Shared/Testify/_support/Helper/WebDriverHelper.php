@@ -30,12 +30,12 @@ class WebDriverHelper extends Extension
     protected const DEFAULT_TIMEOUT = 10;
 
     protected const BROWSER_PARAMETERS = [
-        'chrome' => [
+        'vendor/bin/chromedriver' => [
             'webdriver-port' => '--port',
             'whitelisted-ips' => '--whitelisted-ips',
             'url-base' => '--url-base',
         ],
-        'phantomjs' => [
+        'vendor/bin/phantomjs' => [
             'port' => '--webdriver',
             'proxy' => '--proxy',
             'proxyType' => '--proxy-type',
@@ -275,13 +275,13 @@ class WebDriverHelper extends Extension
 
     protected function getCommandParametersMapping()
     {
-        $browser_name = $this->config[static::KEY_BROWSER] ?? static::DEFAULT_BROWSER;
+        $browser_path = $this->config['path'];
 
-        if (!empty(static::BROWSER_PARAMETERS[$browser_name])) {
-            return static::BROWSER_PARAMETERS[$browser_name];
+        if (!empty(static::BROWSER_PARAMETERS[$browser_path])) {
+            return static::BROWSER_PARAMETERS[$browser_path];
         }
 
-        throw new ExtensionException($this, 'Unknown browser specified: ' . $browser_name);
+        throw new ExtensionException($this, 'Unknown browser specified: ' . $browser_path);
     }
 
     /**
