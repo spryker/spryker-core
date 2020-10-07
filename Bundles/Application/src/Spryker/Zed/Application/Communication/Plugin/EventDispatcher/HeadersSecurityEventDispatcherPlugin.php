@@ -11,7 +11,7 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -38,7 +38,7 @@ class HeadersSecurityEventDispatcherPlugin extends AbstractPlugin implements Eve
 
         $eventDispatcher->addListener(
             KernelEvents::RESPONSE,
-            function (FilterResponseEvent $event) use ($securityHeaders) {
+            function (ResponseEvent $event) use ($securityHeaders) {
                 foreach ($securityHeaders as $securityHeaderName => $securityHeaderValue) {
                     if ($securityHeaderValue) {
                         $event->getResponse()->headers->set($securityHeaderName, $securityHeaderValue);

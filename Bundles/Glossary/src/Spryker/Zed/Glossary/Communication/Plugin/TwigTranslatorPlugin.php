@@ -10,7 +10,7 @@ namespace Spryker\Zed\Glossary\Communication\Plugin;
 use Generated\Shared\Transfer\LocaleTransfer;
 use InvalidArgumentException;
 use Spryker\Zed\Twig\Communication\Plugin\AbstractTwigExtensionPlugin;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\TwigFilter;
 
 /**
@@ -70,7 +70,7 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
      *
      * @return string
      */
-    public function trans($identifier, array $parameters = [], $domain = null, $locale = null)
+    public function trans($identifier, array $parameters = [], ?string $domain = null, ?string $locale = null)
     {
         if ($locale !== null) {
             $this->setLocale($locale);
@@ -101,7 +101,7 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
      *
      * @return string The translated string
      */
-    public function transChoice($identifier, $number, array $parameters = [], $domain = null, $locale = null)
+    public function transChoice($identifier, $number, array $parameters = [], ?string $domain = null, ?string $locale = null)
     {
         if ($locale !== null) {
             $this->setLocale($locale);

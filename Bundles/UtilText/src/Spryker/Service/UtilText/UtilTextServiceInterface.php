@@ -73,6 +73,18 @@ interface UtilTextServiceInterface
 
     /**
      * Specification:
+     * - Converts a camel cased string into a string where every word is linked with the other by a dash (-) separator.
+     *
+     * @api
+     *
+     * @param string $string
+     *
+     * @return string
+     */
+    public function camelCaseToDash($string);
+
+    /**
+     * Specification:
      * - Converts a string with a given separator into a camel cased string.
      *
      * @api
@@ -84,6 +96,19 @@ interface UtilTextServiceInterface
      * @return string
      */
     public function separatorToCamelCase($string, $separator = '-', $upperCaseFirst = false);
+
+    /**
+     * Specification:
+     * - Converts a dashed string into a camel cased string.
+     *
+     * @api
+     *
+     * @param string $string
+     * @param bool $upperCaseFirst
+     *
+     * @return string
+     */
+    public function dashToCamelCase($string, $upperCaseFirst = false);
 
     /**
      * Specification:

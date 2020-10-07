@@ -12,7 +12,6 @@ use Spryker\Shared\Currency\Builder\CurrencyBuilder;
 use Spryker\Shared\Currency\Builder\CurrencyBuilderInterface;
 use Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationBridge;
 use Spryker\Shared\Kernel\Store;
-use Symfony\Component\Intl\Intl;
 
 /**
  * Auto-generated group annotations
@@ -53,7 +52,7 @@ class CurrencyBuilderTest extends Unit
      */
     protected function getCurrencyBuilder(): CurrencyBuilderInterface
     {
-        $currencyRepository = new CurrencyToInternationalizationBridge(Intl::getCurrencyBundle());
+        $currencyRepository = new CurrencyToInternationalizationBridge();
 
         return new CurrencyBuilder(
             $currencyRepository,

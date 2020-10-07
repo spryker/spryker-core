@@ -16,7 +16,6 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\ZedRequest\Business\Model\Repeater;
 use Spryker\Zed\ZedRequest\Communication\Plugin\GatewayControllerListenerPlugin;
 use Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\TransferServer as CoreTransferServer;
-use SprykerTest\Zed\ZedRequest\Communication\Plugin\Fixture\FilterControllerEvent;
 use SprykerTest\Zed\ZedRequest\Communication\Plugin\Fixture\GatewayController;
 use SprykerTest\Zed\ZedRequest\Communication\Plugin\Fixture\NotGatewayController;
 use SprykerTest\Zed\ZedRequest\Communication\Plugin\Fixture\Request;
@@ -36,6 +35,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class GatewayControllerListenerPluginTest extends Unit
 {
+    /**
+     * @var \SprykerTest\Zed\ZedRequest\ZedRequestCommunicationTester
+     */
+    protected $tester;
+
     /**
      * @return void
      */
@@ -73,10 +77,9 @@ class GatewayControllerListenerPluginTest extends Unit
      */
     public function testWhenControllerIsGatewayControllerPluginMustReturnInstanceOfClosure(): void
     {
-        $eventMock = new FilterControllerEvent();
         $controller = new GatewayController();
         $action = 'goodAction';
-        $eventMock->setController([$controller, $action]);
+        $eventMock = $this->tester->createControllerEvent([$controller, $action]);
 
         $controllerListenerPlugin = new GatewayControllerListenerPlugin();
         $controllerListenerPlugin->onKernelController($eventMock);
@@ -91,10 +94,9 @@ class GatewayControllerListenerPluginTest extends Unit
      */
     public function testWhenControllerIsNotAGatewayControllerPluginMustReturnPassedCallable(): void
     {
-        $action = 'badAction';
-        $eventMock = new FilterControllerEvent();
         $controller = new NotGatewayController();
-        $eventMock->setController([$controller, $action]);
+        $action = 'badAction';
+        $eventMock = $this->tester->createControllerEvent([$controller, $action]);
 
         $controllerListenerPlugin = new GatewayControllerListenerPlugin();
         $controllerListenerPlugin->onKernelController($eventMock);
@@ -289,9 +291,8 @@ class GatewayControllerListenerPluginTest extends Unit
      */
     private function executeMockedListenerTest(string $action, ?TransferInterface $transfer = null): callable
     {
-        $eventMock = new FilterControllerEvent();
         $controller = new GatewayController();
-        $eventMock->setController([$controller, $action]);
+        $eventMock = $this->tester->createControllerEvent([$controller, $action]);
 
         $controllerListenerPlugin = new GatewayControllerListenerPlugin();
 

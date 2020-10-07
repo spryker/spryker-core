@@ -59,7 +59,7 @@ class DoubleSubmitProtectionServiceProvider extends AbstractPlugin implements Se
 
     /**
      * @param \Silex\Application $app
-     * @param \Symfony\Component\Translation\TranslatorInterface|null $translator
+     * @param \Symfony\Contracts\Translation\TranslatorInterface|null $translator
      *
      * @return \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\DoubleSubmitProtectionExtension
      */

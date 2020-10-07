@@ -11,20 +11,20 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Yves\Kernel\Exception\ForbiddenExternalRedirectException;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class RedirectUrlValidator implements RedirectUrlValidatorInterface
 {
     protected const HTTP_HEADER_LOCATION = 'Location';
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
      *
      * @throws \Spryker\Yves\Kernel\Exception\ForbiddenExternalRedirectException
      *
      * @return void
      */
-    public function validateRedirectUrl(FilterResponseEvent $event): void
+    public function validateRedirectUrl(ResponseEvent $event): void
     {
         $response = $event->getResponse();
         if (!$response->isRedirection()) {
