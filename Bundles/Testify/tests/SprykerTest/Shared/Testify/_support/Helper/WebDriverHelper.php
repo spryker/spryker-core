@@ -81,8 +81,6 @@ class WebDriverHelper extends Extension
     /**
      * @param array $config
      * @param array $options
-     *
-     * @throws \Codeception\Exception\ExtensionException
      */
     public function __construct(array $config, array $options)
     {
@@ -111,16 +109,15 @@ class WebDriverHelper extends Extension
     }
 
     /**
-     * Start local webdriver server if no remote provided.
-     *
      * @param \Codeception\Event\SuiteEvent $e
+     *
+     * @throws \Codeception\Exception\ExtensionException
      *
      * @return void
      */
     public function suiteInit(SuiteEvent $e): void
     {
         if (!$this->isRemoteEnabled()) {
-
             if (!file_exists(realpath($this->config['path']))) {
                 throw new ExtensionException($this, "Webdriver executable not found: {$this->config['path']}");
             }
@@ -132,8 +129,10 @@ class WebDriverHelper extends Extension
                     $suites = $this->config['suites'];
                 }
 
-                if (!in_array($e->getSuite()->getBaseName(), $suites, true)
-                    && !in_array($e->getSuite()->getName(), $suites, true)) {
+                if (
+                    !in_array($e->getSuite()->getBaseName(), $suites, true)
+                    && !in_array($e->getSuite()->getName(), $suites, true)
+                ) {
                     return;
                 }
             }
@@ -168,7 +167,7 @@ class WebDriverHelper extends Extension
         }
 
         $this->writeln(PHP_EOL);
-        $this->writeln("Starting webdriver server.");
+        $this->writeln('Starting webdriver server.');
 
         $command = $this->getCommand();
 
@@ -197,6 +196,7 @@ class WebDriverHelper extends Extension
 
         if (!is_resource($this->resource) || !proc_get_status($this->resource)['running']) {
             proc_close($this->resource);
+
             throw new ExtensionException($this, 'Failed to start webdriver server.');
         }
 
@@ -206,7 +206,6 @@ class WebDriverHelper extends Extension
         $this->write('Waiting for the webdriver server to be reachable.');
 
         while (true) {
-
             if ($checks >= $max_checks) {
                 throw new ExtensionException($this, 'Webdriver server never became reachable.');
             }
@@ -224,6 +223,7 @@ class WebDriverHelper extends Extension
                 $this->writeln('');
                 $this->writeln('Webdriver server now accessible.');
                 fclose($fp);
+
                 break;
             }
 
@@ -245,11 +245,11 @@ class WebDriverHelper extends Extension
             $max_checks = 10;
 
             for ($i = 0; $i < $max_checks; $i++) {
-
                 if ($i === $max_checks - 1 && proc_get_status($this->resource)['running'] === true) {
                     $this->writeln('');
                     $this->writeln('Unable to properly shutdown webdriver server.');
                     unset($this->resource);
+
                     break;
                 }
 
@@ -257,6 +257,7 @@ class WebDriverHelper extends Extension
                     $this->writeln('');
                     $this->writeln('Webdriver server stopped.');
                     unset($this->resource);
+
                     break;
                 }
 
@@ -273,6 +274,11 @@ class WebDriverHelper extends Extension
         }
     }
 
+    /**
+     * @throws \Codeception\Exception\ExtensionException
+     *
+     * @return string[]
+     */
     protected function getCommandParametersMapping()
     {
         $browser_path = $this->config['path'];
@@ -348,5 +354,4 @@ class WebDriverHelper extends Extension
 
         return (bool)$isRemoteEnabled;
     }
-
 }
