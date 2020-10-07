@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CmsBlockCollectionTransfer;
 use Generated\Shared\Transfer\CmsBlockCriteriaTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
-use Generated\Shared\Transfer\FilterTransfer;
 
 class CmsSlotBlockGuiToCmsSlotBlockFacadeBridge implements CmsSlotBlockGuiToCmsSlotBlockFacadeInterface
 {
@@ -57,18 +56,6 @@ class CmsSlotBlockGuiToCmsSlotBlockFacadeBridge implements CmsSlotBlockGuiToCmsS
         CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
     ): CmsSlotBlockCollectionTransfer {
         return $this->cmsSlotBlockFacade->getCmsSlotBlockCollection($cmsSlotBlockCriteriaTransfer);
-    }
-
-    /**
-     * @deprecated Use {@link getPaginatedCmsBlocksWithSlotRelations()} instead.
-     *
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
-     */
-    public function getCmsBlocksWithSlotRelations(FilterTransfer $filterTransfer): array
-    {
-        return $this->cmsSlotBlockFacade->getCmsBlocksWithSlotRelations($filterTransfer);
     }
 
     /**
