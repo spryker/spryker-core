@@ -300,14 +300,14 @@ class ProductAttributeBusinessTester extends Actor
             $attributeValueTranslationEntity = new SpyProductManagementAttributeValueTranslation();
             $attributeValueTranslationEntity
                 ->setFkProductManagementAttributeValue($productManagementAttributeValueEntity->getIdProductManagementAttributeValue())
-                ->setFkLocale($this->getLocale('aa_AA')->getIdLocale())
+                ->setFkLocale($this->getLocale(static::LOCALE_ONE_NAME)->getIdLocale())
                 ->setTranslation($productManagementAttributeValueEntity->getValue() . ' translated to a language')
                 ->save();
 
             $attributeValueTranslationEntity = new SpyProductManagementAttributeValueTranslation();
             $attributeValueTranslationEntity
                 ->setFkProductManagementAttributeValue($productManagementAttributeValueEntity->getIdProductManagementAttributeValue())
-                ->setFkLocale($this->getLocale('bb_BB')->getIdLocale())
+                ->setFkLocale($this->getLocale(static::LOCALE_TWO_NAME)->getIdLocale())
                 ->setTranslation($productManagementAttributeValueEntity->getValue() . ' translated to another language')
                 ->save();
         }

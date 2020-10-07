@@ -40,17 +40,4 @@ interface ProductAttributeTransferMapperInterface
      * @return \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer[]
      */
     public function convertProductAttributeValueCollection(ObjectCollection $productAttributeValueEntityCollection);
-
-    /**
-     * @param \Generated\Shared\Transfer\TranslationTransfer[] $translationTransfers
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
-     * @param \Generated\Shared\Transfer\GlossaryKeyTransfer[] $glossaryKeyTransfers
-     *
-     * @return string[][]
-     */
-    public function indexTranslationsByKeyNameAndLocaleName(
-        array $translationTransfers,
-        array $localeTransfers,
-        array $glossaryKeyTransfers
-    ): array;
 }

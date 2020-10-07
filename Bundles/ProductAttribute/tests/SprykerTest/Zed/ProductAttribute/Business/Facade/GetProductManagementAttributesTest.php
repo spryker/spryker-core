@@ -45,7 +45,11 @@ class GetProductManagementAttributesTest extends Test
             ->getProductManagementAttributes($productManagementAttributeFilterTransfer);
 
         //Assert
-        $this->assertCount(1, $productManagementAttributeCollectionTransfer->getProductManagementAttributes());
+        $this->assertCount(
+            1,
+            $productManagementAttributeCollectionTransfer->getProductManagementAttributes(),
+            'The number of product attributes should be limited by filter.'
+        );
         $this->assertSame(
             $key,
             $productManagementAttributeCollectionTransfer->getProductManagementAttributes()->offsetGet(0)->getKey()
@@ -69,7 +73,11 @@ class GetProductManagementAttributesTest extends Test
             ->getProductManagementAttributes($productManagementAttributeFilterTransfer);
 
         //Assert
-        $this->assertCount(3, $productManagementAttributeCollectionTransfer->getProductManagementAttributes()->offsetGet(0)->getValues());
+        $this->assertCount(
+            3,
+            $productManagementAttributeCollectionTransfer->getProductManagementAttributes()->offsetGet(0)->getValues(),
+            'Values of product attribute should be returned too.'
+        );
     }
 
     /**
@@ -94,7 +102,8 @@ class GetProductManagementAttributesTest extends Test
 
         $this->assertCount(2, $productManagementAttributeTransfer->getValues()->offsetGet(0)->getLocalizedValues());
         $this->assertNotNull(
-            $productManagementAttributeTransfer->getValues()->offsetGet(0)->getLocalizedValues()->offsetGet(0)->getLocaleName()
+            $productManagementAttributeTransfer->getValues()->offsetGet(0)->getLocalizedValues()->offsetGet(0)->getLocaleName(),
+            'Ensure that new property `localName` was expanded in DTO.'
         );
     }
 
@@ -132,6 +141,9 @@ class GetProductManagementAttributesTest extends Test
             ->getProductManagementAttributes(new ProductManagementAttributeFilterTransfer());
 
         //Assert
-        $this->assertIsNumeric($productManagementAttributeCollectionTransfer->getPagination()->getNbResults());
+        $this->assertIsNumeric(
+            $productManagementAttributeCollectionTransfer->getPagination()->getNbResults(),
+            'Glue layer expects `Pagination::NbResults` property to be provided.'
+        );
     }
 }
