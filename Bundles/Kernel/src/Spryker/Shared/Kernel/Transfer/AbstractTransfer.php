@@ -418,7 +418,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
      */
     protected function assertCorrectVarType($var, string $varTypes, string $methodName): void
     {
-        if (is_null($var)) {
+        if ($var === null) {
             return;
         }
 
