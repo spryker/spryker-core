@@ -37,7 +37,7 @@
 {% endmacro %}
 
 {% block content %}
-    {{ form_start(form, {row_attr: {novalidate: ''}}) }}
+    {{ form_start(form, {attr: {novalidate: '', withMonitor: true}}) }}
         <web-mp-profile cloak>
             <span title>{{ 'Profile' | trans }}</span>
 

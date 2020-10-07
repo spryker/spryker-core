@@ -15,7 +15,7 @@ use Spryker\Zed\Router\Communication\Plugin\Application\RouterApplicationPlugin;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Event\FinishRequestEvent;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\RequestContextAwareInterface;
 
@@ -74,7 +74,7 @@ class RouterLocaleEventDispatcherPlugin extends AbstractPlugin implements EventD
     {
         $eventDispatcher->addListener(
             KernelEvents::REQUEST,
-            function (GetResponseEvent $event) use ($container): void {
+            function (RequestEvent $event) use ($container): void {
                 $request = $event->getRequest();
                 $this->setRouterContext($request, $this->getUrlMatcher($container));
             },

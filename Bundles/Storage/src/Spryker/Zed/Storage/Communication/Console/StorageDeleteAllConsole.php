@@ -37,7 +37,7 @@ class StorageDeleteAllConsole extends Console
      *
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($this->getFacade()->getTotalCount() === 0) {
             $this->info('Storage is empty');

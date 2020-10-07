@@ -40,14 +40,14 @@ class PostgresqlCompatibilityConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|null
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if (Config::get(PropelConstants::ZED_DB_ENGINE) !== PropelConfig::DB_ENGINE_PGSQL) {
             $this->info('This command doesn\'t support chosen DB engine');
 
-            return null;
+            return static::CODE_SUCCESS;
         }
 
         $this->info('Adjust propel config for PostgreSQL and missing functions (group_concat)');

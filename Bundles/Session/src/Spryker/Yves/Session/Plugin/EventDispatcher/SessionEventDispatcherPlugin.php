@@ -13,8 +13,8 @@ use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPlu
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -66,7 +66,7 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
         EventDispatcherInterface $eventDispatcher,
         ContainerInterface $container
     ): EventDispatcherInterface {
-        $eventDispatcher->addListener(KernelEvents::REQUEST, function (GetResponseEvent $event) use ($container) {
+        $eventDispatcher->addListener(KernelEvents::REQUEST, function (RequestEvent $event) use ($container) {
             $event->getRequest()->setSession($this->getSession($container));
         }, static::EVENT_PRIORITY_EARLY_KERNEL_REQUEST);
 
@@ -83,7 +83,7 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
         EventDispatcherInterface $eventDispatcher,
         ContainerInterface $container
     ): EventDispatcherInterface {
-        $eventDispatcher->addListener(KernelEvents::REQUEST, function (GetResponseEvent $event) use ($container) {
+        $eventDispatcher->addListener(KernelEvents::REQUEST, function (RequestEvent $event) use ($container) {
             if (!$event->isMasterRequest()) {
                 return;
             }
@@ -111,7 +111,7 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
         EventDispatcherInterface $eventDispatcher,
         ContainerInterface $container
     ): EventDispatcherInterface {
-        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event) {
+        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (ResponseEvent $event) {
             if (!$event->isMasterRequest() || !$event->getRequest()->hasSession()) {
                 return;
             }

@@ -1,4 +1,6 @@
 namespace: UtilSanitizeXss
+include:
+    - tests/SprykerTest/Service/UtilSanitizeXss
 paths:
     tests: tests
     log: tests/_output

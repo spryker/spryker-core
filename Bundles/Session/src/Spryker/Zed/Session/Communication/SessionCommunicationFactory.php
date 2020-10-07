@@ -13,12 +13,12 @@ use Spryker\Shared\Session\Model\SessionStorage\SessionStorageHandlerPool;
 use Spryker\Shared\Session\Model\SessionStorage\SessionStorageOptions;
 use Spryker\Shared\Session\SessionConfig;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Session\Communication\EventListener\SaveSessionListener;
 use Spryker\Zed\Session\SessionDependencyProvider;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
-use Symfony\Component\HttpKernel\EventListener\SaveSessionListener;
 
 /**
  * @method \Spryker\Zed\Session\SessionConfig getConfig()

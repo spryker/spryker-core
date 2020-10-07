@@ -54,9 +54,9 @@ class CheckConditionConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|null
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $optionStateMachineName = $this->input->getOption(static::OPTION_STATE_MACHINE_NAME);
         $argumentStateMachineName = $this->input->getArgument(static::ARGUMENT_STATE_MACHINE_NAME);
@@ -66,7 +66,7 @@ class CheckConditionConsole extends Console
             $this->validateStateMachineNameOption($optionStateMachineName);
         }
         if ($isValidArgument === false) {
-            return null;
+            return static::CODE_SUCCESS;
         }
 
         $affected = $this->getFacade()->checkConditions($isValidArgument === null ? $optionStateMachineName : $argumentStateMachineName);

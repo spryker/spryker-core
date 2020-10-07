@@ -16,7 +16,7 @@ use Spryker\Zed\Api\Communication\Controller\AbstractApiController;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Throwable;
 
 /**
@@ -40,11 +40,11 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
      *
      * @api
      *
-     * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
      *
      * @return callable|null
      */
-    public function onKernelController(FilterControllerEvent $event)
+    public function onKernelController(ControllerEvent $event)
     {
         /** @var array $currentController */
         $currentController = $event->getController();
