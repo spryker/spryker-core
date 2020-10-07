@@ -64,6 +64,8 @@ class CmsSlotBlockRepository extends AbstractRepository implements CmsSlotBlockR
     }
 
     /**
+     * @deprecated Use {@link getPaginatedCmsBlocksWithSlotRelations()} instead.
+     *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
@@ -93,7 +95,7 @@ class CmsSlotBlockRepository extends AbstractRepository implements CmsSlotBlockR
      *
      * @return \Generated\Shared\Transfer\CmsBlockCollectionTransfer
      */
-    public function getPaginatedCmsBlocks(CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer): CmsBlockCollectionTransfer
+    public function getPaginatedCmsBlocksWithSlotRelations(CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer): CmsBlockCollectionTransfer
     {
         $paginationTransfer = $cmsBlockCriteriaTransfer
             ->requirePagination()

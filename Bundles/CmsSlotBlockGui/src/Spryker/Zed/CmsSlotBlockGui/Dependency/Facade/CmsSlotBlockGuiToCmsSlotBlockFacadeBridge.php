@@ -60,6 +60,8 @@ class CmsSlotBlockGuiToCmsSlotBlockFacadeBridge implements CmsSlotBlockGuiToCmsS
     }
 
     /**
+     * @deprecated Use {@link getPaginatedCmsBlocksWithSlotRelations()} instead.
+     *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
@@ -84,8 +86,8 @@ class CmsSlotBlockGuiToCmsSlotBlockFacadeBridge implements CmsSlotBlockGuiToCmsS
      *
      * @return \Generated\Shared\Transfer\CmsBlockCollectionTransfer
      */
-    public function getPaginatedCmsBlocks(CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer): CmsBlockCollectionTransfer
+    public function getPaginatedCmsBlocksWithSlotRelations(CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer): CmsBlockCollectionTransfer
     {
-        return $this->cmsSlotBlockFacade->getPaginatedCmsBlocks($cmsBlockCriteriaTransfer);
+        return $this->cmsSlotBlockFacade->getPaginatedCmsBlocksWithSlotRelations($cmsBlockCriteriaTransfer);
     }
 }

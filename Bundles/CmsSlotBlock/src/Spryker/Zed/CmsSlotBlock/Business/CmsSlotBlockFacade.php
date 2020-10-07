@@ -89,6 +89,8 @@ class CmsSlotBlockFacade extends AbstractFacade implements CmsSlotBlockFacadeInt
      *
      * @api
      *
+     * @deprecated Use {@link getPaginatedCmsBlocksWithSlotRelations()} instead.
+     *
      * @param string $twigPath
      *
      * @return string[]
@@ -109,8 +111,8 @@ class CmsSlotBlockFacade extends AbstractFacade implements CmsSlotBlockFacadeInt
      *
      * @return \Generated\Shared\Transfer\CmsBlockCollectionTransfer
      */
-    public function getPaginatedCmsBlocks(CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer): CmsBlockCollectionTransfer
+    public function getPaginatedCmsBlocksWithSlotRelations(CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer): CmsBlockCollectionTransfer
     {
-        return $this->getRepository()->getPaginatedCmsBlocks($cmsBlockCriteriaTransfer);
+        return $this->getRepository()->getPaginatedCmsBlocksWithSlotRelations($cmsBlockCriteriaTransfer);
     }
 }

@@ -74,6 +74,8 @@ interface CmsSlotBlockFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link getPaginatedCmsBlocksWithSlotRelations()} instead.
+     *
      * @param string $twigPath
      *
      * @return string[]
@@ -93,5 +95,5 @@ interface CmsSlotBlockFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockCollectionTransfer
      */
-    public function getPaginatedCmsBlocks(CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer): CmsBlockCollectionTransfer;
+    public function getPaginatedCmsBlocksWithSlotRelations(CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer): CmsBlockCollectionTransfer;
 }

@@ -25,6 +25,8 @@ interface CmsSlotBlockRepositoryInterface
     ): CmsSlotBlockCollectionTransfer;
 
     /**
+     * @deprecated Use {@link getPaginatedCmsBlocksWithSlotRelations()} instead.
+     *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
@@ -36,5 +38,5 @@ interface CmsSlotBlockRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockCollectionTransfer
      */
-    public function getPaginatedCmsBlocks(CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer): CmsBlockCollectionTransfer;
+    public function getPaginatedCmsBlocksWithSlotRelations(CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer): CmsBlockCollectionTransfer;
 }

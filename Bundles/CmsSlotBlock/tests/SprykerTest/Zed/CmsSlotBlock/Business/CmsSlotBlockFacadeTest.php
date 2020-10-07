@@ -277,7 +277,7 @@ class CmsSlotBlockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetPaginatedCmsBlockReturnsDataWithEmptySearchName(): void
+    public function testGetPaginatedCmsBlockWithSlotRelationsReturnsDataWithEmptySearchName(): void
     {
         // Arrange
         $cmsBlockCountBefore = $this->tester->getCmsBlockCount();
@@ -292,7 +292,7 @@ class CmsSlotBlockFacadeTest extends Unit
         // Act
         $cmsBlockCollectionTransfer = $this->tester
             ->createCmsSlotBlockFacade()
-            ->getPaginatedCmsBlocks($cmsBlockCriteriaTransfer);
+            ->getPaginatedCmsBlocksWithSlotRelations($cmsBlockCriteriaTransfer);
 
         // Assert
         $this->assertCount($cmsBlockCountAfter, $cmsBlockCollectionTransfer->getCmsBlocks());
@@ -301,7 +301,7 @@ class CmsSlotBlockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetPaginatedCmsBlockReturnsCmsBlockBasedOnSearchData(): void
+    public function testGetPaginatedCmsBlockWithSlotRelationsReturnsCmsBlockBasedOnSearchData(): void
     {
         // Arrange
         $blockNamePattern = 'block-';
@@ -313,13 +313,13 @@ class CmsSlotBlockFacadeTest extends Unit
             ->setMaxPerPage($cmsBlockWithNamesCount)
             ->setPage(1);
         $cmsBlockCriteriaTransfer = (new CmsBlockCriteriaTransfer())
-            ->setName($blockNamePattern)
+            ->setNamePattern($blockNamePattern)
             ->setPagination($paginationTransfer);
 
         // Act
         $cmsBlockCollectionTransfer = $this->tester
             ->createCmsSlotBlockFacade()
-            ->getPaginatedCmsBlocks($cmsBlockCriteriaTransfer);
+            ->getPaginatedCmsBlocksWithSlotRelations($cmsBlockCriteriaTransfer);
 
         // Assert
         $this->assertCount($cmsBlockWithNamesCount, $cmsBlockCollectionTransfer->getCmsBlocks());
@@ -328,7 +328,7 @@ class CmsSlotBlockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetPaginatedCmsBlockReturnsPaginatedData(): void
+    public function testGetPaginatedCmsBlockWithSlotRelationsReturnsPaginatedData(): void
     {
         // Arrange
         $blockNamePattern = 'block-';
@@ -340,13 +340,13 @@ class CmsSlotBlockFacadeTest extends Unit
             ->setMaxPerPage($cmsBlocksMaxPerPage)
             ->setPage(1);
         $cmsBlockCriteriaTransfer = (new CmsBlockCriteriaTransfer())
-            ->setName($blockNamePattern)
+            ->setNamePattern($blockNamePattern)
             ->setPagination($paginationTransfer);
 
         // Act
         $cmsBlockCollectionTransfer = $this->tester
             ->createCmsSlotBlockFacade()
-            ->getPaginatedCmsBlocks($cmsBlockCriteriaTransfer);
+            ->getPaginatedCmsBlocksWithSlotRelations($cmsBlockCriteriaTransfer);
 
         // Assert
         $this->assertCount($cmsBlocksMaxPerPage, $cmsBlockCollectionTransfer->getCmsBlocks());
@@ -356,7 +356,7 @@ class CmsSlotBlockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetPaginatedCmsBlockReturnsEmptyData()
+    public function testGetPaginatedCmsBlockWithSlotRelationsReturnsEmptyData()
     {
         // Arrange
         $blockNamePattern = 'block-';
@@ -366,13 +366,13 @@ class CmsSlotBlockFacadeTest extends Unit
             ->setMaxPerPage(5)
             ->setPage(1);
         $cmsBlockCriteriaTransfer = (new CmsBlockCriteriaTransfer())
-            ->setName('block-name')
+            ->setNamePattern('block-name')
             ->setPagination($paginationTransfer);
 
         // Act
         $cmsBlockCollectionTransfer = $this->tester
             ->createCmsSlotBlockFacade()
-            ->getPaginatedCmsBlocks($cmsBlockCriteriaTransfer);
+            ->getPaginatedCmsBlocksWithSlotRelations($cmsBlockCriteriaTransfer);
 
         // Assert
         $this->assertEmpty($cmsBlockCollectionTransfer->getCmsBlocks());

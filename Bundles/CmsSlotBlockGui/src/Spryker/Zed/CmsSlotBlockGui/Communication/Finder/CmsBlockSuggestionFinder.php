@@ -45,7 +45,7 @@ class CmsBlockSuggestionFinder implements CmsBlockSuggestionFinderInterface
     ): array {
         $cmsBlockSuggestionCollectionTransfer = $this
             ->cmsSlotBlockFacade
-            ->getPaginatedCmsBlocks($cmsBlockCriteriaTransfer);
+            ->getPaginatedCmsBlocksWithSlotRelations($cmsBlockCriteriaTransfer);
 
         return [
             static::RESPONSE_KEY_RESULTS => $this->transformCmsBlocksToSuggestionData(
