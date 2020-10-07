@@ -734,7 +734,6 @@ class ClassDefinition implements ClassDefinitionInterface
             'typeHint' => null,
             'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
             'shimNotice' => $this->getShimNotice($property),
-            'propertyType' => $property['type'],
         ];
         $method = $this->addTypeHint($property, $method);
         $method = $this->addDefaultNull($method, $property);

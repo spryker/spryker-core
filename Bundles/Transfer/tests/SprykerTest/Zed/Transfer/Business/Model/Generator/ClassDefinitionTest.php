@@ -213,7 +213,7 @@ class ClassDefinitionTest extends Unit
         $methods = $classDefinition->getMethods();
 
         $givenSetter = $methods['setProperty1'];
-        $expectedSetter = $this->getMethod('setProperty1', 'property1', 'string|null', null, null, 'PROPERTY1', [], false, false);
+        $expectedSetter = $this->getMethod('setProperty1', 'property1', 'string|null', null, null, 'PROPERTY1', [], false, false, true);
         $this->assertEquals($expectedSetter, $givenSetter);
 
         $givenGetter = $methods['getProperty1'];
@@ -236,7 +236,7 @@ class ClassDefinitionTest extends Unit
 
         $methods = $classDefinition->getMethods();
         $givenSetter = $methods['setProperty1'];
-        $expectedSetter = $this->getMethod('setProperty1', 'property1', 'string|null', null, null, 'PROPERTY1', [], false, false);
+        $expectedSetter = $this->getMethod('setProperty1', 'property1', 'string|null', null, null, 'PROPERTY1', [], false, false, true);
 
         $this->assertEquals($expectedSetter, $givenSetter);
     }
@@ -360,6 +360,7 @@ class ClassDefinitionTest extends Unit
      * @param array $bundles
      * @param bool|null $hasDefaultNull
      * @param bool|null $valueObject
+     * @param bool $typeAssertion
      *
      * @return array
      */
@@ -372,7 +373,8 @@ class ClassDefinitionTest extends Unit
         ?string $constant = null,
         array $bundles = [],
         ?bool $hasDefaultNull = null,
-        ?bool $valueObject = null
+        ?bool $valueObject = null,
+        bool $typeAssertion = false
     ): array {
         $method = [
             'name' => $method,
@@ -380,6 +382,7 @@ class ClassDefinitionTest extends Unit
             'bundles' => $bundles,
             'deprecationDescription' => null,
             'shimNotice' => null,
+            'typeAssertion' => $typeAssertion,
         ];
 
         if ($var !== null) {
@@ -432,6 +435,7 @@ class ClassDefinitionTest extends Unit
         $method = $this->getMethod($method, $property, $var, $return, $typeHint, $constant, $bundles, $hasDefaultNull);
         unset($method['typeHint']);
         unset($method['shimNotice']);
+        unset($method['typeAssertion']);
 
         return $method;
     }
@@ -462,6 +466,7 @@ class ClassDefinitionTest extends Unit
         $method['parent'] = $parent;
         $method['is_associative'] = false;
         unset($method['shimNotice']);
+        unset($method['typeAssertion']);
 
         return $method;
     }

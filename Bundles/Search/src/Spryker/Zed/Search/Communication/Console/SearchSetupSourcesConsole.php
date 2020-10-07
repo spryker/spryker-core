@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Search\Communication\Console;
 
+use Generated\Shared\Transfer\ProductReviewTransfer;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -39,7 +40,8 @@ class SearchSetupSourcesConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->getFacade()->installSources($this->getMessenger());
+        $t = new ProductReviewTransfer();
+        $t->setStatus(true);
 
         return static::CODE_SUCCESS;
     }

@@ -251,8 +251,8 @@ class TransferConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - When enabled, an extra-code is added to the setter method of every generated transfer that checks the type of a value to be set for correctness.
-     * - Must not be adjusted on project level.
+     * - When enabled, an extra-check for type correctness of a setter method argument is done.
+     * - Only for core level introspection, do not use for projects.
      *
      * @api
      *

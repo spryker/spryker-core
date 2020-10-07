@@ -411,26 +411,43 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
 
     /**
      * @param mixed $var
-     * @param string $varType
+     * @param string $varTypes
+     * @param string $methodName
      *
-     * @return bool
+     * @return void
      */
-    protected function assertCorrectVarType($var, string $varType): bool
+    protected function assertCorrectVarType($var, string $varTypes, string $methodName): void
     {
         if (is_null($var)) {
-            return true;
+            return;
         }
 
         if (!is_scalar($var) && !is_array($var)) {
-            return true;
+            return;
         }
 
-        $assertFunctionName = 'is_' . $varType;
+        $varTypesCollection = explode('|', $varTypes);
 
-        if (!function_exists($assertFunctionName)) {
-            return false;
+        foreach ($varTypesCollection as $varType) {
+            $assertFunctionName = 'is_' . $varType;
+
+            if (!function_exists($assertFunctionName)) {
+                continue;
+            }
+
+            if ($assertFunctionName($var)) {
+                return;
+            }
         }
 
-        return $assertFunctionName($var);
+        trigger_error(
+            sprintf(
+                'Argument passed to `%s()` is expected to be of type %s. %s is given.',
+                $methodName,
+                $varTypes,
+                gettype($var)
+            ),
+            E_USER_WARNING
+        );
     }
 }
