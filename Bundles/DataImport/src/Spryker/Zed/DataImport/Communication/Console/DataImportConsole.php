@@ -119,7 +119,7 @@ class DataImportConsole extends Console
      *
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if (!$this->checkImportTypeAndGroupConfiguration($input)) {
             $this->error(

@@ -93,7 +93,6 @@ class ExportPostgreSqlDatabase implements ExportDatabaseInterface
     {
         $process = $this->getProcess($command);
         $process->setTimeout($this->config->getProcessTimeout());
-        $process->inheritEnvironmentVariables(true);
         $process->run();
 
         if (!$process->isSuccessful()) {
@@ -116,7 +115,7 @@ class ExportPostgreSqlDatabase implements ExportDatabaseInterface
             return Process::fromShellCommandline($command, null, $this->getEnvironmentVariables());
         }
 
-        return new Process($command, null, $this->getEnvironmentVariables());
+        return new Process(explode(' ', $command), null, $this->getEnvironmentVariables());
     }
 
     /**
