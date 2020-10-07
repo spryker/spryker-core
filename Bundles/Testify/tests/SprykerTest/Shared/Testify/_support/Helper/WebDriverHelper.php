@@ -194,7 +194,9 @@ class WebDriverHelper extends Extension
             ['bypass_shell' => true]
         );
 
+        // phpcs:disable
         if (!is_resource($this->resource) || !proc_get_status($this->resource)['running']) {
+            // phpcs:enable
             proc_close($this->resource);
 
             throw new ExtensionException($this, 'Failed to start webdriver server.');
@@ -262,9 +264,11 @@ class WebDriverHelper extends Extension
                 }
 
                 foreach ($this->pipes as $pipe) {
+                    // phpcs:disable
                     if (is_resource($pipe)) {
                         fclose($pipe);
                     }
+                    // phpcs:enable
                 }
 
                 proc_terminate($this->resource, 2);
