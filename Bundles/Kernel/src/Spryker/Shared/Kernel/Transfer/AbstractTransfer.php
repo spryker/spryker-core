@@ -440,15 +440,8 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
             }
         }
 
-        trigger_error(
-            sprintf(
-                'Argument passed to `%s()` is expected to be of type %s. %s is given.',
-                $methodName,
-                $varTypes,
-                gettype($var)
-            ),
-            E_USER_WARNING
-        );
+        $errorMessage = sprintf('Argument passed to `%s()` is expected to be of type %s. %s is given.', $methodName, $varTypes, gettype($var));
+        file_put_contents('/tmp/transfer-type-error.log', $errorMessage . PHP_EOL, FILE_APPEND);
     }
 
     /**
@@ -458,6 +451,10 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
      */
     protected function getAssertFunctionName(string $varType): string
     {
+        if ($varType === 'boolean') {
+            return 'is_bool';
+        }
+
         if ($this->isTypedArray($varType)) {
             return 'is_array';
         }
