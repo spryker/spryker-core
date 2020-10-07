@@ -11,7 +11,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
-use Symfony\Component\HttpKernel\Event\PostResponseEvent;
+use Symfony\Component\HttpKernel\Event\TerminateEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -35,9 +35,9 @@ class StorageKeyCacheEventDispatcherPlugin extends AbstractPlugin implements Eve
      */
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
-        $eventDispatcher->addListener(KernelEvents::TERMINATE, function (PostResponseEvent $postResponseEvent) {
+        $eventDispatcher->addListener(KernelEvents::TERMINATE, function (TerminateEvent $event) {
             $storageKeyCacheStrategy = $this->getConfig()->getStorageKeyCacheStrategy();
-            $request = $postResponseEvent->getRequest();
+            $request = $event->getRequest();
             $this->getClient()->persistCacheForRequest($request, $storageKeyCacheStrategy);
         });
 

@@ -9,12 +9,15 @@ namespace Spryker\Zed\Translator;
 
 use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\TranslatorExtension\Dependency\Plugin\TranslatorPluginInterface;
+use Spryker\Shared\TranslatorExtension\Dependency\Plugin\Translator\TranslatorPluginInterface;
+use Spryker\Shared\TranslatorExtension\Dependency\Plugin\TranslatorPluginInterface as LegacyTranslatorPluginInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Translator\Communication\Plugin\TranslatorPlugin;
+use Spryker\Zed\Translator\Communication\Plugin\Translator\TranslatorPlugin;
+use Spryker\Zed\Translator\Communication\Plugin\TranslatorPlugin as LegacyTranslatorPlugin;
 use Spryker\Zed\Translator\Dependency\Facade\TranslatorToLocaleFacadeBridge;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @method \Spryker\Zed\Translator\TranslatorConfig getConfig()
@@ -136,18 +139,30 @@ class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTranslatorPlugin(Container $container): Container
     {
-        $container->set(static::PLUGIN_TRANSLATOR, function (): TranslatorPluginInterface {
-            return $this->getTranslatorPlugin();
+        $container->set(static::PLUGIN_TRANSLATOR, function () {
+            if (interface_exists(TranslatorInterface::class)) {
+                return $this->getTranslatorPlugin();
+            }
+
+            return $this->getLegacyTranslatorPlugin();
         });
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Shared\TranslatorExtension\Dependency\Plugin\TranslatorPluginInterface
+     * @return \Spryker\Shared\TranslatorExtension\Dependency\Plugin\Translator\TranslatorPluginInterface
      */
     protected function getTranslatorPlugin(): TranslatorPluginInterface
     {
         return new TranslatorPlugin();
+    }
+
+    /**
+     * @return \Spryker\Shared\TranslatorExtension\Dependency\Plugin\TranslatorPluginInterface
+     */
+    protected function getLegacyTranslatorPlugin(): LegacyTranslatorPluginInterface
+    {
+        return new LegacyTranslatorPlugin();
     }
 }

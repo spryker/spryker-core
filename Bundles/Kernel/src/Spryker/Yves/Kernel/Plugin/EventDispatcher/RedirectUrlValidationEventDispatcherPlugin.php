@@ -11,7 +11,7 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -39,7 +39,7 @@ class RedirectUrlValidationEventDispatcherPlugin extends AbstractPlugin implemen
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
         $container->set(static::BC_REDIRECT_URL_VALIDATION_HANDLED, true);
-        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event) {
+        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (ResponseEvent $event) {
             $this->getFactory()->createRedirectUrlValidator()->validateRedirectUrl($event);
         });
 

@@ -135,8 +135,9 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
             ->createPriceProductQuery()
             ->filterByFKProduct($priceProductTransfer->getIdProduct())
             ->filterByFkPriceType($priceProductTransfer->getFkPriceType())
-            ->findOneOrCreate()
-            ->save();
+            ->findOneOrCreate();
+
+        $priceProductEntity->save();
 
         return $priceProductEntity->getIdPriceProduct();
     }
@@ -157,8 +158,9 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
             ->createPriceProductQuery()
             ->filterByFkProductAbstract($priceProductTransfer->getIdProductAbstract())
             ->filterByFkPriceType($priceProductTransfer->getFkPriceType())
-            ->findOneOrCreate()
-            ->save();
+            ->findOneOrCreate();
+
+        $priceProductEntity->save();
 
         return $priceProductEntity->getIdPriceProduct();
     }

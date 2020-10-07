@@ -5,7 +5,10 @@
                 {% if form.external_url_small.vars.value == false %}
                     {% do form.image_preview.setRendered %}
                 {% endif %}
-                {{ form_widget(form.image_preview) }}
+
+                {% if not form.image_preview.isRendered %}
+                    {{ form_widget(form.image_preview) }}
+                {% endif %}
             </div>
             <div class="form-group">
                 {{ form_row(form.external_url_small) }}
@@ -16,7 +19,10 @@
                 {% if form.external_url_large.vars.value == false %}
                     {% do form.image_preview_large_url.setRendered %}
                 {% endif %}
-                {{ form_widget(form.image_preview_large_url) }}
+
+                {% if not form.image_preview_large_url.isRendered %}
+                    {{ form_widget(form.image_preview_large_url) }}
+                {% endif %}
             </div>
             <div class="form-group">
                 {{ form_row(form.external_url_large) }}

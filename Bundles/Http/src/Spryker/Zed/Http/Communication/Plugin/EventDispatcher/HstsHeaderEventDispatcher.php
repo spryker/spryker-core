@@ -12,7 +12,7 @@ use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -39,7 +39,7 @@ class HstsHeaderEventDispatcher extends AbstractPlugin implements EventDispatche
      */
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
-        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event): void {
+        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (ResponseEvent $event): void {
             if (!$event->isMasterRequest() || !$this->getConfig()->isHstsEnabled()) {
                 return;
             }

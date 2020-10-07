@@ -34,7 +34,6 @@ class RouterConfig extends AbstractBundleConfig
             'cache_dir' => $this->getCachePathIfCacheEnabled(),
             'generator_class' => UrlGenerator::class,
             'matcher_class' => CompiledUrlMatcher::class,
-            'matcher_base_class' => CompiledUrlMatcher::class,
         ];
     }
 
@@ -83,7 +82,7 @@ class RouterConfig extends AbstractBundleConfig
         $controllerDirectories = [];
 
         foreach ($this->get(KernelConstants::PROJECT_NAMESPACES) as $projectNamespace) {
-            $controllerDirectories[] = sprintf('%s/%s/Zed/*/Communication/Controller/', APPLICATION_SOURCE_DIR, $projectNamespace);
+            $controllerDirectories[] = sprintf('%s/%s/Zed/*/Communication/Controller/', rtrim(APPLICATION_SOURCE_DIR, '/'), $projectNamespace);
         }
 
         foreach ($this->get(KernelConstants::CORE_NAMESPACES) as $coreNamespace) {
@@ -91,7 +90,7 @@ class RouterConfig extends AbstractBundleConfig
 
             $controllerDirectories[] = sprintf(
                 '%s/%s/*/src/%s/Zed/*/Communication/Controller/',
-                APPLICATION_VENDOR_DIR,
+                rtrim(APPLICATION_VENDOR_DIR, '/'),
                 $composerPackageNamespace,
                 $coreNamespace
             );

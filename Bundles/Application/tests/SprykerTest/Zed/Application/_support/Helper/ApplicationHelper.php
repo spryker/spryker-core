@@ -23,5 +23,7 @@ class ApplicationHelper extends AbstractApplicationHelper
         parent::_before($test);
 
         $this->addApplicationPlugin(new HttpApplicationPlugin());
+
+        $this->getRequest()->server->set('SERVER_NAME', 'localhost');
     }
 }

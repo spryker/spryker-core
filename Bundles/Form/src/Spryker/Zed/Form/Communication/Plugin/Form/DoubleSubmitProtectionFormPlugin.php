@@ -14,7 +14,7 @@ use Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\StorageInter
 use Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Form\FormFactoryBuilderInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @method \Spryker\Zed\Form\Communication\FormCommunicationFactory getFactory()
@@ -79,7 +79,7 @@ class DoubleSubmitProtectionFormPlugin extends AbstractPlugin implements FormPlu
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @return \Symfony\Component\Translation\TranslatorInterface|null
+     * @return \Symfony\Contracts\Translation\TranslatorInterface|null
      */
     protected function getTranslatorService(ContainerInterface $container): ?TranslatorInterface
     {
