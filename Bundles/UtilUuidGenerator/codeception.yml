@@ -1,4 +1,6 @@
 namespace: UtilUuidGenerator
+include:
+    - tests/SprykerTest/Service/UtilUuidGenerator
 paths:
     tests: tests
     log: tests/_output

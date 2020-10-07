@@ -35,19 +35,18 @@
                     <div class="form-group {% if cmsPageAttributesForm.url.vars.errors|length > 0 %}has-error{% endif %}" >
                         {{ form_label(cmsPageAttributesForm.url) }}
                             {% if cmsPageAttributesForm.vars.data.urlPrefix %}
-                            <div class="input-group m-b">
-                                <span class="input-group-addon">
-                                    {{ cmsPageAttributesForm.vars.data.urlPrefix }}
-                                </span>
-                                {{ form_widget(cmsPageAttributesForm.url) }}
-                            </div>
+                                <div class="input-group m-b">
+                                    <span class="input-group-addon">
+                                        {{ cmsPageAttributesForm.vars.data.urlPrefix }}
+                                    </span>
+                                    {{ form_widget(cmsPageAttributesForm.url) }}
+                                </div>
                             {% else %}
                                 {{ form_widget(cmsPageAttributesForm.url) }}
                             {% endif %}
                         {{ form_errors(cmsPageAttributesForm.url) }}
                     </div>
 
-                    {{ form_row(cmsPageAttributesForm.url) }}
                     {{ form_row(cmsPageAttributesForm.localeName) }}
                     {{ form_row(cmsPageAttributesForm.idCmsPageLocalizedAttributes) }}
                 {% endif %}

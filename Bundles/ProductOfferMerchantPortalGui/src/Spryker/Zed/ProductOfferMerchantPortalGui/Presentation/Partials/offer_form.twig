@@ -58,9 +58,11 @@
                                         <div control>
                                             {% for priceField in pricesByPriceType %}
                                                 <div class="mp-edit-offer__prices-item">
-                                                    {{ form_widget(priceField, {attr: {
-                                                        'outer-prefix': priceField.vars.label,
-                                                    }}) }}
+                                                    {% if not priceField.isRendered %}
+                                                        {{ form_widget(priceField, {attr: {
+                                                            'outer-prefix': priceField.vars.label,
+                                                        }}) }}
+                                                    {% endif %}
                                                 </div>
 
                                                 {% do priceField.setRendered %}
@@ -113,7 +115,7 @@
     </div>
 
     <div>
-        {{ form_start(form) }}
+        {{ form_start(form, {attr: {excludeFormTag: true}}) }}
 
             <web-spy-card spy-title="{{ "Offer visibility" | trans }}">
                 <div class="mp-edit-offer__visibility">
@@ -186,6 +188,6 @@
 
             {% do form.children.productOfferValidity.setRendered %}
 
-        {{ form_end(form) }}
+        {{ form_end(form, {attr: {excludeFormTag: true}}) }}
     </div>
 </web-mp-edit-offer>

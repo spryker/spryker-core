@@ -249,7 +249,7 @@ class RouterResource implements ResourceInterface
             $routeName = 'home';
         }
 
-        $routeCollection->add($routeName, $route);
+        $routeCollection->add($routeName, $route, 0);
 
         return $routeCollection;
     }

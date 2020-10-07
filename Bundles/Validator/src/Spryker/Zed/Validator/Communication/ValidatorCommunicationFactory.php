@@ -14,7 +14,6 @@ use Symfony\Component\Validator\Mapping\Factory\MetadataFactoryInterface;
 use Symfony\Component\Validator\Mapping\Loader\LoaderInterface;
 use Symfony\Component\Validator\Mapping\Loader\StaticMethodLoader;
 use Symfony\Component\Validator\ValidatorBuilder;
-use Symfony\Component\Validator\ValidatorBuilderInterface;
 
 /**
  * @method \Spryker\Zed\Validator\ValidatorConfig getConfig()
@@ -22,9 +21,9 @@ use Symfony\Component\Validator\ValidatorBuilderInterface;
 class ValidatorCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Symfony\Component\Validator\ValidatorBuilderInterface
+     * @return \Symfony\Component\Validator\ValidatorBuilder
      */
-    public function createValidatorBuilder(): ValidatorBuilderInterface
+    public function createValidatorBuilder(): ValidatorBuilder
     {
         return new ValidatorBuilder();
     }

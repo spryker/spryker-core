@@ -191,6 +191,6 @@ class ProcessManager implements ProcessManagerInterface
             return Process::fromShellCommandline($command, APPLICATION_ROOT_DIR);
         }
 
-        return new Process($command);
+        return new Process(explode(' ', $command));
     }
 }

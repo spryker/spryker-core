@@ -10,7 +10,7 @@ namespace Spryker\Yves\Validator\Plugin\Application;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Symfony\Component\Validator\ValidatorBuilderInterface;
+use Symfony\Component\Validator\ValidatorBuilder;
 
 /**
  * @method \Spryker\Yves\Validator\ValidatorFactory getFactory()
@@ -55,12 +55,12 @@ class ValidatorApplicationPlugin extends AbstractPlugin implements ApplicationPl
     }
 
     /**
-     * @param \Symfony\Component\Validator\ValidatorBuilderInterface $validatorBuilder
+     * @param \Symfony\Component\Validator\ValidatorBuilder $validatorBuilder
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @return \Symfony\Component\Validator\ValidatorBuilderInterface
+     * @return \Symfony\Component\Validator\ValidatorBuilder
      */
-    protected function extendValidator(ValidatorBuilderInterface $validatorBuilder, ContainerInterface $container): ValidatorBuilderInterface
+    protected function extendValidator(ValidatorBuilder $validatorBuilder, ContainerInterface $container): ValidatorBuilder
     {
         foreach ($this->getFactory()->getValidatorPlugins() as $validatorPlugin) {
             $validatorBuilder = $validatorPlugin->extend($validatorBuilder, $container);
