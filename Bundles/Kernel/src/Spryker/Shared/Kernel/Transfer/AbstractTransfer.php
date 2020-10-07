@@ -416,7 +416,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
      *
      * @return void
      */
-    protected function assertCorrectVarType($var, string $varTypes, string $methodName): void
+    protected function assertVarTypeIsCorrect($var, string $varTypes, string $methodName): void
     {
         if ($var === null) {
             return;
@@ -429,7 +429,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
         $varTypesCollection = explode('|', $varTypes);
 
         foreach ($varTypesCollection as $varType) {
-            $assertFunctionName = 'is_' . $varType;
+            $assertFunctionName = $this->getAssertFunctionName($varType);
 
             if (!function_exists($assertFunctionName)) {
                 continue;
@@ -449,5 +449,29 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
             ),
             E_USER_WARNING
         );
+    }
+
+    /**
+     * @param string $varType
+     *
+     * @return string
+     */
+    protected function getAssertFunctionName(string $varType): string
+    {
+        if ($this->isTypedArray($varType)) {
+            return 'is_array';
+        }
+
+        return 'is_' . $varType;
+    }
+
+    /**
+     * @param string $varType
+     *
+     * @return bool
+     */
+    protected function isTypedArray(string $varType): bool
+    {
+        return (bool)preg_match('/array\[\]|callable\[\]|int\[\]|integer\[\]|float\[\]|decimal\[\]|string\[\]|bool\[\]|boolean\[\]|iterable\[\]|object\[\]|resource\[\]|mixed\[\]/', $varType);
     }
 }

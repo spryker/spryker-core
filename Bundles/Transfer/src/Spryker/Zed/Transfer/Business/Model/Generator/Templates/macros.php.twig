@@ -82,7 +82,7 @@
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }}{% if method.hasDefaultNull %} = null{% endif %})
     {
         {% if method.typeAssertion -%}
-        $this->assertCorrectVarType(${{ method.property }}, '{{ method.var }}', __METHOD__);
+        $this->assertVarTypeIsCorrect(${{ method.property }}, '{{ method.var }}', __METHOD__);
 
         {% endif -%}
         {% if method.typeHint == "array" -%}
