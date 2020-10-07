@@ -33,7 +33,6 @@ class RouterConfig extends AbstractBundleConfig
             'cache_dir' => $this->getCachePathIfCacheEnabled(),
             'generator_class' => UrlGenerator::class,
             'matcher_class' => CompiledUrlMatcher::class,
-            'matcher_base_class' => CompiledUrlMatcher::class,
         ];
     }
 

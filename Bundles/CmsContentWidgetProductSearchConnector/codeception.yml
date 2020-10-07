@@ -1,4 +1,6 @@
 namespace: CmsContentWidgetProductSearchConnector
+include:
+    - tests/SprykerTest/Yves/CmsContentWidgetProductSearchConnector
 paths:
     tests: tests
     log: tests/_output

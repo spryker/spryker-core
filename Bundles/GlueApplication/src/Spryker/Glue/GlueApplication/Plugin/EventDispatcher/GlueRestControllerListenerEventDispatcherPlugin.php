@@ -14,7 +14,7 @@ use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -30,7 +30,7 @@ class GlueRestControllerListenerEventDispatcherPlugin extends AbstractPlugin imp
      */
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
-        $eventDispatcher->addListener(KernelEvents::CONTROLLER, function (FilterControllerEvent $event) {
+        $eventDispatcher->addListener(KernelEvents::CONTROLLER, function (ControllerEvent $event) {
             $this->onKernelController($event);
         });
 
@@ -38,11 +38,11 @@ class GlueRestControllerListenerEventDispatcherPlugin extends AbstractPlugin imp
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
      *
      * @return void
      */
-    protected function onKernelController(FilterControllerEvent $event): void
+    protected function onKernelController(ControllerEvent $event): void
     {
         $currentController = $event->getController();
 

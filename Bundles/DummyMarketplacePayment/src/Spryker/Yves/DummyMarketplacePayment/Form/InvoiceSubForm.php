@@ -96,6 +96,7 @@ class InvoiceSubForm extends AbstractSubFormType implements SubFormInterface, Su
                 'required' => true,
                 'widget' => 'single_text',
                 'format' => 'dd.MM.yyyy',
+                'html5' => false,
                 'input' => 'string',
                 'attr' => [
                     'placeholder' => 'customer.birth_date',

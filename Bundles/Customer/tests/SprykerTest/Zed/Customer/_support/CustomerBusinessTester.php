@@ -9,6 +9,8 @@ namespace SprykerTest\Zed\Customer;
 
 use Codeception\Actor;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 
 /**
  * @method void wantToTest($text)
@@ -39,8 +41,20 @@ class CustomerBusinessTester extends Actor
      */
     public function assertPasswordsEqual(string $hash, string $rawPassword, string $salt = ''): void
     {
-        $passwordEncoder = new BCryptPasswordEncoder(12);
+        $passwordEncoder = $this->getPasswordEncoder();
 
         $this->assertTrue($passwordEncoder->isPasswordValid($hash, $rawPassword, $salt), 'Passwords are not equal.');
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface
+     */
+    protected function getPasswordEncoder(): PasswordEncoderInterface
+    {
+        if (class_exists(BCryptPasswordEncoder::class)) {
+            return new BCryptPasswordEncoder(12);
+        }
+
+        return new NativePasswordEncoder(null, null, 12);
     }
 }

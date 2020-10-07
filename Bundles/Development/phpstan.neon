@@ -1,4 +1,5 @@
 parameters:
+    reportUnmatchedIgnoredErrors: false
     checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
     ignoreErrors:
@@ -6,3 +7,4 @@ parameters:
         - '#Constant T_OPEN_PARENTHESIS not found.#'
         - '#Constant T_OPEN_SQUARE_BRACKET not found.#'
         - '#Call to an undefined method ReflectionType::getName\(\)#'
+        - "#Call to function method_exists\\(\\) with Symfony\\\\Component\\\\Console\\\\Helper\\\\ProgressBar and 'maxSecondsBetweenRe…' will always evaluate to false.#"

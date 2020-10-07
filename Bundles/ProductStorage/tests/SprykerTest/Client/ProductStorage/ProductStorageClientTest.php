@@ -42,6 +42,7 @@ class ProductStorageClientTest extends Unit
         $productAbstractStorageTransfer = $this->getProductAbstractStorage();
         $idProductAbstract = $productAbstractStorageTransfer->getIdProductAbstract();
         $localeName = 'DE';
+        $storeName = 'DE';
 
         $this->getStorageClientMock()
             ->expects($this->once())
@@ -53,7 +54,7 @@ class ProductStorageClientTest extends Unit
         // Act
         $productAbstractStorageData = $this->tester
             ->getProductStorageClient()
-            ->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName([$idProductAbstract], $localeName);
+            ->getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore([$idProductAbstract], $localeName, $storeName);
 
         // Assert
         $this->assertCount(1, $productAbstractStorageData);

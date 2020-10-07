@@ -95,9 +95,9 @@ EOM
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|null
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->warning(sprintf('The console command `%s` is deprecated. Use `frontend:npm:run` instead', static::COMMAND_NAME));
         $command = $this->getCommand();
@@ -119,9 +119,9 @@ EOM
     /**
      * @param string $command
      *
-     * @return int|null
+     * @return int
      */
-    protected function runCommand($command)
+    protected function runCommand($command): int
     {
         $this->info('Run command: ' . $command);
         $process = new Process(explode(' ', $command), APPLICATION_ROOT_DIR);

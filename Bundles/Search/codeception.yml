@@ -1,7 +1,6 @@
 namespace: SprykerTest
 include:
     - tests/SprykerTest/Client/Search
-    - tests/SprykerTest/Shared/Search
     - tests/SprykerTest/Zed/Search
 paths:
     tests: tests

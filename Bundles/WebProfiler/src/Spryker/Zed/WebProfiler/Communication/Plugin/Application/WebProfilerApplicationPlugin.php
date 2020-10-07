@@ -15,11 +15,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Bridge\Twig\Extension\CodeExtension;
 use Symfony\Bridge\Twig\Extension\ProfilerExtension;
 use Symfony\Bundle\WebProfilerBundle\Controller\ExceptionController;
+use Symfony\Bundle\WebProfilerBundle\Controller\ExceptionPanelController;
 use Symfony\Bundle\WebProfilerBundle\Controller\ProfilerController;
 use Symfony\Bundle\WebProfilerBundle\Controller\RouterController;
 use Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener;
 use Symfony\Bundle\WebProfilerBundle\Twig\WebProfilerExtension;
 use Symfony\Cmf\Component\Routing\ChainRouter;
+use Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer;
 use Symfony\Component\HttpKernel\Debug\FileLinkFormatter;
 use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher;
 use Symfony\Component\HttpKernel\EventListener\ProfilerListener;
@@ -183,7 +185,7 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
                 $route->setMethods('GET');
                 $route->setDefault('_controller', $controllerKey);
 
-                $routeCollection->add($routeName, $route);
+                $routeCollection->add($routeName, $route, 0);
             }
 
             return $routeCollection;
@@ -195,7 +197,7 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @return array
+     * @return array[]
      */
     protected function getRouteDefinitions(ContainerInterface $container): array
     {
@@ -217,6 +219,13 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
         };
 
         $exceptionController = function () use ($container) {
+            if (class_exists(ExceptionPanelController::class)) {
+                return new ExceptionPanelController(
+                    new HtmlErrorRenderer($container->get('debug')),
+                    $container->get(static::SERVICE_PROFILER)
+                );
+            }
+
             return new ExceptionController(
                 $container->get(static::SERVICE_PROFILER),
                 $container->get(static::SERVICE_TWIG),
@@ -241,7 +250,7 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
     }
 
     /**
-     * @return array
+     * @return array[]
      */
     protected function getDataCollectorPluginTemplates(): array
     {

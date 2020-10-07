@@ -149,7 +149,7 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
             return Process::fromShellCommandline($command);
         }
 
-        return new Process($command);
+        return new Process(explode(' ', $command));
     }
 
     /**

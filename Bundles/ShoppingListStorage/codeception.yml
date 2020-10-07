@@ -1,4 +1,6 @@
 namespace: ShoppingListStorage
+include:
+    - tests/SprykerTest/Zed/ShoppingListStorage
 paths:
     tests: tests
     log: tests/_output

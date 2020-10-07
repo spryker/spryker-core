@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\ZedRequest\Communication\Plugin;
 
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
 interface GatewayControllerListenerInterface
 {
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
      *
      * @return callable|null
      */
-    public function onKernelController(FilterControllerEvent $event);
+    public function onKernelController(ControllerEvent $event);
 }
