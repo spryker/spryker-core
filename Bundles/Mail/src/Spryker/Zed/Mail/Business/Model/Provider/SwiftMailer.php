@@ -141,7 +141,7 @@ class SwiftMailer implements MailProviderPluginInterface
     protected function addAttachments(MailTransfer $mailTransfer): void
     {
         foreach ($mailTransfer->getAttachments() as $attachment) {
-            $this->mailer->addAttachment($attachment->getAttachmentUrl());
+            $this->mailer->attach($attachment->getAttachmentUrl());
         }
     }
 }

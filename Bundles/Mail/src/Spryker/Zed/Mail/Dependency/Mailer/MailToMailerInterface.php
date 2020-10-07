@@ -60,9 +60,9 @@ interface MailToMailerInterface
     public function send();
 
     /**
-     * @param string $attachment
+     * @param string $attachmentUrl
      *
      * @return void
      */
-    public function addAttachment(string $attachment): void;
+    public function attach(string $attachmentUrl): void;
 }

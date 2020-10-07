@@ -103,12 +103,12 @@ class MailToMailerBridge implements MailToMailerInterface
     }
 
     /**
-     * @param string $attachment
+     * @param string $attachmentUrl
      *
      * @return void
      */
-    public function addAttachment(string $attachment): void
+    public function attach(string $attachmentUrl): void
     {
-        $this->message->attach(Swift_Attachment::fromPath($attachment));
+        $this->message->attach(Swift_Attachment::fromPath($attachmentUrl));
     }
 }
