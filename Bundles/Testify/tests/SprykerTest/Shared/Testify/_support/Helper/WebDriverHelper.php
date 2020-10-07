@@ -25,9 +25,40 @@ class WebDriverHelper extends Extension
 
     protected const DEFAULT_HOST = '0.0.0.0';
     protected const DEFAULT_PORT = 4444;
-    protected const DEFAULT_BROWSER = 'chrome';
+    protected const DEFAULT_BROWSER = 'phantomjs';
     protected const DEFAULT_PATH = 'vendor/bin/phantomjs';
     protected const DEFAULT_TIMEOUT = 10;
+
+    protected const BROWSER_PARAMETERS = [
+        'chrome' => [
+            'webdriver-port' => '--port',
+            'whitelisted-ips' => '--whitelisted-ips',
+            'url-base' => '--url-base',
+        ],
+        'phantomjs' => [
+            'port' => '--webdriver',
+            'proxy' => '--proxy',
+            'proxyType' => '--proxy-type',
+            'proxyAuth' => '--proxy-auth',
+            'webSecurity' => '--web-security',
+            'ignoreSslErrors' => '--ignore-ssl-errors',
+            'sslProtocol' => '--ssl-protocol',
+            'sslCertificatesPath' => '--ssl-certificates-path',
+            'remoteDebuggerPort' => '--remote-debugger-port',
+            'remoteDebuggerAutorun' => '--remote-debugger-autorun',
+            'cookiesFile' => '--cookies-file',
+            'diskCache' => '--disk-cache',
+            'maxDiskCacheSize' => '--max-disk-cache-size',
+            'loadImages' => '--load-images',
+            'localStoragePath' => '--local-storage-path',
+            'localStorageQuota' => '--local-storage-quota',
+            'localToRemoteUrlAccess' => '--local-to-remote-url-access',
+            'outputEncoding' => '--output-encoding',
+            'scriptEncoding' => '--script-encoding',
+            'webdriverLoglevel' => '--webdriver-loglevel',
+            'webdriverLogfile' => '--webdriver-logfile',
+        ],
+    ];
 
     /**
      * @var string[]
@@ -175,6 +206,7 @@ class WebDriverHelper extends Extension
         $this->write('Waiting for the webdriver server to be reachable.');
 
         while (true) {
+
             if ($checks >= $max_checks) {
                 throw new ExtensionException($this, 'Webdriver server never became reachable.');
             }
@@ -243,32 +275,13 @@ class WebDriverHelper extends Extension
 
     protected function getCommandParametersMapping()
     {
-        return [
-            'webdriver-port' => '--port',
-            'whitelisted-ips' => '--whitelisted-ips',
-            'url-base' => '--url-base',
-            'port' => '--webdriver',
-            'proxy' => '--proxy',
-            'proxyType' => '--proxy-type',
-            'proxyAuth' => '--proxy-auth',
-            'webSecurity' => '--web-security',
-            'ignoreSslErrors' => '--ignore-ssl-errors',
-            'sslProtocol' => '--ssl-protocol',
-            'sslCertificatesPath' => '--ssl-certificates-path',
-            'remoteDebuggerPort' => '--remote-debugger-port',
-            'remoteDebuggerAutorun' => '--remote-debugger-autorun',
-            'cookiesFile' => '--cookies-file',
-            'diskCache' => '--disk-cache',
-            'maxDiskCacheSize' => '--max-disk-cache-size',
-            'loadImages' => '--load-images',
-            'localStoragePath' => '--local-storage-path',
-            'localStorageQuota' => '--local-storage-quota',
-            'localToRemoteUrlAccess' => '--local-to-remote-url-access',
-            'outputEncoding' => '--output-encoding',
-            'scriptEncoding' => '--script-encoding',
-            'webdriverLoglevel' => '--webdriver-loglevel',
-            'webdriverLogfile' => '--webdriver-logfile',
-        ];
+        $browser_name = $this->config[static::KEY_BROWSER] ?? static::DEFAULT_BROWSER;
+
+        if (!empty(static::BROWSER_PARAMETERS[$browser_name])) {
+            return static::BROWSER_PARAMETERS[$browser_name];
+        }
+
+        throw new ExtensionException($this, 'Unknown browser specified: ' . $browser_name);
     }
 
     /**
