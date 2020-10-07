@@ -664,7 +664,7 @@ class ClassDefinitionTest extends Unit
                 ],
                 'property3' => [
                     'name' => 'property3',
-                    'type' => 'Dummy',
+                    'type' => 'array',
                     'is_transfer' => true,
                     'is_typed_array' => false,
                     'bundles' => [],
@@ -717,13 +717,13 @@ class ClassDefinitionTest extends Unit
                 'shim config' => [
                     'FooBar' => [
                         'property3' => [
-                            'Dummy' => 'int',
+                            'array' => 'int',
                         ],
                     ],
                 ],
                 'expected types' => [
                     'property3',
-                    'int|\Generated\Shared\Transfer\DummyTransfer',
+                    'int|array',
                 ],
             ],
         ];
