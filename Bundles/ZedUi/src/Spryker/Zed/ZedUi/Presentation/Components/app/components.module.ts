@@ -16,6 +16,8 @@ import { MerchantLayoutCenteredComponent } from './merchant-layout-centered/merc
 import { MerchantLayoutCenteredModule } from './merchant-layout-centered/merchant-layout-centered.module';
 import { MerchantLayoutMainComponent } from './merchant-layout-main/merchant-layout-main.component';
 import { MerchantLayoutMainModule } from './merchant-layout-main/merchant-layout-main.module';
+import { FormComponent } from './form/form.component';
+import { FormModule } from './form/form.module';
 
 @NgModule({
     imports: [
@@ -26,6 +28,7 @@ import { MerchantLayoutMainModule } from './merchant-layout-main/merchant-layout
         HeaderModule,
         NotificationModule,
         LocaleModule,
+        FormModule,
     ],
     providers: [],
 })
@@ -50,5 +53,6 @@ export class ComponentsModule extends CustomElementModule {
         HeaderComponent,
         NotificationComponent,
         LocaleSwitcherComponent,
+        FormComponent,
     ];
 }

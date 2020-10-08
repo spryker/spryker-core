@@ -93,7 +93,7 @@ class GlueRouterTest extends Unit
 
         $routeConfiguration = $glueRouterPlugin->matchRequest($request);
 
-        $this->assertSame(1, $routeConfiguration[RequestConstantsInterface::ATTRIBUTE_ID]);
+        $this->assertSame('1', $routeConfiguration[RequestConstantsInterface::ATTRIBUTE_ID]);
         $this->assertSame('tests', $routeConfiguration[RequestConstantsInterface::ATTRIBUTE_TYPE]);
         $this->assertArrayHasKey(RequestConstantsInterface::ATTRIBUTE_RESOURCE_FQCN, $routeConfiguration);
         $this->assertArrayHasKey(RequestConstantsInterface::ATTRIBUTE_ALL_RESOURCES, $routeConfiguration);

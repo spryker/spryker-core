@@ -11,6 +11,8 @@ use Spryker\Shared\TranslatorExtension\Dependency\Plugin\TranslatorPluginInterfa
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\Translator\Communication\Plugin\Translator\TranslatorPlugin} instead.
+ *
  * @method \Spryker\Zed\Translator\Business\TranslatorFacadeInterface getFacade()
  * @method \Spryker\Zed\Translator\Communication\TranslatorCommunicationFactory getFactory()
  * @method \Spryker\Zed\Translator\TranslatorConfig getConfig()
@@ -29,7 +31,7 @@ class TranslatorPlugin extends AbstractPlugin implements TranslatorPluginInterfa
      *
      * @return string
      */
-    public function trans($id, array $parameters = [], $domain = null, $locale = null): string
+    public function trans(string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string
     {
         return $this->getFacade()->trans($id, $parameters, $domain, $locale);
     }
@@ -47,7 +49,7 @@ class TranslatorPlugin extends AbstractPlugin implements TranslatorPluginInterfa
      *
      * @return string
      */
-    public function transChoice($id, $number, array $parameters = [], $domain = null, $locale = null): string
+    public function transChoice(string $id, int $number, array $parameters = [], ?string $domain = null, ?string $locale = null): string
     {
         return $this->getFacade()->transChoice($id, $number, $parameters, $domain, $locale);
     }
@@ -65,7 +67,7 @@ class TranslatorPlugin extends AbstractPlugin implements TranslatorPluginInterfa
      *
      * @return void
      */
-    public function setLocale($locale): void
+    public function setLocale(string $locale): void
     {
         $this->getFacade()->setLocale($locale);
     }

@@ -1,17 +1,14 @@
-namespace: UtilCsv
+namespace: MerchantOmsDataImport
 include:
-    - tests/SprykerTest/Service/UtilText
+    - tests/SprykerTest/Zed/MerchantOmsDataImport
 paths:
     tests: tests
     log: tests/_output
     data: tests/_data
-    support: .
+    support: tests/_support
     envs: tests/_envs
 settings:
     suite_class: \PHPUnit\Framework\TestSuite
     colors: true
     memory_limit: 1024M
     log: true
-extensions:
-    enabled: [Codeception\Extension\Phantoman]
-    config: { Codeception\Extension\Phantoman: { suites: [Presentation] } }

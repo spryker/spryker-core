@@ -91,9 +91,17 @@
                             </td>
                          {%  endif %}
 
-                        {{ form_row(moneyValue.fk_currency) }}
-                        {{ form_row(moneyValue.fk_store) }}
-                        {{ form_row(productMoneyValueForView.fk_price_type) }}
+                        {% if not moneyValue.fk_currency.isRendered %}
+                            {{ form_row(moneyValue.fk_currency) }}
+                        {% endif %}
+
+                        {% if not moneyValue.fk_store.isRendered %}
+                            {{ form_row(moneyValue.fk_store) }}
+                        {% endif %}
+
+                        {% if not productMoneyValueForView.fk_price_type.isRendered %}
+                            {{ form_row(productMoneyValueForView.fk_price_type) }}
+                        {% endif %}
                    {% endfor %}
                 {% endfor %}
          </tr>

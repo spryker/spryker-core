@@ -38,7 +38,7 @@ class DatabaseDropTablesConsole extends Console
      *
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->info('Dropping all database tables.');
 

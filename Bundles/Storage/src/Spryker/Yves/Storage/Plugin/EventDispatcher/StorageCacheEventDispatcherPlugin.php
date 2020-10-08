@@ -12,7 +12,7 @@ use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
 use Spryker\Shared\Storage\StorageConstants;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Symfony\Component\HttpKernel\Event\PostResponseEvent;
+use Symfony\Component\HttpKernel\Event\TerminateEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -35,9 +35,9 @@ class StorageCacheEventDispatcherPlugin extends AbstractPlugin implements EventD
      */
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
-        $eventDispatcher->addListener(KernelEvents::TERMINATE, function (PostResponseEvent $postResponseEvent) use ($container) {
+        $eventDispatcher->addListener(KernelEvents::TERMINATE, function (TerminateEvent $event) use ($container) {
             if ($container->has(StorageConstants::STORAGE_CACHE_STRATEGY)) {
-                $request = $postResponseEvent->getRequest();
+                $request = $event->getRequest();
                 $this->getClient()->persistCacheForRequest($request, $container->get(StorageConstants::STORAGE_CACHE_STRATEGY));
             }
         });

@@ -1,3 +1,6 @@
 parameters:
+    reportUnmatchedIgnoredErrors: false
     checkMissingIterableValueType: false
     ignoreErrors:
+        - '#Method .+RouteCollection::add\(\) invoked with 3 parameters, 2 required.#'
+        - '#Instantiated class Symfony\\Bundle\\WebProfilerBundle\\Controller\\ExceptionController not found.#'
