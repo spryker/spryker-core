@@ -8,12 +8,11 @@
 namespace Spryker\Yves\Translator\Translator;
 
 use InvalidArgumentException;
+use Spryker\Shared\Translator\TranslatorInterface;
 use Spryker\Yves\Translator\Dependency\Client\TranslatorToGlossaryStorageClientInterface;
 use Spryker\Yves\Translator\Dependency\Client\TranslatorToLocaleClientInterface;
-use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
-class Translator implements LegacyTranslatorInterface, TranslatorInterface
+class Translator implements TranslatorInterface
 {
     /**
      * @var \Spryker\Yves\Translator\Dependency\Client\TranslatorToGlossaryStorageClientInterface
@@ -48,7 +47,7 @@ class Translator implements LegacyTranslatorInterface, TranslatorInterface
      *
      * @return string The translated string
      */
-    public function trans($identifier, array $parameters = [], $domain = null, $locale = null)
+    public function trans($identifier, array $parameters = [], ?string $domain = null, ?string $locale = null)
     {
         if ($locale === null) {
             $locale = $this->getLocaleName();

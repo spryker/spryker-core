@@ -157,7 +157,9 @@ class PhpstanRunner implements PhpstanRunnerInterface
 
         $progressBar = new ProgressBar($progressBarOutput, $stepsCount);
         $progressBar->setRedrawFrequency(static::PROGRESS_BAR_FREQUENCY);
-        $progressBar->maxSecondsBetweenRedraws(static::PROGRESS_BAR_SECONDS_FORCE_REDRAW);
+        if (method_exists($progressBar, 'maxSecondsBetweenRedraws')) {
+            $progressBar->maxSecondsBetweenRedraws(static::PROGRESS_BAR_SECONDS_FORCE_REDRAW);
+        }
 
         return $progressBar;
     }

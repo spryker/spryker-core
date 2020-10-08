@@ -343,6 +343,6 @@ class RequestFormatterTest extends Unit
     protected function assertResource(RestRequestInterface $restRequest): void
     {
         $this->assertSame('tests', $restRequest->getResource()->getType());
-        $this->assertSame(1, $restRequest->getResource()->getId());
+        $this->assertSame('1', $restRequest->getResource()->getId());
     }
 }

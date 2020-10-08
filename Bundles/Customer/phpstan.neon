@@ -1,2 +1,8 @@
 parameters:
     checkMissingIterableValueType: false
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        - '#Instantiated class .+NativePasswordEncoder not found.#'
+        - '#Instantiated class .+BCryptPasswordEncoder not found.#'
+        - '#Method .+Customer::getPasswordEncoder\(\) should return .+PasswordEncoderInterface but returns .+NativePasswordEncoder.#'
+        - '#Method .+Customer::getPasswordEncoder\(\) should return .+PasswordEncoderInterface but returns .+BCryptPasswordEncoder.#'

@@ -140,7 +140,7 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
             return Process::fromShellCommandline($command);
         }
 
-        return new Process($command);
+        return new Process(explode(' ', $command));
     }
 
     /**

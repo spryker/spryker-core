@@ -11,7 +11,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\Kernel\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
 /**
  * @deprecated Use {@link \Spryker\Glue\GlueApplication\Plugin\EventDispatcher\GlueRestControllerListenerEventDispatcherPlugin} instead.
@@ -21,11 +21,11 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 class GlueControllerListenerPlugin extends AbstractPlugin
 {
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
      *
      * @return callable|null
      */
-    public function onKernelController(FilterControllerEvent $event)
+    public function onKernelController(ControllerEvent $event)
     {
         $currentController = $event->getController();
 

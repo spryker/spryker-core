@@ -56,6 +56,9 @@ interface SecurityBuilderInterface
     public function addAuthenticationFailureHandler(string $firewallName, callable $authenticationFailureHandler);
 
     /**
+     * @deprecated Use {@link EventDispatcherPluginInterface::extend()} instead. Since symfony/security-core 5.1 you
+     * need to add an event listener or subscriber instead.
+     *
      * @param string $firewallName
      * @param callable $logoutHandler
      *
