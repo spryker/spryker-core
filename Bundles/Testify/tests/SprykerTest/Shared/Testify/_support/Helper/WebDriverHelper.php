@@ -119,7 +119,10 @@ class WebDriverHelper extends Extension
     {
         if (!$this->isRemoteEnabled()) {
             if (!file_exists(realpath($this->config['path']))) {
-                throw new ExtensionException($this, "Webdriver executable not found: {$this->config['path']}");
+                throw new ExtensionException(
+                    $this,
+                    sprintf('Webdriver executable not found: %s', $this->config['path'])
+                );
             }
 
             if (isset($this->config['suites'])) {
@@ -283,7 +286,7 @@ class WebDriverHelper extends Extension
      *
      * @return string[]
      */
-    protected function getCommandParametersMapping()
+    protected function getCommandParametersMapping(): array
     {
         $browser_path = $this->config['path'];
 
