@@ -198,4 +198,54 @@ class TransferConfig extends AbstractBundleConfig
     {
         return false;
     }
+
+    /**
+     * Gets shim from=>to map per transfer field that was wrongly set up in core level.
+     * Since transfers are not "owned" by a particular module, this applies here transfer internal on a core level
+     * as a whole.
+     *
+     * This list can be reduced on project level where needed (e.g. to preserve full BC in edge cases).
+     * But we recommend to fix the project code instead fo use the same intended type as the actual type
+     * going in and out on core level here.
+     *
+     * Only scalar values and arrays are allowed to be shimmed and this list is only used from core level perspective.
+     * Do not increase this list from project level, it is intended to help projects adapt early to the actual
+     * type of core methods.
+     *
+     * @api
+     *
+     * @phpstan-return array<string, array<string, array<string, string>>>
+     *
+     * @return string[][][]
+     */
+    public function getTypeShims(): array
+    {
+        return [
+            'KeyTranslation' => [
+                'glossaryKey' => [
+                    'int' => 'string',
+                ],
+            ],
+            'ProductReview' => [
+                'status' => [
+                    'int' => 'string',
+                ],
+            ],
+            'CheckoutError' => [
+                'errorCode' => [
+                    'int' => 'string',
+                ],
+            ],
+            'SynchronizationData' => [
+                'data' => [
+                    'string' => 'array',
+                ],
+            ],
+            'SpyProductQuantityStorageEntity' => [
+                'data' => [
+                    'string' => 'array',
+                ],
+            ],
+        ];
+    }
 }

@@ -29,6 +29,8 @@ class ClassDefinition implements ClassDefinitionInterface
         ],
     ];
 
+    protected const SHIM_NOTICE_TEMPLATE = 'Forward compatibility warning: %s is the actual type (please use that, %s is kept for BC).';
+
     /**
      * @var string
      */
@@ -108,6 +110,7 @@ class ClassDefinition implements ClassDefinitionInterface
         $this->addEntityNamespace($definition);
 
         if (isset($definition['property'])) {
+            $definition = $this->shimTransferDefinitionPropertyTypes($definition);
             $properties = $this->normalizePropertyTypes($definition['property']);
             $this->addConstants($properties);
             $this->addProperties($properties);
@@ -226,7 +229,7 @@ class ClassDefinition implements ClassDefinitionInterface
         $property['name'] = lcfirst($property['name']);
         $propertyInfo = [
             'name' => $property['name'],
-            'type' => $this->getPropertyType($property),
+            'type' => $this->buildPropertyType($property),
             'is_typed_array' => $property['is_typed_array'],
             'bundles' => $property['bundles'],
             'is_associative' => $property['is_associative'],
@@ -725,11 +728,12 @@ class ClassDefinition implements ClassDefinitionInterface
             'name' => $methodName,
             'property' => $propertyName,
             'propertyConst' => $this->getPropertyConstantName($property),
-            'var' => $this->getSetVar($property),
+            'var' => $this->buildSetVar($property),
             'valueObject' => false,
             'bundles' => $property['bundles'],
             'typeHint' => null,
             'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
+            'shimNotice' => $this->getShimNotice($property),
         ];
         $method = $this->addTypeHint($property, $method);
         $method = $this->addDefaultNull($method, $property);
@@ -992,5 +996,123 @@ class ClassDefinition implements ClassDefinitionInterface
 
         $this->useStatements[$fullyQualifiedClassName] = $fullyQualifiedClassName;
         ksort($this->useStatements, SORT_STRING);
+    }
+
+    /**
+     * @param array $transferDefinition
+     *
+     * @return array
+     */
+    protected function shimTransferDefinitionPropertyTypes(array $transferDefinition): array
+    {
+        $transferName = $transferDefinition['name'];
+        $shim = $this->transferConfig->getTypeShims()[$transferName] ?? null;
+
+        if (!isset($transferDefinition['property']) || !$shim) {
+            return $transferDefinition;
+        }
+
+        foreach ($shim as $propertyName => $shimChange) {
+            foreach ($transferDefinition['property'] as $propertyKey => $propertyDefinition) {
+                if ($propertyDefinition['name'] !== $propertyName) {
+                    continue;
+                }
+
+                $propertyDefinition = $this->shimPropertyType($propertyDefinition, $shimChange);
+                $transferDefinition['property'][$propertyKey] = $propertyDefinition;
+            }
+        }
+
+        return $transferDefinition;
+    }
+
+    /**
+     * @param array $propertyDefinition
+     * @param string[] $shimChange
+     *
+     * @return array
+     */
+    protected function shimPropertyType(array $propertyDefinition, array $shimChange): array
+    {
+        $toType = $shimChange[$propertyDefinition['type']] ?? null;
+
+        if ($toType !== null) {
+            $propertyDefinition['typeShim'] = $toType;
+            $propertyDefinition = $this->addShimNotice($toType, $propertyDefinition);
+        }
+
+        return $propertyDefinition;
+    }
+
+    /**
+     * @param string $typeShim
+     * @param array $propertyDefinition
+     *
+     * @return array
+     */
+    protected function addShimNotice(string $typeShim, array $propertyDefinition): array
+    {
+        $propertyDefinition['shimNotice'] = sprintf(static::SHIM_NOTICE_TEMPLATE, $typeShim, $propertyDefinition['type']);
+
+        return $propertyDefinition;
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string|null
+     */
+    protected function getTypeShim(array $property): ?string
+    {
+        return $property['typeShim'] ?? null;
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string
+     */
+    protected function buildPropertyType(array $property): string
+    {
+        $propertyType = $this->getPropertyType($property);
+
+        return $this->buildShimmedType($propertyType, $this->getTypeShim($property));
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string
+     */
+    protected function buildSetVar(array $property): string
+    {
+        $varType = $this->getSetVar($property);
+
+        return $this->buildShimmedType($varType, $this->getTypeShim($property));
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string|null
+     */
+    protected function getShimNotice(array $property): ?string
+    {
+        return $property['shimNotice'] ?? null;
+    }
+
+    /**
+     * @param string $originalType
+     * @param string|null $typeShim
+     *
+     * @return string
+     */
+    protected function buildShimmedType(string $originalType, ?string $typeShim = null): string
+    {
+        if ($typeShim === null) {
+            return $originalType;
+        }
+
+        return sprintf('%s|%s', $typeShim, $originalType);
     }
 }
