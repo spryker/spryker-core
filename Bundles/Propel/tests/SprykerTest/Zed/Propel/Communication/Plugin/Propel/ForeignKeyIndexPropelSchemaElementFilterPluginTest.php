@@ -8,10 +8,7 @@
 namespace SprykerTest\Zed\Propel\Communication\Plugin\Propel;
 
 use Codeception\Test\Unit;
-use DOMDocument;
-use SimpleXMLElement;
 use Spryker\Zed\Propel\Communication\Plugin\Propel\ForeignKeyIndexPropelSchemaElementFilterPlugin;
-use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Auto-generated group annotations
@@ -27,6 +24,11 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 class ForeignKeyIndexPropelSchemaElementFilterPluginTest extends Unit
 {
+    /**
+     * @var \SprykerTest\Zed\Propel\PropelBusinessTester
+     */
+    protected $tester;
+
     /**
      * @return void
      */
@@ -59,33 +61,13 @@ class ForeignKeyIndexPropelSchemaElementFilterPluginTest extends Unit
      */
     protected function runFilterTests(string $inputFileName, string $expectedFileName): void
     {
-        $schemaXmlElement = $this->createXmlElement($inputFileName);
+        $xmlFilePath = $this->getFixturesPathToFile($inputFileName);
+        $schemaXmlElement = $this->tester->createXmlElement($xmlFilePath);
         $schemaXmlElement = (new ForeignKeyIndexPropelSchemaElementFilterPlugin())->filter($schemaXmlElement);
 
         $expected = file_get_contents($this->getFixturesPathToFile($expectedFileName));
 
-        $this->assertSame($expected, $this->formatXml($schemaXmlElement));
-    }
-
-    /**
-     * @param \SimpleXMLElement $xmlElement
-     *
-     * @return string
-     */
-    protected function formatXml(SimpleXMLElement $xmlElement): string
-    {
-        $dom = new DOMDocument('1.0');
-        $dom->preserveWhiteSpace = false;
-        $dom->formatOutput = true;
-        $dom->loadXML($xmlElement->asXML());
-
-        $callback = function ($matches) {
-            $multiplier = (strlen($matches[1]) / 2) * 4;
-
-            return str_repeat(' ', $multiplier) . '<';
-        };
-
-        return preg_replace_callback('/^( +)</m', $callback, $dom->saveXML());
+        $this->assertSame($expected, $this->tester->formatXml($schemaXmlElement->asXML()));
     }
 
     /**
@@ -98,22 +80,10 @@ class ForeignKeyIndexPropelSchemaElementFilterPluginTest extends Unit
         $pathParts = [
             __DIR__,
             'Fixtures',
-            'PropelSchemaFilter',
+            'PropelSchema',
+            $fileName,
         ];
 
-        return implode(DIRECTORY_SEPARATOR, $pathParts) . DIRECTORY_SEPARATOR . $fileName;
-    }
-
-    /**
-     * @param string $fileName
-     *
-     * @return \SimpleXMLElement
-     */
-    protected function createXmlElement(string $fileName): SimpleXMLElement
-    {
-        $xmlFilePath = $this->getFixturesPathToFile($fileName);
-        $schemaFile = new SplFileInfo($xmlFilePath, '', '');
-
-        return new SimpleXMLElement($schemaFile->getContents());
+        return implode(DIRECTORY_SEPARATOR, $pathParts);
     }
 }

@@ -27,13 +27,13 @@ class DropMySqlDatabaseTables implements DropDatabaseTablesInterface
     protected function getDropQuery(): string
     {
         return "
-            SELECT concat('KILL ',id,';') from information_schema.processlist where db = (SELECT DATABASE()); 
-            
+            SELECT concat('KILL ',id,';') from information_schema.processlist where db = (SELECT DATABASE());
+
             SET FOREIGN_KEY_CHECKS = 0;
             SELECT CONCAT('DROP TABLE IF EXISTS `', GROUP_CONCAT(table_name SEPARATOR '`, `'), '`;')
                 FROM information_schema.tables
                 WHERE table_schema = (SELECT DATABASE()) INTO @dropTableQuery;
-            
+
             PREPARE stmt FROM @dropTableQuery;
             EXECUTE stmt;
             DEALLOCATE PREPARE stmt;

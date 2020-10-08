@@ -8,9 +8,11 @@
 namespace SprykerTest\Zed\Propel\Business;
 
 use Codeception\Test\Unit;
-use DOMDocument;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Propel;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Propel\PropelConstants;
+use Spryker\Zed\Propel\PropelConfig;
 
 /**
  * Auto-generated group annotations
@@ -74,9 +76,13 @@ class PropelFacadeTest extends Unit
 
         $expectedXml = file_get_contents($this->getFixturesPathToFile('expected.postgresql_adjuster.spy_foo.schema.xml'));
 
-        $this->assertNotSame($expectedXml, $this->formatXml($this->tester->getVirtualDirectoryFileContent('schemas/spy_foo.schema.xml')));
+        $actualXml = $this->tester->formatXml($this->tester->getVirtualDirectoryFileContent('schemas/spy_foo.schema.xml'));
+        $this->assertNotSame($expectedXml, $actualXml);
+
         $this->tester->getFacade()->adjustPropelSchemaFilesForPostgresql();
-        $this->assertSame($expectedXml, $this->formatXml($this->tester->getVirtualDirectoryFileContent('schemas/spy_foo.schema.xml')));
+
+        $actualXml = $this->tester->formatXml($this->tester->getVirtualDirectoryFileContent('schemas/spy_foo.schema.xml'));
+        $this->assertSame($expectedXml, $actualXml);
     }
 
     /**
@@ -84,6 +90,10 @@ class PropelFacadeTest extends Unit
      */
     public function testAdjustPostgresqlFunctionsAddsFunction(): void
     {
+        if (Config::get(PropelConstants::ZED_DB_ENGINE) !== PropelConfig::DB_ENGINE_PGSQL) {
+            $this->markTestSkipped('PostgreSQL related test');
+        }
+
         $entityDirectory = $this->tester->getVirtualDirectory();
         $this->tester->mockConfigMethod('getPropelSchemaPathPatterns', function () use ($entityDirectory) {
             return [$entityDirectory];
@@ -103,12 +113,11 @@ class PropelFacadeTest extends Unit
     }
 
     /**
-     * @throws void
+     * @return void
      */
     public function testDeleteMigrationFilesDirectoryShouldRemoveMigrationDirectory(): void
     {
         $schemaDirectory = $this->tester->getVirtualDirectory();
-
         $this->tester->mockConfigMethod('getMigrationDirectory', function () use ($schemaDirectory) {
             return $schemaDirectory;
         });
@@ -133,36 +142,21 @@ class PropelFacadeTest extends Unit
         return $statement->fetch()['exists'] ?? false;
     }
 
+    /**
+     * @param string $fileName
+     *
+     * @return string
+     */
     protected function getFixturesPathToFile(string $fileName): string
     {
         $pathParts = [
             __DIR__,
             'Fixtures',
             'PropelSchema',
+            $fileName,
         ];
 
-        return implode(DIRECTORY_SEPARATOR, $pathParts) . DIRECTORY_SEPARATOR . $fileName;
-    }
-
-    /**
-     * @param string $xml
-     *
-     * @return string
-     */
-    protected function formatXml(string $xml): string
-    {
-        $dom = new DOMDocument('1.0');
-        $dom->preserveWhiteSpace = false;
-        $dom->formatOutput = true;
-        $dom->loadXML($xml);
-
-        $callback = function ($matches) {
-            $multiplier = (strlen($matches[1]) / 2) * 4;
-
-            return str_repeat(' ', $multiplier) . '<';
-        };
-
-        return preg_replace_callback('/^( +)</m', $callback, $dom->saveXML());
+        return implode(DIRECTORY_SEPARATOR, $pathParts);
     }
 
     /**
