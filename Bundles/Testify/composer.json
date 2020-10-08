@@ -17,6 +17,7 @@
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
+    "dms/phpunit-arraysubset-asserts": "*",
     "spryker/code-sniffer": "*",
     "spryker/console": "*",
     "spryker/json-path": "^1.0.0",
