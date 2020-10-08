@@ -49,7 +49,7 @@ class RestResourceTest extends Unit
 
         $this->assertCount(2, $array[RestResourceInterface::RESOURCE_ATTRIBUTES]);
         $this->assertCount(1, $array[RestResourceInterface::RESOURCE_LINKS]);
-        $this->assertSame(1, $array[RestResourceInterface::RESOURCE_ID]);
+        $this->assertSame('1', $array[RestResourceInterface::RESOURCE_ID]);
         $this->assertSame('tests', $array[RestResourceInterface::RESOURCE_TYPE]);
 
         $this->assertArrayHasKey('related', $array[RestResourceInterface::RESOURCE_RELATIONSHIPS]);
