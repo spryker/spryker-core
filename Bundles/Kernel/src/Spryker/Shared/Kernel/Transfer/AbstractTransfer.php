@@ -20,6 +20,8 @@ use Spryker\Shared\Kernel\Transfer\Exception\TransferUnserializationException;
 
 abstract class AbstractTransfer implements TransferInterface, Serializable, ArrayAccess
 {
+    protected const TRANSFER_ARGUMENT_TYPE_ERROR_LOG_PATH = '/tmp/transfer-type-error.log';
+
     /**
      * @var array
      */
@@ -34,6 +36,11 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
      * @var string[]
      */
     protected $transferPropertyNameMap = [];
+
+    /**
+     * @var bool[]
+     */
+    protected static $loggedTransferArgumentTypeErrorCache = [];
 
     public function __construct()
     {
@@ -440,8 +447,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
             }
         }
 
-        $errorMessage = sprintf('Argument passed to `%s()` is expected to be of type %s. %s is given.', $methodName, $varTypes, gettype($var));
-        file_put_contents('/tmp/transfer-type-error.log', $errorMessage . PHP_EOL, FILE_APPEND);
+        $this->logTransferArgumentTypeError($methodName, $varTypes, gettype($var));
     }
 
     /**
@@ -470,5 +476,44 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     protected function isTypedArray(string $varType): bool
     {
         return (bool)preg_match('/array\[\]|callable\[\]|int\[\]|integer\[\]|float\[\]|decimal\[\]|string\[\]|bool\[\]|boolean\[\]|iterable\[\]|object\[\]|resource\[\]|mixed\[\]/', $varType);
+    }
+
+    /**
+     * @param string $methodFullName
+     * @param string $expectedTypes
+     * @param string $actualType
+     *
+     * @return void
+     */
+    protected function logTransferArgumentTypeError(string $methodFullName, string $expectedTypes, string $actualType): void
+    {
+        $errorMessage = sprintf("Argument passed to `%s()` is expected to be of type %s. %s is given.\n", $methodFullName, $expectedTypes, $actualType);
+
+        if ($this->isTransferArgumentTypeErrorAlreadyLogged($errorMessage)) {
+            return;
+        }
+
+        file_put_contents(static::TRANSFER_ARGUMENT_TYPE_ERROR_LOG_PATH, $errorMessage, FILE_APPEND);
+        static::$loggedTransferArgumentTypeErrorCache[$errorMessage] = true;
+    }
+
+    /**
+     * @param string $errorMessage
+     *
+     * @return bool
+     */
+    protected function isTransferArgumentTypeErrorAlreadyLogged(string $errorMessage): bool
+    {
+        if (array_key_exists($errorMessage, static::$loggedTransferArgumentTypeErrorCache)) {
+            return true;
+        }
+
+        if (!file_exists(static::TRANSFER_ARGUMENT_TYPE_ERROR_LOG_PATH)) {
+            return false;
+        }
+
+        $loggedTransferArgumentTypeErrors = file(static::TRANSFER_ARGUMENT_TYPE_ERROR_LOG_PATH);
+
+        return in_array($errorMessage, $loggedTransferArgumentTypeErrors, true);
     }
 }
