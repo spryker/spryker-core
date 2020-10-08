@@ -213,7 +213,9 @@ class ExternalDependencyFinder extends AbstractFileDependencyFinder
     {
         foreach ($this->config->getExternalToInternalNamespaceMap() as $namespace => $package) {
             if (strpos($useStatement, $namespace) === 0) {
-                return $this->getDependentModuleNameFromPackage($package);
+                return $package;
+
+                $this->getDependentModuleNameFromPackage($package);
             }
         }
 
