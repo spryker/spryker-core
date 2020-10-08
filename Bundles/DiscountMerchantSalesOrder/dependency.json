@@ -1,6 +1,6 @@
 {
   "include": {
-    "spryker/discount": "Provides a controller action.",
-    "spryker/merchant-sales-order": "Provides a controller action."
+    "spryker/discount": "Not used at the moment, added as required in order to avoid major in the future.",
+    "spryker/merchant-sales-order": "Not used at the moment, added as required in order to avoid major in the future."
   }
 }

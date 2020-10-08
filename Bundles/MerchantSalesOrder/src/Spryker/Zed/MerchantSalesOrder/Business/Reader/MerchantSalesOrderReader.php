@@ -159,7 +159,7 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
             unset($itemTransfers);
         }
 
-        $orderTransfer = $this->filterOrder($orderTransfer, $merchantOrderTransfer);
+        $orderTransfer = $this->filterMerchantOrderItems($orderTransfer, $merchantOrderTransfer);
 
         $merchantOrderTransfer->setOrder($orderTransfer);
         $merchantOrderTransfer->setExpenses($this->getMerchantOrderExpenses($merchantOrderTransfer));
@@ -173,7 +173,7 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    protected function filterOrder(OrderTransfer $orderTransfer, MerchantOrderTransfer $merchantOrderTransfer): OrderTransfer
+    protected function filterMerchantOrderItems(OrderTransfer $orderTransfer, MerchantOrderTransfer $merchantOrderTransfer): OrderTransfer
     {
         $orderItemTransfers = new ArrayObject();
 
