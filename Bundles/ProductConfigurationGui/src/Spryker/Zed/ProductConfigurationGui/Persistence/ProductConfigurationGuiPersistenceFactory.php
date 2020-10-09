@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductConfigurationGui\Persistence;
 
-use Orm\Zed\ProductConfiguration\Persistence\SpyProductConfigurationQuery;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductConfigurationGui\ProductConfigurationGuiDependencyProvider;
 
@@ -17,10 +17,10 @@ use Spryker\Zed\ProductConfigurationGui\ProductConfigurationGuiDependencyProvide
 class ProductConfigurationGuiPersistenceFactory extends AbstractPersistenceFactory
 {
     /**
-     * @return \Orm\Zed\ProductConfiguration\Persistence\SpyProductConfigurationQuery|\Propel\Runtime\ActiveQuery\Criteria
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function getProductConfigurationPropelQuery(): SpyProductConfigurationQuery
+    public function getProductAbstractPropelQuery(): SpyProductAbstractQuery
     {
-        return $this->getProvidedDependency(ProductConfigurationGuiDependencyProvider::PROPEL_QUERY_PRODUCT_CONFIGURATION);
+        return $this->getProvidedDependency(ProductConfigurationGuiDependencyProvider::PROPEL_QUERY_PRODUCT_ABSTRACT);
     }
 }
