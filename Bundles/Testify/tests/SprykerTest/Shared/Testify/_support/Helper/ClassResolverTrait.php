@@ -69,7 +69,7 @@ trait ClassResolverTrait
         $namespaceParts = explode('\\', $config['namespace']);
 
         $classNameCandidates = [];
-        $classNameCandidates[] = sprintf($classNamePattern, rtrim($namespaceParts[0], 'Test'), $namespaceParts[1], $moduleName);
+        $classNameCandidates[] = sprintf($classNamePattern, preg_replace('/Test$/', '', $namespaceParts[0]), $namespaceParts[1], $moduleName);
 
         foreach ($this->coreNamespaces as $coreNamespace) {
             $classNameCandidates[] = sprintf($classNamePattern, $coreNamespace, $namespaceParts[1], $moduleName);
