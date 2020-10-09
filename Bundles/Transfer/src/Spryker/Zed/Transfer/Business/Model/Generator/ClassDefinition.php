@@ -1126,7 +1126,7 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         $method['typeAssertion'] = false;
 
-        if ($this->transferConfig->isSetterTypeAssertionEnabled() && !$method['typeHint']) {
+        if ($this->transferConfig->isDevelopment() && !$method['typeHint']) {
             $method['typeAssertion'] = true;
         }
 

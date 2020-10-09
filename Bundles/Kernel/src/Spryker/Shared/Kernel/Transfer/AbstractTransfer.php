@@ -12,6 +12,8 @@ use ArrayObject;
 use Countable;
 use Exception;
 use InvalidArgumentException;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use Serializable;
 use Spryker\Service\UtilEncoding\Model\Json;
 use Spryker\Shared\Kernel\Transfer\Exception\ArrayAccessReadyOnlyException;
@@ -33,18 +35,20 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     protected $transferMetadata = [];
 
     /**
+     * @var \Monolog\Logger
+     */
+    protected $logger;
+
+    /**
      * @var string[]
      */
     protected $transferPropertyNameMap = [];
 
-    /**
-     * @var bool[]
-     */
-    protected static $loggedTransferArgumentTypeErrorCache = [];
-
     public function __construct()
     {
         $this->initCollectionProperties();
+
+        $this->setUpLogger();
     }
 
     /**
@@ -447,7 +451,9 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
             }
         }
 
-        $this->logTransferArgumentTypeError($methodName, $varTypes, gettype($var));
+        $this->logger->warning(
+            sprintf("Argument passed to `%s()` is expected to be of type %s. %s is given.", $methodName, $varTypes, gettype($var))
+        );
     }
 
     /**
@@ -479,41 +485,13 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     }
 
     /**
-     * @param string $methodFullName
-     * @param string $expectedTypes
-     * @param string $actualType
-     *
      * @return void
      */
-    protected function logTransferArgumentTypeError(string $methodFullName, string $expectedTypes, string $actualType): void
+    protected function setUpLogger(): void
     {
-        $errorMessage = sprintf("Argument passed to `%s()` is expected to be of type %s. %s is given.\n", $methodFullName, $expectedTypes, $actualType);
+        $logger = new Logger('transferLogger');
+        $logger->pushHandler(new StreamHandler(static::TRANSFER_ARGUMENT_TYPE_ERROR_LOG_PATH, Logger::WARNING));
 
-        if ($this->isTransferArgumentTypeErrorAlreadyLogged($errorMessage)) {
-            return;
-        }
-
-        file_put_contents(static::TRANSFER_ARGUMENT_TYPE_ERROR_LOG_PATH, $errorMessage, FILE_APPEND);
-        static::$loggedTransferArgumentTypeErrorCache[$errorMessage] = true;
-    }
-
-    /**
-     * @param string $errorMessage
-     *
-     * @return bool
-     */
-    protected function isTransferArgumentTypeErrorAlreadyLogged(string $errorMessage): bool
-    {
-        if (array_key_exists($errorMessage, static::$loggedTransferArgumentTypeErrorCache)) {
-            return true;
-        }
-
-        if (!file_exists(static::TRANSFER_ARGUMENT_TYPE_ERROR_LOG_PATH)) {
-            return false;
-        }
-
-        $loggedTransferArgumentTypeErrors = file(static::TRANSFER_ARGUMENT_TYPE_ERROR_LOG_PATH);
-
-        return in_array($errorMessage, $loggedTransferArgumentTypeErrors, true);
+        $this->logger = $logger;
     }
 }

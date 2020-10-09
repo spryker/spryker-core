@@ -251,14 +251,14 @@ class TransferConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - When enabled, an extra-check for type correctness of a setter method argument is done.
+     * - When enabled, some extra integrity checks are performed.
      * - Only for core level introspection, do not use for projects.
      *
      * @api
      *
      * @return bool
      */
-    public function isSetterTypeAssertionEnabled(): bool
+    public function isDevelopment(): bool
     {
         return true;
     }
