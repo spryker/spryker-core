@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToCartClientBridge;
+use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToProductConfigurationClientBridge;
 use Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageFactory;
 use Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorResponseValidatorInterface;
 use Spryker\Client\ProductConfigurationStorage\Writer\ProductConfigurationInstanceWriter;
@@ -49,11 +50,19 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
             ->onlyMethods(['storeProductConfigurationInstanceBySku'])
             ->disableOriginalConstructor()->getMock();
 
+        $productConfigurationClientMock = $this->getMockBuilder(
+            ProductConfigurationStorageToProductConfigurationClientBridge::class
+        )->disableOriginalConstructor()->onlyMethods(['validateProductConfiguratorCheckSumResponse'])->getMock();
+
+        $productConfigurationClientMock->method('validateProductConfiguratorCheckSumResponse')
+            ->willReturn((new ProductConfiguratorResponseProcessorResponseTransfer())->setIsSuccessful(true));
+
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageFactory $productConfigurationStorageFactoryMock */
         $productConfigurationStorageFactoryMock = $this->getMockBuilder(ProductConfigurationStorageFactory::class)
             ->onlyMethods([
                 'getCartClient',
                 'createProductConfigurationInstanceWriter',
+                'getProductConfigurationClient',
                 'createProductConfiguratorCheckSumResponseValidators',
             ])->getMock();
 
@@ -64,6 +73,10 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
         $productConfigurationStorageFactoryMock
             ->method('createProductConfigurationInstanceWriter')
             ->willReturn($productConfigurationInstanceWriterMock);
+
+        $productConfigurationStorageFactoryMock
+            ->method('getProductConfigurationClient')
+            ->willReturn($productConfigurationClientMock);
 
         $productConfigurationStorageFactoryMock
             ->method('createProductConfiguratorCheckSumResponseValidators')
@@ -100,6 +113,13 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
             (new QuoteResponseTransfer())->setIsSuccessful(true)
         );
 
+        $productConfigurationClientMock = $this->getMockBuilder(
+            ProductConfigurationStorageToProductConfigurationClientBridge::class
+        )->disableOriginalConstructor()->onlyMethods(['validateProductConfiguratorCheckSumResponse'])->getMock();
+
+        $productConfigurationClientMock->method('validateProductConfiguratorCheckSumResponse')
+            ->willReturn((new ProductConfiguratorResponseProcessorResponseTransfer())->setIsSuccessful(true));
+
         $productConfigurationInstanceWriterMock = $this->getMockBuilder(ProductConfigurationInstanceWriter::class)
             ->onlyMethods(['storeProductConfigurationInstanceBySku'])
             ->disableOriginalConstructor()->getMock();
@@ -110,11 +130,16 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
                 'getCartClient',
                 'createProductConfigurationInstanceWriter',
                 'createProductConfiguratorCheckSumResponseValidators',
+                'getProductConfigurationClient',
             ])->getMock();
 
         $productConfigurationStorageFactoryMock
             ->method('getCartClient')
             ->willReturn($cartClientMock);
+
+        $productConfigurationStorageFactoryMock
+            ->method('getProductConfigurationClient')
+            ->willReturn($productConfigurationClientMock);
 
         $productConfigurationStorageFactoryMock
             ->method('createProductConfigurationInstanceWriter')
@@ -147,6 +172,13 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
      */
     public function testProcessProductConfiguratorCheckSumResponseWillSetProcessorResponseResultToFalseWhenNotValidResponseData(): void
     {
+        $productConfigurationClientMock = $this->getMockBuilder(
+            ProductConfigurationStorageToProductConfigurationClientBridge::class
+        )->disableOriginalConstructor()->onlyMethods(['validateProductConfiguratorCheckSumResponse'])->getMock();
+
+        $productConfigurationClientMock->method('validateProductConfiguratorCheckSumResponse')
+            ->willReturn((new ProductConfiguratorResponseProcessorResponseTransfer())->setIsSuccessful(true));
+
         $productConfiguratorResponseValidatorMock = $this->getMockBuilder(
             ProductConfiguratorResponseValidatorInterface::class
         )->onlyMethods(['validate'])->getMock();
@@ -157,6 +189,7 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageFactory $productConfigurationStorageFactoryMock */
         $productConfigurationStorageFactoryMock = $this->getMockBuilder(ProductConfigurationStorageFactory::class)
             ->onlyMethods([
+                'getProductConfigurationClient',
                 'createProductConfiguratorCheckSumResponseValidators',
             ])->getMock();
 
@@ -165,6 +198,10 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
             ->willReturn([
                 $productConfiguratorResponseValidatorMock,
             ]);
+
+        $productConfigurationStorageFactoryMock
+            ->method('getProductConfigurationClient')
+            ->willReturn($productConfigurationClientMock);
 
         $productConfiguratorResponseTransfer = (new ProductConfiguratorResponseBuilder())
             ->withProductConfigurationInstance()
@@ -194,6 +231,13 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
             (new QuoteResponseTransfer())->setIsSuccessful(false)
         );
 
+        $productConfigurationClientMock = $this->getMockBuilder(
+            ProductConfigurationStorageToProductConfigurationClientBridge::class
+        )->disableOriginalConstructor()->onlyMethods(['validateProductConfiguratorCheckSumResponse'])->getMock();
+
+        $productConfigurationClientMock->method('validateProductConfiguratorCheckSumResponse')
+            ->willReturn((new ProductConfiguratorResponseProcessorResponseTransfer())->setIsSuccessful(true));
+
         $productConfigurationInstanceWriterMock = $this->getMockBuilder(ProductConfigurationInstanceWriter::class)
             ->onlyMethods(['storeProductConfigurationInstanceBySku'])
             ->disableOriginalConstructor()->getMock();
@@ -204,11 +248,16 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
                 'getCartClient',
                 'createProductConfigurationInstanceWriter',
                 'createProductConfiguratorCheckSumResponseValidators',
+                'getProductConfigurationClient',
             ])->getMock();
 
         $productConfigurationStorageFactoryMock
             ->method('getCartClient')
             ->willReturn($cartClientMock);
+
+        $productConfigurationStorageFactoryMock
+            ->method('getProductConfigurationClient')
+            ->willReturn($productConfigurationClientMock);
 
         $productConfigurationStorageFactoryMock
             ->method('createProductConfigurationInstanceWriter')
@@ -226,6 +275,54 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
 
         $productConfigurationInstanceWriterMock->expects($this->never())
             ->method('storeProductConfigurationInstanceBySku');
+
+        // Act
+        $productConfiguratorResponseProcessorResponseTransfer = $this->tester
+            ->getClientMock($productConfigurationStorageFactoryMock)
+            ->processProductConfiguratorCheckSumResponse($productConfiguratorResponseTransfer, []);
+
+        // Assert
+        $this->assertFalse($productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testProcessProductConfiguratorCheckSumResponseWillSetProcessorResponseResultToFalseWhenNotValidCheckSum(): void
+    {
+        $productConfigurationClientMock = $this->getMockBuilder(
+            ProductConfigurationStorageToProductConfigurationClientBridge::class
+        )->disableOriginalConstructor()->onlyMethods(['validateProductConfiguratorCheckSumResponse'])->getMock();
+
+        $productConfigurationClientMock->method('validateProductConfiguratorCheckSumResponse')
+            ->willReturn((new ProductConfiguratorResponseProcessorResponseTransfer())->setIsSuccessful(false));
+
+        $productConfiguratorResponseValidatorMock = $this->getMockBuilder(
+            ProductConfiguratorResponseValidatorInterface::class
+        )->onlyMethods(['validate'])->getMock();
+
+        $productConfiguratorResponseValidatorMock->expects($this->never())->method('validate');
+
+        /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageFactory $productConfigurationStorageFactoryMock */
+        $productConfigurationStorageFactoryMock = $this->getMockBuilder(ProductConfigurationStorageFactory::class)
+            ->onlyMethods([
+                'getProductConfigurationClient',
+                'createProductConfiguratorCheckSumResponseValidators',
+            ])->getMock();
+
+        $productConfigurationStorageFactoryMock
+            ->method('createProductConfiguratorCheckSumResponseValidators')
+            ->willReturn([
+                $productConfiguratorResponseValidatorMock,
+            ]);
+
+        $productConfigurationStorageFactoryMock
+            ->method('getProductConfigurationClient')
+            ->willReturn($productConfigurationClientMock);
+
+        $productConfiguratorResponseTransfer = (new ProductConfiguratorResponseBuilder())
+            ->withProductConfigurationInstance()
+            ->build();
 
         // Act
         $productConfiguratorResponseProcessorResponseTransfer = $this->tester

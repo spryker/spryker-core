@@ -5,25 +5,25 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductConfigurationStorage\Validator;
+namespace Spryker\Client\ProductConfiguration\Validator;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer;
-use Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageConfig;
+use Spryker\Client\ProductConfiguration\ProductConfigurationConfig;
 
 class ProductConfiguratorTimestampResponseValidator implements ProductConfiguratorResponseValidatorInterface
 {
-    protected const GLOSSARY_KEY_PRODUCT_CONFIGURATION_STORAGE_EXPIRED_TIMESTAMP = 'product_configuration_storage.validation.error.expired_timestamp';
+    protected const GLOSSARY_KEY_PRODUCT_CONFIGURATION_STORAGE_EXPIRED_TIMESTAMP = 'product_configuration.validation.error.expired_timestamp';
 
     /**
-     * @var \Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageConfig
+     * @var \Spryker\Client\ProductConfiguration\ProductConfigurationConfig
      */
     protected $config;
 
     /**
-     * @param \Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageConfig $config
+     * @param \Spryker\Client\ProductConfiguration\ProductConfigurationConfig $config
      */
-    public function __construct(ProductConfigurationStorageConfig $config)
+    public function __construct(ProductConfigurationConfig $config)
     {
         $this->config = $config;
     }

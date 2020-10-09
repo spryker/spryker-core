@@ -9,7 +9,7 @@ namespace Spryker\Client\ProductConfigurationStorage\Validator;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer;
-use Spryker\Shared\ProductConfiguration\ProductConfigurationConfig;
+use Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageConfig;
 
 class ProductConfiguratorItemGroupKeyResponseValidator implements ProductConfiguratorResponseValidatorInterface
 {
@@ -31,7 +31,7 @@ class ProductConfiguratorItemGroupKeyResponseValidator implements ProductConfigu
             ->getProductConfiguratorResponse();
 
         if (
-            $productConfiguratorResponseTransfer->getSourceType() === ProductConfigurationConfig::SOURCE_TYPE_CART &&
+            $productConfiguratorResponseTransfer->getSourceType() === ProductConfigurationStorageConfig::SOURCE_TYPE_CART &&
             !$productConfiguratorResponseTransfer->getItemGroupKey()
         ) {
             return $productConfiguratorResponseProcessorResponseTransfer

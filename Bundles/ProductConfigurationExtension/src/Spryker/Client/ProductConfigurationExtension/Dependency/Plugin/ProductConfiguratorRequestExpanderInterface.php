@@ -16,7 +16,7 @@ interface ProductConfiguratorRequestExpanderInterface
 {
     /**
      * Specification:
-     * - Expands product configurator request.
+     * - Expands product configurator request with additional data.
      *
      * @api
      *

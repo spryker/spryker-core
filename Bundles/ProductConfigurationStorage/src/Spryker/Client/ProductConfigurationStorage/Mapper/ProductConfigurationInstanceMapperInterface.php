@@ -24,11 +24,13 @@ interface ProductConfigurationInstanceMapperInterface
     ): ProductConfigurationInstanceTransfer;
 
     /**
+     * @param array $configuratorResponseData
      * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer
      */
-    public function mapProductConfigurationInstancePricesToProductConfigurationInstancePriceProductTransfer(
+    public function mapConfiguratorResponseDataPricesToProductConfigurationInstancePrices(
+        array $configuratorResponseData,
         ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
     ): ProductConfigurationInstanceTransfer;
 }

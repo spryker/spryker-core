@@ -49,8 +49,8 @@ class ProductConfigurationClient extends AbstractClient implements ProductConfig
         ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
     ): ProductConfiguratorRedirectTransfer {
         return $this->getFactory()
-                ->createProductConfigurationAccessTokenRedirectResolver()
-                ->prepareProductConfiguratorAccessTokenRedirect($productConfiguratorRequestTransfer);
+            ->createProductConfigurationAccessTokenRedirectResolver()
+            ->prepareProductConfiguratorAccessTokenRedirect($productConfiguratorRequestTransfer);
     }
 
     /**
@@ -86,5 +86,24 @@ class ProductConfigurationClient extends AbstractClient implements ProductConfig
         return $this->getFactory()
             ->createQuoteProductConfigurationChecker()
             ->isQuoteProductConfigurationValid($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
+     * @param array $productData
+     *
+     * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
+     */
+    public function validateProductConfiguratorCheckSumResponse(
+        ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer,
+        array $productData
+    ): ProductConfiguratorResponseProcessorResponseTransfer {
+        return $this->getFactory()
+            ->createProductConfiguratorCheckSumResponseValidator()
+            ->validate($productConfiguratorResponseProcessorResponseTransfer, $productData);
     }
 }

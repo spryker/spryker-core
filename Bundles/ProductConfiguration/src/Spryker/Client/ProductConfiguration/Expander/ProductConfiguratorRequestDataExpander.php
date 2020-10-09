@@ -14,7 +14,7 @@ use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationTo
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToPriceClientInterface;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToStoreClientInterface;
 
-class ProductConfiguratorDataExpander implements ProductConfiguratorDataExpanderInterface
+class ProductConfiguratorRequestDataExpander implements ProductConfiguratorRequestDataExpanderInterface
 {
     /**
      * @var \Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToCustomerClientInterface

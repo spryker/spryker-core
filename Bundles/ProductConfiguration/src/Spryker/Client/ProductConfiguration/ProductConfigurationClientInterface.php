@@ -33,7 +33,7 @@ interface ProductConfigurationClientInterface
      * Specification:
      * - Expands product configurator request with additional data.
      * - Sends access token request to configurator.
-     * - Builds product configuration redirect from configurator response.
+     * - Builds product configurator redirect URL from configurator response.
      *
      * @api
      *
@@ -72,4 +72,26 @@ interface ProductConfigurationClientInterface
      * @return bool
      */
     public function isQuoteProductConfigurationValid(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * Specification:
+     * - Requires fields to be set on the ProductConfiguratorResponseProcessorResponseTransfer:
+     *   - productConfiguratorResponse::checkSum
+     *   - productConfiguratorResponse::timestamp
+     *   - productConfiguratorResponse::sourceType
+     *   - productConfiguratorResponse::productConfigurationInstance::configuratorKey.
+     * - Validates checkSum and timestamp according to provided response data.
+     * - Returns `isSuccessful=true` on success or `isSuccessful=false` with error messages otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
+     * @param array $productData
+     *
+     * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
+     */
+    public function validateProductConfiguratorCheckSumResponse(
+        ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer,
+        array $productData
+    ): ProductConfiguratorResponseProcessorResponseTransfer;
 }

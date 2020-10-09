@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductConfiguration\Http;
+namespace Spryker\Client\ProductConfiguration\Dependency\External;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
 use Spryker\Client\ProductConfiguration\Http\Exception\ProductConfigurationHttpRequestException;
 
-class ProductConfigurationGuzzleHttpClient implements ProductConfigurationGuzzleHttpClientInterface
+class ProductConfigurationToHttpClientAdapter implements ProductConfigurationToHttpClientInterface
 {
     /**
      * @var \GuzzleHttp\ClientInterface

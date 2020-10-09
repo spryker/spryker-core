@@ -9,7 +9,7 @@ namespace Spryker\Client\ProductConfiguration\Expander;
 
 use Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer;
 
-interface ProductConfiguratorDataExpanderInterface
+interface ProductConfiguratorRequestDataExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer $productConfiguratorRequestDataTransfer

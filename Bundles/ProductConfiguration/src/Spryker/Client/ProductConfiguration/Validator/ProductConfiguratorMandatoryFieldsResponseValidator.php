@@ -5,10 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductConfigurationStorage\Validator;
+namespace Spryker\Client\ProductConfiguration\Validator;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer;
+use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 
 class ProductConfiguratorMandatoryFieldsResponseValidator implements ProductConfiguratorResponseValidatorInterface
@@ -29,7 +30,7 @@ class ProductConfiguratorMandatoryFieldsResponseValidator implements ProductConf
             ->getProductConfiguratorResponse();
 
         try {
-            $productConfiguratorResponseTransfer->requireSku();
+            $this->assertMandatoryFields($productConfiguratorResponseTransfer);
         } catch (RequiredTransferPropertyException $requiredTransferPropertyException) {
             return $productConfiguratorResponseProcessorResponseTransfer
                 ->addMessage(
@@ -39,5 +40,21 @@ class ProductConfiguratorMandatoryFieldsResponseValidator implements ProductConf
         }
 
         return $productConfiguratorResponseProcessorResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
+     *
+     * @return void
+     */
+    protected function assertMandatoryFields(ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer): void
+    {
+        $productConfiguratorResponseTransfer
+            ->requireSourceType()
+            ->requireCheckSum()
+            ->requireTimestamp()
+            ->requireProductConfigurationInstance()
+            ->getProductConfigurationInstance()
+            ->requireConfiguratorKey();
     }
 }

@@ -37,7 +37,7 @@ class ProductConfigurationConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Holds configurator key.
+     * - Provides encryption key for checksum validation.
      *
      * @api
      */

@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductConfigurationStorage\Dependency\Service;
+namespace Spryker\Client\ProductConfiguration\Dependency\Service;
 
-interface ProductConfigurationStorageToProductConfigurationDataChecksumGeneratorInterface
+interface ProductConfigurationToProductConfigurationDataChecksumGeneratorInterface
 {
     /**
      * @param array $productConfiguration

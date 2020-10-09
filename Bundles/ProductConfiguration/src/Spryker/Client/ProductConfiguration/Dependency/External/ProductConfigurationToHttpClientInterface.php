@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductConfiguration\Http;
+namespace Spryker\Client\ProductConfiguration\Dependency\External;
 
 use Psr\Http\Message\ResponseInterface;
 
-interface ProductConfigurationGuzzleHttpClientInterface
+interface ProductConfigurationToHttpClientInterface
 {
     /**
      * @param string $method

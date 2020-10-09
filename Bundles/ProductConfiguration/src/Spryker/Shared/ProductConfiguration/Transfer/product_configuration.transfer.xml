@@ -65,6 +65,7 @@
     <transfer name="Message">
         <property name="parameters" type="array" singular="parameters"/>
         <property name="value" type="string"/>
+        <property name="message" type="string"/>
     </transfer>
 
     <transfer name="ProductConfiguratorResponse">

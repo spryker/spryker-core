@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ProductConfiguration;
 
-use GuzzleHttp\ClientInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductConfiguration\Checker\QuoteProductConfigurationChecker;
 use Spryker\Client\ProductConfiguration\Checker\QuoteProductConfigurationCheckerInterface;
@@ -16,19 +15,28 @@ use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationTo
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToLocaleInterface;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToPriceClientInterface;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToStoreClientInterface;
-use Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorDataExpander;
-use Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorDataExpanderInterface;
-use Spryker\Client\ProductConfiguration\Http\ProductConfigurationGuzzleHttpClient;
-use Spryker\Client\ProductConfiguration\Http\ProductConfigurationGuzzleHttpClientInterface;
+use Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToHttpClientInterface;
+use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToProductConfigurationDataChecksumGeneratorInterface;
+use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingInterface;
+use Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataExpander;
+use Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataExpanderInterface;
 use Spryker\Client\ProductConfiguration\Processor\ProductConfiguratorResponseProcessor;
 use Spryker\Client\ProductConfiguration\Processor\ProductConfiguratorResponseProcessorInterface;
 use Spryker\Client\ProductConfiguration\Resolver\ProductConfiguratorAccessTokenRedirectResolver;
 use Spryker\Client\ProductConfiguration\Resolver\ProductConfiguratorAccessTokenRedirectResolverInterface;
 use Spryker\Client\ProductConfiguration\Resolver\ProductConfiguratorRedirectResolver;
 use Spryker\Client\ProductConfiguration\Resolver\ProductConfiguratorRedirectResolverInterface;
+use Spryker\Client\ProductConfiguration\Validator\ProductConfiguratorCheckSumResponseValidator;
+use Spryker\Client\ProductConfiguration\Validator\ProductConfiguratorCheckSumResponseValidatorComposite;
+use Spryker\Client\ProductConfiguration\Validator\ProductConfiguratorMandatoryFieldsResponseValidator;
+use Spryker\Client\ProductConfiguration\Validator\ProductConfiguratorResponseValidatorInterface;
+use Spryker\Client\ProductConfiguration\Validator\ProductConfiguratorTimestampResponseValidator;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorResponsePluginInterface;
 
+/**
+ * @method \Spryker\Client\ProductConfiguration\ProductConfigurationConfig getConfig()
+ */
 class ProductConfigurationFactory extends AbstractFactory
 {
     /**
@@ -44,11 +52,11 @@ class ProductConfigurationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorDataExpanderInterface
+     * @return \Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataExpanderInterface
      */
-    public function createProductConfiguratorDataExpander(): ProductConfiguratorDataExpanderInterface
+    public function createProductConfiguratorDataExpander(): ProductConfiguratorRequestDataExpanderInterface
     {
-        return new ProductConfiguratorDataExpander(
+        return new ProductConfiguratorRequestDataExpander(
             $this->getCustomerClient(),
             $this->getStoreClient(),
             $this->getLocaleClient(),
@@ -64,7 +72,8 @@ class ProductConfigurationFactory extends AbstractFactory
     {
         return new ProductConfiguratorAccessTokenRedirectResolver(
             $this->getProductConfiguratorRequestExpanderPlugins(),
-            $this->createProductConfigurationGuzzleHttpClient()
+            $this->createProductConfigurationHttpClient(),
+            $this->getUtilEncoding()
         );
     }
 
@@ -88,11 +97,67 @@ class ProductConfigurationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductConfiguration\Http\ProductConfigurationGuzzleHttpClientInterface
+     * @return \Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToHttpClientInterface
      */
-    public function createProductConfigurationGuzzleHttpClient(): ProductConfigurationGuzzleHttpClientInterface
+    public function createProductConfigurationHttpClient(): ProductConfigurationToHttpClientInterface
     {
-        return new ProductConfigurationGuzzleHttpClient($this->getGuzzleClient());
+        return $this->getProvidedDependency(ProductConfigurationDependencyProvider::CLIENT_HTTP);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfiguration\Validator\ProductConfiguratorResponseValidatorInterface
+     */
+    public function createProductConfiguratorCheckSumResponseValidator(): ProductConfiguratorResponseValidatorInterface
+    {
+        return new ProductConfiguratorCheckSumResponseValidator(
+            $this->getConfig(),
+            $this->getProductConfigurationDataChecksumGenerator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfiguration\Validator\ProductConfiguratorResponseValidatorInterface
+     */
+    public function createProductConfiguratorCheckSumResponseValidatorComposite(): ProductConfiguratorResponseValidatorInterface
+    {
+        return new ProductConfiguratorCheckSumResponseValidatorComposite(
+            $this->createProductConfiguratorCheckSumResponseValidators()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfiguration\Validator\ProductConfiguratorResponseValidatorInterface[]
+     */
+    public function createProductConfiguratorCheckSumResponseValidators(): array
+    {
+        return [
+            $this->createProductConfiguratorMandatoryFieldsResponseValidator(),
+            $this->createProductConfiguratorTimestampResponseValidator(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfiguration\Validator\ProductConfiguratorResponseValidatorInterface
+     */
+    public function createProductConfiguratorMandatoryFieldsResponseValidator(): ProductConfiguratorResponseValidatorInterface
+    {
+        return new ProductConfiguratorMandatoryFieldsResponseValidator();
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfiguration\Validator\ProductConfiguratorResponseValidatorInterface
+     */
+    public function createProductConfiguratorTimestampResponseValidator(): ProductConfiguratorResponseValidatorInterface
+    {
+        return new ProductConfiguratorTimestampResponseValidator($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToProductConfigurationDataChecksumGeneratorInterface
+     */
+    public function getProductConfigurationDataChecksumGenerator(): ProductConfigurationToProductConfigurationDataChecksumGeneratorInterface
+    {
+        return $this->getProvidedDependency(ProductConfigurationDependencyProvider::SERVICE_PRODUCT_CONFIGURATION_DATA_CHECKSUM_GENERATOR);
     }
 
     /**
@@ -168,18 +233,18 @@ class ProductConfigurationFactory extends AbstractFactory
     }
 
     /**
-     * @return \GuzzleHttp\ClientInterface
-     */
-    public function getGuzzleClient(): ClientInterface
-    {
-        return $this->getProvidedDependency(ProductConfigurationDependencyProvider::CLIENT_GUZZLE);
-    }
-
-    /**
      * @return \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestExpanderInterface[]
      */
     public function getProductConfiguratorRequestExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ProductConfigurationDependencyProvider::PLUGINS_PRODUCT_CONFIGURATOR_REQUEST_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingInterface
+     */
+    public function getUtilEncoding(): ProductConfigurationToUtilEncodingInterface
+    {
+        return $this->getProvidedDependency(ProductConfigurationDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

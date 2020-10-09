@@ -22,8 +22,9 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Psr\Http\Message\ResponseInterface;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToCurrencyClientInterface;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToStoreClientInterface;
+use Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToHttpClientAdapter;
+use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingInterface;
 use Spryker\Client\ProductConfiguration\Http\Exception\ProductConfigurationHttpRequestException;
-use Spryker\Client\ProductConfiguration\Http\ProductConfigurationGuzzleHttpClient;
 use Spryker\Client\ProductConfiguration\ProductConfigurationFactory;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestExpanderInterface;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface;
@@ -44,11 +45,16 @@ class ProductConfigurationClientTest extends Unit
 {
     protected const TEST_PRODUCT_CONFIGURATOR_REQUEST_KEY = 'test_plugin_request_key';
     protected const TEST_PRODUCT_CONFIGURATOR_RESPONSE_KEY = 'test_plugin_response_key';
-    protected const TEST_CONFIGURATOR_REDIRECT_URL = 'testUrl';
+    protected const TEST_CONFIGURATOR_REDIRECT_RESPONSE = '{"isSuccessful":true,"configuratorRedirectUrl":"testUrl","messages":[]}';
+    protected const TEST_CONFIGURATOR_REDIRECT_RESPONSE_DATA = [
+        'isSuccessful' => true,
+        'configuratorRedirectUrl' => 'testUrl',
+        'messages' => [],
+    ];
     protected const TEST_CONFIGURATOR_ACCESS_TOKEN_URL = 'test_access_token_url';
 
     /**
-     * @var \Spryker\Client\ProductConfiguration\Http\ProductConfigurationGuzzleHttpClient|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToHttpClientAdapter|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $httpClientMock;
 
@@ -124,7 +130,7 @@ class ProductConfigurationClientTest extends Unit
         $this->productConfiguratorRequestPluginMock->method('resolveProductConfiguratorRedirect')
             ->willReturn(
                 (new ProductConfiguratorRedirectTransfer())
-                    ->setConfiguratorRedirectUrl(static::TEST_CONFIGURATOR_REDIRECT_URL)
+                    ->setConfiguratorRedirectUrl(static::TEST_CONFIGURATOR_REDIRECT_RESPONSE)
                     ->setIsSuccessful(true)
             );
 
@@ -134,7 +140,7 @@ class ProductConfigurationClientTest extends Unit
                     ->setIsSuccessful(true)
             );
 
-        $this->httpClientMock = $this->getMockBuilder(ProductConfigurationGuzzleHttpClient::class)
+        $this->httpClientMock = $this->getMockBuilder(ProductConfigurationToHttpClientAdapter::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['request'])
             ->getMock();
@@ -161,7 +167,7 @@ class ProductConfigurationClientTest extends Unit
             ->prepareProductConfiguratorRedirect($productConfigurationRequestTransfer);
 
         //Assert
-        $this->assertSame(static::TEST_CONFIGURATOR_REDIRECT_URL, $productConfiguratorRedirect->getConfiguratorRedirectUrl());
+        $this->assertSame(static::TEST_CONFIGURATOR_REDIRECT_RESPONSE, $productConfiguratorRedirect->getConfiguratorRedirectUrl());
     }
 
     /**
@@ -185,7 +191,7 @@ class ProductConfigurationClientTest extends Unit
             ->prepareProductConfiguratorRedirect($productConfigurationRequestTransfer);
 
         //Assert
-        $this->assertSame(static::TEST_CONFIGURATOR_REDIRECT_URL, $productConfiguratorRedirect->getConfiguratorRedirectUrl());
+        $this->assertSame(static::TEST_CONFIGURATOR_REDIRECT_RESPONSE, $productConfiguratorRedirect->getConfiguratorRedirectUrl());
     }
 
     /**
@@ -339,17 +345,26 @@ class ProductConfigurationClientTest extends Unit
                 static::TEST_PRODUCT_CONFIGURATOR_REQUEST_KEY => $productConfiguratorRequestExpanderPluginMock,
             ]);
 
+        $utilEncodingMock = $this->getMockBuilder(ProductConfigurationToUtilEncodingInterface::class)
+            ->onlyMethods(['decodeJson'])
+            ->getMockForAbstractClass();
+
+        $utilEncodingMock->method('decodeJson')->willReturn(static::TEST_CONFIGURATOR_REDIRECT_RESPONSE_DATA);
+
+        $this->productConfigurationFactoryMock->method('getUtilEncoding')
+            ->willReturn($utilEncodingMock);
+
         $responseMock = $this->getMockBuilder(ResponseInterface::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['getBody'])
             ->getMockForAbstractClass();
 
         $responseMock->expects($this->once())->method('getBody')
-            ->willReturn(static::TEST_CONFIGURATOR_REDIRECT_URL);
+            ->willReturn(static::TEST_CONFIGURATOR_REDIRECT_RESPONSE);
 
         $this->httpClientMock->expects($this->once())->method('request')->willReturn($responseMock);
 
-        $this->productConfigurationFactoryMock->method('createProductConfigurationGuzzleHttpClient')
+        $this->productConfigurationFactoryMock->method('createProductConfigurationHttpClient')
             ->willReturn($this->httpClientMock);
 
         //Act
@@ -359,7 +374,7 @@ class ProductConfigurationClientTest extends Unit
         //Assert
         $this->assertTrue($productConfiguratorRedirectTransfer->getIsSuccessful());
         $this->assertSame(
-            static::TEST_CONFIGURATOR_REDIRECT_URL,
+            'testUrl',
             $productConfiguratorRedirectTransfer->getConfiguratorRedirectUrl()
         );
     }
@@ -390,7 +405,7 @@ class ProductConfigurationClientTest extends Unit
     /**
      * @return void
      */
-    public function testResolveProductConfiguratorAccessTokenRedirectWillReturnSuccessFalseWhenRequestFail(): void
+    public function testResolveProductConfiguratorAccessTokenRedirectWillReturnIsSuccessfulFalseWhenRequestFail(): void
     {
         //Arrange
         $productConfigurationRequestTransfer = (new ProductConfiguratorRequestTransfer())
@@ -419,7 +434,7 @@ class ProductConfigurationClientTest extends Unit
         $this->httpClientMock->expects($this->once())->method('request')
             ->willThrowException(new ProductConfigurationHttpRequestException('test_exception_throw'));
 
-        $this->productConfigurationFactoryMock->method('createProductConfigurationGuzzleHttpClient')
+        $this->productConfigurationFactoryMock->method('createProductConfigurationHttpClient')
             ->willReturn($this->httpClientMock);
 
         //Act

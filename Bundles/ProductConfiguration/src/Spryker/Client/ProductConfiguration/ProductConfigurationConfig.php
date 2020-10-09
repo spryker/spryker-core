@@ -8,7 +8,32 @@
 namespace Spryker\Client\ProductConfiguration;
 
 use Spryker\Client\Kernel\AbstractBundleConfig;
+use Spryker\Shared\ProductConfiguration\ProductConfigurationConfig as ProductConfigurationProductConfigurationConfig;
 
 class ProductConfigurationConfig extends AbstractBundleConfig
 {
+    /**
+     * Number of seconds while response considered as valid
+     */
+    protected const PRODUCT_CONFIGURATION_RESPONSE_MAX_VALID_SECONDS = 60;
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getProductConfigurationEncryptionKey(): string
+    {
+        return $this->get(ProductConfigurationProductConfigurationConfig::ENCRYPTION_KEY);
+    }
+
+    /**
+     * @api
+     *
+     * @return int
+     */
+    public function getProductConfigurationResponseMaxValidSeconds(): int
+    {
+        return static::PRODUCT_CONFIGURATION_RESPONSE_MAX_VALID_SECONDS;
+    }
 }
