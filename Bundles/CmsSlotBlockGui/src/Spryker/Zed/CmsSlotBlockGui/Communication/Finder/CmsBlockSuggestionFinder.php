@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsSlotBlockGui\Communication\Finder;
 
-use ArrayObject;
+use Generated\Shared\Transfer\CmsBlockCollectionTransfer;
 use Generated\Shared\Transfer\CmsBlockCriteriaTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
@@ -49,7 +49,7 @@ class CmsBlockSuggestionFinder implements CmsBlockSuggestionFinderInterface
 
         return [
             static::RESPONSE_KEY_RESULTS => $this->transformCmsBlocksToSuggestionData(
-                $cmsBlockSuggestionCollectionTransfer->getCmsBlocks(),
+                $cmsBlockSuggestionCollectionTransfer,
                 $cmsSlotBlockCriteriaTransfer
             ),
             static::RESPONSE_KEY_PAGINATION => $this->getPaginationData(
@@ -59,20 +59,20 @@ class CmsBlockSuggestionFinder implements CmsBlockSuggestionFinderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\CmsBlockTransfer[] $cmsBlockTransfers
+     * @param \Generated\Shared\Transfer\CmsBlockCollectionTransfer $cmsBlockSuggestionCollectionTransfer
      * @param \Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
      *
      * @return array
      */
     protected function transformCmsBlocksToSuggestionData(
-        ArrayObject $cmsBlockTransfers,
+        CmsBlockCollectionTransfer $cmsBlockSuggestionCollectionTransfer,
         CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
     ): array {
         $idCmsSlotTemplate = $cmsSlotBlockCriteriaTransfer->getIdCmsSlotTemplate();
         $idCmsSlot = $cmsSlotBlockCriteriaTransfer->getIdCmsSlot();
 
         $data = [];
-        foreach ($cmsBlockTransfers as $cmsBlockTransfer) {
+        foreach ($cmsBlockSuggestionCollectionTransfer->getCmsBlocks() as $cmsBlockTransfer) {
             $data[] = [
                 'id' => $cmsBlockTransfer->getIdCmsBlock(),
                 'text' => $cmsBlockTransfer->getName(),
