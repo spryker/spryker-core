@@ -305,6 +305,7 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
         $priceProductStoreQuery
             ->innerJoinWithPriceProduct()
             ->usePriceProductQuery()
+                ->joinWithPriceType()
                 ->filterByFkProductAbstract_In($productAbstractIds)
             ->endUse();
 

@@ -9,6 +9,9 @@ namespace Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostDeleteBulkProductDiscontinuedPluginInterface} instead.
+ */
 interface PostDeleteProductDiscontinuedPluginInterface
 {
     /**
