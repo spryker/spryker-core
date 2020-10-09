@@ -107,17 +107,6 @@ class ProductConfigurationFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductConfiguration\Validator\ProductConfiguratorResponseValidatorInterface
      */
-    public function createProductConfiguratorCheckSumResponseValidator(): ProductConfiguratorResponseValidatorInterface
-    {
-        return new ProductConfiguratorCheckSumResponseValidator(
-            $this->getConfig(),
-            $this->getProductConfigurationDataChecksumGenerator()
-        );
-    }
-
-    /**
-     * @return \Spryker\Client\ProductConfiguration\Validator\ProductConfiguratorResponseValidatorInterface
-     */
     public function createProductConfiguratorCheckSumResponseValidatorComposite(): ProductConfiguratorResponseValidatorInterface
     {
         return new ProductConfiguratorCheckSumResponseValidatorComposite(
@@ -133,7 +122,19 @@ class ProductConfigurationFactory extends AbstractFactory
         return [
             $this->createProductConfiguratorMandatoryFieldsResponseValidator(),
             $this->createProductConfiguratorTimestampResponseValidator(),
+            $this->createProductConfiguratorCheckSumResponseValidator()
         ];
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfiguration\Validator\ProductConfiguratorResponseValidatorInterface
+     */
+    public function createProductConfiguratorCheckSumResponseValidator(): ProductConfiguratorResponseValidatorInterface
+    {
+        return new ProductConfiguratorCheckSumResponseValidator(
+            $this->getConfig(),
+            $this->getProductConfigurationDataChecksumGenerator()
+        );
     }
 
     /**

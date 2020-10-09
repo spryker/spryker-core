@@ -103,7 +103,7 @@ class ProductConfigurationClient extends AbstractClient implements ProductConfig
         array $productData
     ): ProductConfiguratorResponseProcessorResponseTransfer {
         return $this->getFactory()
-            ->createProductConfiguratorCheckSumResponseValidator()
+            ->createProductConfiguratorCheckSumResponseValidatorComposite()
             ->validate($productConfiguratorResponseProcessorResponseTransfer, $productData);
     }
 }
