@@ -332,4 +332,60 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
         // Assert
         $this->assertFalse($productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful());
     }
+
+    /**
+     * @return void
+     */
+    public function testProcessProductConfiguratorCheckSumResponseWillSetIsSuccessFalseAndReturnOnFirstFailedValidator(): void
+    {
+        $productConfigurationClientMock = $this->getMockBuilder(
+            ProductConfigurationStorageToProductConfigurationClientBridge::class
+        )->disableOriginalConstructor()->onlyMethods(['validateProductConfiguratorCheckSumResponse'])->getMock();
+
+        $productConfigurationClientMock->method('validateProductConfiguratorCheckSumResponse')
+            ->willReturn((new ProductConfiguratorResponseProcessorResponseTransfer())->setIsSuccessful(true));
+
+        $productConfiguratorResponseValidatorMockOne = $this->getMockBuilder(
+            ProductConfiguratorResponseValidatorInterface::class
+        )->onlyMethods(['validate'])->getMock();
+
+        $productConfiguratorResponseValidatorMockOne->expects($this->once())->method('validate')
+            ->willReturn((new ProductConfiguratorResponseProcessorResponseTransfer())->setIsSuccessful(false));
+
+        $productConfiguratorResponseValidatorMockTwo = $this->getMockBuilder(
+            ProductConfiguratorResponseValidatorInterface::class
+        )->onlyMethods(['validate'])->getMock();
+
+        $productConfiguratorResponseValidatorMockTwo->expects($this->never())->method('validate');
+
+        /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageFactory $productConfigurationStorageFactoryMock */
+        $productConfigurationStorageFactoryMock = $this->getMockBuilder(ProductConfigurationStorageFactory::class)
+            ->onlyMethods([
+                'getProductConfigurationClient',
+                'createProductConfiguratorCheckSumResponseValidators',
+            ])->getMock();
+
+        $productConfigurationStorageFactoryMock
+            ->method('createProductConfiguratorCheckSumResponseValidators')
+            ->willReturn([
+                $productConfiguratorResponseValidatorMockOne,
+                $productConfiguratorResponseValidatorMockTwo
+            ]);
+
+        $productConfigurationStorageFactoryMock
+            ->method('getProductConfigurationClient')
+            ->willReturn($productConfigurationClientMock);
+
+        $productConfiguratorResponseTransfer = (new ProductConfiguratorResponseBuilder())
+            ->withProductConfigurationInstance()
+            ->build();
+
+        // Act
+        $productConfiguratorResponseProcessorResponseTransfer = $this->tester
+            ->getClientMock($productConfigurationStorageFactoryMock)
+            ->processProductConfiguratorCheckSumResponse($productConfiguratorResponseTransfer, []);
+
+        // Assert
+        $this->assertFalse($productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful());
+    }
 }

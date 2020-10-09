@@ -122,7 +122,7 @@ class ProductConfigurationFactory extends AbstractFactory
         return [
             $this->createProductConfiguratorMandatoryFieldsResponseValidator(),
             $this->createProductConfiguratorTimestampResponseValidator(),
-            $this->createProductConfiguratorCheckSumResponseValidator()
+            $this->createProductConfiguratorCheckSumResponseValidator(),
         ];
     }
 

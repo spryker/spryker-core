@@ -39,6 +39,10 @@ class ProductConfiguratorCheckSumResponseValidatorComposite implements ProductCo
                 $productConfiguratorResponseProcessorResponseTransfer,
                 $configuratorResponseData
             );
+
+            if (!$productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful()) {
+                return $productConfiguratorResponseProcessorResponseTransfer;
+            }
         }
 
         return $productConfiguratorResponseProcessorResponseTransfer;
