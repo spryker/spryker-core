@@ -4,7 +4,7 @@
   "description": "ErrorHandler module",
   "license": "proprietary",
   "require": {
-    "filp/whoops": "^2.1",
+    "filp/whoops": "^2.4.0",
     "php": ">=7.2",
     "spryker/application-extension": "^1.0.0",
     "spryker/config": "^3.0.0",
