@@ -369,7 +369,7 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
             ->method('createProductConfiguratorCheckSumResponseValidators')
             ->willReturn([
                 $productConfiguratorResponseValidatorMockOne,
-                $productConfiguratorResponseValidatorMockTwo
+                $productConfiguratorResponseValidatorMockTwo,
             ]);
 
         $productConfigurationStorageFactoryMock

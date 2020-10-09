@@ -99,7 +99,7 @@ class ProductConfigurationClientTest extends Unit
                 'createQuoteProductConfigurationChecker',
                 'createProductConfigurationAccessTokenRedirectResolver',
                 'createProductConfiguratorDataExpander',
-                'createProductConfiguratorCheckSumResponseValidatorComposite'
+                'createProductConfiguratorCheckSumResponseValidatorComposite',
             ])
             ->getMock();
 
@@ -479,12 +479,12 @@ class ProductConfigurationClientTest extends Unit
             ->getMock();
 
         $validatorMock->method('validate')->willReturn(
-            (new ProductConfiguratorResponseProcessorResponseTransfer)->setIsSuccessful(false)
+            (new ProductConfiguratorResponseProcessorResponseTransfer())->setIsSuccessful(false)
         );
 
         $this->productConfigurationFactoryMock->method('createProductConfiguratorCheckSumResponseValidators')
             ->willReturn([
-                $validatorMock
+                $validatorMock,
             ]);
 
         $productConfiguratorResponseProcessorResponseTransfer = (new ProductConfiguratorResponseProcessorResponseTransfer())
@@ -510,7 +510,7 @@ class ProductConfigurationClientTest extends Unit
             ->getMock();
 
         $validatorMockOne->method('validate')->willReturn(
-            (new ProductConfiguratorResponseProcessorResponseTransfer)->setIsSuccessful(false)
+            (new ProductConfiguratorResponseProcessorResponseTransfer())->setIsSuccessful(false)
         );
 
         $validatorMocTwo = $this->getMockBuilder(ProductConfiguratorResponseValidatorInterface::class)
@@ -523,7 +523,7 @@ class ProductConfigurationClientTest extends Unit
         $this->productConfigurationFactoryMock->method('createProductConfiguratorCheckSumResponseValidators')
             ->willReturn([
                 $validatorMockOne,
-                $validatorMocTwo
+                $validatorMocTwo,
             ]);
 
         $productConfiguratorResponseProcessorResponseTransfer = (new ProductConfiguratorResponseProcessorResponseTransfer())
