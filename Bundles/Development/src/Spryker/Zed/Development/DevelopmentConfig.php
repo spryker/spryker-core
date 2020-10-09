@@ -409,6 +409,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return array
      */
     public function getIgnorableDependencies()
