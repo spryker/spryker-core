@@ -58,9 +58,11 @@
                                         <div control>
                                             {% for priceField in pricesByPriceType %}
                                                 <div class="mp-edit-offer__prices-item">
-                                                    {{ form_widget(priceField, {attr: {
-                                                        'outer-prefix': priceField.vars.label,
-                                                    }}) }}
+                                                    {% if not priceField.isRendered %}
+                                                        {{ form_widget(priceField, {attr: {
+                                                            'outer-prefix': priceField.vars.label,
+                                                        }}) }}
+                                                    {% endif %}
                                                 </div>
 
                                                 {% do priceField.setRendered %}

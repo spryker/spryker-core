@@ -8,6 +8,7 @@
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External;
 
 use Doctrine\Common\Inflector\Inflector;
+use Doctrine\Inflector\InflectorFactory;
 
 class DocumentationGeneratorRestApiToDoctrineInflectorAdapter implements DocumentationGeneratorRestApiToTextInflectorInterface
 {
@@ -18,6 +19,12 @@ class DocumentationGeneratorRestApiToDoctrineInflectorAdapter implements Documen
      */
     public function classify(string $word): string
     {
+        if (class_exists(InflectorFactory::class)) {
+            $inflector = InflectorFactory::create()->build();
+
+            return $inflector->classify($word);
+        }
+
         return Inflector::classify($word);
     }
 
@@ -28,6 +35,12 @@ class DocumentationGeneratorRestApiToDoctrineInflectorAdapter implements Documen
      */
     public function singularize(string $word): string
     {
+        if (class_exists(InflectorFactory::class)) {
+            $inflector = InflectorFactory::create()->build();
+
+            return $inflector->singularize($word);
+        }
+
         return Inflector::singularize($word);
     }
 }

@@ -1087,16 +1087,24 @@ class CustomerFacadeTest extends Unit
     /**
      * @param array $data
      *
-     * @return int
+     * @return void
      */
-    protected function createCustomerUsingCustomerDataProviderUserData(array $data): int
+    protected function createCustomerUsingCustomerDataProviderUserData(array $data): void
     {
-        return (new SpyCustomer())
+        $customerEntity = (new SpyCustomer())
             ->setEmail($data['email'])
             ->setPassword($data['password'])
             ->setRestorePasswordKey($data['passwordRestoreKey'])
-            ->setCustomerReference($data['customerReference'])
-            ->save();
+            ->setCustomerReference($data['customerReference']);
+
+        $customerEntity->save();
+
+        $customerTransfer = new CustomerTransfer();
+        $customerTransfer->fromArray($customerEntity->toArray(), true);
+
+        $this->tester->addCleanup(function () use ($customerTransfer): void {
+            $this->tester->getFacade()->deleteCustomer($customerTransfer);
+        });
     }
 
     /**

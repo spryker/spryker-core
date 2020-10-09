@@ -10,6 +10,7 @@ namespace SprykerTest\Glue\Testify\Helper;
 use Codeception\Module;
 use Codeception\PHPUnit\Constraint\JsonType as JsonTypeConstraint;
 use Codeception\Util\JsonType;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use JsonPath\JsonObject;
 use PHPUnit\Framework\Assert;
 
@@ -19,6 +20,7 @@ use PHPUnit\Framework\Assert;
 class JsonPath extends Module
 {
     use LastConnectionConsumerTrait;
+    use ArraySubsetAsserts;
 
     /**
      * @inheritDoc
@@ -103,7 +105,7 @@ class JsonPath extends Module
         Assert::assertIsArray($foundSegments, 'Requested response part should be an array to assert `contains`');
 
         foreach ($foundSegments as $segment) {
-            Assert::assertArraySubset(
+            $this->assertArraySubset(
                 $subArray,
                 $segment
             );

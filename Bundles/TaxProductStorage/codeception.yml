@@ -1,4 +1,6 @@
 namespace: TaxProductStorage
+include:
+    - tests/SprykerTest/Zed/TaxProductStorage
 paths:
     tests: tests
     log: tests/_output

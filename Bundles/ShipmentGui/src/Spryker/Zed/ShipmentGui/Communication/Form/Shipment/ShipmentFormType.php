@@ -101,6 +101,7 @@ class ShipmentFormType extends AbstractType
             'widget' => 'single_text',
             'input' => 'string',
             'format' => static::FIELD_REQUESTED_DELIVERY_DATE_FORMAT,
+            'html5' => false,
             'attr' => [
                 'class' => 'datepicker safe-datetime',
             ],

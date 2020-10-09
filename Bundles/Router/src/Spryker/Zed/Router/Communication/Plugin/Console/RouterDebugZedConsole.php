@@ -49,9 +49,9 @@ class RouterDebugZedConsole extends Console
      *
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      *
-     * @return int|null|void
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         $name = $input->getArgument(static::ARGUMENT_ROUTE_NAME);
@@ -85,6 +85,8 @@ class RouterDebugZedConsole extends Console
                 'output' => $io,
             ]);
         }
+
+        return static::CODE_SUCCESS;
     }
 
     /**

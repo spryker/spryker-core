@@ -44,7 +44,7 @@ class StorageExportRdbConsole extends Console
      *
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $destination = $input->getArgument(static::ARGUMENT_DESTINATION);
 

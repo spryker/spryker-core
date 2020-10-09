@@ -16,7 +16,7 @@ use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -42,7 +42,7 @@ class RedirectAfterLoginEventDispatcherPlugin extends AbstractPlugin implements 
      */
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
-        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event) {
+        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (ResponseEvent $event) {
             return $this->onKernelResponse($event);
         });
 
@@ -50,11 +50,11 @@ class RedirectAfterLoginEventDispatcherPlugin extends AbstractPlugin implements 
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
      *
-     * @return \Symfony\Component\HttpKernel\Event\FilterResponseEvent
+     * @return \Symfony\Component\HttpKernel\Event\ResponseEvent
      */
-    protected function onKernelResponse(FilterResponseEvent $event): FilterResponseEvent
+    protected function onKernelResponse(ResponseEvent $event): ResponseEvent
     {
         $requestUri = $event->getRequest()->getRequestUri();
 
@@ -69,11 +69,11 @@ class RedirectAfterLoginEventDispatcherPlugin extends AbstractPlugin implements 
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
      *
-     * @return \Symfony\Component\HttpKernel\Event\FilterResponseEvent
+     * @return \Symfony\Component\HttpKernel\Event\ResponseEvent
      */
-    protected function handleRedirectToLogin(FilterResponseEvent $event): FilterResponseEvent
+    protected function handleRedirectToLogin(ResponseEvent $event): ResponseEvent
     {
         $response = $event->getResponse();
         if (!($response instanceof RedirectResponse)) {
@@ -102,11 +102,11 @@ class RedirectAfterLoginEventDispatcherPlugin extends AbstractPlugin implements 
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
      *
      * @return string|null
      */
-    protected function getUrlToRedirectBackTo(FilterResponseEvent $event): ?string
+    protected function getUrlToRedirectBackTo(ResponseEvent $event): ?string
     {
         $urlToRedirectBackTo = $event->getRequest()->getRequestUri();
 
@@ -119,11 +119,11 @@ class RedirectAfterLoginEventDispatcherPlugin extends AbstractPlugin implements 
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
      *
-     * @return \Symfony\Component\HttpKernel\Event\FilterResponseEvent
+     * @return \Symfony\Component\HttpKernel\Event\ResponseEvent
      */
-    protected function handleRedirectFromLogin(FilterResponseEvent $event): FilterResponseEvent
+    protected function handleRedirectFromLogin(ResponseEvent $event): ResponseEvent
     {
         $request = $event->getRequest();
 

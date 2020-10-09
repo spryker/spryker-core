@@ -255,10 +255,10 @@ class GlueControllerFilterPluginTest extends Unit
         $content = json_decode($response->getContent(), true);
 
         $this->assertPaginationKeys($content);
-        $this->assertUri($content, RestLinkInterface::LINK_FIRST, 2, 0);
-        $this->assertUri($content, RestLinkInterface::LINK_LAST, 2, 18);
-        $this->assertUri($content, RestLinkInterface::LINK_NEXT, 2, 4);
-        $this->assertUri($content, RestLinkInterface::LINK_PREV, 2, 0);
+        $this->assertUri($content, RestLinkInterface::LINK_FIRST, '2', '0');
+        $this->assertUri($content, RestLinkInterface::LINK_LAST, '2', '18');
+        $this->assertUri($content, RestLinkInterface::LINK_NEXT, '2', '4');
+        $this->assertUri($content, RestLinkInterface::LINK_PREV, '2', '0');
     }
 
     /**
@@ -286,12 +286,12 @@ class GlueControllerFilterPluginTest extends Unit
     /**
      * @param array $content
      * @param string $field
-     * @param int $limit
-     * @param int $offset
+     * @param string $limit
+     * @param string $offset
      *
      * @return void
      */
-    protected function assertUri(array $content, string $field, int $limit, int $offset): void
+    protected function assertUri(array $content, string $field, string $limit, string $offset): void
     {
         $queryParts = [];
 
