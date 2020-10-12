@@ -158,12 +158,4 @@ class PropelFacadeTest extends Unit
 
         return implode(DIRECTORY_SEPARATOR, $pathParts);
     }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Propel\Runtime\Connection\ConnectionInterface
-     */
-    protected function createConnectionMock(): ConnectionInterface
-    {
-        return $this->getMockBuilder(ConnectionInterface::class)->getMock();
-    }
 }

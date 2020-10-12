@@ -24,6 +24,15 @@
         <property name="message" type="string"/>
     </transfer>
 
+    <transfer name="Column">
+        <property name="name" type="string"/>
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="ColumnsCollection">
+        <property name="columns" type="Column[]"/>
+    </transfer>
+
 </transfers>
 
 
