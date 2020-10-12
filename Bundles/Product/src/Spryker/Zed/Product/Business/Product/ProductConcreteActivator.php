@@ -15,6 +15,7 @@ use Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusCheckerInte
 use Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouchInterface;
 use Spryker\Zed\Product\Business\Product\Url\ProductUrlManagerInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
+use Spryker\Zed\Product\Persistence\ProductRepositoryInterface;
 
 class ProductConcreteActivator implements ProductConcreteActivatorInterface
 {
@@ -51,12 +52,18 @@ class ProductConcreteActivator implements ProductConcreteActivatorInterface
     protected $productQueryContainer;
 
     /**
+     * @var \Spryker\Zed\Product\Persistence\ProductRepositoryInterface
+     */
+    protected $productRepository;
+
+    /**
      * @param \Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusCheckerInterface $productAbstractStatusChecker
      * @param \Spryker\Zed\Product\Business\Product\ProductAbstractManagerInterface $productAbstractManager
      * @param \Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface $productConcreteManager
      * @param \Spryker\Zed\Product\Business\Product\Url\ProductUrlManagerInterface $productUrlManager
      * @param \Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouchInterface $productConcreteTouch
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
+     * @param \Spryker\Zed\Product\Persistence\ProductRepositoryInterface $productRepository
      */
     public function __construct(
         ProductAbstractStatusCheckerInterface $productAbstractStatusChecker,
@@ -64,7 +71,8 @@ class ProductConcreteActivator implements ProductConcreteActivatorInterface
         ProductConcreteManagerInterface $productConcreteManager,
         ProductUrlManagerInterface $productUrlManager,
         ProductConcreteTouchInterface $productConcreteTouch,
-        ProductQueryContainerInterface $productQueryContainer
+        ProductQueryContainerInterface $productQueryContainer,
+        ProductRepositoryInterface $productRepository
     ) {
         $this->productAbstractManager = $productAbstractManager;
         $this->productConcreteManager = $productConcreteManager;
@@ -72,6 +80,7 @@ class ProductConcreteActivator implements ProductConcreteActivatorInterface
         $this->productAbstractStatusChecker = $productAbstractStatusChecker;
         $this->productConcreteTouch = $productConcreteTouch;
         $this->productQueryContainer = $productQueryContainer;
+        $this->productRepository = $productRepository;
     }
 
     /**
@@ -95,6 +104,18 @@ class ProductConcreteActivator implements ProductConcreteActivatorInterface
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($idProductConcrete) {
             $this->executeDeactivateProductConcreteTransaction($idProductConcrete);
+        });
+    }
+
+    /**
+     * @param string[] $productConcreteSkus
+     *
+     * @return void
+     */
+    public function deactivateProductConcretesByConcreteSkus(array $productConcreteSkus): void
+    {
+        $this->getTransactionHandler()->handleTransaction(function () use ($productConcreteSkus) {
+            $this->executeDeactivateProductConcretesTransactionByConcreteSkus($productConcreteSkus);
         });
     }
 
@@ -129,6 +150,28 @@ class ProductConcreteActivator implements ProductConcreteActivatorInterface
     }
 
     /**
+     * @param string[] $productConcreteSkus
+     *
+     * @return void
+     */
+    protected function executeDeactivateProductConcretesTransactionByConcreteSkus(array $productConcreteSkus): void
+    {
+        $productConcreteTransfers = $this->productConcreteManager->getProductConcretesByConcreteSkus($productConcreteSkus);
+        $productAbstractIds = [];
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            $this->updateIsActive($productConcreteTransfer, false);
+            $productAbstractIds[] = $productConcreteTransfer->getFkProductAbstract();
+        }
+
+        $notActiveProductAbstractIds = $this->productAbstractStatusChecker->filterActiveIds($productAbstractIds);
+        $notActiveProductAbstractTransfers = $this->productRepository
+            ->getRawProductAbstractsByProductAbstractIds($notActiveProductAbstractIds);
+        foreach ($notActiveProductAbstractTransfers as $productAbstractTransfer) {
+            $this->productUrlManager->deleteProductUrl($productAbstractTransfer);
+        }
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param bool $isActive
      *
@@ -136,12 +179,10 @@ class ProductConcreteActivator implements ProductConcreteActivatorInterface
      */
     protected function updateIsActive(ProductConcreteTransfer $productConcreteTransfer, $isActive)
     {
-        $productConcreteTransfer = $this->getProductConcreteTransfer($productConcreteTransfer->getIdProductConcrete());
-
         $productConcreteTransfer->setIsActive($isActive);
         $this->productConcreteManager->saveProductConcrete($productConcreteTransfer);
 
-        $this->productConcreteTouch->touchProductConcrete($productConcreteTransfer->getIdProductConcrete());
+        $this->productConcreteTouch->touchProductConcreteByTransfer($productConcreteTransfer);
     }
 
     /**
