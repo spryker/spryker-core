@@ -26,7 +26,7 @@ class ProductConfigurationProductPriceExpander implements ProductConfigurationPr
         foreach ($cartChangeTransfer->getItems() as $item) {
             $productConfigurationInstance = $item->getProductConfigurationInstance();
 
-            if ($productConfigurationInstance && $productConfigurationInstance->getPrices()) {
+            if ($productConfigurationInstance && $productConfigurationInstance->getPrices()->count()) {
                 $productConfigurationPrices[] = $productConfigurationInstance->getPrices();
             }
         }

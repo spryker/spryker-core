@@ -35,7 +35,7 @@ class ProductConfiguratorCheckSumResponseValidatorComposite implements ProductCo
         array $configuratorResponseData
     ): ProductConfiguratorResponseProcessorResponseTransfer {
         foreach ($this->productConfiguratorResponseValidators as $productConfiguratorResponseValidator) {
-            $productConfiguratorResponseProcessorResponseTransfer = $productConfiguratorResponseValidator->validate(
+            $productConfiguratorResponseProcessorResponseTransfer = $productConfiguratorResponseValidator->validateProductConfiguratorCheckSumResponse(
                 $productConfiguratorResponseProcessorResponseTransfer,
                 $configuratorResponseData
             );
