@@ -122,7 +122,7 @@ class ProductConfiguratorAccessTokenRedirectResolver implements ProductConfigura
         }
 
         return $productConfiguratorRedirectTransfer->setIsSuccessful(false)
-            ->addMessage(static::RESPONSE_ERROR_MESSAGES_KEY);
+            ->addMessage($responseData[static::RESPONSE_ERROR_MESSAGES_KEY]);
     }
 
     /**

@@ -47,9 +47,7 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
             return $productConfiguratorResponseProcessorResponseTransfer;
         }
 
-        $itemReplaceTransfer = $this->createItemReplaceTransfer(
-            $productConfiguratorResponseTransfer
-        );
+        $itemReplaceTransfer = $this->createItemReplaceTransfer($productConfiguratorResponseTransfer);
 
         $quoteResponseTransfer = $this->cartClient->replaceItem($itemReplaceTransfer);
 
