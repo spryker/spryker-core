@@ -26,6 +26,7 @@ use Spryker\Client\ProductConfiguration\Dependency\External\ProductConfiguration
 use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingInterface;
 use Spryker\Client\ProductConfiguration\Http\Exception\ProductConfigurationHttpRequestException;
 use Spryker\Client\ProductConfiguration\ProductConfigurationFactory;
+use Spryker\Client\ProductConfiguration\Validator\ProductConfiguratorResponseValidatorInterface;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestExpanderInterface;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorResponsePluginInterface;
@@ -98,6 +99,7 @@ class ProductConfigurationClientTest extends Unit
                 'createQuoteProductConfigurationChecker',
                 'createProductConfigurationAccessTokenRedirectResolver',
                 'createProductConfiguratorDataExpander',
+                'createProductConfiguratorCheckSumResponseValidatorComposite',
             ])
             ->getMock();
 
@@ -443,5 +445,95 @@ class ProductConfigurationClientTest extends Unit
 
         //Assert
         $this->assertFalse($productConfiguratorRedirectTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateProductConfiguratorCheckSumResponseWillSetIsSuccessTrueWhenValidationPass(): void
+    {
+        //Arrange
+        $this->productConfigurationFactoryMock->method('createProductConfiguratorCheckSumResponseValidators')
+            ->willReturn([]);
+
+        $productConfiguratorResponseProcessorResponseTransfer = (new ProductConfiguratorResponseProcessorResponseTransfer())
+            ->setIsSuccessful(true);
+
+        //Act
+        $productConfiguratorResponseProcessorResponseTransferValidated = $this->productConfigurationClient
+            ->validateProductConfiguratorCheckSumResponse($productConfiguratorResponseProcessorResponseTransfer, []);
+
+        //Assert
+        $this->assertTrue($productConfiguratorResponseProcessorResponseTransferValidated->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateProductConfiguratorCheckSumResponseWillSetIsSuccessFalseWhenValidationFail(): void
+    {
+        //Arrange
+        $validatorMock = $this->getMockBuilder(ProductConfiguratorResponseValidatorInterface::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['validate'])
+            ->getMock();
+
+        $validatorMock->method('validate')->willReturn(
+            (new ProductConfiguratorResponseProcessorResponseTransfer())->setIsSuccessful(false)
+        );
+
+        $this->productConfigurationFactoryMock->method('createProductConfiguratorCheckSumResponseValidators')
+            ->willReturn([
+                $validatorMock,
+            ]);
+
+        $productConfiguratorResponseProcessorResponseTransfer = (new ProductConfiguratorResponseProcessorResponseTransfer())
+            ->setIsSuccessful(true);
+
+        //Act
+        $productConfiguratorResponseProcessorResponseTransferValidated = $this->productConfigurationClient
+            ->validateProductConfiguratorCheckSumResponse($productConfiguratorResponseProcessorResponseTransfer, []);
+
+        //Assert
+        $this->assertFalse($productConfiguratorResponseProcessorResponseTransferValidated->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateProductConfiguratorCheckSumResponseWillSetIsSuccessFalseAndReturnOnFirstFailedValidator(): void
+    {
+        //Arrange
+        $validatorMockOne = $this->getMockBuilder(ProductConfiguratorResponseValidatorInterface::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['validate'])
+            ->getMock();
+
+        $validatorMockOne->method('validate')->willReturn(
+            (new ProductConfiguratorResponseProcessorResponseTransfer())->setIsSuccessful(false)
+        );
+
+        $validatorMocTwo = $this->getMockBuilder(ProductConfiguratorResponseValidatorInterface::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['validate'])
+            ->getMock();
+
+        $validatorMocTwo->expects($this->never())->method('validate');
+
+        $this->productConfigurationFactoryMock->method('createProductConfiguratorCheckSumResponseValidators')
+            ->willReturn([
+                $validatorMockOne,
+                $validatorMocTwo,
+            ]);
+
+        $productConfiguratorResponseProcessorResponseTransfer = (new ProductConfiguratorResponseProcessorResponseTransfer())
+            ->setIsSuccessful(true);
+
+        //Act
+        $productConfiguratorResponseProcessorResponseTransferValidated = $this->productConfigurationClient
+            ->validateProductConfiguratorCheckSumResponse($productConfiguratorResponseProcessorResponseTransfer, []);
+
+        //Assert
+        $this->assertFalse($productConfiguratorResponseProcessorResponseTransferValidated->getIsSuccessful());
     }
 }

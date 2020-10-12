@@ -29,7 +29,6 @@ class ProductTable extends AbstractProductTable
     public const COL_VARIANT_COUNT = 'variants';
     public const COL_STATUS = 'status';
     public const COL_ACTIONS = 'actions';
-    public const COL_IS_BUNDLE = 'is_bundle';
     public const COL_STORE_RELATION = 'store_relation';
     public const COL_PRODUCT_TYPES = 'product_types';
 
@@ -100,19 +99,16 @@ class ProductTable extends AbstractProductTable
             static::COL_TAX_SET => 'Tax Set',
             static::COL_VARIANT_COUNT => 'Variants',
             static::COL_STATUS => 'Status',
-            static::COL_IS_BUNDLE => 'Contains bundles',
-            static::COL_PRODUCT_TYPES => 'Product types',
+            static::COL_PRODUCT_TYPES => 'Types',
             static::COL_STORE_RELATION => 'Stores',
             static::COL_ACTIONS => 'Actions',
         ]);
 
         $config->setRawColumns([
             static::COL_STATUS,
-            static::COL_IS_BUNDLE,
             static::COL_PRODUCT_TYPES,
             static::COL_STORE_RELATION,
             static::COL_ACTIONS,
-            static::COL_IS_BUNDLE,
         ]);
 
         $config->setSearchable([
@@ -176,7 +172,6 @@ class ProductTable extends AbstractProductTable
             static::COL_TAX_SET => $productAbstractEntity->getVirtualColumn(static::COL_TAX_SET),
             static::COL_VARIANT_COUNT => $productAbstractEntity->getSpyProducts()->count(),
             static::COL_STATUS => $this->getAbstractProductStatusLabel($productAbstractEntity),
-            static::COL_IS_BUNDLE => $this->getIsBundleProductLable($productAbstractEntity),
             static::COL_PRODUCT_TYPES => $this->getTypeName($productAbstractEntity),
             static::COL_STORE_RELATION => $this->getStoreNames($productAbstractEntity->getIdProductAbstract()),
             static::COL_ACTIONS => implode(' ', $this->createActionColumn($productAbstractEntity)),

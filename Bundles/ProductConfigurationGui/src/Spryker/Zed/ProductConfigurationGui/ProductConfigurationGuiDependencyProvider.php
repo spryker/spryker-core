@@ -7,13 +7,13 @@
 
 namespace Spryker\Zed\ProductConfigurationGui;
 
-use Orm\Zed\ProductConfiguration\Persistence\SpyProductConfigurationQuery;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 class ProductConfigurationGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const PROPEL_QUERY_PRODUCT_CONFIGURATION = 'PROPEL_QUERY_PRODUCT_CONFIGURATION';
+    public const PROPEL_QUERY_PRODUCT_ABSTRACT = 'PROPEL_QUERY_PRODUCT_ABSTRACT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -22,7 +22,7 @@ class ProductConfigurationGuiDependencyProvider extends AbstractBundleDependency
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container = $this->addProductConfigurationPropelQuery($container);
+        $container = $this->addProductAbstractPropelQuery($container);
 
         return $container;
     }
@@ -32,10 +32,10 @@ class ProductConfigurationGuiDependencyProvider extends AbstractBundleDependency
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductConfigurationPropelQuery(Container $container): Container
+    protected function addProductAbstractPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_PRODUCT_CONFIGURATION, $container->factory(function () {
-            return SpyProductConfigurationQuery::create();
+        $container->set(static::PROPEL_QUERY_PRODUCT_ABSTRACT, $container->factory(function () {
+            return SpyProductAbstractQuery::create();
         }));
 
         return $container;
