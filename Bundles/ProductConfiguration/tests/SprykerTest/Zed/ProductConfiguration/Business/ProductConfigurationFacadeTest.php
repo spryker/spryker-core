@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\ProductConfiguration\Business;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
@@ -222,7 +223,7 @@ class ProductConfigurationFacadeTest extends Unit
             ->onlyMethods(['getPrices'])
             ->getMock();
 
-        $priceProductTransfers = new \ArrayObject();
+        $priceProductTransfers = new ArrayObject();
         $priceProductTransfers->append((new PriceProductTransfer())->setSkuProduct('test1'));
 
         $productConfigurationInstanceMock->method('getPrices')->willReturn($priceProductTransfers);

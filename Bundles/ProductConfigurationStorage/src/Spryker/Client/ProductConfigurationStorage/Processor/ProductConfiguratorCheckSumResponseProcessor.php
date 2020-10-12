@@ -35,7 +35,7 @@ class ProductConfiguratorCheckSumResponseProcessor implements ProductConfigurato
     /**
      * @var \Spryker\Client\ProductConfigurationStorage\Replacer\QuoteItemReplacerInterface
      */
-    protected $quoteReplacer;
+    protected $quoteItemReplacer;
 
     /**
      * @var \Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorResponseValidatorInterface
@@ -45,18 +45,18 @@ class ProductConfiguratorCheckSumResponseProcessor implements ProductConfigurato
     /**
      * @param \Spryker\Client\ProductConfigurationStorage\Writer\ProductConfigurationInstanceWriterInterface $productConfigurationInstanceWriter
      * @param \Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstanceMapperInterface $productConfigurationInstanceMapper
-     * @param \Spryker\Client\ProductConfigurationStorage\Replacer\QuoteItemReplacerInterface $quoteReplacer
+     * @param \Spryker\Client\ProductConfigurationStorage\Replacer\QuoteItemReplacerInterface $quoteItemReplacer
      * @param \Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorResponseValidatorInterface $productConfiguratorResponseValidator
      */
     public function __construct(
         ProductConfigurationInstanceWriterInterface $productConfigurationInstanceWriter,
         ProductConfigurationInstanceMapperInterface $productConfigurationInstanceMapper,
-        QuoteItemReplacerInterface $quoteReplacer,
+        QuoteItemReplacerInterface $quoteItemReplacer,
         ProductConfiguratorResponseValidatorInterface $productConfiguratorResponseValidator
     ) {
         $this->productConfigurationInstanceWriter = $productConfigurationInstanceWriter;
         $this->productConfigurationInstanceMapper = $productConfigurationInstanceMapper;
-        $this->quoteReplacer = $quoteReplacer;
+        $this->quoteItemReplacer = $quoteItemReplacer;
         $this->productConfiguratorResponseValidator = $productConfiguratorResponseValidator;
     }
 
@@ -95,7 +95,7 @@ class ProductConfiguratorCheckSumResponseProcessor implements ProductConfigurato
 
         $this->storeProductConfigurationInstance($productConfiguratorResponseTransfer);
 
-        return $this->quoteReplacer->replaceItemInQuote(
+        return $this->quoteItemReplacer->replaceItemInQuote(
             $productConfiguratorResponseTransfer,
             $productConfiguratorResponseProcessorResponseTransfer
         );
