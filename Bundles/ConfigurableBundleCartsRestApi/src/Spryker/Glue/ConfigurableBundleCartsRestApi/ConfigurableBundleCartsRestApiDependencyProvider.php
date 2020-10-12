@@ -30,7 +30,6 @@ class ConfigurableBundleCartsRestApiDependencyProvider extends AbstractBundleDep
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
-
         $container = $this->addCartsRestApiResource($container);
         $container = $this->addConfigurableBundleStorageClient($container);
         $container = $this->addGlossaryStorageClient($container);
