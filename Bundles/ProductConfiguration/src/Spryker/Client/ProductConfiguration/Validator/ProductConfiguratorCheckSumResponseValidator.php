@@ -9,6 +9,7 @@ namespace Spryker\Client\ProductConfiguration\Validator;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer;
+use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
 use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToProductConfigurationDataChecksumGeneratorInterface;
 use Spryker\Client\ProductConfiguration\ProductConfigurationConfig;
 
@@ -54,8 +55,12 @@ class ProductConfiguratorCheckSumResponseValidator implements ProductConfigurato
             ->getProductConfiguratorResponse();
         $key = $this->productConfigurationConfig->getProductConfigurationEncryptionKey();
 
+        $plainCopyOfConfiguredResponseData = $configuratorResponseData;
+        unset($plainCopyOfConfiguredResponseData[ProductConfiguratorResponseTransfer::CHECK_SUM]);
+        unset($plainCopyOfConfiguredResponseData[ProductConfiguratorResponseTransfer::TIMESTAMP]);
+
         $responseChecksum = $this->productConfigurationDataChecksumGenerator->generateProductConfigurationDataChecksum(
-            $configuratorResponseData,
+            $plainCopyOfConfiguredResponseData,
             $key
         );
 
