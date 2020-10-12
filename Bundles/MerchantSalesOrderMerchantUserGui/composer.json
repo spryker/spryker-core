@@ -22,27 +22,18 @@
     "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/merchant": "*",
-    "spryker/oms": "*",
-    "spryker/propel": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
   },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
     }
   },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "../MerchantShipment/tests/SprykerTest/"
-    }
-  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ ../MerchantShipment/tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ ../MerchantShipment/tests/"
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
   },
   "extra": {
     "branch-alias": {

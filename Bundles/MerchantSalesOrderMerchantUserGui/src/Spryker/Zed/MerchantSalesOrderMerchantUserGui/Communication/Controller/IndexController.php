@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @method \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\MerchantSalesOrderMerchantUserGuiCommunicationFactory getFactory()
- * @method \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Business\MerchantSalesOrderMerchantUserGuiFacadeInterface getFacade()
  */
 class IndexController extends AbstractController
 {
@@ -24,7 +23,7 @@ class IndexController extends AbstractController
     public function indexAction(): array
     {
         $myOrdersTable = $this->getFactory()
-            ->createMyOrderTable();
+            ->createMerchantOrderTable();
 
         return $this->viewResponse([
             'myOrdersTable' => $myOrdersTable->render(),
@@ -37,7 +36,7 @@ class IndexController extends AbstractController
     public function tableAction(): JsonResponse
     {
         $table = $this->getFactory()
-            ->createMyOrderTable();
+            ->createMerchantOrderTable();
 
         return $this->jsonResponse($table->fetchData());
     }
