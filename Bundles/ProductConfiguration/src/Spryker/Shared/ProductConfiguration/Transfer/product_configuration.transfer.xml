@@ -86,7 +86,7 @@
 
     <transfer name="ProductConfiguratorRedirect">
         <property name="isSuccessful" type="bool"/>
-        <property name="messages" type="array" singular="message"/>
+        <property name="messages" type="Message[]" singular="message"/>
         <property name="configuratorRedirectUrl" type="string"/>
     </transfer>
 

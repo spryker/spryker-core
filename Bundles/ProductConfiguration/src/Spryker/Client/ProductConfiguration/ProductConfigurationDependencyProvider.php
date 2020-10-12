@@ -175,6 +175,22 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
+            return new ProductConfigurationToUtilEncodingBridge(
+                $container->getLocator()->utilEncoding()->service()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
     protected function addProductConfiguratorRequestPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_PRODUCT_CONFIGURATOR_REQUEST, function () {
@@ -251,22 +267,6 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::PLUGINS_PRODUCT_CONFIGURATOR_REQUEST_EXPANDER, function () {
             return $this->getProductConfigurationRequestExpanderPlugins();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addUtilEncodingService(Container $container): Container
-    {
-        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
-            return new ProductConfigurationToUtilEncodingBridge(
-                $container->getLocator()->utilEncoding()->service()
-            );
         });
 
         return $container;
