@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Merchant\Communication\Plugin\Checkout\Validator;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
@@ -40,7 +39,7 @@ class MerchantCheckoutValidator implements MerchantCheckoutValidatorInterface
      */
     public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
-        $checkoutErrorTransfers = [];
+        $validationPassed = true;
         $merchantTransfers = $this->getMerchantTransfersGroupedByMerchantReference($quoteTransfer);
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
@@ -49,19 +48,20 @@ class MerchantCheckoutValidator implements MerchantCheckoutValidatorInterface
             }
 
             if (!isset($merchantTransfers[$itemTransfer->getMerchantReference()])) {
-                $checkoutErrorTransfers[] = (new CheckoutErrorTransfer())
+                $checkoutErrorTransfer = (new CheckoutErrorTransfer())
                     ->setMessage(static::GLOSSARY_KEY_REMOVED_MERCHANT)
                     ->setParameters([static::GLOSSARY_PARAM_SKU => $itemTransfer->getSku()]);
 
-                continue;
+                $checkoutResponseTransfer->addError($checkoutErrorTransfer);
+                $validationPassed = false;
             }
         }
 
-        $checkoutResponseTransfer
-            ->setIsSuccess(!$checkoutErrorTransfers)
-            ->setErrors(new ArrayObject($checkoutErrorTransfers));
+        if (!$validationPassed) {
+            $checkoutResponseTransfer->setIsSuccess(false);
+        }
 
-        return !$checkoutErrorTransfers;
+        return $validationPassed;
     }
 
     /**
