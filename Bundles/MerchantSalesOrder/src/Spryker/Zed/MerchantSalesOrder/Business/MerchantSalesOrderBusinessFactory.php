@@ -104,7 +104,7 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
         return new MerchantSalesOrderReader(
             $this->getSalesFacade(),
             $this->getRepository(),
-            $this->getMerchantOrderPreExpandPlugins(),
+            $this->getMerchantOrderFilterPlugins(),
             $this->getMerchantOrderExpanderPlugins()
         );
     }
@@ -142,10 +142,10 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderPreExpandPluginInterface[]
+     * @return \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderFilterPluginInterface[]
      */
-    public function getMerchantOrderPreExpandPlugins(): array
+    public function getMerchantOrderFilterPlugins(): array
     {
-        return $this->getProvidedDependency(MerchantSalesOrderDependencyProvider::PLUGINS_MERCHANT_ORDER_PRE_EXPAND);
+        return $this->getProvidedDependency(MerchantSalesOrderDependencyProvider::PLUGINS_MERCHANT_ORDER_FILTER);
     }
 }

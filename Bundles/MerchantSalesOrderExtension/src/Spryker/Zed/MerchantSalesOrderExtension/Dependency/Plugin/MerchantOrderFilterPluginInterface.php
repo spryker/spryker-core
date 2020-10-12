@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\MerchantOrderTransfer;
 /**
  * Allows to modify merchant order transfer before expanding.
  */
-interface MerchantOrderPreExpandPluginInterface
+interface MerchantOrderFilterPluginInterface
 {
     /**
      * Specification:
@@ -24,5 +24,5 @@ interface MerchantOrderPreExpandPluginInterface
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer
      */
-    public function execute(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer;
+    public function filter(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer;
 }

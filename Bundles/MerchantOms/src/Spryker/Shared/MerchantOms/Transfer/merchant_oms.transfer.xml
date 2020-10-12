@@ -86,5 +86,8 @@
 
     <transfer name="MerchantOrderCriteria">
         <property name="idMerchantOrder" type="int"/>
+        <property name="idMerchant" type="int"/>
+        <property name="withItems" type="bool"/>
+        <property name="withOrder" type="bool"/>
     </transfer>
 </transfers>

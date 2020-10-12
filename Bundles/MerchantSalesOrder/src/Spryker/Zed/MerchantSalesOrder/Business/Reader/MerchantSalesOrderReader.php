@@ -32,25 +32,25 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
     protected $merchantOrderExpanderPlugins;
 
     /**
-     * @var \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderPreExpandPluginInterface[]
+     * @var \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderFilterPluginInterface[]
      */
-    protected $merchantOrderPreExpandPlugins;
+    protected $merchantOrderFilterPlugins;
 
     /**
      * @param \Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToSalesFacadeInterface $salesFacade
      * @param \Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderRepositoryInterface $merchantSalesOrderRepository
-     * @param \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderPreExpandPluginInterface[] $merchantOrderPreExpandPlugins
+     * @param \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderFilterPluginInterface[] $merchantOrderFilterPlugins
      * @param \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderExpanderPluginInterface[] $merchantOrderExpanderPlugins
      */
     public function __construct(
         MerchantSalesOrderToSalesFacadeInterface $salesFacade,
         MerchantSalesOrderRepositoryInterface $merchantSalesOrderRepository,
-        array $merchantOrderPreExpandPlugins,
+        array $merchantOrderFilterPlugins,
         array $merchantOrderExpanderPlugins
     ) {
         $this->salesFacade = $salesFacade;
         $this->merchantSalesOrderRepository = $merchantSalesOrderRepository;
-        $this->merchantOrderPreExpandPlugins = $merchantOrderPreExpandPlugins;
+        $this->merchantOrderFilterPlugins = $merchantOrderFilterPlugins;
         $this->merchantOrderExpanderPlugins = $merchantOrderExpanderPlugins;
     }
 
@@ -69,6 +69,7 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
 
         if ($merchantOrderCriteriaTransfer->getWithOrder()) {
             $merchantOrderTransfer = $this->addSalesOrder($merchantOrderTransfer, $merchantOrderCriteriaTransfer);
+            $merchantOrderTransfer = $this->executeSalesOrderFilterPlugins($merchantOrderTransfer);
         }
 
         if ($merchantOrderCriteriaTransfer->getWithUniqueProductsCount()) {
@@ -76,8 +77,6 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
                 $this->merchantSalesOrderRepository->getUniqueProductsCount($merchantOrderTransfer->getIdMerchantOrder())
             );
         }
-
-        $merchantOrderTransfer = $this->executeMerchantOrderPreExpandPlugins($merchantOrderTransfer);
 
         return $this->executeMerchantOrderExpanderPlugins($merchantOrderTransfer);
     }
@@ -123,10 +122,10 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer
      */
-    protected function executeMerchantOrderPreExpandPlugins(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer
+    protected function executeSalesOrderFilterPlugins(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer
     {
-        foreach ($this->merchantOrderPreExpandPlugins as $merchantOrderPreExpandPlugin) {
-            $merchantOrderTransfer = $merchantOrderPreExpandPlugin->execute($merchantOrderTransfer);
+        foreach ($this->merchantOrderFilterPlugins as $merchantOrderFiilterPlugin) {
+            $merchantOrderTransfer = $merchantOrderFiilterPlugin->filter($merchantOrderTransfer);
         }
 
         return $merchantOrderTransfer;

@@ -9,12 +9,12 @@ namespace Spryker\Zed\DiscountMerchantSalesOrder\Communication\Plugin;
 
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderPreExpandPluginInterface;
+use Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderFilterPluginInterface;
 
 /**
- * @method \Spryker\Zed\DiscountMerchantSalesOrder\Business\DiscountMerchantSalesOrderFacade getFacade()
+ * @method \Spryker\Zed\DiscountMerchantSalesOrder\Business\DiscountMerchantSalesOrderFacadeInterface getFacade()
  */
-class FilterDiscountMerchantOrderPreExpandPlugin extends AbstractPlugin implements MerchantOrderPreExpandPluginInterface
+class DiscountMerchantOrderFilterPlugin extends AbstractPlugin implements MerchantOrderFilterPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -26,7 +26,7 @@ class FilterDiscountMerchantOrderPreExpandPlugin extends AbstractPlugin implemen
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer
      */
-    public function execute(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer
+    public function filter(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer
     {
         return $this->getFacade()
             ->filterMerchantDiscounts($merchantOrderTransfer);

@@ -16,6 +16,7 @@ use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Exception\Missin
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToCustomerFacadeBridge;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToMerchantOmsFacadeBridge;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToMerchantSalesOrderFacadeBridge;
+use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToMerchantShipmentFacadeBridge;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToMerchantUserFacadeBridge;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToMoneyFacadeBridge;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToShipmentFacadeBridge;
@@ -36,6 +37,7 @@ class MerchantSalesOrderMerchantUserGuiDependencyProvider extends AbstractBundle
     public const FACADE_MERCHANT_SALES_ORDER = 'FACADE_MERCHANT_SALES_ORDER';
     public const FACADE_MERCHANT_OMS = 'FACADE_MERCHANT_OMS';
     public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
+    public const FACADE_MERCHANT_SHIPMENT = 'FACADE_MERCHANT_SHIPMENT';
 
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const SERVICE_DATE_TIME = 'SERVICE_DATE_TIME';
@@ -65,6 +67,7 @@ class MerchantSalesOrderMerchantUserGuiDependencyProvider extends AbstractBundle
         $container = $this->addShipmentFacade($container);
         $container = $this->addShipmentFormTypePlugin($container);
         $container = $this->addItemFormTypePlugin($container);
+        $container = $this->addMerchantShipmentFacade($container);
 
         return $container;
     }
@@ -273,5 +276,21 @@ class MerchantSalesOrderMerchantUserGuiDependencyProvider extends AbstractBundle
                 FormTypeInterface::class
             )
         );
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantShipmentFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MERCHANT_SHIPMENT, function (Container $container) {
+            return new MerchantSalesOrderMerchantUserGuiToMerchantShipmentFacadeBridge(
+                $container->getLocator()->merchantShipment()->facade()
+            );
+        });
+
+        return $container;
     }
 }

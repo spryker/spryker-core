@@ -1,6 +1,6 @@
-namespace: MerchantSalesOrderMerchantUserGui
+namespace: MerchantShipment
 include:
-    - tests/SprykerTest/Zed/MerchantSalesOrderMerchantUserGui
+    - tests/SprykerTest/Zed/MerchantShipment
 paths:
     tests: tests
     log: tests/_output

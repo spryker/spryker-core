@@ -17,10 +17,11 @@ use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\DataProvide
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\EventItemTriggerForm;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\EventTriggerForm;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\Shipment\MerchantShipmentGroupFormType;
-use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Table\MyOrderTable;
+use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Table\MerchantOrderTable;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToCustomerFacadeInterface;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToMerchantOmsFacadeInterface;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToMerchantSalesOrderFacadeInterface;
+use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToMerchantShipmentFacadeInterface;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToMoneyFacadeInterface;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToShipmentFacadeInterface;
@@ -38,11 +39,11 @@ use Symfony\Component\Form\FormInterface;
 class MerchantSalesOrderMerchantUserGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Table\MyOrderTable
+     * @return \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Table\MerchantOrderTable
      */
-    public function createMyOrderTable(): MyOrderTable
+    public function createMerchantOrderTable(): MerchantOrderTable
     {
-        return new MyOrderTable(
+        return new MerchantOrderTable(
             $this->getMerchantSalesOrderPropelQuery(),
             $this->getMoneyFacade(),
             $this->getUtilSanitizeService(),
@@ -230,5 +231,13 @@ class MerchantSalesOrderMerchantUserGuiCommunicationFactory extends AbstractComm
     public function getItemFormTypePlugin(): FormTypeInterface
     {
         return $this->getProvidedDependency(MerchantSalesOrderMerchantUserGuiDependencyProvider::PLUGIN_ITEM_FORM_TYPE);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToMerchantShipmentFacadeInterface
+     */
+    public function getMerchantShipmentFacade(): MerchantSalesOrderMerchantUserGuiToMerchantShipmentFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantSalesOrderMerchantUserGuiDependencyProvider::FACADE_MERCHANT_SHIPMENT);
     }
 }

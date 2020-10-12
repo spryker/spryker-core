@@ -9,13 +9,14 @@ namespace Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller
 
 use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantOrderTransfer;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\MerchantSalesOrderMerchantUserGuiCommunicationFactory getFactory()
- * @method \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Business\MerchantSalesOrderMerchantUserGuiFacadeInterface getFacade()
  */
 class OmsTriggerController extends AbstractController
 {
@@ -29,11 +30,18 @@ class OmsTriggerController extends AbstractController
     protected const ERROR_INVALID_REQUEST = 'Request is invalid';
 
     /**
+     * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\DetailController::ROUTE_REDIRECT
+     */
+    protected const REDIRECT_URL_DEFAULT = '/merchant-sales-order-merchant-user-gui/detail';
+
+    protected const MESSAGE_ORDER_NOT_FOUND_ERROR = 'Merchant sales order #%d not found.';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function submitTriggerEventForMerchantOrderAction(Request $request): RedirectResponse
+    public function submitTriggerEventAction(Request $request): RedirectResponse
     {
         $redirect = $request->query->get('redirect', static::URL_PARAM_REDIRECT);
 
@@ -50,11 +58,14 @@ class OmsTriggerController extends AbstractController
         $event = $request->query->get(static::URL_PARAM_EVENT);
         $idMerchantOrder = $request->query->getInt(static::URL_PARAM_ID_MERCHANT_SALES_ORDER);
 
-        $merchantOrderTransfer = $this->getFactory()->getMerchantSalesOrderFacade()->findMerchantOrder(
-            (new MerchantOrderCriteriaTransfer())
-                ->setIdMerchantOrder($idMerchantOrder)
-                ->setWithItems(true)
-        );
+        $merchantOrderTransfer = $this->findMerchantOrder($idMerchantOrder);
+
+        if (!$merchantOrderTransfer) {
+            $this->addErrorMessage(static::MESSAGE_ORDER_NOT_FOUND_ERROR, ['%d' => $idMerchantOrder]);
+            $redirectUrl = Url::generate(static::REDIRECT_URL_DEFAULT)->build();
+
+            return $this->redirectResponse($redirectUrl);
+        }
 
         $countTriggeredItems = $this->getFactory()
             ->getMerchantOmsFacade()
@@ -80,7 +91,7 @@ class OmsTriggerController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function submitTriggerEventForMerchantOrderItemAction(Request $request): RedirectResponse
+    public function submitTriggerEventForItemAction(Request $request): RedirectResponse
     {
         $redirect = $request->query->get('redirect', static::URL_PARAM_REDIRECT);
 
@@ -112,5 +123,19 @@ class OmsTriggerController extends AbstractController
         $this->addInfoMessage(static::MESSAGE_STATUS_CHANGED_SUCCESSFULLY);
 
         return $this->redirectResponse($redirect);
+    }
+
+    /**
+     * @param int $idMerchantOrder
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
+     */
+    protected function findMerchantOrder(int $idMerchantOrder): ?MerchantOrderTransfer
+    {
+        return $this->getFactory()->getMerchantSalesOrderFacade()->findMerchantOrder(
+            (new MerchantOrderCriteriaTransfer())
+                ->setIdMerchantOrder($idMerchantOrder)
+                ->setWithItems(true)
+        );
     }
 }

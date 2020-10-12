@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\MerchantSalesOrderMerchantUserGui;
+namespace SprykerTest\Zed\MerchantShipment;
 
 use Codeception\Actor;
 
@@ -25,7 +25,7 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
  */
-class MerchantSalesOrderMerchantUserGuiBusinessTester extends Actor
+class MerchantShipmentBusinessTester extends Actor
 {
-    use _generated\MerchantSalesOrderMerchantUserGuiBusinessTesterActions;
+    use _generated\MerchantShipmentBusinessTesterActions;
 }

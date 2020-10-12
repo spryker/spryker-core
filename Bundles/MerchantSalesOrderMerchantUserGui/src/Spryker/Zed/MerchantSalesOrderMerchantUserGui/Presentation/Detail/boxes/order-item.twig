@@ -1,4 +1,4 @@
-{% set merchantOrderItem = merchantOrderItemsWithOrderItemIdKey[orderItem.IdSalesOrderItem] %}
+{% set merchantOrderItem = groupedMerchantOrderItems[orderItem.IdSalesOrderItem] %}
 
 <td class="item-checker">
     <input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="item-check">

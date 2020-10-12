@@ -16,11 +16,9 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\MerchantSalesOrderMerchantUserGuiConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * @method \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\MerchantSalesOrderMerchantUserGuiCommunicationFactory getFactory()
- * @method \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Business\MerchantSalesOrderMerchantUserGuiFacadeInterface getFacade()
  */
 class DetailController extends AbstractController
 {
@@ -33,40 +31,30 @@ class DetailController extends AbstractController
      */
     protected const SERVICE_SUB_REQUEST = 'sub_request';
 
-    protected const MASSAGE_MERCHANT_ORDER_DOES_NOT_EXIST = 'Merchant order doesn\'t exist.';
+    protected const MESSAGE_ORDER_NOT_FOUND_ERROR = 'Merchant sales order #%d not found.';
 
     /**
-     * @phpstan-return array<string, mixed>
+     * @phpstan-return array<mixed>|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
-     *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function indexAction(Request $request): array
+    public function indexAction(Request $request)
     {
-        $idMerchantSalesOrder = $this->castId($request->query->getInt(MerchantSalesOrderMerchantUserGuiConfig::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER));
+        $idMerchantSalesOrder = $this->castId(
+            $request->query->getInt(MerchantSalesOrderMerchantUserGuiConfig::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER)
+        );
         $idMerchant = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser()->getIdMerchant();
 
-        $merchantOrderTransfer = $this->getFactory()->getMerchantSalesOrderFacade()->findMerchantOrder(
-            (new MerchantOrderCriteriaTransfer())
-                ->setIdMerchantOrder($idMerchantSalesOrder)
-                ->setIdMerchant($idMerchant)
-                ->setWithItems(true)
-                ->setWithOrder(true)
-        );
+        $merchantOrderTransfer = $this->findMerchantSalesOrder($idMerchantSalesOrder, $idMerchant);
+
         if (!$merchantOrderTransfer) {
-            throw new AccessDeniedHttpException(static::MASSAGE_MERCHANT_ORDER_DOES_NOT_EXIST);
+            $this->addErrorMessage(static::MESSAGE_ORDER_NOT_FOUND_ERROR, ['%d' => $idMerchantSalesOrder]);
+            $redirectUrl = Url::generate(static::ROUTE_REDIRECT)->build();
+
+            return $this->redirectResponse($redirectUrl);
         }
-
-        $merchantOrderTransfer = $this->getFactory()
-            ->getMerchantOmsFacade()
-            ->expandMerchantOrderItemsWithStateHistory($merchantOrderTransfer);
-
-        $merchantOrderTransfer = $this->getFactory()
-            ->getMerchantOmsFacade()
-            ->expandMerchantOrderWithMerchantOmsData($merchantOrderTransfer);
 
         $merchantOrderItemCollectionTransfer = $this->getFactory()
             ->getMerchantOmsFacade()
@@ -76,19 +64,16 @@ class DetailController extends AbstractController
             );
         $merchantOrderTransfer->setMerchantOrderItems($merchantOrderItemCollectionTransfer->getMerchantOrderItems());
 
-        $blockData = $this->renderMultipleActions(
+        $blockData = $this->renderActions(
             $request,
             $this->getFactory()->getMerchantSalesOrderDetailExternalBlocksUrls(),
             $merchantOrderTransfer
         );
-        $groupedMerchantOrderItemsByShipment = $this->getFactory()->getShipmentService()->groupItemsByShipment($merchantOrderTransfer->getOrder()->getItems());
+        $groupedMerchantOrderItemsByShipment = $this->getFactory()->getShipmentService()->groupItemsByShipment(
+            $merchantOrderTransfer->getOrder()->getItems()
+        );
 
-        $merchantOrderItemsWithOrderItemIdKey = [];
-        foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItem) {
-            $merchantOrderItemsWithOrderItemIdKey[$merchantOrderItem->getOrderItem()->getIdSalesOrderItem()] = $merchantOrderItem;
-        }
-
-        $uniqueEventsGroupedByShipmentId = $this->extractUniqueEvents($groupedMerchantOrderItemsByShipment, $merchantOrderItemsWithOrderItemIdKey);
+        $groupedMerchantOrderItems = $this->groupMerchantOrderItemsByIdSalesOrderItem($merchantOrderTransfer);
 
         return [
             'merchantOrder' => $merchantOrderTransfer,
@@ -97,10 +82,31 @@ class DetailController extends AbstractController
                 (new MerchantOrderCriteriaTransfer())->setMerchantReference($merchantOrderTransfer->getMerchantReference())
             ),
             'changeStatusRedirectUrl' => $this->createRedirectLink($idMerchantSalesOrder),
-            'merchantOrderItemsWithOrderItemIdKey' => $merchantOrderItemsWithOrderItemIdKey,
-            'uniqueEventsGroupedByShipmentId' => $uniqueEventsGroupedByShipmentId,
+            'groupedMerchantOrderItems' => $groupedMerchantOrderItems,
+            'uniqueEventsGroupedByShipmentId' => $this->extractUniqueEvents($groupedMerchantOrderItemsByShipment, $groupedMerchantOrderItems),
             'blocks' => $blockData,
         ];
+    }
+
+    /**
+     * @param int $idMerchantSalesOrder
+     * @param int $idMerchant
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
+     */
+    protected function findMerchantSalesOrder(int $idMerchantSalesOrder, int $idMerchant): ?MerchantOrderTransfer
+    {
+        $merchantOrderCriteriaTransfer = (new MerchantOrderCriteriaTransfer())
+            ->setIdMerchantOrder($idMerchantSalesOrder)
+            ->setIdMerchant($idMerchant)
+            ->setWithItems(true)
+            ->setWithOrder(true);
+
+        $merchantOrderTransfer = $this->getFactory()
+            ->getMerchantSalesOrderFacade()
+            ->findMerchantOrder($merchantOrderCriteriaTransfer);
+
+        return $merchantOrderTransfer;
     }
 
     /**
@@ -155,7 +161,7 @@ class DetailController extends AbstractController
      *
      * @return array
      */
-    protected function renderMultipleActions(Request $request, array $data, MerchantOrderTransfer $merchantOrderTransfer): array
+    protected function renderActions(Request $request, array $data, MerchantOrderTransfer $merchantOrderTransfer): array
     {
         $subRequest = clone $request;
         $subRequest->setMethod(Request::METHOD_POST);
@@ -185,5 +191,23 @@ class DetailController extends AbstractController
         }
 
         return $blockResponse->getContent();
+    }
+
+    /**
+     * @phpstan-return array<int|string, \Generated\Shared\Transfer\MerchantOrderItemTransfer>
+     *
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     *
+     * @return array
+     */
+    protected function groupMerchantOrderItemsByIdSalesOrderItem(MerchantOrderTransfer $merchantOrderTransfer): array
+    {
+        $groupedOrderItemsWithOrderItemIdKey = [];
+
+        foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
+            $groupedOrderItemsWithOrderItemIdKey[$merchantOrderItemTransfer->getOrderItem()->getIdSalesOrderItem()] = $merchantOrderItemTransfer;
+        }
+
+        return $groupedOrderItemsWithOrderItemIdKey;
     }
 }

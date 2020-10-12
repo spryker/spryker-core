@@ -88,7 +88,7 @@ class MerchantShipmentGroupFormDataProvider
      */
     public function getData(MerchantOrderTransfer $merchantOrderTransfer, ShipmentTransfer $shipmentTransfer): ShipmentGroupTransfer
     {
-        $shipmentTransfer = $this->fillShipmentTransfer($shipmentTransfer, $merchantOrderTransfer);
+        $shipmentTransfer = $this->hydrateShipmentTransfer($shipmentTransfer, $merchantOrderTransfer);
 
         $shipmentGroupTransfer = new ShipmentGroupTransfer();
         $shipmentGroupTransfer->setShipment($shipmentTransfer);
@@ -103,7 +103,7 @@ class MerchantShipmentGroupFormDataProvider
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
-    protected function fillShipmentTransfer(ShipmentTransfer $shipmentTransfer, MerchantOrderTransfer $merchantOrderTransfer): ShipmentTransfer
+    protected function hydrateShipmentTransfer(ShipmentTransfer $shipmentTransfer, MerchantOrderTransfer $merchantOrderTransfer): ShipmentTransfer
     {
         $shipmentTransfer = $this->hydrateShipmentAddressTransfer($merchantOrderTransfer, $shipmentTransfer);
 
@@ -237,7 +237,7 @@ class MerchantShipmentGroupFormDataProvider
     protected function getAddressLabel(AddressTransfer $addressTransfer): string
     {
         return sprintf(
-            static::ADDRESS_LABEL_PATTERN,
+            '%s %s %s, %s %s, %s %s',
             $addressTransfer->getSalutation(),
             $addressTransfer->getFirstName(),
             $addressTransfer->getLastName(),
@@ -309,7 +309,7 @@ class MerchantShipmentGroupFormDataProvider
      */
     protected function getSanitizedCustomerAddressChoices(string $addressLabel, int $itemNumber): string
     {
-        return sprintf(static::SANITIZED_CUSTOMER_ADDRESS_LABEL_PATTERN, $addressLabel, $itemNumber);
+        return sprintf('%s - %s', $addressLabel, $itemNumber);
     }
 
     /**
@@ -326,7 +326,7 @@ class MerchantShipmentGroupFormDataProvider
             }
 
             $shipmentMethodOptionNameCollection[$idShipmentMethod] = sprintf(
-                static::SHIPMENT_METHODS_OPTIONS_NAMES_PATTERN,
+                '%s - %s',
                 $shipmentMethodTransfer->getCarrierName(),
                 $shipmentMethodTransfer->getName()
             );

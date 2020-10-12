@@ -23,12 +23,17 @@ use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Service\MerchantSal
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Service\MerchantSalesOrderMerchantUserGuiToUtilSanitizeInterface;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\MerchantSalesOrderMerchantUserGuiConfig;
 
-class MyOrderTable extends AbstractTable
+class MerchantOrderTable extends AbstractTable
 {
     protected const COL_FULL_CUSTOMER_NAME = 'fullCustomerName';
     protected const COL_ITEM_COUNT = 'itemCount';
     protected const COL_ORDER_STATE = 'orderState';
     protected const COL_ACTIONS = 'actions';
+
+    /**
+     * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\DetailController::ROUTE_REDIRECT
+     */
+    protected const ROUTE_REDIRECT = '/merchant-sales-order-merchant-user-gui/detail';
 
     /**
      * @phpstan-var \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<mixed>
@@ -235,7 +240,7 @@ class MyOrderTable extends AbstractTable
         $buttons = [];
         $buttons[] = $this->generateViewButton(
             Url::generate(
-                MerchantSalesOrderMerchantUserGuiConfig::URL_DETAIL,
+                static::ROUTE_REDIRECT,
                 [MerchantSalesOrderMerchantUserGuiConfig::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER => $item[SpyMerchantSalesOrderTableMap::COL_ID_MERCHANT_SALES_ORDER]]
             ),
             'View'

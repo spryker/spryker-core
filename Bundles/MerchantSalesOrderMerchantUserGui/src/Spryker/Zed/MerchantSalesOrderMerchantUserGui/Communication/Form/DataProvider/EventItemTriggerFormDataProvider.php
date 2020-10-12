@@ -14,8 +14,19 @@ class EventItemTriggerFormDataProvider
 {
     protected const SUBMIT_BUTTON_CLASS = 'btn btn-primary btn-sm trigger-order-single-event';
 
+    /**
+     * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\OmsTriggerController::URL_PARAM_MERCHANT_SALES_ORDER_ITEM_REFERENCE
+     */
     protected const URL_PARAM_MERCHANT_SALES_ORDER_ITEM_REFERENCE = 'merchant-sales-order-item-reference';
+
+    /**
+     * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\OmsTriggerController::URL_PARAM_REDIRECT
+     */
     protected const URL_PARAM_REDIRECT = 'redirect';
+
+    /**
+     * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\OmsTriggerController::URL_PARAM_EVENT_NAME
+     */
     protected const URL_PARAM_EVENT_NAME = 'event';
 
     /**
