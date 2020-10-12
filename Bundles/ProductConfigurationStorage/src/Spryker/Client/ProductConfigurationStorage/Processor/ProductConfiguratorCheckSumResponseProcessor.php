@@ -83,15 +83,10 @@ class ProductConfiguratorCheckSumResponseProcessor implements ProductConfigurato
             return $productConfiguratorResponseProcessorResponseTransfer;
         }
 
-        $productConfigurationInstanceTransfer = $productConfiguratorResponseTransfer->getProductConfigurationInstance();
-
-        $productConfigurationInstanceTransfer = $this->productConfigurationInstanceMapper
-            ->mapConfiguratorResponseDataPricesToProductConfigurationInstancePrices(
-                $configuratorResponseData,
-                $productConfigurationInstanceTransfer
-            );
-
-        $productConfiguratorResponseTransfer->setProductConfigurationInstance($productConfigurationInstanceTransfer);
+        $productConfiguratorResponseTransfer = $this->mapProductConfigurationInstancePrices(
+            $productConfiguratorResponseTransfer,
+            $configuratorResponseData
+        );
 
         $this->storeProductConfigurationInstance($productConfiguratorResponseTransfer);
 
@@ -117,5 +112,26 @@ class ProductConfiguratorCheckSumResponseProcessor implements ProductConfigurato
             $productConfiguratorResponseTransfer->getSku(),
             $productConfiguratorResponseTransfer->getProductConfigurationInstance()
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
+     * @param array $configuratorResponseData
+     *
+     * @return \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer
+     */
+    protected function mapProductConfigurationInstancePrices(
+        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer,
+        array $configuratorResponseData
+    ): ProductConfiguratorResponseTransfer {
+        $productConfigurationInstanceTransfer = $productConfiguratorResponseTransfer->getProductConfigurationInstance();
+
+        $productConfigurationInstanceTransfer = $this->productConfigurationInstanceMapper
+            ->mapConfiguratorResponseDataPricesToProductConfigurationInstancePrices(
+                $configuratorResponseData,
+                $productConfigurationInstanceTransfer
+            );
+
+        return $productConfiguratorResponseTransfer->setProductConfigurationInstance($productConfigurationInstanceTransfer);
     }
 }

@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToCartClientInterface;
 use Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageConfig;
 
@@ -47,8 +48,7 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
         }
 
         $itemReplaceTransfer = $this->createItemReplaceTransfer(
-            $productConfiguratorResponseTransfer,
-            $productConfiguratorResponseProcessorResponseTransfer
+            $productConfiguratorResponseTransfer
         );
 
         $quoteResponseTransfer = $this->cartClient->replaceItem($itemReplaceTransfer);
@@ -57,24 +57,19 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
             return $productConfiguratorResponseProcessorResponseTransfer->setIsSuccessful(true);
         }
 
-        foreach ($quoteResponseTransfer->getErrors() as $error) {
-            $productConfiguratorResponseProcessorResponseTransfer->addMessage(
-                (new MessageTransfer())->setMessage($error->getMessage())
-            );
-        }
-
-        return $productConfiguratorResponseProcessorResponseTransfer->setIsSuccessful(false);
+        return $productConfiguratorResponseProcessorResponseTransfer = $this->addQuoteErrors(
+            $quoteResponseTransfer,
+            $productConfiguratorResponseProcessorResponseTransfer
+        );
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
-     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
      *
      * @return \Generated\Shared\Transfer\ItemReplaceTransfer
      */
     protected function createItemReplaceTransfer(
-        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer,
-        ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
+        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
     ): ItemReplaceTransfer {
         $quoteTransfer = $this->cartClient->getQuote();
 
@@ -97,5 +92,24 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
             ->setItemToBeReplaced($itemToBeReplacedTransfer)
             ->setNewItem($newItemTransfer ?? null)
             ->setQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
+     */
+    protected function addQuoteErrors(
+        QuoteResponseTransfer $quoteResponseTransfer,
+        ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
+    ): ProductConfiguratorResponseProcessorResponseTransfer {
+        foreach ($quoteResponseTransfer->getErrors() as $error) {
+            $productConfiguratorResponseProcessorResponseTransfer->addMessage(
+                (new MessageTransfer())->setMessage($error->getMessage())
+            );
+        }
+
+        return $productConfiguratorResponseProcessorResponseTransfer->setIsSuccessful(false);
     }
 }
