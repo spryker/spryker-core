@@ -25,6 +25,7 @@ class ProductConfigurationInstanceMapper implements ProductConfigurationInstance
     protected const IS_PRICE_MERGEABLE = false;
     protected const PRODUCT_CONFIGURATION_INSTANCE_RESPONSE_KEY = 'productConfigurationInstance';
     protected const PRICES_RESPONSE_KEY = 'prices';
+    protected const PRICES_SKU_KEY = 'SKU';
 
     /**
      * @param \Generated\Shared\Transfer\ProductConfigurationStorageTransfer $productConfigurationStorageTransfer
@@ -74,6 +75,7 @@ class ProductConfigurationInstanceMapper implements ProductConfigurationInstance
                 );
 
             $priceProductTransfers->append((new PriceProductTransfer())
+                ->setSkuProduct($priceData[static::PRICES_SKU_KEY])
                 ->setPriceTypeName(static::DEFAULT_PRICE_TYPE_NAME)
                 ->setIsMergeable(static::IS_PRICE_MERGEABLE)
                 ->setPriceDimension($priceProductDimensionTransfer)

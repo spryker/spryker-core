@@ -63,9 +63,8 @@ class ProductConfiguratorCheckSumResponseValidator implements ProductConfigurato
             return $productConfiguratorResponseProcessorResponseTransfer;
         }
 
-        return $productConfiguratorResponseProcessorResponseTransfer->addMessage(
-            (new MessageTransfer())
-                    ->setMessage(static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_NOT_VALID_RESPONSE_CHECKSUM)
-        )->setIsSuccessful(false);
+        return $productConfiguratorResponseProcessorResponseTransfer->addMessage((new MessageTransfer())
+            ->setMessage(static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_NOT_VALID_RESPONSE_CHECKSUM))
+            ->setIsSuccessful(false);
     }
 }

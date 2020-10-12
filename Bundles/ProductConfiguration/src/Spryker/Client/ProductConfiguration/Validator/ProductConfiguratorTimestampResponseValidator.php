@@ -46,11 +46,9 @@ class ProductConfiguratorTimestampResponseValidator implements ProductConfigurat
         $timestampDiff = time() - $productConfiguratorResponseTransfer->getTimestamp();
 
         if ($timestampDiff > $this->config->getProductConfigurationResponseMaxValidSeconds()) {
-            return $productConfiguratorResponseProcessorResponseTransfer
-                ->addMessage(
-                    (new MessageTransfer())
-                        ->setMessage(static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_STORAGE_EXPIRED_TIMESTAMP)
-                )->setIsSuccessful(false);
+            return $productConfiguratorResponseProcessorResponseTransfer->addMessage((new MessageTransfer())
+                ->setMessage(static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_STORAGE_EXPIRED_TIMESTAMP))
+                ->setIsSuccessful(false);
         }
 
         return $productConfiguratorResponseProcessorResponseTransfer;
