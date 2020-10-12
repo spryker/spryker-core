@@ -22,8 +22,7 @@ class ProductConfiguratorAccessTokenRedirectResolver implements ProductConfigura
     protected const ASSESS_TOKEN_REQUEST_HEADERS = [
         'Content-Type' => 'application/json',
     ];
-    protected const GLOSSARY_KEY_PRODUCT_CONFIGURATION_CAN_NOT_OBTAIN_ACCESS_TOKEN
-        = 'product_configuration.access_token.request.error.can_not_obtain_access_token';
+    protected const GLOSSARY_KEY_PRODUCT_CONFIGURATION_CAN_NOT_OBTAIN_ACCESS_TOKEN = 'product_configuration.access_token.request.error.can_not_obtain_access_token';
 
     protected const CONFIGURATOR_REDIRECT_URL_RESPONSE_KEY = 'configuratorRedirectUrl';
     protected const IS_RESPONSE_SUCCESSFUL_KEY = 'isSuccessful';
@@ -122,11 +121,8 @@ class ProductConfiguratorAccessTokenRedirectResolver implements ProductConfigura
                 ->setConfiguratorRedirectUrl($responseData[static::CONFIGURATOR_REDIRECT_URL_RESPONSE_KEY]);
         }
 
-        return $this->addProductConfigurationError(
-            $productConfiguratorRedirectTransfer,
-            static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_CAN_NOT_OBTAIN_ACCESS_TOKEN,
-            new ProductConfigurationHttpRequestException($responseData[static::RESPONSE_ERROR_MESSAGES_KEY])
-        );
+        return $productConfiguratorRedirectTransfer->setIsSuccessful(false)
+            ->addMessage(static::RESPONSE_ERROR_MESSAGES_KEY);
     }
 
     /**

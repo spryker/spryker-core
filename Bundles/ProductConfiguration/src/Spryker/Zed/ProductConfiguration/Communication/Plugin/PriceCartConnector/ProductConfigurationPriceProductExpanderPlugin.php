@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductConfiguration\Communication\Plugin\PriceCartConnector;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
-
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PriceCartConnectorExtension\Dependency\Plugin\PriceProductExpanderPluginInterface;
 
@@ -19,7 +18,6 @@ use Spryker\Zed\PriceCartConnectorExtension\Dependency\Plugin\PriceProductExpand
  */
 class ProductConfigurationPriceProductExpanderPlugin extends AbstractPlugin implements PriceProductExpanderPluginInterface
 {
-
     /**
      * {@inheritDoc}
      * - Expands the list of product price transfers with product configuration prices.

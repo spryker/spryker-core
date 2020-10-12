@@ -82,7 +82,9 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     protected function addGuzzleClient(Container $container): Container
     {
         $container->set(static::CLIENT_HTTP, function () {
-            return new ProductConfigurationToHttpClientAdapter(new GuzzleHttpClient());
+            return new ProductConfigurationToHttpClientAdapter(
+                new GuzzleHttpClient()
+            );
         });
 
         return $container;
@@ -96,7 +98,9 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     protected function addCurrencyClient(Container $container): Container
     {
         $container->set(static::CLIENT_CURRENCY, function (Container $container) {
-            return new ProductConfigurationToCurrencyClientBridge($container->getLocator()->currency()->client());
+            return new ProductConfigurationToCurrencyClientBridge(
+                $container->getLocator()->currency()->client()
+            );
         });
 
         return $container;
@@ -110,7 +114,9 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     protected function addPriceClient(Container $container): Container
     {
         $container->set(static::CLIENT_PRICE, function (Container $container) {
-            return new ProductConfigurationToPriceClientBridge($container->getLocator()->price()->client());
+            return new ProductConfigurationToPriceClientBridge(
+                $container->getLocator()->price()->client()
+            );
         });
 
         return $container;
@@ -124,7 +130,9 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     protected function addLocaleClient(Container $container): Container
     {
         $container->set(static::CLIENT_LOCALE, function (Container $container) {
-            return new ProductConfigurationToLocaleBridge($container->getLocator()->locale()->client());
+            return new ProductConfigurationToLocaleBridge(
+                $container->getLocator()->locale()->client()
+            );
         });
 
         return $container;
@@ -138,7 +146,9 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     protected function addCustomerClient(Container $container): Container
     {
         $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
-            return new ProductConfigurationToCustomerClientBridge($container->getLocator()->customer()->client());
+            return new ProductConfigurationToCustomerClientBridge(
+                $container->getLocator()->customer()->client()
+            );
         });
 
         return $container;

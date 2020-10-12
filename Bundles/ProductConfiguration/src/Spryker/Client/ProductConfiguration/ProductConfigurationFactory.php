@@ -47,14 +47,14 @@ class ProductConfigurationFactory extends AbstractFactory
         return new ProductConfiguratorRedirectResolver(
             $this->getProductConfiguratorRequestPlugins(),
             $this->getDefaultProductConfiguratorRequestPlugin(),
-            $this->createProductConfiguratorDataExpander()
+            $this->createProductConfiguratorRequestDataExpander()
         );
     }
 
     /**
      * @return \Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataExpanderInterface
      */
-    public function createProductConfiguratorDataExpander(): ProductConfiguratorRequestDataExpanderInterface
+    public function createProductConfiguratorRequestDataExpander(): ProductConfiguratorRequestDataExpanderInterface
     {
         return new ProductConfiguratorRequestDataExpander(
             $this->getCustomerClient(),
@@ -68,11 +68,11 @@ class ProductConfigurationFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductConfiguration\Resolver\ProductConfiguratorAccessTokenRedirectResolverInterface
      */
-    public function createProductConfigurationAccessTokenRedirectResolver(): ProductConfiguratorAccessTokenRedirectResolverInterface
+    public function createProductConfiguratorAccessTokenRedirectResolver(): ProductConfiguratorAccessTokenRedirectResolverInterface
     {
         return new ProductConfiguratorAccessTokenRedirectResolver(
             $this->getProductConfiguratorRequestExpanderPlugins(),
-            $this->createProductConfigurationHttpClient(),
+            $this->getProductConfigurationHttpClient(),
             $this->getUtilEncoding()
         );
     }
@@ -94,14 +94,6 @@ class ProductConfigurationFactory extends AbstractFactory
     public function createQuoteProductConfigurationChecker(): QuoteProductConfigurationCheckerInterface
     {
         return new QuoteProductConfigurationChecker();
-    }
-
-    /**
-     * @return \Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToHttpClientInterface
-     */
-    public function createProductConfigurationHttpClient(): ProductConfigurationToHttpClientInterface
-    {
-        return $this->getProvidedDependency(ProductConfigurationDependencyProvider::CLIENT_HTTP);
     }
 
     /**
@@ -151,6 +143,14 @@ class ProductConfigurationFactory extends AbstractFactory
     public function createProductConfiguratorTimestampResponseValidator(): ProductConfiguratorResponseValidatorInterface
     {
         return new ProductConfiguratorTimestampResponseValidator($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToHttpClientInterface
+     */
+    public function getProductConfigurationHttpClient(): ProductConfigurationToHttpClientInterface
+    {
+        return $this->getProvidedDependency(ProductConfigurationDependencyProvider::CLIENT_HTTP);
     }
 
     /**

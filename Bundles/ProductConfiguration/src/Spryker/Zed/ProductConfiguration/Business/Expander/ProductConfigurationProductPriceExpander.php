@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 
 class ProductConfigurationProductPriceExpander implements ProductConfigurationProductPriceExpanderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
@@ -24,8 +23,7 @@ class ProductConfigurationProductPriceExpander implements ProductConfigurationPr
     ): array {
         $productConfigurationPrices = [];
 
-        foreach ($cartChangeTransfer->getItems() as $item)
-        {
+        foreach ($cartChangeTransfer->getItems() as $item) {
             $productConfigurationInstance = $item->getProductConfigurationInstance();
 
             if ($productConfigurationInstance && $productConfigurationInstance->getPrices()) {

@@ -5,7 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker-sdk/product-configuration-sdk": "*",
+    "spryker-sdk/product-configuration-sdk": "^0.1.0",
     "spryker/cart-extension": "^4.2.0",
     "spryker/checkout-extension": "^1.2.0",
     "spryker/currency": "^3.2.0",
