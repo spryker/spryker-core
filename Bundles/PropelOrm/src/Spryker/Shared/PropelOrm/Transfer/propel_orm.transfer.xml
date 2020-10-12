@@ -9,7 +9,7 @@
     </transfer>
 
     <transfer name="ColumnsCollection">
-        <property name="columns" type="Column[]"/>
+        <property name="columns" type="Column[]" singular="columns"/>
     </transfer>
 
     <transfer name="FileToGenerate">
@@ -18,7 +18,7 @@
     </transfer>
 
     <transfer name="FilesToGenerateCollection">
-        <property name="filesToGenerate" type="FileToGenerate[]"/>
+        <property name="filesToGenerate" type="FileToGenerate[]" singular="filesToGenerate"/>
     </transfer>
 
 </transfers>

@@ -30,7 +30,7 @@
     </transfer>
 
     <transfer name="ColumnsCollection">
-        <property name="columns" type="Column[]"/>
+        <property name="columns" type="Column[]" singular="columns"/>
     </transfer>
 
 </transfers>
