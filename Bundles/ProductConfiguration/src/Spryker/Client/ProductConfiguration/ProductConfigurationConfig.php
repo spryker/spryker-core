@@ -24,7 +24,7 @@ class ProductConfigurationConfig extends AbstractBundleConfig
      */
     public function getProductConfigurationEncryptionKey(): string
     {
-        return $this->get(ProductConfigurationProductConfigurationConfig::ENCRYPTION_KEY);
+        return $this->get(ProductConfigurationProductConfigurationConfig::SPRYKER_CONFIGURATOR_ENCRYPTION_KEY);
     }
 
     /**

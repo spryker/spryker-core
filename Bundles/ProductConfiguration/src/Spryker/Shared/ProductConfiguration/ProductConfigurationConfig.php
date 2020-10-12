@@ -41,5 +41,5 @@ class ProductConfigurationConfig extends AbstractBundleConfig
      *
      * @api
      */
-    public const ENCRYPTION_KEY = 'ENCRYPTION_KEY';
+    public const SPRYKER_CONFIGURATOR_ENCRYPTION_KEY = 'SPRYKER_CONFIGURATOR_ENCRYPTION_KEY';
 }
