@@ -10,7 +10,6 @@ namespace Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade;
 use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
 use Generated\Shared\Transfer\MerchantOmsTriggerResponseTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer;
-use Generated\Shared\Transfer\MerchantOrderTransfer;
 
 class MerchantSalesOrderMerchantUserGuiToMerchantOmsFacadeBridge implements MerchantSalesOrderMerchantUserGuiToMerchantOmsFacadeInterface
 {
@@ -25,28 +24,6 @@ class MerchantSalesOrderMerchantUserGuiToMerchantOmsFacadeBridge implements Merc
     public function __construct($merchantOmsFacade)
     {
         $this->merchantOmsFacade = $merchantOmsFacade;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantOrderTransfer
-     **/
-    public function expandMerchantOrderItemsWithStateHistory(
-        MerchantOrderTransfer $merchantOrderTransfer
-    ): MerchantOrderTransfer {
-        return $this->merchantOmsFacade->expandMerchantOrderItemsWithStateHistory($merchantOrderTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantOrderTransfer
-     **/
-    public function expandMerchantOrderWithMerchantOmsData(
-        MerchantOrderTransfer $merchantOrderTransfer
-    ): MerchantOrderTransfer {
-        return $this->merchantOmsFacade->expandMerchantOrderWithMerchantOmsData($merchantOrderTransfer);
     }
 
     /**
