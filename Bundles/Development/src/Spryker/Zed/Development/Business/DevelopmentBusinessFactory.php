@@ -45,6 +45,8 @@ use Spryker\Zed\Development\Business\Composer\Validator\ComposerJsonPackageNameV
 use Spryker\Zed\Development\Business\Composer\Validator\ComposerJsonUnboundRequireConstraintValidator;
 use Spryker\Zed\Development\Business\Composer\Validator\ComposerJsonValidatorComposite;
 use Spryker\Zed\Development\Business\Composer\Validator\ComposerJsonValidatorInterface;
+use Spryker\Zed\Development\Business\Dependency\ComposerParser\ExternalDependencyParser;
+use Spryker\Zed\Development\Business\Dependency\ComposerParser\ExternalDependencyParserInterface;
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainer;
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\BehaviorDependencyFinder;
@@ -56,6 +58,7 @@ use Spryker\Zed\Development\Business\Dependency\DependencyFinder\ExtensionDepend
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\ExternalDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\InternalDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\LocatorDependencyFinder;
+use Spryker\Zed\Development\Business\Dependency\DependencyFinder\MappedDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\ModuleAnnotationDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\PersistenceDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\SprykerSdkDependencyFinder;
@@ -403,6 +406,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->createSprykerSdkDependencyFinder(),
             $this->createInternalDependencyFinder(),
             $this->createExternalDependencyFinder(),
+            $this->createMappedDependencyFinder(),
             $this->createExtensionDependencyFinder(),
             $this->createLocatorDependencyFinder(),
             $this->createPersistenceDependencyFinder(),
@@ -444,8 +448,25 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new ExternalDependencyFinder(
             $this->createUseStatementParser(),
+            $this->createExternalDependencyParser(),
             $this->getConfig()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderInterface
+     */
+    public function createMappedDependencyFinder(): DependencyFinderInterface
+    {
+        return new MappedDependencyFinder($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\ComposerParser\ExternalDependencyParserInterface
+     */
+    public function createExternalDependencyParser(): ExternalDependencyParserInterface
+    {
+        return new ExternalDependencyParser($this->getConfig());
     }
 
     /**

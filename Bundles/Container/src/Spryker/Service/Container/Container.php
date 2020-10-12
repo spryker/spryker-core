@@ -598,7 +598,7 @@ class Container implements ContainerInterface, ArrayAccess
      */
     public function offsetExists($offset): bool
     {
-        $this->triggerError(sprintf('ArrayAccess the container in Spryker (e.g. isset($container[\'%s\'])) is no longer supported! Please use "ContainerInterface:has()" instead.', $offset));
+        $this->triggerError(sprintf('ArrayAccess for the container in Spryker (e.g. `isset($container[\'%s\'])`) is no longer supported! Please use `ContainerInterface:has()` instead.', $offset));
 
         return $this->has($offset);
     }
@@ -612,7 +612,7 @@ class Container implements ContainerInterface, ArrayAccess
      */
     public function offsetGet($offset)
     {
-        $this->triggerError(sprintf('ArrayAccess the container in Spryker (e.g. $foo = $container[\'%s\']) is no longer supported! Please use "ContainerInterface:get()" instead.', $offset));
+        $this->triggerError(sprintf('ArrayAccess for the container in Spryker (e.g. `$foo = $container[\'%s\']`) is no longer supported! Please use `ContainerInterface:get()` instead.', $offset));
 
         return $this->get($offset);
     }
@@ -627,7 +627,7 @@ class Container implements ContainerInterface, ArrayAccess
      */
     public function offsetSet($offset, $value): void
     {
-        $this->triggerError(sprintf('ArrayAccess the container in Spryker (e.g. $container[\'%s\'] = $foo) is no longer supported! Please use "ContainerInterface:set()" instead.', $offset));
+        $this->triggerError(sprintf('ArrayAccess for the container in Spryker (e.g. `$container[\'%s\'] = $foo`) is no longer supported! Please use `ContainerInterface:set()` instead.', $offset));
 
         // When extend is called for a service which is not registered so far, we store the extension and wait for the service to be added.
         // For BC reasons code like `$container['service'] = $container->extend('service', callable)` is valid and still needs to be supported
@@ -654,7 +654,7 @@ class Container implements ContainerInterface, ArrayAccess
      */
     public function offsetUnset($offset): void
     {
-        $this->triggerError(sprintf('ArrayAccess the container in Spryker (e.g. unset($container[\'%s\'])) is no longer supported! Please use "ContainerInterface:remove()" instead.', $offset));
+        $this->triggerError(sprintf('ArrayAccess for the container in Spryker (e.g. `unset($container[\'%s\'])`) is no longer supported! Please use `ContainerInterface:remove()` instead.', $offset));
 
         $this->remove($offset);
     }
