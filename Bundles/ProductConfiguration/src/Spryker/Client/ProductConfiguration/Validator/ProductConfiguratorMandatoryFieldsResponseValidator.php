@@ -32,11 +32,9 @@ class ProductConfiguratorMandatoryFieldsResponseValidator implements ProductConf
         try {
             $this->assertMandatoryFields($productConfiguratorResponseTransfer);
         } catch (RequiredTransferPropertyException $requiredTransferPropertyException) {
-            return $productConfiguratorResponseProcessorResponseTransfer
-                ->addMessage(
-                    (new MessageTransfer())
-                        ->setMessage($requiredTransferPropertyException->getMessage())
-                )->setIsSuccessful(false);
+            return $productConfiguratorResponseProcessorResponseTransfer->addMessage((new MessageTransfer())
+                ->setMessage($requiredTransferPropertyException->getMessage()))
+                ->setIsSuccessful(false);
         }
 
         return $productConfiguratorResponseProcessorResponseTransfer;

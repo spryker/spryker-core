@@ -50,7 +50,7 @@ class ProductConfigurationClient extends AbstractClient implements ProductConfig
     ): ProductConfiguratorRedirectTransfer {
         return $this->getFactory()
             ->createProductConfiguratorAccessTokenRedirectResolver()
-            ->prepareProductConfiguratorAccessTokenRedirect($productConfiguratorRequestTransfer);
+            ->resolveProductConfiguratorAccessTokenRedirect($productConfiguratorRequestTransfer);
     }
 
     /**

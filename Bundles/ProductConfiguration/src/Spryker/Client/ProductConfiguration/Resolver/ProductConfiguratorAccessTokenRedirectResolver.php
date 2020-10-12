@@ -63,7 +63,7 @@ class ProductConfiguratorAccessTokenRedirectResolver implements ProductConfigura
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer
      */
-    public function prepareProductConfiguratorAccessTokenRedirect(
+    public function resolveProductConfiguratorAccessTokenRedirect(
         ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
     ): ProductConfiguratorRedirectTransfer {
         $productConfiguratorRequestTransfer = $this->executeProductConfigurationRequestExpanderPlugins(

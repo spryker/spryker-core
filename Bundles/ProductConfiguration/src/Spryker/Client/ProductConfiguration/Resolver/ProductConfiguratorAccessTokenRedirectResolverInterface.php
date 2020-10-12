@@ -17,7 +17,7 @@ interface ProductConfiguratorAccessTokenRedirectResolverInterface
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer
      */
-    public function prepareProductConfiguratorAccessTokenRedirect(
+    public function resolveProductConfiguratorAccessTokenRedirect(
         ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
     ): ProductConfiguratorRedirectTransfer;
 }

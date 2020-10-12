@@ -97,8 +97,8 @@ class ProductConfigurationClientTest extends Unit
                 'createProductConfiguratorRedirectResolver',
                 'createProductConfiguratorResponseProcessor',
                 'createQuoteProductConfigurationChecker',
-                'createProductConfigurationAccessTokenRedirectResolver',
-                'createProductConfiguratorDataExpander',
+                'createProductConfiguratorAccessTokenRedirectResolver',
+                'createProductConfiguratorRequestDataExpander',
                 'createProductConfiguratorCheckSumResponseValidatorComposite',
             ])
             ->getMock();
@@ -366,7 +366,7 @@ class ProductConfigurationClientTest extends Unit
 
         $this->httpClientMock->expects($this->once())->method('request')->willReturn($responseMock);
 
-        $this->productConfigurationFactoryMock->method('createProductConfigurationHttpClient')
+        $this->productConfigurationFactoryMock->method('getProductConfigurationHttpClient')
             ->willReturn($this->httpClientMock);
 
         //Act
@@ -436,7 +436,7 @@ class ProductConfigurationClientTest extends Unit
         $this->httpClientMock->expects($this->once())->method('request')
             ->willThrowException(new ProductConfigurationHttpRequestException('test_exception_throw'));
 
-        $this->productConfigurationFactoryMock->method('createProductConfigurationHttpClient')
+        $this->productConfigurationFactoryMock->method('getProductConfigurationHttpClient')
             ->willReturn($this->httpClientMock);
 
         //Act
@@ -475,10 +475,10 @@ class ProductConfigurationClientTest extends Unit
         //Arrange
         $validatorMock = $this->getMockBuilder(ProductConfiguratorResponseValidatorInterface::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['validate'])
+            ->onlyMethods(['validateProductConfiguratorCheckSumResponse'])
             ->getMock();
 
-        $validatorMock->method('validate')->willReturn(
+        $validatorMock->method('validateProductConfiguratorCheckSumResponse')->willReturn(
             (new ProductConfiguratorResponseProcessorResponseTransfer())->setIsSuccessful(false)
         );
 
@@ -506,24 +506,24 @@ class ProductConfigurationClientTest extends Unit
         //Arrange
         $validatorMockOne = $this->getMockBuilder(ProductConfiguratorResponseValidatorInterface::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['validate'])
+            ->onlyMethods(['validateProductConfiguratorCheckSumResponse'])
             ->getMock();
 
-        $validatorMockOne->method('validate')->willReturn(
+        $validatorMockOne->method('validateProductConfiguratorCheckSumResponse')->willReturn(
             (new ProductConfiguratorResponseProcessorResponseTransfer())->setIsSuccessful(false)
         );
 
-        $validatorMocTwo = $this->getMockBuilder(ProductConfiguratorResponseValidatorInterface::class)
+        $validatorMockTwo = $this->getMockBuilder(ProductConfiguratorResponseValidatorInterface::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['validate'])
+            ->onlyMethods(['validateProductConfiguratorCheckSumResponse'])
             ->getMock();
 
-        $validatorMocTwo->expects($this->never())->method('validate');
+        $validatorMockTwo->expects($this->never())->method('validateProductConfiguratorCheckSumResponse');
 
         $this->productConfigurationFactoryMock->method('createProductConfiguratorCheckSumResponseValidators')
             ->willReturn([
                 $validatorMockOne,
-                $validatorMocTwo,
+                $validatorMockTwo,
             ]);
 
         $productConfiguratorResponseProcessorResponseTransfer = (new ProductConfiguratorResponseProcessorResponseTransfer())
