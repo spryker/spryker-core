@@ -54,7 +54,7 @@ class ProductConfigurationTableDataExpander implements ProductConfigurationTable
             return $item;
         }
 
-        if(!$productConfigurationAggregationTransfer->getProductConfigurationCount()) {
+        if (!$productConfigurationAggregationTransfer->getProductConfigurationCount()) {
             return $item;
         }
 

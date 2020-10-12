@@ -73,7 +73,7 @@ class ProductConfigurationFactory extends AbstractFactory
         return new ProductConfiguratorAccessTokenRedirectResolver(
             $this->getProductConfiguratorRequestExpanderPlugins(),
             $this->getProductConfigurationHttpClient(),
-            $this->getUtilEncoding()
+            $this->getUtilEncodingService()
         );
     }
 
@@ -244,7 +244,7 @@ class ProductConfigurationFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingInterface
      */
-    public function getUtilEncoding(): ProductConfigurationToUtilEncodingInterface
+    public function getUtilEncodingService(): ProductConfigurationToUtilEncodingInterface
     {
         return $this->getProvidedDependency(ProductConfigurationDependencyProvider::SERVICE_UTIL_ENCODING);
     }

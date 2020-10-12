@@ -353,7 +353,7 @@ class ProductConfigurationClientTest extends Unit
 
         $utilEncodingMock->method('decodeJson')->willReturn(static::TEST_CONFIGURATOR_REDIRECT_RESPONSE_DATA);
 
-        $this->productConfigurationFactoryMock->method('getUtilEncoding')
+        $this->productConfigurationFactoryMock->method('getUtilEncodingService')
             ->willReturn($utilEncodingMock);
 
         $responseMock = $this->getMockBuilder(ResponseInterface::class)
