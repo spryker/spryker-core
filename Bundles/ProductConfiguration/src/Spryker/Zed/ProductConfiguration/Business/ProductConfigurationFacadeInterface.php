@@ -61,4 +61,20 @@ interface ProductConfigurationFacadeInterface
      * @return bool
      */
     public function isQuoteProductConfigurationValid(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
+
+    /**
+     * Specification:
+     * - Expands the list of product price transfers with product configuration prices.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function expandPriceProductTransfersWithProductConfigurationPrices(
+        array $priceProductTransfers,
+        CartChangeTransfer $cartChangeTransfer
+    ): array;
 }

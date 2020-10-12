@@ -34,11 +34,9 @@ class ProductConfiguratorItemGroupKeyResponseValidator implements ProductConfigu
             $productConfiguratorResponseTransfer->getSourceType() === ProductConfigurationStorageConfig::SOURCE_TYPE_CART &&
             !$productConfiguratorResponseTransfer->getItemGroupKey()
         ) {
-            return $productConfiguratorResponseProcessorResponseTransfer
-                ->addMessage(
-                    (new MessageTransfer())
-                        ->setMessage(static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_STORAGE_GROUP_KEY_IS_NOT_PROVIDED)
-                )->setIsSuccessful(false);
+            return $productConfiguratorResponseProcessorResponseTransfer->addMessage((new MessageTransfer())
+                ->setMessage(static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_STORAGE_GROUP_KEY_IS_NOT_PROVIDED))
+                ->setIsSuccessful(false);
         }
 
         return $productConfiguratorResponseProcessorResponseTransfer;
