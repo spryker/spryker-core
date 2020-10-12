@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued;
 
+use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 
 class ProductDiscontinuedPluginExecutor implements ProductDiscontinuedPluginExecutorInterface
@@ -22,15 +23,23 @@ class ProductDiscontinuedPluginExecutor implements ProductDiscontinuedPluginExec
     protected $postDeleteProductDiscontinuedPlugins;
 
     /**
+     * @var \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostDeleteBulkProductDiscontinuedPluginInterface[]
+     */
+    protected $postDeleteBulkProductDiscontinuedPlugins;
+
+    /**
      * @param \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostProductDiscontinuePluginInterface[] $postProductDiscontinuePlugins
      * @param \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostDeleteProductDiscontinuedPluginInterface[] $postDeleteProductDiscontinuedPlugins
+     * @param \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostDeleteBulkProductDiscontinuedPluginInterface[] $postDeleteBulkProductDiscontinuedPlugins
      */
     public function __construct(
         array $postProductDiscontinuePlugins,
-        array $postDeleteProductDiscontinuedPlugins
+        array $postDeleteProductDiscontinuedPlugins,
+        array $postDeleteBulkProductDiscontinuedPlugins
     ) {
         $this->postDeleteProductDiscontinuedPlugins = $postDeleteProductDiscontinuedPlugins;
         $this->postProductDiscontinuePlugins = $postProductDiscontinuePlugins;
+        $this->postDeleteBulkProductDiscontinuedPlugins = $postDeleteBulkProductDiscontinuedPlugins;
     }
 
     /**
@@ -46,6 +55,8 @@ class ProductDiscontinuedPluginExecutor implements ProductDiscontinuedPluginExec
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedPluginExecutor::executeBulkPostDeleteProductDiscontinuedPlugins()} instead.
+     *
      * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer $productDiscontinuedTransfer
      *
      * @return void
@@ -54,6 +65,39 @@ class ProductDiscontinuedPluginExecutor implements ProductDiscontinuedPluginExec
     {
         foreach ($this->postDeleteProductDiscontinuedPlugins as $postDeleteProductDiscontinuedPlugin) {
             $postDeleteProductDiscontinuedPlugin->execute($productDiscontinuedTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer
+     *
+     * @return void
+     */
+    public function executeBulkPostDeleteProductDiscontinuedPlugins(ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer): void
+    {
+        $this->executePostDeleteProductDiscontinuedPluginsForProductDiscontinuedCollection($productDiscontinuedCollectionTransfer);
+
+        foreach ($this->postDeleteBulkProductDiscontinuedPlugins as $postDeleteBulkProductDiscontinuedPlugin) {
+            $postDeleteBulkProductDiscontinuedPlugin->execute($productDiscontinuedCollectionTransfer);
+        }
+    }
+
+    /**
+     * @deprecated Added for BC reasons.
+     *
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer
+     *
+     * @return void
+     */
+    protected function executePostDeleteProductDiscontinuedPluginsForProductDiscontinuedCollection(
+        ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer
+    ): void {
+        if (!$this->postDeleteProductDiscontinuedPlugins) {
+            return;
+        }
+
+        foreach ($productDiscontinuedCollectionTransfer->getDiscontinuedProducts() as $productDiscontinuedTransfer) {
+            $this->executePostDeleteProductDiscontinuedPlugins($productDiscontinuedTransfer);
         }
     }
 }

@@ -24,4 +24,11 @@ interface LocaleRepositoryInterface
      * @return \Generated\Shared\Transfer\LocaleTransfer|null
      */
     public function findLocaleTransferByLocaleName(string $localeName): ?LocaleTransfer;
+
+    /**
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer|null
+     */
+    public function findLocaleByIdLocale(int $idLocale): ?LocaleTransfer;
 }
