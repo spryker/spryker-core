@@ -9,17 +9,31 @@ namespace Spryker\Zed\Development\Business\Dependency\DependencyFinder;
 
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContextInterface;
+use Spryker\Zed\Development\DevelopmentConfig;
 
-class ComposerDependencyFinder extends AbstractFileDependencyFinder
+class MappedDependencyFinder extends AbstractFileDependencyFinder
 {
-    public const TYPE_COMPOSER = 'composer';
+    public const TYPE_MAPPED = 'mapped';
+
+    /**
+     * @var \Spryker\Zed\Development\DevelopmentConfig
+     */
+    protected $config;
+
+    /**
+     * @param \Spryker\Zed\Development\DevelopmentConfig $config
+     */
+    public function __construct(DevelopmentConfig $config)
+    {
+        $this->config = $config;
+    }
 
     /**
      * @return string
      */
     public function getType(): string
     {
-        return static::TYPE_COMPOSER;
+        return static::TYPE_MAPPED;
     }
 
     /**
@@ -49,21 +63,13 @@ class ComposerDependencyFinder extends AbstractFileDependencyFinder
     public function findDependencies(DependencyFinderContextInterface $context, DependencyContainerInterface $dependencyContainer): DependencyContainerInterface
     {
         $fileContent = $context->getFileInfo()->getContents();
+        $composerJsonAsArray = json_decode($fileContent, true);
+        $composerName = $composerJsonAsArray['name'];
 
-        if (strpos($fileContent, 'cs-check') !== false) {
-            $dependencyContainer->addDependency('spryker/code-sniffer', $this->getType(), false, true);
-        }
-
-        if (preg_match('/code-sniffer\/(Spryker|SprykerStrict)/', $fileContent)) {
-            $dependencyContainer->addDependency('spryker/code-sniffer', $this->getType(), false, true);
-        }
-
-        if (strpos($fileContent, 'codecept run') !== false) {
-            $dependencyContainer->addDependency('spryker/testify', $this->getType(), false, true);
-        }
-
-        if (strpos($fileContent, 'phpstan analyse') !== false) {
-            $dependencyContainer->addDependency('phpstan/phpstan', $this->getType(), false, true);
+        foreach ($this->config->getExternalToInternalMap() as $externalPackageName => $internalModulePackageName) {
+            if ($internalModulePackageName === $composerName) {
+                $dependencyContainer->addDependency($externalPackageName, $this->getType());
+            }
         }
 
         return $dependencyContainer;

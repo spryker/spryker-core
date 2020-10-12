@@ -35,9 +35,11 @@ interface ProductDiscontinuedRepositoryInterface
     public function isAnyProductConcreteDiscontinued(array $productConcreteIds): bool;
 
     /**
+     * @param int $batchSize
+     *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
      */
-    public function findProductsToDeactivate(): ProductDiscontinuedCollectionTransfer;
+    public function findProductsToDeactivate(int $batchSize = 1000): ProductDiscontinuedCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer

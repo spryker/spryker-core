@@ -1,0 +1,6 @@
+{
+    "exclude": {
+        "aws/aws-sdk-php": "league/flysystem-aws-s3-v3 has aws/aws-sdk-php as dependency.",
+        "league/flysystem": "league/flysystem-aws-s3-v3 has league/flysystem as dependency."
+    }
+}
