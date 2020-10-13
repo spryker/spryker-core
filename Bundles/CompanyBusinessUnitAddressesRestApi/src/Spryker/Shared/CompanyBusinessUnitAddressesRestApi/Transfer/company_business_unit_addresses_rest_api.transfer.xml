@@ -49,6 +49,19 @@
     </transfer>
 
     <transfer name="CompanyUnitAddressCriteriaFilter">
+        <property name="idCompanyBusinessUnit" type="int"/>
+    </transfer>
+
+    <transfer name="RestCheckoutData">
+        <property name="companyBusinessUnitAddresses" type="CompanyUnitAddressCollection"/>
+    </transfer>
+
+    <transfer name="RestCheckoutRequestAttributes">
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="idCompanyBusinessUnit" type="int"/>
     </transfer>
 
 </transfers>
