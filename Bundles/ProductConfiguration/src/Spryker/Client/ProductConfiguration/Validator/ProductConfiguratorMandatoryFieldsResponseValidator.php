@@ -59,8 +59,6 @@ class ProductConfiguratorMandatoryFieldsResponseValidator implements ProductConf
     /**
      * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
      *
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
-     *
      * @return void
      */
     protected function assertMandatoryFields(ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer): void
