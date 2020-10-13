@@ -38,25 +38,20 @@ class CreateMySqlDatabaseTest extends Unit
     /**
      * @return void
      */
-    public function testCreateIfNotExists(): void
+    public function testCreateIfNotExistsShouldCreateDatabase(): void
     {
         if (Config::get(PropelConstants::ZED_DB_ENGINE) !== PropelConfig::DB_ENGINE_MYSQL) {
             $this->markTestSkipped('MySQL related test');
         }
 
-        $mySqlDatabaseCreatorMock = $this->getMySqlDatabaseCreatorMock();
+        // Arrange
+        $mySqlDatabaseCreatorMock = new CreateMySqlDatabase();
 
+        // Act
         $mySqlDatabaseCreatorMock->createIfNotExists();
 
+        // Assert
         $this->assertNotEmpty($this->findCreatedDatabase());
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter\MySql\CreateMySqlDatabase
-     */
-    protected function getMySqlDatabaseCreatorMock(): CreateMySqlDatabase
-    {
-        return $this->getMockBuilder(CreateMySqlDatabase::class)->getMock();
     }
 
     /**

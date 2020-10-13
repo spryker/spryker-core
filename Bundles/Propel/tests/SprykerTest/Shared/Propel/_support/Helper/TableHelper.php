@@ -8,7 +8,7 @@
 namespace SprykerTest\Shared\Propel\Helper;
 
 use Codeception\Module;
-use Generated\Shared\Transfer\ColumnsCollectionTransfer;
+use Generated\Shared\Transfer\TableTransfer;
 use Propel\Generator\Model\Column;
 use Propel\Generator\Model\Database;
 use Propel\Generator\Model\Domain;
@@ -35,12 +35,11 @@ class TableHelper extends Module
     }
 
     /**
-     * @param string $name
-     * @param \Generated\Shared\Transfer\ColumnsCollectionTransfer $columnsCollectionTransfer
+     * @param \Generated\Shared\Transfer\TableTransfer $tableTransfer
      *
      * @return \Propel\Generator\Model\Table
      */
-    public function createTable(string $name, ColumnsCollectionTransfer $columnsCollectionTransfer): Table
+    public function createTable(TableTransfer $tableTransfer): Table
     {
         $platform = $this->findPlatform();
         $connection = Propel::getConnection();
@@ -48,10 +47,11 @@ class TableHelper extends Module
         $database = new Database(Config::get(PropelConstants::ZED_DB_DATABASE), $platform);
         $database->setPlatform($platform);
 
-        $table = new Table($name);
+        $table = new Table($tableTransfer->getName());
+        $table->setNamespace($tableTransfer->getNamespace());
         $database->addTable($table);
 
-        foreach ($columnsCollectionTransfer->getColumns() as $columnTransfer) {
+        foreach ($tableTransfer->getColumns() as $columnTransfer) {
             $columnType = $columnTransfer->getType();
             $column = new Column($columnTransfer->getName(), $columnType);
 

@@ -30,44 +30,37 @@ class ForeignKeyIndexPropelSchemaElementFilterPluginTest extends Unit
     protected $tester;
 
     /**
-     * @return void
-     */
-    public function testFilterRemovesOnlyFirstDuplicateIndex(): void
-    {
-        $this->runFilterTests('spy_foo.with_index.schema.xml', 'expected.spy_foo.with_index.schema.xml');
-    }
-
-    /**
-     * @return void
-     */
-    public function testFilterWithoutIndex(): void
-    {
-        $this->runFilterTests('spy_foo.without_index.schema.xml', 'expected.spy_foo.without_index.schema.xml');
-    }
-
-    /**
-     * @return void
-     */
-    public function testFilterDoesNotRemoveUniqueIndex(): void
-    {
-        $this->runFilterTests('spy_foo.with_unique_index.schema.xml', 'expected.spy_foo.with_unique_index.schema.xml');
-    }
-
-    /**
+     * @dataProvider filterDataProvider
+     *
      * @param string $inputFileName
      * @param string $expectedFileName
      *
      * @return void
      */
-    protected function runFilterTests(string $inputFileName, string $expectedFileName): void
+    public function testFilterShouldFilterSchema(string $inputFileName, string $expectedFileName): void
     {
+        // Arrange
         $xmlFilePath = $this->getFixturesPathToFile($inputFileName);
         $schemaXmlElement = $this->tester->createXmlElement($xmlFilePath);
-        $schemaXmlElement = (new ForeignKeyIndexPropelSchemaElementFilterPlugin())->filter($schemaXmlElement);
-
         $expected = file_get_contents($this->getFixturesPathToFile($expectedFileName));
 
+        // Act
+        $schemaXmlElement = (new ForeignKeyIndexPropelSchemaElementFilterPlugin())->filter($schemaXmlElement);
+
+        // Assert
         $this->assertSame($expected, $this->tester->formatXml($schemaXmlElement->asXML()));
+    }
+
+    /**
+     * @return array
+     */
+    public function filterDataProvider(): array
+    {
+        return [
+            ['spy_foo.with_index.schema.xml', 'expected.spy_foo.with_index.schema.xml'],
+            ['spy_foo.without_index.schema.xml', 'expected.spy_foo.without_index.schema.xml'],
+            ['spy_foo.with_unique_index.schema.xml', 'expected.spy_foo.with_unique_index.schema.xml'],
+        ];
     }
 
     /**

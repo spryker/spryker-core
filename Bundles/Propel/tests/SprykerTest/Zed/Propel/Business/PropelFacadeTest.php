@@ -66,8 +66,9 @@ class PropelFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAdjustPropelSchemaFilesForPostgresqlAddsIdMethodParameter(): void
+    public function testAdjustPropelSchemaFilesForPostgresqlShouldAddIdMethodParameter(): void
     {
+        // Arrange
         $initialXml = file_get_contents($this->getFixturesPathToFile('postgresql_adjuster.spy_foo.schema.xml'));
         $entityDirectory = $this->tester->getVirtualDirectory(['schemas' => ['spy_foo.schema.xml' => $initialXml]]);
         $this->tester->mockConfigMethod('getPropelSchemaPathPatterns', function () use ($entityDirectory) {
@@ -79,8 +80,10 @@ class PropelFacadeTest extends Unit
         $actualXml = $this->tester->formatXml($this->tester->getVirtualDirectoryFileContent('schemas/spy_foo.schema.xml'));
         $this->assertNotSame($expectedXml, $actualXml);
 
+        // Act
         $this->tester->getFacade()->adjustPropelSchemaFilesForPostgresql();
 
+        // Assert
         $actualXml = $this->tester->formatXml($this->tester->getVirtualDirectoryFileContent('schemas/spy_foo.schema.xml'));
         $this->assertSame($expectedXml, $actualXml);
     }
@@ -88,12 +91,13 @@ class PropelFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAdjustPostgresqlFunctionsAddsFunction(): void
+    public function testAdjustPostgresqlFunctionsShouldAddFunctions(): void
     {
         if (Config::get(PropelConstants::ZED_DB_ENGINE) !== PropelConfig::DB_ENGINE_PGSQL) {
             $this->markTestSkipped('PostgreSQL related test');
         }
 
+        // Arrange
         $entityDirectory = $this->tester->getVirtualDirectory();
         $this->tester->mockConfigMethod('getPropelSchemaPathPatterns', function () use ($entityDirectory) {
             return [$entityDirectory];
@@ -106,8 +110,10 @@ class PropelFacadeTest extends Unit
         $this->assertFalse($this->executeExistsQuery($connection, 'text_add'));
         $this->assertFalse($this->executeExistsQuery($connection, 'group_concat'));
 
+        // Act
         $this->tester->getFacade()->adjustPostgresqlFunctions();
 
+        // Assert
         $this->assertTrue($this->executeExistsQuery($connection, 'text_add'));
         $this->assertTrue($this->executeExistsQuery($connection, 'group_concat'));
     }
@@ -117,13 +123,17 @@ class PropelFacadeTest extends Unit
      */
     public function testDeleteMigrationFilesDirectoryShouldRemoveMigrationDirectory(): void
     {
+        // Arrange
         $schemaDirectory = $this->tester->getVirtualDirectory();
         $this->tester->mockConfigMethod('getMigrationDirectory', function () use ($schemaDirectory) {
             return $schemaDirectory;
         });
-
         $this->assertTrue(is_dir($schemaDirectory));
+
+        // Act
         $this->tester->getFacade()->deleteMigrationFilesDirectory();
+
+        // Assert
         $this->assertFalse(is_dir($schemaDirectory));
     }
 

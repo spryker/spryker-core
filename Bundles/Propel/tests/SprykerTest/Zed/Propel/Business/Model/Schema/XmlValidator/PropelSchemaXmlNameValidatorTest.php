@@ -30,65 +30,21 @@ class PropelSchemaXmlNameValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateReturnsTransferWithoutErrorsWhenNamesHaveProperLengthAndTableNamesAreUnique(): void
+    public function testValidateShouldReturnTransferWithoutErrorsWhenNamesHaveProperLengthAndTableNamesAreUnique(): void
     {
         $this->assertTrue($this->executeXmlValidation(['Valid']));
     }
 
     /**
+     * @dataProvider invalidXmlValidationDataProvider
+     *
+     * @param array $dirPattern
+     *
      * @return void
      */
-    public function testValidateReturnsTransferWithErrorsWhenTableNameIsTooLong(): void
+    public function testValidateShouldReturnTransferWithErrors(array $dirPattern): void
     {
-        $this->assertFalse($this->executeXmlValidation(['Invalid', 'TooLongTableName']));
-    }
-
-    /**
-     * @return void
-     */
-    public function testValidateReturnsTransferWithErrorsWhenTableIndexNameIsTooLong(): void
-    {
-        $this->assertFalse($this->executeXmlValidation(['Invalid', 'TooLongTableIndexName']));
-    }
-
-    /**
-     * @return void
-     */
-    public function testValidateReturnsTransferWithErrorsWhenTableColumnNameIsTooLong(): void
-    {
-        $this->assertFalse($this->executeXmlValidation(['Invalid', 'TooLongTableColumnName']));
-    }
-
-    /**
-     * @return void
-     */
-    public function testValidateReturnsTransferWithErrorsWhenTableUniqueNameIsTooLong(): void
-    {
-        $this->assertFalse($this->executeXmlValidation(['Invalid', 'TooLongTableUniqueName']));
-    }
-
-    /**
-     * @return void
-     */
-    public function testValidateReturnsTransferWithErrorsWhenTableForeignKeyNameIsTooLong(): void
-    {
-        $this->assertFalse($this->executeXmlValidation(['Invalid', 'TooLongTableForeignKeyName']));
-    }
-
-    /**
-     * @return void
-     */
-    public function testValidateReturnsTransferWithErrorsWhenTableForeignKeyReferenceLocalIsTooLong(): void
-    {
-        $this->assertFalse($this->executeXmlValidation(['Invalid', 'TooLongTableForeignKeyReferenceLocal']));
-    }
-
-    /**
-     * @return void
-     */
-    public function testValidateReturnsTransferWithErrorsWhenTableIdMethodParameterValueIsTooLong(): void
-    {
-        $this->assertFalse($this->executeXmlValidation(['Invalid', 'TooLongTableIdMethodParameterValue']));
+        $this->assertFalse($this->executeXmlValidation($dirPattern));
     }
 
     /**
@@ -104,6 +60,22 @@ class PropelSchemaXmlNameValidatorTest extends Unit
         $schemaValidationTransfer = $propelSchemaValidator->validate();
 
         return (bool)$schemaValidationTransfer->getIsSuccess();
+    }
+
+    /**
+     * @return array
+     */
+    public function invalidXmlValidationDataProvider(): array
+    {
+        return [
+            [['Invalid', 'TooLongTableName']],
+            [['Invalid', 'TooLongTableIndexName']],
+            [['Invalid', 'TooLongTableColumnName']],
+            [['Invalid', 'TooLongTableUniqueName']],
+            [['Invalid', 'TooLongTableForeignKeyName']],
+            [['Invalid', 'TooLongTableForeignKeyReferenceLocal']],
+            [['Invalid', 'TooLongTableIdMethodParameterValue']],
+        ];
     }
 
     /**

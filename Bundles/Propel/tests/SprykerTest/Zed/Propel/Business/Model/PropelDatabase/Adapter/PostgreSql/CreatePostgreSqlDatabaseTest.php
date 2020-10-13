@@ -29,7 +29,7 @@ class CreatePostgreSqlDatabaseTest extends Unit
     /**
      * @return void
      */
-    public function testCreateWithNotExistingDatabase(): void
+    public function testCreateIfNotExistsShouldCreateDatabaseWhenDatabaseIsNotExist(): void
     {
         $createPostgreSqlDatabaseMock = $this->getCreatePostgreSqlDatabaseMock();
         $createPostgreSqlDatabaseMock->expects($this->once())
@@ -44,7 +44,7 @@ class CreatePostgreSqlDatabaseTest extends Unit
     /**
      * @return void
      */
-    public function testCreateWithExistingDatabase(): void
+    public function testCreateIfNotExistsShouldSkipDatabaseCreationWhenDatabaseIsExist(): void
     {
         $createPostgreSqlDatabaseMock = $this->getCreatePostgreSqlDatabaseMock();
         $createPostgreSqlDatabaseMock->expects($this->once())

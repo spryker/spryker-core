@@ -9,6 +9,9 @@ namespace SprykerTest\Service\UtilDataReader\Model\BatchIterator;
 
 use Codeception\Test\Unit;
 use Everon\Component\CriteriaBuilder\SqlPart;
+use Generated\Shared\Transfer\ColumnTransfer;
+use Generated\Shared\Transfer\TableTransfer;
+use Propel\Generator\Model\PropelTypes;
 use Spryker\Service\UtilDataReader\Model\BatchIterator\PdoBatchIterator;
 use Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilder;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -27,11 +30,23 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class PdoBatchIteratorTest extends Unit
 {
     /**
-     * @var \Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterfaces
+     * @var \SprykerTest\Service\UtilDataReader\UtilDataReaderServiceTester
+     */
+    protected $tester;
+
+    /**
+     * @var \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
     protected $queryContainer;
 
+    /**
+     * @var \Propel\Generator\Model\Table
+     */
+    protected $table;
+
     protected const TESTING_TABLE_NAME = 'foo';
+    protected const TESTING_COLUMN_NAME = 'id_foo';
+    protected const TESTING_COLUMN_TYPE = PropelTypes::INTEGER;
 
     /**
      * @return void
@@ -41,7 +56,8 @@ class PdoBatchIteratorTest extends Unit
         parent::setUp();
 
         $this->queryContainer = $this->getMockForAbstractClass(AbstractQueryContainer::class);
-        $this->createTestingTable();
+
+        $this->table = $this->tester->createTable($this->buildTableTransfer());
     }
 
     /**
@@ -51,7 +67,7 @@ class PdoBatchIteratorTest extends Unit
     {
         parent::tearDown();
 
-        $this->dropTestingTable();
+        $this->tester->dropTable($this->table);
     }
 
     /**
@@ -101,14 +117,19 @@ class PdoBatchIteratorTest extends Unit
     }
 
     /**
-     * @return void
+     * @return \Generated\Shared\Transfer\TableTransfer
      */
-    protected function createTestingTable(): void
+    protected function buildTableTransfer(): TableTransfer
     {
-        $tableName = static::TESTING_TABLE_NAME;
-        $createTestingTableQuery = "CREATE TABLE IF NOT EXISTS $tableName (name varchar(20) NOT NULL);";
+        $columnTransfer = (new ColumnTransfer())->fromArray([
+            'name' => static::TESTING_COLUMN_NAME,
+            'type' => static::TESTING_COLUMN_TYPE,
+        ]);
 
-        $this->queryContainer->getConnection()->exec($createTestingTableQuery);
+        return (new TableTransfer())
+            ->setName(static::TESTING_TABLE_NAME)
+            ->setNamespace(__NAMESPACE__)
+            ->addColumns($columnTransfer);
     }
 
     /**
@@ -119,21 +140,11 @@ class PdoBatchIteratorTest extends Unit
     protected function addRowsToTestingTable(int $numberOfRows): void
     {
         $tableName = static::TESTING_TABLE_NAME;
-        $addRowQuery = "INSERT INTO $tableName (name) VALUES (?)";
+        $tableColumns = static::TESTING_COLUMN_NAME;
+        $addRowQuery = "INSERT INTO $tableName ($tableColumns) VALUES (?)";
         for ($i = 0; $i < $numberOfRows; $i++) {
             $statement = $this->queryContainer->getConnection()->prepare($addRowQuery);
             $statement->execute([$i]);
         }
-    }
-
-    /**
-     * @return void
-     */
-    protected function dropTestingTable(): void
-    {
-        $tableName = static::TESTING_TABLE_NAME;
-        $dropTestingTableQuery = "DROP TABLE IF EXISTS $tableName;";
-
-        $this->queryContainer->getConnection()->exec($dropTestingTableQuery);
     }
 }

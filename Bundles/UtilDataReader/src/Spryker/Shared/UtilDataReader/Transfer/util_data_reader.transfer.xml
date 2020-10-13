@@ -10,17 +10,7 @@
 
     <transfer name="Table">
         <property name="name" type="string"/>
-        <property name="namespace" type="string"/>
         <property name="columns" type="Column[]" singular="columns"/>
-    </transfer>
-
-    <transfer name="FileToGenerate">
-        <property name="fileName" type="string"/>
-        <property name="builderClass" type="string"/>
-    </transfer>
-
-    <transfer name="FilesToGenerateCollection">
-        <property name="filesToGenerate" type="FileToGenerate[]" singular="filesToGenerate"/>
     </transfer>
 
 </transfers>
