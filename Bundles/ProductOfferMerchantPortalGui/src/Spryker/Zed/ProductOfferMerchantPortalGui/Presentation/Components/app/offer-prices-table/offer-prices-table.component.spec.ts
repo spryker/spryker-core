@@ -46,6 +46,6 @@ describe('OfferPricesTableComponent', () => {
         component.tableId = mockTableId;
         fixture.detectChanges();
 
-        expect(tableComponent.properties.tableId).toEqual(mockTableId);
+        expect(tableComponent.properties.tableId).toBe(mockTableId);
     });
 });
