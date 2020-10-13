@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductConfiguration\Resolver;
 
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorRequestTransfer;
 use Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToHttpClientInterface;
@@ -122,7 +123,9 @@ class ProductConfiguratorAccessTokenRedirectResolver implements ProductConfigura
         }
 
         return $productConfiguratorRedirectTransfer->setIsSuccessful(false)
-            ->addMessage($responseData[static::RESPONSE_ERROR_MESSAGES_KEY]);
+            ->addMessage(
+                (new MessageTransfer())->setMessage($responseData[static::RESPONSE_ERROR_MESSAGES_KEY])
+            );
     }
 
     /**
@@ -157,6 +160,8 @@ class ProductConfiguratorAccessTokenRedirectResolver implements ProductConfigura
         );
 
         return $productConfiguratorRedirectTransfer->setIsSuccessful(false)
-        ->addMessage($message);
+        ->addMessage(
+            (new MessageTransfer())->setMessage($message)
+        );
     }
 }

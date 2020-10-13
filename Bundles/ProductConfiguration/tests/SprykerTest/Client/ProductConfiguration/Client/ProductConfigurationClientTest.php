@@ -22,7 +22,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Psr\Http\Message\ResponseInterface;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToCurrencyClientInterface;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToStoreClientInterface;
-use Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToHttpClientAdapter;
+use Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToGuzzleHttpClientAdapter;
 use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingInterface;
 use Spryker\Client\ProductConfiguration\Http\Exception\ProductConfigurationHttpRequestException;
 use Spryker\Client\ProductConfiguration\ProductConfigurationFactory;
@@ -55,7 +55,7 @@ class ProductConfigurationClientTest extends Unit
     protected const TEST_CONFIGURATOR_ACCESS_TOKEN_URL = 'test_access_token_url';
 
     /**
-     * @var \Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToHttpClientAdapter|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToGuzzleHttpClientAdapter|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $httpClientMock;
 
@@ -142,7 +142,7 @@ class ProductConfigurationClientTest extends Unit
                     ->setIsSuccessful(true)
             );
 
-        $this->httpClientMock = $this->getMockBuilder(ProductConfigurationToHttpClientAdapter::class)
+        $this->httpClientMock = $this->getMockBuilder(ProductConfigurationToGuzzleHttpClientAdapter::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['request'])
             ->getMock();
@@ -366,7 +366,7 @@ class ProductConfigurationClientTest extends Unit
 
         $this->httpClientMock->expects($this->once())->method('request')->willReturn($responseMock);
 
-        $this->productConfigurationFactoryMock->method('getProductConfigurationHttpClient')
+        $this->productConfigurationFactoryMock->method('getHttpClient')
             ->willReturn($this->httpClientMock);
 
         //Act
@@ -436,7 +436,7 @@ class ProductConfigurationClientTest extends Unit
         $this->httpClientMock->expects($this->once())->method('request')
             ->willThrowException(new ProductConfigurationHttpRequestException('test_exception_throw'));
 
-        $this->productConfigurationFactoryMock->method('getProductConfigurationHttpClient')
+        $this->productConfigurationFactoryMock->method('getHttpClient')
             ->willReturn($this->httpClientMock);
 
         //Act

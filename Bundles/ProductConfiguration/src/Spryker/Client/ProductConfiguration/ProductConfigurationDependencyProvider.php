@@ -15,7 +15,7 @@ use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationTo
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToLocaleBridge;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToPriceClientBridge;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToStoreClientBridge;
-use Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToHttpClientAdapter;
+use Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToGuzzleHttpClientAdapter;
 use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToProductConfigurationDataChecksumGeneratorBridge;
 use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingBridge;
 use Spryker\Client\ProductConfiguration\Exception\MissingDefaultProductConfigurationRequestPluginException;
@@ -67,7 +67,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
         $container = $this->addPriceClient($container);
         $container = $this->addCurrencyClient($container);
         $container = $this->addProductConfigurationRequestExpanderPlugins($container);
-        $container = $this->addGuzzleClient($container);
+        $container = $this->addHttpClient($container);
         $container = $this->addUtilEncodingService($container);
         $container = $this->addProductConfigurationDataChecksumGenerator($container);
 
@@ -79,10 +79,10 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addGuzzleClient(Container $container): Container
+    protected function addHttpClient(Container $container): Container
     {
         $container->set(static::CLIENT_HTTP, function () {
-            return new ProductConfigurationToHttpClientAdapter(
+            return new ProductConfigurationToGuzzleHttpClientAdapter(
                 new GuzzleHttpClient()
             );
         });

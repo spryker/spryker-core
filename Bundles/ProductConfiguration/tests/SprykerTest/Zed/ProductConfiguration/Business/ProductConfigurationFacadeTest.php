@@ -216,20 +216,15 @@ class ProductConfigurationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandPriceProductTransfersWithProductConfigurationPricesWillExpandPricesWithMerge(): void
+    public function testExpandPriceProductTransfersWithProductConfigurationPricesWillExpandPrices(): void
     {
         //Arrange
-        $productConfigurationInstanceMock = $this->getMockBuilder(ProductConfigurationInstanceTransfer::class)
-            ->onlyMethods(['getPrices'])
-            ->getMock();
-
         $priceProductTransfers = new ArrayObject();
         $priceProductTransfers->append((new PriceProductTransfer())->setSkuProduct('test1'));
-
-        $productConfigurationInstanceMock->method('getPrices')->willReturn($priceProductTransfers);
+        $productConfigurationInstance = (new ProductConfigurationInstanceTransfer())->setPrices($priceProductTransfers);
 
         $itemTransfer = (new ItemBuilder([
-            ItemTransfer::PRODUCT_CONFIGURATION_INSTANCE => $productConfigurationInstanceMock,
+            ItemTransfer::PRODUCT_CONFIGURATION_INSTANCE => $productConfigurationInstance,
         ]))->build();
 
         $cartChangeTransfer = (new CartChangeTransfer())->addItem($itemTransfer);

@@ -72,7 +72,7 @@ class ProductConfigurationFactory extends AbstractFactory
     {
         return new ProductConfiguratorAccessTokenRedirectResolver(
             $this->getProductConfiguratorRequestExpanderPlugins(),
-            $this->getProductConfigurationHttpClient(),
+            $this->getHttpClient(),
             $this->getUtilEncodingService()
         );
     }
@@ -148,7 +148,7 @@ class ProductConfigurationFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToHttpClientInterface
      */
-    public function getProductConfigurationHttpClient(): ProductConfigurationToHttpClientInterface
+    public function getHttpClient(): ProductConfigurationToHttpClientInterface
     {
         return $this->getProvidedDependency(ProductConfigurationDependencyProvider::CLIENT_HTTP);
     }
