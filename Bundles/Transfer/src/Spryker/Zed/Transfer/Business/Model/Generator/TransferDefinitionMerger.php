@@ -8,12 +8,19 @@
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
 use Exception;
+use Spryker\Zed\Transfer\Business\Exception\TransferDefinitionMismatchException;
 
 class TransferDefinitionMerger implements MergerInterface
 {
     public const ERROR_MESSAGE_ATTRIBUTES_NOT_IDENTICAL =
         'Value mismatch for "%1$s.%2$s" tranfer property. Value1: "%3$s"; Value2: "%4$s". ' .
         'To fix this, search for \'property name="%2$s"\' in the code base and fix the wrong one.';
+
+    protected const ERROR_MESSAGE_TRANSFER_DEFINITION_ATTRIBUTE_MISMATCH = 'Value mismatch for attribute `%s` of transfer `%s`. ' .
+        'Value1: "%s"; Value2: "%s".';
+
+    protected const ERROR_MESSAGE_TRANSFER_PROPERTY_ATTRIBUTE_MISMATCH = 'Value mismatch for attribute `%s` of transfer `%s.%s`. ' .
+        'Value1: "%s"; Value2: "%s".';
 
     /**
      * @var array
@@ -53,11 +60,14 @@ class TransferDefinitionMerger implements MergerInterface
      */
     protected function mergeDefinitions(array $existingDefinition, array $definitionToMerge, $transferName)
     {
+        $this->assertTransferStrictModeIsConsistent($existingDefinition, $definitionToMerge);
+
         return [
             'name' => $existingDefinition['name'],
             'entity-namespace' => isset($existingDefinition['entity-namespace']) ? $existingDefinition['entity-namespace'] : null,
             'deprecated' => $this->mergeDeprecatedClassDefinition($existingDefinition, $definitionToMerge),
             'property' => $this->mergeProperty($existingDefinition['property'], $definitionToMerge['property'], $transferName),
+            'strict' => $definitionToMerge['strict'],
         ];
     }
 
@@ -138,6 +148,10 @@ class TransferDefinitionMerger implements MergerInterface
                     $property[$propertyName] = $this->mergeDeprecatedAttributes($property[$propertyName], $propertyValue);
 
                     break;
+                case 'strict':
+                    $this->assertTransferPropertyStrictModeIsConsistent($property, $propertyToMerge, $transferName);
+
+                    break;
                 default:
                     if ($propertyValue !== $property[$propertyName]) {
                         throw new Exception(sprintf(
@@ -186,5 +200,57 @@ class TransferDefinitionMerger implements MergerInterface
         }
 
         return $deprecated1;
+    }
+
+    /**
+     * @param array $existingTransferProperty
+     * @param array $transferPropertyToMerge
+     * @param string $transferName
+     *
+     * @throws \Spryker\Zed\Transfer\Business\Exception\TransferDefinitionMismatchException
+     *
+     * @return void
+     */
+    protected function assertTransferPropertyStrictModeIsConsistent(array $existingTransferProperty, array $transferPropertyToMerge, string $transferName): void
+    {
+        if ($existingTransferProperty['strict'] === $transferPropertyToMerge['strict']) {
+            return;
+        }
+
+        throw new TransferDefinitionMismatchException(
+            sprintf(
+                static::ERROR_MESSAGE_TRANSFER_PROPERTY_ATTRIBUTE_MISMATCH,
+                'strict',
+                $transferName,
+                $existingTransferProperty['name'],
+                $existingTransferProperty['strict'],
+                $transferPropertyToMerge['strict']
+            )
+        );
+    }
+
+    /**
+     * @param array $existingDefinition
+     * @param array $definitionToMerge
+     *
+     * @throws \Spryker\Zed\Transfer\Business\Exception\TransferDefinitionMismatchException
+     *
+     * @return void
+     */
+    protected function assertTransferStrictModeIsConsistent(array $existingDefinition, array $definitionToMerge): void
+    {
+        if ($existingDefinition['strict'] === $definitionToMerge['strict']) {
+            return;
+        }
+
+        throw new TransferDefinitionMismatchException(
+            sprintf(
+                static::ERROR_MESSAGE_TRANSFER_DEFINITION_ATTRIBUTE_MISMATCH,
+                'strict',
+                $existingDefinition['name'],
+                $existingDefinition['strict'],
+                $definitionToMerge['strict']
+            )
+        );
     }
 }

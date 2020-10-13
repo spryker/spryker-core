@@ -165,6 +165,30 @@ class TransferGeneratorTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testStrictPropertiesShouldHaveTypeHintsAndHasMethod(): void
+    {
+        $sourceDirectories = [
+            codecept_data_dir('Shared/Strict/Transfer/'),
+        ];
+
+        $transferDefinitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories);
+        $messenger = $this->getMessenger();
+        $generator = $this->getClassGenerator();
+
+        $transferGenerator = new TransferGenerator($messenger, $generator, $transferDefinitionBuilder);
+        $transferGenerator->execute();
+
+        $this->assertFileExists($this->getTargetDirectory() . 'StrictFooBarTransfer.php');
+
+        $this->assertSame(
+            file_get_contents(codecept_data_dir('test_files/expected.strict.transfer.php')),
+            file_get_contents($this->getTargetDirectory() . 'StrictFooBarTransfer.php')
+        );
+    }
+
+    /**
      * @return string
      */
     protected function getTargetDirectory(): string

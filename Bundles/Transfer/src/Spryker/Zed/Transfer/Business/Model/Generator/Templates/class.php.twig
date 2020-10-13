@@ -51,6 +51,9 @@ class {{ className }} extends {{ abstractClass }}
 {% if methodName starts with 'get' %}
 {{ macro.addGet(method) -}}
 {% endif %}
+{% if methodName starts with 'has' %}
+{{ macro.addHas(method) -}}
+{% endif %}
 {% if methodName starts with 'add' %}
 {% if not method.is_associative %}
 {{ macro.addAdd(method) -}}

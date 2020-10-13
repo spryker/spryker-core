@@ -428,6 +428,10 @@ class ClassDefinition implements ClassDefinitionInterface
             return '\Generated\Shared\Transfer\\' . $property['type'];
         }
 
+        if ($this->isStrictProperty($property)) {
+            return $property['type'];
+        }
+
         return $property['type'] . '|null';
     }
 
@@ -500,6 +504,12 @@ class ClassDefinition implements ClassDefinitionInterface
 
         if ($this->isCollection($property) || $this->isArray($property)) {
             $this->buildAddMethod($property);
+        }
+
+        if ($this->isStrictProperty($property)) {
+            $this->buildHasMethod($property);
+
+            return;
         }
 
         $this->buildRequireMethod($property);
@@ -649,8 +659,12 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return bool|string
      */
-    protected function getTypeHint(array $property)
+    protected function getSetTypeHint(array $property)
     {
+        if ($this->isStrictProperty($property)) {
+            return $this->getStrictSetTypeHint($property);
+        }
+
         if ($this->isArray($property) && isset($property['associative'])) {
             return false;
         }
@@ -685,6 +699,14 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function getAddTypeHint(array $property)
     {
+        if (!$this->isStrictProperty($property)) {
+            if ($this->isArray($property)) {
+                return false;
+            }
+
+            return str_replace('[]', '', $property['type']);
+        }
+
         if (preg_match('/^(string|int|integer|float|bool|boolean|mixed|resource|callable|iterable|array|\[\])/', $property['type'])) {
             return false;
         }
@@ -709,6 +731,9 @@ class ClassDefinition implements ClassDefinitionInterface
             'bundles' => $property['bundles'],
             'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
         ];
+
+        $method = $this->addGetReturnTypeHint($method, $property);
+
         $this->methods[$methodName] = $method;
     }
 
@@ -731,7 +756,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'typeHint' => null,
             'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
         ];
-        $method = $this->addTypeHint($property, $method);
+        $method = $this->addSetTypeHint($property, $method);
         $method = $this->addDefaultNull($method, $property);
 
         if ($this->isValueObject($property)) {
@@ -790,9 +815,10 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return array
      */
-    protected function addTypeHint(array $property, array $method): array
+    protected function addSetTypeHint(array $property, array $method): array
     {
-        $typeHint = $this->getTypeHint($property);
+        $typeHint = $this->getSetTypeHint($property);
+
         if ($typeHint) {
             $method['typeHint'] = $typeHint;
         }
@@ -810,7 +836,7 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         $method['hasDefaultNull'] = false;
 
-        if ($this->isValueObject($property) || ($method['typeHint'] && (!$this->isCollection($property) || $method['typeHint'] === 'array'))) {
+        if ($this->isValueObject($property) || ($method['typeHint'] && (!$this->isCollection($property) || $this->isArray($property)))) {
             $method['hasDefaultNull'] = true;
         }
 
@@ -831,6 +857,35 @@ class ClassDefinition implements ClassDefinitionInterface
             'property' => $propertyName,
             'propertyConst' => $this->getPropertyConstantName($property),
             'isCollection' => ($this->isCollection($property) && !$this->isArray($property)),
+            'bundles' => $property['bundles'],
+            'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
+        ];
+        $this->methods[$methodName] = $method;
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return bool
+     */
+    protected function isStrictProperty(array $property): bool
+    {
+        return $property['strict'] ?? false;
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return void
+     */
+    protected function buildHasMethod(array $property): void
+    {
+        $propertyName = $this->getPropertyName($property);
+        $methodName = 'has' . ucfirst($propertyName);
+        $method = [
+            'name' => $methodName,
+            'property' => $propertyName,
+            'propertyConst' => $this->getPropertyConstantName($property),
             'bundles' => $property['bundles'],
             'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
         ];
@@ -992,5 +1047,72 @@ class ClassDefinition implements ClassDefinitionInterface
 
         $this->useStatements[$fullyQualifiedClassName] = $fullyQualifiedClassName;
         ksort($this->useStatements, SORT_STRING);
+    }
+
+    /**
+     * @param array $method
+     * @param array $property
+     *
+     * @return array
+     */
+    protected function addGetReturnTypeHint(array $method, array $property): array
+    {
+        if ($this->isStrictProperty($property)) {
+            $method['returnTypeHint'] = $this->buildGetReturnTypeHint($property);
+        }
+
+        return $method;
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string
+     */
+    protected function buildGetReturnTypeHint(array $property): string
+    {
+        if ($this->isArray($property)) {
+            return 'array';
+        }
+
+        if ($this->isCollection($property)) {
+            return 'ArrayObject';
+        }
+
+        $type = $property['type'];
+
+        if ($this->isValueObject($property)) {
+            $type = $this->getShortClassName(
+                $this->getValueObjectFullyQualifiedClassName($property)
+            );
+        }
+
+        return sprintf('?%s', $type);
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string|bool
+     */
+    protected function getStrictSetTypeHint(array $property)
+    {
+        if ($this->isArray($property)) {
+            return '?array';
+        }
+
+        if ($this->isValueObject($property)) {
+            $this->addUseStatement($this->getValueObjectFullyQualifiedClassName($property));
+
+            return false;
+        }
+
+        if ($this->isCollection($property)) {
+            $this->addUseStatement(ArrayObject::class);
+
+            return 'ArrayObject';
+        }
+
+        return sprintf('?%s', $property['type']);
     }
 }

@@ -81,7 +81,7 @@
      */
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }}{% if method.hasDefaultNull %} = null{% endif %})
     {
-        {% if method.typeHint == "array" -%}
+        {% if "array" in method.typeHint -%}
         if (${{ method.property }} === null) {
             ${{ method.property }} = [];
         }
@@ -113,9 +113,28 @@
      {% endif -%}
      * @return {{ method.return }}
      */
-    public function {{ method.name }}()
+    public function {{ method.name }}(){% if method.returnTypeHint is defined %}: {{ method.returnTypeHint }} {% endif ~%}
     {
         return $this->{{ method.property }};
+    }
+{% endmacro -%}
+
+{# has method #}
+{%- macro addHas(method) %}
+    /**
+    {% if method.bundles is defined -%}
+    * @module {{ method.bundles|join('|') }}
+    *
+    {% endif -%}
+    {% if method.deprecationDescription is not null -%}
+    * @deprecated {{ method.deprecationDescription }}
+    *
+    {% endif -%}
+    * @return bool
+    */
+    public function {{ method.name }}(): bool
+    {
+        return isset($this->{{ method.property }});
     }
 {% endmacro -%}
 
