@@ -10,6 +10,10 @@ namespace Spryker\Zed\Customer;
 use Spryker\Service\Customer\CustomerServiceInterface;
 use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Customer\Business\Plugin\CustomerPasswordBlacklistPolicyPlugin;
+use Spryker\Zed\Customer\Business\Plugin\CustomerPasswordCharsetPolicyPlugin;
+use Spryker\Zed\Customer\Business\Plugin\CustomerPasswordLengthPolicyPlugin;
+use Spryker\Zed\Customer\Business\Plugin\CustomerPasswordSequencePolicyPlugin;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
@@ -17,6 +21,7 @@ use Spryker\Zed\Customer\Dependency\Facade\CustomerToSequenceNumberBridge;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilDateTimeServiceBridge;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilSanitizeServiceBridge;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateServiceBridge;
+use Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerPasswordPolicyPluginInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -51,6 +56,8 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_CUSTOMER_ANONYMIZER = 'PLUGINS_CUSTOMER_ANONYMIZER';
     public const PLUGINS_CUSTOMER_TRANSFER_EXPANDER = 'PLUGINS_CUSTOMER_TRANSFER_EXPANDER';
     public const PLUGINS_POST_CUSTOMER_REGISTRATION = 'PLUGINS_POST_CUSTOMER_REGISTRATION';
+    public const PLUGINS_CUSTOMER_PASSWORD_POLICY = 'PLUGINS_CUSTOMER_PASSWORD_POLICY';
+
     public const PLUGINS_CUSTOMER_TABLE_ACTION_EXPANDER = 'PLUGINS_CUSTOMER_TABLE_ACTION_EXPANDER';
 
     public const SUB_REQUEST_HANDLER = 'SUB_REQUEST_HANDLER';
@@ -72,6 +79,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addLocaleFacade($container);
         $container = $this->addCustomerTransferExpanderPlugins($container);
         $container = $this->addPostCustomerRegistrationPlugins($container);
+        $container = $this->addCustomerPasswordPolicyPlugins($container);
         $container = $this->addCustomerService($container);
 
         return $container;
@@ -314,6 +322,33 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     protected function getPostCustomerRegistrationPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function addCustomerPasswordPolicyPlugins(Container $container)
+    {
+        $container->set(static::PLUGINS_CUSTOMER_PASSWORD_POLICY, function (Container $container) {
+            return $this->getCustomerPasswordPolicyPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerPasswordPolicyPluginInterface[]
+     */
+    public function getCustomerPasswordPolicyPlugins(): array
+    {
+        return [
+            new CustomerPasswordBlacklistPolicyPlugin(),
+            new CustomerPasswordCharsetPolicyPlugin(),
+            new CustomerPasswordLengthPolicyPlugin(),
+            new CustomerPasswordSequencePolicyPlugin(),
+        ];
     }
 
     /**

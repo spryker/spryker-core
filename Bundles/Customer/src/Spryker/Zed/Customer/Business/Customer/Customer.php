@@ -31,6 +31,7 @@ use Spryker\Zed\Customer\Communication\Plugin\Mail\CustomerRestorePasswordMailTy
 use Spryker\Zed\Customer\CustomerConfig;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
+use Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerPasswordPolicyPluginInterface;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
@@ -95,6 +96,11 @@ class Customer implements CustomerInterface
     protected $postCustomerRegistrationPlugins;
 
     /**
+     * @var CustomerPasswordPolicyPluginInterface;
+     */
+    protected $passwordPolicyManager;
+
+    /**
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface $customerReferenceGenerator
      * @param \Spryker\Zed\Customer\CustomerConfig $customerConfig
@@ -114,7 +120,8 @@ class Customer implements CustomerInterface
         LocaleQueryContainerInterface $localeQueryContainer,
         Store $store,
         CustomerExpanderInterface $customerExpander,
-        array $postCustomerRegistrationPlugins = []
+        array $postCustomerRegistrationPlugins = [],
+        CustomerPasswordPolicyManagerInterface $passwordPolicyManager
     ) {
         $this->queryContainer = $queryContainer;
         $this->customerReferenceGenerator = $customerReferenceGenerator;
@@ -125,6 +132,7 @@ class Customer implements CustomerInterface
         $this->store = $store;
         $this->customerExpander = $customerExpander;
         $this->postCustomerRegistrationPlugins = $postCustomerRegistrationPlugins;
+        $this->passwordPolicyManager = $passwordPolicyManager;
     }
 
     /**
@@ -978,6 +986,7 @@ class Customer implements CustomerInterface
      */
     protected function validateCustomerPasswordLength(string $password): CustomerResponseTransfer
     {
+        $passwordCheckResult = $this->passwordPolicyManager->check($this->customerConfig->getCustomerPasswordPolicy());
         $customerResponseTransfer = (new CustomerResponseTransfer())
             ->setIsSuccess(false);
 
