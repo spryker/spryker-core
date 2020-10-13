@@ -15,4 +15,11 @@ interface ProductDiscontinuedToProductFacadeInterface
      * @return void
      */
     public function deactivateProductConcrete($idProductConcrete): void;
+
+    /**
+     * @param string[] $productConcreteSkus
+     *
+     * @return void
+     */
+    public function deactivateProductConcretesByConcreteSkus(array $productConcreteSkus): void;
 }

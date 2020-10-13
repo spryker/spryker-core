@@ -595,6 +595,20 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
+     * - Deactivates concrete products.
+     * - Touches concrete products as active.
+     * - Deletes abstract product URL if abstract products are inactive.
+     *
+     * @api
+     *
+     * @param string[] $productConcreteSkus
+     *
+     * @return void
+     */
+    public function deactivateProductConcretesByConcreteSkus(array $productConcreteSkus): void;
+
+    /**
+     * Specification:
      * - Generates all possible permutations of the given attributes.
      *
      * Leaf node of a tree is concrete id.
