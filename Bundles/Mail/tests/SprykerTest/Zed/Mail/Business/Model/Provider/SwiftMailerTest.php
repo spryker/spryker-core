@@ -41,6 +41,7 @@ class SwiftMailerTest extends Unit
     protected const BCC_NAME = 'bccName';
     protected const HTML_MAIL_CONTENT = 'html mail content';
     protected const TEXT_MAIL_CONTENT = 'text mail content';
+    protected const MAIL_ATTACHMENT_URL = 'http://mail-attachment-url';
 
     /**
      * @return void
@@ -197,6 +198,18 @@ class SwiftMailerTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testSendMailAddAttachmentToMassage(): void
+    {
+        $mailerMock = $this->getMailerMock();
+        $mailerMock->expects($this->once())->method('attach')->with(static::MAIL_ATTACHMENT_URL);
+
+        $swiftMailer = $this->getSwiftMailerWithMocks($mailerMock);
+        $swiftMailer->sendMail($this->getMailTransfer());
+    }
+
+    /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Business\Model\Renderer\RendererInterface
      */
     protected function getRendererMock(): RendererInterface
@@ -253,13 +266,14 @@ class SwiftMailerTest extends Unit
      * @uses MailToMailerInterface::setHtmlContent()
      * @uses MailToMailerInterface::setTextContent()
      * @uses MailToMailerInterface::send()
+     * @uses MailToMailerInterface::attach()
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Dependency\Mailer\MailToMailerInterface
      */
     protected function getMailerMock(): MailToMailerInterface
     {
         $mailerMock = $this->getMockBuilder(MailToMailerInterface::class)
-            ->setMethods(['setSubject', 'setFrom', 'addTo', 'addBcc', 'setHtmlContent', 'setTextContent', 'send'])
+            ->setMethods(['setSubject', 'setFrom', 'addTo', 'addBcc', 'setHtmlContent', 'setTextContent', 'send', 'attach'])
             ->getMock();
 
         return $mailerMock;
