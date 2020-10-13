@@ -49,7 +49,7 @@ use Spryker\Client\ProductConfigurationStorage\Writer\ProductConfigurationInstan
 use Spryker\Client\ProductConfigurationStorage\Writer\ProductConfigurationInstanceWriterInterface;
 
 /**
- * @method \Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageConfig getConfig()()
+ * @method \Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageConfig getConfig()
  */
 class ProductConfigurationStorageFactory extends AbstractFactory
 {

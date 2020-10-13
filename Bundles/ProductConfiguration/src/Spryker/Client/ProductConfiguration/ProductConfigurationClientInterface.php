@@ -86,12 +86,12 @@ interface ProductConfigurationClientInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
-     * @param array $productData
+     * @param array $configuratorResponseData
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
      */
     public function validateProductConfiguratorCheckSumResponse(
         ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer,
-        array $productData
+        array $configuratorResponseData
     ): ProductConfiguratorResponseProcessorResponseTransfer;
 }

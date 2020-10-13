@@ -15,7 +15,7 @@ use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationTo
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToLocaleBridge;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToPriceClientBridge;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToStoreClientBridge;
-use Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToHttpClientAdapter;
+use Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToGuzzleHttpClientAdapter;
 use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToProductConfigurationDataChecksumGeneratorBridge;
 use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingBridge;
 use Spryker\Client\ProductConfiguration\Exception\MissingDefaultProductConfigurationRequestPluginException;
@@ -67,7 +67,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
         $container = $this->addPriceClient($container);
         $container = $this->addCurrencyClient($container);
         $container = $this->addProductConfigurationRequestExpanderPlugins($container);
-        $container = $this->addGuzzleClient($container);
+        $container = $this->addHttpClient($container);
         $container = $this->addUtilEncodingService($container);
         $container = $this->addProductConfigurationDataChecksumGenerator($container);
 
@@ -79,10 +79,12 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addGuzzleClient(Container $container): Container
+    protected function addHttpClient(Container $container): Container
     {
         $container->set(static::CLIENT_HTTP, function () {
-            return new ProductConfigurationToHttpClientAdapter(new GuzzleHttpClient());
+            return new ProductConfigurationToGuzzleHttpClientAdapter(
+                new GuzzleHttpClient()
+            );
         });
 
         return $container;
@@ -96,7 +98,9 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     protected function addCurrencyClient(Container $container): Container
     {
         $container->set(static::CLIENT_CURRENCY, function (Container $container) {
-            return new ProductConfigurationToCurrencyClientBridge($container->getLocator()->currency()->client());
+            return new ProductConfigurationToCurrencyClientBridge(
+                $container->getLocator()->currency()->client()
+            );
         });
 
         return $container;
@@ -110,7 +114,9 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     protected function addPriceClient(Container $container): Container
     {
         $container->set(static::CLIENT_PRICE, function (Container $container) {
-            return new ProductConfigurationToPriceClientBridge($container->getLocator()->price()->client());
+            return new ProductConfigurationToPriceClientBridge(
+                $container->getLocator()->price()->client()
+            );
         });
 
         return $container;
@@ -124,7 +130,9 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     protected function addLocaleClient(Container $container): Container
     {
         $container->set(static::CLIENT_LOCALE, function (Container $container) {
-            return new ProductConfigurationToLocaleBridge($container->getLocator()->locale()->client());
+            return new ProductConfigurationToLocaleBridge(
+                $container->getLocator()->locale()->client()
+            );
         });
 
         return $container;
@@ -138,7 +146,9 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     protected function addCustomerClient(Container $container): Container
     {
         $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
-            return new ProductConfigurationToCustomerClientBridge($container->getLocator()->customer()->client());
+            return new ProductConfigurationToCustomerClientBridge(
+                $container->getLocator()->customer()->client()
+            );
         });
 
         return $container;
@@ -154,6 +164,22 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
         $container->set(static::CLIENT_STORE, function (Container $container) {
             return new ProductConfigurationToStoreClientBridge(
                 $container->getLocator()->store()->client()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
+            return new ProductConfigurationToUtilEncodingBridge(
+                $container->getLocator()->utilEncoding()->service()
             );
         });
 
@@ -241,22 +267,6 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::PLUGINS_PRODUCT_CONFIGURATOR_REQUEST_EXPANDER, function () {
             return $this->getProductConfigurationRequestExpanderPlugins();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addUtilEncodingService(Container $container): Container
-    {
-        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
-            return new ProductConfigurationToUtilEncodingBridge(
-                $container->getLocator()->utilEncoding()->service()
-            );
         });
 
         return $container;

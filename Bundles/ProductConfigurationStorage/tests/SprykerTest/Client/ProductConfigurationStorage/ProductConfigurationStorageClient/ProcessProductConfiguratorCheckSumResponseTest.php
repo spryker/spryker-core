@@ -42,6 +42,7 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
      */
     public function testProcessProductConfiguratorCheckSumResponseWillSaveToSessionWhenSourcePdp(): void
     {
+        //Arrange
         $cartClientMock = $this->getMockBuilder(ProductConfigurationStorageToCartClientBridge::class)
             ->onlyMethods(['findQuoteItem', 'getQuote', 'replaceItem'])
             ->disableOriginalConstructor()->getMock();
@@ -103,6 +104,7 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
      */
     public function testProcessProductConfiguratorCheckSumResponseWillReplaceItemInQuoteWhenSourceCart(): void
     {
+        //Arrange
         $cartClientMock = $this->getMockBuilder(ProductConfigurationStorageToCartClientBridge::class)
             ->onlyMethods(['findQuoteItem', 'getQuote', 'replaceItem'])
             ->disableOriginalConstructor()->getMock();
@@ -151,7 +153,7 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
 
         $productConfiguratorResponseTransfer = (new ProductConfiguratorResponseBuilder([
             ProductConfiguratorResponseTransfer::SOURCE_TYPE => 'SOURCE_TYPE_CART',
-            ]))
+        ]))
             ->withProductConfigurationInstance()
             ->build();
 
@@ -172,6 +174,7 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
      */
     public function testProcessProductConfiguratorCheckSumResponseWillSetProcessorResponseResultToFalseWhenNotValidResponseData(): void
     {
+        //Arrange
         $productConfigurationClientMock = $this->getMockBuilder(
             ProductConfigurationStorageToProductConfigurationClientBridge::class
         )->disableOriginalConstructor()->onlyMethods(['validateProductConfiguratorCheckSumResponse'])->getMock();
@@ -221,6 +224,7 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
      */
     public function testProcessProductConfiguratorCheckSumResponseWillSetProcessorResponseResultToFalseOnCartReplaceFail(): void
     {
+        //Arrange
         $cartClientMock = $this->getMockBuilder(ProductConfigurationStorageToCartClientBridge::class)
             ->onlyMethods(['findQuoteItem', 'getQuote', 'replaceItem'])
             ->disableOriginalConstructor()->getMock();
@@ -290,6 +294,7 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
      */
     public function testProcessProductConfiguratorCheckSumResponseWillSetProcessorResponseResultToFalseWhenNotValidCheckSum(): void
     {
+        //Arrange
         $productConfigurationClientMock = $this->getMockBuilder(
             ProductConfigurationStorageToProductConfigurationClientBridge::class
         )->disableOriginalConstructor()->onlyMethods(['validateProductConfiguratorCheckSumResponse'])->getMock();
@@ -338,6 +343,7 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
      */
     public function testProcessProductConfiguratorCheckSumResponseWillSetIsSuccessFalseAndReturnOnFirstFailedValidator(): void
     {
+        //Arrange
         $productConfigurationClientMock = $this->getMockBuilder(
             ProductConfigurationStorageToProductConfigurationClientBridge::class
         )->disableOriginalConstructor()->onlyMethods(['validateProductConfiguratorCheckSumResponse'])->getMock();

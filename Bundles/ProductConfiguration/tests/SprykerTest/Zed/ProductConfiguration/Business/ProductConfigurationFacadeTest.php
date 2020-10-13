@@ -7,11 +7,13 @@
 
 namespace SprykerTest\Zed\ProductConfiguration\Business;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductConfigurationFilterTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\ProductConfigurationTransfer;
@@ -209,5 +211,53 @@ class ProductConfigurationFacadeTest extends Unit
 
         //Assert
         $this->assertTrue($isQuoteProductConfigurationValid);
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandPriceProductTransfersWithProductConfigurationPricesWillExpandPrices(): void
+    {
+        //Arrange
+        $priceProductTransfers = new ArrayObject();
+        $priceProductTransfers->append((new PriceProductTransfer())->setSkuProduct('test1'));
+        $productConfigurationInstance = (new ProductConfigurationInstanceTransfer())->setPrices($priceProductTransfers);
+
+        $itemTransfer = (new ItemBuilder([
+            ItemTransfer::PRODUCT_CONFIGURATION_INSTANCE => $productConfigurationInstance,
+        ]))->build();
+
+        $cartChangeTransfer = (new CartChangeTransfer())->addItem($itemTransfer);
+
+        //Act
+        $priceProductTransfersResult = $this->tester->getFacade()
+            ->expandPriceProductTransfersWithProductConfigurationPrices(
+                [(new PriceProductTransfer())->setSkuProduct('test2')],
+                $cartChangeTransfer
+            );
+
+        //Assert
+        $this->assertCount(2, $priceProductTransfersResult);
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandPriceProductTransfersWithProductConfigurationPricesWillDoNothingWithoutProductConfigurationExistence(): void
+    {
+        //Arrange
+        $itemTransfer = (new ItemBuilder())->build();
+
+        $cartChangeTransfer = (new CartChangeTransfer())->addItem($itemTransfer);
+
+        //Act
+        $priceProductTransfersResult = $this->tester->getFacade()
+            ->expandPriceProductTransfersWithProductConfigurationPrices(
+                [(new PriceProductTransfer())->setSkuProduct('test2')],
+                $cartChangeTransfer
+            );
+
+        //Assert
+        $this->assertCount(1, $priceProductTransfersResult);
     }
 }

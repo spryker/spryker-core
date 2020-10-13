@@ -12,7 +12,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
 use Spryker\Client\ProductConfiguration\Http\Exception\ProductConfigurationHttpRequestException;
 
-class ProductConfigurationToHttpClientAdapter implements ProductConfigurationToHttpClientInterface
+class ProductConfigurationToGuzzleHttpClientAdapter implements ProductConfigurationToHttpClientInterface
 {
     /**
      * @var \GuzzleHttp\ClientInterface

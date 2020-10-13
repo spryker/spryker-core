@@ -8,8 +8,10 @@
 namespace Spryker\Client\ProductConfiguration;
 
 use Spryker\Client\Kernel\AbstractBundleConfig;
-use Spryker\Shared\ProductConfiguration\ProductConfigurationConfig as ProductConfigurationProductConfigurationConfig;
 
+/**
+ * @method \Spryker\Shared\ProductConfiguration\ProductConfigurationConfig getSharedConfig()
+ */
 class ProductConfigurationConfig extends AbstractBundleConfig
 {
     /**
@@ -24,7 +26,7 @@ class ProductConfigurationConfig extends AbstractBundleConfig
      */
     public function getProductConfigurationEncryptionKey(): string
     {
-        return $this->get(ProductConfigurationProductConfigurationConfig::SPRYKER_CONFIGURATOR_ENCRYPTION_KEY);
+        return $this->getSharedConfig()->getEncryptionKey();
     }
 
     /**

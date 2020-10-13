@@ -31,9 +31,8 @@ class ProductConfiguratorMandatoryFieldsResponseValidator implements ProductConf
         try {
             $productConfiguratorResponseTransfer->requireSku();
         } catch (RequiredTransferPropertyException $requiredTransferPropertyException) {
-            return $productConfiguratorResponseProcessorResponseTransfer
-                ->addMessage((new MessageTransfer())
-                    ->setMessage($requiredTransferPropertyException->getMessage()))
+            return $productConfiguratorResponseProcessorResponseTransfer->addMessage((new MessageTransfer())
+                ->setMessage($requiredTransferPropertyException->getMessage()))
                 ->setIsSuccessful(false);
         }
 

@@ -45,7 +45,7 @@ class ProductConfiguratorCheckSumResponseValidator implements ProductConfigurato
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
      */
-    public function validate(
+    public function validateProductConfiguratorCheckSumResponse(
         ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer,
         array $configuratorResponseData
     ): ProductConfiguratorResponseProcessorResponseTransfer {
@@ -53,7 +53,7 @@ class ProductConfiguratorCheckSumResponseValidator implements ProductConfigurato
 
         $productConfiguratorResponseTransfer = $productConfiguratorResponseProcessorResponseTransfer
             ->getProductConfiguratorResponse();
-        $key = $this->productConfigurationConfig->getProductConfigurationEncryptionKey();
+        $encryptionKey = $this->productConfigurationConfig->getProductConfigurationEncryptionKey();
 
         $plainCopyOfConfiguredResponseData = $configuratorResponseData;
         unset($plainCopyOfConfiguredResponseData[ProductConfiguratorResponseTransfer::CHECK_SUM]);

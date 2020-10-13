@@ -17,7 +17,7 @@ interface ProductConfiguratorResponseValidatorInterface
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
      */
-    public function validate(
+    public function validateProductConfiguratorCheckSumResponse(
         ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer,
         array $configuratorResponseData
     ): ProductConfiguratorResponseProcessorResponseTransfer;

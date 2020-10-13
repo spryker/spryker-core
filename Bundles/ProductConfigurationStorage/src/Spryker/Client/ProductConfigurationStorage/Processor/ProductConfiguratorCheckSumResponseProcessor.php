@@ -35,7 +35,7 @@ class ProductConfiguratorCheckSumResponseProcessor implements ProductConfigurato
     /**
      * @var \Spryker\Client\ProductConfigurationStorage\Replacer\QuoteItemReplacerInterface
      */
-    protected $quoteReplacer;
+    protected $quoteItemReplacer;
 
     /**
      * @var \Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorResponseValidatorInterface
@@ -45,18 +45,18 @@ class ProductConfiguratorCheckSumResponseProcessor implements ProductConfigurato
     /**
      * @param \Spryker\Client\ProductConfigurationStorage\Writer\ProductConfigurationInstanceWriterInterface $productConfigurationInstanceWriter
      * @param \Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstanceMapperInterface $productConfigurationInstanceMapper
-     * @param \Spryker\Client\ProductConfigurationStorage\Replacer\QuoteItemReplacerInterface $quoteReplacer
+     * @param \Spryker\Client\ProductConfigurationStorage\Replacer\QuoteItemReplacerInterface $quoteItemReplacer
      * @param \Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorResponseValidatorInterface $productConfiguratorResponseValidator
      */
     public function __construct(
         ProductConfigurationInstanceWriterInterface $productConfigurationInstanceWriter,
         ProductConfigurationInstanceMapperInterface $productConfigurationInstanceMapper,
-        QuoteItemReplacerInterface $quoteReplacer,
+        QuoteItemReplacerInterface $quoteItemReplacer,
         ProductConfiguratorResponseValidatorInterface $productConfiguratorResponseValidator
     ) {
         $this->productConfigurationInstanceWriter = $productConfigurationInstanceWriter;
         $this->productConfigurationInstanceMapper = $productConfigurationInstanceMapper;
-        $this->quoteReplacer = $quoteReplacer;
+        $this->quoteItemReplacer = $quoteItemReplacer;
         $this->productConfiguratorResponseValidator = $productConfiguratorResponseValidator;
     }
 
@@ -83,19 +83,14 @@ class ProductConfiguratorCheckSumResponseProcessor implements ProductConfigurato
             return $productConfiguratorResponseProcessorResponseTransfer;
         }
 
-        $productConfigurationInstanceTransfer = $productConfiguratorResponseTransfer->getProductConfigurationInstance();
-
-        $productConfigurationInstanceTransfer = $this->productConfigurationInstanceMapper
-            ->mapConfiguratorResponseDataPricesToProductConfigurationInstancePrices(
-                $configuratorResponseData,
-                $productConfigurationInstanceTransfer
-            );
-
-        $productConfiguratorResponseTransfer->setProductConfigurationInstance($productConfigurationInstanceTransfer);
+        $productConfiguratorResponseTransfer = $this->mapProductConfigurationInstancePrices(
+            $productConfiguratorResponseTransfer,
+            $configuratorResponseData
+        );
 
         $this->storeProductConfigurationInstance($productConfiguratorResponseTransfer);
 
-        return $this->quoteReplacer->replaceItemInQuote(
+        return $this->quoteItemReplacer->replaceItemInQuote(
             $productConfiguratorResponseTransfer,
             $productConfiguratorResponseProcessorResponseTransfer
         );
@@ -117,5 +112,26 @@ class ProductConfiguratorCheckSumResponseProcessor implements ProductConfigurato
             $productConfiguratorResponseTransfer->getSku(),
             $productConfiguratorResponseTransfer->getProductConfigurationInstance()
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
+     * @param array $configuratorResponseData
+     *
+     * @return \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer
+     */
+    protected function mapProductConfigurationInstancePrices(
+        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer,
+        array $configuratorResponseData
+    ): ProductConfiguratorResponseTransfer {
+        $productConfigurationInstanceTransfer = $productConfiguratorResponseTransfer->getProductConfigurationInstance();
+
+        $productConfigurationInstanceTransfer = $this->productConfigurationInstanceMapper
+            ->mapConfiguratorResponseDataPricesToProductConfigurationInstancePrices(
+                $configuratorResponseData,
+                $productConfigurationInstanceTransfer
+            );
+
+        return $productConfiguratorResponseTransfer->setProductConfigurationInstance($productConfigurationInstanceTransfer);
     }
 }

@@ -83,9 +83,8 @@ class ProductConfigurationFacade extends AbstractFacade implements ProductConfig
         array $priceProductTransfers,
         CartChangeTransfer $cartChangeTransfer
     ): array {
-      $this->getFactory()
+        return $this->getFactory()
           ->createProductConfigurationProductPriceExpander()
           ->expandPriceProductTransfersWithProductConfigurationPrices($priceProductTransfers, $cartChangeTransfer);
     }
-
 }

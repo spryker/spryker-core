@@ -8,6 +8,7 @@
 namespace Spryker\Shared\ProductConfiguration;
 
 use Spryker\Shared\Kernel\AbstractBundleConfig;
+use Spryker\Shared\ProductConfiguration\Exception\EncryptionKeyNotPreConfigured;
 
 class ProductConfigurationConfig extends AbstractBundleConfig
 {
@@ -36,10 +37,20 @@ class ProductConfigurationConfig extends AbstractBundleConfig
     public const SOURCE_TYPE_CART = 'SOURCE_TYPE_CART';
 
     /**
-     * Specification:
-     * - Provides encryption key for checksum validation.
-     *
      * @api
+     *
+     * @throws \Spryker\Shared\ProductConfiguration\Exception\EncryptionKeyNotPreConfigured
+     *
+     * @return string
      */
-    public const SPRYKER_CONFIGURATOR_ENCRYPTION_KEY = 'SPRYKER_CONFIGURATOR_ENCRYPTION_KEY';
+    public function getEncryptionKey(): string
+    {
+        $encryptionKey = $this->get(ProductConfigurationConstants::ENCRYPTION_KEY, false);
+
+        if ($encryptionKey) {
+            return $encryptionKey;
+        }
+
+        throw new EncryptionKeyNotPreConfigured('Encryption key is not pre-configured, please update PRODUCT_CONFIGURATION:ENCRYPTION_KEY env variable.');
+    }
 }

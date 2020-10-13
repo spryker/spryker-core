@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductConfiguration\Resolver;
 
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorRequestTransfer;
 use Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToHttpClientInterface;
@@ -22,8 +23,7 @@ class ProductConfiguratorAccessTokenRedirectResolver implements ProductConfigura
     protected const ASSESS_TOKEN_REQUEST_HEADERS = [
         'Content-Type' => 'application/json',
     ];
-    protected const GLOSSARY_KEY_PRODUCT_CONFIGURATION_CAN_NOT_OBTAIN_ACCESS_TOKEN
-        = 'product_configuration.access_token.request.error.can_not_obtain_access_token';
+    protected const GLOSSARY_KEY_PRODUCT_CONFIGURATION_CAN_NOT_OBTAIN_ACCESS_TOKEN = 'product_configuration.access_token.request.error.can_not_obtain_access_token';
 
     protected const CONFIGURATOR_REDIRECT_URL_RESPONSE_KEY = 'configuratorRedirectUrl';
     protected const IS_RESPONSE_SUCCESSFUL_KEY = 'isSuccessful';
@@ -64,7 +64,7 @@ class ProductConfiguratorAccessTokenRedirectResolver implements ProductConfigura
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer
      */
-    public function prepareProductConfiguratorAccessTokenRedirect(
+    public function resolveProductConfiguratorAccessTokenRedirect(
         ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
     ): ProductConfiguratorRedirectTransfer {
         $productConfiguratorRequestTransfer = $this->executeProductConfigurationRequestExpanderPlugins(
@@ -122,11 +122,10 @@ class ProductConfiguratorAccessTokenRedirectResolver implements ProductConfigura
                 ->setConfiguratorRedirectUrl($responseData[static::CONFIGURATOR_REDIRECT_URL_RESPONSE_KEY]);
         }
 
-        return $this->addProductConfigurationError(
-            $productConfiguratorRedirectTransfer,
-            static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_CAN_NOT_OBTAIN_ACCESS_TOKEN,
-            new ProductConfigurationHttpRequestException($responseData[static::RESPONSE_ERROR_MESSAGES_KEY])
-        );
+        return $productConfiguratorRedirectTransfer->setIsSuccessful(false)
+            ->addMessage(
+                (new MessageTransfer())->setMessage($responseData[static::RESPONSE_ERROR_MESSAGES_KEY])
+            );
     }
 
     /**
@@ -161,6 +160,8 @@ class ProductConfiguratorAccessTokenRedirectResolver implements ProductConfigura
         );
 
         return $productConfiguratorRedirectTransfer->setIsSuccessful(false)
-        ->addMessage($message);
+        ->addMessage(
+            (new MessageTransfer())->setMessage($message)
+        );
     }
 }

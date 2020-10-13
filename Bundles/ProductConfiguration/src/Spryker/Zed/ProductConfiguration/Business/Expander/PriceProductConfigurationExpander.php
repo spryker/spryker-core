@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductConfiguration\Business\Expander;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 
-interface ProductConfigurationProductPriceExpanderInterface
+class PriceProductConfigurationExpander implements PriceProductConfigurationExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
@@ -20,5 +20,17 @@ interface ProductConfigurationProductPriceExpanderInterface
     public function expandPriceProductTransfersWithProductConfigurationPrices(
         array $priceProductTransfers,
         CartChangeTransfer $cartChangeTransfer
-    ): array;
+    ): array {
+        $productConfigurationPriceProductTransfers = [];
+
+        foreach ($cartChangeTransfer->getItems() as $item) {
+            $productConfigurationInstance = $item->getProductConfigurationInstance();
+
+            if ($productConfigurationInstance && $productConfigurationInstance->getPrices()->count()) {
+                $productConfigurationPriceProductTransfers[] = $productConfigurationInstance->getPrices()->getArrayCopy();
+            }
+        }
+
+        return array_merge($priceProductTransfers, ...$productConfigurationPriceProductTransfers);
+    }
 }
