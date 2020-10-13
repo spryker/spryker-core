@@ -16,15 +16,9 @@
         <property name="merchantReference" type="string"/>
     </transfer>
 
-    <transfer name="MerchantShipmentCollection">
-        <property name="merchantShipments" type="MerchantShipment[]" singular="merchantShipment"/>
-    </transfer>
-
-
-    <transfer name="MerchantShipment">
-        <property name="idSalesShipment" type="int"/>
+    <transfer name="MerchantShipmentCriteria">
         <property name="merchantReference" type="string"/>
+        <property name="idShipment" type="int"/>
     </transfer>
-
 
 </transfers>

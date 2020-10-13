@@ -7,18 +7,20 @@
 
 namespace Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\MerchantShipment;
 
+use ArrayObject;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
+use Generated\Shared\Transfer\MerchantShipmentCriteriaTransfer;
 use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * @method \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\MerchantSalesOrderMerchantUserGuiCommunicationFactory getFactory()
  */
-class MerchantShipmentController extends AbstractController
+abstract class AbstractMerchantShipmentController extends AbstractController
 {
     protected const PARAM_ID_MERCHANT_SALES_ORDER = 'id-merchant-sales-order';
 
@@ -42,8 +44,6 @@ class MerchantShipmentController extends AbstractController
     /**
      * @param int $idMerchantSalesOrder
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
-     *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
      */
     protected function findMerchantOrder(int $idMerchantSalesOrder): ?MerchantOrderTransfer
@@ -51,6 +51,7 @@ class MerchantShipmentController extends AbstractController
         $merchantUserTransfer = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser();
         $merchantOrderCriteriaTransfer = (new MerchantOrderCriteriaTransfer())
             ->setIdMerchantOrder($idMerchantSalesOrder)
+            ->setMerchantReference($merchantUserTransfer->getMerchant()->getMerchantReference())
             ->setWithItems(true)
             ->setWithOrder(true);
 
@@ -62,18 +63,20 @@ class MerchantShipmentController extends AbstractController
             return null;
         }
 
-        if ($merchantUserTransfer->getMerchant()->getMerchantReference() !== $merchantOrderTransfer->getMerchantReference()) {
-            throw new AccessDeniedHttpException('Access denied');
-        }
+        $merchantOrderItemIds = $this->extractMerchantOrderItemIds($merchantOrderTransfer->getMerchantOrderItems());
+        $merchantOrderItemsStateHistory = $this->getFactory()
+            ->getMerchantOmsFacade()
+            ->getMerchantOrderItemsStateHistory($merchantOrderItemIds);
 
-        return $merchantOrderTransfer;
+        return $this->mapMerchantOrderItemsStateHistoryToMerchantOrderItems(
+            $merchantOrderTransfer,
+            $merchantOrderItemsStateHistory
+        );
     }
 
     /**
      * @param string $merchantReference
      * @param int|null $idShipment
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer|null
      */
@@ -83,21 +86,13 @@ class MerchantShipmentController extends AbstractController
             return new ShipmentTransfer();
         }
 
-        $shipmentTransfer = $this->getFactory()->getShipmentFacade()->findShipmentById($idShipment);
+        $merchantShipmentCriteriaTransfer = (new MerchantShipmentCriteriaTransfer())
+            ->setMerchantReference($merchantReference)
+            ->setIdShipment($idShipment);
 
-        if (!$shipmentTransfer) {
-            return null;
-        }
-
-        $isMerchantOrderShipment = $this->getFactory()
+        return $this->getFactory()
             ->getMerchantShipmentFacade()
-            ->isMerchantOrderShipment($merchantReference, $shipmentTransfer);
-
-        if (!$isMerchantOrderShipment) {
-            throw new AccessDeniedHttpException('Access denied');
-        }
-
-        return $shipmentTransfer;
+            ->findShipment($merchantShipmentCriteriaTransfer);
     }
 
     /**
@@ -159,5 +154,47 @@ class MerchantShipmentController extends AbstractController
         return $this->getFactory()
             ->getShipmentFacade()
             ->saveShipment($shipmentGroupTransfer, $merchantOrderTransfer->getOrder());
+    }
+
+    /**
+     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItems
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\MerchantOrderItemTransfer[] $merchantOrderItems
+     *
+     * @return int[]
+     */
+    protected function extractMerchantOrderItemIds(ArrayObject $merchantOrderItems): array
+    {
+        return array_map(
+            function (MerchantOrderItemTransfer $merchantOrderItemTransfer) {
+                return $merchantOrderItemTransfer->getIdMerchantOrderItem();
+            },
+            $merchantOrderItems->getArrayCopy()
+        );
+    }
+
+    /**
+     * @phpstan-param array<int, array<\Generated\Shared\Transfer\StateMachineItemTransfer>> $merchantOrderItemsStateHistory
+     *
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     * @param array $merchantOrderItemsStateHistory
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer
+     */
+    protected function mapMerchantOrderItemsStateHistoryToMerchantOrderItems(
+        MerchantOrderTransfer $merchantOrderTransfer,
+        array $merchantOrderItemsStateHistory
+    ): MerchantOrderTransfer {
+        foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
+            if (!isset($merchantOrderItemsStateHistory[$merchantOrderItemTransfer->getIdMerchantOrderItem()])) {
+                continue;
+            }
+
+            $merchantOrderItemTransfer->setStateHistory(
+                new ArrayObject($merchantOrderItemsStateHistory[$merchantOrderItemTransfer->getIdMerchantOrderItem()])
+            );
+        }
+
+        return $merchantOrderTransfer;
     }
 }

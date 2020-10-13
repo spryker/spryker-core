@@ -8,13 +8,13 @@
 namespace Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller;
 
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\MerchantShipment\MerchantShipmentController;
+use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\MerchantShipment\AbstractMerchantShipmentController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\MerchantSalesOrderMerchantUserGuiCommunicationFactory getFactory()
  */
-class MerchantShipmentCreateController extends MerchantShipmentController
+class MerchantShipmentCreateController extends AbstractMerchantShipmentController
 {
     protected const MESSAGE_SHIPMENT_CREATE_SUCCESS = 'Shipment has been successfully created.';
     protected const MESSAGE_SHIPMENT_CREATE_FAIL = 'Shipment has not been created.';

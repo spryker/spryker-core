@@ -91,7 +91,7 @@ class OmsTriggerController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function submitTriggerEventForItemAction(Request $request): RedirectResponse
+    public function submitTriggerEventItemAction(Request $request): RedirectResponse
     {
         $redirect = $request->query->get('redirect', static::URL_PARAM_REDIRECT);
 

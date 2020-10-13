@@ -23,6 +23,15 @@ interface MerchantSalesOrderMerchantUserGuiToMerchantOmsFacadeInterface
     ): MerchantOrderItemCollectionTransfer;
 
     /**
+     * @phpstan-return array<int, array<\Generated\Shared\Transfer\StateMachineItemTransfer>>
+     *
+     * @param int[] $merchantOrderItemIds
+     *
+     * @return array
+     */
+    public function getMerchantOrderItemsStateHistory(array $merchantOrderItemIds): array;
+
+    /**
      * @param \Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer
      *
      * @return int

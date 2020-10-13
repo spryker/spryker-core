@@ -8,13 +8,13 @@
 namespace Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller;
 
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\MerchantShipment\MerchantShipmentController;
+use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\MerchantShipment\AbstractMerchantShipmentController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\MerchantSalesOrderMerchantUserGuiCommunicationFactory getFactory()
  */
-class MerchantShipmentEditController extends MerchantShipmentController
+class MerchantShipmentEditController extends AbstractMerchantShipmentController
 {
     protected const PARAM_ID_SHIPMENT = 'id-shipment';
 

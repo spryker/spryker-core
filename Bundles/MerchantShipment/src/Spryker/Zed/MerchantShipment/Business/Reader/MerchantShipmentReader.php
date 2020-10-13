@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\MerchantShipment\Business\Reader;
 
+use Generated\Shared\Transfer\MerchantShipmentCriteriaTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Spryker\Zed\MerchantShipment\Dependency\Facade\MerchantShipmentToShipmentFacadeInterface;
 use Spryker\Zed\MerchantShipment\Persistence\MerchantShipmentRepositoryInterface;
 
 class MerchantShipmentReader implements MerchantShipmentReaderInterface
@@ -18,32 +21,59 @@ class MerchantShipmentReader implements MerchantShipmentReaderInterface
     protected $merchantShipmentRepository;
 
     /**
-     * @param \Spryker\Zed\MerchantShipment\Persistence\MerchantShipmentRepositoryInterface $merchantShipmentRepository
+     * @var \Spryker\Zed\MerchantShipment\Dependency\Facade\MerchantShipmentToShipmentFacadeInterface
      */
-    public function __construct(MerchantShipmentRepositoryInterface $merchantShipmentRepository)
-    {
+    protected $shipmentFacade;
+
+    /**
+     * @param \Spryker\Zed\MerchantShipment\Persistence\MerchantShipmentRepositoryInterface $merchantShipmentRepository
+     * @param \Spryker\Zed\MerchantShipment\Dependency\Facade\MerchantShipmentToShipmentFacadeInterface $shipmentFacade
+     */
+    public function __construct(
+        MerchantShipmentRepositoryInterface $merchantShipmentRepository,
+        MerchantShipmentToShipmentFacadeInterface $shipmentFacade
+    ) {
         $this->merchantShipmentRepository = $merchantShipmentRepository;
+        $this->shipmentFacade = $shipmentFacade;
     }
 
     /**
-     * @param string $merchantReference
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param \Generated\Shared\Transfer\MerchantShipmentCriteriaTransfer $merchantShipmentCriteriaTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ShipmentTransfer|null
      */
-    public function isMerchantOrderShipment(
-        string $merchantReference,
-        ShipmentTransfer $shipmentTransfer
-    ): bool {
-        $merchantShipmentCollection = $this->merchantShipmentRepository
-            ->getMerchantShipments($merchantReference);
+    public function findShipment(MerchantShipmentCriteriaTransfer $merchantShipmentCriteriaTransfer): ?ShipmentTransfer
+    {
+        $shipmentTransfer = $this->merchantShipmentRepository->findShipment($merchantShipmentCriteriaTransfer);
 
-        foreach ($merchantShipmentCollection->getMerchantShipments() as $merchantShipmentTransfer) {
-            if ($merchantShipmentTransfer->getIdSalesShipment() === $shipmentTransfer->getIdSalesShipment()) {
-                return true;
-            }
+        if (!$shipmentTransfer) {
+            return null;
         }
 
-        return false;
+        $shipmentMethodTransfer = $this->getShipmentMethodTransfer($shipmentTransfer);
+        $shipmentTransfer->setMethod($shipmentMethodTransfer);
+
+        return $shipmentTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    protected function getShipmentMethodTransfer(ShipmentTransfer $shipmentTransfer): ?ShipmentMethodTransfer
+    {
+        $shipmentMethodTransfer = $shipmentTransfer->getMethod();
+
+        if (!$shipmentMethodTransfer) {
+            return null;
+        }
+
+        $shipmentMethodName = $shipmentMethodTransfer->getName();
+        if (!$shipmentMethodName) {
+            return $this->shipmentFacade->findShipmentMethodByName($shipmentMethodName);
+        }
+
+        return $shipmentMethodTransfer;
     }
 }

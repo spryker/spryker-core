@@ -10,6 +10,8 @@ namespace Spryker\Zed\MerchantShipment\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MerchantShipment\Business\Reader\MerchantShipmentReader;
 use Spryker\Zed\MerchantShipment\Business\Reader\MerchantShipmentReaderInterface;
+use Spryker\Zed\MerchantShipment\Dependency\Facade\MerchantShipmentToShipmentFacadeInterface;
+use Spryker\Zed\MerchantShipment\MerchantShipmentDependencyProvider;
 
 /**
  * @method \Spryker\Zed\MerchantShipment\MerchantShipmentConfig getConfig()
@@ -22,6 +24,17 @@ class MerchantShipmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createMerchantShipmentReader(): MerchantShipmentReaderInterface
     {
-        return new MerchantShipmentReader($this->getRepository());
+        return new MerchantShipmentReader(
+            $this->getRepository(),
+            $this->getShipmentFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantShipment\Dependency\Facade\MerchantShipmentToShipmentFacadeInterface
+     */
+    public function getShipmentFacade(): MerchantShipmentToShipmentFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantShipmentDependencyProvider::FACADE_SHIPMENT);
     }
 }

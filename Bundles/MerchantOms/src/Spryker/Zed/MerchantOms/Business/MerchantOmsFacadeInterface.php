@@ -124,17 +124,18 @@ interface MerchantOmsFacadeInterface
 
     /**
      * Specification:
-     * - Expands MerchantOrder.items with oms state history.
+     * - Gets state history for MerchantOrder.items.
+     * - Groups to array where key is MerchantOrderItem.id and value is array of states.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     * @phpstan-return array<int, array<\Generated\Shared\Transfer\StateMachineItemTransfer>>
      *
-     * @return \Generated\Shared\Transfer\MerchantOrderTransfer
-     **/
-    public function expandMerchantOrderItemsWithStateHistory(
-        MerchantOrderTransfer $merchantOrderTransfer
-    ): MerchantOrderTransfer;
+     * @param int[] $merchantOrderItemIds
+     *
+     * @return array
+     */
+    public function getMerchantOrderItemsStateHistory(array $merchantOrderItemIds): array;
 
     /**
      * Specification:

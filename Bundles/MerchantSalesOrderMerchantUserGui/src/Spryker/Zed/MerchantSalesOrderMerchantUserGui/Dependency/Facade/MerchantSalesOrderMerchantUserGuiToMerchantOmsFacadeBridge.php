@@ -38,6 +38,18 @@ class MerchantSalesOrderMerchantUserGuiToMerchantOmsFacadeBridge implements Merc
     }
 
     /**
+     * @phpstan-return array<int, array<\Generated\Shared\Transfer\StateMachineItemTransfer>>
+     *
+     * @param int[] $merchantOrderItemIds
+     *
+     * @return array
+     */
+    public function getMerchantOrderItemsStateHistory(array $merchantOrderItemIds): array
+    {
+        return $this->merchantOmsFacade->getMerchantOrderItemsStateHistory($merchantOrderItemIds);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer
      *
      * @return int

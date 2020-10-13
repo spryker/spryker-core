@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\MerchantShipment\Persistence;
 
-use Generated\Shared\Transfer\MerchantShipmentCollectionTransfer;
-use Generated\Shared\Transfer\MerchantShipmentTransfer;
+use Generated\Shared\Transfer\MerchantShipmentCriteriaTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -17,28 +18,58 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class MerchantShipmentRepository extends AbstractRepository implements MerchantShipmentRepositoryInterface
 {
     /**
-     * @param string $merchantReference
+     * @param \Generated\Shared\Transfer\MerchantShipmentCriteriaTransfer $merchantShipmentCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantShipmentCollectionTransfer
+     * @return \Generated\Shared\Transfer\ShipmentTransfer|null
      */
-    public function getMerchantShipments(string $merchantReference): MerchantShipmentCollectionTransfer
+    public function findShipment(MerchantShipmentCriteriaTransfer $merchantShipmentCriteriaTransfer): ?ShipmentTransfer
     {
-        $merchantShipmentEntities = $this->getFactory()
-            ->createSalesShipmentPropelQuery()
-            ->findByMerchantReference($merchantReference);
+        $salesShipmentQuery = $this->getFactory()
+            ->createSalesShipmentPropelQuery();
 
-        $merchantShipmentCollection = new MerchantShipmentCollectionTransfer();
-        $merchantShipmentMapper = $this->getFactory()->createMerchantShipmentMapper();
+        $salesShipmentQuery = $this->filterSalesShipmentQuery($salesShipmentQuery, $merchantShipmentCriteriaTransfer);
+        $salesShipmentQuery->leftJoinWithSpySalesOrderAddress()
+            ->useSpySalesOrderAddressQuery()
+                ->leftJoinCountry()
+            ->endUse();
 
-        foreach ($merchantShipmentEntities as $merchantShipmentEntity) {
-            $merchantShipmentCollection->addMerchantShipment(
-                $merchantShipmentMapper->mapMerchantShipmentEntityToMerchantShipmentTransfer(
-                    $merchantShipmentEntity,
-                    new MerchantShipmentTransfer()
-                )
+        $salesShipmentEntity = $salesShipmentQuery->findOne();
+
+        if (!$salesShipmentEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createMerchantShipmentMapper()
+            ->mapShipmentEntityToShipmentTransfer($salesShipmentEntity, new ShipmentTransfer());
+    }
+
+    /**
+     * @phpstan-param \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery<mixed> $salesShipmentQuery
+     *
+     * @phpstan-return \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery<mixed>
+     *
+     * @param \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery $salesShipmentQuery
+     * @param \Generated\Shared\Transfer\MerchantShipmentCriteriaTransfer $merchantShipmentCriteriaTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery
+     */
+    protected function filterSalesShipmentQuery(
+        SpySalesShipmentQuery $salesShipmentQuery,
+        MerchantShipmentCriteriaTransfer $merchantShipmentCriteriaTransfer
+    ): SpySalesShipmentQuery {
+        if ($merchantShipmentCriteriaTransfer->getMerchantReference()) {
+            $salesShipmentQuery->filterByMerchantReference(
+                $merchantShipmentCriteriaTransfer->getMerchantReference()
             );
         }
 
-        return $merchantShipmentCollection;
+        if ($merchantShipmentCriteriaTransfer->getIdShipment()) {
+            $salesShipmentQuery->filterByIdSalesShipment(
+                $merchantShipmentCriteriaTransfer->getIdShipment()
+            );
+        }
+
+        return $salesShipmentQuery;
     }
 }

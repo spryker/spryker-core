@@ -7,14 +7,15 @@
 
 namespace Spryker\Zed\MerchantShipment\Persistence;
 
-use Generated\Shared\Transfer\MerchantShipmentCollectionTransfer;
+use Generated\Shared\Transfer\MerchantShipmentCriteriaTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 
 interface MerchantShipmentRepositoryInterface
 {
     /**
-     * @param string $merchantReference
+     * @param \Generated\Shared\Transfer\MerchantShipmentCriteriaTransfer $merchantShipmentCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantShipmentCollectionTransfer
+     * @return \Generated\Shared\Transfer\ShipmentTransfer|null
      */
-    public function getMerchantShipments(string $merchantReference): MerchantShipmentCollectionTransfer;
+    public function findShipment(MerchantShipmentCriteriaTransfer $merchantShipmentCriteriaTransfer): ?ShipmentTransfer;
 }

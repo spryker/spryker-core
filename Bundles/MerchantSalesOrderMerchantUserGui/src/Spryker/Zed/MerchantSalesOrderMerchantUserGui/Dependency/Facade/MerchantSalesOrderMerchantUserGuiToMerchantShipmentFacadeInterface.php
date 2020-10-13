@@ -7,18 +7,15 @@
 
 namespace Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\MerchantShipmentCriteriaTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 
 interface MerchantSalesOrderMerchantUserGuiToMerchantShipmentFacadeInterface
 {
     /**
-     * @param string $merchantReference
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param \Generated\Shared\Transfer\MerchantShipmentCriteriaTransfer $merchantShipmentCriteriaTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ShipmentTransfer|null
      */
-    public function isMerchantOrderShipment(
-        string $merchantReference,
-        ShipmentTransfer $shipmentTransfer
-    ): bool;
+    public function findShipment(MerchantShipmentCriteriaTransfer $merchantShipmentCriteriaTransfer): ?ShipmentTransfer;
 }
