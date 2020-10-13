@@ -8,6 +8,7 @@
 namespace Spryker\Shared\ProductConfiguration;
 
 use Spryker\Shared\Kernel\AbstractBundleConfig;
+use Spryker\Shared\ProductConfiguration\Exception\EncryptionKeyNotPreConfigured;
 
 class ProductConfigurationConfig extends AbstractBundleConfig
 {
@@ -34,4 +35,22 @@ class ProductConfigurationConfig extends AbstractBundleConfig
      * @api
      */
     public const SOURCE_TYPE_CART = 'SOURCE_TYPE_CART';
+
+    /**
+     * @api
+     *
+     * @throws \Spryker\Shared\ProductConfiguration\Exception\EncryptionKeyNotPreConfigured
+     *
+     * @return string
+     */
+    public function getEncryptionKey(): string
+    {
+        $encryptionKey = $this->get(ProductConfigurationConstants::ENCRYPTION_KEY, false);
+
+        if ($encryptionKey) {
+            return $encryptionKey;
+        }
+
+        throw new EncryptionKeyNotPreConfigured('Encryption key is not pre-configured, please update PRODUCT_CONFIGURATION:ENCRYPTION_KEY env variable.');
+    }
 }

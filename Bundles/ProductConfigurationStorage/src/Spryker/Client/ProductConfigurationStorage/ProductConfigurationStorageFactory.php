@@ -12,6 +12,7 @@ use Spryker\Client\ProductConfigurationStorage\Builder\ProductConfigurationSessi
 use Spryker\Client\ProductConfigurationStorage\Builder\ProductConfigurationSessionKeyBuilderInterface;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToCartClientInterface;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToLocaleClientInterface;
+use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToProductConfigurationClientInterface;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToProductStorageClientInterface;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToSessionClientInterface;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToStorageClientInterface;
@@ -26,6 +27,8 @@ use Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstan
 use Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstanceMapperInterface;
 use Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationStorageMapper;
 use Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationStorageMapperInterface;
+use Spryker\Client\ProductConfigurationStorage\Processor\ProductConfiguratorCheckSumResponseProcessor;
+use Spryker\Client\ProductConfigurationStorage\Processor\ProductConfiguratorCheckSumResponseProcessorInterface;
 use Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationAvailabilityReader;
 use Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationAvailabilityReaderInterface;
 use Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationInstanceQuoteReader;
@@ -34,11 +37,20 @@ use Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationInstan
 use Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationInstanceReaderInterface;
 use Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationPriceReader;
 use Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationPriceReaderInterface;
+use Spryker\Client\ProductConfigurationStorage\Replacer\QuoteItemReplacer;
+use Spryker\Client\ProductConfigurationStorage\Replacer\QuoteItemReplacerInterface;
 use Spryker\Client\ProductConfigurationStorage\Storage\ProductConfigurationStorageReader;
 use Spryker\Client\ProductConfigurationStorage\Storage\ProductConfigurationStorageReaderInterface;
+use Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorCheckSumResponseValidatorComposite;
+use Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorItemGroupKeyResponseValidator;
+use Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorMandatoryFieldsResponseValidator;
+use Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorResponseValidatorInterface;
 use Spryker\Client\ProductConfigurationStorage\Writer\ProductConfigurationInstanceWriter;
 use Spryker\Client\ProductConfigurationStorage\Writer\ProductConfigurationInstanceWriterInterface;
 
+/**
+ * @method \Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageConfig getConfig()
+ */
 class ProductConfigurationStorageFactory extends AbstractFactory
 {
     /**
@@ -130,6 +142,38 @@ class ProductConfigurationStorageFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\ProductConfigurationStorage\Processor\ProductConfiguratorCheckSumResponseProcessorInterface
+     */
+    public function createProductConfiguratorCheckSumResponseProcessor(): ProductConfiguratorCheckSumResponseProcessorInterface
+    {
+        return new ProductConfiguratorCheckSumResponseProcessor(
+            $this->createProductConfigurationInstanceWriter(),
+            $this->createProductConfigurationInstanceMapper(),
+            $this->createQuoteItemReplacer(),
+            $this->createProductConfiguratorCheckSumResponseValidatorComposite()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfigurationStorage\Replacer\QuoteItemReplacerInterface
+     */
+    public function createQuoteItemReplacer(): QuoteItemReplacerInterface
+    {
+        return new QuoteItemReplacer($this->getCartClient());
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorResponseValidatorInterface
+     */
+    public function createProductConfiguratorCheckSumResponseValidatorComposite(): ProductConfiguratorResponseValidatorInterface
+    {
+        return new ProductConfiguratorCheckSumResponseValidatorComposite(
+            $this->getProductConfigurationClient(),
+            $this->createProductConfiguratorCheckSumResponseValidators()
+        );
+    }
+
+    /**
      * @return \Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationPriceReaderInterface
      */
     public function createProductConfigurationPriceReader(): ProductConfigurationPriceReaderInterface
@@ -157,6 +201,33 @@ class ProductConfigurationStorageFactory extends AbstractFactory
     public function createProductConfigurationSessionKeyBuilder(): ProductConfigurationSessionKeyBuilderInterface
     {
         return new ProductConfigurationSessionKeyBuilder();
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorResponseValidatorInterface[]
+     */
+    public function createProductConfiguratorCheckSumResponseValidators(): array
+    {
+        return [
+            $this->createProductConfiguratorMandatoryFieldsResponseValidator(),
+            $this->createProductConfiguratorItemGroupKeyResponseValidator(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorResponseValidatorInterface
+     */
+    public function createProductConfiguratorMandatoryFieldsResponseValidator(): ProductConfiguratorResponseValidatorInterface
+    {
+        return new ProductConfiguratorMandatoryFieldsResponseValidator();
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorResponseValidatorInterface
+     */
+    public function createProductConfiguratorItemGroupKeyResponseValidator(): ProductConfiguratorResponseValidatorInterface
+    {
+        return new ProductConfiguratorItemGroupKeyResponseValidator();
     }
 
     /**
@@ -205,5 +276,13 @@ class ProductConfigurationStorageFactory extends AbstractFactory
     public function getCartClient(): ProductConfigurationStorageToCartClientInterface
     {
         return $this->getProvidedDependency(ProductConfigurationStorageDependencyProvider::CLIENT_CART);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToProductConfigurationClientInterface
+     */
+    public function getProductConfigurationClient(): ProductConfigurationStorageToProductConfigurationClientInterface
+    {
+        return $this->getProvidedDependency(ProductConfigurationStorageDependencyProvider::CLIENT_PRODUCT_CONFIGURATION);
     }
 }

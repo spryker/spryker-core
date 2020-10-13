@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.2",
     "spryker/availability-storage-extension": "^1.0.0",
-    "spryker/cart": "^7.0.0",
+    "spryker/cart": "^7.8.0",
     "spryker/cart-extension": "^4.0.0",
     "spryker/event-behavior": "^1.0.0",
     "spryker/kernel": "^3.30.0",
@@ -15,6 +15,7 @@
     "spryker/price-product-extension": "^1.2.0",
     "spryker/price-product-storage-extension": "^1.2.0",
     "spryker/product-configuration": "^0.1.0",
+    "spryker/product-configuration-extension": "^0.1.0",
     "spryker/product-storage": "^1.1.0",
     "spryker/product-storage-extension": "^1.4.0",
     "spryker/propel-orm": "^1.5.0",

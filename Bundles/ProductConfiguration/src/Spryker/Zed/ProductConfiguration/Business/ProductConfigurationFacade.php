@@ -68,4 +68,23 @@ class ProductConfigurationFacade extends AbstractFacade implements ProductConfig
             ->createProductConfigurationChecker()
             ->isQuoteProductConfigurationValid($quoteTransfer, $checkoutResponseTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function expandPriceProductTransfersWithProductConfigurationPrices(
+        array $priceProductTransfers,
+        CartChangeTransfer $cartChangeTransfer
+    ): array {
+        return $this->getFactory()
+          ->createProductConfigurationProductPriceExpander()
+          ->expandPriceProductTransfersWithProductConfigurationPrices($priceProductTransfers, $cartChangeTransfer);
+    }
 }

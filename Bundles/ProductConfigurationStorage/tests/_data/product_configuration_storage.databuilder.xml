@@ -34,4 +34,14 @@
         <property name="groupKey" dataBuilderRule="sentence(2)"/>
     </transfer>
 
+    <transfer name="ProductConfiguratorResponse">
+        <property name="productConfigurationInstance" dataBuilderRule="ProductConfigurationInstance"/>
+        <property name="sku" dataBuilderRule="isbn10"/>
+        <property name="itemGroupKey" dataBuilderRule="word"/>
+        <property name="customerReference" dataBuilderRule="word"/>
+        <property name="sourceType" dataBuilderRule="=SOURCE_TYPE_PDP"/>
+        <property name="timestamp" dataBuilderRule="randomNumber(1)"/>
+        <property name="checkSum" dataBuilderRule="word"/>
+    </transfer>
+
 </transfers>
