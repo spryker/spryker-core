@@ -24,7 +24,6 @@ import {
     DateRangePickerModule,
     DateRangePickerComponent,
 } from '@spryker/date-picker';
-import { CollapsibleModule, CollapsibleComponent } from '@spryker/collapsible';
 import { FormItemModule, FormItemComponent } from '@spryker/form-item';
 
 @NgModule({
@@ -34,7 +33,6 @@ import { FormItemModule, FormItemComponent } from '@spryker/form-item';
         ButtonModule,
         ButtonLinkModule,
         FormItemModule,
-        CollapsibleModule,
         CardModule,
         DateRangePickerModule,
         CheckboxModule,
@@ -60,7 +58,6 @@ export class ComponentsModule extends CustomElementModule {
         CardComponent,
         DateRangePickerComponent,
         CheckboxComponent,
-        CollapsibleComponent,
         FormItemComponent,
         OfferPricesTableComponent,
     ];

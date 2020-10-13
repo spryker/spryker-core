@@ -47,41 +47,6 @@
             {# Add TABLE CONFIG #}
             <web-mp-offer-prices-table table-id="web-mp-offer-prices-table" config=''></web-mp-offer-prices-table>
         </web-spy-card>
-
-
-
-        {% for storeName, pricesByStore in priceProduct.vars.pricesFormTable %}
-            <web-spy-collapsible
-                class="mp-edit-offer__prices-container"
-                spy-title="{{ storeName }}"
-                {% if loop.first %}active{% endif %}
-            >
-                <div class="mp-edit-offer__prices">
-                    {% for amountType, pricesByAmountType in pricesByStore %}
-                        {% for priceType, pricesByPriceType in pricesByAmountType %}
-                                <div class="mp-edit-offer__prices-col">
-                                    <web-spy-form-item no-spaces="true">
-                                        {{ amountType ~ ' ' ~ priceType | trans }}
-                                        <div control>
-                                            {% for priceField in pricesByPriceType %}
-                                                <div class="mp-edit-offer__prices-item">
-                                                    {% if not priceField.isRendered %}
-                                                        {{ form_widget(priceField, {attr: {
-                                                            'outer-prefix': priceField.vars.label,
-                                                        }}) }}
-                                                    {% endif %}
-                                                </div>
-
-                                                {% do priceField.setRendered %}
-                                            {% endfor %}
-                                        </div>
-                                    </web-spy-form-item>
-                                </div>
-                        {% endfor %}
-                    {% endfor %}
-                </div>
-            </web-spy-collapsible>
-        {% endfor %}
     </web-spy-card>
 {% endmacro %}
 
