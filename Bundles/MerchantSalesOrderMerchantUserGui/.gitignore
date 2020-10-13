@@ -31,6 +31,6 @@ src/*/Zed/*/Persistence/Propel/Base/*
 src/*/Zed/*/Persistence/Propel/Map/*
 
 # tests
-../MerchantShipment/tests/**/_generated/
-../MerchantShipment/tests/_output/*
-!../MerchantShipment/tests/_output/.gitkeep
+tests/**/_generated/
+tests/_output/*
+!tests/_output/.gitkeep

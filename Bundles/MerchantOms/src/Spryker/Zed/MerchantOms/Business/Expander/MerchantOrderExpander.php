@@ -55,27 +55,6 @@ class MerchantOrderExpander implements MerchantOrderExpanderInterface
     }
 
     /**
-     * @phpstan-return array<int, array<\Generated\Shared\Transfer\StateMachineItemTransfer>>
-     *
-     * @param int[] $merchantOrderItemIds
-     *
-     * @return array
-     */
-    public function getMerchantOrderItemsStateHistory(array $merchantOrderItemIds): array
-    {
-        $stateMachineItemTransfers = $this->merchantOmsRepository
-            ->findStateHistoryByMerchantOrderIds($merchantOrderItemIds);
-
-        $stateMachineItemTransfersGroupedByIdMerchantOrderItem = [];
-
-        foreach ($stateMachineItemTransfers as $stateMachineItemTransfer) {
-            $stateMachineItemTransfersGroupedByIdMerchantOrderItem[$stateMachineItemTransfer->getIdentifier()][] = $stateMachineItemTransfer;
-        }
-
-        return $stateMachineItemTransfersGroupedByIdMerchantOrderItem;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItemTransfers
      *
      * @return string|null

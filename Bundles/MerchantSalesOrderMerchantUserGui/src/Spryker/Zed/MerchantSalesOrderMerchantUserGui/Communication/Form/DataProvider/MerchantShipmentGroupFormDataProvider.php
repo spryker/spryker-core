@@ -16,11 +16,6 @@ use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSale
 
 class MerchantShipmentGroupFormDataProvider
 {
-    protected const ADDRESS_LABEL_PATTERN = '%s %s %s, %s %s, %s %s';
-    protected const SHIPMENT_METHODS_OPTIONS_NAMES_PATTERN = '%s - %s';
-    protected const SANITIZED_CUSTOMER_ADDRESS_LABEL_PATTERN = '%s - %s';
-
-    protected const VALUE_ADD_NEW_ADDRESS = '';
     protected const ADDRESS_CHOICE_NEW_ADDRESS_LABEL = 'New address';
 
     /**
@@ -210,7 +205,7 @@ class MerchantShipmentGroupFormDataProvider
      */
     protected function getShippingAddressesOptions(MerchantOrderTransfer $merchantOrderTransfer): array
     {
-        $newAddressChoice = [static::ADDRESS_CHOICE_NEW_ADDRESS_LABEL => static::VALUE_ADD_NEW_ADDRESS];
+        $newAddressChoice = [static::ADDRESS_CHOICE_NEW_ADDRESS_LABEL => ''];
 
         $customerTransfer = $merchantOrderTransfer->getOrder()->getCustomer();
         if ($customerTransfer === null) {

@@ -17,13 +17,4 @@ interface MerchantOrderExpanderInterface
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer
      */
     public function expandMerchantOrderWithMerchantOmsData(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer;
-
-    /**
-     * @phpstan-return array<int, array<\Generated\Shared\Transfer\StateMachineItemTransfer>>
-     *
-     * @param int[] $merchantOrderItemIds
-     *
-     * @return array
-     */
-    public function getMerchantOrderItemsStateHistory(array $merchantOrderItemIds): array;
 }

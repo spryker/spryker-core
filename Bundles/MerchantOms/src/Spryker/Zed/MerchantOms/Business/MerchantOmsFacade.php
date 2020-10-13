@@ -136,7 +136,7 @@ class MerchantOmsFacade extends AbstractFacade implements MerchantOmsFacadeInter
     public function getMerchantOrderItemsStateHistory(array $merchantOrderItemIds): array
     {
         return $this->getFactory()
-            ->createMerchantOrderExpander()
+            ->createMerchantOmsReader()
             ->getMerchantOrderItemsStateHistory($merchantOrderItemIds);
     }
 

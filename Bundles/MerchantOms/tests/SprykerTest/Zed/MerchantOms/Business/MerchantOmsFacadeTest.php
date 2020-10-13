@@ -392,7 +392,7 @@ class MerchantOmsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandMerchantOrderItemsWithStateHistory(): void
+    public function testGetMerchantOrderItemsStateHistory(): void
     {
         // Arrange
         $merchantOrderTransfer = $this->tester->createMerchantOrderWithItems();
@@ -406,10 +406,18 @@ class MerchantOmsFacadeTest extends Unit
             StateMachineItemStateHistoryTransfer::IDENTIFIER => $merchantOrderItemTransfer->getIdMerchantOrderItem(),
         ]);
 
+        $merchantOrderItemIds = array_map(
+            function (MerchantOrderItemTransfer $merchantOrderItemTransfer) {
+                return $merchantOrderItemTransfer->getIdMerchantOrderItem();
+            },
+            $merchantOrderTransfer->getMerchantOrderItems()->getArrayCopy()
+        );
+
         // Act
-        $merchantOrderTransfer = $this->tester->getFacade()->expandMerchantOrderItemsWithStateHistory($merchantOrderTransfer);
+        $stateMachineItemTransfers = $this->tester->getFacade()->getMerchantOrderItemsStateHistory($merchantOrderItemIds);
 
         // Assert
-        $this->assertCount(1, $merchantOrderTransfer->getMerchantOrderItems()->getIterator()->current()->getStateHistory());
+        $this->assertIsArray($stateMachineItemTransfers);
+        $this->assertCount(1, $stateMachineItemTransfers);
     }
 }
