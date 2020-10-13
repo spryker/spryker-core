@@ -55,12 +55,18 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     protected $calculationFacade;
 
     /**
+     * @var \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataExpanderPluginInterface[]
+     */
+    protected $checkoutDataExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToShipmentFacadeInterface $shipmentFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToPaymentFacadeInterface $paymentFacade
      * @param \Spryker\Zed\CheckoutRestApi\Business\Checkout\Address\AddressReaderInterface $addressReader
      * @param \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface[] $quoteMapperPlugins
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCalculationFacadeInterface $calculationFacade
+     * @param \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataExpanderPluginInterface[] $checkoutDataExpanderPlugins
      */
     public function __construct(
         QuoteReaderInterface $quoteReader,
@@ -68,7 +74,8 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         CheckoutRestApiToPaymentFacadeInterface $paymentFacade,
         AddressReaderInterface $addressReader,
         array $quoteMapperPlugins,
-        CheckoutRestApiToCalculationFacadeInterface $calculationFacade
+        CheckoutRestApiToCalculationFacadeInterface $calculationFacade,
+        array $checkoutDataExpanderPlugins
     ) {
         $this->quoteReader = $quoteReader;
         $this->shipmentFacade = $shipmentFacade;
@@ -76,6 +83,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         $this->addressReader = $addressReader;
         $this->quoteMapperPlugins = $quoteMapperPlugins;
         $this->calculationFacade = $calculationFacade;
+        $this->checkoutDataExpanderPlugins = $checkoutDataExpanderPlugins;
     }
 
     /**
@@ -107,6 +115,11 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
             ->setPaymentProviders($this->paymentFacade->getAvailablePaymentProvidersForStore($storeTransfer->getName()))
             ->setAddresses($this->addressReader->getAddressesTransfer($quoteTransfer))
             ->setAvailablePaymentMethods($this->getAvailablePaymentMethods($quoteTransfer));
+
+        $checkoutDataTransfer = $this->executeCheckoutDataExpanderPlugins(
+            $checkoutDataTransfer,
+            $restCheckoutRequestAttributesTransfer
+        );
 
         return (new RestCheckoutDataResponseTransfer())
             ->setIsSuccess(true)
@@ -171,5 +184,25 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestCheckoutDataTransfer
+     */
+    protected function executeCheckoutDataExpanderPlugins(
+        RestCheckoutDataTransfer $restCheckoutDataTransfer,
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+    ): RestCheckoutDataTransfer {
+        foreach ($this->checkoutDataExpanderPlugins as $checkoutDataExpanderPlugin) {
+            $restCheckoutDataTransfer = $checkoutDataExpanderPlugin->expandCheckoutData(
+                $restCheckoutDataTransfer,
+                $restCheckoutRequestAttributesTransfer
+            );
+        }
+
+        return $restCheckoutDataTransfer;
     }
 }
