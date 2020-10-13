@@ -478,6 +478,7 @@
     "spryker/product-api": "*",
     "spryker/product-attribute": "*",
     "spryker/product-attribute-gui": "*",
+    "spryker/product-attributes-rest-api": "*",
     "spryker/product-availabilities-rest-api": "*",
     "spryker/product-barcode": "*",
     "spryker/product-barcode-gui": "*",

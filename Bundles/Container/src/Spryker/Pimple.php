@@ -9,7 +9,7 @@ use Spryker\Service\Container\Container;
 
 /**
  * phpcs:disable
- * @deprecated This class exists only for BC reasons. Please switch to the `Spryker\Service\Container\ContainerInterface`.
+ * @deprecated This class exists only for BC reasons. Please switch to the {@link \Spryker\Service\Container\ContainerInterface}.
  */
 class Pimple extends Container
 {
