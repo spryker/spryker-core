@@ -10,13 +10,13 @@ namespace Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 
 /**
- * Allows to modify merchant order transfer before expanding.
+ * Allows to modify merchant order transfer.
  */
 interface MerchantOrderFilterPluginInterface
 {
     /**
      * Specification:
-     * - Executed before merchant order transfer expanding.
+     * - Executed when order transfer adding to merchant order.
      *
      * @api
      *
