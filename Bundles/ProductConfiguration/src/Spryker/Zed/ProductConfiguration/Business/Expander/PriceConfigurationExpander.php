@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductConfiguration\Business\Expander;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 
-class PriceProductConfigurationExpander implements ProductConfigurationPriceProductExpanderInterface
+class PriceConfigurationExpander implements PriceProductConfigurationExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
