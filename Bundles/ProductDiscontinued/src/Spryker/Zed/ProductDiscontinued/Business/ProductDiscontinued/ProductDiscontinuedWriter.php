@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued;
 
+use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 use Generated\Shared\Transfer\ProductDiscontinueRequestTransfer;
@@ -139,7 +140,11 @@ class ProductDiscontinuedWriter implements ProductDiscontinuedWriterInterface
     ): ProductDiscontinuedResponseTransfer {
         $this->productDiscontinuedEntityManager->deleteProductDiscontinuedNotes($productDiscontinuedTransfer);
         $this->productDiscontinuedEntityManager->deleteProductDiscontinued($productDiscontinuedTransfer);
-        $this->productDiscontinuedPluginExecutor->executePostDeleteProductDiscontinuedPlugins($productDiscontinuedTransfer);
+
+        $productDiscontinuedCollectionTransfer = new ProductDiscontinuedCollectionTransfer();
+        $productDiscontinuedCollectionTransfer->addDiscontinuedProduct($productDiscontinuedTransfer);
+
+        $this->productDiscontinuedPluginExecutor->executeBulkPostDeleteProductDiscontinuedPlugins($productDiscontinuedCollectionTransfer);
 
         return (new ProductDiscontinuedResponseTransfer())->setIsSuccessful(true);
     }

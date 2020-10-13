@@ -17,6 +17,11 @@ class LocaleCache implements LocaleCacheInterface
     protected static $localeCache = [];
 
     /**
+     * @var \Generated\Shared\Transfer\LocaleTransfer[]
+     */
+    protected static $localeCacheById = [];
+
+    /**
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer|null
@@ -27,6 +32,16 @@ class LocaleCache implements LocaleCacheInterface
     }
 
     /**
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer|null
+     */
+    public function findById(int $idLocale): ?LocaleTransfer
+    {
+        return static::$localeCacheById[$idLocale] ?? null;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
@@ -34,5 +49,6 @@ class LocaleCache implements LocaleCacheInterface
     public function set(LocaleTransfer $localeTransfer): void
     {
         static::$localeCache[$localeTransfer->getLocaleName()] = $localeTransfer;
+        static::$localeCacheById[$localeTransfer->getIdLocale()] = &static::$localeCache[$localeTransfer->getLocaleName()];
     }
 }

@@ -1,0 +1,5 @@
+{
+    "exclude": {
+        "pimple/pimple": "spryker/container provides a Pimple replacement."
+    }
+}
