@@ -10,12 +10,12 @@ namespace Spryker\Client\ProductConfiguration\Dependency\Service;
 class ProductConfigurationToProductConfigurationDataChecksumGeneratorBridge implements ProductConfigurationToProductConfigurationDataChecksumGeneratorInterface
 {
     /**
-     * @var \SprykerSdk\ProductConfigurationSdk\Service\ProductConfigurationDataChecksumGeneratorInterface
+     * @var \SprykerSdk\Service\ProductConfigurationSdk\Generator\ProductConfigurationDataChecksumGeneratorInterface
      */
     protected $productConfigurationDataChecksumGenerator;
 
     /**
-     * @param \SprykerSdk\ProductConfigurationSdk\Service\ProductConfigurationDataChecksumGeneratorInterface $productConfigurationDataChecksumGenerator
+     * @param \SprykerSdk\Service\ProductConfigurationSdk\Generator\ProductConfigurationDataChecksumGeneratorInterface $productConfigurationDataChecksumGenerator
      */
     public function __construct($productConfigurationDataChecksumGenerator)
     {
