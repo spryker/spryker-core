@@ -27,10 +27,10 @@ class PriceConfigurationExpander implements PriceProductConfigurationExpanderInt
             $productConfigurationInstance = $item->getProductConfigurationInstance();
 
             if ($productConfigurationInstance && $productConfigurationInstance->getPrices()->count()) {
-                $productConfigurationPriceProductTransfers[] = $productConfigurationInstance->getPrices();
+                $productConfigurationPriceProductTransfers[] = $productConfigurationInstance->getPrices()->getArrayCopy();
             }
         }
 
-        return array_merge($priceProductTransfers, $productConfigurationPriceProductTransfers);
+        return array_merge($priceProductTransfers, ...$productConfigurationPriceProductTransfers);
     }
 }
