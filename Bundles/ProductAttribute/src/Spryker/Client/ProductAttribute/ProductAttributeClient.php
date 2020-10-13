@@ -5,33 +5,31 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductAttribute\Persistence;
+namespace Spryker\Client\ProductAttribute;
 
 use Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer;
+use Spryker\Client\Kernel\AbstractClient;
 
-interface ProductAttributeRepositoryInterface
+/**
+ * @method \Spryker\Client\ProductAttribute\ProductAttributeFactory getFactory()
+ */
+class ProductAttributeClient extends AbstractClient implements ProductAttributeClientInterface
 {
     /**
-     * @param array $attributes
+     * {@inheritDoc}
      *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
-     */
-    public function findSuperAttributesFromAttributesList(array $attributes): array;
-
-    /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer $productManagementAttributeFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer
      */
     public function getProductManagementAttributes(
         ProductManagementAttributeFilterTransfer $productManagementAttributeFilterTransfer
-    ): ProductManagementAttributeCollectionTransfer;
-
-    /**
-     * @param int[] $productManagementAttributeIds
-     *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer[]
-     */
-    public function getProductManagementAttributeValues(array $productManagementAttributeIds): array;
+    ): ProductManagementAttributeCollectionTransfer {
+        return $this->getFactory()
+            ->createProductAttributeStub()
+            ->getProductManagementAttributes($productManagementAttributeFilterTransfer);
+    }
 }

@@ -5,21 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductAttribute\Persistence;
+namespace Spryker\Client\ProductAttribute;
 
 use Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer;
 
-interface ProductAttributeRepositoryInterface
+interface ProductAttributeClientInterface
 {
     /**
-     * @param array $attributes
+     * Specification:
+     * - Makes Zed request.
+     * - Retrieves product management attributes from Persistence by the given criteria.
      *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
-     */
-    public function findSuperAttributesFromAttributesList(array $attributes): array;
-
-    /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer $productManagementAttributeFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer
@@ -27,11 +26,4 @@ interface ProductAttributeRepositoryInterface
     public function getProductManagementAttributes(
         ProductManagementAttributeFilterTransfer $productManagementAttributeFilterTransfer
     ): ProductManagementAttributeCollectionTransfer;
-
-    /**
-     * @param int[] $productManagementAttributeIds
-     *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer[]
-     */
-    public function getProductManagementAttributeValues(array $productManagementAttributeIds): array;
 }

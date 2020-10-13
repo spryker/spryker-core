@@ -14,6 +14,7 @@ use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueTrans
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductAttribute\Persistence\Mapper\ProductAttributeMapper;
 use Spryker\Zed\ProductAttribute\Persistence\Mapper\ProductAttributeMapperInterface;
+use Spryker\Zed\ProductAttribute\Persistence\Propel\Mapper\ProductManagementAttributeMapper;
 
 /**
  * @method \Spryker\Zed\ProductAttribute\ProductAttributeConfig getConfig()
@@ -60,5 +61,13 @@ class ProductAttributePersistenceFactory extends AbstractPersistenceFactory
     public function createProductAttributeMapper(): ProductAttributeMapperInterface
     {
         return new ProductAttributeMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAttribute\Persistence\Propel\Mapper\ProductManagementAttributeMapper
+     */
+    public function createProductManagementAttributeMapper(): ProductManagementAttributeMapper
+    {
+        return new ProductManagementAttributeMapper();
     }
 }
