@@ -11,6 +11,9 @@ use Codeception\Module;
 
 class BrowserHelper extends Module
 {
+    /** @var string */
+    protected $navigatorRegularName = '/\bHeadlessChrome\//';
+
     /**
      * Disables native HTML5 client-side validation
      *
@@ -24,12 +27,14 @@ class BrowserHelper extends Module
         $webdriver = $this->getModule('WebDriver');
         $webdriver->executeJS(
             <<<EOF
-            document.querySelectorAll('{$selector}')
-                .forEach(
-                    function(element) {
-                        element.setAttribute('novalidate','novalidate')
-                    }
-                );
+            if ({$this->navigatorRegularName}.test(navigator.userAgent)) {
+                document.querySelectorAll('{$selector}')
+                    .forEach(
+                        function(element) {
+                            element.setAttribute('novalidate','novalidate')
+                        }
+                    );
+            }
 EOF
         );
     }
