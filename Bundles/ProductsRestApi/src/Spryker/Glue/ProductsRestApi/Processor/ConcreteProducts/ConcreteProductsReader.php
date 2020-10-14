@@ -168,6 +168,26 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
     }
 
     /**
+     * @param int[] $productConcreteIds
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function getProductConcreteCollectionByIds(array $productConcreteIds, RestRequestInterface $restRequest): array
+    {
+        $bulkProductConcreteStorageData = $this->productStorageClient
+            ->getBulkProductConcreteStorageData(
+                $productConcreteIds,
+                $restRequest->getMetadata()->getLocale()
+            );
+
+        return $this->createRestResourcesFromConcreteProductStorageData(
+            $bulkProductConcreteStorageData,
+            $restRequest
+        );
+    }
+
+    /**
      * @param array $multipleProductConcreteStorageData
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
