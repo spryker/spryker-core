@@ -11,7 +11,11 @@ use Codeception\Module;
 
 class BrowserHelper extends Module
 {
-    /** @var string */
+    /**
+     * Regular expression used for browser detection to disable validation.
+     *
+     * @var string
+     */
     protected $navigatorRegularName = '/\bHeadlessChrome\//';
 
     /**
