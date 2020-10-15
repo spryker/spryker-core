@@ -8,10 +8,11 @@
 namespace SprykerTest\Shared\Testify\Helper;
 
 use Codeception\Module;
+use Codeception\TestInterface;
 
 class BrowserHelper extends Module
 {
-    const PHANTOMJS_BROWSER_NAME = 'phantomjs';
+    protected const PHANTOMJS_BROWSER_NAME = 'phantomjs';
 
     /**
      * @var \Codeception\Scenario
@@ -20,8 +21,10 @@ class BrowserHelper extends Module
 
     /**
      * @param \Codeception\TestInterface $test
+     *
+     * @return void
      */
-    public function _before(\Codeception\TestInterface $test)
+    public function _before(TestInterface $test): void
     {
         $this->scenario = $test->getScenario();
     }
