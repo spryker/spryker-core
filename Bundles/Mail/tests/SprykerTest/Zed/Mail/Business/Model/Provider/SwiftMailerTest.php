@@ -203,23 +203,23 @@ class SwiftMailerTest extends Unit
      *
      * @dataProvider provideAttachments
      *
-     * @param \Generated\Shared\Transfer\MailAttachmentTransfer[] $mailAttachments
+     * @param \Generated\Shared\Transfer\MailAttachmentTransfer[] $mailAttachmentTransfers
      *
      * @return void
      */
-    public function testSendMailAddAttachmentToMassage(array $mailAttachments): void
+    public function testSendMailAddAttachments(array $mailAttachmentTransfers): void
     {
         // Assign
         $mailerMock = $this->getMailerMock();
         $swiftMailer = $this->getSwiftMailerWithMocks($mailerMock);
         $mailTransfer = $this->getMailTransfer();
 
-        foreach ($mailAttachments as $mailAttachmentTransfer) {
+        foreach ($mailAttachmentTransfers as $mailAttachmentTransfer) {
             $mailTransfer->addAttachment($mailAttachmentTransfer);
         }
 
         // Assert
-        $mailerMock->expects($this->exactly(count($mailAttachments)))->method('attach');
+        $mailerMock->expects($this->exactly(count($mailAttachmentTransfers)))->method('attach');
 
         // Act
         $swiftMailer->sendMail($mailTransfer);
