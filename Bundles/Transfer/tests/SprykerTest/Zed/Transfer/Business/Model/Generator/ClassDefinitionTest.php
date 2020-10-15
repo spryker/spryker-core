@@ -466,7 +466,6 @@ class ClassDefinitionTest extends Unit
         $method['parent'] = $parent;
         $method['is_associative'] = false;
         unset($method['shimNotice']);
-        unset($method['typeAssertion']);
 
         return $method;
     }

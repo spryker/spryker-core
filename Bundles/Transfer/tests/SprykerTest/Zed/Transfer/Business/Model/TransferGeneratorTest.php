@@ -205,7 +205,7 @@ class TransferGeneratorTest extends Unit
             codecept_data_dir('Shared/Test/Transfer/'),
         ];
         $configMock = $this->createMock(TransferConfig::class);
-        $configMock->method('isDevelopment')->willReturn(true);
+        $configMock->method('isDebugEnabled')->willReturn(true);
         $transferDefinitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories, $configMock);
 
         $messenger = $this->getMessenger();
@@ -275,7 +275,7 @@ class TransferGeneratorTest extends Unit
     protected function getTransferConfigMock(): TransferConfig
     {
         $configMock = $this->createMock(TransferConfig::class);
-        $configMock->method('isDevelopment')->willReturn(false);
+        $configMock->method('isDebugEnabled')->willReturn(false);
 
         return $configMock;
     }

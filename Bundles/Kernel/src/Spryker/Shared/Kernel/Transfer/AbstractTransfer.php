@@ -12,8 +12,6 @@ use ArrayObject;
 use Countable;
 use Exception;
 use InvalidArgumentException;
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
 use Serializable;
 use Spryker\Service\UtilEncoding\Model\Json;
 use Spryker\Shared\Kernel\Transfer\Exception\ArrayAccessReadyOnlyException;
@@ -22,8 +20,6 @@ use Spryker\Shared\Kernel\Transfer\Exception\TransferUnserializationException;
 
 abstract class AbstractTransfer implements TransferInterface, Serializable, ArrayAccess
 {
-    protected const TRANSFER_ARGUMENT_TYPE_ERROR_LOG_PATH = '/tmp/transfer-type-error.log';
-
     /**
      * @var array
      */
@@ -35,11 +31,6 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     protected $transferMetadata = [];
 
     /**
-     * @var \Monolog\Logger
-     */
-    protected $logger;
-
-    /**
      * @var string[]
      */
     protected $transferPropertyNameMap = [];
@@ -47,8 +38,6 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     public function __construct()
     {
         $this->initCollectionProperties();
-
-        $this->setUpLogger();
     }
 
     /**
@@ -418,80 +407,5 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     public function offsetUnset($offset)
     {
         throw new ArrayAccessReadyOnlyException('Transfer object as an array is available only for read');
-    }
-
-    /**
-     * @param mixed $var
-     * @param string $varTypes
-     * @param string $methodName
-     *
-     * @return void
-     */
-    protected function assertVarTypeIsCorrect($var, string $varTypes, string $methodName): void
-    {
-        if ($var === null) {
-            return;
-        }
-
-        if (!is_scalar($var) && !is_array($var)) {
-            return;
-        }
-
-        $varTypesCollection = explode('|', $varTypes);
-
-        foreach ($varTypesCollection as $varType) {
-            $assertFunctionName = $this->getAssertFunctionName($varType);
-
-            if (!function_exists($assertFunctionName)) {
-                continue;
-            }
-
-            if ($assertFunctionName($var)) {
-                return;
-            }
-        }
-
-        $this->logger->warning(
-            sprintf("Argument passed to `%s()` is expected to be of type %s. %s is given.", $methodName, $varTypes, gettype($var))
-        );
-    }
-
-    /**
-     * @param string $varType
-     *
-     * @return string
-     */
-    protected function getAssertFunctionName(string $varType): string
-    {
-        if ($varType === 'boolean') {
-            return 'is_bool';
-        }
-
-        if ($this->isTypedArray($varType)) {
-            return 'is_array';
-        }
-
-        return 'is_' . $varType;
-    }
-
-    /**
-     * @param string $varType
-     *
-     * @return bool
-     */
-    protected function isTypedArray(string $varType): bool
-    {
-        return (bool)preg_match('/array\[\]|callable\[\]|int\[\]|integer\[\]|float\[\]|decimal\[\]|string\[\]|bool\[\]|boolean\[\]|iterable\[\]|object\[\]|resource\[\]|mixed\[\]/', $varType);
-    }
-
-    /**
-     * @return void
-     */
-    protected function setUpLogger(): void
-    {
-        $logger = new Logger('transferLogger');
-        $logger->pushHandler(new StreamHandler(static::TRANSFER_ARGUMENT_TYPE_ERROR_LOG_PATH, Logger::WARNING));
-
-        $this->logger = $logger;
     }
 }

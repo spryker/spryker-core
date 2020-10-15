@@ -72,6 +72,9 @@ class {{ className }} extends {{ abstractClass }}
     {
         foreach ($data as $property => $value) {
             $normalizedPropertyName = $this->transferPropertyNameMap[$property] ?? null;
+{% if debugMode %}
+            $this->assertValueTypeIsCorrect($value, $this->getPropertyExpectedTypes($normalizedPropertyName), __METHOD__);
+{% endif %}
 
             switch ($normalizedPropertyName) {
 {% if primitives is not empty %}
@@ -224,4 +227,104 @@ class {{ className }} extends {{ abstractClass }}
     {{ macro.addToArray('toArrayRecursiveNotCamelCased', true, false, primitives, transfers, transferCollections, valueObjects) }}
 
     {{ macro.addToArray('toArrayRecursiveCamelCased', true, true, primitives, transfers, transferCollections, valueObjects) }}
+{% if debugMode %}
+
+    /**
+    * @param mixed $value
+    * @param string $expectedValueTypes
+    * @param string $methodName
+    *
+    * @return void
+    */
+    protected function assertValueTypeIsCorrect($value, string $expectedValueTypes, string $methodName): void
+    {
+        if ($value === null || (!is_scalar($value) && !is_array($value))) {
+            return;
+        }
+
+        $valueTypesCollection = explode('|', $expectedValueTypes);
+
+        foreach ($valueTypesCollection as $valueType) {
+            $assertFunctionName = $this->getAssertFunctionName($valueType);
+
+            if (!function_exists($assertFunctionName)) {
+                continue;
+            }
+
+            if ($assertFunctionName($value)) {
+                return;
+            }
+        }
+
+        ['file' => $callerFileName, 'line' => $callerLineNumber] = debug_backtrace()[1];
+
+        $this->getLogger()->warning(
+            sprintf(
+                "Value passed to `%s()` is expected to be of type(s) %s. %s is given. Called in %s:%d",
+                $methodName,
+                $expectedValueTypes,
+                gettype($value),
+                $callerFileName,
+                $callerLineNumber
+            )
+        );
+    }
+
+    /**
+    * @param string $varType
+    *
+    * @return string
+    */
+    protected function getAssertFunctionName(string $varType): string
+    {
+        if ($varType === 'boolean') {
+            return 'is_bool';
+        }
+
+        if ($this->isTypedArray($varType)) {
+            return 'is_array';
+        }
+
+        return 'is_' . $varType;
+    }
+
+    /**
+    * @param string $varType
+    *
+    * @return bool
+    */
+    protected function isTypedArray(string $varType): bool
+    {
+        return (bool)preg_match('/array\[\]|callable\[\]|int\[\]|integer\[\]|float\[\]|decimal\[\]|string\[\]|bool\[\]|boolean\[\]|iterable\[\]|object\[\]|resource\[\]|mixed\[\]/', $varType);
+    }
+
+    /**
+    * @return \Monolog\Logger
+    */
+    protected function getLogger(): Logger
+    {
+        $logFilePath = sys_get_temp_dir() . '/transfer-type-error.log';
+        $logger = new Logger('transferLogger');
+        $logger->pushHandler(new StreamHandler($logFilePath, Logger::WARNING));
+
+        return $logger;
+    }
+
+    /**
+    * @param $property
+    *
+    * @return string
+    */
+    protected function getPropertyExpectedTypes($property): string
+    {
+        $propertyTypes = $this->transferMetadata[$property]['type'];
+        $typeShim = $this->transferMetadata[$property]['type_shim'];
+
+        if ($typeShim) {
+            $propertyTypes .= '|' . $typeShim;
+        }
+
+        return $propertyTypes;
+    }
+{% endif -%}
 }

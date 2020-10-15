@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Transfer;
 
+use Spryker\Shared\Transfer\TransferConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class TransferConfig extends AbstractBundleConfig
@@ -246,6 +247,11 @@ class TransferConfig extends AbstractBundleConfig
                     'string' => 'array',
                 ],
             ],
+            'FooBarBaz' => [
+                'propInt' => [
+                    'int' => 'string',
+                ],
+            ],
         ];
     }
 
@@ -258,8 +264,21 @@ class TransferConfig extends AbstractBundleConfig
      *
      * @return bool
      */
-    public function isDevelopment(): bool
+    public function isDebugEnabled(): bool
     {
-        return true;
+        return $this->get(TransferConstants::DEBUG, true);
+    }
+
+    /**
+     * Specification:
+     * - Checks if application-wide debug mode is enabled.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isApplicationDebugEnabled(): bool
+    {
+        return $this->get(TransferConstants::ENABLE_APPLICATION_DEBUG, false);
     }
 }

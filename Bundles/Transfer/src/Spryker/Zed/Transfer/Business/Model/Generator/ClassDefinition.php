@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
 use ArrayObject;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeTypeException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeValueException;
@@ -108,6 +110,7 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         $this->addEntityNamespace($definition);
+        $this->addExtraUseStatements();
 
         if (isset($definition['property'])) {
             $definition = $this->shimTransferDefinitionPropertyTypes($definition);
@@ -779,6 +782,8 @@ class ClassDefinition implements ClassDefinitionInterface
             $method['typeHint'] = $typeHint;
         }
 
+        $method = $this->addTypeAssertion($method);
+
         if ($method['is_associative']) {
             $method['var'] = static::DEFAULT_ASSOCIATIVE_ARRAY_TYPE;
             $method['typeHint'] = null;
@@ -975,6 +980,14 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
+     * @return bool
+     */
+    public function debugMode(): bool
+    {
+        return $this->transferConfig->isDebugEnabled() ?: $this->transferConfig->isApplicationDebugEnabled();
+    }
+
+    /**
      * @param string $fullyQualifiedClassName
      *
      * @return string
@@ -1124,12 +1137,19 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function addTypeAssertion(array $method): array
     {
-        $method['typeAssertion'] = false;
-
-        if ($this->transferConfig->isDevelopment() && !$method['typeHint']) {
-            $method['typeAssertion'] = true;
-        }
+        $method['typeAssertion'] = $this->debugMode() && empty($method['typeHint']) && $method['var'] !== 'mixed';
 
         return $method;
+    }
+
+    /**
+     * @return void
+     */
+    protected function addExtraUseStatements(): void
+    {
+        if ($this->debugMode()) {
+            $this->addUseStatement(Logger::class);
+            $this->addUseStatement(StreamHandler::class);
+        }
     }
 }

@@ -7,6 +7,8 @@
 namespace Generated\Shared\Transfer;
 
 use ArrayObject;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 /**
@@ -104,6 +106,7 @@ class CatFaceTransfer extends AbstractTransfer
     protected $transferMetadata = [
         self::NAME => [
             'type' => 'string',
+            'type_shim' => null,
             'name_underscore' => 'name',
             'is_collection' => false,
             'is_transfer' => false,
@@ -114,6 +117,7 @@ class CatFaceTransfer extends AbstractTransfer
         ],
         self::ITEM => [
             'type' => 'Generated\Shared\Transfer\ItemTransfer',
+            'type_shim' => null,
             'name_underscore' => 'item',
             'is_collection' => false,
             'is_transfer' => true,
@@ -124,6 +128,7 @@ class CatFaceTransfer extends AbstractTransfer
         ],
         self::ITEMS => [
             'type' => 'Generated\Shared\Transfer\ItemTransfer',
+            'type_shim' => null,
             'name_underscore' => 'items',
             'is_collection' => true,
             'is_transfer' => true,
@@ -134,6 +139,7 @@ class CatFaceTransfer extends AbstractTransfer
         ],
         self::TYPED_ARRAY => [
             'type' => 'string[]',
+            'type_shim' => null,
             'name_underscore' => 'typed_array',
             'is_collection' => false,
             'is_transfer' => false,
@@ -144,6 +150,7 @@ class CatFaceTransfer extends AbstractTransfer
         ],
         self::TYPED_ASSOCIATIVE_STRING_ARRAY => [
             'type' => 'string[]',
+            'type_shim' => null,
             'name_underscore' => 'typed_associative_string_array',
             'is_collection' => false,
             'is_transfer' => false,
@@ -154,6 +161,7 @@ class CatFaceTransfer extends AbstractTransfer
         ],
         self::TYPED_ASSOCIATIVE_COLLECTION => [
             'type' => 'Generated\Shared\Transfer\ItemTransfer',
+            'type_shim' => null,
             'name_underscore' => 'typed_associative_collection',
             'is_collection' => true,
             'is_transfer' => true,
@@ -164,6 +172,7 @@ class CatFaceTransfer extends AbstractTransfer
         ],
         self::TYPED_NOT_ASSOCIATIVE_STRING_ARRAY => [
             'type' => 'string[]',
+            'type_shim' => null,
             'name_underscore' => 'typed_not_associative_string_array',
             'is_collection' => false,
             'is_transfer' => false,
@@ -174,6 +183,7 @@ class CatFaceTransfer extends AbstractTransfer
         ],
         self::TYPED_NOT_ASSOCIATIVE_ARRAY => [
             'type' => 'array',
+            'type_shim' => null,
             'name_underscore' => 'typed_not_associative_array',
             'is_collection' => false,
             'is_transfer' => false,
@@ -193,7 +203,7 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function setName($name)
     {
-        $this->assertVarTypeIsCorrect($name, 'string|null', __METHOD__);
+        $this->assertValueTypeIsCorrect($name, 'string|null', __METHOD__);
 
         $this->name = $name;
         $this->modifiedProperties[self::NAME] = true;
@@ -350,6 +360,8 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function addTypedArray($typedArray)
     {
+        $this->assertValueTypeIsCorrect($typedArray, 'string', __METHOD__);
+
         $this->typedArray[] = $typedArray;
         $this->modifiedProperties[self::TYPED_ARRAY] = true;
 
@@ -377,7 +389,7 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function setTypedAssociativeStringArray($typedAssociativeStringArray)
     {
-        $this->assertVarTypeIsCorrect($typedAssociativeStringArray, 'string[]', __METHOD__);
+        $this->assertValueTypeIsCorrect($typedAssociativeStringArray, 'string[]', __METHOD__);
 
         $this->typedAssociativeStringArray = $typedAssociativeStringArray;
         $this->modifiedProperties[self::TYPED_ASSOCIATIVE_STRING_ARRAY] = true;
@@ -485,7 +497,7 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function setTypedNotAssociativeStringArray($typedNotAssociativeStringArray)
     {
-        $this->assertVarTypeIsCorrect($typedNotAssociativeStringArray, 'string[]', __METHOD__);
+        $this->assertValueTypeIsCorrect($typedNotAssociativeStringArray, 'string[]', __METHOD__);
 
         $this->typedNotAssociativeStringArray = $typedNotAssociativeStringArray;
         $this->modifiedProperties[self::TYPED_NOT_ASSOCIATIVE_STRING_ARRAY] = true;
@@ -512,6 +524,8 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function addTypedNotAssociativeStringArray($typedNotAssociativeStringArray)
     {
+        $this->assertValueTypeIsCorrect($typedNotAssociativeStringArray, 'string', __METHOD__);
+
         $this->typedNotAssociativeStringArray[] = $typedNotAssociativeStringArray;
         $this->modifiedProperties[self::TYPED_NOT_ASSOCIATIVE_STRING_ARRAY] = true;
 
@@ -539,7 +553,7 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function setTypedNotAssociativeArray($typedNotAssociativeArray)
     {
-        $this->assertVarTypeIsCorrect($typedNotAssociativeArray, 'array', __METHOD__);
+        $this->assertValueTypeIsCorrect($typedNotAssociativeArray, 'array', __METHOD__);
 
         $this->typedNotAssociativeArray = $typedNotAssociativeArray;
         $this->modifiedProperties[self::TYPED_NOT_ASSOCIATIVE_ARRAY] = true;
@@ -593,6 +607,7 @@ class CatFaceTransfer extends AbstractTransfer
     {
         foreach ($data as $property => $value) {
             $normalizedPropertyName = $this->transferPropertyNameMap[$property] ?? null;
+            $this->assertValueTypeIsCorrect($value, $this->getPropertyExpectedTypes($normalizedPropertyName), __METHOD__);
 
             switch ($normalizedPropertyName) {
                 case 'name':
@@ -892,5 +907,103 @@ class CatFaceTransfer extends AbstractTransfer
             'items' => $this->items instanceof AbstractTransfer ? $this->items->toArray(true, true) : $this->addValuesToCollection($this->items, true, true),
             'typedAssociativeCollection' => $this->typedAssociativeCollection instanceof AbstractTransfer ? $this->typedAssociativeCollection->toArray(true, true) : $this->addValuesToCollection($this->typedAssociativeCollection, true, true),
         ];
+    }
+
+    /**
+    * @param mixed $value
+    * @param string $expectedValueTypes
+    * @param string $methodName
+    *
+    * @return void
+    */
+    protected function assertValueTypeIsCorrect($value, string $expectedValueTypes, string $methodName): void
+    {
+        if ($value === null || (!is_scalar($value) && !is_array($value))) {
+            return;
+        }
+
+        $valueTypesCollection = explode('|', $expectedValueTypes);
+
+        foreach ($valueTypesCollection as $valueType) {
+            $assertFunctionName = $this->getAssertFunctionName($valueType);
+
+            if (!function_exists($assertFunctionName)) {
+                continue;
+            }
+
+            if ($assertFunctionName($value)) {
+                return;
+            }
+        }
+
+        ['file' => $callerFileName, 'line' => $callerLineNumber] = debug_backtrace()[1];
+
+        $this->getLogger()->warning(
+            sprintf(
+                "Value passed to `%s()` is expected to be of type(s) %s. %s is given. Called in %s:%d",
+                $methodName,
+                $expectedValueTypes,
+                gettype($value),
+                $callerFileName,
+                $callerLineNumber
+            )
+        );
+    }
+
+    /**
+    * @param string $varType
+    *
+    * @return string
+    */
+    protected function getAssertFunctionName(string $varType): string
+    {
+        if ($varType === 'boolean') {
+            return 'is_bool';
+        }
+
+        if ($this->isTypedArray($varType)) {
+            return 'is_array';
+        }
+
+        return 'is_' . $varType;
+    }
+
+    /**
+    * @param string $varType
+    *
+    * @return bool
+    */
+    protected function isTypedArray(string $varType): bool
+    {
+        return (bool)preg_match('/array\[\]|callable\[\]|int\[\]|integer\[\]|float\[\]|decimal\[\]|string\[\]|bool\[\]|boolean\[\]|iterable\[\]|object\[\]|resource\[\]|mixed\[\]/', $varType);
+    }
+
+    /**
+    * @return \Monolog\Logger
+    */
+    protected function getLogger(): Logger
+    {
+        $logFilePath = sys_get_temp_dir() . '/transfer-type-error.log';
+        $logger = new Logger('transferLogger');
+        $logger->pushHandler(new StreamHandler($logFilePath, Logger::WARNING));
+
+        return $logger;
+    }
+
+    /**
+    * @param $property
+    *
+    * @return string
+    */
+    protected function getPropertyExpectedTypes($property): string
+    {
+        $propertyTypes = $this->transferMetadata[$property]['type'];
+        $typeShim = $this->transferMetadata[$property]['type_shim'];
+
+        if ($typeShim) {
+            $propertyTypes .= '|' . $typeShim;
+        }
+
+        return $propertyTypes;
     }
 }

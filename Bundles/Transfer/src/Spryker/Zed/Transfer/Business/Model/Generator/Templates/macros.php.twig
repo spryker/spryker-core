@@ -18,6 +18,7 @@
     {% for property in normalizedProperties %}
     self::{{ property.propertyConst }} => [
             'type' => '{{ property.type_fully_qualified }}',
+            'type_shim' => {% if property.typeShim is defined %}'{{ property.typeShim }}'{% else %}null{% endif %},
             'name_underscore' => '{{ property.name_underscore }}',
             'is_collection' => {{ property.is_collection ? 'true' : 'false' }},
             'is_transfer' => {{ property.is_transfer ? 'true' : 'false' }},
@@ -82,7 +83,7 @@
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }}{% if method.hasDefaultNull %} = null{% endif %})
     {
         {% if method.typeAssertion -%}
-        $this->assertVarTypeIsCorrect(${{ method.property }}, '{{ method.var }}', __METHOD__);
+        $this->assertValueTypeIsCorrect(${{ method.property }}, '{{ method.var }}', __METHOD__);
 
         {% endif -%}
         {% if method.typeHint == "array" -%}
@@ -140,6 +141,10 @@
      */
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }})
     {
+        {% if method.typeAssertion -%}
+        $this->assertValueTypeIsCorrect(${{ method.property }}, '{{ method.var }}', __METHOD__);
+
+        {% endif -%}
         $this->{{ method.parent }}[] = ${{ method.property }};
         $this->modifiedProperties[self::{{ method.propertyConst }}] = true;
 
