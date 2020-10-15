@@ -62,11 +62,11 @@ EOF
      */
     public function adaptDateInputForBrowser(string $date): string
     {
-        if (!$this->isPhantom()) {
-            $date = implode('', array_reverse(explode('-', $date)));
+        if ($this->isPhantom()) {
+            return $date;
         }
 
-        return $date;
+        return implode('', array_reverse(explode('-', $date)));
     }
 
     /**
