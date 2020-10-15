@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Propel\Communication\Console;
 
-use Generated\Shared\Transfer\FooBarBazTransfer;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -52,13 +51,15 @@ class PropelInstallConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $t = new FooBarBazTransfer();
-        $t->fromArray([
-            'propInt' => true,
-            'propSimpleArray' => [1,2,3],
-            'propStringArray' => ['foo', 1, 'bar']
-        ]);
-        $t->addPropStringArray(1);
+        $dependingCommands = $this->getDependingCommands();
+
+        foreach ($dependingCommands as $commandName) {
+            $this->runDependingCommand($commandName);
+
+            if ($this->hasError()) {
+                return $this->getLastExitCode();
+            }
+        }
 
         return static::CODE_SUCCESS;
     }
