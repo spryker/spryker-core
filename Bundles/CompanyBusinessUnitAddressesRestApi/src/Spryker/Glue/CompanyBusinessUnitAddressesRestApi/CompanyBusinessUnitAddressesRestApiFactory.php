@@ -13,6 +13,7 @@ use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUn
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Reader\CompanyBusinessUnitAddressReader;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Reader\CompanyBusinessUnitAddressReaderInterface;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Relationship\CompanyBusinessUnitAddressCollectionByCompanyBusinessUnitTransferResourceRelationshipExpander;
+use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Relationship\CompanyBusinessUnitAddressCollectionByRestCheckoutDataTransferResourceRelationshipExpander;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Relationship\CompanyBusinessUnitAddressCollectionResourceRelationshipExpanderInterface;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\RestResponseBuilder\CompanyBusinessUnitAddressRestResponseBuilder;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\RestResponseBuilder\CompanyBusinessUnitAddressRestResponseBuilderInterface;
@@ -26,6 +27,17 @@ class CompanyBusinessUnitAddressesRestApiFactory extends AbstractFactory
     public function createCompanyBusinessUnitAddressCollectionByCompanyBusinessUnitTransferResourceRelationshipExpander(): CompanyBusinessUnitAddressCollectionResourceRelationshipExpanderInterface
     {
         return new CompanyBusinessUnitAddressCollectionByCompanyBusinessUnitTransferResourceRelationshipExpander(
+            $this->createCompanyBusinessUnitAddressRestResponseBuilder(),
+            $this->createCompanyBusinessUnitAddressMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Relationship\CompanyBusinessUnitAddressCollectionResourceRelationshipExpanderInterface
+     */
+    public function createCompanyBusinessUnitAddressCollectionByRestCheckoutDataTransferResourceRelationshipExpander(): CompanyBusinessUnitAddressCollectionResourceRelationshipExpanderInterface
+    {
+        return new CompanyBusinessUnitAddressCollectionByRestCheckoutDataTransferResourceRelationshipExpander(
             $this->createCompanyBusinessUnitAddressRestResponseBuilder(),
             $this->createCompanyBusinessUnitAddressMapper()
         );
