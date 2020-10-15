@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Mail\Business\Model\Provider;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\MailAttachmentTransfer;
 use Generated\Shared\Transfer\MailRecipientTransfer;
 use Generated\Shared\Transfer\MailSenderTransfer;
 use Generated\Shared\Transfer\MailTemplateTransfer;
@@ -198,15 +199,62 @@ class SwiftMailerTest extends Unit
     }
 
     /**
+     * @uses MailToMailerInterface::attach()
+     *
+     * @dataProvider provideAttachments
+     *
+     * @param \Generated\Shared\Transfer\MailAttachmentTransfer[] $mailAttachments
+     *
      * @return void
      */
-    public function testSendMailAddAttachmentToMassage(): void
+    public function testSendMailAddAttachmentToMassage(array $mailAttachments): void
     {
+        // Assign
         $mailerMock = $this->getMailerMock();
-        $mailerMock->expects($this->once())->method('attach')->with(static::MAIL_ATTACHMENT_URL);
-
         $swiftMailer = $this->getSwiftMailerWithMocks($mailerMock);
-        $swiftMailer->sendMail($this->getMailTransfer());
+        $mailTransfer = $this->getMailTransfer();
+
+        foreach ($mailAttachments as $mailAttachmentTransfer) {
+            $mailTransfer->addAttachment($mailAttachmentTransfer);
+        }
+
+        // Assert
+        $mailerMock->expects($this->exactly(count($mailAttachments)))->method('attach');
+
+        // Act
+        $swiftMailer->sendMail($mailTransfer);
+    }
+
+    /**
+     * @return array
+     */
+    public function provideAttachments(): array
+    {
+        return [
+            [ // 0 Attachments
+                [],
+            ],
+            [ // 1 Attachment
+                [
+                    (new MailAttachmentTransfer())
+                        ->setAttachmentUrl(static::MAIL_ATTACHMENT_URL),
+                ],
+            ],
+            [ // multiple Attachments
+                [
+                    (new MailAttachmentTransfer())
+                        ->setAttachmentUrl(static::MAIL_ATTACHMENT_URL),
+                ],
+                [
+                    (new MailAttachmentTransfer())
+                        ->setAttachmentUrl(static::MAIL_ATTACHMENT_URL),
+                ],
+                [
+                    (new MailAttachmentTransfer())
+                        ->setAttachmentUrl(static::MAIL_ATTACHMENT_URL),
+                ],
+            ],
+        ];
     }
 
     /**
