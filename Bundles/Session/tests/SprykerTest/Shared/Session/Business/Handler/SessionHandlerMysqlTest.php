@@ -103,7 +103,7 @@ class SessionHandlerMysqlTest extends Unit
         $sessionHandlerMySql = $this->createSessionHandlerMySql();
 
         // Act
-        $result = $sessionHandlerMySql->write(self::SESSION_ID, self::SESSION_DATA);
+        $result = $sessionHandlerMySql->write(static::SESSION_ID, static::SESSION_DATA);
 
         // Assert
         $this->assertTrue($result);
@@ -131,13 +131,13 @@ class SessionHandlerMysqlTest extends Unit
     {
         // Arrange
         $sessionHandlerMySql = $this->createSessionHandlerMySql();
-        $sessionHandlerMySql->write(self::SESSION_ID, self::SESSION_DATA);
+        $sessionHandlerMySql->write(static::SESSION_ID, static::SESSION_DATA);
 
         // Act
-        $result = $sessionHandlerMySql->read(self::SESSION_ID);
+        $result = $sessionHandlerMySql->read(static::SESSION_ID);
 
         // Assert
-        $this->assertSame(self::SESSION_DATA, $result);
+        $this->assertSame(static::SESSION_DATA, $result);
     }
 
     /**
@@ -147,13 +147,13 @@ class SessionHandlerMysqlTest extends Unit
     {
         // Arrange
         $sessionHandlerMySql = $this->createSessionHandlerMySql();
-        $sessionHandlerMySql->write(self::SESSION_ID, self::SESSION_DATA);
+        $sessionHandlerMySql->write(static::SESSION_ID, static::SESSION_DATA);
 
         // Act
-        $sessionHandlerMySql->destroy(self::SESSION_ID);
+        $sessionHandlerMySql->destroy(static::SESSION_ID);
 
         // Assert
-        $this->assertEmpty($sessionHandlerMySql->read(self::SESSION_ID));
+        $this->assertEmpty($sessionHandlerMySql->read(static::SESSION_ID));
     }
 
     /**
@@ -207,8 +207,10 @@ class SessionHandlerMysqlTest extends Unit
      */
     protected function isSessionTableExists(): bool
     {
-        $schema = Config::get(PropelConstants::ZED_DB_DATABASE);
-        $searchSessionTableQuery = "SELECT * FROM information_schema.tables WHERE table_schema = '$schema' AND table_name = 'session' LIMIT 1;";
+        $searchSessionTableQuery = sprintf(
+            "SELECT * FROM information_schema.tables WHERE table_schema = '%s' AND table_name = 'session' LIMIT 1;",
+            Config::get(PropelConstants::ZED_DB_DATABASE)
+        );
         $statement = $this->connection->query($searchSessionTableQuery);
         $statement->execute();
 

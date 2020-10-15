@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\ProductSearch;
 
 use Codeception\Actor;
+use Orm\Zed\Product\Persistence\SpyProductAttributeKey;
+use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttribute;
 
 /**
  * @method void wantToTest($text)
@@ -26,4 +28,23 @@ use Codeception\Actor;
 class ProductSearchPersistenceTester extends Actor
 {
     use _generated\ProductSearchPersistenceTesterActions;
+
+    /**
+     * @param string $filterType
+     *
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttribute
+     */
+    public function createProductSearchAttribute(string $filterType): SpyProductSearchAttribute
+    {
+        $productAttributeKey = new SpyProductAttributeKey();
+        $productAttributeKey->setKey("{$filterType}_key");
+        $productAttributeKey->save();
+
+        $productSearchAttribute = new SpyProductSearchAttribute();
+        $productSearchAttribute->setFilterType($filterType);
+        $productSearchAttribute->setFkProductAttributeKey($productAttributeKey->getIdProductAttributeKey());
+        $productSearchAttribute->save();
+
+        return $productSearchAttribute;
+    }
 }

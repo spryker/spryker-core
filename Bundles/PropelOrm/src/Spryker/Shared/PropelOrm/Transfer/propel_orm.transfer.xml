@@ -11,7 +11,7 @@
     <transfer name="Table">
         <property name="name" type="string"/>
         <property name="namespace" type="string"/>
-        <property name="columns" type="Column[]" singular="columns"/>
+        <property name="columns" type="Column[]" singular="column"/>
     </transfer>
 
     <transfer name="FileToGenerate">
@@ -20,7 +20,7 @@
     </transfer>
 
     <transfer name="FilesToGenerateCollection">
-        <property name="filesToGenerate" type="FileToGenerate[]" singular="filesToGenerate"/>
+        <property name="filesToGenerate" type="FileToGenerate[]" singular="fileToGenerate"/>
     </transfer>
 
 </transfers>

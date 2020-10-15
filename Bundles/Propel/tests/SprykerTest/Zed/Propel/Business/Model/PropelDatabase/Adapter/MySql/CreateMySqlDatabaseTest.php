@@ -55,17 +55,19 @@ class CreateMySqlDatabaseTest extends Unit
     }
 
     /**
-     * @return mixed
+     * @return array
      */
-    protected function findCreatedDatabase()
+    protected function findCreatedDatabase(): array
     {
-        $databaseName = Config::get(PropelConstants::ZED_DB_DATABASE);
-        $searchDbQuery = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '$databaseName';";
+        $searchDbQuery = sprintf(
+            "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '%s';",
+            Config::get(PropelConstants::ZED_DB_DATABASE)
+        );
 
         $connection = Propel::getConnection();
         $statement = $connection->prepare($searchDbQuery);
         $statement->execute();
 
-        return $statement->fetch();
+        return $statement->fetchAll();
     }
 }

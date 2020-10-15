@@ -8,10 +8,8 @@
 namespace SprykerTest\Zed\ProductSearch\Persistence\Propel;
 
 use Codeception\Test\Unit;
-use Orm\Zed\Product\Persistence\SpyProductAttributeKey;
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttribute;
 use Propel\Runtime\Propel;
-use Spryker\Zed\ProductSearch\Persistence\Propel\AbstractSpyProductSearchAttribute;
 
 /**
  * Auto-generated group annotations
@@ -26,6 +24,13 @@ use Spryker\Zed\ProductSearch\Persistence\Propel\AbstractSpyProductSearchAttribu
  */
 class AbstractSpyProductSearchAttributeTest extends Unit
 {
+    protected const PRODUCT_SEARCH_ATTRIBUTE_FILTER_TYPE = 'product_search_attribute';
+
+    /**
+     * @var \SprykerTest\Zed\ProductSearch\ProductSearchPersistenceTester
+     */
+    protected $tester;
+
     /**
      * @var \Spryker\Zed\ProductSearch\Persistence\Propel\AbstractSpyProductSearchAttribute
      */
@@ -43,8 +48,7 @@ class AbstractSpyProductSearchAttributeTest extends Unit
     {
         parent::setUp();
 
-        $this->spyProductSearchAttribute = new class extends AbstractSpyProductSearchAttribute {
-        };
+        $this->spyProductSearchAttribute = new SpyProductSearchAttribute();
         $this->connection = Propel::getConnection();
     }
 
@@ -54,7 +58,7 @@ class AbstractSpyProductSearchAttributeTest extends Unit
     public function testPreInsertWithoutPositionShouldSetPosition(): void
     {
         // Arrange
-        $productAttributeSearchEntity = $this->createProductSearchAttribute('product_search_attribute');
+        $productAttributeSearchEntity = $this->tester->createProductSearchAttribute(static::PRODUCT_SEARCH_ATTRIBUTE_FILTER_TYPE);
         $expectedPosition = $productAttributeSearchEntity->getPosition() + 1;
         $this->spyProductSearchAttribute->setPosition(0);
 
@@ -81,24 +85,5 @@ class AbstractSpyProductSearchAttributeTest extends Unit
         // Assert
         $this->assertTrue($result);
         $this->assertEquals($position, $this->spyProductSearchAttribute->getPosition());
-    }
-
-    /**
-     * @param string $filterType
-     *
-     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttribute
-     */
-    protected function createProductSearchAttribute(string $filterType): SpyProductSearchAttribute
-    {
-        $productAttributeKey = new SpyProductAttributeKey();
-        $productAttributeKey->setKey("{$filterType}_key");
-        $productAttributeKey->save();
-
-        $productSearchAttribute = new SpyProductSearchAttribute();
-        $productSearchAttribute->setFilterType($filterType);
-        $productSearchAttribute->setFkProductAttributeKey($productAttributeKey->getIdProductAttributeKey());
-        $productSearchAttribute->save();
-
-        return $productSearchAttribute;
     }
 }

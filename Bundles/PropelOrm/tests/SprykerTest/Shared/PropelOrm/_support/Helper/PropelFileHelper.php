@@ -8,7 +8,7 @@
 namespace SprykerTest\Shared\PropelOrm\Helper;
 
 use Codeception\Module;
-use Generated\Shared\Transfer\FilesToGenerateCollectionTransfer;
+use Codeception\TestInterface;
 use Propel\Generator\Builder\Om\AbstractOMBuilder;
 use Propel\Generator\Config\QuickGeneratorConfig;
 use Propel\Generator\Model\Table;
@@ -16,21 +16,37 @@ use Propel\Generator\Model\Table;
 class PropelFileHelper extends Module
 {
     /**
-     * @param \Generated\Shared\Transfer\FilesToGenerateCollectionTransfer $filesToGenerateCollectionTransfer
+     * @var string[]
+     */
+    protected $filesNames = [];
+
+    /**
+     * @param array $filesToGenerate
      * @param \Propel\Generator\Model\Table $table
      *
      * @return void
      */
-    public function writePropelFiles(FilesToGenerateCollectionTransfer $filesToGenerateCollectionTransfer, Table $table): void
+    public function writePropelFiles(array $filesToGenerate, Table $table): void
     {
         $config = new QuickGeneratorConfig();
 
-        foreach ($filesToGenerateCollectionTransfer->getFilesToGenerate() as $fileToGenerateTransfer) {
-            $builderClass = $fileToGenerateTransfer->getBuilderClass();
+        foreach ($filesToGenerate as $fileName => $builderClass) {
             $builder = new $builderClass($table);
             $builder->setGeneratorConfig($config);
-            $this->writePropelFile($builder, $fileToGenerateTransfer->getFileName());
+            $this->writePropelFile($builder, $fileName);
         }
+    }
+
+    /**
+     * @param \Codeception\TestInterface $test
+     *
+     * @return void
+     */
+    public function _after(TestInterface $test): void
+    {
+        parent::_after($test);
+
+        $this->deletePropelFiles();
     }
 
     /**
@@ -47,27 +63,19 @@ class PropelFileHelper extends Module
             mkdir($directory, 0777, true);
         }
         file_put_contents($fileName, $fileContent);
+
+        $this->filesNames[] = $fileName;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FilesToGenerateCollectionTransfer $filesToGenerateCollectionTransfer
-     *
      * @return void
      */
-    public function deletePropelFiles(FilesToGenerateCollectionTransfer $filesToGenerateCollectionTransfer): void
+    protected function deletePropelFiles(): void
     {
-        foreach ($filesToGenerateCollectionTransfer->getFilesToGenerate() as $fileToGenerateTransfer) {
-            $this->deletePropelFile($fileToGenerateTransfer->getFileName());
+        foreach ($this->filesNames as $fileName) {
+            if (file_exists($fileName)) {
+                unlink($fileName);
+            }
         }
-    }
-
-    /**
-     * @param string $fileName
-     *
-     * @return void
-     */
-    protected function deletePropelFile(string $fileName): void
-    {
-        unlink($fileName);
     }
 }

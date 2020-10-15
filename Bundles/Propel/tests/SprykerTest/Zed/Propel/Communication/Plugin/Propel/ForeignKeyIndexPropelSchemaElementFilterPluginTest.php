@@ -24,6 +24,13 @@ use Spryker\Zed\Propel\Communication\Plugin\Propel\ForeignKeyIndexPropelSchemaEl
  */
 class ForeignKeyIndexPropelSchemaElementFilterPluginTest extends Unit
 {
+    protected const SCHEMA_WITH_INDEX = 'spy_foo.with_index.schema.xml';
+    protected const EXPECTED_SCHEMA_WITH_INDEX = 'expected.spy_foo.with_index.schema.xml';
+    protected const SCHEMA_WITHOUT_INDEX = 'spy_foo.without_index.schema.xml';
+    protected const EXPECTED_SCHEMA_WITHOUT_INDEX = 'expected.spy_foo.without_index.schema.xml';
+    protected const SCHEMA_WITH_UNIQUE_INDEX = 'spy_foo.with_unique_index.schema.xml';
+    protected const EXPECTED_SCHEMA_WITH_UNIQUE_INDEX = 'expected.spy_foo.with_unique_index.schema.xml';
+
     /**
      * @var \SprykerTest\Zed\Propel\PropelBusinessTester
      */
@@ -57,9 +64,9 @@ class ForeignKeyIndexPropelSchemaElementFilterPluginTest extends Unit
     public function filterDataProvider(): array
     {
         return [
-            ['spy_foo.with_index.schema.xml', 'expected.spy_foo.with_index.schema.xml'],
-            ['spy_foo.without_index.schema.xml', 'expected.spy_foo.without_index.schema.xml'],
-            ['spy_foo.with_unique_index.schema.xml', 'expected.spy_foo.with_unique_index.schema.xml'],
+            [static::SCHEMA_WITH_INDEX, static::EXPECTED_SCHEMA_WITH_INDEX],
+            [static::SCHEMA_WITHOUT_INDEX, static::EXPECTED_SCHEMA_WITHOUT_INDEX],
+            [static::SCHEMA_WITH_UNIQUE_INDEX, static::EXPECTED_SCHEMA_WITH_UNIQUE_INDEX],
         ];
     }
 

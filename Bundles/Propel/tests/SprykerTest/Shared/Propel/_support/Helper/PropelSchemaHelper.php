@@ -12,7 +12,7 @@ use DOMDocument;
 use SimpleXMLElement;
 use Symfony\Component\Finder\SplFileInfo;
 
-class XmlHelper extends Module
+class PropelSchemaHelper extends Module
 {
     /**
      * @param string $xml
@@ -26,13 +26,7 @@ class XmlHelper extends Module
         $dom->formatOutput = true;
         $dom->loadXML($xml);
 
-        $callback = function ($matches) {
-            $multiplier = (strlen($matches[1]) / 2) * 4;
-
-            return str_repeat(' ', $multiplier) . '<';
-        };
-
-        return preg_replace_callback('/^( +)</m', $callback, $dom->saveXML());
+        return preg_replace_callback('/^( +)</m', [$this, 'xmlSpacesDoublerFilter'], $dom->saveXML());
     }
 
     /**
@@ -45,5 +39,17 @@ class XmlHelper extends Module
         $schemaFile = new SplFileInfo($xmlFilePath, '', '');
 
         return new SimpleXMLElement($schemaFile->getContents());
+    }
+
+    /**
+     * @param array $matches
+     *
+     * @return string
+     */
+    protected function xmlSpacesDoublerFilter(array $matches): string
+    {
+        $multiplier = strlen($matches[1]) * 2;
+
+        return str_repeat(' ', $multiplier) . '<';
     }
 }

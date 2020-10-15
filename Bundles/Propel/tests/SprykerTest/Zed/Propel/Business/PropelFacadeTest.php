@@ -27,6 +27,11 @@ use Spryker\Zed\Propel\PropelConfig;
  */
 class PropelFacadeTest extends Unit
 {
+    protected const POSTGRESQL_ADJUSTER_SCHEMA = 'postgresql_adjuster.spy_foo.schema.xml';
+    protected const POSTGRESQL_SCHEMA_DIRECTORY = 'schemas';
+    protected const POSTGRESQL_SCHEMA = 'spy_foo.schema.xml';
+    protected const EXPECTED_POSTGRESQL_ADJUSTER_SCHEMA = 'expected.postgresql_adjuster.spy_foo.schema.xml';
+
     /**
      * @var \SprykerTest\Zed\Propel\PropelBusinessTester
      */
@@ -68,23 +73,30 @@ class PropelFacadeTest extends Unit
      */
     public function testAdjustPropelSchemaFilesForPostgresqlShouldAddIdMethodParameter(): void
     {
+        if (Config::get(PropelConstants::ZED_DB_ENGINE) !== PropelConfig::DB_ENGINE_PGSQL) {
+            $this->markTestSkipped('PostgreSQL related test');
+        }
+
         // Arrange
-        $initialXml = file_get_contents($this->getFixturesPathToFile('postgresql_adjuster.spy_foo.schema.xml'));
-        $entityDirectory = $this->tester->getVirtualDirectory(['schemas' => ['spy_foo.schema.xml' => $initialXml]]);
+        $initialXml = file_get_contents($this->getFixturesPathToFile(static::POSTGRESQL_ADJUSTER_SCHEMA));
+        $entityDirectory = $this->tester->getVirtualDirectory([static::POSTGRESQL_SCHEMA_DIRECTORY => [static::POSTGRESQL_SCHEMA => $initialXml]]);
         $this->tester->mockConfigMethod('getPropelSchemaPathPatterns', function () use ($entityDirectory) {
-            return [$entityDirectory . '/schemas'];
+            return [
+                sprintf('%s/%s', $entityDirectory, static::POSTGRESQL_SCHEMA_DIRECTORY),
+            ];
         });
 
-        $expectedXml = file_get_contents($this->getFixturesPathToFile('expected.postgresql_adjuster.spy_foo.schema.xml'));
+        $expectedXml = file_get_contents($this->getFixturesPathToFile(static::EXPECTED_POSTGRESQL_ADJUSTER_SCHEMA));
 
-        $actualXml = $this->tester->formatXml($this->tester->getVirtualDirectoryFileContent('schemas/spy_foo.schema.xml'));
+        $pathToSchema = sprintf('%s/%s', static::POSTGRESQL_SCHEMA_DIRECTORY, static::POSTGRESQL_SCHEMA);
+        $actualXml = $this->tester->formatXml($this->tester->getVirtualDirectoryFileContent($pathToSchema));
         $this->assertNotSame($expectedXml, $actualXml);
 
         // Act
         $this->tester->getFacade()->adjustPropelSchemaFilesForPostgresql();
 
         // Assert
-        $actualXml = $this->tester->formatXml($this->tester->getVirtualDirectoryFileContent('schemas/spy_foo.schema.xml'));
+        $actualXml = $this->tester->formatXml($this->tester->getVirtualDirectoryFileContent($pathToSchema));
         $this->assertSame($expectedXml, $actualXml);
     }
 
@@ -138,21 +150,6 @@ class PropelFacadeTest extends Unit
     }
 
     /**
-     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
-     * @param string $name
-     *
-     * @return bool
-     */
-    protected function executeExistsQuery(ConnectionInterface $connection, string $name): bool
-    {
-        $sqlQuery = "SELECT exists(SELECT * FROM pg_proc WHERE proname = '$name')";
-        $statement = $connection->prepare($sqlQuery);
-        $statement->execute();
-
-        return $statement->fetch()['exists'] ?? false;
-    }
-
-    /**
      * @param string $fileName
      *
      * @return string
@@ -167,5 +164,24 @@ class PropelFacadeTest extends Unit
         ];
 
         return implode(DIRECTORY_SEPARATOR, $pathParts);
+    }
+
+    /**
+     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
+     * @param string $name
+     *
+     * @return bool
+     */
+    protected function executeExistsQuery(ConnectionInterface $connection, string $name): bool
+    {
+        if (Config::get(PropelConstants::ZED_DB_ENGINE) !== PropelConfig::DB_ENGINE_PGSQL) {
+            return false;
+        }
+
+        $sqlQuery = sprintf("SELECT exists(SELECT * FROM pg_proc WHERE proname = '%s')", $name);
+        $statement = $connection->prepare($sqlQuery);
+        $statement->execute();
+
+        return $statement->fetch()['exists'] ?? false;
     }
 }
