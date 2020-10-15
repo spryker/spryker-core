@@ -45,7 +45,7 @@ class SalesProductConfigurationGuiDependencyProvider extends AbstractBundleDepen
     }
 
     /**
-     * @return \Spryker\Zed\SalesProductConfigurationGuiExtension\Dependency\Plugin\ProductConfigurationRenderPluginInterface[]
+     * @return \Spryker\Zed\SalesProductConfigurationGuiExtension\Dependency\Plugin\ProductConfigurationRenderStrategyPluginInterface[]
      */
     protected function getProductConfigurationRenderStrategyPlugins(): array
     {

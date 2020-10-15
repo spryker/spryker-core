@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\SalesProductConfigurationTemplateTransfer;
 /**
  * Use this plugin to provide the template and data for product configuration display.
  */
-interface ProductConfigurationRenderPluginInterface
+interface ProductConfigurationRenderStrategyPluginInterface
 {
     /**
      * Specification:

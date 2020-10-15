@@ -104,7 +104,7 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
     ): ProductConfiguratorResponseProcessorResponseTransfer {
         foreach ($quoteResponseTransfer->getErrors() as $error) {
             $productConfiguratorResponseProcessorResponseTransfer->addMessage(
-                (new MessageTransfer())->setMessage($error->getMessage())
+                (new MessageTransfer())->setValue($error->getMessage())
             );
         }
 

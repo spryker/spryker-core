@@ -13,16 +13,16 @@ use Generated\Shared\Transfer\SalesProductConfigurationTemplateTransfer;
 class ProductConfigurationTemplateResolver implements ProductConfigurationTemplateResolverInterface
 {
     /**
-     * @var \Spryker\Zed\SalesProductConfigurationGuiExtension\Dependency\Plugin\ProductConfigurationRenderPluginInterface[]
+     * @var \Spryker\Zed\SalesProductConfigurationGuiExtension\Dependency\Plugin\ProductConfigurationRenderStrategyPluginInterface[]
      */
-    protected $productConfigurationRenderPlugins;
+    protected $productConfigurationRenderStrategyPlugins;
 
     /**
-     * @param \Spryker\Zed\SalesProductConfigurationGuiExtension\Dependency\Plugin\ProductConfigurationRenderPluginInterface[] $productConfigurationRenderPlugins
+     * @param \Spryker\Zed\SalesProductConfigurationGuiExtension\Dependency\Plugin\ProductConfigurationRenderStrategyPluginInterface[] $productConfigurationRenderStrategyPlugins
      */
-    public function __construct(array $productConfigurationRenderPlugins)
+    public function __construct(array $productConfigurationRenderStrategyPlugins)
     {
-        $this->productConfigurationRenderPlugins = $productConfigurationRenderPlugins;
+        $this->productConfigurationRenderStrategyPlugins = $productConfigurationRenderStrategyPlugins;
     }
 
     /**
@@ -32,9 +32,9 @@ class ProductConfigurationTemplateResolver implements ProductConfigurationTempla
      */
     public function resolveProductConfigurationTemplate(ItemTransfer $itemTransfer): ?SalesProductConfigurationTemplateTransfer
     {
-        foreach ($this->productConfigurationRenderPlugins as $productConfigurationRenderPlugin) {
-            if ($productConfigurationRenderPlugin->isApplicable($itemTransfer)) {
-                return $productConfigurationRenderPlugin->getTemplate($itemTransfer);
+        foreach ($this->productConfigurationRenderStrategyPlugins as $productConfigurationRenderStrategyPlugin) {
+            if ($productConfigurationRenderStrategyPlugin->isApplicable($itemTransfer)) {
+                return $productConfigurationRenderStrategyPlugin->getTemplate($itemTransfer);
             }
         }
 
