@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductAttribute\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer;
+use Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -343,5 +345,22 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
         return $this->getFactory()
             ->createSuperAttributeReader()
             ->getUniqueSuperAttributesFromConcreteProducts($productConcreteTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer $productManagementAttributeFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer
+     */
+    public function getProductManagementAttributes(
+        ProductManagementAttributeFilterTransfer $productManagementAttributeFilterTransfer
+    ): ProductManagementAttributeCollectionTransfer {
+        return $this->getFactory()
+            ->createProductManagementAttributeReader()
+            ->getProductManagementAttributes($productManagementAttributeFilterTransfer);
     }
 }
