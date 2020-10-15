@@ -51,15 +51,19 @@ class ComposerDependencyFinder extends AbstractFileDependencyFinder
         $fileContent = $context->getFileInfo()->getContents();
 
         if (strpos($fileContent, 'cs-check') !== false) {
-            $dependencyContainer->addDependency('CodeSniffer', $this->getType(), false, true);
+            $dependencyContainer->addDependency('spryker/code-sniffer', $this->getType(), false, true);
         }
 
         if (preg_match('/code-sniffer\/(Spryker|SprykerStrict)/', $fileContent)) {
-            $dependencyContainer->addDependency('CodeSniffer', $this->getType(), false, true);
+            $dependencyContainer->addDependency('spryker/code-sniffer', $this->getType(), false, true);
         }
 
         if (strpos($fileContent, 'codecept run') !== false) {
-            $dependencyContainer->addDependency('Testify', $this->getType(), false, true);
+            $dependencyContainer->addDependency('spryker/testify', $this->getType(), false, true);
+        }
+
+        if (strpos($fileContent, 'phpstan analyse') !== false) {
+            $dependencyContainer->addDependency('phpstan/phpstan', $this->getType(), false, true);
         }
 
         return $dependencyContainer;

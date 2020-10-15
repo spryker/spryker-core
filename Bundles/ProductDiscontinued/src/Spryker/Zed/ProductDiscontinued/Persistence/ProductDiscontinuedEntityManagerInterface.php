@@ -39,4 +39,18 @@ interface ProductDiscontinuedEntityManagerInterface
      * @return void
      */
     public function deleteProductDiscontinuedNotes(ProductDiscontinuedTransfer $productDiscontinuedTransfer): void;
+
+    /**
+     * @param int[] $productDiscontinuedIds
+     *
+     * @return void
+     */
+    public function deleteProductDiscontinuedInBulk(array $productDiscontinuedIds): void;
+
+    /**
+     * @param int[] $productDiscontinuedIds
+     *
+     * @return void
+     */
+    public function deleteProductDiscontinuedNotesInBulk(array $productDiscontinuedIds): void;
 }

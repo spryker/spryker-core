@@ -579,7 +579,7 @@ class Reader implements ReaderInterface
                 $priceProductCriteriaTransfer
             );
 
-            if ($this->isPriceProductHasValidMoneyValue($resolvedItemPrice, $priceProductFilterTransfers)) {
+            if ($resolvedItemPrice) {
                 $resolvedPriceProductTransfers[] = $resolvedItemPrice;
             }
         }
@@ -607,41 +607,6 @@ class Reader implements ReaderInterface
         }
 
         return static::$resolvedPriceProductTransferCollection[$priceProductCriteriaIdentifier];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer|null $priceProductTransfer
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
-     *
-     * @return bool
-     */
-    protected function isPriceProductHasValidMoneyValue(
-        ?PriceProductTransfer $priceProductTransfer,
-        array $priceProductFilterTransfers
-    ): bool {
-        if ($priceProductTransfer === null) {
-            return false;
-        }
-
-        $priceModeIdentifierForNetType = $this->getPriceModeIdentifierForNetType();
-
-        foreach ($priceProductFilterTransfers as $priceProductFilterTransfer) {
-            $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
-
-            if ($priceProductFilterTransfer->getPriceMode() === $priceModeIdentifierForNetType) {
-                if ($moneyValueTransfer->getNetAmount() === null) {
-                    return false;
-                }
-
-                continue;
-            }
-
-            if ($moneyValueTransfer->getGrossAmount() === null) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     /**

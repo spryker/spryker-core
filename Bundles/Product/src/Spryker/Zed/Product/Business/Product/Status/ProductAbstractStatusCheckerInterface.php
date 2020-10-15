@@ -15,4 +15,11 @@ interface ProductAbstractStatusCheckerInterface
      * @return bool
      */
     public function isActive($idProductAbstract);
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return int[]
+     */
+    public function filterActiveIds(array $productAbstractIds): array;
 }

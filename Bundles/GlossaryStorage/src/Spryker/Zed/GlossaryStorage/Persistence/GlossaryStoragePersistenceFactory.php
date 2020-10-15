@@ -32,7 +32,7 @@ class GlossaryStoragePersistenceFactory extends AbstractPersistenceFactory
 
     /**
      * @deprecated This will be removed without replacement, please check
-     * `\Spryker\Zed\GlossaryStorage\Dependency\Facade\GlossaryStorageToGlossaryFacadeInterface::findGlossaryTranslationEntityTransfer()`.
+     *   {@link \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageRepositoryInterface::findGlossaryTranslationEntityTransfer()}.
      *
      * @return \Spryker\Zed\GlossaryStorage\Dependency\QueryContainer\GlossaryStorageToGlossaryQueryContainerInterface
      */
