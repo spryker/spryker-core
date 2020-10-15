@@ -28,7 +28,6 @@
     "spryker/twig": "^3.0.0"
   },
   "suggest": {
-    "spryker-sdk/codeception-phantoman": "If you want to use WebDriverHelper.",
     "spryker/silex": "Add this when you still want to use the abandoned Silex."
   },
   "autoload": {

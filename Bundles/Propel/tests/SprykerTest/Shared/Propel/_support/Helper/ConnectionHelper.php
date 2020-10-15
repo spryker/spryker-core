@@ -35,7 +35,7 @@ class ConnectionHelper extends Module
     }
 
     /**
-     * @deprecated Will be removed in favor of `\Spryker\Zed\Propel\Communication\Plugin\Application\PropelApplicationPlugin`.
+     * @deprecated Will be removed in favor of {@link \Spryker\Zed\Propel\Communication\Plugin\Application\PropelApplicationPlugin}.
      *
      * @return void
      */

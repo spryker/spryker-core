@@ -10,7 +10,7 @@ namespace Spryker\Zed\Http\Communication\Pluign\Form;
 use Spryker\Zed\Http\Communication\Plugin\Form\HttpFoundationFormPlugin as SprykerHttpFoundationFormPlugin;
 
 /**
- * @deprecated Use `\Spryker\Zed\Http\Communication\Plugin\Form\HttpFoundationFormPlugin` instead.
+ * @deprecated Use {@link \Spryker\Zed\Http\Communication\Plugin\Form\HttpFoundationFormPlugin} instead.
  *
  * @method \Spryker\Zed\Http\Communication\HttpCommunicationFactory getFactory()
  */
