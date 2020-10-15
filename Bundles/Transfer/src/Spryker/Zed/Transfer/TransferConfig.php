@@ -247,11 +247,6 @@ class TransferConfig extends AbstractBundleConfig
                     'string' => 'array',
                 ],
             ],
-            'FooBarBaz' => [
-                'propInt' => [
-                    'int' => 'string',
-                ],
-            ],
         ];
     }
 
