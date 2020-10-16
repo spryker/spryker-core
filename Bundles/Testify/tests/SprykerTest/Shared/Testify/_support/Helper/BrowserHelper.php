@@ -38,7 +38,7 @@ class BrowserHelper extends Module
      */
     public function disableBrowserNativeValidation(string $selector): void
     {
-        if ($this->isPhantom()) {
+        if ($this->isBrowserPhantom()) {
             return;
         }
 
@@ -65,7 +65,7 @@ EOF
      */
     public function adaptDateInputForBrowser(string $date): string
     {
-        if ($this->isPhantom()) {
+        if ($this->isBrowserPhantom()) {
             return $date;
         }
 
@@ -77,7 +77,7 @@ EOF
      *
      * @return bool
      */
-    protected function isPhantom()
+    protected function isBrowserPhantom(): bool
     {
         return ($this->scenario->current('browser') === static::PHANTOMJS_BROWSER_NAME);
     }
