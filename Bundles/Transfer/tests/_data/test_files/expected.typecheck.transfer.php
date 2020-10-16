@@ -607,7 +607,11 @@ class CatFaceTransfer extends AbstractTransfer
     {
         foreach ($data as $property => $value) {
             $normalizedPropertyName = $this->transferPropertyNameMap[$property] ?? null;
-            $this->assertValueTypeIsCorrect($value, $this->getPropertyExpectedTypes($normalizedPropertyName), __METHOD__);
+            $propertyExpectedTypes = $this->getPropertyExpectedTypes($normalizedPropertyName, $ignoreMissingProperty);
+
+            if ($propertyExpectedTypes !== null) {
+                $this->assertValueTypeIsCorrect($value, $propertyExpectedTypes, __METHOD__);
+            }
 
             switch ($normalizedPropertyName) {
                 case 'name':
@@ -991,14 +995,27 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-    * @param $property
+    * @param string|null $propertyName
+    * @param bool $ignoreMissingProperty
     *
-    * @return string
+    * @throws \InvalidArgumentException
+    *
+    * @return string|null
     */
-    protected function getPropertyExpectedTypes($property): string
+    protected function getPropertyExpectedTypes(?string $propertyName, bool $ignoreMissingProperty = false): ?string
     {
-        $propertyTypes = $this->transferMetadata[$property]['type'];
-        $typeShim = $this->transferMetadata[$property]['type_shim'];
+        if (!isset($this->transferMetadata[$propertyName])) {
+            if ($ignoreMissingProperty) {
+                return null;
+            }
+
+            throw new \InvalidArgumentException(sprintf('Missing property `%s` in `%s`', $propertyName, static::class));
+        }
+
+        $propertyTypes = $this->transferMetadata[$propertyName]['is_transfer']
+            ? 'array'
+            : $this->transferMetadata[$propertyName]['type'];
+        $typeShim = $this->transferMetadata[$propertyName]['type_shim'];
 
         if ($typeShim) {
             $propertyTypes .= '|' . $typeShim;
