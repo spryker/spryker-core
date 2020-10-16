@@ -1,0 +1,78 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\ConfigurableBundlesRestApi\\Processor\\RestResourceBuilder\\ConfigurableBundleTemplateImageSetRestResourceBuilderInterface::buildConfigurableBundleTemplateImageSetRestResource cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlesRestApi/src/Spryker/Glue/ConfigurableBundlesRestApi/Processor/Expander/ConfigurableBundleTemplateImageSetExpander.php",
+            "snippet": "                        $configurableBundleTemplateStorageTransfer->getUuid()",
+            "selected_text": "$configurableBundleTemplateStorageTransfer->getUuid()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 73,
+            "line_to": 73,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlesRestApi/src/Spryker/Glue/ConfigurableBundlesRestApi/Processor/Expander/ConfigurableBundleTemplateImageSetExpander.php",
+            "snippet": "            $parentRestResource->getId(),",
+            "selected_text": "$parentRestResource->getId()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlesRestApi/src/Spryker/Glue/ConfigurableBundlesRestApi/Processor/Expander/ConfigurableBundleTemplateSlotExpander.php",
+            "snippet": "            $parentRestResource->getId(),",
+            "selected_text": "$parentRestResource->getId()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 86,
+            "line_to": 86,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $translations using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlesRestApi/src/Spryker/Glue/ConfigurableBundlesRestApi/Processor/Translator/ConfigurableBundleRestApiTranslator.php",
+            "snippet": "                    $translations[$configurableBundleTemplateStorageTransfer->getName()]",
+            "selected_text": "$translations",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 93,
+            "line_to": 93,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $translations using possibly null offset mixed|null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlesRestApi/src/Spryker/Glue/ConfigurableBundlesRestApi/Processor/Translator/ConfigurableBundleRestApiTranslator.php",
+            "snippet": "                        $translations[$configurableBundleTemplateSlotStorageTransfer->getName()]",
+            "selected_text": "$translations",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 101,
+            "line_to": 101,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $translations using possibly null offset mixed|null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlesRestApi/src/Spryker/Glue/ConfigurableBundlesRestApi/Processor/Translator/ConfigurableBundleRestApiTranslator.php",
+            "snippet": "                        $translations[$productImageSetStorageTransfer->getName()]",
+            "selected_text": "$translations",
+            "error_level": 3,
+            "shortcode": 125
+        }
+    ],
+    "deprecation": []
+}

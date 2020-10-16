@@ -64,12 +64,13 @@ class ShippingAddressSaveTest extends Test
         // Arrange
         $salesOrderQuery = SpySalesOrderQuery::create()->orderByIdSalesOrder(Criteria::DESC);
         $salesOrderAddressQuery = SpySalesOrderAddressQuery::create();
+        $originalsalesOrderAddressCount = $salesOrderAddressQuery->count();
 
         // Act
         $this->getSalesFacadeWithMockedConfig()->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
 
         // Assert
-        $this->assertSame(2, $salesOrderAddressQuery->count(), 'Shipping address and billing address should have been saved');
+        $this->assertSame($originalsalesOrderAddressCount + 2, $salesOrderAddressQuery->count(), 'Shipping address and billing address should have been saved');
         $this->assertNotNull($salesOrderQuery->findOne()->getShippingAddress(), 'Shipping address should have been assigned on sales order level.');
     }
 
@@ -86,12 +87,13 @@ class ShippingAddressSaveTest extends Test
         // Arrange
         $salesOrderQuery = SpySalesOrderQuery::create()->orderByIdSalesOrder(Criteria::DESC);
         $salesOrderAddressQuery = SpySalesOrderAddressQuery::create();
+        $originalsalesOrderAddressCount = $salesOrderAddressQuery->count();
 
         // Act
         $this->getSalesFacadeWithMockedConfig()->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
 
         // Assert
-        $this->assertSame(1, $salesOrderAddressQuery->count(), 'Only billing address should have been saved.');
+        $this->assertSame($originalsalesOrderAddressCount + 1, $salesOrderAddressQuery->count(), 'Only billing address should have been saved.');
         $this->assertNull($salesOrderQuery->findOne()->getShippingAddress(), 'Shipping address should not have been assigned on sales order level.');
     }
 
@@ -175,9 +177,12 @@ class ShippingAddressSaveTest extends Test
      */
     protected function createSequenceNumberSettingsTransfer(): SequenceNumberSettingsTransfer
     {
-        return (new SequenceNumberSettingsBuilder([
+        /** @var \Generated\Shared\Transfer\SequenceNumberSettingsTransfer $sequenceNumberSettingsTransfer */
+        $sequenceNumberSettingsTransfer = (new SequenceNumberSettingsBuilder([
             'name' => SalesConstants::NAME_ORDER_REFERENCE,
             'prefix' => 'DE--',
         ]))->build();
+
+        return $sequenceNumberSettingsTransfer;
     }
 }

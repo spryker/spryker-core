@@ -20,7 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
- * @deprecated Will be removed in favor of `\Spryker\Zed\Console\Communication\Bootstrap\ConsoleBootstrap`.
+ * @deprecated Use {@link \Spryker\Zed\Console\Communication\Bootstrap\ConsoleBootstrap}
  *
  * @method \Spryker\Zed\Console\ConsoleConfig getConfig()
  */
@@ -137,6 +137,7 @@ class ConsoleBootstrap extends Application
         $inputDefinitions = parent::getDefaultInputDefinition();
         $inputDefinitions->addOption(new InputOption('--no-pre', '', InputOption::VALUE_NONE, 'Will not execute pre run hooks'));
         $inputDefinitions->addOption(new InputOption('--no-post', '', InputOption::VALUE_NONE, 'Will not execute post run hooks'));
+        $inputDefinitions->addOption(new InputOption('--quiet-meta', '', InputOption::VALUE_NONE, 'Disables meta output of store and environment'));
 
         return $inputDefinitions;
     }
@@ -182,7 +183,7 @@ class ConsoleBootstrap extends Application
     {
         $this->setDecorated($output);
 
-        if (!$input->hasParameterOption(['--format'], true)) {
+        if (!$input->hasParameterOption(['--format'], true) && !$input->hasParameterOption('--quiet-meta', true)) {
             $output->writeln($this->getInfoText());
         }
 
