@@ -31,6 +31,7 @@
 
     <transfer name="ProductConfigurationInstance">
         <property name="displayData" type="string"/>
+        <property name="displayDescription" type="string"/>
         <property name="configuration" type="string"/>
         <property name="configuratorKey" type="string"/>
         <property name="isComplete" type="bool"/>
@@ -85,10 +86,12 @@
     <transfer name="Item">
         <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
         <property name="sku" type="string"/>
+        <property name="groupKey" type="string"/>
     </transfer>
 
     <transfer name="ProductConcrete">
         <property name="sku" type="string"/>
+        <property name="isActive" type="bool"/>
     </transfer>
 
     <transfer name="Quote">
@@ -118,6 +121,7 @@
         <property name="itemGroupKey" type="string"/>
         <property name="checkSum" type="string"/>
         <property name="timestamp" type="int"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="ItemReplace">
@@ -132,7 +136,7 @@
     </transfer>
 
     <transfer name="Message">
-        <property name="message" type="string"/>
+        <property name="value" type="string"/>
     </transfer>
 
     <transfer name="QuoteError">

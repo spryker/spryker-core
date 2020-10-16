@@ -23,6 +23,10 @@
     <transfer name="Item">
         <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
         <property name="groupKey" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="unitGrossPrice" type="int"/>
+        <property name="sumGrossPrice" type="int"/>
+        <property name="quantity" type="int"/>
     </transfer>
 
     <transfer name="ProductConfigurationFilter">
