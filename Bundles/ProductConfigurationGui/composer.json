@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-configuration-gui",
+  "type": "library",
   "description": "ProductConfigurationGui module",
   "license": "proprietary",
   "require": {
@@ -8,6 +9,9 @@
     "spryker/product": "^6.0.0",
     "spryker/product-configuration": "^0.1.0",
     "spryker/product-management-extension": "^1.5.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*"
   },
   "autoload": {
     "psr-4": {
@@ -27,8 +31,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*"
   }
 }
