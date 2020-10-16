@@ -8,6 +8,9 @@
 namespace SprykerTest\Zed\SalesStatistics;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\Transfer\ItemTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 /**
  * @method void wantToTest($text)
@@ -21,9 +24,34 @@ use Codeception\Actor;
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
+ * @method \Spryker\Zed\SalesStatistics\Business\SalesStatisticsFacadeInterface getFacade()
+ *
  * @SuppressWarnings(PHPMD)
  */
 class SalesStatisticsBusinessTester extends Actor
 {
     use _generated\SalesStatisticsBusinessTesterActions;
+
+    public const ITEM_NAME = 'test1';
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
+     */
+    public function haveOrderWithOneItem(): SpySalesOrder
+    {
+        return $this->haveSalesOrderEntity([
+            (new ItemBuilder([ItemTransfer::NAME => static::ITEM_NAME]))->build(),
+        ]);
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
+     */
+    public function haveOrderWithTwoItems(): SpySalesOrder
+    {
+        return $this->haveSalesOrderEntity([
+            (new ItemBuilder([ItemTransfer::NAME => static::ITEM_NAME]))->build(),
+            (new ItemBuilder([ItemTransfer::NAME => static::ITEM_NAME]))->build(),
+        ]);
+    }
 }
