@@ -6,7 +6,9 @@
             {% do imageSetForm.setRendered %}
         {% endif %}
 
-        {{ form_widget(imageSetForm) }}
+        {% if not imageSetForm.isRendered %}
+            {{ form_widget(imageSetForm) }}
+        {% endif %}
     {% endfor %}
 
     <a href="#" class="btn btn-outline btn-primary add-another-image-set m-t-md">

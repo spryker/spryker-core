@@ -4,8 +4,7 @@
   "description": "TwigExtension module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
-    "twig/twig": "^1.41.0"
+    "php": ">=7.2"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

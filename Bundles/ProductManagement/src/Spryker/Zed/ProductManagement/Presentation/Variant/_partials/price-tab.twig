@@ -1,8 +1,8 @@
 <div class="well">
-    {% filter trans|raw %}
+    {% apply trans|raw %}
         <h3>{{ 'Price' | trans }}</h3>
         <p>{{ 'Enter price.' | trans }}</p>
-    {% endfilter %}
+    {% endapply %}
 </div>
 
 {% if form.price_source is defined %}
@@ -16,10 +16,10 @@
 {% if form.price_and_stock is defined %}
 
     <div class="well">
-        {% filter trans|raw %}
+        {% apply trans|raw %}
             <h3>{{ 'Stock' | trans }}</h3>
             <p>{{ 'Enter stock value. In case you create multiple variants, the stock can be managed under "Product Variants" and this input field will be ignored.' | trans }}</p>
-        {% endfilter %}
+        {% endapply %}
     </div>
 
     {% for inputCollection in form.price_and_stock %}

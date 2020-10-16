@@ -94,6 +94,21 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
     }
 
     /**
+     * Specification:
+     * - Converts a camel cased string into a string where every word is linked with the other by a dash (-) separator.
+     *
+     * @api
+     *
+     * @param string $string
+     *
+     * @return string
+     */
+    public function camelCaseToDash($string)
+    {
+        return $this->getFactory()->createCamelCaseToSeparator()->filter($string, '-');
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @api
@@ -107,6 +122,21 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
     public function separatorToCamelCase($string, $separator = '-', $upperCaseFirst = false)
     {
         return $this->getFactory()->createSeparatorToCamelCase()->filter($string, $separator, $upperCaseFirst);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $string
+     * @param bool $upperCaseFirst
+     *
+     * @return string
+     */
+    public function dashToCamelCase($string, $upperCaseFirst = false)
+    {
+        return $this->getFactory()->createSeparatorToCamelCase()->filter($string, '-', $upperCaseFirst);
     }
 
     /**

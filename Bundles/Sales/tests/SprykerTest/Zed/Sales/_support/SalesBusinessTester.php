@@ -68,6 +68,7 @@ class SalesBusinessTester extends Actor
      */
     protected function buildFakeQuote(CustomerTransfer $customerTransfer, StoreTransfer $storeTransfer): QuoteTransfer
     {
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
         $quoteTransfer = (new QuoteBuilder())
             ->withItem()
             ->withItem()
@@ -91,8 +92,11 @@ class SalesBusinessTester extends Actor
      */
     public function createOrderListRequestTransfer(array $seed): OrderListRequestTransfer
     {
-        return (new OrderListRequestBuilder($seed))
+        /** @var \Generated\Shared\Transfer\OrderListRequestTransfer $orderListRequestTransfer */
+        $orderListRequestTransfer = (new OrderListRequestBuilder($seed))
             ->build();
+
+        return $orderListRequestTransfer;
     }
 
     /**
@@ -102,11 +106,14 @@ class SalesBusinessTester extends Actor
      */
     public function buildQuote(array $seed = []): QuoteTransfer
     {
-        return (new QuoteBuilder($seed))
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
+        $quoteTransfer = (new QuoteBuilder($seed))
             ->withItem()
             ->withTotals()
             ->withShippingAddress()
             ->withBillingAddress()
             ->build();
+
+        return $quoteTransfer;
     }
 }

@@ -36,7 +36,7 @@ class PropelSchemaValidatorConsole extends Console
      *
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $schemaValidationTransfer = $this->getFacade()->validateSchemaFiles();
         if ($schemaValidationTransfer->getIsSuccess()) {

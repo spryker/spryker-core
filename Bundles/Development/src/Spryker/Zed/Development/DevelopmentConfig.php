@@ -300,64 +300,116 @@ class DevelopmentConfig extends AbstractBundleConfig
     public function getExternalToInternalNamespaceMap()
     {
         return [
-            'Psr\\Log\\' => 'spryker/log',
-            'Psr\\Container\\' => 'spryker/container',
-            'Propel\\' => 'spryker/propel-orm',
-            'Silex\\' => 'spryker/silex',
-            'Spryker\\DecimalObject\\' => 'spryker/decimal-object',
-            'Pimple' => 'spryker/container',
-            'Predis\\' => 'spryker/redis',
+            'Codeception\\' => 'spryker/testify',
+            'CodeItNow\\BarcodeBundle' => 'spryker/code-it-now',
+            'Doctrine\\Common\\Inflector' => 'spryker/doctrine-inflector',
+            'DMS\\PHPUnitExtensions\\' => 'spryker/testify',
+            'Egulias\\EmailValidator\\' => 'spryker/egulias',
+            'Elastica\\' => 'spryker/elastica',
+            'Faker\\' => 'spryker/testify',
             'Guzzle\\' => 'spryker/guzzle',
             'GuzzleHttp\\' => 'spryker/guzzle',
-            'League\\Csv\\' => 'spryker/csv',
-            'Monolog\\' => 'spryker/monolog',
-            'Elastica\\' => 'spryker/elastica',
-            'Symfony\\Component\\' => 'spryker/symfony',
-            'Twig_' => 'spryker/twig',
-            'Twig\\' => 'spryker/twig',
-            'Zend\\' => 'spryker/zend',
-            'phpDocumentor\\GraphViz\\' => 'spryker/graphviz',
-            'Egulias\\EmailValidator\\' => 'spryker/egulias',
-            'Ramsey\\Uuid' => 'spryker/ramsey-uuid',
-            'Doctrine\\Common\\Inflector' => 'spryker/doctrine-inflector',
             'JsonPath\\' => 'spryker/json-path',
             'JsonSchema\\' => 'spryker/json-schema',
+            'League\\Csv\\' => 'spryker/csv',
+            'Monolog\\' => 'spryker/monolog',
+            'org\\bovigo\\vfs\\' => 'spryker/testify',
+            'phpDocumentor\\GraphViz\\' => 'spryker/graphviz',
+            'Propel\\' => 'spryker/propel-orm',
+            'PHPUnit\\' => 'spryker/testify',
+            'Pimple' => 'spryker/container',
+            'Predis\\' => 'spryker/redis',
+            'Psr\\Log\\' => 'spryker/log',
+            'Psr\\Container\\' => 'spryker/container',
+            'Ramsey\\Uuid' => 'spryker/ramsey-uuid',
+            'Silex\\' => 'spryker/silex',
+            'Spryker\\DecimalObject\\' => 'spryker/decimal-object',
+            'Symfony\\Bridge\\Twig\\' => 'spryker/symfony',
+            'Symfony\\Bundle\\WebProfilerBundle\\' => 'spryker/symfony',
+            'Symfony\\Component\\' => 'spryker/symfony',
+            'Symfony\\Contracts\\' => 'spryker/symfony',
+            'Symfony\\Cmf\\' => 'spryker/symfony',
+            'Twig_' => 'spryker/twig',
+            'Twig\\' => 'spryker/twig',
             'Webmozart\\Glob' => 'spryker/util-glob',
+            'Zend\\' => 'spryker/zend',
         ];
     }
 
     /**
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getExternalToInternalMap()
     {
         return [
-            'psr/log' => 'spryker/log',
-            'propel/propel' => 'spryker/propel-orm',
-            'silex/silex' => 'spryker/silex',
-            'pimple/pimple' => 'spryker/container',
-            'mandrill/mandrill' => 'spryker/mandrill',
-            'predis/predis' => 'spryker/redis',
-            'guzzle/guzzle' => 'spryker/guzzle',
-            'guzzlehttp/guzzle' => 'spryker/guzzle',
-            'league/csv' => 'spryker/csv',
-            'monolog/monolog' => 'spryker/monolog',
-            'ruflin/elastica' => 'spryker/elastica',
-            '/symfony/' => 'spryker/symfony',
-            'twig/twig' => 'spryker/twig',
-            '/zendframework/' => 'spryker/zend',
-            'phpdocumentor/graphviz' => 'spryker/graphviz',
-            'egulias/email-validator' => 'spryker/egulias',
-            'ramsey/uuid' => 'spryker/ramsey-uuid',
+            'codeception/codeception' => 'spryker/testify',
+            'codeitnowin/barcode' => 'spryker/code-it-now',
+            'dms/phpunit-arraysubset-asserts' => 'spryker/testify',
             'doctrine/inflector' => 'spryker/doctrine-inflector',
+            'egulias/email-validator' => 'spryker/egulias',
+            'fzaninotto/faker' => 'spryker/testify',
+            'galbar/jsonpath' => 'spryker/json-path',
+            'guzzlehttp/guzzle' => 'spryker/guzzle',
+            'justinrainbow/json-schema' => 'spryker/json-schema',
+            'league/csv' => 'spryker/csv',
+            'league/oauth2-server' => 'spryker/oauth',
+            'mandrill/mandrill' => 'spryker/mandrill',
+            'mikey179/vfsstream' => 'spryker/testify',
+            'moneyphp/money' => 'spryker/money',
+            'monolog/monolog' => 'spryker/monolog',
+            'pimple/pimple' => 'spryker/container',
+            'phpbench/phpbench' => 'spryker-sdk/benchmark',
+            'phpdocumentor/graphviz' => 'spryker/graphviz',
+            'predis/predis' => 'spryker/redis',
+            'propel/propel' => 'spryker/propel-orm',
+            'psr/log' => 'spryker/log',
+            'psr/container' => 'spryker/container',
+            'ramsey/uuid' => 'spryker/ramsey-uuid',
+            'ruflin/elastica' => 'spryker/elastica',
+            'symfony-cmf/routing' => 'spryker/symfony',
+            'symfony/config' => 'spryker/symfony',
+            'symfony/console' => 'spryker/symfony',
+            'symfony/debug' => 'spryker/symfony',
+            'symfony/error-handler' => 'spryker/symfony',
+            'symfony/event-dispatcher' => 'spryker/symfony',
+            'symfony/filesystem' => 'spryker/symfony',
+            'symfony/finder' => 'spryker/symfony',
+            'symfony/form' => 'spryker/symfony',
+            'symfony/http-foundation' => 'spryker/symfony',
+            'symfony/http-kernel' => 'spryker/symfony',
+            'symfony/intl' => 'spryker/symfony',
+            'symfony/mime' => 'spryker/symfony',
+            'symfony/options-resolver' => 'spryker/symfony',
+            'symfony/process' => 'spryker/symfony',
+            'symfony/property-access' => 'spryker/symfony',
+            'symfony/routing' => 'spryker/symfony',
+            'symfony/security-core' => 'spryker/symfony',
+            'symfony/security-csrf' => 'spryker/symfony',
+            'symfony/security-guard' => 'spryker/symfony',
+            'symfony/security-http' => 'spryker/symfony',
+            'symfony/serializer' => 'spryker/symfony',
+            'symfony/stopwatch' => 'spryker/symfony',
+            'symfony/translation' => 'spryker/symfony',
+            'symfony/translation-contracts' => 'spryker/symfony',
+            'symfony/twig-bridge' => 'spryker/symfony',
+            'symfony/validator' => 'spryker/symfony',
+            'symfony/web-profiler-bundle' => 'spryker/web-profiler',
+            'symfony/yaml' => 'spryker/symfony',
+            'swiftmailer/swiftmailer' => 'spryker/mail',
+            'twig/twig' => 'spryker/twig',
             'webmozart/glob' => 'spryker/util-glob',
+            'zendframework/zend-config' => 'spryker/zend',
+            'zendframework/zend-filter' => 'spryker/zend',
+            'zendframework/zend-servicemanager' => 'spryker/zend',
         ];
     }
 
     /**
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return array
      */
@@ -370,7 +422,6 @@ class DevelopmentConfig extends AbstractBundleConfig
             'phploc/phploc',
             'phpmd/phpmd',
             'sebastian/phpcpd',
-            'codeception/codeception',
             'fabpot/php-cs-fixer',
             'sensiolabs/security-checker',
             'sllh/composer-versions-check',
@@ -557,13 +608,15 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * Gets PHPStan default level. The higher, the better.
      *
+     * Recommended level is 8 (include nullable safety).
+     *
      * @api
      *
      * @return int
      */
     public function getPhpstanLevel()
     {
-        return 3;
+        return 7;
     }
 
     /**

@@ -59,7 +59,7 @@ class UtilValidateServiceTest extends Unit
         $actualResult = $this->utilValidateService->isEmailFormatValid($invalidEmail);
 
         // Assert
-        $this->assertEquals($expectedResult, $actualResult);
+        $this->assertSame($expectedResult, $actualResult);
     }
 
     /**
@@ -96,7 +96,7 @@ class UtilValidateServiceTest extends Unit
         $actualResult = $this->utilValidateService->isEmailFormatValid($email);
 
         // Assert
-        $this->assertEquals($expectedResult, $actualResult);
+        $this->assertSame($expectedResult, $actualResult);
     }
 
     /**
@@ -122,6 +122,6 @@ class UtilValidateServiceTest extends Unit
         $actualResult = $this->utilValidateService->isEmailFormatValid(static::VALID_EMAIL);
 
         // Assert
-        $this->assertEquals($expectedResult, $actualResult);
+        $this->assertSame($expectedResult, $actualResult);
     }
 }

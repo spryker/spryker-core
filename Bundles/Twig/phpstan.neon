@@ -1,3 +1,7 @@
 parameters:
+    checkMissingIterableValueType: false
     ignoreErrors:
-    - '#Call to an undefined method Silex\\Application::render\(\).#'
+        - '#Call to an undefined method Silex\\Application::render\(\).#'
+        - '#Comparison operation "<" between [1-9] and 3 is always (true|false).#'
+        - '#Else branch is unreachable because previous condition is always true#'
+    reportUnmatchedIgnoredErrors: false

@@ -41,9 +41,9 @@ class DeployPreparePropelConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|null
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->warning(sprintf('The console command `%s` is deprecated. Use `propel:deploy:prepare` instead', static::COMMAND_NAME));
 

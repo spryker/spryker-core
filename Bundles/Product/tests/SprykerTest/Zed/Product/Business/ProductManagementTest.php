@@ -242,7 +242,7 @@ class ProductManagementTest extends FacadeTestAbstract
         $createdProductEntity = $this->getProductAbstractEntityById($productAbstractTransfer->getIdProductAbstract());
 
         $this->assertNotNull($createdProductEntity);
-        $this->assertEquals($productAbstractTransfer->getSku(), $createdProductEntity->getSku());
+        $this->assertSame($productAbstractTransfer->getSku(), $createdProductEntity->getSku());
     }
 
     /**
@@ -302,7 +302,7 @@ class ProductManagementTest extends FacadeTestAbstract
         foreach ($productConcreteTransferExpected->getLocalizedAttributes() as $localizedAttribute) {
             $expectedProductName = self::UPDATED_PRODUCT_CONCRETE_NAME[$localizedAttribute->getLocale()->getLocaleName()];
 
-            $this->assertEquals($expectedProductName, $localizedAttribute->getName());
+            $this->assertSame($expectedProductName, $localizedAttribute->getName());
         }
     }
 

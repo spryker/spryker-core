@@ -54,7 +54,7 @@ class GlueControllerFinderTest extends Unit
 
         $this->assertNotEmpty($files);
         foreach ($files as $file) {
-            $this->assertEquals(static::CONTROLLER_FILE_NAME, $file->getFilename());
+            $this->assertSame(static::CONTROLLER_FILE_NAME, $file->getFilename());
         }
     }
 

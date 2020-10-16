@@ -50,7 +50,7 @@ class CodeceptionDependencyFinder extends AbstractFileDependencyFinder
     {
         if (preg_match_all('/SprykerTest\\\\(.*?)\\\\(.*?)\\\\/', $context->getFileInfo()->getContents(), $matches, PREG_SET_ORDER)) {
             foreach ($matches as $match) {
-                $dependencyContainer->addDependency($match[2], $this->getType(), false, true);
+                $dependencyContainer->addDependency(sprintf('spryker/%s', $this->getFilter()->filter($match[2])), $this->getType(), false, true);
             }
         }
 

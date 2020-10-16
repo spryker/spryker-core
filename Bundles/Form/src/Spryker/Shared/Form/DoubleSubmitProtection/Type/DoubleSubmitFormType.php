@@ -17,7 +17,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DoubleSubmitFormType extends AbstractTypeExtension
 {
@@ -43,7 +43,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
     protected $fieldName;
 
     /**
-     * @var \Symfony\Component\Translation\TranslatorInterface|null
+     * @var \Symfony\Contracts\Translation\TranslatorInterface|null
      */
     protected $translator;
 
@@ -55,7 +55,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
     /**
      * @param \Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface $tokenGenerator
      * @param \Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\StorageInterface $storage
-     * @param \Symfony\Component\Translation\TranslatorInterface|null $translator
+     * @param \Symfony\Contracts\Translation\TranslatorInterface|null $translator
      * @param string|null $translationDomain
      */
     public function __construct(
@@ -131,6 +131,14 @@ class DoubleSubmitFormType extends AbstractTypeExtension
     public function getExtendedType(): string
     {
         return FormType::class;
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function getExtendedTypes(): iterable
+    {
+        return [FormType::class];
     }
 
     /**

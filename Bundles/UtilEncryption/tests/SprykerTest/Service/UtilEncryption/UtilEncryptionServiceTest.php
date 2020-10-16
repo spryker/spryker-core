@@ -79,7 +79,7 @@ class UtilEncryptionServiceTest extends Unit
 
         //Assert
         $this->assertNotEmpty($decryptedString);
-        $this->assertEquals($decryptedString, static::OPEN_SSL_ENCRYPTION_PLAIN_TEXT);
+        $this->assertSame(static::OPEN_SSL_ENCRYPTION_PLAIN_TEXT, $decryptedString);
     }
 
     /**

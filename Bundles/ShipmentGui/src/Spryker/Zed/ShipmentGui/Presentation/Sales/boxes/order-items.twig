@@ -1,3 +1,7 @@
+{# @var order \Generated\Shared\Transfer\OrderTransfer #}
+{# @var shipmentOrderItems \Generated\Shared\Transfer\ShipmentGroupTransfer #}
+{# @var expense \Generated\Shared\Transfer\ExpenseTransfer #}
+
 {% for shipmentOrderItems in groupedOrderItemsByShipment %}
     <div class="row">
         <div class="col-sm-9">
@@ -33,8 +37,10 @@
             </p>
             <p>
                 <b>{{ 'Shipping Costs' | trans }}:</b>
-                {% for expense in order.expenses if expense.type == 'SHIPMENT_EXPENSE_TYPE' and shipmentOrderItems.shipment.idSalesShipment == expense.shipment.idSalesShipment %}
-                    {{ expense.sumPrice | money(true, order.currencyIsoCode) }}
+                {% for expense in order.expenses %}
+                    {% if expense.type == 'SHIPMENT_EXPENSE_TYPE' and shipmentOrderItems.shipment.idSalesShipment == expense.shipment.idSalesShipment %}
+                        {{ expense.sumPrice | money(true, order.currencyIsoCode) }}
+                    {% endif %}
                 {% endfor %}
             </p>
             <p>

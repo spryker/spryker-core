@@ -10,8 +10,13 @@
   "require-dev": {
     "spryker/application": "*",
     "spryker/code-sniffer": "*",
+    "spryker/container": "*",
+    "spryker/event-dispatcher": "*",
+    "spryker/gui": "*",
     "spryker/propel": "*",
+    "spryker/router": "*",
     "spryker/testify": "*",
+    "spryker/twig": "*",
     "spryker/zed-navigation": "*"
   },
   "autoload": {

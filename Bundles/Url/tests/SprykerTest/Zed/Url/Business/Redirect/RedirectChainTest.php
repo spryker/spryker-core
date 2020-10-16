@@ -145,6 +145,6 @@ class RedirectChainTest extends Unit
         $redirectEntity = $urlEntity->getSpyUrlRedirect();
 
         $this->assertInstanceOf(SpyUrlRedirect::class, $redirectEntity, 'Url entity should have associated redirect entity.');
-        $this->assertEquals($updatedUrlTransfer->getUrl(), $redirectEntity->getToUrl(), 'Redirect url should match the new url after update.');
+        $this->assertSame($updatedUrlTransfer->getUrl(), $redirectEntity->getToUrl(), 'Redirect url should match the new url after update.');
     }
 }

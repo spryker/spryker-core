@@ -254,7 +254,7 @@ class StockFacadeTest extends Unit
             ->filterByIdStockProduct($idStockProduct)
             ->findOne();
 
-        $this->assertEquals(self::STOCK_QUANTITY_1, $stockProductEntity->getQuantity());
+        $this->assertSame('92.0000000000', $stockProductEntity->getQuantity());
     }
 
     /**
@@ -276,7 +276,7 @@ class StockFacadeTest extends Unit
             ->filterByIdStockProduct($idStockProduct)
             ->findOne();
 
-        $this->assertEquals(static::STOCK_QUANTITY_1, $stockProductEntity->getQuantity());
+        $this->assertSame(static::STOCK_QUANTITY_1, $stockProductEntity->getQuantity());
     }
 
     /**
@@ -296,7 +296,7 @@ class StockFacadeTest extends Unit
             ->filterByIdStockProduct($idStockProduct)
             ->findOne();
 
-        $this->assertEquals(555, $stockProductEntity->getQuantity());
+        $this->assertSame('555.0000000000', $stockProductEntity->getQuantity());
     }
 
     /**
@@ -391,8 +391,9 @@ class StockFacadeTest extends Unit
         $this->assertNotEmpty($stockProductEntityCollection);
 
         foreach ($stockProductEntityCollection as $stockProductEntity) {
-            $this->assertEquals(self::STOCK_QUANTITY_1 + $increment, $stockProductEntity->getQuantity());
-            $this->assertEquals($this->productConcreteEntity->getIdProduct(), $stockProductEntity->getFkProduct());
+            // static::STOCK_QUANTITY_1 + $increment
+            $this->assertSame('112.0000000000', $stockProductEntity->getQuantity());
+            $this->assertSame($this->productConcreteEntity->getIdProduct(), $stockProductEntity->getFkProduct());
         }
     }
 
@@ -410,7 +411,7 @@ class StockFacadeTest extends Unit
         $this->assertNotEmpty($productConcreteTransfer->getStocks());
         foreach ($productConcreteTransfer->getStocks() as $stock) {
             $this->assertTrue($stock->getQuantity()->greaterThan(0));
-            $this->assertEquals($stock->getSku(), self::CONCRETE_SKU);
+            $this->assertSame($stock->getSku(), self::CONCRETE_SKU);
         }
     }
 
@@ -470,7 +471,7 @@ class StockFacadeTest extends Unit
             $stockProductTransfers[0]->getQuantity()->equals(static::STOCK_QUANTITY_1),
             'Stock product quantity does not match expected value.'
         );
-        $this->assertEquals(
+        $this->assertSame(
             $this->stockTransfer1->getIdStock(),
             $stockProductTransfers[0]->getFkStock(),
             'Stock ID does not match expected value.'
@@ -579,7 +580,7 @@ class StockFacadeTest extends Unit
         $this->assertIsArray($productStockCollection, 'Product stock collection should be an array.');
         $this->assertCount(2, $productStockCollection, 'Product stock collection count does not match expected value.');
         foreach ($productStockCollection as $stockProductTransfer) {
-            $this->assertEquals(
+            $this->assertSame(
                 $this->productConcreteEntity->getSku(),
                 $stockProductTransfer->getSku(),
                 'Concrete product sku of stock product does not match expected value.'
@@ -606,7 +607,7 @@ class StockFacadeTest extends Unit
         $this->assertIsArray($productStockCollection, 'Product stock collection should be an array.');
         $this->assertCount(2, $productStockCollection, 'Product stock collection count does not match expected value.');
         foreach ($productStockCollection as $stockProductTransfer) {
-            $this->assertEquals(
+            $this->assertSame(
                 $this->productConcreteEntity->getSku(),
                 $stockProductTransfer->getSku(),
                 'Concrete product sku of stock product does not match expected value.'
@@ -629,12 +630,12 @@ class StockFacadeTest extends Unit
             $storeTransfers[0],
             sprintf('Store transfer should be an instance of %s.', StoreTransfer::class)
         );
-        $this->assertEquals(
+        $this->assertSame(
             $this->storeTransfer->getIdStore(),
             $storeTransfers[0]->getIdStore(),
             'Store ID does not match expected value.'
         );
-        $this->assertEquals(
+        $this->assertSame(
             $this->storeTransfer->getName(),
             $storeTransfers[0]->getName(),
             'Store name does not match expected value.'
@@ -650,8 +651,8 @@ class StockFacadeTest extends Unit
         $stockTransfer = $this->stockFacade->findStockByName($this->stockTransfer1->getName());
 
         //Assert
-        $this->assertEquals($stockTransfer->getIdStock(), $this->stockTransfer1->getIdStock(), 'Stock ID does not match expected value.');
-        $this->assertEquals($stockTransfer->getName(), $this->stockTransfer1->getName(), 'Stock name does not match expected value.');
+        $this->assertSame($stockTransfer->getIdStock(), $this->stockTransfer1->getIdStock(), 'Stock ID does not match expected value.');
+        $this->assertSame($stockTransfer->getName(), $this->stockTransfer1->getName(), 'Stock name does not match expected value.');
     }
 
     /**
@@ -683,8 +684,8 @@ class StockFacadeTest extends Unit
         $this->assertTrue($stockResponseTransfer->getIsSuccessful(), 'Stock response should be successful.');
         $stockTransfer = $stockResponseTransfer->getStock();
         $this->assertIsInt($stockTransfer->getIdStock(), 'Stock ID should be integer value.');
-        $this->assertEquals($originStockTransfer->getName(), $stockTransfer->getName(), 'Stock name does not match expected value.');
-        $this->assertEquals($originStockTransfer->getIsActive(), $stockTransfer->getIsActive(), 'Stock active status does not match expected value.');
+        $this->assertSame($originStockTransfer->getName(), $stockTransfer->getName(), 'Stock name does not match expected value.');
+        $this->assertSame($originStockTransfer->getIsActive(), $stockTransfer->getIsActive(), 'Stock active status does not match expected value.');
     }
 
     /**
@@ -708,8 +709,8 @@ class StockFacadeTest extends Unit
         $this->assertTrue($stockResponseTransfer->getIsSuccessful(), 'Stock response should be successful.');
         $stockTransfer = $stockResponseTransfer->getStock();
         $this->assertIsInt($stockTransfer->getIdStock(), 'Stock ID should be integer value.');
-        $this->assertEquals($originStockTransfer->getName(), $stockTransfer->getName(), 'Stock name does not match expected value.');
-        $this->assertEquals($originStockTransfer->getIsActive(), $stockTransfer->getIsActive(), 'Stock active status does not match expected value.');
+        $this->assertSame($originStockTransfer->getName(), $stockTransfer->getName(), 'Stock name does not match expected value.');
+        $this->assertSame($originStockTransfer->getIsActive(), $stockTransfer->getIsActive(), 'Stock active status does not match expected value.');
         $this->assertNotNull($stockTransfer->getStoreRelation(), 'Stock should have store relations.');
         $this->assertEquals(
             $storeRelationTransfer->getIdStores(),
@@ -728,9 +729,9 @@ class StockFacadeTest extends Unit
         $stockTransfer = $this->stockFacade->findStockById($this->stockTransfer1->getIdStock());
 
         //Assert
-        $this->assertEquals($this->stockTransfer1->getIdStock(), $stockTransfer->getIdStock(), 'Stock ID should be integer value.');
-        $this->assertEquals($this->stockTransfer1->getName(), $stockTransfer->getName(), 'Stock name does not match expected value.');
-        $this->assertEquals($this->stockTransfer1->getIsActive(), $stockTransfer->getIsActive(), 'Stock active status does not match expected value.');
+        $this->assertSame($this->stockTransfer1->getIdStock(), $stockTransfer->getIdStock(), 'Stock ID should be integer value.');
+        $this->assertSame($this->stockTransfer1->getName(), $stockTransfer->getName(), 'Stock name does not match expected value.');
+        $this->assertSame($this->stockTransfer1->getIsActive(), $stockTransfer->getIsActive(), 'Stock active status does not match expected value.');
     }
 
     /**
@@ -760,7 +761,7 @@ class StockFacadeTest extends Unit
         //Assert
         $this->assertTrue($stockResponseTransfer->getIsSuccessful(), 'Stock response should be successful.');
         $stockTransfer = $stockResponseTransfer->getStock();
-        $this->assertEquals($originStockTransfer->getName(), $stockTransfer->getName(), 'Stock name does not match expected value.');
+        $this->assertSame($originStockTransfer->getName(), $stockTransfer->getName(), 'Stock name does not match expected value.');
     }
 
     /**
@@ -778,7 +779,7 @@ class StockFacadeTest extends Unit
         //Assert
         $this->assertTrue($stockResponseTransfer->getIsSuccessful(), 'Stock response should be successful.');
         $stockTransfer = $stockResponseTransfer->getStock();
-        $this->assertEquals($originStockTransfer->getIsActive(), $stockTransfer->getIsActive(), 'Stock active status does not match expected value.');
+        $this->assertSame($originStockTransfer->getIsActive(), $stockTransfer->getIsActive(), 'Stock active status does not match expected value.');
     }
 
     /**

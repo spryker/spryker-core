@@ -46,7 +46,7 @@ class ViewControllerTest extends Unit
 
         foreach ($testData as $expectedUrl => $originalUrl) {
             $url = $reflectionMethod->invoke($vieControllerMock, $originalUrl, static::IMAGE_URL_PREFIX);
-            $this->assertEquals($expectedUrl, $url);
+            $this->assertSame($expectedUrl, $url);
         }
     }
 

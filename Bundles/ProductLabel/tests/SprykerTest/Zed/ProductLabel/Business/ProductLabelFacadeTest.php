@@ -328,7 +328,7 @@ class ProductLabelFacadeTest extends Unit
             $productLabelStoreRelationAfterUpdate,
             'Product label store relation data should be relevant'
         );
-        $this->assertEquals(
+        $this->assertSame(
             $storeTransferAT->getIdStore(),
             $productLabelStoreRelationAfterUpdate->offsetGet(0)->getFkStore(),
             'Product label store relation'

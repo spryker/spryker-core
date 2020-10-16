@@ -4,6 +4,7 @@
   "description": "ResourceShare module",
   "license": "proprietary",
   "require": {
+    "everon/factory": "^1.0.0",
     "php": ">=7.2",
     "spryker/kernel": "^3.32.0",
     "spryker/resource-share-extension": "^1.0.0",

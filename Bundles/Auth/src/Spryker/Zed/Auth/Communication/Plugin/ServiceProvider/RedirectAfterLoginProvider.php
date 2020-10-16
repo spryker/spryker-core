@@ -15,7 +15,7 @@ use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -50,11 +50,11 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
      *
      * @return void
      */
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event)
     {
         $requestUri = $event->getRequest()->getRequestUri();
 
@@ -67,11 +67,11 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
      *
      * @return void
      */
-    protected function handleRedirectToLogin(FilterResponseEvent $event)
+    protected function handleRedirectToLogin(ResponseEvent $event)
     {
         $response = $event->getResponse();
         if (!($response instanceof RedirectResponse)) {
@@ -98,11 +98,11 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
      *
      * @return string|null
      */
-    protected function getUrlToRedirectBackTo(FilterResponseEvent $event)
+    protected function getUrlToRedirectBackTo(ResponseEvent $event)
     {
         $urlToRedirectBackTo = $event->getRequest()->getRequestUri();
 
@@ -115,11 +115,11 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
      *
      * @return void
      */
-    protected function handleRedirectFromLogin(FilterResponseEvent $event)
+    protected function handleRedirectFromLogin(ResponseEvent $event)
     {
         $request = $event->getRequest();
 

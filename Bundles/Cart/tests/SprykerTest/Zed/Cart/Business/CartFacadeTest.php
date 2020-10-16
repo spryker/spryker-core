@@ -90,9 +90,9 @@ class CartFacadeTest extends Unit
         /** @var \Generated\Shared\Transfer\ItemTransfer $item */
         foreach ($quoteTransfer->getItems() as $item) {
             if ($item->getSku() === $cartItem->getSku()) {
-                $this->assertEquals($cartItem->getQuantity(), $item->getQuantity());
+                $this->assertSame($cartItem->getQuantity(), $item->getQuantity());
             } elseif ($newItem->getSku() === $item->getSku()) {
-                $this->assertEquals($newItem->getQuantity(), $item->getQuantity());
+                $this->assertSame($newItem->getQuantity(), $item->getQuantity());
             } else {
                 $this->fail('Cart has a unknown item inside');
             }

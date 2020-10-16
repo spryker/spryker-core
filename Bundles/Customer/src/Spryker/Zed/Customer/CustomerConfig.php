@@ -30,7 +30,7 @@ class CustomerConfig extends AbstractBundleConfig
     protected const MIN_LENGTH_CUSTOMER_PASSWORD = 1;
 
     /**
-     * @uses \Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder::MAX_PASSWORD_LENGTH
+     * @uses \Symfony\Component\Security\Core\Encoder\NativePasswordEncoder::MAX_PASSWORD_LENGTH
      *
      * @var int
      */

@@ -76,9 +76,9 @@ class WishlistsRestApiFacadeTest extends Test
         $actualWishlistTransfer = $wishlistResponseTransfer->getWishlist();
         $this->assertTrue($wishlistResponseTransfer->getIsSuccess());
         $this->assertNotNull($actualWishlistTransfer);
-        $this->assertEquals($actualWishlistTransfer->getIdWishlist(), $wishlistTransfer->getIdWishlist());
-        $this->assertEquals($actualWishlistTransfer->getName(), $wishlistTransfer->getName());
-        $this->assertEquals($actualWishlistTransfer->getName(), $newName);
+        $this->assertSame($actualWishlistTransfer->getIdWishlist(), $wishlistTransfer->getIdWishlist());
+        $this->assertSame($actualWishlistTransfer->getName(), $wishlistTransfer->getName());
+        $this->assertSame($actualWishlistTransfer->getName(), $newName);
     }
 
     /**
@@ -96,7 +96,7 @@ class WishlistsRestApiFacadeTest extends Test
 
         //Assert
         $this->assertFalse($wishlistResponseTransfer->getIsSuccess());
-        $this->assertEquals(
+        $this->assertSame(
             $wishlistResponseTransfer->getErrorIdentifier(),
             WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NOT_FOUND
         );
@@ -126,7 +126,7 @@ class WishlistsRestApiFacadeTest extends Test
 
         //Assert
         $this->assertFalse($wishlistResponseTransfer->getIsSuccess());
-        $this->assertEquals(
+        $this->assertSame(
             $wishlistResponseTransfer->getErrorIdentifier(),
             WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NAME_WRONG_FORMAT
         );
@@ -162,7 +162,7 @@ class WishlistsRestApiFacadeTest extends Test
 
         //Assert
         $this->assertFalse($wishlistResponseTransfer->getIsSuccess());
-        $this->assertEquals(
+        $this->assertSame(
             $wishlistResponseTransfer->getErrorIdentifier(),
             WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NAME_ALREADY_EXIST
         );
@@ -208,7 +208,7 @@ class WishlistsRestApiFacadeTest extends Test
 
         //Assert
         $this->assertFalse($wishlistResponseTransfer->getIsSuccess());
-        $this->assertEquals(
+        $this->assertSame(
             $wishlistResponseTransfer->getErrorIdentifier(),
             WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NOT_FOUND
         );
@@ -243,8 +243,8 @@ class WishlistsRestApiFacadeTest extends Test
         $this->assertEmpty($wishlistItemResponseTransfer->getErrors());
         $this->assertNull($wishlistItemResponseTransfer->getErrorIdentifier());
         $this->assertNotNull($wishlistTransfer->getIdWishlist());
-        $this->assertEquals(1, $wishlistTransfer->getNumberOfItems());
-        $this->assertEquals(
+        $this->assertSame(1, $wishlistTransfer->getNumberOfItems());
+        $this->assertSame(
             $concreteProduct->getSku(),
             $wishlistItemResponseTransfer->getWishlistItem()->getSku()
         );
@@ -267,7 +267,7 @@ class WishlistsRestApiFacadeTest extends Test
 
         //Assert
         $this->assertFalse($wishlistItemResponseTransfer->getIsSuccess());
-        $this->assertEquals(
+        $this->assertSame(
             $wishlistItemResponseTransfer->getErrorIdentifier(),
             WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NOT_FOUND
         );
@@ -295,7 +295,7 @@ class WishlistsRestApiFacadeTest extends Test
 
         //Assert
         $this->assertFalse($wishlistItemResponseTransfer->getIsSuccess());
-        $this->assertEquals(
+        $this->assertSame(
             $wishlistItemResponseTransfer->getErrorIdentifier(),
             WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_ITEM_CANT_BE_ADDED
         );
@@ -370,7 +370,7 @@ class WishlistsRestApiFacadeTest extends Test
 
         //Assert
         $this->assertFalse($wishlistItemResponseTransfer->getIsSuccess());
-        $this->assertEquals(
+        $this->assertSame(
             WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NOT_FOUND,
             $wishlistItemResponseTransfer->getErrorIdentifier()
         );
@@ -400,7 +400,7 @@ class WishlistsRestApiFacadeTest extends Test
 
         //Assert
         $this->assertFalse($wishlistItemResponseTransfer->getIsSuccess());
-        $this->assertEquals(
+        $this->assertSame(
             WishlistsRestApiConfig::ERROR_IDENTIFIER_ITEM_WITH_SKU_NOT_FOUND_IN_WISHLIST,
             $wishlistItemResponseTransfer->getErrorIdentifier()
         );

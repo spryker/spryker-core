@@ -10,7 +10,7 @@
     "spryker/kernel": "^3.30.0",
     "spryker/session": "^3.0.0 || ^4.0.0",
     "spryker/session-redis-extension": "^1.0.0",
-    "spryker/symfony": "^3.0.0",
+    "spryker/symfony": "^3.5.0",
     "spryker/transfer": "^3.8.0",
     "spryker/user": "^3.0.0",
     "spryker/util-text": "^1.1.0"
@@ -22,9 +22,13 @@
     "spryker/container": "*",
     "spryker/discount": "*",
     "spryker/event-dispatcher": "*",
+    "spryker/form": "*",
     "spryker/propel": "*",
+    "spryker/router": "*",
     "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/twig": "*",
+    "spryker/validator": "*"
   },
   "suggest": {
     "spryker/config": "Add this module when you want to use the EventDispatcherPlugins.",

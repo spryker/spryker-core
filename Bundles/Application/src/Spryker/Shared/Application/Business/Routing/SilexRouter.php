@@ -66,7 +66,7 @@ class SilexRouter implements RouterInterface
     }
 
     /**
-     * @inheritDoc
+     * @return mixed|\Symfony\Component\Routing\RouteCollection
      */
     public function getRouteCollection()
     {
@@ -74,7 +74,11 @@ class SilexRouter implements RouterInterface
     }
 
     /**
-     * @inheritDoc
+     * @param string $name
+     * @param array $parameters
+     * @param int $referenceType
+     *
+     * @return string
      */
     public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {

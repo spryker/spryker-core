@@ -13,12 +13,13 @@ use Spryker\Shared\Application\ApplicationInterface;
 use Spryker\Shared\Application\EventListener\KernelLogListener;
 use Spryker\Shared\Kernel\Container\ContainerProxy;
 use Spryker\Shared\Log\LoggerTrait;
-use Spryker\Shared\Twig\TwigFunction;
+use Spryker\Shared\Twig\TwigFunctionProvider;
 use Spryker\Zed\Application\ApplicationDependencyProvider;
-use Spryker\Zed\Application\Communication\Twig\YvesUrlFunction;
+use Spryker\Zed\Application\Communication\EventListener\SaveSessionListener;
+use Spryker\Zed\Application\Communication\Twig\YvesUrlFunctionProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\EventListener\SaveSessionListener;
+use Twig\TwigFunction;
 
 /**
  * @method \Spryker\Zed\Application\ApplicationConfig getConfig()
@@ -63,6 +64,8 @@ class ApplicationCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface
      */
     public function createSaveSessionEventSubscriber(): EventSubscriberInterface
@@ -71,10 +74,24 @@ class ApplicationCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Shared\Twig\TwigFunction
+     * @return \Spryker\Shared\Twig\TwigFunctionProvider
+     */
+    public function createYvesUrlFunctionProvider(): TwigFunctionProvider
+    {
+        return new YvesUrlFunctionProvider($this->getConfig());
+    }
+
+    /**
+     * @return \Twig\TwigFunction
      */
     public function createYvesUrlFunction(): TwigFunction
     {
-        return new YvesUrlFunction($this->getConfig());
+        $functionProvider = $this->createYvesUrlFunctionProvider();
+
+        return new TwigFunction(
+            $functionProvider->getFunctionName(),
+            $functionProvider->getFunction(),
+            $functionProvider->getOptions()
+        );
     }
 }

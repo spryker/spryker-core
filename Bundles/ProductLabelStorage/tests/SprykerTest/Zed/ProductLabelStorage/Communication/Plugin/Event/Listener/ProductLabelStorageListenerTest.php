@@ -256,7 +256,7 @@ class ProductLabelStorageListenerTest extends Unit
         // Assert
         $productLabelDictionaryStorageEntityCount = SpyProductLabelDictionaryStorageQuery::create()->count();
 
-        $this->assertEquals(
+        $this->assertSame(
             0,
             $productLabelDictionaryStorageEntityCount,
             'Product label dictionary storage entities number does not equals to an expected number'

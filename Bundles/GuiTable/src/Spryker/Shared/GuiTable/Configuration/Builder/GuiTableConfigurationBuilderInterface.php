@@ -18,6 +18,7 @@ interface GuiTableConfigurationBuilderInterface
     public const COLUMN_TYPE_LIST = 'list';
 
     public const FILTER_TYPE_SELECT = 'select';
+    public const FILTER_TYPE_TREE_SELECT = 'tree-select';
     public const FILTER_TYPE_DATE_RANGE = 'date-range';
 
     public const ACTION_TYPE_FORM_OVERLAY = 'form-overlay';
@@ -85,7 +86,7 @@ interface GuiTableConfigurationBuilderInterface
      * @param bool $isSortable
      * @param bool $isHideable
      * @param string|null $color
-     * @param array|null $colorMapping
+     * @param mixed[]|null $colorMapping
      *
      * @return $this
      */
@@ -110,7 +111,7 @@ interface GuiTableConfigurationBuilderInterface
      *
      * @return $this
      */
-    public function addColumnChips(
+    public function addColumnListChip(
         string $id,
         string $title,
         bool $isSortable,
@@ -122,14 +123,28 @@ interface GuiTableConfigurationBuilderInterface
     /**
      * @api
      *
+     * @phpstan-param array<int, string> $values
+     *
      * @param string $id
      * @param string $title
      * @param bool $isMultiselect
-     * @param array $values select values in format of ['value1' => 'title1', 'value2' => 'title2']
+     * @param string[] $values select values in format of ['value1' => 'title1', 'value2' => 'title2']
      *
      * @return $this
      */
     public function addFilterSelect(string $id, string $title, bool $isMultiselect, array $values);
+
+    /**
+     * @api
+     *
+     * @param string $id
+     * @param string $title
+     * @param bool $isMultiselect
+     * @param \Generated\Shared\Transfer\OptionSelectGuiTableFilterTypeOptionsTransfer[] $options
+     *
+     * @return $this
+     */
+    public function addFilterTreeSelect(string $id, string $title, bool $isMultiselect, array $options);
 
     /**
      * @api

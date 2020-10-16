@@ -79,7 +79,7 @@ class QuoteRequestAgentConverterTest extends Unit
 
         // Assert
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
-        $this->assertEquals(
+        $this->assertSame(
             static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS,
             $quoteResponseTransfer->getErrors()[0]->getMessage()
         );

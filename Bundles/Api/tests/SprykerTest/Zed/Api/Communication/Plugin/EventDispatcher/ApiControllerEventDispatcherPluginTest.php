@@ -42,12 +42,11 @@ class ApiControllerEventDispatcherPluginTest extends Unit
         $apiControllerEventDispatcherPlugin = new ApiControllerEventDispatcherPlugin();
         $eventDispatcher = $apiControllerEventDispatcherPlugin->extend($eventDispatcher, new Container());
 
-        $event = $this->tester->getFilterControllerEvent(
+        $event = $this->tester->getControllerEvent(
             $this->tester->getNonApiRequest()
         );
         $originalController = $event->getController();
 
-        /** @var \SprykerTest\Zed\ZedRequest\Communication\Plugin\Fixture\FilterControllerEvent $dispatchedEvent */
         $dispatchedEvent = $eventDispatcher->dispatch($event, KernelEvents::CONTROLLER);
 
         $this->assertSame($originalController, $dispatchedEvent->getController());
@@ -62,12 +61,11 @@ class ApiControllerEventDispatcherPluginTest extends Unit
         $apiControllerEventDispatcherPlugin = new ApiControllerEventDispatcherPlugin();
         $eventDispatcher = $apiControllerEventDispatcherPlugin->extend($eventDispatcher, new Container());
 
-        $event = $this->tester->getFilterControllerEvent(
+        $event = $this->tester->getControllerEvent(
             $this->tester->getApiRequest()
         );
         $originalController = $event->getController();
 
-        /** @var \SprykerTest\Zed\ZedRequest\Communication\Plugin\Fixture\FilterControllerEvent $dispatchedEvent */
         $dispatchedEvent = $eventDispatcher->dispatch($event, KernelEvents::CONTROLLER);
 
         $this->assertNotSame($originalController, $dispatchedEvent->getController());
@@ -82,11 +80,10 @@ class ApiControllerEventDispatcherPluginTest extends Unit
         $apiControllerEventDispatcherPlugin = new ApiControllerEventDispatcherPlugin();
         $eventDispatcher = $apiControllerEventDispatcherPlugin->extend($eventDispatcher, new Container());
 
-        $event = $this->tester->getFilterControllerEvent(
+        $event = $this->tester->getControllerEvent(
             $this->tester->getApiRequest()
         );
 
-        /** @var \SprykerTest\Zed\ZedRequest\Communication\Plugin\Fixture\FilterControllerEvent $dispatchedEvent */
         $eventDispatcher->dispatch($event, KernelEvents::CONTROLLER);
 
         $controller = $event->getController();

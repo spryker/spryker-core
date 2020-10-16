@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Twig\Error\SyntaxError;
+use Twig\Source;
 
 class TwigContentValidator extends ConstraintValidator
 {
@@ -55,7 +56,7 @@ class TwigContentValidator extends ConstraintValidator
     protected function validateTwigContent($value, TwigContent $constraint)
     {
         $twigEnvironment = $constraint->getTwigEnvironment();
-        $twigEnvironment->tokenize(str_replace(['</p>', '<br>'], PHP_EOL, $value));
+        $twigEnvironment->tokenize($this->createSource($value));
     }
 
     /**
@@ -66,5 +67,17 @@ class TwigContentValidator extends ConstraintValidator
     protected function isTwigContent($value)
     {
         return strpos($value, '{{') !== false || strpos($value, '}}') !== false;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return \Twig\Source
+     */
+    protected function createSource(string $value): Source
+    {
+        $value = str_replace(['</p>', '<br>'], PHP_EOL, $value);
+
+        return new Source($value, 'template');
     }
 }

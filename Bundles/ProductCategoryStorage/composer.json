@@ -4,6 +4,7 @@
   "description": "ProductCategoryStorage module",
   "license": "proprietary",
   "require": {
+    "everon/collection": "^1.0.0",
     "php": ">=7.2",
     "spryker/category": "^4.3.0",
     "spryker/event-behavior": "^1.10.0",

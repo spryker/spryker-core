@@ -147,9 +147,9 @@ class StorageDatabaseTest extends Unit
         $accessStats = $this->storageDatabase->getAccessStats();
 
         // Assert
-        $this->assertEquals(1, $accessStats['count']['read']);
+        $this->assertSame(1, $accessStats['count']['read']);
         $this->assertCount(1, $accessStats['keys']['read']);
-        $this->assertEquals(static::DUMMY_KEY, $accessStats['keys']['read'][0]);
+        $this->assertSame(static::DUMMY_KEY, $accessStats['keys']['read'][0]);
 
         return $accessStats;
     }

@@ -11,7 +11,8 @@
     "spryker/product": "^5.2.0 || ^6.0.0",
     "spryker/propel-orm": "^1.2.0",
     "spryker/util-encoding": "^2.0.0",
-    "spryker/util-sanitize-xss": "^1.0.0"
+    "spryker/util-sanitize-xss": "^1.0.0",
+    "spryker/zed-request": "^3.4.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

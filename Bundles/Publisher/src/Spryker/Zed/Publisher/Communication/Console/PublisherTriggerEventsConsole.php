@@ -36,7 +36,7 @@ class PublisherTriggerEventsConsole extends Console
             static::RESOURCE_OPTION,
             static::RESOURCE_OPTION_SHORTCUT,
             InputArgument::OPTIONAL,
-            'The resource(s) should be published, if there is more than one, use comma to separate them. 
+            'The resource(s) should be published, if there is more than one, use comma to separate them.
         If not, full data will be published.'
         );
 
@@ -44,7 +44,7 @@ class PublisherTriggerEventsConsole extends Console
             static::RESOURCE_IDS_OPTION,
             static::RESOURCE_IDS_OPTION_SHORTCUT,
             InputArgument::OPTIONAL,
-            'Defines ids of entities which should be published, if there is more than one, use comma to separate them. 
+            'Defines ids of entities which should be published, if there is more than one, use comma to separate them.
         If not, all ids will be published.'
         );
 
@@ -58,9 +58,9 @@ class PublisherTriggerEventsConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|null|void
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $resources = [];
         $resourcesIds = [];
@@ -78,6 +78,8 @@ class PublisherTriggerEventsConsole extends Console
         $resourcePublisherPlugins = $this->getFactory()->getPublisherTriggerPlugins();
 
         $this->getFactory()->getEventBehaviorFacade()->executeResolvedPluginsBySources($resources, $resourcesIds, $resourcePublisherPlugins);
+
+        return static::CODE_SUCCESS;
     }
 
     /**

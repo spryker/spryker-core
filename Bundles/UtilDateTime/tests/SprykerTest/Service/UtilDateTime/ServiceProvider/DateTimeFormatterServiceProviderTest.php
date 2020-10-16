@@ -15,6 +15,8 @@ use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * Auto-generated group annotations
  *
  * @group SprykerTest
@@ -37,7 +39,7 @@ class DateTimeFormatterServiceProviderTest extends Unit
 
         $twig = $applicationMock['twig'];
 
-        $this->assertTrue($twig->hasExtension(DateTimeFormatterTwigExtension::EXTENSION_NAME));
+        $this->assertTrue($twig->hasExtension(DateTimeFormatterTwigExtension::class));
     }
 
     /**
