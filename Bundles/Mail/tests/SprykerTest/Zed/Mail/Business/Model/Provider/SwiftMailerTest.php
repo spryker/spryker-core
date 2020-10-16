@@ -207,7 +207,7 @@ class SwiftMailerTest extends Unit
      *
      * @return void
      */
-    public function testSendMailAddAttachments(array $mailAttachmentTransfers): void
+    public function testSendMailAddsAttachments(array $mailAttachmentTransfers): void
     {
         // Assign
         $mailerMock = $this->getMailerMock();
