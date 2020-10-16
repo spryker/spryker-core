@@ -8,10 +8,12 @@
 namespace SprykerTest\Service\UtilDataReader\Model\BatchIterator;
 
 use Codeception\Test\Unit;
-use Everon\Component\CriteriaBuilder\SqlPart;
 use Propel\Generator\Model\PropelTypes;
 use Spryker\Service\UtilDataReader\Model\BatchIterator\PdoBatchIterator;
 use Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilder;
+use Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderDependencyContainer;
+use Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderFactory;
+use Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderFactoryWorker;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -79,22 +81,15 @@ class PdoBatchIteratorTest extends Unit
      */
     protected function createPdoBatchIterator(): PdoBatchIterator
     {
-        $sqlPartMock = $this->getMockBuilder(SqlPart::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['getSql'])
-            ->getMock();
-
         $selectTestingQuery = sprintf('SELECT * FROM %s', static::TESTING_TABLE_NAME);
-        $sqlPartMock->expects($this->once())
-            ->method('getSql')
-            ->willReturn($selectTestingQuery);
 
-        $criteriaBuilderMock = $this->getMockBuilder(CriteriaBuilder::class)
-            ->onlyMethods(['toSqlPart'])
-            ->getMock();
-        $criteriaBuilderMock->expects($this->once())
-            ->method('toSqlPart')
-            ->willReturn($sqlPartMock);
+        $criteriaBuilderMock = new CriteriaBuilder();
+
+        $criteriaBuilderFactoryMock = new CriteriaBuilderFactory(new CriteriaBuilderDependencyContainer());
+        $criteriaFactoryWorkerMock = new CriteriaBuilderFactoryWorker($criteriaBuilderFactoryMock);
+
+        $criteriaBuilderMock->setCriteriaBuilderFactoryWorker($criteriaFactoryWorkerMock);
+        $criteriaBuilderMock->sql($selectTestingQuery);
 
         return new PdoBatchIterator(
             $criteriaBuilderMock,
