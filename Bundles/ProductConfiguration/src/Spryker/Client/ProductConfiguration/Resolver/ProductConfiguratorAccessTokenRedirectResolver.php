@@ -124,7 +124,7 @@ class ProductConfiguratorAccessTokenRedirectResolver implements ProductConfigura
 
         return $productConfiguratorRedirectTransfer->setIsSuccessful(false)
             ->addMessage(
-                (new MessageTransfer())->setMessage($responseData[static::RESPONSE_ERROR_MESSAGES_KEY])
+                (new MessageTransfer())->setValue($responseData[static::RESPONSE_ERROR_MESSAGES_KEY])
             );
     }
 
@@ -161,7 +161,7 @@ class ProductConfiguratorAccessTokenRedirectResolver implements ProductConfigura
 
         return $productConfiguratorRedirectTransfer->setIsSuccessful(false)
         ->addMessage(
-            (new MessageTransfer())->setMessage($message)
+            (new MessageTransfer())->setValue($message)
         );
     }
 }

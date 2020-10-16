@@ -45,12 +45,12 @@ class ProductConfigurationConfig extends AbstractBundleConfig
      */
     public function getEncryptionKey(): string
     {
-        $encryptionKey = $this->get(ProductConfigurationConstants::ENCRYPTION_KEY, false);
+        $encryptionKey = $this->get(ProductConfigurationConstants::SPRYKER_CONFIGURATOR_ENCRYPTION_KEY, false);
 
         if ($encryptionKey) {
             return $encryptionKey;
         }
 
-        throw new EncryptionKeyNotPreConfigured('Encryption key is not pre-configured, please update PRODUCT_CONFIGURATION:ENCRYPTION_KEY env variable.');
+        throw new EncryptionKeyNotPreConfigured('Encryption key is not pre-configured, please update SPRYKER_CONFIGURATOR_ENCRYPTION_KEY env variable.');
     }
 }

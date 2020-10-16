@@ -22,8 +22,8 @@ use Spryker\Client\ProductConfiguration\Exception\MissingDefaultProductConfigura
 use Spryker\Client\ProductConfiguration\Exception\MissingDefaultProductConfiguratorResponsePluginException;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorResponsePluginInterface;
-use SprykerSdk\ProductConfigurationSdk\Service\ProductConfigurationDataChecksumGenerator;
-use SprykerSdk\ProductConfigurationSdk\Service\ProductConfigurationDataChecksumGeneratorInterface;
+use SprykerSdk\Service\ProductConfigurationSdk\Generator\ProductConfigurationDataChecksumGenerator;
+use SprykerSdk\Service\ProductConfigurationSdk\Generator\ProductConfigurationDataChecksumGeneratorInterface;
 
 /**
  * @method \Spryker\Client\ProductConfiguration\ProductConfigurationConfig getConfig()
@@ -279,7 +279,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
      */
     protected function addProductConfigurationDataChecksumGenerator(Container $container): Container
     {
-        $container->set(static::SERVICE_PRODUCT_CONFIGURATION_DATA_CHECKSUM_GENERATOR, function (Container $container) {
+        $container->set(static::SERVICE_PRODUCT_CONFIGURATION_DATA_CHECKSUM_GENERATOR, function () {
             return new ProductConfigurationToProductConfigurationDataChecksumGeneratorBridge(
                 $this->getProductConfigurationDataChecksumGenerator()
             );
@@ -289,7 +289,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \SprykerSdk\ProductConfigurationSdk\Service\ProductConfigurationDataChecksumGeneratorInterface
+     * @return \SprykerSdk\Service\ProductConfigurationSdk\Generator\ProductConfigurationDataChecksumGeneratorInterface
      */
     protected function getProductConfigurationDataChecksumGenerator(): ProductConfigurationDataChecksumGeneratorInterface
     {

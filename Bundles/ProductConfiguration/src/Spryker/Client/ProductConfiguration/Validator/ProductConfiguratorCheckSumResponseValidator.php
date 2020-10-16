@@ -9,6 +9,7 @@ namespace Spryker\Client\ProductConfiguration\Validator;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer;
+use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
 use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToProductConfigurationDataChecksumGeneratorInterface;
 use Spryker\Client\ProductConfiguration\ProductConfigurationConfig;
 
@@ -54,8 +55,12 @@ class ProductConfiguratorCheckSumResponseValidator implements ProductConfigurato
             ->getProductConfiguratorResponse();
         $encryptionKey = $this->productConfigurationConfig->getProductConfigurationEncryptionKey();
 
+        $plainCopyOfConfiguredResponseData = $configuratorResponseData;
+        unset($plainCopyOfConfiguredResponseData[ProductConfiguratorResponseTransfer::CHECK_SUM]);
+        unset($plainCopyOfConfiguredResponseData[ProductConfiguratorResponseTransfer::TIMESTAMP]);
+
         $responseChecksum = $this->productConfigurationDataChecksumGenerator->generateProductConfigurationDataChecksum(
-            $configuratorResponseData,
+            $plainCopyOfConfiguredResponseData,
             $encryptionKey
         );
 
@@ -63,8 +68,24 @@ class ProductConfiguratorCheckSumResponseValidator implements ProductConfigurato
             return $productConfiguratorResponseProcessorResponseTransfer;
         }
 
-        return $productConfiguratorResponseProcessorResponseTransfer->addMessage((new MessageTransfer())
-            ->setMessage(static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_NOT_VALID_RESPONSE_CHECKSUM))
+        return $this->getErrorResponse(
+            $productConfiguratorResponseProcessorResponseTransfer,
+            static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_NOT_VALID_RESPONSE_CHECKSUM
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
+     * @param string $errorMessage
+     *
+     * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
+     */
+    protected function getErrorResponse(
+        ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer,
+        string $errorMessage
+    ): ProductConfiguratorResponseProcessorResponseTransfer {
+        return $productConfiguratorResponseProcessorResponseTransfer
+            ->addMessage((new MessageTransfer())->setValue($errorMessage))
             ->setIsSuccessful(false);
     }
 }

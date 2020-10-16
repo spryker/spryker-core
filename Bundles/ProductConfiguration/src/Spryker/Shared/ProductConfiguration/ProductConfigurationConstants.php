@@ -18,5 +18,5 @@ interface ProductConfigurationConstants
      *
      * @api
      */
-    public const ENCRYPTION_KEY = 'PRODUCT_CONFIGURATION:ENCRYPTION_KEY';
+    public const SPRYKER_CONFIGURATOR_ENCRYPTION_KEY = 'SPRYKER_CONFIGURATOR_ENCRYPTION_KEY';
 }

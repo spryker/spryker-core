@@ -32,12 +32,28 @@ class ProductConfiguratorMandatoryFieldsResponseValidator implements ProductConf
         try {
             $this->assertMandatoryFields($productConfiguratorResponseTransfer);
         } catch (RequiredTransferPropertyException $requiredTransferPropertyException) {
-            return $productConfiguratorResponseProcessorResponseTransfer->addMessage((new MessageTransfer())
-                ->setMessage($requiredTransferPropertyException->getMessage()))
-                ->setIsSuccessful(false);
+            return $this->getErrorResponse(
+                $productConfiguratorResponseProcessorResponseTransfer,
+                $requiredTransferPropertyException->getMessage()
+            );
         }
 
         return $productConfiguratorResponseProcessorResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
+     * @param string $errorMessage
+     *
+     * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
+     */
+    protected function getErrorResponse(
+        ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer,
+        string $errorMessage
+    ): ProductConfiguratorResponseProcessorResponseTransfer {
+        return $productConfiguratorResponseProcessorResponseTransfer
+            ->addMessage((new MessageTransfer())->setValue($errorMessage))
+            ->setIsSuccessful(false);
     }
 
     /**
@@ -53,6 +69,6 @@ class ProductConfiguratorMandatoryFieldsResponseValidator implements ProductConf
             ->requireTimestamp()
             ->requireProductConfigurationInstance()
             ->getProductConfigurationInstance()
-            ->requireConfiguratorKey();
+                ->requireConfiguratorKey();
     }
 }
