@@ -8,6 +8,7 @@
     "spryker/decimal-object": "^1.0.0",
     "spryker/kernel": "^3.55.0",
     "spryker/log": "^3.0.0",
+    "spryker/monolog": "^2.0.0",
     "spryker/propel": "^3.21.0",
     "spryker/symfony": "^3.0.0",
     "spryker/twig": "^3.0.0",
