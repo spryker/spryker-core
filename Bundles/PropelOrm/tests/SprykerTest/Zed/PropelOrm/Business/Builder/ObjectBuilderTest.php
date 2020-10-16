@@ -7,7 +7,6 @@
 
 namespace SprykerTest\Zed\PropelOrm\Business\Builder;
 
-use Propel\Runtime\Propel;
 use Spryker\Zed\PropelOrm\Business\Builder\ObjectBuilder;
 use SprykerTest\Zed\PropelOrm\Business\Builder\Fixtures\Foo;
 
@@ -32,11 +31,10 @@ class ObjectBuilderTest extends AbstractBuilderTester
     public function testSaveShouldNotThrowAnException(): void
     {
         // Arrange
-        $connection = Propel::getConnection();
         $foo = new Foo();
         $foo->setIdFoo(1);
 
         // Act
-        $foo->save($connection);
+        $foo->save();
     }
 }

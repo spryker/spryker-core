@@ -20,6 +20,8 @@ use Spryker\Shared\Propel\PropelConstants;
 
 class TableHelper extends Module
 {
+    protected const DEFAULT_DATA_SOURCE_NAME = 'zed';
+
     /**
      * @var \Propel\Generator\Model\Table[]
      */
@@ -37,7 +39,7 @@ class TableHelper extends Module
         $platform = $this->getPlatform();
         $connection = Propel::getConnection();
 
-        $database = new Database(Config::get(PropelConstants::ZED_DB_DATABASE), $platform);
+        $database = new Database(static::DEFAULT_DATA_SOURCE_NAME, $platform);
         $database->setPlatform($platform);
 
         $table = new Table($name);

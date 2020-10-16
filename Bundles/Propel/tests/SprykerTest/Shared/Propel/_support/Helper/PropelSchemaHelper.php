@@ -26,7 +26,7 @@ class PropelSchemaHelper extends Module
         $dom->formatOutput = true;
         $dom->loadXML($xml);
 
-        return preg_replace_callback('/^( +)</m', [$this, 'xmlSpacesDoublerFilter'], $dom->saveXML());
+        return preg_replace_callback('/^( +)</m', [$this, 'doubleSpaces'], $dom->saveXML());
     }
 
     /**
@@ -46,7 +46,7 @@ class PropelSchemaHelper extends Module
      *
      * @return string
      */
-    protected function xmlSpacesDoublerFilter(array $matches): string
+    protected function doubleSpaces(array $matches): string
     {
         $multiplier = strlen($matches[1]) * 2;
 
