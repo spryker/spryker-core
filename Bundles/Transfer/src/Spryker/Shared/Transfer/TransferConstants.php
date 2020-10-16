@@ -14,9 +14,10 @@ interface TransferConstants
 {
     /**
      * Specification:
-     * - Defines debug mode for transfer generation process.
+     * - If true, transfer generation is in debug mode.
+     * - If false, transfer generation will run in normal mode.
      *
      * @api
      */
-    public const DEBUG = 'TRANSFER:DEBUG';
+    public const IS_DEBUG_ENABLED = 'TRANSFER:IS_DEBUG_ENABLED';
 }

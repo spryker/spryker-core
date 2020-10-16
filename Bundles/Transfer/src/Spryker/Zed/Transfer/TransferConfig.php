@@ -261,6 +261,6 @@ class TransferConfig extends AbstractBundleConfig
      */
     public function isDebugEnabled(): bool
     {
-        return $this->get(TransferConstants::DEBUG, false);
+        return $this->get(TransferConstants::IS_DEBUG_ENABLED, false);
     }
 }
