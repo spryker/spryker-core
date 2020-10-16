@@ -60,7 +60,6 @@ class TransferDefinitionLoader implements LoaderInterface
         $this->transferDefinitions = $this->definitionNormalizer->normalizeDefinitions(
             $this->transferDefinitions
         );
-        $this->normalizeStrictMode();
 
         return $this->transferDefinitions;
     }
@@ -212,79 +211,5 @@ class TransferDefinitionLoader implements LoaderInterface
         }
 
         return $transfer;
-    }
-
-    /**
-     * @return void
-     */
-    protected function normalizeStrictMode(): void
-    {
-        $normalizedTransferDefinitions = [];
-
-        foreach ($this->transferDefinitions as $transferDefinition) {
-            $transferDefinition = $this->normalizeTransferDefinitionStrictMode($transferDefinition);
-            $transferPropertyDefinitions = $this->normalizeTransferPropertyDefinitionsStrictMode($transferDefinition);
-
-            if ($transferPropertyDefinitions) {
-                $transferDefinition['property'] = $transferPropertyDefinitions;
-            }
-
-            $normalizedTransferDefinitions[] = $transferDefinition;
-        }
-
-        $this->transferDefinitions = $normalizedTransferDefinitions;
-    }
-
-    /**
-     * @param array $transferDefinition
-     *
-     * @return array
-     */
-    protected function normalizeTransferDefinitionStrictMode(array $transferDefinition): array
-    {
-        $transferDefinition['strict'] = isset($transferDefinition['strict']) && filter_var($transferDefinition['strict'], FILTER_VALIDATE_BOOLEAN);
-
-        return $transferDefinition;
-    }
-
-    /**
-     * @param array $transferDefinition
-     *
-     * @return array|null
-     */
-    protected function normalizeTransferPropertyDefinitionsStrictMode(array $transferDefinition): ?array
-    {
-        if (empty($transferDefinition['property'])) {
-            return null;
-        }
-
-        $transferStrictMode = $transferDefinition['strict'];
-        $transferProperties = $transferDefinition['property'];
-
-        if (isset($transferProperties[0])) {
-            return $this->normalizeTransferPropertyDefinitionStrictMode($transferProperties, $transferStrictMode);
-        }
-
-        return $this->normalizeTransferPropertyDefinitionStrictMode([$transferProperties], $transferStrictMode);
-    }
-
-    /**
-     * @param array $transferPropertyDefinitions
-     * @param bool $transferStrictMode
-     *
-     * @return array
-     */
-    protected function normalizeTransferPropertyDefinitionStrictMode(array $transferPropertyDefinitions, bool $transferStrictMode): array
-    {
-        $normalizedTransferPropertyDefinitions = [];
-
-        foreach ($transferPropertyDefinitions as $transferPropertyDefinition) {
-            $transferPropertyDefinition['strict'] = isset($transferPropertyDefinition['strict'])
-                ? filter_var($transferPropertyDefinition['strict'], FILTER_VALIDATE_BOOLEAN)
-                : $transferStrictMode;
-            $normalizedTransferPropertyDefinitions[] = $transferPropertyDefinition;
-        }
-
-        return $normalizedTransferPropertyDefinitions;
     }
 }
