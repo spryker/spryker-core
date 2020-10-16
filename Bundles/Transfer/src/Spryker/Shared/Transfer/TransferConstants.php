@@ -19,14 +19,4 @@ interface TransferConstants
      * @api
      */
     public const DEBUG = 'TRANSFER:DEBUG';
-
-    /**
-     * Specification:
-     * - Enables application-wide debug mode.
-     *
-     * @api
-     *
-     * @uses \Spryker\Shared\Application\ApplicationConstants::ENABLE_APPLICATION_DEBUG
-     */
-    public const ENABLE_APPLICATION_DEBUG = 'APPLICATION:ENABLE_APPLICATION_DEBUG';
 }

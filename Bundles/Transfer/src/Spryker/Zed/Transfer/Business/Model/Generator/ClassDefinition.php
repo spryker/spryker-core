@@ -984,7 +984,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     public function debugMode(): bool
     {
-        return $this->transferConfig->isDebugEnabled() ?: $this->transferConfig->isApplicationDebugEnabled();
+        return $this->transferConfig->isDebugEnabled();
     }
 
     /**

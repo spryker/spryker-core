@@ -263,17 +263,4 @@ class TransferConfig extends AbstractBundleConfig
     {
         return $this->get(TransferConstants::DEBUG, false);
     }
-
-    /**
-     * Specification:
-     * - Checks if application-wide debug mode is enabled.
-     *
-     * @api
-     *
-     * @return bool
-     */
-    public function isApplicationDebugEnabled(): bool
-    {
-        return $this->get(TransferConstants::ENABLE_APPLICATION_DEBUG, false);
-    }
 }
