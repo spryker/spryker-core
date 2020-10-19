@@ -9,10 +9,8 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\DataProvi
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToCurrencyFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantStockFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToProductFacadeInterface;
 
 class ProductOfferCreateFormDataProvider extends AbstractProductOfferFormDataProvider implements ProductOfferCreateFormDataProviderInterface
@@ -37,7 +35,7 @@ class ProductOfferCreateFormDataProvider extends AbstractProductOfferFormDataPro
      */
     public function getData(ProductConcreteTransfer $productConcreteTransfer): ProductOfferTransfer
     {
-        $productOfferTransfer = $this->addPrices((new ProductOfferTransfer()));
+//        $productOfferTransfer = $this->addPrices((new ProductOfferTransfer()));
         $productOfferTransfer = $this->addDefaultValues($productOfferTransfer, $productConcreteTransfer);
 
         return $productOfferTransfer;
