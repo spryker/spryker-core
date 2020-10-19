@@ -51,16 +51,16 @@ class MerchantShipmentCreateController extends AbstractMerchantShipmentControlle
 
             if ($responseTransfer->getIsSuccessful()) {
                 $this->addSuccessMessage(static::MESSAGE_SHIPMENT_CREATE_SUCCESS);
+
+                $redirectUrl = Url::generate(
+                    static::REDIRECT_URL_DEFAULT,
+                    [static::PARAM_ID_MERCHANT_SALES_ORDER => $merchantOrderTransfer->getIdMerchantOrder()]
+                )->build();
+
+                return $this->redirectResponse($redirectUrl);
             }
 
             $this->addErrorMessage(static::MESSAGE_SHIPMENT_CREATE_FAIL);
-
-            $redirectUrl = Url::generate(
-                static::REDIRECT_URL_DEFAULT,
-                [static::PARAM_ID_MERCHANT_SALES_ORDER => $merchantOrderTransfer->getIdMerchantOrder()]
-            )->build();
-
-            return $this->redirectResponse($redirectUrl);
         }
 
         return $this->viewResponse([
