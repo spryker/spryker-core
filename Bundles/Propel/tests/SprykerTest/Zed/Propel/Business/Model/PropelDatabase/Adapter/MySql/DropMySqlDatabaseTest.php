@@ -11,8 +11,8 @@ use Codeception\Test\Unit;
 use PDO;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
-use Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter\MySql\CreateMySqlDatabase;
-use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\CreateDatabaseInterface;
+use Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter\MySql\DropMySqlDatabase;
+use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseInterface;
 use Spryker\Zed\Propel\PropelConfig;
 
 /**
@@ -26,42 +26,42 @@ use Spryker\Zed\Propel\PropelConfig;
  * @group PropelDatabase
  * @group Adapter
  * @group MySql
- * @group CreateMySqlDatabaseTest
+ * @group DropMySqlDatabaseTest
  * Add your own group annotations below this line
  */
-class CreateMySqlDatabaseTest extends Unit
+class DropMySqlDatabaseTest extends Unit
 {
     /**
      * @return void
      */
-    public function testCreateIfNotExistsShouldCreateDatabase(): void
+    public function testDropDatabaseShouldDropDatabase(): void
     {
         if (Config::get(PropelConstants::ZED_DB_ENGINE) !== PropelConfig::DB_ENGINE_MYSQL) {
             $this->markTestSkipped('MySQL related test');
         }
 
         // Arrange
-        $createMySqlDatabaseMock = $this->getCreateMySqlDatabaseMock();
+        $dropMySqlDatabaseMock = $this->getDropMySqlDatabaseMock();
         $pdoMock = $this->getPdoMock();
 
-        $createMySqlDatabaseMock->expects($this->once())
+        $dropMySqlDatabaseMock->expects($this->once())
             ->method('getConnection')
             ->willReturn($pdoMock);
-        $createMySqlDatabaseMock->expects($this->once())
+        $dropMySqlDatabaseMock->expects($this->once())
             ->method('getQuery');
         $pdoMock->expects($this->once())
             ->method('exec');
 
         // Act
-        $createMySqlDatabaseMock->createIfNotExists();
+        $dropMySqlDatabaseMock->dropDatabase();
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\CreateDatabaseInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseInterface
      */
-    protected function getCreateMySqlDatabaseMock(): CreateDatabaseInterface
+    protected function getDropMySqlDatabaseMock(): DropDatabaseInterface
     {
-        return $this->getMockBuilder(CreateMySqlDatabase::class)
+        return $this->getMockBuilder(DropMySqlDatabase::class)
             ->onlyMethods(['getConnection', 'getQuery'])
             ->getMock();
     }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter\MySql;
 
+use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Propel;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseTablesInterface;
 
@@ -17,8 +18,16 @@ class DropMySqlDatabaseTables implements DropDatabaseTablesInterface
      */
     public function dropTables(): void
     {
-        $conn = Propel::getConnection();
+        $conn = $this->getConnection();
         $conn->exec($this->getDropQuery());
+    }
+
+    /**
+     * @return \Propel\Runtime\Connection\ConnectionInterface
+     */
+    protected function getConnection(): ConnectionInterface
+    {
+        return Propel::getConnection();
     }
 
     /**
