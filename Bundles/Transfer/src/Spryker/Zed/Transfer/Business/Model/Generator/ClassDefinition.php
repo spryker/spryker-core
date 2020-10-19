@@ -708,10 +708,10 @@ class ClassDefinition implements ClassDefinitionInterface
             'name' => $methodName,
             'property' => $propertyName,
             'propertyConst' => $this->getPropertyConstantName($property),
-            'return' => $this->getReturnType($property),
             'bundles' => $property['bundles'],
             'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
         ];
+        $method = $this->addGetReturnTypeData($method, $property);
         $this->methods[$methodName] = $method;
     }
 
@@ -728,15 +728,14 @@ class ClassDefinition implements ClassDefinitionInterface
             'name' => $methodName,
             'property' => $propertyName,
             'propertyConst' => $this->getPropertyConstantName($property),
-            'var' => $this->buildSetVar($property),
             'valueObject' => false,
             'bundles' => $property['bundles'],
             'typeHint' => null,
             'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
-            'shimNotice' => $this->getShimNotice($property),
         ];
         $method = $this->addTypeHint($property, $method);
         $method = $this->addDefaultNull($method, $property);
+        $method = $this->addSetArgumentTypeData($method, $property);
 
         if ($this->isValueObject($property)) {
             $method['valueObject'] = $this->getShortClassName(
@@ -767,7 +766,6 @@ class ClassDefinition implements ClassDefinitionInterface
             'property' => $propertyName,
             'propertyConst' => $propertyConstant,
             'parent' => $parent,
-            'var' => $this->getAddVar($property),
             'bundles' => $property['bundles'],
             'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
             'is_associative' => $this->isAssociativeArray($property),
@@ -779,12 +777,11 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         if ($method['is_associative']) {
-            $method['var'] = static::DEFAULT_ASSOCIATIVE_ARRAY_TYPE;
             $method['typeHint'] = null;
-            $method['varValue'] = $this->getAddVar($property);
             $method['typeHintValue'] = $this->getAddTypeHint($property);
         }
 
+        $method = $this->addAddArgumentTypeData($method, $property);
         $this->methods[$methodName] = $method;
     }
 
@@ -1038,21 +1035,7 @@ class ClassDefinition implements ClassDefinitionInterface
 
         if ($toType !== null) {
             $propertyDefinition['typeShim'] = $toType;
-            $propertyDefinition = $this->addShimNotice($toType, $propertyDefinition);
         }
-
-        return $propertyDefinition;
-    }
-
-    /**
-     * @param string $typeShim
-     * @param array $propertyDefinition
-     *
-     * @return array
-     */
-    protected function addShimNotice(string $typeShim, array $propertyDefinition): array
-    {
-        $propertyDefinition['shimNotice'] = sprintf(static::SHIM_NOTICE_TEMPLATE, $typeShim, $propertyDefinition['type']);
 
         return $propertyDefinition;
     }
@@ -1074,31 +1057,67 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function buildPropertyType(array $property): string
     {
-        $propertyType = $this->getPropertyType($property);
-
-        return $this->buildShimmedType($propertyType, $this->getTypeShim($property));
+        return $this->buildType(
+            $this->getPropertyType($property),
+            $this->getTypeShim($property)
+        );
     }
 
     /**
+     * @param array $method
      * @param array $property
      *
-     * @return string
+     * @return array
      */
-    protected function buildSetVar(array $property): string
+    protected function addSetArgumentTypeData(array $method, array $property): array
     {
-        $varType = $this->getSetVar($property);
+        $originalType = $this->getSetVar($property);
+        $typeShim = $this->getTypeShim($property);
 
-        return $this->buildShimmedType($varType, $this->getTypeShim($property));
+        $method['var'] = $this->buildType($originalType, $typeShim);
+
+        return $this->addTypeShimNotice($method, $originalType, $typeShim);
     }
 
     /**
+     * @param array $method
      * @param array $property
      *
-     * @return string|null
+     * @return array
      */
-    protected function getShimNotice(array $property): ?string
+    protected function addGetReturnTypeData(array $method, array $property): array
     {
-        return $property['shimNotice'] ?? null;
+        $originalType = $this->getReturnType($property);
+        $typeShim = $this->getTypeShim($property);
+
+        $method['return'] = $this->buildType($originalType, $typeShim);
+
+        return $this->addTypeShimNotice($method, $originalType, $typeShim);
+    }
+
+    /**
+     * @param array $method
+     * @param array $property
+     *
+     * @return array
+     */
+    protected function addAddArgumentTypeData(array $method, array $property): array
+    {
+        $originalType = $this->getAddVar($property);
+        $typeShim = $this->getTypeShim($property);
+
+        if ($typeShim !== null) {
+            $typeShim = str_replace('[]', '', $typeShim);
+        }
+
+        $method['var'] = $this->buildType($originalType, $typeShim);
+
+        if ($method['is_associative']) {
+            $method['varValue'] = $method['var'];
+            $method['var'] = static::DEFAULT_ASSOCIATIVE_ARRAY_TYPE;
+        }
+
+        return $this->addTypeShimNotice($method, $originalType, $typeShim);
     }
 
     /**
@@ -1107,12 +1126,30 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return string
      */
-    protected function buildShimmedType(string $originalType, ?string $typeShim = null): string
+    protected function buildType(string $originalType, ?string $typeShim = null): string
     {
         if ($typeShim === null) {
             return $originalType;
         }
 
         return sprintf('%s|%s', $typeShim, $originalType);
+    }
+
+    /**
+     * @param array $method
+     * @param string $originalType
+     * @param string|null $typeShim
+     *
+     * @return array
+     */
+    protected function addTypeShimNotice(array $method, string $originalType, ?string $typeShim = null): array
+    {
+        if ($typeShim === null) {
+            return $method;
+        }
+
+        $method['shimNotice'] = sprintf(static::SHIM_NOTICE_TEMPLATE, $typeShim, $originalType);
+
+        return $method;
     }
 }
