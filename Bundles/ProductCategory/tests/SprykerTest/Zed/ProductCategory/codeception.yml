@@ -48,3 +48,11 @@ suites:
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Zed\Category\Helper\CategoryDataHelper
                 - \SprykerTest\Zed\ProductCategory\Helper\AssignHelper
+    Persistence:
+        path: Persistence
+        class_name: ProductCategoryPersistenceTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
