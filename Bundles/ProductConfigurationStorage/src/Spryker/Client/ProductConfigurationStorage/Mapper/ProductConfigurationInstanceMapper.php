@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\ProductConfigurationStorageTransfer;
+use Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToPriceProductServiceInterface;
 use Spryker\Shared\ProductConfigurationStorage\ProductConfigurationStorageConfig;
 
 class ProductConfigurationInstanceMapper implements ProductConfigurationInstanceMapperInterface
@@ -25,7 +26,20 @@ class ProductConfigurationInstanceMapper implements ProductConfigurationInstance
     protected const IS_PRICE_MERGEABLE = false;
     protected const PRODUCT_CONFIGURATION_INSTANCE_RESPONSE_KEY = 'productConfigurationInstance';
     protected const PRICES_RESPONSE_KEY = 'prices';
-    protected const PRICES_SKU_KEY = 'SKU';
+    protected const PRICES_SKU_KEY = 'sku';
+
+    /**
+     * @var \Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToPriceProductServiceInterface
+     */
+    protected $priceProductService;
+
+    /**
+     * @param \Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToPriceProductServiceInterface $priceProductService
+     */
+    public function __construct(ProductConfigurationStorageToPriceProductServiceInterface $priceProductService)
+    {
+        $this->priceProductService = $priceProductService;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\ProductConfigurationStorageTransfer $productConfigurationStorageTransfer
@@ -61,7 +75,7 @@ class ProductConfigurationInstanceMapper implements ProductConfigurationInstance
         $configuratorResponsePrisesData
             = $configuratorResponseData[static::PRODUCT_CONFIGURATION_INSTANCE_RESPONSE_KEY][static::PRICES_RESPONSE_KEY] ?? [];
 
-        foreach ($configuratorResponsePrisesData as $currencyName => $priceData) {
+        foreach ($configuratorResponsePrisesData as $currencyCode => $priceData) {
             $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
                 ->setType(ProductConfigurationStorageConfig::PRICE_DIMENSION_PRODUCT_CONFIGURATION)
                 ->setProductConfigurationConfiguratorKey($productConfigurationInstanceTransfer->getConfiguratorKey());
@@ -71,15 +85,19 @@ class ProductConfigurationInstanceMapper implements ProductConfigurationInstance
                 ->setGrossAmount($priceData[static::PRICE_GROSS_MODE_KEY][static::DEFAULT_PRICE_TYPE_NAME] ?? null)
                 ->setPriceData($priceData[static::PRICE_DATA_KEY] ?? null)
                 ->setCurrency(
-                    (new CurrencyTransfer())->setName($currencyName)
+                    (new CurrencyTransfer())->setCode($currencyCode)
                 );
 
-            $priceProductTransfers->append((new PriceProductTransfer())
-                ->setSkuProduct($priceData[static::PRICES_SKU_KEY])
+            $priceProductTransfer = (new PriceProductTransfer())
+                ->setSkuProduct($configuratorResponseData[static::PRICES_SKU_KEY])
                 ->setPriceTypeName(static::DEFAULT_PRICE_TYPE_NAME)
                 ->setIsMergeable(static::IS_PRICE_MERGEABLE)
                 ->setPriceDimension($priceProductDimensionTransfer)
-                ->setMoneyValue($moneyValue));
+                ->setMoneyValue($moneyValue);
+
+            $priceProductTransfer->setGroupKey($this->priceProductService->buildPriceProductGroupKey($priceProductTransfer));
+
+            $priceProductTransfers->append($priceProductTransfer);
         }
 
         $productConfigurationInstanceTransfer->setPrices($priceProductTransfers);

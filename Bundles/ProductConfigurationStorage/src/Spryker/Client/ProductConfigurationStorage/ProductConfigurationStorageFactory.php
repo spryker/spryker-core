@@ -16,6 +16,7 @@ use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigur
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToProductStorageClientInterface;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToSessionClientInterface;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToStorageClientInterface;
+use Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToPriceProductServiceInterface;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductConfigurationStorage\Expander\PriceProductFilterExpander;
 use Spryker\Client\ProductConfigurationStorage\Expander\PriceProductFilterExpanderInterface as PriceProductFilterExpanderInterfaceAlias;
@@ -68,7 +69,7 @@ class ProductConfigurationStorageFactory extends AbstractFactory
      */
     public function createProductConfigurationInstanceMapper(): ProductConfigurationInstanceMapperInterface
     {
-        return new ProductConfigurationInstanceMapper();
+        return new ProductConfigurationInstanceMapper($this->getPriceProductService());
     }
 
     /**
@@ -244,6 +245,14 @@ class ProductConfigurationStorageFactory extends AbstractFactory
     public function getSynchronizationService(): ProductConfigurationStorageToSynchronizationServiceInterface
     {
         return $this->getProvidedDependency(ProductConfigurationStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToPriceProductServiceInterface
+     */
+    public function getPriceProductService(): ProductConfigurationStorageToPriceProductServiceInterface
+    {
+        return $this->getProvidedDependency(ProductConfigurationStorageDependencyProvider::SERVICE_PRICE_PRODUCT);
     }
 
     /**

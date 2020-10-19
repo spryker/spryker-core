@@ -15,6 +15,7 @@ use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigur
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToProductStorageClientBridge;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToSessionClientBridge;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToStorageClientBridge;
+use Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToPriceProductServiceBridge;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToSynchronizationServiceBridge;
 
 /**
@@ -29,6 +30,7 @@ class ProductConfigurationStorageDependencyProvider extends AbstractDependencyPr
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
     public const CLIENT_PRODUCT_CONFIGURATION = 'CLIENT_PRODUCT_CONFIGURATION';
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    public const SERVICE_PRICE_PRODUCT = 'SERVICE_PRICE_PRODUCT';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -45,6 +47,7 @@ class ProductConfigurationStorageDependencyProvider extends AbstractDependencyPr
         $container = $this->addProductStorageClient($container);
         $container = $this->addCartClient($container);
         $container = $this->addProductConfigurationClient($container);
+        $container = $this->addPriceProductService($container);
 
         return $container;
     }
@@ -117,6 +120,22 @@ class ProductConfigurationStorageDependencyProvider extends AbstractDependencyPr
         $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
             return new ProductConfigurationStorageToSynchronizationServiceBridge(
                 $container->getLocator()->synchronization()->service()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addPriceProductService(Container $container): Container
+    {
+        $container->set(static::SERVICE_PRICE_PRODUCT, function (Container $container) {
+            return new ProductConfigurationStorageToPriceProductServiceBridge(
+                $container->getLocator()->priceProduct()->service()
             );
         });
 

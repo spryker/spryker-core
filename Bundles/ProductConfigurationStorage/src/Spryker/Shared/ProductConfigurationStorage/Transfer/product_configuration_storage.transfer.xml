@@ -62,6 +62,7 @@
         <property name="isMergeable" type="bool"/>
         <property name="moneyValue" type="MoneyValue"/>
         <property name="skuProduct" type="string"/>
+        <property name="groupKey" type="string"/>
     </transfer>
 
     <transfer name="ProductConfiguration">
@@ -105,7 +106,7 @@
     </transfer>
 
     <transfer name="Currency">
-        <property name="name" type="string"/>
+        <property name="code" type="string"/>
     </transfer>
 
     <transfer name="ProductConfiguratorResponseProcessorResponse">
