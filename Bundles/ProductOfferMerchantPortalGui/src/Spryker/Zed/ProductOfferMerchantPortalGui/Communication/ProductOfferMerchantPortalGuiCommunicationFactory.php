@@ -129,8 +129,6 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     public function createProductOfferCreateFormDataProvider(): ProductOfferCreateFormDataProviderInterface
     {
         return new ProductOfferCreateFormDataProvider(
-            $this->getCurrencyFacade(),
-            $this->getPriceProductFacade(),
             $this->getProductFacade(),
             $this->getMerchantUserFacade(),
             $this->getMerchantStockFacade()
@@ -143,8 +141,6 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     public function createProductOfferUpdateFormDataProvider(): ProductOfferUpdateFormDataProviderInterface
     {
         return new ProductOfferUpdateFormDataProvider(
-            $this->getCurrencyFacade(),
-            $this->getPriceProductFacade(),
             $this->getProductFacade(),
             $this->getProductOfferFacade(),
             $this->getMerchantStockFacade(),

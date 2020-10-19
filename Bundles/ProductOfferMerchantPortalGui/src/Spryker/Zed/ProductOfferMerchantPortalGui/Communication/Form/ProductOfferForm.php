@@ -89,7 +89,7 @@ class ProductOfferForm extends AbstractType
             ->addStoresField($builder, $options)
             ->addIsActiveField($builder)
             ->addProductOfferStockSubform($builder)
-            ->addPricesSubform($builder)
+//            ->addPricesSubform($builder)
             ->addProductOfferValiditySubform($builder);
     }
 
@@ -252,14 +252,14 @@ class ProductOfferForm extends AbstractType
             $priceProductTransfer = $this->getPriceProductTransfer($formView);
             $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
 
-            $formView->children[PriceProductForm::FIELD_NET_AMOUNT]->vars['label'] = $moneyValueTransfer->getCurrency()->getSymbol();
-            $formView->children[PriceProductForm::FIELD_GROSS_AMOUNT]->vars['label'] = $moneyValueTransfer->getCurrency()->getSymbol();
+//            $formView->children[PriceProductForm::FIELD_NET_AMOUNT]->vars['label'] = $moneyValueTransfer->getCurrency()->getSymbol();
+//            $formView->children[PriceProductForm::FIELD_GROSS_AMOUNT]->vars['label'] = $moneyValueTransfer->getCurrency()->getSymbol();
 
             $storeName = $moneyValueTransfer->getStore()->getName();
             $priceTypeName = $priceProductTransfer->getPriceType()->getName();
 
-            $pricesFormTable[$storeName]['GROSS'][$priceTypeName][] = $formView->children[PriceProductForm::FIELD_GROSS_AMOUNT];
-            $pricesFormTable[$storeName]['NET'][$priceTypeName][] = $formView->children[PriceProductForm::FIELD_NET_AMOUNT];
+//            $pricesFormTable[$storeName]['GROSS'][$priceTypeName][] = $formView->children[PriceProductForm::FIELD_GROSS_AMOUNT];
+//            $pricesFormTable[$storeName]['NET'][$priceTypeName][] = $formView->children[PriceProductForm::FIELD_NET_AMOUNT];
         }
 
         $formViewCollection->vars['pricesFormTable'] = $pricesFormTable;

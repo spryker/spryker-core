@@ -24,22 +24,18 @@ class ProductOfferUpdateFormDataProvider extends AbstractProductOfferFormDataPro
     protected $productOfferFacade;
 
     /**
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToCurrencyFacadeInterface $currencyFacade
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToProductOfferFacadeInterface $productOfferFacade
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantStockFacadeInterface $merchantStockFacade
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
      */
     public function __construct(
-        ProductOfferMerchantPortalGuiToCurrencyFacadeInterface $currencyFacade,
-        ProductOfferMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade,
         ProductOfferMerchantPortalGuiToProductFacadeInterface $productFacade,
         ProductOfferMerchantPortalGuiToProductOfferFacadeInterface $productOfferFacade,
         ProductOfferMerchantPortalGuiToMerchantStockFacadeInterface $merchantStockFacade,
         ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
     ) {
-        parent::__construct($currencyFacade, $priceProductFacade, $productFacade, $merchantUserFacade, $merchantStockFacade);
+        parent::__construct($productFacade, $merchantUserFacade, $merchantStockFacade);
         $this->productOfferFacade = $productOfferFacade;
     }
 
