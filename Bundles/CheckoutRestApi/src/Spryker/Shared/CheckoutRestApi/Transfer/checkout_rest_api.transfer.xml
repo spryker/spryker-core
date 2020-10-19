@@ -72,7 +72,7 @@
     </transfer>
 
     <transfer name="RestCheckoutDataResponseAttributes">
-        <property name="addresses" type="RestAddress[]" singular="address"/>
+        <property name="addresses" type="RestAddress[]" singular="address" deprecated="Will be removed in next major. Use relations instead."/>
         <property name="paymentProviders" type="RestPaymentProvider[]" singular="paymentProvider" deprecated="Will be removed in next major release. Use relations instead."/>
         <property name="shipmentMethods" type="RestShipmentMethod[]" singular="shipmentMethod" deprecated="Will be removed in next major release. Use relations instead."/>
         <property name="selectedShipmentMethods" type="RestShipmentMethod[]" singular="selectedShipmentMethod"/>
