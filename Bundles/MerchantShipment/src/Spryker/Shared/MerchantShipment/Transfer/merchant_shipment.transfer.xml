@@ -25,6 +25,7 @@
     </transfer>
 
     <transfer name="ShipmentMethod">
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="Address">
