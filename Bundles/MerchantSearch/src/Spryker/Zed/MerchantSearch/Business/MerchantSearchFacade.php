@@ -33,4 +33,20 @@ class MerchantSearchFacade extends AbstractFacade implements MerchantSearchFacad
             ->getMerchantFacade()
             ->get($merchantCriteriaTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByMerchantEvents(array $eventTransfers): void
+    {
+        $this->getFactory()
+            ->createMerchantSearchWriter()
+            ->writeCollectionByMerchantEvents($eventTransfers);
+    }
 }

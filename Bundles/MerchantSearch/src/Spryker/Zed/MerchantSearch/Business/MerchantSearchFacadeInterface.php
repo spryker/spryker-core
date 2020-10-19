@@ -24,4 +24,13 @@ interface MerchantSearchFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
     public function get(MerchantCriteriaTransfer $merchantCriteriaTransfer): MerchantCollectionTransfer;
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByMerchantEvents(array $eventTransfers): void;
 }
