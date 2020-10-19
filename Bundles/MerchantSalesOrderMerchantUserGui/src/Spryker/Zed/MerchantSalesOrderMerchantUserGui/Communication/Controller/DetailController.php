@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller
 use ArrayObject;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer;
+use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -106,7 +107,61 @@ class DetailController extends AbstractController
             ->getMerchantSalesOrderFacade()
             ->findMerchantOrder($merchantOrderCriteriaTransfer);
 
+        if (!$merchantOrderTransfer) {
+            return null;
+        }
+
+        $merchantOrderItemIds = $this->extractMerchantOrderItemIds($merchantOrderTransfer->getMerchantOrderItems());
+        $merchantOrderItemsStateHistory = $this->getFactory()
+            ->getMerchantOmsFacade()
+            ->getMerchantOrderItemsStateHistory($merchantOrderItemIds);
+
+        return $this->mapMerchantOrderItemsStateHistoryToMerchantOrderItems(
+            $merchantOrderTransfer,
+            $merchantOrderItemsStateHistory
+        );
+    }
+
+    /**
+     * @phpstan-param array<int, array<\Generated\Shared\Transfer\StateMachineItemTransfer>> $merchantOrderItemsStateHistory
+     *
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     * @param array $merchantOrderItemsStateHistory
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer
+     */
+    protected function mapMerchantOrderItemsStateHistoryToMerchantOrderItems(
+        MerchantOrderTransfer $merchantOrderTransfer,
+        array $merchantOrderItemsStateHistory
+    ): MerchantOrderTransfer {
+        foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
+            if (!isset($merchantOrderItemsStateHistory[$merchantOrderItemTransfer->getIdMerchantOrderItem()])) {
+                continue;
+            }
+
+            $merchantOrderItemTransfer->setStateHistory(
+                new ArrayObject($merchantOrderItemsStateHistory[$merchantOrderItemTransfer->getIdMerchantOrderItem()])
+            );
+        }
+
         return $merchantOrderTransfer;
+    }
+
+    /**
+     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItems
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\MerchantOrderItemTransfer[] $merchantOrderItems
+     *
+     * @return int[]
+     */
+    protected function extractMerchantOrderItemIds(ArrayObject $merchantOrderItems): array
+    {
+        return array_map(
+            function (MerchantOrderItemTransfer $merchantOrderItemTransfer) {
+                return $merchantOrderItemTransfer->getIdMerchantOrderItem();
+            },
+            $merchantOrderItems->getArrayCopy()
+        );
     }
 
     /**
