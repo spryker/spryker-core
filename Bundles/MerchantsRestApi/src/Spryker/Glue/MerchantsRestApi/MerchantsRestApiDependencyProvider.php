@@ -20,6 +20,8 @@ class MerchantsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     public const CLIENT_MERCHANT_STORAGE = 'CLIENT_MERCHANT_STORAGE';
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
+    public const PLUGINS_REST_MERCHANT_ATTRIBUTES_MAPPER = 'PLUGINS_REST_MERCHANT_ATTRIBUTES_MAPPER';
+
     /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
@@ -30,6 +32,8 @@ class MerchantsRestApiDependencyProvider extends AbstractBundleDependencyProvide
         $container = parent::provideDependencies($container);
         $container = $this->addMerchantStorageClient($container);
         $container = $this->addGlossaryStorageClient($container);
+
+        $container = $this->addRestMerchantAttributesMapperPlugins($container);
 
         return $container;
     }
@@ -64,5 +68,27 @@ class MerchantsRestApiDependencyProvider extends AbstractBundleDependencyProvide
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addRestMerchantAttributesMapperPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_REST_MERCHANT_ATTRIBUTES_MAPPER, function (Container $container) {
+            return $this->getRestMerchantAttributesMapperPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\RestMerchantAttributesMapperPluginInterface[]
+     */
+    public function getRestMerchantAttributesMapperPlugins(): array
+    {
+        return [];
     }
 }

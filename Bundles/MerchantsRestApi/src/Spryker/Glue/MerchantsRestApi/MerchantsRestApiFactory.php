@@ -120,7 +120,17 @@ class MerchantsRestApiFactory extends AbstractFactory
      */
     public function createMerchantMapper(): MerchantMapperInterface
     {
-        return new MerchantMapper();
+        return new MerchantMapper(
+            $this->getRestMerchantAttributesMapperPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\RestMerchantAttributesMapperPluginInterface[]
+     */
+    public function getRestMerchantAttributesMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantsRestApiDependencyProvider::PLUGINS_REST_MERCHANT_ATTRIBUTES_MAPPER);
     }
 
     /**

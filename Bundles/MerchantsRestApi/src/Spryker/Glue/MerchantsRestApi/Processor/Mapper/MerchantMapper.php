@@ -14,6 +14,19 @@ use Generated\Shared\Transfer\RestMerchantsAttributesTransfer;
 class MerchantMapper implements MerchantMapperInterface
 {
     /**
+     * @var \Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\RestMerchantAttributesMapperPluginInterface[]
+     */
+    protected $restMerchantAttributesMapperPlugins;
+
+    /**
+     * @param \Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\RestMerchantAttributesMapperPluginInterface[] $restMerchantAttributesMapperPlugins
+     */
+    public function __construct(array $restMerchantAttributesMapperPlugins)
+    {
+        $this->restMerchantAttributesMapperPlugins = $restMerchantAttributesMapperPlugins;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\MerchantStorageTransfer $merchantStorageTransfer
      * @param \Generated\Shared\Transfer\RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer
      * @param string $localeName
@@ -33,7 +46,7 @@ class MerchantMapper implements MerchantMapperInterface
             ->setImprint($merchantStorageProfileTransfer->getImprint())
             ->setTerms($merchantStorageProfileTransfer->getTermsConditions());
 
-        return $restMerchantsAttributesTransfer->fromArray($merchantStorageTransfer->toArray(), true)
+        $restMerchantsAttributesTransfer->fromArray($merchantStorageTransfer->toArray(), true)
             ->fromArray($merchantStorageProfileTransfer->toArray(), true)
             ->setMerchantName($merchantStorageTransfer->getName())
             ->setLegalInformation($restLegalInformationTransfer)
@@ -41,6 +54,14 @@ class MerchantMapper implements MerchantMapperInterface
             ->setDescription($merchantStorageProfileTransfer->getDescription())
             ->setDeliveryTime($merchantStorageProfileTransfer->getDeliveryTime())
             ->setMerchantUrl($this->findMerchantUrlByLocaleName($merchantStorageTransfer, $localeName));
+
+        $restMerchantsAttributesTransfer = $this->executeRestMerchantAttributesMapperPlugins(
+            $merchantStorageTransfer,
+            $restMerchantsAttributesTransfer,
+            $localeName
+        );
+
+        return $restMerchantsAttributesTransfer;
     }
 
     /**
@@ -58,5 +79,28 @@ class MerchantMapper implements MerchantMapperInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantStorageTransfer $merchantStorageTransfer
+     * @param \Generated\Shared\Transfer\RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\RestMerchantsAttributesTransfer
+     */
+    protected function executeRestMerchantAttributesMapperPlugins(
+        MerchantStorageTransfer $merchantStorageTransfer,
+        RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer,
+        string $localeName
+    ): RestMerchantsAttributesTransfer {
+        foreach ($this->restMerchantAttributesMapperPlugins as $restMerchantAttributesMapperPlugin) {
+            $restMerchantsAttributesTransfer = $restMerchantAttributesMapperPlugin->mapMerchantStorageTransferToRestMerchantsAttributesTransfer(
+                $merchantStorageTransfer,
+                $restMerchantsAttributesTransfer,
+                $localeName
+            );
+        }
+
+        return $restMerchantsAttributesTransfer;
     }
 }
