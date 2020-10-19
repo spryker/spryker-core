@@ -20,7 +20,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "zendframework/zend-filter": "If you want to use logging in debug mode"
+    "spryker/monolog": "If you want to use logging in debug mode"
   },
   "autoload": {
     "psr-4": {
