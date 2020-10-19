@@ -58,6 +58,9 @@ class QueryBuilder implements QueryBuilderInterface
         $query = $this->mergeQueryWithColumnSelection($query, $propelQueryBuilderCriteriaTransfer);
         $query = $this->mergeQueryWithPagination($query, $propelQueryBuilderCriteriaTransfer);
 
+        $params = [];
+        $sql = $query->addSelfSelectColumns()->createSelectSql($params);
+
         return $query;
     }
 

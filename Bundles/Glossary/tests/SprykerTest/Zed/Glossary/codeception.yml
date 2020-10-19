@@ -59,3 +59,17 @@ suites:
                 - \SprykerTest\Zed\Router\Helper\RouterHelper
                 - \SprykerTest\Zed\Application\Helper\ApplicationHelper
                 - \SprykerTest\Shared\Glossary\Helper\TranslationHelper
+
+    Persistence:
+        path: Persistence
+        class_name: GlossaryPersistenceTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
+                - \SprykerTest\Shared\Glossary\Helper\TranslationHelper
