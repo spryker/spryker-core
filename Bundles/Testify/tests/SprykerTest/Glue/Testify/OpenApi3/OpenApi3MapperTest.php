@@ -52,8 +52,8 @@ class OpenApi3MapperTest extends Unit
 
         $mapper->mapObjectFromPayload($document, $payload);
 
-        $this->assertEquals('value 1', $document->foo1->bar[0]);
-        $this->assertEquals('value 6', $document->foo2->bar['key3']);
+        $this->assertSame('value 1', $document->foo1->bar[0]);
+        $this->assertSame('value 6', $document->foo2->bar['key3']);
         $this->assertEquals(['value 1', 'value 2', 'value 3'], $document->foo1->bar->toArray());
     }
 
@@ -82,6 +82,6 @@ class OpenApi3MapperTest extends Unit
         $mapper->mapObjectFromPayload($document, $payload);
 
         $this->assertEquals($document->foo1->bar->toArray(), $document->foo2->bar->toArray());
-        $this->assertEquals('value 2', $document->foo2->bar[1]);
+        $this->assertSame('value 2', $document->foo2->bar[1]);
     }
 }

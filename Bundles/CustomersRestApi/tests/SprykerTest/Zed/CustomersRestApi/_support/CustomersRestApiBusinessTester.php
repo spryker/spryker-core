@@ -264,14 +264,14 @@ class CustomersRestApiBusinessTester extends Actor
         RestAddressTransfer $expectedShippingAddress,
         AddressTransfer $actualShippingAddressTransfer
     ): void {
-        $this->assertEquals($expectedShippingAddress->getSalutation(), $actualShippingAddressTransfer->getSalutation());
-        $this->assertEquals($expectedShippingAddress->getFirstName(), $actualShippingAddressTransfer->getFirstName());
-        $this->assertEquals($expectedShippingAddress->getLastName(), $actualShippingAddressTransfer->getLastName());
-        $this->assertEquals($expectedShippingAddress->getAddress1(), $actualShippingAddressTransfer->getAddress1());
-        $this->assertEquals($expectedShippingAddress->getAddress2(), $actualShippingAddressTransfer->getAddress2());
-        $this->assertEquals($expectedShippingAddress->getCity(), $actualShippingAddressTransfer->getCity());
-        $this->assertEquals($expectedShippingAddress->getIso2Code(), $actualShippingAddressTransfer->getIso2Code());
-        $this->assertEquals($expectedShippingAddress->getZipCode(), $actualShippingAddressTransfer->getZipCode());
-        $this->assertEquals($expectedShippingAddress->getCompany(), $actualShippingAddressTransfer->getCompany());
+        $this->assertSame($expectedShippingAddress->getSalutation(), $actualShippingAddressTransfer->getSalutation());
+        $this->assertSame($expectedShippingAddress->getFirstName(), $actualShippingAddressTransfer->getFirstName());
+        $this->assertSame($expectedShippingAddress->getLastName(), $actualShippingAddressTransfer->getLastName());
+        $this->assertSame($expectedShippingAddress->getAddress1(), $actualShippingAddressTransfer->getAddress1());
+        $this->assertSame($expectedShippingAddress->getAddress2(), $actualShippingAddressTransfer->getAddress2());
+        $this->assertSame($expectedShippingAddress->getCity(), $actualShippingAddressTransfer->getCity());
+        $this->assertSame($expectedShippingAddress->getIso2Code(), $actualShippingAddressTransfer->getIso2Code());
+        $this->assertSame($expectedShippingAddress->getZipCode(), $actualShippingAddressTransfer->getZipCode());
+        $this->assertSame($expectedShippingAddress->getCompany(), $actualShippingAddressTransfer->getCompany());
     }
 }

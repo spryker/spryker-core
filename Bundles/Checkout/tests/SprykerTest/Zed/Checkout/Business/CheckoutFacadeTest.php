@@ -169,8 +169,8 @@ class CheckoutFacadeTest extends Unit
 
         // Assert
         $this->assertFalse($result->getIsSuccess());
-        $this->assertEquals(1, count($result->getErrors()));
-        $this->assertEquals(CheckoutConfig::ERROR_CODE_CUSTOMER_ALREADY_REGISTERED, $result->getErrors()[0]->getErrorCode());
+        $this->assertSame(1, count($result->getErrors()));
+        $this->assertSame(CheckoutConfig::ERROR_CODE_CUSTOMER_ALREADY_REGISTERED, $result->getErrors()[0]->getErrorCode());
     }
 
     /**
@@ -200,7 +200,7 @@ class CheckoutFacadeTest extends Unit
         // Assert
         $this->assertFalse($result->getIsSuccess());
         $this->assertCount(1, $result->getErrors());
-        $this->assertEquals(CheckoutConfig::ERROR_CODE_CUSTOMER_ALREADY_REGISTERED, $result->getErrors()[0]->getErrorCode());
+        $this->assertSame(CheckoutConfig::ERROR_CODE_CUSTOMER_ALREADY_REGISTERED, $result->getErrors()[0]->getErrorCode());
     }
 
     /**
@@ -231,13 +231,13 @@ class CheckoutFacadeTest extends Unit
 
         // Assert
         $this->assertTrue($result->getIsSuccess());
-        $this->assertEquals(0, count($result->getErrors()));
+        $this->assertSame(0, count($result->getErrors()));
 
         $salesFacade = $this->tester->getLocator()->sales()->facade();
         $orderTransfer = $salesFacade->getOrderByIdSalesOrder($result->getSaveOrder()->getIdSalesOrder());
         $orderItemsSkuList = $this->getOrderItemsSkuList($orderTransfer);
 
-        $this->assertEquals(2, $orderTransfer->getItems()->count());
+        $this->assertSame(2, $orderTransfer->getItems()->count());
         $this->assertArrayHasKey($productTransfer1->getSku(), $orderItemsSkuList);
         $this->assertArrayHasKey($productTransfer2->getSku(), $orderItemsSkuList);
     }
@@ -270,13 +270,13 @@ class CheckoutFacadeTest extends Unit
 
         // Assert
         $this->assertTrue($result->getIsSuccess());
-        $this->assertEquals(0, count($result->getErrors()));
+        $this->assertSame(0, count($result->getErrors()));
 
         $salesFacade = $this->tester->getLocator()->sales()->facade();
         $orderTransfer = $salesFacade->getOrderByIdSalesOrder($result->getSaveOrder()->getIdSalesOrder());
         $orderItemsSkuList = $this->getOrderItemsSkuList($orderTransfer);
 
-        $this->assertEquals(2, $orderTransfer->getItems()->count());
+        $this->assertSame(2, $orderTransfer->getItems()->count());
         $this->assertArrayHasKey($productTransfer1->getSku(), $orderItemsSkuList);
         $this->assertArrayHasKey($productTransfer2->getSku(), $orderItemsSkuList);
     }
@@ -297,10 +297,10 @@ class CheckoutFacadeTest extends Unit
 
         // Assert
         $this->assertTrue($result->getIsSuccess());
-        $this->assertEquals(0, count($result->getErrors()));
+        $this->assertSame(0, count($result->getErrors()));
 
         $customerQuery = SpyCustomerQuery::create()->filterByEmail($quoteTransfer->getCustomer()->getEmail());
-        $this->assertEquals(1, $customerQuery->count());
+        $this->assertSame(1, $customerQuery->count());
     }
 
     /**
@@ -316,10 +316,10 @@ class CheckoutFacadeTest extends Unit
 
         // Assert
         $this->assertTrue($result->getIsSuccess());
-        $this->assertEquals(0, count($result->getErrors()));
+        $this->assertSame(0, count($result->getErrors()));
 
         $customerQuery = SpyCustomerQuery::create()->filterByEmail($quoteTransfer->getCustomer()->getEmail());
-        $this->assertEquals(1, $customerQuery->count());
+        $this->assertSame(1, $customerQuery->count());
     }
 
     /**
@@ -339,10 +339,10 @@ class CheckoutFacadeTest extends Unit
 
         // Assert
         $this->assertTrue($result->getIsSuccess());
-        $this->assertEquals(0, count($result->getErrors()));
+        $this->assertSame(0, count($result->getErrors()));
 
         $customerQuery = SpyCustomerQuery::create()->filterByEmail($quoteTransfer->getCustomer()->getEmail());
-        $this->assertEquals(0, $customerQuery->count());
+        $this->assertSame(0, $customerQuery->count());
     }
 
     /**
@@ -359,10 +359,10 @@ class CheckoutFacadeTest extends Unit
 
         // Assert
         $this->assertTrue($result->getIsSuccess());
-        $this->assertEquals(0, count($result->getErrors()));
+        $this->assertSame(0, count($result->getErrors()));
 
         $customerQuery = SpyCustomerQuery::create()->filterByEmail($quoteTransfer->getCustomer()->getEmail());
-        $this->assertEquals(0, $customerQuery->count());
+        $this->assertSame(0, $customerQuery->count());
     }
 
     /**
@@ -383,8 +383,8 @@ class CheckoutFacadeTest extends Unit
 
         // Assert
         $this->assertFalse($result->getIsSuccess());
-        $this->assertEquals(1, count($result->getErrors()));
-        $this->assertEquals(CheckoutConfig::ERROR_CODE_PRODUCT_UNAVAILABLE, $result->getErrors()[0]->getErrorCode());
+        $this->assertSame(1, count($result->getErrors()));
+        $this->assertSame(CheckoutConfig::ERROR_CODE_PRODUCT_UNAVAILABLE, $result->getErrors()[0]->getErrorCode());
     }
 
     /**
@@ -405,8 +405,8 @@ class CheckoutFacadeTest extends Unit
 
         // Assert
         $this->assertFalse($result->getIsSuccess());
-        $this->assertEquals(1, count($result->getErrors()));
-        $this->assertEquals(CheckoutConfig::ERROR_CODE_PRODUCT_UNAVAILABLE, $result->getErrors()[0]->getErrorCode());
+        $this->assertSame(1, count($result->getErrors()));
+        $this->assertSame(CheckoutConfig::ERROR_CODE_PRODUCT_UNAVAILABLE, $result->getErrors()[0]->getErrorCode());
     }
 
     /**
@@ -431,8 +431,8 @@ class CheckoutFacadeTest extends Unit
 
         // Assert
         $this->assertFalse($result->getIsSuccess());
-        $this->assertEquals(1, count($result->getErrors()));
-        $this->assertEquals(CheckoutConfig::ERROR_CODE_PRODUCT_UNAVAILABLE, $result->getErrors()[0]->getErrorCode());
+        $this->assertSame(1, count($result->getErrors()));
+        $this->assertSame(CheckoutConfig::ERROR_CODE_PRODUCT_UNAVAILABLE, $result->getErrors()[0]->getErrorCode());
     }
 
     /**

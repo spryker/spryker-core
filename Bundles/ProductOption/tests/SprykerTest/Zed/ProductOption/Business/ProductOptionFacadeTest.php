@@ -117,14 +117,14 @@ class ProductOptionFacadeTest extends Unit
             ->findOneByIdProductOptionGroup($idOfProductOptionGroup);
 
         $this->assertNotEmpty($idOfProductOptionGroup);
-        $this->assertEquals($productOptionGroupTransfer->getName(), $productOptionGroupEntity->getName());
+        $this->assertSame($productOptionGroupTransfer->getName(), $productOptionGroupEntity->getName());
         $this->assertSame($productOptionGroupTransfer->getActive(), $productOptionGroupEntity->getActive());
 
         $productOptionValues = $productOptionGroupEntity->getSpyProductOptionValues();
         $productOptionValueEntity = $productOptionValues[0];
 
-        $this->assertEquals($productOptionValueTransfer->getValue(), $productOptionValueEntity->getValue());
-        $this->assertEquals($productOptionValueTransfer->getSku(), $productOptionValueEntity->getSku());
+        $this->assertSame($productOptionValueTransfer->getValue(), $productOptionValueEntity->getValue());
+        $this->assertSame($productOptionValueTransfer->getSku(), $productOptionValueEntity->getSku());
     }
 
     /**
@@ -213,7 +213,7 @@ class ProductOptionFacadeTest extends Unit
 
         $assignedProductAbstractEntity = $productOptionGroupEntity->getSpyProductAbstracts()[0];
 
-        $this->assertEquals($assignedProductAbstractEntity->getSku(), $productAbstractEntity->getSku());
+        $this->assertSame($assignedProductAbstractEntity->getSku(), $productAbstractEntity->getSku());
     }
 
     /**
@@ -292,8 +292,8 @@ class ProductOptionFacadeTest extends Unit
 
         $productOptionValueEntity = $this->tester->findOneProductOptionValueById($idProductOptionValue);
 
-        $this->assertEquals($productOptionValueTransfer->getSku(), $productOptionValueEntity->getSku());
-        $this->assertEquals($productOptionValueTransfer->getValue(), $productOptionValueEntity->getValue());
+        $this->assertSame($productOptionValueTransfer->getSku(), $productOptionValueEntity->getSku());
+        $this->assertSame($productOptionValueTransfer->getValue(), $productOptionValueEntity->getValue());
     }
 
     /**
@@ -372,9 +372,9 @@ class ProductOptionFacadeTest extends Unit
 
         $productOptionTransfer = $productOptionFacade->getProductOptionValueById($idOfPersistedOptionValue);
 
-        $this->assertEquals($idOfPersistedOptionValue, $productOptionTransfer->getIdProductOptionValue());
-        $this->assertEquals($productOptionValueTransfer->getValue(), $productOptionTransfer->getValue());
-        $this->assertEquals($productOptionValueTransfer->getSku(), $productOptionTransfer->getSku());
+        $this->assertSame($idOfPersistedOptionValue, $productOptionTransfer->getIdProductOptionValue());
+        $this->assertSame($productOptionValueTransfer->getValue(), $productOptionTransfer->getValue());
+        $this->assertSame($productOptionValueTransfer->getSku(), $productOptionTransfer->getSku());
     }
 
     /**
@@ -393,7 +393,7 @@ class ProductOptionFacadeTest extends Unit
         $persistedProductOptionGroupTransfer = $productOptionFacade->getProductOptionGroupById($idOfPersistedOptionGroup);
 
         $this->assertNotEmpty($persistedProductOptionGroupTransfer);
-        $this->assertEquals($productOptionGroupTransfer->getName(), $persistedProductOptionGroupTransfer->getName());
+        $this->assertSame($productOptionGroupTransfer->getName(), $persistedProductOptionGroupTransfer->getName());
     }
 
     /**

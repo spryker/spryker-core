@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Spryker\Shared\Security\Configuration\SecurityConfiguration;
 use Spryker\Shared\Security\Exception\FirewallNotFoundException;
 use Spryker\Shared\Security\Exception\SecurityConfigurationException;
+use Symfony\Component\Security\Http\Event\LogoutEvent;
 
 /**
  * Auto-generated group annotations
@@ -134,14 +135,33 @@ class SecurityConfigurationTest extends Unit
     /**
      * @return void
      */
-    public function testAddLogoutHandlerAddsALogoutHandler(): void
+    public function testAddLogoutHandlerAddsALogoutHandlerBeforeSymfonySecurity51(): void
     {
+        if (class_exists(LogoutEvent::class)) {
+            $this->markTestSkipped('Adding a logout handler is only allowed in symfony/security-core < 5.1');
+        }
         $securityConfiguration = new SecurityConfiguration();
         $securityConfiguration->addLogoutHandler(static::FIREWALL_MAIN, function (): void {
         });
         $securityConfiguration = $securityConfiguration->getConfiguration();
 
         $this->assertCount(1, $securityConfiguration->getLogoutHandlers());
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddLogoutHandlerThrowsExceptionWhenSymfonySecurity51IsInstalled(): void
+    {
+        if (class_exists(LogoutEvent::class)) {
+            $this->expectException(SecurityConfigurationException::class);
+
+            $securityConfiguration = new SecurityConfiguration();
+            $securityConfiguration->addLogoutHandler(static::FIREWALL_MAIN, function (): void {
+            });
+        }
+
+        $this->markTestSkipped('Test will only be executed when symfony/security-core <= 5.1 is installed.');
     }
 
     /**

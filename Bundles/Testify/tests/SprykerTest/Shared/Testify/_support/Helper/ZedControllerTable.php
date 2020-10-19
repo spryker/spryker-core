@@ -87,7 +87,7 @@ class ZedControllerTable extends Module implements DependsOnModule
         if (!isset($this->currentData['recordsTotal'])) {
             $this->fail('recordsTotal value not set; Run successful ->listDataTable before');
         }
-        $this->assertEquals($num, $this->currentData['recordsTotal'], 'records in table');
+        $this->assertSame($num, $this->currentData['recordsTotal'], 'records in table');
     }
 
     /**
@@ -106,7 +106,7 @@ class ZedControllerTable extends Module implements DependsOnModule
             $this->fail("No row #$row inside in a list, current number of rows: " . count($data));
         }
         $actualRow = $data[$row];
-        $this->assertEquals(
+        $this->assertSame(
             count($expectedRow),
             count(array_intersect_assoc($expectedRow, $actualRow)),
             "Row does not contain the provided data\n"

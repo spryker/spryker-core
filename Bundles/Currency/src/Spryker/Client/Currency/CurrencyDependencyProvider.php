@@ -14,7 +14,6 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationBridge;
 use Spryker\Shared\Kernel\Store;
-use Symfony\Component\Intl\Intl;
 
 class CurrencyDependencyProvider extends AbstractDependencyProvider
 {
@@ -80,11 +79,7 @@ class CurrencyDependencyProvider extends AbstractDependencyProvider
     protected function addInternationalization(Container $container)
     {
         $container->set(static::INTERNATIONALIZATION, function () {
-            $currencyToInternationalizationBridge = new CurrencyToInternationalizationBridge(
-                Intl::getCurrencyBundle()
-            );
-
-            return $currencyToInternationalizationBridge;
+            return new CurrencyToInternationalizationBridge();
         });
 
         return $container;

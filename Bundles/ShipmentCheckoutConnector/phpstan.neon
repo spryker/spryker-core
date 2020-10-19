@@ -1,3 +1,4 @@
 parameters:
+    checkGenericClassInNonGenericObjectType: false
     ignoreErrors:
         - '#Parameter \#1 \$errorCode of method .+CheckoutErrorTransfer::setErrorCode\(\) expects int\|null, string given.#'

@@ -68,7 +68,7 @@ class ProductTouchConsole extends Console
      *
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $idProductAbstract = (int)$input->getArgument(self::ARGUMENT_ID_ABSTRACT_PRODUCT);
         $action = strtolower($input->getArgument(self::ARGUMENT_TOUCH_ACTION));
@@ -93,6 +93,6 @@ class ProductTouchConsole extends Console
                 throw new Exception('Unknown touch action: ' . $action);
         }
 
-        return self::CODE_SUCCESS;
+        return static::CODE_SUCCESS;
     }
 }

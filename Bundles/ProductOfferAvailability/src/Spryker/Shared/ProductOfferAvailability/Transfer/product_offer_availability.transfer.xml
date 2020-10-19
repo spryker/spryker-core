@@ -38,6 +38,7 @@
     <transfer name="ReservationRequest">
         <property name="productOfferReference" type="string"/>
         <property name="store" type="Store"/>
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="ReservationResponse">

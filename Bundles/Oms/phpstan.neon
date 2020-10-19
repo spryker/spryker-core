@@ -1,11 +1,9 @@
 parameters:
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false
     ignoreErrors:
-    -
-        message: '#Result of && is always false.#'
-        path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Communication/Plugin/Oms/Command/CommandCollection.php'
-    -
-        message: '#Result of && is always false.#'
-        path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Communication/Plugin/Oms/Condition/ConditionCollection.php'
-    - '#Instanceof between \*NEVER\* and .+ConditionInterface will always evaluate to false#'
-    - '#Parameter \#1 \$v of method .+SpyOmsProductReservationLastExportedVersion::setVersion\(\) expects string, int given.#'
-    - '#Parameter \#1 \$string of method .+ConnectionInterface::quote\(\) expects string, int given.#'
+        - { message: '#Result of && is always false.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Communication/Plugin/Oms/Command/CommandCollection.php' }
+        - { message: '#Result of && is always false.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Communication/Plugin/Oms/Condition/ConditionCollection.php' }
+        - '#Instanceof between \*NEVER\* and .+ConditionInterface will always evaluate to false#'
+        - '#Parameter \#1 \$v of method .+SpyOmsProductReservationLastExportedVersion::setVersion\(\) expects string, int given.#'
+        - '#Parameter \#1 \$string of method .+ConnectionInterface::quote\(\) expects string, int given.#'

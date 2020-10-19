@@ -69,7 +69,7 @@ class ResponseTest extends Unit
     public function testDefaultSuccessIsTrue(): void
     {
         $response = new Response();
-        $this->assertEquals(true, $response->isSuccess());
+        $this->assertTrue($response->isSuccess());
     }
 
     /**
@@ -94,7 +94,7 @@ class ResponseTest extends Unit
 
         $response = $this->createFullResponse($transfer);
 
-        $this->assertEquals(false, $response->isSuccess());
+        $this->assertFalse($response->isSuccess());
         $this->assertEquals([$this->getMessageTransfer(self::MESSAGE_ERROR)], $response->getErrorMessages());
         $this->assertEquals([$this->getMessageTransfer(self::MESSAGE_INFO)], $response->getInfoMessages());
         $this->assertEquals([$this->getMessageTransfer(self::MESSAGE_SUCCESS)], $response->getSuccessMessages());

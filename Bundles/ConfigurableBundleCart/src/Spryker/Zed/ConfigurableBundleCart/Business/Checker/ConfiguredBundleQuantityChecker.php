@@ -95,7 +95,11 @@ class ConfiguredBundleQuantityChecker implements ConfiguredBundleQuantityChecker
                 return false;
             }
 
-            $itemQuantity = (int)$itemTransfer->getConfiguredBundle()->getQuantity() * $itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot();
+            if (!$itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot()) {
+                return false;
+            }
+
+            $itemQuantity = (int)($itemTransfer->getConfiguredBundle()->getQuantity() * $itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot());
 
             if ($itemQuantity !== $itemTransfer->getQuantity()) {
                 return false;

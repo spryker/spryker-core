@@ -77,7 +77,7 @@ class ContentNavigationClientTest extends Unit
             ->executeNavigationTypeByKey(static::CONTENT_KEY, static::LOCALE);
 
         // Assert
-        $this->assertEquals(ContentNavigationTypeTransfer::class, get_class($contentNavigationTypeTransfer));
+        $this->assertSame(ContentNavigationTypeTransfer::class, get_class($contentNavigationTypeTransfer));
     }
 
     /**

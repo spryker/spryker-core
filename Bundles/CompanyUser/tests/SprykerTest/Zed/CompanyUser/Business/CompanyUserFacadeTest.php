@@ -487,6 +487,7 @@ class CompanyUserFacadeTest extends Test
 
         //Assert
         $this->assertCount(1, $activeCompanyUsers);
+        // TODO: use assertSame() once the actual return result is of int, and not string
         $this->assertEquals($activeCompanyUsers[0], $activeCompanyUserTransfer->getIdCompanyUser());
     }
 
@@ -547,7 +548,7 @@ class CompanyUserFacadeTest extends Test
             ->offsetGet(0);
 
         // Assert
-        $this->assertEquals($companyUserTransfer->getIdCompanyUser(), $foundCompanyUserTransfer->getIdCompanyUser());
+        $this->assertSame($companyUserTransfer->getIdCompanyUser(), $foundCompanyUserTransfer->getIdCompanyUser());
     }
 
     /**
@@ -568,7 +569,7 @@ class CompanyUserFacadeTest extends Test
             ->offsetGet(0);
 
         // Assert
-        $this->assertEquals($companyUserTransfer->getIdCompanyUser(), $foundCompanyUserTransfer->getIdCompanyUser());
+        $this->assertSame($companyUserTransfer->getIdCompanyUser(), $foundCompanyUserTransfer->getIdCompanyUser());
     }
 
     /**
@@ -589,7 +590,7 @@ class CompanyUserFacadeTest extends Test
             ->offsetGet(0);
 
         // Assert
-        $this->assertEquals($companyUserTransfer->getIdCompanyUser(), $foundCompanyUserTransfer->getIdCompanyUser());
+        $this->assertSame($companyUserTransfer->getIdCompanyUser(), $foundCompanyUserTransfer->getIdCompanyUser());
     }
 
     /**

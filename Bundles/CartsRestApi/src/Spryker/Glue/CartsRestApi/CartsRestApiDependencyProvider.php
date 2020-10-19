@@ -24,6 +24,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_CUSTOMER_EXPANDER = 'PLUGINS_CUSTOMER_EXPANDER';
     public const PLUGINS_CART_ITEM_EXPANDER = 'PLUGINS_CART_ITEM_EXPANDER';
     public const PLUGINS_REST_CART_ITEMS_ATTRIBUTES_MAPPER = 'PLUGINS_REST_CART_ITEMS_ATTRIBUTES_MAPPER';
+    public const PLUGINS_CART_ITEM_FILTER = 'PLUGINS_CART_ITEM_FILTER';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -37,6 +38,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCustomerExpanderPlugins($container);
         $container = $this->addRestCartItemsAttributesMapperPlugins($container);
         $container = $this->addCartItemExpanderPlugins($container);
+        $container = $this->addCartItemFilterPlugins($container);
 
         return $container;
     }
@@ -98,6 +100,20 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addCartItemFilterPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CART_ITEM_FILTER, function () {
+            return $this->getCartItemFilterPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[]
      */
     protected function getCustomerExpanderPlugins(): array
@@ -117,6 +133,14 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\RestCartItemsAttributesMapperPluginInterface[]
      */
     protected function getRestCartItemsAttributesMapperPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CartItemFilterPluginInterface[]
+     */
+    protected function getCartItemFilterPlugins(): array
     {
         return [];
     }

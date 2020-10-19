@@ -18,7 +18,7 @@ use Spryker\Zed\Api\Communication\Controller\AbstractApiController;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Throwable;
 
@@ -48,7 +48,7 @@ class ApiControllerEventDispatcherPlugin extends AbstractPlugin implements Event
      */
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
-        $eventDispatcher->addListener(KernelEvents::CONTROLLER, function (FilterControllerEvent $event) {
+        $eventDispatcher->addListener(KernelEvents::CONTROLLER, function (ControllerEvent $event) {
             $this->onKernelController($event);
         });
 
@@ -56,11 +56,11 @@ class ApiControllerEventDispatcherPlugin extends AbstractPlugin implements Event
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
      *
      * @return void
      */
-    protected function onKernelController(FilterControllerEvent $event): void
+    protected function onKernelController(ControllerEvent $event): void
     {
         $request = $event->getRequest();
 

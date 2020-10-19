@@ -5,6 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
+    "psr/http-message": "^1.0.0",
     "spryker/config": "^3.0.0",
     "spryker/error-handler": "^2.1.0",
     "spryker/event-dispatcher-extension": "^1.0.0",
@@ -12,7 +13,7 @@
     "spryker/health-check-extension": "^1.0.0",
     "spryker/kernel": "^3.52.0",
     "spryker/messenger": "^3.0.0",
-    "spryker/symfony": "^3.0.0",
+    "spryker/symfony": "^3.5.0",
     "spryker/util-network": "^1.1.0",
     "spryker/util-text": "^1.1.0"
   },

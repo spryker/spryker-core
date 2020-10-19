@@ -68,7 +68,7 @@ class ResponseRelationshipTest extends Unit
         $this->assertCount(1, $resource->getRelationships());
 
         $this->assertCount(1, $resource->getRelationships()['related']);
-        $this->assertSame(1, $resource->getRelationships()['related'][0]->getId());
+        $this->assertSame('1', $resource->getRelationships()['related'][0]->getId());
         $this->assertSame('related', $resource->getRelationships()['related'][0]->getType());
     }
 

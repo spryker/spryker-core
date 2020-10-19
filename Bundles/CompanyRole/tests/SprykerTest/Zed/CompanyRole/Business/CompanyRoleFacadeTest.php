@@ -141,7 +141,7 @@ class CompanyRoleFacadeTest extends Test
             ->getCompanyRoleById($companyRoleTransfer);
 
         // Assert
-        $this->assertEquals(static::TEST_NAME, $resultCompanyRoleTransfer->getName());
+        $this->assertSame(static::TEST_NAME, $resultCompanyRoleTransfer->getName());
     }
 
     /**
@@ -346,7 +346,7 @@ class CompanyRoleFacadeTest extends Test
         // Assert
         $permissionTransferUpdated = $this->tester->getFacade()
             ->findPermissionByIdCompanyRoleByIdPermission($idCompanyRole, $idPermission);
-        $this->assertEquals(static::CONFIGURATION, $permissionTransferUpdated->getConfiguration());
+        $this->assertSame(static::CONFIGURATION, $permissionTransferUpdated->getConfiguration());
     }
 
     /**

@@ -25,14 +25,22 @@ class CartItemByQuoteResourceRelationshipExpander implements CartItemByQuoteReso
     protected $itemResponseBuilder;
 
     /**
+     * @var \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CartItemFilterPluginInterface[]
+     */
+    protected $cartItemFilterPlugins;
+
+    /**
      * @param \Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface $cartReader
+     * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CartItemFilterPluginInterface[] $cartItemFilterPlugins
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\ItemResponseBuilderInterface $itemResponseBuilder
      */
     public function __construct(
         CartReaderInterface $cartReader,
+        array $cartItemFilterPlugins,
         ItemResponseBuilderInterface $itemResponseBuilder
     ) {
         $this->cartReader = $cartReader;
+        $this->cartItemFilterPlugins = $cartItemFilterPlugins;
         $this->itemResponseBuilder = $itemResponseBuilder;
     }
 
@@ -53,7 +61,12 @@ class CartItemByQuoteResourceRelationshipExpander implements CartItemByQuoteReso
                 continue;
             }
 
-            foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $filteredItemTransfers = $this->executeCartItemFilterPlugins(
+                $quoteTransfer->getItems()->getArrayCopy(),
+                $quoteTransfer
+            );
+
+            foreach ($filteredItemTransfers as $itemTransfer) {
                 $itemResource = $this->itemResponseBuilder->createCartItemResource(
                     $resource,
                     $itemTransfer,
@@ -63,5 +76,54 @@ class CartItemByQuoteResourceRelationshipExpander implements CartItemByQuoteReso
                 $resource->addRelationship($itemResource);
             }
         }
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return void
+     */
+    public function addGuestCartItemResourceRelationships(array $resources, RestRequestInterface $restRequest): void
+    {
+        foreach ($resources as $resource) {
+            /**
+             * @var \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
+             */
+            $quoteTransfer = $resource->getPayload();
+            if (!$quoteTransfer instanceof QuoteTransfer) {
+                continue;
+            }
+
+            $filteredItemTransfers = $this->executeCartItemFilterPlugins(
+                $quoteTransfer->getItems()->getArrayCopy(),
+                $quoteTransfer
+            );
+
+            foreach ($filteredItemTransfers as $itemTransfer) {
+                $itemResource = $this->itemResponseBuilder->createGuestCartItemResource(
+                    $resource,
+                    $itemTransfer,
+                    $restRequest->getMetadata()->getLocale()
+                );
+
+                $resource->addRelationship($itemResource);
+            }
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function executeCartItemFilterPlugins(array $itemTransfers, QuoteTransfer $quoteTransfer): array
+    {
+        foreach ($this->cartItemFilterPlugins as $cartItemFilterPlugin) {
+            $itemTransfers = $cartItemFilterPlugin->filterCartItems($itemTransfers, $quoteTransfer);
+        }
+
+        return $itemTransfers;
     }
 }

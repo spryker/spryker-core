@@ -134,7 +134,8 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->createProductConcreteManager(),
             $this->createProductUrlManager(),
             $this->createProductConcreteTouch(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getRepository()
         );
     }
 
@@ -180,7 +181,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductAbstractStatusChecker()
     {
-        return new ProductAbstractStatusChecker($this->getQueryContainer());
+        return new ProductAbstractStatusChecker($this->getQueryContainer(), $this->getRepository());
     }
 
     /**

@@ -9,7 +9,7 @@ namespace Spryker\Yves\Application\Plugin\Provider\ExceptionService;
 
 use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Yves\Application\Plugin\Exception\UndefinedExceptionHandlerException;
-use Symfony\Component\Debug\Exception\FlattenException;
+use Symfony\Component\ErrorHandler\Exception\FlattenException;
 
 class ExceptionHandlerDispatcher
 {
@@ -29,7 +29,7 @@ class ExceptionHandlerDispatcher
     }
 
     /**
-     * @param \Symfony\Component\Debug\Exception\FlattenException $exception
+     * @param \Symfony\Component\ErrorHandler\Exception\FlattenException $exception
      *
      * @throws \Spryker\Yves\Application\Plugin\Exception\UndefinedExceptionHandlerException
      *
