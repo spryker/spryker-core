@@ -242,25 +242,28 @@ class {{ className }} extends {{ abstractClass }}
     /**
     * Checks if scalar and array values are of expected type(s).
     *
-    * @param string $propertyName
     * @param mixed $value
     * @param string $expectedValueTypes Expected types concatenated with '|' sign.
     *
     * @return bool
     */
-    protected function checkValueTypeIsCorrect(string $propertyName, $value, string $expectedValueTypes): bool
+    protected function checkValueTypeIsCorrect($value, string $expectedValueTypes): bool
     {
-        if (isset($this->transferMetadata[$propertyName]) && $this->transferMetadata[$propertyName]['is_value_object']) {
-            return true;
-        }
-
-        if ($value === null || (!is_scalar($value) && !is_array($value))) {
+        if ($value === null) {
             return true;
         }
 
         $valueTypesCollection = explode('|', $expectedValueTypes);
 
         foreach ($valueTypesCollection as $valueType) {
+            if (class_exists($valueType)) {
+                if ($value instanceof $valueType) {
+                    return true;
+                }
+
+                continue;
+            }
+
             $typeAssertFunctionName = $this->getTypeAssertFunctionName($valueType);
 
             if ($typeAssertFunctionName($value)) {
@@ -307,9 +310,9 @@ class {{ className }} extends {{ abstractClass }}
     */
     protected function validateFromArrayValueType(string $propertyName, $value): void
     {
-        $propertyExpectedTypes = $this->getPropertyExpectedTypes($propertyName, $value);
+        $propertyExpectedTypes = $this->getFromArrayPropertyExpectedTypes($propertyName, $value);
 
-        if ($this->checkValueTypeIsCorrect($propertyName, $value, $propertyExpectedTypes)) {
+        if ($this->checkValueTypeIsCorrect($value, $propertyExpectedTypes)) {
             return;
         }
 
@@ -324,17 +327,15 @@ class {{ className }} extends {{ abstractClass }}
     }
 
     /**
-    * @param string $propertyName
     * @param mixed $value
+    * @param string $propertyExpectedTypes
     * @param string $fullyQualifiedCalleeMethodName
     *
     * @return void
     */
-    protected function validateAddSetValueType(string $propertyName, $value, string $fullyQualifiedCalleeMethodName): void
+    protected function validateAddSetValueType($value, string $propertyExpectedTypes, string $fullyQualifiedCalleeMethodName): void
     {
-        $propertyExpectedTypes = $this->getPropertyExpectedTypes($propertyName, $value);
-
-        if ($this->checkValueTypeIsCorrect($propertyName, $value, $propertyExpectedTypes)) {
+        if ($this->checkValueTypeIsCorrect($value, $propertyExpectedTypes)) {
             return;
         }
 
@@ -404,7 +405,7 @@ class {{ className }} extends {{ abstractClass }}
     *
     * @return string
     */
-    protected function getPropertyExpectedTypes(string $propertyName, $value): string
+    protected function getFromArrayPropertyExpectedTypes(string $propertyName, $value): string
     {
         $propertyType = $this->transferMetadata[$propertyName]['type'];
         $typeShim = $this->transferMetadata[$propertyName]['type_shim'];
@@ -413,7 +414,11 @@ class {{ className }} extends {{ abstractClass }}
             $propertyType = 'string';
         }
 
-        if ($this->transferMetadata[$propertyName]['is_transfer'] || preg_match('/^.*\[\]/', $propertyType)) {
+        if ($this->transferMetadata[$propertyName]['is_transfer']) {
+            $propertyType = $this->transferMetadata[$propertyName]['is_collection'] ? '\ArrayObject|array' : 'array';
+        }
+
+        if (preg_match('/^.*\[\]/', $propertyType)) {
             $propertyType = 'array';
         }
 

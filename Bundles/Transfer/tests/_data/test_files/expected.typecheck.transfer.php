@@ -209,7 +209,7 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function setName($name)
     {
-        $this->validateAddSetValueType('name', $name, __METHOD__);
+        $this->validateAddSetValueType($name, 'string|null', __METHOD__);
 
         $this->name = $name;
         $this->modifiedProperties[self::NAME] = true;
@@ -366,7 +366,7 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function addTypedArray($typedArray)
     {
-        $this->validateAddSetValueType('typedArray', $typedArray, __METHOD__);
+        $this->validateAddSetValueType($typedArray, 'string', __METHOD__);
 
         $this->typedArray[] = $typedArray;
         $this->modifiedProperties[self::TYPED_ARRAY] = true;
@@ -395,7 +395,7 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function setTypedAssociativeStringArray($typedAssociativeStringArray)
     {
-        $this->validateAddSetValueType('typedAssociativeStringArray', $typedAssociativeStringArray, __METHOD__);
+        $this->validateAddSetValueType($typedAssociativeStringArray, 'string[]', __METHOD__);
 
         $this->typedAssociativeStringArray = $typedAssociativeStringArray;
         $this->modifiedProperties[self::TYPED_ASSOCIATIVE_STRING_ARRAY] = true;
@@ -503,7 +503,7 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function setTypedNotAssociativeStringArray($typedNotAssociativeStringArray)
     {
-        $this->validateAddSetValueType('typedNotAssociativeStringArray', $typedNotAssociativeStringArray, __METHOD__);
+        $this->validateAddSetValueType($typedNotAssociativeStringArray, 'string[]', __METHOD__);
 
         $this->typedNotAssociativeStringArray = $typedNotAssociativeStringArray;
         $this->modifiedProperties[self::TYPED_NOT_ASSOCIATIVE_STRING_ARRAY] = true;
@@ -530,7 +530,7 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function addTypedNotAssociativeStringArray($typedNotAssociativeStringArray)
     {
-        $this->validateAddSetValueType('typedNotAssociativeStringArray', $typedNotAssociativeStringArray, __METHOD__);
+        $this->validateAddSetValueType($typedNotAssociativeStringArray, 'string', __METHOD__);
 
         $this->typedNotAssociativeStringArray[] = $typedNotAssociativeStringArray;
         $this->modifiedProperties[self::TYPED_NOT_ASSOCIATIVE_STRING_ARRAY] = true;
@@ -559,7 +559,7 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function setTypedNotAssociativeArray($typedNotAssociativeArray)
     {
-        $this->validateAddSetValueType('typedNotAssociativeArray', $typedNotAssociativeArray, __METHOD__);
+        $this->validateAddSetValueType($typedNotAssociativeArray, 'array', __METHOD__);
 
         $this->typedNotAssociativeArray = $typedNotAssociativeArray;
         $this->modifiedProperties[self::TYPED_NOT_ASSOCIATIVE_ARRAY] = true;
@@ -921,25 +921,28 @@ class CatFaceTransfer extends AbstractTransfer
     /**
     * Checks if scalar and array values are of expected type(s).
     *
-    * @param string $propertyName
     * @param mixed $value
     * @param string $expectedValueTypes Expected types concatenated with '|' sign.
     *
     * @return bool
     */
-    protected function checkValueTypeIsCorrect(string $propertyName, $value, string $expectedValueTypes): bool
+    protected function checkValueTypeIsCorrect($value, string $expectedValueTypes): bool
     {
-        if (isset($this->transferMetadata[$propertyName]) && $this->transferMetadata[$propertyName]['is_value_object']) {
-            return true;
-        }
-
-        if ($value === null || (!is_scalar($value) && !is_array($value))) {
+        if ($value === null) {
             return true;
         }
 
         $valueTypesCollection = explode('|', $expectedValueTypes);
 
         foreach ($valueTypesCollection as $valueType) {
+            if (class_exists($valueType)) {
+                if ($value instanceof $valueType) {
+                    return true;
+                }
+
+                continue;
+            }
+
             $typeAssertFunctionName = $this->getTypeAssertFunctionName($valueType);
 
             if ($typeAssertFunctionName($value)) {
@@ -986,9 +989,9 @@ class CatFaceTransfer extends AbstractTransfer
     */
     protected function validateFromArrayValueType(string $propertyName, $value): void
     {
-        $propertyExpectedTypes = $this->getPropertyExpectedTypes($propertyName, $value);
+        $propertyExpectedTypes = $this->getFromArrayPropertyExpectedTypes($propertyName, $value);
 
-        if ($this->checkValueTypeIsCorrect($propertyName, $value, $propertyExpectedTypes)) {
+        if ($this->checkValueTypeIsCorrect($value, $propertyExpectedTypes)) {
             return;
         }
 
@@ -1003,17 +1006,15 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-    * @param string $propertyName
     * @param mixed $value
+    * @param string $propertyExpectedTypes
     * @param string $fullyQualifiedCalleeMethodName
     *
     * @return void
     */
-    protected function validateAddSetValueType(string $propertyName, $value, string $fullyQualifiedCalleeMethodName): void
+    protected function validateAddSetValueType($value, string $propertyExpectedTypes, string $fullyQualifiedCalleeMethodName): void
     {
-        $propertyExpectedTypes = $this->getPropertyExpectedTypes($propertyName, $value);
-
-        if ($this->checkValueTypeIsCorrect($propertyName, $value, $propertyExpectedTypes)) {
+        if ($this->checkValueTypeIsCorrect($value, $propertyExpectedTypes)) {
             return;
         }
 
@@ -1083,7 +1084,7 @@ class CatFaceTransfer extends AbstractTransfer
     *
     * @return string
     */
-    protected function getPropertyExpectedTypes(string $propertyName, $value): string
+    protected function getFromArrayPropertyExpectedTypes(string $propertyName, $value): string
     {
         $propertyType = $this->transferMetadata[$propertyName]['type'];
         $typeShim = $this->transferMetadata[$propertyName]['type_shim'];
@@ -1092,7 +1093,11 @@ class CatFaceTransfer extends AbstractTransfer
             $propertyType = 'string';
         }
 
-        if ($this->transferMetadata[$propertyName]['is_transfer'] || preg_match('/^.*\[\]/', $propertyType)) {
+        if ($this->transferMetadata[$propertyName]['is_transfer']) {
+            $propertyType = $this->transferMetadata[$propertyName]['is_collection'] ? '\ArrayObject|array' : 'array';
+        }
+
+        if (preg_match('/^.*\[\]/', $propertyType)) {
             $propertyType = 'array';
         }
 

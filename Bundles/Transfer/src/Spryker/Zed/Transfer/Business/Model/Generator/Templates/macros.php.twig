@@ -83,7 +83,7 @@
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }}{% if method.hasDefaultNull %} = null{% endif %})
     {
         {% if method.typeAssertion -%}
-        $this->validateAddSetValueType('{{ method.property }}', ${{ method.property }}, __METHOD__);
+        $this->validateAddSetValueType(${{ method.property }}, '{{ method.var }}', __METHOD__);
 
         {% endif -%}
         {% if method.typeHint == "array" -%}
@@ -142,7 +142,7 @@
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }})
     {
         {% if method.typeAssertion -%}
-        $this->validateAddSetValueType('{{ method.parent }}', ${{ method.property }}, __METHOD__);
+        $this->validateAddSetValueType(${{ method.property }}, '{{ method.var }}', __METHOD__);
 
         {% endif -%}
         $this->{{ method.parent }}[] = ${{ method.property }};
