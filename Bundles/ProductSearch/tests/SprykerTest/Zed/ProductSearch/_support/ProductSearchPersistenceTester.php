@@ -37,7 +37,7 @@ class ProductSearchPersistenceTester extends Actor
     public function createProductSearchAttribute(string $filterType): SpyProductSearchAttribute
     {
         $productAttributeKey = new SpyProductAttributeKey();
-        $productAttributeKey->setKey("{$filterType}_key");
+        $productAttributeKey->setKey(sprintf('%s_key', $filterType));
         $productAttributeKey->save();
 
         $productSearchAttribute = new SpyProductSearchAttribute();
