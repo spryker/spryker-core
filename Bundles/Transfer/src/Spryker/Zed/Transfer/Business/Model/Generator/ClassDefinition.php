@@ -8,8 +8,6 @@
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
 use ArrayObject;
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeTypeException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeValueException;
@@ -1147,9 +1145,18 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function addExtraUseStatements(): void
     {
-        if ($this->debugMode()) {
-            $this->addUseStatement(Logger::class);
-            $this->addUseStatement(StreamHandler::class);
+        if ($this->debugMode() && $this->isLoggingEnabled()) {
+            $this->addUseStatement('Monolog\Logger');
+            $this->addUseStatement('Monolog\Handler\DeduplicationHandler');
+            $this->addUseStatement('Monolog\Handler\StreamHandler');
         }
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isLoggingEnabled(): bool
+    {
+        return class_exists('Monolog\Logger');
     }
 }

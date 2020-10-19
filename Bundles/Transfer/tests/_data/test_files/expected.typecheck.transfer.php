@@ -7,6 +7,7 @@
 namespace Generated\Shared\Transfer;
 
 use ArrayObject;
+use Monolog\Handler\DeduplicationHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
@@ -72,6 +73,11 @@ class CatFaceTransfer extends AbstractTransfer
      * @var array
      */
     protected $typedNotAssociativeArray = [];
+
+    /**
+     * @var \Monolog\Logger
+     */
+    protected $logger;
 
     /**
      * @var array
@@ -203,7 +209,7 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function setName($name)
     {
-        $this->assertValueTypeIsCorrect($name, 'string|null', __METHOD__);
+        $this->validateAddSetValueType('name', $name, __METHOD__);
 
         $this->name = $name;
         $this->modifiedProperties[self::NAME] = true;
@@ -360,7 +366,7 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function addTypedArray($typedArray)
     {
-        $this->assertValueTypeIsCorrect($typedArray, 'string', __METHOD__);
+        $this->validateAddSetValueType('typedArray', $typedArray, __METHOD__);
 
         $this->typedArray[] = $typedArray;
         $this->modifiedProperties[self::TYPED_ARRAY] = true;
@@ -389,7 +395,7 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function setTypedAssociativeStringArray($typedAssociativeStringArray)
     {
-        $this->assertValueTypeIsCorrect($typedAssociativeStringArray, 'string[]', __METHOD__);
+        $this->validateAddSetValueType('typedAssociativeStringArray', $typedAssociativeStringArray, __METHOD__);
 
         $this->typedAssociativeStringArray = $typedAssociativeStringArray;
         $this->modifiedProperties[self::TYPED_ASSOCIATIVE_STRING_ARRAY] = true;
@@ -497,7 +503,7 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function setTypedNotAssociativeStringArray($typedNotAssociativeStringArray)
     {
-        $this->assertValueTypeIsCorrect($typedNotAssociativeStringArray, 'string[]', __METHOD__);
+        $this->validateAddSetValueType('typedNotAssociativeStringArray', $typedNotAssociativeStringArray, __METHOD__);
 
         $this->typedNotAssociativeStringArray = $typedNotAssociativeStringArray;
         $this->modifiedProperties[self::TYPED_NOT_ASSOCIATIVE_STRING_ARRAY] = true;
@@ -524,7 +530,7 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function addTypedNotAssociativeStringArray($typedNotAssociativeStringArray)
     {
-        $this->assertValueTypeIsCorrect($typedNotAssociativeStringArray, 'string', __METHOD__);
+        $this->validateAddSetValueType('typedNotAssociativeStringArray', $typedNotAssociativeStringArray, __METHOD__);
 
         $this->typedNotAssociativeStringArray[] = $typedNotAssociativeStringArray;
         $this->modifiedProperties[self::TYPED_NOT_ASSOCIATIVE_STRING_ARRAY] = true;
@@ -553,7 +559,7 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function setTypedNotAssociativeArray($typedNotAssociativeArray)
     {
-        $this->assertValueTypeIsCorrect($typedNotAssociativeArray, 'array', __METHOD__);
+        $this->validateAddSetValueType('typedNotAssociativeArray', $typedNotAssociativeArray, __METHOD__);
 
         $this->typedNotAssociativeArray = $typedNotAssociativeArray;
         $this->modifiedProperties[self::TYPED_NOT_ASSOCIATIVE_ARRAY] = true;
@@ -607,11 +613,9 @@ class CatFaceTransfer extends AbstractTransfer
     {
         foreach ($data as $property => $value) {
             $normalizedPropertyName = $this->transferPropertyNameMap[$property] ?? null;
-            $propertyExpectedTypes = $this->getPropertyExpectedTypes($normalizedPropertyName, $ignoreMissingProperty);
-
-            if ($propertyExpectedTypes !== null) {
-                $this->assertValueTypeIsCorrect($value, $propertyExpectedTypes, __METHOD__);
-            }
+        if ($normalizedPropertyName !== null) {
+            $this->validateFromArrayValueType($normalizedPropertyName, $value);
+        }
 
             switch ($normalizedPropertyName) {
                 case 'name':
@@ -914,113 +918,195 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-    * @param mixed $value
-    * @param string $expectedValueTypes
-    * @param string $methodName
+    * Checks if scalar and array values are of expected type(s).
     *
-    * @return void
+    * @param string $propertyName
+    * @param mixed $value
+    * @param string $expectedValueTypes Expected types, concatenated with '|' sign.
+    *
+    * @return bool
     */
-    protected function assertValueTypeIsCorrect($value, string $expectedValueTypes, string $methodName): void
+    protected function checkValueTypeIsCorrect(string $propertyName, $value, string $expectedValueTypes): bool
     {
+        if (isset($this->transferMetadata[$propertyName]) && $this->transferMetadata[$propertyName]['is_value_object']) {
+            return true;
+        }
+
         if ($value === null || (!is_scalar($value) && !is_array($value))) {
-            return;
+            return true;
         }
 
         $valueTypesCollection = explode('|', $expectedValueTypes);
 
         foreach ($valueTypesCollection as $valueType) {
-            $assertFunctionName = $this->getAssertFunctionName($valueType);
+            $typeAssertFunctionName = $this->getTypeAssertFunctionName($valueType);
 
-            if (!function_exists($assertFunctionName)) {
-                continue;
-            }
-
-            if ($assertFunctionName($value)) {
-                return;
+            if ($typeAssertFunctionName($value)) {
+                return true;
             }
         }
 
-        ['file' => $callerFileName, 'line' => $callerLineNumber] = debug_backtrace()[1];
-
-        $this->getLogger()->warning(
-            sprintf(
-                "Value passed to `%s()` is expected to be of type(s) %s. %s is given. Called in %s:%d",
-                $methodName,
-                $expectedValueTypes,
-                gettype($value),
-                $callerFileName,
-                $callerLineNumber
-            )
-        );
+        return false;
     }
 
     /**
     * @param string $varType
     *
+    * @throws \InvalidArgumentException
+    *
     * @return string
     */
-    protected function getAssertFunctionName(string $varType): string
+    protected function getTypeAssertFunctionName(string $varType): string
     {
         if ($varType === 'boolean') {
             return 'is_bool';
         }
 
-        if ($this->isTypedArray($varType)) {
+        if ($varType === 'array' || preg_match('/^.*\[\]/', $varType)) {
             return 'is_array';
         }
 
-        return 'is_' . $varType;
+        $typeAssertFunctionName = 'is_' . $varType;
+
+        if (!function_exists($typeAssertFunctionName)) {
+            throw new \InvalidArgumentException(
+                sprintf('Variable type `%s` is not resolvable to an existing type assert function.', $varType)
+            );
+        }
+
+        return $typeAssertFunctionName;
     }
 
     /**
-    * @param string $varType
+    * @param string $propertyName
+    * @param mixed $value
     *
-    * @return bool
+    * @return void
     */
-    protected function isTypedArray(string $varType): bool
+    protected function validateFromArrayValueType(string $propertyName, $value): void
     {
-        return (bool)preg_match('/array\[\]|callable\[\]|int\[\]|integer\[\]|float\[\]|decimal\[\]|string\[\]|bool\[\]|boolean\[\]|iterable\[\]|object\[\]|resource\[\]|mixed\[\]/', $varType);
+        $propertyExpectedTypes = $this->getPropertyExpectedTypes($propertyName, $value);
+
+        if ($this->checkValueTypeIsCorrect($propertyName, $value, $propertyExpectedTypes)) {
+            return;
+        }
+
+        $message = sprintf(
+            'Value passed to `%s::fromArray()` method under the `%s` key is expected to be of type(s) %s. %s is given',
+            static::class,
+            $propertyName,
+            $propertyExpectedTypes,
+            gettype($value)
+        );
+        $this->logTypeErrorMessage($message, 2);
     }
 
     /**
-    * @return \Monolog\Logger
+    * @param string $propertyName
+    * @param mixed $value
+    * @param string $fullyQualifiedCalleeMethodName
+    *
+    * @return void
     */
-    protected function getLogger(): Logger
+    protected function validateAddSetValueType(string $propertyName, $value, string $fullyQualifiedCalleeMethodName): void
     {
+        $propertyExpectedTypes = $this->getPropertyExpectedTypes($propertyName, $value);
+
+        if ($this->checkValueTypeIsCorrect($propertyName, $value, $propertyExpectedTypes)) {
+            return;
+        }
+
+        $message = sprintf(
+            'Value passed to `%s()` method is expected to be of type(s) %s. %s is given',
+            $fullyQualifiedCalleeMethodName,
+            $propertyExpectedTypes,
+            gettype($value)
+        );
+        $this->logTypeErrorMessage($message, 2);
+    }
+
+    /**
+    * @param string $message
+    *
+    * @param int $stackTraceNestingLevel
+    *
+    * @return void
+    */
+    protected function logTypeErrorMessage(string $message, $stackTraceNestingLevel = 1): void
+    {
+        $logger = $this->getLogger();
+
+        if ($logger === null) {
+            return;
+        }
+
+        ['file' => $callerFileName, 'line' => $callerLineNumber] = debug_backtrace()[$stackTraceNestingLevel];
+
+        $logger->warning(
+            sprintf(
+                "%s. Called in %s:%d",
+                $message,
+                $callerFileName,
+                $callerLineNumber
+            )
+        );
+        $logger->close();
+    }
+
+    /**
+    * @return \Monolog\Logger|null
+    */
+    protected function getLogger(): ?Logger
+    {
+        if (!$this->isLoggingEnabled()) {
+            return null;
+        }
+
+        if ($this->logger) {
+            return $this->logger;
+        }
+
         $logFilePath = sys_get_temp_dir() . '/transfer-type-error.log';
         $logger = new Logger('transferLogger');
-        $logger->pushHandler(new StreamHandler($logFilePath, Logger::WARNING));
+        $logger->pushHandler(
+            new DeduplicationHandler(new StreamHandler($logFilePath, Logger::WARNING), null, Logger::WARNING, 120)
+        );
+        $this->logger = $logger;
 
-        return $logger;
+        return $this->logger;
     }
 
     /**
-    * @param string|null $propertyName
-    * @param bool $ignoreMissingProperty
+    * @param string $propertyName
+    * @param mixed $value
     *
-    * @throws \InvalidArgumentException
-    *
-    * @return string|null
+    * @return string
     */
-    protected function getPropertyExpectedTypes(?string $propertyName, bool $ignoreMissingProperty = false): ?string
+    protected function getPropertyExpectedTypes(string $propertyName, $value): string
     {
-        if (!isset($this->transferMetadata[$propertyName])) {
-            if ($ignoreMissingProperty) {
-                return null;
-            }
-
-            throw new \InvalidArgumentException(sprintf('Missing property `%s` in `%s`', $propertyName, static::class));
-        }
-
-        $propertyTypes = $this->transferMetadata[$propertyName]['is_transfer']
-            ? 'array'
-            : $this->transferMetadata[$propertyName]['type'];
+        $propertyType = $this->transferMetadata[$propertyName]['type'];
         $typeShim = $this->transferMetadata[$propertyName]['type_shim'];
 
-        if ($typeShim) {
-            $propertyTypes .= '|' . $typeShim;
+        if ($propertyType === 'array' && is_string($value) && json_decode($value) !== null) {
+            $propertyType = 'string';
         }
 
-        return $propertyTypes;
+        if ($this->transferMetadata[$propertyName]['is_transfer'] || preg_match('/^.*\[\]/', $propertyType)) {
+            $propertyType = 'array';
+        }
+
+        if ($typeShim) {
+            return sprintf('%s|%s', $propertyType, $typeShim);
+        }
+
+        return $propertyType;
+    }
+
+    /**
+    * @return bool
+    */
+    protected function isLoggingEnabled(): bool
+    {
+        return class_exists('Monolog\Logger');
     }
 }
