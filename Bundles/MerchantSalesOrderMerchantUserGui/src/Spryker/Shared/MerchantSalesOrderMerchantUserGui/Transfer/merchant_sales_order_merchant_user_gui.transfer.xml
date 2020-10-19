@@ -53,6 +53,7 @@
         <property name="manualEvents" type="string[]" singular="manualEvent"/>
         <property name="orderItem" type="Item"/>
         <property name="stateHistory" type="StateMachineItem[]" singular="stateHistory"/>
+        <property name="idMerchantOrderItem" type="int"/>
     </transfer>
 
     <transfer name="ShipmentGroupResponse">
