@@ -38,7 +38,7 @@ class {{ className }} extends {{ abstractClass }}
 {% endfor -%}
 {% if debugMode %}
     /**
-     * @var \Monolog\Logger
+     * @var \Monolog\Logger|null
      */
     protected $logger;
 
@@ -80,9 +80,10 @@ class {{ className }} extends {{ abstractClass }}
         foreach ($data as $property => $value) {
             $normalizedPropertyName = $this->transferPropertyNameMap[$property] ?? null;
 {% if debugMode %}
-        if ($normalizedPropertyName !== null) {
-            $this->validateFromArrayValueType($normalizedPropertyName, $value);
-        }
+
+            if ($normalizedPropertyName !== null) {
+                $this->validateFromArrayValueType($normalizedPropertyName, $value);
+            }
 {% endif %}
 
             switch ($normalizedPropertyName) {
@@ -243,7 +244,7 @@ class {{ className }} extends {{ abstractClass }}
     *
     * @param string $propertyName
     * @param mixed $value
-    * @param string $expectedValueTypes Expected types, concatenated with '|' sign.
+    * @param string $expectedValueTypes Expected types concatenated with '|' sign.
     *
     * @return bool
     */

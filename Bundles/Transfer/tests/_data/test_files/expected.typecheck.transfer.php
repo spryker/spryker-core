@@ -75,7 +75,7 @@ class CatFaceTransfer extends AbstractTransfer
     protected $typedNotAssociativeArray = [];
 
     /**
-     * @var \Monolog\Logger
+     * @var \Monolog\Logger|null
      */
     protected $logger;
 
@@ -613,9 +613,10 @@ class CatFaceTransfer extends AbstractTransfer
     {
         foreach ($data as $property => $value) {
             $normalizedPropertyName = $this->transferPropertyNameMap[$property] ?? null;
-        if ($normalizedPropertyName !== null) {
-            $this->validateFromArrayValueType($normalizedPropertyName, $value);
-        }
+
+            if ($normalizedPropertyName !== null) {
+                $this->validateFromArrayValueType($normalizedPropertyName, $value);
+            }
 
             switch ($normalizedPropertyName) {
                 case 'name':
@@ -922,7 +923,7 @@ class CatFaceTransfer extends AbstractTransfer
     *
     * @param string $propertyName
     * @param mixed $value
-    * @param string $expectedValueTypes Expected types, concatenated with '|' sign.
+    * @param string $expectedValueTypes Expected types concatenated with '|' sign.
     *
     * @return bool
     */
