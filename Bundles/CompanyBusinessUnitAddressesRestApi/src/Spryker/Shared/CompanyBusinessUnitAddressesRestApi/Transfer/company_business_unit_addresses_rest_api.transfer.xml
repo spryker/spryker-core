@@ -57,10 +57,10 @@
     </transfer>
 
     <transfer name="RestCheckoutRequestAttributes">
-        <property name="customer" type="Customer"/>
+        <property name="customer" type="RestCustomer"/>
     </transfer>
 
-    <transfer name="Customer">
+    <transfer name="RestCustomer">
         <property name="idCompanyBusinessUnit" type="int"/>
     </transfer>
 

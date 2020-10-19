@@ -19,8 +19,8 @@ class CompanyBusinessUnitAddressesByCheckoutDataResourceRelationshipPlugin exten
 {
     /**
      * {@inheritDoc}
-     *  - Adds company business unit addresses resources as relationship.
-     *  - Requires a RestCheckoutDataTransfer to be provided in resource payload.
+     * - Adds company business unit addresses resources as relationship.
+     * - Requires a `RestCheckoutDataTransfer` to be provided in resource payload.
      *
      * @api
      *
@@ -32,7 +32,7 @@ class CompanyBusinessUnitAddressesByCheckoutDataResourceRelationshipPlugin exten
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createCompanyBusinessUnitAddressCollectionByRestCheckoutDataTransferResourceRelationshipExpander()
+            ->createCompanyBusinessUnitAddressCollectionByCheckoutDataResourceRelationshipExpander()
             ->addResourceRelationships($resources, $restRequest);
     }
 

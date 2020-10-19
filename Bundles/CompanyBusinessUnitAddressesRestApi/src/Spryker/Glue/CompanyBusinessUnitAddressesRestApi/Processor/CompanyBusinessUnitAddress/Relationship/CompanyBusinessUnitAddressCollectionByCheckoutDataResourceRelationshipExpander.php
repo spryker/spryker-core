@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
-class CompanyBusinessUnitAddressCollectionByRestCheckoutDataTransferResourceRelationshipExpander extends AbstractCompanyBusinessUnitAddressCollectionResourceRelationshipExpander
+class CompanyBusinessUnitAddressCollectionByCheckoutDataResourceRelationshipExpander extends AbstractCompanyBusinessUnitAddressCollectionResourceRelationshipExpander
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource

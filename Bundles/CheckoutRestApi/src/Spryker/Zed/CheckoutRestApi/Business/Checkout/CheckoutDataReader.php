@@ -111,6 +111,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         $quoteTransfer = $this->calculationFacade->recalculateQuote($quoteTransfer);
 
         $checkoutDataTransfer = (new RestCheckoutDataTransfer())
+            ->setQuote($quoteTransfer)
             ->setShipmentMethods($this->getShipmentMethodsTransfer($quoteTransfer))
             ->setPaymentProviders($this->paymentFacade->getAvailablePaymentProvidersForStore($storeTransfer->getName()))
             ->setAddresses($this->addressReader->getAddressesTransfer($quoteTransfer))
