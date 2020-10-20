@@ -32,6 +32,7 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
                 self::KEY_NAME => $transferDefinition[self::KEY_NAME],
                 self::KEY_DEPRECATED => isset($transferDefinition[self::KEY_DEPRECATED]) ? $transferDefinition[self::KEY_DEPRECATED] : null,
                 self::KEY_PROPERTY => $this->normalizeAttributes($transferDefinition[self::KEY_PROPERTY] ?? [], $transferDefinition[self::KEY_BUNDLE]),
+                self::KEY_STRICT_MODE => $transferDefinition[static::KEY_STRICT_MODE] ?? null,
             ];
 
             $normalizedDefinitions[] = $this->normalizeStrictMode($normalizedDefinition);
