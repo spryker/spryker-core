@@ -381,7 +381,6 @@ class ClassDefinitionTest extends Unit
             'property' => $property,
             'bundles' => $bundles,
             'deprecationDescription' => null,
-            'shimNotice' => null,
             'typeAssertion' => $typeAssertion,
         ];
 
