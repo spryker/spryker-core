@@ -45,18 +45,18 @@ class ProductConfiguratorAccessTokenRedirectResolver implements ProductConfigura
     protected $utilEncoding;
 
     /**
-     * @param \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestExpanderInterface[] $productConfiguratorRequestExpanderPlugins
      * @param \Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToHttpClientInterface $httpClient
      * @param \Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingInterface $utilEncoding
+     * @param \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestExpanderInterface[] $productConfiguratorRequestExpanderPlugins
      */
     public function __construct(
-        array $productConfiguratorRequestExpanderPlugins,
         ProductConfigurationToHttpClientInterface $httpClient,
-        ProductConfigurationToUtilEncodingInterface $utilEncoding
+        ProductConfigurationToUtilEncodingInterface $utilEncoding,
+        array $productConfiguratorRequestExpanderPlugins
     ) {
-        $this->productConfiguratorRequestExpanderPlugins = $productConfiguratorRequestExpanderPlugins;
         $this->httpClient = $httpClient;
         $this->utilEncoding = $utilEncoding;
+        $this->productConfiguratorRequestExpanderPlugins = $productConfiguratorRequestExpanderPlugins;
     }
 
     /**

@@ -52,11 +52,7 @@ class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirect
     public function prepareProductConfiguratorRedirect(
         ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
     ): ProductConfiguratorRedirectTransfer {
-        $productConfigurationRequestDataTransfer = $this->productConfiguratorDataExpander->expand(
-            $productConfiguratorRequestTransfer->getProductConfiguratorRequestData()
-        );
-
-        $productConfiguratorRequestTransfer->setProductConfiguratorRequestData($productConfigurationRequestDataTransfer);
+        $productConfiguratorRequestTransfer = $this->expandProductConfiguratorRequestData($productConfiguratorRequestTransfer);
 
         foreach ($this->productConfiguratorRequestPlugins as $configuratorKey => $productConfiguratorRequestPlugin) {
             if ($configuratorKey === $productConfiguratorRequestTransfer->getProductConfiguratorRequestData()->getConfiguratorKey()) {
@@ -66,5 +62,22 @@ class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirect
 
         return $this->productConfiguratorRequestDefaultPlugin
             ->resolveProductConfiguratorRedirect($productConfiguratorRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer
+     */
+    protected function expandProductConfiguratorRequestData(
+        ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
+    ): ProductConfiguratorRequestTransfer {
+        $productConfigurationRequestDataTransfer = $this->productConfiguratorDataExpander->expand(
+            $productConfiguratorRequestTransfer->getProductConfiguratorRequestData()
+        );
+
+        return $productConfiguratorRequestTransfer->setProductConfiguratorRequestData(
+            $productConfigurationRequestDataTransfer
+        );
     }
 }

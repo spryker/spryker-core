@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractBundleConfig;
 class ProductConfigurationConfig extends AbstractBundleConfig
 {
     /**
-     * Number of seconds while response considered as valid
+     * Number of seconds while response considered as valid.
      */
     protected const PRODUCT_CONFIGURATION_RESPONSE_MAX_VALID_SECONDS = 60;
 

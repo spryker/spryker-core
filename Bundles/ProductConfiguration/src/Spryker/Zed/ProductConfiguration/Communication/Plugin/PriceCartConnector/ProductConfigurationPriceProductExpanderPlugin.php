@@ -20,7 +20,7 @@ class ProductConfigurationPriceProductExpanderPlugin extends AbstractPlugin impl
 {
     /**
      * {@inheritDoc}
-     * - Expands the list of product price transfers with product configuration prices.
+     * - Expands the list of price product transfers with product configuration prices.
      *
      * @api
      *
