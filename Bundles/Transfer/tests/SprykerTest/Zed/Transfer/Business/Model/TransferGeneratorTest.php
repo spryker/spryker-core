@@ -179,6 +179,9 @@ class TransferGeneratorTest extends Unit
                 'name' => [
                     'string' => 'int',
                 ],
+                'typedArray' => [
+                    'string[]' => 'int[]',
+                ],
             ],
         ]);
         $transferDefinitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories, $configMock);

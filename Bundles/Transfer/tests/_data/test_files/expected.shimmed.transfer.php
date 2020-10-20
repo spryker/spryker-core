@@ -47,7 +47,7 @@ class CatFaceTransfer extends AbstractTransfer
     protected $items;
 
     /**
-     * @var string[]
+     * @var int[]|string[]
      */
     protected $typedArray = [];
 
@@ -137,7 +137,7 @@ class CatFaceTransfer extends AbstractTransfer
         ],
         self::TYPED_ARRAY => [
             'type' => 'string[]',
-            'type_shim' => null,
+            'type_shim' => 'int[]',
             'name_underscore' => 'typed_array',
             'is_collection' => false,
             'is_transfer' => false,
@@ -210,7 +210,7 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @module Test
      *
-     * @return string|null
+     * @return int|string|null Forward compatibility warning: int is the actual type (please use that, string is kept for BC).
      */
     public function getName()
     {
@@ -321,7 +321,7 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @module Test
      *
-     * @param string[]|null $typedArray
+     * @param int[]|string[]|null $typedArray Forward compatibility warning: int[] is the actual type (please use that, string[] is kept for BC).
      *
      * @return $this
      */
@@ -340,7 +340,7 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @module Test
      *
-     * @return string[]
+     * @return int[]|string[] Forward compatibility warning: int[] is the actual type (please use that, string[] is kept for BC).
      */
     public function getTypedArray()
     {
@@ -350,7 +350,7 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @module Test
      *
-     * @param string $typedArray
+     * @param int|string $typedArray Forward compatibility warning: int is the actual type (please use that, string is kept for BC).
      *
      * @return $this
      */

@@ -1160,7 +1160,7 @@ class ClassDefinition implements ClassDefinitionInterface
             return $method;
         }
 
-        $method['shimNotice'] = sprintf(static::SHIM_NOTICE_TEMPLATE, $typeShim, $originalType);
+        $method['shimNotice'] = sprintf(static::SHIM_NOTICE_TEMPLATE, $typeShim, rtrim($originalType, '|null'));
 
         return $method;
     }
