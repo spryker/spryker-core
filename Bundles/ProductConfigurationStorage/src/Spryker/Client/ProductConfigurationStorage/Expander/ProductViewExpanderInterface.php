@@ -7,14 +7,23 @@
 
 namespace Spryker\Client\ProductConfigurationStorage\Expander;
 
+use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 
 interface ProductViewExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param array $productData
+     * @param string $localeName
+     * @param \Generated\Shared\Transfer\ProductStorageCriteriaTransfer|null $productStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function expandProductViewWithProductConfigurationInstance(ProductViewTransfer $productViewTransfer): ProductViewTransfer;
+    public function expandProductViewWithProductConfigurationInstance(
+        ProductViewTransfer $productViewTransfer,
+        array $productData,
+        string $localeName,
+        ?ProductStorageCriteriaTransfer $productStorageCriteriaTransfer = null
+    ): ProductViewTransfer;
 }

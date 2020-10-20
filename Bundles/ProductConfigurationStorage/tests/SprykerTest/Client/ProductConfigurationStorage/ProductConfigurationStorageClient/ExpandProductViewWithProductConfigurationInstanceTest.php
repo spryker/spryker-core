@@ -27,6 +27,8 @@ use Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageFactor
  */
 class ExpandProductViewWithProductConfigurationInstanceTest extends Unit
 {
+    protected const TEST_LOCALE_NAME = 'test_locale_name';
+
     /**
      * @var \SprykerTest\Client\ProductConfigurationStorage\ProductConfigurationStorageClientTester
      */
@@ -51,7 +53,7 @@ class ExpandProductViewWithProductConfigurationInstanceTest extends Unit
         // Act
         $productViewTransfer = $this->tester
             ->getClient()
-            ->expandProductViewWithProductConfigurationInstance($productViewTransfer);
+            ->expandProductViewWithProductConfigurationInstance($productViewTransfer, [], static::TEST_LOCALE_NAME);
 
         // Assert
         $this->assertNotNull($productViewTransfer->getProductConfigurationInstance());
@@ -74,7 +76,7 @@ class ExpandProductViewWithProductConfigurationInstanceTest extends Unit
         // Act
         $productViewTransfer = $this->tester
             ->getClient()
-            ->expandProductViewWithProductConfigurationInstance($productViewTransfer);
+            ->expandProductViewWithProductConfigurationInstance($productViewTransfer, [], static::TEST_LOCALE_NAME);
 
         // Assert
         $this->assertNull($productViewTransfer->getProductConfigurationInstance());
@@ -97,7 +99,7 @@ class ExpandProductViewWithProductConfigurationInstanceTest extends Unit
         // Act
         $productViewTransfer = $this->tester
             ->getClient()
-            ->expandProductViewWithProductConfigurationInstance($productViewTransfer);
+            ->expandProductViewWithProductConfigurationInstance($productViewTransfer, [], static::TEST_LOCALE_NAME);
 
         // Assert
         $this->assertNull($productViewTransfer->getProductConfigurationInstance());
@@ -127,7 +129,7 @@ class ExpandProductViewWithProductConfigurationInstanceTest extends Unit
         // Act
         $productViewTransfer = $this->tester
             ->getClientMock($productConfigurationStorageFactoryMock)
-            ->expandProductViewWithProductConfigurationInstance($productViewTransfer);
+            ->expandProductViewWithProductConfigurationInstance($productViewTransfer, [], static::TEST_LOCALE_NAME);
 
         // Assert
         $this->assertNotNull($productViewTransfer->getProductConfigurationInstance());
