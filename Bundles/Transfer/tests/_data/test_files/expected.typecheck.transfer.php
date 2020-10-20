@@ -337,6 +337,8 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function setTypedArray(array $typedArray = null)
     {
+        $this->validateAddSetValueType($typedArray, 'string[]', __METHOD__);
+
         if ($typedArray === null) {
             $typedArray = [];
         }
@@ -423,6 +425,8 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function addTypedAssociativeStringArray($typedAssociativeStringArrayKey, $typedAssociativeStringArrayValue)
     {
+        $this->validateAddSetValueType($typedAssociativeStringArrayValue, 'string', __METHOD__);
+
         $this->typedAssociativeStringArray[$typedAssociativeStringArrayKey] = $typedAssociativeStringArrayValue;
         $this->modifiedProperties[self::TYPED_ASSOCIATIVE_STRING_ARRAY] = true;
 
@@ -919,8 +923,6 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-    * Checks if scalar and array values are of expected type(s).
-    *
     * @param mixed $value
     * @param string $expectedValueTypes Expected types concatenated with '|' sign.
     *
@@ -935,17 +937,9 @@ class CatFaceTransfer extends AbstractTransfer
         $valueTypesCollection = explode('|', $expectedValueTypes);
 
         foreach ($valueTypesCollection as $valueType) {
-            if (class_exists($valueType)) {
-                if ($value instanceof $valueType) {
-                    return true;
-                }
+            $typeAssertFunction = $this->getTypeAssertFunction($valueType);
 
-                continue;
-            }
-
-            $typeAssertFunctionName = $this->getTypeAssertFunctionName($valueType);
-
-            if ($typeAssertFunctionName($value)) {
+            if ($typeAssertFunction($value)) {
                 return true;
             }
         }
@@ -958,16 +952,24 @@ class CatFaceTransfer extends AbstractTransfer
     *
     * @throws \InvalidArgumentException
     *
-    * @return string
+    * @return callable
     */
-    protected function getTypeAssertFunctionName(string $varType): string
+    protected function getTypeAssertFunction(string $varType): callable
     {
-        if ($varType === 'boolean') {
-            return 'is_bool';
+        if (preg_match('/^.*\[\]$/', $varType)) {
+            return function ($value) use ($varType) {
+                return is_array($value) && $this->checkArrayElementsAreOfExpectedType($value, str_replace('[]', '', $varType));
+            };
         }
 
-        if ($varType === 'array' || preg_match('/^.*\[\]/', $varType)) {
-            return 'is_array';
+        if (class_exists($varType)) {
+            return function ($value) use ($varType) {
+                return $value instanceof $varType;
+            };
+        }
+
+        if ($varType === 'boolean') {
+            return 'is_bool';
         }
 
         $typeAssertFunctionName = 'is_' . $varType;
@@ -979,6 +981,25 @@ class CatFaceTransfer extends AbstractTransfer
         }
 
         return $typeAssertFunctionName;
+    }
+
+    /**
+    * @param array $array
+    * @param string $elementType
+    *
+    * @return bool
+    */
+    protected function checkArrayElementsAreOfExpectedType(array $array, string $elementType): bool
+    {
+        $typeAssertFunction = $this->getTypeAssertFunction($elementType);
+
+        foreach ($array as $arrayElement) {
+            if (!$typeAssertFunction($arrayElement)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -1000,7 +1021,7 @@ class CatFaceTransfer extends AbstractTransfer
             static::class,
             $propertyName,
             $propertyExpectedTypes,
-            gettype($value)
+            $this->getActualValueType($value)
         );
         $this->logTypeErrorMessage($message, 2);
     }
@@ -1022,9 +1043,32 @@ class CatFaceTransfer extends AbstractTransfer
             'Value passed to `%s()` method is expected to be of type(s) %s. %s is given',
             $fullyQualifiedCalleeMethodName,
             $propertyExpectedTypes,
-            gettype($value)
+            $this->getActualValueType($value)
         );
         $this->logTypeErrorMessage($message, 2);
+    }
+
+    /**
+    * @param mixed $value
+    *
+    * @return string
+    */
+    protected function getActualValueType($value): string
+    {
+        if (!is_array($value)) {
+            return gettype($value);
+        }
+
+        if (empty($value)) {
+            return 'array';
+        }
+
+        $firstElementKey = key($value);
+        $firstElementType = gettype($value[$firstElementKey]);
+
+        return $this->checkArrayElementsAreOfExpectedType($value, $firstElementType)
+            ? $firstElementType . '[]'
+            : 'mixed[]';
     }
 
     /**
@@ -1095,10 +1139,6 @@ class CatFaceTransfer extends AbstractTransfer
 
         if ($this->transferMetadata[$propertyName]['is_transfer']) {
             $propertyType = $this->transferMetadata[$propertyName]['is_collection'] ? '\ArrayObject|array' : 'array';
-        }
-
-        if (preg_match('/^.*\[\]/', $propertyType)) {
-            $propertyType = 'array';
         }
 
         if ($typeShim) {

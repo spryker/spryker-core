@@ -172,6 +172,10 @@
      */
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ propertyKey }}, {% if method.typeHintValue %}{{ method.typeHintValue }} {% endif %}${{ propertyValue }})
     {
+        {% if method.typeAssertion -%}
+        $this->validateAddSetValueType(${{ propertyValue }}, '{{ method.varValue }}', __METHOD__);
+
+        {% endif -%}
         $this->{{ method.parent }}[${{ propertyKey }}] = ${{ propertyValue }};
         $this->modifiedProperties[self::{{ method.propertyConst }}] = true;
 

@@ -1135,7 +1135,13 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function addTypeAssertion(array $method): array
     {
-        $method['typeAssertion'] = $this->debugMode() && empty($method['typeHint']) && $method['var'] !== 'mixed';
+        $method['typeAssertion'] = false;
+
+        if (!$this->debugMode() || $method['var'] === 'mixed') {
+            return $method;
+        }
+
+        $method['typeAssertion'] = empty($method['typeHint']) || $method['typeHint'] === 'array';
 
         return $method;
     }
