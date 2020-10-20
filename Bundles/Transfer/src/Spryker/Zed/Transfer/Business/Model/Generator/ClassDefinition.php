@@ -780,14 +780,14 @@ class ClassDefinition implements ClassDefinitionInterface
             $method['typeHint'] = $typeHint;
         }
 
-        $method = $this->addTypeAssertion($method);
-
         if ($method['is_associative']) {
             $method['var'] = static::DEFAULT_ASSOCIATIVE_ARRAY_TYPE;
             $method['typeHint'] = null;
             $method['varValue'] = $this->getAddVar($property);
             $method['typeHintValue'] = $this->getAddTypeHint($property);
         }
+
+        $method = $this->addTypeAssertion($method);
 
         $this->methods[$methodName] = $method;
     }
@@ -980,7 +980,7 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @return bool
      */
-    public function debugMode(): bool
+    public function isDebugMode(): bool
     {
         return $this->transferConfig->isDebugEnabled();
     }
@@ -1136,12 +1136,14 @@ class ClassDefinition implements ClassDefinitionInterface
     protected function addTypeAssertion(array $method): array
     {
         $method['typeAssertion'] = false;
+        $methodVarType = $method['varValue'] ?? $method['var'];
 
-        if (!$this->debugMode() || $method['var'] === 'mixed') {
+        if (!$this->isDebugMode() || $methodVarType === 'mixed') {
             return $method;
         }
 
-        $method['typeAssertion'] = empty($method['typeHint']) || $method['typeHint'] === 'array';
+        $methodVValueTypeHint = $method['typeHintValue'] ?? $method['typeHint'] ?? null;
+        $method['typeAssertion'] = empty($methodVValueTypeHint) || $methodVValueTypeHint === 'array';
 
         return $method;
     }
@@ -1151,7 +1153,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function addExtraUseStatements(): void
     {
-        if ($this->debugMode() && $this->isLoggingEnabled()) {
+        if ($this->isDebugMode() && $this->isLoggingEnabled()) {
             $this->addUseStatement('Monolog\Logger');
             $this->addUseStatement('Monolog\Handler\DeduplicationHandler');
             $this->addUseStatement('Monolog\Handler\StreamHandler');

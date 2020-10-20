@@ -36,7 +36,7 @@ class {{ className }} extends {{ abstractClass }}
 {% for property in properties %}
 {{ macro.addProperty(property) }}
 {% endfor -%}
-{% if debugMode %}
+{% if isDebugMode %}
     /**
      * @var \Monolog\Logger|null
      */
@@ -79,7 +79,7 @@ class {{ className }} extends {{ abstractClass }}
     {
         foreach ($data as $property => $value) {
             $normalizedPropertyName = $this->transferPropertyNameMap[$property] ?? null;
-{% if debugMode %}
+{% if isDebugMode %}
 
             if ($normalizedPropertyName !== null) {
                 $this->validateFromArrayValueType($normalizedPropertyName, $value);
@@ -237,7 +237,7 @@ class {{ className }} extends {{ abstractClass }}
     {{ macro.addToArray('toArrayRecursiveNotCamelCased', true, false, primitives, transfers, transferCollections, valueObjects) }}
 
     {{ macro.addToArray('toArrayRecursiveCamelCased', true, true, primitives, transfers, transferCollections, valueObjects) }}
-{% if debugMode %}
+{% if isDebugMode %}
 
     /**
     * @param mixed $value
@@ -470,7 +470,7 @@ class {{ className }} extends {{ abstractClass }}
     */
     protected function isLoggingEnabled(): bool
     {
-        return class_exists('Monolog\Logger');
+        return class_exists(\Monolog\Logger::class);
     }
 {% endif %}
 }

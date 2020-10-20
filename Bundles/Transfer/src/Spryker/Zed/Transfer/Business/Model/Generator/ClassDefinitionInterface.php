@@ -60,5 +60,5 @@ interface ClassDefinitionInterface extends DefinitionInterface
     /**
      * @return bool
      */
-    public function debugMode(): bool;
+    public function isDebugMode(): bool;
 }

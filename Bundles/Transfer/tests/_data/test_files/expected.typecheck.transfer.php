@@ -1153,6 +1153,6 @@ class CatFaceTransfer extends AbstractTransfer
     */
     protected function isLoggingEnabled(): bool
     {
-        return class_exists('Monolog\Logger');
+        return class_exists(\Monolog\Logger::class);
     }
 }

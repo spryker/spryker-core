@@ -116,7 +116,7 @@ class ClassGenerator implements GeneratorInterface
             'deprecationDescription' => $classDefinition->getDeprecationDescription(),
             'useStatements' => $classDefinition->getUseStatements(),
             'entityNamespace' => $classDefinition->getEntityNamespace(),
-            'debugMode' => $classDefinition->debugMode(),
+            'isDebugMode' => $classDefinition->isDebugMode(),
         ];
         $twigVariables += $this->getPropertiesSegregatedByType($classDefinition);
 
