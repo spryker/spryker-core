@@ -151,6 +151,16 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isCustomerPasswordCheckOnPasswordUpdateEnabled()
+    {
+        return false;
+    }
+
+    /**
      * @return string
      */
     protected function getUniqueIdentifierSeparator()

@@ -34,23 +34,39 @@ class CustomerPasswordPolicyValidator implements CustomerPasswordPolicyValidator
     public const PASSWORD_POLICY_ERROR_BLACKLIST = 'customer.password.error.blacklist';
     public const PASSWORD_POLICY_ERROR_MIN = 'customer.password.error.min_length';
     public const PASSWORD_POLICY_ERROR_MAX = 'customer.password.error.max_length';
+    protected const GLOSSARY_PARAM_VALIDATION_LENGTH = '{{ limit }}';
 
     /**
      * @inheriDoc
+     *
+     * @return Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
      */
-    public function checkLength(CustomerTransfer $customerTransfer, CustomerPasswordPolicyResultTransfer $resultTransfer, array $config): CustomerPasswordPolicyResultTransfer
+    public function checkLength(
+        CustomerTransfer $customerTransfer,
+        CustomerPasswordPolicyResultTransfer $resultTransfer,
+        array $config
+            ): CustomerPasswordPolicyResultTransfer
     {
         $passwordLength = strlen($customerTransfer->getPassword());
 
-        if ($passwordLength < $config[self::PASSWORD_POLICY_ATTRIBUTE_MIN]) {
+        if ($passwordLength < $config[static::PASSWORD_POLICY_ATTRIBUTE_MIN]) {
             $this->addError(
-                $resultTransfer,
-                self::PASSWORD_POLICY_ERROR_MIN
+                    $resultTransfer,
+        static::PASSWORD_POLICY_ERROR_MIN,
+                    [
+                        static::PASSWORD_POLICY_LENGTH => $config[static::PASSWORD_POLICY_ATTRIBUTE_MIN],
+                    ]
             );
         }
 
-        if ($passwordLength > $config[self::PASSWORD_POLICY_ATTRIBUTE_MAX]) {
-            $this->addError($resultTransfer, self::PASSWORD_POLICY_ERROR_MAX);
+        if ($passwordLength > $config[static::PASSWORD_POLICY_ATTRIBUTE_MAX]) {
+            $this->addError(
+                $resultTransfer,
+    static::PASSWORD_POLICY_ERROR_MAX,
+                [
+                    static::PASSWORD_POLICY_LENGTH => $config[static::PASSWORD_POLICY_ATTRIBUTE_MAX]
+                ]
+            );
         }
 
         return $resultTransfer;
@@ -63,29 +79,29 @@ class CustomerPasswordPolicyValidator implements CustomerPasswordPolicyValidator
     public function checkCharset(CustomerTransfer $customerTransfer, CustomerPasswordPolicyResultTransfer $resultTransfer, array $config): CustomerPasswordPolicyResultTransfer
     {
         $password = $customerTransfer->getPassword();
-        $requiredCharsets = $config[self::PASSWORD_POLICY_ATTRIBUTE_CHARSET];
-        $specialChars = $config[self::PASSWORD_POLICY_ATTRIBUTE_SPECIALSET];
+        $requiredCharsets = $config[static::PASSWORD_POLICY_ATTRIBUTE_CHARSET];
+        $specialChars = $config[static::PASSWORD_POLICY_ATTRIBUTE_SPECIALSET];
 
-        if (in_array(self::PASSWORD_POLICY_ATTRIBUTE_LOWER_CASE, $requiredCharsets)) {
+        if (in_array(static::PASSWORD_POLICY_ATTRIBUTE_LOWER_CASE, $requiredCharsets)) {
             if (!$this->hasLowerCase($password)) {
-                $this->addError($resultTransfer, self::PASSWORD_POLICY_ERROR_LOWER_CASE);
+                $this->addError($resultTransfer, static::PASSWORD_POLICY_ERROR_LOWER_CASE);
             }
         }
 
-        if (in_array(self::PASSWORD_POLICY_ATTRIBUTE_UPPER_CASE, $requiredCharsets)) {
+        if (in_array(static::PASSWORD_POLICY_ATTRIBUTE_UPPER_CASE, $requiredCharsets)) {
             if (!$this->hasUpperCase($password)) {
-                $this->addError($resultTransfer, self::PASSWORD_POLICY_ERROR_LOWER_CASE);
+                $this->addError($resultTransfer, static::PASSWORD_POLICY_ERROR_LOWER_CASE);
             }
         }
 
-        if (in_array(self::PASSWORD_POLICY_ATTRIBUTE_SPECIAL, $requiredCharsets)) {
+        if (in_array(static::PASSWORD_POLICY_ATTRIBUTE_SPECIAL, $requiredCharsets)) {
             if (!$this->hasSpecial($password, $specialChars)) {
-                $this->addError($resultTransfer, self::PASSWORD_POLICY_ERROR_LOWER_CASE);
+                $this->addError($resultTransfer, static::PASSWORD_POLICY_ERROR_LOWER_CASE);
             }
         }
 
         if (!$this->checkAllowed($password, $specialChars)) {
-            $this->addError($resultTransfer, self::PASSWORD_POLICY_ERROR_SEQUENCE);
+            $this->addError($resultTransfer, static::PASSWORD_POLICY_ERROR_SEQUENCE);
         }
 
         return $resultTransfer;
@@ -103,7 +119,7 @@ class CustomerPasswordPolicyValidator implements CustomerPasswordPolicyValidator
                 $counter++;
             }
             if ($sequenceLengthLimit < $counter) {
-                $this->addError($resultTransfer, self::PASSWORD_POLICY_ERROR_SEQUENCE);
+                $this->addError($resultTransfer, static::PASSWORD_POLICY_ERROR_SEQUENCE);
                 break;
             }
             $prevchar = $char;
@@ -118,7 +134,7 @@ class CustomerPasswordPolicyValidator implements CustomerPasswordPolicyValidator
     public function checkBlacklist(CustomerTransfer $customerTransfer, CustomerPasswordPolicyResultTransfer $resultTransfer, array $blackList): CustomerPasswordPolicyResultTransfer
     {
         if (in_array($customerTransfer->getPassword(), $blackList)) {
-            $this->addError($resultTransfer, self::PASSWORD_POLICY_ERROR_BLACKLIST);
+            $this->addError($resultTransfer, static::PASSWORD_POLICY_ERROR_BLACKLIST);
         }
 
         return $resultTransfer;
@@ -133,7 +149,7 @@ class CustomerPasswordPolicyValidator implements CustomerPasswordPolicyValidator
      */
     protected function hasLowerCase(string $word): bool
     {
-        return (bool) preg_match(self::PASSWORD_POLICY_CHARSET_LOWER);
+        return (bool) preg_match(static::PASSWORD_POLICY_CHARSET_LOWER);
     }
 
     /**
@@ -145,7 +161,7 @@ class CustomerPasswordPolicyValidator implements CustomerPasswordPolicyValidator
      */
     protected function hasUpperCase(string $word): bool
     {
-        return (bool) preg_match(self::PASSWORD_POLICY_CHARSET_UPPER);
+        return (bool) preg_match(static::PASSWORD_POLICY_CHARSET_UPPER);
     }
 
     /**
@@ -196,10 +212,11 @@ class CustomerPasswordPolicyValidator implements CustomerPasswordPolicyValidator
      *
      * @return CustomerPasswordPolicyResultTransfer
      */
-    protected function addError(CustomerPasswordPolicyResultTransfer $resultTransfer, string $errorMessage)
+    protected function addError(CustomerPasswordPolicyResultTransfer $resultTransfer, string $errorMessage, array $params = null)
     {
         $message = new MessageTransfer();
         $message->setValue($errorMessage);
+        $message->setParameters(empty($params ? null : $params));
 
         return $resultTransfer->setIsSuccessful(false)->addMessage($message);
     }
