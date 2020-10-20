@@ -18,7 +18,7 @@ interface ProductConfigurationRenderStrategyPluginInterface
     /**
      * Specification:
      * - Checks if this plugin is applicable for a product configuration item.
-     * - Hint: mostly the check should be done by the configuratorKey of the configuration instance.
+     * - Hint: mostly the check should be done by the configuratorKey of the configuration.
      *
      * @api
      *

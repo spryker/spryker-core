@@ -134,7 +134,7 @@ class SalesProductConfigurationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandOrderItemsWithProductConfigurationCheckExpanderSuccess()
+    public function testExpandOrderItemsWithProductConfigurationCheckExpanderSuccess(): void
     {
         //Arrange
         $orderId = $this->tester->createOrder();
