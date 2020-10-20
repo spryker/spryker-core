@@ -8,18 +8,17 @@
 namespace Spryker\Client\ProductConfigurationStorage\Mapper;
 
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
-use Generated\Shared\Transfer\ProductConfigurationStorageTransfer;
 
-interface ProductConfigurationInstanceMapperInterface
+interface ProductConfigurationInstancePriceMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductConfigurationStorageTransfer $productConfigurationStorageTransfer
+     * @param array $configuratorResponseData
      * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer
      */
-    public function mapProductConfigurationStorageTransferToProductConfigurationInstanceTransfer(
-        ProductConfigurationStorageTransfer $productConfigurationStorageTransfer,
+    public function mapConfiguratorResponseDataPricesToProductConfigurationInstancePrices(
+        array $configuratorResponseData,
         ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
     ): ProductConfigurationInstanceTransfer;
 }

@@ -26,6 +26,8 @@ use Spryker\Client\ProductConfigurationStorage\Expander\ProductViewExpander;
 use Spryker\Client\ProductConfigurationStorage\Expander\ProductViewExpanderInterface;
 use Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstanceMapper;
 use Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstanceMapperInterface;
+use Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstancePriceMapper;
+use Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstancePriceMapperInterface;
 use Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationStorageMapper;
 use Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationStorageMapperInterface;
 use Spryker\Client\ProductConfigurationStorage\Processor\ProductConfiguratorCheckSumResponseProcessor;
@@ -69,7 +71,15 @@ class ProductConfigurationStorageFactory extends AbstractFactory
      */
     public function createProductConfigurationInstanceMapper(): ProductConfigurationInstanceMapperInterface
     {
-        return new ProductConfigurationInstanceMapper($this->getPriceProductService());
+        return new ProductConfigurationInstanceMapper();
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstancePriceMapperInterface
+     */
+    public function createProductConfigurationInstancePriceMapper(): ProductConfigurationInstancePriceMapperInterface
+    {
+        return new ProductConfigurationInstancePriceMapper($this->getPriceProductService());
     }
 
     /**
@@ -149,7 +159,7 @@ class ProductConfigurationStorageFactory extends AbstractFactory
     {
         return new ProductConfiguratorCheckSumResponseProcessor(
             $this->createProductConfigurationInstanceWriter(),
-            $this->createProductConfigurationInstanceMapper(),
+            $this->createProductConfigurationInstancePriceMapper(),
             $this->createQuoteItemReplacer(),
             $this->createProductConfiguratorCheckSumResponseValidatorComposite()
         );

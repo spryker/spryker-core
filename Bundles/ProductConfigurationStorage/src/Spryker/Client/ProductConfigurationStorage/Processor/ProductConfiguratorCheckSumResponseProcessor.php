@@ -9,7 +9,7 @@ namespace Spryker\Client\ProductConfigurationStorage\Processor;
 
 use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
-use Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstanceMapperInterface;
+use Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstancePriceMapperInterface;
 use Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageConfig;
 use Spryker\Client\ProductConfigurationStorage\Replacer\QuoteItemReplacerInterface;
 use Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorResponseValidatorInterface;
@@ -28,9 +28,9 @@ class ProductConfiguratorCheckSumResponseProcessor implements ProductConfigurato
     protected $productConfiguratorResponseValidators;
 
     /**
-     * @var \Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstanceMapperInterface
+     * @var \Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstancePriceMapperInterface
      */
-    protected $productConfigurationInstanceMapper;
+    protected $productConfigurationInstancePriceMapper;
 
     /**
      * @var \Spryker\Client\ProductConfigurationStorage\Replacer\QuoteItemReplacerInterface
@@ -44,18 +44,18 @@ class ProductConfiguratorCheckSumResponseProcessor implements ProductConfigurato
 
     /**
      * @param \Spryker\Client\ProductConfigurationStorage\Writer\ProductConfigurationInstanceWriterInterface $productConfigurationInstanceWriter
-     * @param \Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstanceMapperInterface $productConfigurationInstanceMapper
+     * @param \Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstancePriceMapperInterface $productConfigurationInstancePriceMapper
      * @param \Spryker\Client\ProductConfigurationStorage\Replacer\QuoteItemReplacerInterface $quoteItemReplacer
      * @param \Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorResponseValidatorInterface $productConfiguratorResponseValidator
      */
     public function __construct(
         ProductConfigurationInstanceWriterInterface $productConfigurationInstanceWriter,
-        ProductConfigurationInstanceMapperInterface $productConfigurationInstanceMapper,
+        ProductConfigurationInstancePriceMapperInterface $productConfigurationInstancePriceMapper,
         QuoteItemReplacerInterface $quoteItemReplacer,
         ProductConfiguratorResponseValidatorInterface $productConfiguratorResponseValidator
     ) {
         $this->productConfigurationInstanceWriter = $productConfigurationInstanceWriter;
-        $this->productConfigurationInstanceMapper = $productConfigurationInstanceMapper;
+        $this->productConfigurationInstancePriceMapper = $productConfigurationInstancePriceMapper;
         $this->quoteItemReplacer = $quoteItemReplacer;
         $this->productConfiguratorResponseValidator = $productConfiguratorResponseValidator;
     }
@@ -126,7 +126,7 @@ class ProductConfiguratorCheckSumResponseProcessor implements ProductConfigurato
     ): ProductConfiguratorResponseTransfer {
         $productConfigurationInstanceTransfer = $productConfiguratorResponseTransfer->getProductConfigurationInstance();
 
-        $productConfigurationInstanceTransfer = $this->productConfigurationInstanceMapper
+        $productConfigurationInstanceTransfer = $this->productConfigurationInstancePriceMapper
             ->mapConfiguratorResponseDataPricesToProductConfigurationInstancePrices(
                 $configuratorResponseData,
                 $productConfigurationInstanceTransfer
