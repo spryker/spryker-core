@@ -379,7 +379,6 @@ class ClassDefinitionTest extends Unit
             'property' => $property,
             'bundles' => $bundles,
             'deprecationDescription' => null,
-            'shimNotice' => null,
         ];
 
         if ($var !== null) {
