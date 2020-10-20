@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\MerchantsRestApi\Processor\Mapper;
 
+use Generated\Shared\Transfer\MerchantSearchTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\RestLegalInformationTransfer;
 use Generated\Shared\Transfer\RestMerchantsAttributesTransfer;
@@ -62,6 +63,23 @@ class MerchantMapper implements MerchantMapperInterface
         );
 
         return $restMerchantsAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantSearchTransfer $merchantSearchTransfer
+     * @param \Generated\Shared\Transfer\RestMerchantsAttributesTransfer $restMerchantsAttributesTrasnsfer
+     *
+     * @return \Generated\Shared\Transfer\RestMerchantsAttributesTransfer
+     */
+    public function mapMerchantSearchTransferToRestMerchantsAttributesTransfer(
+        MerchantSearchTransfer $merchantSearchTransfer,
+        RestMerchantsAttributesTransfer $restMerchantsAttributesTrasnsfer
+    ): RestMerchantsAttributesTransfer {
+        $restMerchantsAttributesTrasnsfer->setMerchantName($merchantSearchTransfer->getName());
+
+        // @todo
+
+        return $restMerchantsAttributesTrasnsfer;
     }
 
     /**

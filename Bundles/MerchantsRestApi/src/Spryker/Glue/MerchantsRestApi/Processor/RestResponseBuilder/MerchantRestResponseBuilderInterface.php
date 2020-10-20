@@ -7,6 +7,8 @@
 
 namespace Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder;
 
+use Generated\Shared\Transfer\MerchantSearchCollectionTransfer;
+use Generated\Shared\Transfer\MerchantSearchRequestTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
@@ -40,4 +42,17 @@ interface MerchantRestResponseBuilderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createMerchantIdentifierMissingErrorResponse(): RestResponseInterface;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantSearchRequestTransfer $merchantSearchRequestTransfer
+     * @param \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer
+     * @param string $localeName
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createMerchantListRestResponse(
+        MerchantSearchRequestTransfer $merchantSearchRequestTransfer,
+        MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer,
+        string $localeName
+    ): RestResponseInterface;
 }

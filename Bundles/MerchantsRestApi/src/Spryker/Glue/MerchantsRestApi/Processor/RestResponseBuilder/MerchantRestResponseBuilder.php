@@ -7,6 +7,8 @@
 
 namespace Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder;
 
+use Generated\Shared\Transfer\MerchantSearchCollectionTransfer;
+use Generated\Shared\Transfer\MerchantSearchRequestTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestMerchantsAttributesTransfer;
@@ -103,6 +105,46 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
                     ->setCode(MerchantsRestApiConfig::RESPONSE_CODE_MERCHANT_IDENTIFIER_MISSING)
                     ->setDetail(MerchantsRestApiConfig::RESPONSE_DETAIL_MERCHANT_IDENTIFIER_MISSING)
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantSearchRequestTransfer $merchantSearchRequestTransfer
+     * @param \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer
+     * @param string $localeName
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createMerchantListRestResponse(
+        MerchantSearchRequestTransfer $merchantSearchRequestTransfer,
+        MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer,
+        string $localeName
+    ): RestResponseInterface {
+        $restMerchantAttributesTransfers = [];
+
+        foreach ($merchantSearchCollectionTransfer->getMerchants() as $merchantSearchTransfer) {
+            $restMerchantAttributesTransfers[] = $this->merchantMapper
+                ->mapMerchantSearchTransferToRestMerchantsAttributesTransfer(
+                    $merchantSearchTransfer,
+                    new RestMerchantsAttributesTransfer()
+                );
+        }
+
+        $restResponse = $this->restResourceBuilder->createRestResponse(
+            $merchantSearchCollectionTransfer->getNbResults(),
+            $merchantSearchRequestTransfer->getRequestParameters()['ipp'] ?? 0
+        );
+
+        foreach ($restMerchantAttributesTransfers as $restMerchantAttributesTransfer) {
+            $restResponse->addResource(
+                $this->restResourceBuilder->createRestResource(
+                    MerchantsRestApiConfig::RESOURCE_MERCHANTS,
+                    null,
+                    $restMerchantAttributesTransfer
+                )
+            );
+        }
+
+        return $restResponse;
     }
 
     /**
