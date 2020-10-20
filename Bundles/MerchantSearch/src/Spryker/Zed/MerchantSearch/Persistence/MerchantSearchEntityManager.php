@@ -24,7 +24,7 @@ class MerchantSearchEntityManager extends AbstractEntityManager implements Merch
     {
         $this->getFactory()
             ->getMerchantSearchPropelQuery()
-            ->filterByPrimaryKeys($merchantIds)
+            ->filterByFkMerchant_In($merchantIds)
             ->find()
             ->delete();
     }

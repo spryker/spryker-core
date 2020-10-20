@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantSearch\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -48,5 +49,37 @@ class MerchantSearchFacade extends AbstractFacade implements MerchantSearchFacad
         $this->getFactory()
             ->createMerchantSearchWriter()
             ->writeCollectionByMerchantEvents($eventTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function deleteCollectionByMerchantEvents(array $eventTransfers): void
+    {
+        $this->getFactory()
+            ->createMerchantSearchDeleter()
+            ->deleteCollectionByMerchantEvents($eventTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $merchantIds
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getMerchantSynchronizationDataTransfersByIds(FilterTransfer $filterTransfer, array $merchantIds): array
+    {
+        return $this->getRepository()
+            ->getMerchantSynchronizationDataTransfersByIds($filterTransfer, $merchantIds);
     }
 }

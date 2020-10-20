@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantSearch\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantSearch\Business\Deleter\MerchantSearchDeleter;
+use Spryker\Zed\MerchantSearch\Business\Deleter\MerchantSearchDeleterInterface;
 use Spryker\Zed\MerchantSearch\Business\Mapper\MerchantSearchMapper;
 use Spryker\Zed\MerchantSearch\Business\Mapper\MerchantSearchMapperInterface;
 use Spryker\Zed\MerchantSearch\Business\Writer\MerchantSearchWriter;
@@ -58,8 +60,19 @@ class MerchantSearchBusinessFactory extends AbstractBusinessFactory
             $this->getMerchantFacade(),
             $this->getEventBehaviorFacade(),
             $this->createMerchantSearchMapper(),
+            $this->getEntityManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSearch\Business\Deleter\MerchantSearchDeleterInterface
+     */
+    public function createMerchantSearchDeleter(): MerchantSearchDeleterInterface
+    {
+        return new MerchantSearchDeleter(
+            $this->getMerchantFacade(),
             $this->getEntityManager(),
-            $this->getRepository()
+            $this->getEventBehaviorFacade()
         );
     }
 }

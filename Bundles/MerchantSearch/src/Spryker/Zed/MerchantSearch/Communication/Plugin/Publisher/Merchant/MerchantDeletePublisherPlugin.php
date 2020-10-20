@@ -30,6 +30,7 @@ class MerchantDeletePublisherPlugin extends AbstractPlugin implements PublisherP
      */
     public function handleBulk(array $eventTransfers, $eventName): void
     {
+        $this->getFacade()->deleteCollectionByMerchantEvents($eventTransfers);
     }
 
     /**
@@ -42,8 +43,9 @@ class MerchantDeletePublisherPlugin extends AbstractPlugin implements PublisherP
     public function getSubscribedEvents(): array
     {
         return [
+            MerchantSearchConfig::MERCHANT_PUBLISH,
             MerchantSearchConfig::MERCHANT_PUBLISH_DELETE,
-            MerchantSearchConfig::MERCHANT_PUBLISH_DELETE,
+            MerchantSearchConfig::ENTITY_SPY_MERCHANT_DELETE,
         ];
     }
 }

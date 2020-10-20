@@ -50,4 +50,9 @@ class MerchantSearchConfig extends AbstractBundleConfig
      * This events will be used for spy_merchant entity deletion.
      */
     public const ENTITY_SPY_MERCHANT_DELETE = 'Entity.spy_merchant.delete';
+
+    /**
+     * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_APPROVED
+     */
+    public const MERCHANT_STATUS_APPROVED = 'approved';
 }

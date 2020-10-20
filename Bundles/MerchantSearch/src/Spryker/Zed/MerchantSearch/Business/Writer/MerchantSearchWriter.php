@@ -11,11 +11,11 @@ use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantSearchCollectionTransfer;
 use Generated\Shared\Transfer\MerchantSearchTransfer;
+use Spryker\Shared\MerchantSearch\MerchantSearchConfig;
 use Spryker\Zed\MerchantSearch\Business\Mapper\MerchantSearchMapperInterface;
 use Spryker\Zed\MerchantSearch\Dependency\Facade\MerchantSearchToEventBehaviorFacadeInterface;
 use Spryker\Zed\MerchantSearch\Dependency\Facade\MerchantSearchToMerchantFacadeInterface;
 use Spryker\Zed\MerchantSearch\Persistence\MerchantSearchEntityManagerInterface;
-use Spryker\Zed\MerchantSearch\Persistence\MerchantSearchRepositoryInterface;
 
 class MerchantSearchWriter implements MerchantSearchWriterInterface
 {
@@ -40,29 +40,21 @@ class MerchantSearchWriter implements MerchantSearchWriterInterface
     protected $entityManager;
 
     /**
-     * @var \Spryker\Zed\MerchantSearch\Persistence\MerchantSearchRepositoryInterface
-     */
-    protected $repository;
-
-    /**
      * @param \Spryker\Zed\MerchantSearch\Dependency\Facade\MerchantSearchToMerchantFacadeInterface $merchantFacade
      * @param \Spryker\Zed\MerchantSearch\Dependency\Facade\MerchantSearchToEventBehaviorFacadeInterface $eventBehaviorFacade
      * @param \Spryker\Zed\MerchantSearch\Business\Mapper\MerchantSearchMapperInterface $merchantMapper
      * @param \Spryker\Zed\MerchantSearch\Persistence\MerchantSearchEntityManagerInterface $entityManager
-     * @param \Spryker\Zed\MerchantSearch\Persistence\MerchantSearchRepositoryInterface $repository
      */
     public function __construct(
         MerchantSearchToMerchantFacadeInterface $merchantFacade,
         MerchantSearchToEventBehaviorFacadeInterface $eventBehaviorFacade,
         MerchantSearchMapperInterface $merchantMapper,
-        MerchantSearchEntityManagerInterface $entityManager,
-        MerchantSearchRepositoryInterface $repository
+        MerchantSearchEntityManagerInterface $entityManager
     ) {
         $this->merchantFacade = $merchantFacade;
         $this->eventBehaviorFacade = $eventBehaviorFacade;
         $this->merchantMapper = $merchantMapper;
         $this->entityManager = $entityManager;
-        $this->repository = $repository;
     }
 
     /**
@@ -73,7 +65,6 @@ class MerchantSearchWriter implements MerchantSearchWriterInterface
     public function writeCollectionByMerchantEvents(array $eventTransfers): void
     {
         $merchantIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
-
         $this->writeCollectionByMerchantIds($merchantIds);
     }
 
@@ -89,12 +80,13 @@ class MerchantSearchWriter implements MerchantSearchWriterInterface
         }
 
         $merchantCollectionTransfer = $this->merchantFacade->get(
-            (new MerchantCriteriaTransfer())->setMerchantIds($merchantIds)
+            (new MerchantCriteriaTransfer())
+                ->setMerchantIds($merchantIds)
+            ->setIsActive(true)
+            ->setStatus(MerchantSearchConfig::MERCHANT_STATUS_APPROVED)
         );
 
         if (!$merchantCollectionTransfer->getMerchants()->count()) {
-            $this->entityManager->deleteMerchantSearchByMerchantIds($merchantIds);
-
             return;
         }
         $merchantSearchCollectionTransfer = $this->getMerchantSearchTransfersByMerchantTransfers($merchantCollectionTransfer);

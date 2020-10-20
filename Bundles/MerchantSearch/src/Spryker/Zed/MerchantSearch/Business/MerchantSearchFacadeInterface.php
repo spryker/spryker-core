@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantSearch\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 
@@ -33,4 +34,23 @@ interface MerchantSearchFacadeInterface
      * @return void
      */
     public function writeCollectionByMerchantEvents(array $eventTransfers): void;
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function deleteCollectionByMerchantEvents(array $eventTransfers): void;
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $merchantIds
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getMerchantSynchronizationDataTransfersByIds(FilterTransfer $filterTransfer, array $merchantIds): array;
 }

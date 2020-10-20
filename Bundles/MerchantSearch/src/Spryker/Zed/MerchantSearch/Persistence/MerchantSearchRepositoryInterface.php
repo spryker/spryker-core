@@ -7,6 +7,15 @@
 
 namespace Spryker\Zed\MerchantSearch\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface MerchantSearchRepositoryInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $merchantIds
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getMerchantSynchronizationDataTransfersByIds(FilterTransfer $filterTransfer, array $merchantIds = []): array;
 }
