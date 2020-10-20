@@ -15,7 +15,7 @@ interface PriceProductConfigurationExpanderInterface
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function expandPriceProductTransfersWithProductConfigurationPrices(
         array $priceProductTransfers,
