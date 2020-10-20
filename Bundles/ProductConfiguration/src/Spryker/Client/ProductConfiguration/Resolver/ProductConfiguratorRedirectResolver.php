@@ -8,7 +8,6 @@
 namespace Spryker\Client\ProductConfiguration\Resolver;
 
 use Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer;
-use Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorRequestTransfer;
 use Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataExpanderInterface;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface;
