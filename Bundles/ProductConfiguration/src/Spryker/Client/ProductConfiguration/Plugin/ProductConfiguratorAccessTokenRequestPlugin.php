@@ -20,7 +20,7 @@ class ProductConfiguratorAccessTokenRequestPlugin extends AbstractPlugin impleme
 {
     /**
      * {@inheritDoc}
-     * - Builds product configuration redirect from configurator response.
+     * - Builds product configurator redirect URL from configurator response.
      *
      * @param \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
      *

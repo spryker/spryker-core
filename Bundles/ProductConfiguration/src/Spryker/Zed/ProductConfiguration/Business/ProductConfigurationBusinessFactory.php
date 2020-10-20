@@ -10,8 +10,8 @@ namespace Spryker\Zed\ProductConfiguration\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductConfiguration\Business\Checker\ProductConfigurationChecker;
 use Spryker\Zed\ProductConfiguration\Business\Checker\ProductConfigurationCheckerInterface;
-use Spryker\Zed\ProductConfiguration\Business\Expander\PriceProductConfigurationExpander;
-use Spryker\Zed\ProductConfiguration\Business\Expander\PriceProductConfigurationExpanderInterface;
+use Spryker\Zed\ProductConfiguration\Business\Expander\ProductConfigurationPriceProductExpander;
+use Spryker\Zed\ProductConfiguration\Business\Expander\ProductConfigurationPriceProductExpanderInterface;
 use Spryker\Zed\ProductConfiguration\Business\Expander\ProductConfigurationGroupKeyItemExpander;
 use Spryker\Zed\ProductConfiguration\Business\Expander\ProductConfigurationGroupKeyItemExpanderInterface;
 use Spryker\Zed\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingServiceInterface;
@@ -44,11 +44,11 @@ class ProductConfigurationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductConfiguration\Business\Expander\PriceProductConfigurationExpanderInterface
+     * @return \Spryker\Zed\ProductConfiguration\Business\Expander\ProductConfigurationPriceProductExpanderInterface
      */
-    public function createProductConfigurationProductPriceExpander(): PriceProductConfigurationExpanderInterface
+    public function createProductConfigurationPriceProductExpander(): ProductConfigurationPriceProductExpanderInterface
     {
-        return new PriceProductConfigurationExpander();
+        return new ProductConfigurationPriceProductExpander();
     }
 
     /**

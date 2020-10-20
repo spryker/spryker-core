@@ -71,9 +71,9 @@ class ProductConfigurationFactory extends AbstractFactory
     public function createProductConfiguratorAccessTokenRedirectResolver(): ProductConfiguratorAccessTokenRedirectResolverInterface
     {
         return new ProductConfiguratorAccessTokenRedirectResolver(
-            $this->getProductConfiguratorRequestExpanderPlugins(),
             $this->getHttpClient(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
+            $this->getProductConfiguratorRequestExpanderPlugins()
         );
     }
 
