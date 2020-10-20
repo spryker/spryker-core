@@ -16,7 +16,6 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/monolog": "^2.0.0",
     "spryker/testify": "*"
   },
   "suggest": {

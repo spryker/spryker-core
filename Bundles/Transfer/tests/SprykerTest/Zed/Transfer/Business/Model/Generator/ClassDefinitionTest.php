@@ -360,7 +360,7 @@ class ClassDefinitionTest extends Unit
      * @param array $bundles
      * @param bool|null $hasDefaultNull
      * @param bool|null $valueObject
-     * @param bool $typeAssertion
+     * @param bool $isTypeAssertionEnabled
      *
      * @return array
      */
@@ -374,14 +374,14 @@ class ClassDefinitionTest extends Unit
         array $bundles = [],
         ?bool $hasDefaultNull = null,
         ?bool $valueObject = null,
-        bool $typeAssertion = false
+        bool $isTypeAssertionEnabled = false
     ): array {
         $method = [
             'name' => $method,
             'property' => $property,
             'bundles' => $bundles,
             'deprecationDescription' => null,
-            'typeAssertion' => $typeAssertion,
+            'isTypeAssertionEnabled' => $isTypeAssertionEnabled,
         ];
 
         if ($var !== null) {
@@ -434,7 +434,7 @@ class ClassDefinitionTest extends Unit
         $method = $this->getMethod($method, $property, $var, $return, $typeHint, $constant, $bundles, $hasDefaultNull);
         unset($method['typeHint']);
         unset($method['shimNotice']);
-        unset($method['typeAssertion']);
+        unset($method['isTypeAssertionEnabled']);
 
         return $method;
     }

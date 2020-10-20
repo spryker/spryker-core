@@ -12,6 +12,7 @@ use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeTypeException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeValueException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidNameException;
+use Spryker\Zed\Transfer\Business\Transfer\TypeValidation\TransferTypeValidatorTrait;
 use Spryker\Zed\Transfer\TransferConfig;
 use Zend\Filter\Word\CamelCaseToUnderscore;
 use Zend\Filter\Word\UnderscoreToCamelCase;
@@ -737,7 +738,7 @@ class ClassDefinition implements ClassDefinitionInterface
         $method = $this->addTypeHint($property, $method);
         $method = $this->addDefaultNull($method, $property);
         $method = $this->addSetArgumentTypeData($method, $property);
-        $method = $this->addTypeAssertion($method);
+        $method = $this->setTypeAssertionMode($method);
 
         if ($this->isValueObject($property)) {
             $method['valueObject'] = $this->getShortClassName(
@@ -784,7 +785,7 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         $method = $this->addAddArgumentTypeData($method, $property);
-        $method = $this->addTypeAssertion($method);
+        $method = $this->setTypeAssertionMode($method);
 
         $this->methods[$methodName] = $method;
     }
@@ -1170,17 +1171,17 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return array
      */
-    protected function addTypeAssertion(array $method): array
+    protected function setTypeAssertionMode(array $method): array
     {
-        $method['typeAssertion'] = false;
-        $methodVarType = $method['varValue'] ?? $method['var'];
+        $method['isTypeAssertionEnabled'] = false;
+        $methodArgumentType = $method['varValue'] ?? $method['var'];
 
-        if (!$this->isDebugMode() || $methodVarType === 'mixed') {
+        if (!$this->isDebugMode() || $methodArgumentType === 'mixed') {
             return $method;
         }
 
-        $methodVValueTypeHint = $method['typeHintValue'] ?? $method['typeHint'] ?? null;
-        $method['typeAssertion'] = empty($methodVValueTypeHint) || $methodVValueTypeHint === 'array';
+        $methodArgumentTypeHint = $method['typeHintValue'] ?? $method['typeHint'] ?? null;
+        $method['isTypeAssertionEnabled'] = empty($methodArgumentTypeHint) || $methodArgumentTypeHint === 'array';
 
         return $method;
     }
@@ -1190,18 +1191,8 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function addExtraUseStatements(): void
     {
-        if ($this->isDebugMode() && $this->isLoggingEnabled()) {
-            $this->addUseStatement('Monolog\Logger');
-            $this->addUseStatement('Monolog\Handler\DeduplicationHandler');
-            $this->addUseStatement('Monolog\Handler\StreamHandler');
+        if ($this->isDebugMode()) {
+            $this->addUseStatement(TransferTypeValidatorTrait::class);
         }
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isLoggingEnabled(): bool
-    {
-        return class_exists('Monolog\Logger');
     }
 }
