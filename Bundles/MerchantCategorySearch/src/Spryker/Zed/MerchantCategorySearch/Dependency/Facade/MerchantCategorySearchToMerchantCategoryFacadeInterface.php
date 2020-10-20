@@ -5,19 +5,14 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantCategory\Business;
+namespace Spryker\Zed\MerchantCategorySearch\Dependency\Facade;
 
 use Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantCategoryTransfer;
 
-interface MerchantCategoryFacadeInterface
+interface MerchantCategorySearchToMerchantCategoryFacadeInterface
 {
     /**
-     * Specification:
-     * - Returns transfer with list of merchant categories by provided criteria.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantCategoryTransfer
