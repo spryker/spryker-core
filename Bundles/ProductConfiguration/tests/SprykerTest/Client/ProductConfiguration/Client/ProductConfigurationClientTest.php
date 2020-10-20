@@ -91,33 +91,7 @@ class ProductConfigurationClientTest extends Unit
     {
         parent::setUp();
 
-        $this->productConfigurationFactoryMock = $this->getMockBuilder(ProductConfigurationFactory::class)
-            ->disableOriginalConstructor()
-            ->setMethodsExcept([
-                'createProductConfiguratorRedirectResolver',
-                'createProductConfiguratorResponseProcessor',
-                'createQuoteProductConfigurationChecker',
-                'createProductConfiguratorAccessTokenRedirectResolver',
-                'createProductConfiguratorRequestDataExpander',
-                'createProductConfiguratorCheckSumResponseValidatorComposite',
-            ])
-            ->getMock();
-
-        $storeClientMock = $this->getMockBuilder(ProductConfigurationToStoreClientInterface::class)
-            ->onlyMethods(['getCurrentStore'])->getMockForAbstractClass();
-
-        $storeClientMock->method('getCurrentStore')->willReturn(new StoreTransfer());
-
-        $this->productConfigurationFactoryMock->method('getStoreClient')
-            ->willReturn($storeClientMock);
-
-        $currencyClientMock = $this->getMockBuilder(ProductConfigurationToCurrencyClientInterface::class)
-            ->onlyMethods(['getCurrent'])->getMockForAbstractClass();
-
-        $currencyClientMock->method('getCurrent')->willReturn(new CurrencyTransfer());
-
-        $this->productConfigurationFactoryMock->method('getCurrencyClient')
-            ->willReturn($currencyClientMock);
+        $this->productConfigurationFactoryMock = $this->createProductConfigurationFactoryMock();
 
         $this->productConfigurationClient = $this->tester->getClient()->setFactory($this->productConfigurationFactoryMock);
 
@@ -535,5 +509,41 @@ class ProductConfigurationClientTest extends Unit
 
         //Assert
         $this->assertFalse($productConfiguratorResponseProcessorResponseTransferValidated->getIsSuccessful());
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfiguration\ProductConfigurationFactory
+     */
+    protected function createProductConfigurationFactoryMock(): ProductConfigurationFactory
+    {
+        $productConfigurationFactoryMock = $this->getMockBuilder(ProductConfigurationFactory::class)
+            ->disableOriginalConstructor()
+            ->setMethodsExcept([
+                'createProductConfiguratorRedirectResolver',
+                'createProductConfiguratorResponseProcessor',
+                'createQuoteProductConfigurationChecker',
+                'createProductConfiguratorAccessTokenRedirectResolver',
+                'createProductConfiguratorRequestDataExpander',
+                'createProductConfiguratorCheckSumResponseValidatorComposite',
+            ])
+            ->getMock();
+
+        $storeClientMock = $this->getMockBuilder(ProductConfigurationToStoreClientInterface::class)
+            ->onlyMethods(['getCurrentStore'])->getMockForAbstractClass();
+
+        $storeClientMock->method('getCurrentStore')->willReturn(new StoreTransfer());
+
+        $productConfigurationFactoryMock->method('getStoreClient')
+            ->willReturn($storeClientMock);
+
+        $currencyClientMock = $this->getMockBuilder(ProductConfigurationToCurrencyClientInterface::class)
+            ->onlyMethods(['getCurrent'])->getMockForAbstractClass();
+
+        $currencyClientMock->method('getCurrent')->willReturn(new CurrencyTransfer());
+
+        $productConfigurationFactoryMock->method('getCurrencyClient')
+            ->willReturn($currencyClientMock);
+
+        return $productConfigurationFactoryMock;
     }
 }
