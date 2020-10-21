@@ -2,16 +2,21 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\ConfigurableBundleGui\Communication\Table;
+namespace SprykerTest\Zed\ProductOfferGui\Communication\Table;
 
 use Codeception\Test\Unit;
-use Orm\Zed\ConfigurableBundle\Persistence\Map\SpyConfigurableBundleTemplateTableMap;
-use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery;
-use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeBridge;
-use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeInterface;
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
+use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
+use Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToLocaleFacadeBridge;
+use Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToLocaleFacadeInterface;
+use Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToProductOfferFacadeBridge;
+use Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToProductOfferFacadeInterface;
+use Spryker\Zed\ProductOfferGui\Persistence\ProductOfferGuiRepository;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -24,18 +29,14 @@ use Twig\Loader\LoaderInterface;
  *
  * @group SprykerTest
  * @group Zed
- * @group ConfigurableBundleGui
+ * @group ProductOfferGui
  * @group Communication
  * @group Table
- * @group ConfigurableBundleTemplateTableQueryTest
+ * @group ProductOfferTableQueryTest
  * Add your own group annotations below this line
  */
-class ConfigurableBundleTemplateTableQueryTest extends Unit
+class ProductOfferTableQueryTest extends Unit
 {
-    protected const CONFIGURABLE_BUNDLE_TEMPLATE_1 = 'BUNDLE-1';
-
-    protected const CONFIGURABLE_BUNDLE_TEMPLATE_2 = 'BUNDLE-2';
-
     /**
      * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
      */
@@ -47,7 +48,7 @@ class ConfigurableBundleTemplateTableQueryTest extends Unit
     protected const SERVICE_FORM_FACTORY = 'form.factory';
 
     /**
-     * @var \SprykerTest\Zed\ConfigurableBundleGui\ConfigurableBundleGuiCommunicationTester
+     * @var \SprykerTest\Zed\ProductOfferGui\ProductOfferGuiCommunicationTester
      */
     protected $tester;
 
@@ -65,48 +66,66 @@ class ConfigurableBundleTemplateTableQueryTest extends Unit
     /**
      * @return void
      */
-    public function testFetchDataShouldReturnConfigurableBundlesTemplates(): void
+    public function testFetchDataShouldReturnProductOffers(): void
     {
         // Arrange
-        $configurableBundleTemplate1 = $this->tester->createConfigurableBundleTemplate(static::CONFIGURABLE_BUNDLE_TEMPLATE_1);
-        $configurableBundleTemplate2 = $this->tester->createConfigurableBundleTemplate(static::CONFIGURABLE_BUNDLE_TEMPLATE_2);
+        $product = $this->tester->haveFullProduct();
+        $productOfferSeedData = [
+            ProductOfferTransfer::CONCRETE_SKU => $product->getSku(),
+        ];
+        $productOffer1 = $this->tester->haveProductOffer($productOfferSeedData);
+        $productOffer2 = $this->tester->haveProductOffer($productOfferSeedData);
 
-        $configurableBundleQuery = SpyConfigurableBundleTemplateQuery::create();
-        $tableMock = new ConfigurableBundleTemplateTableMock(
-            $configurableBundleQuery,
-            $this->getConfigurableBundleGuiToLocaleFacadeMock()
+        $contentQuery = SpyProductOfferQuery::create();
+        $productOfferGuiRepository = new ProductOfferGuiRepository();
+        $tableMock = new ProductOfferTableMock(
+            $contentQuery,
+            $this->getProductOfferGuiToLocaleFacadeMock(),
+            $this->getProductOfferGuiToProductOfferFacadeMock(),
+            $productOfferGuiRepository,
+            []
         );
 
         // Act
         $result = $tableMock->fetchData();
 
         // Assert
-        $configurableBundleTemplateIdColName = str_replace(
-            sprintf('%s.', SpyConfigurableBundleTemplateTableMap::TABLE_NAME),
-            '',
-            SpyConfigurableBundleTemplateTableMap::COL_ID_CONFIGURABLE_BUNDLE_TEMPLATE
-        );
-        $resultConfigurableBundleTemplateIds = array_column($result, $configurableBundleTemplateIdColName);
+        $resultProductOffersIds = array_column($result, SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER);
         $this->assertNotEmpty($result);
-        $this->assertContains($configurableBundleTemplate1->getIdConfigurableBundleTemplate(), $resultConfigurableBundleTemplateIds);
-        $this->assertContains($configurableBundleTemplate2->getIdConfigurableBundleTemplate(), $resultConfigurableBundleTemplateIds);
+        $this->assertContains($productOffer1->getIdProductOffer(), $resultProductOffersIds);
+        $this->assertContains($productOffer2->getIdProductOffer(), $resultProductOffersIds);
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToLocaleFacadeInterface
      */
-    protected function getConfigurableBundleGuiToLocaleFacadeMock(): ConfigurableBundleGuiToLocaleFacadeInterface
+    protected function getProductOfferGuiToLocaleFacadeMock(): ProductOfferGuiToLocaleFacadeInterface
     {
-        $configurableBundleGuiToLocaleFacadeMock = $this->getMockBuilder(ConfigurableBundleGuiToLocaleFacadeBridge::class)
+        $productOfferGuiToLocaleFacadeMock = $this->getMockBuilder(ProductOfferGuiToLocaleFacadeBridge::class)
             ->onlyMethods(['getCurrentLocale'])
             ->disableOriginalConstructor()
             ->getMock();
 
-        $configurableBundleGuiToLocaleFacadeMock->expects($this->once())
-            ->method('getCurrentLocale')
-            ->willReturn($this->tester->getCurrentLocale());
+        $currentLocale = $this->tester->getLocator()
+            ->locale()
+            ->facade()
+            ->getCurrentLocale();
 
-        return $configurableBundleGuiToLocaleFacadeMock;
+        $productOfferGuiToLocaleFacadeMock->expects($this->once())
+            ->method('getCurrentLocale')
+            ->willReturn((new LocaleTransfer())->setIdLocale($currentLocale->getIdLocale()));
+
+        return $productOfferGuiToLocaleFacadeMock;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToProductOfferFacadeInterface
+     */
+    protected function getProductOfferGuiToProductOfferFacadeMock(): ProductOfferGuiToProductOfferFacadeInterface
+    {
+        return $this->getMockBuilder(ProductOfferGuiToProductOfferFacadeBridge::class)
+            ->disableOriginalConstructor()
+            ->getMock();
     }
 
     /**

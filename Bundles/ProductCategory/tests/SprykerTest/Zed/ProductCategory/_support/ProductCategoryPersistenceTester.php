@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\ProductCategory;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\CategoryTransfer;
+use Orm\Zed\Category\Persistence\SpyCategoryAttribute;
 use Orm\Zed\Locale\Persistence\SpyLocale;
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
@@ -34,22 +36,23 @@ class ProductCategoryPersistenceTester extends Actor
     protected const ATTRIBUTES = '[]';
 
     /**
-     * @param string $name
+     * @param string $sku
+     * @param string $attributeName
      * @param \Orm\Zed\Locale\Persistence\SpyLocale $localeEntity
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
      */
-    public function createProductAbstractEntity(string $name, SpyLocale $localeEntity): SpyProductAbstract
+    public function createProductAbstractEntity(string $sku, string $attributeName, SpyLocale $localeEntity): SpyProductAbstract
     {
         $productAbstractLocalizedAttributesEntity = new SpyProductAbstractLocalizedAttributes();
         $productAbstractLocalizedAttributesEntity
-            ->setName($name)
+            ->setName($attributeName)
             ->setAttributes(static::ATTRIBUTES)
             ->setLocale($localeEntity);
 
         $productAbstractEntity = new SpyProductAbstract();
         $productAbstractEntity
-            ->setSku($name)
+            ->setSku($sku)
             ->setAttributes(static::ATTRIBUTES)
             ->addSpyProductAbstractLocalizedAttributes($productAbstractLocalizedAttributesEntity)
             ->save();
@@ -71,5 +74,46 @@ class ProductCategoryPersistenceTester extends Actor
         $localeEntity->save();
 
         return $localeEntity;
+    }
+
+    /**
+     * @param string $sku
+     * @param array $categoriesData
+     * @param \Orm\Zed\Locale\Persistence\SpyLocale $localeEntity
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
+     */
+    public function createProductAbstractEntityWithCategories(string $sku, array $categoriesData, SpyLocale $localeEntity): SpyProductAbstract
+    {
+        $productAbstractEntity = $this->createProductAbstractEntity($sku, $sku, $localeEntity);
+
+        foreach ($categoriesData as $categoryName => $attributeNames) {
+            $categoryEntity = $this->haveCategory([
+                CategoryTransfer::NAME => $categoryName,
+            ]);
+            $this->createCategoryAttributesEntities($categoryEntity->getIdCategory(), $attributeNames, $localeEntity);
+            $this->assignProductToCategory($categoryEntity->getIdCategory(), $productAbstractEntity->getIdProductAbstract());
+        }
+
+        return $productAbstractEntity;
+    }
+
+    /**
+     * @param int $idCategory
+     * @param array $attributesNames
+     * @param \Orm\Zed\Locale\Persistence\Base\SpyLocale $spyLocale
+     *
+     * @return void
+     */
+    protected function createCategoryAttributesEntities(int $idCategory, array $attributesNames, SpyLocale $spyLocale): void
+    {
+        foreach ($attributesNames as $attributeName) {
+            $categoryAttributeEntity = new SpyCategoryAttribute();
+            $categoryAttributeEntity->setName($attributeName);
+            $categoryAttributeEntity->setFkCategory($idCategory);
+            $categoryAttributeEntity->setLocale($spyLocale);
+
+            $categoryAttributeEntity->save();
+        }
     }
 }

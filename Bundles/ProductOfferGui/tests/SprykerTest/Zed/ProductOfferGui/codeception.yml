@@ -1,4 +1,4 @@
-namespace: SprykerTest\Zed\ProductLabelGui
+namespace: SprykerTest\Zed\ProductOfferGui
 
 paths:
     tests: .
@@ -14,17 +14,15 @@ coverage:
 suites:
     Communication:
         path: Communication
-        class_name: ProductLabelGuiCommunicationTester
+        class_name: ProductOfferGuiCommunicationTester
         modules:
             enabled:
                 - Asserts
                 - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
-                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
-                - \SprykerTest\Zed\Testify\Helper\CommunicationHelper
-                - \SprykerTest\Zed\ProductLabel\Helper\ProductLabelDataHelper
+                - \SprykerTest\Zed\ProductOffer\Helper\ProductOfferHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper

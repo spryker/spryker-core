@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\ProductOption;
+namespace SprykerTest\Zed\SalesOrderThreshold;
 
 use Codeception\Actor;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
+use Orm\Zed\SalesOrderThreshold\Persistence\SpySalesOrderThresholdTaxSet;
 
 /**
  * @method void wantToTest($text)
@@ -24,23 +24,19 @@ use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
  *
  * @SuppressWarnings(PHPMD)
  */
-class ProductOptionCommunicationTester extends Actor
+class SalesOrderThresholdPersistenceTester extends Actor
 {
-    use _generated\ProductOptionCommunicationTesterActions;
+    use _generated\SalesOrderThresholdPersistenceTesterActions;
 
     /**
-     * @param string $sku
-     * @param int $idProductOptionGroup
+     * @param int $idTaxSet
      *
      * @return void
      */
-    public function createProductOptionValueEntity(string $sku, int $idProductOptionGroup): void
+    public function createSalesOrderThresholdTaxSetEntity(int $idTaxSet): void
     {
-        $productOptionValue = new SpyProductOptionValue();
-        $productOptionValue->setSku($sku);
-        $productOptionValue->setValue($sku);
-        $productOptionValue->setFkProductOptionGroup($idProductOptionGroup);
-
-        $productOptionValue->save();
+        $salesOrderThresholdTaxSet = new SpySalesOrderThresholdTaxSet();
+        $salesOrderThresholdTaxSet->setFkTaxSet($idTaxSet);
+        $salesOrderThresholdTaxSet->save();
     }
 }

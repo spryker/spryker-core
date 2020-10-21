@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ConfigurableBundleGui;
 use Codeception\Actor;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 
 /**
  * @method void wantToTest($text)
@@ -44,6 +45,17 @@ class ConfigurableBundleGuiCommunicationTester extends Actor
             ConfigurableBundleTemplateTransfer::IS_ACTIVE => true,
             ConfigurableBundleTemplateTransfer::TRANSLATIONS => $this->getTemplateTranslations(),
         ]);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getCurrentLocale(): LocaleTransfer
+    {
+        return $this->getLocator()
+            ->locale()
+            ->facade()
+            ->getCurrentLocale();
     }
 
     /**
