@@ -75,7 +75,7 @@
      * @deprecated {{ method.deprecationDescription }}
      *
      {% endif -%}
-     * @param {{ method.var }}{% if method.hasDefaultNull %}|null{% endif %} ${{ method.property }}{% if method.shimNotice %} {{ method.shimNotice }}{% endif ~%}
+     * @param {{ method.var }}{% if method.hasDefaultNull %}|null{% endif %} ${{ method.property }}{% if method.typeShimNotice %} {{ method.typeShimNotice }}{% endif ~%}
      *
      * @return $this
      */
@@ -111,7 +111,7 @@
      * @deprecated {{ method.deprecationDescription }}
      *
      {% endif -%}
-     * @return {{ method.return }}{% if method.shimNotice %} {{ method.shimNotice }}{% endif ~%}
+     * @return {{ method.return }}{% if method.typeShimNotice %} {{ method.typeShimNotice }}{% endif ~%}
      */
     public function {{ method.name }}()
     {
@@ -130,7 +130,7 @@
      * @deprecated {{ method.deprecationDescription }}
      *
      {% endif -%}
-     * @param {{ method.var }} ${{ method.property }}{% if method.shimNotice %} {{ method.shimNotice }}{% endif ~%}
+     * @param {{ method.var }} ${{ method.property }}{% if method.typeShimNotice %} {{ method.typeShimNotice }}{% endif ~%}
      *
      * @return $this
      */
@@ -157,7 +157,7 @@
      *
      {% endif -%}
      * @param {{ method.var }} ${{ propertyKey }}
-     * @param {{ method.varValue }} ${{ propertyValue }}{% if method.shimNotice %} {{ method.shimNotice }}{% endif ~%}
+     * @param {{ method.varValue }} ${{ propertyValue }}{% if method.typeShimNotice %} {{ method.typeShimNotice }}{% endif ~%}
      *
      * @return $this
      */
