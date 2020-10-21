@@ -179,22 +179,23 @@ trait TransferTypeValidatorTrait
      */
     protected function logTypeErrorMessage(string $message, $stackTraceNestingLevel = 1): void
     {
+        ['file' => $callerFileName, 'line' => $callerLineNumber] = debug_backtrace()[$stackTraceNestingLevel];
+        $typeErrorMessage = sprintf(
+            '%s. Called in %s:%d',
+            $message,
+            $callerFileName,
+            $callerLineNumber
+        );
+
         $logger = $this->getLogger();
 
         if ($logger === null) {
+            file_put_contents($this->getLogFilePath(), $typeErrorMessage . PHP_EOL, FILE_APPEND);
+
             return;
         }
 
-        ['file' => $callerFileName, 'line' => $callerLineNumber] = debug_backtrace()[$stackTraceNestingLevel];
-
-        $logger->warning(
-            sprintf(
-                '%s. Called in %s:%d',
-                $message,
-                $callerFileName,
-                $callerLineNumber
-            )
-        );
+        $logger->warning($typeErrorMessage);
         $logger->close();
     }
 
@@ -211,10 +212,9 @@ trait TransferTypeValidatorTrait
             return $this->logger;
         }
 
-        $logFilePath = sys_get_temp_dir() . '/transfer-type-error.log';
         $logger = new Logger('transferLogger');
         $logger->pushHandler(
-            new DeduplicationHandler(new StreamHandler($logFilePath, Logger::WARNING), null, Logger::WARNING, 120)
+            new DeduplicationHandler(new StreamHandler($this->getLogFilePath(), Logger::WARNING), null, Logger::WARNING)
         );
         $this->logger = $logger;
 
@@ -253,5 +253,13 @@ trait TransferTypeValidatorTrait
     protected function isLoggingEnabled(): bool
     {
         return class_exists(Logger::class);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getLogFilePath(): string
+    {
+        return sys_get_temp_dir() . '/transfer-type-error.log';
     }
 }
