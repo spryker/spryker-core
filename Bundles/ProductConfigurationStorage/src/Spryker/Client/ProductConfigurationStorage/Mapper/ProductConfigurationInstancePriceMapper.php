@@ -18,9 +18,17 @@ use Spryker\Shared\ProductConfigurationStorage\ProductConfigurationStorageConfig
 
 class ProductConfigurationInstancePriceMapper implements ProductConfigurationInstancePriceMapperInterface
 {
+    /**
+     * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
+     */
+    protected const PRICE_GROSS_MODE_KEY = 'GROSS_MODE';
+
+    /**
+     * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_NET
+     */
+
+    protected const PRICE_NET_MODE_KEY = 'NET_MODE';
     protected const DEFAULT_PRICE_TYPE_NAME = 'DEFAULT';
-    protected const PRICE_GROSS_MODE_KEY = 'GROSSMODE';
-    protected const PRICE_NET_MODE_KEY = 'NETMODE';
     protected const PRICE_DATA_KEY = 'priceData';
     protected const IS_PRICE_MERGEABLE = false;
     protected const PRODUCT_CONFIGURATION_INSTANCE_RESPONSE_KEY = 'productConfigurationInstance';
