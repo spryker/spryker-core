@@ -11,4 +11,7 @@
     <transfer name="ShoppingListCollection">
     </transfer>
 
+    <transfer name="Customer">
+    </transfer>
+
 </transfers>
