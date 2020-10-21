@@ -20,4 +20,14 @@ interface ShoppingListSessionClientInterface
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
      */
     public function getCustomerShoppingListCollection(): ShoppingListCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Sanitizes customer shopping list collection.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function sanitizeCustomerShoppingListCollection(): void;
 }

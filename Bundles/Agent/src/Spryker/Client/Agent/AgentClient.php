@@ -9,6 +9,7 @@ namespace Spryker\Client\Agent;
 
 use Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer;
 use Generated\Shared\Transfer\CustomerQueryTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -92,5 +93,21 @@ class AgentClient extends AbstractClient implements AgentClientInterface
         return $this->getFactory()
             ->createZedStub()
             ->findCustomersByQuery($customerQueryTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    public function sanitizeCustomerImpersonation(CustomerTransfer $customerTransfer): void
+    {
+        $this->getFactory()
+            ->createCustomerImpersonationSanitizer()
+            ->sanitizeCustomerImpersonation($customerTransfer);
     }
 }

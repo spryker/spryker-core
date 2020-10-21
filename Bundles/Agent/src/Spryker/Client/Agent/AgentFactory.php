@@ -9,6 +9,8 @@ namespace Spryker\Client\Agent;
 
 use Spryker\Client\Agent\Dependency\Client\AgentToSessionClientInterface;
 use Spryker\Client\Agent\Dependency\Client\AgentToZedRequestClientInterface;
+use Spryker\Client\Agent\Sanitizer\CustomerImpersonationSanitizer;
+use Spryker\Client\Agent\Sanitizer\CustomerImpersonationSanitizerInterface;
 use Spryker\Client\Agent\Session\AgentSession;
 use Spryker\Client\Agent\Session\AgentSessionInterface;
 use Spryker\Client\Agent\Zed\AgentStub;
@@ -38,6 +40,16 @@ class AgentFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\Agent\Sanitizer\CustomerImpersonationSanitizerInterface
+     */
+    public function createCustomerImpersonationSanitizer(): CustomerImpersonationSanitizerInterface
+    {
+        return new CustomerImpersonationSanitizer(
+            $this->getCustomerImpersonationSanitizerPlugins()
+        );
+    }
+
+    /**
      * @return \Spryker\Client\Agent\Dependency\Client\AgentToZedRequestClientInterface
      */
     public function getZedRequestClient(): AgentToZedRequestClientInterface
@@ -51,5 +63,13 @@ class AgentFactory extends AbstractFactory
     public function getSessionClient(): AgentToSessionClientInterface
     {
         return $this->getProvidedDependency(AgentDependencyProvider::CLIENT_SESSION);
+    }
+
+    /**
+     * @return \Spryker\Client\AgentExtension\Dependency\Plugin\CustomerImpersonationSanitizerPluginInterface[]
+     */
+    public function getCustomerImpersonationSanitizerPlugins(): array
+    {
+        return $this->getProvidedDependency(AgentDependencyProvider::PLUGINS_CUSTOMER_IMPERSONATION_SANITIZER);
     }
 }

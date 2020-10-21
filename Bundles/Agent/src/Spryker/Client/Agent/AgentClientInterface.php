@@ -9,6 +9,7 @@ namespace Spryker\Client\Agent;
 
 use Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer;
 use Generated\Shared\Transfer\CustomerQueryTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
 interface AgentClientInterface
@@ -71,4 +72,17 @@ interface AgentClientInterface
      * @return \Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer
      */
     public function findCustomersByQuery(CustomerQueryTransfer $customerQueryTransfer): CustomerAutocompleteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Sanitizes data related to the end of customer impersonation.
+     * - Executes PluginInterface plugins.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    public function sanitizeCustomerImpersonation(CustomerTransfer $customerTransfer): void;
 }

@@ -18,6 +18,7 @@ class AgentDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
     public const CLIENT_SESSION = 'CLIENT_SESSION';
+    public const PLUGINS_CUSTOMER_IMPERSONATION_SANITIZER = 'PLUGINS_CUSTOMER_IMPERSONATION_SANITIZER';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -26,8 +27,11 @@ class AgentDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container)
     {
+        $container = parent::provideServiceLayerDependencies($container);
+
         $container = $this->addZedRequestClient($container);
         $container = $this->addSessionClient($container);
+        $container = $this->addCustomerImpersonationSanitizerPlugins($container);
 
         return $container;
     }
@@ -62,5 +66,27 @@ class AgentDependencyProvider extends AbstractDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addCustomerImpersonationSanitizerPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CUSTOMER_IMPERSONATION_SANITIZER, function () {
+            return $this->getCustomerImpersonationSanitizerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Client\AgentExtension\Dependency\Plugin\CustomerImpersonationSanitizerPluginInterface[]
+     */
+    protected function getCustomerImpersonationSanitizerPlugins(): array
+    {
+        return [];
     }
 }

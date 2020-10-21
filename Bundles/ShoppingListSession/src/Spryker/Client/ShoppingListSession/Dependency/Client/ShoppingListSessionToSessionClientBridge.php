@@ -43,4 +43,14 @@ class ShoppingListSessionToSessionClientBridge implements ShoppingListSessionToS
     {
         return $this->sessionClient->get($name, $default);
     }
+
+    /**
+     * @param string $name
+     *
+     * @return mixed
+     */
+    public function remove(string $name)
+    {
+        return $this->sessionClient->remove($name);
+    }
 }
