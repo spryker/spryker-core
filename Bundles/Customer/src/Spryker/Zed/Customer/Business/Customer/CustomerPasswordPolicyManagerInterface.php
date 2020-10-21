@@ -12,5 +12,6 @@ use Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer;
 
 interface CustomerPasswordPolicyManagerInterface
 {
+
     public function check(): CustomerPasswordPolicyResultTransfer;
 }

@@ -151,11 +151,13 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
+     * This method enables password check for Customer::restorePassword() in BC way.
+     *
      * @api
      *
      * @return bool
      */
-    public function isCustomerPasswordCheckOnPasswordUpdateEnabled()
+    public function isCustomerPasswordCheckEnabledOnRestorePassword()
     {
         return false;
     }

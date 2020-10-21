@@ -191,7 +191,7 @@ class Customer implements CustomerInterface
     public function add($customerTransfer)
     {
         if ($customerTransfer->getPassword()) {
-            $customerResponseTransfer = $this->validateCustomerPasswordLength($customerTransfer->getPassword());
+            $customerResponseTransfer = $this->validateCustomerPassword($customerTransfer->getPassword());
             if (!$customerResponseTransfer->getIsSuccess()) {
                 return $customerResponseTransfer;
             }
@@ -456,6 +456,13 @@ class Customer implements CustomerInterface
      */
     public function restorePassword(CustomerTransfer $customerTransfer)
     {
+        if ($this->customerConfig->isCustomerPasswordCheckEnabledOnRestorePassword()) {
+            $customerResponseTransfer = $this->validateCustomerPassword($customerTransfer->getPassword());
+            if (!$customerResponseTransfer->getIsSuccess()) {
+                return $customerResponseTransfer;
+            }
+        }
+
         $customerTransfer = $this->encryptPassword($customerTransfer);
 
         $customerResponseTransfer = $this->createCustomerResponseTransfer();
@@ -507,11 +514,9 @@ class Customer implements CustomerInterface
      */
     public function update(CustomerTransfer $customerTransfer)
     {
-        if ($this->customerConfig->isCustomerPasswordCheckOnPasswordUpdateEnabled()) {
-            $customerResponseTransfer = $this->validateCustomerPasswordLength($customerTransfer->getPassword());
-            if (!$customerResponseTransfer->getIsSuccess()) {
-                return $customerResponseTransfer;
-            }
+        $customerResponseTransfer = $this->validateCustomerPassword($customerTransfer->getPassword());
+        if (!$customerResponseTransfer->getIsSuccess()) {
+            return $customerResponseTransfer;
         }
 
         if (!empty($customerTransfer->getNewPassword())) {
@@ -626,7 +631,7 @@ class Customer implements CustomerInterface
             return $customerResponseTransfer;
         }
 
-        $customerResponseTransfer = $this->validateCustomerPasswordLength($customerTransfer->getNewPassword());
+        $customerResponseTransfer = $this->validateCustomerPassword($customerTransfer->getNewPassword());
         if (!$customerResponseTransfer->getIsSuccess()) {
             return $customerResponseTransfer;
         }
