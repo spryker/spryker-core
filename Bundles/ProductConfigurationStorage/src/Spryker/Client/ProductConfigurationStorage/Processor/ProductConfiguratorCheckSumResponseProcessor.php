@@ -23,11 +23,6 @@ class ProductConfiguratorCheckSumResponseProcessor implements ProductConfigurato
     protected $productConfigurationInstanceWriter;
 
     /**
-     * @var \Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorResponseValidatorInterface[]
-     */
-    protected $productConfiguratorResponseValidators;
-
-    /**
      * @var \Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstancePriceMapperInterface
      */
     protected $productConfigurationInstancePriceMapper;
