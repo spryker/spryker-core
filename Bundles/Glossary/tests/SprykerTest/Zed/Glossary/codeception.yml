@@ -59,6 +59,7 @@ suites:
                 - \SprykerTest\Zed\Router\Helper\RouterHelper
                 - \SprykerTest\Zed\Application\Helper\ApplicationHelper
                 - \SprykerTest\Shared\Glossary\Helper\TranslationHelper
+                - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
 
     Persistence:
         path: Persistence

@@ -20,7 +20,6 @@ use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer;
  * @group Zed
  * @group Glossary
  * @group Persistence
- * @group QueryContainer
  * @group GlossaryQueryContainerTest
  * Add your own group annotations below this line
  */
@@ -40,6 +39,9 @@ class GlossaryQueryContainerTest extends Unit
      */
     protected $glossaryQueryContainer;
 
+    /**
+     * @return void
+     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -82,7 +84,8 @@ class GlossaryQueryContainerTest extends Unit
         $localeTransfer1 = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE_1]);
         $localeTransfer2 = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE_2]);
 
-        $this->tester->haveTranslation([KeyTranslationTransfer::LOCALES => [
+        $this->tester->haveTranslation([
+        KeyTranslationTransfer::LOCALES => [
             $localeTransfer1->getLocaleName(),
             $localeTransfer2->getLocaleName(),
         ]]);
