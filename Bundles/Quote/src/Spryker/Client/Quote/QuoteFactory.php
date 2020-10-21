@@ -22,7 +22,6 @@ use Spryker\Client\Quote\StorageStrategy\StorageStrategyProvider;
 use Spryker\Client\Quote\Zed\QuoteStub;
 
 /**
- * @method \Spryker\Client\Quote\QuoteClientInterface getClient()
  * @method \Spryker\Client\Quote\QuoteConfig getConfig()
  */
 class QuoteFactory extends AbstractFactory
