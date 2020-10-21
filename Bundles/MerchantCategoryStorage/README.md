@@ -1,7 +1,7 @@
 # MerchantCategoryStorage Module
 [![Build Status](https://travis-ci.org/spryker/merchant-category-storage.svg)](https://travis-ci.org/spryker/merchant-category-storage)
 
-{{ADD DESCRIPTION HERE}}
+Manages storage for merchant category.
 
 ## Installation
 

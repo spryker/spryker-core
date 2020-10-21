@@ -1,7 +1,7 @@
 # MerchantCategorySearch Module
 [![Build Status](https://travis-ci.org/spryker/merchant-category-search.svg)](https://travis-ci.org/spryker/merchant-category-search)
 
-{{ADD DESCRIPTION HERE}}
+Provides plugins to extend MerchantSearch with categories.
 
 ## Installation
 

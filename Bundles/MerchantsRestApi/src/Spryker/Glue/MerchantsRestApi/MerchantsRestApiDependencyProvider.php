@@ -22,7 +22,7 @@ class MerchantsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     public const CLIENT_MERCHANT_SEARCH = 'CLIENT_MERCHANT_SEARCH';
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
-    public const PLUGINS_REST_MERCHANT_ATTRIBUTES_MAPPER = 'PLUGINS_REST_MERCHANT_ATTRIBUTES_MAPPER';
+    public const PLUGINS_REST_MERCHANTS_ATTRIBUTES_MAPPER = 'PLUGINS_REST_MERCHANTS_ATTRIBUTES_MAPPER';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -37,7 +37,7 @@ class MerchantsRestApiDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addMerchantSearchClient($container);
         $container = $this->addGlossaryStorageClient($container);
 
-        $container = $this->addRestMerchantAttributesMapperPlugins($container);
+        $container = $this->addRestMerchantsAttributesMapperPlugins($container);
 
         return $container;
     }
@@ -95,19 +95,19 @@ class MerchantsRestApiDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addRestMerchantAttributesMapperPlugins(Container $container): Container
+    protected function addRestMerchantsAttributesMapperPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_REST_MERCHANT_ATTRIBUTES_MAPPER, function (Container $container) {
-            return $this->getRestMerchantAttributesMapperPlugins();
+        $container->set(static::PLUGINS_REST_MERCHANTS_ATTRIBUTES_MAPPER, function (Container $container) {
+            return $this->getRestMerchantsAttributesMapperPlugins();
         });
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\RestMerchantAttributesMapperPluginInterface[]
+     * @return \Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\RestMerchantsAttributesMapperPluginInterface[]
      */
-    public function getRestMerchantAttributesMapperPlugins(): array
+    public function getRestMerchantsAttributesMapperPlugins(): array
     {
         return [];
     }

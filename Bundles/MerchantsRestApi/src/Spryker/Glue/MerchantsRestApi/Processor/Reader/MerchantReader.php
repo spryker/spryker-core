@@ -138,12 +138,12 @@ class MerchantReader implements MerchantReaderInterface
     protected function getMerchants(RestRequestInterface $restRequest): RestResponseInterface
     {
         $merchantSearchRequestTransfer = $this->createMerchantSearchRequest($restRequest);
-        $searchResults = $this->merchantSearchClient->searchMerchants(
+        $searchResult = $this->merchantSearchClient->searchMerchants(
             $merchantSearchRequestTransfer
         );
 
         /** @var \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer */
-        $merchantSearchCollectionTransfer = $searchResults[static::KEY_MERCHANT_COLLECTION];
+        $merchantSearchCollectionTransfer = $searchResult[static::KEY_MERCHANT_COLLECTION];
 
         return $this->merchantRestResponseBuilder->createMerchantListRestResponse(
             $merchantSearchRequestTransfer,

@@ -5,19 +5,15 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin;
+namespace Spryker\Glue\MerchantCategoriesRestApi\Plugin\MerchantsRestApi;
 
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\RestMerchantsAttributesTransfer;
+use Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\RestMerchantsAttributesMapperPluginInterface;
 
-interface RestMerchantAttributesMapperPluginInterface
+class MerchantCategoryRestMerchantsAttributesMapperPlugin implements RestMerchantsAttributesMapperPluginInterface
 {
     /**
-     * Specification:
-     * - Maps MerchantStorageTransfer to RestMerchantsAttributesTransfer.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\MerchantStorageTransfer $merchantStorageTransfer
      * @param \Generated\Shared\Transfer\RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer
      * @param string $localeName
@@ -28,5 +24,9 @@ interface RestMerchantAttributesMapperPluginInterface
         MerchantStorageTransfer $merchantStorageTransfer,
         RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer,
         string $localeName
-    ): RestMerchantsAttributesTransfer;
+    ): RestMerchantsAttributesTransfer {
+        $restMerchantsAttributesTransfer->setCategories($merchantStorageTransfer->getCategories());
+
+        return $restMerchantsAttributesTransfer;
+    }
 }

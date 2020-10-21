@@ -1,7 +1,7 @@
 # MerchantsRestApiExtension Module
 [![Build Status](https://travis-ci.org/spryker/merchants-rest-api-extension.svg)](https://travis-ci.org/spryker/merchants-rest-api-extension)
 
-{{ADD DESCRIPTION HERE}}
+Provides plugin interfaces to extend MerchantsRestApi module from the other modules.
 
 ## Installation
 

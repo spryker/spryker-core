@@ -40,8 +40,8 @@ class MerchantCategoryMerchantSearchDataExpanderPlugin extends AbstractPlugin im
 
         $merchantCategoryIds = [];
 
-        foreach ($merchantCategoryTransfer->getCategories() as $category) {
-            $merchantCategoryIds[] = $category->getIdCategory();
+        foreach ($merchantCategoryTransfer->getCategories() as $categoryTransfer) {
+            $merchantCategoryIds[] = $categoryTransfer->getIdCategory();
         }
 
         $merchantSearchData[static::MERCHANT_CATEGORY_IDS] = $merchantCategoryIds;

@@ -1,7 +1,7 @@
 # MerchantCategoriesRestApi Module
 [![Build Status](https://travis-ci.org/spryker/merchant-categories-rest-api.svg)](https://travis-ci.org/spryker/merchant-categories-rest-api)
 
-{{ADD DESCRIPTION HERE}}
+MerchantCategoriesRestApi module provides REST API endpoints to manage merchant categories.
 
 ## Installation
 

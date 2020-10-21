@@ -22,6 +22,11 @@ use Symfony\Component\HttpFoundation\Response;
 class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterface
 {
     /**
+     * @uses @todo
+     */
+    protected const ITEMS_PER_PAGE = 'ipp';
+
+    /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
     protected $restResourceBuilder;
@@ -119,10 +124,10 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
         MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer,
         string $localeName
     ): RestResponseInterface {
-        $restMerchantAttributesTransfers = [];
+        $restMerchantsAttributesTransfers = [];
 
         foreach ($merchantSearchCollectionTransfer->getMerchants() as $merchantSearchTransfer) {
-            $restMerchantAttributesTransfers[] = $this->merchantMapper
+            $restMerchantsAttributesTransfers[] = $this->merchantMapper
                 ->mapMerchantSearchTransferToRestMerchantsAttributesTransfer(
                     $merchantSearchTransfer,
                     new RestMerchantsAttributesTransfer()
@@ -131,15 +136,15 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
 
         $restResponse = $this->restResourceBuilder->createRestResponse(
             $merchantSearchCollectionTransfer->getNbResults(),
-            $merchantSearchRequestTransfer->getRequestParameters()['ipp'] ?? 0
+            $merchantSearchRequestTransfer->getRequestParameters()[static::ITEMS_PER_PAGE] ?? 0
         );
 
-        foreach ($restMerchantAttributesTransfers as $restMerchantAttributesTransfer) {
+        foreach ($restMerchantsAttributesTransfers as $restMerchantsAttributesTransfer) {
             $restResponse->addResource(
                 $this->restResourceBuilder->createRestResource(
                     MerchantsRestApiConfig::RESOURCE_MERCHANTS,
                     null,
-                    $restMerchantAttributesTransfer
+                    $restMerchantsAttributesTransfer
                 )
             );
         }

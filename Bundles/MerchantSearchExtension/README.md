@@ -1,7 +1,7 @@
 # MerchantSearchExtension Module
 [![Build Status](https://travis-ci.org/spryker/merchant-search-extension.svg)](https://travis-ci.org/spryker/merchant-search-extension)
 
-{{ADD DESCRIPTION HERE}}
+Provides plugin interfaces to extend MerchantSearch module from the other modules.
 
 ## Installation
 

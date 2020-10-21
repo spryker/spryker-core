@@ -4,6 +4,7 @@
   "description": "MerchantCategoryStorage module",
   "license": "proprietary",
   "require": {
+    "spryker/merchant-category": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

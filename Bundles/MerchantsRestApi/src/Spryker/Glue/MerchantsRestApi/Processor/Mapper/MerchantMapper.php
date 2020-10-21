@@ -15,16 +15,16 @@ use Generated\Shared\Transfer\RestMerchantsAttributesTransfer;
 class MerchantMapper implements MerchantMapperInterface
 {
     /**
-     * @var \Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\RestMerchantAttributesMapperPluginInterface[]
+     * @var \Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\RestMerchantsAttributesMapperPluginInterface[]
      */
-    protected $restMerchantAttributesMapperPlugins;
+    protected $restMerchantsAttributesMapperPlugins;
 
     /**
-     * @param \Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\RestMerchantAttributesMapperPluginInterface[] $restMerchantAttributesMapperPlugins
+     * @param \Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\RestMerchantsAttributesMapperPluginInterface[] $restMerchantsAttributesMapperPlugins
      */
-    public function __construct(array $restMerchantAttributesMapperPlugins)
+    public function __construct(array $restMerchantsAttributesMapperPlugins)
     {
-        $this->restMerchantAttributesMapperPlugins = $restMerchantAttributesMapperPlugins;
+        $this->restMerchantsAttributesMapperPlugins = $restMerchantsAttributesMapperPlugins;
     }
 
     /**
@@ -56,7 +56,7 @@ class MerchantMapper implements MerchantMapperInterface
             ->setDeliveryTime($merchantStorageProfileTransfer->getDeliveryTime())
             ->setMerchantUrl($this->findMerchantUrlByLocaleName($merchantStorageTransfer, $localeName));
 
-        $restMerchantsAttributesTransfer = $this->executeRestMerchantAttributesMapperPlugins(
+        $restMerchantsAttributesTransfer = $this->executeRestMerchantsAttributesMapperPlugins(
             $merchantStorageTransfer,
             $restMerchantsAttributesTransfer,
             $localeName
@@ -106,12 +106,12 @@ class MerchantMapper implements MerchantMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestMerchantsAttributesTransfer
      */
-    protected function executeRestMerchantAttributesMapperPlugins(
+    protected function executeRestMerchantsAttributesMapperPlugins(
         MerchantStorageTransfer $merchantStorageTransfer,
         RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer,
         string $localeName
     ): RestMerchantsAttributesTransfer {
-        foreach ($this->restMerchantAttributesMapperPlugins as $restMerchantAttributesMapperPlugin) {
+        foreach ($this->restMerchantsAttributesMapperPlugins as $restMerchantAttributesMapperPlugin) {
             $restMerchantsAttributesTransfer = $restMerchantAttributesMapperPlugin->mapMerchantStorageTransferToRestMerchantsAttributesTransfer(
                 $merchantStorageTransfer,
                 $restMerchantsAttributesTransfer,
