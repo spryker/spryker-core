@@ -33,8 +33,12 @@ class ObjectBuilderTest extends AbstractBuilderTester
         // Arrange
         $foo = new Foo();
         $foo->setIdFoo(1);
+        $expectedCount = 1;
 
         // Act
-        $foo->save();
+        $affectedCount = $foo->save();
+
+        // Assert
+        $this->assertSame($expectedCount, $affectedCount);
     }
 }
