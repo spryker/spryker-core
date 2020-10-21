@@ -76,7 +76,7 @@ interface AgentClientInterface
     /**
      * Specification:
      * - Sanitizes data related to the end of customer impersonation.
-     * - Executes PluginInterface plugins.
+     * - Executes CustomerImpersonationSanitizerPluginInterface plugins.
      *
      * @api
      *
