@@ -190,7 +190,6 @@ class DependencyViolationFinderConsole extends AbstractCoreModuleAwareConsole
 
         return [
             'Composer name' => sprintf('<fg=%s>%s</>', $color, $composerName),
-            'Module name' => $moduleDependencyTransfer->getModuleName(),
             'is valid' => $this->getColoredYesOrNo($moduleDependencyTransfer->getIsValid()),
             'src dependency' => $this->getYesOrNo($moduleDependencyTransfer->getIsSrcDependency()),
             'test dependency' => $this->getYesOrNo($moduleDependencyTransfer->getIsTestDependency()),

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateImageStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToStorageClientInterface;
 use Spryker\Client\ConfigurableBundleStorage\Dependency\Service\ConfigurableBundleStorageToSynchronizationServiceInterface;
+use Spryker\Client\ConfigurableBundleStorage\Dependency\Service\ConfigurableBundleStorageToUtilEncodingServiceInterface;
 use Spryker\Shared\ConfigurableBundleStorage\ConfigurableBundleStorageConfig;
 
 class ConfigurableBundleTemplateImageStorageReader implements ConfigurableBundleTemplateImageStorageReaderInterface
@@ -26,15 +27,23 @@ class ConfigurableBundleTemplateImageStorageReader implements ConfigurableBundle
     protected $synchronizationService;
 
     /**
+     * @var \Spryker\Client\ConfigurableBundleStorage\Dependency\Service\ConfigurableBundleStorageToUtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
      * @param \Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ConfigurableBundleStorage\Dependency\Service\ConfigurableBundleStorageToSynchronizationServiceInterface $synchronizationService
+     * @param \Spryker\Client\ConfigurableBundleStorage\Dependency\Service\ConfigurableBundleStorageToUtilEncodingServiceInterface $utilEncodingService
      */
     public function __construct(
         ConfigurableBundleStorageToStorageClientInterface $storageClient,
-        ConfigurableBundleStorageToSynchronizationServiceInterface $synchronizationService
+        ConfigurableBundleStorageToSynchronizationServiceInterface $synchronizationService,
+        ConfigurableBundleStorageToUtilEncodingServiceInterface $utilEncodingService
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -56,6 +65,59 @@ class ConfigurableBundleTemplateImageStorageReader implements ConfigurableBundle
         }
 
         return $this->mapStorageDataToConfigurableBundleImageStorageTransfer($configurableBundleTemplateImageStorageData);
+    }
+
+    /**
+     * @param int[] $configurableBundleTemplateIds
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateImageStorageTransfer[]
+     */
+    public function getBulkConfigurableBundleTemplateImageStorage(array $configurableBundleTemplateIds, string $localeName): array
+    {
+        $storageKeys = $this->prepareStorageKeys($configurableBundleTemplateIds, $localeName);
+        $configurableBundleTemplateImageStorageData = $this->storageClient->getMulti($storageKeys);
+
+        if (!$configurableBundleTemplateImageStorageData) {
+            return [];
+        }
+
+        return $this->mapStorageDataToConfigurableBundleImageStorageTransfers($configurableBundleTemplateImageStorageData);
+    }
+
+    /**
+     * @param int[] $configurableBundleTemplateIds
+     * @param string $localeName
+     *
+     * @return string[]
+     */
+    protected function prepareStorageKeys(array $configurableBundleTemplateIds, string $localeName): array
+    {
+        $storageKeys = [];
+
+        foreach ($configurableBundleTemplateIds as $idConfigurableBundleTemplate) {
+            $storageKeys[] = $this->generateKey($idConfigurableBundleTemplate, $localeName);
+        }
+
+        return $storageKeys;
+    }
+
+    /**
+     * @param array $configurableBundleTemplateImageStorageData
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateImageStorageTransfer[]
+     */
+    protected function mapStorageDataToConfigurableBundleImageStorageTransfers(array $configurableBundleTemplateImageStorageData): array
+    {
+        $configurableBundleTemplateImageStorageTransfers = [];
+
+        foreach ($configurableBundleTemplateImageStorageData as $configurableBundleTemplateImageStorageTransferData) {
+            $configurableBundleTemplateImageStorageTransfers[] = $this->mapStorageDataToConfigurableBundleImageStorageTransfer(
+                $this->utilEncodingService->decodeJson($configurableBundleTemplateImageStorageTransferData, true) ?? []
+            );
+        }
+
+        return $configurableBundleTemplateImageStorageTransfers;
     }
 
     /**

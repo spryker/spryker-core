@@ -22,7 +22,7 @@ class ValidationRuleIsOptionalButNotSuggested implements ValidationRuleInterface
         if ($moduleDependencyTransfer->getIsOptionalDependency() && $moduleDependencyTransfer->getIsSrcDependency() && !$moduleDependencyTransfer->getIsSuggested()) {
             $moduleDependencyTransfer->setIsValid(false);
             $validationMessageTransfer = new ValidationMessageTransfer();
-            $validationMessageTransfer->setMessage('Optional dependency should be listed in composer suggests');
+            $validationMessageTransfer->setMessage('Optional dependency should be listed in composer suggest');
             $validationMessageTransfer->setFixType(static::ADD_SUGGEST);
 
             $moduleDependencyTransfer->addValidationMessage($validationMessageTransfer);

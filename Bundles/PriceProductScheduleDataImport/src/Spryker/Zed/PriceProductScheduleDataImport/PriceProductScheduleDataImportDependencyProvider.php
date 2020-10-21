@@ -10,7 +10,7 @@ namespace Spryker\Zed\PriceProductScheduleDataImport;
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
 
 /**
- * @method \Spryker\Zed\MerchantRelationshipSalesOrderThresholdDataImport\MerchantRelationshipSalesOrderThresholdDataImportConfig getConfig()
+ * @method \Spryker\Zed\PriceProductScheduleDataImport\PriceProductScheduleDataImportConfig getConfig()
  */
 class PriceProductScheduleDataImportDependencyProvider extends DataImportDependencyProvider
 {
