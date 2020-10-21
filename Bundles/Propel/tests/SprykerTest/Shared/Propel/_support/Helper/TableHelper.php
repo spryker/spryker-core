@@ -15,14 +15,11 @@ use Propel\Generator\Model\Domain;
 use Propel\Generator\Model\Table;
 use Propel\Generator\Platform\DefaultPlatform;
 use Propel\Runtime\Propel;
-use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Propel\PropelConstants;
 
 class TableHelper extends Module
 {
-    use ConfigHelperTrait;
-
-    protected const MODULE_NAME = 'Propel';
-
     protected const DEFAULT_DATA_SOURCE_NAME = 'zed';
 
     /**
@@ -82,9 +79,7 @@ class TableHelper extends Module
      */
     protected function getPlatform(): DefaultPlatform
     {
-        $dbEngine = $this->getConfigHelper()
-            ->getModuleConfig(static::MODULE_NAME)
-            ->getCurrentDatabaseEngine();
+        $dbEngine = Config::get(PropelConstants::ZED_DB_ENGINE);
         $class = sprintf(
             '\\Propel\\Generator\\Platform\\%sPlatform',
             ucfirst(strtolower($dbEngine))
