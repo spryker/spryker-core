@@ -9,6 +9,8 @@ namespace Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Dependency\Facade;
 
 use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 
 interface CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressFacadeInterface
 {
@@ -20,4 +22,13 @@ interface CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressFacadeInterface
     public function getCompanyUnitAddressCollection(
         CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUnitAddressCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
+     */
+    public function findCompanyBusinessUnitAddressByUuid(
+        CompanyUnitAddressTransfer $companyUnitAddressTransfer
+    ): CompanyUnitAddressResponseTransfer;
 }

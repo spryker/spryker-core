@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -36,5 +37,24 @@ class CompanyBusinessUnitAddressesRestApiFacade extends AbstractFacade implement
                 $restCheckoutDataTransfer,
                 $restCheckoutRequestAttributesTransfer
             );
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function mapCompanyBusinessUnitAddressesToQuote(
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
+        QuoteTransfer $quoteTransfer
+    ): QuoteTransfer {
+        return $this->getFactory()
+            ->createCompanyBusinessUnitAddressQuoteMapper()
+            ->mapCompanyBusinessUnitAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
     }
 }

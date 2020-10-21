@@ -9,6 +9,8 @@ namespace Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business;
 
 use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Expander\CheckoutDataExpander;
 use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Expander\CheckoutDataExpanderInterface;
+use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Mapper\CompanyBusinessUnitAddressQuoteMapper;
+use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Mapper\CompanyBusinessUnitAddressQuoteMapperInterface;
 use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\CompanyBusinessUnitAddressesRestApiDependencyProvider;
 use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Dependency\Facade\CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -24,6 +26,14 @@ class CompanyBusinessUnitAddressesRestApiBusinessFactory extends AbstractBusines
     public function createCheckoutDataExpander(): CheckoutDataExpanderInterface
     {
         return new CheckoutDataExpander($this->getCompanyUnitAddressFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Mapper\CompanyBusinessUnitAddressQuoteMapperInterface
+     */
+    public function createCompanyBusinessUnitAddressQuoteMapper(): CompanyBusinessUnitAddressQuoteMapperInterface
+    {
+        return new CompanyBusinessUnitAddressQuoteMapper($this->getCompanyUnitAddressFacade());
     }
 
     /**

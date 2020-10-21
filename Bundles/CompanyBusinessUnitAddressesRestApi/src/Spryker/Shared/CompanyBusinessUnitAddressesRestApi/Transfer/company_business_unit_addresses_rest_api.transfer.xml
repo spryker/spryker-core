@@ -27,6 +27,7 @@
         <property name="uuid" type="string"/>
         <property name="fkCompany" type="int"/>
         <property name="idCompanyUnitAddress" type="int"/>
+        <property name="company" type="Company"/>
     </transfer>
 
     <transfer name="CompanyUnitAddressResponse">
@@ -58,10 +59,51 @@
 
     <transfer name="RestCheckoutRequestAttributes">
         <property name="customer" type="RestCustomer"/>
+        <property name="billingAddress" type="RestAddress"/>
+        <property name="shippingAddress" type="RestAddress"/>
     </transfer>
 
     <transfer name="RestCustomer">
         <property name="idCompanyBusinessUnit" type="int"/>
+    </transfer>
+
+    <transfer name="RestAddress">
+        <property name="companyBusinessUnitAddressId" type="string"/>
+    </transfer>
+
+    <transfer name="Company">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="billingAddress" type="Address"/>
+        <property name="shippingAddress" type="Address"/>
+        <property name="customer" type="Customer"/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Address">
+        <property name="isAddressSavingSkipped" type="bool"/>
+        <property name="email" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="salutation" type="string"/>
+        <property name="company" type="string"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="shipment" type="Shipment"/>
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="shippingAddress" type="Address"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="email" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="salutation" type="string"/>
     </transfer>
 
 </transfers>
