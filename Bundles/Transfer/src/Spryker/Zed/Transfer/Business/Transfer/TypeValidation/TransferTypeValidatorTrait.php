@@ -204,7 +204,7 @@ trait TransferTypeValidatorTrait
      */
     protected function getLogger(): ?Logger
     {
-        if (!$this->isLoggingEnabled()) {
+        if (!class_exists(Logger::class)) {
             return null;
         }
 
@@ -245,14 +245,6 @@ trait TransferTypeValidatorTrait
         }
 
         return $propertyType;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isLoggingEnabled(): bool
-    {
-        return class_exists(Logger::class);
     }
 
     /**
