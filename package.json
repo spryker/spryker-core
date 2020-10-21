@@ -1,0 +1,21 @@
+{
+    "private": true,
+    "name": "spryker-master-suite",
+    "description": "Spryker Master Suite",
+    "author": {
+        "name": "Spryker Systems GmbH",
+        "email": "info@spryker.com",
+        "url": "https://spryker.com/"
+    },
+    "scripts": {
+        "formatter:write": "npx prettier --config node_modules/@spryker/prettier-config/.prettierrc.json --write '**/*.(scss|css|less|js|ts|json|html)'",
+        "formatter:check": "npx prettier --config node_modules/@spryker/prettier-config/.prettierrc.json --check '**/*.(scss|css|less|js|ts|json|html)'"
+    },
+    "engines": {
+        "node": ">=12.0.0",
+        "npm": ">=6.9.0"
+    },
+    "devDependencies": {
+        "prettier": "~2.0.5"
+    }
+}
