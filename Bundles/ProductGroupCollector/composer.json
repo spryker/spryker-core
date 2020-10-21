@@ -14,7 +14,10 @@
     "spryker/util-data-reader": "^1.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/product": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {

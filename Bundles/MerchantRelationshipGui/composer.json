@@ -17,7 +17,11 @@
     "spryker/util-text": "^1.1.1"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/container": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*",
+    "spryker/twig": "*"
   },
   "autoload": {
     "psr-4": {

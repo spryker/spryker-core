@@ -23,7 +23,10 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/container": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*",
+    "spryker/twig": "*"
   },
   "autoload": {
     "psr-4": {

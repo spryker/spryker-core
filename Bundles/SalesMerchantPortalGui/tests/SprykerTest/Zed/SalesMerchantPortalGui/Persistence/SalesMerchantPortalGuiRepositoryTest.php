@@ -54,6 +54,9 @@ class SalesMerchantPortalGuiRepositoryTest extends Unit
      */
     protected $salesMerchantPortalGuiRepository;
 
+    /**
+     * @return void
+     */
     protected function setUp(): void
     {
         parent::setUp();

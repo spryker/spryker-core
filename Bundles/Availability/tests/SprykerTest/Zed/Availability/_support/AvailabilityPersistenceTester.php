@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerTest\Zed\Availability;
 
 use Codeception\Actor;
@@ -13,6 +19,7 @@ use Spryker\DecimalObject\Decimal;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -25,14 +32,10 @@ use Spryker\DecimalObject\Decimal;
  * @method void pause()
  *
  * @SuppressWarnings(PHPMD)
-*/
+ */
 class AvailabilityPersistenceTester extends Actor
 {
     use _generated\AvailabilityPersistenceTesterActions;
-
-    /**
-     * Define custom actions here
-     */
 
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
@@ -49,7 +52,7 @@ class AvailabilityPersistenceTester extends Actor
         int $productQuantity
     ): ProductConcreteTransfer {
         $localizedAttributes = (new LocalizedAttributesBuilder([
-            LocalizedAttributesTransfer::LOCALE => $localeTransfer
+            LocalizedAttributesTransfer::LOCALE => $localeTransfer,
         ]))->build()->toArray();
 
         $productConcreteTransfer = $this->haveProduct(
@@ -61,7 +64,7 @@ class AvailabilityPersistenceTester extends Actor
             $this->haveStockProduct([
                 StockProductTransfer::SKU => $productConcreteTransfer->getSku(),
                 StockProductTransfer::QUANTITY => $productQuantity,
-                StockProductTransfer::STOCK_TYPE => $stockTransfer->getName()
+                StockProductTransfer::STOCK_TYPE => $stockTransfer->getName(),
             ]);
         }
 

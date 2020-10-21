@@ -17,7 +17,6 @@ use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepository;
  * @group Zed
  * @group ProductPageSearch
  * @group Persistence
- * @group Repository
  * @group ProductPageSearchRepositoryTest
  * Add your own group annotations below this line
  */

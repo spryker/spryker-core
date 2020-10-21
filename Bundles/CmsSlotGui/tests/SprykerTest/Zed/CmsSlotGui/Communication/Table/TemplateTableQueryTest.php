@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
 use Orm\Zed\CmsSlot\Persistence\Map\SpyCmsSlotTemplateTableMap;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplateQuery;
-use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotToCmsSlotTemplate;
 
 /**
  * Auto-generated group annotations

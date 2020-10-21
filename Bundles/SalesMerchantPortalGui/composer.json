@@ -28,7 +28,10 @@
     "spryker/zed-ui": "^0.3.3"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/oms": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {

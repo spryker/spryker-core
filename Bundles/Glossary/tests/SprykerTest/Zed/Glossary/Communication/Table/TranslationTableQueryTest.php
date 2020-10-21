@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
-use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface;
 use Twig\Environment;
 use Twig\Loader\ChainLoader;
 use Twig\Loader\LoaderInterface;
@@ -58,7 +57,7 @@ class TranslationTableQueryTest extends Unit
     /**
      * @return void
      */
-    public function testFetchDataCollectsCorrectMerchantData(): void
+    public function testFetchDataCollectsCorrectGlossaryData(): void
     {
         // Arrange
         SpyGlossaryTranslationQuery::create()->deleteAll();
@@ -88,14 +87,6 @@ class TranslationTableQueryTest extends Unit
         $resultGlossaryKeyIds = array_column($result, SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY);
         $this->assertContains($idGlossaryKey1, $resultGlossaryKeyIds);
         $this->assertContains($idGlossaryKey2, $resultGlossaryKeyIds);
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface
-     */
-    protected function getMerchantGuiToMerchantFacadeMock(): MerchantGuiToMerchantFacadeInterface
-    {
-        return $this->getMockBuilder(MerchantGuiToMerchantFacadeInterface::class)->getMock();
     }
 
     /**

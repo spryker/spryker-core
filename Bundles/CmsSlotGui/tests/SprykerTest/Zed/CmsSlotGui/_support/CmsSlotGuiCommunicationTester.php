@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\CmsSlotGui;
 
 use Codeception\Actor;
-use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotToCmsSlotTemplate;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotToCmsSlotTemplateQuery;
 
 /**

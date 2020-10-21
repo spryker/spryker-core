@@ -192,7 +192,6 @@ class ProductDiscontinuedFacadeTest extends Unit
 
         // Assert
         $this->assertContains($this->productConcrete->getFkProductAbstract(), $result);
-
     }
 
     /**
@@ -205,6 +204,5 @@ class ProductDiscontinuedFacadeTest extends Unit
 
         // Assert
         $this->assertNotContains($this->productConcrete->getFkProductAbstract(), $result);
-
     }
 }

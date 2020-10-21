@@ -11,7 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Orm\Zed\Cms\Persistence\SpyCmsVersionQuery;
 use Spryker\Zed\Cms\Persistence\CmsPersistenceFactory;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
@@ -49,6 +48,8 @@ class CmsQueryContainerTest extends Unit
 
     /**
      * @void
+     *
+     * @return void
      */
     public function testQueryPagesWithTemplatesForSelectedLocaleReturnsCorrectData(): void
     {

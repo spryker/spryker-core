@@ -74,6 +74,9 @@ class ProductOptionQueryContainerTest extends Unit
         $this->assertInstanceOf(SpyProductOptionValueQuery::class, $query);
     }
 
+    /**
+     * @return void
+     */
     public function testQueryProductsAbstractBySearchTermReturnsCorrectData(): void
     {
         // Arrange
@@ -83,7 +86,7 @@ class ProductOptionQueryContainerTest extends Unit
 
         $localizedAttributesTransfer = (new LocalizedAttributesBuilder([
             LocalizedAttributesTransfer::LOCALE => $localeTransfer,
-            LocalizedAttributesTransfer::NAME => static::TEST_LOCALIZED_PRODUCT_NAME
+            LocalizedAttributesTransfer::NAME => static::TEST_LOCALIZED_PRODUCT_NAME,
         ]))->build();
         $productAbstractTransfer1 = $this->tester->haveProductAbstract([
             ProductAbstractTransfer::LOCALIZED_ATTRIBUTES => [$localizedAttributesTransfer->toArray()],

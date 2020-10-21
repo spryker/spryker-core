@@ -41,13 +41,15 @@ class ProductRelationQueryContainerTest extends Unit
      */
     protected $productRelationQueryContainer;
 
+    /**
+     * @return void
+     */
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->productRelationQueryContainer = new ProductRelationQueryContainer();
         $this->productRelationQueryContainer->setFactory(new ProductRelationPersistenceFactory());
-
     }
 
     /**
@@ -72,15 +74,15 @@ class ProductRelationQueryContainerTest extends Unit
 
         $localeTransfer = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::LOCALE_NAME]);
         $localizedAttributes = (new LocalizedAttributesBuilder([
-            LocalizedAttributesTransfer::LOCALE => $localeTransfer
+            LocalizedAttributesTransfer::LOCALE => $localeTransfer,
         ]))->build()->toArray();
         $productAbstractTransfer1 = $this->tester->haveProductAbstract();
         $productAbstractTransfer2 = $this->tester->haveProductAbstract();
         $relatedProductAbstractTransfer1 = $this->tester->haveProductAbstract([
-            ProductAbstractTransfer::LOCALIZED_ATTRIBUTES => [$localizedAttributes]
+            ProductAbstractTransfer::LOCALIZED_ATTRIBUTES => [$localizedAttributes],
         ]);
         $relatedProductAbstractTransfer2 = $this->tester->haveProductAbstract([
-            ProductAbstractTransfer::LOCALIZED_ATTRIBUTES => [$localizedAttributes]
+            ProductAbstractTransfer::LOCALIZED_ATTRIBUTES => [$localizedAttributes],
         ]);
 
         $productRelationTransfer11 = $this->tester->haveProductRelation(

@@ -39,6 +39,8 @@ class PriceProductScheduleListTableMock extends PriceProductScheduleListTable
 
     /**
      * @param \Twig\Environment $twig
+     *
+     * @return void
      */
     public function setTwig(Environment $twig): void
     {

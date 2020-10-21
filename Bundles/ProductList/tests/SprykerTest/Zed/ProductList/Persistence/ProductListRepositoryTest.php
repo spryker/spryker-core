@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ProductListProductConcreteRelationTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListProductConcreteTableMap;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
-use Orm\Zed\ProductList\Persistence\SpyProductListProductConcreteQuery;
 use Spryker\Zed\ProductList\Persistence\ProductListRepository;
 
 /**
@@ -22,7 +21,6 @@ use Spryker\Zed\ProductList\Persistence\ProductListRepository;
  * @group Zed
  * @group ProductList
  * @group Persistence
- * @group Repository
  * @group ProductListRepositoryTest
  * Add your own group annotations below this line
  */
@@ -67,7 +65,7 @@ class ProductListRepositoryTest extends Unit
         $this->productListProductConcreteRelation = (new ProductListProductConcreteRelationTransfer())
             ->setProductIds([
                 $this->productConcreteTransfer1->getIdProductConcrete(),
-                $this->productConcreteTransfer2->getIdProductConcrete()
+                $this->productConcreteTransfer2->getIdProductConcrete(),
             ]);
     }
 
@@ -79,7 +77,7 @@ class ProductListRepositoryTest extends Unit
         //Assert
         $productConcreteIds = [
             $this->productConcreteTransfer1->getIdProductConcrete(),
-            $this->productConcreteTransfer2->getIdProductConcrete()
+            $this->productConcreteTransfer2->getIdProductConcrete(),
         ];
         $this->tester->haveProductList([
             ProductListTransfer::PRODUCT_LIST_PRODUCT_CONCRETE_RELATION => $this->productListProductConcreteRelation->toArray(),

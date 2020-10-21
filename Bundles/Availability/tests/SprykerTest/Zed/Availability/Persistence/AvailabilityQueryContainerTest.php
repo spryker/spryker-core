@@ -59,7 +59,7 @@ class AvailabilityQueryContainerTest extends Unit
     protected $stockTransfers = [];
 
     /**
-     *
+     * @return void
      */
     protected function setUp(): void
     {

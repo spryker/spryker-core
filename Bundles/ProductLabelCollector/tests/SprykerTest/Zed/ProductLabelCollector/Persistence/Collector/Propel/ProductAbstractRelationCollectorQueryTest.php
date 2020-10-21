@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\ProductLabelCollector\Persistence\Collector\Propel;
 
 use Codeception\Test\Unit;
-use Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Zed\ProductLabelCollector\Persistence\Collector\Propel\ProductAbstractRelationCollectorQuery;
 

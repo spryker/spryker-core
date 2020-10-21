@@ -1,12 +1,19 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerTest\Zed\MerchantRelationship;
 
-use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
+use Codeception\Actor;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -19,8 +26,8 @@ use Generated\Shared\Transfer\MerchantRelationshipTransfer;
  * @method void pause()
  *
  * @SuppressWarnings(PHPMD)
-*/
-class MerchantRelationshipGuiCommunicationTester extends \Codeception\Actor
+ */
+class MerchantRelationshipGuiCommunicationTester extends Actor
 {
     use _generated\MerchantRelationshipGuiCommunicationTesterActions;
 
@@ -29,7 +36,8 @@ class MerchantRelationshipGuiCommunicationTester extends \Codeception\Actor
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
      */
-    public function createMerchantRelationship(string $merchantRelationshipKey): MerchantRelationshipTransfer {
+    public function createMerchantRelationship(string $merchantRelationshipKey): MerchantRelationshipTransfer
+    {
         $merchantTransfer = $this->haveMerchant();
         $companyTransfer = $this->haveCompany();
         $companyBusinessUnitTransfer = $this->haveCompanyBusinessUnit([

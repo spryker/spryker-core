@@ -13,7 +13,9 @@
     "spryker/util-text": "^1.2.1"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/cms-slot-block-gui": "If you want to assign CMS Blocks to CMS Slots"

@@ -21,7 +21,6 @@ use Symfony\Component\Form\FormView;
 use Twig\Environment;
 use Twig\Loader\ChainLoader;
 use Twig\Loader\LoaderInterface;
-use function Functional\id;
 
 /**
  * Auto-generated group annotations

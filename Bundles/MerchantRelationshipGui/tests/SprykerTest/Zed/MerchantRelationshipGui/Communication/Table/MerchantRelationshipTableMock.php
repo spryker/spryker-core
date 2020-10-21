@@ -37,9 +37,10 @@ class MerchantRelationshipTableMock extends MerchantRelationshipTable
         return $this->prepareData($this->config);
     }
 
-
     /**
      * @param \Twig\Environment $twig
+     *
+     * @return void
      */
     public function setTwig(Environment $twig): void
     {
