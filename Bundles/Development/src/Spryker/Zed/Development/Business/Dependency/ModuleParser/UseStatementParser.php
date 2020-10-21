@@ -28,10 +28,10 @@ class UseStatementParser implements UseStatementParserInterface
      */
     protected function getUseStatementsInFile(SplFileInfo $fileInfo): array
     {
-        preg_match_all('#use (.*);#', $fileInfo->getContents(), $matches);
+        preg_match_all('/^(use\s([^\s|;]+))/m', $fileInfo->getContents(), $matches);
 
         $useStatements = [];
-        foreach ($matches[1] as $useStatement) {
+        foreach ($matches[2] as $useStatement) {
             $useStatements[] = $useStatement;
         }
 

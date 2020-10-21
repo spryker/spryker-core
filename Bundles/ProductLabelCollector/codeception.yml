@@ -13,4 +13,4 @@ settings:
     memory_limit: 1024M
     log: true
 extensions:
-    config: { Codeception\Extension\Phantoman: { suites: [Business] } }
+    config: { SprykerTest\Shared\Testify\Helper\WebDriverHelper: { suites: [Business] } }

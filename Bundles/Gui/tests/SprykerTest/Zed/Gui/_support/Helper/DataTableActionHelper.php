@@ -73,12 +73,20 @@ class DataTableActionHelper extends Module
     public function clickDataTableLinkInDropDownOfButton(string $buttonName, string $linkName, int $rowPosition = 1): void
     {
         $this->clickButton($buttonName, $rowPosition);
-        $this->getDriver()->click(sprintf(
+
+        $elementInRoot = sprintf(
+            '//body/ul[@class="dropdown-menu"][1]//following::li/a[contains(., "%s")]',
+            $linkName
+        );
+
+        $elementInList = sprintf(
             '(//tr[@role="row"]//button[contains(., "%s")])[%s]/following::ul[1]//a[contains(., "%s")]',
             $buttonName,
             $rowPosition,
             $linkName
-        ));
+        );
+
+        $this->getDriver()->click(sprintf('%s | %s', $elementInRoot, $elementInList));
     }
 
     /**

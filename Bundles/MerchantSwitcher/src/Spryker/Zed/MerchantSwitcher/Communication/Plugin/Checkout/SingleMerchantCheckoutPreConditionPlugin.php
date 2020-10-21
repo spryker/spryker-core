@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantSwitcher\Communication\Plugin\Checkout;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -47,17 +46,20 @@ class SingleMerchantCheckoutPreConditionPlugin extends AbstractPlugin implements
         $singleMerchantQuoteValidationResponseTransfer = $this->getFacade()
             ->validateMerchantInQuoteItems($singleMerchantQuoteValidationRequestTransfer);
 
-        $checkoutErrorTransfers = [];
+        $validationPassed = true;
         foreach ($singleMerchantQuoteValidationResponseTransfer->getErrors() as $messageTransfer) {
-            $checkoutErrorTransfers[] = (new CheckoutErrorTransfer())
+            $checkoutErrorTransfer = (new CheckoutErrorTransfer())
                 ->setMessage($messageTransfer->getValue())
                 ->setParameters($messageTransfer->getParameters());
+
+            $checkoutResponseTransfer->addError($checkoutErrorTransfer);
+            $validationPassed = false;
         }
 
-        $checkoutResponseTransfer
-            ->setIsSuccess($singleMerchantQuoteValidationResponseTransfer->getIsSuccessful())
-            ->setErrors(new ArrayObject($checkoutErrorTransfers));
+        if (!$validationPassed) {
+            $checkoutResponseTransfer->setIsSuccess(false);
+        }
 
-        return !$checkoutErrorTransfers;
+        return $validationPassed;
     }
 }

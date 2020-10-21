@@ -77,4 +77,15 @@ interface ProductsRestApiToProductStorageClientInterface
         array $identifiers,
         string $localeName
     ): array;
+
+    /**
+     * @param int[] $productConcreteIds
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function getBulkProductConcreteStorageData(
+        array $productConcreteIds,
+        string $localeName
+    ): array;
 }

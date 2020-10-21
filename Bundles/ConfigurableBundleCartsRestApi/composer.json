@@ -1,0 +1,55 @@
+{
+  "name": "spryker/configurable-bundle-carts-rest-api",
+  "type": "library",
+  "description": "ConfigurableBundleCartsRestApi module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.2",
+    "spryker/carts-rest-api": "^5.7.0",
+    "spryker/carts-rest-api-extension": "^1.5.0",
+    "spryker/configurable-bundle-cart": "^1.3.0",
+    "spryker/configurable-bundle-storage": "^2.1.0",
+    "spryker/glossary-storage": "^1.5.0",
+    "spryker/glue-application": "^1.9.0",
+    "spryker/glue-application-extension": "^1.0.0",
+    "spryker/kernel": "^3.30.0",
+    "spryker/persistent-cart": "^3.4.0",
+    "spryker/store": "^1.1.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/zed-request": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/cart": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/configurable-bundle": "*",
+    "spryker/customer": "*",
+    "spryker/product": "*",
+    "spryker/propel": "*",
+    "spryker/quote": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

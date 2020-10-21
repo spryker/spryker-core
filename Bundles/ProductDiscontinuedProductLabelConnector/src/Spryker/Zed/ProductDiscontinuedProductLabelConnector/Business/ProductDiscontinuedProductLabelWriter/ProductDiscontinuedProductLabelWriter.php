@@ -36,6 +36,11 @@ class ProductDiscontinuedProductLabelWriter implements ProductDiscontinuedProduc
     protected $config;
 
     /**
+     * @var \Generated\Shared\Transfer\ProductLabelTransfer|null
+     */
+    protected static $productLabelCache;
+
+    /**
      * @param \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToProductInterface $productFacade
      * @param \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToProductLabelFacadeInterface $productLabelFacade
      * @param \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToProductDiscontinuedFacadeInterface $productDiscontinuedFacade
@@ -85,9 +90,13 @@ class ProductDiscontinuedProductLabelWriter implements ProductDiscontinuedProduc
      */
     protected function findProductDiscontinuedProductLabel(): ?ProductLabelTransfer
     {
-        return $this->productLabelFacade->findLabelByLabelName(
-            $this->config->getProductDiscontinueLabelName()
-        );
+        if (!static::$productLabelCache) {
+            static::$productLabelCache = $this->productLabelFacade->findLabelByLabelName(
+                $this->config->getProductDiscontinueLabelName()
+            );
+        }
+
+        return static::$productLabelCache;
     }
 
     /**
@@ -104,5 +113,25 @@ class ProductDiscontinuedProductLabelWriter implements ProductDiscontinuedProduc
         }
 
         $this->productLabelFacade->removeProductAbstractRelationsForLabel($productLabelTransfer->getIdProductLabel(), [$idProductAbstract]);
+    }
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return void
+     */
+    public function removeProductAbstractRelationsForLabelInBulk(array $productConcreteIds): void
+    {
+        $productLabelTransfer = $this->findProductDiscontinuedProductLabel();
+        if (!$productLabelTransfer) {
+            return;
+        }
+
+        $productAbstractIds = $this->productFacade->getProductAbstractIdsByProductConcreteIds($productConcreteIds);
+        if (!$productAbstractIds) {
+            return;
+        }
+
+        $this->productLabelFacade->removeProductAbstractRelationsForLabel($productLabelTransfer->getIdProductLabel(), $productAbstractIds);
     }
 }

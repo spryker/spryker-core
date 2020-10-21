@@ -81,7 +81,7 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     public function getLocaleById($idLocale)
     {
         return $this->getFactory()
-            ->createLocaleManager()
+            ->createLocaleReader()
             ->getLocaleById($idLocale);
     }
 
