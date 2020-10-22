@@ -80,10 +80,11 @@ class MerchantSynchronizationDataBulkRepositoryPlugin extends AbstractPlugin imp
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {
-        return $this->getFacade()->getMerchantSynchronizationDataTransfersByIds(
-            (new FilterTransfer())->setLimit($limit)->setOffset($offset),
-            $ids
-        );
+        return $this->getFacade()
+            ->getSynchronizationDataTransfersByMerchantIds(
+                (new FilterTransfer())->setLimit($limit)->setOffset($offset),
+                $ids
+            );
     }
 
     /**
