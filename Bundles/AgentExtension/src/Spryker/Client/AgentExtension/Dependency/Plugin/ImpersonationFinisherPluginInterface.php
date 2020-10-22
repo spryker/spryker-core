@@ -10,7 +10,8 @@ namespace Spryker\Client\AgentExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 /**
- * Use this plugin when customer impersonation is finished.
+ * Plugin runs when customer impersonation is finished.
+ * Implement it when you need to execute a cleanup/perform action after customer impersonation is finished.
  */
 interface ImpersonationFinisherPluginInterface
 {
