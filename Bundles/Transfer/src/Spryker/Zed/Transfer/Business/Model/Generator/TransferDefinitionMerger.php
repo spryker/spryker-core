@@ -16,10 +16,6 @@ class TransferDefinitionMerger implements MergerInterface
         'Value mismatch for "%1$s.%2$s" tranfer property. Value1: "%3$s"; Value2: "%4$s". ' .
         'To fix this, search for \'property name="%2$s"\' in the code base and fix the wrong one.';
 
-    protected const ERROR_MESSAGE_TRANSFER_ATTRIBUTES_MISMATCH =
-        'Value mismatch for attribute "%1$s" of transfer "%2$s". Value1: "%3$s"; Value2: "%4$s".' .
-        'To fix this, search for \'transfer name="%2$s"\' in the code base and fix the wrong one.';
-
     /**
      * @var array
      */
@@ -219,7 +215,7 @@ class TransferDefinitionMerger implements MergerInterface
 
         throw new TransferDefinitionMismatchException(
             sprintf(
-                'Strict mode violation detected for transfer %s. "strict" attribute value for this transfer must match across all definitions.',
+                'Strict mode violation detected for transfer %s. "strict" attribute value for this transfer must be identical across all definitions.',
                 $existingTransferDefinition['name']
             )
         );
@@ -242,7 +238,7 @@ class TransferDefinitionMerger implements MergerInterface
 
         throw new TransferDefinitionMismatchException(
             sprintf(
-                'Strict mode violation detected for transfer property %s.%s. "strict" attribute value for this property must match across all definitions.',
+                'Strict mode violation detected for transfer property %s.%s. "strict" attribute value for this property must be identical across all definitions.',
                 $transferName,
                 $existingTransferProperty['name']
             )
