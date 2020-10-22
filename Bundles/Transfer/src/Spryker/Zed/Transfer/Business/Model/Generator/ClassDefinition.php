@@ -507,7 +507,9 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         if ($this->isStrictProperty($property)) {
-            $this->buildHasMethod($property);
+            if (!$this->isArrayOrCollection($property)) {
+                $this->buildHasMethod($property);
+            }
 
             return;
         }
@@ -589,6 +591,10 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function getReturnType(array $property): string
     {
+        if ($this->isStrictProperty($property)) {
+            return $this->getStrictReturnType($property);
+        }
+
         if ($this->isValueObject($property)) {
             return sprintf('\%s|null', $this->getValueObjectFullyQualifiedClassName($property));
         }
@@ -617,6 +623,38 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @param array $property
      *
+     * @return string
+     */
+    protected function getStrictReturnType(array $property): string
+    {
+        if ($this->isValueObject($property)) {
+            return '\\' . $this->getValueObjectFullyQualifiedClassName($property);
+        }
+
+        if ($this->isTypedArray($property)) {
+            $type = preg_replace('/\[\]/', '', $property['type']);
+
+            return $type . '[]';
+        }
+
+        if ($this->isArray($property)) {
+            return 'array';
+        }
+
+        if ($this->isCollection($property)) {
+            return '\\ArrayObject|\Generated\Shared\Transfer\\' . $property['type'];
+        }
+
+        if ($this->isTypeTransferObject($property)) {
+            return '\Generated\Shared\Transfer\\' . $property['type'];
+        }
+
+        return $property['type'];
+    }
+
+    /**
+     * @param array $property
+     *
      * @return bool
      */
     protected function isCollection(array $property): bool
@@ -632,6 +670,16 @@ class ClassDefinition implements ClassDefinitionInterface
     protected function isArray(array $property): bool
     {
         return ($property['type'] === 'array' || $property['type'] === '[]' || $this->isTypedArray($property));
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return bool
+     */
+    protected function isArrayOrCollection(array $property): bool
+    {
+        return $this->isArray($property) || $this->isCollection($property);
     }
 
     /**
@@ -725,6 +773,10 @@ class ClassDefinition implements ClassDefinitionInterface
             'bundles' => $property['bundles'],
             'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
         ];
+
+        if ($this->isStrictProperty($property) && !$this->isArrayOrCollection($property)) {
+            $method['nullValueCheckRequired'] = true;
+        }
 
         $method = $this->addGetReturnTypeHint($method, $property);
 
@@ -1081,7 +1133,7 @@ class ClassDefinition implements ClassDefinitionInterface
             );
         }
 
-        return sprintf('?%s', $type);
+        return sprintf('%s', $type);
     }
 
     /**

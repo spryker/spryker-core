@@ -83,10 +83,15 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
     protected function normalizeStrictMode(array $transferDefinition): array
     {
         $transferDefinition = $this->normalizeTransferDefinitionStrictMode($transferDefinition);
-        $transferPropertyDefinitions = $this->normalizeTransferPropertyDefinitionsStrictMode($transferDefinition);
+        $propertyDefinitions = $transferDefinition[static::KEY_PROPERTY] ?? [];
+        $isTransferInStrictMode = $transferDefinition[static::KEY_STRICT_MODE] ?? false;
 
-        if ($transferPropertyDefinitions) {
-            $transferDefinition[static::KEY_PROPERTY] = $transferPropertyDefinitions;
+        if ($propertyDefinitions) {
+            $propertyDefinitions = isset($propertyDefinitions[0]) ? $propertyDefinitions : [$propertyDefinitions];
+            $transferDefinition[static::KEY_PROPERTY] = $this->normalizeTransferPropertyDefinitionStrictMode(
+                $propertyDefinitions,
+                $isTransferInStrictMode
+            );
         }
 
         return $transferDefinition;
@@ -99,47 +104,39 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
      */
     protected function normalizeTransferDefinitionStrictMode(array $transferDefinition): array
     {
-        $transferDefinition[static::KEY_STRICT_MODE] = isset($transferDefinition[static::KEY_STRICT_MODE]) && filter_var($transferDefinition[static::KEY_STRICT_MODE], FILTER_VALIDATE_BOOLEAN);
+        $isTransferInStrictMode = isset($transferDefinition[static::KEY_STRICT_MODE])
+            ? filter_var($transferDefinition[static::KEY_STRICT_MODE], FILTER_VALIDATE_BOOLEAN)
+            : false;
+
+        if ($isTransferInStrictMode) {
+            $transferDefinition[static::KEY_STRICT_MODE] = true;
+        }
 
         return $transferDefinition;
     }
 
     /**
-     * @param array $transferDefinition
-     *
-     * @return array|null
-     */
-    protected function normalizeTransferPropertyDefinitionsStrictMode(array $transferDefinition): ?array
-    {
-        if (empty($transferDefinition[static::KEY_PROPERTY])) {
-            return null;
-        }
-
-        $transferStrictMode = $transferDefinition[static::KEY_STRICT_MODE];
-        $transferProperties = isset($transferDefinition[static::KEY_PROPERTY][0])
-            ? $transferDefinition[static::KEY_PROPERTY]
-            : [$transferDefinition[static::KEY_PROPERTY]];
-
-        return $this->normalizeTransferPropertyDefinitionStrictMode($transferProperties, $transferStrictMode);
-    }
-
-    /**
-     * @param array $transferPropertyDefinitions
-     * @param bool $transferStrictMode
+     * @param array $propertyDefinitions
+     * @param bool $isTransferInStrictMode
      *
      * @return array
      */
-    protected function normalizeTransferPropertyDefinitionStrictMode(array $transferPropertyDefinitions, bool $transferStrictMode): array
+    protected function normalizeTransferPropertyDefinitionStrictMode(array $propertyDefinitions, bool $isTransferInStrictMode): array
     {
-        $normalizedTransferPropertyDefinitions = [];
+        $normalizedPropertyDefinitions = [];
 
-        foreach ($transferPropertyDefinitions as $transferPropertyDefinition) {
-            $transferPropertyDefinition[static::KEY_STRICT_MODE] = isset($transferPropertyDefinition[static::KEY_STRICT_MODE])
-                ? filter_var($transferPropertyDefinition[static::KEY_STRICT_MODE], FILTER_VALIDATE_BOOLEAN)
-                : $transferStrictMode;
-            $normalizedTransferPropertyDefinitions[] = $transferPropertyDefinition;
+        foreach ($propertyDefinitions as $propertyDefinition) {
+            $isPropertyInStrictMode = isset($propertyDefinition[static::KEY_STRICT_MODE])
+                ? filter_var($propertyDefinition[static::KEY_STRICT_MODE], FILTER_VALIDATE_BOOLEAN)
+                : $isTransferInStrictMode;
+
+            if ($isPropertyInStrictMode) {
+                $propertyDefinition[static::KEY_STRICT_MODE] = true;
+            }
+
+            $normalizedPropertyDefinitions[] = $propertyDefinition;
         }
 
-        return $normalizedTransferPropertyDefinitions;
+        return $normalizedPropertyDefinitions;
     }
 }

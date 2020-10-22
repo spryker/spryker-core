@@ -26,7 +26,6 @@ class TransferDefinitionMergerHelper
                     ],
                 ],
             ],
-            'strict' => false,
         ];
     }
 
@@ -54,7 +53,6 @@ class TransferDefinitionMergerHelper
                     ],
                 ],
             ],
-            'strict' => false,
         ];
     }
 
@@ -84,7 +82,6 @@ class TransferDefinitionMergerHelper
                     ],
                 ],
             ],
-            'strict' => false,
         ];
     }
 }

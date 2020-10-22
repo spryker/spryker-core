@@ -56,7 +56,6 @@ class TransferDefinitionMergerTest extends Unit
             [
                 'name' => 'propertyA',
                 'type' => 'int',
-                'strict' => false,
             ],
         ];
 

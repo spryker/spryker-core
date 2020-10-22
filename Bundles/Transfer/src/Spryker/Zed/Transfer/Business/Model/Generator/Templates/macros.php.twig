@@ -115,6 +115,10 @@
      */
     public function {{ method.name }}(){% if method.returnTypeHint is defined %}: {{ method.returnTypeHint }} {% endif ~%}
     {
+        {% if method.nullValueCheckRequired is defined -%}
+        $this->assertPropertyIsSet($this->{{ method.property }});
+
+        {% endif -%}
         return $this->{{ method.property }};
     }
 {% endmacro -%}
@@ -134,7 +138,7 @@
     */
     public function {{ method.name }}(): bool
     {
-        return isset($this->{{ method.property }});
+        return $this->{{ method.property }} !== null;
     }
 {% endmacro -%}
 
@@ -322,8 +326,8 @@
     */
     protected function initCollectionProperties()
     {
-{% for collcation in collections %}
-        $this->{{ collcation.name }} = $this->{{ collcation.name }} ?: new ArrayObject();
+{% for collection in collections %}
+        $this->{{ collection.name }} = $this->{{ collection.name }} ?: new ArrayObject();
 {% endfor %}
     }
 {%- endmacro -%}
