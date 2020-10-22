@@ -112,7 +112,7 @@ class ProductListRepositoryTest extends Unit
 
         //Arrange
         $this->assertCount(1, $result);
-        $this->assertSame($productListTransfer->getIdProductList(), $result[0]);
+        $this->assertEquals($productListTransfer->getIdProductList(), $result[0]);
     }
 
     /**
@@ -133,7 +133,7 @@ class ProductListRepositoryTest extends Unit
 
         //Arrange
         $this->assertCount(1, $result);
-        $this->assertSame($productListTransfer->getIdProductList(), $result[0]);
+        $this->assertEquals($productListTransfer->getIdProductList(), $result[0]);
     }
 
     /**
@@ -154,7 +154,7 @@ class ProductListRepositoryTest extends Unit
 
         //Arrange
         $this->assertCount(1, $result);
-        $this->assertSame($productListTransfer->getIdProductList(), $result[0]);
+        $this->assertEquals($productListTransfer->getIdProductList(), $result[0]);
     }
 
     /**

@@ -37,39 +37,62 @@ class ProductAbstractGroupsCollectorQueryTest extends Unit
     public function testPrepareShouldReturnAbstractGroupsTouchQueryGroupedByAbstractProductId(): void
     {
         // Arrange
-        $expectedCount = 4;
+        $productAbstractTransfer1 = $this->tester->haveProductAbstract();
+        $productAbstractTransfer2 = $this->tester->haveProductAbstract();
 
-        $productAbstract1Id = $this->tester->haveProductAbstract()
-            ->getIdProductAbstract();
-        $productAbstract2Id = $this->tester->haveProductAbstract()
-            ->getIdProductAbstract();
-
-        $groupsOverrideData = [
-            [
-                ProductGroupTransfer::ID_PRODUCT_ABSTRACTS => [
-                    $productAbstract1Id,
-                    $productAbstract2Id,
-                ],
+        $productGroupTransfer1 = $this->tester->haveProductGroup([
+            ProductGroupTransfer::ID_PRODUCT_ABSTRACTS => [
+                $productAbstractTransfer1->getIdProductAbstract(),
+                $productAbstractTransfer2->getIdProductAbstract(),
             ],
-            [
-                ProductGroupTransfer::ID_PRODUCT_ABSTRACTS => [
-                    $productAbstract1Id,
-                ],
+        ]);
+        $productGroupTransfer2 = $this->tester->haveProductGroup([
+            ProductGroupTransfer::ID_PRODUCT_ABSTRACTS => [
+                $productAbstractTransfer1->getIdProductAbstract(),
             ],
-        ];
-
-        foreach ($groupsOverrideData as $groupOverrideData) {
-            $this->tester->haveProductGroup($groupOverrideData);
-        }
+        ]);
 
         $touchQuery = new SpyTouchQuery();
         $productAbstractGroupsCollectorQuery = new ProductAbstractGroupsCollectorQuery();
         $productAbstractGroupsCollectorQuery->setTouchQuery($touchQuery);
 
         // Act
-        $preparedQuery = $productAbstractGroupsCollectorQuery->prepare()->getTouchQuery();
+        $result = $productAbstractGroupsCollectorQuery->prepare()
+            ->getTouchQuery()
+            ->find()
+            ->toArray();
 
         // Assert
-        $this->assertSame($expectedCount, $preparedQuery->count());
+        $this->assertNotEmpty($result);
+        $resultProductAbstractGroupData1 = $this->findResultProductAbstractGroupData($result, $productAbstractTransfer1->getIdProductAbstract());
+        $this->assertNotNull($resultProductAbstractGroupData1);
+        $this->assertEquals(
+            implode(',', [$productGroupTransfer1->getIdProductGroup(), $productGroupTransfer2->getIdProductGroup()]),
+            $resultProductAbstractGroupData1[ProductAbstractGroupsCollectorQuery::FIELD_ID_PRODUCT_GROUPS]
+        );
+
+        $resultProductAbstractGroupData2 = $this->findResultProductAbstractGroupData($result, $productAbstractTransfer2->getIdProductAbstract());
+        $this->assertNotNull($resultProductAbstractGroupData2);
+        $this->assertEquals(
+            $productGroupTransfer1->getIdProductGroup(),
+            $resultProductAbstractGroupData2[ProductAbstractGroupsCollectorQuery::FIELD_ID_PRODUCT_GROUPS]
+        );
+    }
+
+    /**
+     * @param array $result
+     * @param int $idProductAbstract
+     *
+     * @return array|null
+     */
+    protected function findResultProductAbstractGroupData(array $result, int $idProductAbstract): ?array
+    {
+        foreach ($result as $row) {
+            if ($row['ItemType'] === 'product_abstract_groups' && $row['ItemId'] === $idProductAbstract) {
+                return $row;
+            }
+        }
+
+        return null;
     }
 }

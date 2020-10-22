@@ -63,15 +63,31 @@ class ProductAbstractRelationCollectorQueryTest extends Unit
 
         // Assert
         $this->assertNotEmpty($result);
-        $resultItemIds = array_column($result, static::COL_ITEM_ID);
-        $this->assertContains($productAbstractTransfer->getIdProductAbstract(), $resultItemIds);
-        $idExpectedProductLabelCsv = $productLabelTransfer1->getIdProductLabel()
+        $resultProductAbstractRelationData = $this->findResultProductAbstractRelationData($result, $productAbstractTransfer->getIdProductAbstract());
+        $this->assertNotNull($resultProductAbstractRelationData);
+        $expectedIdProductLabelsCsv = $productLabelTransfer1->getIdProductLabel()
             . ProductAbstractRelationCollectorQuery::LABEL_DELIMITER
             . 't,'
             . $productLabelTransfer2->getIdProductLabel()
             . ProductAbstractRelationCollectorQuery::LABEL_DELIMITER
             . 't';
-        $resultProductLabelCsvIds = array_column($result, ProductAbstractRelationCollectorQuery::RESULT_FIELD_ID_PRODUCT_LABELS_CSV);
-        $this->assertContains($idExpectedProductLabelCsv, $resultProductLabelCsvIds);
+        $this->assertEquals($expectedIdProductLabelsCsv, $resultProductAbstractRelationData[ProductAbstractRelationCollectorQuery::RESULT_FIELD_ID_PRODUCT_LABELS_CSV]);
+    }
+
+    /**
+     * @param array $result
+     * @param int $idProductAbstract
+     *
+     * @return array|null
+     */
+    protected function findResultProductAbstractRelationData(array $result, int $idProductAbstract): ?array
+    {
+        foreach ($result as $row) {
+            if ($row['ItemType'] === 'product_abstract' && $row['ItemId'] === $idProductAbstract) {
+                return $row;
+            }
+        }
+
+        return null;
     }
 }

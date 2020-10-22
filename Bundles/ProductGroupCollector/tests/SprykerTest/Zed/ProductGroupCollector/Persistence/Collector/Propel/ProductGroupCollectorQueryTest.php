@@ -79,9 +79,9 @@ class ProductGroupCollectorQueryTest extends Unit
      * @param array $result
      * @param int $idProductGroup
      *
-     * @return array
+     * @return array|null
      */
-    protected function findResultProductGroupData(array $result, int $idProductGroup): array
+    protected function findResultProductGroupData(array $result, int $idProductGroup): ?array
     {
         foreach ($result as $row) {
             if ($row['ItemType'] === 'product_group' && $row['ItemId'] === $idProductGroup) {
