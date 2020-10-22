@@ -8,30 +8,20 @@
 namespace Spryker\Client\Agent\Finisher;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Client\Agent\Dependency\Client\AgentToCustomerClientInterface;
 
 class ImpersonationFinisher implements ImpersonationFinisherInterface
 {
-    /**
-     * @var \Spryker\Client\Agent\Dependency\Client\AgentToCustomerClientInterface
-     */
-    protected $customerClient;
-
     /**
      * @var \Spryker\Client\AgentExtension\Dependency\Plugin\ImpersonationFinisherPluginInterface[]
      */
     protected $impersonationFinisherPlugins;
 
     /**
-     * @param \Spryker\Client\Agent\Dependency\Client\AgentToCustomerClientInterface $customerClient
      * @param \Spryker\Client\AgentExtension\Dependency\Plugin\ImpersonationFinisherPluginInterface[] $impersonationFinisherPlugins
      */
-    public function __construct(
-        AgentToCustomerClientInterface $customerClient,
-        array $impersonationFinisherPlugins
-    ) {
+    public function __construct(array $impersonationFinisherPlugins)
+    {
         $this->impersonationFinisherPlugins = $impersonationFinisherPlugins;
-        $this->customerClient = $customerClient;
     }
 
     /**
@@ -41,8 +31,6 @@ class ImpersonationFinisher implements ImpersonationFinisherInterface
      */
     public function finishImpersonation(CustomerTransfer $customerTransfer): void
     {
-        $this->customerClient->logout();
-
         $this->executeImpersonationFinisherPlugins($customerTransfer);
     }
 

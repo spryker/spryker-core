@@ -75,7 +75,6 @@ interface AgentClientInterface
 
     /**
      * Specification:
-     * - Removes customer information from session.
      * - Executes ImpersonationFinisherPluginInterface plugins.
      *
      * @api

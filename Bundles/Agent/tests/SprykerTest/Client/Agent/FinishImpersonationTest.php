@@ -10,7 +10,6 @@ namespace SprykerTest\Client\Agent;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Client\Agent\AgentDependencyProvider;
-use Spryker\Client\Agent\Dependency\Client\AgentToCustomerClientInterface;
 use Spryker\Client\AgentExtension\Dependency\Plugin\ImpersonationFinisherPluginInterface;
 
 /**
@@ -32,26 +31,12 @@ class FinishImpersonationTest extends Unit
     /**
      * @return void
      */
-    public function testFinishImpersonationEnsureThatCustomerLogoutIsExecuted(): void
-    {
-        // Arrange
-        $this->tester->setDependency(AgentDependencyProvider::CLIENT_CUSTOMER, $this->createCustomerClientMock());
-
-        // Act
-        $this->tester
-            ->getClient()
-            ->finishImpersonation(new CustomerTransfer());
-    }
-
-    /**
-     * @return void
-     */
     public function testFinishImpersonationSupportsImpersonationFinisherPluginStack(): void
     {
         // Arrange
         $this->tester->setDependency(
             AgentDependencyProvider::PLUGINS_IMPERSONATION_FINISHER,
-            [$this->getCustomerImpersonationSanitizerPluginMock()]
+            [$this->getImpersonationFinisherPluginMock()]
         );
 
         // Act
@@ -63,7 +48,7 @@ class FinishImpersonationTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\AgentExtension\Dependency\Plugin\ImpersonationFinisherPluginInterface
      */
-    protected function getCustomerImpersonationSanitizerPluginMock(): ImpersonationFinisherPluginInterface
+    protected function getImpersonationFinisherPluginMock(): ImpersonationFinisherPluginInterface
     {
         $customerImpersonationSanitizerPluginMock = $this
             ->getMockBuilder(ImpersonationFinisherPluginInterface::class)
@@ -74,21 +59,5 @@ class FinishImpersonationTest extends Unit
             ->method('finish');
 
         return $customerImpersonationSanitizerPluginMock;
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Agent\Dependency\Client\AgentToCustomerClientInterface
-     */
-    protected function createCustomerClientMock(): AgentToCustomerClientInterface
-    {
-        $customerClientMock = $this
-            ->getMockBuilder(AgentToCustomerClientInterface::class)
-            ->getMock();
-
-        $customerClientMock
-            ->expects($this->once())
-            ->method('logout');
-
-        return $customerClientMock;
     }
 }
