@@ -7,9 +7,9 @@
     "php": ">=7.2",
     "spryker/kernel": "^3.30.0",
     "spryker/locale": "^3.0.0",
-    "spryker/product": "^6.2.0",
+    "spryker/product": "^6.11.0",
     "spryker/product-discontinued": "^1.0.0",
-    "spryker/product-discontinued-extension": "^1.0.0",
+    "spryker/product-discontinued-extension": "^1.2.0",
     "spryker/product-label": "^2.5.0 || ^3.0.0",
     "spryker/propel-orm": "^1.0.0"
   },

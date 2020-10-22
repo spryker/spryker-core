@@ -51,6 +51,7 @@ class AuthPresentationTester extends Actor
 
         $i->amZed();
         $i->amOnPage(LoginPage::URL);
+        $i->disableBrowserNativeValidation('form');
         $i->fillField(LoginPage::SELECTOR_USERNAME_FIELD, $username);
         $i->fillField(LoginPage::SELECTOR_PASSWORD_FIELD, $password);
         $i->click(LoginPage::SELECTOR_SUBMIT_BUTTON);
