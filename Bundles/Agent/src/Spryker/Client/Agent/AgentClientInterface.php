@@ -75,8 +75,8 @@ interface AgentClientInterface
 
     /**
      * Specification:
-     * - Sanitizes data related to the end of customer impersonation.
-     * - Executes CustomerImpersonationSanitizerPluginInterface plugins.
+     * - Removes customer information from session.
+     * - Executes ImpersonationFinisherPluginInterface plugins.
      *
      * @api
      *
@@ -84,5 +84,5 @@ interface AgentClientInterface
      *
      * @return void
      */
-    public function sanitizeCustomerImpersonation(CustomerTransfer $customerTransfer): void;
+    public function finishImpersonation(CustomerTransfer $customerTransfer): void;
 }

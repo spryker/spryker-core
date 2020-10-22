@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Agent\Sanitizer;
+namespace Spryker\Client\Agent\Finisher;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 
-interface CustomerImpersonationSanitizerInterface
+interface ImpersonationFinisherInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return void
      */
-    public function sanitizeCustomerImpersonation(CustomerTransfer $customerTransfer): void;
+    public function finishImpersonation(CustomerTransfer $customerTransfer): void;
 }

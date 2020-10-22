@@ -8,13 +8,13 @@
 namespace Spryker\Client\ShoppingListSession\Plugin\Agent;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Client\AgentExtension\Dependency\Plugin\CustomerImpersonationSanitizerPluginInterface;
+use Spryker\Client\AgentExtension\Dependency\Plugin\ImpersonationFinisherPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Client\ShoppingListSession\ShoppingListSessionClientInterface getClient()
  */
-class SanitizeCustomerShoppingListsCustomerImpersonationSanitizerPlugin extends AbstractPlugin implements CustomerImpersonationSanitizerPluginInterface
+class SanitizeCustomerShoppingListsImpersonationFinisherPlugin extends AbstractPlugin implements ImpersonationFinisherPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -26,7 +26,7 @@ class SanitizeCustomerShoppingListsCustomerImpersonationSanitizerPlugin extends 
      *
      * @return void
      */
-    public function sanitize(CustomerTransfer $customerTransfer): void
+    public function finish(CustomerTransfer $customerTransfer): void
     {
         $this->getClient()->removeShoppingListCollection();
     }

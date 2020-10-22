@@ -104,10 +104,10 @@ class AgentClient extends AbstractClient implements AgentClientInterface
      *
      * @return void
      */
-    public function sanitizeCustomerImpersonation(CustomerTransfer $customerTransfer): void
+    public function finishImpersonation(CustomerTransfer $customerTransfer): void
     {
         $this->getFactory()
-            ->createCustomerImpersonationSanitizer()
-            ->sanitizeCustomerImpersonation($customerTransfer);
+            ->createImpersonationFinisher()
+            ->finishImpersonation($customerTransfer);
     }
 }

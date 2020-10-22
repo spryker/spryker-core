@@ -9,11 +9,14 @@ namespace Spryker\Client\AgentExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 
-interface CustomerImpersonationSanitizerPluginInterface
+/**
+ * Use this plugin when customer impersonation is finished.
+ */
+interface ImpersonationFinisherPluginInterface
 {
     /**
      * Specification:
-     * - Sanitizes data related to the end of customer impersonation.
+     * - Finishes process related for logged customer at the end of customer impersonation.
      *
      * @api
      *
@@ -21,5 +24,5 @@ interface CustomerImpersonationSanitizerPluginInterface
      *
      * @return void
      */
-    public function sanitize(CustomerTransfer $customerTransfer): void;
+    public function finish(CustomerTransfer $customerTransfer): void;
 }
