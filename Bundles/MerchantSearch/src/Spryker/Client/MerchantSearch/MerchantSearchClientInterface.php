@@ -21,4 +21,15 @@ interface MerchantSearchClientInterface
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
     public function getMerchantCollection(): MerchantCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Makes ElasticSearch request.
+     * - Returns the list of active merchants.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\MerchantSearchCollectionTransfer
+     */
+    public function merchantSearch();
 }

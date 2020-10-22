@@ -28,4 +28,18 @@ class MerchantSearchClient extends AbstractClient implements MerchantSearchClien
             ->createMerchantReader()
             ->get();
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\MerchantSearchCollectionTransfer
+     */
+    public function merchantSearch()
+    {
+        return $this->getFactory()
+            ->createMerchantSearchReader()
+            ->merchantSearch();
+    }
 }

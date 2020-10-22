@@ -8,10 +8,22 @@
     "spryker/kernel": "^3.33.0",
     "spryker/merchant": "^3.0.0",
     "spryker/store": "^1.1.0",
-    "spryker/zed-request": "^3.0.0"
+    "spryker/zed-request": "^3.0.0",
+    "spryker/event-behavior": "^1.0.0",
+    "spryker/publisher-extension": "^1.0.0",
+    "spryker/synchronization-behavior": "^1.0.0",
+    "spryker/util-encoding": "^2.0.0",
+    "spryker/synchronization-extension": "^1.0.0",
+    "spryker/propel-orm": "^1.5.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/elastica": "*",
+    "spryker/search-elasticsearch": "*"
+  },
+  "suggest": {
+    "spryker/elastica": "If you want to use search functionality from MerchantSearchClient.",
+    "spryker/search-elasticsearch": "If you want to use search plugins."
   },
   "autoload": {
     "psr-4": {
