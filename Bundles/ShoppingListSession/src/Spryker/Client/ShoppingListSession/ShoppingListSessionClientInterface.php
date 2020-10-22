@@ -23,11 +23,11 @@ interface ShoppingListSessionClientInterface
 
     /**
      * Specification:
-     * - Sanitizes customer shopping list collection.
+     * - Removes customer shopping list collection from session.
      *
      * @api
      *
      * @return void
      */
-    public function sanitizeCustomerShoppingListCollection(): void;
+    public function removeShoppingListCollection(): void;
 }

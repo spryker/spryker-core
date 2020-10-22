@@ -34,7 +34,7 @@ class ShoppingListSessionClient extends AbstractClient implements ShoppingListSe
      *
      * @return void
      */
-    public function sanitizeCustomerShoppingListCollection(): void
+    public function removeShoppingListCollection(): void
     {
         $this->getFactory()
             ->createShoppingListSessionStorage()

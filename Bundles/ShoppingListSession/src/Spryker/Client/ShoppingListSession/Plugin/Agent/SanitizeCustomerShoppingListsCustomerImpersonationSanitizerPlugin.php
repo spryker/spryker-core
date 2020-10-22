@@ -18,7 +18,7 @@ class SanitizeCustomerShoppingListsCustomerImpersonationSanitizerPlugin extends 
 {
     /**
      * {@inheritDoc}
-     * - Sanitizes customer shopping list collection.
+     * - Removes customer shopping list collection from session.
      *
      * @api
      *
@@ -28,6 +28,6 @@ class SanitizeCustomerShoppingListsCustomerImpersonationSanitizerPlugin extends 
      */
     public function sanitize(CustomerTransfer $customerTransfer): void
     {
-        $this->getClient()->sanitizeCustomerShoppingListCollection();
+        $this->getClient()->removeShoppingListCollection();
     }
 }
