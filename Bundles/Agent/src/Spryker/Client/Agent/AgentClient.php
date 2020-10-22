@@ -9,7 +9,6 @@ namespace Spryker\Client\Agent;
 
 use Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer;
 use Generated\Shared\Transfer\CustomerQueryTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -100,14 +99,12 @@ class AgentClient extends AbstractClient implements AgentClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
      * @return void
      */
-    public function finishImpersonation(CustomerTransfer $customerTransfer): void
+    public function finishImpersonationSession(): void
     {
         $this->getFactory()
-            ->createImpersonationFinisher()
-            ->finishImpersonation($customerTransfer);
+            ->createImpersonationSessionFinisher()
+            ->finishImpersonationSession();
     }
 }

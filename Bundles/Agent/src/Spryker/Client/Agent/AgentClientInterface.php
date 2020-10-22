@@ -9,7 +9,6 @@ namespace Spryker\Client\Agent;
 
 use Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer;
 use Generated\Shared\Transfer\CustomerQueryTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
 interface AgentClientInterface
@@ -75,13 +74,12 @@ interface AgentClientInterface
 
     /**
      * Specification:
-     * - Executes ImpersonationFinisherPluginInterface plugins.
+     * - Executes ImpersonationSessionFinisherPluginInterface plugins.
+     * - Removes customer information from session.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
      * @return void
      */
-    public function finishImpersonation(CustomerTransfer $customerTransfer): void;
+    public function finishImpersonationSession(): void;
 }

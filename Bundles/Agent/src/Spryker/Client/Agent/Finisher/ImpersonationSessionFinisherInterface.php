@@ -7,14 +7,10 @@
 
 namespace Spryker\Client\Agent\Finisher;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-
-interface ImpersonationFinisherInterface
+interface ImpersonationSessionFinisherInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
      * @return void
      */
-    public function finishImpersonation(CustomerTransfer $customerTransfer): void;
+    public function finishImpersonationSession(): void;
 }

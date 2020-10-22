@@ -7,10 +7,11 @@
 
 namespace Spryker\Client\Agent;
 
+use Spryker\Client\Agent\Dependency\Client\AgentToCustomerClientInterface;
 use Spryker\Client\Agent\Dependency\Client\AgentToSessionClientInterface;
 use Spryker\Client\Agent\Dependency\Client\AgentToZedRequestClientInterface;
-use Spryker\Client\Agent\Finisher\ImpersonationFinisher;
-use Spryker\Client\Agent\Finisher\ImpersonationFinisherInterface;
+use Spryker\Client\Agent\Finisher\ImpersonationSessionFinisher;
+use Spryker\Client\Agent\Finisher\ImpersonationSessionFinisherInterface;
 use Spryker\Client\Agent\Session\AgentSession;
 use Spryker\Client\Agent\Session\AgentSessionInterface;
 use Spryker\Client\Agent\Zed\AgentStub;
@@ -40,12 +41,13 @@ class AgentFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Agent\Finisher\ImpersonationFinisherInterface
+     * @return \Spryker\Client\Agent\Finisher\ImpersonationSessionFinisherInterface
      */
-    public function createImpersonationFinisher(): ImpersonationFinisherInterface
+    public function createImpersonationSessionFinisher(): ImpersonationSessionFinisherInterface
     {
-        return new ImpersonationFinisher(
-            $this->getImpersonationFinisherPlugins()
+        return new ImpersonationSessionFinisher(
+            $this->getCustomerClient(),
+            $this->getImpersonationSessionFinisherPlugins()
         );
     }
 
@@ -66,10 +68,18 @@ class AgentFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\AgentExtension\Dependency\Plugin\ImpersonationFinisherPluginInterface[]
+     * @return \Spryker\Client\Agent\Dependency\Client\AgentToCustomerClientInterface
      */
-    public function getImpersonationFinisherPlugins(): array
+    public function getCustomerClient(): AgentToCustomerClientInterface
     {
-        return $this->getProvidedDependency(AgentDependencyProvider::PLUGINS_IMPERSONATION_FINISHER);
+        return $this->getProvidedDependency(AgentDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Client\AgentExtension\Dependency\Plugin\ImpersonationSessionFinisherPluginInterface[]
+     */
+    public function getImpersonationSessionFinisherPlugins(): array
+    {
+        return $this->getProvidedDependency(AgentDependencyProvider::PLUGINS_IMPERSONATION_SESSION_FINISHER);
     }
 }

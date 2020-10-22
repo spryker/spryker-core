@@ -7,15 +7,14 @@
 
 namespace Spryker\Client\Quote\Plugin\Agent;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\AgentExtension\Dependency\Plugin\ImpersonationFinisherPluginInterface;
+use Spryker\Client\AgentExtension\Dependency\Plugin\ImpersonationSessionFinisherPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Client\Quote\QuoteClientInterface getClient()
  */
-class SanitizeCustomerQuoteImpersonationFinisherPlugin extends AbstractPlugin implements ImpersonationFinisherPluginInterface
+class SanitizeCustomerQuoteImpersonationSessionFinisherPlugin extends AbstractPlugin implements ImpersonationSessionFinisherPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -23,11 +22,9 @@ class SanitizeCustomerQuoteImpersonationFinisherPlugin extends AbstractPlugin im
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
      * @return void
      */
-    public function finish(CustomerTransfer $customerTransfer): void
+    public function finish(): void
     {
         $this->getClient()->setQuote(new QuoteTransfer());
     }
