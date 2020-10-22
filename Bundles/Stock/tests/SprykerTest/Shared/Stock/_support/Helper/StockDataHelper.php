@@ -159,7 +159,7 @@ class StockDataHelper extends Module
     /**
      * @param array $seedData
      *
-     * @return StockProductTransfer
+     * @return \Generated\Shared\Transfer\StockProductTransfer
      */
     protected function createStockProduct(array $seedData): StockProductTransfer
     {
