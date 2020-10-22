@@ -33,14 +33,17 @@ class MerchantCategoryFacadeTest extends Unit
      */
     public function testGetReturnsListOfMerchantCategoriesByMerchantId(): void
     {
+        // Arrange
         $merchantCategoryTransfer = $this->tester->haveMerchantCategory();
 
+        // Act
         $merchantCategoryResponseTransfer = $this->tester->getFacade()
             ->get(
                 (new MerchantCategoryCriteriaTransfer())
                     ->setIdMerchant($merchantCategoryTransfer->getFkMerchant())
             );
 
+        // Assert
         $this->assertCount(1, $merchantCategoryResponseTransfer->getCategories());
     }
 
@@ -49,13 +52,17 @@ class MerchantCategoryFacadeTest extends Unit
      */
     public function testGetReturnsNothingForNotExistingCategory(): void
     {
+        // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
+
+        // Act
         $merchantCategoryResponseTransfer = $this->tester->getFacade()
             ->get(
                 (new MerchantCategoryCriteriaTransfer())
                     ->setIdMerchant($merchantTransfer->getIdMerchant())
             );
 
+        // Assert
         $this->assertEmpty($merchantCategoryResponseTransfer->getCategories());
     }
 }
