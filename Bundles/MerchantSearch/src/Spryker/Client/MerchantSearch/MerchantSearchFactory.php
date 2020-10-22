@@ -12,8 +12,10 @@ use Spryker\Client\MerchantSearch\Dependency\Client\MerchantSearchToStoreClientI
 use Spryker\Client\MerchantSearch\Dependency\Client\MerchantSearchToZedRequestClientInterface;
 use Spryker\Client\MerchantSearch\MerchantReader\MerchantReader;
 use Spryker\Client\MerchantSearch\MerchantReader\MerchantReaderInterface;
+use Spryker\Client\MerchantSearch\MerchantReader\MerchantSearchReader;
 use Spryker\Client\MerchantSearch\Zed\MerchantSearchStub;
 use Spryker\Client\MerchantSearch\Zed\MerchantSearchStubInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
 class MerchantSearchFactory extends AbstractFactory
 {
@@ -52,5 +54,50 @@ class MerchantSearchFactory extends AbstractFactory
     public function getStoreClient(): MerchantSearchToStoreClientInterface
     {
         return $this->getProvidedDependency(MerchantSearchDependencyProvider::CLIENT_STORE);
+    }
+
+    /**
+     * @return \Spryker\Client\MerchantSearch\Dependency\Client\MerchantSearchToSearchClientInterface
+     */
+    public function getSerchClient()
+    {
+        return $this->getProvidedDependency(MerchantSearchDependencyProvider::CLIENT_SEARCH);
+    }
+
+    /**
+     * @return \Spryker\Client\MerchantSearch\MerchantReader\MerchantSearchReader
+     */
+    public function createMerchantSearchReader()
+    {
+        return new MerchantSearchReader(
+            $this->getSerchClient(),
+            $this->getMerchantSearchQueryPlugin(),
+            $this->getMerchantSearchQueryExpanderPlugins(),
+            $this->getMerchantSearchResultFormatterPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     */
+    public function getMerchantSearchQueryPlugin(): QueryInterface
+    {
+        return $this->getProvidedDependency(MerchantSearchDependencyProvider::PLUGIN_MERCHANT_SEARCH_QUERY);
+    }
+
+    /**
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface[]
+     */
+    public function getMerchantSearchQueryExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantSearchDependencyProvider::PLUGINS_MERCHANT_SEARCH_QUERY_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[]
+     */
+    public function getMerchantSearchResultFormatterPlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantSearchDependencyProvider::PLUGINS_MERCHANT_SEARCH_RESULT_FORMATTER);
     }
 }

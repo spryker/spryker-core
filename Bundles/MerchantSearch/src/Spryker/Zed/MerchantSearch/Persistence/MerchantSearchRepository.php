@@ -24,7 +24,7 @@ class MerchantSearchRepository extends AbstractRepository implements MerchantSea
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getMerchantSynchronizationDataTransfersByIds(FilterTransfer $filterTransfer, array $merchantIds = []): array
+    public function getSynchronizationDataTransfersByMerchantIds(FilterTransfer $filterTransfer, array $merchantIds = []): array
     {
         $synchronizationDataTransfers = [];
 
@@ -53,7 +53,7 @@ class MerchantSearchRepository extends AbstractRepository implements MerchantSea
      */
     protected function getMerchantSearchEntityCollection(
         FilterTransfer $filterTransfer,
-        array $merchantIds = []
+        array $merchantIds
     ): ObjectCollection {
         $merchantSearchQuery = $this->getFactory()->getMerchantSearchPropelQuery();
 

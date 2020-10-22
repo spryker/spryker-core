@@ -69,7 +69,7 @@ class MerchantSearchDeleter implements MerchantSearchDeleterInterface
 
         $merchantToDelete = array_diff($merchantIds, $merchantActiveIds);
 
-        if (empty($merchantToDelete)) {
+        if ($merchantToDelete) {
             return;
         }
 

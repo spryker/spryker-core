@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantSearch\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantSearch\Business\DataMapper\MerchantSearchDataMapper;
+use Spryker\Zed\MerchantSearch\Business\DataMapper\MerchantSearchDataMapperInterface;
 use Spryker\Zed\MerchantSearch\Business\Deleter\MerchantSearchDeleter;
 use Spryker\Zed\MerchantSearch\Business\Deleter\MerchantSearchDeleterInterface;
 use Spryker\Zed\MerchantSearch\Business\Mapper\MerchantSearchMapper;
@@ -47,7 +49,8 @@ class MerchantSearchBusinessFactory extends AbstractBusinessFactory
     public function createMerchantSearchMapper(): MerchantSearchMapperInterface
     {
         return new MerchantSearchMapper(
-            $this->getProvidedDependency(MerchantSearchDependencyProvider::SERVICE_UTIL_ENCODING)
+            $this->getProvidedDependency(MerchantSearchDependencyProvider::SERVICE_UTIL_ENCODING),
+            $this->createMerchantSearchDataMapper()
         );
     }
 
@@ -74,5 +77,13 @@ class MerchantSearchBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getEventBehaviorFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSearch\Business\DataMapper\MerchantSearchDataMapperInterface
+     */
+    public function createMerchantSearchDataMapper(): MerchantSearchDataMapperInterface
+    {
+        return new MerchantSearchDataMapper();
     }
 }

@@ -27,6 +27,11 @@ interface MerchantSearchFacadeInterface
     public function get(MerchantCriteriaTransfer $merchantCriteriaTransfer): MerchantCollectionTransfer;
 
     /**
+     * Specification:
+     * - Retrieves all Merchants using IDs from $eventTransfers.
+     * - Updates entities from `spy_merchant_search` with actual data from obtained Merchants.
+     * - Sends a copy of data to queue based on module config.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
@@ -36,6 +41,10 @@ interface MerchantSearchFacadeInterface
     public function writeCollectionByMerchantEvents(array $eventTransfers): void;
 
     /**
+     * Specification:
+     * - Deletes entities from `spy_merchant_search` based on IDs from $eventTransfers.
+     * - Sends delete message to queue based on module config.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
@@ -45,6 +54,10 @@ interface MerchantSearchFacadeInterface
     public function deleteCollectionByMerchantEvents(array $eventTransfers): void;
 
     /**
+     * Specification:
+     * - Reads entities from `spy_merchant_search` based on criteria from FilterTransfer and $merchantIds.
+     * - Returns array of SynchronizationDataTransfer filled with data from search entities.
+
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
@@ -52,5 +65,5 @@ interface MerchantSearchFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getMerchantSynchronizationDataTransfersByIds(FilterTransfer $filterTransfer, array $merchantIds): array;
+    public function getSynchronizationDataTransfersByMerchantIds(FilterTransfer $filterTransfer, array $merchantIds): array;
 }

@@ -17,7 +17,13 @@
     "spryker/propel-orm": "^1.5.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/elastica": "*",
+    "spryker/search-elasticsearch": "*"
+  },
+  "suggest": {
+    "spryker/elastica": "If you want to use search functionality from MerchantSearchClient.",
+    "spryker/search-elasticsearch": "If you want to use search plugins."
   },
   "autoload": {
     "psr-4": {

@@ -38,9 +38,9 @@ class MerchantStatusController extends AbstractController
         $form = $this->getFactory()->createMerchantStatusForm()->handleRequest($request);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
-           // $this->addErrorMessage('CSRF token is not valid');
+            $this->addErrorMessage('CSRF token is not valid');
 
-           // return $this->redirectResponse($request->headers->get('referer', static::URL_REDIRECT_MERCHANT_LIST));
+            return $this->redirectResponse($request->headers->get('referer', static::URL_REDIRECT_MERCHANT_LIST));
         }
 
         $idMerchant = $request->query->getInt(static::PARAM_ID_MERCHANT);

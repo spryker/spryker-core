@@ -14,5 +14,5 @@ interface MerchantSearchToEventBehaviorFacadeInterface
      *
      * @return int[]
      */
-    public function getEventTransferIds(array $eventTransfers): array;
+    public function getEventTransferIds(array $eventTransfers);
 }

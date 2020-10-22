@@ -7,10 +7,8 @@
 
 namespace Spryker\Zed\MerchantSearch\Business\Writer;
 
-use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantSearchCollectionTransfer;
-use Generated\Shared\Transfer\MerchantSearchTransfer;
 use Spryker\Shared\MerchantSearch\MerchantSearchConfig;
 use Spryker\Zed\MerchantSearch\Business\Mapper\MerchantSearchMapperInterface;
 use Spryker\Zed\MerchantSearch\Dependency\Facade\MerchantSearchToEventBehaviorFacadeInterface;
@@ -82,34 +80,20 @@ class MerchantSearchWriter implements MerchantSearchWriterInterface
         $merchantCollectionTransfer = $this->merchantFacade->get(
             (new MerchantCriteriaTransfer())
                 ->setMerchantIds($merchantIds)
-            ->setIsActive(true)
-            ->setStatus(MerchantSearchConfig::MERCHANT_STATUS_APPROVED)
+                ->setIsActive(true)
+                ->setStatus(MerchantSearchConfig::MERCHANT_STATUS_APPROVED)
         );
 
         if (!$merchantCollectionTransfer->getMerchants()->count()) {
             return;
         }
-        $merchantSearchCollectionTransfer = $this->getMerchantSearchTransfersByMerchantTransfers($merchantCollectionTransfer);
+        $merchantSearchCollectionTransfer = $this->merchantMapper
+            ->mapMerchantCollectionTransferToMerchantSearchCollectionTransfer(
+                $merchantCollectionTransfer,
+                new MerchantSearchCollectionTransfer(),
+            );
+
         $this->writeCollection($merchantSearchCollectionTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantCollectionTransfer $merchantCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantSearchCollectionTransfer
-     */
-    protected function getMerchantSearchTransfersByMerchantTransfers(
-        MerchantCollectionTransfer $merchantCollectionTransfer
-    ): MerchantSearchCollectionTransfer {
-        $merchantSearchCollectionTransfer = new MerchantSearchCollectionTransfer();
-
-        foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
-            $merchantSearchTransfer = new MerchantSearchTransfer();
-            $this->merchantMapper->mapMerchantTransferToMerchantSearchTransfer($merchantTransfer, $merchantSearchTransfer);
-            $merchantSearchCollectionTransfer->addMerchantSearch($merchantSearchTransfer);
-        }
-
-        return $merchantSearchCollectionTransfer;
     }
 
     /**
