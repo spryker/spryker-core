@@ -26,8 +26,8 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
     /**
      * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_NET
      */
-
     protected const PRICE_NET_MODE_KEY = 'NET_MODE';
+
     protected const DEFAULT_PRICE_TYPE_NAME = 'DEFAULT';
     protected const PRICE_DATA_KEY = 'priceData';
     protected const IS_PRICE_MERGEABLE = false;
@@ -41,11 +41,20 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
     protected $priceProductService;
 
     /**
-     * @param \Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToPriceProductServiceInterface $priceProductService
+     * @var \Spryker\Client\ProductConfigurationStorageExtension\Dependency\Plugin\ProductConfigurationStoragePriceExtractorPluginInterface[]
      */
-    public function __construct(ProductConfigurationStorageToPriceProductServiceInterface $priceProductService)
-    {
+    protected $productConfigurationStoragePriceExtractorPlugins;
+
+    /**
+     * @param \Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToPriceProductServiceInterface $priceProductService
+     * @param \Spryker\Client\ProductConfigurationStorageExtension\Dependency\Plugin\ProductConfigurationStoragePriceExtractorPluginInterface[] $productConfigurationStoragePriceExtractorPlugins
+     */
+    public function __construct(
+        ProductConfigurationStorageToPriceProductServiceInterface $priceProductService,
+        array $productConfigurationStoragePriceExtractorPlugins
+    ) {
         $this->priceProductService = $priceProductService;
+        $this->productConfigurationStoragePriceExtractorPlugins = $productConfigurationStoragePriceExtractorPlugins;
     }
 
     /**
@@ -58,7 +67,7 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
         array $configuratorResponseData,
         ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
     ): ProductConfigurationInstanceTransfer {
-        $priceProductTransfers = new ArrayObject();
+        $priceProductTransfers = [];
         $configuratorResponsePrisesData
             = $configuratorResponseData[static::PRODUCT_CONFIGURATION_INSTANCE_RESPONSE_KEY][static::PRICES_RESPONSE_KEY] ?? [];
 
@@ -84,11 +93,30 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
 
             $priceProductTransfer->setGroupKey($this->priceProductService->buildPriceProductGroupKey($priceProductTransfer));
 
-            $priceProductTransfers->append($priceProductTransfer);
+            $priceProductTransfers[] = $priceProductTransfer;
         }
 
-        $productConfigurationInstanceTransfer->setPrices($priceProductTransfers);
+        $priceProductTransfers = $this->executeProductProductConfigurationStoragePriceExtractorPlugins($priceProductTransfers);
+
+        $productConfigurationInstanceTransfer->setPrices(new ArrayObject($priceProductTransfers));
 
         return $productConfigurationInstanceTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function executeProductProductConfigurationStoragePriceExtractorPlugins(array $priceProductTransfers): array
+    {
+        $extractedPriceProductTransfers = [];
+
+        foreach ($this->productConfigurationStoragePriceExtractorPlugins as $productConfigurationStoragePriceExtractorPlugins) {
+            $extractedPriceProductTransfers[] = $productConfigurationStoragePriceExtractorPlugins
+                ->extractProductPrices($priceProductTransfers);
+        }
+
+        return array_merge($priceProductTransfers, ...$extractedPriceProductTransfers);
     }
 }

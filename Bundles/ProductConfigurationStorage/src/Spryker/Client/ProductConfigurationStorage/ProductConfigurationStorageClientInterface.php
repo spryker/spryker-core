@@ -200,4 +200,16 @@ interface ProductConfigurationStorageClientInterface
         ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer,
         array $configuratorResponseData
     ): ProductConfiguratorResponseProcessorResponseTransfer;
+
+    /**
+     * Specification:
+     * - Extracts additional product configuration volume prices from price product data.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function extractProductPrices(array $priceProductTransfers): array;
 }

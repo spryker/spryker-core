@@ -10,6 +10,8 @@ namespace Spryker\Service\ProductConfigurationStorage;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 use Spryker\Service\ProductConfigurationStorage\Filter\PriceProductConfigurationFilter;
 use Spryker\Service\ProductConfigurationStorage\Filter\PriceProductConfigurationFilterInterface;
+use Spryker\Service\ProductConfigurationStorage\Filter\PriceProductConfigurationVolumeFilter;
+use Spryker\Service\ProductConfigurationStorage\Filter\PriceProductConfigurationVolumeFilterInterface;
 
 class ProductConfigurationStorageServiceFactory extends AbstractServiceFactory
 {
@@ -19,5 +21,13 @@ class ProductConfigurationStorageServiceFactory extends AbstractServiceFactory
     public function createPriceProductConfigurationFilter(): PriceProductConfigurationFilterInterface
     {
         return new PriceProductConfigurationFilter();
+    }
+
+    /**
+     * @return \Spryker\Service\ProductConfigurationStorage\Filter\PriceProductConfigurationVolumeFilterInterface
+     */
+    public function createVolumePriceProductConfigurationFilter(): PriceProductConfigurationVolumeFilterInterface
+    {
+        return new PriceProductConfigurationVolumeFilter();
     }
 }
