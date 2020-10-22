@@ -83,7 +83,7 @@ class ProductAbstractRelationCollectorQueryTest extends Unit
     protected function findResultProductAbstractRelationData(array $result, int $idProductAbstract): ?array
     {
         foreach ($result as $row) {
-            if ($row['ItemType'] === 'product_abstract' && $row['ItemId'] === $idProductAbstract) {
+            if ($row['ItemType'] === 'product_abstract_product_label_relations' && $row['ItemId'] === $idProductAbstract) {
                 return $row;
             }
         }
