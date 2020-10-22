@@ -9,7 +9,7 @@ namespace Spryker\Zed\MerchantCategory\Business\Reader;
 
 use ArrayObject;
 use Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer;
-use Generated\Shared\Transfer\MerchantCategoryTransfer;
+use Generated\Shared\Transfer\MerchantCategoryResponseTransfer;
 use Spryker\Zed\MerchantCategory\Persistence\MerchantCategoryRepositoryInterface;
 
 class MerchantCategoryReader implements MerchantCategoryReaderInterface
@@ -30,13 +30,13 @@ class MerchantCategoryReader implements MerchantCategoryReaderInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantCategoryTransfer
+     * @return \Generated\Shared\Transfer\MerchantCategoryResponseTransfer
      */
-    public function get(MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer): MerchantCategoryTransfer
+    public function get(MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer): MerchantCategoryResponseTransfer
     {
         $categoryTransfers = $this->repository->getCategories($merchantCategoryCriteriaTransfer);
 
-        return (new MerchantCategoryTransfer())
+        return (new MerchantCategoryResponseTransfer())
             ->setCategories(new ArrayObject($categoryTransfers));
     }
 }

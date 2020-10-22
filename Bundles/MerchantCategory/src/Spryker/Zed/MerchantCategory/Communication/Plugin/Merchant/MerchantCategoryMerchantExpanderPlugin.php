@@ -13,9 +13,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantExpanderPluginInterface;
 
 /**
- *
- *
  * @method \Spryker\Zed\MerchantCategory\Business\MerchantCategoryFacade getFacade()
+ * @method \Spryker\Zed\MerchantCategory\MerchantCategoryConfig getConfig()
  */
 class MerchantCategoryMerchantExpanderPlugin extends AbstractPlugin implements MerchantExpanderPluginInterface
 {

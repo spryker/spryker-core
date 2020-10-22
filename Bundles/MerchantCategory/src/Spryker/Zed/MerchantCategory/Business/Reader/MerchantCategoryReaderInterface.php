@@ -8,14 +8,14 @@
 namespace Spryker\Zed\MerchantCategory\Business\Reader;
 
 use Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer;
-use Generated\Shared\Transfer\MerchantCategoryTransfer;
+use Generated\Shared\Transfer\MerchantCategoryResponseTransfer;
 
 interface MerchantCategoryReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantCategoryTransfer
+     * @return \Generated\Shared\Transfer\MerchantCategoryResponseTransfer
      */
-    public function get(MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer): MerchantCategoryTransfer;
+    public function get(MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer): MerchantCategoryResponseTransfer;
 }

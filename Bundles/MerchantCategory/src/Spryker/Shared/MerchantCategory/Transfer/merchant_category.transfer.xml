@@ -12,6 +12,12 @@
     </transfer>
 
     <transfer name="MerchantCategory">
+        <property name="idMerchantCategory" type="int"/>
+        <property name="fkCategory" type="int"/>
+        <property name="fkMerchant" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantCategoryResponse">
         <property name="categories" type="Category[]" singular="category"/>
     </transfer>
 </transfers>

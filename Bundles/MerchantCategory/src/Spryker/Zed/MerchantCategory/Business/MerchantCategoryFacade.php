@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MerchantCategory\Business;
 
 use Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer;
-use Generated\Shared\Transfer\MerchantCategoryTransfer;
+use Generated\Shared\Transfer\MerchantCategoryResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -24,9 +24,9 @@ class MerchantCategoryFacade extends AbstractFacade implements MerchantCategoryF
      *
      * @param \Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantCategoryTransfer
+     * @return \Generated\Shared\Transfer\MerchantCategoryResponseTransfer
      */
-    public function get(MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer): MerchantCategoryTransfer
+    public function get(MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer): MerchantCategoryResponseTransfer
     {
         return $this->getFactory()
             ->createMerchantCategoryReader()

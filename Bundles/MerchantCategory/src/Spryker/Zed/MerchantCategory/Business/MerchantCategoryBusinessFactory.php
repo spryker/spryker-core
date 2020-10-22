@@ -13,6 +13,7 @@ use Spryker\Zed\MerchantCategory\Business\Reader\MerchantCategoryReaderInterface
 
 /**
  * @method \Spryker\Zed\MerchantCategory\Persistence\MerchantCategoryRepositoryInterface getRepository()
+ * @method \Spryker\Zed\MerchantCategory\MerchantCategoryConfig getConfig()
  */
 class MerchantCategoryBusinessFactory extends AbstractBusinessFactory
 {

@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MerchantCategorySearch\Dependency\Facade;
 
 use Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer;
-use Generated\Shared\Transfer\MerchantCategoryTransfer;
+use Generated\Shared\Transfer\MerchantCategoryResponseTransfer;
 
 class MerchantCategorySearchToMerchantCategoryFacadeBridge implements MerchantCategorySearchToMerchantCategoryFacadeInterface
 {
@@ -28,9 +28,9 @@ class MerchantCategorySearchToMerchantCategoryFacadeBridge implements MerchantCa
     /**
      * @param \Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantCategoryTransfer
+     * @return \Generated\Shared\Transfer\MerchantCategoryResponseTransfer
      */
-    public function get(MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer): MerchantCategoryTransfer
+    public function get(MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer): MerchantCategoryResponseTransfer
     {
         return $this->merchantCategoryFacade->get($merchantCategoryCriteriaTransfer);
     }

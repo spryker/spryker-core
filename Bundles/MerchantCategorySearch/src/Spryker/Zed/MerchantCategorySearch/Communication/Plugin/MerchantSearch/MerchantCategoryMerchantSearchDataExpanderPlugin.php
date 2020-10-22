@@ -31,7 +31,7 @@ class MerchantCategoryMerchantSearchDataExpanderPlugin extends AbstractPlugin im
      */
     public function expand(array $merchantSearchData): array
     {
-        $merchantCategoryTransfer = $this->getFactory()
+        $merchantCategoryResponseTransfer = $this->getFactory()
             ->getMerchantCategoryFacade()
             ->get(
                 (new MerchantCategoryCriteriaTransfer())
@@ -40,7 +40,7 @@ class MerchantCategoryMerchantSearchDataExpanderPlugin extends AbstractPlugin im
 
         $merchantCategoryIds = [];
 
-        foreach ($merchantCategoryTransfer->getCategories() as $categoryTransfer) {
+        foreach ($merchantCategoryResponseTransfer->getCategories() as $categoryTransfer) {
             $merchantCategoryIds[] = $categoryTransfer->getIdCategory();
         }
 

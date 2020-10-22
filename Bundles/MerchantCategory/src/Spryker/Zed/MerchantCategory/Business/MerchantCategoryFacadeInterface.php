@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MerchantCategory\Business;
 
 use Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer;
-use Generated\Shared\Transfer\MerchantCategoryTransfer;
+use Generated\Shared\Transfer\MerchantCategoryResponseTransfer;
 
 interface MerchantCategoryFacadeInterface
 {
@@ -20,7 +20,7 @@ interface MerchantCategoryFacadeInterface
      *
      * @param \Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantCategoryTransfer
+     * @return \Generated\Shared\Transfer\MerchantCategoryResponseTransfer
      */
-    public function get(MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer): MerchantCategoryTransfer;
+    public function get(MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer): MerchantCategoryResponseTransfer;
 }
