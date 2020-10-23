@@ -63,16 +63,16 @@ class MerchantSearchDeleter implements MerchantSearchDeleterInterface
                 ->setIsActive(true)
                 ->setStatus(MerchantSearchConfig::MERCHANT_STATUS_APPROVED)
         );
-        $merchantActiveIds = array_map(function (MerchantTransfer $merchant) {
+        $activeMerchantIds = array_map(function (MerchantTransfer $merchant) {
             return $merchant->getIdMerchant();
         }, $merchantCollectionTransfer->getMerchants()->getArrayCopy());
 
-        $merchantToDelete = array_diff($merchantIds, $merchantActiveIds);
+        $merchantsToDelete = array_diff($merchantIds, $activeMerchantIds);
 
-        if ($merchantToDelete) {
+        if ($merchantsToDelete) {
             return;
         }
 
-        $this->entityManager->deleteMerchantSearchByMerchantIds($merchantToDelete);
+        $this->entityManager->deleteMerchantSearchByMerchantIds($merchantsToDelete);
     }
 }

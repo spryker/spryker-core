@@ -7,9 +7,9 @@
 
 namespace Spryker\Client\MerchantSearch\MerchantReader;
 
+use Generated\Shared\Transfer\MerchantSearchRequestTransfer;
 use Spryker\Client\MerchantSearch\Dependency\Client\MerchantSearchToSearchClientInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
-use function Functional\first;
 
 class MerchantSearchReader implements MerchantSearchReaderInterface
 {
@@ -52,19 +52,24 @@ class MerchantSearchReader implements MerchantSearchReaderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MerchantSearchCollectionTransfer
+     * @param \Generated\Shared\Transfer\MerchantSearchRequestTransfer $merchantSearchRequestTransfer
+     *
+     * @return array
      */
-    public function merchantSearch()
+    public function merchantSearch(MerchantSearchRequestTransfer $merchantSearchRequestTransfer): array
     {
+        $requestParameters = $merchantSearchRequestTransfer->getRequestParameters();
         $searchQuery = $this->searchClient->expandQuery(
             $this->merchantSearchQueryPlugin,
             $this->merchantSearchQueryExpanderPlugins,
+            $requestParameters,
         );
         $result = $this->searchClient->search(
             $searchQuery,
             $this->merchantSearchResultFormatterPlugins,
+            $requestParameters,
         );
 
-        return first($result);
+        return $result;
     }
 }

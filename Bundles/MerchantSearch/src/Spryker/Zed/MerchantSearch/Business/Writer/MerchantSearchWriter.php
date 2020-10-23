@@ -87,11 +87,10 @@ class MerchantSearchWriter implements MerchantSearchWriterInterface
         if (!$merchantCollectionTransfer->getMerchants()->count()) {
             return;
         }
-        $merchantSearchCollectionTransfer = $this->merchantMapper
-            ->mapMerchantCollectionTransferToMerchantSearchCollectionTransfer(
-                $merchantCollectionTransfer,
-                new MerchantSearchCollectionTransfer(),
-            );
+        $merchantSearchCollectionTransfer = $this->merchantMapper->mapMerchantCollectionTransferToMerchantSearchCollectionTransfer(
+            $merchantCollectionTransfer,
+            new MerchantSearchCollectionTransfer(),
+        );
 
         $this->writeCollection($merchantSearchCollectionTransfer);
     }

@@ -29,7 +29,7 @@ class MerchantSearchToSearchClientBridge implements MerchantSearchToSearchClient
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
      * @param mixed[] $requestParameters
      *
-     * @return array|\Elastica\ResultSet|mixed
+     * @return array|\Elastica\ResultSet|mixed (@deprecated Only mixed will be supported with the next major)
      */
     public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = [])
     {
