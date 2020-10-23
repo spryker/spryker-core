@@ -748,9 +748,13 @@ class ClassDefinition implements ClassDefinitionInterface
     protected function getAddTypeHint(array $property)
     {
         if (!$this->isStrictProperty($property)) {
-            if (preg_match('/^(string|int|integer|float|bool|boolean|mixed|resource|callable|iterable|array|\[\])/', $property['type'])) {
+            if (preg_match('/^(string|int|integer|float|bool|boolean|resource|callable|iterable|\[\])/', $property['type'])) {
                 return false;
             }
+        }
+
+        if ($property['type'] === 'array' || $property['type'] === 'mixed') {
+            return false;
         }
 
         return str_replace('[]', '', $property['type']);

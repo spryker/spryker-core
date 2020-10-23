@@ -282,7 +282,7 @@ class FullyStrictTransfer extends AbstractTransfer
      *
      * @return $this
      */
-    public function addPropSimpleArray(array $propSimpleArray)
+    public function addPropSimpleArray($propSimpleArray)
     {
         $this->propSimpleArray[] = $propSimpleArray;
         $this->modifiedProperties[self::PROP_SIMPLE_ARRAY] = true;

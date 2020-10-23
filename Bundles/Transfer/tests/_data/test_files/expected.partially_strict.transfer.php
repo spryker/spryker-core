@@ -556,7 +556,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
      *
      * @return $this
      */
-    public function addPropSimpleArrayStrict(array $propSimpleArrayStrict)
+    public function addPropSimpleArrayStrict($propSimpleArrayStrict)
     {
         $this->propSimpleArrayStrict[] = $propSimpleArrayStrict;
         $this->modifiedProperties[self::PROP_SIMPLE_ARRAY_STRICT] = true;
