@@ -7,12 +7,29 @@
 
 namespace Spryker\Client\CategoryStorage;
 
+use Spryker\Client\CategoryStorage\Formatter\CategoryTreeFilterFormatter;
+use Spryker\Client\CategoryStorage\Formatter\CategoryTreeFilterFormatterInterface;
 use Spryker\Client\CategoryStorage\Storage\CategoryNodeStorage;
 use Spryker\Client\CategoryStorage\Storage\CategoryTreeStorageReader;
 use Spryker\Client\Kernel\AbstractFactory;
 
+/**
+ * @method \Spryker\Client\CategoryStorage\CategoryStorageConfig getConfig()
+ */
 class CategoryStorageFactory extends AbstractFactory
 {
+    /**
+     * @return \Spryker\Client\CategoryStorage\Formatter\CategoryTreeFilterFormatterInterface
+     */
+    public function createCategoryTreeFilterFormatter(): CategoryTreeFilterFormatterInterface
+    {
+        return new CategoryTreeFilterFormatter(
+            $this->getConfig(),
+            $this->getLocaleClient(),
+            $this->createCategoryTreeStorageReader()
+        );
+    }
+
     /**
      * @return \Spryker\Client\CategoryStorage\Storage\CategoryTreeStorageReaderInterface
      */
@@ -41,6 +58,14 @@ class CategoryStorageFactory extends AbstractFactory
     protected function getStorage()
     {
         return $this->getProvidedDependency(CategoryStorageDependencyProvider::CLIENT_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToLocaleClientInterface
+     */
+    public function getLocaleClient()
+    {
+        return $this->getProvidedDependency(CategoryStorageDependencyProvider::CLIENT_LOCALE);
     }
 
     /**

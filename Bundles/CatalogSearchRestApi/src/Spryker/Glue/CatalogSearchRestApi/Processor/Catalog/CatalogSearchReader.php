@@ -102,6 +102,8 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         $requestParameters = $this->getAllRequestParameters($restRequest);
         $searchResult = $this->catalogClient->catalogSearch($searchString, $requestParameters);
 
+//        print_r($searchResult);exit;
+
         $restSearchAttributesTransfer = $this
             ->catalogSearchResourceMapper
             ->mapSearchResultToRestAttributesTransfer($searchResult);

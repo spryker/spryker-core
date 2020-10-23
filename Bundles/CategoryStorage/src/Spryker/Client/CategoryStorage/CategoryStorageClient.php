@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\CategoryStorage;
 
+use ArrayObject;
+use Elastica\ResultSet;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -62,5 +64,21 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
         return $this->getFactory()
             ->createCategoryNodeStorage()
             ->getCategoryNodeByIds($categoryNodeIds, $localeName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Elastica\ResultSet $searchResult
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]
+     */
+    public function formatResultSetToCategoryTreeFilter(ResultSet $searchResult): ArrayObject
+    {
+        return $this->getFactory()
+            ->createCategoryTreeFilterFormatter()
+            ->formatResultSetToCategoryTreeFilter($searchResult);
     }
 }

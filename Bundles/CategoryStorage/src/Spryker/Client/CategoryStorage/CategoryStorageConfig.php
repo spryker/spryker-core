@@ -12,6 +12,16 @@ use Spryker\Client\Kernel\AbstractBundleConfig;
 class CategoryStorageConfig extends AbstractBundleConfig
 {
     /**
+     * @uses \Spryker\Client\Catalog\Plugin\ConfigTransferBuilder\CategoryFacetConfigTransferBuilderPlugin::NAME
+     */
+    protected const CATEGORY_NAME = 'category';
+
+    /**
+     * @uses \Generated\Shared\Search\PageIndexMap::CATEGORY_ALL_PARENTS
+     */
+    protected const CATEGORY_ALL_PARENTS = 'category.all-parents';
+
+    /**
      * To be able to work with data exported with collectors to redis, we need to bring this module into compatibility
      * mode. If this is turned on the CategoryExporterClient will be used instead.
      *
@@ -22,5 +32,17 @@ class CategoryStorageConfig extends AbstractBundleConfig
     public static function isCollectorCompatibilityMode(): bool
     {
         return false;
+    }
+
+    /**
+     * - Returns category `doc_count` aggregation name.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getCategoryDocCountAggregationName(): string
+    {
+        return sprintf('%s.%s', static::CATEGORY_ALL_PARENTS, static::CATEGORY_NAME);
     }
 }

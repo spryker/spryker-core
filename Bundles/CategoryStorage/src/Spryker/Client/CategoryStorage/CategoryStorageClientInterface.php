@@ -7,6 +7,9 @@
 
 namespace Spryker\Client\CategoryStorage;
 
+use ArrayObject;
+use Elastica\ResultSet;
+
 interface CategoryStorageClientInterface
 {
     /**
@@ -46,4 +49,16 @@ interface CategoryStorageClientInterface
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
      */
     public function getCategoryNodeByIds(array $categoryNodeIds, string $localeName): array;
+
+    /**
+     * Specification:
+     * - Returns formatted category node tree with docCount information.
+     *
+     * @api
+     *
+     * @param \Elastica\ResultSet $searchResult
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]
+     */
+    public function formatResultSetToCategoryTreeFilter(ResultSet $searchResult): ArrayObject;
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CatalogSearchRestApi\Processor\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Generated\Shared\Transfer\FacetSearchResultTransfer;
@@ -15,6 +16,7 @@ use Generated\Shared\Transfer\RangeSearchResultTransfer;
 use Generated\Shared\Transfer\RestCatalogSearchAbstractProductsTransfer;
 use Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer;
 use Generated\Shared\Transfer\RestCatalogSearchSortTransfer;
+use Generated\Shared\Transfer\RestCategoryNodeSearchResultAttributesTransfer;
 use Generated\Shared\Transfer\RestCurrencyTransfer;
 use Generated\Shared\Transfer\RestFacetConfigTransfer;
 use Generated\Shared\Transfer\RestFacetSearchResultTransfer;
@@ -78,6 +80,19 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
                 $restSearchAttributesTransfer
             );
         }
+
+        // TODO: clarify additional mapping.
+        $restCategoryNodeSearchResultAttributes = new ArrayObject();
+
+        if (isset($restSearchResponse['categoryTreeFilter'])) {
+            foreach ($restSearchResponse['categoryTreeFilter'] as $categoryNodeSearchResultTransfer) {
+                $restCategoryNodeSearchResultAttributes->append(
+                    (new RestCategoryNodeSearchResultAttributesTransfer())->fromArray($categoryNodeSearchResultTransfer->toArray(), true)
+                );
+            }
+        }
+
+        $restSearchAttributesTransfer->setCategoryTreeFilter($restCategoryNodeSearchResultAttributes);
 
         return $restSearchAttributesTransfer;
     }

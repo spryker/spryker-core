@@ -9,7 +9,15 @@
         <property name="abstractProducts" type="RestCatalogSearchAbstractProducts[]" singular="abstractProduct"/>
         <property name="valueFacets" type="RestFacetSearchResult[]" singular="valueFacet"/>
         <property name="rangeFacets" type="RestRangeSearchResult[]" singular="rangeFacet"/>
+        <property name="categoryTreeFilter" type="RestCategoryNodeSearchResultAttributes[]" singular="categoryTreeFilter"/>
         <property name="spellingSuggestion" type="string"/>
+    </transfer>
+
+    <transfer name="RestCategoryNodeSearchResultAttributes">
+        <property name="nodeId" type="int"/>
+        <property name="name" type="string"/>
+        <property name="docCount" type="int"/>
+        <property name="children" type="RestCategoryNodeSearchResultAttributes[]" singular="children"/>
     </transfer>
 
     <transfer name="RestCatalogSearchSort">
