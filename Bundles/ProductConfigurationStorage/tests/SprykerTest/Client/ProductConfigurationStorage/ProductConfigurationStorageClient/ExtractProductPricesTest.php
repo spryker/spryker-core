@@ -35,7 +35,7 @@ class ExtractProductPricesTest extends Unit
     /**
      * @return void
      */
-    public function testExtractProductPricesWillExtractVolumePriceSuccessfully(): void
+    public function testExtractProductConfigurationVolumePricesWillExtractVolumePriceSuccessfully(): void
     {
         //Arrange
         $priceProductTransfers = [
@@ -51,6 +51,7 @@ class ExtractProductPricesTest extends Unit
 
         /** @var \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer */
         $priceProductTransfer = array_shift($priceProductTransfers);
+
         // Assert
         $this->assertSame(3, $priceProductTransfer->getVolumeQuantity());
         $this->assertSame(385, $priceProductTransfer->getMoneyValue()->getGrossAmount());
@@ -64,7 +65,7 @@ class ExtractProductPricesTest extends Unit
     /**
      * @return void
      */
-    public function testExtractProductPricesWillExtractAllVolumePricesSuccessfully(): void
+    public function testExtractProductConfigurationVolumePricesWillExtractAllVolumePricesSuccessfully(): void
     {
         //Arrange
         $priceProductTransfers = [
@@ -85,7 +86,7 @@ class ExtractProductPricesTest extends Unit
     /**
      * @return void
      */
-    public function testExtractProductPricesWithOutPricesWillReturnEmptyArray(): void
+    public function testExtractProductConfigurationVolumePricesWithOutPricesWillReturnEmptyArray(): void
     {
         //Arrange
         $priceProductTransfers = [];
@@ -102,7 +103,7 @@ class ExtractProductPricesTest extends Unit
     /**
      * @return void
      */
-    public function testExtractProductPricesWithOutPriceDataWillReturnEmptyArray(): void
+    public function testExtractProductConfigurationVolumePricesWithOutPriceDataWillReturnEmptyArray(): void
     {
         //Arrange
         $priceProductTransfers = [
