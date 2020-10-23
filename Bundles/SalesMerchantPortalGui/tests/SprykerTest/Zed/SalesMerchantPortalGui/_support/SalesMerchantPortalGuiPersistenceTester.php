@@ -28,8 +28,4 @@ use Codeception\Actor;
 class SalesMerchantPortalGuiPersistenceTester extends Actor
 {
     use _generated\SalesMerchantPortalGuiPersistenceTesterActions;
-
-    /**
-     * Define custom actions here
-     */
 }

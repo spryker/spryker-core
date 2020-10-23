@@ -32,9 +32,7 @@ class ProductLabelTableMock extends ProductLabelTable
      */
     public function fetchData(): array
     {
-        $this->init();
-
-        return $this->prepareData($this->config);
+        return $this->init()->prepareData($this->config);
     }
 
     /**

@@ -33,6 +33,8 @@ class ProductAbstractRelationCollectorQueryTest extends Unit
     protected $tester;
 
     /**
+     * @skip
+     *
      * @return void
      */
     public function testPrepareQueryWillPrepareQueryThatReturnCorrectProductAbstractRelationData(): void

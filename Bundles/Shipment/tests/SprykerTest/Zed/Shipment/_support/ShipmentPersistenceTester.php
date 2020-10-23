@@ -28,8 +28,4 @@ use Codeception\Actor;
 class ShipmentPersistenceTester extends Actor
 {
     use _generated\ShipmentPersistenceTesterActions;
-
-    /**
-     * Define custom actions here
-     */
 }

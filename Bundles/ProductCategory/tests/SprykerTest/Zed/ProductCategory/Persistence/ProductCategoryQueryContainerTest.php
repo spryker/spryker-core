@@ -75,24 +75,44 @@ class ProductCategoryQueryContainerTest extends Unit
     public function getQueryProductsAbstractBySearchTermData(): array
     {
         return [
-            [[
-                static::PRODUCT_ABSTRACT_SKU_1 => static::PRODUCT_ATTRIBUTE_NAME_1,
-                static::PRODUCT_ABSTRACT_SKU_2 => static::PRODUCT_ATTRIBUTE_NAME_2,
-            ], static::PRODUCT_ABSTRACT_SKU_1, 1],
-            [[
-                static::PRODUCT_ABSTRACT_SKU_1 => static::PRODUCT_ATTRIBUTE_NAME_2,
-                static::PRODUCT_ABSTRACT_SKU_2 => static::PRODUCT_ATTRIBUTE_NAME_2,
-            ], static::PRODUCT_ABSTRACT_SKU, 2],
-            [[
-                static::PRODUCT_ABSTRACT_SKU_1 => static::PRODUCT_ATTRIBUTE_NAME_2,
-            ], static::PRODUCT_ABSTRACT_SKU_2, 0],
-            [[
-                static::PRODUCT_ABSTRACT_SKU_1 => static::PRODUCT_ATTRIBUTE_NAME_1,
-            ], static::PRODUCT_ATTRIBUTE_NAME_1, 1],
-            [[
-                static::PRODUCT_ABSTRACT_SKU_1 => static::PRODUCT_ATTRIBUTE_NAME_1,
-                static::PRODUCT_ABSTRACT_SKU_2 => static::PRODUCT_ATTRIBUTE_NAME_2,
-            ], static::PRODUCT_ATTRIBUTE_NAME, 2],
+            [
+                [
+                    static::PRODUCT_ABSTRACT_SKU_1 => static::PRODUCT_ATTRIBUTE_NAME_1,
+                    static::PRODUCT_ABSTRACT_SKU_2 => static::PRODUCT_ATTRIBUTE_NAME_2,
+                ],
+                static::PRODUCT_ABSTRACT_SKU_1,
+                1,
+            ],
+            [
+                [
+                    static::PRODUCT_ABSTRACT_SKU_1 => static::PRODUCT_ATTRIBUTE_NAME_2,
+                    static::PRODUCT_ABSTRACT_SKU_2 => static::PRODUCT_ATTRIBUTE_NAME_2,
+                ],
+                static::PRODUCT_ABSTRACT_SKU,
+                2,
+            ],
+            [
+                [
+                    static::PRODUCT_ABSTRACT_SKU_1 => static::PRODUCT_ATTRIBUTE_NAME_2,
+                ],
+                static::PRODUCT_ABSTRACT_SKU_2,
+                0,
+            ],
+            [
+                [
+                    static::PRODUCT_ABSTRACT_SKU_1 => static::PRODUCT_ATTRIBUTE_NAME_1,
+                ],
+                static::PRODUCT_ATTRIBUTE_NAME_1,
+                1,
+            ],
+            [
+                [
+                    static::PRODUCT_ABSTRACT_SKU_1 => static::PRODUCT_ATTRIBUTE_NAME_1,
+                    static::PRODUCT_ABSTRACT_SKU_2 => static::PRODUCT_ATTRIBUTE_NAME_2,
+                ],
+                static::PRODUCT_ATTRIBUTE_NAME,
+                2,
+            ],
         ];
     }
 }

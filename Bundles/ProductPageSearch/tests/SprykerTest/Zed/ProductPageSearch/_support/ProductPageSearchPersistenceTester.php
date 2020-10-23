@@ -28,8 +28,4 @@ use Codeception\Actor;
 class ProductPageSearchPersistenceTester extends Actor
 {
     use _generated\ProductPageSearchPersistenceTesterActions;
-
-    /**
-     * Define custom actions here
-     */
 }
