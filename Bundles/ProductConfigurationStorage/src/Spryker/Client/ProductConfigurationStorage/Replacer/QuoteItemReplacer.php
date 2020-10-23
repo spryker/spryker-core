@@ -79,11 +79,9 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
 
         if ($itemToBeReplacedTransfer) {
             $newItemTransfer = (new ItemTransfer())
-                ->fromArray(
-                    $itemToBeReplacedTransfer->toArray()
-                )->setProductConfigurationInstance(
-                    $productConfiguratorResponseTransfer->getProductConfigurationInstance()
-                );
+                ->fromArray($itemToBeReplacedTransfer->toArray())
+                ->setGroupKey(null)
+                ->setProductConfigurationInstance($productConfiguratorResponseTransfer->getProductConfigurationInstance());
         }
 
         return (new ItemReplaceTransfer())
