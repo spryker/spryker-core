@@ -231,4 +231,20 @@ class ProductConfigurationStorageClient extends AbstractClient implements Produc
             ->createProductConfiguratorCheckSumResponseProcessor()
             ->processProductConfiguratorCheckSumResponse($productConfiguratorResponseTransfer, $configuratorResponseData);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function extractProductConfigurationVolumePrices(array $priceProductTransfers): array
+    {
+        return $this->getFactory()
+            ->createProductConfigurationVolumePriceExtractor()
+            ->extractProductConfigurationVolumePrices($priceProductTransfers);
+    }
 }

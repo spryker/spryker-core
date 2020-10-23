@@ -17,6 +17,7 @@
     "spryker/price-product-storage-extension": "^1.2.0",
     "spryker/product-configuration": "^0.1.0",
     "spryker/product-configuration-extension": "^0.1.0",
+    "spryker/product-configuration-storage-extension": "^0.1.0",
     "spryker/product-storage": "^1.1.0",
     "spryker/product-storage-extension": "^1.4.0",
     "spryker/propel-orm": "^1.5.0",

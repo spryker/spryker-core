@@ -18,12 +18,15 @@ use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigur
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToStorageClientInterface;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToPriceProductServiceInterface;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToSynchronizationServiceInterface;
+use Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToUtilEncodingServiceInterface;
 use Spryker\Client\ProductConfigurationStorage\Expander\PriceProductFilterExpander;
 use Spryker\Client\ProductConfigurationStorage\Expander\PriceProductFilterExpanderInterface as PriceProductFilterExpanderInterfaceAlias;
 use Spryker\Client\ProductConfigurationStorage\Expander\ProductConfigurationInstanceCartChangeExpander;
 use Spryker\Client\ProductConfigurationStorage\Expander\ProductConfigurationInstanceCartChangeExpanderInterface;
 use Spryker\Client\ProductConfigurationStorage\Expander\ProductViewExpander;
 use Spryker\Client\ProductConfigurationStorage\Expander\ProductViewExpanderInterface;
+use Spryker\Client\ProductConfigurationStorage\Extractor\ProductConfigurationVolumePriceExtractor;
+use Spryker\Client\ProductConfigurationStorage\Extractor\ProductConfigurationVolumePriceExtractorInterface;
 use Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstanceMapper;
 use Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstanceMapperInterface;
 use Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstancePriceMapper;
@@ -75,11 +78,22 @@ class ProductConfigurationStorageFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\ProductConfigurationStorage\Extractor\ProductConfigurationVolumePriceExtractorInterface
+     */
+    public function createProductConfigurationVolumePriceExtractor(): ProductConfigurationVolumePriceExtractorInterface
+    {
+        return new ProductConfigurationVolumePriceExtractor($this->getUtilEncodingService());
+    }
+
+    /**
      * @return \Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstancePriceMapperInterface
      */
     public function createProductConfigurationInstancePriceMapper(): ProductConfigurationInstancePriceMapperInterface
     {
-        return new ProductConfigurationInstancePriceMapper($this->getPriceProductService());
+        return new ProductConfigurationInstancePriceMapper(
+            $this->getPriceProductService(),
+            $this->getPriceProductConfigurationStoragePriceExtractorPlugins()
+        );
     }
 
     /**
@@ -266,6 +280,14 @@ class ProductConfigurationStorageFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): ProductConfigurationStorageToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(ProductConfigurationStorageDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
      * @return \Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToStorageClientInterface
      */
     public function getStorageClient(): ProductConfigurationStorageToStorageClientInterface
@@ -303,5 +325,13 @@ class ProductConfigurationStorageFactory extends AbstractFactory
     public function getProductConfigurationClient(): ProductConfigurationStorageToProductConfigurationClientInterface
     {
         return $this->getProvidedDependency(ProductConfigurationStorageDependencyProvider::CLIENT_PRODUCT_CONFIGURATION);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfigurationStorageExtension\Dependency\Plugin\ProductConfigurationStoragePriceExtractorPluginInterface[]
+     */
+    public function getPriceProductConfigurationStoragePriceExtractorPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductConfigurationStorageDependencyProvider::PLUGINS_PRODUCT_CONFIGURATION_STORAGE_PRICE_EXTRACTOR);
     }
 }

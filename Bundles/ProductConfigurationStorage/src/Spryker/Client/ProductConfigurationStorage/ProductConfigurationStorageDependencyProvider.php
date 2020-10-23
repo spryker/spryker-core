@@ -17,6 +17,7 @@ use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigur
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToStorageClientBridge;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToPriceProductServiceBridge;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToSynchronizationServiceBridge;
+use Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToUtilEncodingServiceServiceBridge;
 
 /**
  * @method \Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageConfig getConfig()
@@ -31,6 +32,8 @@ class ProductConfigurationStorageDependencyProvider extends AbstractDependencyPr
     public const CLIENT_PRODUCT_CONFIGURATION = 'CLIENT_PRODUCT_CONFIGURATION';
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
     public const SERVICE_PRICE_PRODUCT = 'SERVICE_PRICE_PRODUCT';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const PLUGINS_PRODUCT_CONFIGURATION_STORAGE_PRICE_EXTRACTOR = 'PLUGINS_PRODUCT_CONFIGURATION_STORAGE_PRICE_EXTRACTOR';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -42,12 +45,14 @@ class ProductConfigurationStorageDependencyProvider extends AbstractDependencyPr
         $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addSessionClient($container);
         $container = $this->addStorageClient($container);
-        $container = $this->addSynchronizationService($container);
         $container = $this->addLocaleClient($container);
         $container = $this->addProductStorageClient($container);
         $container = $this->addCartClient($container);
         $container = $this->addProductConfigurationClient($container);
         $container = $this->addPriceProductService($container);
+        $container = $this->addUtilEncodingService($container);
+        $container = $this->addSynchronizationService($container);
+        $container = $this->addPriceProductConfigurationStoragePriceExtractorPlugins($container);
 
         return $container;
     }
@@ -147,6 +152,22 @@ class ProductConfigurationStorageDependencyProvider extends AbstractDependencyPr
      *
      * @return \Spryker\Client\Kernel\Container
      */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
+            return new ProductConfigurationStorageToUtilEncodingServiceServiceBridge(
+                $container->getLocator()->utilEncoding()->service()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
     protected function addLocaleClient(Container $container): Container
     {
         $container->set(static::CLIENT_LOCALE, function (Container $container) {
@@ -170,5 +191,27 @@ class ProductConfigurationStorageDependencyProvider extends AbstractDependencyPr
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addPriceProductConfigurationStoragePriceExtractorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_CONFIGURATION_STORAGE_PRICE_EXTRACTOR, function () {
+            return $this->getProductConfigurationStoragePriceExtractorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfigurationStorageExtension\Dependency\Plugin\ProductConfigurationStoragePriceExtractorPluginInterface[]
+     */
+    protected function getProductConfigurationStoragePriceExtractorPlugins(): array
+    {
+        return [];
     }
 }
