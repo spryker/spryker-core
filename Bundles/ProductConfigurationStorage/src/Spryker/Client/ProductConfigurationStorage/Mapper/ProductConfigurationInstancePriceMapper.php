@@ -34,6 +34,7 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
     protected const PRODUCT_CONFIGURATION_INSTANCE_RESPONSE_KEY = 'productConfigurationInstance';
     protected const PRICES_RESPONSE_KEY = 'prices';
     protected const PRICES_SKU_KEY = 'sku';
+    protected const CONFIGURATOR_KEY = 'configuratorKey';
 
     /**
      * @var \Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToPriceProductServiceInterface
@@ -72,24 +73,11 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
             = $configuratorResponseData[static::PRODUCT_CONFIGURATION_INSTANCE_RESPONSE_KEY][static::PRICES_RESPONSE_KEY] ?? [];
 
         foreach ($configuratorResponsePrisesData as $currencyCode => $priceData) {
-            $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
-                ->setType(ProductConfigurationStorageConfig::PRICE_DIMENSION_PRODUCT_CONFIGURATION)
-                ->setProductConfigurationConfiguratorKey($productConfigurationInstanceTransfer->getConfiguratorKey());
-
-            $moneyValue = (new MoneyValueTransfer())
-                ->setNetAmount($priceData[static::PRICE_NET_MODE_KEY][static::DEFAULT_PRICE_TYPE_NAME] ?? null)
-                ->setGrossAmount($priceData[static::PRICE_GROSS_MODE_KEY][static::DEFAULT_PRICE_TYPE_NAME] ?? null)
-                ->setPriceData($priceData[static::PRICE_DATA_KEY] ?? null)
-                ->setCurrency(
-                    (new CurrencyTransfer())->setCode($currencyCode)
-                );
-
-            $priceProductTransfer = (new PriceProductTransfer())
-                ->setSkuProduct($configuratorResponseData[static::PRICES_SKU_KEY])
-                ->setPriceTypeName(static::DEFAULT_PRICE_TYPE_NAME)
-                ->setIsMergeable(static::IS_PRICE_MERGEABLE)
-                ->setPriceDimension($priceProductDimensionTransfer)
-                ->setMoneyValue($moneyValue);
+            $priceProductTransfer = $this->mapPriceDataToPriceProductTransfer(
+                $configuratorResponseData,
+                $currencyCode,
+                $priceData
+            );
 
             $priceProductTransfer->setGroupKey($this->priceProductService->buildPriceProductGroupKey($priceProductTransfer));
 
@@ -101,6 +89,40 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
         $productConfigurationInstanceTransfer->setPrices(new ArrayObject($priceProductTransfers));
 
         return $productConfigurationInstanceTransfer;
+    }
+
+    /**
+     * @param array $configuratorResponseData
+     * @param string $currencyCode
+     * @param array $priceData
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function mapPriceDataToPriceProductTransfer(
+        array $configuratorResponseData,
+        string $currencyCode,
+        array $priceData
+    ): PriceProductTransfer {
+        $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
+            ->setType(ProductConfigurationStorageConfig::PRICE_DIMENSION_PRODUCT_CONFIGURATION)
+            ->setProductConfigurationConfiguratorKey(
+                $configuratorResponseData[static::PRODUCT_CONFIGURATION_INSTANCE_RESPONSE_KEY][static::CONFIGURATOR_KEY]
+            );
+
+        $moneyValue = (new MoneyValueTransfer())
+            ->setNetAmount($priceData[static::PRICE_NET_MODE_KEY][static::DEFAULT_PRICE_TYPE_NAME] ?? null)
+            ->setGrossAmount($priceData[static::PRICE_GROSS_MODE_KEY][static::DEFAULT_PRICE_TYPE_NAME] ?? null)
+            ->setPriceData($priceData[static::PRICE_DATA_KEY] ?? null)
+            ->setCurrency(
+                (new CurrencyTransfer())->setCode($currencyCode)
+            );
+
+        return (new PriceProductTransfer())
+            ->setSkuProduct($configuratorResponseData[static::PRICES_SKU_KEY])
+            ->setPriceTypeName(static::DEFAULT_PRICE_TYPE_NAME)
+            ->setIsMergeable(static::IS_PRICE_MERGEABLE)
+            ->setPriceDimension($priceProductDimensionTransfer)
+            ->setMoneyValue($moneyValue);
     }
 
     /**
