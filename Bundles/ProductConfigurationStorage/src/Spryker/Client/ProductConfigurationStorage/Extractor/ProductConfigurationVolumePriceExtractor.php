@@ -50,12 +50,12 @@ class ProductConfigurationVolumePriceExtractor implements ProductConfigurationVo
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function extractProductPrices(array $priceProductTransfers): array
+    public function extractProductConfigurationVolumePrices(array $priceProductTransfers): array
     {
         $extractedPrices = [];
 
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            $extractedPrices = $this->extractProductConfigurationVolumePrices($extractedPrices, $priceProductTransfer);
+            $extractedPrices = $this->extractVolumePrices($extractedPrices, $priceProductTransfer);
         }
 
         return $extractedPrices;
@@ -67,7 +67,7 @@ class ProductConfigurationVolumePriceExtractor implements ProductConfigurationVo
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function extractProductConfigurationVolumePrices(array $extractedPrices, PriceProductTransfer $priceProductTransfer): array
+    protected function extractVolumePrices(array $extractedPrices, PriceProductTransfer $priceProductTransfer): array
     {
         if (!$priceProductTransfer->getMoneyValue()->getPriceData()) {
             return $extractedPrices;

@@ -245,6 +245,6 @@ class ProductConfigurationStorageClient extends AbstractClient implements Produc
     {
         return $this->getFactory()
             ->createProductConfigurationVolumePriceExtractor()
-            ->extractProductPrices($priceProductTransfers);
+            ->extractProductConfigurationVolumePrices($priceProductTransfers);
     }
 }

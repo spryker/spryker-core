@@ -14,5 +14,5 @@ interface ProductConfigurationVolumePriceExtractorInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function extractProductPrices(array $priceProductTransfers): array;
+    public function extractProductConfigurationVolumePrices(array $priceProductTransfers): array;
 }
