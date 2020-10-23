@@ -31,6 +31,14 @@
         <property name="shippingAddress" type="RestAddress" restRequestParameter="yes"/>
         <property name="payments" type="RestPayment[]" singular="payment" restRequestParameter="yes"/>
         <property name="shipment" type="RestShipment" restRequestParameter="yes"/>
+        <property name="shipments" type="RestShipments[]" singular="shipment" restRequestParameter="yes"/>
+    </transfer>
+
+    <transfer name="RestShipments">
+        <property name="items" type="string[]" singular="item" restRequestParameter="yes"/>
+        <property name="shippingAddress" type="RestAddress" restRequestParameter="yes"/>
+        <property name="shipmentMethodId" type="int" restRequestParameter="yes"/>
+        <property name="requestedDeliveryDate" type="string" restRequestParameter="yes"/>
     </transfer>
 
     <transfer name="RestCustomer">
@@ -43,7 +51,8 @@
     </transfer>
 
     <transfer name="RestAddress">
-        <property name="id" type="string"/>
+        <property name="id" type="string" restRequestParameter="yes"/>
+        <property name="companyBusinessUnitAddressId" type="string" restRequestParameter="yes"/>
         <property name="salutation" type="string" restRequestParameter="required"/>
         <property name="firstName" type="string" restRequestParameter="required"/>
         <property name="lastName" type="string" restRequestParameter="required"/>
