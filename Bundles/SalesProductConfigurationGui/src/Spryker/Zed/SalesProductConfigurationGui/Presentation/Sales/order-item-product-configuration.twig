@@ -2,7 +2,7 @@
 {# @var orderItem \Generated\Shared\Transfer\ItemTransfer #}
 
 {% if template is not null %}
-    {% include template.templatePath with {'data': template.data} only %}
+    {% include template.templatePath with {'data': template.data, 'IdSalesOrderItem': orderItem.IdSalesOrderItem} only %}
 {% else %}
     {{ orderItem.salesOrderItemConfiguration.displayData }}
 {% endif %}
