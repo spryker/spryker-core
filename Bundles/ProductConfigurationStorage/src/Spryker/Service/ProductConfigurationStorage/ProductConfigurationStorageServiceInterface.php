@@ -31,9 +31,9 @@ interface ProductConfigurationStorageServiceInterface
 
     /**
      * Specification:
-     * - Checks that price product filter has product configuration instance.
-     * - Filters out all prices except product configuration prices.
-     * - Leaves prices without changes if price product filter doesn't have product configuration instance.
+     * - Compares singular item prices with volume prices.
+     * - Finds corresponding volume price for provided quantity.
+     * - Returns singular item prices if matching volume price can not be found.
      *
      * @api
      *

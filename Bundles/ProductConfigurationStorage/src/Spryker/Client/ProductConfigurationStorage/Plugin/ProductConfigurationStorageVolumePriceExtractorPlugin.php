@@ -13,10 +13,11 @@ use Spryker\Client\ProductConfigurationStorageExtension\Dependency\Plugin\Produc
 /**
  * @method \Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageClientInterface getClient()
  */
-class ProductConfigurationStorageVolumeExtractorPlugin extends AbstractPlugin implements ProductConfigurationStoragePriceExtractorPluginInterface
+class ProductConfigurationStorageVolumePriceExtractorPlugin extends AbstractPlugin implements ProductConfigurationStoragePriceExtractorPluginInterface
 {
     /**
      * {@inheritDoc}
+     * - Extracts additional product configuration volume prices from price product data.
      *
      * @api
      *
@@ -26,6 +27,6 @@ class ProductConfigurationStorageVolumeExtractorPlugin extends AbstractPlugin im
      */
     public function extractProductPrices(array $priceProductTransfers): array
     {
-        return $this->getClient()->extractProductPrices($priceProductTransfers);
+        return $this->getClient()->extractProductConfigurationVolumePrices($priceProductTransfers);
     }
 }

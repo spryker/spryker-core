@@ -19,6 +19,9 @@ class ProductConfigurationPriceProductVolumeFilterPlugin extends AbstractPlugin 
 {
     /**
      * {@inheritDoc}
+     * - Compares singular item prices with volume prices.
+     * - Finds corresponding volume price for provided quantity.
+     * - Returns singular item prices if matching volume price can not be found.
      *
      * @api
      *

@@ -12,9 +12,24 @@ use Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigu
 
 class ProductConfigurationVolumePriceExtractor implements ProductConfigurationVolumePriceExtractorInterface
 {
+    /**
+     * @uses \Spryker\Shared\PriceProductVolume\PriceProductVolumeConfig::VOLUME_PRICE_TYPE
+     */
     protected const VOLUME_PRICE_KEY = 'volume_prices';
+
+    /**
+     * @uses \Spryker\Shared\PriceProductVolume\PriceProductVolumeConfig::VOLUME_PRICE_QUANTITY
+     */
     protected const VOLUME_PRICE_QUANTITY_KEY = 'quantity';
+
+    /**
+     * @uses \Spryker\Shared\PriceProductVolume\PriceProductVolumeConfig::VOLUME_PRICE_NET_PRICE
+     */
     protected const VOLUME_PRICE_NET_PRICE_KEY = 'net_price';
+
+    /**
+     * @uses \Spryker\Shared\PriceProductVolume\PriceProductVolumeConfig::VOLUME_PRICE_GROSS_PRICE
+     */
     protected const VOLUME_PRICE_GROSS_PRICE_KEY = 'gross_price';
 
     /**

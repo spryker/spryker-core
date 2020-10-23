@@ -96,7 +96,7 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
             $priceProductTransfers[] = $priceProductTransfer;
         }
 
-        $priceProductTransfers = $this->executeProductProductConfigurationStoragePriceExtractorPlugins($priceProductTransfers);
+        $priceProductTransfers = $this->executeProductConfigurationStoragePriceExtractorPlugins($priceProductTransfers);
 
         $productConfigurationInstanceTransfer->setPrices(new ArrayObject($priceProductTransfers));
 
@@ -108,7 +108,7 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function executeProductProductConfigurationStoragePriceExtractorPlugins(array $priceProductTransfers): array
+    protected function executeProductConfigurationStoragePriceExtractorPlugins(array $priceProductTransfers): array
     {
         $extractedPriceProductTransfers = [];
 

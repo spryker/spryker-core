@@ -10,6 +10,8 @@ namespace SprykerTest\Client\ProductConfigurationStorage\ProductConfigurationSto
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductConfigurationInstanceBuilder;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 
 /**
@@ -35,7 +37,9 @@ class ExpandPriceProductFilterWithProductConfigurationInstanceTest extends Unit
     public function testExpandPriceProductFilterWithProductConfigurationInstance(): void
     {
         // Arrange
-        $productConfigurationInstanceTransfer = (new ProductConfigurationInstanceBuilder())->build();
+        $productConfigurationInstanceTransfer = (new ProductConfigurationInstanceBuilder([
+            ProductConfigurationInstanceTransfer::PRICES => new PriceProductTransfer(),
+        ]))->build();
         $productViewTransfer = (new ProductViewTransfer())
             ->setProductConfigurationInstance($productConfigurationInstanceTransfer);
 

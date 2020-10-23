@@ -241,7 +241,7 @@ class ProductConfigurationStorageClient extends AbstractClient implements Produc
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function extractProductPrices(array $priceProductTransfers): array
+    public function extractProductConfigurationVolumePrices(array $priceProductTransfers): array
     {
         return $this->getFactory()
             ->createProductConfigurationVolumePriceExtractor()
