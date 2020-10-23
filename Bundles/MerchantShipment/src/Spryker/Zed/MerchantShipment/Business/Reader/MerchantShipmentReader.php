@@ -71,9 +71,9 @@ class MerchantShipmentReader implements MerchantShipmentReaderInterface
 
         $shipmentMethodName = $shipmentMethodTransfer->getName();
         if (!$shipmentMethodName) {
-            return $this->shipmentFacade->findShipmentMethodByName($shipmentMethodName);
+            return $shipmentMethodTransfer;
         }
 
-        return $shipmentMethodTransfer;
+        return $this->shipmentFacade->findShipmentMethodByName($shipmentMethodName);
     }
 }

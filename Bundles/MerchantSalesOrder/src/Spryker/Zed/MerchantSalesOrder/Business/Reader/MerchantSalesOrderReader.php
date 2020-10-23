@@ -82,17 +82,16 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
     }
 
     /**
-     * @phpstan-return \ArrayObject<int,\Generated\Shared\Transfer\ExpenseTransfer>
-     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
-     * @return \Generated\Shared\Transfer\ExpenseTransfer[]|\ArrayObject
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    protected function getMerchantOrderExpenses(MerchantOrderTransfer $merchantOrderTransfer): ArrayObject
+    protected function filterMerchantOrderExpences(OrderTransfer $orderTransfer, MerchantOrderTransfer $merchantOrderTransfer): OrderTransfer
     {
         $expenseTransfers = new ArrayObject();
 
-        foreach ($merchantOrderTransfer->getOrder()->getExpenses() as $expenseTransfer) {
+        foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
             if ($expenseTransfer->getMerchantReference() !== $merchantOrderTransfer->getMerchantReference()) {
                 continue;
             }
@@ -100,7 +99,7 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
             $expenseTransfers->append($expenseTransfer);
         }
 
-        return $expenseTransfers;
+        return $orderTransfer->setExpenses($expenseTransfers);
     }
 
     /**
@@ -159,9 +158,10 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
         }
 
         $orderTransfer = $this->filterMerchantOrderItems($orderTransfer, $merchantOrderTransfer);
+        $orderTransfer = $this->filterMerchantOrderExpences($orderTransfer, $merchantOrderTransfer);
 
         $merchantOrderTransfer->setOrder($orderTransfer);
-        $merchantOrderTransfer->setExpenses($this->getMerchantOrderExpenses($merchantOrderTransfer));
+        $merchantOrderTransfer->setExpenses($orderTransfer->getExpenses());
 
         return $merchantOrderTransfer;
     }
