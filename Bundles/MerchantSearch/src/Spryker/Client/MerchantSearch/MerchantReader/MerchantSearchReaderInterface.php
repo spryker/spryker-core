@@ -7,10 +7,14 @@
 
 namespace Spryker\Client\MerchantSearch\MerchantReader;
 
+use Generated\Shared\Transfer\MerchantSearchRequestTransfer;
+
 interface MerchantSearchReaderInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\MerchantSearchCollectionTransfer
+     * @param \Generated\Shared\Transfer\MerchantSearchRequestTransfer $merchantSearchRequestTransfer
+     *
+     * @return array
      */
-    public function merchantSearch();
+    public function merchantSearch(MerchantSearchRequestTransfer $merchantSearchRequestTransfer): array;
 }

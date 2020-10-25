@@ -15,7 +15,7 @@ use Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\AbstractElasticsea
 
 class MerchantSearchResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
-    public const NAME = 'MerchantCollection';
+    protected const NAME = 'MerchantSearchCollection';
 
     /**
      * @api

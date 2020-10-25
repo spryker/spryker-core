@@ -8,66 +8,30 @@
 namespace Spryker\Client\MerchantSearch;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\MerchantSearch\Dependency\Client\MerchantSearchToStoreClientInterface;
-use Spryker\Client\MerchantSearch\Dependency\Client\MerchantSearchToZedRequestClientInterface;
-use Spryker\Client\MerchantSearch\MerchantReader\MerchantReader;
-use Spryker\Client\MerchantSearch\MerchantReader\MerchantReaderInterface;
+use Spryker\Client\MerchantSearch\Dependency\Client\MerchantSearchToSearchClientInterface;
 use Spryker\Client\MerchantSearch\MerchantReader\MerchantSearchReader;
-use Spryker\Client\MerchantSearch\Zed\MerchantSearchStub;
-use Spryker\Client\MerchantSearch\Zed\MerchantSearchStubInterface;
+use Spryker\Client\MerchantSearch\MerchantReader\MerchantSearchReaderInterface;
+use Spryker\Client\MerchantSearch\PaginationConfigBuilder\MerchantSearchPaginationConfigBuilder;
+use Spryker\Client\MerchantSearch\PaginationConfigBuilder\PaginationConfigBuilderInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
+/**
+ * @method \Spryker\Client\MerchantSearch\MerchantSearchConfig getConfig()
+ */
 class MerchantSearchFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\MerchantSearch\Zed\MerchantSearchStubInterface
-     */
-    public function createMerchantSearchStub(): MerchantSearchStubInterface
-    {
-        return new MerchantSearchStub(
-            $this->getZedRequestClient()
-        );
-    }
-
-    /**
-     * @return \Spryker\Client\MerchantSearch\MerchantReader\MerchantReaderInterface
-     */
-    public function createMerchantReader(): MerchantReaderInterface
-    {
-        return new MerchantReader(
-            $this->createMerchantSearchStub(),
-            $this->getStoreClient()
-        );
-    }
-
-    /**
-     * @return \Spryker\Client\MerchantSearch\Dependency\Client\MerchantSearchToZedRequestClientInterface
-     */
-    public function getZedRequestClient(): MerchantSearchToZedRequestClientInterface
-    {
-        return $this->getProvidedDependency(MerchantSearchDependencyProvider::CLIENT_ZED_REQUEST);
-    }
-
-    /**
-     * @return \Spryker\Client\MerchantSearch\Dependency\Client\MerchantSearchToStoreClientInterface
-     */
-    public function getStoreClient(): MerchantSearchToStoreClientInterface
-    {
-        return $this->getProvidedDependency(MerchantSearchDependencyProvider::CLIENT_STORE);
-    }
-
-    /**
      * @return \Spryker\Client\MerchantSearch\Dependency\Client\MerchantSearchToSearchClientInterface
      */
-    public function getSerchClient()
+    public function getSerchClient(): MerchantSearchToSearchClientInterface
     {
         return $this->getProvidedDependency(MerchantSearchDependencyProvider::CLIENT_SEARCH);
     }
 
     /**
-     * @return \Spryker\Client\MerchantSearch\MerchantReader\MerchantSearchReader
+     * @return \Spryker\Client\MerchantSearch\MerchantReader\MerchantSearchReaderInterface
      */
-    public function createMerchantSearchReader()
+    public function createMerchantSearchReader(): MerchantSearchReaderInterface
     {
         return new MerchantSearchReader(
             $this->getSerchClient(),
@@ -99,5 +63,18 @@ class MerchantSearchFactory extends AbstractFactory
     public function getMerchantSearchResultFormatterPlugins(): array
     {
         return $this->getProvidedDependency(MerchantSearchDependencyProvider::PLUGINS_MERCHANT_SEARCH_RESULT_FORMATTER);
+    }
+
+    /**
+     * @return \Spryker\Client\MerchantSearch\PaginationConfigBuilder\PaginationConfigBuilderInterface
+     */
+    public function createMerchantSearchPaginationConfigBuilder(): PaginationConfigBuilderInterface
+    {
+        $merchantSearchPaginationConfigBuilder = new MerchantSearchPaginationConfigBuilder();
+        $merchantSearchPaginationConfigBuilder->setPaginationConfigTransfer(
+            $this->getConfig()->getMerchantSearchPaginationConfigTransfer()
+        );
+
+        return $merchantSearchPaginationConfigBuilder;
     }
 }

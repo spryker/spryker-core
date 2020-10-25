@@ -9,6 +9,9 @@ namespace Spryker\Zed\MerchantSearch\Business\DataMapper;
 
 use Generated\Shared\Search\MerchantIndexMap;
 use Generated\Shared\Transfer\MerchantSearchTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\MerchantSearch\MerchantSearchConfig;
 
 class MerchantSearchDataMapper implements MerchantSearchDataMapperInterface
@@ -27,6 +30,7 @@ class MerchantSearchDataMapper implements MerchantSearchDataMapperInterface
             MerchantIndexMap::SUGGESTION_TERMS => $this->getSuggestionTermsData($data),
             MerchantIndexMap::COMPLETION_TERMS => $this->getCompletionTermsData($data),
             MerchantIndexMap::STRING_SORT => $this->getStringSortData($data),
+            MerchantIndexMap::STORE => $this->getStoresData($data),
         ];
     }
 
@@ -92,5 +96,15 @@ class MerchantSearchDataMapper implements MerchantSearchDataMapperInterface
         return [
             MerchantSearchTransfer::NAME => $data[MerchantSearchTransfer::NAME],
         ];
+    }
+
+    /**
+     * @param string[] $data
+     *
+     * @return string[]
+     */
+    protected function getStoresData(array $data): array
+    {
+        return array_column($data[MerchantTransfer::STORE_RELATION][StoreRelationTransfer::STORES], StoreTransfer::NAME);
     }
 }

@@ -25,7 +25,7 @@ class MerchantSearchToEventBehaviorFacadeBridge implements MerchantSearchToEvent
     /**
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
-     * @return int[]
+     * @return array
      */
     public function getEventTransferIds(array $eventTransfers)
     {

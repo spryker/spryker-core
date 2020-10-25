@@ -60,6 +60,9 @@
                     "type": "object",
                     "properties": {
                     }
+                },
+                "store": {
+                    "type": "text"
                 }
             }
         }

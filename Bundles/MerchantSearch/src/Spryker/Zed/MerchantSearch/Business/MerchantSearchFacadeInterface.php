@@ -8,24 +8,9 @@
 namespace Spryker\Zed\MerchantSearch\Business;
 
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\MerchantCollectionTransfer;
-use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 
 interface MerchantSearchFacadeInterface
 {
-    /**
-     * Specification:
-     * - Returns the list of active merchants.
-     * - Can be filtered by MerchantCriteriaTransfer.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
-     */
-    public function get(MerchantCriteriaTransfer $merchantCriteriaTransfer): MerchantCollectionTransfer;
-
     /**
      * Specification:
      * - Retrieves all Merchants using IDs from $eventTransfers.

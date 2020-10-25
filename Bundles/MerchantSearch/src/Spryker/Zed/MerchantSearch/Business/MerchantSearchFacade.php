@@ -8,8 +8,6 @@
 namespace Spryker\Zed\MerchantSearch\Business;
 
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\MerchantCollectionTransfer;
-use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -19,22 +17,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class MerchantSearchFacade extends AbstractFacade implements MerchantSearchFacadeInterface
 {
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
-     */
-    public function get(MerchantCriteriaTransfer $merchantCriteriaTransfer): MerchantCollectionTransfer
-    {
-        return $this->getFactory()
-            ->getMerchantFacade()
-            ->get($merchantCriteriaTransfer);
-    }
-
     /**
      * {@inheritDoc}
      *

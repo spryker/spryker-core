@@ -22,11 +22,6 @@ class MerchantSearchConfig extends AbstractBundleConfig
     public const SYNC_SEARCH_MERCHANT = 'sync.search.merchant';
 
     /**
-     * Defines queue name as used for processing translation error messages.
-     */
-    public const SYNC_SEARCH_MERCHANT_ERROR = 'sync.search.merchant.error';
-
-    /**
      * This events that will be used for key writing.
      */
     public const MERCHANT_PUBLISH = 'Merchant.merchant.publish';
