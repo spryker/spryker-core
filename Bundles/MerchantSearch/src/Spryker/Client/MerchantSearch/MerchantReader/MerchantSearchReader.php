@@ -62,12 +62,13 @@ class MerchantSearchReader implements MerchantSearchReaderInterface
         $searchQuery = $this->searchClient->expandQuery(
             $this->merchantSearchQueryPlugin,
             $this->merchantSearchQueryExpanderPlugins,
-            $requestParameters,
+            $requestParameters
         );
+
         $result = $this->searchClient->search(
             $searchQuery,
             $this->merchantSearchResultFormatterPlugins,
-            $requestParameters,
+            $requestParameters
         );
 
         return $result;

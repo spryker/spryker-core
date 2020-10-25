@@ -7,6 +7,8 @@
 
 namespace Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder;
 
+use Generated\Shared\Transfer\MerchantSearchCollectionTransfer;
+use Generated\Shared\Transfer\MerchantSearchRequestTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestMerchantsAttributesTransfer;
@@ -19,6 +21,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterface
 {
+    /**
+     * @uses @todo
+     */
+    protected const ITEMS_PER_PAGE = 'ipp';
+
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
@@ -103,6 +110,47 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
                     ->setCode(MerchantsRestApiConfig::RESPONSE_CODE_MERCHANT_IDENTIFIER_MISSING)
                     ->setDetail(MerchantsRestApiConfig::RESPONSE_DETAIL_MERCHANT_IDENTIFIER_MISSING)
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantSearchRequestTransfer $merchantSearchRequestTransfer
+     * @param \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer
+     * @param string $localeName
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createMerchantListRestResponse(
+        MerchantSearchRequestTransfer $merchantSearchRequestTransfer,
+        MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer,
+        string $localeName
+    ): RestResponseInterface {
+        $restMerchantsAttributesTransfers = [];
+
+        foreach ($merchantSearchCollectionTransfer->getMerchantSearches() as $key => $merchantSearchTransfer) {
+            $restMerchantsAttributesTransfers[$key] = $this->merchantMapper
+                ->mapMerchantSearchTransferToRestMerchantsAttributesTransfer(
+                    $merchantSearchTransfer,
+                    new RestMerchantsAttributesTransfer(),
+                    $localeName
+                );
+        }
+
+        $restResponse = $this->restResourceBuilder->createRestResponse(
+            $merchantSearchCollectionTransfer->getNbResults(),
+            $merchantSearchRequestTransfer->getRequestParameters()[static::ITEMS_PER_PAGE] ?? 0
+        );
+
+        foreach ($restMerchantsAttributesTransfers as $key => $restMerchantsAttributesTransfer) {
+            $restResponse->addResource(
+                $this->restResourceBuilder->createRestResource(
+                    MerchantsRestApiConfig::RESOURCE_MERCHANTS,
+                    $merchantSearchCollectionTransfer->getMerchantSearches()[$key]->getMerchantReference(),
+                    $restMerchantsAttributesTransfer
+                )
+            );
+        }
+
+        return $restResponse;
     }
 
     /**
