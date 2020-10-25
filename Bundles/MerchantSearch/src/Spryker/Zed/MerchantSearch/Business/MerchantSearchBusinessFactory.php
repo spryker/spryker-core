@@ -63,7 +63,8 @@ class MerchantSearchBusinessFactory extends AbstractBusinessFactory
             $this->getMerchantFacade(),
             $this->getEventBehaviorFacade(),
             $this->createMerchantSearchMapper(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getMerchantSearchDataExpanderPlugins()
         );
     }
 
@@ -85,5 +86,13 @@ class MerchantSearchBusinessFactory extends AbstractBusinessFactory
     public function createMerchantSearchDataMapper(): MerchantSearchDataMapperInterface
     {
         return new MerchantSearchDataMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSearchExtension\Dependency\Plugin\MerchantSearchDataExpanderPluginInterface[]
+     */
+    public function getMerchantSearchDataExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantSearchDependencyProvider::PLUGINS_MERCHANT_SEARCH_DATA_EXPANDER);
     }
 }

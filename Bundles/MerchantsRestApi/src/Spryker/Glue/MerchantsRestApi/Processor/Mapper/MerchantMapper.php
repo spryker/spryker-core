@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\MerchantsRestApi\Processor\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\MerchantSearchTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\RestLegalInformationTransfer;
@@ -54,7 +55,7 @@ class MerchantMapper implements MerchantMapperInterface
             ->setBannerUrl($merchantStorageProfileTransfer->getBannerUrl())
             ->setDescription($merchantStorageProfileTransfer->getDescription())
             ->setDeliveryTime($merchantStorageProfileTransfer->getDeliveryTime())
-            ->setMerchantUrl($this->findMerchantUrlByLocaleName($merchantStorageTransfer, $localeName));
+            ->setMerchantUrl($this->findMerchantUrlByLocaleName($merchantStorageTransfer->getUrlCollection(), $localeName));
 
         $restMerchantsAttributesTransfer = $this->executeRestMerchantsAttributesMapperPlugins(
             $merchantStorageTransfer,
@@ -68,29 +69,54 @@ class MerchantMapper implements MerchantMapperInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantSearchTransfer $merchantSearchTransfer
      * @param \Generated\Shared\Transfer\RestMerchantsAttributesTransfer $restMerchantsAttributesTrasnsfer
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\RestMerchantsAttributesTransfer
      */
     public function mapMerchantSearchTransferToRestMerchantsAttributesTransfer(
         MerchantSearchTransfer $merchantSearchTransfer,
-        RestMerchantsAttributesTransfer $restMerchantsAttributesTrasnsfer
+        RestMerchantsAttributesTransfer $restMerchantsAttributesTrasnsfer,
+        string $localeName
     ): RestMerchantsAttributesTransfer {
-        $restMerchantsAttributesTrasnsfer->setMerchantName($merchantSearchTransfer->getName());
+        $merchantProfileTransfer = $merchantSearchTransfer->getMerchantProfile();
 
-        // @todo
+        $restLegalInformationTransfer = (new RestLegalInformationTransfer())
+            ->setCancellationPolicy($merchantProfileTransfer->getCancellationPolicy())
+            ->setDataPrivacy($merchantProfileTransfer->getDataPrivacy())
+            ->setImprint($merchantProfileTransfer->getImprint())
+            ->setTerms($merchantProfileTransfer->getTermsConditions());
+
+        $restMerchantsAttributesTrasnsfer->fromArray($merchantSearchTransfer->toArray(), true);
+        $restMerchantsAttributesTrasnsfer->setMerchantName($merchantSearchTransfer->getName())
+            ->setMerchantUrl($this->findMerchantUrlByLocaleName($merchantSearchTransfer->getUrlCollection(), $localeName))
+            ->setContactPersonRole($merchantProfileTransfer->getContactPersonRole())
+            ->setContactPersonTitle($merchantProfileTransfer->getContactPersonTitle())
+            ->setContactPersonFirstName($merchantProfileTransfer->getContactPersonFirstName())
+            ->setContactPersonLastName($merchantProfileTransfer->getContactPersonLastName())
+            ->setContactPersonPhone($merchantProfileTransfer->getContactPersonPhone())
+            ->setLogoUrl($merchantProfileTransfer->getLogoUrl())
+            ->setPublicEmail($merchantProfileTransfer->getPublicEmail())
+            ->setPublicPhone($merchantProfileTransfer->getPublicPhone())
+            ->setDescription($merchantProfileTransfer->getDescription())
+            ->setBannerUrl($merchantProfileTransfer->getBannerUrl())
+            ->setDeliveryTime($merchantProfileTransfer->getDeliveryTime())
+            ->setLatitude($merchantProfileTransfer->getLatitude())
+            ->setLongitude($merchantProfileTransfer->getLongitude())
+            ->setFaxNumber($merchantProfileTransfer->getFaxNumber())
+            ->setLegalInformation($restLegalInformationTransfer);
 
         return $restMerchantsAttributesTrasnsfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantStorageTransfer $merchantStorageTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\UrlTransfer[] $urlCollection
      * @param string $localeName
      *
      * @return string|null
      */
-    protected function findMerchantUrlByLocaleName(MerchantStorageTransfer $merchantStorageTransfer, string $localeName): ?string
+    protected function findMerchantUrlByLocaleName(ArrayObject $urlCollection, string $localeName): ?string
     {
-        foreach ($merchantStorageTransfer->getUrlCollection() as $urlTransfer) {
+        foreach ($urlCollection as $urlTransfer) {
             if ($urlTransfer->getLocaleName() === $localeName) {
                 return $urlTransfer->getUrl();
             }

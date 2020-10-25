@@ -17,9 +17,9 @@ use Spryker\Shared\MerchantSearch\MerchantSearchConfig;
 class MerchantSearchDataMapper implements MerchantSearchDataMapperInterface
 {
     /**
-     * @param string[] $data
+     * @param array $data
      *
-     * @return mixed[]
+     * @return array
      */
     public function mapMerchantDataToSearchData(array $data): array
     {
@@ -35,19 +35,13 @@ class MerchantSearchDataMapper implements MerchantSearchDataMapperInterface
     }
 
     /**
-     * @param string[] $data
+     * @param array $data
      *
-     * @return string[]
+     * @return array
      */
     protected function getSearchResultData(array $data): array
     {
-        return [
-            MerchantSearchTransfer::ID_MERCHANT => $data[MerchantSearchTransfer::ID_MERCHANT],
-            MerchantSearchTransfer::NAME => $data[MerchantSearchTransfer::NAME],
-            MerchantSearchTransfer::EMAIL => $data[MerchantSearchTransfer::EMAIL],
-            MerchantSearchTransfer::REGISTRATION_NUMBER => $data[MerchantSearchTransfer::REGISTRATION_NUMBER],
-            MerchantSearchTransfer::MERCHANT_REFERENCE => $data[MerchantSearchTransfer::MERCHANT_REFERENCE],
-        ];
+        return (new MerchantSearchTransfer())->fromArray($data, true)->toArray();
     }
 
     /**
@@ -99,9 +93,9 @@ class MerchantSearchDataMapper implements MerchantSearchDataMapperInterface
     }
 
     /**
-     * @param string[] $data
+     * @param array $data
      *
-     * @return string[]
+     * @return array
      */
     protected function getStoresData(array $data): array
     {

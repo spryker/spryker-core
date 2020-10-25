@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\MerchantCategory\Persistence\Propel\Mapper;
 
+use ArrayObject;
+use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategory;
 
 class MerchantCategoryMapper
@@ -22,8 +25,20 @@ class MerchantCategoryMapper
         SpyMerchantCategory $merchantCategoryEntity,
         CategoryTransfer $categoryTransfer
     ): CategoryTransfer {
-        $categoryTransfer->fromArray($merchantCategoryEntity->getSpyCategory()->toArray(), true);
+        $categoryEntity = $merchantCategoryEntity->getSpyCategory();
 
-        return $categoryTransfer;
+        $categoryTransfer->fromArray($categoryEntity->toArray(), true);
+
+        $categoryLocalizedAttributesTransfers = [];
+
+        foreach ($categoryEntity->getAttributes() as $categoryAttributeEntity) {
+            $categoryLocalizedAttributesTransfers[] = (new CategoryLocalizedAttributesTransfer())
+                ->fromArray($categoryAttributeEntity->toArray(), true)
+                ->setLocale(
+                    (new LocaleTransfer())->fromArray($categoryAttributeEntity->getLocale()->toArray(), true)
+                );
+        }
+
+        return $categoryTransfer->setLocalizedAttributes(new ArrayObject($categoryLocalizedAttributesTransfers));
     }
 }

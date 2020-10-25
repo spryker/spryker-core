@@ -20,7 +20,10 @@ class MerchantSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_MERCHANT = 'FACADE_MERCHANT';
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
+    public const PLUGINS_MERCHANT_SEARCH_DATA_EXPANDER = 'PLUGINS_MERCHANT_SEARCH_DATA_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -32,8 +35,11 @@ class MerchantSearchDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideBusinessLayerDependencies($container);
 
         $container = $this->addMerchantFacade($container);
+
         $container = $this->addEventBehaviorFacade($container);
         $container = $this->addUtilEncodingService($container);
+
+        $container = $this->addMerchantSearchDataExpanderPlugins($container);
 
         return $container;
     }
@@ -82,5 +88,27 @@ class MerchantSearchDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantSearchDataExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_SEARCH_DATA_EXPANDER, function () {
+            return $this->getMerchantSearchDataExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSearchExtension\Dependency\Plugin\MerchantSearchDataExpanderPluginInterface[]
+     */
+    protected function getMerchantSearchDataExpanderPlugins(): array
+    {
+        return [];
     }
 }

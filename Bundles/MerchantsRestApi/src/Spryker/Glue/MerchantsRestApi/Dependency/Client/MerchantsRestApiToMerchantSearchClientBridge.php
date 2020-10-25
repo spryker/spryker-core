@@ -7,31 +7,30 @@
 
 namespace Spryker\Glue\MerchantsRestApi\Dependency\Client;
 
-use ArrayObject;
-use Generated\Shared\Transfer\MerchantSearchCollectionTransfer;
 use Generated\Shared\Transfer\MerchantSearchRequestTransfer;
-use Generated\Shared\Transfer\MerchantSearchTransfer;
 
 class MerchantsRestApiToMerchantSearchClientBridge implements MerchantsRestApiToMerchantSearchClientInterface
 {
     /**
-     * @todo
+     * @var \Spryker\Client\MerchantSearch\MerchantSearchClientInterface
+     */
+    protected $merchantSearchClient;
 
+    /**
+     * @param \Spryker\Client\MerchantSearch\MerchantSearchClientInterface $merchantSearchClient
+     */
+    public function __construct($merchantSearchClient)
+    {
+        $this->merchantSearchClient = $merchantSearchClient;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\MerchantSearchRequestTransfer $merchantSearchRequestTransfer
      *
      * @return array
      */
-    public function searchMerchants(MerchantSearchRequestTransfer $merchantSearchRequestTransfer): array
+    public function merchantSearch(MerchantSearchRequestTransfer $merchantSearchRequestTransfer): array
     {
-        return [
-            'MercahantCollection' => (new MerchantSearchCollectionTransfer())
-                ->setNbResults(1)
-                ->setMerchants(new ArrayObject([
-                    (new MerchantSearchTransfer())
-                        ->setName('Spryker'),
-                    (new MerchantSearchTransfer())
-                        ->setName('Video King'),
-                ])),
-        ];
+        return $this->merchantSearchClient->merchantSearch($merchantSearchRequestTransfer);
     }
 }

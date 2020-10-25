@@ -35,7 +35,7 @@ class MerchantReader implements MerchantReaderInterface
     /**
      * @uses @todo
      */
-    protected const KEY_MERCHANT_COLLECTION = 'MercahantCollection';
+    protected const KEY_MERCHANT_SEARCH_COLLECTION = 'MerchantSearchCollection';
 
     /**
      * @var \Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantStorageClientInterface
@@ -138,12 +138,17 @@ class MerchantReader implements MerchantReaderInterface
     protected function getMerchants(RestRequestInterface $restRequest): RestResponseInterface
     {
         $merchantSearchRequestTransfer = $this->createMerchantSearchRequest($restRequest);
-        $searchResult = $this->merchantSearchClient->searchMerchants(
+        $searchResult = $this->merchantSearchClient->merchantSearch(
             $merchantSearchRequestTransfer
         );
 
         /** @var \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer */
-        $merchantSearchCollectionTransfer = $searchResult[static::KEY_MERCHANT_COLLECTION];
+        $merchantSearchCollectionTransfer = $searchResult[static::KEY_MERCHANT_SEARCH_COLLECTION];
+
+        $merchantSearchCollectionTransfer = $this->merchantTranslator->translateMerchantSearchCollection(
+            $merchantSearchCollectionTransfer,
+            $restRequest->getMetadata()->getLocale()
+        );
 
         return $this->merchantRestResponseBuilder->createMerchantListRestResponse(
             $merchantSearchRequestTransfer,

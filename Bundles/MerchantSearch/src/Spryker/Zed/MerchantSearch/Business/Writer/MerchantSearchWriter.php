@@ -38,21 +38,29 @@ class MerchantSearchWriter implements MerchantSearchWriterInterface
     protected $entityManager;
 
     /**
+     * @var \Spryker\Zed\MerchantSearchExtension\Dependency\Plugin\MerchantSearchDataExpanderPluginInterface[]
+     */
+    protected $merchantSearchDataExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\MerchantSearch\Dependency\Facade\MerchantSearchToMerchantFacadeInterface $merchantFacade
      * @param \Spryker\Zed\MerchantSearch\Dependency\Facade\MerchantSearchToEventBehaviorFacadeInterface $eventBehaviorFacade
      * @param \Spryker\Zed\MerchantSearch\Business\Mapper\MerchantSearchMapperInterface $merchantMapper
      * @param \Spryker\Zed\MerchantSearch\Persistence\MerchantSearchEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\MerchantSearchExtension\Dependency\Plugin\MerchantSearchDataExpanderPluginInterface[] $merchantSearchDataExpanderPlugins
      */
     public function __construct(
         MerchantSearchToMerchantFacadeInterface $merchantFacade,
         MerchantSearchToEventBehaviorFacadeInterface $eventBehaviorFacade,
         MerchantSearchMapperInterface $merchantMapper,
-        MerchantSearchEntityManagerInterface $entityManager
+        MerchantSearchEntityManagerInterface $entityManager,
+        array $merchantSearchDataExpanderPlugins
     ) {
         $this->merchantFacade = $merchantFacade;
         $this->eventBehaviorFacade = $eventBehaviorFacade;
         $this->merchantMapper = $merchantMapper;
         $this->entityManager = $entityManager;
+        $this->merchantSearchDataExpanderPlugins = $merchantSearchDataExpanderPlugins;
     }
 
     /**
@@ -89,7 +97,7 @@ class MerchantSearchWriter implements MerchantSearchWriterInterface
         }
         $merchantSearchCollectionTransfer = $this->merchantMapper->mapMerchantCollectionTransferToMerchantSearchCollectionTransfer(
             $merchantCollectionTransfer,
-            new MerchantSearchCollectionTransfer(),
+            new MerchantSearchCollectionTransfer()
         );
 
         $this->writeCollection($merchantSearchCollectionTransfer);

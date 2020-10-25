@@ -24,9 +24,18 @@ class MerchantCategoryRepository extends AbstractRepository implements MerchantC
      */
     public function getCategories(MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer): array
     {
+        /**
+         * @var \Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery $merchantCategoryQuery
+         */
         $merchantCategoryQuery = $this->getFactory()
             ->getMerchantCategoryPropelQuery()
-            ->joinWithSpyCategory();
+            ->joinWithSpyCategory()
+            ->useSpyCategoryQuery()
+                ->leftJoinWithAttribute()
+                ->useAttributeQuery()
+                    ->leftJoinWithLocale()
+                ->endUse()
+            ->endUse();
 
         $merchantCategoryQuery = $this->applyFilters($merchantCategoryQuery, $merchantCategoryCriteriaTransfer);
         $merchantCategoryEntities = $merchantCategoryQuery->find();

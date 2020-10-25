@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\MerchantsRestApi\Processor\Translator;
 
+use Generated\Shared\Transfer\MerchantSearchCollectionTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 
 interface MerchantTranslatorInterface
@@ -32,4 +33,15 @@ interface MerchantTranslatorInterface
         array $merchantStorageTransfers,
         string $localeName
     ): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\MerchantSearchCollectionTransfer
+     */
+    public function translateMerchantSearchCollection(
+        MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer,
+        string $localeName
+    ): MerchantSearchCollectionTransfer;
 }

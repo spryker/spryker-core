@@ -27,6 +27,7 @@
         <property name="merchantReference" type="string"/>
         <property name="data" type="array" singular="data"/>
         <property name="structuredData" type="string"/>
+        <property name="urlCollection" type="Url[]" singular="url"/>
     </transfer>
 
     <transfer name="MerchantSearchRequest">

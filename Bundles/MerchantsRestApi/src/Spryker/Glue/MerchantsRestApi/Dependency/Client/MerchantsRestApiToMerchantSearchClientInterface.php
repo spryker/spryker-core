@@ -12,11 +12,9 @@ use Generated\Shared\Transfer\MerchantSearchRequestTransfer;
 interface MerchantsRestApiToMerchantSearchClientInterface
 {
     /**
-     * @todo
-     *
      * @param \Generated\Shared\Transfer\MerchantSearchRequestTransfer $merchantSearchRequestTransfer
      *
      * @return array
      */
-    public function searchMerchants(MerchantSearchRequestTransfer $merchantSearchRequestTransfer): array;
+    public function merchantSearch(MerchantSearchRequestTransfer $merchantSearchRequestTransfer): array;
 }
