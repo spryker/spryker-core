@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\MerchantSearch;
 
-use Generated\Shared\Transfer\MerchantCollectionTransfer;
+use Generated\Shared\Transfer\MerchantSearchRequestTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -20,12 +20,14 @@ class MerchantSearchClient extends AbstractClient implements MerchantSearchClien
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
+     * @param \Generated\Shared\Transfer\MerchantSearchRequestTransfer $merchantSearchRequestTransfer
+     *
+     * @return array
      */
-    public function getMerchantCollection(): MerchantCollectionTransfer
+    public function merchantSearch(MerchantSearchRequestTransfer $merchantSearchRequestTransfer): array
     {
         return $this->getFactory()
-            ->createMerchantReader()
-            ->get();
+            ->createMerchantSearchReader()
+            ->merchantSearch($merchantSearchRequestTransfer);
     }
 }

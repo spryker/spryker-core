@@ -7,21 +7,48 @@
 
 namespace Spryker\Zed\MerchantSearch\Business;
 
-use Generated\Shared\Transfer\MerchantCollectionTransfer;
-use Generated\Shared\Transfer\MerchantCriteriaTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 
 interface MerchantSearchFacadeInterface
 {
     /**
      * Specification:
-     * - Returns the list of active merchants.
-     * - Can be filtered by MerchantCriteriaTransfer.
+     * - Retrieves all Merchants using IDs from $eventTransfers.
+     * - Updates entities from `spy_merchant_search` with actual data from obtained Merchants.
+     * - Sends a copy of data to queue based on module config.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
-     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
+     * @return void
      */
-    public function get(MerchantCriteriaTransfer $merchantCriteriaTransfer): MerchantCollectionTransfer;
+    public function writeCollectionByMerchantEvents(array $eventTransfers): void;
+
+    /**
+     * Specification:
+     * - Deletes entities from `spy_merchant_search` based on IDs from $eventTransfers.
+     * - Sends delete message to queue based on module config.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function deleteCollectionByMerchantEvents(array $eventTransfers): void;
+
+    /**
+     * Specification:
+     * - Reads entities from `spy_merchant_search` based on criteria from FilterTransfer and $merchantIds.
+     * - Returns array of SynchronizationDataTransfer filled with data from search entities.
+
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $merchantIds
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getSynchronizationDataTransfersByMerchantIds(FilterTransfer $filterTransfer, array $merchantIds): array;
 }

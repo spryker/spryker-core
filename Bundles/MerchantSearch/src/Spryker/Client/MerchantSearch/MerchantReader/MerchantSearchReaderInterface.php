@@ -5,19 +5,13 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\MerchantSearch;
+namespace Spryker\Client\MerchantSearch\MerchantReader;
 
 use Generated\Shared\Transfer\MerchantSearchRequestTransfer;
 
-interface MerchantSearchClientInterface
+interface MerchantSearchReaderInterface
 {
     /**
-     * Specification:
-     * - Makes ElasticSearch request.
-     * - Returns the list of active merchants.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\MerchantSearchRequestTransfer $merchantSearchRequestTransfer
      *
      * @return array
