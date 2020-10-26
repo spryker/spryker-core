@@ -264,7 +264,7 @@ class ProductConfigurationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateCartItemQuantityWithoutItemsInCartWillDefaultQuantity(): void
+    public function testCalculateCartItemQuantityWithoutItemsInCartWillReturnDefaultQuantity(): void
     {
         //Arrange
         $itemTransfer = (new ItemBuilder())->build();
