@@ -130,8 +130,12 @@ class OrderMapper implements OrderMapperInterface
         $countryName = $countryTransfer ? $countryTransfer->getName() : null;
         $countryIso2Code = $countryTransfer ? $countryTransfer->getIso2Code() : null;
 
-        $restOrderDetailsAttributesTransfer->getShippingAddress()->setCountry($countryName);
-        $restOrderDetailsAttributesTransfer->getShippingAddress()->setIso2Code($countryIso2Code);
+        $shippingAddress = $restOrderDetailsAttributesTransfer->getShippingAddress();
+        if ($shippingAddress) {
+            $shippingAddress
+                ->setCountry($countryName)
+                ->setIso2Code($countryIso2Code);
+        }
 
         $restOrderDetailsAttributesTransfer->setShipments(
             $this->orderShipmentMapper->mapOrderTransferToRestOrderShipmentTransfers($orderTransfer, new ArrayObject())
