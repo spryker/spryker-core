@@ -57,9 +57,9 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
      */
     public function mapSearchResultToRestAttributesTransfer(array $searchResult): RestCatalogSearchAttributesTransfer
     {
-        $searchResultToArray = $this->convertSearchResultToArray($searchResult);
+        $convertSearchResult = $this->convertSearchResultToArray($searchResult);
 
-        $restSearchAttributesTransfer = (new RestCatalogSearchAttributesTransfer())->fromArray($searchResultToArray, true);
+        $restSearchAttributesTransfer = (new RestCatalogSearchAttributesTransfer())->fromArray($convertSearchResult, true);
 
         $restSearchAttributesTransfer = $this->mapSearchResponseProductsToRestCatalogSearchAttributesTransfer(
             $restSearchAttributesTransfer,
@@ -211,32 +211,32 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
     }
 
     /**
-     * @param array $searchResponse
+     * @param array $searchResult
      *
      * @return array
      */
-    protected function convertSearchResultToArray(array $searchResponse): array
+    protected function convertSearchResultToArray(array $searchResult): array
     {
-        $convertedSearchResponse = [];
-        foreach ($searchResponse as $searchDataKey => $searchDataItem) {
-            if ($searchDataItem instanceof ArrayObject) {
-                foreach ($searchDataItem as $transferInArrayObject) {
+        $convertedSearchResult = [];
+        foreach ($searchResult as $searchResultDataIndex => $searchResultDataItem) {
+            if ($searchResultDataItem instanceof ArrayObject) {
+                foreach ($searchResultDataItem as $transferInArrayObject) {
                     /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $transferInArrayObject */
-                    $convertedSearchResponse[$searchDataKey][] = $transferInArrayObject->toArray();
+                    $convertedSearchResult[$searchResultDataIndex][] = $transferInArrayObject->toArray();
                 }
 
                 continue;
             }
 
-            if ($searchDataItem instanceof TransferInterface) {
-                $convertedSearchResponse[$searchDataKey] = $searchDataItem->toArray();
+            if ($searchResultDataItem instanceof TransferInterface) {
+                $convertedSearchResult[$searchResultDataIndex] = $searchResultDataItem->toArray();
 
                 continue;
             }
 
-            $convertedSearchResponse[$searchDataKey] = $searchDataItem;
+            $convertedSearchResult[$searchResultDataIndex] = $searchResultDataItem;
         }
 
-        return $convertedSearchResponse;
+        return $convertedSearchResult;
     }
 }
