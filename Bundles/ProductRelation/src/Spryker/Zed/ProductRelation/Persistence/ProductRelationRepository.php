@@ -178,7 +178,6 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
         $productRelationEntities = $this->getFactory()
             ->getProductRelationQueryContainer()
             ->queryActiveAndScheduledRelations()
-            ->filterByIdProductRelation_In([40, 41, 42, 43, 44])
             ->find();
 
         if (!$productRelationEntities->getData()) {

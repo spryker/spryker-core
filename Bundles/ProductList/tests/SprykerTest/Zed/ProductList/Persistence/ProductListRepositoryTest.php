@@ -99,7 +99,6 @@ class ProductListRepositoryTest extends Unit
     public function testGetProductConcreteProductListIdsForTypeReturnsCorrectProductListId(): void
     {
         //Assert
-
         $productListTransfer = $this->tester->haveProductList([
             ProductListTransfer::PRODUCT_LIST_PRODUCT_CONCRETE_RELATION => $this->productListProductConcreteRelation->toArray(),
         ]);

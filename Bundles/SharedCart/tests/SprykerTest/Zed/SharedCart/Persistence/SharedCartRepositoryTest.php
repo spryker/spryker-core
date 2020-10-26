@@ -39,12 +39,12 @@ class SharedCartRepositoryTest extends Unit
         // Arrange
         $sharedCartRepository = new SharedCartRepository();
 
-        $customer = $this->tester->haveCustomer();
+        $customerTransfer = $this->tester->haveCustomer();
         $quoteTransfer1 = $this->tester->havePersistentQuote([
-            QuoteTransfer::CUSTOMER => $customer,
+            QuoteTransfer::CUSTOMER => $customerTransfer,
         ]);
         $quoteTransfer2 = $this->tester->havePersistentQuote([
-            QuoteTransfer::CUSTOMER => $customer,
+            QuoteTransfer::CUSTOMER => $customerTransfer,
         ]);
 
         $this->tester->haveQuotePermissionGroup(static::PERMISSION_KEY, [
@@ -52,7 +52,7 @@ class SharedCartRepositoryTest extends Unit
         ]);
 
         // Act
-        $customerPermissions = $sharedCartRepository->findPermissionsByCustomer($customer->getCustomerReference())->getPermissions();
+        $customerPermissions = $sharedCartRepository->findPermissionsByCustomer($customerTransfer->getCustomerReference())->getPermissions();
 
         // Assert
         $this->assertNotEmpty($customerPermissions);

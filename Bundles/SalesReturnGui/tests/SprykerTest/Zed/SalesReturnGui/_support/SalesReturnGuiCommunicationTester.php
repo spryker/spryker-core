@@ -50,17 +50,15 @@ class SalesReturnGuiCommunicationTester extends Actor
         OrderTransfer $orderTransfer,
         ?CustomerTransfer $customerTransfer = null
     ): ?ReturnTransfer {
-        $firstItemTransfer = $orderTransfer->getItems()->offsetGet(0);
-        $secondItemTransfer = $orderTransfer->getItems()->offsetGet(1);
-
-        $this->setItemState($firstItemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
-        $this->setItemState($secondItemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
-
         $returnCreateRequestTransfer = (new ReturnCreateRequestTransfer())
             ->setCustomer($customerTransfer ?? $orderTransfer->getCustomer())
-            ->setStore($orderTransfer->getStore())
-            ->addReturnItem((new ReturnItemTransfer())->setOrderItem($firstItemTransfer))
-            ->addReturnItem((new ReturnItemTransfer())->setOrderItem($secondItemTransfer));
+            ->setStore($orderTransfer->getStore());
+
+        foreach ($orderTransfer->getItems() as $itemTransfer) {
+            $this->setItemState($itemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
+
+            $returnCreateRequestTransfer->addReturnItem((new ReturnItemTransfer())->setOrderItem($itemTransfer));
+        }
 
         return $this->getLocator()
             ->salesReturn()
@@ -106,6 +104,7 @@ class SalesReturnGuiCommunicationTester extends Actor
      */
     protected function buildFakeQuote(CustomerTransfer $customerTransfer, StoreTransfer $storeTransfer, array $currencyData): QuoteTransfer
     {
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
         $quoteTransfer = (new QuoteBuilder())
             ->withItem()
             ->withItem()
