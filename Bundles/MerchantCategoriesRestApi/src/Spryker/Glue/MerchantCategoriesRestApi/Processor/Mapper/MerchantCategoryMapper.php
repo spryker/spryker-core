@@ -5,33 +5,31 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\MerchantCategoriesRestApi\Plugin\MerchantsRestApi;
+namespace Spryker\Glue\MerchantCategoriesRestApi\Processor\Mapper;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\RestMerchantCategoryAttributesTransfer;
 use Generated\Shared\Transfer\RestMerchantsAttributesTransfer;
-use Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\RestMerchantsAttributesMapperPluginInterface;
 
-class MerchantCategoryRestMerchantsAttributesMapperPlugin implements RestMerchantsAttributesMapperPluginInterface
+class MerchantCategoryMapper implements MerchantCategoryMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantStorageTransfer $merchantStorageTransfer
+     * @param \Generated\Shared\Transfer\CategoryTransfer[] $categoryTransfers
      * @param \Generated\Shared\Transfer\RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\RestMerchantsAttributesTransfer
      */
-    public function mapMerchantStorageTransferToRestMerchantsAttributesTransfer(
-        MerchantStorageTransfer $merchantStorageTransfer,
+    public function mapCategoryTransfersToRestMerchantsAttributesTransfer(
+        array $categoryTransfers,
         RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer,
         string $localeName
     ): RestMerchantsAttributesTransfer {
         $restMerchantsCategoryAttributesTransfers = [];
 
-        foreach ($merchantStorageTransfer->getCategories() as $categoryTransfer) {
+        foreach ($categoryTransfers as $categoryTransfer) {
             $restMerchantsCategoryAttributesTransfer = (new RestMerchantCategoryAttributesTransfer())
                 ->fromArray($categoryTransfer->toArray(), true);
 

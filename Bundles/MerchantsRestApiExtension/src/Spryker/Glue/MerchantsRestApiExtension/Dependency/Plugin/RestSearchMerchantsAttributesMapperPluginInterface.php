@@ -7,25 +7,25 @@
 
 namespace Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\MerchantStorageTransfer;
+use Generated\Shared\Transfer\MerchantSearchTransfer;
 use Generated\Shared\Transfer\RestMerchantsAttributesTransfer;
 
-interface RestMerchantsAttributesMapperPluginInterface
+interface RestSearchMerchantsAttributesMapperPluginInterface
 {
     /**
      * Specification:
-     * - Maps MerchantStorageTransfer to RestMerchantsAttributesTransfer.
+     * - Maps MerchantSearchTransfer to RestMerchantsAttributesTransfer.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantStorageTransfer $merchantStorageTransfer
+     * @param \Generated\Shared\Transfer\MerchantSearchTransfer $merchantSearchTransfer
      * @param \Generated\Shared\Transfer\RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\RestMerchantsAttributesTransfer
      */
-    public function mapMerchantStorageTransferToRestMerchantsAttributesTransfer(
-        MerchantStorageTransfer $merchantStorageTransfer,
+    public function mapMerchantSearchTransferToRestMerchantsAttributesTransfer(
+        MerchantSearchTransfer $merchantSearchTransfer,
         RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer,
         string $localeName
     ): RestMerchantsAttributesTransfer;

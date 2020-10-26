@@ -20,6 +20,9 @@ class MerchantWritePublisherPlugin extends AbstractPlugin implements PublisherPl
 {
     /**
      * {@inheritDoc}
+     * - Retrieves all Merchants using IDs from $eventTransfers.
+     * - Updates entities from `spy_merchant_search` with actual data from obtained Merchants.
+     * - Sends a copy of data to queue based on module config.
      *
      * @api
      *
