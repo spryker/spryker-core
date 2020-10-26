@@ -40,6 +40,30 @@
         },
         {
             "severity": "info",
+            "line_from": 122,
+            "line_to": 122,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'int' for Spryker\\Zed\\Setup\\Communication\\Console\\Npm\\RunnerConsole::runCommand is not nullable, but 'int|null' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/Setup/src/Spryker/Zed/Setup/Communication/Console/Npm/RunnerConsole.php",
+            "snippet": "     * @return int",
+            "selected_text": "int",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 133,
+            "line_to": 133,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'int' for Spryker\\Zed\\Setup\\Communication\\Console\\Npm\\RunnerConsole::runCommand is not nullable, but the function returns 'int|null'",
+            "file_name": "vendor/spryker/spryker/Bundles/Setup/src/Spryker/Zed/Setup/Communication/Console/Npm/RunnerConsole.php",
+            "snippet": "        return $process->getExitCode();",
+            "selected_text": "$process->getExitCode()",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
             "line_from": 194,
             "line_to": 194,
             "type": "PossiblyInvalidArgument",

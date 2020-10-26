@@ -10,8 +10,7 @@
             "snippet": "     * @return int[]",
             "selected_text": "int[]",
             "error_level": 6,
-            "shortcode": 11,
-            "taint_trace": null
+            "shortcode": 11
         },
         {
             "severity": "error",
@@ -23,8 +22,7 @@
             "snippet": "        return array_map(function (StoreTransfer $storeTransfer) {\n            return $storeTransfer->getIdStore();\n        }, $relatedStores->getArrayCopy());",
             "selected_text": "array_map(function (StoreTransfer $storeTransfer) {\n            return $storeTransfer->getIdStore();\n        }, $relatedStores->getArrayCopy())",
             "error_level": 6,
-            "shortcode": 128,
-            "taint_trace": null
+            "shortcode": 128
         },
         {
             "severity": "error",
@@ -36,8 +34,7 @@
             "snippet": "     * @return int[]",
             "selected_text": "int[]",
             "error_level": 6,
-            "shortcode": 11,
-            "taint_trace": null
+            "shortcode": 11
         },
         {
             "severity": "error",
@@ -49,8 +46,7 @@
             "snippet": "        return $idStores;",
             "selected_text": "$idStores",
             "error_level": 6,
-            "shortcode": 128,
-            "taint_trace": null
+            "shortcode": 128
         }
     ],
     "warning": [
@@ -64,8 +60,7 @@
             "snippet": "        return $this->getRepository()->getCompanyById($companyTransfer->getIdCompany());",
             "selected_text": "$companyTransfer->getIdCompany()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -77,8 +72,7 @@
             "snippet": "        $this->companyEntityManager->deleteCompanyById($companyTransfer->getIdCompany());",
             "selected_text": "$companyTransfer->getIdCompany()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -90,8 +84,7 @@
             "snippet": "        $companyTransfer = $this->companyEntityManager->saveCompany($companyTransfer);",
             "selected_text": "$companyTransfer",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -103,8 +96,7 @@
             "snippet": "        $this->persistStoreRelations($companyResponseTransfer->getCompanyTransfer());",
             "selected_text": "$companyResponseTransfer->getCompanyTransfer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -116,8 +108,7 @@
             "snippet": "            $companyTransfer->getStoreRelation()->setIdEntity($companyTransfer->getIdCompany());",
             "selected_text": "setIdEntity",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -129,8 +120,7 @@
             "snippet": "            $storeRelationTransfer->getIdEntity()",
             "selected_text": "$storeRelationTransfer->getIdEntity()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -142,8 +132,7 @@
             "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\StoreTransfer[] $relatedStores",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\StoreTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -155,8 +144,7 @@
             "snippet": "        }, $relatedStores->getArrayCopy());",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -168,8 +156,7 @@
             "snippet": "        $currentIdStores = $this->getIdStoresByIdCompany($storeRelationTransfer->getIdEntity());",
             "selected_text": "$storeRelationTransfer->getIdEntity()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -181,8 +168,7 @@
             "snippet": "        $this->companyEntityManager->addStores($saveIdStores, $storeRelationTransfer->getIdEntity());",
             "selected_text": "$storeRelationTransfer->getIdEntity()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -194,8 +180,7 @@
             "snippet": "        $this->companyEntityManager->removeStores($deleteIdStores, $storeRelationTransfer->getIdEntity());",
             "selected_text": "$storeRelationTransfer->getIdEntity()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -207,8 +192,7 @@
             "snippet": "            $companyTransfer->getUuid()",
             "selected_text": "$companyTransfer->getUuid()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -220,8 +204,7 @@
             "snippet": "            ->mapEntityToCompanyTransfer($spyCompany, new CompanyTransfer());",
             "selected_text": "$spyCompany",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         }
     ],
     "deprecation": []

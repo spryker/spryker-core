@@ -109,54 +109,6 @@
             "selected_text": "$productConcreteSkus",
             "error_level": 3,
             "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 53,
-            "line_to": 53,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferPricesRestApi/src/Spryker/Glue/ProductOfferPricesRestApi/ProductOfferPricesRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->priceProductStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 69,
-            "line_to": 69,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferPricesRestApi/src/Spryker/Glue/ProductOfferPricesRestApi/ProductOfferPricesRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->merchantProductOfferStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 85,
-            "line_to": 85,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferPricesRestApi/src/Spryker/Glue/ProductOfferPricesRestApi/ProductOfferPricesRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 101,
-            "line_to": 101,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferPricesRestApi/src/Spryker/Glue/ProductOfferPricesRestApi/ProductOfferPricesRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->priceProduct()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

@@ -2,6 +2,30 @@
     "error": [
         {
             "severity": "error",
+            "line_from": 25,
+            "line_to": 25,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriptionQuery' for Spryker\\Zed\\Newsletter\\Persistence\\NewsletterQueryContainer::querySubscriptionByEmailAndNewsletterTypeName is incorrect, got 'Orm\\Zed\\Customer\\Persistence\\SpyCustomerQuery&static|Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriptionQuery&static'",
+            "file_name": "vendor/spryker/spryker/Bundles/Newsletter/src/Spryker/Zed/Newsletter/Persistence/NewsletterQueryContainer.php",
+            "snippet": "     * @return \\Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriptionQuery",
+            "selected_text": "\\Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriptionQuery",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Orm\\Zed\\Customer\\Persistence\\SpyCustomerQuery&static|Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriptionQuery&static' does not match the declared return type 'Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriptionQuery' for Spryker\\Zed\\Newsletter\\Persistence\\NewsletterQueryContainer::querySubscriptionByEmailAndNewsletterTypeName",
+            "file_name": "vendor/spryker/spryker/Bundles/Newsletter/src/Spryker/Zed/Newsletter/Persistence/NewsletterQueryContainer.php",
+            "snippet": "        return $subscriptionQuery;",
+            "selected_text": "$subscriptionQuery",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
             "line_from": 51,
             "line_to": 51,
             "type": "InvalidReturnType",
@@ -50,18 +74,6 @@
         }
     ],
     "warning": [
-        {
-            "severity": "info",
-            "line_from": 25,
-            "line_to": 25,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Newsletter/src/Spryker/Client/Newsletter/NewsletterDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->zedRequest()->client();",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
         {
             "severity": "info",
             "line_from": 49,
@@ -481,78 +493,6 @@
             "selected_text": "getEmail",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 34,
-            "line_to": 34,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Newsletter/src/Spryker/Zed/Newsletter/NewsletterDependencyProvider.php",
-            "snippet": "            return new NewsletterToMailBridge($container->getLocator()->mail()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 50,
-            "line_to": 50,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Newsletter/src/Spryker/Zed/Newsletter/NewsletterDependencyProvider.php",
-            "snippet": "            return new NewsletterToMailBridge($container->getLocator()->mail()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 53,
-            "line_to": 53,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Newsletter/src/Spryker/Zed/Newsletter/NewsletterDependencyProvider.php",
-            "snippet": "            return new NewsletterToGlossaryBridge($container->getLocator()->glossary()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 67,
-            "line_to": 67,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Newsletter/src/Spryker/Zed/Newsletter/NewsletterDependencyProvider.php",
-            "snippet": "            return new NewsletterToUtilValidateServiceBridge($container->getLocator()->utilValidate()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 25,
-            "line_to": 25,
-            "type": "MoreSpecificReturnType",
-            "message": "The declared return type 'Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriptionQuery' for Spryker\\Zed\\Newsletter\\Persistence\\NewsletterQueryContainer::querySubscriptionByEmailAndNewsletterTypeName is more specific than the inferred return type 'Propel\\Runtime\\ActiveQuery\\Criteria'",
-            "file_name": "vendor/spryker/spryker/Bundles/Newsletter/src/Spryker/Zed/Newsletter/Persistence/NewsletterQueryContainer.php",
-            "snippet": "     * @return \\Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriptionQuery",
-            "selected_text": "\\Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriptionQuery",
-            "error_level": 3,
-            "shortcode": 70
-        },
-        {
-            "severity": "info",
-            "line_from": 40,
-            "line_to": 40,
-            "type": "LessSpecificReturnStatement",
-            "message": "The type 'Orm\\Zed\\Customer\\Persistence\\SpyCustomerQuery&static|Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriptionQuery&static|Propel\\Runtime\\ActiveQuery\\Criteria' is more general than the declared return type 'Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriptionQuery' for Spryker\\Zed\\Newsletter\\Persistence\\NewsletterQueryContainer::querySubscriptionByEmailAndNewsletterTypeName",
-            "file_name": "vendor/spryker/spryker/Bundles/Newsletter/src/Spryker/Zed/Newsletter/Persistence/NewsletterQueryContainer.php",
-            "snippet": "        return $subscriptionQuery;",
-            "selected_text": "$subscriptionQuery",
-            "error_level": 3,
-            "shortcode": 129
         }
     ],
     "deprecation": [

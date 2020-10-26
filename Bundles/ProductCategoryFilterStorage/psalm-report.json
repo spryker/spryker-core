@@ -1,30 +1,19 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\ProductCategoryFilterStorage\\Communication\\Plugin\\Event\\Listener\\ProductCategoryFilterPublishStorageListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilterStorage/src/Spryker/Zed/ProductCategoryFilterStorage/Communication/Plugin/Event/Listener/ProductCategoryFilterPublishStorageListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
     "warning": [
-        {
-            "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilterStorage/src/Spryker/Client/ProductCategoryFilterStorage/ProductCategoryFilterStorageDependencyProvider.php",
-            "snippet": "            return new ProductCategoryFilterStorageToStorageBridge($container->getLocator()->storage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilterStorage/src/Spryker/Client/ProductCategoryFilterStorage/ProductCategoryFilterStorageDependencyProvider.php",
-            "snippet": "            return new ProductCategoryFilterStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
         {
             "severity": "info",
             "line_from": 66,
@@ -48,6 +37,18 @@
             "selected_text": "toKeyValue",
             "error_level": 3,
             "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\ProductCategoryFilterStorage\\Communication\\Plugin\\Event\\ProductCategoryFilterEventResourceQueryContainerPlugin::queryData has the more specific type 'array<array-key, int>', expecting 'array<array-key, int|string>' as defined by Spryker\\Zed\\EventBehavior\\Dependency\\Plugin\\EventResourceQueryContainerPluginInterface::queryData",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilterStorage/src/Spryker/Zed/ProductCategoryFilterStorage/Communication/Plugin/Event/ProductCategoryFilterEventResourceQueryContainerPlugin.php",
+            "snippet": "    public function queryData(array $ids = []): ?ModelCriteria",
+            "selected_text": "$ids",
+            "error_level": 5,
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -108,42 +109,6 @@
             "selected_text": "$this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options)",
             "error_level": 5,
             "shortcode": 139
-        },
-        {
-            "severity": "info",
-            "line_from": 33,
-            "line_to": 33,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilterStorage/src/Spryker/Zed/ProductCategoryFilterStorage/ProductCategoryFilterStorageDependencyProvider.php",
-            "snippet": "            return new ProductCategoryFilterStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 47,
-            "line_to": 47,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilterStorage/src/Spryker/Zed/ProductCategoryFilterStorage/ProductCategoryFilterStorageDependencyProvider.php",
-            "snippet": "            return new ProductCategoryFilterStorageToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilterStorage/src/Spryker/Zed/ProductCategoryFilterStorage/ProductCategoryFilterStorageDependencyProvider.php",
-            "snippet": "            return new ProductCategoryFilterStorageToProductCategoryFilterQueryContainerBridge($container->getLocator()->productCategoryFilter()->queryContainer());",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

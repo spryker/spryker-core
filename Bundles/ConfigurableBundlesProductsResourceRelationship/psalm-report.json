@@ -1,22 +1,35 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, int>' for Spryker\\Glue\\ConfigurableBundlesProductsResourceRelationship\\Processor\\Reader\\ProductConcreteReader::getMappedProductConcreteIds is incorrect, got 'array<int(0)|string, int|null>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlesProductsResourceRelationship/src/Spryker/Glue/ConfigurableBundlesProductsResourceRelationship/Processor/Reader/ProductConcreteReader.php",
+            "snippet": "     * @return int[]",
+            "selected_text": "int[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 75,
+            "line_to": 75,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'array<int(0)|string, int|null>' does not match the declared return type 'array<array-key, int>' for Spryker\\Glue\\ConfigurableBundlesProductsResourceRelationship\\Processor\\Reader\\ProductConcreteReader::getMappedProductConcreteIds",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlesProductsResourceRelationship/src/Spryker/Glue/ConfigurableBundlesProductsResourceRelationship/Processor/Reader/ProductConcreteReader.php",
+            "snippet": "        return $productConcreteIds;",
+            "selected_text": "$productConcreteIds",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
     "warning": [
         {
             "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Glue\\ConfigurableBundlesProductsResourceRelationship\\Processor\\Reader\\ProductConcreteReaderInterface::getProductConcreteIdsByProductListId cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlesProductsResourceRelationship/src/Spryker/Glue/ConfigurableBundlesProductsResourceRelationship/Processor/Expander/ProductConcreteExpander.php",
-            "snippet": "                    $configurableBundleTemplateSlotStorageTransfer->getIdProductList()",
-            "selected_text": "$configurableBundleTemplateSlotStorageTransfer->getIdProductList()",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
+            "line_from": 70,
+            "line_to": 70,
             "type": "PossibleRawObjectIteration",
             "message": "Possibly undesired iteration over regular object Elastica\\Result",
             "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlesProductsResourceRelationship/src/Spryker/Glue/ConfigurableBundlesProductsResourceRelationship/Processor/Reader/ProductConcreteReader.php",
@@ -24,6 +37,18 @@
             "selected_text": "$productConcretePageSearchTransfers",
             "error_level": 4,
             "shortcode": 208
+        },
+        {
+            "severity": "info",
+            "line_from": 72,
+            "line_to": 72,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productConcreteIds[null|string] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlesProductsResourceRelationship/src/Spryker/Glue/ConfigurableBundlesProductsResourceRelationship/Processor/Reader/ProductConcreteReader.php",
+            "snippet": "            /** @var \\Generated\\Shared\\Transfer\\ProductConcretePageSearchTransfer $productConcretePageSearchTransfer */\n            $productConcreteIds[$productConcretePageSearchTransfer->getSku()] = $productConcretePageSearchTransfer->getFkProduct();",
+            "selected_text": "$productConcreteIds",
+            "error_level": 3,
+            "shortcode": 125
         }
     ],
     "deprecation": []

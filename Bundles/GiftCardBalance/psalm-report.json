@@ -99,8 +99,8 @@
         },
         {
             "severity": "info",
-            "line_from": 72,
-            "line_to": 72,
+            "line_from": 80,
+            "line_to": 80,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/GiftCardBalance/src/Spryker/Zed/GiftCardBalance/Communication/Table/GiftCardBalanceTable.php",
@@ -111,8 +111,8 @@
         },
         {
             "severity": "info",
-            "line_from": 88,
-            "line_to": 88,
+            "line_from": 96,
+            "line_to": 96,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, mixed> variable $customersCollection",
             "file_name": "vendor/spryker/spryker/Bundles/GiftCardBalance/src/Spryker/Zed/GiftCardBalance/Communication/Table/GiftCardBalanceTable.php",
@@ -123,8 +123,8 @@
         },
         {
             "severity": "info",
-            "line_from": 92,
-            "line_to": 92,
+            "line_from": 100,
+            "line_to": 100,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of Spryker\\Zed\\GiftCardBalance\\Communication\\Table\\GiftCardBalanceTable::formatCollection expects Propel\\Runtime\\Collection\\ObjectCollection, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, mixed> provided",
             "file_name": "vendor/spryker/spryker/Bundles/GiftCardBalance/src/Spryker/Zed/GiftCardBalance/Communication/Table/GiftCardBalanceTable.php",
@@ -132,54 +132,6 @@
             "selected_text": "$customersCollection",
             "error_level": 3,
             "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 96,
-            "line_to": 96,
-            "type": "MoreSpecificReturnType",
-            "message": "The declared return type 'Orm\\Zed\\GiftCardBalance\\Persistence\\SpyGiftCardBalanceLogQuery' for Spryker\\Zed\\GiftCardBalance\\Communication\\Table\\GiftCardBalanceTable::prepareQuery is more specific than the inferred return type 'Propel\\Runtime\\ActiveQuery\\ModelCriteria'",
-            "file_name": "vendor/spryker/spryker/Bundles/GiftCardBalance/src/Spryker/Zed/GiftCardBalance/Communication/Table/GiftCardBalanceTable.php",
-            "snippet": "     * @return \\Orm\\Zed\\GiftCardBalance\\Persistence\\SpyGiftCardBalanceLogQuery",
-            "selected_text": "\\Orm\\Zed\\GiftCardBalance\\Persistence\\SpyGiftCardBalanceLogQuery",
-            "error_level": 3,
-            "shortcode": 70
-        },
-        {
-            "severity": "info",
-            "line_from": 110,
-            "line_to": 110,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::usespygiftcardquery does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/GiftCardBalance/src/Spryker/Zed/GiftCardBalance/Communication/Table/GiftCardBalanceTable.php",
-            "snippet": "            $query->useSpyGiftCardQuery()",
-            "selected_text": "useSpyGiftCardQuery",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 115,
-            "line_to": 115,
-            "type": "LessSpecificReturnStatement",
-            "message": "The type 'Propel\\Runtime\\ActiveQuery\\ModelCriteria' is more general than the declared return type 'Orm\\Zed\\GiftCardBalance\\Persistence\\SpyGiftCardBalanceLogQuery' for Spryker\\Zed\\GiftCardBalance\\Communication\\Table\\GiftCardBalanceTable::prepareQuery",
-            "file_name": "vendor/spryker/spryker/Bundles/GiftCardBalance/src/Spryker/Zed/GiftCardBalance/Communication/Table/GiftCardBalanceTable.php",
-            "snippet": "        return $query;",
-            "selected_text": "$query",
-            "error_level": 3,
-            "shortcode": 129
-        },
-        {
-            "severity": "info",
-            "line_from": 42,
-            "line_to": 42,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/GiftCardBalance/src/Spryker/Zed/GiftCardBalance/GiftCardBalanceDependencyProvider.php",
-            "snippet": "            return new GiftCardBalanceToMoneyFacadeBridge($container->getLocator()->money()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

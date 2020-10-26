@@ -11,8 +11,7 @@
             "snippet": "            $userTransfer->getFirstName(),",
             "selected_text": "$userTransfer->getFirstName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -24,8 +23,7 @@
             "snippet": "            $userTransfer->getLastName()",
             "selected_text": "$userTransfer->getLastName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -37,8 +35,19 @@
             "snippet": "/**\n * @method \\Generated\\Shared\\Transfer\\SpyCustomerNoteEntityTransfer save(\\Generated\\Shared\\Transfer\\SpyCustomerNoteEntityTransfer $customerNoteEntityTransfer)\n * @method \\Spryker\\Zed\\CustomerNote\\Persistence\\CustomerNotePersistenceFactory getFactory()\n */\nclass CustomerNoteEntityManager extends AbstractEntityManager implements CustomerNoteEntityManagerInterface",
             "selected_text": "/**\n * @method \\Generated\\Shared\\Transfer\\SpyCustomerNoteEntityTransfer save(\\Generated\\Shared\\Transfer\\SpyCustomerNoteEntityTransfer $customerNoteEntityTransfer)\n * @method \\Spryker\\Zed\\CustomerNote\\Persistence\\CustomerNotePersistenceFactory getFactory()\n */\nc",
             "error_level": 5,
-            "shortcode": 140,
-            "taint_trace": null
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CustomerNote\\Persistence\\CustomerNoteRepository::prepareCustomerNoteCollectionTransfer expects array<array-key, Generated\\Shared\\Transfer\\SpyCustomerNoteEntityTransfer>, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerNote/src/Spryker/Zed/CustomerNote/Persistence/CustomerNoteRepository.php",
+            "snippet": "        return $this->prepareCustomerNoteCollectionTransfer($customerNoteEntityTransfers);",
+            "selected_text": "$customerNoteEntityTransfers",
+            "error_level": 3,
+            "shortcode": 92
         }
     ],
     "deprecation": []

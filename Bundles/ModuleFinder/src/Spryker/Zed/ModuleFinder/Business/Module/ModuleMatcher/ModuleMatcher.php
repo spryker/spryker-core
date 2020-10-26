@@ -119,6 +119,6 @@ class ModuleMatcher implements ModuleMatcherInterface
             $search = mb_substr($search, 0, mb_strlen($search) - 1);
         }
 
-        return preg_match(sprintf('/%s/', $search), $given);
+        return (bool)preg_match(sprintf('/%s/', $search), $given);
     }
 }

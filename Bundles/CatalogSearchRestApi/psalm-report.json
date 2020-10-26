@@ -3,54 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 52,
-            "line_to": 52,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CatalogSearchRestApi/src/Spryker/Glue/CatalogSearchRestApi/CatalogSearchRestApiDependencyProvider.php",
-            "snippet": "            return new CatalogSearchRestApiToCatalogClientBridge($container->getLocator()->catalog()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 66,
-            "line_to": 66,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CatalogSearchRestApi/src/Spryker/Glue/CatalogSearchRestApi/CatalogSearchRestApiDependencyProvider.php",
-            "snippet": "            return new CatalogSearchRestApiToPriceClientBridge($container->getLocator()->price()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 80,
-            "line_to": 80,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CatalogSearchRestApi/src/Spryker/Glue/CatalogSearchRestApi/CatalogSearchRestApiDependencyProvider.php",
-            "snippet": "            return new CatalogSearchRestApiToCurrencyClientBridge($container->getLocator()->currency()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 94,
-            "line_to": 94,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CatalogSearchRestApi/src/Spryker/Glue/CatalogSearchRestApi/CatalogSearchRestApiDependencyProvider.php",
-            "snippet": "            return new CatalogSearchRestApiToGlossaryStorageClientBridge($container->getLocator()->glossaryStorage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 150,
             "line_to": 150,
             "type": "InvalidNullableReturnType",
@@ -182,5 +134,30 @@
             "shortcode": 83
         }
     ],
-    "deprecation": []
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 102,
+            "line_to": 102,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\RestCatalogSearchSuggestionsAttributesTransfer::setCategories has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CatalogSearchRestApi/src/Spryker/Glue/CatalogSearchRestApi/Processor/Mapper/CatalogSearchSuggestionsResourceMapper.php",
+            "snippet": "        $restSearchSuggestionsAttributesTransfer->setCategories($categoriesSuggestions);",
+            "selected_text": "setCategories",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 126,
+            "line_to": 126,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\RestCatalogSearchSuggestionsAttributesTransfer::setCmsPages has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CatalogSearchRestApi/src/Spryker/Glue/CatalogSearchRestApi/Processor/Mapper/CatalogSearchSuggestionsResourceMapper.php",
+            "snippet": "        $restSearchSuggestionsAttributesTransfer->setCmsPages($cmsPagesSuggestions);",
+            "selected_text": "setCmsPages",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
 }

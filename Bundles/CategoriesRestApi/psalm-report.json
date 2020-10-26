@@ -3,18 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 42,
-            "line_to": 42,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoriesRestApi/src/Spryker/Glue/CategoriesRestApi/CategoriesRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->categoryStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 106,
             "line_to": 106,
             "type": "PossiblyNullArgument",

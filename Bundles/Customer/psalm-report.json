@@ -2,42 +2,39 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 281,
-            "line_to": 281,
+            "line_from": 275,
+            "line_to": 275,
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\Customer\\Business\\Customer\\Address::getFormattedAddressArray is incorrect, got 'non-empty-list<null|string>'",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
             "snippet": "     * @return string[]",
             "selected_text": "string[]",
             "error_level": 6,
-            "shortcode": 11,
-            "taint_trace": null
+            "shortcode": 11
         },
         {
             "severity": "error",
-            "line_from": 305,
-            "line_to": 305,
+            "line_from": 299,
+            "line_to": 299,
             "type": "InvalidReturnStatement",
             "message": "The inferred type 'non-empty-list<null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\Customer\\Business\\Customer\\Address::getFormattedAddressArray",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
             "snippet": "        return $address;",
             "selected_text": "$address",
             "error_level": 6,
-            "shortcode": 128,
-            "taint_trace": null
+            "shortcode": 128
         },
         {
             "severity": "error",
-            "line_from": 114,
-            "line_to": 114,
-            "type": "InvalidArgument",
-            "message": "Argument 2 of Symfony\\Component\\HttpFoundation\\InputBag::set expects array<array-key, mixed>|string, Generated\\Shared\\Transfer\\CustomerTransfer provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Communication/Controller/ViewController.php",
-            "snippet": "        $subRequest->request->set(static::PARAM_CUSTOMER, $customerTransfer);",
-            "selected_text": "$customerTransfer",
-            "error_level": 6,
-            "shortcode": 4,
-            "taint_trace": null
+            "line_from": 854,
+            "line_to": 854,
+            "type": "UndefinedClass",
+            "message": "Class or interface Symfony\\Component\\Security\\Core\\Encoder\\BCryptPasswordEncoder does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
+            "snippet": "        return new BCryptPasswordEncoder(static::BCRYPT_FACTOR);",
+            "selected_text": "BCryptPasswordEncoder",
+            "error_level": -1,
+            "shortcode": 19
         }
     ],
     "warning": [
@@ -51,8 +48,7 @@
             "snippet": "        $customerTransfer = $this->getCustomerById($customerTransfer->getIdCustomer());",
             "selected_text": "$customerTransfer->getIdCustomer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -64,8 +60,7 @@
             "snippet": "            $customerTransfer = $this->getClient()->getCustomerById($customerTransfer->getIdCustomer());",
             "selected_text": "$customerTransfer->getIdCustomer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -77,8 +72,7 @@
             "snippet": "            $this->getCustomer()->setIsDirty(true);",
             "selected_text": "setIsDirty",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -90,8 +84,7 @@
             "snippet": "        return md5($this->utilEncodingService->encodeJson($addressKeyData));",
             "selected_text": "$this->utilEncodingService->encodeJson($addressKeyData)",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -103,8 +96,7 @@
             "snippet": "        $addressesTransfer = $this->anonymizeCustomerAddresses($addressesTransfer);",
             "selected_text": "$addressesTransfer",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -116,8 +108,7 @@
             "snippet": "        $this->updateCustomerAddresses($customerTransfer->getAddresses());",
             "selected_text": "$customerTransfer->getAddresses()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -129,8 +120,7 @@
             "snippet": "        if ($customerTransfer->getIsGuest() === true) {",
             "selected_text": "getIsGuest",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -142,8 +132,7 @@
             "snippet": "        $this->processCustomerAddress($quoteTransfer->getShippingAddress(), $customer);",
             "selected_text": "$quoteTransfer->getShippingAddress()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -155,8 +144,7 @@
             "snippet": "            $this->processCustomerAddress($quoteTransfer->getBillingAddress(), $customer);",
             "selected_text": "$quoteTransfer->getBillingAddress()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -168,8 +156,7 @@
             "snippet": "        $customerTransfer->setFirstName($quoteTransfer->getBillingAddress()->getFirstName());",
             "selected_text": "getFirstName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -181,8 +168,7 @@
             "snippet": "        $customerTransfer->setLastName($quoteTransfer->getBillingAddress()->getLastName());",
             "selected_text": "getLastName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -194,8 +180,7 @@
             "snippet": "            $customerTransfer->setEmail($quoteTransfer->getBillingAddress()->getEmail());",
             "selected_text": "getEmail",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -207,8 +192,7 @@
             "snippet": "        $shippingAddressTransfer = $shipmentTransfer->requireShippingAddress()->getShippingAddress();",
             "selected_text": "requireShippingAddress",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -220,775 +204,775 @@
             "snippet": "        if ($shippingAddressTransfer->getIsAddressSavingSkipped()) {",
             "selected_text": "getIsAddressSavingSkipped",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 100,
-            "line_to": 100,
+            "line_from": 99,
+            "line_to": 99,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Customer\\Business\\Customer\\Address::getAddressTransferById cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
             "snippet": "        $addressTransfer = $this->getAddressTransferById($addressTransfer->getIdCustomerAddress(), $idCustomer);",
             "selected_text": "$addressTransfer->getIdCustomerAddress()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 124,
-            "line_to": 124,
+            "line_from": 123,
+            "line_to": 123,
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
             "snippet": "            throw new AddressNotFoundException(sprintf('Address not found for ID `%s` (and optional customer ID `%s`).', $idAddress, $idCustomer));",
             "selected_text": "$idCustomer",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 141,
-            "line_to": 141,
+            "line_from": 138,
+            "line_to": 138,
             "type": "RedundantCondition",
             "message": "Generated\\Shared\\Transfer\\AddressTransfer can never contain null",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
             "snippet": "        if ($addressTransfer !== null) {",
             "selected_text": "$addressTransfer !== null",
             "error_level": 4,
-            "shortcode": 122,
-            "taint_trace": null
+            "shortcode": 122
         },
         {
             "severity": "info",
-            "line_from": 143,
-            "line_to": 143,
+            "line_from": 140,
+            "line_to": 140,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Customer\\Business\\Customer\\Address::isDefaultAddress cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
             "snippet": "                $this->isDefaultAddress($addressTransfer->getIdCustomerAddress(), $customerEntity->getDefaultBillingAddress())",
             "selected_text": "$addressTransfer->getIdCustomerAddress()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 143,
-            "line_to": 143,
+            "line_from": 140,
+            "line_to": 140,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\Customer\\Business\\Customer\\Address::isDefaultAddress cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
             "snippet": "                $this->isDefaultAddress($addressTransfer->getIdCustomerAddress(), $customerEntity->getDefaultBillingAddress())",
             "selected_text": "$customerEntity->getDefaultBillingAddress()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 146,
-            "line_to": 146,
+            "line_from": 143,
+            "line_to": 143,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Customer\\Business\\Customer\\Address::isDefaultAddress cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
             "snippet": "                $this->isDefaultAddress($addressTransfer->getIdCustomerAddress(), $customerEntity->getDefaultShippingAddress())",
             "selected_text": "$addressTransfer->getIdCustomerAddress()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 146,
-            "line_to": 146,
+            "line_from": 143,
+            "line_to": 143,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\Customer\\Business\\Customer\\Address::isDefaultAddress cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
             "snippet": "                $this->isDefaultAddress($addressTransfer->getIdCustomerAddress(), $customerEntity->getDefaultShippingAddress())",
             "selected_text": "$customerEntity->getDefaultShippingAddress()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 217,
+            "line_to": 217,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Customer\\Persistence\\CustomerQueryContainerInterface::queryAddressForCustomer cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
+            "snippet": "        $entity = $this->queryContainer->queryAddressForCustomer($addressTransfer->getIdCustomerAddress(), $customer->getEmail())",
+            "selected_text": "$addressTransfer->getIdCustomerAddress()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
             "line_from": 223,
             "line_to": 223,
             "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Zed\\Customer\\Persistence\\CustomerQueryContainerInterface::queryAddressForCustomer cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
-            "snippet": "        $entity = $this->queryContainer->queryAddressForCustomer($addressTransfer->getIdCustomerAddress(), $customer->getEmail())",
-            "selected_text": "$addressTransfer->getIdCustomerAddress()",
-            "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 229,
-            "line_to": 229,
-            "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
             "snippet": "                $addressTransfer->getIdCustomerAddress(),",
             "selected_text": "$addressTransfer->getIdCustomerAddress()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 245,
+            "line_to": 245,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Customer\\Persistence\\CustomerQueryContainerInterface::queryAddressForCustomer cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
+            "snippet": "        $entity = $this->queryContainer->queryAddressForCustomer($addressTransfer->getIdCustomerAddress(), $customer->getEmail())",
+            "selected_text": "$addressTransfer->getIdCustomerAddress()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
             "line_from": 251,
             "line_to": 251,
             "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Zed\\Customer\\Persistence\\CustomerQueryContainerInterface::queryAddressForCustomer cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
-            "snippet": "        $entity = $this->queryContainer->queryAddressForCustomer($addressTransfer->getIdCustomerAddress(), $customer->getEmail())",
-            "selected_text": "$addressTransfer->getIdCustomerAddress()",
-            "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 257,
-            "line_to": 257,
-            "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
             "snippet": "                $addressTransfer->getIdCustomerAddress(),",
             "selected_text": "$addressTransfer->getIdCustomerAddress()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 291,
-            "line_to": 291,
+            "line_from": 285,
+            "line_to": 285,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
             "snippet": "        $address[] = sprintf('%s %s %s', $addressTransfer->getSalutation(), $addressTransfer->getFirstName(), $addressTransfer->getLastName());",
             "selected_text": "$addressTransfer->getSalutation()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 291,
-            "line_to": 291,
+            "line_from": 285,
+            "line_to": 285,
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
             "snippet": "        $address[] = sprintf('%s %s %s', $addressTransfer->getSalutation(), $addressTransfer->getFirstName(), $addressTransfer->getLastName());",
             "selected_text": "$addressTransfer->getFirstName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 291,
-            "line_to": 291,
+            "line_from": 285,
+            "line_to": 285,
             "type": "PossiblyNullArgument",
             "message": "Argument 4 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
             "snippet": "        $address[] = sprintf('%s %s %s', $addressTransfer->getSalutation(), $addressTransfer->getFirstName(), $addressTransfer->getLastName());",
             "selected_text": "$addressTransfer->getLastName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 303,
-            "line_to": 303,
+            "line_from": 297,
+            "line_to": 297,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
             "snippet": "        $address[] = sprintf('%s %s', $addressTransfer->getZipCode(), $addressTransfer->getCity());",
             "selected_text": "$addressTransfer->getZipCode()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 303,
-            "line_to": 303,
+            "line_from": 297,
+            "line_to": 297,
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
             "snippet": "        $address[] = sprintf('%s %s', $addressTransfer->getZipCode(), $addressTransfer->getCity());",
             "selected_text": "$addressTransfer->getCity()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 328,
-            "line_to": 328,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $entities has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\Customer\\Persistence\\SpyCustomerAddress>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
-            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
-            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Customer\\Persistence\\SpyCustomerAddress[] $entities",
-            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Customer\\Persistence\\SpyCustomerAddress[]",
-            "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 358,
-            "line_to": 358,
+            "line_from": 335,
+            "line_to": 335,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
             "snippet": "                $addressTransfer->getEmail(),",
             "selected_text": "$addressTransfer->getEmail()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 359,
-            "line_to": 359,
+            "line_from": 336,
+            "line_to": 336,
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
             "snippet": "                $addressTransfer->getFkCustomer()",
             "selected_text": "$addressTransfer->getFkCustomer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 417,
-            "line_to": 417,
+            "line_from": 384,
+            "line_to": 384,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Customer\\Persistence\\CustomerQueryContainerInterface::queryCustomerByEmail cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
+            "snippet": "            $customer = $this->queryContainer->queryCustomerByEmail($customerTransfer->getEmail())",
+            "selected_text": "$customerTransfer->getEmail()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 387,
+            "line_to": 387,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Customer\\Persistence\\CustomerQueryContainerInterface::queryCustomerById cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
+            "snippet": "            $customer = $this->queryContainer->queryCustomerById($customerTransfer->getIdCustomer())",
+            "selected_text": "$customerTransfer->getIdCustomer()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 394,
+            "line_to": 394,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
             "snippet": "                $customerTransfer->getEmail(),",
             "selected_text": "$customerTransfer->getEmail()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 418,
-            "line_to": 418,
+            "line_from": 395,
+            "line_to": 395,
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
             "snippet": "                $customerTransfer->getIdCustomer()",
             "selected_text": "$customerTransfer->getIdCustomer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 426,
-            "line_to": 426,
+            "line_from": 403,
+            "line_to": 403,
             "type": "InvalidNullableReturnType",
             "message": "The declared return type 'int' for Spryker\\Zed\\Customer\\Business\\Customer\\Address::getCustomerCountryId is not nullable, but 'int|null' contains null",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
             "snippet": "     * @return int",
             "selected_text": "int",
             "error_level": 5,
-            "shortcode": 144,
-            "taint_trace": null
+            "shortcode": 144
         },
         {
             "severity": "info",
-            "line_from": 432,
-            "line_to": 432,
+            "line_from": 409,
+            "line_to": 409,
             "type": "NullableReturnStatement",
             "message": "The declared return type 'int' for Spryker\\Zed\\Customer\\Business\\Customer\\Address::getCustomerCountryId is not nullable, but the function returns 'int|null'",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
             "snippet": "        return $countryTransfer->getIdCountry();",
             "selected_text": "$countryTransfer->getIdCountry()",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
         },
         {
             "severity": "info",
-            "line_from": 445,
-            "line_to": 445,
+            "line_from": 422,
+            "line_to": 422,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Customer\\Business\\Customer\\Address::getAddressTransferById cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
             "snippet": "        return $this->getAddressTransferById($idAddress);",
             "selected_text": "$idAddress",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 458,
-            "line_to": 458,
+            "line_from": 435,
+            "line_to": 435,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Customer\\Business\\Customer\\Address::getAddressTransferById cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
             "snippet": "        return $this->getAddressTransferById($idAddress);",
             "selected_text": "$idAddress",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 469,
-            "line_to": 469,
+            "line_from": 446,
+            "line_to": 446,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of explode cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
             "snippet": "        return explode('_', $localeName)[1];",
             "selected_text": "$localeName",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 485,
-            "line_to": 485,
+            "line_from": 462,
+            "line_to": 462,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Customer\\Persistence\\CustomerQueryContainerInterface::queryAddressForCustomer cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
             "snippet": "                $addressTransfer->getIdCustomerAddress(),",
             "selected_text": "$addressTransfer->getIdCustomerAddress()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 493,
-            "line_to": 493,
+            "line_from": 470,
+            "line_to": 470,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
             "snippet": "                $addressTransfer->getIdCustomerAddress(),",
             "selected_text": "$addressTransfer->getIdCustomerAddress()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 522,
-            "line_to": 522,
+            "line_from": 499,
+            "line_to": 499,
             "type": "InvalidNullableReturnType",
             "message": "The declared return type 'int' for Spryker\\Zed\\Customer\\Business\\Customer\\Address::retrieveFkCountry is not nullable, but 'int|null' contains null",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
             "snippet": "     * @return int",
             "selected_text": "int",
             "error_level": 5,
-            "shortcode": 144,
-            "taint_trace": null
+            "shortcode": 144
         },
         {
             "severity": "info",
-            "line_from": 537,
-            "line_to": 537,
+            "line_from": 514,
+            "line_to": 514,
             "type": "NullableReturnStatement",
             "message": "The declared return type 'int' for Spryker\\Zed\\Customer\\Business\\Customer\\Address::retrieveFkCountry is not nullable, but the function returns 'int|null'",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
             "snippet": "        return $fkCountry;",
             "selected_text": "$fkCountry",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
         },
         {
             "severity": "info",
-            "line_from": 654,
-            "line_to": 654,
+            "line_from": 631,
+            "line_to": 631,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Customer\\Persistence\\CustomerQueryContainerInterface::queryAddressForCustomer cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
             "snippet": "            ->queryAddressForCustomer($addressTransfer->getIdCustomerAddress(), $customer->getEmail())",
             "selected_text": "$addressTransfer->getIdCustomerAddress()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 660,
-            "line_to": 660,
+            "line_from": 637,
+            "line_to": 637,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Address.php",
             "snippet": "                $addressTransfer->getIdCustomerAddress(),",
             "selected_text": "$addressTransfer->getIdCustomerAddress()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 168,
-            "line_to": 168,
+            "line_from": 170,
+            "line_to": 170,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of Spryker\\Zed\\Customer\\Business\\Customer\\Customer::entityCollectionToTransferCollection expects Propel\\Runtime\\Collection\\ObjectCollection, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\Customer\\Persistence\\SpyCustomerAddress> provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
             "snippet": "        $addressesTransfer = $this->entityCollectionToTransferCollection($addresses, $customerEntity);",
             "selected_text": "$addresses",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
-            "line_from": 196,
-            "line_to": 196,
+            "line_from": 186,
+            "line_to": 186,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Customer\\Business\\Customer\\Customer::validateCustomerPasswordLength cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
+            "snippet": "            $customerResponseTransfer = $this->validateCustomerPasswordLength($customerTransfer->getPassword());",
+            "selected_text": "$customerTransfer->getPassword()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 198,
+            "line_to": 198,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\Customer\\Business\\Customer\\Customer::addLocaleByLocaleName cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
             "snippet": "            $this->addLocaleByLocaleName($customerEntity, $customerTransfer->getLocale()->getLocaleName());",
             "selected_text": "$customerTransfer->getLocale()->getLocaleName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 196,
-            "line_to": 196,
+            "line_from": 198,
+            "line_to": 198,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getLocaleName on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
             "snippet": "            $this->addLocaleByLocaleName($customerEntity, $customerTransfer->getLocale()->getLocaleName());",
             "selected_text": "getLocaleName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 215,
-            "line_to": 215,
+            "line_from": 217,
+            "line_to": 217,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible string variable ",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
             "snippet": "        $customerTransfer->setCreatedAt($customerEntity->getCreatedAt()->format('Y-m-d H:i:s.u'));",
             "selected_text": "format",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
-            "line_from": 216,
-            "line_to": 216,
+            "line_from": 218,
+            "line_to": 218,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible string variable ",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
             "snippet": "        $customerTransfer->setUpdatedAt($customerEntity->getUpdatedAt()->format('Y-m-d H:i:s.u'));",
             "selected_text": "format",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
-            "line_from": 312,
-            "line_to": 312,
+            "line_from": 314,
+            "line_to": 314,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Customer\\CustomerConfig::getCustomerPasswordRestoreTokenUrl cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
             "snippet": "            ->getCustomerPasswordRestoreTokenUrl($customerTransfer->getRestorePasswordKey());",
             "selected_text": "$customerTransfer->getRestorePasswordKey()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 332,
-            "line_to": 332,
+            "line_from": 334,
+            "line_to": 334,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Customer\\CustomerConfig::getRegisterConfirmTokenUrl cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
             "snippet": "            ->getRegisterConfirmTokenUrl($customerTransfer->getRegistrationKey());",
             "selected_text": "$customerTransfer->getRegistrationKey()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 374,
-            "line_to": 374,
+            "line_from": 376,
+            "line_to": 376,
             "type": "InvalidNullableReturnType",
             "message": "The declared return type 'Generated\\Shared\\Transfer\\CustomerTransfer' for Spryker\\Zed\\Customer\\Business\\Customer\\Customer::confirmRegistration is not nullable, but 'Generated\\Shared\\Transfer\\CustomerTransfer|null' contains null",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
             "snippet": "     * @return \\Generated\\Shared\\Transfer\\CustomerTransfer",
             "selected_text": "\\Generated\\Shared\\Transfer\\CustomerTransfer",
             "error_level": 5,
-            "shortcode": 144,
-            "taint_trace": null
+            "shortcode": 144
         },
         {
             "severity": "info",
-            "line_from": 380,
-            "line_to": 380,
+            "line_from": 382,
+            "line_to": 382,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
             "snippet": "            throw new CustomerNotFoundException(sprintf('Customer for registration key `%s` not found', $customerTransfer->getRegistrationKey()));",
             "selected_text": "$customerTransfer->getRegistrationKey()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 383,
-            "line_to": 383,
+            "line_from": 385,
+            "line_to": 385,
             "type": "NullableReturnStatement",
             "message": "The declared return type 'Generated\\Shared\\Transfer\\CustomerTransfer' for Spryker\\Zed\\Customer\\Business\\Customer\\Customer::confirmRegistration is not nullable, but the function returns 'Generated\\Shared\\Transfer\\CustomerTransfer|null'",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
             "snippet": "        return $customerResponseTransfer->getCustomerTransfer();",
             "selected_text": "$customerResponseTransfer->getCustomerTransfer()",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
         },
         {
             "severity": "info",
-            "line_from": 397,
-            "line_to": 397,
+            "line_from": 399,
+            "line_to": 399,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Customer\\Persistence\\CustomerQueryContainerInterface::queryCustomerByRegistrationKey cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
             "snippet": "        $customerEntity = $this->queryContainer->queryCustomerByRegistrationKey($customerTransfer->getRegistrationKey())->findOne();",
             "selected_text": "$customerTransfer->getRegistrationKey()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 508,
-            "line_to": 508,
+            "line_from": 510,
+            "line_to": 510,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getNewPassword on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
             "snippet": "            $customerTransfer->setNewPassword($updatedPasswordCustomerTransfer->getNewPassword())",
             "selected_text": "getNewPassword",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 519,
-            "line_to": 519,
+            "line_from": 521,
+            "line_to": 521,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\Customer\\Business\\Customer\\Customer::addLocaleByLocaleName cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
             "snippet": "            $this->addLocaleByLocaleName($customerEntity, $customerTransfer->getLocale()->getLocaleName());",
             "selected_text": "$customerTransfer->getLocale()->getLocaleName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 519,
-            "line_to": 519,
+            "line_from": 521,
+            "line_to": 521,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getLocaleName on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
             "snippet": "            $this->addLocaleByLocaleName($customerEntity, $customerTransfer->getLocale()->getLocaleName());",
             "selected_text": "getLocaleName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 612,
-            "line_to": 612,
+            "line_from": 614,
+            "line_to": 614,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Customer\\Business\\Customer\\Customer::validateCustomerPasswordLength cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
             "snippet": "        $customerResponseTransfer = $this->validateCustomerPasswordLength($customerTransfer->getNewPassword());",
             "selected_text": "$customerTransfer->getNewPassword()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 643,
-            "line_to": 643,
+            "line_from": 645,
+            "line_to": 645,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Customer\\Business\\Customer\\Customer::isValidPassword cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
             "snippet": "        if (!$this->isValidPassword($customerEntity->getPassword(), $customerTransfer->getPassword())) {",
             "selected_text": "$customerEntity->getPassword()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 643,
-            "line_to": 643,
+            "line_from": 645,
+            "line_to": 645,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\Customer\\Business\\Customer\\Customer::isValidPassword cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
             "snippet": "        if (!$this->isValidPassword($customerEntity->getPassword(), $customerTransfer->getPassword())) {",
             "selected_text": "$customerTransfer->getPassword()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 745,
-            "line_to": 745,
+            "line_from": 731,
+            "line_to": 731,
             "type": "PossiblyNullArgument",
-            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "message": "Argument 1 of Spryker\\Zed\\Customer\\Persistence\\CustomerQueryContainerInterface::queryCustomerById cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
-            "snippet": "            $customerTransfer->getIdCustomer(),",
+            "snippet": "            $customerEntity = $this->queryContainer->queryCustomerById($customerTransfer->getIdCustomer())",
             "selected_text": "$customerTransfer->getIdCustomer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 746,
-            "line_to": 746,
+            "line_from": 734,
+            "line_to": 734,
             "type": "PossiblyNullArgument",
-            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "message": "Argument 1 of Spryker\\Zed\\Customer\\Persistence\\CustomerQueryContainerInterface::queryCustomerByEmail cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
-            "snippet": "            $customerTransfer->getEmail(),",
+            "snippet": "            $customerEntity = $this->queryContainer->queryCustomerByEmail($customerTransfer->getEmail())",
             "selected_text": "$customerTransfer->getEmail()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 737,
+            "line_to": 737,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Customer\\Persistence\\CustomerQueryContainerInterface::queryCustomerByRestorePasswordKey cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
+            "snippet": "            $customerEntity = $this->queryContainer->queryCustomerByRestorePasswordKey($customerTransfer->getRestorePasswordKey())",
+            "selected_text": "$customerTransfer->getRestorePasswordKey()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
             "line_from": 747,
             "line_to": 747,
             "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
+            "snippet": "            $customerTransfer->getIdCustomer(),",
+            "selected_text": "$customerTransfer->getIdCustomer()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 748,
+            "line_to": 748,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
+            "snippet": "            $customerTransfer->getEmail(),",
+            "selected_text": "$customerTransfer->getEmail()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 749,
+            "line_to": 749,
+            "type": "PossiblyNullArgument",
             "message": "Argument 4 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
             "snippet": "            $customerTransfer->getRestorePasswordKey()",
             "selected_text": "$customerTransfer->getRestorePasswordKey()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 785,
-            "line_to": 785,
+            "line_from": 765,
+            "line_to": 765,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Customer\\Persistence\\CustomerQueryContainerInterface::queryCustomerById cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
+            "snippet": "                ->queryCustomerById($customerTransfer->getIdCustomer())",
+            "selected_text": "$customerTransfer->getIdCustomer()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 769,
+            "line_to": 769,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Customer\\Persistence\\CustomerQueryContainerInterface::queryCustomerByEmail cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
+            "snippet": "                ->queryCustomerByEmail($customerTransfer->getEmail())",
+            "selected_text": "$customerTransfer->getEmail()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 787,
+            "line_to": 787,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Customer\\Persistence\\CustomerQueryContainerInterface::queryCustomerByEmail cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
             "snippet": "        $customerEntity = $this->queryContainer->queryCustomerByEmail($customerTransfer->getEmail())",
             "selected_text": "$customerTransfer->getEmail()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 792,
-            "line_to": 792,
+            "line_from": 794,
+            "line_to": 794,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Customer\\Business\\Customer\\Customer::isValidPassword cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
             "snippet": "        if (!$this->isValidPassword($customerEntity->getPassword(), $customerTransfer->getPassword())) {",
             "selected_text": "$customerEntity->getPassword()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 792,
-            "line_to": 792,
+            "line_from": 794,
+            "line_to": 794,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\Customer\\Business\\Customer\\Customer::isValidPassword cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
             "snippet": "        if (!$this->isValidPassword($customerEntity->getPassword(), $customerTransfer->getPassword())) {",
             "selected_text": "$customerTransfer->getPassword()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 811,
-            "line_to": 811,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Zed\\Customer\\Business\\Customer\\Customer::getEncodedPassword cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
-            "snippet": "        $customerTransfer->setPassword($this->getEncodedPassword($currentPassword));",
-            "selected_text": "$currentPassword",
-            "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 824,
-            "line_to": 824,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Zed\\Customer\\Business\\Customer\\Customer::getEncodedPassword cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
-            "snippet": "        $customerTransfer->setNewPassword($this->getEncodedPassword($currentPassword));",
-            "selected_text": "$currentPassword",
-            "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 863,
-            "line_to": 863,
+            "line_from": 877,
+            "line_to": 877,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Customer\\Persistence\\CustomerQueryContainerInterface::queryCustomerById cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
             "snippet": "        $customerEntity = $this->queryContainer->queryCustomerById($customerTransfer->getIdCustomer())",
             "selected_text": "$customerTransfer->getIdCustomer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 1007,
-            "line_to": 1007,
+            "line_from": 1021,
+            "line_to": 1021,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\CustomerTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
             "snippet": "        $customersCount = $customerCollectionTransfer->getCustomers()->count();",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -1000,8 +984,7 @@
             "snippet": "        $this->saveOrderCustomer($quoteTransfer, $checkoutResponseTransfer->getSaveOrder());",
             "selected_text": "$checkoutResponseTransfer->getSaveOrder()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1013,8 +996,7 @@
             "snippet": "        if ($quoteTransfer->getCustomer()->getIsGuest() === true) {",
             "selected_text": "getIsGuest",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -1026,8 +1008,7 @@
             "snippet": "        if (!$this->utilValidateService->isEmailFormatValid($quoteTransfer->getCustomer()->getEmail())) {",
             "selected_text": "$quoteTransfer->getCustomer()->getEmail()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1039,8 +1020,7 @@
             "snippet": "        if (!$this->utilValidateService->isEmailFormatValid($quoteTransfer->getCustomer()->getEmail())) {",
             "selected_text": "getEmail",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -1052,8 +1032,7 @@
             "snippet": "        if ($this->customer->hasEmail($quoteTransfer->getCustomer()->getEmail())) {",
             "selected_text": "$quoteTransfer->getCustomer()->getEmail()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1065,8 +1044,7 @@
             "snippet": "        if ($this->customer->hasEmail($quoteTransfer->getCustomer()->getEmail())) {",
             "selected_text": "getEmail",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -1078,8 +1056,19 @@
             "snippet": "        return $quoteTransfer->getCustomer() !== null && $quoteTransfer->getCustomer()->getIdCustomer() !== null;",
             "selected_text": "getIdCustomer",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Customer\\Business\\Customer\\CustomerInterface::findByReference cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Sales/CustomerOrderHydrator.php",
+            "snippet": "        $customerTransfer = $this->customer->findByReference($orderTransfer->getCustomerReference());",
+            "selected_text": "$orderTransfer->getCustomerReference()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1091,8 +1080,7 @@
             "snippet": "        $customerCriteriaFilterTransfer = $this->createCustomerCriteriaFilterTransfer($input->getOption(static::OPTION_NO_TOKEN));",
             "selected_text": "$input->getOption(static::OPTION_NO_TOKEN)",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -1104,8 +1092,7 @@
             "snippet": "            if (!$this->getQuestionHelper()->ask($input, $output, $this->createConfirmationQuestion($customerCollection->getCustomers()->count()))) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -1117,8 +1104,7 @@
             "snippet": "        $customerCriteriaFilterTransfer = $this->createCustomerCriteriaFilterTransfer($input->getOption(static::OPTION_NO_TOKEN));",
             "selected_text": "$input->getOption(static::OPTION_NO_TOKEN)",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -1130,8 +1116,7 @@
             "snippet": "            if (!$this->getQuestionHelper()->ask($input, $output, $this->createConfirmationQuestion($customerCollection->getCustomers()->count()))) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -1143,8 +1128,7 @@
             "snippet": "        $baseRedirectUrl = urldecode($request->query->get(static::REDIRECT_URL_KEY, static::REDIRECT_URL_DEFAULT));",
             "selected_text": "$request->query->get(static::REDIRECT_URL_KEY, static::REDIRECT_URL_DEFAULT)",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1156,8 +1140,7 @@
             "snippet": "        $redirectUrl->addQuery('customerReference', $customer->getCustomerReference());",
             "selected_text": "$customer->getCustomerReference()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1169,34 +1152,7 @@
             "snippet": "                $idCustomer",
             "selected_text": "$idCustomer",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 77,
-            "line_to": 77,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Symfony\\Component\\Form\\FormErrorIterator::getMessage does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Communication/Controller/DeleteController.php",
-            "snippet": "                $this->addErrorMessage($formError->getMessage(), $formError->getMessageParameters());",
-            "selected_text": "getMessage",
-            "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 77,
-            "line_to": 77,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Symfony\\Component\\Form\\FormErrorIterator::getMessageParameters does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Communication/Controller/DeleteController.php",
-            "snippet": "                $this->addErrorMessage($formError->getMessage(), $formError->getMessageParameters());",
-            "selected_text": "getMessageParameters",
-            "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1208,8 +1164,7 @@
             "snippet": "            $this->updateBillingAddress($customerTransfer->getIdCustomer(), (int)$defaultBilling);",
             "selected_text": "$customerTransfer->getIdCustomer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1221,8 +1176,7 @@
             "snippet": "            $this->updateShippingAddress($customerTransfer->getIdCustomer(), (int)$defaultShipping);",
             "selected_text": "$customerTransfer->getIdCustomer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1234,8 +1188,7 @@
             "snippet": "        $this->setSuccess($response->getIsSuccess());",
             "selected_text": "$response->getIsSuccess()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1247,8 +1200,7 @@
             "snippet": "        $this->setSuccess($response->getIsSuccess());",
             "selected_text": "$response->getIsSuccess()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1260,8 +1212,7 @@
             "snippet": "        return $this->getFacade()->findCustomerByReference($customerTransfer->getCustomerReference());",
             "selected_text": "$customerTransfer->getCustomerReference()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1273,8 +1224,7 @@
             "snippet": "     * @return string|\\Symfony\\Component\\HttpFoundation\\RedirectResponse",
             "selected_text": "string|\\Symfony\\Component\\HttpFoundation\\RedirectResponse",
             "error_level": 2,
-            "shortcode": 143,
-            "taint_trace": null
+            "shortcode": 143
         },
         {
             "severity": "info",
@@ -1286,8 +1236,7 @@
             "snippet": "        return $blockResponse->getContent();",
             "selected_text": "$blockResponse->getContent()",
             "error_level": 5,
-            "shortcode": 137,
-            "taint_trace": null
+            "shortcode": 137
         },
         {
             "severity": "info",
@@ -1299,8 +1248,7 @@
             "snippet": "                if ($customerQuery->findByEmail($email)->count() > 0) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -1312,8 +1260,7 @@
             "snippet": "        return $addressEntity->toArray();",
             "selected_text": "toArray",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -1325,8 +1272,7 @@
             "snippet": "            $result[$countryTransfer->getIdCountry()] = $countryTransfer->getName();",
             "selected_text": "$result",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -1338,8 +1284,7 @@
             "snippet": "                    $address->getAddress1(),",
             "selected_text": "$address->getAddress1()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1351,8 +1296,7 @@
             "snippet": "                    $address->getZipCode(),",
             "selected_text": "$address->getZipCode()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1364,8 +1308,7 @@
             "snippet": "                    $address->getCity()",
             "selected_text": "$address->getCity()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1377,8 +1320,7 @@
             "snippet": "            $customerTransfer->getEmail(),",
             "selected_text": "$customerTransfer->getEmail()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1390,8 +1332,7 @@
             "snippet": "            $customerTransfer->getEmail(),",
             "selected_text": "getEmail",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -1403,8 +1344,7 @@
             "snippet": "            $customerTransfer->getFirstName() . ' ' . $customerTransfer->getLastName()",
             "selected_text": "$customerTransfer->getFirstName()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -1416,8 +1356,7 @@
             "snippet": "            $customerTransfer->getFirstName() . ' ' . $customerTransfer->getLastName()",
             "selected_text": "$customerTransfer->getLastName()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -1429,8 +1368,7 @@
             "snippet": "            $customerTransfer->getEmail(),",
             "selected_text": "$customerTransfer->getEmail()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1442,8 +1380,7 @@
             "snippet": "            $customerTransfer->getEmail(),",
             "selected_text": "getEmail",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -1455,8 +1392,7 @@
             "snippet": "            $customerTransfer->getFirstName() . ' ' . $customerTransfer->getLastName()",
             "selected_text": "$customerTransfer->getFirstName()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -1468,8 +1404,7 @@
             "snippet": "            $customerTransfer->getFirstName() . ' ' . $customerTransfer->getLastName()",
             "selected_text": "$customerTransfer->getLastName()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -1481,8 +1416,7 @@
             "snippet": "            $customerTransfer->getEmail(),",
             "selected_text": "$customerTransfer->getEmail()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1494,8 +1428,7 @@
             "snippet": "            $customerTransfer->getEmail(),",
             "selected_text": "getEmail",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -1507,8 +1440,7 @@
             "snippet": "            $customerTransfer->getFirstName() . ' ' . $customerTransfer->getLastName()",
             "selected_text": "$customerTransfer->getFirstName()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -1520,8 +1452,7 @@
             "snippet": "            $customerTransfer->getFirstName() . ' ' . $customerTransfer->getLastName()",
             "selected_text": "$customerTransfer->getLastName()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -1533,8 +1464,7 @@
             "snippet": "            $customerTransfer->getEmail(),",
             "selected_text": "$customerTransfer->getEmail()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1546,8 +1476,7 @@
             "snippet": "            $customerTransfer->getEmail(),",
             "selected_text": "getEmail",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -1559,8 +1488,7 @@
             "snippet": "            $customerTransfer->getFirstName() . ' ' . $customerTransfer->getLastName()",
             "selected_text": "$customerTransfer->getFirstName()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -1572,8 +1500,7 @@
             "snippet": "            $customerTransfer->getFirstName() . ' ' . $customerTransfer->getLastName()",
             "selected_text": "$customerTransfer->getLastName()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -1585,8 +1512,7 @@
             "snippet": "        if ($customersCollection->count() < 1) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -1598,8 +1524,7 @@
             "snippet": "        return $this->formatCustomerCollection($customersCollection);",
             "selected_text": "$customersCollection",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -1611,8 +1536,7 @@
             "snippet": "                $button->getUrl(),",
             "selected_text": "$button->getUrl()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1624,8 +1548,7 @@
             "snippet": "                $button->getTitle(),",
             "selected_text": "$button->getTitle()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1637,8 +1560,7 @@
             "snippet": "     * @return array",
             "selected_text": "array",
             "error_level": 5,
-            "shortcode": 166,
-            "taint_trace": null
+            "shortcode": 166
         },
         {
             "severity": "info",
@@ -1650,8 +1572,7 @@
             "snippet": "        $query->filterByCustomer($customer);",
             "selected_text": "$customer",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1663,86 +1584,31 @@
             "snippet": "        $query->filterByCustomer($customer);",
             "selected_text": "$customer",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 42,
-            "line_to": 42,
+            "line_from": 46,
+            "line_to": 46,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Customer\\Persistence\\SpyCustomer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Persistence/CustomerRepository.php",
             "snippet": "        $this->hydrateCustomerListWithCustomers($customerCollectionTransfer, $customerQuery->find()->getData());",
             "selected_text": "getData",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
-            "line_from": 93,
-            "line_to": 93,
+            "line_from": 97,
+            "line_to": 97,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of Spryker\\Zed\\Customer\\Persistence\\Mapper\\CustomerMapperInterface::mapCustomerAddressEntityToAddressTransfer expects Orm\\Zed\\Customer\\Persistence\\SpyCustomerAddress, possibly different type Orm\\Zed\\CompanyUnitAddress\\Persistence\\SpyCompanyUnitAddress|Orm\\Zed\\Country\\Persistence\\SpyRegion|Orm\\Zed\\Customer\\Persistence\\SpyCustomerAddress|Orm\\Zed\\MerchantProfile\\Persistence\\SpyMerchantProfileAddress|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderAddress|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderAddressHistory|Orm\\Zed\\Tax\\Persistence\\SpyTaxRate provided",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Persistence/CustomerRepository.php",
             "snippet": "            ->mapCustomerAddressEntityToAddressTransfer($addressEntity, new AddressTransfer());",
             "selected_text": "$addressEntity",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 137,
-            "line_to": 137,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Customer\\Persistence\\SpyCustomer> variable $paginationModel",
-            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Persistence/CustomerRepository.php",
-            "snippet": "        $paginationTransfer->setNbResults($paginationModel->getNbResults());",
-            "selected_text": "getNbResults",
-            "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 138,
-            "line_to": 138,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Customer\\Persistence\\SpyCustomer> variable $paginationModel",
-            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Persistence/CustomerRepository.php",
-            "snippet": "        $paginationTransfer->setFirstIndex($paginationModel->getFirstIndex());",
-            "selected_text": "getFirstIndex",
-            "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 139,
-            "line_to": 139,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Customer\\Persistence\\SpyCustomer> variable $paginationModel",
-            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Persistence/CustomerRepository.php",
-            "snippet": "        $paginationTransfer->setLastIndex($paginationModel->getLastIndex());",
-            "selected_text": "getLastIndex",
-            "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 140,
-            "line_to": 140,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Customer\\Persistence\\SpyCustomer> variable $paginationModel",
-            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Persistence/CustomerRepository.php",
-            "snippet": "        $paginationTransfer->setFirstPage($paginationModel->getFirstPage());",
-            "selected_text": "getFirstPage",
-            "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -1751,11 +1617,10 @@
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Customer\\Persistence\\SpyCustomer> variable $paginationModel",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Persistence/CustomerRepository.php",
-            "snippet": "        $paginationTransfer->setLastPage($paginationModel->getLastPage());",
-            "selected_text": "getLastPage",
+            "snippet": "        $paginationTransfer->setNbResults($paginationModel->getNbResults());",
+            "selected_text": "getNbResults",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -1764,11 +1629,10 @@
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Customer\\Persistence\\SpyCustomer> variable $paginationModel",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Persistence/CustomerRepository.php",
-            "snippet": "        $paginationTransfer->setNextPage($paginationModel->getNextPage());",
-            "selected_text": "getNextPage",
+            "snippet": "        $paginationTransfer->setFirstIndex($paginationModel->getFirstIndex());",
+            "selected_text": "getFirstIndex",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -1777,11 +1641,22 @@
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Customer\\Persistence\\SpyCustomer> variable $paginationModel",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Persistence/CustomerRepository.php",
-            "snippet": "        $paginationTransfer->setPreviousPage($paginationModel->getPreviousPage());",
-            "selected_text": "getPreviousPage",
+            "snippet": "        $paginationTransfer->setLastIndex($paginationModel->getLastIndex());",
+            "selected_text": "getLastIndex",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 144,
+            "line_to": 144,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Customer\\Persistence\\SpyCustomer> variable $paginationModel",
+            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Persistence/CustomerRepository.php",
+            "snippet": "        $paginationTransfer->setFirstPage($paginationModel->getFirstPage());",
+            "selected_text": "getFirstPage",
+            "error_level": 3,
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -1790,24 +1665,58 @@
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Customer\\Persistence\\SpyCustomer> variable $paginationModel",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Persistence/CustomerRepository.php",
-            "snippet": "        return $paginationModel->getQuery();",
-            "selected_text": "getQuery",
+            "snippet": "        $paginationTransfer->setLastPage($paginationModel->getLastPage());",
+            "selected_text": "getLastPage",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
-            "line_from": 210,
-            "line_to": 210,
+            "line_from": 146,
+            "line_to": 146,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Customer\\Persistence\\SpyCustomer> variable $paginationModel",
+            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Persistence/CustomerRepository.php",
+            "snippet": "        $paginationTransfer->setNextPage($paginationModel->getNextPage());",
+            "selected_text": "getNextPage",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 147,
+            "line_to": 147,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Customer\\Persistence\\SpyCustomer> variable $paginationModel",
+            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Persistence/CustomerRepository.php",
+            "snippet": "        $paginationTransfer->setPreviousPage($paginationModel->getPreviousPage());",
+            "selected_text": "getPreviousPage",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 150,
+            "line_to": 150,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Customer\\Persistence\\SpyCustomer> variable $paginationModel",
+            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Persistence/CustomerRepository.php",
+            "snippet": "        $customerQuery = $paginationModel->getQuery();",
+            "selected_text": "getQuery",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 217,
+            "line_to": 217,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Customer\\Persistence\\SpyCustomer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Persistence/CustomerRepository.php",
             "snippet": "            $this->queryCustomersByCriteria($customerCriteriaFilterTransfer)->find()->toArray()",
             "selected_text": "toArray",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         }
     ],
     "deprecation": [
@@ -1821,8 +1730,7 @@
             "snippet": "            ->confirmRegistration($customerTransfer);",
             "selected_text": "confirmRegistration",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -1834,8 +1742,7 @@
             "snippet": "    use DatabaseTransactionHandlerTrait;",
             "selected_text": "DatabaseTransactionHandlerTrait",
             "error_level": 2,
-            "shortcode": 171,
-            "taint_trace": null
+            "shortcode": 171
         },
         {
             "severity": "info",
@@ -1847,8 +1754,7 @@
             "snippet": "        if ($quoteTransfer->getIsAddressSavingSkipped()) {",
             "selected_text": "getIsAddressSavingSkipped",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -1860,8 +1766,7 @@
             "snippet": "        $quoteTransfer->requireShippingAddress();",
             "selected_text": "requireShippingAddress",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -1873,8 +1778,7 @@
             "snippet": "        $this->processCustomerAddress($quoteTransfer->getShippingAddress(), $customer);",
             "selected_text": "getShippingAddress",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -1886,8 +1790,7 @@
             "snippet": "class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver",
             "selected_text": "CustomerOrderSaver",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -1899,177 +1802,139 @@
             "snippet": "        parent::__construct($customer, $address);",
             "selected_text": "parent::__construct($customer, $address)",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 836,
-            "line_to": 836,
-            "type": "DeprecatedClass",
-            "message": "Symfony\\Component\\Security\\Core\\Encoder\\BCryptPasswordEncoder is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
-            "snippet": "        $encoder = new BCryptPasswordEncoder(self::BCRYPT_FACTOR);",
-            "selected_text": "new BCryptPasswordEncoder(self::BCRYPT_FACTOR)",
-            "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 849,
-            "line_to": 849,
-            "type": "DeprecatedClass",
-            "message": "Symfony\\Component\\Security\\Core\\Encoder\\BCryptPasswordEncoder is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
-            "snippet": "        $encoder = new BCryptPasswordEncoder(self::BCRYPT_FACTOR);",
-            "selected_text": "new BCryptPasswordEncoder(self::BCRYPT_FACTOR)",
-            "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 130,
-            "line_to": 130,
+            "line_from": 131,
+            "line_to": 131,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Customer\\Business\\Model\\CustomerOrderSaverInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/CustomerBusinessFactory.php",
             "snippet": "     * @return \\Spryker\\Zed\\Customer\\Business\\Model\\CustomerOrderSaverInterface",
             "selected_text": "\\Spryker\\Zed\\Customer\\Business\\Model\\CustomerOrderSaverInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 134,
-            "line_to": 134,
+            "line_from": 135,
+            "line_to": 135,
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\Customer\\Business\\Model\\CustomerOrderSaver is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/CustomerBusinessFactory.php",
             "snippet": "        return new ObsoleteCustomerOrderSaver($this->createCustomer(), $this->createAddress());",
             "selected_text": "new ObsoleteCustomerOrderSaver($this->createCustomer(), $this->createAddress())",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 144,
-            "line_to": 144,
+            "line_from": 145,
+            "line_to": 145,
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\Customer\\Business\\Checkout\\CustomerOrderSaver is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/CustomerBusinessFactory.php",
             "snippet": "        return new CustomerOrderSaver($this->createCustomer(), $this->createAddress());",
             "selected_text": "new CustomerOrderSaver($this->createCustomer(), $this->createAddress())",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 262,
-            "line_to": 262,
+            "line_from": 263,
+            "line_to": 263,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Customer\\Business\\StrategyResolver\\OrderSaverStrategyResolverInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/CustomerBusinessFactory.php",
             "snippet": "     * @return \\Spryker\\Zed\\Customer\\Business\\StrategyResolver\\OrderSaverStrategyResolverInterface",
             "selected_text": "\\Spryker\\Zed\\Customer\\Business\\StrategyResolver\\OrderSaverStrategyResolverInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 264,
-            "line_to": 264,
+            "line_from": 265,
+            "line_to": 265,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Customer\\Business\\StrategyResolver\\OrderSaverStrategyResolverInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/CustomerBusinessFactory.php",
             "snippet": "    public function createCustomerOrderSaverStrategyResolver(): OrderSaverStrategyResolverInterface",
             "selected_text": "OrderSaverStrategyResolverInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 268,
-            "line_to": 268,
+            "line_from": 269,
+            "line_to": 269,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Customer\\Business\\StrategyResolver\\OrderSaverStrategyResolver is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/CustomerBusinessFactory.php",
             "snippet": "        $strategyContainer[OrderSaverStrategyResolver::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {",
             "selected_text": "OrderSaverStrategyResolver::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 269,
-            "line_to": 269,
+            "line_from": 270,
+            "line_to": 270,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Customer\\Business\\CustomerBusinessFactory::createCheckoutCustomerOrderSaver has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/CustomerBusinessFactory.php",
             "snippet": "            return $this->createCheckoutCustomerOrderSaver();",
             "selected_text": "createCheckoutCustomerOrderSaver",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
-            "line_from": 272,
-            "line_to": 272,
+            "line_from": 273,
+            "line_to": 273,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Customer\\Business\\StrategyResolver\\OrderSaverStrategyResolver is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/CustomerBusinessFactory.php",
             "snippet": "        $strategyContainer[OrderSaverStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {",
             "selected_text": "OrderSaverStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 276,
-            "line_to": 276,
+            "line_from": 277,
+            "line_to": 277,
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\Customer\\Business\\StrategyResolver\\OrderSaverStrategyResolver is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/CustomerBusinessFactory.php",
             "snippet": "        return new OrderSaverStrategyResolver($strategyContainer);",
             "selected_text": "new OrderSaverStrategyResolver($strategyContainer)",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 108,
-            "line_to": 108,
+            "line_from": 109,
+            "line_to": 109,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Customer\\Business\\Customer\\CustomerInterface::confirmRegistration has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/CustomerFacade.php",
             "snippet": "            ->confirmRegistration($customerTransfer);",
             "selected_text": "confirmRegistration",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
-            "line_from": 511,
-            "line_to": 511,
+            "line_from": 512,
+            "line_to": 512,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Customer\\Business\\CustomerBusinessFactory::createCustomerOrderSaverStrategyResolver has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/CustomerFacade.php",
             "snippet": "            ->createCustomerOrderSaverStrategyResolver()",
             "selected_text": "createCustomerOrderSaverStrategyResolver",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -2081,8 +1946,7 @@
             "snippet": "class CustomerOrderSaver extends CheckoutCustomerOrderSaver implements CustomerOrderSaverInterface",
             "selected_text": "CustomerOrderSaver",
             "error_level": 2,
-            "shortcode": 152,
-            "taint_trace": null
+            "shortcode": 152
         },
         {
             "severity": "info",
@@ -2094,8 +1958,7 @@
             "snippet": "class CustomerOrderSaver extends CheckoutCustomerOrderSaver implements CustomerOrderSaverInterface",
             "selected_text": "CheckoutCustomerOrderSaver",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -2107,8 +1970,7 @@
             "snippet": "        $this->saveOrderCustomer($quoteTransfer, $checkoutResponseTransfer->getSaveOrder());",
             "selected_text": "getSaveOrder",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -2120,8 +1982,7 @@
             "snippet": "class OrderSaverStrategyResolver implements OrderSaverStrategyResolverInterface",
             "selected_text": "OrderSaverStrategyResolver",
             "error_level": 2,
-            "shortcode": 152,
-            "taint_trace": null
+            "shortcode": 152
         },
         {
             "severity": "info",
@@ -2133,8 +1994,7 @@
             "snippet": "            ->confirmRegistration($customerTransfer);",
             "selected_text": "confirmRegistration",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -2146,8 +2006,7 @@
             "snippet": "        return new CustomerFormDataProvider($this->getQueryContainer(), $this->getLocaleFacade());",
             "selected_text": "getLocaleFacade",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -2159,8 +2018,7 @@
             "snippet": "        return new CustomerUpdateFormDataProvider($this->getQueryContainer(), $this->getLocaleFacade());",
             "selected_text": "getLocaleFacade",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -2172,8 +2030,7 @@
             "snippet": "     * @return \\Spryker\\Zed\\Application\\Business\\Model\\Request\\SubRequestHandlerInterface",
             "selected_text": "\\Spryker\\Zed\\Application\\Business\\Model\\Request\\SubRequestHandlerInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -2185,8 +2042,7 @@
             "snippet": "class CustomerOrderSavePlugin extends AbstractPlugin implements CheckoutDoSaveOrderInterface",
             "selected_text": "CustomerOrderSavePlugin",
             "error_level": 2,
-            "shortcode": 152,
-            "taint_trace": null
+            "shortcode": 152
         },
         {
             "severity": "info",
@@ -2198,8 +2054,7 @@
             "snippet": "class CustomerPreConditionCheckerPlugin extends AbstractPlugin implements CheckoutPreConditionInterface",
             "selected_text": "CustomerPreConditionCheckerPlugin",
             "error_level": 2,
-            "shortcode": 152,
-            "taint_trace": null
+            "shortcode": 152
         },
         {
             "severity": "info",
@@ -2211,8 +2066,7 @@
             "snippet": "class OrderCustomerSavePlugin extends AbstractPlugin implements CheckoutSaveOrderInterface",
             "selected_text": "OrderCustomerSavePlugin",
             "error_level": 2,
-            "shortcode": 152,
-            "taint_trace": null
+            "shortcode": 152
         },
         {
             "severity": "info",
@@ -2224,8 +2078,7 @@
             "snippet": "        $this->getFacade()->saveCustomerForOrder($quoteTransfer, $checkoutResponse);",
             "selected_text": "saveCustomerForOrder",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -2237,8 +2090,7 @@
             "snippet": "class CustomerOrderHydratePlugin extends AbstractPlugin implements HydrateOrderPluginInterface",
             "selected_text": "CustomerOrderHydratePlugin",
             "error_level": 2,
-            "shortcode": 152,
-            "taint_trace": null
+            "shortcode": 152
         },
         {
             "severity": "info",
@@ -2250,21 +2102,7 @@
             "snippet": "        $container->set(static::SERVICE_DATE_FORMATTER, function (Container $container) {",
             "selected_text": "static::SERVICE_DATE_FORMATTER",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 307,
-            "line_to": 307,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/CustomerDependencyProvider.php",
-            "snippet": "            return $pimple->getApplication()['sub_request'];",
-            "selected_text": "$pimple->getApplication()",
-            "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 170
         }
     ]
 }

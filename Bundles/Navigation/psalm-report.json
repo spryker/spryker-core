@@ -28,20 +28,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 37,
-            "line_to": 37,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Navigation/src/Spryker/Client/Navigation/NavigationDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->storage()->client();",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 48,
-            "line_to": 48,
+            "line_from": 47,
+            "line_to": 47,
             "type": "LessSpecificImplementedReturnType",
             "message": "The inherited return type 'array<array-key, Twig\\TwigFunction>' for Twig\\Extension\\ExtensionInterface::getFunctions is more specific than the implemented return type for Spryker\\Yves\\Navigation\\Twig\\NavigationTwigExtension::getfunctions 'array<array-key, mixed>'",
             "file_name": "vendor/spryker/spryker/Bundles/Navigation/src/Spryker/Yves/Navigation/Twig/NavigationTwigExtension.php",
@@ -364,6 +352,30 @@
         },
         {
             "severity": "info",
+            "line_from": 150,
+            "line_to": 150,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Navigation\\Persistence\\NavigationQueryContainerInterface::queryNavigationNodeLocalizedAttributesById cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Navigation/src/Spryker/Zed/Navigation/Business/Node/NavigationNodeUpdater.php",
+            "snippet": "            ->queryNavigationNodeLocalizedAttributesById($navigationNodeLocalizedAttributesTransfer->getIdNavigationNodeLocalizedAttributes())",
+            "selected_text": "$navigationNodeLocalizedAttributesTransfer->getIdNavigationNodeLocalizedAttributes()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 156,
+            "line_to": 156,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Navigation/src/Spryker/Zed/Navigation/Business/Node/NavigationNodeUpdater.php",
+            "snippet": "                $navigationNodeLocalizedAttributesTransfer->getIdNavigationNodeLocalizedAttributes()",
+            "selected_text": "$navigationNodeLocalizedAttributesTransfer->getIdNavigationNodeLocalizedAttributes()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
             "line_from": 80,
             "line_to": 80,
             "type": "PossiblyNullArgument",
@@ -496,18 +508,6 @@
         },
         {
             "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Navigation/src/Spryker/Zed/Navigation/NavigationDependencyProvider.php",
-            "snippet": "            return new NavigationToTouchBridge($container->getLocator()->touch()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 17,
             "line_to": 17,
             "type": "MismatchingDocblockParamType",
@@ -534,8 +534,44 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 27,
-            "line_to": 27,
+            "line_from": 35,
+            "line_to": 35,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Yves\\Navigation\\NavigationDependencyProvider::providePluginApplication has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Navigation/src/Spryker/Yves/Navigation/NavigationDependencyProvider.php",
+            "snippet": "        $this->providePluginApplication($container);",
+            "selected_text": "providePluginApplication",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "DeprecatedConstant",
+            "message": "Constant Spryker\\Yves\\Navigation\\NavigationDependencyProvider::PLUGIN_APPLICATION is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Navigation/src/Spryker/Yves/Navigation/NavigationDependencyProvider.php",
+            "snippet": "        $container->set(static::PLUGIN_APPLICATION, function () {",
+            "selected_text": "static::PLUGIN_APPLICATION",
+            "error_level": 2,
+            "shortcode": 170
+        },
+        {
+            "severity": "info",
+            "line_from": 64,
+            "line_to": 64,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Yves\\Kernel\\Plugin\\Pimple is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Navigation/src/Spryker/Yves/Navigation/NavigationDependencyProvider.php",
+            "snippet": "            $pimplePlugin = new Pimple();",
+            "selected_text": "new Pimple()",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 37,
+            "line_to": 37,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Yves\\Kernel\\Application is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Navigation/src/Spryker/Yves/Navigation/NavigationFactory.php",
@@ -543,6 +579,18 @@
             "selected_text": "\\Spryker\\Yves\\Kernel\\Application",
             "error_level": 2,
             "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "DeprecatedConstant",
+            "message": "Constant Spryker\\Yves\\Navigation\\NavigationDependencyProvider::PLUGIN_APPLICATION is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Navigation/src/Spryker/Yves/Navigation/NavigationFactory.php",
+            "snippet": "        return $this->getProvidedDependency(NavigationDependencyProvider::PLUGIN_APPLICATION);",
+            "selected_text": "NavigationDependencyProvider::PLUGIN_APPLICATION",
+            "error_level": 2,
+            "shortcode": 170
         },
         {
             "severity": "info",
@@ -565,42 +613,6 @@
             "file_name": "vendor/spryker/spryker/Bundles/Navigation/src/Spryker/Yves/Navigation/Plugin/Provider/NavigationTwigServiceProvider.php",
             "snippet": "        $app['twig'] = $app->share(",
             "selected_text": "share",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 28,
-            "line_to": 28,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Yves\\Kernel\\Application is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Navigation/src/Spryker/Yves/Navigation/Twig/NavigationTwigExtension.php",
-            "snippet": "     * @var \\Spryker\\Yves\\Kernel\\Application",
-            "selected_text": "\\Spryker\\Yves\\Kernel\\Application",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 39,
-            "line_to": 39,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Yves\\Kernel\\Application is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Navigation/src/Spryker/Yves/Navigation/Twig/NavigationTwigExtension.php",
-            "snippet": "     * @param \\Spryker\\Yves\\Kernel\\Application $application",
-            "selected_text": "\\Spryker\\Yves\\Kernel\\Application",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 93,
-            "line_to": 93,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Navigation/src/Spryker/Yves/Navigation/Twig/NavigationTwigExtension.php",
-            "snippet": "        return $this->application['locale'];",
-            "selected_text": "$this->application",
             "error_level": 2,
             "shortcode": 1
         },

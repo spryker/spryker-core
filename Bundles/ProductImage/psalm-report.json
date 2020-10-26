@@ -244,6 +244,18 @@
         },
         {
             "severity": "info",
+            "line_from": 290,
+            "line_to": 290,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdLocale on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductImage/src/Spryker/Zed/ProductImage/Business/Model/Writer.php",
+            "snippet": "            $productImageSetEntity->setFkLocale($productImageSetTransfer->getLocale()->getIdLocale());",
+            "selected_text": "getIdLocale",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 307,
             "line_to": 307,
             "type": "PossiblyNullArgument",
@@ -388,6 +400,18 @@
         },
         {
             "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getLocaleName on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductImage/src/Spryker/Zed/ProductImage/Business/Resolver/ProductImageSetResolver.php",
+            "snippet": "            if (!$productImageSetTransfer->getLocale() || $productImageSetTransfer->getLocale()->getLocaleName() !== $localeName) {",
+            "selected_text": "getLocaleName",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 43,
             "line_to": 43,
             "type": "PossiblyNullArrayOffset",
@@ -508,39 +532,15 @@
         },
         {
             "severity": "info",
-            "line_from": 93,
-            "line_to": 93,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Orm\\Zed\\ConfigurableBundle\\Persistence\\SpyConfigurableBundleTemplateQuery::orderbysortorder does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductImage/src/Spryker/Zed/ProductImage/Persistence/ProductImageQueryContainer.php",
-            "snippet": "                ->orderBySortOrder(Criteria::DESC)",
-            "selected_text": "orderBySortOrder",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 114,
-            "line_to": 114,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Orm\\Zed\\ConfigurableBundle\\Persistence\\SpyConfigurableBundleTemplateQuery::orderbysortorder does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductImage/src/Spryker/Zed/ProductImage/Persistence/ProductImageQueryContainer.php",
-            "snippet": "            ->orderBySortOrder(Criteria::DESC)",
-            "selected_text": "orderBySortOrder",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 39,
-            "line_to": 39,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::find does not exist",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSet> variable $productImageSetEntities",
             "file_name": "vendor/spryker/spryker/Bundles/ProductImage/src/Spryker/Zed/ProductImage/Persistence/ProductImageRepository.php",
-            "snippet": "            ->find();",
-            "selected_text": "find",
+            "snippet": "        if ($productImageSetEntities->count() === 0) {",
+            "selected_text": "count",
             "error_level": 3,
-            "shortcode": 108
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -580,39 +580,15 @@
         },
         {
             "severity": "info",
-            "line_from": 128,
-            "line_to": 128,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::filterbyfkproduct does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductImage/src/Spryker/Zed/ProductImage/Persistence/ProductImageRepository.php",
-            "snippet": "            ->filterByFkProduct(null, Criteria::ISNOTNULL)",
-            "selected_text": "filterByFkProduct",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 131,
             "line_to": 131,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSet|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSet> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ProductImage/src/Spryker/Zed/ProductImage/Persistence/ProductImageRepository.php",
             "snippet": "            ->getData();",
             "selected_text": "getData",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 29,
-            "line_to": 29,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductImage/src/Spryker/Zed/ProductImage/ProductImageDependencyProvider.php",
-            "snippet": "            return new ProductImageToLocaleBridge($container->getLocator()->locale()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

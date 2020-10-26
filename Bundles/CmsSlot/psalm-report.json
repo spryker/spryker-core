@@ -36,6 +36,42 @@
             "selected_text": "$cmsSlotEntities",
             "error_level": 3,
             "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 100,
+            "line_to": 100,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\CmsSlot\\Persistence\\SpyCmsSlotQuery::setLimit cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlot/src/Spryker/Zed/CmsSlot/Persistence/CmsSlotRepository.php",
+            "snippet": "            $cmsSlotQuery->setLimit($filterTransfer->getLimit());",
+            "selected_text": "$filterTransfer->getLimit()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 104,
+            "line_to": 104,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\CmsSlot\\Persistence\\SpyCmsSlotQuery::setOffset cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlot/src/Spryker/Zed/CmsSlot/Persistence/CmsSlotRepository.php",
+            "snippet": "            $cmsSlotQuery->setOffset($filterTransfer->getOffset());",
+            "selected_text": "$filterTransfer->getOffset()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 108,
+            "line_to": 108,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\CmsSlot\\Persistence\\SpyCmsSlotQuery::orderBy cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlot/src/Spryker/Zed/CmsSlot/Persistence/CmsSlotRepository.php",
+            "snippet": "            $cmsSlotQuery->orderBy($filterTransfer->getOrderBy());",
+            "selected_text": "$filterTransfer->getOrderBy()",
+            "error_level": 3,
+            "shortcode": 78
         }
     ],
     "deprecation": []

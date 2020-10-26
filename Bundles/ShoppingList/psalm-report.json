@@ -2,6 +2,30 @@
     "error": [
         {
             "severity": "error",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Client\\ShoppingList\\Plugin\\ReadShoppingListPermissionPlugin::can has wrong name $idShoppingList, expecting $context as defined by Spryker\\Shared\\PermissionExtension\\Dependency\\Plugin\\ExecutablePermissionPluginInterface::can",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Client/ShoppingList/Plugin/ReadShoppingListPermissionPlugin.php",
+            "snippet": "    public function can(array $configuration, $idShoppingList = null): bool",
+            "selected_text": "$idShoppingList",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Client\\ShoppingList\\Plugin\\WriteShoppingListPermissionPlugin::can has wrong name $idShoppingList, expecting $context as defined by Spryker\\Shared\\PermissionExtension\\Dependency\\Plugin\\ExecutablePermissionPluginInterface::can",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Client/ShoppingList/Plugin/WriteShoppingListPermissionPlugin.php",
+            "snippet": "    public function can(array $configuration, $idShoppingList = null): bool",
+            "selected_text": "$idShoppingList",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
             "line_from": 222,
             "line_to": 222,
             "type": "InvalidArgument",
@@ -47,21 +71,33 @@
             "selected_text": "[\n                 $companyUserTransfer->getCustomer()->getCustomerReference() => ShoppingListTransfer::CUSTOMER_REFERENCE,\n            ]",
             "error_level": 6,
             "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Zed\\ShoppingList\\Communication\\Plugin\\ReadShoppingListPermissionPlugin::can has wrong name $idShoppingList, expecting $context as defined by Spryker\\Shared\\PermissionExtension\\Dependency\\Plugin\\ExecutablePermissionPluginInterface::can",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Communication/Plugin/ReadShoppingListPermissionPlugin.php",
+            "snippet": "    public function can(array $configuration, $idShoppingList = null): bool",
+            "selected_text": "$idShoppingList",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Zed\\ShoppingList\\Communication\\Plugin\\WriteShoppingListPermissionPlugin::can has wrong name $idShoppingList, expecting $context as defined by Spryker\\Shared\\PermissionExtension\\Dependency\\Plugin\\ExecutablePermissionPluginInterface::can",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Communication/Plugin/WriteShoppingListPermissionPlugin.php",
+            "snippet": "    public function can(array $configuration, $idShoppingList = null): bool",
+            "selected_text": "$idShoppingList",
+            "error_level": 7,
+            "shortcode": 230
         }
     ],
     "warning": [
-        {
-            "severity": "info",
-            "line_from": 24,
-            "line_to": 24,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/PermissionAwareTrait.php",
-            "snippet": "            return Locator::getInstance()->permission()->facade()->can($permissionKey, $identifier, $context);",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
         {
             "severity": "info",
             "line_from": 23,
@@ -256,78 +292,6 @@
         },
         {
             "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Client/ShoppingList/ShoppingListDependencyProvider.php",
-            "snippet": "            return new ShoppingListToPriceProductClientBridge($container->getLocator()->priceProduct()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 75,
-            "line_to": 75,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Client/ShoppingList/ShoppingListDependencyProvider.php",
-            "snippet": "            return new ShoppingListToCustomerClientBridge($container->getLocator()->customer()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 89,
-            "line_to": 89,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Client/ShoppingList/ShoppingListDependencyProvider.php",
-            "snippet": "            return new ShoppingListToCartClientBridge($container->getLocator()->cart()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 103,
-            "line_to": 103,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Client/ShoppingList/ShoppingListDependencyProvider.php",
-            "snippet": "            return new ShoppingListToProductClientBridge($container->getLocator()->product()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 117,
-            "line_to": 117,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Client/ShoppingList/ShoppingListDependencyProvider.php",
-            "snippet": "            return new ShoppingListToZedRequestClientBridge($container->getLocator()->zedRequest()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 131,
-            "line_to": 131,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Client/ShoppingList/ShoppingListDependencyProvider.php",
-            "snippet": "            return new ShoppingListToMessengerClientBridge($container->getLocator()->messenger()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 77,
             "line_to": 77,
             "type": "PossiblyNullArgument",
@@ -436,8 +400,20 @@
         },
         {
             "severity": "info",
-            "line_from": 121,
-            "line_to": 121,
+            "line_from": 205,
+            "line_to": 205,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\ShoppingList\\Business\\Model\\QuoteToShoppingListConverter::can cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Business/Model/QuoteToShoppingListConverter.php",
+            "snippet": "            $shoppingListTransfer->getIdCompanyUser(),",
+            "selected_text": "$shoppingListTransfer->getIdCompanyUser()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 119,
+            "line_to": 119,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ShoppingList\\Persistence\\ShoppingListRepositoryInterface::findShoppingListItemsByIdShoppingList cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Business/Model/ShoppingListItemOperation.php",
@@ -448,8 +424,8 @@
         },
         {
             "severity": "info",
-            "line_from": 309,
-            "line_to": 309,
+            "line_from": 305,
+            "line_to": 305,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ShoppingListItemTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Business/Model/ShoppingListItemOperation.php",
@@ -460,8 +436,8 @@
         },
         {
             "severity": "info",
-            "line_from": 340,
-            "line_to": 340,
+            "line_from": 339,
+            "line_to": 339,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ShoppingList\\Persistence\\ShoppingListEntityManagerInterface::deleteShoppingListItem cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Business/Model/ShoppingListItemOperation.php",
@@ -472,8 +448,8 @@
         },
         {
             "severity": "info",
-            "line_from": 368,
-            "line_to": 368,
+            "line_from": 367,
+            "line_to": 367,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ShoppingList\\Business\\Model\\ShoppingListResolverInterface::createDefaultShoppingListIfNotExists cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Business/Model/ShoppingListItemOperation.php",
@@ -568,6 +544,18 @@
         },
         {
             "severity": "info",
+            "line_from": 189,
+            "line_to": 189,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCompanyUser on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Business/Model/ShoppingListReader.php",
+            "snippet": "        if ($customerTransfer->getCompanyUserTransfer() && $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()) {",
+            "selected_text": "getIdCompanyUser",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 191,
             "line_to": 191,
             "type": "PossiblyNullArgument",
@@ -577,6 +565,18 @@
             "selected_text": "$customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 191,
+            "line_to": 191,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCompanyUser on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Business/Model/ShoppingListReader.php",
+            "snippet": "                $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()",
+            "selected_text": "getIdCompanyUser",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -592,6 +592,18 @@
         },
         {
             "severity": "info",
+            "line_from": 195,
+            "line_to": 195,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getFkCompanyBusinessUnit on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Business/Model/ShoppingListReader.php",
+            "snippet": "                $customerTransfer->getCompanyUserTransfer()->getFkCompanyBusinessUnit()",
+            "selected_text": "getFkCompanyBusinessUnit",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 200,
             "line_to": 200,
             "type": "PossiblyNullArgument",
@@ -601,6 +613,18 @@
             "selected_text": "$customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 200,
+            "line_to": 200,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCompanyUser on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Business/Model/ShoppingListReader.php",
+            "snippet": "                $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()",
+            "selected_text": "getIdCompanyUser",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -733,6 +757,18 @@
             "selected_text": "$mergedShoppingListIds",
             "error_level": 3,
             "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 599,
+            "line_to": 599,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\ShoppingList\\Business\\Model\\ShoppingListReader::can cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Business/Model/ShoppingListReader.php",
+            "snippet": "            $shoppingListTransfer->getIdCompanyUser(),",
+            "selected_text": "$shoppingListTransfer->getIdCompanyUser()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -952,6 +988,30 @@
         },
         {
             "severity": "info",
+            "line_from": 390,
+            "line_to": 390,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\ShoppingList\\Business\\Model\\ShoppingListSharer::can cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Business/Model/ShoppingListSharer.php",
+            "snippet": "            $shoppingListTransfer->getIdCompanyUser(),",
+            "selected_text": "$shoppingListTransfer->getIdCompanyUser()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 238,
+            "line_to": 238,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\ShoppingList\\Business\\Model\\ShoppingListWriter::can cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Business/Model/ShoppingListWriter.php",
+            "snippet": "            $shoppingListTransfer->getIdCompanyUser(),",
+            "selected_text": "$shoppingListTransfer->getIdCompanyUser()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
             "line_from": 252,
             "line_to": 252,
             "type": "PossiblyNullArgument",
@@ -1132,6 +1192,18 @@
         },
         {
             "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\ShoppingList\\Business\\ShoppingListItem\\Validator\\ShoppingListItemPermissionValidator::can cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Business/ShoppingListItem/Validator/ShoppingListItemPermissionValidator.php",
+            "snippet": "            $shoppingListTransfer->getIdCompanyUser(),",
+            "selected_text": "$shoppingListTransfer->getIdCompanyUser()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
             "line_from": 125,
             "line_to": 125,
             "type": "PossiblyNullArgument",
@@ -1165,6 +1237,18 @@
             "selected_text": "$customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCompanyUser on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Communication/Plugin/ShoppingListPermissionCustomerExpanderPlugin.php",
+            "snippet": "                $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()",
+            "selected_text": "getIdCompanyUser",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -1468,30 +1552,6 @@
         },
         {
             "severity": "info",
-            "line_from": 89,
-            "line_to": 89,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::withColumn does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Persistence/ShoppingListRepository.php",
-            "snippet": "            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, ShoppingListMapper::FIELD_FIRST_NAME)",
-            "selected_text": "withColumn",
-            "error_level": 3,
-            "shortcode": 108
-        },
-        {
-            "severity": "info",
-            "line_from": 114,
-            "line_to": 114,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::withColumn does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Persistence/ShoppingListRepository.php",
-            "snippet": "            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, ShoppingListMapper::FIELD_FIRST_NAME)",
-            "selected_text": "withColumn",
-            "error_level": 3,
-            "shortcode": 108
-        },
-        {
-            "severity": "info",
             "line_from": 139,
             "line_to": 139,
             "type": "PossiblyNullReference",
@@ -1504,27 +1564,87 @@
         },
         {
             "severity": "info",
+            "line_from": 151,
+            "line_to": 151,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ShoppingList\\Persistence\\Propel\\Mapper\\ShoppingListItemMapperInterface::mapItemCollectionTransfer expects array<array-key, Generated\\Shared\\Transfer\\SpyShoppingListItemEntityTransfer>, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Persistence/ShoppingListRepository.php",
+            "snippet": "                $this->getFactory()->createShoppingListItemMapper()->mapItemCollectionTransfer($shoppingListItemEntityTransferCollection)",
+            "selected_text": "$shoppingListItemEntityTransferCollection",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 167,
+            "line_to": 167,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ShoppingList\\Persistence\\Propel\\Mapper\\ShoppingListMapperInterface::mapCollectionTransfer expects array<array-key, Generated\\Shared\\Transfer\\SpyShoppingListEntityTransfer>, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Persistence/ShoppingListRepository.php",
+            "snippet": "            ->mapCollectionTransfer($shoppingListsEntityTransferCollection);",
+            "selected_text": "$shoppingListsEntityTransferCollection",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 186,
+            "line_to": 186,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ShoppingList\\Persistence\\Propel\\Mapper\\ShoppingListItemMapperInterface::mapItemCollectionTransfer expects array<array-key, Generated\\Shared\\Transfer\\SpyShoppingListItemEntityTransfer>, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Persistence/ShoppingListRepository.php",
+            "snippet": "            ->mapItemCollectionTransfer($shoppingListsItemEntityTransferCollection);",
+            "selected_text": "$shoppingListsItemEntityTransferCollection",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 204,
+            "line_to": 204,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ShoppingList\\Persistence\\Propel\\Mapper\\ShoppingListItemMapperInterface::mapItemCollectionTransfer expects array<array-key, Generated\\Shared\\Transfer\\SpyShoppingListItemEntityTransfer>, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Persistence/ShoppingListRepository.php",
+            "snippet": "            ->mapItemCollectionTransfer($shoppingListsItemEntityTransferCollection);",
+            "selected_text": "$shoppingListsItemEntityTransferCollection",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 221,
+            "line_to": 221,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ShoppingList\\Persistence\\Propel\\Mapper\\ShoppingListItemMapperInterface::mapItemCollectionTransfer expects array<array-key, Generated\\Shared\\Transfer\\SpyShoppingListItemEntityTransfer>, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Persistence/ShoppingListRepository.php",
+            "snippet": "            ->mapItemCollectionTransfer($shoppingListsItemEntityTransferCollection);",
+            "selected_text": "$shoppingListsItemEntityTransferCollection",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 234,
+            "line_to": 234,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ShoppingList\\Persistence\\Propel\\Mapper\\ShoppingListPermissionGroupMapperInterface::mapShoppingListPermissionGroupEntitiesToShoppingListPermissionTransfers expects array<array-key, Generated\\Shared\\Transfer\\SpyShoppingListPermissionGroupEntityTransfer>, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Persistence/ShoppingListRepository.php",
+            "snippet": "            ->mapShoppingListPermissionGroupEntitiesToShoppingListPermissionTransfers($permissionGroupEntityTransferCollection, new ShoppingListPermissionGroupCollectionTransfer());",
+            "selected_text": "$permissionGroupEntityTransferCollection",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
             "line_from": 281,
             "line_to": 281,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ShoppingList\\Persistence\\SpyShoppingListCompanyBusinessUnit|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ShoppingList\\Persistence\\SpyShoppingListCompanyBusinessUnit> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Persistence/ShoppingListRepository.php",
             "snippet": "            ->toArray();",
             "selected_text": "toArray",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 298,
-            "line_to": 298,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::usespyshoppinglistpermissiongroupquery does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Persistence/ShoppingListRepository.php",
-            "snippet": "            ->useSpyShoppingListPermissionGroupQuery()",
-            "selected_text": "useSpyShoppingListPermissionGroupQuery",
-            "error_level": 4,
-            "shortcode": 219
         },
         {
             "severity": "info",
@@ -1543,24 +1663,12 @@
             "line_from": 317,
             "line_to": 317,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ShoppingList\\Persistence\\SpyShoppingListCompanyUser|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ShoppingList\\Persistence\\SpyShoppingListCompanyUser> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Persistence/ShoppingListRepository.php",
             "snippet": "            ->toArray();",
             "selected_text": "toArray",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 334,
-            "line_to": 334,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::usespyshoppinglistpermissiongroupquery does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Persistence/ShoppingListRepository.php",
-            "snippet": "            ->useSpyShoppingListPermissionGroupQuery()",
-            "selected_text": "useSpyShoppingListPermissionGroupQuery",
-            "error_level": 4,
-            "shortcode": 219
         },
         {
             "severity": "info",
@@ -1576,27 +1684,27 @@
         },
         {
             "severity": "info",
-            "line_from": 351,
-            "line_to": 351,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::withColumn does not exist",
+            "line_from": 362,
+            "line_to": 362,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ShoppingList\\Persistence\\Propel\\Mapper\\ShoppingListMapperInterface::mapCollectionTransfer expects array<array-key, Generated\\Shared\\Transfer\\SpyShoppingListEntityTransfer>, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed provided",
             "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Persistence/ShoppingListRepository.php",
-            "snippet": "            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, ShoppingListMapper::FIELD_FIRST_NAME)",
-            "selected_text": "withColumn",
+            "snippet": "            ->mapCollectionTransfer($shoppingListsEntityTransferCollection);",
+            "selected_text": "$shoppingListsEntityTransferCollection",
             "error_level": 3,
-            "shortcode": 108
+            "shortcode": 92
         },
         {
             "severity": "info",
-            "line_from": 377,
-            "line_to": 377,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::withColumn does not exist",
+            "line_from": 388,
+            "line_to": 388,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ShoppingList\\Persistence\\Propel\\Mapper\\ShoppingListMapperInterface::mapCollectionTransfer expects array<array-key, Generated\\Shared\\Transfer\\SpyShoppingListEntityTransfer>, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed provided",
             "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Persistence/ShoppingListRepository.php",
-            "snippet": "            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, ShoppingListMapper::FIELD_FIRST_NAME)",
-            "selected_text": "withColumn",
+            "snippet": "            ->mapCollectionTransfer($shoppingListsEntityTransferCollection);",
+            "selected_text": "$shoppingListsEntityTransferCollection",
             "error_level": 3,
-            "shortcode": 108
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -1624,18 +1732,6 @@
         },
         {
             "severity": "info",
-            "line_from": 432,
-            "line_to": 432,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Orm\\Zed\\Customer\\Persistence\\SpyCustomerQuery::filterbyfkshoppinglist does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Persistence/ShoppingListRepository.php",
-            "snippet": "            ->filterByFkShoppingList($shoppingListTransfer->getIdShoppingList())",
-            "selected_text": "filterByFkShoppingList",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 437,
             "line_to": 437,
             "type": "PossiblyInvalidMethodCall",
@@ -1660,30 +1756,6 @@
         },
         {
             "severity": "info",
-            "line_from": 458,
-            "line_to": 458,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::withColumn does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Persistence/ShoppingListRepository.php",
-            "snippet": "            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, ShoppingListMapper::FIELD_FIRST_NAME)",
-            "selected_text": "withColumn",
-            "error_level": 3,
-            "shortcode": 108
-        },
-        {
-            "severity": "info",
-            "line_from": 521,
-            "line_to": 521,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::findbyfkcompanyuser does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Persistence/ShoppingListRepository.php",
-            "snippet": "            ->findByFkCompanyUser($idCompanyUser)",
-            "selected_text": "findByFkCompanyUser",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 522,
             "line_to": 522,
             "type": "PossiblyInvalidMethodCall",
@@ -1693,78 +1765,6 @@
             "selected_text": "toArray",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 74,
-            "line_to": 74,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/ShoppingListDependencyProvider.php",
-            "snippet": "            return new ShoppingListToProductFacadeBridge($container->getLocator()->product()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 88,
-            "line_to": 88,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/ShoppingListDependencyProvider.php",
-            "snippet": "            return new ShoppingListToPermissionFacadeBridge($container->getLocator()->permission()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 102,
-            "line_to": 102,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/ShoppingListDependencyProvider.php",
-            "snippet": "            return new ShoppingListToPersistentCartFacadeBridge($container->getLocator()->persistentCart()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 116,
-            "line_to": 116,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/ShoppingListDependencyProvider.php",
-            "snippet": "            return new ShoppingListToCompanyUserFacadeBridge($container->getLocator()->companyUser()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 130,
-            "line_to": 130,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/ShoppingListDependencyProvider.php",
-            "snippet": "            return new ShoppingListToMessengerFacadeBridge($container->getLocator()->messenger()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 144,
-            "line_to": 144,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/ShoppingListDependencyProvider.php",
-            "snippet": "            return new ShoppingListToEventFacadeBridge($container->getLocator()->event()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [
@@ -1806,8 +1806,8 @@
         },
         {
             "severity": "info",
-            "line_from": 287,
-            "line_to": 287,
+            "line_from": 283,
+            "line_to": 283,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\ShoppingList\\Business\\ShoppingListItem\\ShoppingListItemPluginExecutorInterface::executeItemExpanderPlugins has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Business/Model/ShoppingListItemOperation.php",
@@ -1866,8 +1866,8 @@
         },
         {
             "severity": "info",
-            "line_from": 146,
-            "line_to": 146,
+            "line_from": 148,
+            "line_to": 148,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\ShoppingList\\Business\\Model\\ShoppingListItemOperationInterface::addItem has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Business/ShoppingListFacade.php",
@@ -1878,8 +1878,8 @@
         },
         {
             "severity": "info",
-            "line_from": 273,
-            "line_to": 273,
+            "line_from": 275,
+            "line_to": 275,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\ShoppingList\\Business\\Model\\ShoppingListItemOperationInterface::saveShoppingListItem has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Business/ShoppingListFacade.php",
