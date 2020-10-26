@@ -36,6 +36,11 @@ $(document).ready(function() {
         blocksChoiceFormSelector: blocksChoiceFormSelector,
         blocksTable: blocksTable,
         blocksChoiceAddSelector: '#block-choice_add',
+        baseUrl: '/cms-slot-block-gui/cms-block-suggest',
+        paramTerm: 'q',
+        paramPage: 'page',
+        paramIdCmsSlotTemplate: 'id-cms-slot-template',
+        paramIdCmsSlot: 'id-cms-slot',
     });
 
     var slotBlocks = new SlotBlocks({
