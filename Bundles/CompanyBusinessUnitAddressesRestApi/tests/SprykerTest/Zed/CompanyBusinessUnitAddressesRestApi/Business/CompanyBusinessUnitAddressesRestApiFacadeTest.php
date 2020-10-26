@@ -8,10 +8,13 @@
 namespace SprykerTest\Zed\CompanyBusinessUnitAddressesRestApi\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\CompanyBusinessUnitAddressesRestApiBusinessFactory;
 use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Dependency\Facade\CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressFacadeBridge;
 use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Dependency\Facade\CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressFacadeInterface;
+use SprykerTest\Zed\CompanyBusinessUnitAddressesRestApi\CompanyBusinessUnitAddressesRestApiBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -72,6 +75,9 @@ class CompanyBusinessUnitAddressesRestApiFacadeTest extends Unit
         );
     }
 
+    /**
+     * @return void
+     */
     public function testMapCompanyBusinessUnitAddressesToQuote(): void
     {
         // Arrange
@@ -81,13 +87,58 @@ class CompanyBusinessUnitAddressesRestApiFacadeTest extends Unit
         );
 
         // Act
-        $restCheckoutDataTransfer = $CompanyBusinessUnitAddressesRestApiFacade->mapCompanyBusinessUnitAddressesToQuote(
+        $quoteTransfer = $CompanyBusinessUnitAddressesRestApiFacade->mapCompanyBusinessUnitAddressesToQuote(
             $this->tester->createRestCheckoutRequestAttributesTransfer(),
             $this->tester->createQuoteTransfer()
         );
 
         // Assert
+        $this->assertCompanyBusinessAddress($quoteTransfer->getBillingAddress(), $quoteTransfer);
+        $this->assertCompanyBusinessAddress($quoteTransfer->getShippingAddress(), $quoteTransfer);
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $this->assertCompanyBusinessAddress(
+                $itemTransfer->getShipment()->getShippingAddress(),
+                $quoteTransfer
+            );
+        }
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function assertCompanyBusinessAddress(AddressTransfer $addressTransfer, QuoteTransfer $quoteTransfer): void
+    {
+        $this->assertIsInt(
+            $addressTransfer->getIdCompanyUnitAddress(),
+            'Expected billing address has idCompanyUnitAddress set.'
+        );
+        $this->assertTrue(
+            $addressTransfer->getIsAddressSavingSkipped(),
+            'Expected company business unit address will not be saved.'
+        );
+        $this->assertSame(
+            $quoteTransfer->getCustomer()->getFirstName(),
+            $addressTransfer->getFirstName(),
+            'Expected address first name has taken from customer.'
+        );
+        $this->assertSame(
+            $quoteTransfer->getCustomer()->getLastName(),
+            $addressTransfer->getLastName(),
+            'Expected address last name has taken from customer.'
+        );
+        $this->assertSame(
+            CompanyBusinessUnitAddressesRestApiBusinessTester::FAKE_COMPANY_BUSINESS_UNIT_ADDRESS1,
+            $addressTransfer->getAddress1(),
+            'Expected `Address1` field has taken from company business unit address.'
+        );
+        $this->assertSame(
+            CompanyBusinessUnitAddressesRestApiBusinessTester::FAKE_COMPANY_BUSINESS_UNIT_ADDRESS2,
+            $addressTransfer->getAddress2(),
+            'Expected `Address2` field has taken from company business unit address.'
+        );
     }
 
     /**
