@@ -57,8 +57,7 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
      */
     public function mapSearchResultToRestAttributesTransfer(array $searchResult): RestCatalogSearchAttributesTransfer
     {
-        $searchResultToArray = [];
-        $searchResultToArray = $this->convertSearchResultToArray($searchResult, $searchResultToArray);
+        $searchResultToArray = $this->convertSearchResultToArray($searchResult);
 
         $restSearchAttributesTransfer = (new RestCatalogSearchAttributesTransfer())->fromArray($searchResultToArray, true);
 
@@ -79,19 +78,19 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
 
     /**
      * @param \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer $restCatalogSearchAttributesTransfer
-     * @param array $restSearchResponse
+     * @param array $searchResult
      *
      * @return \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer
      */
     protected function mapSearchResponseProductsToRestCatalogSearchAttributesTransfer(
         RestCatalogSearchAttributesTransfer $restCatalogSearchAttributesTransfer,
-        array $restSearchResponse
+        array $searchResult
     ): RestCatalogSearchAttributesTransfer {
-        if (!isset($restSearchResponse[static::SEARCH_KEY_PRODUCTS]) || !is_array($restSearchResponse[static::SEARCH_KEY_PRODUCTS])) {
+        if (!isset($searchResult[static::SEARCH_KEY_PRODUCTS]) || !is_array($searchResult[static::SEARCH_KEY_PRODUCTS])) {
             return $restCatalogSearchAttributesTransfer;
         }
 
-        foreach ($restSearchResponse[static::SEARCH_KEY_PRODUCTS] as $product) {
+        foreach ($searchResult[static::SEARCH_KEY_PRODUCTS] as $product) {
             $restCatalogSearchAttributesTransfer->addAbstractProduct(
                 (new RestCatalogSearchAbstractProductsTransfer())->fromArray($product, true)
             );
@@ -213,36 +212,31 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
 
     /**
      * @param array $searchResponse
-     * @param array $restSearchResponse
      *
      * @return array
      */
-    protected function convertSearchResultToArray(array $searchResponse, array $restSearchResponse): array
+    protected function convertSearchResultToArray(array $searchResponse): array
     {
+        $convertedSearchResponse = [];
         foreach ($searchResponse as $searchDataKey => $searchDataItem) {
-            if (is_array($searchDataItem)) {
-                $restSearchResponse[$searchDataKey] = [];
-                $restSearchResponse[$searchDataKey] = $this->convertSearchResultToArray($searchDataItem, $restSearchResponse[$searchDataKey]);
-
-                continue;
-            }
-
             if ($searchDataItem instanceof ArrayObject) {
-                $restSearchResponse[$searchDataKey] = [];
-                $restSearchResponse[$searchDataKey] = $this->convertSearchResultToArray($searchDataItem->getArrayCopy(), $restSearchResponse[$searchDataKey]);
+                foreach ($searchDataItem as $transferInArrayObject) {
+                    /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $transferInArrayObject */
+                    $convertedSearchResponse[$searchDataKey][] = $transferInArrayObject->toArray();
+                }
 
                 continue;
             }
 
             if ($searchDataItem instanceof TransferInterface) {
-                $restSearchResponse[$searchDataKey] = $searchDataItem->toArray();
+                $convertedSearchResponse[$searchDataKey] = $searchDataItem->toArray();
 
                 continue;
             }
 
-            $restSearchResponse[$searchDataKey] = $searchDataItem;
+            $convertedSearchResponse[$searchDataKey] = $searchDataItem;
         }
 
-        return $restSearchResponse;
+        return $convertedSearchResponse;
     }
 }
