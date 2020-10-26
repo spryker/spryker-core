@@ -33,11 +33,6 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
     protected const NAME = 'facets';
 
     /**
-     * @uses \Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\SortedResultFormatterPlugin::NAME
-     */
-    protected const SORT_NAME = 'sort';
-
-    /**
      * @var \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientInterface
      */
     protected $currencyClient;
