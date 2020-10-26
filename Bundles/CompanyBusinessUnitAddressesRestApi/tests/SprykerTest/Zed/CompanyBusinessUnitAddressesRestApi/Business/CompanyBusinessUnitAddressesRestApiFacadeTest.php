@@ -93,10 +93,10 @@ class CompanyBusinessUnitAddressesRestApiFacadeTest extends Unit
         );
 
         // Assert
-        $this->assertCompanyBusinessAddress($quoteTransfer->getBillingAddress(), $quoteTransfer);
-        $this->assertCompanyBusinessAddress($quoteTransfer->getShippingAddress(), $quoteTransfer);
+        $this->assertCompanyBusinessUnitAddress($quoteTransfer->getBillingAddress(), $quoteTransfer);
+        $this->assertCompanyBusinessUnitAddress($quoteTransfer->getShippingAddress(), $quoteTransfer);
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $this->assertCompanyBusinessAddress(
+            $this->assertCompanyBusinessUnitAddress(
                 $itemTransfer->getShipment()->getShippingAddress(),
                 $quoteTransfer
             );
@@ -109,7 +109,7 @@ class CompanyBusinessUnitAddressesRestApiFacadeTest extends Unit
      *
      * @return void
      */
-    protected function assertCompanyBusinessAddress(AddressTransfer $addressTransfer, QuoteTransfer $quoteTransfer): void
+    protected function assertCompanyBusinessUnitAddress(AddressTransfer $addressTransfer, QuoteTransfer $quoteTransfer): void
     {
         $this->assertIsInt(
             $addressTransfer->getIdCompanyUnitAddress(),
