@@ -95,10 +95,13 @@ class MerchantSearchWriter implements MerchantSearchWriterInterface
         if (!$merchantCollectionTransfer->getMerchants()->count()) {
             return;
         }
+
         $merchantSearchCollectionTransfer = $this->merchantMapper->mapMerchantCollectionTransferToMerchantSearchCollectionTransfer(
             $merchantCollectionTransfer,
             new MerchantSearchCollectionTransfer()
         );
+
+        $merchantSearchCollectionTransfer = $this->expandMerchantSearchData($merchantSearchCollectionTransfer);
 
         $this->writeCollection($merchantSearchCollectionTransfer);
     }
@@ -113,5 +116,35 @@ class MerchantSearchWriter implements MerchantSearchWriterInterface
         foreach ($merchantSearchCollectionTransfer->getMerchantSearches() as $merchantSearchTransfer) {
             $this->entityManager->saveMerchantSearch($merchantSearchTransfer);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantSearchCollectionTransfer
+     */
+    protected function expandMerchantSearchData(MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer): MerchantSearchCollectionTransfer
+    {
+        foreach ($merchantSearchCollectionTransfer->getMerchantSearches() as $merchantSearchTransfer) {
+            $merchantSearchTransfer = $merchantSearchTransfer->setData(
+                $this->executeMerchantSearchDataExpanderPlugins($merchantSearchTransfer->getData())
+            );
+        }
+
+        return $merchantSearchCollectionTransfer;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function executeMerchantSearchDataExpanderPlugins(array $data): array
+    {
+        foreach ($this->merchantSearchDataExpanderPlugins as $merchantSearchDataExpanderPlugin) {
+            $data = $merchantSearchDataExpanderPlugin->expand($data);
+        }
+
+        return $data;
     }
 }

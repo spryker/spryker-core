@@ -160,7 +160,7 @@ class MerchantReader implements MerchantReaderInterface
     protected function createMerchantSearchRequest(RestRequestInterface $restRequest): MerchantSearchRequestTransfer
     {
         $page = $restRequest->getPage();
-        $requestParameters = [];
+        $requestParameters = $restRequest->getHttpRequest()->query->all();
 
         if ($page) {
             $requestParameters[static::PARAMETER_OFFSET] = $page->getOffset();
