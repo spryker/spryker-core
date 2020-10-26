@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\ProductConfigurationInstanceBuilder;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\ProductConfigurationStorageTransfer;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToStorageClientBridge;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToStorageClientInterface;
@@ -40,7 +41,9 @@ class ExpandPersistentCartChangeWithProductConfigurationInstanceTest extends Uni
     {
         // Arrange
         $productConcreteTransfer = $this->tester->haveProduct();
-        $productConfigurationInstanceTransfer = (new ProductConfigurationInstanceBuilder())->build();
+        $productConfigurationInstanceTransfer = (new ProductConfigurationInstanceBuilder([
+            ProductConfigurationInstanceTransfer::PRICES => new \ArrayObject()
+        ]))->build();
 
         $this->tester->getClient()->storeProductConfigurationInstanceBySku($productConcreteTransfer->getSku(), $productConfigurationInstanceTransfer);
 
@@ -57,7 +60,7 @@ class ExpandPersistentCartChangeWithProductConfigurationInstanceTest extends Uni
         $itemTransfer = $persistentCartChangeTransfer->getItems()->offsetGet(0);
 
         $this->assertNotNull($itemTransfer->getProductConfigurationInstance());
-        $this->assertSame($productConfigurationInstanceTransfer, $itemTransfer->getProductConfigurationInstance());
+        $this->assertEquals($productConfigurationInstanceTransfer, $itemTransfer->getProductConfigurationInstance());
     }
 
     /**

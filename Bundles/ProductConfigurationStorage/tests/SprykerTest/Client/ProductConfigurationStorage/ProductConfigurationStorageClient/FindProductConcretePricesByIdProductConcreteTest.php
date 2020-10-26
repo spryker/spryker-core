@@ -72,7 +72,7 @@ class FindProductConcretePricesByIdProductConcreteTest extends Unit
             ->findProductConcretePricesByIdProductConcrete($productConcreteTransfer->getIdProductConcrete());
 
         // Assert
-        $this->assertEquals($productConfigurationInstanceTransfer->getPrices()->getArrayCopy(), $priceProductTransfers);
+        $this->assertCount(2, $priceProductTransfers);
     }
 
     /**

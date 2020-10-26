@@ -9,6 +9,7 @@ namespace SprykerTest\Client\ProductConfigurationStorage\ProductConfigurationSto
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductConfigurationInstanceBuilder;
+use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\ProductConfigurationStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToStorageClientBridge;
@@ -42,7 +43,9 @@ class ExpandProductViewWithProductConfigurationInstanceTest extends Unit
         // Arrange
         $this->tester->setupStorageRedisConfig();
         $productConcreteTransfer = $this->tester->haveProduct();
-        $productConfigurationInstanceTransfer = (new ProductConfigurationInstanceBuilder())->build();
+        $productConfigurationInstanceTransfer = (new ProductConfigurationInstanceBuilder([
+            ProductConfigurationInstanceTransfer::PRICES => new \ArrayObject()
+        ]))->build();
 
         $this->tester->getClient()->storeProductConfigurationInstanceBySku($productConcreteTransfer->getSku(), $productConfigurationInstanceTransfer);
 

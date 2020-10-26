@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CartItemQuantityTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 
 /**
- * Allows to change default strategy running in AvailabilityCartConnector.
+ * Allows changing the cart item quantity calculation strategy during item availability check.
  */
 interface CartItemQuantityCalculatorStrategyPluginInterface
 {
@@ -30,8 +30,8 @@ interface CartItemQuantityCalculatorStrategyPluginInterface
 
     /**
      * Specification:
-     * - Calculates quantity for given item.
-     * - Returns quantity for given item.
+     * - Calculates quantity for the given item.
+     * - Returns quantity for the given item.
      *
      * @api
      *
