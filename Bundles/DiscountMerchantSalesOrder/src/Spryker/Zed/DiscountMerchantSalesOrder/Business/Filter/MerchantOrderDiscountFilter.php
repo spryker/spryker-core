@@ -8,8 +8,8 @@
 namespace Spryker\Zed\DiscountMerchantSalesOrder\Business\Filter;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 
 class MerchantOrderDiscountFilter implements MerchantOrderDiscountFilterInterface
 {
@@ -24,20 +24,14 @@ class MerchantOrderDiscountFilter implements MerchantOrderDiscountFilterInterfac
             return $merchantOrderTransfer;
         }
 
-        $merchantOrderItemIds = [];
-
-        foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItem) {
-            $merchantOrderItemIds[] = $merchantOrderItem->getIdOrderItem();
-        }
-
         $orderTransfer = $merchantOrderTransfer->getOrder();
-
-        $calculatedDiscountTransfers = array_filter(
-            $orderTransfer->getCalculatedDiscounts()->getArrayCopy(),
-            function (CalculatedDiscountTransfer $calculatedDiscountTransfer) use ($merchantOrderItemIds) {
-                return $calculatedDiscountTransfer->getFkSalesOrderItem() === null || in_array($calculatedDiscountTransfer->getFkSalesOrderItem(), $merchantOrderItemIds);
-            }
+        $generalCalculatedDiscountTransfers = $this->filterGeneralDiscounts(
+            $orderTransfer,
+            $merchantOrderTransfer->getMerchantOrderItems()->count()
         );
+        $itemsCalculatedDiscountTransfers = $this->filterDiscountsByMerchantOrderItems($merchantOrderTransfer);
+
+        $calculatedDiscountTransfers = array_merge($generalCalculatedDiscountTransfers, $itemsCalculatedDiscountTransfers);
 
         $orderTransfer->setCalculatedDiscounts(
             new ArrayObject($calculatedDiscountTransfers)
@@ -46,5 +40,63 @@ class MerchantOrderDiscountFilter implements MerchantOrderDiscountFilterInterfac
         $merchantOrderTransfer->setOrder($orderTransfer);
 
         return $merchantOrderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param int $merchantOrderItemsCount
+     *
+     * @return \Generated\Shared\Transfer\CalculatedDiscountTransfer[]
+     */
+    protected function filterGeneralDiscounts(OrderTransfer $orderTransfer, $merchantOrderItemsCount): array
+    {
+        $calculatedDiscountTransfers = [];
+
+        foreach ($orderTransfer->getCalculatedDiscounts()->getArrayCopy() as $calculatedDiscountTransfer) {
+            /** @var \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer */
+            if ($calculatedDiscountTransfer->getFkSalesOrderItem()) {
+                continue;
+            }
+
+            $sumAmount = $calculatedDiscountTransfer->getSumAmount();
+            $calculatedQuantity = $calculatedDiscountTransfer->getQuantity();
+
+            $calculatedDiscountTransfer->setSumAmount($sumAmount / $calculatedQuantity * $merchantOrderItemsCount);
+            $calculatedDiscountTransfer->setQuantity($merchantOrderItemsCount);
+            $calculatedDiscountTransfers[$calculatedDiscountTransfer->getDisplayName()] = $calculatedDiscountTransfer;
+        }
+
+        return $calculatedDiscountTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\CalculatedDiscountTransfer[]
+     */
+    protected function filterDiscountsByMerchantOrderItems(MerchantOrderTransfer $merchantOrderTransfer): array
+    {
+        $itemsCalculatedDiscountTransfers = [];
+
+        foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
+            foreach ($merchantOrderItemTransfer->getOrderItem()->getCalculatedDiscounts() as $calculatedDiscountTransfer) {
+                if (!isset($itemsCalculatedDiscountTransfers[$calculatedDiscountTransfer->getDisplayName()])) {
+                    $itemsCalculatedDiscountTransfers[$calculatedDiscountTransfer->getDisplayName()] = $calculatedDiscountTransfer;
+
+                    continue;
+                }
+
+                $groupedCalculatedDiscountTransfer = $itemsCalculatedDiscountTransfers[$calculatedDiscountTransfer->getDisplayName()];
+                $groupedCalculatedDiscountTransfer->setQuantity(
+                    $groupedCalculatedDiscountTransfer->getQuantity() + $calculatedDiscountTransfer->getQuantity()
+                );
+                $groupedCalculatedDiscountTransfer->setSumAmount(
+                    $groupedCalculatedDiscountTransfer->getSumAmount() + $calculatedDiscountTransfer->getSumAmount()
+                );
+                $itemsCalculatedDiscountTransfers[$calculatedDiscountTransfer->getDisplayName()] = $groupedCalculatedDiscountTransfer;
+            }
+        }
+
+        return $itemsCalculatedDiscountTransfers;
     }
 }
