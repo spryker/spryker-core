@@ -46,7 +46,7 @@ class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterf
         $this->productMeasurementUnitStorageClient = $productMeasurementUnitStorageClient;
         $this->productMeasurementUnitNameTranslator = $productMeasurementUnitNameTranslator;
     }
-    
+
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
