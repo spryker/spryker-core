@@ -102,11 +102,13 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     protected function calculateCurrentCartItemQuantity(ArrayObject $itemsInCart, ItemTransfer $itemTransfer): int
     {
         foreach ($this->cartItemQuantityCalculatorStrategyPlugins as $cartItemQuantityCalculatorStrategyPlugin) {
-            if ($cartItemQuantityCalculatorStrategyPlugin->isApplicable($itemsInCart->getArrayCopy(), $itemTransfer)) {
-                return $cartItemQuantityCalculatorStrategyPlugin->calculateCartItemQuantity(
-                    $itemsInCart->getArrayCopy(),
+            if ($cartItemQuantityCalculatorStrategyPlugin->isApplicable($itemsInCart, $itemTransfer)) {
+                $cartItemQuantityTransfer = $cartItemQuantityCalculatorStrategyPlugin->calculateCartItemQuantity(
+                    $itemsInCart,
                     $itemTransfer
-                )->getQuantity();
+                );
+
+                return $cartItemQuantityTransfer->getQuantity();
             }
         }
 

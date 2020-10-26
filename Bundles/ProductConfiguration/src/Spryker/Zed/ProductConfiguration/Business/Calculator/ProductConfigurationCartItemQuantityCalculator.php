@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductConfiguration\Business\Calculator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CartItemQuantityTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 
@@ -15,12 +16,12 @@ class ProductConfigurationCartItemQuantityCalculator implements ProductConfigura
     protected const DEFAULT_ITEM_QUANTITY = 0;
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\CartItemQuantityTransfer
      */
-    public function calculateCartItemQuantity(array $itemsInCart, ItemTransfer $itemTransfer): CartItemQuantityTransfer
+    public function calculateCartItemQuantity(ArrayObject $itemsInCart, ItemTransfer $itemTransfer): CartItemQuantityTransfer
     {
         $quantity = static::DEFAULT_ITEM_QUANTITY;
 

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityCartConnectorExtension\Dependency\Plugin;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CartItemQuantityTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 
@@ -21,12 +22,12 @@ interface CartItemQuantityCalculatorStrategyPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return bool
      */
-    public function isApplicable(array $itemsInCart, ItemTransfer $itemTransfer): bool;
+    public function isApplicable(ArrayObject $itemsInCart, ItemTransfer $itemTransfer): bool;
 
     /**
      * Specification:
@@ -35,10 +36,10 @@ interface CartItemQuantityCalculatorStrategyPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\CartItemQuantityTransfer
      */
-    public function calculateCartItemQuantity(array $itemsInCart, ItemTransfer $itemTransfer): CartItemQuantityTransfer;
+    public function calculateCartItemQuantity(ArrayObject $itemsInCart, ItemTransfer $itemTransfer): CartItemQuantityTransfer;
 }
