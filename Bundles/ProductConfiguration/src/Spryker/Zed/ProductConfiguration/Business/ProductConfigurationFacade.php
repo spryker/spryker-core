@@ -8,7 +8,9 @@
 namespace Spryker\Zed\ProductConfiguration\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartItemQuantityTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConfigurationCollectionTransfer;
 use Generated\Shared\Transfer\ProductConfigurationFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -86,5 +88,22 @@ class ProductConfigurationFacade extends AbstractFacade implements ProductConfig
         return $this->getFactory()
           ->createProductConfigurationPriceProductExpander()
           ->expandPriceProductTransfersWithProductConfigurationPrices($priceProductTransfers, $cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartItemQuantityTransfer
+     */
+    public function calculateCartItemQuantity(array $itemsInCart, ItemTransfer $itemTransfer): CartItemQuantityTransfer
+    {
+        return $this->getFactory()
+            ->createProductConfigurationCartItemQuantityCalculator()
+            ->calculateCartItemQuantity($itemsInCart, $itemTransfer);
     }
 }

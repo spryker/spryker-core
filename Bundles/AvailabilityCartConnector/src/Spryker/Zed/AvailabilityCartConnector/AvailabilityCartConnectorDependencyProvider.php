@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Container;
 class AvailabilityCartConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
+    public const PLUGINS_CART_ITEM_QUANTITY_CALCULATOR_STRATEGY = 'PLUGINS_CART_ITEM_QUANTITY_CALCULATOR_STRATEGY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -23,6 +24,7 @@ class AvailabilityCartConnectorDependencyProvider extends AbstractBundleDependen
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container = $this->addAvailabilityFacade($container);
+        $container = $this->addCartItemQuantityCalculatorStrategyPlugins($container);
 
         return $container;
     }
@@ -39,5 +41,27 @@ class AvailabilityCartConnectorDependencyProvider extends AbstractBundleDependen
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCartItemQuantityCalculatorStrategyPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CART_ITEM_QUANTITY_CALCULATOR_STRATEGY, function () {
+            return $this->getCartItemQuantityCalculatorStrategyPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityCartConnectorExtension\Dependency\Plugin\CartItemQuantityCalculatorStrategyPluginInterface[]
+     */
+    public function getCartItemQuantityCalculatorStrategyPlugins(): array
+    {
+        return [];
     }
 }
