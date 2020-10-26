@@ -30,6 +30,7 @@ var BlocksTable = function (options) {
     this.rowUnsavedOverlaySelector = '.js-row-unsaved-overlay .ibox-content';
     this.selectedRowIndex = 0;
     this.tableIsUnsaved = false;
+    this.modifiedBlocks = [];
 
     $.extend(this, options);
 
@@ -46,6 +47,7 @@ var BlocksTable = function (options) {
         $(document).on('savedBlocksForm', function () {
             _self.setInitTableState();
             _self.tableRowSelect();
+            _self.resetModifiedBlocks();
         });
         _self.isFirstInit = false;
         _self.setInitOptionsState();
@@ -110,9 +112,27 @@ var BlocksTable = function (options) {
         _self.initTableState = _self.getTable().data;
     };
 
+    this.isBlockModified = function (id) {
+        return _self.modifiedBlocks.includes(id);
+    }
+
+    this.resetModifiedBlocks = function () {
+        _self.modifiedBlocks = [];
+    }
+
+    this.toggleIsModified = function (id) {
+        var blockIndex = _self.modifiedBlocks.indexOf(id);
+        if (blockIndex > -1) {
+            _self.modifiedBlocks.splice(blockIndex, 1);
+        } else {
+            _self.modifiedBlocks.push(id);
+        }
+    }
+
     this.addRow = function (rowData = {}) {
+        var blockId = Number(rowData.blockId);
         rowData = [
-            Number(rowData.blockId),
+            blockId,
             rowData.blockName,
             rowData.validFrom,
             rowData.validTo,
@@ -124,6 +144,7 @@ var BlocksTable = function (options) {
         var table = _self.getTable();
         table.data.unshift(rowData);
         _self.updateTable(table.api, table.data);
+        _self.toggleIsModified(blockId);
     };
 
     this.getActionButtons = function(blockId) {
@@ -208,8 +229,8 @@ var BlocksTable = function (options) {
     this.removeButtonsHandler = function (event) {
         var clickInfo = _self.getClickInfo(event);
         var table = _self.getTable();
-        var rowName = table.data[clickInfo.$clickedTableRow][1];
-        _self.updateChoiceDropdown(rowName);
+        var rowId = table.data[clickInfo.$clickedTableRow][0];
+        _self.updateChoiceDropdown(rowId);
         table.data.splice(clickInfo.$clickedTableRow, 1);
         _self.updateTable(table.api, table.data);
     };
@@ -220,11 +241,8 @@ var BlocksTable = function (options) {
         });
     };
 
-    this.updateChoiceDropdown = function (optionLabel) {
-        _self.$blocksChoiceDropDown.children('option[disabled]')
-            .filter(function() { return $(this).text() === optionLabel })
-            .prop('disabled', false);
-        _self.$blocksChoiceDropDown.select2();
+    this.updateChoiceDropdown = function (blockId) {
+        _self.toggleIsModified(Number(blockId));
     };
 
     this.resetChoiceDropdown = function () {
