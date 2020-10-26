@@ -260,4 +260,39 @@ class ProductConfigurationFacadeTest extends Unit
         //Assert
         $this->assertCount(1, $priceProductTransfersResult);
     }
+
+    /**
+     * @return void
+     */
+    public function testCalculateCartItemQuantityWithoutItemsInCartWillDefaultQuantity(): void
+    {
+        //Arrange
+        $itemTransfer = (new ItemBuilder())->build();
+
+        //Act
+        $cartItemQuantity = $this->tester->getFacade()->calculateCartItemQuantity(new ArrayObject(), $itemTransfer);
+
+        //Assert
+        $this->assertSame(0, $cartItemQuantity->getQuantity());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculateCartItemQuantityWillCalculateQuantityCorrectly(): void
+    {
+        //Arrange
+        $itemTransferInCartOne = (new ItemBuilder([ItemTransfer::QUANTITY => 3]))->build();
+        $itemTransferInCartTwo = (new ItemBuilder([ItemTransfer::QUANTITY => 10]))->build();
+        $itemTransferAddedToCart = (clone $itemTransferInCartOne)->setQuantity(5);
+
+        $itemsInCart = new ArrayObject([$itemTransferInCartOne, $itemTransferInCartTwo]);
+
+        //Act
+        $cartItemQuantity = $this->tester->getFacade()
+            ->calculateCartItemQuantity($itemsInCart, $itemTransferAddedToCart);
+
+        //Assert
+        $this->assertSame(3, $cartItemQuantity->getQuantity());
+    }
 }
