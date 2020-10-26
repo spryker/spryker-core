@@ -1202,7 +1202,7 @@ class ClassDefinition implements ClassDefinitionInterface
         $method['isTypeAssertionEnabled'] = false;
         $methodArgumentType = $method['varValue'] ?? $method['var'];
 
-        if (!$this->isDebugMode() || $methodArgumentType === 'mixed') {
+        if (!$this->isDebugMode() || $this->getEntityNamespace() || $methodArgumentType === 'mixed') {
             return $method;
         }
 
@@ -1217,7 +1217,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function addExtraUseStatements(): void
     {
-        if ($this->isDebugMode()) {
+        if ($this->isDebugMode() && !$this->getEntityNamespace()) {
             $this->addUseStatement(TransferTypeValidatorTrait::class);
         }
     }

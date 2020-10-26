@@ -237,7 +237,7 @@ trait TransferTypeValidatorTrait
         }
 
         if ($this->transferMetadata[$propertyName]['is_transfer']) {
-            $propertyType = $this->transferMetadata[$propertyName]['is_collection'] ? '\ArrayObject|array' : 'array';
+            $propertyType = $this->transferMetadata[$propertyName]['is_collection'] ? '\ArrayObject|array' : sprintf('\%s|array', $propertyType);
         }
 
         if ($typeShim) {
