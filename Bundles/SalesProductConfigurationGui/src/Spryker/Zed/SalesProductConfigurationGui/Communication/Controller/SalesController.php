@@ -22,7 +22,7 @@ class SalesController extends AbstractController
      */
     public function orderItemProductConfigurationAction(Request $request): array
     {
-        /** @var \Generated\Shared\Transfer\ItemTransfer|null $itemTransfer */
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
         $itemTransfer = $request->attributes->get('orderItem');
 
         $productConfigurationTemplate = $this->getFactory()

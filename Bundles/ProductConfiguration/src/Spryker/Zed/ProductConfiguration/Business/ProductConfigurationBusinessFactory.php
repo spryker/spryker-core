@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductConfiguration\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductConfiguration\Business\Calculator\ProductConfigurationCartItemQuantityCalculator;
+use Spryker\Zed\ProductConfiguration\Business\Calculator\ProductConfigurationCartItemQuantityCalculatorInterface;
 use Spryker\Zed\ProductConfiguration\Business\Checker\ProductConfigurationChecker;
 use Spryker\Zed\ProductConfiguration\Business\Checker\ProductConfigurationCheckerInterface;
 use Spryker\Zed\ProductConfiguration\Business\Expander\ProductConfigurationGroupKeyItemExpander;
@@ -49,6 +51,14 @@ class ProductConfigurationBusinessFactory extends AbstractBusinessFactory
     public function createProductConfigurationPriceProductExpander(): ProductConfigurationPriceProductExpanderInterface
     {
         return new ProductConfigurationPriceProductExpander();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductConfiguration\Business\Calculator\ProductConfigurationCartItemQuantityCalculatorInterface
+     */
+    public function createProductConfigurationCartItemQuantityCalculator(): ProductConfigurationCartItemQuantityCalculatorInterface
+    {
+        return new ProductConfigurationCartItemQuantityCalculator();
     }
 
     /**

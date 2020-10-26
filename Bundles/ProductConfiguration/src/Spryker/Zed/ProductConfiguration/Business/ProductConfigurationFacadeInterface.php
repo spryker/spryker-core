@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\ProductConfiguration\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartItemQuantityTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConfigurationCollectionTransfer;
 use Generated\Shared\Transfer\ProductConfigurationFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -77,4 +80,18 @@ interface ProductConfigurationFacadeInterface
         array $priceProductTransfers,
         CartChangeTransfer $cartChangeTransfer
     ): array;
+
+    /**
+     * Specification:
+     * - Calculates item quantity by item group key.
+     * - Returns quantity for the item.
+     *
+     * @api
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartItemQuantityTransfer
+     */
+    public function calculateCartItemQuantity(ArrayObject $itemsInCart, ItemTransfer $itemTransfer): CartItemQuantityTransfer;
 }

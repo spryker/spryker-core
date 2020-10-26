@@ -26,7 +26,8 @@
     "spryker/storage": "^3.0.0",
     "spryker/synchronization": "^1.9.0",
     "spryker/synchronization-behavior": "^1.0.0",
-    "spryker/synchronization-extension": "^1.1.0"
+    "spryker/synchronization-extension": "^1.1.0",
+    "spryker/util-encoding": "^2.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\ProductConfigurationInstanceBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\ProductConfigurationStorageTransfer;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToStorageClientBridge;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToStorageClientInterface;
@@ -40,7 +41,9 @@ class ExpandCartChangeWithProductConfigurationInstanceTest extends Unit
     {
         // Arrange
         $productConcreteTransfer = $this->tester->haveProduct();
-        $productConfigurationInstanceTransfer = (new ProductConfigurationInstanceBuilder())->build();
+        $productConfigurationInstanceTransfer = (new ProductConfigurationInstanceBuilder([
+            ProductConfigurationInstanceTransfer::PRICES => new \ArrayObject()
+        ]))->build();
 
         $this->tester->getClient()->storeProductConfigurationInstanceBySku($productConcreteTransfer->getSku(), $productConfigurationInstanceTransfer);
 

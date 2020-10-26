@@ -18,7 +18,7 @@ class AvailabilityCartConnectorBusinessFactory extends AbstractBusinessFactory
      */
     public function createCartCheckAvailability()
     {
-        return new CheckCartAvailability($this->getAvailabilityFacade());
+        return new CheckCartAvailability($this->getAvailabilityFacade(), $this->getCartItemQuantityCalculatorStrategyPlugins());
     }
 
     /**
@@ -27,5 +27,13 @@ class AvailabilityCartConnectorBusinessFactory extends AbstractBusinessFactory
     public function getAvailabilityFacade()
     {
         return $this->getProvidedDependency(AvailabilityCartConnectorDependencyProvider::FACADE_AVAILABILITY);
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityCartConnectorExtension\Dependency\Plugin\CartItemQuantityCalculatorStrategyPluginInterface[]
+     */
+    public function getCartItemQuantityCalculatorStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(AvailabilityCartConnectorDependencyProvider::PLUGINS_CART_ITEM_QUANTITY_CALCULATOR_STRATEGY);
     }
 }

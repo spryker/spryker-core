@@ -7,6 +7,7 @@
     "php": ">=7.2",
     "psr/http-message": "^1.0.0",
     "spryker-sdk/product-configuration-sdk": "^0.1.0",
+    "spryker/availability-cart-connector-extension":  "^1.0.0",
     "spryker/cart-extension": "^4.2.0",
     "spryker/checkout-extension": "^1.2.0",
     "spryker/currency": "^3.2.0",
