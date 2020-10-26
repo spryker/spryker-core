@@ -15,6 +15,18 @@
         },
         {
             "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\FileManager\\Business\\File\\FileRemover::executeDeleteFileInfoTransaction cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/FileManager/src/Spryker/Zed/FileManager/Business/File/FileRemover.php",
+            "snippet": "            return $this->executeDeleteFileInfoTransaction($fileInfoTransfer);",
+            "selected_text": "$fileInfoTransfer",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
             "line_from": 83,
             "line_to": 83,
             "type": "PossiblyNullArgument",
@@ -432,18 +444,6 @@
             "selected_text": "$mimeTypeTransfer->getIdMimeType()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 42,
-            "line_to": 42,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/FileManager/src/Spryker/Zed/FileManager/FileManagerDependencyProvider.php",
-            "snippet": "                $container->getLocator()->fileSystem()->service()",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
         },
         {
             "severity": "info",

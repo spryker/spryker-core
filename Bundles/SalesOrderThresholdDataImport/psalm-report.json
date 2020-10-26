@@ -48,42 +48,6 @@
             "selected_text": "import",
             "error_level": 3,
             "shortcode": 108
-        },
-        {
-            "severity": "info",
-            "line_from": 50,
-            "line_to": 50,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThresholdDataImport/src/Spryker/Zed/SalesOrderThresholdDataImport/SalesOrderThresholdDataImportDependencyProvider.php",
-            "snippet": "                $container->getLocator()->salesOrderThreshold()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 66,
-            "line_to": 66,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThresholdDataImport/src/Spryker/Zed/SalesOrderThresholdDataImport/SalesOrderThresholdDataImportDependencyProvider.php",
-            "snippet": "                $container->getLocator()->store()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 82,
-            "line_to": 82,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThresholdDataImport/src/Spryker/Zed/SalesOrderThresholdDataImport/SalesOrderThresholdDataImportDependencyProvider.php",
-            "snippet": "                $container->getLocator()->currency()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

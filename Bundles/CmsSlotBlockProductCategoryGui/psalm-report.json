@@ -10,8 +10,7 @@
             "snippet": "     * @return int[]",
             "selected_text": "int[]",
             "error_level": 6,
-            "shortcode": 11,
-            "taint_trace": null
+            "shortcode": 11
         },
         {
             "severity": "error",
@@ -23,8 +22,7 @@
             "snippet": "        return $categoryIds;",
             "selected_text": "$categoryIds",
             "error_level": 6,
-            "shortcode": 128,
-            "taint_trace": null
+            "shortcode": 128
         },
         {
             "severity": "error",
@@ -36,8 +34,7 @@
             "snippet": "     * @return int[]",
             "selected_text": "int[]",
             "error_level": 6,
-            "shortcode": 11,
-            "taint_trace": null
+            "shortcode": 11
         },
         {
             "severity": "error",
@@ -49,8 +46,7 @@
             "snippet": "        return $productIds;",
             "selected_text": "$productIds",
             "error_level": 6,
-            "shortcode": 128,
-            "taint_trace": null
+            "shortcode": 128
         }
     ],
     "warning": [
@@ -64,8 +60,7 @@
             "snippet": "            ->getProductAbstractPaginatedAutocompleteData($suggestion, $page);",
             "selected_text": "$suggestion",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -77,8 +72,7 @@
             "snippet": "                $event->getForm()->getParent(),",
             "selected_text": "$event->getForm()->getParent()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -90,8 +84,7 @@
             "snippet": "            $categoryIds[$categoryTransfer->getName()] = $categoryTransfer->getIdCategory();",
             "selected_text": "$categoryIds",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -103,8 +96,7 @@
             "snippet": "                $productAbstractSuggestionCollectionTransfer->getPagination()",
             "selected_text": "$productAbstractSuggestionCollectionTransfer->getPagination()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -116,8 +108,7 @@
             "snippet": "                $productAbstractTransfer->getName(),",
             "selected_text": "$productAbstractTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -129,8 +120,7 @@
             "snippet": "                $productAbstractTransfer->getSku()",
             "selected_text": "$productAbstractTransfer->getSku()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -142,8 +132,7 @@
             "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ProductAbstractTransfer[] $productAbstractTransfers",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ProductAbstractTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -155,8 +144,7 @@
             "snippet": "                    $productAbstractTransfer->getName(),",
             "selected_text": "$productAbstractTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -168,8 +156,7 @@
             "snippet": "                    $productAbstractTransfer->getSku()",
             "selected_text": "$productAbstractTransfer->getSku()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -181,8 +168,7 @@
             "snippet": "            ->queryProductAbstractWithName($idLocale)",
             "selected_text": "$idLocale",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -194,8 +180,7 @@
             "snippet": "            ->mapProductAbstractCollectionToTransfers($productAbstractCollection);",
             "selected_text": "$productAbstractCollection",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         }
     ],
     "deprecation": []

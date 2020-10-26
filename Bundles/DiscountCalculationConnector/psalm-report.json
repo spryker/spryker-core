@@ -1,24 +1,11 @@
 {
     "error": [],
-    "warning": [
-        {
-            "severity": "info",
-            "line_from": 29,
-            "line_to": 29,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/DiscountCalculationConnector/src/Spryker/Zed/DiscountCalculationConnector/DiscountCalculationConnectorDependencyProvider.php",
-            "snippet": "            return new DiscountCalculationToDiscountBridge($container->getLocator()->discount()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        }
-    ],
+    "warning": [],
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 19,
-            "line_to": 19,
+            "line_from": 21,
+            "line_to": 21,
             "type": "DeprecatedInterface",
             "message": "Spryker\\Zed\\Calculation\\Dependency\\Plugin\\CalculatorPluginInterface is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountCalculationConnector/src/Spryker/Zed/DiscountCalculationConnector/Communication/Plugin/DiscountCalculatorPlugin.php",

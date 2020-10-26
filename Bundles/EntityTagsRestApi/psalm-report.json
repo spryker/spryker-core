@@ -3,18 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/EntityTagsRestApi/src/Spryker/Glue/EntityTagsRestApi/EntityTagsRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->entityTag()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 73,
             "line_to": 73,
             "type": "PossiblyNullArgument",

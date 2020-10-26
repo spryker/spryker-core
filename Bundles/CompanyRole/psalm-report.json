@@ -1,5 +1,18 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 259,
+            "line_to": 259,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\CompanyRole\\Persistence\\CompanyRoleRepository::buildQueryFromCriteria has wrong name $criteria, expecting $modelCriteria as defined by Spryker\\Zed\\Kernel\\Persistence\\AbstractRepository::buildQueryFromCriteria",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyRole/src/Spryker/Zed/CompanyRole/Persistence/CompanyRoleRepository.php",
+            "snippet": "    public function buildQueryFromCriteria(ModelCriteria $criteria, ?FilterTransfer $filterTransfer = null): ModelCriteria",
+            "selected_text": "$criteria",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -11,8 +24,7 @@
             "snippet": "                $availableCompanyRolePermissions[$permissionTransfer->getKey()]",
             "selected_text": "$availableCompanyRolePermissions",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -24,8 +36,7 @@
             "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\PermissionTransfer[] $availablePermissions",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\PermissionTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -37,8 +48,7 @@
             "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\PermissionTransfer[] $companyRolePermissions",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\PermissionTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -50,8 +60,7 @@
             "snippet": "            $availableCompanyRolePermissions[$availablePermission->getKey()] = $availablePermission;",
             "selected_text": "$availableCompanyRolePermissions",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -63,8 +72,31 @@
             "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\PermissionTransfer[] $companyRolePermissions",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\PermissionTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 20,
+            "line_to": 20,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'Generated\\Shared\\Transfer\\PermissionCollectionTransfer' for Spryker\\Client\\CompanyRole\\Plugin\\PermissionStoragePlugin::getPermissionCollection is not nullable, but 'Generated\\Shared\\Transfer\\PermissionCollectionTransfer|null' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyRole/src/Spryker/Client/CompanyRole/Plugin/PermissionStoragePlugin.php",
+            "snippet": "     * @return \\Generated\\Shared\\Transfer\\PermissionCollectionTransfer",
+            "selected_text": "\\Generated\\Shared\\Transfer\\PermissionCollectionTransfer",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'Generated\\Shared\\Transfer\\PermissionCollectionTransfer' for Spryker\\Client\\CompanyRole\\Plugin\\PermissionStoragePlugin::getPermissionCollection is not nullable, but the function returns 'Generated\\Shared\\Transfer\\PermissionCollectionTransfer|null'",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyRole/src/Spryker/Client/CompanyRole/Plugin/PermissionStoragePlugin.php",
+            "snippet": "        return $customerTransfer->getPermissions();",
+            "selected_text": "$customerTransfer->getPermissions()",
+            "error_level": 5,
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -76,8 +108,7 @@
             "snippet": "                $companyTransfer,",
             "selected_text": "$companyTransfer",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -89,8 +120,7 @@
             "snippet": "            $companyRoleTransfer->getPermissionCollection(),",
             "selected_text": "$companyRoleTransfer->getPermissionCollection()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -102,8 +132,7 @@
             "snippet": "            ->requireIdCompanyRole();",
             "selected_text": "requireIdCompanyRole",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -115,8 +144,7 @@
             "snippet": "            $companyRoleResponseTransfer\n                ->getCompanyRoleTransfer()\n                ->getIdCompanyRole()",
             "selected_text": "$companyRoleResponseTransfer\n                ->getCompanyRoleTransfer()\n                ->getIdCompanyRole()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -128,8 +156,7 @@
             "snippet": "                ->getIdCompanyRole()",
             "selected_text": "getIdCompanyRole",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -141,8 +168,7 @@
             "snippet": "            $companyRoleResponseTransfer\n                ->getCompanyRoleTransfer()\n                ->getIdCompanyRole()",
             "selected_text": "$companyRoleResponseTransfer\n                ->getCompanyRoleTransfer()\n                ->getIdCompanyRole()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -154,8 +180,7 @@
             "snippet": "                ->getIdCompanyRole()",
             "selected_text": "getIdCompanyRole",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -167,8 +192,7 @@
             "snippet": "        return $this->repository->findCompanyRolePermissions($companyRoleTransfer->getIdCompanyRole());",
             "selected_text": "$companyRoleTransfer->getIdCompanyRole()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -180,8 +204,7 @@
             "snippet": "            $companyRoleTransfer->getIdCompanyRole()",
             "selected_text": "$companyRoleTransfer->getIdCompanyRole()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -193,8 +216,7 @@
             "snippet": "            $companyRoleTransfer->getIdCompanyRole()",
             "selected_text": "$companyRoleTransfer->getIdCompanyRole()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -206,8 +228,7 @@
             "snippet": "            $permissions[$permission->getIdPermission()] = $permission;",
             "selected_text": "$permissions",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -219,8 +240,7 @@
             "snippet": "        foreach ($companyRoleTransfer->getPermissionCollection()->getPermissions() as $permission) {",
             "selected_text": "getPermissions",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -232,8 +252,7 @@
             "snippet": "            $permissions[$permission->getIdPermission()] = $permission;",
             "selected_text": "$permissions",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -245,8 +264,7 @@
             "snippet": "            $companyRoleTransfer->getUuid()",
             "selected_text": "$companyRoleTransfer->getUuid()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -258,8 +276,7 @@
             "snippet": "        return $this->getFacade()->findCompanyRolePermissions($companyRoleTransfer->getIdCompanyRole());",
             "selected_text": "$companyRoleTransfer->getIdCompanyRole()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -271,8 +288,7 @@
             "snippet": "            $permissionTransfer->getIdCompanyRole(),",
             "selected_text": "$permissionTransfer->getIdCompanyRole()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -284,8 +300,31 @@
             "snippet": "            $permissionTransfer->getIdPermission()",
             "selected_text": "$permissionTransfer->getIdPermission()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getFkCompany on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyRole/src/Spryker/Zed/CompanyRole/Communication/Plugin/CompanyUser/AssignDefaultCompanyUserRolePlugin.php",
+            "snippet": "        if (!$companyUserResponseTransfer->getCompanyUser() || !$companyUserResponseTransfer->getCompanyUser()->getFkCompany()) {",
+            "selected_text": "getFkCompany",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CompanyRole\\Communication\\Plugin\\CompanyUser\\AssignDefaultCompanyUserRolePlugin::haveRoleAlready cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyRole/src/Spryker/Zed/CompanyRole/Communication/Plugin/CompanyUser/AssignDefaultCompanyUserRolePlugin.php",
+            "snippet": "        if ($this->haveRoleAlready($companyUserResponseTransfer->getCompanyUser())) {",
+            "selected_text": "$companyUserResponseTransfer->getCompanyUser()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -297,8 +336,31 @@
             "snippet": "            $companyUserResponseTransfer->getCompanyUser()->getFkCompany()",
             "selected_text": "$companyUserResponseTransfer->getCompanyUser()->getFkCompany()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getFkCompany on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyRole/src/Spryker/Zed/CompanyRole/Communication/Plugin/CompanyUser/AssignDefaultCompanyUserRolePlugin.php",
+            "snippet": "            $companyUserResponseTransfer->getCompanyUser()->getFkCompany()",
+            "selected_text": "getFkCompany",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCompanyRoleCollection on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyRole/src/Spryker/Zed/CompanyRole/Communication/Plugin/CompanyUser/AssignDefaultCompanyUserRolePlugin.php",
+            "snippet": "        if (!$companyUserTransfer->getCompanyRoleCollection()) {",
+            "selected_text": "getCompanyRoleCollection",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -310,8 +372,7 @@
             "snippet": "        $companyUserTransfer->getCompanyRoleCollection()->addRole($defaultCompanyRoleTransfer);",
             "selected_text": "addRole",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -323,8 +384,7 @@
             "snippet": "            $companyUserTransfer->getCompanyRoleCollection()->getRoles()->count() > 0;",
             "selected_text": "getRoles",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -336,8 +396,7 @@
             "snippet": "            $companyUserTransfer->getCompanyRoleCollection()->getRoles()->count() > 0;",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -349,8 +408,7 @@
             "snippet": "            $companyUser->getCompanyRoleCollection() !== null &&",
             "selected_text": "getCompanyRoleCollection",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -362,8 +420,7 @@
             "snippet": "            $companyUser->getCompanyRoleCollection()->getRoles()->count()",
             "selected_text": "getRoles",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -375,8 +432,7 @@
             "snippet": "            $companyUser->getCompanyRoleCollection()->getRoles()->count()",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -388,8 +444,7 @@
             "snippet": "            $companyUser->getCompanyRoleCollection() !== null &&",
             "selected_text": "getCompanyRoleCollection",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -401,8 +456,7 @@
             "snippet": "            $companyUser->getCompanyRoleCollection()->getRoles()->count()",
             "selected_text": "getRoles",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -414,8 +468,7 @@
             "snippet": "            $companyUser->getCompanyRoleCollection()->getRoles()->count()",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -427,21 +480,55 @@
             "snippet": "                $customerTransfer\n                    ->getCompanyUserTransfer()\n                    ->getIdCompanyUser()",
             "selected_text": "$customerTransfer\n                    ->getCompanyUserTransfer()\n                    ->getIdCompanyUser()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCompanyUser on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyRole/src/Spryker/Zed/CompanyRole/Communication/Plugin/PermissionCustomerExpanderPlugin.php",
+            "snippet": "                    ->getIdCompanyUser()",
+            "selected_text": "getIdCompanyUser",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 64,
+            "line_to": 64,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method addPermission on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyRole/src/Spryker/Zed/CompanyRole/Communication/Plugin/PermissionCustomerExpanderPlugin.php",
+            "snippet": "            $customerPermissionCollectionTransfer->addPermission($permissionTransfer);",
+            "selected_text": "addPermission",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 68,
+            "line_to": 68,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getRoles on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyRole/src/Spryker/Zed/CompanyRole/Persistence/CompanyRoleEntityManager.php",
+            "snippet": "            $companyRoles = $companyUserTransfer->getCompanyRoleCollection()->getRoles();",
+            "selected_text": "getRoles",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
             "line_from": 214,
             "line_to": 214,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CompanyRole\\Persistence\\SpyCompanyRole|Orm\\Zed\\Permission\\Persistence\\SpyPermission|Orm\\Zed\\SharedCart\\Persistence\\SpyQuotePermissionGroup|Orm\\Zed\\ShoppingList\\Persistence\\SpyShoppingListPermissionGroup|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CompanyRole\\Persistence\\SpyCompanyRole|Orm\\Zed\\Permission\\Persistence\\SpyPermission|Orm\\Zed\\SharedCart\\Persistence\\SpyQuotePermissionGroup|Orm\\Zed\\ShoppingList\\Persistence\\SpyShoppingListPermissionGroup> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyRole/src/Spryker/Zed/CompanyRole/Persistence/CompanyRoleRepository.php",
             "snippet": "            ->toArray();",
             "selected_text": "toArray",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -453,8 +540,7 @@
             "snippet": "            $paginationModel = $query->paginate($page, $maxPerPage);",
             "selected_text": "$page",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -466,8 +552,7 @@
             "snippet": "            $paginationModel = $query->paginate($page, $maxPerPage);",
             "selected_text": "$maxPerPage",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         }
     ],
     "deprecation": [
@@ -481,8 +566,7 @@
             "snippet": "        return $this->getRepository()->getDefaultCompanyRole();",
             "selected_text": "getDefaultCompanyRole",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         }
     ]
 }

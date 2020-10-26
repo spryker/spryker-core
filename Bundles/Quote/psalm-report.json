@@ -28,78 +28,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 23,
-            "line_to": 23,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Client/Kernel/PermissionAwareTrait.php",
-            "snippet": "            return Locator::getInstance()->permission()->client()->can($permissionKey, $context);",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 24,
-            "line_to": 24,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/PermissionAwareTrait.php",
-            "snippet": "            return Locator::getInstance()->permission()->facade()->can($permissionKey, $identifier, $context);",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 57,
-            "line_to": 57,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Client/Quote/QuoteDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->session()->client();",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 113,
-            "line_to": 113,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Client/Quote/QuoteDependencyProvider.php",
-            "snippet": "            return new QuoteToCustomerClientBridge($container->getLocator()->customer()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 127,
-            "line_to": 127,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Client/Quote/QuoteDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->zedRequest()->client();",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 141,
-            "line_to": 141,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Client/Quote/QuoteDependencyProvider.php",
-            "snippet": "            return new QuoteToCurrencyClientBridge($container->getLocator()->currency()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 60,
             "line_to": 60,
             "type": "PossiblyNullReference",
@@ -184,6 +112,18 @@
         },
         {
             "severity": "info",
+            "line_from": 95,
+            "line_to": 95,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\Quote\\Business\\Model\\QuoteDeleter::isDeleteAllowed cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Zed/Quote/Business/Model/QuoteDeleter.php",
+            "snippet": "        return $this->isDeleteAllowed($loadedQuoteTransfer, $customerTransfer);",
+            "selected_text": "$customerTransfer",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
             "line_from": 107,
             "line_to": 107,
             "type": "PossiblyNullArgument",
@@ -205,6 +145,18 @@
             "selected_text": "$customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 153,
+            "line_to": 153,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCompanyUser on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Zed/Quote/Business/Model/QuoteDeleter.php",
+            "snippet": "                && $this->can('WriteSharedCartPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(), $quoteTransfer->getIdQuote())",
+            "selected_text": "getIdCompanyUser",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -433,42 +385,6 @@
             "selected_text": "$quoteEntityTransfer->getQuoteData()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 163,
-            "line_to": 163,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::filterByUpdatedAt does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Zed/Quote/Persistence/QuoteRepository.php",
-            "snippet": "            ->filterByUpdatedAt(['max' => $lifetimeLimitDate], Criteria::LESS_EQUAL)",
-            "selected_text": "filterByUpdatedAt",
-            "error_level": 3,
-            "shortcode": 108
-        },
-        {
-            "severity": "info",
-            "line_from": 77,
-            "line_to": 77,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Zed/Quote/QuoteDependencyProvider.php",
-            "snippet": "            return new QuoteToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 91,
-            "line_to": 91,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Zed/Quote/QuoteDependencyProvider.php",
-            "snippet": "            return new QuoteToStoreFacadeBridge($container->getLocator()->store()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

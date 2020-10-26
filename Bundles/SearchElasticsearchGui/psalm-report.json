@@ -157,33 +157,45 @@
             "selected_text": "setSearchContext",
             "error_level": 3,
             "shortcode": 108
-        },
-        {
-            "severity": "info",
-            "line_from": 54,
-            "line_to": 54,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/SearchElasticsearchGuiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->searchElasticsearch()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 70,
-            "line_to": 70,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/SearchElasticsearchGuiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->searchElasticsearch()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\SearchContextAwareQueryInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Plugin/Query/DocumentListQuery.php",
+            "snippet": "class DocumentListQuery extends AbstractPlugin implements QueryInterface, SearchContextAwareQueryInterface",
+            "selected_text": "DocumentListQuery",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 29,
+            "line_to": 29,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\SearchContextAwareQueryInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Table/DocumentTable.php",
+            "snippet": "     * @var \\Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface|\\Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\SearchContextAwareQueryInterface",
+            "selected_text": "\\Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface|\\Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\SearchContextAwareQueryInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\SearchContextAwareQueryInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Table/DocumentTable.php",
+            "snippet": "     * @param \\Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface|\\Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\SearchContextAwareQueryInterface $documentListQuery",
+            "selected_text": "\\Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface|\\Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\SearchContextAwareQueryInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
         {
             "severity": "info",
             "line_from": 112,

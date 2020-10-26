@@ -2,6 +2,18 @@
     "error": [
         {
             "severity": "error",
+            "line_from": 29,
+            "line_to": 29,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Client\\ProductPackagingUnit\\Plugin\\PersistentCartExtension\\ProductPackagingUnitAmountPersistentCartChangeExpanderPlugin::extend has wrong name $persistentCartChangeTransfer, expecting $cartChangeTransfer as defined by Spryker\\Client\\PersistentCartExtension\\Dependency\\Plugin\\PersistentCartChangeExpanderPluginInterface::extend",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Client/ProductPackagingUnit/Plugin/PersistentCartExtension/ProductPackagingUnitAmountPersistentCartChangeExpanderPlugin.php",
+            "snippet": "    public function extend(PersistentCartChangeTransfer $persistentCartChangeTransfer, array $params = []): PersistentCartChangeTransfer",
+            "selected_text": "$persistentCartChangeTransfer",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
             "line_from": 68,
             "line_to": 68,
             "type": "InvalidReturnType",
@@ -93,6 +105,30 @@
             "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Business/Model/Validator/ProductPackagingUnitAmountRestrictionValidator.php",
             "snippet": "        return $productPackagingUnitAmountTransferMap;",
             "selected_text": "$productPackagingUnitAmountTransferMap",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 68,
+            "line_to": 68,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, int>' for Spryker\\Zed\\ProductPackagingUnit\\Business\\Reader\\ProductPackagingUnitReader::extractProductConcreteIdsFromProductConcreteTransfers is incorrect, got 'list<int|null>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Business/Reader/ProductPackagingUnitReader.php",
+            "snippet": "     * @return int[]",
+            "selected_text": "int[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 78,
+            "line_to": 78,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<int|null>' does not match the declared return type 'array<array-key, int>' for Spryker\\Zed\\ProductPackagingUnit\\Business\\Reader\\ProductPackagingUnitReader::extractProductConcreteIdsFromProductConcreteTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Business/Reader/ProductPackagingUnitReader.php",
+            "snippet": "        return $productConcreteIds;",
+            "selected_text": "$productConcreteIds",
             "error_level": 6,
             "shortcode": 128
         }
@@ -460,6 +496,18 @@
         },
         {
             "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method lessThan on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Business/Model/Availability/PreCheck/ProductPackagingUnitCheckoutPreCheck.php",
+            "snippet": "            if (!$itemTransfer->getAmountLeadProduct() || !$itemTransfer->getAmount() || $itemTransfer->getAmount()->lessThan(0)) {",
+            "selected_text": "lessThan",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 84,
             "line_to": 84,
             "type": "PossiblyNullArgument",
@@ -784,6 +832,18 @@
         },
         {
             "severity": "info",
+            "line_from": 82,
+            "line_to": 82,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductPackagingUnit\\Business\\Model\\Hydrator\\AmountLeadProductHydrateOrder::findProductConcreteBySku cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Business/Model/Hydrator/AmountLeadProductHydrateOrder.php",
+            "snippet": "        $leadProductConcreteTransfer = $this->findProductConcreteBySku($spySalesOrderItemEntityTransfer->getAmountSku());",
+            "selected_text": "$spySalesOrderItemEntityTransfer->getAmountSku()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
             "line_from": 54,
             "line_to": 54,
             "type": "PossiblyNullArgument",
@@ -805,6 +865,18 @@
             "selected_text": "$salesOrderItemEntityTransfer->getIdSalesOrderItem()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getProductMeasurementBaseUnit on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Business/Model/OrderItem/OrderItemExpander.php",
+            "snippet": "            ->getProductMeasurementBaseUnit()",
+            "selected_text": "getProductMeasurementBaseUnit",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -832,6 +904,18 @@
         },
         {
             "severity": "info",
+            "line_from": 68,
+            "line_to": 68,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getProductMeasurementUnit on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Business/Model/OrderItem/OrderItemExpander.php",
+            "snippet": "            ->getProductMeasurementUnit()",
+            "selected_text": "getProductMeasurementUnit",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 69,
             "line_to": 69,
             "type": "PossiblyNullReference",
@@ -844,6 +928,18 @@
         },
         {
             "severity": "info",
+            "line_from": 72,
+            "line_to": 72,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getProductMeasurementUnit on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Business/Model/OrderItem/OrderItemExpander.php",
+            "snippet": "            ->getProductMeasurementUnit()",
+            "selected_text": "getProductMeasurementUnit",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 73,
             "line_to": 73,
             "type": "PossiblyNullReference",
@@ -851,6 +947,42 @@
             "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Business/Model/OrderItem/OrderItemExpander.php",
             "snippet": "            ->getCode();",
             "selected_text": "getCode",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 79,
+            "line_to": 79,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getPrecision on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Business/Model/OrderItem/OrderItemExpander.php",
+            "snippet": "        $salesOrderItemEntity->setAmountMeasurementUnitPrecision($itemTransfer->getAmountSalesUnit()->getPrecision());",
+            "selected_text": "getPrecision",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 80,
+            "line_to": 80,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getConversion on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Business/Model/OrderItem/OrderItemExpander.php",
+            "snippet": "        $salesOrderItemEntity->setAmountMeasurementUnitConversion($itemTransfer->getAmountSalesUnit()->getConversion());",
+            "selected_text": "getConversion",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 99,
+            "line_to": 99,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getSku on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Business/Model/OrderItem/OrderItemExpander.php",
+            "snippet": "        $packagingUnitLeadProductSku = $itemTransfer->getAmountLeadProduct()->getSku();",
+            "selected_text": "getSku",
             "error_level": 3,
             "shortcode": 83
         },
@@ -889,6 +1021,30 @@
             "selected_text": "$itemTransfer->getQuantity()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getProductPackagingUnitAmount on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Business/Model/PriceChange/PriceChangeExpander.php",
+            "snippet": "                    ->getProductPackagingUnitAmount()",
+            "selected_text": "getProductPackagingUnitAmount",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 37,
+            "line_to": 37,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getProductPackagingUnitAmount on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Business/Model/PriceChange/PriceChangeExpander.php",
+            "snippet": "                    ->getProductPackagingUnitAmount()",
+            "selected_text": "getProductPackagingUnitAmount",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -1146,6 +1302,18 @@
             "severity": "info",
             "line_from": 28,
             "line_to": 28,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method divide on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Business/Model/ProductPackagingUnit/ProductPackagingUnitGroupKeyGenerator.php",
+            "snippet": "        $amountPerQuantity = $itemTransfer->getAmount()->divide($itemTransfer->getQuantity(), static::DIVISION_SCALE);",
+            "selected_text": "divide",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 28,
+            "line_to": 28,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\DecimalObject\\Decimal::divide cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Business/Model/ProductPackagingUnit/ProductPackagingUnitGroupKeyGenerator.php",
@@ -1177,6 +1345,18 @@
             "selected_text": "$itemTransfer->getAmountSalesUnit()->getIdProductMeasurementSalesUnit()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdProductMeasurementSalesUnit on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Business/Model/ProductPackagingUnit/ProductPackagingUnitGroupKeyGenerator.php",
+            "snippet": "            $itemTransfer->getAmountSalesUnit()->getIdProductMeasurementSalesUnit()",
+            "selected_text": "getIdProductMeasurementSalesUnit",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -1552,10 +1732,10 @@
         },
         {
             "severity": "info",
-            "line_from": 139,
-            "line_to": 139,
+            "line_from": 140,
+            "line_to": 140,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductPackagingUnit\\Persistence\\SpyProductPackagingUnit|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductPackagingUnit\\Persistence\\SpyProductPackagingUnit> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Persistence/ProductPackagingUnitRepository.php",
             "snippet": "            ->toArray();",
             "selected_text": "toArray",
@@ -1564,8 +1744,8 @@
         },
         {
             "severity": "info",
-            "line_from": 153,
-            "line_to": 153,
+            "line_from": 154,
+            "line_to": 154,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductPackagingUnit\\Persistence\\SpyProductPackagingUnit> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Persistence/ProductPackagingUnitRepository.php",
@@ -1576,8 +1756,8 @@
         },
         {
             "severity": "info",
-            "line_from": 180,
-            "line_to": 180,
+            "line_from": 181,
+            "line_to": 181,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductPackagingUnit\\Persistence\\SpyProductPackagingUnit> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Persistence/ProductPackagingUnitRepository.php",
@@ -1588,10 +1768,10 @@
         },
         {
             "severity": "info",
-            "line_from": 211,
-            "line_to": 211,
+            "line_from": 212,
+            "line_to": 212,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CompanySupplier\\Persistence\\SpyCompanySupplierToProduct|Orm\\Zed\\GiftCard\\Persistence\\SpyGiftCardProductConfigurationLink|Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationship|Orm\\Zed\\PriceProductSchedule\\Persistence\\SpyPriceProductSchedule|Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProduct|Orm\\Zed\\ProductAlternative\\Persistence\\SpyProductAlternative|Orm\\Zed\\ProductBundle\\Persistence\\SpyProductBundle|Orm\\Zed\\ProductDiscontinued\\Persistence\\SpyProductDiscontinued|Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSet|Orm\\Zed\\ProductList\\Persistence\\SpyProductListProductConcrete|Orm\\Zed\\ProductMeasurementUnit\\Persistence\\SpyProductMeasurementSalesUnit|Orm\\Zed\\ProductPackagingUnit\\Persistence\\SpyProductPackagingUnit|Orm\\Zed\\ProductQuantity\\Persistence\\SpyProductQuantity|Orm\\Zed\\ProductSearch\\Persistence\\SpyProductSearch|Orm\\Zed\\ProductValidity\\Persistence\\SpyProductValidity|Orm\\Zed\\Product\\Persistence\\SpyProductAbstract|Orm\\Zed\\Product\\Persistence\\SpyProductLocalizedAttributes|Orm\\Zed\\Stock\\Persistence\\SpyStockProduct|Orm\\Zed\\Wishlist\\Persistence\\SpyWishlistItem> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CompanySupplier\\Persistence\\SpyCompanySupplierToProduct|Orm\\Zed\\GiftCard\\Persistence\\SpyGiftCardProductConfigurationLink|Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationship|Orm\\Zed\\PriceProductSchedule\\Persistence\\SpyPriceProductSchedule|Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProduct|Orm\\Zed\\ProductAlternative\\Persistence\\SpyProductAlternative|Orm\\Zed\\ProductBundle\\Persistence\\SpyProductBundle|Orm\\Zed\\ProductConfiguration\\Persistence\\SpyProductConfiguration|Orm\\Zed\\ProductDiscontinued\\Persistence\\SpyProductDiscontinued|Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSet|Orm\\Zed\\ProductList\\Persistence\\SpyProductListProductConcrete|Orm\\Zed\\ProductMeasurementUnit\\Persistence\\SpyProductMeasurementSalesUnit|Orm\\Zed\\ProductPackagingUnit\\Persistence\\SpyProductPackagingUnit|Orm\\Zed\\ProductQuantity\\Persistence\\SpyProductQuantity|Orm\\Zed\\ProductSearch\\Persistence\\SpyProductSearch|Orm\\Zed\\ProductValidity\\Persistence\\SpyProductValidity|Orm\\Zed\\Product\\Persistence\\SpyProductAbstract|Orm\\Zed\\Product\\Persistence\\SpyProductLocalizedAttributes|Orm\\Zed\\Stock\\Persistence\\SpyStockProduct|Orm\\Zed\\Wishlist\\Persistence\\SpyWishlistItem> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Persistence/ProductPackagingUnitRepository.php",
             "snippet": "            ->getFirst();",
             "selected_text": "getFirst",
@@ -1600,10 +1780,10 @@
         },
         {
             "severity": "info",
-            "line_from": 248,
-            "line_to": 248,
+            "line_from": 249,
+            "line_to": 249,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CompanySupplier\\Persistence\\SpyCompanySupplierToProduct|Orm\\Zed\\GiftCard\\Persistence\\SpyGiftCardProductConfigurationLink|Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationship|Orm\\Zed\\PriceProductSchedule\\Persistence\\SpyPriceProductSchedule|Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProduct|Orm\\Zed\\ProductAlternative\\Persistence\\SpyProductAlternative|Orm\\Zed\\ProductBundle\\Persistence\\SpyProductBundle|Orm\\Zed\\ProductDiscontinued\\Persistence\\SpyProductDiscontinued|Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSet|Orm\\Zed\\ProductList\\Persistence\\SpyProductListProductConcrete|Orm\\Zed\\ProductMeasurementUnit\\Persistence\\SpyProductMeasurementSalesUnit|Orm\\Zed\\ProductPackagingUnit\\Persistence\\SpyProductPackagingUnit|Orm\\Zed\\ProductQuantity\\Persistence\\SpyProductQuantity|Orm\\Zed\\ProductSearch\\Persistence\\SpyProductSearch|Orm\\Zed\\ProductValidity\\Persistence\\SpyProductValidity|Orm\\Zed\\Product\\Persistence\\SpyProductAbstract|Orm\\Zed\\Product\\Persistence\\SpyProductLocalizedAttributes|Orm\\Zed\\Stock\\Persistence\\SpyStockProduct|Orm\\Zed\\Wishlist\\Persistence\\SpyWishlistItem|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CompanySupplier\\Persistence\\SpyCompanySupplierToProduct|Orm\\Zed\\GiftCard\\Persistence\\SpyGiftCardProductConfigurationLink|Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationship|Orm\\Zed\\PriceProductSchedule\\Persistence\\SpyPriceProductSchedule|Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProduct|Orm\\Zed\\ProductAlternative\\Persistence\\SpyProductAlternative|Orm\\Zed\\ProductBundle\\Persistence\\SpyProductBundle|Orm\\Zed\\ProductConfiguration\\Persistence\\SpyProductConfiguration|Orm\\Zed\\ProductDiscontinued\\Persistence\\SpyProductDiscontinued|Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSet|Orm\\Zed\\ProductList\\Persistence\\SpyProductListProductConcrete|Orm\\Zed\\ProductMeasurementUnit\\Persistence\\SpyProductMeasurementSalesUnit|Orm\\Zed\\ProductPackagingUnit\\Persistence\\SpyProductPackagingUnit|Orm\\Zed\\ProductQuantity\\Persistence\\SpyProductQuantity|Orm\\Zed\\ProductSearch\\Persistence\\SpyProductSearch|Orm\\Zed\\ProductValidity\\Persistence\\SpyProductValidity|Orm\\Zed\\Product\\Persistence\\SpyProductAbstract|Orm\\Zed\\Product\\Persistence\\SpyProductLocalizedAttributes|Orm\\Zed\\Stock\\Persistence\\SpyStockProduct|Orm\\Zed\\Wishlist\\Persistence\\SpyWishlistItem> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Persistence/ProductPackagingUnitRepository.php",
             "snippet": "            ->getArrayCopy();",
             "selected_text": "getArrayCopy",
@@ -1612,39 +1792,15 @@
         },
         {
             "severity": "info",
-            "line_from": 312,
-            "line_to": 312,
+            "line_from": 313,
+            "line_to": 313,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Sales\\Persistence\\SpySalesOrderItem|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Sales\\Persistence\\SpySalesOrderItem> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Persistence/ProductPackagingUnitRepository.php",
             "snippet": "            ->toKeyValue(SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM, SpySalesOrderItemTableMap::COL_AMOUNT_SKU);",
             "selected_text": "toKeyValue",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 356,
-            "line_to": 356,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Orm\\Zed\\Oms\\Persistence\\SpyOmsEventTimeoutQuery::innerjoinprocess does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Persistence/ProductPackagingUnitRepository.php",
-            "snippet": "            ->innerJoinProcess()",
-            "selected_text": "innerJoinProcess",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 379,
-            "line_to": 379,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::useorderquery does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Persistence/ProductPackagingUnitRepository.php",
-            "snippet": "                ->useOrderQuery()",
-            "selected_text": "useOrderQuery",
-            "error_level": 4,
-            "shortcode": 219
         },
         {
             "severity": "info",
@@ -1657,114 +1813,6 @@
             "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Sales\\Persistence\\SpySalesOrderItem[]",
             "error_level": 4,
             "shortcode": 141
-        },
-        {
-            "severity": "info",
-            "line_from": 87,
-            "line_to": 87,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/ProductPackagingUnitDependencyProvider.php",
-            "snippet": "                $container->getLocator()->locale()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 103,
-            "line_to": 103,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/ProductPackagingUnitDependencyProvider.php",
-            "snippet": "                $container->getLocator()->glossary()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 119,
-            "line_to": 119,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/ProductPackagingUnitDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productMeasurementUnit()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 135,
-            "line_to": 135,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/ProductPackagingUnitDependencyProvider.php",
-            "snippet": "                $container->getLocator()->availability()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 151,
-            "line_to": 151,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/ProductPackagingUnitDependencyProvider.php",
-            "snippet": "                $container->getLocator()->oms()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 167,
-            "line_to": 167,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/ProductPackagingUnitDependencyProvider.php",
-            "snippet": "                $container->getLocator()->store()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 183,
-            "line_to": 183,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/ProductPackagingUnitDependencyProvider.php",
-            "snippet": "                $container->getLocator()->product()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 199,
-            "line_to": 199,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/ProductPackagingUnitDependencyProvider.php",
-            "snippet": "                $container->getLocator()->salesQuantity()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 228,
-            "line_to": 228,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/ProductPackagingUnitDependencyProvider.php",
-            "snippet": "            return new ProductPackagingUnitToUtilTextServiceBridge($container->getLocator()->utilText()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [
@@ -1794,8 +1842,8 @@
         },
         {
             "severity": "info",
-            "line_from": 355,
-            "line_to": 355,
+            "line_from": 365,
+            "line_to": 365,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\ProductPackagingUnit\\Business\\Model\\Hydrator\\AmountLeadProductHydrateOrderInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Business/ProductPackagingUnitBusinessFactory.php",
@@ -1806,8 +1854,8 @@
         },
         {
             "severity": "info",
-            "line_from": 357,
-            "line_to": 357,
+            "line_from": 367,
+            "line_to": 367,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\ProductPackagingUnit\\Business\\Model\\Hydrator\\AmountLeadProductHydrateOrderInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Business/ProductPackagingUnitBusinessFactory.php",
@@ -1818,8 +1866,8 @@
         },
         {
             "severity": "info",
-            "line_from": 359,
-            "line_to": 362,
+            "line_from": 369,
+            "line_to": 372,
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\ProductPackagingUnit\\Business\\Model\\Hydrator\\AmountLeadProductHydrateOrder is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Business/ProductPackagingUnitBusinessFactory.php",
@@ -1830,8 +1878,8 @@
         },
         {
             "severity": "info",
-            "line_from": 368,
-            "line_to": 368,
+            "line_from": 378,
+            "line_to": 378,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\ProductPackagingUnit\\Business\\Model\\Hydrator\\AmountSalesUnitHydrateOrderInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Business/ProductPackagingUnitBusinessFactory.php",
@@ -1842,8 +1890,8 @@
         },
         {
             "severity": "info",
-            "line_from": 370,
-            "line_to": 370,
+            "line_from": 380,
+            "line_to": 380,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\ProductPackagingUnit\\Business\\Model\\Hydrator\\AmountSalesUnitHydrateOrderInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Business/ProductPackagingUnitBusinessFactory.php",
@@ -1854,8 +1902,8 @@
         },
         {
             "severity": "info",
-            "line_from": 372,
-            "line_to": 375,
+            "line_from": 382,
+            "line_to": 385,
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\ProductPackagingUnit\\Business\\Model\\Hydrator\\AmountSalesUnitHydrateOrder is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Business/ProductPackagingUnitBusinessFactory.php",
@@ -2067,6 +2115,18 @@
             "selected_text": "LeadProductStockUpdateHandlerPlugin",
             "error_level": 2,
             "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\Locale\\Business\\LocaleFacadeInterface::getLocaleByCode has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Dependency/Facade/ProductPackagingUnitToLocaleFacadeBridge.php",
+            "snippet": "        return $this->localeFacade->getLocaleByCode($localeCode);",
+            "selected_text": "getLocaleByCode",
+            "error_level": 2,
+            "shortcode": 1
         },
         {
             "severity": "info",

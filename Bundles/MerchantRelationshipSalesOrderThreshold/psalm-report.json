@@ -47,6 +47,30 @@
             "selected_text": "$translationsByLocale",
             "error_level": 6,
             "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 27,
+            "line_to": 27,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantRelationshipSalesOrderThreshold\\Persistence\\Propel\\Mapper\\MerchantRelationshipSalesOrderThresholdMapper::mapMerchantRelationshipSalesOrderThresholdEntityToTransfer has wrong name $merchantRelationshipSalesOrderThresholdEntity, expecting $salesOrderThresholdEntity as defined by Spryker\\Zed\\MerchantRelationshipSalesOrderThreshold\\Persistence\\Propel\\Mapper\\MerchantRelationshipSalesOrderThresholdMapperInterface::mapMerchantRelationshipSalesOrderThresholdEntityToTransfer",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Persistence/Propel/Mapper/MerchantRelationshipSalesOrderThresholdMapper.php",
+            "snippet": "        SpyMerchantRelationshipSalesOrderThreshold $merchantRelationshipSalesOrderThresholdEntity,",
+            "selected_text": "$merchantRelationshipSalesOrderThresholdEntity",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 28,
+            "line_to": 28,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Zed\\MerchantRelationshipSalesOrderThreshold\\Persistence\\Propel\\Mapper\\MerchantRelationshipSalesOrderThresholdMapper::mapMerchantRelationshipSalesOrderThresholdEntityToTransfer has wrong name $merchantRelationshipSalesOrderThresholdTransfer, expecting $salesOrderThresholdTransfer as defined by Spryker\\Zed\\MerchantRelationshipSalesOrderThreshold\\Persistence\\Propel\\Mapper\\MerchantRelationshipSalesOrderThresholdMapperInterface::mapMerchantRelationshipSalesOrderThresholdEntityToTransfer",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Persistence/Propel/Mapper/MerchantRelationshipSalesOrderThresholdMapper.php",
+            "snippet": "        MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer",
+            "selected_text": "$merchantRelationshipSalesOrderThresholdTransfer",
+            "error_level": 7,
+            "shortcode": 230
         }
     ],
     "warning": [
@@ -124,6 +148,30 @@
         },
         {
             "severity": "info",
+            "line_from": 133,
+            "line_to": 133,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCompanyUserTransfer on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Business/MerchantRelationshipThreshold/MerchantRelationshipThresholdReader.php",
+            "snippet": "            $quoteTransfer->getCustomer()->getCompanyUserTransfer() &&",
+            "selected_text": "getCompanyUserTransfer",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 134,
+            "line_to": 134,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCompanyUserTransfer on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Business/MerchantRelationshipThreshold/MerchantRelationshipThresholdReader.php",
+            "snippet": "            $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getCompanyBusinessUnit() &&",
+            "selected_text": "getCompanyUserTransfer",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 134,
             "line_to": 134,
             "type": "PossiblyNullReference",
@@ -131,6 +179,18 @@
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Business/MerchantRelationshipThreshold/MerchantRelationshipThresholdReader.php",
             "snippet": "            $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getCompanyBusinessUnit() &&",
             "selected_text": "getCompanyBusinessUnit",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 135,
+            "line_to": 135,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCompanyUserTransfer on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Business/MerchantRelationshipThreshold/MerchantRelationshipThresholdReader.php",
+            "snippet": "            $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getCompanyBusinessUnit()->getMerchantRelationships()->count();",
+            "selected_text": "getCompanyUserTransfer",
             "error_level": 3,
             "shortcode": 83
         },
@@ -229,6 +289,30 @@
             "selected_text": "$itemTransfer->getSumSubtotalAggregation()",
             "error_level": 1,
             "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 168,
+            "line_to": 168,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getPriceDimension on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Business/MerchantRelationshipThreshold/MerchantRelationshipThresholdReader.php",
+            "snippet": "            $itemTransfer->getPriceProduct()->getPriceDimension() &&",
+            "selected_text": "getPriceDimension",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 169,
+            "line_to": 169,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getPriceDimension on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Business/MerchantRelationshipThreshold/MerchantRelationshipThresholdReader.php",
+            "snippet": "            $itemTransfer->getPriceProduct()->getPriceDimension()->getIdMerchantRelationship();",
+            "selected_text": "getPriceDimension",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -616,42 +700,6 @@
         },
         {
             "severity": "info",
-            "line_from": 50,
-            "line_to": 50,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/MerchantRelationshipSalesOrderThresholdDependencyProvider.php",
-            "snippet": "                $container->getLocator()->salesOrderThreshold()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 65,
-            "line_to": 65,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/MerchantRelationshipSalesOrderThresholdDependencyProvider.php",
-            "snippet": "            return new MerchantRelationshipSalesOrderThresholdToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 79,
-            "line_to": 79,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/MerchantRelationshipSalesOrderThresholdDependencyProvider.php",
-            "snippet": "            return new MerchantRelationshipSalesOrderThresholdToStoreFacadeBridge($container->getLocator()->store()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 32,
             "line_to": 32,
             "type": "PossiblyNullReference",
@@ -916,25 +964,25 @@
         },
         {
             "severity": "info",
-            "line_from": 35,
-            "line_to": 35,
+            "line_from": 38,
+            "line_to": 38,
             "type": "PossiblyUndefinedMethod",
-            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::filterByFkStore does not exist",
+            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::useStoreQuery does not exist",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Persistence/Propel/AbstractSpyMerchantRelationshipSalesOrderThresholdQuery.php",
-            "snippet": "                ->filterByFkStore($storeTransfer->getIdStore())",
-            "selected_text": "filterByFkStore",
+            "snippet": "                ->useStoreQuery()",
+            "selected_text": "useStoreQuery",
             "error_level": 3,
             "shortcode": 108
         },
         {
             "severity": "info",
-            "line_from": 53,
-            "line_to": 53,
+            "line_from": 59,
+            "line_to": 59,
             "type": "PossiblyUndefinedMethod",
-            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::filterByFkCurrency does not exist",
+            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::useCurrencyQuery does not exist",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Persistence/Propel/AbstractSpyMerchantRelationshipSalesOrderThresholdQuery.php",
-            "snippet": "                ->filterByFkCurrency($currencyTransfer->getIdCurrency())",
-            "selected_text": "filterByFkCurrency",
+            "snippet": "                ->useCurrencyQuery()",
+            "selected_text": "useCurrencyQuery",
             "error_level": 3,
             "shortcode": 108
         },

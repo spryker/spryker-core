@@ -65,18 +65,6 @@
         },
         {
             "severity": "info",
-            "line_from": 12,
-            "line_to": 12,
-            "type": "DeprecatedInterface",
-            "message": "Symfony\\Component\\EventDispatcher\\Debug\\TraceableEventDispatcherInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/EventDispatcher/src/Spryker/Shared/EventDispatcher/TraceableEventDispatcher.php",
-            "snippet": "class TraceableEventDispatcher extends SymfonyTraceableEventDispatcher implements EventDispatcherInterface",
-            "selected_text": "TraceableEventDispatcher",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
             "line_from": 40,
             "line_to": 40,
             "type": "DeprecatedMethod",
