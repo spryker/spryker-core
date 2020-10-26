@@ -87,7 +87,7 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    protected function filterMerchantOrderExpences(OrderTransfer $orderTransfer, MerchantOrderTransfer $merchantOrderTransfer): OrderTransfer
+    protected function filterMerchantOrderExpenses(OrderTransfer $orderTransfer, MerchantOrderTransfer $merchantOrderTransfer): OrderTransfer
     {
         $expenseTransfers = new ArrayObject();
 
@@ -158,7 +158,7 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
         }
 
         $orderTransfer = $this->filterMerchantOrderItems($orderTransfer, $merchantOrderTransfer);
-        $orderTransfer = $this->filterMerchantOrderExpences($orderTransfer, $merchantOrderTransfer);
+        $orderTransfer = $this->filterMerchantOrderExpenses($orderTransfer, $merchantOrderTransfer);
 
         $merchantOrderTransfer->setOrder($orderTransfer);
         $merchantOrderTransfer->setExpenses($orderTransfer->getExpenses());
