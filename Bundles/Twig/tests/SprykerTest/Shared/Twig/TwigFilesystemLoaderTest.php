@@ -128,6 +128,24 @@ class TwigFilesystemLoaderTest extends Unit
     /**
      * @return void
      */
+    public function testIsPathInSplit(): void
+    {
+        $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_ZED_PROJECT);
+
+        $reflection = new ReflectionClass(get_class($filesystemLoader));
+        $method = $reflection->getMethod('isPathInSplit');
+        $method->setAccessible(true);
+
+        $result = $method->invokeArgs($filesystemLoader, ['vendor/spryker/spryker/Bundles/Foo/']);
+        $this->assertFalse($result);
+
+        $result = $method->invokeArgs($filesystemLoader, ['vendor/spryker/foo/']);
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @return void
+     */
     public function testGetSourceThrowsExceptionWhenNameDoesNotContainControllerAndTemplateNameInfo(): void
     {
         $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_ZED_PROJECT);
