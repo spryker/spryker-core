@@ -22,7 +22,7 @@ class PaginatedMerchantSearchQueryExpanderPlugin extends AbstractPlugin implemen
 
     /**
      * {@inheritDoc}
-     *  - Allows to fetch return reason results by page.
+     *  - Allows to fetch merchant results by page.
      *
      * @api
      *

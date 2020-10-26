@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterface
 {
     /**
-     * @uses @todo
+     * @uses \Spryker\Client\MerchantSearch\MerchantSearchConfig::PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME
      */
     protected const ITEMS_PER_PAGE = 'ipp';
 
