@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.2",
     "spryker/availability": "^9.1.0",
-    "spryker/availability-cart-connector-extension": "^0.1.0",
+    "spryker/availability-cart-connector-extension": "^1.0.0",
     "spryker/cart-extension": "^2.1.0 || ^3.0.0 || ^4.0.0",
     "spryker/decimal-object": "^1.0.0",
     "spryker/kernel": "^3.30.0",
