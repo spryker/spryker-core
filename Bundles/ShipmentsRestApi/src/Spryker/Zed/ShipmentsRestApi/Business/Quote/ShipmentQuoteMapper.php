@@ -84,8 +84,14 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
 
         foreach ($restCheckoutRequestAttributesTransfer->getShipments() as $restShipmentsTransfer) {
             $shipmentTransfer = (new ShipmentTransfer())
-                ->setShippingAddress((new AddressTransfer())->fromArray($restShipmentsTransfer->toArray(), true))
-                ->setMethod((new ShipmentMethodTransfer())->setIdShipmentMethod($restShipmentsTransfer->getShipmentMethodId()))
+                ->setShippingAddress(
+                    (new AddressTransfer())
+                        ->fromArray($restShipmentsTransfer->getShippingAddress()->toArray(), true)
+                )
+                ->setMethod(
+                    (new ShipmentMethodTransfer())
+                        ->setIdShipmentMethod($restShipmentsTransfer->getShipmentMethodId())
+                )
                 ->setRequestedDeliveryDate($restShipmentsTransfer->getRequestedDeliveryDate());
 
             foreach ($quoteTransfer->getItems() as $itemTransfer) {

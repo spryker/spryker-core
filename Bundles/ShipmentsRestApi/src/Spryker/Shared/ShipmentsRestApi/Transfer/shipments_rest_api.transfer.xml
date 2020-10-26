@@ -48,6 +48,7 @@
         <property name="method" type="ShipmentMethod"/>
         <property name="shipmentSelection" type="string"/>
         <property name="shippingAddress" type="Address"/>
+        <property name="requestedDeliveryDate" type="string"/>
     </transfer>
 
     <transfer name="ShipmentMethod">
@@ -67,6 +68,7 @@
 
     <transfer name="Item">
         <property name="shipment" type="Shipment"/>
+        <property name="groupKey" type="string"/>
     </transfer>
 
     <transfer name="CheckoutData">
