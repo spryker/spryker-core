@@ -32,7 +32,7 @@ class ProductItemTaxRateCalculatorPlugin extends AbstractPlugin implements Calcu
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
         $this->getFacade()->calculateProductItemTaxRate($quoteTransfer);
-        
+
         return $quoteTransfer;
     }
 }
