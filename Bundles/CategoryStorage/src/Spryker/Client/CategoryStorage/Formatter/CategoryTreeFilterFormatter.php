@@ -140,7 +140,12 @@ class CategoryTreeFilterFormatter implements CategoryTreeFilterFormatterInterfac
         $categoryBuckets = $docCountAggregation['buckets'] ?? [];
 
         foreach ($categoryBuckets as $categoryBucket) {
-            $categoryDocCounts[$categoryBucket['key']] = $categoryBucket['doc_count'];
+            $key = $categoryBucket['key'] ?? null;
+            $docCount = $categoryBucket['doc_count'] ?? null;
+
+            if ($key && $docCount) {
+                $categoryDocCounts[$key] = $docCount;
+            }
         }
 
         return $categoryDocCounts;
