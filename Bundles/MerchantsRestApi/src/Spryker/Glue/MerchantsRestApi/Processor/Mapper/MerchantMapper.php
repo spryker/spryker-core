@@ -16,16 +16,25 @@ use Generated\Shared\Transfer\RestMerchantsAttributesTransfer;
 class MerchantMapper implements MerchantMapperInterface
 {
     /**
-     * @var \Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\RestMerchantsAttributesMapperPluginInterface[]
+     * @var \Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\RestStorageMerchantsAttributesMapperPluginInterface[]
      */
-    protected $restMerchantsAttributesMapperPlugins;
+    protected $restStorageMerchantsAttributesMapperPlugins;
 
     /**
-     * @param \Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\RestMerchantsAttributesMapperPluginInterface[] $restMerchantsAttributesMapperPlugins
+     * @var \Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\RestSearchMerchantsAttributesMapperPluginInterface[]
      */
-    public function __construct(array $restMerchantsAttributesMapperPlugins)
-    {
-        $this->restMerchantsAttributesMapperPlugins = $restMerchantsAttributesMapperPlugins;
+    protected $restSearchMerchantsAttributesMapperPlugins;
+
+    /**
+     * @param \Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\RestStorageMerchantsAttributesMapperPluginInterface[] $restStorageMerchantsAttributesMapperPlugins
+     * @param \Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\RestSearchMerchantsAttributesMapperPluginInterface[] $restSearchMerchantsAttributesMapperPlugins
+     */
+    public function __construct(
+        array $restStorageMerchantsAttributesMapperPlugins,
+        array $restSearchMerchantsAttributesMapperPlugins
+    ) {
+        $this->restStorageMerchantsAttributesMapperPlugins = $restStorageMerchantsAttributesMapperPlugins;
+        $this->restSearchMerchantsAttributesMapperPlugins = $restSearchMerchantsAttributesMapperPlugins;
     }
 
     /**
@@ -57,7 +66,7 @@ class MerchantMapper implements MerchantMapperInterface
             ->setDeliveryTime($merchantStorageProfileTransfer->getDeliveryTime())
             ->setMerchantUrl($this->findMerchantUrlByLocaleName($merchantStorageTransfer->getUrlCollection(), $localeName));
 
-        $restMerchantsAttributesTransfer = $this->executeRestMerchantsAttributesMapperPlugins(
+        $restMerchantsAttributesTransfer = $this->executeRestStorageMerchantsAttributesMapperPlugins(
             $merchantStorageTransfer,
             $restMerchantsAttributesTransfer,
             $localeName
@@ -68,14 +77,14 @@ class MerchantMapper implements MerchantMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\MerchantSearchTransfer $merchantSearchTransfer
-     * @param \Generated\Shared\Transfer\RestMerchantsAttributesTransfer $restMerchantsAttributesTrasnsfer
+     * @param \Generated\Shared\Transfer\RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\RestMerchantsAttributesTransfer
      */
     public function mapMerchantSearchTransferToRestMerchantsAttributesTransfer(
         MerchantSearchTransfer $merchantSearchTransfer,
-        RestMerchantsAttributesTransfer $restMerchantsAttributesTrasnsfer,
+        RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer,
         string $localeName
     ): RestMerchantsAttributesTransfer {
         $merchantProfileTransfer = $merchantSearchTransfer->getMerchantProfile();
@@ -86,8 +95,8 @@ class MerchantMapper implements MerchantMapperInterface
             ->setImprint($merchantProfileTransfer->getImprint())
             ->setTerms($merchantProfileTransfer->getTermsConditions());
 
-        $restMerchantsAttributesTrasnsfer->fromArray($merchantSearchTransfer->toArray(), true);
-        $restMerchantsAttributesTrasnsfer->setMerchantName($merchantSearchTransfer->getName())
+        $restMerchantsAttributesTransfer->fromArray($merchantSearchTransfer->toArray(), true);
+        $restMerchantsAttributesTransfer->setMerchantName($merchantSearchTransfer->getName())
             ->setMerchantUrl($this->findMerchantUrlByLocaleName($merchantSearchTransfer->getUrlCollection(), $localeName))
             ->setContactPersonRole($merchantProfileTransfer->getContactPersonRole())
             ->setContactPersonTitle($merchantProfileTransfer->getContactPersonTitle())
@@ -105,7 +114,13 @@ class MerchantMapper implements MerchantMapperInterface
             ->setFaxNumber($merchantProfileTransfer->getFaxNumber())
             ->setLegalInformation($restLegalInformationTransfer);
 
-        return $restMerchantsAttributesTrasnsfer;
+        $restMerchantsAttributesTransfer = $this->executeRestSearchMerchantsAttributesMapperPlugins(
+            $merchantSearchTransfer,
+            $restMerchantsAttributesTransfer,
+            $localeName
+        );
+
+        return $restMerchantsAttributesTransfer;
     }
 
     /**
@@ -132,14 +147,37 @@ class MerchantMapper implements MerchantMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestMerchantsAttributesTransfer
      */
-    protected function executeRestMerchantsAttributesMapperPlugins(
+    protected function executeRestStorageMerchantsAttributesMapperPlugins(
         MerchantStorageTransfer $merchantStorageTransfer,
         RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer,
         string $localeName
     ): RestMerchantsAttributesTransfer {
-        foreach ($this->restMerchantsAttributesMapperPlugins as $restMerchantAttributesMapperPlugin) {
-            $restMerchantsAttributesTransfer = $restMerchantAttributesMapperPlugin->mapMerchantStorageTransferToRestMerchantsAttributesTransfer(
+        foreach ($this->restStorageMerchantsAttributesMapperPlugins as $restStorageMerchantAttributesMapperPlugin) {
+            $restMerchantsAttributesTransfer = $restStorageMerchantAttributesMapperPlugin->mapMerchantStorageTransferToRestMerchantsAttributesTransfer(
                 $merchantStorageTransfer,
+                $restMerchantsAttributesTransfer,
+                $localeName
+            );
+        }
+
+        return $restMerchantsAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantSearchTransfer $merchantSearchTransfer
+     * @param \Generated\Shared\Transfer\RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\RestMerchantsAttributesTransfer
+     */
+    protected function executeRestSearchMerchantsAttributesMapperPlugins(
+        MerchantSearchTransfer $merchantSearchTransfer,
+        RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer,
+        string $localeName
+    ): RestMerchantsAttributesTransfer {
+        foreach ($this->restSearchMerchantsAttributesMapperPlugins as $restSearchMerchantsAttributesMapperPlugin) {
+            $restMerchantsAttributesTransfer = $restSearchMerchantsAttributesMapperPlugin->mapMerchantSearchTransferToRestMerchantsAttributesTransfer(
+                $merchantSearchTransfer,
                 $restMerchantsAttributesTransfer,
                 $localeName
             );
