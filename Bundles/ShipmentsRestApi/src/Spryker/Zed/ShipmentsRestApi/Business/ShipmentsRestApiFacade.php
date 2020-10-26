@@ -51,4 +51,23 @@ class ShipmentsRestApiFacade extends AbstractFacade implements ShipmentsRestApiF
             ->createShipmentMethodCheckoutDataValidator()
             ->validateShipmentMethodCheckoutData($checkoutDataTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function mapShipmentsToQuote(
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
+        QuoteTransfer $quoteTransfer
+    ): QuoteTransfer {
+        return $this->getFactory()
+            ->createShipmentQuoteMapper()
+            ->mapShipmentsToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+    }
 }

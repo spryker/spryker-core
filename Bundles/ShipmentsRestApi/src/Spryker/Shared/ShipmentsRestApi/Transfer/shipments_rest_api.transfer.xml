@@ -5,10 +5,36 @@
 
     <transfer name="RestCheckoutRequestAttributes">
         <property name="shipment" type="RestShipment"/>
+        <property name="shipments" type="RestShipments[]" singular="shipment" restRequestParameter="yes"/>
+    </transfer>
+
+    <transfer name="RestShipments">
+        <property name="items" type="string[]" singular="item" restRequestParameter="yes"/>
+        <property name="shippingAddress" type="RestAddress" restRequestParameter="yes"/>
+        <property name="shipmentMethodId" type="int" restRequestParameter="yes"/>
+        <property name="requestedDeliveryDate" type="string" restRequestParameter="yes"/>
     </transfer>
 
     <transfer name="RestShipment">
         <property name="idShipmentMethod" type="int" restRequestParameter="required"/>
+    </transfer>
+
+    <transfer name="RestAddress">
+        <property name="id" type="string" restRequestParameter="yes"/>
+        <property name="salutation" type="string" restRequestParameter="required"/>
+        <property name="firstName" type="string" restRequestParameter="required"/>
+        <property name="lastName" type="string" restRequestParameter="required"/>
+        <property name="address1" type="string" restRequestParameter="required"/>
+        <property name="address2" type="string" restRequestParameter="required"/>
+        <property name="address3" type="string" restRequestParameter="required"/>
+        <property name="zipCode" type="string" restRequestParameter="required"/>
+        <property name="city" type="string" restRequestParameter="required"/>
+        <property name="country" type="string" restRequestParameter="no"/>
+        <property name="iso2Code" type="string" restRequestParameter="required"/>
+        <property name="company" type="string" restRequestParameter="required"/>
+        <property name="phone" type="string" restRequestParameter="required"/>
+        <property name="isDefaultBilling" type="bool" restRequestParameter="yes"/>
+        <property name="isDefaultShipping" type="bool" restRequestParameter="yes"/>
     </transfer>
 
     <transfer name="Quote">

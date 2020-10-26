@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\ShipmentsRestApi\Business\Quote;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\ShipmentsRestApi\ShipmentsRestApiConfig;
 use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeInterface;
@@ -62,6 +64,38 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
 
         $expenseTransfer = $this->createShippingExpenseTransfer($shipmentTransfer);
         $quoteTransfer->addExpense($expenseTransfer);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function mapShipmentsToQuote(
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
+        QuoteTransfer $quoteTransfer
+    ): QuoteTransfer {
+        if (!$restCheckoutRequestAttributesTransfer->getShipments()->count()) {
+            return $quoteTransfer;
+        }
+
+        foreach ($restCheckoutRequestAttributesTransfer->getShipments() as $restShipmentsTransfer) {
+            $shipmentTransfer = (new ShipmentTransfer())
+                ->setShippingAddress((new AddressTransfer())->fromArray($restShipmentsTransfer->toArray(), true))
+                ->setMethod((new ShipmentMethodTransfer())->setIdShipmentMethod($restShipmentsTransfer->getShipmentMethodId()))
+                ->setRequestedDeliveryDate($restShipmentsTransfer->getRequestedDeliveryDate());
+
+            foreach ($quoteTransfer->getItems() as $itemTransfer) {
+                if (!in_array($itemTransfer->getGroupKey(), $restShipmentsTransfer->getItems())) {
+                    continue;
+                }
+
+                $itemTransfer->setShipment($shipmentTransfer);
+            }
+        }
 
         return $quoteTransfer;
     }
