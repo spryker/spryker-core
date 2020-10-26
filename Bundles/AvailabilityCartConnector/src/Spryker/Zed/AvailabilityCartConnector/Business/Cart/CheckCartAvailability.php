@@ -97,9 +97,9 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return \Generated\Shared\Transfer\CartItemQuantityTransfer|int
+     * @return int
      */
-    protected function calculateCurrentCartItemQuantity(ArrayObject $itemsInCart, ItemTransfer $itemTransfer)
+    protected function calculateCurrentCartItemQuantity(ArrayObject $itemsInCart, ItemTransfer $itemTransfer): int
     {
         foreach ($this->cartItemQuantityCalculatorStrategyPlugins as $cartItemQuantityCalculatorStrategyPlugin) {
             if ($cartItemQuantityCalculatorStrategyPlugin->isApplicable($itemsInCart->getArrayCopy(), $itemTransfer)) {
