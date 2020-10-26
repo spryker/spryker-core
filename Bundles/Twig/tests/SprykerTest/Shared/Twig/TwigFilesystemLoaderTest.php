@@ -8,6 +8,7 @@
 namespace SprykerTest\Shared\Twig;
 
 use Codeception\Test\Unit;
+use ReflectionClass;
 use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Shared\Twig\Cache\CacheInterface;
 use Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceBridge;
