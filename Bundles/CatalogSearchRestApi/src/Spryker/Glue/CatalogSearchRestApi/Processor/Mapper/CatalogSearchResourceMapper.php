@@ -39,6 +39,11 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
     protected const SORT_NAME = 'sort';
 
     /**
+     * @uses \Spryker\Client\CategoryStorage\Plugin\Elasticsearch\ResultFormatter\CategoryTreeFilterPageSearchResultFormatterPlugin::NAME
+     */
+    protected const CATEGORY_TREE_FILTER_NAME = 'categoryTreeFilter';
+
+    /**
      * @var \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientInterface
      */
     protected $currencyClient;
@@ -81,18 +86,12 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
             );
         }
 
-        // TODO: clarify additional mapping.
-        $restCategoryNodeSearchResultAttributes = new ArrayObject();
-
-        if (isset($restSearchResponse['categoryTreeFilter'])) {
-            foreach ($restSearchResponse['categoryTreeFilter'] as $categoryNodeSearchResultTransfer) {
-                $restCategoryNodeSearchResultAttributes->append(
-                    (new RestCategoryNodeSearchResultAttributesTransfer())->fromArray($categoryNodeSearchResultTransfer->toArray(), true)
-                );
-            }
+        if (isset($restSearchResponse[static::CATEGORY_TREE_FILTER_NAME])) {
+            $restSearchAttributesTransfer = $this->mapSearchResponseCategoryTreeFilterToSearchAttributesTransfer(
+                $restSearchResponse[static::CATEGORY_TREE_FILTER_NAME],
+                $restSearchAttributesTransfer
+            );
         }
-
-        $restSearchAttributesTransfer->setCategoryTreeFilter($restCategoryNodeSearchResultAttributes);
 
         return $restSearchAttributesTransfer;
     }
@@ -146,6 +145,27 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
         }
 
         return $restSearchAttributesTransfer;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[] $categoryNodeSearchResultTransfers
+     * @param \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer
+     */
+    protected function mapSearchResponseCategoryTreeFilterToSearchAttributesTransfer(
+        ArrayObject $categoryNodeSearchResultTransfers,
+        RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer
+    ): RestCatalogSearchAttributesTransfer {
+        $restCategoryNodeSearchResultAttributesTransfers = new ArrayObject();
+
+        foreach ($categoryNodeSearchResultTransfers as $categoryNodeSearchResultTransfer) {
+            $restCategoryNodeSearchResultAttributesTransfers->append(
+                (new RestCategoryNodeSearchResultAttributesTransfer())->fromArray($categoryNodeSearchResultTransfer->toArray(), true)
+            );
+        }
+
+        return $restSearchAttributesTransfer->setCategoryTreeFilter($restCategoryNodeSearchResultAttributesTransfers);
     }
 
     /**
