@@ -9,6 +9,7 @@ namespace Spryker\Shared\ProductConfiguration;
 
 use Spryker\Shared\Kernel\AbstractBundleConfig;
 use Spryker\Shared\ProductConfiguration\Exception\EncryptionKeyNotPreConfigured;
+use Spryker\Shared\ProductConfiguration\Exception\HexInitializationVectorNotPreConfigured;
 
 class ProductConfigurationConfig extends AbstractBundleConfig
 {
@@ -52,5 +53,28 @@ class ProductConfigurationConfig extends AbstractBundleConfig
         }
 
         throw new EncryptionKeyNotPreConfigured('Encryption key is not pre-configured, please update SPRYKER_CONFIGURATOR_ENCRYPTION_KEY env variable.');
+    }
+
+    /**
+     * @api
+     *
+     * @throws \Spryker\Shared\ProductConfiguration\Exception\HexInitializationVectorNotPreConfigured
+     *
+     * @return string
+     */
+    public function getHexInitializationVector(): string
+    {
+        $hexInitializationVector = $this->get(
+            ProductConfigurationConstants::SPRYKER_CONFIGURATOR_HEX_INITIALIZATION_VECTOR,
+            false
+        );
+
+        if ($hexInitializationVector) {
+            return $hexInitializationVector;
+        }
+
+        throw new HexInitializationVectorNotPreConfigured(
+            'Hex initialization vector is not pre-configured, please update SPRYKER_CONFIGURATOR_HEX_INITIALIZATION_VECTOR env variable.'
+        );
     }
 }

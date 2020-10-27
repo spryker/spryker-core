@@ -22,8 +22,8 @@ use Spryker\Client\ProductConfiguration\Exception\MissingDefaultProductConfigura
 use Spryker\Client\ProductConfiguration\Exception\MissingDefaultProductConfiguratorResponsePluginException;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorResponsePluginInterface;
-use SprykerSdk\Service\ProductConfigurationSdk\Generator\ProductConfigurationDataChecksumGenerator;
-use SprykerSdk\Service\ProductConfigurationSdk\Generator\ProductConfigurationDataChecksumGeneratorInterface;
+use SprykerSdk\ProductConfigurationSdk\Checksum\CrcProductConfigurationDataChecksumGenerator;
+use SprykerSdk\ProductConfigurationSdk\Checksum\ProductConfigurationDataChecksumGeneratorInterface;
 
 /**
  * @method \Spryker\Client\ProductConfiguration\ProductConfigurationConfig getConfig()
@@ -289,11 +289,13 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \SprykerSdk\Service\ProductConfigurationSdk\Generator\ProductConfigurationDataChecksumGeneratorInterface
+     * @return \SprykerSdk\ProductConfigurationSdk\Checksum\ProductConfigurationDataChecksumGeneratorInterface
      */
     protected function getProductConfigurationDataChecksumGenerator(): ProductConfigurationDataChecksumGeneratorInterface
     {
-        return new ProductConfigurationDataChecksumGenerator();
+        return new CrcProductConfigurationDataChecksumGenerator(
+            $this->getConfig()->getProductConfigurationHexInitializationVector()
+        );
     }
 
     /**

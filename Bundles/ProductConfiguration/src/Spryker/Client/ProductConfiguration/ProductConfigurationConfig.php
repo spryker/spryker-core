@@ -32,6 +32,16 @@ class ProductConfigurationConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @return string
+     */
+    public function getProductConfigurationHexInitializationVector(): string
+    {
+        return $this->getSharedConfig()->getHexInitializationVector();
+    }
+
+    /**
+     * @api
+     *
      * @return int
      */
     public function getProductConfigurationResponseMaxValidSeconds(): int
