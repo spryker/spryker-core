@@ -220,9 +220,14 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
         $convertedSearchResult = [];
         foreach ($searchResult as $searchResultDataIndex => $searchResultDataItem) {
             if ($searchResultDataItem instanceof ArrayObject) {
-                foreach ($searchResultDataItem as $transferInArrayObject) {
-                    /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $transferInArrayObject */
-                    $convertedSearchResult[$searchResultDataIndex][] = $transferInArrayObject->toArray();
+                foreach ($searchResultDataItem as $arrayObjectMember) {
+                    /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $arrayObjectMember */
+                    if (!$arrayObjectMember instanceof TransferInterface) {
+                        $convertedSearchResult[$searchResultDataIndex][] = $arrayObjectMember;
+
+                        continue;
+                    }
+                    $convertedSearchResult[$searchResultDataIndex][] = $arrayObjectMember->toArray();
                 }
 
                 continue;
