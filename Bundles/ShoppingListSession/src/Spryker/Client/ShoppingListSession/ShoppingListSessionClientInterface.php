@@ -20,4 +20,14 @@ interface ShoppingListSessionClientInterface
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
      */
     public function getCustomerShoppingListCollection(): ShoppingListCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Removes customer shopping list collection from session.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeShoppingListCollection(): void;
 }

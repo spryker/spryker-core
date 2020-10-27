@@ -1,18 +1,5 @@
 {
     "error": [],
-    "warning": [
-        {
-            "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/UtilEncryption/src/Spryker/Service/UtilEncryption/UtilEncryptionDependencyProvider.php",
-            "snippet": "            return new UtilEncryptionToUtilTextServiceBridge($container->getLocator()->utilText()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        }
-    ],
+    "warning": [],
     "deprecation": []
 }

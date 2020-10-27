@@ -11,8 +11,7 @@
             "snippet": "        if ($orderTransfer->getCompanyBusinessUnitUuid() !== $customerTransfer->getCompanyUserTransfer()->getCompanyBusinessUnit()->getUuid()) {",
             "selected_text": "getCompanyBusinessUnit",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -24,8 +23,7 @@
             "snippet": "        if ($orderTransfer->getCompanyBusinessUnitUuid() !== $customerTransfer->getCompanyUserTransfer()->getCompanyBusinessUnit()->getUuid()) {",
             "selected_text": "getUuid",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -37,8 +35,7 @@
             "snippet": "        return $this->can('SeeBusinessUnitOrdersPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());",
             "selected_text": "$customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -50,8 +47,31 @@
             "snippet": "        return $this->can('SeeBusinessUnitOrdersPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());",
             "selected_text": "getIdCompanyUser",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCompanyUser on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyBusinessUnitSalesConnector/src/Spryker/Zed/CompanyBusinessUnitSalesConnector/Business/Checker/PermissionChecker.php",
+            "snippet": "            || !$customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()",
+            "selected_text": "getIdCompanyUser",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCompanyBusinessUnit on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyBusinessUnitSalesConnector/src/Spryker/Zed/CompanyBusinessUnitSalesConnector/Business/Checker/PermissionChecker.php",
+            "snippet": "            || !$customerTransfer->getCompanyUserTransfer()->getCompanyBusinessUnit()",
+            "selected_text": "getCompanyBusinessUnit",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -63,8 +83,7 @@
             "snippet": "            $this->createCompanyBusinessUnitFilterQueryJoin($filterFieldTransfer->getValue())",
             "selected_text": "$filterFieldTransfer->getValue()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -76,8 +95,7 @@
             "snippet": "            $this->createCustomerFilterQueryJoin($filterFieldTransfer->getValue())",
             "selected_text": "$filterFieldTransfer->getValue()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -89,8 +107,7 @@
             "snippet": "        [$orderColumn, $orderDirection] = explode(static::DELIMITER_ORDER_BY, $filterFieldTransfer->getValue());",
             "selected_text": "$filterFieldTransfer->getValue()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -102,8 +119,31 @@
             "snippet": "            $saveOrderTransfer->getIdSalesOrder(),",
             "selected_text": "$saveOrderTransfer->getIdSalesOrder()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 64,
+            "line_to": 64,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCompanyUserTransfer on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyBusinessUnitSalesConnector/src/Spryker/Zed/CompanyBusinessUnitSalesConnector/Business/Writer/OrderWriter.php",
+            "snippet": "        $companyUserTransfer = $quoteTransfer->getCustomer()->getCompanyUserTransfer();",
+            "selected_text": "getCompanyUserTransfer",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getUuid on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyBusinessUnitSalesConnector/src/Spryker/Zed/CompanyBusinessUnitSalesConnector/Business/Writer/OrderWriter.php",
+            "snippet": "        return $companyUserTransfer->getCompanyBusinessUnit()->getUuid();",
+            "selected_text": "getUuid",
+            "error_level": 3,
+            "shortcode": 83
         }
     ],
     "deprecation": []

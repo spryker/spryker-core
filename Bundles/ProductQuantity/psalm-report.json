@@ -381,7 +381,7 @@
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $skuMap[mixed|null|string] using possibly null offset mixed|null|string",
             "file_name": "vendor/spryker/spryker/Bundles/ProductQuantity/src/Spryker/Zed/ProductQuantity/Business/Model/Validator/ProductQuantityRestrictionValidator.php",
-            "snippet": "            $skuMap[$itemTransfer->getGroupKey()] = $itemTransfer->getSku();",
+            "snippet": "            $skuMap[$itemTransfer->getGroupKey() ?? $itemTransfer->getSku()] = $itemTransfer->getSku();",
             "selected_text": "$skuMap",
             "error_level": 3,
             "shortcode": 125
@@ -412,15 +412,51 @@
         },
         {
             "severity": "info",
-            "line_from": 53,
-            "line_to": 53,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductQuantity/src/Spryker/Zed/ProductQuantity/ProductQuantityDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->productQuantity()->service();",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
+            "line_from": 41,
+            "line_to": 41,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductQuantity\\Persistence\\ProductQuantityRepository::getMappedProductQuantityTransfers expects array<array-key, Generated\\Shared\\Transfer\\SpyProductQuantityEntityTransfer>, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductQuantity/src/Spryker/Zed/ProductQuantity/Persistence/ProductQuantityRepository.php",
+            "snippet": "        return $this->getMappedProductQuantityTransfers($productQuantityEntityTransfers);",
+            "selected_text": "$productQuantityEntityTransfers",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductQuantity\\Persistence\\ProductQuantityRepository::getMappedProductQuantityTransfers expects array<array-key, Generated\\Shared\\Transfer\\SpyProductQuantityEntityTransfer>, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductQuantity/src/Spryker/Zed/ProductQuantity/Persistence/ProductQuantityRepository.php",
+            "snippet": "        return $this->getMappedProductQuantityTransfers($productQuantityEntityTransfers);",
+            "selected_text": "$productQuantityEntityTransfers",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 72,
+            "line_to": 72,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductQuantity\\Persistence\\ProductQuantityRepository::getMappedProductQuantityTransfers expects array<array-key, Generated\\Shared\\Transfer\\SpyProductQuantityEntityTransfer>, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductQuantity/src/Spryker/Zed/ProductQuantity/Persistence/ProductQuantityRepository.php",
+            "snippet": "        return $this->getMappedProductQuantityTransfers($productQuantityEntityTransfers);",
+            "selected_text": "$productQuantityEntityTransfers",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 87,
+            "line_to": 87,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductQuantity\\Persistence\\ProductQuantityRepository::getMappedProductQuantityTransfers expects array<array-key, Generated\\Shared\\Transfer\\SpyProductQuantityEntityTransfer>, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductQuantity/src/Spryker/Zed/ProductQuantity/Persistence/ProductQuantityRepository.php",
+            "snippet": "        return $this->getMappedProductQuantityTransfers($productQuantityEntityTransfers);",
+            "selected_text": "$productQuantityEntityTransfers",
+            "error_level": 3,
+            "shortcode": 92
         }
     ],
     "deprecation": [

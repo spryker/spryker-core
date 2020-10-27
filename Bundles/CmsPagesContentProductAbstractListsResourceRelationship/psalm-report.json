@@ -1,5 +1,55 @@
 {
-    "error": [],
-    "warning": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 91,
+            "line_to": 91,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<string, array<string, string>>' for Spryker\\Glue\\CmsPagesContentProductAbstractListsResourceRelationship\\Processor\\Reader\\ContentProductAbstractListReader::getGroupedContentProductAbstractListKeys is incorrect, got 'array<int(0)|string, non-empty-mixed>'",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPagesContentProductAbstractListsResourceRelationship/src/Spryker/Glue/CmsPagesContentProductAbstractListsResourceRelationship/Processor/Reader/ContentProductAbstractListReader.php",
+            "snippet": "     * @phpstan-return array<string, array<string, string>>",
+            "selected_text": "array<string, array<string, string>>",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 110,
+            "line_to": 110,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'array<int(0)|string, non-empty-mixed>' does not match the declared return type 'array<string, array<string, string>>' for Spryker\\Glue\\CmsPagesContentProductAbstractListsResourceRelationship\\Processor\\Reader\\ContentProductAbstractListReader::getGroupedContentProductAbstractListKeys",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPagesContentProductAbstractListsResourceRelationship/src/Spryker/Glue/CmsPagesContentProductAbstractListsResourceRelationship/Processor/Reader/ContentProductAbstractListReader.php",
+            "snippet": "        return $groupedContentProductAbstractListKeys;",
+            "selected_text": "$groupedContentProductAbstractListKeys",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of Spryker\\Glue\\CmsPagesContentProductAbstractListsResourceRelationship\\Dependency\\Client\\CmsPagesContentProductAbstractListsResourceRelationshipToCmsStorageClientInterface::getCmsPageStorageByUuids cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPagesContentProductAbstractListsResourceRelationship/src/Spryker/Glue/CmsPagesContentProductAbstractListsResourceRelationship/Processor/Reader/ContentProductAbstractListReader.php",
+            "snippet": "            $storeName",
+            "selected_text": "$storeName",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 106,
+            "line_to": 106,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $groupedContentProductAbstractListKeys[null|string] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPagesContentProductAbstractListsResourceRelationship/src/Spryker/Glue/CmsPagesContentProductAbstractListsResourceRelationship/Processor/Reader/ContentProductAbstractListReader.php",
+            "snippet": "            $groupedContentProductAbstractListKeys[$cmsPageStorageTransfer->getUuid()]",
+            "selected_text": "$groupedContentProductAbstractListKeys",
+            "error_level": 3,
+            "shortcode": 125
+        }
+    ],
     "deprecation": []
 }

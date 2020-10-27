@@ -73,7 +73,7 @@ class ProductReviewReader implements ProductReviewReaderInterface
         $this->productReviewClient = $productReviewClient;
         $this->productReviewsRestApiConfig = $productReviewsRestApiConfig;
     }
-    
+
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *

@@ -3,18 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 40,
-            "line_to": 40,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductBarcode/src/Spryker/Client/ProductBarcode/ProductBarcodeDependencyProvider.php",
-            "snippet": "                $container->getLocator()->barcode()->service()",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 31,
             "line_to": 31,
             "type": "InvalidNullableReturnType",
@@ -96,18 +84,6 @@
             "selected_text": "$spyProduct",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 42,
-            "line_to": 42,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductBarcode/src/Spryker/Zed/ProductBarcode/ProductBarcodeDependencyProvider.php",
-            "snippet": "                $container->getLocator()->barcode()->service()",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

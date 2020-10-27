@@ -339,7 +339,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function isTransferOrTransferArray($type): bool
     {
-        return preg_match('/^[A-Z].*/', $type);
+        return (bool)preg_match('/^[A-Z].*/', $type);
     }
 
     /**

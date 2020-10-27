@@ -4,7 +4,7 @@
   "description": "AvailabilityNotification module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/application": "^3.2.0",
     "spryker/customer": "^7.16.1",
     "spryker/glossary": "^3.0.0",

@@ -4,7 +4,7 @@
   "description": "Log module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "psr/log": "^1.0.0",
     "spryker/config": "^3.0.0",
     "spryker/kernel": "^3.48.0",

@@ -76,6 +76,18 @@
         },
         {
             "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getLocaleName on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/Money/src/Spryker/Shared/Money/Formatter/IntlMoneyFormatter/AbstractIntlMoneyFormatter.php",
+            "snippet": "            return $moneyTransfer->getLocale()->getLocaleName();",
+            "selected_text": "getLocaleName",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 24,
             "line_to": 24,
             "type": "PossiblyNullArgument",
@@ -268,6 +280,18 @@
         },
         {
             "severity": "info",
+            "line_from": 196,
+            "line_to": 196,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Money\\Communication\\Form\\DataProvider\\MoneyDataProvider::getStoreById cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Money/src/Spryker/Zed/Money/Communication/Form/Type/MoneyType.php",
+            "snippet": "            $storeTransfer = $this->createMoneyDataProvider()->getStoreById($viewData->getFkStore());",
+            "selected_text": "$viewData->getFkStore()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
             "line_from": 200,
             "line_to": 200,
             "type": "PossiblyNullReference",
@@ -277,30 +301,6 @@
             "selected_text": "getSymbol",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 89,
-            "line_to": 89,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Money/src/Spryker/Zed/Money/MoneyDependencyProvider.php",
-            "snippet": "            return new MoneyToCurrencyBridge($container->getLocator()->currency()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 154,
-            "line_to": 154,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Money/src/Spryker/Zed/Money/MoneyDependencyProvider.php",
-            "snippet": "            return new MoneyToStoreBridge($container->getLocator()->store()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

@@ -3,6 +3,18 @@
     "warning": [
         {
             "severity": "info",
+            "line_from": 53,
+            "line_to": 53,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Zed\\User\\Business\\Expander\\MailExpander::getEmailFromMailTransfer is not nullable, but the function returns 'mixed|null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/User/src/Spryker/Zed/User/Business/Expander/MailExpander.php",
+            "snippet": "        return $mailRecipientTransfer->getEmail();",
+            "selected_text": "$mailRecipientTransfer->getEmail()",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
             "line_from": 118,
             "line_to": 118,
             "type": "PossiblyNullArgument",
@@ -87,8 +99,8 @@
         },
         {
             "severity": "info",
-            "line_from": 328,
-            "line_to": 328,
+            "line_from": 353,
+            "line_to": 353,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\User\\Dependency\\Plugin\\GroupPluginInterface::addUserToGroup cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/User/src/Spryker/Zed/User/Communication/Controller/EditController.php",
@@ -99,8 +111,8 @@
         },
         {
             "severity": "info",
-            "line_from": 345,
-            "line_to": 345,
+            "line_from": 370,
+            "line_to": 370,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\User\\Dependency\\Plugin\\GroupPluginInterface::removeUserFromGroup cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/User/src/Spryker/Zed/User/Communication/Controller/EditController.php",
@@ -207,8 +219,8 @@
         },
         {
             "severity": "info",
-            "line_from": 227,
-            "line_to": 227,
+            "line_from": 231,
+            "line_to": 231,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\User\\Communication\\Table\\UsersTable::generateButton cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/User/src/Spryker/Zed/User/Communication/Table/UsersTable.php",
@@ -219,8 +231,8 @@
         },
         {
             "severity": "info",
-            "line_from": 228,
-            "line_to": 228,
+            "line_from": 232,
+            "line_to": 232,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\User\\Communication\\Table\\UsersTable::generateButton cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/User/src/Spryker/Zed/User/Communication/Table/UsersTable.php",
@@ -228,37 +240,13 @@
             "selected_text": "$buttonTransfer->getTitle()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 72,
-            "line_to": 72,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/User/src/Spryker/Zed/User/UserDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->session()->client();",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 86,
-            "line_to": 86,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/User/src/Spryker/Zed/User/UserDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->utilDateTime()->service();",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 112,
-            "line_to": 112,
+            "line_from": 113,
+            "line_to": 113,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\User\\Business\\Model\\UserInterface::findUserById has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/User/src/Spryker/Zed/User/Business/UserFacade.php",
@@ -269,8 +257,8 @@
         },
         {
             "severity": "info",
-            "line_from": 163,
-            "line_to": 163,
+            "line_from": 164,
+            "line_to": 164,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\User\\Business\\Model\\UserInterface::addUser has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/User/src/Spryker/Zed/User/Business/UserFacade.php",

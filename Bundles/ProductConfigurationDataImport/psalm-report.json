@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 29,
-            "line_to": 29,
+            "line_from": 28,
+            "line_to": 28,
             "type": "PossiblyUndefinedMethod",
             "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface::addStep does not exist",
             "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationDataImport/src/Spryker/Zed/ProductConfigurationDataImport/Business/ProductConfigurationDataImportBusinessFactory.php",
@@ -15,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 30,
-            "line_to": 30,
+            "line_from": 29,
+            "line_to": 29,
             "type": "PossiblyUndefinedMethod",
             "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface::addStep does not exist",
             "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationDataImport/src/Spryker/Zed/ProductConfigurationDataImport/Business/ProductConfigurationDataImportBusinessFactory.php",
@@ -27,8 +27,8 @@
         },
         {
             "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
+            "line_from": 31,
+            "line_to": 31,
             "type": "PossiblyUndefinedMethod",
             "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface::addDataSetStepBroker does not exist",
             "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationDataImport/src/Spryker/Zed/ProductConfigurationDataImport/Business/ProductConfigurationDataImportBusinessFactory.php",
@@ -39,8 +39,8 @@
         },
         {
             "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
+            "line_from": 31,
+            "line_to": 31,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerAwareInterface::addDataSetStepBroker expects Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface, possibly different type Spryker\\Zed\\DataImport\\Business\\Model\\DataImportStep\\DataImportStepAwareInterface|Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationDataImport/src/Spryker/Zed/ProductConfigurationDataImport/Business/ProductConfigurationDataImportBusinessFactory.php",

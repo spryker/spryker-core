@@ -27,8 +27,20 @@
         },
         {
             "severity": "info",
-            "line_from": 57,
-            "line_to": 57,
+            "line_from": 54,
+            "line_to": 54,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductListGui\\Communication\\Controller\\DeleteController::redirectResponse cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductListGui/src/Spryker/Zed/ProductListGui/Communication/Controller/DeleteController.php",
+            "snippet": "            return $this->redirectResponse($redirectUrl);",
+            "selected_text": "$redirectUrl",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductListGui\\Communication\\Controller\\DeleteController::redirectResponse cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductListGui/src/Spryker/Zed/ProductListGui/Communication/Controller/DeleteController.php",
@@ -267,6 +279,18 @@
         },
         {
             "severity": "info",
+            "line_from": 173,
+            "line_to": 173,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductListGui\\Communication\\Table\\ProductListTable::generateButton cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductListGui/src/Spryker/Zed/ProductListGui/Communication/Table/ProductListTable.php",
+            "snippet": "                $button->getUrl(),",
+            "selected_text": "$button->getUrl()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
             "line_from": 174,
             "line_to": 174,
             "type": "PossiblyNullArgument",
@@ -315,15 +339,15 @@
         },
         {
             "severity": "info",
-            "line_from": 154,
-            "line_to": 154,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductListGui/src/Spryker/Zed/ProductListGui/ProductListGuiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->utilCsv()->service()",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
+            "line_from": 229,
+            "line_to": 229,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Orm\\Zed\\ProductList\\Persistence\\SpyProductListQuery::addJoinCondition cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductListGui/src/Spryker/Zed/ProductListGui/Communication/Table/ProductListTable.php",
+            "snippet": "                $queryJoinTransfer->getCondition()",
+            "selected_text": "$queryJoinTransfer->getCondition()",
+            "error_level": 3,
+            "shortcode": 78
         }
     ],
     "deprecation": []

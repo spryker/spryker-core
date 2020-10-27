@@ -4,7 +4,7 @@
   "description": "CompanyUnitAddressLabel module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/company-unit-address": "^1.1.0",
     "spryker/company-unit-address-extension": "^1.0.0",
     "spryker/company-unit-address-gui-extension": "^1.0.0",

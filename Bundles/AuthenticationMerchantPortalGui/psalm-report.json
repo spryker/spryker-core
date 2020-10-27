@@ -3,18 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/AuthenticationMerchantPortalGui/src/Spryker/Zed/AuthenticationMerchantPortalGui/AuthenticationMerchantPortalGuiDependencyProvider.php",
-            "snippet": "            return new AuthenticationMerchantPortalGuiToAuthFacadeBridge($container->getLocator()->auth()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 34,
             "line_to": 34,
             "type": "PossiblyNullArgument",

@@ -3,7 +3,7 @@
   "description": "Spryker Framework",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2"
+    "php": ">=7.3"
   },
   "require-dev": {
     "spryker/code-sniffer": "dev-master"
@@ -33,6 +33,7 @@
     "spryker/agent": "*",
     "spryker/agent-auth-rest-api": "*",
     "spryker/agent-gui": "*",
+    "spryker/agent-extension": "*",
     "spryker/alternative-products-rest-api": "*",
     "spryker/api": "*",
     "spryker/api-query-builder": "*",

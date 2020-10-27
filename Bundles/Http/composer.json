@@ -4,7 +4,7 @@
   "description": "Http module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/application-extension": "^1.0.0",
     "spryker/event-dispatcher-extension": "^1.0.0",
     "spryker/form-extension": "^1.0.0",

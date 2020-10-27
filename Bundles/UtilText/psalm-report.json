@@ -1,5 +1,18 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 29,
+            "line_to": 29,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Service\\UtilText\\Model\\Token\\Token::check has wrong name $hash, expecting $token as defined by Spryker\\Service\\UtilText\\Model\\Token\\TokenInterface::check",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilText/src/Spryker/Service/UtilText/Model/Token/Token.php",
+            "snippet": "    public function check($rawToken, $hash)",
+            "selected_text": "$hash",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -12,6 +25,30 @@
             "selected_text": "$tokenLength",
             "error_level": 4,
             "shortcode": 12
+        },
+        {
+            "severity": "info",
+            "line_from": 93,
+            "line_to": 93,
+            "type": "UnsafeInstantiation",
+            "message": "Cannot safely instantiate class Spryker\\Service\\UtilText\\Model\\Url\\Url with \"new static\" as its constructor might change in child classes",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilText/src/Spryker/Service/UtilText/Model/Url/Url.php",
+            "snippet": "        return new static($parts);",
+            "selected_text": "new static($parts)",
+            "error_level": 2,
+            "shortcode": 229
+        },
+        {
+            "severity": "info",
+            "line_from": 112,
+            "line_to": 112,
+            "type": "UnsafeInstantiation",
+            "message": "Cannot safely instantiate class Spryker\\Service\\UtilText\\Model\\Url\\Url with \"new static\" as its constructor might change in child classes",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilText/src/Spryker/Service/UtilText/Model/Url/Url.php",
+            "snippet": "        return new static($parts);",
+            "selected_text": "new static($parts)",
+            "error_level": 2,
+            "shortcode": 229
         },
         {
             "severity": "info",
