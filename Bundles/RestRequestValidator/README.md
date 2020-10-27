@@ -1,6 +1,6 @@
 # RestRequestValidator Module
 [![Build Status](https://travis-ci.org/spryker/rest-request-validator.svg)](https://travis-ci.org/spryker/rest-request-validator)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 RestRequestValidator provides the plugin for validation of the incoming POST and PATCH requests.
 
