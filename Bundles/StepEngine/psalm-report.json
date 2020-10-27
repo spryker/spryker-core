@@ -1,18 +1,19 @@
 {
-    "error": [],
-    "warning": [
+    "error": [
         {
-            "severity": "info",
-            "line_from": 169,
-            "line_to": 169,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Symfony\\Component\\Form\\FormFactoryInterface::create expects string, possibly different type Symfony\\Component\\Form\\FormTypeInterface|string provided",
-            "file_name": "vendor/spryker/spryker/Bundles/StepEngine/src/Spryker/Yves/StepEngine/Form/FormCollectionHandler.php",
-            "snippet": "        return $this->formFactory->create($formType, null, $formOptions);",
-            "selected_text": "$formType",
-            "error_level": 3,
-            "shortcode": 92
-        },
+            "severity": "error",
+            "line_from": 69,
+            "line_to": 69,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Yves\\StepEngine\\Process\\StepCollection::canAccessStep has wrong name $currentStep, expecting $step as defined by Spryker\\Yves\\StepEngine\\Process\\StepCollectionInterface::canAccessStep",
+            "file_name": "vendor/spryker/spryker/Bundles/StepEngine/src/Spryker/Yves/StepEngine/Process/StepCollection.php",
+            "snippet": "    public function canAccessStep(StepInterface $currentStep, Request $request, AbstractTransfer $dataTransfer)",
+            "selected_text": "$currentStep",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
+    "warning": [
         {
             "severity": "info",
             "line_from": 134,

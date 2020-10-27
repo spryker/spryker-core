@@ -11,8 +11,7 @@
             "snippet": "            $result[$address->getIdCompanyUnitAddress()] = $address->getAddress1();",
             "selected_text": "$result",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -24,8 +23,7 @@
             "snippet": "            $result[$company->getIdCompany()] = $company->getName();",
             "selected_text": "$result",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -37,8 +35,7 @@
             "snippet": "            $result[$country->getIdCountry()] = $country->getName();",
             "selected_text": "$result",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -50,8 +47,7 @@
             "snippet": "     * @return string",
             "selected_text": "string",
             "error_level": 5,
-            "shortcode": 144,
-            "taint_trace": null
+            "shortcode": 144
         },
         {
             "severity": "info",
@@ -63,8 +59,7 @@
             "snippet": "            return $companyUnitAddressEntity->getCountry()->getName();",
             "selected_text": "$companyUnitAddressEntity->getCountry()->getName()",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -76,8 +71,7 @@
             "snippet": "            return $companyUnitAddressEntity->getCompany()->getName();",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         }
     ],
     "deprecation": []

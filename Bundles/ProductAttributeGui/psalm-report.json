@@ -15,6 +15,18 @@
         },
         {
             "severity": "info",
+            "line_from": 101,
+            "line_to": 101,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductAttributeGui/src/Spryker/Zed/ProductAttributeGui/Communication/Controller/AttributeController.php",
+            "snippet": "            $attributeTransfer->getIdProductManagementAttribute()",
+            "selected_text": "$attributeTransfer->getIdProductManagementAttribute()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
             "line_from": 159,
             "line_to": 159,
             "type": "PossiblyNullArgument",
@@ -240,54 +252,6 @@
             "selected_text": "mixed",
             "error_level": 5,
             "shortcode": 166
-        },
-        {
-            "severity": "info",
-            "line_from": 52,
-            "line_to": 52,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductAttributeGui/src/Spryker/Zed/ProductAttributeGui/ProductAttributeGuiDependencyProvider.php",
-            "snippet": "            return new ProductAttributeGuiToProductBridge($container->getLocator()->product()->queryContainer());",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 66,
-            "line_to": 66,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductAttributeGui/src/Spryker/Zed/ProductAttributeGui/ProductAttributeGuiDependencyProvider.php",
-            "snippet": "            return new ProductAttributeGuiToLocaleBridge($container->getLocator()->locale()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 80,
-            "line_to": 80,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductAttributeGui/src/Spryker/Zed/ProductAttributeGui/ProductAttributeGuiDependencyProvider.php",
-            "snippet": "            return new ProductAttributeGuiToProductAttributeBridge($container->getLocator()->productAttribute()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 95,
-            "line_to": 95,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductAttributeGui/src/Spryker/Zed/ProductAttributeGui/ProductAttributeGuiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productAttribute()->queryContainer()",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

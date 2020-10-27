@@ -3,30 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CartVariant/src/Spryker/Yves/CartVariant/CartVariantDependencyProvider.php",
-            "snippet": "            return new CartVariantToProductClientBridge($container->getLocator()->product()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CartVariant/src/Spryker/Yves/CartVariant/CartVariantDependencyProvider.php",
-            "snippet": "            return new CartVariantToAvailabilityStorageClientBridge($container->getLocator()->availabilityStorage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 19,
             "line_to": 19,
             "type": "MismatchingDocblockParamType",

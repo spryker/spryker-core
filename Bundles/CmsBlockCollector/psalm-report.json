@@ -1,42 +1,19 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Zed\\CmsBlockCollector\\Communication\\Plugin\\CmsBlockCollectorStoragePlugin::run has wrong name $localeTransfer, expecting $locale as defined by Spryker\\Zed\\Collector\\Dependency\\Plugin\\CollectorPluginInterface::run",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCollector/src/Spryker/Zed/CmsBlockCollector/Communication/Plugin/CmsBlockCollectorStoragePlugin.php",
+            "snippet": "        LocaleTransfer $localeTransfer,",
+            "selected_text": "$localeTransfer",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
     "warning": [
-        {
-            "severity": "info",
-            "line_from": 51,
-            "line_to": 51,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCollector/src/Spryker/Zed/CmsBlockCollector/CmsBlockCollectorDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->touch()->queryContainer();",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 65,
-            "line_to": 65,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCollector/src/Spryker/Zed/CmsBlockCollector/CmsBlockCollectorDependencyProvider.php",
-            "snippet": "            return new CmsBlockCollectorToCollectorBridge($container->getLocator()->collector()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 79,
-            "line_to": 79,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCollector/src/Spryker/Zed/CmsBlockCollector/CmsBlockCollectorDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->utilDataReader()->service();",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
         {
             "severity": "info",
             "line_from": 30,

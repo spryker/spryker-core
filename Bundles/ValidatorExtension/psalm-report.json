@@ -1,42 +1,5 @@
 {
     "error": [],
     "warning": [],
-    "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 21,
-            "line_to": 21,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\Validator\\ValidatorBuilderInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ValidatorExtension/src/Spryker/Shared/ValidatorExtension/Dependency/Plugin/ValidatorPluginInterface.php",
-            "snippet": "     * @param \\Symfony\\Component\\Validator\\ValidatorBuilderInterface $validatorBuilder",
-            "selected_text": "\\Symfony\\Component\\Validator\\ValidatorBuilderInterface",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 24,
-            "line_to": 24,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\Validator\\ValidatorBuilderInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ValidatorExtension/src/Spryker/Shared/ValidatorExtension/Dependency/Plugin/ValidatorPluginInterface.php",
-            "snippet": "     * @return \\Symfony\\Component\\Validator\\ValidatorBuilderInterface",
-            "selected_text": "\\Symfony\\Component\\Validator\\ValidatorBuilderInterface",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 26,
-            "line_to": 26,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\Validator\\ValidatorBuilderInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ValidatorExtension/src/Spryker/Shared/ValidatorExtension/Dependency/Plugin/ValidatorPluginInterface.php",
-            "snippet": "    public function extend(ValidatorBuilderInterface $validatorBuilder, ContainerInterface $container): ValidatorBuilderInterface;",
-            "selected_text": "ValidatorBuilderInterface",
-            "error_level": 2,
-            "shortcode": 98
-        }
-    ]
+    "deprecation": []
 }

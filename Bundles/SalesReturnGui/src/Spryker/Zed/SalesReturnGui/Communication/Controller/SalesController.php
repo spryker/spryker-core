@@ -27,7 +27,7 @@ class SalesController extends AbstractController
     {
         /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
         $orderTransfer = $request->request->get('orderTransfer');
-        
+
         $orderReturnTable = $this->getFactory()
             ->createOrderReturnTable($orderTransfer);
 

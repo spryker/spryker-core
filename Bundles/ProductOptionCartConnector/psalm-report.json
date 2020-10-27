@@ -144,30 +144,6 @@
             "selected_text": "getPriceMode",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionCartConnector/src/Spryker/Zed/ProductOptionCartConnector/ProductOptionCartConnectorDependencyProvider.php",
-            "snippet": "            return new ProductOptionCartConnectorToProductOptionFacadeBridge($container->getLocator()->productOption()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 58,
-            "line_to": 58,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionCartConnector/src/Spryker/Zed/ProductOptionCartConnector/ProductOptionCartConnectorDependencyProvider.php",
-            "snippet": "            return new ProductOptionCartConnectorToPriceFacadeBridge($container->getLocator()->price()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

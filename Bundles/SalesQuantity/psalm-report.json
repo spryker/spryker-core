@@ -139,24 +139,12 @@
             "line_from": 44,
             "line_to": 44,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProduct|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProduct> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/SalesQuantity/src/Spryker/Zed/SalesQuantity/Persistence/SalesQuantityRepository.php",
             "snippet": "            ->getArrayCopy();",
             "selected_text": "getArrayCopy",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 45,
-            "line_to": 45,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesQuantity/src/Spryker/Zed/SalesQuantity/SalesQuantityDependencyProvider.php",
-            "snippet": "            return new SalesQuantityToProductFacadeBridge($container->getLocator()->product()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

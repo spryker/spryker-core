@@ -4,7 +4,7 @@
   "description": "ProductNew module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/kernel": "^3.30.0",
     "spryker/product": "^5.0.0 || ^6.0.0",
     "spryker/product-label": "^2.1.0 || ^3.0.0",

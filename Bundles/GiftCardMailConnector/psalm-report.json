@@ -144,54 +144,6 @@
             "selected_text": "$customerTransfer->getLastName()",
             "error_level": 1,
             "shortcode": 80
-        },
-        {
-            "severity": "info",
-            "line_from": 50,
-            "line_to": 50,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/GiftCardMailConnector/src/Spryker/Zed/GiftCardMailConnector/GiftCardMailConnectorDependencyProvider.php",
-            "snippet": "            return new GiftCardMailConnectorToMailFacadeBridge($container->getLocator()->mail()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 64,
-            "line_to": 64,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/GiftCardMailConnector/src/Spryker/Zed/GiftCardMailConnector/GiftCardMailConnectorDependencyProvider.php",
-            "snippet": "            return new GiftCardMailConnectorToCustomerFacadeBridge($container->getLocator()->customer()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 78,
-            "line_to": 78,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/GiftCardMailConnector/src/Spryker/Zed/GiftCardMailConnector/GiftCardMailConnectorDependencyProvider.php",
-            "snippet": "            return new GiftCardMailConnectorToGiftCardFacadeBridge($container->getLocator()->giftCard()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 92,
-            "line_to": 92,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/GiftCardMailConnector/src/Spryker/Zed/GiftCardMailConnector/GiftCardMailConnectorDependencyProvider.php",
-            "snippet": "            return new GiftCardMailConnectorToSalesFacadeBridge($container->getLocator()->sales()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []
