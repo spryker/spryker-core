@@ -10,7 +10,9 @@
 
     <transfer name="CalculatedDiscount">
         <property name="fkSalesOrderItem" type="int"/>
-
+        <property name="sumAmount" type="int"/>
+        <property name="quantity" type="int"/>
+        <property name="displayName" type="string"/>
     </transfer>
 
     <transfer name="MerchantOrderItem">
