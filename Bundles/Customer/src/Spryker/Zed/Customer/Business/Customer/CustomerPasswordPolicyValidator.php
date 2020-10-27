@@ -15,7 +15,7 @@ class CustomerPasswordPolicyValidator implements CustomerPasswordPolicyValidator
     public const PASSWORD_POLICY_LENGTH = 'length';
     public const PASSWORD_POLICY_CHARSET = 'charset';
     public const PASSWORD_POLICY_BLACKLIST = 'blacklist';
-    public const PASSWORD_POLICY_SEQUENCE = 'blacklist';
+    public const PASSWORD_POLICY_SEQUENCE = 'sequence';
 
     public const PASSWORD_POLICY_ATTRIBUTE_SEQUENCE_LIMIT = 'limit';
     public const PASSWORD_POLICY_ATTRIBUTE_MIN = 'min';
@@ -38,9 +38,9 @@ class CustomerPasswordPolicyValidator implements CustomerPasswordPolicyValidator
     public const PASSWORD_POLICY_ERROR_MIN = 'customer.password.error.min_length';
     public const PASSWORD_POLICY_ERROR_MAX = 'customer.password.error.max_length';
 
-    protected const GLOSSARY_PARAM_VALIDATION_LENGTH = '{{ limit }}';
-    protected const GLOSSARY_PARAM_VALIDATION_SPECIAL_LIST = '{{ specialCharsList }}';
-    protected const GLOSSARY_PARAM_VALIDATION_SEQUENCE_LENGTH_LIMIT = '{{ sequenceLimit }}';
+    protected const GLOSSARY_PARAM_VALIDATION_LENGTH = '%limit%';
+    protected const GLOSSARY_PARAM_SPECIAL_LIST = '%specialCharsList%';
+    protected const GLOSSARY_PARAM_SEQUENCE_LENGTH_LIMIT = '%limit%';
     protected const LOWER_CASE_PATTERN = '/[a-z]/';
     protected const UPPER_CASE_PATTERN = '/[A-Z]/';
     protected const NUMBER_PATTERN = '/(\d)/';
