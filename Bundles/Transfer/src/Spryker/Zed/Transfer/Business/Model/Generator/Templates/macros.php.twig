@@ -35,7 +35,7 @@
     /**
      * @var {{ property.type }}
      */
-    protected ${{ property.name }}{% if property.type == 'array' or property.is_typed_array %} = []{% endif %};
+    protected ${{ property.name }}{% if property.is_array_collection %} = []{% endif %};
 {% endmacro %}
 
 {# propertyNamesMap #}
@@ -81,7 +81,7 @@
      */
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }}{% if method.hasDefaultNull %} = null{% endif %})
     {
-        {% if "array" in method.typeHint -%}
+        {% if method.setsArrayCollection|default -%}
         if (${{ method.property }} === null) {
             ${{ method.property }} = [];
         }
@@ -115,8 +115,8 @@
      */
     public function {{ method.name }}(){% if method.returnTypeHint is defined %}: {{ method.returnTypeHint }} {% endif ~%}
     {
-        {% if method.nullValueCheckRequired is defined -%}
-        $this->assertPropertyIsSet($this->{{ method.property }});
+        {% if method.isValueCheckRequired|default -%}
+        $this->assertPropertyIsSet('{{ method.property }}');
 
         {% endif -%}
         return $this->{{ method.property }};
@@ -190,6 +190,48 @@
         $this->modifiedProperties[self::{{ method.propertyConst }}] = true;
 
         return $this;
+    }
+{% endmacro -%}
+
+{# get collection element method #}
+{%- macro addGetCollectionElement(method) %}
+    /**
+     {% if method.bundles is defined -%}
+     * @module {{ method.bundles|join('|') }}
+     *
+     {% endif -%}
+     {% if method.deprecationDescription is not null -%}
+     * @deprecated {{ method.deprecationDescription }}
+     *
+     {% endif -%}
+     * @param {{ method.var }} $key
+     *
+     * @return {{ method.return }}
+     */
+    public function {{ method.name }}($key){% if method.returnTypeHint is defined -%}: {{ method.returnTypeHint }}{% endif ~%}
+    {
+        return $this->{{ method.property }}[$key];
+    }
+{% endmacro -%}
+
+{# has collection element method #}
+{%- macro addHasCollectionElement(method) %}
+    /**
+     {% if method.bundles is defined -%}
+     * @module {{ method.bundles|join('|') }}
+     *
+     {% endif -%}
+     {% if method.deprecationDescription is not null -%}
+     * @deprecated {{ method.deprecationDescription }}
+     *
+     {% endif -%}
+     * @param {{ method.var }} $key
+     *
+     * @return bool
+     */
+    public function {{ method.name }}($key): bool
+    {
+        return isset($this->{{ method.property }}[$key]);
     }
 {% endmacro -%}
 

@@ -72,7 +72,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
     /**
      * @var array
      */
-    protected $propSimpleArrayStrict = [];
+    protected $propSimpleArrayStrict;
 
     /**
      * @var \Generated\Shared\Transfer\DummyItemTransfer|null
@@ -367,7 +367,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
      */
     public function getPropScalarStrict(): int 
     {
-        $this->assertPropertyIsSet($this->propScalarStrict);
+        $this->assertPropertyIsSet('propScalarStrict');
 
         return $this->propScalarStrict;
     }
@@ -449,7 +449,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
      */
     public function getPropDecimalStrict(): Decimal 
     {
-        $this->assertPropertyIsSet($this->propDecimalStrict);
+        $this->assertPropertyIsSet('propDecimalStrict');
 
         return $this->propDecimalStrict;
     }
@@ -529,10 +529,6 @@ class PartiallyStrictTransfer extends AbstractTransfer
      */
     public function setPropSimpleArrayStrict(?array $propSimpleArrayStrict = null)
     {
-        if ($propSimpleArrayStrict === null) {
-            $propSimpleArrayStrict = [];
-        }
-
         $this->propSimpleArrayStrict = $propSimpleArrayStrict;
         $this->modifiedProperties[self::PROP_SIMPLE_ARRAY_STRICT] = true;
 
@@ -546,22 +542,19 @@ class PartiallyStrictTransfer extends AbstractTransfer
      */
     public function getPropSimpleArrayStrict(): array 
     {
+        $this->assertPropertyIsSet('propSimpleArrayStrict');
+
         return $this->propSimpleArrayStrict;
     }
 
     /**
-     * @module Test
-     *
-     * @param mixed $propSimpleArrayStrict
-     *
-     * @return $this
-     */
-    public function addPropSimpleArrayStrict($propSimpleArrayStrict)
+    * @module Test
+    *
+    * @return bool
+    */
+    public function hasPropSimpleArrayStrict(): bool
     {
-        $this->propSimpleArrayStrict[] = $propSimpleArrayStrict;
-        $this->modifiedProperties[self::PROP_SIMPLE_ARRAY_STRICT] = true;
-
-        return $this;
+        return $this->propSimpleArrayStrict !== null;
     }
 
     /**
@@ -623,7 +616,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
      */
     public function getPropDummyItemStrict(): DummyItemTransfer 
     {
-        $this->assertPropertyIsSet($this->propDummyItemStrict);
+        $this->assertPropertyIsSet('propDummyItemStrict');
 
         return $this->propDummyItemStrict;
     }
@@ -839,6 +832,10 @@ class PartiallyStrictTransfer extends AbstractTransfer
      */
     public function setPropTypedArrayAssoc($propTypedArrayAssoc)
     {
+        if ($propTypedArrayAssoc === null) {
+            $propTypedArrayAssoc = [];
+        }
+
         $this->propTypedArrayAssoc = $propTypedArrayAssoc;
         $this->modifiedProperties[self::PROP_TYPED_ARRAY_ASSOC] = true;
 
@@ -915,14 +912,40 @@ class PartiallyStrictTransfer extends AbstractTransfer
     /**
      * @module Test
      *
-     * @param string|int $propTypedArrayAssocStrictKey
-     * @param string $propTypedArrayAssocStrictValue
+     * @param string|int $key
+     *
+     * @return string
+     */
+    public function getPropTypedArrayAssocStrictSingular($key): string
+    {
+        return $this->propTypedArrayAssocStrict[$key];
+    }
+
+
+    /**
+     * @module Test
+     *
+     * @param string|int $key
+     *
+     * @return bool
+     */
+    public function hasPropTypedArrayAssocStrictSingular($key): bool
+    {
+        return isset($this->propTypedArrayAssocStrict[$key]);
+    }
+
+
+    /**
+     * @module Test
+     *
+     * @param string|int $propTypedArrayAssocStrictSingularKey
+     * @param string $propTypedArrayAssocStrictSingularValue
      *
      * @return $this
      */
-    public function addPropTypedArrayAssocStrict($propTypedArrayAssocStrictKey, string $propTypedArrayAssocStrictValue)
+    public function addPropTypedArrayAssocStrictSingular($propTypedArrayAssocStrictSingularKey, string $propTypedArrayAssocStrictSingularValue)
     {
-        $this->propTypedArrayAssocStrict[$propTypedArrayAssocStrictKey] = $propTypedArrayAssocStrictValue;
+        $this->propTypedArrayAssocStrict[$propTypedArrayAssocStrictSingularKey] = $propTypedArrayAssocStrictSingularValue;
         $this->modifiedProperties[self::PROP_TYPED_ARRAY_ASSOC_STRICT] = true;
 
         return $this;

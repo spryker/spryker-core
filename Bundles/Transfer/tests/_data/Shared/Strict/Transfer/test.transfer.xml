@@ -20,7 +20,7 @@
         <property name="propTypedArray" type="string[]"/>
         <property name="propTypedArrayStrict" type="string[]" strict="true"/>
         <property name="propTypedArrayAssoc" type="string[]" associative="true"/>
-        <property name="propTypedArrayAssocStrict" type="string[]" associative="true" strict="true"/>
+        <property name="propTypedArrayAssocStrict" type="string[]" singular="propTypedArrayAssocStrictSingular" associative="true" strict="true"/>
     </transfer>
 
     <transfer name="FullyStrict" strict="true">
@@ -30,7 +30,8 @@
         <property name="propDummyItem" type="DummyItem"/>
         <property name="propDummyItemCollection" type="DummyItem[]"/>
         <property name="propTypedArray" type="string[]"/>
-        <property name="propTypedArrayAssoc" type="string[]" associative="true"/>
+        <property name="propTypedArrayAssoc" type="string[]" singular="propTypedArrayAssocSingular" associative="true"/>
+        <property name="propDummyItemCollectionAssoc" type="DummyItem[]" singular="propDummyItemCollectionAssocSingular" associative="true"/>
     </transfer>
 
 </transfers>
