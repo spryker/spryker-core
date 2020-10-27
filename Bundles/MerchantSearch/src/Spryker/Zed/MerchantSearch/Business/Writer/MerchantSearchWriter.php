@@ -126,7 +126,7 @@ class MerchantSearchWriter implements MerchantSearchWriterInterface
     protected function expandMerchantSearchData(MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer): MerchantSearchCollectionTransfer
     {
         foreach ($merchantSearchCollectionTransfer->getMerchantSearches() as $merchantSearchTransfer) {
-            $merchantSearchTransfer = $merchantSearchTransfer->setData(
+            $merchantSearchTransfer->setData(
                 $this->executeMerchantSearchDataExpanderPlugins($merchantSearchTransfer->getData())
             );
         }
