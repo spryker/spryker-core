@@ -3,54 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 51,
-            "line_to": 51,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/AlternativeProductsRestApi/src/Spryker/Glue/AlternativeProductsRestApi/AlternativeProductsRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productAlternativeStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 67,
-            "line_to": 67,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::resource does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/AlternativeProductsRestApi/src/Spryker/Glue/AlternativeProductsRestApi/AlternativeProductsRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productsRestApi()->resource()",
-            "selected_text": "resource",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 83,
-            "line_to": 83,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/AlternativeProductsRestApi/src/Spryker/Glue/AlternativeProductsRestApi/AlternativeProductsRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 66,
-            "line_to": 66,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 2 of Spryker\\Glue\\AlternativeProductsRestApi\\Dependency\\Client\\AlternativeProductsRestApiToProductStorageClientInterface::findProductConcreteStorageDataByMapping cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/AlternativeProductsRestApi/src/Spryker/Glue/AlternativeProductsRestApi/Processor/AbstractAlternativeProduct/AbstractAlternativeProductReader.php",
-            "snippet": "            $concreteProductSku,",
-            "selected_text": "$concreteProductSku",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
             "line_from": 66,
             "line_to": 66,
             "type": "PossiblyNullArgument",

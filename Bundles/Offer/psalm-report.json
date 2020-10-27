@@ -63,30 +63,6 @@
         },
         {
             "severity": "info",
-            "line_from": 42,
-            "line_to": 42,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Offer/src/Spryker/Client/Offer/OfferDependencyProvider.php",
-            "snippet": "                $container->getLocator()->zedRequest()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 58,
-            "line_to": 58,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Offer/src/Spryker/Client/Offer/OfferDependencyProvider.php",
-            "snippet": "                $container->getLocator()->customer()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 40,
             "line_to": 40,
             "type": "PossiblyNullArgument",
@@ -555,66 +531,6 @@
         },
         {
             "severity": "info",
-            "line_from": 83,
-            "line_to": 83,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Offer/src/Spryker/Zed/Offer/OfferDependencyProvider.php",
-            "snippet": "            return new OfferToCartFacadeBridge($container->getLocator()->cart()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 98,
-            "line_to": 98,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Offer/src/Spryker/Zed/Offer/OfferDependencyProvider.php",
-            "snippet": "                $container->getLocator()->sales()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 113,
-            "line_to": 113,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Offer/src/Spryker/Zed/Offer/OfferDependencyProvider.php",
-            "snippet": "            return new OfferToMessengerFacadeBridge($container->getLocator()->messenger()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 127,
-            "line_to": 127,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Offer/src/Spryker/Zed/Offer/OfferDependencyProvider.php",
-            "snippet": "            return new OfferToCustomerFacadeBridge($container->getLocator()->customer()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 155,
-            "line_to": 155,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Offer/src/Spryker/Zed/Offer/OfferDependencyProvider.php",
-            "snippet": "            return new OfferToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 67,
             "line_to": 67,
             "type": "PossiblyNullArgument",
@@ -660,6 +576,18 @@
             "selected_text": "$offerTransfer->getQuote()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 2 of Spryker\\Zed\\Offer\\Persistence\\OfferRepository::hydrateOfferListWithOffers expects array<array-key, Generated\\Shared\\Transfer\\SpyOfferEntityTransfer>, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Offer/src/Spryker/Zed/Offer/Persistence/OfferRepository.php",
+            "snippet": "        $offerListTransfer = $this->hydrateOfferListWithOffers($offerListTransfer, $offerEntityTransfers);",
+            "selected_text": "$offerEntityTransfers",
+            "error_level": 3,
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -752,7 +680,7 @@
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Offer\\Persistence\\SpyOffer> variable $paginationModel",
             "file_name": "vendor/spryker/spryker/Bundles/Offer/src/Spryker/Zed/Offer/Persistence/OfferRepository.php",
-            "snippet": "        return $paginationModel->getQuery();",
+            "snippet": "        $query = $paginationModel->getQuery();",
             "selected_text": "getQuery",
             "error_level": 3,
             "shortcode": 113

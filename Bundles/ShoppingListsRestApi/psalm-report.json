@@ -3,18 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 40,
-            "line_to": 40,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListsRestApi/src/Spryker/Client/ShoppingListsRestApi/ShoppingListsRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->zedRequest()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 42,
             "line_to": 42,
             "type": "PossiblyNullReference",
@@ -207,30 +195,6 @@
         },
         {
             "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListsRestApi/src/Spryker/Glue/ShoppingListsRestApi/ShoppingListsRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->shoppingList()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListsRestApi/src/Spryker/Glue/ShoppingListsRestApi/ShoppingListsRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->glossaryStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 27,
             "line_to": 27,
             "type": "PossiblyNullReference",
@@ -420,18 +384,6 @@
             "selected_text": "modifiedToArray",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListsRestApi/src/Spryker/Zed/ShoppingListsRestApi/ShoppingListsRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->shoppingList()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

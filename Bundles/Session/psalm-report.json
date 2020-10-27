@@ -64,18 +64,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 33,
-            "line_to": 33,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Session/src/Spryker/Client/Session/ServiceProvider/SessionClientServiceProvider.php",
-            "snippet": "            return $container->getLocator()->session()->client();",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 55,
             "line_to": 55,
             "type": "PossiblyNullReference",
@@ -544,30 +532,6 @@
         },
         {
             "severity": "info",
-            "line_from": 47,
-            "line_to": 47,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Session/src/Spryker/Yves/Session/SessionDependencyProvider.php",
-            "snippet": "                $container->getLocator()->monitoring()->service()",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 86,
-            "line_to": 86,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Session/src/Spryker/Yves/Session/SessionDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->session()->client();",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 68,
             "line_to": 68,
             "type": "PossiblyInvalidArgument",
@@ -601,30 +565,6 @@
             "selected_text": "$cookies->get($session->getName())",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Session/src/Spryker/Zed/Session/SessionDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->session()->client();",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 77,
-            "line_to": 77,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Session/src/Spryker/Zed/Session/SessionDependencyProvider.php",
-            "snippet": "                $container->getLocator()->monitoring()->service()",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [
@@ -1122,42 +1062,6 @@
         },
         {
             "severity": "info",
-            "line_from": 69,
-            "line_to": 69,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Session/src/Spryker/Yves/Session/Plugin/EventDispatcher/SessionEventDispatcherPlugin.php",
-            "snippet": "        $eventDispatcher->addListener(KernelEvents::REQUEST, function (GetResponseEvent $event) use ($container) {",
-            "selected_text": "GetResponseEvent",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 86,
-            "line_to": 86,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Session/src/Spryker/Yves/Session/Plugin/EventDispatcher/SessionEventDispatcherPlugin.php",
-            "snippet": "        $eventDispatcher->addListener(KernelEvents::REQUEST, function (GetResponseEvent $event) use ($container) {",
-            "selected_text": "GetResponseEvent",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 114,
-            "line_to": 114,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Session/src/Spryker/Yves/Session/Plugin/EventDispatcher/SessionEventDispatcherPlugin.php",
-            "snippet": "        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event) {",
-            "selected_text": "FilterResponseEvent",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
             "line_from": 48,
             "line_to": 48,
             "type": "DeprecatedMethod",
@@ -1167,18 +1071,6 @@
             "selected_text": "$application",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Session/src/Spryker/Yves/Session/Plugin/ServiceProvider/SessionServiceProvider.php",
-            "snippet": "     * @param \\Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent $event",
-            "selected_text": "\\Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent",
-            "error_level": 2,
-            "shortcode": 98
         },
         {
             "severity": "info",
@@ -2130,42 +2022,6 @@
         },
         {
             "severity": "info",
-            "line_from": 69,
-            "line_to": 69,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Session/src/Spryker/Zed/Session/Communication/Plugin/EventDispatcher/SessionEventDispatcherPlugin.php",
-            "snippet": "        $eventDispatcher->addListener(KernelEvents::REQUEST, function (GetResponseEvent $event) use ($container) {",
-            "selected_text": "GetResponseEvent",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 86,
-            "line_to": 86,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Session/src/Spryker/Zed/Session/Communication/Plugin/EventDispatcher/SessionEventDispatcherPlugin.php",
-            "snippet": "        $eventDispatcher->addListener(KernelEvents::REQUEST, function (GetResponseEvent $event) use ($container) {",
-            "selected_text": "GetResponseEvent",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 114,
-            "line_to": 114,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Session/src/Spryker/Zed/Session/Communication/Plugin/EventDispatcher/SessionEventDispatcherPlugin.php",
-            "snippet": "        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event) {",
-            "selected_text": "FilterResponseEvent",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
             "line_from": 45,
             "line_to": 45,
             "type": "DeprecatedMethod",
@@ -2199,18 +2055,6 @@
             "selected_text": "$application",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 77,
-            "line_to": 77,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Session/src/Spryker/Zed/Session/Communication/Plugin/ServiceProvider/SessionServiceProvider.php",
-            "snippet": "     * @param \\Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent $event",
-            "selected_text": "\\Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent",
-            "error_level": 2,
-            "shortcode": 98
         },
         {
             "severity": "info",
@@ -2499,18 +2343,6 @@
             "selected_text": "getSessionHandlerFileSavePath",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 169,
-            "line_to": 169,
-            "type": "DeprecatedClass",
-            "message": "Symfony\\Component\\HttpKernel\\EventListener\\SaveSessionListener is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Session/src/Spryker/Zed/Session/Communication/SessionCommunicationFactory.php",
-            "snippet": "        return new SaveSessionListener();",
-            "selected_text": "new SaveSessionListener()",
-            "error_level": 2,
-            "shortcode": 98
         },
         {
             "severity": "info",

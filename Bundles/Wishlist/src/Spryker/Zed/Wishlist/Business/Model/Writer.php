@@ -514,7 +514,7 @@ class Writer implements WriterInterface
     {
         $wishlistTransfer->requireName();
 
-        return preg_match(static::WISH_LIST_NAME_VALIDATION_REGEX, $wishlistTransfer->getName());
+        return (bool)preg_match(static::WISH_LIST_NAME_VALIDATION_REGEX, $wishlistTransfer->getName());
     }
 
     /**

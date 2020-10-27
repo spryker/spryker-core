@@ -28,30 +28,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 42,
-            "line_to": 42,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockProductCategoryConnector/src/Spryker/Client/CmsSlotBlockProductCategoryConnector/CmsSlotBlockProductCategoryConnectorDependencyProvider.php",
-            "snippet": "                $container->getLocator()->locale()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 58,
-            "line_to": 58,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockProductCategoryConnector/src/Spryker/Client/CmsSlotBlockProductCategoryConnector/CmsSlotBlockProductCategoryConnectorDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productCategoryStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 38,
             "line_to": 38,
             "type": "PossiblyInvalidMethodCall",
@@ -73,6 +49,18 @@
             "selected_text": "offsetGet",
             "error_level": 3,
             "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Client\\CmsSlotBlockProductCategoryConnector\\Resolver\\ProductCategoryCmsSlotBlockConditionResolver::getIsProductInCategoryIds cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockProductCategoryConnector/src/Spryker/Client/CmsSlotBlockProductCategoryConnector/Resolver/ProductCategoryCmsSlotBlockConditionResolver.php",
+            "snippet": "                    $cmsSlotParamsTransfer->getIdProductAbstract(),",
+            "selected_text": "$cmsSlotParamsTransfer->getIdProductAbstract()",
+            "error_level": 3,
+            "shortcode": 78
         }
     ],
     "deprecation": []

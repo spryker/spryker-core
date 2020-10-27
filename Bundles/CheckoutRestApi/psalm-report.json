@@ -3,30 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 39,
-            "line_to": 39,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CheckoutRestApi/src/Spryker/Client/CheckoutRestApi/CheckoutRestApiDependencyProvider.php",
-            "snippet": "            return new CheckoutRestApiToZedRequestClientBridge($container->getLocator()->zedRequest()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 48,
-            "line_to": 48,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CheckoutRestApi/src/Spryker/Glue/CheckoutRestApi/CheckoutRestApiDependencyProvider.php",
-            "snippet": "            return new CheckoutRestApiToGlossaryStorageClientBridge($container->getLocator()->glossaryStorage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 92,
             "line_to": 92,
             "type": "PossiblyInvalidMethodCall",
@@ -147,6 +123,18 @@
         },
         {
             "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method toArray on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CheckoutRestApi/src/Spryker/Glue/CheckoutRestApi/Processor/Customer/CustomerMapper.php",
+            "snippet": "                $restCheckoutRequestAttributesTransfer->getCustomer()->toArray(),",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 39,
             "line_to": 39,
             "type": "PossiblyNullReference",
@@ -183,8 +171,20 @@
         },
         {
             "severity": "info",
-            "line_from": 84,
-            "line_to": 84,
+            "line_from": 121,
+            "line_to": 121,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\CheckoutRestApi\\Dependency\\Client\\CheckoutRestApiToGlossaryStorageClientInterface::translate cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CheckoutRestApi/src/Spryker/Glue/CheckoutRestApi/Processor/Error/RestCheckoutErrorMapper.php",
+            "snippet": "            $restCheckoutErrorTransfer->getDetail(),",
+            "selected_text": "$restCheckoutErrorTransfer->getDetail()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 92,
+            "line_to": 92,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $paymentProviderMethodToStateMachineMapping using possibly null offset mixed|null|string",
             "file_name": "vendor/spryker/spryker/Bundles/CheckoutRestApi/src/Spryker/Glue/CheckoutRestApi/Processor/RequestAttributesExpander/CheckoutRequestAttributesExpander.php",
@@ -387,6 +387,30 @@
         },
         {
             "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCustomerReference on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CheckoutRestApi/src/Spryker/Zed/CheckoutRestApi/Business/Checkout/Quote/QuoteReader.php",
+            "snippet": "            || !$restCheckoutRequestAttributesTransfer->getCustomer()->getCustomerReference()",
+            "selected_text": "getCustomerReference",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCustomerReference on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CheckoutRestApi/src/Spryker/Zed/CheckoutRestApi/Business/Checkout/Quote/QuoteReader.php",
+            "snippet": "        $customerReference = $restCheckoutRequestAttributesTransfer->getCustomer()->getCustomerReference();",
+            "selected_text": "getCustomerReference",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 53,
             "line_to": 53,
             "type": "PossiblyNullReference",
@@ -432,102 +456,6 @@
             "selected_text": "getCustomerReference",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 67,
-            "line_to": 67,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CheckoutRestApi/src/Spryker/Zed/CheckoutRestApi/CheckoutRestApiDependencyProvider.php",
-            "snippet": "            return new CheckoutRestApiToCartFacadeBridge($container->getLocator()->cart()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 81,
-            "line_to": 81,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CheckoutRestApi/src/Spryker/Zed/CheckoutRestApi/CheckoutRestApiDependencyProvider.php",
-            "snippet": "            return new CheckoutRestApiToCartsRestApiFacadeBridge($container->getLocator()->cartsRestApi()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 95,
-            "line_to": 95,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CheckoutRestApi/src/Spryker/Zed/CheckoutRestApi/CheckoutRestApiDependencyProvider.php",
-            "snippet": "            return new CheckoutRestApiToCheckoutFacadeBridge($container->getLocator()->checkout()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 109,
-            "line_to": 109,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CheckoutRestApi/src/Spryker/Zed/CheckoutRestApi/CheckoutRestApiDependencyProvider.php",
-            "snippet": "            return new CheckoutRestApiToCustomerFacadeBridge($container->getLocator()->customer()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 123,
-            "line_to": 123,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CheckoutRestApi/src/Spryker/Zed/CheckoutRestApi/CheckoutRestApiDependencyProvider.php",
-            "snippet": "            return new CheckoutRestApiToPaymentFacadeBridge($container->getLocator()->payment()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 137,
-            "line_to": 137,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CheckoutRestApi/src/Spryker/Zed/CheckoutRestApi/CheckoutRestApiDependencyProvider.php",
-            "snippet": "            return new CheckoutRestApiToQuoteFacadeBridge($container->getLocator()->quote()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 151,
-            "line_to": 151,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CheckoutRestApi/src/Spryker/Zed/CheckoutRestApi/CheckoutRestApiDependencyProvider.php",
-            "snippet": "            return new CheckoutRestApiToShipmentFacadeBridge($container->getLocator()->shipment()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 165,
-            "line_to": 165,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CheckoutRestApi/src/Spryker/Zed/CheckoutRestApi/CheckoutRestApiDependencyProvider.php",
-            "snippet": "            return new CheckoutRestApiToCalculationFacadeBridge($container->getLocator()->calculation()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

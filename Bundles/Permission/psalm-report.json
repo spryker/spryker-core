@@ -3,18 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 58,
-            "line_to": 58,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Permission/src/Spryker/Client/Permission/PermissionDependencyProvider.php",
-            "snippet": "            return new PermissionToZedRequestClientBridge($container->getLocator()->zedRequest()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 60,
             "line_to": 60,
             "type": "PossiblyInvalidMethodCall",
@@ -132,18 +120,6 @@
             "selected_text": "$indexedPermissions",
             "error_level": 3,
             "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 89,
-            "line_to": 89,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Permission/src/Spryker/Zed/Permission/PermissionDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->permission()->client();",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         },
         {
             "severity": "info",

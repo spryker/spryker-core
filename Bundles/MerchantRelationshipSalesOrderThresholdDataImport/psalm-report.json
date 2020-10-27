@@ -48,54 +48,6 @@
             "selected_text": "import",
             "error_level": 3,
             "shortcode": 108
-        },
-        {
-            "severity": "info",
-            "line_from": 53,
-            "line_to": 53,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThresholdDataImport/src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdDataImport/MerchantRelationshipSalesOrderThresholdDataImportDependencyProvider.php",
-            "snippet": "                $container->getLocator()->merchantRelationshipSalesOrderThreshold()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 69,
-            "line_to": 69,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThresholdDataImport/src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdDataImport/MerchantRelationshipSalesOrderThresholdDataImportDependencyProvider.php",
-            "snippet": "                $container->getLocator()->merchantRelationship()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 85,
-            "line_to": 85,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThresholdDataImport/src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdDataImport/MerchantRelationshipSalesOrderThresholdDataImportDependencyProvider.php",
-            "snippet": "                $container->getLocator()->store()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 101,
-            "line_to": 101,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThresholdDataImport/src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdDataImport/MerchantRelationshipSalesOrderThresholdDataImportDependencyProvider.php",
-            "snippet": "                $container->getLocator()->currency()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

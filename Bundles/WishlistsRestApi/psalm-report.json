@@ -3,18 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 39,
-            "line_to": 39,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/WishlistsRestApi/src/Spryker/Client/WishlistsRestApi/WishlistsRestApiDependencyProvider.php",
-            "snippet": "            return new WishlistsRestApiToZedRequestClientBridge($container->getLocator()->zedRequest()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 37,
             "line_to": 37,
             "type": "PossiblyNullArgument",
@@ -255,18 +243,6 @@
         },
         {
             "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/WishlistsRestApi/src/Spryker/Glue/WishlistsRestApi/WishlistsRestApiDependencyProvider.php",
-            "snippet": "            return new WishlistsRestApiToWishlistClientBridge($container->getLocator()->wishlist()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 45,
             "line_to": 45,
             "type": "PossiblyNullArgument",
@@ -366,24 +342,12 @@
             "line_from": 36,
             "line_to": 36,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Wishlist\\Persistence\\SpyWishlist|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable $wishlistEntities",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Wishlist\\Persistence\\SpyWishlist> variable $wishlistEntities",
             "file_name": "vendor/spryker/spryker/Bundles/WishlistsRestApi/src/Spryker/Zed/WishlistsRestApi/Persistence/WishlistsRestApiEntityManager.php",
             "snippet": "        } while ($wishlistEntities->count());",
             "selected_text": "count",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 73,
-            "line_to": 73,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/WishlistsRestApi/src/Spryker/Zed/WishlistsRestApi/WishlistsRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->wishlist()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

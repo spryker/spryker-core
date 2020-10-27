@@ -63,6 +63,30 @@
         },
         {
             "severity": "info",
+            "line_from": 128,
+            "line_to": 128,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdShipmentMethod on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentCartConnector/src/Spryker/Zed/ShipmentCartConnector/Business/Cart/ShipmentCartExpander.php",
+            "snippet": "        if (!$shipmentTransfer || !$shipmentTransfer->getMethod() || !$shipmentTransfer->getMethod()->getIdShipmentMethod()) {",
+            "selected_text": "getIdShipmentMethod",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 134,
+            "line_to": 134,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getSourcePrice on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentCartConnector/src/Spryker/Zed/ShipmentCartConnector/Business/Cart/ShipmentCartExpander.php",
+            "snippet": "        if ($this->isCurrencyChanged($shipmentTransfer, $quoteTransfer) || $shipmentMethodTransfer->getSourcePrice()) {",
+            "selected_text": "getSourcePrice",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 161,
             "line_to": 161,
             "type": "PossiblyNullReference",
@@ -327,6 +351,30 @@
         },
         {
             "severity": "info",
+            "line_from": 94,
+            "line_to": 94,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getMethod on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentCartConnector/src/Spryker/Zed/ShipmentCartConnector/Business/Model/ShipmentCartExpander.php",
+            "snippet": "        if (!$quoteTransfer->getShipment() || !$quoteTransfer->getShipment()->getMethod()) {",
+            "selected_text": "getMethod",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 98,
+            "line_to": 98,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getMethod on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentCartConnector/src/Spryker/Zed/ShipmentCartConnector/Business/Model/ShipmentCartExpander.php",
+            "snippet": "        $shipmentMethodTransfer = $quoteTransfer->getShipment()->getMethod();",
+            "selected_text": "getMethod",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 100,
             "line_to": 100,
             "type": "PossiblyNullReference",
@@ -454,6 +502,18 @@
             "file_name": "vendor/spryker/spryker/Bundles/ShipmentCartConnector/src/Spryker/Zed/ShipmentCartConnector/Business/Model/ShipmentCartValidator.php",
             "snippet": "        if (!$quoteTransfer->getShipment() || !$this->isCurrencyChanged($quoteTransfer)) {",
             "selected_text": "getShipment",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getMethod on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentCartConnector/src/Spryker/Zed/ShipmentCartConnector/Business/Model/ShipmentCartValidator.php",
+            "snippet": "        $idShipmentMethod = $quoteTransfer->getShipment()->getMethod()->getIdShipmentMethod();",
+            "selected_text": "getMethod",
             "error_level": 3,
             "shortcode": 83
         },
@@ -603,6 +663,18 @@
         },
         {
             "severity": "info",
+            "line_from": 119,
+            "line_to": 119,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method setMethod on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentCartConnector/src/Spryker/Zed/ShipmentCartConnector/Business/Sanitizer/ShipmentSanitizer.php",
+            "snippet": "            $quoteTransfer->getShipment()->setMethod(null);",
+            "selected_text": "setMethod",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 31,
             "line_to": 31,
             "type": "PossiblyNullReference",
@@ -696,42 +768,6 @@
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ShipmentGroupTransfer[]",
             "error_level": 4,
             "shortcode": 142
-        },
-        {
-            "severity": "info",
-            "line_from": 48,
-            "line_to": 48,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShipmentCartConnector/src/Spryker/Zed/ShipmentCartConnector/ShipmentCartConnectorDependencyProvider.php",
-            "snippet": "            return new ShipmentCartConnectorToShipmentFacadeBridge($container->getLocator()->shipment()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShipmentCartConnector/src/Spryker/Zed/ShipmentCartConnector/ShipmentCartConnectorDependencyProvider.php",
-            "snippet": "            return new ShipmentCartConnectorToPriceFacadeBridge($container->getLocator()->price()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 76,
-            "line_to": 76,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShipmentCartConnector/src/Spryker/Zed/ShipmentCartConnector/ShipmentCartConnectorDependencyProvider.php",
-            "snippet": "            return new ShipmentCartConnectorToShipmentServiceBridge($container->getLocator()->shipment()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

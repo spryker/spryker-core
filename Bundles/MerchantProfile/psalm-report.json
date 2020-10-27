@@ -1,5 +1,18 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 81,
+            "line_to": 81,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantProfile\\Persistence\\MerchantProfileRepository::buildQueryFromCriteria has wrong name $criteria, expecting $modelCriteria as defined by Spryker\\Zed\\Kernel\\Persistence\\AbstractRepository::buildQueryFromCriteria",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfile/src/Spryker/Zed/MerchantProfile/Persistence/MerchantProfileRepository.php",
+            "snippet": "    public function buildQueryFromCriteria(ModelCriteria $criteria, ?FilterTransfer $filterTransfer = null): ModelCriteria",
+            "selected_text": "$criteria",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -84,30 +97,6 @@
             "selected_text": "setFkMerchant",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfile/src/Spryker/Zed/MerchantProfile/MerchantProfileDependencyProvider.php",
-            "snippet": "            return new MerchantProfileToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 60,
-            "line_to": 60,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfile/src/Spryker/Zed/MerchantProfile/MerchantProfileDependencyProvider.php",
-            "snippet": "            return new MerchantProfileToLocaleFacadeBridge($container->getLocator()->locale()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         },
         {
             "severity": "info",

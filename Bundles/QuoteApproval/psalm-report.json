@@ -3,30 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 23,
-            "line_to": 23,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Client/Kernel/PermissionAwareTrait.php",
-            "snippet": "            return Locator::getInstance()->permission()->client()->can($permissionKey, $context);",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 24,
-            "line_to": 24,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/PermissionAwareTrait.php",
-            "snippet": "            return Locator::getInstance()->permission()->facade()->can($permissionKey, $identifier, $context);",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 38,
             "line_to": 38,
             "type": "PossiblyNullReference",
@@ -120,6 +96,18 @@
             "selected_text": "int",
             "error_level": 5,
             "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 87,
+            "line_to": 87,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getMethod on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Client/QuoteApproval/Permission/ContextProvider/PermissionContextProvider.php",
+            "snippet": "            ->getMethod();",
+            "selected_text": "getMethod",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -375,30 +363,6 @@
         },
         {
             "severity": "info",
-            "line_from": 47,
-            "line_to": 47,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Client/QuoteApproval/QuoteApprovalDependencyProvider.php",
-            "snippet": "            return new QuoteApprovalToZedRequestClientBridge($container->getLocator()->zedRequest()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Client/QuoteApproval/QuoteApprovalDependencyProvider.php",
-            "snippet": "            return new QuoteApprovalToQuoteClientBridge($container->getLocator()->quote()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 38,
             "line_to": 38,
             "type": "PossiblyNullReference",
@@ -495,6 +459,18 @@
         },
         {
             "severity": "info",
+            "line_from": 87,
+            "line_to": 87,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getMethod on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/Business/Permission/ContextProvider/PermissionContextProvider.php",
+            "snippet": "            ->getMethod();",
+            "selected_text": "getMethod",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 93,
             "line_to": 93,
             "type": "NullableReturnStatement",
@@ -516,6 +492,18 @@
             "selected_text": "$statuses",
             "error_level": 3,
             "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 73,
+            "line_to": 73,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCompanyUserTransfer on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/Business/Quote/QuoteStatusChecker.php",
+            "snippet": "        if (!$quoteTransfer->getCustomer() || !$quoteTransfer->getCustomer()->getCompanyUserTransfer()) {",
+            "selected_text": "getCompanyUserTransfer",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -783,8 +771,8 @@
         },
         {
             "severity": "info",
-            "line_from": 95,
-            "line_to": 95,
+            "line_from": 96,
+            "line_to": 96,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/Business/QuoteApproval/QuoteApprovalRequestValidator.php",
@@ -795,8 +783,8 @@
         },
         {
             "severity": "info",
-            "line_from": 99,
-            "line_to": 99,
+            "line_from": 100,
+            "line_to": 100,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\QuoteApproval\\Business\\QuoteApproval\\QuoteApprovalRequestValidator::isQuoteOwner cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/Business/QuoteApproval/QuoteApprovalRequestValidator.php",
@@ -807,8 +795,8 @@
         },
         {
             "severity": "info",
-            "line_from": 103,
-            "line_to": 103,
+            "line_from": 104,
+            "line_to": 104,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\QuoteApproval\\Business\\QuoteApproval\\QuoteApprovalRequestValidator::isApproverCanApproveQuote cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/Business/QuoteApproval/QuoteApprovalRequestValidator.php",
@@ -819,8 +807,8 @@
         },
         {
             "severity": "info",
-            "line_from": 126,
-            "line_to": 126,
+            "line_from": 127,
+            "line_to": 127,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\QuoteApproval\\Business\\QuoteApproval\\QuoteApprovalRequestValidator::findQuoteByIdQuoteApproval cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/Business/QuoteApproval/QuoteApprovalRequestValidator.php",
@@ -831,8 +819,8 @@
         },
         {
             "severity": "info",
-            "line_from": 129,
-            "line_to": 129,
+            "line_from": 130,
+            "line_to": 130,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\QuoteApproval\\Business\\QuoteApproval\\QuoteApprovalRequestValidator::isQuoteOwner cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/Business/QuoteApproval/QuoteApprovalRequestValidator.php",
@@ -843,8 +831,8 @@
         },
         {
             "severity": "info",
-            "line_from": 129,
-            "line_to": 129,
+            "line_from": 130,
+            "line_to": 130,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\QuoteApproval\\Business\\QuoteApproval\\QuoteApprovalRequestValidator::isQuoteOwner cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/Business/QuoteApproval/QuoteApprovalRequestValidator.php",
@@ -855,8 +843,8 @@
         },
         {
             "severity": "info",
-            "line_from": 148,
-            "line_to": 148,
+            "line_from": 149,
+            "line_to": 149,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\QuoteApproval\\Persistence\\QuoteApprovalRepositoryInterface::findQuoteApprovalById cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/Business/QuoteApproval/QuoteApprovalRequestValidator.php",
@@ -867,8 +855,8 @@
         },
         {
             "severity": "info",
-            "line_from": 149,
-            "line_to": 149,
+            "line_from": 150,
+            "line_to": 150,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\QuoteApproval\\Business\\QuoteApproval\\QuoteApprovalRequestValidator::findQuoteByIdQuoteApproval cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/Business/QuoteApproval/QuoteApprovalRequestValidator.php",
@@ -879,8 +867,8 @@
         },
         {
             "severity": "info",
-            "line_from": 149,
-            "line_to": 149,
+            "line_from": 150,
+            "line_to": 150,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdQuoteApproval on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/Business/QuoteApproval/QuoteApprovalRequestValidator.php",
@@ -891,8 +879,8 @@
         },
         {
             "severity": "info",
-            "line_from": 151,
-            "line_to": 151,
+            "line_from": 152,
+            "line_to": 152,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\QuoteApproval\\Business\\QuoteApproval\\QuoteApprovalRequestValidator::isQuoteApprovalRequestCanceled cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/Business/QuoteApproval/QuoteApprovalRequestValidator.php",
@@ -903,8 +891,8 @@
         },
         {
             "severity": "info",
-            "line_from": 163,
-            "line_to": 163,
+            "line_from": 164,
+            "line_to": 164,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\QuoteApproval\\Business\\QuoteApproval\\QuoteApprovalRequestValidator::isApproverCanApproveQuote cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/Business/QuoteApproval/QuoteApprovalRequestValidator.php",
@@ -915,8 +903,8 @@
         },
         {
             "severity": "info",
-            "line_from": 253,
-            "line_to": 253,
+            "line_from": 254,
+            "line_to": 254,
             "type": "PossiblyNullReference",
             "message": "Cannot call method setCustomer on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/Business/QuoteApproval/QuoteApprovalRequestValidator.php",
@@ -927,8 +915,8 @@
         },
         {
             "severity": "info",
-            "line_from": 254,
-            "line_to": 254,
+            "line_from": 255,
+            "line_to": 255,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getCustomerReference on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/Business/QuoteApproval/QuoteApprovalRequestValidator.php",
@@ -939,8 +927,8 @@
         },
         {
             "severity": "info",
-            "line_from": 268,
-            "line_to": 268,
+            "line_from": 269,
+            "line_to": 269,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\QuoteApproval\\Persistence\\QuoteApprovalRepositoryInterface::findQuoteApprovalById cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/Business/QuoteApproval/QuoteApprovalRequestValidator.php",
@@ -951,8 +939,8 @@
         },
         {
             "severity": "info",
-            "line_from": 271,
-            "line_to": 271,
+            "line_from": 272,
+            "line_to": 272,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getApproverCompanyUserId on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/Business/QuoteApproval/QuoteApprovalRequestValidator.php",
@@ -963,8 +951,8 @@
         },
         {
             "severity": "info",
-            "line_from": 284,
-            "line_to": 284,
+            "line_from": 285,
+            "line_to": 285,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getCustomerReference on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/Business/QuoteApproval/QuoteApprovalRequestValidator.php",
@@ -975,8 +963,8 @@
         },
         {
             "severity": "info",
-            "line_from": 365,
-            "line_to": 365,
+            "line_from": 366,
+            "line_to": 366,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdQuote on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/Business/QuoteApproval/QuoteApprovalRequestValidator.php",
@@ -987,13 +975,25 @@
         },
         {
             "severity": "info",
-            "line_from": 367,
-            "line_to": 367,
+            "line_from": 368,
+            "line_to": 368,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\QuoteApproval\\Business\\QuoteApproval\\QuoteApprovalRequestValidator::getQuoteById cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/Business/QuoteApproval/QuoteApprovalRequestValidator.php",
             "snippet": "        $quoteTransfer = $this->getQuoteById($idQuote);",
             "selected_text": "$idQuote",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 375,
+            "line_to": 375,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\QuoteApproval\\Business\\QuoteApproval\\QuoteApprovalRequestValidator::mergeQuotes cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/Business/QuoteApproval/QuoteApprovalRequestValidator.php",
+            "snippet": "            $quoteApprovalRequestTransfer->getQuote(),",
+            "selected_text": "$quoteApprovalRequestTransfer->getQuote()",
             "error_level": 3,
             "shortcode": 78
         },
@@ -1164,6 +1164,18 @@
             "selected_text": "getArrayCopy",
             "error_level": 3,
             "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\QuoteApproval\\Persistence\\QuoteApprovalEntityManagerInterface::removeApprovalsByIdQuote cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/Business/Sanitizer/QuoteApprovalSanitizer.php",
+            "snippet": "            $this->quoteApprovalEntityManager->removeApprovalsByIdQuote($quoteTransfer->getIdQuote());",
+            "selected_text": "$quoteTransfer->getIdQuote()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1359,6 +1371,18 @@
         },
         {
             "severity": "info",
+            "line_from": 28,
+            "line_to": 28,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\QuoteApproval\\Persistence\\SpyQuoteApproval::setFkCompanyUser cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/Persistence/Propel/Mapper/QuoteApprovalMapper.php",
+            "snippet": "            $quoteApprovalEntity->setFkCompanyUser($quoteApprovalTransfer->getApproverCompanyUserId());",
+            "selected_text": "$quoteApprovalTransfer->getApproverCompanyUserId()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
             "line_from": 30,
             "line_to": 30,
             "type": "PossiblyNullArgument",
@@ -1383,42 +1407,6 @@
         },
         {
             "severity": "info",
-            "line_from": 34,
-            "line_to": 34,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Orm\\Zed\\CompanyBusinessUnit\\Persistence\\SpyCompanyBusinessUnitQuery::filterbyfkquote does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/Persistence/QuoteApprovalRepository.php",
-            "snippet": "            ->filterByFkQuote($idQuote)",
-            "selected_text": "filterByFkQuote",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 35,
-            "line_to": 35,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Orm\\Zed\\SharedCart\\Persistence\\SpyQuoteCompanyUserQuery::orderbyidquoteapproval does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/Persistence/QuoteApprovalRepository.php",
-            "snippet": "            ->orderByIdQuoteApproval()",
-            "selected_text": "orderByIdQuoteApproval",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 84,
-            "line_to": 84,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Orm\\Zed\\CompanyBusinessUnit\\Persistence\\SpyCompanyBusinessUnitQuery::filterbyidquoteapproval does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/Persistence/QuoteApprovalRepository.php",
-            "snippet": "            ->filterByIdQuoteApproval($idQuoteApproval)",
-            "selected_text": "filterByIdQuoteApproval",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 86,
             "line_to": 86,
             "type": "PossiblyInvalidMethodCall",
@@ -1428,66 +1416,6 @@
             "selected_text": "getFirst",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 56,
-            "line_to": 56,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/QuoteApprovalDependencyProvider.php",
-            "snippet": "            return new QuoteApprovalToQuoteFacadeBridge($container->getLocator()->quote()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 71,
-            "line_to": 71,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/QuoteApprovalDependencyProvider.php",
-            "snippet": "                $container->getLocator()->companyUser()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 87,
-            "line_to": 87,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/QuoteApprovalDependencyProvider.php",
-            "snippet": "                $container->getLocator()->companyRole()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 103,
-            "line_to": 103,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/QuoteApprovalDependencyProvider.php",
-            "snippet": "                $container->getLocator()->sharedCart()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 119,
-            "line_to": 119,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/QuoteApprovalDependencyProvider.php",
-            "snippet": "                $container->getLocator()->customer()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [
@@ -1637,8 +1565,8 @@
         },
         {
             "severity": "info",
-            "line_from": 208,
-            "line_to": 208,
+            "line_from": 209,
+            "line_to": 209,
             "type": "DeprecatedMethod",
             "message": "The method Generated\\Shared\\Transfer\\QuoteApprovalRequestTransfer::requireIdQuote has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/Business/QuoteApproval/QuoteApprovalRequestValidator.php",
@@ -1649,8 +1577,8 @@
         },
         {
             "severity": "info",
-            "line_from": 365,
-            "line_to": 365,
+            "line_from": 366,
+            "line_to": 366,
             "type": "DeprecatedMethod",
             "message": "The method Generated\\Shared\\Transfer\\QuoteApprovalRequestTransfer::getIdQuote has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/Business/QuoteApproval/QuoteApprovalRequestValidator.php",

@@ -1,111 +1,50 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 65,
-            "line_to": 65,
-            "type": "InvalidReturnType",
-            "message": "The declared return type 'string' for /media/mark/f42d91bd-14bc-4e71-936f-96ed99135be4/www/suite-nonsplit/project/vendor/spryker/spryker/bundles/cmsslotblockgui/src/spryker/zed/cmsslotblockgui/communication/form/block/cmsblockchoiceform.php:65:2196:-:closure is incorrect, got 'int|null|string()'",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockGui/src/Spryker/Zed/CmsSlotBlockGui/Communication/Form/Block/CmsBlockChoiceForm.php",
-            "snippet": "            'choice_value' => function (?CmsBlockTransfer $cmsBlockTransfer = null): string {",
-            "selected_text": "string",
-            "error_level": 6,
-            "shortcode": 11
-        },
-        {
-            "severity": "error",
-            "line_from": 66,
-            "line_to": 66,
-            "type": "InvalidReturnStatement",
-            "message": "The inferred type 'int|null|string()' does not match the declared return type 'string' for /media/mark/f42d91bd-14bc-4e71-936f-96ed99135be4/www/suite-nonsplit/project/vendor/spryker/spryker/bundles/cmsslotblockgui/src/spryker/zed/cmsslotblockgui/communication/form/block/cmsblockchoiceform.php:65:2196:-:closure",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockGui/src/Spryker/Zed/CmsSlotBlockGui/Communication/Form/Block/CmsBlockChoiceForm.php",
-            "snippet": "                return $cmsBlockTransfer ? $cmsBlockTransfer->getIdCmsBlock() : '';",
-            "selected_text": "$cmsBlockTransfer ? $cmsBlockTransfer->getIdCmsBlock() : ''",
-            "error_level": 6,
-            "shortcode": 128
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockGui/src/Spryker/Zed/CmsSlotBlockGui/CmsSlotBlockGuiDependencyProvider.php",
-            "snippet": "            return new CmsSlotBlockGuiToCmsSlotBlockFacadeBridge($container->getLocator()->cmsSlotBlock()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 69,
-            "line_to": 69,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockGui/src/Spryker/Zed/CmsSlotBlockGui/CmsSlotBlockGuiDependencyProvider.php",
-            "snippet": "            return new CmsSlotBlockGuiToCmsSlotFacadeBridge($container->getLocator()->cmsSlot()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
+            "line_from": 56,
+            "line_to": 56,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CmsSlotBlockGui\\Communication\\Finder\\CmsBlockSuggestionFinder::getPaginationData cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockGui/src/Spryker/Zed/CmsSlotBlockGui/Communication/Finder/CmsBlockSuggestionFinder.php",
+            "snippet": "                $cmsBlockSuggestionCollectionTransfer->getPagination()",
+            "selected_text": "$cmsBlockSuggestionCollectionTransfer->getPagination()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
             "line_from": 83,
             "line_to": 83,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockGui/src/Spryker/Zed/CmsSlotBlockGui/CmsSlotBlockGuiDependencyProvider.php",
-            "snippet": "            return new CmsSlotBlockGuiToCmsBlockFacadeBridge($container->getLocator()->cmsBlock()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\CmsSlotBlockGui\\Communication\\Finder\\CmsBlockSuggestionFinder::isCmsBlockAssignedToSlotAndTemplate cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockGui/src/Spryker/Zed/CmsSlotBlockGui/Communication/Finder/CmsBlockSuggestionFinder.php",
+            "snippet": "                'disabled' => $this->isCmsBlockAssignedToSlotAndTemplate($cmsBlockTransfer, $idCmsSlotTemplate, $idCmsSlot),",
+            "selected_text": "$idCmsSlotTemplate",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 66,
-            "line_to": 66,
-            "type": "NullableReturnStatement",
-            "message": "The declared return type 'string' for /media/mark/f42d91bd-14bc-4e71-936f-96ed99135be4/www/suite-nonsplit/project/vendor/spryker/spryker/bundles/cmsslotblockgui/src/spryker/zed/cmsslotblockgui/communication/form/block/cmsblockchoiceform.php:65:2196:-:closure is not nullable, but the function returns 'int|null|string()'",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockGui/src/Spryker/Zed/CmsSlotBlockGui/Communication/Form/Block/CmsBlockChoiceForm.php",
-            "snippet": "                return $cmsBlockTransfer ? $cmsBlockTransfer->getIdCmsBlock() : '';",
-            "selected_text": "$cmsBlockTransfer ? $cmsBlockTransfer->getIdCmsBlock() : ''",
-            "error_level": 5,
-            "shortcode": 139
+            "line_from": 83,
+            "line_to": 83,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of Spryker\\Zed\\CmsSlotBlockGui\\Communication\\Finder\\CmsBlockSuggestionFinder::isCmsBlockAssignedToSlotAndTemplate cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockGui/src/Spryker/Zed/CmsSlotBlockGui/Communication/Finder/CmsBlockSuggestionFinder.php",
+            "snippet": "                'disabled' => $this->isCmsBlockAssignedToSlotAndTemplate($cmsBlockTransfer, $idCmsSlotTemplate, $idCmsSlot),",
+            "selected_text": "$idCmsSlot",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 68,
-            "line_to": 68,
-            "type": "InvalidNullableReturnType",
-            "message": "The declared return type 'string' for /media/mark/f42d91bd-14bc-4e71-936f-96ed99135be4/www/suite-nonsplit/project/vendor/spryker/spryker/bundles/cmsslotblockgui/src/spryker/zed/cmsslotblockgui/communication/form/block/cmsblockchoiceform.php:68:2389:-:closure is not nullable, but 'null|string' contains null",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockGui/src/Spryker/Zed/CmsSlotBlockGui/Communication/Form/Block/CmsBlockChoiceForm.php",
-            "snippet": "            'choice_label' => function (?CmsBlockTransfer $cmsBlockTransfer = null): string {",
-            "selected_text": "string",
-            "error_level": 5,
-            "shortcode": 144
-        },
-        {
-            "severity": "info",
-            "line_from": 69,
-            "line_to": 69,
-            "type": "NullableReturnStatement",
-            "message": "The declared return type 'string' for /media/mark/f42d91bd-14bc-4e71-936f-96ed99135be4/www/suite-nonsplit/project/vendor/spryker/spryker/bundles/cmsslotblockgui/src/spryker/zed/cmsslotblockgui/communication/form/block/cmsblockchoiceform.php:68:2389:-:closure is not nullable, but the function returns 'null|string'",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockGui/src/Spryker/Zed/CmsSlotBlockGui/Communication/Form/Block/CmsBlockChoiceForm.php",
-            "snippet": "                return $cmsBlockTransfer ? $cmsBlockTransfer->getName() : '';",
-            "selected_text": "$cmsBlockTransfer ? $cmsBlockTransfer->getName() : ''",
-            "error_level": 5,
-            "shortcode": 139
-        },
-        {
-            "severity": "info",
-            "line_from": 94,
-            "line_to": 94,
+            "line_from": 102,
+            "line_to": 102,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getCmsSlotBlocks on possibly null value",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockGui/src/Spryker/Zed/CmsSlotBlockGui/Communication/Form/DataProvider/CmsBlockChoiceFormDataProvider.php",
-            "snippet": "        $cmsSlotBlocks = $cmsBlockTransfer->getCmsSlotBlockCollection()->getCmsSlotBlocks();",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockGui/src/Spryker/Zed/CmsSlotBlockGui/Communication/Finder/CmsBlockSuggestionFinder.php",
+            "snippet": "        $cmsBlockTransfers = $cmsBlockTransfer->getCmsSlotBlockCollection()->getCmsSlotBlocks();",
             "selected_text": "getCmsSlotBlocks",
             "error_level": 3,
             "shortcode": 83
@@ -183,5 +122,18 @@
             "shortcode": 78
         }
     ],
-    "deprecation": []
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 68,
+            "line_to": 68,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\CmsSlotBlock\\Business\\CmsSlotBlockFacadeInterface::getTemplateConditionsByPath has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockGui/src/Spryker/Zed/CmsSlotBlockGui/Dependency/Facade/CmsSlotBlockGuiToCmsSlotBlockFacadeBridge.php",
+            "snippet": "        return $this->cmsSlotBlockFacade->getTemplateConditionsByPath($twigPath);",
+            "selected_text": "getTemplateConditionsByPath",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
 }

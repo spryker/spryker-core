@@ -3,18 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 40,
-            "line_to": 40,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SharedCartsRestApi/src/Spryker/Client/SharedCartsRestApi/SharedCartsRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->zedRequest()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 71,
             "line_to": 71,
             "type": "PossiblyNullArgument",
@@ -24,6 +12,30 @@
             "selected_text": "$shareDetailTransfer->getUuid()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getUuid on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/SharedCartsRestApi/src/Spryker/Glue/SharedCartsRestApi/Processor/SharedCart/Mapper/SharedCartMapper.php",
+            "snippet": "                $shareDetailTransfer->getCompanyUser()->getUuid()",
+            "selected_text": "getUuid",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdQuotePermissionGroup on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/SharedCartsRestApi/src/Spryker/Glue/SharedCartsRestApi/Processor/SharedCart/Mapper/SharedCartMapper.php",
+            "snippet": "                $shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup()",
+            "selected_text": "getIdQuotePermissionGroup",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -60,6 +72,18 @@
             "selected_text": "getNaturalIdentifier",
             "error_level": 3,
             "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 81,
+            "line_to": 81,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of Spryker\\Glue\\SharedCartsRestApi\\Processor\\SharedCart\\SharedCartCreator::createShareCartRequestTransfer cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SharedCartsRestApi/src/Spryker/Glue/SharedCartsRestApi/Processor/SharedCart/SharedCartCreator.php",
+            "snippet": "            $companyUserTransfer->getIdCompanyUser(),",
+            "selected_text": "$companyUserTransfer->getIdCompanyUser()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -387,6 +411,18 @@
         },
         {
             "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\SharedCartsRestApi\\Dependency\\Facade\\SharedCartsRestApiToSharedCartFacadeInterface::getShareDetailsByIdQuote cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SharedCartsRestApi/src/Spryker/Zed/SharedCartsRestApi/Business/SharedCart/SharedCartReader.php",
+            "snippet": "        return $this->sharedCartFacade->getShareDetailsByIdQuote($quoteResponseTransfer->getQuoteTransfer());",
+            "selected_text": "$quoteResponseTransfer->getQuoteTransfer()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
             "line_from": 45,
             "line_to": 45,
             "type": "PossiblyInvalidMethodCall",
@@ -420,30 +456,6 @@
             "selected_text": "$quoteTransfer",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SharedCartsRestApi/src/Spryker/Zed/SharedCartsRestApi/SharedCartsRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->quote()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SharedCartsRestApi/src/Spryker/Zed/SharedCartsRestApi/SharedCartsRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->sharedCart()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

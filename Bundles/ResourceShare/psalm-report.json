@@ -75,18 +75,6 @@
         },
         {
             "severity": "info",
-            "line_from": 72,
-            "line_to": 72,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ResourceShare/src/Spryker/Client/ResourceShare/ResourceShareDependencyProvider.php",
-            "snippet": "                $container->getLocator()->zedRequest()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 50,
             "line_to": 50,
             "type": "PossiblyNullReference",
@@ -106,6 +94,18 @@
             "file_name": "vendor/spryker/spryker/Bundles/ResourceShare/src/Spryker/Zed/ResourceShare/Business/ResourceShare/ResourceShareReader.php",
             "snippet": "            $resourceShareTransfer->getUuid()",
             "selected_text": "$resourceShareTransfer->getUuid()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 69,
+            "line_to": 69,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of strtotime cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ResourceShare/src/Spryker/Zed/ResourceShare/Business/ResourceShare/ResourceShareValidator.php",
+            "snippet": "        return time() >= strtotime($resourceShareTransfer->getExpiryDate());",
+            "selected_text": "$resourceShareTransfer->getExpiryDate()",
             "error_level": 3,
             "shortcode": 78
         },
@@ -156,18 +156,6 @@
             "selected_text": "$decodedResourceData",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 57,
-            "line_to": 57,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ResourceShare/src/Spryker/Zed/ResourceShare/ResourceShareDependencyProvider.php",
-            "snippet": "                $container->getLocator()->utilEncoding()->service()",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

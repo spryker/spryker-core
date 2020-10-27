@@ -3,18 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::resource does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/NavigationsCategoryNodesResourceRelationship/src/Spryker/Glue/NavigationsCategoryNodesResourceRelationship/NavigationsCategoryNodesResourceRelationshipDependencyProvider.php",
-            "snippet": "                $container->getLocator()->categoriesRestApi()->resource()",
-            "selected_text": "resource",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 46,
             "line_to": 46,
             "type": "PossiblyInvalidMethodCall",

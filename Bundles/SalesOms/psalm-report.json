@@ -1,5 +1,18 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "ParamNameMismatch",
+            "message": "Argument 3 of Spryker\\Zed\\SalesOms\\Communication\\Plugin\\OrderItemReferenceExpanderPreSavePlugin::expandOrderItem has wrong name $salesOrderItemEntityTransfer, expecting $salesOrderItemEntity as defined by Spryker\\Zed\\SalesExtension\\Dependency\\Plugin\\OrderItemExpanderPreSavePluginInterface::expandOrderItem",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesOms/src/Spryker/Zed/SalesOms/Communication/Plugin/OrderItemReferenceExpanderPreSavePlugin.php",
+            "snippet": "        SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer",
+            "selected_text": "$salesOrderItemEntityTransfer",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -60,30 +73,6 @@
             "selected_text": "getMessage",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesOms/src/Spryker/Zed/SalesOms/SalesOmsDependencyProvider.php",
-            "snippet": "            return new SalesOmsToUtilDataReaderServiceBridge($container->getLocator()->utilDataReader()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 60,
-            "line_to": 60,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesOms/src/Spryker/Zed/SalesOms/SalesOmsDependencyProvider.php",
-            "snippet": "            return new SalesOmsToOmsFacadeBridge($container->getLocator()->oms()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []
