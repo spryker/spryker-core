@@ -10,6 +10,7 @@ namespace Spryker\Client\MerchantCategorySearch\Plugin\Elasticsearch\Query;
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\Match;
+use Elastica\Query\Terms;
 use InvalidArgumentException;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface;
@@ -20,7 +21,7 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
  */
 class MerchantCategoryMerchantSearchQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
-    protected const PARAMETER_ID_CATEGORY = 'idCategory';
+    protected const PARAMETER_CATEGORY_IDS = 'category-ids';
 
     /**
      * @uses \Spryker\Zed\MerchantCategorySearch\Communication\Plugin\MerchantSearch\MerchantCategoryMerchantSearchDataExpanderPlugin::CATEGORY_IDS
@@ -55,13 +56,21 @@ class MerchantCategoryMerchantSearchQueryExpanderPlugin extends AbstractPlugin i
     {
         $boolQuery = $this->getBoolQuery($query);
 
-        $idCategory = $requestParameters[static::PARAMETER_ID_CATEGORY] ?? null;
+        $categoryIds = $requestParameters[static::PARAMETER_CATEGORY_IDS] ?? [];
 
-        if ($idCategory) {
-            $matchQuery = (new Match())->setField(static::CATEGORY_IDS, $idCategory);
-
-            $boolQuery->addMust($matchQuery);
+        if ($categoryIds) {
+            $boolQuery->addMust($this->createCategoriesTermQuery($categoryIds));
         }
+    }
+
+    /**
+     * @param string[] $categoryIds
+     *
+     * @return \Elastica\Query\Terms
+     */
+    protected function createCategoriesTermQuery(array $categoryIds): Terms
+    {
+        return new Terms(static::CATEGORY_IDS, $categoryIds);
     }
 
     /**
