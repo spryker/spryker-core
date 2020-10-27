@@ -3,6 +3,30 @@
     "warning": [
         {
             "severity": "info",
+            "line_from": 48,
+            "line_to": 48,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method requireMethod on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentCheckoutConnector/src/Spryker/Zed/ShipmentCheckoutConnector/Business/Model/ShipmentCheckoutPreCheck.php",
+            "snippet": "        $quoteTransfer->getShipment()->requireMethod();",
+            "selected_text": "requireMethod",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getMethod on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentCheckoutConnector/src/Spryker/Zed/ShipmentCheckoutConnector/Business/Model/ShipmentCheckoutPreCheck.php",
+            "snippet": "            ->getMethod()",
+            "selected_text": "getMethod",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 52,
             "line_to": 52,
             "type": "PossiblyNullReference",
@@ -24,6 +48,18 @@
             "selected_text": "ShipmentCheckoutConnectorConfig::ERROR_CODE_SHIPMENT_FAILED",
             "error_level": 4,
             "shortcode": 12
+        },
+        {
+            "severity": "info",
+            "line_from": 68,
+            "line_to": 68,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ShipmentCheckoutConnector\\Dependency\\Facade\\ShipmentCheckoutConnectorToShipmentFacadeInterface::isShipmentMethodActive cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentCheckoutConnector/src/Spryker/Zed/ShipmentCheckoutConnector/Business/Shipment/ShipmentCheckoutPreCheck.php",
+            "snippet": "                && $this->shipmentFacade->isShipmentMethodActive($shipmentMethodTransfer->getIdShipmentMethod())",
+            "selected_text": "$shipmentMethodTransfer->getIdShipmentMethod()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -72,30 +108,6 @@
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ShipmentGroupTransfer[]",
             "error_level": 4,
             "shortcode": 142
-        },
-        {
-            "severity": "info",
-            "line_from": 45,
-            "line_to": 45,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShipmentCheckoutConnector/src/Spryker/Zed/ShipmentCheckoutConnector/ShipmentCheckoutConnectorDependencyProvider.php",
-            "snippet": "            return new ShipmentCheckoutConnectorToShipmentFacadeBridge($container->getLocator()->shipment()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 59,
-            "line_to": 59,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShipmentCheckoutConnector/src/Spryker/Zed/ShipmentCheckoutConnector/ShipmentCheckoutConnectorDependencyProvider.php",
-            "snippet": "            return new ShipmentCheckoutConnectorToShipmentServiceBridge($container->getLocator()->shipment()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

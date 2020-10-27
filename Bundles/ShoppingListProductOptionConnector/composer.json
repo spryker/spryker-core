@@ -4,7 +4,7 @@
   "description": "ShoppingListProductOptionConnector module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/kernel": "^3.30.0",
     "spryker/product": "^5.0.0 || ^6.0.0",
     "spryker/product-option": "^6.11.0 || ^8.5.0",

@@ -3,18 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 226,
-            "line_to": 226,
-            "type": "NullableReturnStatement",
-            "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\SchedulerJenkins\\Business\\Api\\JenkinsApi::getCrumbIssuer is not nullable, but the function returns 'mixed|null'",
-            "file_name": "vendor/spryker/spryker/Bundles/SchedulerJenkins/src/Spryker/Zed/SchedulerJenkins/Business/Api/JenkinsApi.php",
-            "snippet": "        return $crumbIssuer;",
-            "selected_text": "$crumbIssuer",
-            "error_level": 5,
-            "shortcode": 139
-        },
-        {
-            "severity": "info",
             "line_from": 52,
             "line_to": 52,
             "type": "PossiblyNullArgument",
@@ -108,25 +96,25 @@
             "selected_text": "$response->getPayload()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 107,
-            "line_to": 107,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SchedulerJenkins/src/Spryker/Zed/SchedulerJenkins/SchedulerJenkinsDependencyProvider.php",
-            "snippet": "                $container->getLocator()->utilEncoding()->service()",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 83,
-            "line_to": 83,
+            "line_from": 91,
+            "line_to": 91,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Zed\\Kernel\\Communication\\Plugin\\Pimple is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SchedulerJenkins/src/Spryker/Zed/SchedulerJenkins/SchedulerJenkinsDependencyProvider.php",
+            "snippet": "        $pimplePlugin = new Pimple();",
+            "selected_text": "new Pimple()",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 93,
+            "line_to": 93,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/SchedulerJenkins/src/Spryker/Zed/SchedulerJenkins/SchedulerJenkinsDependencyProvider.php",

@@ -147,18 +147,6 @@
         },
         {
             "severity": "info",
-            "line_from": 63,
-            "line_to": 63,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryImage/src/Spryker/Zed/CategoryImage/CategoryImageDependencyProvider.php",
-            "snippet": "            return new CategoryImageToLocaleBridge($container->getLocator()->locale()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 46,
             "line_to": 46,
             "type": "PossiblyNullArgument",
@@ -195,18 +183,6 @@
         },
         {
             "severity": "info",
-            "line_from": 33,
-            "line_to": 33,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImageQuery::filterbyfkcategory does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryImage/src/Spryker/Zed/CategoryImage/Persistence/CategoryImageRepository.php",
-            "snippet": "            ->filterByFkCategory($idCategory)",
-            "selected_text": "filterByFkCategory",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 36,
             "line_to": 36,
             "type": "MismatchingDocblockParamType",
@@ -228,6 +204,18 @@
             "selected_text": "\\Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImage[]|\\Propel\\Runtime\\Collection\\ObjectCollection",
             "error_level": 4,
             "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 137,
+            "line_to": 137,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdLocale on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImage/src/Spryker/Zed/CategoryImage/Persistence/Propel/Mapper/CategoryImageMapper.php",
+            "snippet": "            $categoryImageSetEntity->setFkLocale($categoryImageSetTransfer->getLocale()->getIdLocale());",
+            "selected_text": "getIdLocale",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",

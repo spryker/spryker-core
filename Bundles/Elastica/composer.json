@@ -4,7 +4,7 @@
   "description": "Elastica module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "ruflin/elastica": "^7.0.0"
   },
   "minimum-stability": "dev",

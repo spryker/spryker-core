@@ -41,7 +41,7 @@ class CreateShipmentMethodController extends AbstractController
             $dataProvider->getOptions()
         );
         $shipmentMethodForm->handleRequest($request);
-        
+
         if ($shipmentMethodForm->isSubmitted() && $shipmentMethodForm->isValid()) {
             return $this->handleShipmentMethodForm($shipmentMethodForm);
         }

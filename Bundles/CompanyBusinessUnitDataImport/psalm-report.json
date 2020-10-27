@@ -10,8 +10,7 @@
             "snippet": "     * @return \\Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface",
             "selected_text": "\\Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface",
             "error_level": 6,
-            "shortcode": 11,
-            "taint_trace": null
+            "shortcode": 11
         },
         {
             "severity": "error",
@@ -23,8 +22,7 @@
             "snippet": "        return $dataImporter;",
             "selected_text": "$dataImporter",
             "error_level": 6,
-            "shortcode": 128,
-            "taint_trace": null
+            "shortcode": 128
         },
         {
             "severity": "error",
@@ -36,8 +34,7 @@
             "snippet": "     * @return \\Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface",
             "selected_text": "\\Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface",
             "error_level": 6,
-            "shortcode": 11,
-            "taint_trace": null
+            "shortcode": 11
         },
         {
             "severity": "error",
@@ -49,8 +46,7 @@
             "snippet": "        return $dataImporter;",
             "selected_text": "$dataImporter",
             "error_level": 6,
-            "shortcode": 128,
-            "taint_trace": null
+            "shortcode": 128
         },
         {
             "severity": "error",
@@ -62,8 +58,7 @@
             "snippet": "     * @return \\Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface",
             "selected_text": "\\Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface",
             "error_level": 6,
-            "shortcode": 11,
-            "taint_trace": null
+            "shortcode": 11
         },
         {
             "severity": "error",
@@ -75,47 +70,7 @@
             "snippet": "        return $dataImporter;",
             "selected_text": "$dataImporter",
             "error_level": 6,
-            "shortcode": 128,
-            "taint_trace": null
-        },
-        {
-            "severity": "error",
-            "line_from": 81,
-            "line_to": 81,
-            "type": "InvalidReturnStatement",
-            "message": "The inferred type 'Orm\\Zed\\CompanyUnitAddress\\Persistence\\SpyCompanyUnitAddress|non-empty-mixed' does not match the declared return type 'int' for Spryker\\Zed\\CompanyBusinessUnitDataImport\\Business\\Model\\Step\\BusinessUnitKeyToAddressKeyStep::getIdCompanyUnitAddressByKey",
-            "file_name": "vendor/spryker/spryker/Bundles/CompanyBusinessUnitDataImport/src/Spryker/Zed/CompanyBusinessUnitDataImport/Business/Model/Step/BusinessUnitKeyToAddressKeyStep.php",
-            "snippet": "        return $this->idCompanyUnitAddressListCache[$companyAddressKey];",
-            "selected_text": "$this->idCompanyUnitAddressListCache[$companyAddressKey]",
-            "error_level": 6,
-            "shortcode": 128,
-            "taint_trace": null
-        },
-        {
-            "severity": "error",
-            "line_from": 58,
-            "line_to": 58,
-            "type": "InvalidReturnStatement",
-            "message": "The inferred type 'Orm\\Zed\\Company\\Persistence\\SpyCompany|non-empty-mixed' does not match the declared return type 'int' for Spryker\\Zed\\CompanyBusinessUnitDataImport\\Business\\Model\\Step\\CompanyKeyToIdCompanyStep::getIdCompanyByKey",
-            "file_name": "vendor/spryker/spryker/Bundles/CompanyBusinessUnitDataImport/src/Spryker/Zed/CompanyBusinessUnitDataImport/Business/Model/Step/CompanyKeyToIdCompanyStep.php",
-            "snippet": "        return $this->idCompanyListCache[$companyKey];",
-            "selected_text": "$this->idCompanyListCache[$companyKey]",
-            "error_level": 6,
-            "shortcode": 128,
-            "taint_trace": null
-        },
-        {
-            "severity": "error",
-            "line_from": 48,
-            "line_to": 48,
-            "type": "InvalidReturnStatement",
-            "message": "The inferred type 'Orm\\Zed\\CompanyBusinessUnit\\Persistence\\SpyCompanyBusinessUnit|non-empty-mixed' does not match the declared return type 'int' for Spryker\\Zed\\CompanyBusinessUnitDataImport\\Persistence\\CompanyBusinessUnitDataImportRepository::getIdCompanyBusinessUnitByKey",
-            "file_name": "vendor/spryker/spryker/Bundles/CompanyBusinessUnitDataImport/src/Spryker/Zed/CompanyBusinessUnitDataImport/Persistence/CompanyBusinessUnitDataImportRepository.php",
-            "snippet": "        return $this->idCompanyBusinessUnitListCache[$companyBusinessUnitKey];",
-            "selected_text": "$this->idCompanyBusinessUnitListCache[$companyBusinessUnitKey]",
-            "error_level": 6,
-            "shortcode": 128,
-            "taint_trace": null
+            "shortcode": 128
         }
     ],
     "warning": [
@@ -129,8 +84,7 @@
             "snippet": "            ->addStep($this->createCompanyKeyToIdCompanyStep())",
             "selected_text": "addStep",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
@@ -142,8 +96,7 @@
             "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
             "selected_text": "addDataSetStepBroker",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
@@ -155,8 +108,7 @@
             "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
             "selected_text": "$dataSetStepBroker",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -168,8 +120,7 @@
             "snippet": "        $dataSetStepBroker->addStep($this->createCompanyBusinessUnitUserWriterStep());",
             "selected_text": "addStep",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
@@ -181,8 +132,7 @@
             "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
             "selected_text": "addDataSetStepBroker",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
@@ -194,8 +144,7 @@
             "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
             "selected_text": "$dataSetStepBroker",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -207,8 +156,7 @@
             "snippet": "        $dataSetStepBroker->addStep($this->createBusinessUnitKeyToAddressKeyStep());",
             "selected_text": "addStep",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
@@ -220,8 +168,7 @@
             "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
             "selected_text": "addDataSetStepBroker",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
@@ -233,8 +180,7 @@
             "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
             "selected_text": "$dataSetStepBroker",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         }
     ],
     "deprecation": []

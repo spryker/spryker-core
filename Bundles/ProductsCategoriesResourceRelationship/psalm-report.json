@@ -49,42 +49,6 @@
             "selected_text": "$productAbstractIds",
             "error_level": 3,
             "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::resource does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductsCategoriesResourceRelationship/src/Spryker/Glue/ProductsCategoriesResourceRelationship/ProductsCategoriesResourceRelationshipDependencyProvider.php",
-            "snippet": "                $container->getLocator()->categoriesRestApi()->resource()",
-            "selected_text": "resource",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 65,
-            "line_to": 65,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductsCategoriesResourceRelationship/src/Spryker/Glue/ProductsCategoriesResourceRelationship/ProductsCategoriesResourceRelationshipDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 81,
-            "line_to": 81,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductsCategoriesResourceRelationship/src/Spryker/Glue/ProductsCategoriesResourceRelationship/ProductsCategoriesResourceRelationshipDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productCategoryStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

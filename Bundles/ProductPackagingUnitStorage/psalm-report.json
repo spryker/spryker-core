@@ -1,5 +1,90 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\ProductPackagingUnitStorage\\Communication\\Plugin\\Event\\Listener\\ProductPackagingUnitPublishStorageListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Zed/ProductPackagingUnitStorage/Communication/Plugin/Event/Listener/ProductPackagingUnitPublishStorageListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\ProductPackagingUnitStorage\\Communication\\Plugin\\Event\\Listener\\ProductPackagingUnitTypePublishStorageListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Zed/ProductPackagingUnitStorage/Communication/Plugin/Event/Listener/ProductPackagingUnitTypePublishStorageListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\ProductPackagingUnitStorage\\Communication\\Plugin\\Event\\Listener\\ProductPackagingUnitTypeUnpublishStorageListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Zed/ProductPackagingUnitStorage/Communication/Plugin/Event/Listener/ProductPackagingUnitTypeUnpublishStorageListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\ProductPackagingUnitStorage\\Communication\\Plugin\\Event\\Listener\\ProductPackagingUnitUnpublishStorageListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Zed/ProductPackagingUnitStorage/Communication/Plugin/Event/Listener/ProductPackagingUnitUnpublishStorageListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyProductPackagingUnitStorageEntityTransfer>' for Spryker\\Zed\\ProductPackagingUnitStorage\\Persistence\\ProductPackagingUnitStorageRepository::findProductPackagingUnitStorageEntitiesByProductConcreteIds",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Zed/ProductPackagingUnitStorage/Persistence/ProductPackagingUnitStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($query)->find();",
+            "selected_text": "$this->buildQueryFromCriteria($query)->find()",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 90,
+            "line_to": 90,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyProductPackagingUnitEntityTransfer>' for Spryker\\Zed\\ProductPackagingUnitStorage\\Persistence\\ProductPackagingUnitStorageRepository::findFilteredProductPackagingUnit",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Zed/ProductPackagingUnitStorage/Persistence/ProductPackagingUnitStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();",
+            "selected_text": "$this->buildQueryFromCriteria($query, $filterTransfer)->find()",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 107,
+            "line_to": 107,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyProductPackagingUnitStorageEntityTransfer>' for Spryker\\Zed\\ProductPackagingUnitStorage\\Persistence\\ProductPackagingUnitStorageRepository::findFilteredProductPackagingUnitStorageEntityTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Zed/ProductPackagingUnitStorage/Persistence/ProductPackagingUnitStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();",
+            "selected_text": "$this->buildQueryFromCriteria($query, $filterTransfer)->find()",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -51,42 +136,6 @@
         },
         {
             "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Client/ProductPackagingUnitStorage/ProductPackagingUnitStorageDependencyProvider.php",
-            "snippet": "            return new ProductPackagingUnitStorageToStorageClientBridge($container->getLocator()->storage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Client/ProductPackagingUnitStorage/ProductPackagingUnitStorageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productMeasurementUnitStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 76,
-            "line_to": 76,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Client/ProductPackagingUnitStorage/ProductPackagingUnitStorageDependencyProvider.php",
-            "snippet": "            return new ProductPackagingUnitStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 28,
             "line_to": 28,
             "type": "PossiblyNullReference",
@@ -108,30 +157,6 @@
             "selected_text": "getName",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 105,
-            "line_to": 105,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Zed/ProductPackagingUnitStorage/ProductPackagingUnitStorageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productPackagingUnit()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 121,
-            "line_to": 121,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Zed/ProductPackagingUnitStorage/ProductPackagingUnitStorageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->eventBehavior()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

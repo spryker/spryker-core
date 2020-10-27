@@ -11,8 +11,7 @@
             "snippet": "        $userTransfer = $this->userFacade->getUserById($cmsVersionTransfer->getFkUser());",
             "selected_text": "$cmsVersionTransfer->getFkUser()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -24,8 +23,7 @@
             "snippet": "        $cmsVersionEntity = $this->updateCmsVersionUserId($cmsVersionTransfer, $idUser);",
             "selected_text": "$idUser",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -37,8 +35,7 @@
             "snippet": "            ->queryCmsVersionById($cmsVersionTransfer->getIdCmsVersion())",
             "selected_text": "$cmsVersionTransfer->getIdCmsVersion()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -50,8 +47,7 @@
             "snippet": "        $cmsVersionEntity->setFkUser($idUser);",
             "selected_text": "setFkUser",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         }
     ],
     "deprecation": []

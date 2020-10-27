@@ -1,5 +1,18 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 179,
+            "line_to": 179,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\CompanyUserInvitation\\Persistence\\CompanyUserInvitationRepository::buildQueryFromCriteria has wrong name $criteria, expecting $modelCriteria as defined by Spryker\\Zed\\Kernel\\Persistence\\AbstractRepository::buildQueryFromCriteria",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUserInvitation/src/Spryker/Zed/CompanyUserInvitation/Persistence/CompanyUserInvitationRepository.php",
+            "snippet": "    public function buildQueryFromCriteria(ModelCriteria $criteria, ?FilterTransfer $filterTransfer = null): ModelCriteria",
+            "selected_text": "$criteria",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -11,8 +24,7 @@
             "snippet": "            !$this->can(ManageCompanyUserInvitationPermissionPlugin::KEY, $companyUserInvitationDeleteRequestTransfer->getIdCompanyUser())",
             "selected_text": "$companyUserInvitationDeleteRequestTransfer->getIdCompanyUser()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -24,8 +36,7 @@
             "snippet": "                || !$this->repository->findCompanyUserInvitationById($companyUserInvitationTransfer)",
             "selected_text": "$companyUserInvitationTransfer",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -37,8 +48,7 @@
             "snippet": "        $this->entityManager->deleteCompanyUserInvitationById($companyUserInvitationTransfer->getIdCompanyUserInvitation());",
             "selected_text": "$companyUserInvitationTransfer->getIdCompanyUserInvitation()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -50,8 +60,7 @@
             "snippet": "        $this->entityManager->deleteCompanyUserInvitationById($companyUserInvitationTransfer->getIdCompanyUserInvitation());",
             "selected_text": "getIdCompanyUserInvitation",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -63,8 +72,7 @@
             "snippet": "            sprintf('%s.%s', $invitationTransfer->getEmail(), microtime(true)),",
             "selected_text": "$invitationTransfer->getEmail()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -76,8 +84,7 @@
             "snippet": "        return $this->businessUnitCache[$invitationTransfer->getCompanyBusinessUnitName()];",
             "selected_text": "$this->businessUnitCache",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -89,8 +96,7 @@
             "snippet": "        $companyUserTransfer = $this->companyUserFacade->getCompanyUserById($invitationTransfer->getFkCompanyUser());",
             "selected_text": "$invitationTransfer->getFkCompanyUser()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -102,8 +108,7 @@
             "snippet": "            $this->businessUnitCache[$companyBusinessUnitTransfer->getName()] = $companyBusinessUnitTransfer->getIdCompanyBusinessUnit();",
             "selected_text": "$this->businessUnitCache",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -115,8 +120,7 @@
             "snippet": "     * @return int",
             "selected_text": "int",
             "error_level": 5,
-            "shortcode": 144,
-            "taint_trace": null
+            "shortcode": 144
         },
         {
             "severity": "info",
@@ -128,8 +132,7 @@
             "snippet": "        return $this->companyUserInvitationStatusTransfer->getIdCompanyUserInvitationStatus();",
             "selected_text": "$this->companyUserInvitationStatusTransfer->getIdCompanyUserInvitationStatus()",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -141,8 +144,7 @@
             "snippet": "        return $this->companyUserInvitationStatusTransfer->getIdCompanyUserInvitationStatus();",
             "selected_text": "getIdCompanyUserInvitationStatus",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -154,8 +156,7 @@
             "snippet": "        if (!$this->can(ManageCompanyUserInvitationPermissionPlugin::KEY, $companyUserInvitationImportRequestTransfer->getIdCompanyUser())) {",
             "selected_text": "$companyUserInvitationImportRequestTransfer->getIdCompanyUser()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -167,8 +168,7 @@
             "snippet": "        foreach ($companyUserInvitationCollection->getCompanyUserInvitations() as $companyUserInvitationTransfer) {",
             "selected_text": "getCompanyUserInvitations",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -180,8 +180,7 @@
             "snippet": "                        $companyUserInvitationCreateResponseTransfer->getError()",
             "selected_text": "$companyUserInvitationCreateResponseTransfer->getError()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -193,8 +192,7 @@
             "snippet": "            $companyUserInvitationTransfer->getHash()",
             "selected_text": "$companyUserInvitationTransfer->getHash()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -206,8 +204,7 @@
             "snippet": "        return $this->repository->getCompanyUserInvitationByHash($companyUserInvitationTransfer);",
             "selected_text": "getCompanyUserInvitationByHash",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
@@ -219,8 +216,7 @@
             "snippet": "        if (!$this->can(ManageCompanyUserInvitationPermissionPlugin::KEY, $companyUserInvitationGetCollectionRequestTransfer->getIdCompanyUser())) {",
             "selected_text": "$companyUserInvitationGetCollectionRequestTransfer->getIdCompanyUser()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -232,8 +228,7 @@
             "snippet": "            $companyUserInvitationGetCollectionRequestTransfer->getCriteriaFilter()",
             "selected_text": "$companyUserInvitationGetCollectionRequestTransfer->getCriteriaFilter()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -245,8 +240,7 @@
             "snippet": "        if (!$this->can(ManageCompanyUserInvitationPermissionPlugin::KEY, $companyUserInvitationSendRequestTransfer->getIdCompanyUser())) {",
             "selected_text": "$companyUserInvitationSendRequestTransfer->getIdCompanyUser()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -258,8 +252,7 @@
             "snippet": "            $companyUserInvitationSendRequestTransfer->getCompanyUserInvitation()",
             "selected_text": "$companyUserInvitationSendRequestTransfer->getCompanyUserInvitation()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -271,8 +264,7 @@
             "snippet": "            $this->send($companyUserInvitationSendRequestTransfer->getIdCompanyUser(), $companyUserInvitationTransfer)",
             "selected_text": "$companyUserInvitationSendRequestTransfer->getIdCompanyUser()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -284,8 +276,7 @@
             "snippet": "        if (!$this->can(ManageCompanyUserInvitationPermissionPlugin::KEY, $companyUserTransfer->getIdCompanyUser())) {",
             "selected_text": "$companyUserTransfer->getIdCompanyUser()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -297,8 +288,7 @@
             "snippet": "            if (!$this->send($companyUserTransfer->getIdCompanyUser(), $companyUserInvitationTransfer)) {",
             "selected_text": "$companyUserTransfer->getIdCompanyUser()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -310,8 +300,7 @@
             "snippet": "     * @return bool",
             "selected_text": "bool",
             "error_level": 5,
-            "shortcode": 144,
-            "taint_trace": null
+            "shortcode": 144
         },
         {
             "severity": "info",
@@ -323,8 +312,7 @@
             "snippet": "        return $this->invitationUpdater->updateStatus($companyUserInvitationUpdateStatusRequestTransfer)->getIsSuccess();",
             "selected_text": "$this->invitationUpdater->updateStatus($companyUserInvitationUpdateStatusRequestTransfer)->getIsSuccess()",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -336,8 +324,7 @@
             "snippet": "            !$this->can(ManageCompanyUserInvitationPermissionPlugin::KEY, $companyUserInvitationUpdateStatusRequestTransfer->getIdCompanyUser())",
             "selected_text": "$companyUserInvitationUpdateStatusRequestTransfer->getIdCompanyUser()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -349,8 +336,7 @@
             "snippet": "            || !$this->repository->findCompanyUserInvitationById($companyUserInvitationTransfer)",
             "selected_text": "$companyUserInvitationTransfer",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -362,8 +348,7 @@
             "snippet": "        $companyUserInvitationTransfer->setFkCompanyUserInvitationStatus(",
             "selected_text": "setFkCompanyUserInvitationStatus",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -375,8 +360,7 @@
             "snippet": "            $this->getIdCompanyUserInvitationStatus($companyUserInvitationUpdateStatusRequestTransfer->getStatusKey())",
             "selected_text": "$companyUserInvitationUpdateStatusRequestTransfer->getStatusKey()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -388,8 +372,7 @@
             "snippet": "            $this->invitationStatusCache[$companyUserInvitationStatusTransfer->getStatusKey()]",
             "selected_text": "$this->invitationStatusCache",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -401,8 +384,7 @@
             "snippet": "                = $companyUserInvitationStatusTransfer->getIdCompanyUserInvitationStatus();",
             "selected_text": "getIdCompanyUserInvitationStatus",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -414,8 +396,7 @@
             "snippet": "        return $this->invitationStatusCache[$statusKey];",
             "selected_text": "$this->invitationStatusCache[$statusKey]",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -427,8 +408,7 @@
             "snippet": "        if (!trim($invitationTransfer->getFirstName())) {",
             "selected_text": "$invitationTransfer->getFirstName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -440,8 +420,7 @@
             "snippet": "        if (!trim($invitationTransfer->getLastName())) {",
             "selected_text": "$invitationTransfer->getLastName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -453,8 +432,7 @@
             "snippet": "            !trim($invitationTransfer->getCompanyBusinessUnitName())",
             "selected_text": "$invitationTransfer->getCompanyBusinessUnitName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -466,8 +444,7 @@
             "snippet": "            $this->errorMessage = sprintf('Business Unit \"%s\" is not valid', $invitationTransfer->getCompanyBusinessUnitName());",
             "selected_text": "$invitationTransfer->getCompanyBusinessUnitName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -479,8 +456,7 @@
             "snippet": "            $this->errorMessage = sprintf('Email \"%s\" is not valid', $invitationTransfer->getEmail());",
             "selected_text": "$invitationTransfer->getEmail()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -492,8 +468,7 @@
             "snippet": "            $this->errorMessage = sprintf('Invitation for %s is already imported', $invitationTransfer->getEmail());",
             "selected_text": "$invitationTransfer->getEmail()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -505,8 +480,7 @@
             "snippet": "        $companyUserTransfer = $this->companyUserFacade->getCompanyUserById($invitationTransfer->getFkCompanyUser());",
             "selected_text": "$invitationTransfer->getFkCompanyUser()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -518,8 +492,7 @@
             "snippet": "        if (!$this->can(ManageCompanyUserInvitationPermissionPlugin::KEY, $companyUserInvitationCreateRequestTransfer->getIdCompanyUser())) {",
             "selected_text": "$companyUserInvitationCreateRequestTransfer->getIdCompanyUser()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -531,8 +504,7 @@
             "snippet": "        if (!$this->invitationValidator->isValidInvitation($companyUserInvitationTransfer)) {",
             "selected_text": "$companyUserInvitationTransfer",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -544,8 +516,7 @@
             "snippet": "            $mailTransfer->getEmail(),",
             "selected_text": "$mailTransfer->getEmail()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -557,8 +528,7 @@
             "snippet": "            $mailTransfer->getEmail(),",
             "selected_text": "getEmail",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -570,8 +540,7 @@
             "snippet": "            sprintf('%s %s', $mailTransfer->getFirstName(), $mailTransfer->getLastName())",
             "selected_text": "$mailTransfer->getFirstName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -583,21 +552,19 @@
             "snippet": "            sprintf('%s %s', $mailTransfer->getFirstName(), $mailTransfer->getLastName())",
             "selected_text": "$mailTransfer->getLastName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
             "line_from": 52,
             "line_to": 52,
             "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\CompanyUserInvitation\\Persistence\\Mapper\\CompanyUserInvitationMapperInterface::mapCompanyUserInvitationCollection expects Propel\\Runtime\\Collection\\Collection, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed>|mixed provided",
+            "message": "Argument 1 of Spryker\\Zed\\CompanyUserInvitation\\Persistence\\Mapper\\CompanyUserInvitationMapperInterface::mapCompanyUserInvitationCollection expects Propel\\Runtime\\Collection\\Collection, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed provided",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUserInvitation/src/Spryker/Zed/CompanyUserInvitation/Persistence/CompanyUserInvitationRepository.php",
             "snippet": "            ->mapCompanyUserInvitationCollection($queryCompanyUserInvitation->find());",
             "selected_text": "$queryCompanyUserInvitation->find()",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -609,8 +576,7 @@
             "snippet": "            $companyUserInvitationCriteriaFilterTransfer->getPagination()->requirePage()->getPage(),",
             "selected_text": "$companyUserInvitationCriteriaFilterTransfer->getPagination()->requirePage()->getPage()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -622,8 +588,7 @@
             "snippet": "            $companyUserInvitationCriteriaFilterTransfer->getPagination()->requirePage()->getPage(),",
             "selected_text": "requirePage",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -635,8 +600,7 @@
             "snippet": "            $companyUserInvitationCriteriaFilterTransfer->getPagination()->requireMaxPerPage()->getMaxPerPage()",
             "selected_text": "$companyUserInvitationCriteriaFilterTransfer->getPagination()->requireMaxPerPage()->getMaxPerPage()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -648,8 +612,7 @@
             "snippet": "            $companyUserInvitationCriteriaFilterTransfer->getPagination()->requireMaxPerPage()->getMaxPerPage()",
             "selected_text": "requireMaxPerPage",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -661,8 +624,7 @@
             "snippet": "            $this->hydratePaginationTransfer($companyUserInvitationCriteriaFilterTransfer->getPagination(), $pager)",
             "selected_text": "$companyUserInvitationCriteriaFilterTransfer->getPagination()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         }
     ],
     "deprecation": []

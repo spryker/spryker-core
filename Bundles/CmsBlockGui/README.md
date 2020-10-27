@@ -1,6 +1,6 @@
 # CmsBlockGui Module
 [![Build Status](https://travis-ci.org/spryker/cms-block-gui.svg)](https://travis-ci.org/spryker/cms-block-gui)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 CmsBlockGui is a user interface module to manage the CMS blocks in the Zed Administration Interface.
 

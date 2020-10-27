@@ -43,7 +43,7 @@
             "line_from": 121,
             "line_to": 121,
             "type": "MoreSpecificReturnType",
-            "message": "The declared return type 'Symfony\\Component\\Validator\\Constraint' for /media/mark/f42d91bd-14bc-4e71-936f-96ed99135be4/www/suite-nonsplit/project/vendor/spryker/spryker/bundles/restrequestvalidator/src/spryker/glue/restrequestvalidator/processor/validator/constraint/restrequestvalidatorconstraintresolver.php:121:4417:-:closure is more specific than the inferred return type 'object'",
+            "message": "The declared return type 'Symfony\\Component\\Validator\\Constraint' for /media/mark/f42d91bd-14bc-4e71-936f-96ed99135be4/www/devvm/project/vendor/spryker/spryker/bundles/restrequestvalidator/src/spryker/glue/restrequestvalidator/processor/validator/constraint/restrequestvalidatorconstraintresolver.php:121:4417:-:closure is more specific than the inferred return type 'object'",
             "file_name": "vendor/spryker/spryker/Bundles/RestRequestValidator/src/Spryker/Glue/RestRequestValidator/Processor/Validator/Constraint/RestRequestValidatorConstraintResolver.php",
             "snippet": "        return function (array $validatorConfig): Constraint {",
             "selected_text": "Constraint",
@@ -55,24 +55,12 @@
             "line_from": 131,
             "line_to": 131,
             "type": "LessSpecificReturnStatement",
-            "message": "The type 'object' is more general than the declared return type 'Symfony\\Component\\Validator\\Constraint' for /media/mark/f42d91bd-14bc-4e71-936f-96ed99135be4/www/suite-nonsplit/project/vendor/spryker/spryker/bundles/restrequestvalidator/src/spryker/glue/restrequestvalidator/processor/validator/constraint/restrequestvalidatorconstraintresolver.php:121:4417:-:closure",
+            "message": "The type 'object' is more general than the declared return type 'Symfony\\Component\\Validator\\Constraint' for /media/mark/f42d91bd-14bc-4e71-936f-96ed99135be4/www/devvm/project/vendor/spryker/spryker/bundles/restrequestvalidator/src/spryker/glue/restrequestvalidator/processor/validator/constraint/restrequestvalidatorconstraintresolver.php:121:4417:-:closure",
             "file_name": "vendor/spryker/spryker/Bundles/RestRequestValidator/src/Spryker/Glue/RestRequestValidator/Processor/Validator/Constraint/RestRequestValidatorConstraintResolver.php",
             "snippet": "            return new $className($parameters);",
             "selected_text": "new $className($parameters)",
             "error_level": 3,
             "shortcode": 129
-        },
-        {
-            "severity": "info",
-            "line_from": 82,
-            "line_to": 82,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/RestRequestValidator/src/Spryker/Glue/RestRequestValidator/RestRequestValidatorDependencyProvider.php",
-            "snippet": "            return new RestRequestValidatorToStoreClientBridge($container->getLocator()->store()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

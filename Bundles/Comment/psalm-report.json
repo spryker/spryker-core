@@ -11,8 +11,7 @@
             "snippet": "                ->requireUuid();",
             "selected_text": "requireUuid",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -24,8 +23,7 @@
             "snippet": "        $commentTransfer = $this->commentRepository->findCommentByUuid($commentTagRequestTransfer->getComment());",
             "selected_text": "$commentTagRequestTransfer->getComment()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -37,8 +35,7 @@
             "snippet": "                ->requireUuid();",
             "selected_text": "requireUuid",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -50,8 +47,7 @@
             "snippet": "        $commentTransfer = $this->commentRepository->findCommentByUuid($commentTagRequestTransfer->getComment());",
             "selected_text": "$commentTagRequestTransfer->getComment()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -63,8 +59,7 @@
             "snippet": "                $commentTagMap[$commentTagTransfer->getName()] = $this->commentEntityManager->createCommentTag($commentTagTransfer);",
             "selected_text": "$commentTagMap",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -76,8 +71,7 @@
             "snippet": "            $expandedCommentTagTransfers[] = $commentTagMap[$commentTagTransfer->getName()];",
             "selected_text": "$commentTagMap",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -89,8 +83,7 @@
             "snippet": "            $commentTagMap[$commentTagTransfer->getName()] = $commentTagTransfer;",
             "selected_text": "$commentTagMap",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -102,8 +95,7 @@
             "snippet": "        if ($duplicatedCommentTransfer->getCommentTags()->count()) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -115,8 +107,7 @@
             "snippet": "                ->requireMessage()",
             "selected_text": "requireMessage",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -128,8 +119,7 @@
             "snippet": "                    ->requireIdCustomer();",
             "selected_text": "requireIdCustomer",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -141,8 +131,7 @@
             "snippet": "                ->requireUuid()",
             "selected_text": "requireUuid",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -154,8 +143,7 @@
             "snippet": "                    ->requireIdCustomer();",
             "selected_text": "requireIdCustomer",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -167,8 +155,7 @@
             "snippet": "                ->requireUuid()",
             "selected_text": "requireUuid",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -180,8 +167,7 @@
             "snippet": "                    ->requireIdCustomer();",
             "selected_text": "requireIdCustomer",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -193,8 +179,7 @@
             "snippet": "            ->setMessage(trim($commentTransfer->getMessage()))",
             "selected_text": "setMessage",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -206,8 +191,7 @@
             "snippet": "            ->setMessage(trim($commentTransfer->getMessage()))",
             "selected_text": "$commentTransfer->getMessage()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -219,8 +203,7 @@
             "snippet": "            ->setMessage(trim($commentTransfer->getMessage()))",
             "selected_text": "getMessage",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -232,8 +215,7 @@
             "snippet": "        $commentTransfer = $this->commentRepository->findCommentByUuid($commentRequestTransfer->getComment());",
             "selected_text": "$commentRequestTransfer->getComment()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -245,8 +227,7 @@
             "snippet": "            ->setMessage(trim($commentRequestTransfer->getComment()->getMessage()))",
             "selected_text": "setMessage",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -258,8 +239,7 @@
             "snippet": "            ->setMessage(trim($commentRequestTransfer->getComment()->getMessage()))",
             "selected_text": "$commentRequestTransfer->getComment()->getMessage()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -271,8 +251,7 @@
             "snippet": "            ->setMessage(trim($commentRequestTransfer->getComment()->getMessage()))",
             "selected_text": "getMessage",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -284,8 +263,7 @@
             "snippet": "            ->setCommentTags($commentRequestTransfer->getComment()->getCommentTags())",
             "selected_text": "getCommentTags",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -297,8 +275,7 @@
             "snippet": "        $commentTransfer = $this->commentRepository->findCommentByUuid($commentRequestTransfer->getComment());",
             "selected_text": "$commentRequestTransfer->getComment()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -310,8 +287,7 @@
             "snippet": "        $commentTransfer->setCommentTags(new ArrayObject());",
             "selected_text": "setCommentTags",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -323,8 +299,7 @@
             "snippet": "        if ($commentTransfer->getCustomer()->getIdCustomer() !== $commentRequestTransfer->getComment()->getCustomer()->getIdCustomer()) {",
             "selected_text": "getIdCustomer",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -336,8 +311,7 @@
             "snippet": "        if ($commentTransfer->getCustomer()->getIdCustomer() !== $commentRequestTransfer->getComment()->getCustomer()->getIdCustomer()) {",
             "selected_text": "getCustomer",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -349,8 +323,7 @@
             "snippet": "        if ($commentTransfer->getCustomer()->getIdCustomer() !== $commentRequestTransfer->getComment()->getCustomer()->getIdCustomer()) {",
             "selected_text": "getIdCustomer",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -362,8 +335,7 @@
             "snippet": "        $messageLength = mb_strlen($commentTransfer->getMessage());",
             "selected_text": "$commentTransfer->getMessage()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -375,8 +347,7 @@
             "snippet": "            ->mapCommentTransferToCommentEntity($commentTransfer, $commentEntity);",
             "selected_text": "$commentEntity",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -388,8 +359,7 @@
             "snippet": "            $assignedCommentTagIds[] = $commentTagTransfer->getIdCommentTag();",
             "selected_text": "$assignedCommentTagIds",
             "error_level": 3,
-            "shortcode": 18,
-            "taint_trace": null
+            "shortcode": 18
         },
         {
             "severity": "info",
@@ -401,8 +371,7 @@
             "snippet": "                ->setFkCommentTag($commentTagTransfer->getIdCommentTag())",
             "selected_text": "$commentTagTransfer->getIdCommentTag()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -414,8 +383,7 @@
             "snippet": "                ->setFkComment($commentTransfer->getIdComment());",
             "selected_text": "$commentTransfer->getIdComment()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -427,8 +395,7 @@
             "snippet": "            ->getFirst();",
             "selected_text": "getFirst",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -440,8 +407,7 @@
             "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Comment\\Persistence\\SpyCommentTag[] $commentTagEntities",
             "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Comment\\Persistence\\SpyCommentTag[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -453,8 +419,7 @@
             "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Comment\\Persistence\\SpyComment[] $commentEntities",
             "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Comment\\Persistence\\SpyComment[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -466,8 +431,7 @@
             "snippet": "            ->setFkCustomer($commentTransfer->getCustomer()->getIdCustomer())",
             "selected_text": "getIdCustomer",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -479,8 +443,7 @@
             "snippet": "            ->setFkCommentThread($commentTransfer->getIdCommentThread());",
             "selected_text": "$commentTransfer->getIdCommentThread()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -492,8 +455,7 @@
             "snippet": "            $commentTransfer->setCustomer($this->mapCustomerEntityToCustomerTransfer($commentEntity->getSpyCustomer(), new CustomerTransfer()));",
             "selected_text": "$commentEntity->getSpyCustomer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         }
     ],
     "deprecation": []

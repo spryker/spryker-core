@@ -1,5 +1,66 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\ProductDiscontinuedStorage\\Communication\\Plugin\\Event\\Listener\\ProductDiscontinuedNoteStorageListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedStorage/src/Spryker/Zed/ProductDiscontinuedStorage/Communication/Plugin/Event/Listener/ProductDiscontinuedNoteStorageListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\ProductDiscontinuedStorage\\Communication\\Plugin\\Event\\Listener\\ProductDiscontinuedStorageListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedStorage/src/Spryker/Zed/ProductDiscontinuedStorage/Communication/Plugin/Event/Listener/ProductDiscontinuedStorageListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\ProductDiscontinuedStorage\\Communication\\Plugin\\Event\\Listener\\ProductDiscontinuedStoragePublishListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedStorage/src/Spryker/Zed/ProductDiscontinuedStorage/Communication/Plugin/Event/Listener/ProductDiscontinuedStoragePublishListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\ProductDiscontinuedStorage\\Communication\\Plugin\\Event\\Listener\\ProductDiscontinuedStorageUnpublishListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedStorage/src/Spryker/Zed/ProductDiscontinuedStorage/Communication/Plugin/Event/Listener/ProductDiscontinuedStorageUnpublishListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 68,
+            "line_to": 68,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyProductDiscontinuedStorageEntityTransfer>' for Spryker\\Zed\\ProductDiscontinuedStorage\\Persistence\\ProductDiscontinuedStorageRepository::findFilteredProductDiscontinuedStorageEntities",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedStorage/src/Spryker/Zed/ProductDiscontinuedStorage/Persistence/ProductDiscontinuedStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();",
+            "selected_text": "$this->buildQueryFromCriteria($query, $filterTransfer)->find()",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -15,54 +76,6 @@
         },
         {
             "severity": "info",
-            "line_from": 48,
-            "line_to": 48,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedStorage/src/Spryker/Client/ProductDiscontinuedStorage/ProductDiscontinuedStorageDependencyProvider.php",
-            "snippet": "            return new ProductDiscontinuedStorageToGlossaryStorageClientBridge($container->getLocator()->glossaryStorage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedStorage/src/Spryker/Client/ProductDiscontinuedStorage/ProductDiscontinuedStorageDependencyProvider.php",
-            "snippet": "            return new ProductDiscontinuedStorageToLocaleClientBridge($container->getLocator()->locale()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 76,
-            "line_to": 76,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedStorage/src/Spryker/Client/ProductDiscontinuedStorage/ProductDiscontinuedStorageDependencyProvider.php",
-            "snippet": "            return new ProductDiscontinuedStorageToStorageClientBridge($container->getLocator()->storage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 90,
-            "line_to": 90,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedStorage/src/Spryker/Client/ProductDiscontinuedStorage/ProductDiscontinuedStorageDependencyProvider.php",
-            "snippet": "            return new ProductDiscontinuedStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 37,
             "line_to": 37,
             "type": "PossiblyNullArgument",
@@ -70,6 +83,30 @@
             "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedStorage/src/Spryker/Client/ProductDiscontinuedStorage/ProductViewExpander/DiscontinuedAvailabilityProductViewExpander.php",
             "snippet": "            ->findProductDiscontinuedStorage($productViewTransfer->getSku(), $localeName);",
             "selected_text": "$productViewTransfer->getSku()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getSuperAttributes on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedStorage/src/Spryker/Client/ProductDiscontinuedStorage/ProductViewExpander/DiscontinuedSuperAttributesProductViewExpander.php",
+            "snippet": "        $superAttributes = $productViewTransfer->getAttributeMap()->getSuperAttributes();",
+            "selected_text": "getSuperAttributes",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Client\\ProductDiscontinuedStorage\\ProductViewExpander\\DiscontinuedSuperAttributesProductViewExpander::prepareProductSuperAttributes cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedStorage/src/Spryker/Client/ProductDiscontinuedStorage/ProductViewExpander/DiscontinuedSuperAttributesProductViewExpander.php",
+            "snippet": "        $this->prepareProductSuperAttributes($productViewTransfer->getAttributeMap(), $localeName);",
+            "selected_text": "$productViewTransfer->getAttributeMap()",
             "error_level": 3,
             "shortcode": 78
         },
@@ -204,42 +241,6 @@
             "selected_text": "getArrayCopy",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 60,
-            "line_to": 60,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedStorage/src/Spryker/Zed/ProductDiscontinuedStorage/ProductDiscontinuedStorageDependencyProvider.php",
-            "snippet": "            return new ProductDiscontinuedStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 74,
-            "line_to": 74,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedStorage/src/Spryker/Zed/ProductDiscontinuedStorage/ProductDiscontinuedStorageDependencyProvider.php",
-            "snippet": "            return new ProductDiscontinuedStorageToProductDiscontinuedFacadeBridge($container->getLocator()->productDiscontinued()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 88,
-            "line_to": 88,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedStorage/src/Spryker/Zed/ProductDiscontinuedStorage/ProductDiscontinuedStorageDependencyProvider.php",
-            "snippet": "            return new ProductDiscontinuedStorageToLocaleFacadeBridge($container->getLocator()->locale()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [
@@ -305,8 +306,8 @@
         },
         {
             "severity": "info",
-            "line_from": 24,
-            "line_to": 24,
+            "line_from": 25,
+            "line_to": 25,
             "type": "DeprecatedTrait",
             "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedStorage/src/Spryker/Zed/ProductDiscontinuedStorage/Communication/Plugin/Event/Listener/ProductDiscontinuedStorageListener.php",
@@ -341,8 +342,8 @@
         },
         {
             "severity": "info",
-            "line_from": 23,
-            "line_to": 23,
+            "line_from": 22,
+            "line_to": 22,
             "type": "DeprecatedInterface",
             "message": "Spryker\\Zed\\SynchronizationExtension\\Dependency\\Plugin\\SynchronizationDataRepositoryPluginInterface is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedStorage/src/Spryker/Zed/ProductDiscontinuedStorage/Communication/Plugin/Synchronization/ProductDiscontinuedSynchronizationDataPlugin.php",
