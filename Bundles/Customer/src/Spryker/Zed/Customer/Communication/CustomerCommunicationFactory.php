@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Customer\Communication;
 
+use Spryker\Zed\Customer\Business\Customer\CustomerPasswordPolicyValidator;
+use Spryker\Zed\Customer\Business\Customer\CustomerPasswordPolicyValidatorInterface;
 use Spryker\Zed\Customer\Communication\Form\AddressForm;
 use Spryker\Zed\Customer\Communication\Form\CustomerDeleteForm;
 use Spryker\Zed\Customer\Communication\Form\CustomerForm;
@@ -41,6 +43,14 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
             $this->getUtilDateTimeService(),
             $this->createCustomerTableActionPluginExecutor()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\Customer\CustomerPasswordPolicyValidatorInterface
+     */
+    public function createPasswordPolicyValidator(): CustomerPasswordPolicyValidatorInterface
+    {
+        return new CustomerPasswordPolicyValidator();
     }
 
     /**

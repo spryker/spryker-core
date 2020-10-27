@@ -310,6 +310,54 @@ class RestApiError implements RestApiErrorInterface
 
                 continue;
             }
+
+            if ($customerErrorTransfer->getMessage() === static::ERROR_CUSTOMER_PASSWORD_TOO_LONG) {
+                $restResponse = $this->addPasswordTooLong($restResponse);
+
+                continue;
+            }
+
+            if ($customerErrorTransfer->getMessage() === static::ERROR_CUSTOMER_PASSWORD_TOO_SHORT) {
+                $restResponse = $this->addPasswordTooShort($restResponse);
+
+                continue;
+            }
+
+            if ($customerErrorTransfer->getMessage() === static::ERROR_CUSTOMER_PASSWORD_UPPER_CASE_REQUIRED) {
+                $restResponse = $this->addPasswordUpperCaseRequired($restResponse);
+
+                continue;
+            }
+
+            if ($customerErrorTransfer->getMessage() === static::ERROR_CUSTOMER_PASSWORD_LOWER_CASE_REQUIRED) {
+                $restResponse = $this->addPasswordLowerCaseRequired($restResponse);
+
+                continue;
+            }
+
+            if ($customerErrorTransfer->getMessage() === static::ERROR_CUSTOMER_PASSWORD_SPECIAL_REQUIRED) {
+                $restResponse = $this->addPasswordSpecialRequired($restResponse);
+
+                continue;
+            }
+
+            if ($customerErrorTransfer->getMessage() === static::ERROR_CUSTOMER_PASSWORD_SEQUNECE_TOO_LONG) {
+                $restResponse = $this->addPasswordSequenceNotAllowed($restResponse);
+
+                continue;
+            }
+
+            if ($customerErrorTransfer->getMessage() === static::ERROR_CUSTOMER_PASSWORD_DIGIT_REQUIRED) {
+                $restResponse = $this->addPasswordDigitRequired($restResponse);
+
+                continue;
+            }
+
+            if ($customerErrorTransfer->getMessage() === static::ERROR_CUSTOMER_PASSWORD_BLACKLIST) {
+                $restResponse = $this->addPasswordInBlacklist($restResponse);
+
+                continue;
+            }
         }
 
         return $restResponse;
@@ -374,5 +422,140 @@ class RestApiError implements RestApiErrorInterface
         }
 
         return $restResponse;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function addPasswordTooShort(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_PASSWORD_TOO_SHORT)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_PASSWORD_TOO_SHORT);
+
+        return $restResponse->addError($restErrorMessageTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function addPasswordTooLong(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_PASSWORD_TOO_LONG)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_PASSWORD_TOO_LONG);
+
+        return $restResponse->addError($restErrorMessageTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function addPasswordLowerCaseRequired(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_PASSWORD_LOWER_CASE_REQUIRED)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_PASSWORD_LOWER_CASE_REQUIRED);
+
+        return $restResponse->addError($restErrorMessageTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function addPasswordUpperCaseRequired(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_PASSWORD_UPPER_CASE_REQUIRED)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_PASSWORD_UPPER_CASE_REQUIRED);
+
+        return $restResponse->addError($restErrorMessageTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function addPasswordDigitRequired(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_PASSWORD_DIGIT_REQUIRED)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_PASSWORD_DIGIT_REQUIRED);
+
+        return $restResponse->addError($restErrorMessageTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function addPasswordSpecialRequired(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_PASSWORD_SPECIAL_REQUIRED)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_PASSWORD_SPECIAL_REQUIRED);
+
+        return $restResponse->addError($restErrorMessageTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function addPasswordSequenceNotAllowed(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_PASSWORD_SEQUENCE_NOT_ALLOWED)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_PASSWORD_SEQUENCE_NOT_ALLOWED);
+
+        return $restResponse->addError($restErrorMessageTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function addPasswordInvalidChar(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_PASSWORD_INVALID_CHAR)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_PASSWORD_INVALID_CHAR);
+
+        return $restResponse->addError($restErrorMessageTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function addPasswordInBlacklist(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_PASSWORD_BLACKLIST)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_PASSWORD_BLACKLIST);
+
+        return $restResponse->addError($restErrorMessageTransfer);
     }
 }

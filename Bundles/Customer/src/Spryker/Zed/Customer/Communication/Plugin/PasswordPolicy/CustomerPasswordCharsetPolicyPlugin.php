@@ -5,41 +5,49 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Customer\Business\Plugin;
+namespace Spryker\Zed\Customer\Communication\Plugin\PasswordPolicy;
 
 use Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerPasswordPolicyPluginInterface;
 
 /**
- * @method \Spryker\Zed\Customer\Business\CustomerBusinessFactory getFactory()
+ * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
  */
 class CustomerPasswordCharsetPolicyPlugin extends AbstractPlugin implements CustomerPasswordPolicyPluginInterface
 {
     private const CUSTOMER_POLICY_PLUGIN_NAME = 'charset';
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @api
+     *
+     * @param string $customerPassword
      * @param \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer $resultTransfer
-     * @param array $config
+     * @param mixed[] $config
      *
      * @return \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
      */
-    public function check(
-        CustomerTransfer $customerTransfer,
+    public function validate(
+        string $customerPassword,
         CustomerPasswordPolicyResultTransfer $resultTransfer,
         array $config
-    ): CustomerPasswordPolicyResultTransfer
-    {
-
-        $factory = $this->getFactory();
-        return $resultTransfer;
+    ): CustomerPasswordPolicyResultTransfer {
+        return $this->getFactory()
+            ->createPasswordPolicyValidator()
+            ->checkCharset(
+                $customerPassword,
+                $resultTransfer,
+                $config
+            );
     }
 
+    /**
+     * @inheriDoc
+     *
+     * @return string
+     */
     public function getName(): string
     {
         return self::CUSTOMER_POLICY_PLUGIN_NAME;
     }
-
 }

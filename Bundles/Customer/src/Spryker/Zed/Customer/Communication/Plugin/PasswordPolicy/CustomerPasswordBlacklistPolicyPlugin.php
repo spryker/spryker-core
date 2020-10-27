@@ -5,41 +5,48 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Customer\Business\Plugin;
+namespace Spryker\Zed\Customer\Communication\Plugin\PasswordPolicy;
 
 use Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerPasswordPolicyPluginInterface;
 
 /**
- * @method \Spryker\Zed\Customer\Business\CustomerBusinessFactory getFactory()
+ * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
  */
-class CustomerPasswordLengthPolicyPlugin extends AbstractPlugin implements CustomerPasswordPolicyPluginInterface
+class CustomerPasswordBlacklistPolicyPlugin extends AbstractPlugin implements CustomerPasswordPolicyPluginInterface
 {
-    private const CUSTOMER_POLICY_PLUGIN_NAME = 'length';
+    private const CUSTOMER_POLICY_PLUGIN_NAME = 'blacklist';
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param string $customerPassword
      * @param \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer $resultTransfer
-     * @param array $config
+     * @param string[] $config
      *
      * @return \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
      */
-    public function check(
-        CustomerTransfer $customerTransfer,
+    public function validate(
+        string $customerPassword,
         CustomerPasswordPolicyResultTransfer $resultTransfer,
         array $config
-    ): CustomerPasswordPolicyResultTransfer
-    {
+    ): CustomerPasswordPolicyResultTransfer {
+        $resultTransfer = $this->getFactory()->createPasswordPolicyValidator()->checkBlacklist(
+            $customerPassword,
+            $resultTransfer,
+            $config
+        );
 
-        $factory = $this->getFactory();
         return $resultTransfer;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return string
+     */
     public function getName(): string
     {
         return self::CUSTOMER_POLICY_PLUGIN_NAME;
     }
-
 }

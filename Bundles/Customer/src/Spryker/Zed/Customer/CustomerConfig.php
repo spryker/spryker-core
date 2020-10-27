@@ -132,12 +132,23 @@ class CustomerConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return mixed[][]
      */
     public function getCustomerPasswordPolicy(): array
     {
         return [];
     }
+
+    /**
+     * @api
+     *
+     * @return string[]
+     */
+    public function getCustomerPasswordWhitelist(): array
+    {
+        return [];
+    }
+
     /**
      * @api
      *

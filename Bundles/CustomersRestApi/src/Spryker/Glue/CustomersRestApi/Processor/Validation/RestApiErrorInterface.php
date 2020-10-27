@@ -16,6 +16,15 @@ interface RestApiErrorInterface
     public const ERROR_MESSAGE_CUSTOMER_EMAIL_INVALID = 'customer.email.format.invalid';
     public const ERROR_MESSAGE_CUSTOMER_EMAIL_LENGTH_EXCEEDED = 'customer.email.length.exceeded';
     public const ERROR_CUSTOMER_PASSWORD_INVALID = 'customer.password.invalid';
+    public const ERROR_CUSTOMER_PASSWORD_TOO_LONG = 'customer.password.error.max_length';
+    public const ERROR_CUSTOMER_PASSWORD_TOO_SHORT = 'customer.password.error.min_length';
+    public const ERROR_CUSTOMER_PASSWORD_DIGIT_REQUIRED = 'customer.password.error.digit';
+    public const ERROR_CUSTOMER_PASSWORD_UPPER_CASE_REQUIRED = 'customer.password.error.upper_case';
+    public const ERROR_CUSTOMER_PASSWORD_LOWER_CASE_REQUIRED = 'customer.password.error.lower_case';
+    public const ERROR_CUSTOMER_PASSWORD_SPECIAL_REQUIRED = 'customer.password.error.special';
+    public const ERROR_CUSTOMER_PASSWORD_CHAR_NOT_ALLOWED = 'customer.password.error.invalid';
+    public const ERROR_CUSTOMER_PASSWORD_SEQUNECE_TOO_LONG = 'customer.password.error.sequence';
+    public const ERROR_CUSTOMER_PASSWORD_BLACKLIST = 'customer.password.error.blacklist';
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse

@@ -10,10 +10,11 @@ namespace Spryker\Zed\Customer;
 use Spryker\Service\Customer\CustomerServiceInterface;
 use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\Customer\Business\Plugin\CustomerPasswordBlacklistPolicyPlugin;
-use Spryker\Zed\Customer\Business\Plugin\CustomerPasswordCharsetPolicyPlugin;
-use Spryker\Zed\Customer\Business\Plugin\CustomerPasswordLengthPolicyPlugin;
-use Spryker\Zed\Customer\Business\Plugin\CustomerPasswordSequencePolicyPlugin;
+use Spryker\Zed\Customer\Communication\Customer\CustomerPasswordPolicyValidator;
+use Spryker\Zed\Customer\Communication\Plugin\PasswordPolicy\CustomerPasswordBlacklistPolicyPlugin;
+use Spryker\Zed\Customer\Communication\Plugin\PasswordPolicy\CustomerPasswordCharsetPolicyPlugin;
+use Spryker\Zed\Customer\Communication\Plugin\PasswordPolicy\CustomerPasswordLengthPolicyPlugin;
+use Spryker\Zed\Customer\Communication\Plugin\PasswordPolicy\CustomerPasswordSequencePolicyPlugin;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
@@ -21,7 +22,6 @@ use Spryker\Zed\Customer\Dependency\Facade\CustomerToSequenceNumberBridge;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilDateTimeServiceBridge;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilSanitizeServiceBridge;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateServiceBridge;
-use Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerPasswordPolicyPluginInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -349,6 +349,14 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
             new CustomerPasswordLengthPolicyPlugin(),
             new CustomerPasswordSequencePolicyPlugin(),
         ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\Customer\CustomerPasswordPolicyValidator
+     */
+    protected function getCustomerPasswordPolicyValidator(): CustomerPasswordPolicyValidator
+    {
+        return new CustomerPasswordPolicyValidator();
     }
 
     /**

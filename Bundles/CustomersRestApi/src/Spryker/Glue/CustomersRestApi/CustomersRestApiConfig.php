@@ -74,5 +74,32 @@ class CustomersRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_CUSTOMER_EMAIL_LENGTH_EXCEEDED = '417';
     public const RESPONSE_MESSAGE_CUSTOMER_EMAIL_LENGTH_EXCEEDED = 'Email is too long. It should have 100 characters or less.';
 
+    public const RESPONSE_CODE_CUSTOMER_PASSWORD_TOO_SHORT = '418';
+    public const RESPONSE_MESSAGE_CUSTOMER_PASSWORD_TOO_SHORT = 'The password is too short.';
+
+    public const RESPONSE_CODE_CUSTOMER_PASSWORD_TOO_LONG = '419';
+    public const RESPONSE_MESSAGE_CUSTOMER_PASSWORD_TOO_LONG = 'The password is too long.';
+
+    public const RESPONSE_CODE_CUSTOMER_PASSWORD_SPECIAL_REQUIRED = '420';
+    public const RESPONSE_MESSAGE_CUSTOMER_PASSWORD_SPECIAL_REQUIRED = 'The password is required to contain at leas 1 special character.';
+
+    public const RESPONSE_CODE_CUSTOMER_PASSWORD_UPPER_CASE_REQUIRED = '421';
+    public const RESPONSE_MESSAGE_CUSTOMER_PASSWORD_UPPER_CASE_REQUIRED = 'The password is required to contain at leas 1 upper case character.';
+
+    public const RESPONSE_CODE_CUSTOMER_PASSWORD_LOWER_CASE_REQUIRED = '422';
+    public const RESPONSE_MESSAGE_CUSTOMER_PASSWORD_LOWER_CASE_REQUIRED = 'The password is required to contain at leas 1 lower case character.';
+
+    public const RESPONSE_CODE_CUSTOMER_PASSWORD_DIGIT_REQUIRED = '423';
+    public const RESPONSE_MESSAGE_CUSTOMER_PASSWORD_DIGIT_REQUIRED = 'The password is required to contain at leas 1 digit.';
+
+    public const RESPONSE_CODE_CUSTOMER_PASSWORD_INVALID_CHAR = '424';
+    public const RESPONSE_MESSAGE_CUSTOMER_PASSWORD_INVALID_CHAR = 'The password contains invalid character.';
+
+    public const RESPONSE_CODE_CUSTOMER_PASSWORD_SEQUENCE_NOT_ALLOWED = '425';
+    public const RESPONSE_MESSAGE_CUSTOMER_PASSWORD_SEQUENCE_NOT_ALLOWED = 'The password contains sequence of  the same character.';
+
+    public const RESPONSE_CODE_CUSTOMER_PASSWORD_BLACKLIST = '426';
+    public const RESPONSE_MESSAGE_CUSTOMER_PASSWORD_BLACKLIST = 'The password is listed as common.';
+
     public const FORMAT_SELF_LINK_ADDRESS_RESOURCE = '%s/%s/%s/%s';
 }

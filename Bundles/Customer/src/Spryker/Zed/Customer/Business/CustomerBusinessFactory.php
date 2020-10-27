@@ -55,8 +55,8 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
             $this->getLocaleQueryContainer(),
             $this->getStore(),
             $this->createCustomerExpander(),
-            $this->getPostCustomerRegistrationPlugins(),
-            $this->createPasswordPolicyManager()
+            $this->createPasswordPolicyManager(),
+            $this->getPostCustomerRegistrationPlugins()
         );
 
         return $customer;
@@ -67,13 +67,12 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     public function createPasswordPolicyManager(): CustomerPasswordPolicyManagerInterface
     {
-        return new CustomerPasswordPolicyManager($this->getCustomerPasswordPolicyPlugins());
+        $customerPasswordPolicyManager = new CustomerPasswordPolicyManager();
+        $customerPasswordPolicyManager->setPlugins($this->getCustomerPasswordPolicyPlugins());
+
+        return $customerPasswordPolicyManager;
     }
 
-    public function createPasswordPolicyValidator(): CustomerPasswordPolicyValidatorInterface
-    {
-        return new CustomerPasswordPolicyValidator();
-    }
     /**
      * @return \Spryker\Zed\Customer\Business\Customer\CustomerReaderInterface
      */

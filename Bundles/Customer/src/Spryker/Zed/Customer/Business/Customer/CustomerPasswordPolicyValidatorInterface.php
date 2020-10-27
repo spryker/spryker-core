@@ -8,44 +8,58 @@
 namespace Spryker\Zed\Customer\Business\Customer;
 
 use Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CustomerPasswordPolicyValidatorInterface
 {
+    /**
+     * @param string $password
+     * @param \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer $resultTransfer
+     * @param int[] $config
+     *
+     * @return \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
+     */
+    public function checkLength(
+        string $password,
+        CustomerPasswordPolicyResultTransfer $resultTransfer,
+        array $config
+    ): CustomerPasswordPolicyResultTransfer;
 
     /**
-     * @param Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     * @param Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer $resultTransfer
-     * @param array $config
+     * @param string $password
+     * @param \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer $resultTransfer
+     * @param string[][] $config
      *
-     * @return Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
+     * @return \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
      */
-    public function checkLength(CustomerTransfer $customerTransfer, CustomerPasswordPolicyResultTransfer $resultTransfer, array $config): CustomerPasswordPolicyResultTransfer;
+    public function checkCharset(
+        string $password,
+        CustomerPasswordPolicyResultTransfer $resultTransfer,
+        array $config
+    ): CustomerPasswordPolicyResultTransfer;
 
     /**
-     * @param Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     * @param Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer $resultTransfer
-     * @param array $config
+     * @param string $password
+     * @param \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer $resultTransfer
+     * @param int[] $sequenceLimit
      *
-     * @return Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
+     * @return \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
      */
-    public function checkCharset(CustomerTransfer $customerTransfer, CustomerPasswordPolicyResultTransfer $resultTransfer, array $config): CustomerPasswordPolicyResultTransfer;
+    public function checkSequence(
+        string $password,
+        CustomerPasswordPolicyResultTransfer $resultTransfer,
+        array $sequenceLimit
+    ): CustomerPasswordPolicyResultTransfer;
 
     /**
-     * @param Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     * @param Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer $resultTransfer
-     * @param int $sequenceLimit
+     * @param string $password
+     * @param \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer $resultTransfer
+     * @param string[] $config
      *
-     * @return Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
+     * @return \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
      */
-    public function checkSequence(CustomerTransfer $customerTransfer, CustomerPasswordPolicyResultTransfer $resultTransfer, array $sequenceLimit): CustomerPasswordPolicyResultTransfer;
-
-    /**
-     * @param Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     * @param Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer $resultTransfer
-     * @param array $config
-     *
-     * @return Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
-     */
-    public function checkBlacklist(CustomerTransfer $customerTransfer, CustomerPasswordPolicyResultTransfer $resultTransfer, array $blacklist): CustomerPasswordPolicyResultTransfer;
+    public function checkBlacklist(
+        string $password,
+        CustomerPasswordPolicyResultTransfer $resultTransfer,
+        array $config
+    ): CustomerPasswordPolicyResultTransfer;
 }
