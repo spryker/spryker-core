@@ -21,10 +21,10 @@ use Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToStorageInt
  * @group SprykerTest
  * @group Client
  * @group CategoryStorage
- * @group FormatResultSetToCategoryTreeFilterTest
+ * @group FormatCategoryTreeFilterTest
  * Add your own group annotations below this line
  */
-class FormatResultSetToCategoryTreeFilterTest extends Unit
+class FormatCategoryTreeFilterTest extends Unit
 {
     protected const FIRST_CATEGORY_NODE_ID = 1;
     protected const FIRST_CATEGORY_DOC_COUNT = 224;
@@ -43,7 +43,7 @@ class FormatResultSetToCategoryTreeFilterTest extends Unit
     /**
      * @return void
      */
-    public function testFormatResultSetToCategoryTreeFilterFormatsCategoryTree(): void
+    public function testFormatCategoryTreeFilterFormatsCategoryTree(): void
     {
         // Arrange
         $searchResultMock = $this->getResultSetMock($this->getAggregationResult());
@@ -60,7 +60,7 @@ class FormatResultSetToCategoryTreeFilterTest extends Unit
         // Act
         $categoryNodeSearchResultTransfers = $this->tester
             ->getClientMock($categoryStorageFactoryMock)
-            ->formatResultSetToCategoryTreeFilter($searchResultMock);
+            ->formatCategoryTreeFilter($searchResultMock);
 
         // Assert
         /** @var \Generated\Shared\Transfer\CategoryNodeSearchResultTransfer $categoryNodeSearchResultTransfer */
@@ -88,7 +88,7 @@ class FormatResultSetToCategoryTreeFilterTest extends Unit
     /**
      * @return void
      */
-    public function testFormatResultSetToCategoryTreeFilterTryToFormatTreeWhenCategoryDocCountsAreEmpty(): void
+    public function testFormatCategoryTreeFilterTryToFormatTreeWhenCategoryDocCountsAreEmpty(): void
     {
         // Arrange
         $searchResultMock = $this->getResultSetMock([]);
@@ -105,7 +105,7 @@ class FormatResultSetToCategoryTreeFilterTest extends Unit
         // Act
         $categoryNodeSearchResultTransfers = $this->tester
             ->getClientMock($categoryStorageFactoryMock)
-            ->formatResultSetToCategoryTreeFilter($searchResultMock);
+            ->formatCategoryTreeFilter($searchResultMock);
 
         // Assert
         $this->assertSame(
@@ -118,7 +118,7 @@ class FormatResultSetToCategoryTreeFilterTest extends Unit
     /**
      * @return void
      */
-    public function testFormatResultSetToCategoryTreeFilterTryToFormatTreeWhenCategoryNodeStoragesAreEmpty(): void
+    public function testFormatCategoryTreeFilterTryToFormatTreeWhenCategoryNodeStoragesAreEmpty(): void
     {
         // Arrange
         $searchResultMock = $this->getResultSetMock($this->getAggregationResult());
@@ -135,7 +135,7 @@ class FormatResultSetToCategoryTreeFilterTest extends Unit
         // Act
         $categoryNodeSearchResultTransfers = $this->tester
             ->getClientMock($categoryStorageFactoryMock)
-            ->formatResultSetToCategoryTreeFilter($searchResultMock);
+            ->formatCategoryTreeFilter($searchResultMock);
 
         // Assert
         $this->assertEmpty($categoryNodeSearchResultTransfers, 'Expects empty collection in case empty category storage data.');
@@ -144,7 +144,7 @@ class FormatResultSetToCategoryTreeFilterTest extends Unit
     /**
      * @return void
      */
-    public function testFormatResultSetToCategoryTreeFilterTryToFormatTreeWithoutMandatoryBucketsKey(): void
+    public function testFormatCategoryTreeFilterTryToFormatTreeWithoutMandatoryBucketsKey(): void
     {
         // Arrange
         $searchResultMock = $this->getResultSetMock(['category.all-parents.category' => []]);
@@ -161,7 +161,7 @@ class FormatResultSetToCategoryTreeFilterTest extends Unit
         // Act
         $categoryNodeSearchResultTransfers = $this->tester
             ->getClientMock($categoryStorageFactoryMock)
-            ->formatResultSetToCategoryTreeFilter($searchResultMock);
+            ->formatCategoryTreeFilter($searchResultMock);
 
         // Assert
         $this->assertSame(
@@ -174,7 +174,7 @@ class FormatResultSetToCategoryTreeFilterTest extends Unit
     /**
      * @return void
      */
-    public function testFormatResultSetToCategoryTreeFilterTryToFormatTreeWithoutMandatoryKeyOrDocCount(): void
+    public function testFormatCategoryTreeFilterTryToFormatTreeWithoutMandatoryKeyOrDocCount(): void
     {
         // Arrange
         $searchResultMock = $this->getResultSetMock([
@@ -197,7 +197,7 @@ class FormatResultSetToCategoryTreeFilterTest extends Unit
         // Act
         $categoryNodeSearchResultTransfers = $this->tester
             ->getClientMock($categoryStorageFactoryMock)
-            ->formatResultSetToCategoryTreeFilter($searchResultMock);
+            ->formatCategoryTreeFilter($searchResultMock);
 
         // Assert
         $this->assertSame(

@@ -52,8 +52,9 @@ interface CategoryStorageClientInterface
 
     /**
      * Specification:
-     * - Takes category node storage data by locale name.
-     * - Returns formatted category node tree with docCount information.
+     * - Returns category nodes with the `docCount` relevant for the result set.
+     * - Retrieves category tree from storage by locale name.
+     * - Recursively merges each category node in the category tree with `docCount` taken from the `ResultSet` aggregations.
      *
      * @api
      *
@@ -61,5 +62,5 @@ interface CategoryStorageClientInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]
      */
-    public function formatResultSetToCategoryTreeFilter(ResultSet $searchResult): ArrayObject;
+    public function formatCategoryTreeFilter(ResultSet $searchResult): ArrayObject;
 }

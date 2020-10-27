@@ -16,7 +16,7 @@ use Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\AbstractElasticsea
  */
 class CategoryTreeFilterPageSearchResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
-    public const NAME = 'categoryTreeFilter';
+    protected const NAME = 'categoryTreeFilter';
 
     /**
      * @api
@@ -36,6 +36,6 @@ class CategoryTreeFilterPageSearchResultFormatterPlugin extends AbstractElastics
      */
     protected function formatSearchResult(ResultSet $searchResult, array $requestParameters): ArrayObject
     {
-        return $this->getClient()->formatResultSetToCategoryTreeFilter($searchResult);
+        return $this->getClient()->formatCategoryTreeFilter($searchResult);
     }
 }

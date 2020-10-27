@@ -17,5 +17,5 @@ interface CategoryTreeFilterFormatterInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]
      */
-    public function formatResultSetToCategoryTreeFilter(ResultSet $searchResult): ArrayObject;
+    public function formatCategoryTreeFilter(ResultSet $searchResult): ArrayObject;
 }

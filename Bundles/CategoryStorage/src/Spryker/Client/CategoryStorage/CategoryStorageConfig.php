@@ -35,13 +35,14 @@ class CategoryStorageConfig extends AbstractBundleConfig
     }
 
     /**
-     * - Returns category aggregation name with `doc_count` information.
+     * Specification:
+     * - Returns category facet aggregation name.
      *
      * @api
      *
      * @return string
      */
-    public function getCategoryDocCountAggregationName(): string
+    public function getCategoryFacetAggregationName(): string
     {
         return sprintf('%s.%s', static::CATEGORY_ALL_PARENTS, static::CATEGORY_NAME);
     }

@@ -17,6 +17,21 @@ use Spryker\Client\CategoryStorage\Storage\CategoryTreeStorageReaderInterface;
 class CategoryTreeFilterFormatter implements CategoryTreeFilterFormatterInterface
 {
     /**
+     * @uses \Spryker\Client\SearchElasticsearch\AggregationExtractor\CategoryExtractor::DOC_COUNT
+     */
+    protected const DOC_COUNT = 'doc_count';
+
+    /**
+     * @uses \Spryker\Client\SearchElasticsearch\AggregationExtractor\CategoryExtractor::KEY_BUCKETS
+     */
+    protected const KEY_BUCKETS = 'buckets';
+
+    /**
+     * @uses \Spryker\Client\SearchElasticsearch\AggregationExtractor\CategoryExtractor::KEY_KEY
+     */
+    protected const KEY_KEY = 'key';
+
+    /**
      * @var \Spryker\Client\CategoryStorage\CategoryStorageConfig
      */
     protected $categoryStorageConfig;
@@ -51,7 +66,7 @@ class CategoryTreeFilterFormatter implements CategoryTreeFilterFormatterInterfac
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]
      */
-    public function formatResultSetToCategoryTreeFilter(ResultSet $searchResult): ArrayObject
+    public function formatCategoryTreeFilter(ResultSet $searchResult): ArrayObject
     {
         $categoryDocCounts = $this->getMappedCategoryDocCountsByNodeId($searchResult);
 
@@ -59,31 +74,34 @@ class CategoryTreeFilterFormatter implements CategoryTreeFilterFormatterInterfac
             $this->localeClient->getCurrentLocale()
         );
 
-        return $this->formatCategoryTreeFilter($categoryNodeStorageTransfers, $categoryDocCounts);
+        $categoryNodeSearchResultTransfers = $this->mapCategoryNodeStoragesToCategoryNodeSearchResults(
+            $categoryNodeStorageTransfers,
+            new ArrayObject()
+        );
+
+        return $this->mergeCategoryNodeSearchResultWithCategoryDocCount(
+            $categoryNodeSearchResultTransfers,
+            $categoryDocCounts
+        );
     }
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\CategoryNodeStorageTransfer[] $categoryNodeStorageTransfers
-     * @param array $categoryDocCounts
+     * @param \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[] $categoryNodeSearchResultTransfers
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]
      */
-    protected function formatCategoryTreeFilter(
+    protected function mapCategoryNodeStoragesToCategoryNodeSearchResults(
         ArrayObject $categoryNodeStorageTransfers,
-        array $categoryDocCounts
+        ArrayObject $categoryNodeSearchResultTransfers
     ): ArrayObject {
-        $categoryNodeSearchResultTransfers = new ArrayObject();
-
         foreach ($categoryNodeStorageTransfers as $categoryNodeStorageTransfer) {
             $categoryNodeSearchResultTransfers->append(
                 (new CategoryNodeSearchResultTransfer())->fromArray($categoryNodeStorageTransfer->toArray(), true)
             );
         }
 
-        return $this->mergeCategoryNodeSearchResultWithCategoryDocCount(
-            $categoryNodeSearchResultTransfers,
-            $categoryDocCounts
-        );
+        return $categoryNodeSearchResultTransfers;
     }
 
     /**
@@ -125,23 +143,23 @@ class CategoryTreeFilterFormatter implements CategoryTreeFilterFormatterInterfac
     /**
      * @param \Elastica\ResultSet $searchResult
      *
-     * @return array
+     * @return int[]
      */
     protected function getMappedCategoryDocCountsByNodeId(ResultSet $searchResult): array
     {
         $categoryDocCounts = [];
-        $name = $this->categoryStorageConfig->getCategoryDocCountAggregationName();
+        $name = $this->categoryStorageConfig->getCategoryFacetAggregationName();
         $docCountAggregation = $searchResult->getAggregations()[$name] ?? [];
 
         if (!$docCountAggregation) {
             return $categoryDocCounts;
         }
 
-        $categoryBuckets = $docCountAggregation['buckets'] ?? [];
+        $categoryBuckets = $docCountAggregation[static::KEY_BUCKETS] ?? [];
 
         foreach ($categoryBuckets as $categoryBucket) {
-            $key = $categoryBucket['key'] ?? null;
-            $docCount = $categoryBucket['doc_count'] ?? null;
+            $key = $categoryBucket[static::KEY_KEY] ?? null;
+            $docCount = $categoryBucket[static::DOC_COUNT] ?? null;
 
             if ($key && $docCount) {
                 $categoryDocCounts[$key] = $docCount;

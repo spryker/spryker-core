@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\CategoryStorage;
 
+use Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToLocaleClientInterface;
 use Spryker\Client\CategoryStorage\Formatter\CategoryTreeFilterFormatter;
 use Spryker\Client\CategoryStorage\Formatter\CategoryTreeFilterFormatterInterface;
 use Spryker\Client\CategoryStorage\Storage\CategoryNodeStorage;
@@ -63,7 +64,7 @@ class CategoryStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToLocaleClientInterface
      */
-    public function getLocaleClient()
+    public function getLocaleClient(): CategoryStorageToLocaleClientInterface
     {
         return $this->getProvidedDependency(CategoryStorageDependencyProvider::CLIENT_LOCALE);
     }

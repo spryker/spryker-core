@@ -75,10 +75,10 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]
      */
-    public function formatResultSetToCategoryTreeFilter(ResultSet $searchResult): ArrayObject
+    public function formatCategoryTreeFilter(ResultSet $searchResult): ArrayObject
     {
         return $this->getFactory()
             ->createCategoryTreeFilterFormatter()
-            ->formatResultSetToCategoryTreeFilter($searchResult);
+            ->formatCategoryTreeFilter($searchResult);
     }
 }
