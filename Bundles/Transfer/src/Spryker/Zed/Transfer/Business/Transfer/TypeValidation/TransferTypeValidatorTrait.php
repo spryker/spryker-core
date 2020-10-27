@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Transfer\Business\Transfer\TypeValidation;
 
 use InvalidArgumentException;
-use Monolog\Handler\DeduplicationHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
@@ -214,7 +213,7 @@ trait TransferTypeValidatorTrait
 
         $logger = new Logger('transferLogger');
         $logger->pushHandler(
-            new DeduplicationHandler(new StreamHandler($this->getLogFilePath(), Logger::WARNING), null, Logger::WARNING)
+            new StreamHandler($this->getLogFilePath(), Logger::WARNING)
         );
         $this->logger = $logger;
 
