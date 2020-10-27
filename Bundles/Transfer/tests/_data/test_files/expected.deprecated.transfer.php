@@ -155,6 +155,22 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
      *
      * @deprecated scalarField is deprecated.
      *
+     * @return string
+     */
+    public function getScalarFieldOrFail()
+    {
+        if ($this->scalarField === null) {
+            $this->thrownNullValueException(static::SCALAR_FIELD);
+        }
+
+        return $this->scalarField;
+    }
+
+    /**
+     * @module Test
+     *
+     * @deprecated scalarField is deprecated.
+     *
      * @return $this
      */
     public function requireScalarField()
@@ -254,6 +270,22 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
      */
     public function getTransferField()
     {
+        return $this->transferField;
+    }
+
+    /**
+     * @module Test
+     *
+     * @deprecated transferField is deprecated.
+     *
+     * @return \Generated\Shared\Transfer\DeprecatedFooBarTransfer
+     */
+    public function getTransferFieldOrFail()
+    {
+        if ($this->transferField === null) {
+            $this->thrownNullValueException(static::TRANSFER_FIELD);
+        }
+
         return $this->transferField;
     }
 
