@@ -50,10 +50,11 @@ class GetMerchantSynchronizationDataTransfersByIdsTest extends Unit
         $merchantEntities = $this->tester->getMerchantEntitiesByMerchantIds($merchantIds);
 
         // Act
-        $synchronizationDataTransfers = $this->tester->getFacade()->getSynchronizationDataTransfersByMerchantIds(
-            new FilterTransfer(),
-            $merchantIds
-        );
+        $synchronizationDataTransfers = $this->tester->getFacade()
+            ->getSynchronizationDataTransfersByMerchantIds(
+                new FilterTransfer(),
+                $merchantIds
+            );
 
         // Assert
         $this->assertSame(
@@ -72,9 +73,10 @@ class GetMerchantSynchronizationDataTransfersByIdsTest extends Unit
         $merchantIds = $this->tester->extractMerchantIdsFromMerchantTransfers($merchantTransfers);
 
         // Act
-        $synchronizationDataTransfers = $this->tester->getFacade()->getSynchronizationDataTransfersByMerchantIds(
-            (new FilterTransfer())->setOffset(1)->setLimit(1)
-        );
+        $synchronizationDataTransfers = $this->tester->getFacade()
+            ->getSynchronizationDataTransfersByMerchantIds(
+                (new FilterTransfer())->setOffset(1)->setLimit(1)
+            );
 
         // Assert
         $this->assertCount(1, $synchronizationDataTransfers);
@@ -90,10 +92,11 @@ class GetMerchantSynchronizationDataTransfersByIdsTest extends Unit
         $merchantIds = $this->tester->extractMerchantIdsFromMerchantTransfers($merchantTransfers);
 
         // Act
-        $synchronizationDataTransfers = $this->tester->getFacade()->getSynchronizationDataTransfersByMerchantIds(
-            (new FilterTransfer())->setOffset(0)->setLimit(1),
-            [$merchantIds[0]]
-        );
+        $synchronizationDataTransfers = $this->tester->getFacade()
+            ->getSynchronizationDataTransfersByMerchantIds(
+                (new FilterTransfer())->setOffset(0)->setLimit(1),
+                [$merchantIds[0]]
+            );
 
         // Assert
         $this->assertCount(1, $synchronizationDataTransfers);

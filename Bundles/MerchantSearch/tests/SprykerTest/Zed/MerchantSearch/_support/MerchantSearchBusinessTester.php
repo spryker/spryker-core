@@ -112,11 +112,8 @@ class MerchantSearchBusinessTester extends Actor
     {
         $merchantTransfers = [];
         for ($i = 0; $i < static::MERCHANT_COUNT; $i++) {
-            $merchantTransfer = $this->haveMerchant(
-                [
-                    MerchantTransfer::IS_ACTIVE => true,
-                ]
-            )->setStatus(static::MERCHANT_STATUS_APPROVED);
+            $merchantTransfer = $this->haveMerchant()
+                ->setStatus(static::MERCHANT_STATUS_APPROVED);
             $merchantResponseTransfer = $this->updateMerchant($merchantTransfer);
             $merchantTransfers[] = $merchantResponseTransfer->getMerchant();
         }
