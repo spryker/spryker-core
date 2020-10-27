@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Client\ProductConfigurationStorage\ProductConfigurationStorageClient;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\ProductConfigurationInstanceBuilder;
@@ -42,7 +43,7 @@ class ExpandPersistentCartChangeWithProductConfigurationInstanceTest extends Uni
         // Arrange
         $productConcreteTransfer = $this->tester->haveProduct();
         $productConfigurationInstanceTransfer = (new ProductConfigurationInstanceBuilder([
-            ProductConfigurationInstanceTransfer::PRICES => new \ArrayObject()
+            ProductConfigurationInstanceTransfer::PRICES => new ArrayObject(),
         ]))->build();
 
         $this->tester->getClient()->storeProductConfigurationInstanceBySku($productConcreteTransfer->getSku(), $productConfigurationInstanceTransfer);

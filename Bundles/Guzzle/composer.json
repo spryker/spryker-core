@@ -5,11 +5,11 @@
   "license": "proprietary",
   "require": {
     "guzzlehttp/guzzle": "^6.3.0 || ^7.0.0",
-    "php": ">=7.2"
+    "php": ">=7.3"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "scripts": {},
+  "scripts": [],
   "extra": {
     "branch-alias": {
       "dev-master": "2.0.x-dev"

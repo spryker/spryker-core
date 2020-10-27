@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Client\ProductConfigurationStorage\ProductConfigurationStorageClient;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductConcreteBuilder;
 use Generated\Shared\DataBuilder\ProductConfigurationInstanceBuilder;
@@ -37,7 +38,7 @@ class StoreProductConfigurationInstanceBySkuTest extends Unit
         // Arrange
         $productConcreteTransfer = (new ProductConcreteBuilder())->build();
         $productConfigurationInstanceTransfer = (new ProductConfigurationInstanceBuilder([
-            ProductConfigurationInstanceTransfer::PRICES => new \ArrayObject()
+            ProductConfigurationInstanceTransfer::PRICES => new ArrayObject(),
         ]))->build();
 
         // Act

@@ -4,12 +4,12 @@
   "description": "Elastica module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "ruflin/elastica": "^7.0.0"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "scripts": {},
+  "scripts": [],
   "extra": {
     "branch-alias": {
       "dev-master": "6.0.x-dev"
