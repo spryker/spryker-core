@@ -35,7 +35,7 @@ class CategoryStorageConfig extends AbstractBundleConfig
     }
 
     /**
-     * - Returns category `doc_count` aggregation name.
+     * - Returns category aggregation name with `doc_count` information.
      *
      * @api
      *

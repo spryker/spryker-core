@@ -52,6 +52,7 @@ interface CategoryStorageClientInterface
 
     /**
      * Specification:
+     * - Takes category node storage data by locale name.
      * - Returns formatted category node tree with docCount information.
      *
      * @api
