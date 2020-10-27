@@ -18,9 +18,6 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
-  "suggest": {
-    "spryker/monolog": "If you want to use logging in debug mode"
-  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",

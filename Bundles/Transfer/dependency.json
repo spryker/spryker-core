@@ -1,7 +1,0 @@
-{
-  "include": {
-  },
-  "exclude": {
-    "spryker/monolog": "Required in debug mode and by tests"
-  }
-}

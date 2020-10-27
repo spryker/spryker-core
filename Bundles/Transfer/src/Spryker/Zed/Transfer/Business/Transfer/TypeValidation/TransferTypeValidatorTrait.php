@@ -8,19 +8,12 @@
 namespace Spryker\Zed\Transfer\Business\Transfer\TypeValidation;
 
 use InvalidArgumentException;
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
 
 /**
  * @property array $transferMetadata
  */
 trait TransferTypeValidatorTrait
 {
-    /**
-     * @var \Monolog\Logger|null
-     */
-    protected $logger;
-
     /**
      * @param string $propertyName
      * @param mixed $value
@@ -186,38 +179,7 @@ trait TransferTypeValidatorTrait
             $callerLineNumber
         );
 
-        $logger = $this->getLogger();
-
-        if ($logger === null) {
-            file_put_contents($this->getLogFilePath(), $typeErrorMessage . PHP_EOL, FILE_APPEND);
-
-            return;
-        }
-
-        $logger->warning($typeErrorMessage);
-        $logger->close();
-    }
-
-    /**
-     * @return \Monolog\Logger|null
-     */
-    protected function getLogger(): ?Logger
-    {
-        if (!class_exists(Logger::class)) {
-            return null;
-        }
-
-        if ($this->logger) {
-            return $this->logger;
-        }
-
-        $logger = new Logger('transferLogger');
-        $logger->pushHandler(
-            new StreamHandler($this->getLogFilePath(), Logger::WARNING)
-        );
-        $this->logger = $logger;
-
-        return $this->logger;
+        file_put_contents($this->getLogFilePath(), $typeErrorMessage . PHP_EOL, FILE_APPEND);
     }
 
     /**
