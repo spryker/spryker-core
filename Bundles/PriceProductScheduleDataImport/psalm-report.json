@@ -1,91 +1,6 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 49,
-            "line_to": 49,
-            "type": "InvalidPropertyAssignmentValue",
-            "message": "$this->idProductAbstractCache with declared type 'array<array-key, int>' cannot be assigned type 'non-empty-array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProductAbstract|int>'",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductScheduleDataImport/src/Spryker/Zed/PriceProductScheduleDataImport/Business/Model/Step/AbstractSkuToIdProductAbstractStep.php",
-            "snippet": "            $this->idProductAbstractCache[$productAbstractSku] = $idProduct;",
-            "selected_text": "$this->idProductAbstractCache",
-            "error_level": 6,
-            "shortcode": 145
-        },
-        {
-            "severity": "error",
-            "line_from": 49,
-            "line_to": 49,
-            "type": "InvalidPropertyAssignmentValue",
-            "message": "$this->idProductCache with declared type 'array<array-key, int>' cannot be assigned type 'non-empty-array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProduct|int>'",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductScheduleDataImport/src/Spryker/Zed/PriceProductScheduleDataImport/Business/Model/Step/ConcreteSkuToIdProductStep.php",
-            "snippet": "            $this->idProductCache[$productConcreteSku] = $idProduct;",
-            "selected_text": "$this->idProductCache",
-            "error_level": 6,
-            "shortcode": 145
-        },
-        {
-            "severity": "error",
-            "line_from": 45,
-            "line_to": 45,
-            "type": "InvalidPropertyAssignmentValue",
-            "message": "$this->idCurrencyCache with declared type 'array<array-key, int>' cannot be assigned type 'non-empty-array<array-key, Orm\\Zed\\Currency\\Persistence\\SpyCurrency|int>'",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductScheduleDataImport/src/Spryker/Zed/PriceProductScheduleDataImport/Business/Model/Step/CurrencyToIdCurrencyStep.php",
-            "snippet": "            $this->idCurrencyCache[$currencyCode] = $idCurrency;",
-            "selected_text": "$this->idCurrencyCache",
-            "error_level": 6,
-            "shortcode": 145
-        },
-        {
-            "severity": "error",
-            "line_from": 45,
-            "line_to": 45,
-            "type": "InvalidPropertyAssignmentValue",
-            "message": "$this->idStoreCache with declared type 'array<array-key, int>' cannot be assigned type 'non-empty-array<array-key, Orm\\Zed\\Store\\Persistence\\SpyStore|int>'",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductScheduleDataImport/src/Spryker/Zed/PriceProductScheduleDataImport/Business/Model/Step/StoreNameToIdStoreStep.php",
-            "snippet": "            $this->idStoreCache[$storeName] = $idStore;",
-            "selected_text": "$this->idStoreCache",
-            "error_level": 6,
-            "shortcode": 145
-        }
-    ],
+    "error": [],
     "warning": [
-        {
-            "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::findonebysku does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductScheduleDataImport/src/Spryker/Zed/PriceProductScheduleDataImport/Business/Model/Step/AbstractSkuToIdProductAbstractStep.php",
-            "snippet": "                ->findOneBySku($productAbstractSku);",
-            "selected_text": "findOneBySku",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::findonebysku does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductScheduleDataImport/src/Spryker/Zed/PriceProductScheduleDataImport/Business/Model/Step/ConcreteSkuToIdProductStep.php",
-            "snippet": "                ->findOneBySku($productConcreteSku);",
-            "selected_text": "findOneBySku",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 39,
-            "line_to": 39,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::findonebycode does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductScheduleDataImport/src/Spryker/Zed/PriceProductScheduleDataImport/Business/Model/Step/CurrencyToIdCurrencyStep.php",
-            "snippet": "                ->findOneByCode($currencyCode);",
-            "selected_text": "findOneByCode",
-            "error_level": 4,
-            "shortcode": 219
-        },
         {
             "severity": "info",
             "line_from": 60,
@@ -97,18 +12,6 @@
             "selected_text": "$price !== null",
             "error_level": 4,
             "shortcode": 122
-        },
-        {
-            "severity": "info",
-            "line_from": 39,
-            "line_to": 39,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::findonebyname does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductScheduleDataImport/src/Spryker/Zed/PriceProductScheduleDataImport/Business/Model/Step/StoreNameToIdStoreStep.php",
-            "snippet": "                ->findOneByName($storeName);",
-            "selected_text": "findOneByName",
-            "error_level": 4,
-            "shortcode": 219
         },
         {
             "severity": "info",

@@ -10,8 +10,7 @@
             "snippet": "     * @return \\Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterCollectionInterface",
             "selected_text": "\\Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterCollectionInterface",
             "error_level": 6,
-            "shortcode": 11,
-            "taint_trace": null
+            "shortcode": 11
         },
         {
             "severity": "error",
@@ -23,8 +22,7 @@
             "snippet": "        return $dataImporterCollection;",
             "selected_text": "$dataImporterCollection",
             "error_level": 6,
-            "shortcode": 128,
-            "taint_trace": null
+            "shortcode": 128
         },
         {
             "severity": "error",
@@ -36,8 +34,7 @@
             "snippet": "                $dataSetWriter->write($dataSet);",
             "selected_text": "$dataSet",
             "error_level": 6,
-            "shortcode": 4,
-            "taint_trace": null
+            "shortcode": 4
         },
         {
             "severity": "error",
@@ -49,8 +46,7 @@
             "snippet": "            return $input->getArgument(static::ARGUMENT_IMPORTER);",
             "selected_text": "$input->getArgument(static::ARGUMENT_IMPORTER)",
             "error_level": 6,
-            "shortcode": 128,
-            "taint_trace": null
+            "shortcode": 128
         },
         {
             "severity": "error",
@@ -62,8 +58,7 @@
             "snippet": "     * @return string|null",
             "selected_text": "string|null",
             "error_level": 6,
-            "shortcode": 11,
-            "taint_trace": null
+            "shortcode": 11
         },
         {
             "severity": "error",
@@ -75,8 +70,7 @@
             "snippet": "            return $input->getOption(static::OPTION_CONFIG);",
             "selected_text": "$input->getOption(static::OPTION_CONFIG)",
             "error_level": 6,
-            "shortcode": 128,
-            "taint_trace": null
+            "shortcode": 128
         },
         {
             "severity": "error",
@@ -88,8 +82,7 @@
             "snippet": "            ->setOffset($input->getOption(DataImportConsole::OPTION_OFFSET))",
             "selected_text": "$input->getOption(DataImportConsole::OPTION_OFFSET)",
             "error_level": 6,
-            "shortcode": 4,
-            "taint_trace": null
+            "shortcode": 4
         },
         {
             "severity": "error",
@@ -101,8 +94,7 @@
             "snippet": "            ->setLimit($input->getOption(DataImportConsole::OPTION_LIMIT))",
             "selected_text": "$input->getOption(DataImportConsole::OPTION_LIMIT)",
             "error_level": 6,
-            "shortcode": 4,
-            "taint_trace": null
+            "shortcode": 4
         }
     ],
     "warning": [
@@ -116,8 +108,7 @@
             "snippet": "            $queueDataImporterConfigurationTransfer->getReaderConfiguration()",
             "selected_text": "$queueDataImporterConfigurationTransfer->getReaderConfiguration()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -129,8 +120,7 @@
             "snippet": "            $queueDataImporterConfigurationTransfer->getImportType(),",
             "selected_text": "$queueDataImporterConfigurationTransfer->getImportType()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -142,8 +132,7 @@
             "snippet": "        $csvReader = $this->createCsvReaderFromConfig($dataImporterConfigurationTransfer->getReaderConfiguration());",
             "selected_text": "$dataImporterConfigurationTransfer->getReaderConfiguration()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -155,8 +144,7 @@
             "snippet": "        return $this->createDataImporter($dataImporterConfigurationTransfer->getImportType(), $csvReader);",
             "selected_text": "$dataImporterConfigurationTransfer->getImportType()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -168,8 +156,7 @@
             "snippet": "        $csvReader = $this->createCsvReaderFromConfig($dataImporterConfigurationTransfer->getReaderConfiguration());",
             "selected_text": "$dataImporterConfigurationTransfer->getReaderConfiguration()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -181,8 +168,7 @@
             "snippet": "        return $this->createDataImporterWriterAware($dataImporterConfigurationTransfer->getImportType(), $csvReader);",
             "selected_text": "$dataImporterConfigurationTransfer->getImportType()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -194,8 +180,7 @@
             "snippet": "            $this->getImporter()",
             "selected_text": "$this->getImporter()",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -207,8 +192,7 @@
             "snippet": "        return $this->getFactory()->getImporter()->import($dataImporterConfiguration);",
             "selected_text": "import",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
@@ -220,8 +204,7 @@
             "snippet": "            ->import($dataImporterConfiguration);",
             "selected_text": "import",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
@@ -233,8 +216,7 @@
             "snippet": "                $dataImporterCollection->addDataImporterPlugins([$dataImporterPlugin]);",
             "selected_text": "addDataImporterPlugins",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
@@ -246,8 +228,7 @@
             "snippet": "            $dataImporterCollection->addDataImporter($dataImporter);",
             "selected_text": "addDataImporter",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
@@ -259,8 +240,7 @@
             "snippet": "                $dataImporterReportTransfer->setImportedDataSetCount($dataImporterReportTransfer->getImportedDataSetCount() + 1);",
             "selected_text": "$dataImporterReportTransfer->getImportedDataSetCount()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -272,8 +252,7 @@
             "snippet": "                    $dataImportExceptionMessage = $this->buildExceptionMessage($dataImportException, $dataImporterReportTransfer->getImportedDataSetCount() + 1);",
             "selected_text": "$dataImporterReportTransfer->getImportedDataSetCount()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -285,8 +264,7 @@
             "snippet": "            $this->queueMessageHelper->getDecodedMessageBody($queueReceiveMessageTransfer)",
             "selected_text": "$this->queueMessageHelper->getDecodedMessageBody($queueReceiveMessageTransfer)",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -298,8 +276,7 @@
             "snippet": "        $this->dataSetWriter->write($dataSet);",
             "selected_text": "write",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -311,8 +288,7 @@
             "snippet": "        $this->queueReceiveMessageBuffer->enqueue($queueReceiveMessageTransfer);",
             "selected_text": "enqueue",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -324,8 +300,7 @@
             "snippet": "        while ($this->queueReceiveMessageBuffer->count()) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -337,8 +312,7 @@
             "snippet": "            $queueReceiveMessageTransfer = $this->queueReceiveMessageBuffer->dequeue();",
             "selected_text": "dequeue",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -350,8 +324,7 @@
             "snippet": "        while ($this->queueReceiveMessageBuffer->count()) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -363,8 +336,7 @@
             "snippet": "            $queueReceiveMessageTransfer = $this->queueReceiveMessageBuffer->dequeue();",
             "selected_text": "dequeue",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -376,8 +348,7 @@
             "snippet": "            $dataImporterReportTransfer->getImportedDataSetCount() - $this->queueReceiveMessageBuffer->count() + 1",
             "selected_text": "$dataImporterReportTransfer->getImportedDataSetCount()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -389,8 +360,7 @@
             "snippet": "            $dataImporterReportTransfer->getImportedDataSetCount() - $this->queueReceiveMessageBuffer->count() + 1",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -402,8 +372,7 @@
             "snippet": "        return $this->utilEncodingService->decodeJson($queueReceiveMessageTransfer->getQueueMessage()->getBody(), true);",
             "selected_text": "$queueReceiveMessageTransfer->getQueueMessage()->getBody()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -415,8 +384,7 @@
             "snippet": "        return $this->utilEncodingService->decodeJson($queueReceiveMessageTransfer->getQueueMessage()->getBody(), true);",
             "selected_text": "getBody",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -428,8 +396,7 @@
             "snippet": "        $queueReceiveMessageTransfer->getQueueMessage()->setBody($this->utilEncodingService->encodeJson($queueMessageBody));",
             "selected_text": "setBody",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -441,8 +408,7 @@
             "snippet": "        $newChunk = $this->queueClient->receiveMessages($this->getQueueName(), $this->getChunkSize(), $this->getQueueConsumerOptions());",
             "selected_text": "$this->getQueueName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -454,8 +420,7 @@
             "snippet": "        $newChunk = $this->queueClient->receiveMessages($this->getQueueName(), $this->getChunkSize(), $this->getQueueConsumerOptions());",
             "selected_text": "$this->getChunkSize()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -467,8 +432,7 @@
             "snippet": "                $exceptionMessage = $this->buildExceptionMessage($dataImportException, $dataImporterReportTransfer->getImportedDataSetCount() + 1);",
             "selected_text": "$dataImporterReportTransfer->getImportedDataSetCount()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -480,8 +444,7 @@
             "snippet": "        $dataImporterReportTransfer->setImportedDataSetCount($dataImporterReportTransfer->getImportedDataSetCount() + 1);",
             "selected_text": "$dataImporterReportTransfer->getImportedDataSetCount()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -493,8 +456,31 @@
             "snippet": "        $dataImporterReportTransfer->setImportedDataSetCount($dataImporterReportTransfer->getImportedDataSetCount() - $exception->getRolledBackRowsCount());",
             "selected_text": "$dataImporterReportTransfer->getImportedDataSetCount()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 296,
+            "line_to": 296,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\DataImport\\Business\\Model\\DataReader\\ConfigurableDataReaderInterface::configure cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/Model/DataImporter.php",
+            "snippet": "                $this->dataReader->configure($dataImporterConfigurationTransfer->getReaderConfiguration());",
+            "selected_text": "$dataImporterConfigurationTransfer->getReaderConfiguration()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 330,
+            "line_to": 330,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getFileName on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/Model/DataImporter.php",
+            "snippet": "            return $dataImporterConfigurationTransfer->getReaderConfiguration()->getFileName();",
+            "selected_text": "getFileName",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -506,8 +492,7 @@
             "snippet": "            ->setImportedDataSetCount($dataImporterReportTransfer->getImportedDataSetCount() + $innerDataImportReportTransfer->getImportedDataSetCount());",
             "selected_text": "$dataImporterReportTransfer->getImportedDataSetCount()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -519,8 +504,31 @@
             "snippet": "            ->setImportedDataSetCount($dataImporterReportTransfer->getImportedDataSetCount() + $innerDataImportReportTransfer->getImportedDataSetCount());",
             "selected_text": "$innerDataImportReportTransfer->getImportedDataSetCount()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 255,
+            "line_to": 255,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'string' for Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterCollection::getCurrentImportType is not nullable, but 'null|string' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/Model/DataImporterCollection.php",
+            "snippet": "     * @return string",
+            "selected_text": "string",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 260,
+            "line_to": 260,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterCollection::getCurrentImportType is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/Model/DataImporterCollection.php",
+            "snippet": "            return $dataImporterConfigurationTransfer->getImportType();",
+            "selected_text": "$dataImporterConfigurationTransfer->getImportType()",
+            "error_level": 5,
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -532,8 +540,7 @@
             "snippet": "                sprintf('No data importers found for the import group %s. Make sure the name of the group is spelled correctly.', $dataImporterConfigurationTransfer->getImportGroup())",
             "selected_text": "$dataImporterConfigurationTransfer->getImportGroup()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -545,8 +552,7 @@
             "snippet": "        $this->dataSetWriter->flush();",
             "selected_text": "flush",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -558,8 +564,7 @@
             "snippet": "        $this->dataSetWriter->write($dataSet);",
             "selected_text": "write",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -571,8 +576,7 @@
             "snippet": "            $this->dataSetKeys = $this->fileObject->current();",
             "selected_text": "$this->fileObject->current()",
             "error_level": 3,
-            "shortcode": 147,
-            "taint_trace": null
+            "shortcode": 147
         },
         {
             "severity": "info",
@@ -584,8 +588,7 @@
             "snippet": "                $dataSet = array_combine($this->dataSetKeys, $dataSet);",
             "selected_text": "$dataSet",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -597,8 +600,7 @@
             "snippet": "                    implode(', ', array_values($dataSetBeforeCombine))",
             "selected_text": "$dataSetBeforeCombine",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -610,8 +612,55 @@
             "snippet": "        $this->dataSet->exchangeArray($dataSet);",
             "selected_text": "$dataSet",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 72,
+            "line_to": 72,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Zed\\DataImport\\Business\\Model\\DataReader\\CsvReader\\CsvReaderConfiguration::getDelimiter is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/Model/DataReader/CsvReader/CsvReaderConfiguration.php",
+            "snippet": "            return $this->dataImporterReaderConfigurationTransfer->getCsvDelimiter();",
+            "selected_text": "$this->dataImporterReaderConfigurationTransfer->getCsvDelimiter()",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 84,
+            "line_to": 84,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Zed\\DataImport\\Business\\Model\\DataReader\\CsvReader\\CsvReaderConfiguration::getEnclosure is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/Model/DataReader/CsvReader/CsvReaderConfiguration.php",
+            "snippet": "            return $this->dataImporterReaderConfigurationTransfer->getCsvEnclosure();",
+            "selected_text": "$this->dataImporterReaderConfigurationTransfer->getCsvEnclosure()",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 96,
+            "line_to": 96,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Zed\\DataImport\\Business\\Model\\DataReader\\CsvReader\\CsvReaderConfiguration::getEscape is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/Model/DataReader/CsvReader/CsvReaderConfiguration.php",
+            "snippet": "            return $this->dataImporterReaderConfigurationTransfer->getCsvEscape();",
+            "selected_text": "$this->dataImporterReaderConfigurationTransfer->getCsvEscape()",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 108,
+            "line_to": 108,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'int' for Spryker\\Zed\\DataImport\\Business\\Model\\DataReader\\CsvReader\\CsvReaderConfiguration::getFlags is not nullable, but the function returns 'int|null'",
+            "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/Model/DataReader/CsvReader/CsvReaderConfiguration.php",
+            "snippet": "            return $this->dataImporterReaderConfigurationTransfer->getCsvFlags();",
+            "selected_text": "$this->dataImporterReaderConfigurationTransfer->getCsvFlags()",
+            "error_level": 5,
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -623,8 +672,7 @@
             "snippet": "            return $this->dataImporterReaderConfigurationTransfer->getCsvHasHeader();",
             "selected_text": "$this->dataImporterReaderConfigurationTransfer->getCsvHasHeader()",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -636,8 +684,7 @@
             "snippet": "            $dataImporterReaderConfigurationTransfer->getFileName(),",
             "selected_text": "$dataImporterReaderConfigurationTransfer->getFileName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -649,8 +696,7 @@
             "snippet": "            $fileNames[] = rtrim($directory, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $fileName;",
             "selected_text": "$fileName",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -662,8 +708,7 @@
             "snippet": "            throw new DataSetBrokerTransactionFailedException($rolledBackRowsCount, $exception->getMessage(), $exception->getCode(), $exception);",
             "selected_text": "$exception->getCode()",
             "error_level": 4,
-            "shortcode": 12,
-            "taint_trace": null
+            "shortcode": 12
         },
         {
             "severity": "info",
@@ -675,8 +720,7 @@
             "snippet": "            static::$eventFacade->triggerBulk($eventName, $events);",
             "selected_text": "triggerBulk",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -685,11 +729,10 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Communication/Console/DataImportConsole.php",
-            "snippet": "        $this->info(sprintf('Starting import with %s configuration file.</>', $configPath));",
+            "snippet": "        $this->info(sprintf('<fg=white>Starting import with %s configuration file.</>', $configPath));",
             "selected_text": "$configPath",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -701,8 +744,7 @@
             "snippet": "            ->executeByConfigAndImporterType($input, $configPath, $importerType);",
             "selected_text": "$configPath",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -714,8 +756,7 @@
             "snippet": "        if ($dataImporterReportMessageTransfers->count()) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -727,8 +768,7 @@
             "snippet": "                $this->info($dataImporterReportMessageTransfer->getMessage());",
             "selected_text": "$dataImporterReportMessageTransfer->getMessage()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -740,8 +780,7 @@
             "snippet": "        if ($dataImporterReports->count()) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -753,8 +792,7 @@
             "snippet": "            return $input->getArgument(static::ARGUMENT_IMPORTER);",
             "selected_text": "$input->getArgument(static::ARGUMENT_IMPORTER)",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -766,8 +804,19 @@
             "snippet": "        $commandNameParts = explode(':', $this->getName());",
             "selected_text": "$this->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 274,
+            "line_to": 274,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Communication/Console/DataImportConsole.php",
+            "snippet": "            $source = sprintf('Import source: <fg=green>%s</>' . PHP_EOL, $dataImporterReport->getSource());",
+            "selected_text": "$dataImporterReport->getSource()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -779,8 +828,7 @@
             "snippet": "            $dataImporterReport->getImportType(),",
             "selected_text": "$dataImporterReport->getImportType()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -792,8 +840,7 @@
             "snippet": "            $dataImporterReport->getExpectedImportableDataSetCount(),",
             "selected_text": "$dataImporterReport->getExpectedImportableDataSetCount()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -805,8 +852,7 @@
             "snippet": "            $dataImporterReport->getImportedDataSetCount(),",
             "selected_text": "$dataImporterReport->getImportedDataSetCount()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -818,8 +864,7 @@
             "snippet": "            $dataImporterReport->getImportTime(),",
             "selected_text": "$dataImporterReport->getImportTime()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -831,8 +876,7 @@
             "snippet": "                $importerType",
             "selected_text": "$importerType",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -844,8 +888,7 @@
             "snippet": "        if (!$dataImportConfigurationTransfer->getActions()->count()) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -857,8 +900,7 @@
             "snippet": "            $messageTransfer->setMessage(sprintf('Requested import type \"%s\" was not found in %s.', $importerType, $configPath));",
             "selected_text": "$importerType",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -870,8 +912,7 @@
             "snippet": "            $dataImporterConfigurationTransfer->getReaderConfiguration()->setFileName($dataImportConfigurationActionTransfer->getSource());",
             "selected_text": "setFileName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -883,8 +924,7 @@
             "snippet": "            ->setImportGroup($input->getOption(DataImportConsole::OPTION_IMPORT_GROUP))",
             "selected_text": "$input->getOption(DataImportConsole::OPTION_IMPORT_GROUP)",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -896,8 +936,7 @@
             "snippet": "            ->setFileName($input->getOption(DataImportConsole::OPTION_FILE_NAME))",
             "selected_text": "$input->getOption(DataImportConsole::OPTION_FILE_NAME)",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -909,8 +948,7 @@
             "snippet": "            ->setCsvDelimiter($input->getOption(DataImportConsole::OPTION_CSV_DELIMITER))",
             "selected_text": "$input->getOption(DataImportConsole::OPTION_CSV_DELIMITER)",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -922,8 +960,7 @@
             "snippet": "            ->setCsvEnclosure($input->getOption(DataImportConsole::OPTION_CSV_ENCLOSURE))",
             "selected_text": "$input->getOption(DataImportConsole::OPTION_CSV_ENCLOSURE)",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -935,8 +972,7 @@
             "snippet": "            ->setCsvEscape($input->getOption(DataImportConsole::OPTION_CSV_ESCAPE))",
             "selected_text": "$input->getOption(DataImportConsole::OPTION_CSV_ESCAPE)",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -948,8 +984,7 @@
             "snippet": "            ->setCsvHasHeader($input->getOption(DataImportConsole::OPTION_CSV_HAS_HEADER));",
             "selected_text": "$input->getOption(DataImportConsole::OPTION_CSV_HAS_HEADER)",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -961,8 +996,7 @@
             "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\DataImportConfigurationActionTransfer[] $dataImportConfigurationActionTransfers",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\DataImportConfigurationActionTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -974,8 +1008,7 @@
             "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\DataImportConfigurationActionTransfer[]",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\DataImportConfigurationActionTransfer[]",
             "error_level": 4,
-            "shortcode": 142,
-            "taint_trace": null
+            "shortcode": 142
         },
         {
             "severity": "info",
@@ -987,8 +1020,7 @@
             "snippet": "            $dataImportConfigurationActionTransfers->getArrayCopy(),",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -1000,8 +1032,7 @@
             "snippet": "            $dataImporterReportTransfer->getImportedDataSetCount() + $overallDataImporterReportTransfer->getImportedDataSetCount()",
             "selected_text": "$dataImporterReportTransfer->getImportedDataSetCount()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -1013,8 +1044,7 @@
             "snippet": "            $dataImporterReportTransfer->getImportedDataSetCount() + $overallDataImporterReportTransfer->getImportedDataSetCount()",
             "selected_text": "$overallDataImporterReportTransfer->getImportedDataSetCount()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -1026,8 +1056,7 @@
             "snippet": "                $dataImportConfigurationActionTransfer->setSource($this->resolveSourcePath($dataImportConfigurationActionTransfer->getSource()));",
             "selected_text": "$dataImportConfigurationActionTransfer->getSource()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1039,8 +1068,7 @@
             "snippet": "     * @return \\Spryker\\Zed\\Kernel\\AbstractBundleConfig",
             "selected_text": "\\Spryker\\Zed\\Kernel\\AbstractBundleConfig",
             "error_level": 3,
-            "shortcode": 70,
-            "taint_trace": null
+            "shortcode": 70
         },
         {
             "severity": "info",
@@ -1052,8 +1080,7 @@
             "snippet": "     * @return \\Spryker\\Zed\\Kernel\\AbstractBundleConfig",
             "selected_text": "\\Spryker\\Zed\\Kernel\\AbstractBundleConfig",
             "error_level": 3,
-            "shortcode": 70,
-            "taint_trace": null
+            "shortcode": 70
         }
     ],
     "deprecation": [
@@ -1067,8 +1094,7 @@
             "snippet": "     * @return \\Spryker\\Zed\\DataImportExtension\\Dependency\\Plugin\\DataSetWriterPluginInterface[]",
             "selected_text": "\\Spryker\\Zed\\DataImportExtension\\Dependency\\Plugin\\DataSetWriterPluginInterface[]",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -1080,8 +1106,7 @@
             "snippet": "        return $this->getEventFacade();",
             "selected_text": "getEventFacade",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -1093,8 +1118,19 @@
             "snippet": "     * @var \\Spryker\\Zed\\DataImportExtension\\Dependency\\Plugin\\DataSetWriterPluginInterface[]|\\Spryker\\Zed\\DataImportExtension\\Dependency\\Plugin\\DataSetItemWriterPluginInterface[]",
             "selected_text": "\\Spryker\\Zed\\DataImportExtension\\Dependency\\Plugin\\DataSetWriterPluginInterface[]|\\Spryker\\Zed\\DataImportExtension\\Dependency\\Plugin\\DataSetItemWriterPluginInterface[]",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 18,
+            "line_to": 18,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\DataImportExtension\\Dependency\\Plugin\\DataSetWriterPluginInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/Model/DataSet/DataSetWriterCollection.php",
+            "snippet": "    /**\n     * @var \\Spryker\\Zed\\DataImportExtension\\Dependency\\Plugin\\DataSetWriterPluginInterface[]|\\Spryker\\Zed\\DataImportExtension\\Dependency\\Plugin\\DataSetItemWriterPluginInterface[]\n     */\n    protected $dataSetWriters = [];",
+            "selected_text": "protected $dataSetWriters = [];",
+            "error_level": 2,
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -1106,8 +1142,7 @@
             "snippet": "     * @param \\Spryker\\Zed\\DataImportExtension\\Dependency\\Plugin\\DataSetWriterPluginInterface[]|\\Spryker\\Zed\\DataImportExtension\\Dependency\\Plugin\\DataSetItemWriterPluginInterface[] $dataSetWriter",
             "selected_text": "\\Spryker\\Zed\\DataImportExtension\\Dependency\\Plugin\\DataSetWriterPluginInterface[]|\\Spryker\\Zed\\DataImportExtension\\Dependency\\Plugin\\DataSetItemWriterPluginInterface[]",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -1119,8 +1154,7 @@
             "snippet": "            ->executeByImporterType($input, $importerType);",
             "selected_text": "executeByImporterType",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -1132,8 +1166,7 @@
             "snippet": "        return $this->dataImportFacade->import($dataImporterConfigurationTransfer);",
             "selected_text": "import",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -1145,8 +1178,7 @@
             "snippet": "     * @return \\Spryker\\Zed\\DataImportExtension\\Dependency\\Plugin\\DataSetWriterPluginInterface[]",
             "selected_text": "\\Spryker\\Zed\\DataImportExtension\\Dependency\\Plugin\\DataSetWriterPluginInterface[]",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         }
     ]
 }

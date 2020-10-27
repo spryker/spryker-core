@@ -33,6 +33,7 @@
     "spryker/agent": "*",
     "spryker/agent-auth-rest-api": "*",
     "spryker/agent-gui": "*",
+    "spryker/agent-extension": "*",
     "spryker/alternative-products-rest-api": "*",
     "spryker/api": "*",
     "spryker/api-query-builder": "*",

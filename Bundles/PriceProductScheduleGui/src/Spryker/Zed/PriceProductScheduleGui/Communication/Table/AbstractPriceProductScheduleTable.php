@@ -227,7 +227,7 @@ abstract class AbstractPriceProductScheduleTable extends AbstractTable
         if ($priceProductScheduleEntity->getFkProduct() !== null) {
             return null;
         }
-        
+
         $productAbstractEntity = $priceProductScheduleEntity->getProductAbstract();
 
         if ($productAbstractEntity === null) {

@@ -11,8 +11,7 @@
             "snippet": "            ->getCustomerGroupCollectionByIdCustomer($customerTransfer->getIdCustomer());",
             "selected_text": "$customerTransfer->getIdCustomer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -24,8 +23,7 @@
             "snippet": "            ->getCustomerGroupCollectionByIdCustomer($customerTransfer->getIdCustomer());",
             "selected_text": "getIdCustomer",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -37,8 +35,19 @@
             "snippet": "            $lowerCustomerGroupName = mb_strtolower($customerGroup->getName());",
             "selected_text": "$customerGroup->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 92,
+            "line_to": 92,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCustomer on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerGroupDiscountConnector/src/Spryker/Zed/CustomerGroupDiscountConnector/Business/DecisionRule/CustomerGroupDecisionRule.php",
+            "snippet": "        if (!$quoteTransfer->getCustomer()->getIdCustomer()) {",
+            "selected_text": "getIdCustomer",
+            "error_level": 3,
+            "shortcode": 83
         }
     ],
     "deprecation": []

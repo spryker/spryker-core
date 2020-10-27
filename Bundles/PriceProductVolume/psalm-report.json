@@ -1,5 +1,18 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Client\\PriceProductVolume\\PriceExtractor\\VolumePriceExtractor\\VolumePriceExtractor::extractProductPricesForProductConcrete has wrong name $idProductConcrete, expecting $idProductAbstract as defined by Spryker\\Client\\PriceProductVolume\\PriceExtractor\\VolumePriceExtractor\\VolumePriceExtractorInterface::extractProductPricesForProductConcrete",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Client/PriceProductVolume/PriceExtractor/VolumePriceExtractor/VolumePriceExtractor.php",
+            "snippet": "    public function extractProductPricesForProductConcrete(int $idProductConcrete, array $priceProductTransfers): array",
+            "selected_text": "$idProductConcrete",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -72,54 +85,6 @@
             "selected_text": "setPriceData",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 50,
-            "line_to": 50,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Client/PriceProductVolume/PriceProductVolumeDependencyProvider.php",
-            "snippet": "                $container->getLocator()->utilEncoding()->service()",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 66,
-            "line_to": 66,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Client/PriceProductVolume/PriceProductVolumeDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 82,
-            "line_to": 82,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Client/PriceProductVolume/PriceProductVolumeDependencyProvider.php",
-            "snippet": "                $container->getLocator()->priceProductStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 98,
-            "line_to": 98,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Client/PriceProductVolume/PriceProductVolumeDependencyProvider.php",
-            "snippet": "                $container->getLocator()->locale()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         },
         {
             "severity": "info",
@@ -204,30 +169,6 @@
             "selected_text": "setPriceData",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Zed/PriceProductVolume/PriceProductVolumeDependencyProvider.php",
-            "snippet": "                $container->getLocator()->utilEncoding()->service()",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 60,
-            "line_to": 60,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Zed/PriceProductVolume/PriceProductVolumeDependencyProvider.php",
-            "snippet": "                $container->getLocator()->priceProduct()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

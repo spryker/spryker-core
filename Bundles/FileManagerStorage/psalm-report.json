@@ -11,33 +11,69 @@
             "selected_text": "[$fileTransfer->getIdFile()]",
             "error_level": 6,
             "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 26,
+            "line_to": 26,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\FileManagerStorage\\Communication\\Plugin\\Event\\Listener\\FileInfoListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/FileManagerStorage/src/Spryker/Zed/FileManagerStorage/Communication/Plugin/Event/Listener/FileInfoListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 28,
+            "line_to": 28,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\FileManagerStorage\\Communication\\Plugin\\Event\\Listener\\FileListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/FileManagerStorage/src/Spryker/Zed/FileManagerStorage/Communication/Plugin/Event/Listener/FileListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 26,
+            "line_to": 26,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\FileManagerStorage\\Communication\\Plugin\\Event\\Listener\\FileLocalizedAttributesListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/FileManagerStorage/src/Spryker/Zed/FileManagerStorage/Communication/Plugin/Event/Listener/FileLocalizedAttributesListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 25,
+            "line_to": 25,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\FileManagerStorage\\Communication\\Plugin\\Event\\Listener\\FilePublishListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/FileManagerStorage/src/Spryker/Zed/FileManagerStorage/Communication/Plugin/Event/Listener/FilePublishListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 25,
+            "line_to": 25,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\FileManagerStorage\\Communication\\Plugin\\Event\\Listener\\FileUnpublishListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/FileManagerStorage/src/Spryker/Zed/FileManagerStorage/Communication/Plugin/Event/Listener/FileUnpublishListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
         }
     ],
     "warning": [
-        {
-            "severity": "info",
-            "line_from": 42,
-            "line_to": 42,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/FileManagerStorage/src/Spryker/Client/FileManagerStorage/FileManagerStorageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->storage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 58,
-            "line_to": 58,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/FileManagerStorage/src/Spryker/Client/FileManagerStorage/FileManagerStorageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->synchronization()->service()",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
         {
             "severity": "info",
             "line_from": 87,
@@ -196,6 +232,18 @@
         },
         {
             "severity": "info",
+            "line_from": 79,
+            "line_to": 79,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method toArray on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/FileManagerStorage/src/Spryker/Zed/FileManagerStorage/Communication/Plugin/Synchronization/FileSynchronizationDataBulkPlugin.php",
+            "snippet": "            $data = $fileStorageTransfer->getData() ? $fileStorageTransfer->getData()->toArray() : [];",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 68,
             "line_to": 68,
             "type": "MoreSpecificImplementedParamType",
@@ -208,34 +256,10 @@
         },
         {
             "severity": "info",
-            "line_from": 57,
-            "line_to": 57,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/FileManagerStorage/src/Spryker/Zed/FileManagerStorage/FileManagerStorageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->locale()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 73,
-            "line_to": 73,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/FileManagerStorage/src/Spryker/Zed/FileManagerStorage/FileManagerStorageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->eventBehavior()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 67,
             "line_to": 67,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\FileManagerStorage\\Persistence\\SpyFileStorage|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\FileManagerStorage\\Persistence\\SpyFileStorage> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/FileManagerStorage/src/Spryker/Zed/FileManagerStorage/Persistence/FileManagerStorageRepository.php",
             "snippet": "        $fileStorageEntityCollection = $query->find()->toKeyIndex($storageCompositeKey);",
             "selected_text": "toKeyIndex",
