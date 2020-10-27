@@ -57,7 +57,7 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
      */
     public function mapSearchResultToRestAttributesTransfer(array $searchResult): RestCatalogSearchAttributesTransfer
     {
-        $convertSearchResult = $this->convertSearchResultToArray($searchResult);
+        $convertedSearchResult = $this->convertSearchResultToArray($searchResult);
 
         $restSearchAttributesTransfer = (new RestCatalogSearchAttributesTransfer())->fromArray($convertSearchResult, true);
 
