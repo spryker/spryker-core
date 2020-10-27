@@ -16,8 +16,10 @@ use Spryker\Zed\MerchantSearchExtension\Dependency\Plugin\MerchantSearchDataExpa
  */
 class MerchantCategoryMerchantSearchDataExpanderPlugin extends AbstractPlugin implements MerchantSearchDataExpanderPluginInterface
 {
-    protected const ID_MERCHANT = 'idMerchant';
-    protected const MERCHANT_CATEGORY_IDS = 'merchantCategoryIds';
+    protected const ID_MERCHANT = 'id_merchant';
+    protected const CATEGORY_IDS = 'category-ids';
+
+    protected const SEARCH_RESULT_DATA = 'search-result-data';
 
     /**
      * {@inheritDoc}
@@ -35,16 +37,16 @@ class MerchantCategoryMerchantSearchDataExpanderPlugin extends AbstractPlugin im
             ->getMerchantCategoryFacade()
             ->get(
                 (new MerchantCategoryCriteriaTransfer())
-                    ->setIdMerchant($merchantSearchData[static::ID_MERCHANT])
+                    ->setIdMerchant($merchantSearchData[static::SEARCH_RESULT_DATA][static::ID_MERCHANT])
             );
 
-        $merchantCategoryIds = [];
+        $categoryIds = [];
 
         foreach ($merchantCategoryResponseTransfer->getCategories() as $categoryTransfer) {
-            $merchantCategoryIds[] = $categoryTransfer->getIdCategory();
+            $categoryIds[] = $categoryTransfer->getIdCategory();
         }
 
-        $merchantSearchData[static::MERCHANT_CATEGORY_IDS] = $merchantCategoryIds;
+        $merchantSearchData[static::CATEGORY_IDS] = $categoryIds;
 
         return $merchantSearchData;
     }

@@ -70,7 +70,6 @@ class MerchantSearchMapper implements MerchantSearchMapperInterface
         MerchantCollectionTransfer $merchantCollectionTransfer,
         MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer
     ): MerchantSearchCollectionTransfer {
-        $merchantSearchCollectionTransfer->fromArray([]);
         foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
             $merchantSearchTransfer = $this->mapMerchantTransferToMerchantSearchTransfer(
                 $merchantTransfer,

@@ -20,6 +20,8 @@ class MerchantDeletePublisherPlugin extends AbstractPlugin implements PublisherP
 {
     /**
      * {@inheritDoc}
+     * - Deletes entities from `spy_merchant_search` based on IDs from $eventTransfers.
+     * - Sends delete message to queue based on module config.
      *
      * @api
      *

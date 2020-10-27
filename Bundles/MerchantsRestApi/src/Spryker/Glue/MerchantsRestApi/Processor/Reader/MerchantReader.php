@@ -18,22 +18,17 @@ use Spryker\Glue\MerchantsRestApi\Processor\Translator\MerchantTranslatorInterfa
 class MerchantReader implements MerchantReaderInterface
 {
     /**
-     * @uses @todo
-     */
-    protected const QUERY_STRING_PARAMETER = 'q';
-
-    /**
-     * @uses @todo
+     * @uses \Spryker\Client\MerchantSearch\Plugin\Elasticsearch\Query\PaginatedMerchantSearchQueryExpanderPlugin::PARAMETER_OFFSET
      */
     protected const PARAMETER_OFFSET = 'offset';
 
     /**
-     * @uses @todo
+     * @uses \Spryker\Client\MerchantSearch\Plugin\Elasticsearch\Query\PaginatedMerchantSearchQueryExpanderPlugin::PARAMETER_LIMIT
      */
     protected const PARAMETER_LIMIT = 'limit';
 
     /**
-     * @uses @todo
+     * @uses \Spryker\Client\MerchantSearch\Plugin\Elasticsearch\ResultFormatter\MerchantSearchResultFormatterPlugin::NAME
      */
     protected const KEY_MERCHANT_SEARCH_COLLECTION = 'MerchantSearchCollection';
 
@@ -165,7 +160,7 @@ class MerchantReader implements MerchantReaderInterface
     protected function createMerchantSearchRequest(RestRequestInterface $restRequest): MerchantSearchRequestTransfer
     {
         $page = $restRequest->getPage();
-        $requestParameters = [];
+        $requestParameters = $restRequest->getHttpRequest()->query->all();
 
         if ($page) {
             $requestParameters[static::PARAMETER_OFFSET] = $page->getOffset();

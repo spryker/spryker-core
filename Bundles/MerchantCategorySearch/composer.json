@@ -4,11 +4,15 @@
   "description": "MerchantCategorySearch module",
   "license": "proprietary",
   "require": {
-    "spryer/merchant-category": "^0.1.1",
-    "spryker/merchant-search-extension": "^0.1.0"
+    "php": ">=7.2",
+    "spryker/kernel": "^3.33.0",
+    "spryker/merchant-category": "^0.1.1",
+    "spryker/merchant-search-extension": "^0.1.0",
+    "spryker/search-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/elastica": "*",
     "spryker/testify": "*"
   },
   "autoload": {
@@ -16,14 +20,15 @@
       "Spryker\\": "src/Spryker/"
     }
   },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
-    }
-  },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "scripts: {},
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+  },
+  "suggest": {
+    "spryker/elastica": "If you want to use Elastica plugins."
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"
