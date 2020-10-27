@@ -52,7 +52,7 @@ class CustomerPasswordPolicyValidator implements CustomerPasswordPolicyValidator
      *
      * @return \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
      */
-    public function checkLength(
+    public function validateLength(
         string $password,
         CustomerPasswordPolicyResultTransfer $resultTransfer,
         array $config
@@ -89,7 +89,7 @@ class CustomerPasswordPolicyValidator implements CustomerPasswordPolicyValidator
      *
      * @return \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
      */
-    public function checkCharset(
+    public function validateCharset(
         string $password,
         CustomerPasswordPolicyResultTransfer $resultTransfer,
         array $config
@@ -138,7 +138,7 @@ class CustomerPasswordPolicyValidator implements CustomerPasswordPolicyValidator
      *
      * @return \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
      */
-    public function checkSequence(
+    public function validateSequence(
         string $password,
         CustomerPasswordPolicyResultTransfer $resultTransfer,
         array $config
@@ -170,7 +170,7 @@ class CustomerPasswordPolicyValidator implements CustomerPasswordPolicyValidator
      *
      * @return \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
      */
-    public function checkBlacklist(
+    public function validateBlacklist(
         string $password,
         CustomerPasswordPolicyResultTransfer $resultTransfer,
         array $config
@@ -229,7 +229,7 @@ class CustomerPasswordPolicyValidator implements CustomerPasswordPolicyValidator
     protected function hasSpecial(string $word, string $specialChars): bool
     {
         foreach (str_split($word) as $char) {
-            if (strpos($specialChars, $char)) {
+            if (strpos($specialChars, $char) !== false) {
                 return true;
             }
         }

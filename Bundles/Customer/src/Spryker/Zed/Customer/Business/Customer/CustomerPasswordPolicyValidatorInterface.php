@@ -18,7 +18,7 @@ interface CustomerPasswordPolicyValidatorInterface
      *
      * @return \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
      */
-    public function checkLength(
+    public function validateLength(
         string $password,
         CustomerPasswordPolicyResultTransfer $resultTransfer,
         array $config
@@ -31,7 +31,7 @@ interface CustomerPasswordPolicyValidatorInterface
      *
      * @return \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
      */
-    public function checkCharset(
+    public function validateCharset(
         string $password,
         CustomerPasswordPolicyResultTransfer $resultTransfer,
         array $config
@@ -44,7 +44,7 @@ interface CustomerPasswordPolicyValidatorInterface
      *
      * @return \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
      */
-    public function checkSequence(
+    public function validateSequence(
         string $password,
         CustomerPasswordPolicyResultTransfer $resultTransfer,
         array $sequenceLimit
@@ -57,7 +57,7 @@ interface CustomerPasswordPolicyValidatorInterface
      *
      * @return \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
      */
-    public function checkBlacklist(
+    public function validateBlacklist(
         string $password,
         CustomerPasswordPolicyResultTransfer $resultTransfer,
         array $config

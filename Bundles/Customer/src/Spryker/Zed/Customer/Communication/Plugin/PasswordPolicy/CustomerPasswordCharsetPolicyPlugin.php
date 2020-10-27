@@ -8,17 +8,22 @@
 namespace Spryker\Zed\Customer\Communication\Plugin\PasswordPolicy;
 
 use Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerPasswordPolicyPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Customer\Business\CustomerFacadeInterface getFacade()
+ * @method \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Customer\CustomerConfig getConfig()
  */
 class CustomerPasswordCharsetPolicyPlugin extends AbstractPlugin implements CustomerPasswordPolicyPluginInterface
 {
     private const CUSTOMER_POLICY_PLUGIN_NAME = 'charset';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $customerPassword
@@ -34,7 +39,7 @@ class CustomerPasswordCharsetPolicyPlugin extends AbstractPlugin implements Cust
     ): CustomerPasswordPolicyResultTransfer {
         return $this->getFactory()
             ->createPasswordPolicyValidator()
-            ->checkCharset(
+            ->validateCharset(
                 $customerPassword,
                 $resultTransfer,
                 $config
@@ -42,6 +47,10 @@ class CustomerPasswordCharsetPolicyPlugin extends AbstractPlugin implements Cust
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @inheriDoc
      *
      * @return string

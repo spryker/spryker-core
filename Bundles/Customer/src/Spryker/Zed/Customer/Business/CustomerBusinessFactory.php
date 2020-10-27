@@ -16,8 +16,6 @@ use Spryker\Zed\Customer\Business\Customer\Address;
 use Spryker\Zed\Customer\Business\Customer\Customer;
 use Spryker\Zed\Customer\Business\Customer\CustomerPasswordPolicyManager;
 use Spryker\Zed\Customer\Business\Customer\CustomerPasswordPolicyManagerInterface;
-use Spryker\Zed\Customer\Business\Customer\CustomerPasswordPolicyValidator;
-use Spryker\Zed\Customer\Business\Customer\CustomerPasswordPolicyValidatorInterface;
 use Spryker\Zed\Customer\Business\Customer\CustomerReader;
 use Spryker\Zed\Customer\Business\Customer\CustomerReaderInterface;
 use Spryker\Zed\Customer\Business\Customer\EmailValidator;
