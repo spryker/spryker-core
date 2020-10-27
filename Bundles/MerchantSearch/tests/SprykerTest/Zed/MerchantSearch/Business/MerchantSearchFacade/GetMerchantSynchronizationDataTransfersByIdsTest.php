@@ -42,13 +42,14 @@ class GetMerchantSynchronizationDataTransfersByIdsTest extends Unit
     /**
      * @return void
      */
-    public function testGetMerchantSynchronizationDataTransfersByIdsWorksWithIds(): void
+    public function tetsGetSynchronizationDataTransfersByMerchantIdsByIdsWorksWithIds(): void
     {
-        // Act
+        // Arrange
         $merchantTransfers = $this->tester->createActiveMerchants();
         $merchantIds = $this->tester->extractMerchantIdsFromMerchantTransfers($merchantTransfers);
-
         $merchantEntities = $this->tester->getMerchantEntitiesByMerchantIds($merchantIds);
+
+        // Act
         $synchronizationDataTransfers = $this->tester->getFacade()->getSynchronizationDataTransfersByMerchantIds(
             new FilterTransfer(),
             $merchantIds
@@ -64,12 +65,13 @@ class GetMerchantSynchronizationDataTransfersByIdsTest extends Unit
     /**
      * @return void
      */
-    public function testGetMerchantSynchronizationDataTransfersByIdsWorksWithFilter(): void
+    public function testGetSynchronizationDataTransfersByMerchantIdsByIdsWorksWithFilter(): void
     {
-        // Act
+        // Arrange
         $merchantTransfers = $this->tester->createActiveMerchants();
         $merchantIds = $this->tester->extractMerchantIdsFromMerchantTransfers($merchantTransfers);
 
+        // Act
         $synchronizationDataTransfers = $this->tester->getFacade()->getSynchronizationDataTransfersByMerchantIds(
             (new FilterTransfer())->setOffset(1)->setLimit(1)
         );
@@ -81,12 +83,13 @@ class GetMerchantSynchronizationDataTransfersByIdsTest extends Unit
     /**
      * @return void
      */
-    public function testGetMerchantSynchronizationDataTransfersByIdsWorksWithFilterAndIds(): void
+    public function testGetSynchronizationDataTransfersByMerchantIdsByIdsWorksWithFilterAndIds(): void
     {
-        // Act
+        // Arrange
         $merchantTransfers = $this->tester->createActiveMerchants();
         $merchantIds = $this->tester->extractMerchantIdsFromMerchantTransfers($merchantTransfers);
 
+        // Act
         $synchronizationDataTransfers = $this->tester->getFacade()->getSynchronizationDataTransfersByMerchantIds(
             (new FilterTransfer())->setOffset(0)->setLimit(1),
             [$merchantIds[0]]

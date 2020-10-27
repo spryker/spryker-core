@@ -11,6 +11,7 @@ use Codeception\Actor;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Orm\Zed\MerchantSearch\Persistence\SpyMerchantSearchQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
@@ -36,7 +37,7 @@ class MerchantSearchBusinessTester extends Actor
 {
     use _generated\MerchantSearchBusinessTesterActions;
 
-    protected const MERCHANT_COUNT = 3;
+    public const MERCHANT_COUNT = 3;
 
     /**
      * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_APPROVED
@@ -79,14 +80,14 @@ class MerchantSearchBusinessTester extends Actor
      *
      * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantSearch\Persistence\SpyMerchantSearch[]
      */
-    public function getMerchantEntitiesByMerchantIds(array $merchantIds = []): ObjectCollection
+    public function getMerchantEntitiesByMerchantIds(array $merchantIds): ObjectCollection
     {
-        $spyMerchantSearchQuery = SpyMerchantSearchQuery::create();
+        $merchantSearchQuery = SpyMerchantSearchQuery::create();
         if ($merchantIds) {
-            $spyMerchantSearchQuery->filterByFkMerchant($merchantIds, Criteria::IN);
+            $merchantSearchQuery->filterByFkMerchant($merchantIds, Criteria::IN);
         }
 
-        return $spyMerchantSearchQuery->find();
+        return $merchantSearchQuery->find();
     }
 
     /**
@@ -127,6 +128,24 @@ class MerchantSearchBusinessTester extends Actor
     }
 
     /**
+     * @param int[] $merchantIds
+     *
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantSearch\Persistence\SpyMerchantSearch[]
+     */
+    public function getSynchronizationDataTransfersByMerchantIds(array $merchantIds)
+    {
+        $merchantSearchQuery = SpyMerchantSearchQuery::create();
+        if ($merchantIds) {
+            $merchantSearchQuery->filterByFkMerchant($merchantIds, Criteria::IN);
+        }
+
+        $merchantSearchEntityCollection = $merchantSearchQuery->setFormatter(ModelCriteria::FORMAT_OBJECT)
+            ->find();
+
+        return $merchantSearchEntityCollection;
+    }
+
+    /**
      * @return void
      */
     protected function setQueueAdaptersDependency(): void
@@ -135,7 +154,7 @@ class MerchantSearchBusinessTester extends Actor
             QueueDependencyProvider::QUEUE_ADAPTERS,
             function (Container $container) {
                 return [
-                $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
+                    $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
                 ];
             }
         );

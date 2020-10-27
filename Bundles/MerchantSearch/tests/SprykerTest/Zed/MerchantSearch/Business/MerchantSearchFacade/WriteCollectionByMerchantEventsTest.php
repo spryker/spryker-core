@@ -43,7 +43,7 @@ class WriteCollectionByMerchantEventsTest extends Unit
     /**
      * @return void
      */
-    public function testWriteActiveApprovedCollectionByMerchantEventsWritesRecords(): void
+    public function testWriteCollectionByMerchantEventsForActiveMerchantRecords(): void
     {
         // Arrange
         $merchantTransfers = $this->tester->createActiveMerchants();
@@ -65,7 +65,7 @@ class WriteCollectionByMerchantEventsTest extends Unit
     /**
      * @return void
      */
-    public function testWriteDefaultCollectionByMerchantEventsWritesRecords(): void
+    public function testWriteCollectionByMerchantEventsForDefaultMerchantRecords(): void
     {
         // Arrange
         $merchantTransfers = [];

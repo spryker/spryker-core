@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\MerchantSearch\Business\MerchantSearchFacade;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\FilterTransfer;
 
 /**
  * Auto-generated group annotations
@@ -47,22 +46,18 @@ class DeleteCollectionByMerchantEventsTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteMerchantSearchByChangingMerchantStatusAndMerchantEventsDeletesRecords(): void
+    public function testDeleteCollectionByMerchantEventsForDeactivatedMerchantDeletesRecords(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->createActiveMerchants()[0];
         $merchantId = $merchantTransfer->getIdMerchant();
-
-        // Act
         $merchantTransfer->setStatus(static::MERCHANT_STATUS_DENIED);
         $this->tester->updateMerchant($merchantTransfer);
         $eventEntityTransfers = $this->tester->createEventEntityTransfersFromIds([$merchantId]);
-        $this->tester->getFacade()->deleteCollectionByMerchantEvents($eventEntityTransfers);
 
-        $synchronizationDataTransfers = $this->tester->getFacade()->getSynchronizationDataTransfersByMerchantIds(
-            (new FilterTransfer())->setOffset(0)->setLimit(1),
-            [$merchantId]
-        );
+        // Act
+        $this->tester->getFacade()->deleteCollectionByMerchantEvents($eventEntityTransfers);
+        $synchronizationDataTransfers = $this->tester->getSynchronizationDataTransfersByMerchantIds([$merchantId]);
 
         // Assert
         $this->assertCount(0, $synchronizationDataTransfers);
@@ -71,7 +66,7 @@ class DeleteCollectionByMerchantEventsTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteMerchantSearchByChangingActiveStateAndMerchantEventsDeletesRecords(): void
+    public function testDeleteCollectionByMerchantEventsForInactiveMerchantDeletesRecords(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->createActiveMerchants()[0];
@@ -83,10 +78,7 @@ class DeleteCollectionByMerchantEventsTest extends Unit
         $eventEntityTransfers = $this->tester->createEventEntityTransfersFromIds([$merchantId]);
         $this->tester->getFacade()->deleteCollectionByMerchantEvents($eventEntityTransfers);
 
-        $synchronizationDataTransfers = $this->tester->getFacade()->getSynchronizationDataTransfersByMerchantIds(
-            (new FilterTransfer())->setOffset(0)->setLimit(1),
-            [$merchantId]
-        );
+        $synchronizationDataTransfers = $this->tester->getSynchronizationDataTransfersByMerchantIds([$merchantId]);
 
         // Assert
         $this->assertCount(0, $synchronizationDataTransfers);
