@@ -4,7 +4,7 @@
   "description": "CmsPagesContentProductAbstractListsResourceRelationship module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/cms-storage": "^2.4.0",
     "spryker/content-product-abstract-lists-rest-api": "^1.2.0",
     "spryker/glue-application": "^1.8.0",

@@ -5,11 +5,11 @@
   "license": "proprietary",
   "require": {
     "league/csv": "^9.2",
-    "php": ">=7.2"
+    "php": ">=7.3"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "scripts": {},
+  "scripts": [],
   "extra": {
     "branch-alias": {
       "dev-master": "3.0.x-dev"

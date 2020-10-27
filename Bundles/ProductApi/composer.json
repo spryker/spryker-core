@@ -4,7 +4,7 @@
   "description": "ProductApi module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/api": "^0.1.0 || ^0.2.0 || ^0.3.0",
     "spryker/api-query-builder": "^0.1.0",
     "spryker/kernel": "^3.30.0",
