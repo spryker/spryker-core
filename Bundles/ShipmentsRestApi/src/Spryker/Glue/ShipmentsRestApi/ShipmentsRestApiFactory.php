@@ -12,6 +12,8 @@ use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentMethodByCheckoutDat
 use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentMethodByCheckoutDataExpanderInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentsByOrderExpander;
 use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentsByOrderExpanderInterface;
+use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderDetailsAttributesMapper;
+use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderDetailsAttributesMapperInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderShipmentsMapper;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderShipmentsMapperInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodMapper;
@@ -86,5 +88,13 @@ class ShipmentsRestApiFactory extends AbstractFactory
     public function createOrderShipmentsMapper(): OrderShipmentsMapperInterface
     {
         return new OrderShipmentsMapper();
+    }
+
+    /**
+     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderDetailsAttributesMapperInterface
+     */
+    public function createOrderDetailsAttributesMapper(): OrderDetailsAttributesMapperInterface
+    {
+        return new OrderDetailsAttributesMapper();
     }
 }
