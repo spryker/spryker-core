@@ -15,6 +15,7 @@ interface ProductConfigurationConstants
     /**
      * Specification:
      * - Provides encryption key for checksum validation.
+     * - Used for the product configurator data checksum generation based on the given key.
      *
      * @api
      */

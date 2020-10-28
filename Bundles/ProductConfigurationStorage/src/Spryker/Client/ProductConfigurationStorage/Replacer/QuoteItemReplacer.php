@@ -43,9 +43,7 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
         ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer,
         ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
     ): ProductConfiguratorResponseProcessorResponseTransfer {
-        if ($productConfiguratorResponseTransfer->getSourceType() !== ProductConfigurationStorageConfig::SOURCE_TYPE_CART) {
-            return $productConfiguratorResponseProcessorResponseTransfer;
-        }
+
 
         $itemReplaceTransfer = $this->createItemReplaceTransfer($productConfiguratorResponseTransfer);
 

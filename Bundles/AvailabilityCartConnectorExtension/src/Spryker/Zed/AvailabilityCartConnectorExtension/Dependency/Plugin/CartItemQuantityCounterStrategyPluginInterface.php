@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\CartItemQuantityTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 
 /**
- * Allows changing the cart item quantity calculation strategy during item availability check.
+ * Allows changing the cart item quantity counter strategy during item availability check.
  */
-interface CartItemQuantityCalculatorStrategyPluginInterface
+interface CartItemQuantityCounterStrategyPluginInterface
 {
     /**
      * Specification:
@@ -31,8 +31,9 @@ interface CartItemQuantityCalculatorStrategyPluginInterface
 
     /**
      * Specification:
-     * - Calculates quantity for the given item.
-     * - Returns quantity for the given item.
+     * - Finds given item in the cart.
+     * - Counts quantity for the given item.
+     * - Returns counted quantity.
      *
      * @api
      *
@@ -41,5 +42,5 @@ interface CartItemQuantityCalculatorStrategyPluginInterface
      *
      * @return \Generated\Shared\Transfer\CartItemQuantityTransfer
      */
-    public function calculateCartItemQuantity(ArrayObject $itemsInCart, ItemTransfer $itemTransfer): CartItemQuantityTransfer;
+    public function countCartItemQuantity(ArrayObject $itemsInCart, ItemTransfer $itemTransfer): CartItemQuantityTransfer;
 }

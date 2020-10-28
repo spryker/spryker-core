@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductConfiguration\Business\Calculator;
+namespace Spryker\Zed\ProductConfiguration\Business\Counter;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CartItemQuantityTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 
-interface ProductConfigurationCartItemQuantityCalculatorInterface
+interface ProductConfigurationCartItemQuantityCounterInterface
 {
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
@@ -19,5 +19,5 @@ interface ProductConfigurationCartItemQuantityCalculatorInterface
      *
      * @return \Generated\Shared\Transfer\CartItemQuantityTransfer
      */
-    public function calculateCartItemQuantity(ArrayObject $itemsInCart, ItemTransfer $itemTransfer): CartItemQuantityTransfer;
+    public function countCartItemQuantity(ArrayObject $itemsInCart, ItemTransfer $itemTransfer): CartItemQuantityTransfer;
 }

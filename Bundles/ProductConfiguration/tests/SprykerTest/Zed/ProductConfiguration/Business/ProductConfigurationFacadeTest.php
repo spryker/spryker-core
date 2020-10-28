@@ -305,7 +305,7 @@ class ProductConfigurationFacadeTest extends Unit
         $itemTransfer = (new ItemBuilder())->build();
 
         //Act
-        $cartItemQuantity = $this->tester->getFacade()->calculateCartItemQuantity(new ArrayObject(), $itemTransfer);
+        $cartItemQuantity = $this->tester->getFacade()->countCartItemQuantity(new ArrayObject(), $itemTransfer);
 
         //Assert
         $this->assertSame(
@@ -329,7 +329,7 @@ class ProductConfigurationFacadeTest extends Unit
 
         //Act
         $cartItemQuantity = $this->tester->getFacade()
-            ->calculateCartItemQuantity($itemsInCart, $itemTransferAddedToCart);
+            ->countCartItemQuantity($itemsInCart, $itemTransferAddedToCart);
 
         //Assert
         $this->assertSame(

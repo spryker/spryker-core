@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductConfiguration\Business\Calculator;
+namespace Spryker\Zed\ProductConfiguration\Business\Counter;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CartItemQuantityTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 
-class ProductConfigurationCartItemQuantityCalculator implements ProductConfigurationCartItemQuantityCalculatorInterface
+class ProductConfigurationCartItemQuantityCounter implements ProductConfigurationCartItemQuantityCounterInterface
 {
     protected const DEFAULT_ITEM_QUANTITY = 0;
 
@@ -21,17 +21,20 @@ class ProductConfigurationCartItemQuantityCalculator implements ProductConfigura
      *
      * @return \Generated\Shared\Transfer\CartItemQuantityTransfer
      */
-    public function calculateCartItemQuantity(ArrayObject $itemsInCart, ItemTransfer $itemTransfer): CartItemQuantityTransfer
+    public function countCartItemQuantity(ArrayObject $itemsInCart, ItemTransfer $itemTransfer): CartItemQuantityTransfer
     {
-        $quantity = static::DEFAULT_ITEM_QUANTITY;
+        $cartItemQuantityTransfer = (new CartItemQuantityTransfer())->setQuantity(static::DEFAULT_ITEM_QUANTITY);
 
         foreach ($itemsInCart as $itemInCartTransfer) {
             if ($itemInCartTransfer->getGroupKey() !== $itemTransfer->getGroupKey()) {
                 continue;
             }
-            $quantity += $itemInCartTransfer->getQuantity();
+
+            return $cartItemQuantityTransfer->setQuantity(
+                $itemInCartTransfer->getQuantity() ?? static::DEFAULT_ITEM_QUANTITY
+            );
         }
 
-        return (new CartItemQuantityTransfer())->setQuantity($quantity);
+        return $cartItemQuantityTransfer;
     }
 }
