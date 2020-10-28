@@ -23,7 +23,7 @@
     "spryker/search-elasticsearch": "*"
   },
   "suggest": {
-    "spryker/elastica": "If you want to use search functionality from MerchantSearchClient.",
+    "spryker/elastica": "If you want to use Elastica plugins.",
     "spryker/search-elasticsearch": "If you want to use search plugins."
   },
   "autoload": {
