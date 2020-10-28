@@ -53,7 +53,10 @@ class IsProductHasProductConfigurationInstanceTest extends Unit
             ->isProductHasProductConfigurationInstance($productViewTransfer);
 
         // Assert
-        $this->assertTrue($hasProductConfigurationInstance);
+        $this->assertTrue(
+            $hasProductConfigurationInstance,
+            'Expects that product will have product configuration instance in session.'
+        );
     }
 
     /**
@@ -83,7 +86,10 @@ class IsProductHasProductConfigurationInstanceTest extends Unit
             ->isProductHasProductConfigurationInstance($productViewTransfer);
 
         // Assert
-        $this->assertTrue($hasProductConfigurationInstance);
+        $this->assertTrue(
+            $hasProductConfigurationInstance,
+            'Expects that product will have product configuration instance in storage.'
+        );
     }
 
     /**
@@ -104,7 +110,10 @@ class IsProductHasProductConfigurationInstanceTest extends Unit
             ->isProductHasProductConfigurationInstance($productViewTransfer);
 
         // Assert
-        $this->assertFalse($hasProductConfigurationInstance);
+        $this->assertFalse(
+            $hasProductConfigurationInstance,
+            'Expects that product wont have product configuration instance.'
+        );
     }
 
     /**
@@ -127,7 +136,10 @@ class IsProductHasProductConfigurationInstanceTest extends Unit
             ->isProductHasProductConfigurationInstance($productViewTransfer);
 
         // Assert
-        $this->assertTrue($hasProductConfigurationInstance);
+        $this->assertTrue(
+            $hasProductConfigurationInstance,
+            'Expects that product will have product configuration instance in product view transfer.'
+        );
     }
 
     /**
@@ -149,7 +161,10 @@ class IsProductHasProductConfigurationInstanceTest extends Unit
             ->isProductHasProductConfigurationInstance($productViewTransfer);
 
         // Assert
-        $this->assertFalse($hasProductConfigurationInstance);
+        $this->assertFalse(
+            $hasProductConfigurationInstance,
+            'Expects that product wont have product configuration instance when product is not concrete product.'
+        );
     }
 
     /**

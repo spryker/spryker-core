@@ -96,7 +96,10 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
             ->processProductConfiguratorCheckSumResponse($productConfiguratorResponseTransfer, []);
 
         // Assert
-        $this->assertTrue($productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful());
+        $this->assertTrue(
+            $productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful(),
+            'Expects that will save product configuration to the session when source type pdp.'
+        );
     }
 
     /**
@@ -166,7 +169,10 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
             ->processProductConfiguratorCheckSumResponse($productConfiguratorResponseTransfer, []);
 
         // Assert
-        $this->assertTrue($productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful());
+        $this->assertTrue(
+            $productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful(),
+            'Expects that will replace item to the quote when source type cart.'
+        );
     }
 
     /**
@@ -216,7 +222,10 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
             ->processProductConfiguratorCheckSumResponse($productConfiguratorResponseTransfer, []);
 
         // Assert
-        $this->assertFalse($productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful());
+        $this->assertFalse(
+            $productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful(),
+            'Expects that will result to not success result when not valid response data.'
+        );
     }
 
     /**
@@ -286,7 +295,10 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
             ->processProductConfiguratorCheckSumResponse($productConfiguratorResponseTransfer, []);
 
         // Assert
-        $this->assertFalse($productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful());
+        $this->assertFalse(
+            $productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful(),
+            'Expects that will result to not success result when cart item replace fail.'
+        );
     }
 
     /**
@@ -335,7 +347,10 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
             ->processProductConfiguratorCheckSumResponse($productConfiguratorResponseTransfer, []);
 
         // Assert
-        $this->assertFalse($productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful());
+        $this->assertFalse(
+            $productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful(),
+            'Expects that will result to not success result when not valid checksum provided.'
+        );
     }
 
     /**
@@ -392,6 +407,9 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
             ->processProductConfiguratorCheckSumResponse($productConfiguratorResponseTransfer, []);
 
         // Assert
-        $this->assertFalse($productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful());
+        $this->assertFalse(
+            $productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful(),
+            'Expects that will result to not success result when first validator fail.'
+        );
     }
 }

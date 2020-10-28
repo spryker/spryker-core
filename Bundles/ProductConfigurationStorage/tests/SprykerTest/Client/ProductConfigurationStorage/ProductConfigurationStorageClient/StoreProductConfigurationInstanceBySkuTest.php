@@ -54,7 +54,11 @@ class StoreProductConfigurationInstanceBySkuTest extends Unit
             ->getClient()
             ->findProductConfigurationInstanceBySku($productConcreteTransfer->getSku());
 
-        $this->assertEquals($productConfigurationInstanceTransfer, $storedProductConfigurationInstanceTransfer);
+        $this->assertEquals(
+            $productConfigurationInstanceTransfer,
+            $storedProductConfigurationInstanceTransfer,
+            'Expects that store product configuration in session.'
+        );
     }
 
     /**
@@ -79,6 +83,9 @@ class StoreProductConfigurationInstanceBySkuTest extends Unit
             ->getClient()
             ->findProductConfigurationInstanceBySku($productConcreteTransfer->getSku());
 
-        $this->assertNotNull($storedProductConfigurationInstanceTransfer);
+        $this->assertNotNull(
+            $storedProductConfigurationInstanceTransfer,
+            'Expects that store empty product configuration in session.'
+        );
     }
 }

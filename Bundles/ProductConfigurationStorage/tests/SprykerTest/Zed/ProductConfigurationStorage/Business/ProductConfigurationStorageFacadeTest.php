@@ -96,12 +96,14 @@ class ProductConfigurationStorageFacadeTest extends Unit
 
         $this->assertSame(
             $productTransfer->getSku(),
-            $productConfigurationStorageEntity->getSku()
+            $productConfigurationStorageEntity->getSku(),
+            'Expects that will save product configuration to the storage.'
         );
 
         $this->assertSame(
             $productConfigurationTransfer->getIdProductConfiguration(),
-            $productConfigurationStorageEntity->getFkProductConfiguration()
+            $productConfigurationStorageEntity->getFkProductConfiguration(),
+            'Expects that will save product configuration to the storage.'
         );
     }
 
@@ -137,7 +139,10 @@ class ProductConfigurationStorageFacadeTest extends Unit
         )->findOne();
 
         // Assert
-        $this->assertEmpty($productConfigurationStorageEntity);
+        $this->assertEmpty(
+            $productConfigurationStorageEntity,
+            'Expects that will remove product configuration from the storage.'
+        );
     }
 
     /**
@@ -169,7 +174,7 @@ class ProductConfigurationStorageFacadeTest extends Unit
         $this->assertCount(
             1,
             $synchronizationDataTransfers,
-            'Number of synchronisation data transfers is not equals to an expected value.'
+            'Expects that will return synchronization data transfer.'
         );
     }
 }
