@@ -146,7 +146,7 @@ class ProductConfigurationClientTest extends Unit
         $this->assertSame(
             static::TEST_CONFIGURATOR_REDIRECT_RESPONSE,
             $productConfiguratorRedirect->getConfiguratorRedirectUrl(),
-            'Will successfully resolve redirect url.'
+            'Will successfully resolve redirect URL.'
         );
     }
 
@@ -174,7 +174,7 @@ class ProductConfigurationClientTest extends Unit
         $this->assertSame(
             static::TEST_CONFIGURATOR_REDIRECT_RESPONSE,
             $productConfiguratorRedirect->getConfiguratorRedirectUrl(),
-            'Expects that will use default plugin for the redirect url resolve.'
+            'Expects that will use default plugin for the redirect URL resolve.'
         );
     }
 
@@ -376,12 +376,12 @@ class ProductConfigurationClientTest extends Unit
         //Assert
         $this->assertTrue(
             $productConfiguratorRedirectTransfer->getIsSuccessful(),
-            'Expects that redirect url will be resolved successfully.'
+            'Expects that redirect URL will be resolved successfully.'
         );
         $this->assertSame(
             'testUrl',
             $productConfiguratorRedirectTransfer->getConfiguratorRedirectUrl(),
-            'Expects that redirect url will equal `testUrl`.'
+            'Expects that redirect URL will be equal to `testUrl`.'
         );
     }
 
@@ -450,7 +450,7 @@ class ProductConfigurationClientTest extends Unit
         //Assert
         $this->assertFalse(
             $productConfiguratorRedirectTransfer->getIsSuccessful(),
-            'Expects that is success will contain false when request fail.'
+            'Expects that isSuccessful flag  will contain false when request fail.'
         );
     }
 
