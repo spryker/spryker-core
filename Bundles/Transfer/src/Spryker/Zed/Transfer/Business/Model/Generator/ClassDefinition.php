@@ -565,7 +565,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'name' => $methodName,
             'property' => $propertyName,
             'propertyConst' => $this->getPropertyConstantName($property),
-            'return' => rtrim($this->getReturnType($property), '|null'),
+            'return' => preg_replace('/\|null$/', '', $this->getReturnType($property)),
             'bundles' => $property['bundles'],
             'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
         ];

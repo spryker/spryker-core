@@ -239,7 +239,7 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @module Test
      *
-     * @return \Spryker\DecimalObject\Decima
+     * @return \Spryker\DecimalObject\Decimal
      */
     public function getStockOrFail()
     {
