@@ -97,4 +97,12 @@
     <transfer name="Address">
     </transfer>
 
+    <transfer name="RestOrderShipmentsAttributes">
+        <property name="itemUuids" type="string"/>
+        <property name="shippingAddress" type="Address"/>
+        <property name="methodName" type="string"/>
+        <property name="carrierName" type="string"/>
+        <property name="requestedDeliveryDate" type="string"/>
+    </transfer>
+
 </transfers>
