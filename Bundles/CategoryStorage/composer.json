@@ -19,14 +19,18 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/elastica": "*",
     "spryker/event": "*",
     "spryker/propel": "*",
+    "spryker/search-elasticsearch": "*",
     "spryker/testify": "*",
     "spryker/url-storage": "*"
   },
   "suggest": {
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
-    "spryker/url-storage": "If you want to use UrlStorage plugins, minimum required version: 0.2.0"
+    "spryker/url-storage": "If you want to use UrlStorage plugins, minimum required version: 0.2.0",
+    "spryker/elastica": "If you want to use Elastica plugins.",
+    "spryker/search-elasticsearch": "If you want to use search plugins."
   },
   "autoload": {
     "psr-4": {
