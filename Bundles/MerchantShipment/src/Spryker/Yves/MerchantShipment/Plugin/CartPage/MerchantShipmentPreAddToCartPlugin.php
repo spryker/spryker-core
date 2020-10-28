@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\CartPageExtension\Dependency\Plugin\PreAddToCartPluginInterface;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\MerchantShipment\Communication\Plugin\Quote\MerchantShipmentQuoteExpanderPlugin} instead.
+ */
 class MerchantShipmentPreAddToCartPlugin extends AbstractPlugin implements PreAddToCartPluginInterface
 {
     /**
