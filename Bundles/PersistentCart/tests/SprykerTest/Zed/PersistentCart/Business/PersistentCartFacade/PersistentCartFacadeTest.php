@@ -227,7 +227,7 @@ class PersistentCartFacadeTest extends Unit
         // Assert
         $this->assertTrue(
             $quoteResponseTransfer->getIsSuccessful(),
-            'Expected that quote response isSuccessful flag will be set to true when updating cart items quantity with empty persistent cart change transfer .'
+            'Expected that quote response isSuccessful flag will be set to true when updating cart items quantity with empty persistent cart change transfer.'
         );
         $this->assertSame(
             5,
@@ -267,7 +267,7 @@ class PersistentCartFacadeTest extends Unit
         // Assert
         $this->assertTrue(
             $quoteResponseTransfer->getIsSuccessful(),
-            'Expected that quote response isSuccessful flag will be set to true when updating cart items quantity with same items quantity in the persistent cart change transfer .'
+            'Expected that quote response isSuccessful flag will be set to true when updating cart items quantity with same items quantity in the persistent cart change transfer.'
         );
         $this->assertSame(
             5,
