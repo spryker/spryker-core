@@ -37,7 +37,7 @@ class MerchantSearchBusinessTester extends Actor
 {
     use _generated\MerchantSearchBusinessTesterActions;
 
-    public const MERCHANT_COUNT = 3;
+    protected const MERCHANT_COUNT = 3;
 
     /**
      * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_APPROVED
@@ -78,16 +78,17 @@ class MerchantSearchBusinessTester extends Actor
     /**
      * @param int[] $merchantIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantSearch\Persistence\SpyMerchantSearch[]
+     * @return int
      */
-    public function getMerchantEntitiesByMerchantIds(array $merchantIds): ObjectCollection
+    public function getMerchantSearchCount(array $merchantIds): int
     {
-        $merchantSearchQuery = SpyMerchantSearchQuery::create();
-        if ($merchantIds) {
-            $merchantSearchQuery->filterByFkMerchant($merchantIds, Criteria::IN);
+        $merchantSearchQuery = $this->createMerchantSearchQuery();
+        if (!$merchantIds) {
+            return 0;
         }
 
-        return $merchantSearchQuery->find();
+        return $merchantSearchQuery->find()
+            ->count();
     }
 
     /**
@@ -106,12 +107,14 @@ class MerchantSearchBusinessTester extends Actor
     }
 
     /**
+     * @param int $merchantCount
+     *
      * @return \Generated\Shared\Transfer\MerchantTransfer[]
      */
-    public function createActiveMerchants(): array
+    public function createActiveMerchants(int $merchantCount = self::MERCHANT_COUNT): array
     {
         $merchantTransfers = [];
-        for ($i = 0; $i < static::MERCHANT_COUNT; $i++) {
+        for ($i = 0; $i < $merchantCount; $i++) {
             $merchantTransfer = $this->haveMerchant()
                 ->setStatus(static::MERCHANT_STATUS_APPROVED);
             $merchantResponseTransfer = $this->updateMerchant($merchantTransfer);
@@ -129,9 +132,9 @@ class MerchantSearchBusinessTester extends Actor
      *
      * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantSearch\Persistence\SpyMerchantSearch[]
      */
-    public function getSynchronizationDataTransfersByMerchantIds(array $merchantIds)
+    public function getSynchronizationDataTransfersByMerchantIds(array $merchantIds): ObjectCollection
     {
-        $merchantSearchQuery = SpyMerchantSearchQuery::create();
+        $merchantSearchQuery = $this->createMerchantSearchQuery();
         if ($merchantIds) {
             $merchantSearchQuery->filterByFkMerchant($merchantIds, Criteria::IN);
         }
@@ -162,6 +165,14 @@ class MerchantSearchBusinessTester extends Actor
      */
     protected function cleanUpMerchantSearchTable(): void
     {
-        SpyMerchantSearchQuery::create()->deleteAll();
+        $this->createMerchantSearchQuery()->deleteAll();
+    }
+
+    /**
+     * @return \Orm\Zed\MerchantSearch\Persistence\SpyMerchantSearchQuery
+     */
+    protected function createMerchantSearchQuery(): SpyMerchantSearchQuery
+    {
+        return SpyMerchantSearchQuery::create();
     }
 }

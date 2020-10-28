@@ -22,8 +22,6 @@ use Codeception\Test\Unit;
  */
 class WriteCollectionByMerchantEventsTest extends Unit
 {
-    protected const MERCHANT_COUNT = 3;
-
     /**
      * @var \SprykerTest\Zed\MerchantSearch\MerchantSearchBusinessTester
      */
@@ -53,36 +51,32 @@ class WriteCollectionByMerchantEventsTest extends Unit
 
         // Act
         $this->tester->getFacade()->writeCollectionByMerchantEvents($eventEntityTransfers);
-        $merchantEntities = $this->tester->getMerchantEntitiesByMerchantIds($merchantIds);
 
         // Assert
+        $merchantSearchCount = $this->tester->getMerchantSearchCount($merchantIds);
+
         $this->assertSame(
             count($merchantIds),
-            $merchantEntities->count()
+            $merchantSearchCount
         );
     }
 
     /**
      * @return void
      */
-    public function testWriteCollectionByMerchantEventsForDefaultMerchantRecords(): void
+    public function testWriteCollectionByMerchantEventsReturnsNothingForInactiveMerchantRecords(): void
     {
         // Arrange
-        $merchantTransfers = [];
-        for ($i = 0; $i <= static::MERCHANT_COUNT; $i++) {
-            $merchantTransfers[] = $this->tester->haveMerchant();
-        }
-        $merchantIds = $this->tester->extractMerchantIdsFromMerchantTransfers($merchantTransfers);
+        $merchantTransfer = $this->tester->haveMerchant();
+        $merchantIds = $this->tester->extractMerchantIdsFromMerchantTransfers([$merchantTransfer]);
         $eventEntityTransfers = $this->tester->createEventEntityTransfersFromIds($merchantIds);
 
         // Act
         $this->tester->getFacade()->writeCollectionByMerchantEvents($eventEntityTransfers);
-        $merchantEntities = $this->tester->getMerchantEntitiesByMerchantIds($merchantIds);
 
         // Assert
-        $this->assertSame(
-            0,
-            $merchantEntities->count()
-        );
+        $merchantSearchCount = $this->tester->getMerchantSearchCount($merchantIds);
+
+        $this->assertSame(0, $merchantSearchCount);
     }
 }

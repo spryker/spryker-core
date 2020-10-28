@@ -49,18 +49,19 @@ class DeleteCollectionByMerchantEventsTest extends Unit
     public function testDeleteCollectionByMerchantEventsForDeactivatedMerchantDeletesRecords(): void
     {
         // Arrange
-        $merchantTransfer = $this->tester->createActiveMerchants()[0];
-        $merchantId = $merchantTransfer->getIdMerchant();
+        $merchantTransfer = $this->tester->createActiveMerchants(1)[0];
+        $idMerchant = $merchantTransfer->getIdMerchant();
         $merchantTransfer->setStatus(static::MERCHANT_STATUS_DENIED);
         $this->tester->updateMerchant($merchantTransfer);
-        $eventEntityTransfers = $this->tester->createEventEntityTransfersFromIds([$merchantId]);
+        $eventEntityTransfers = $this->tester->createEventEntityTransfersFromIds([$idMerchant]);
 
         // Act
         $this->tester->getFacade()->deleteCollectionByMerchantEvents($eventEntityTransfers);
-        $synchronizationDataTransfers = $this->tester->getSynchronizationDataTransfersByMerchantIds([$merchantId]);
 
         // Assert
-        $this->assertCount(0, $synchronizationDataTransfers);
+        $merchantSearchCount = $this->tester->getMerchantSearchCount([$idMerchant]);
+
+        $this->assertSame(0, $merchantSearchCount);
     }
 
     /**
@@ -69,18 +70,18 @@ class DeleteCollectionByMerchantEventsTest extends Unit
     public function testDeleteCollectionByMerchantEventsForInactiveMerchantDeletesRecords(): void
     {
         // Arrange
-        $merchantTransfer = $this->tester->createActiveMerchants()[0];
-        $merchantId = $merchantTransfer->getIdMerchant();
-
-        // Act
+        $merchantTransfer = $this->tester->createActiveMerchants(1)[0];
+        $idMerchant = $merchantTransfer->getIdMerchant();
         $merchantTransfer->setIsActive(false);
         $this->tester->updateMerchant($merchantTransfer);
-        $eventEntityTransfers = $this->tester->createEventEntityTransfersFromIds([$merchantId]);
+        $eventEntityTransfers = $this->tester->createEventEntityTransfersFromIds([$idMerchant]);
+
+        // Act
         $this->tester->getFacade()->deleteCollectionByMerchantEvents($eventEntityTransfers);
 
-        $synchronizationDataTransfers = $this->tester->getSynchronizationDataTransfersByMerchantIds([$merchantId]);
-
         // Assert
-        $this->assertCount(0, $synchronizationDataTransfers);
+        $merchantSearchCount = $this->tester->getMerchantSearchCount([$idMerchant]);
+
+        $this->assertSame(0, $merchantSearchCount);
     }
 }

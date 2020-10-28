@@ -24,6 +24,11 @@ use Generated\Shared\Transfer\FilterTransfer;
 class GetMerchantSynchronizationDataTransfersByIdsTest extends Unit
 {
     /**
+     * @uses \SprykerTest\Zed\MerchantSearch\MerchantSearchBusinessTester::MERCHANT_COUNT
+     */
+    protected const MERCHANT_COUNT = 3;
+
+    /**
      * @var \SprykerTest\Zed\MerchantSearch\MerchantSearchBusinessTester
      */
     protected $tester;
@@ -42,12 +47,11 @@ class GetMerchantSynchronizationDataTransfersByIdsTest extends Unit
     /**
      * @return void
      */
-    public function tetsGetSynchronizationDataTransfersByMerchantIdsByIdsWorksWithIds(): void
+    public function testGetSynchronizationDataTransfersByMerchantIdsWorksWithIds(): void
     {
         // Arrange
         $merchantTransfers = $this->tester->createActiveMerchants();
         $merchantIds = $this->tester->extractMerchantIdsFromMerchantTransfers($merchantTransfers);
-        $merchantEntities = $this->tester->getMerchantEntitiesByMerchantIds($merchantIds);
 
         // Act
         $synchronizationDataTransfers = $this->tester->getFacade()
@@ -58,7 +62,7 @@ class GetMerchantSynchronizationDataTransfersByIdsTest extends Unit
 
         // Assert
         $this->assertSame(
-            count($merchantEntities),
+            static::MERCHANT_COUNT,
             count($synchronizationDataTransfers)
         );
     }
@@ -66,7 +70,7 @@ class GetMerchantSynchronizationDataTransfersByIdsTest extends Unit
     /**
      * @return void
      */
-    public function testGetSynchronizationDataTransfersByMerchantIdsByIdsWorksWithFilter(): void
+    public function testGetSynchronizationDataTransfersByMerchantIdsWorksWithFilter(): void
     {
         // Arrange
         $merchantTransfers = $this->tester->createActiveMerchants();
@@ -85,7 +89,7 @@ class GetMerchantSynchronizationDataTransfersByIdsTest extends Unit
     /**
      * @return void
      */
-    public function testGetSynchronizationDataTransfersByMerchantIdsByIdsWorksWithFilterAndIds(): void
+    public function testGetSynchronizationDataTransfersByMerchantIdsWorksWithFilterAndIds(): void
     {
         // Arrange
         $merchantTransfers = $this->tester->createActiveMerchants();
