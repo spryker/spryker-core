@@ -16,6 +16,8 @@ use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentMethodRe
 use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentMethodRestResponseBuilderInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Sorter\ShipmentMethodSorter;
 use Spryker\Glue\ShipmentsRestApi\Processor\Sorter\ShipmentMethodSorterInterface;
+use Spryker\Glue\ShipmentsRestApi\Processor\Validator\ShipmentCheckoutDataValidator;
+use Spryker\Glue\ShipmentsRestApi\Processor\Validator\ShipmentCheckoutDataValidatorInterface;
 
 class ShipmentsRestApiFactory extends AbstractFactory
 {
@@ -53,5 +55,13 @@ class ShipmentsRestApiFactory extends AbstractFactory
     public function createShipmentMethodSorter(): ShipmentMethodSorterInterface
     {
         return new ShipmentMethodSorter();
+    }
+
+    /**
+     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Validator\ShipmentCheckoutDataValidatorInterface
+     */
+    public function createShipmentCheckoutDataValidator(): ShipmentCheckoutDataValidatorInterface
+    {
+        return new ShipmentCheckoutDataValidator();
     }
 }

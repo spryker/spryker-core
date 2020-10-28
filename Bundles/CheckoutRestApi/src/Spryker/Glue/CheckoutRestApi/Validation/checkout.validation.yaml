@@ -244,17 +244,17 @@ checkout:
         shipments:
         - Optional:
             constraints:
-            - Collection:
-                fields:
-                    items:
-                    - All:
-                        constraints:
-                        - NotBlank
-                        - Type:
-                            type: string
-                    shippingAddress:
-                    - Optional:
-                        constraints:
+            - All:
+                constraints:
+                - Collection:
+                    fields:
+                        items:
+                        - All:
+                            constraints:
+                            - NotBlank
+                            - Type:
+                                type: string
+                        shippingAddress:
                         - Collection:
                             fields:
                                 salutation:
@@ -285,9 +285,10 @@ checkout:
                                     constraints:
                                     - Type:
                                         type: boolean
-                    idShipmentMethod:
-                    - NotBlank
-                    - Type:
-                        type: numeric
-                    requestedDeliveryDate:
-                    - Optional
+                        idShipmentMethod:
+                        - NotBlank
+                        - Type:
+                            type: numeric
+                        requestedDeliveryDate:
+                        - Optional
+                        - Date
