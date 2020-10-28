@@ -27,11 +27,6 @@ class MerchantSearchConfig extends AbstractBundleConfig
     public const MERCHANT_PUBLISH = 'Merchant.merchant.publish';
 
     /**
-     * This events that will be used for key deleting.
-     */
-    public const MERCHANT_PUBLISH_DELETE = 'Merchant.publish_delete';
-
-    /**
      * This events will be used for spy_merchant entity creation.
      */
     public const ENTITY_SPY_MERCHANT_CREATE = 'Entity.spy_merchant.create';
@@ -40,6 +35,21 @@ class MerchantSearchConfig extends AbstractBundleConfig
      * This events will be used for spy_merchant entity changes.
      */
     public const ENTITY_SPY_MERCHANT_UPDATE = 'Entity.spy_merchant.update';
+
+    /**
+     * This events will be used for spy_merchant_profile entity changes.
+     */
+    public const ENTITY_SPY_MERCHANT_PROFILE_UPDATE = 'Entity.spy_merchant_profile.update';
+
+    /**
+     * This events will be used for spy_merchant_category entity changes.
+     */
+    public const ENTITY_SPY_MERCHANT_CATEGORY_UPDATE = 'Entity.spy_merchant_category.update';
+
+    /**
+     * This events will be used for spy_category entity changes.
+     */
+    public const ENTITY_SPY_CATEGORY_UPDATE = 'Entity.spy_category.update';
 
     /**
      * This events will be used for spy_merchant entity deletion.

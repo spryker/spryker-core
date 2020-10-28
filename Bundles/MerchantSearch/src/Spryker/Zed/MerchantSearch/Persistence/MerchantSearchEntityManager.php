@@ -36,7 +36,6 @@ class MerchantSearchEntityManager extends AbstractEntityManager implements Merch
      */
     public function saveMerchantSearch(MerchantSearchTransfer $merchantSearchTransfer): void
     {
-        /** @var \Orm\Zed\MerchantSearch\Persistence\Base\SpyMerchantSearch $merchantSearchEntity */
         $merchantSearchEntity = $this->getFactory()
             ->getMerchantSearchPropelQuery()
             ->filterByFkMerchant($merchantSearchTransfer->getIdMerchant())
