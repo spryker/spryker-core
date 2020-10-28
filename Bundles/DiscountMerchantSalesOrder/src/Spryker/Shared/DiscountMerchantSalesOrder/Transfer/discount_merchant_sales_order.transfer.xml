@@ -17,6 +17,11 @@
 
     <transfer name="MerchantOrderItem">
         <property name="idOrderItem" type="int"/>
+        <property name="orderItem" type="Item"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
     </transfer>
 
     <transfer name="Order">
