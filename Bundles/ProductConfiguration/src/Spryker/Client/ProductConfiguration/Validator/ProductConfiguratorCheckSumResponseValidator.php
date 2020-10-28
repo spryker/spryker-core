@@ -56,11 +56,9 @@ class ProductConfiguratorCheckSumResponseValidator implements ProductConfigurato
         $encryptionKey = $this->productConfigurationConfig->getProductConfigurationEncryptionKey();
 
         $plainCopyOfConfiguredResponseData = $configuratorResponseData;
-        unset($plainCopyOfConfiguredResponseData[ProductConfiguratorResponseTransfer::CHECK_SUM]);
-        unset($plainCopyOfConfiguredResponseData[ProductConfiguratorResponseTransfer::TIMESTAMP]);
 
         $responseChecksum = $this->productConfigurationDataChecksumGenerator->generateProductConfigurationDataChecksum(
-            $plainCopyOfConfiguredResponseData,
+            $this->sanitizeConfiguratorResponseData($plainCopyOfConfiguredResponseData),
             $encryptionKey
         );
 
@@ -72,6 +70,19 @@ class ProductConfiguratorCheckSumResponseValidator implements ProductConfigurato
             $productConfiguratorResponseProcessorResponseTransfer,
             static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_NOT_VALID_RESPONSE_CHECKSUM
         );
+    }
+
+    /**
+     * @param array $configuratorResponseData
+     *
+     * @return array
+     */
+    protected function sanitizeConfiguratorResponseData(array $configuratorResponseData): array
+    {
+        unset($configuratorResponseData[ProductConfiguratorResponseTransfer::CHECK_SUM]);
+        unset($configuratorResponseData[ProductConfiguratorResponseTransfer::TIMESTAMP]);
+
+        return $configuratorResponseData;
     }
 
     /**

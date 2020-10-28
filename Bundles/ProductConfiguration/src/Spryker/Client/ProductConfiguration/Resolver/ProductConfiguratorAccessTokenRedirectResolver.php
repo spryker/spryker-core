@@ -155,7 +155,7 @@ class ProductConfiguratorAccessTokenRedirectResolver implements ProductConfigura
         ProductConfigurationHttpRequestException $configurationHttpRequestException
     ): ProductConfiguratorRedirectTransfer {
         $this->getLogger()->error(
-            $configurationHttpRequestException->getMessage(),
+            $message,
             ['exception' => $configurationHttpRequestException]
         );
 

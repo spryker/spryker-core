@@ -17,7 +17,7 @@ class ProductConfigurationConfig extends AbstractBundleConfig
     /**
      * Number of seconds while response considered as valid.
      */
-    protected const PRODUCT_CONFIGURATION_RESPONSE_MAX_VALID_SECONDS = 60;
+    protected const PRODUCT_CONFIGURATOR_RESPONSE_MAX_VALID_SECONDS = 60;
 
     /**
      * @api
@@ -44,8 +44,8 @@ class ProductConfigurationConfig extends AbstractBundleConfig
      *
      * @return int
      */
-    public function getProductConfigurationResponseMaxValidSeconds(): int
+    public function getProductConfiguratorResponseMaxValidSeconds(): int
     {
-        return static::PRODUCT_CONFIGURATION_RESPONSE_MAX_VALID_SECONDS;
+        return static::PRODUCT_CONFIGURATOR_RESPONSE_MAX_VALID_SECONDS;
     }
 }

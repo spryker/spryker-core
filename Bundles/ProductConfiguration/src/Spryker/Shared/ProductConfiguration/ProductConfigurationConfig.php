@@ -52,7 +52,7 @@ class ProductConfigurationConfig extends AbstractBundleConfig
             return $encryptionKey;
         }
 
-        throw new EncryptionKeyNotPreConfigured('Encryption key is not pre-configured, please update SPRYKER_CONFIGURATOR_ENCRYPTION_KEY env variable.');
+        throw new EncryptionKeyNotPreConfigured('Encryption key is not pre-configured, please set SPRYKER_CONFIGURATOR_ENCRYPTION_KEY configuration value.');
     }
 
     /**

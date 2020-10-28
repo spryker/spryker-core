@@ -473,7 +473,7 @@ class ProductConfigurationClientTest extends Unit
         //Assert
         $this->assertTrue(
             $productConfiguratorResponseProcessorResponseTransferValidated->getIsSuccessful(),
-            'Expects valid  processor response after checksum validators.'
+            'Expects valid processor response after checksum validators.'
         );
     }
 
@@ -507,7 +507,7 @@ class ProductConfigurationClientTest extends Unit
         //Assert
         $this->assertFalse(
             $productConfiguratorResponseProcessorResponseTransferValidated->getIsSuccessful(),
-            'Expects not valid  processor response after checksum validator fail.'
+            'Expects not valid processor response after checksum validator fail.'
         );
     }
 
@@ -549,7 +549,7 @@ class ProductConfigurationClientTest extends Unit
         //Assert
         $this->assertFalse(
             $productConfiguratorResponseProcessorResponseTransferValidated->getIsSuccessful(),
-            'Expects that return not valid  processor response after first checksum validator fail'
+            'Expects that return not valid  processor response after first checksum validator fail.'
         );
     }
 
