@@ -212,6 +212,20 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @module Test
      *
+     * @return string
+     */
+    public function getNameOrFail()
+    {
+        if ($this->name === null) {
+            $this->thrownNullValueException(static::NAME);
+        }
+
+        return $this->name;
+    }
+
+    /**
+     * @module Test
+     *
      * @return $this
      */
     public function requireName()
@@ -243,6 +257,20 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function getItem()
     {
+        return $this->item;
+    }
+
+    /**
+     * @module Test
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    public function getItemOrFail()
+    {
+        if ($this->item === null) {
+            $this->thrownNullValueException(static::ITEM);
+        }
+
         return $this->item;
     }
 

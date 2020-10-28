@@ -119,6 +119,29 @@
     }
 {% endmacro -%}
 
+{# get or fail method #}
+{%- macro addGetOrFail(method) %}
+    /**
+     {% if method.bundles is defined -%}
+     * @module {{ method.bundles|join('|') }}
+     *
+     {% endif -%}
+     {% if method.deprecationDescription is not null -%}
+     * @deprecated {{ method.deprecationDescription }}
+     *
+     {% endif -%}
+     * @return {{ method.return }}
+     */
+    public function {{ method.name }}()
+    {
+        if ($this->{{ method.property }} === null) {
+            $this->thrownNullValueException(static::{{ method.propertyConst }});
+        }
+
+        return $this->{{ method.property }};
+    }
+{% endmacro -%}
+
 {# add method #}
 {%- macro addAdd(method) %}
     /**

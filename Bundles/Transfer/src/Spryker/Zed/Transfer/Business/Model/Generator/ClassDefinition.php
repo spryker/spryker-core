@@ -546,6 +546,30 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         $this->buildSetMethod($property);
         $this->buildGetMethod($property);
+
+        if (!$this->isArray($property) && !$this->isCollection($property)) {
+            $this->buildGetOrFailMethod($property);
+        }
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return void
+     */
+    protected function buildGetOrFailMethod(array $property): void
+    {
+        $propertyName = $this->getPropertyName($property);
+        $methodName = sprintf('get%sOrFail', ucfirst($propertyName));
+        $method = [
+            'name' => $methodName,
+            'property' => $propertyName,
+            'propertyConst' => $this->getPropertyConstantName($property),
+            'return' => rtrim($this->getReturnType($property), '|null'),
+            'bundles' => $property['bundles'],
+            'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
+        ];
+        $this->methods[$methodName] = $method;
     }
 
     /**
