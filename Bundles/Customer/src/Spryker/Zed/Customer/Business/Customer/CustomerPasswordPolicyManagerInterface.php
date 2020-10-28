@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Customer\Business\Customer;
 
-use Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 
 interface CustomerPasswordPolicyManagerInterface
 {
@@ -23,11 +23,11 @@ interface CustomerPasswordPolicyManagerInterface
      * @param string[][] $customerPasswordPolicyConfig
      * @param string[] $customerPasswordWhiteList
      *
-     * @return \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function validate(
         string $password,
         array $customerPasswordPolicyConfig,
         array $customerPasswordWhiteList
-    ): CustomerPasswordPolicyResultTransfer;
+    ): CustomerResponseTransfer;
 }

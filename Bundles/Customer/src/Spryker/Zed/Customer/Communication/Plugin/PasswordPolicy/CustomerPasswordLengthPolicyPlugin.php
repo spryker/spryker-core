@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Customer\Communication\Plugin\PasswordPolicy;
 
-use Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerPasswordPolicyPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -27,21 +27,21 @@ class CustomerPasswordLengthPolicyPlugin extends AbstractPlugin implements Custo
      * @api
      *
      * @param string $customerPassword
-     * @param \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer $resultTransfer
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
      * @param int[] $config
      *
-     * @return \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function validate(
         string $customerPassword,
-        CustomerPasswordPolicyResultTransfer $resultTransfer,
+        CustomerResponseTransfer $customerResponseTransfer,
         array $config
-    ): CustomerPasswordPolicyResultTransfer {
+    ): CustomerResponseTransfer {
         return $this->getFactory()
             ->createPasswordPolicyValidator()
             ->validateLength(
                 $customerPassword,
-                $resultTransfer,
+                $customerResponseTransfer,
                 $config
             );
     }

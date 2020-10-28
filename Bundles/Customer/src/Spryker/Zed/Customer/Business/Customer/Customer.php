@@ -993,23 +993,11 @@ class Customer implements CustomerInterface
      */
     protected function validateCustomerPassword(string $password): CustomerResponseTransfer
     {
-        $passwordCheckResult = $this->passwordPolicyManager->validate(
+        return $this->passwordPolicyManager->validate(
             $password,
             $this->customerConfig->getCustomerPasswordPolicy(),
             $this->customerConfig->getCustomerPasswordWhitelist()
         );
-
-        $customerResponseTransfer = (new CustomerResponseTransfer())
-            ->setIsSuccess($passwordCheckResult->getIsSuccessful());
-
-        if (!$customerResponseTransfer->getIsSuccess()) {
-            $message = $passwordCheckResult->getMessages()[0];
-            $customerResponseTransfer->addError(
-                $this->createErrorCustomerResponseTransfer($message->getValue())
-            );
-        }
-
-        return $customerResponseTransfer;
     }
 
     /**

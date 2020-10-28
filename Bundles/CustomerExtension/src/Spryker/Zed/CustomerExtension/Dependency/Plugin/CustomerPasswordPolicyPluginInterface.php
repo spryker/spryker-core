@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CustomerExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 
 interface CustomerPasswordPolicyPluginInterface
 {
@@ -18,16 +18,16 @@ interface CustomerPasswordPolicyPluginInterface
      * @api
      *
      * @param string $customerPassword
-     * @param \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer $resultTransfer
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $resultTransfer
      * @param mixed[] $config
      *
-     * @return \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function validate(
         string $customerPassword,
-        CustomerPasswordPolicyResultTransfer $resultTransfer,
+        CustomerResponseTransfer $resultTransfer,
         array $config
-    ): CustomerPasswordPolicyResultTransfer;
+    ): CustomerResponseTransfer;
 
     /**
      * Specification:

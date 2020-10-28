@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Customer\Business\Customer;
 
-use Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 
 class CustomerPasswordPolicyManager implements CustomerPasswordPolicyManagerInterface
 {
@@ -31,15 +31,15 @@ class CustomerPasswordPolicyManager implements CustomerPasswordPolicyManagerInte
      * @param string[][] $customerPasswordPolicyConfig
      * @param string[] $customerPasswordWhiteList
      *
-     * @return \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function validate(
         string $password,
         array $customerPasswordPolicyConfig,
         array $customerPasswordWhiteList
-    ): CustomerPasswordPolicyResultTransfer {
-        $result = new CustomerPasswordPolicyResultTransfer();
-        $result->setIsSuccessful(true);
+    ): CustomerResponseTransfer {
+        $customerResponseTransfer = new CustomerResponseTransfer();
+        $customerResponseTransfer->setIsSuccess(true);
 
         if (!in_array($password, $customerPasswordWhiteList)) {
             foreach ($this->customerPasswordPolicyPlugins as $customerPasswordPolicyPlugin) {
@@ -50,13 +50,13 @@ class CustomerPasswordPolicyManager implements CustomerPasswordPolicyManagerInte
                 if ($passwordPolicyPluginConfig) {
                     $customerPasswordPolicyPlugin->validate(
                         $password,
-                        $result,
+                        $customerResponseTransfer,
                         $passwordPolicyPluginConfig
                     );
                 }
             }
         }
 
-        return $result;
+        return $customerResponseTransfer;
     }
 }

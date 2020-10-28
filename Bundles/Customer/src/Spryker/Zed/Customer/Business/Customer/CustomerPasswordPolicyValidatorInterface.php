@@ -7,59 +7,59 @@
 
 namespace Spryker\Zed\Customer\Business\Customer;
 
-use Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 
 interface CustomerPasswordPolicyValidatorInterface
 {
     /**
      * @param string $password
-     * @param \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer $resultTransfer
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
      * @param int[] $config
      *
-     * @return \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function validateLength(
         string $password,
-        CustomerPasswordPolicyResultTransfer $resultTransfer,
+        CustomerResponseTransfer $customerResponseTransfer,
         array $config
-    ): CustomerPasswordPolicyResultTransfer;
+    ): CustomerResponseTransfer;
 
     /**
      * @param string $password
-     * @param \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer $resultTransfer
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
      * @param string[][] $config
      *
-     * @return \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function validateCharset(
         string $password,
-        CustomerPasswordPolicyResultTransfer $resultTransfer,
+        CustomerResponseTransfer $customerResponseTransfer,
         array $config
-    ): CustomerPasswordPolicyResultTransfer;
+    ): CustomerResponseTransfer;
 
     /**
      * @param string $password
-     * @param \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer $resultTransfer
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $resultTransfer
      * @param int[] $sequenceLimit
      *
-     * @return \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function validateSequence(
         string $password,
-        CustomerPasswordPolicyResultTransfer $resultTransfer,
+        CustomerResponseTransfer $resultTransfer,
         array $sequenceLimit
-    ): CustomerPasswordPolicyResultTransfer;
+    ): CustomerResponseTransfer;
 
     /**
      * @param string $password
-     * @param \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer $resultTransfer
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $resultTransfer
      * @param string[] $config
      *
-     * @return \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function validateBlacklist(
         string $password,
-        CustomerPasswordPolicyResultTransfer $resultTransfer,
+        CustomerResponseTransfer $resultTransfer,
         array $config
-    ): CustomerPasswordPolicyResultTransfer;
+    ): CustomerResponseTransfer;
 }

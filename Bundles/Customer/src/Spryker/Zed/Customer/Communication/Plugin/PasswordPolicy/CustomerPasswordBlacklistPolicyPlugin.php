@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Customer\Communication\Plugin\PasswordPolicy;
 
-use Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerPasswordPolicyPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -27,23 +27,23 @@ class CustomerPasswordBlacklistPolicyPlugin extends AbstractPlugin implements Cu
      * @api
      *
      * @param string $customerPassword
-     * @param \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer $resultTransfer
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
      * @param string[] $config
      *
-     * @return \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function validate(
         string $customerPassword,
-        CustomerPasswordPolicyResultTransfer $resultTransfer,
+        CustomerResponseTransfer $customerResponseTransfer,
         array $config
-    ): CustomerPasswordPolicyResultTransfer {
-        $resultTransfer = $this->getFactory()->createPasswordPolicyValidator()->validateBlacklist(
+    ): CustomerResponseTransfer {
+        $customerResponseTransfer = $this->getFactory()->createPasswordPolicyValidator()->validateBlacklist(
             $customerPassword,
-            $resultTransfer,
+            $customerResponseTransfer,
             $config
         );
 
-        return $resultTransfer;
+        return $customerResponseTransfer;
     }
 
     /**

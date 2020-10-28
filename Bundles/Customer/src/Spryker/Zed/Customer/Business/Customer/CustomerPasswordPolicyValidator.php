@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\Customer\Business\Customer;
 
-use Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer;
+use Generated\Shared\Transfer\CustomerErrorTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 
 class CustomerPasswordPolicyValidator implements CustomerPasswordPolicyValidatorInterface
@@ -21,7 +22,7 @@ class CustomerPasswordPolicyValidator implements CustomerPasswordPolicyValidator
     public const PASSWORD_POLICY_ATTRIBUTE_MIN = 'min';
     public const PASSWORD_POLICY_ATTRIBUTE_MAX = 'max';
     public const PASSWORD_POLICY_ATTRIBUTE_CHARSET_REQUIRED = 'required';
-    public const PASSWORD_POLICY_ATTRIBUTE_SPECIALSET = 'specialset';
+    public const PASSWORD_POLICY_ATTRIBUTE_SPECIAL_SET = 'specialset';
 
     public const PASSWORD_POLICY_CHARSET_DIGIT = 'digit';
     public const PASSWORD_POLICY_CHARSET_SPECIAL = 'special';
@@ -47,139 +48,127 @@ class CustomerPasswordPolicyValidator implements CustomerPasswordPolicyValidator
 
     /**
      * @param string $password
-     * @param \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer $resultTransfer
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
      * @param int[] $config
      *
-     * @return \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function validateLength(
         string $password,
-        CustomerPasswordPolicyResultTransfer $resultTransfer,
+        CustomerResponseTransfer $customerResponseTransfer,
         array $config
-    ): CustomerPasswordPolicyResultTransfer {
+    ): CustomerResponseTransfer {
         $passwordLength = strlen($password);
 
         if ($passwordLength < $config[static::PASSWORD_POLICY_ATTRIBUTE_MIN]) {
-            $this->addError(
-                $resultTransfer,
-                static::PASSWORD_POLICY_ERROR_MIN,
-                [
-                    static::GLOSSARY_PARAM_VALIDATION_LENGTH => $config[static::PASSWORD_POLICY_ATTRIBUTE_MIN],
-                ]
-            );
+            $this->addError($customerResponseTransfer, static::PASSWORD_POLICY_ERROR_MIN);
         }
 
         if ($passwordLength > $config[static::PASSWORD_POLICY_ATTRIBUTE_MAX]) {
-            $this->addError(
-                $resultTransfer,
-                static::PASSWORD_POLICY_ERROR_MAX,
-                [
-                    static::GLOSSARY_PARAM_VALIDATION_LENGTH => $config[static::PASSWORD_POLICY_ATTRIBUTE_MAX],
-                ]
-            );
+            $this->addError($customerResponseTransfer, static::PASSWORD_POLICY_ERROR_MAX);
         }
 
-        return $resultTransfer;
+        return $customerResponseTransfer;
     }
 
     /**
      * @param string $password
-     * @param \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer $resultTransfer
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
      * @param string[][] $config
      *
-     * @return \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function validateCharset(
         string $password,
-        CustomerPasswordPolicyResultTransfer $resultTransfer,
+        CustomerResponseTransfer $customerResponseTransfer,
         array $config
-    ): CustomerPasswordPolicyResultTransfer {
+    ): CustomerResponseTransfer {
         $requiredCharsets = $config[static::PASSWORD_POLICY_ATTRIBUTE_CHARSET_REQUIRED];
         /** @var string $specialChars */
-        $specialChars = $config[static::PASSWORD_POLICY_ATTRIBUTE_SPECIALSET];
+        $specialChars = $config[static::PASSWORD_POLICY_ATTRIBUTE_SPECIAL_SET];
 
         if (in_array(static::PASSWORD_POLICY_CHARSET_DIGIT, $requiredCharsets)) {
             if (!$this->hasNumber($password)) {
-                $this->addError($resultTransfer, static::PASSWORD_POLICY_ERROR_DIGIT);
+                $this->addError($customerResponseTransfer, static::PASSWORD_POLICY_ERROR_DIGIT);
             }
         }
 
         if (in_array(static::PASSWORD_POLICY_CHARSET_LOWER_CASE, $requiredCharsets)) {
             if (!$this->hasLowerCase($password)) {
-                $this->addError($resultTransfer, static::PASSWORD_POLICY_ERROR_LOWER_CASE);
+                $this->addError($customerResponseTransfer, static::PASSWORD_POLICY_ERROR_LOWER_CASE);
             }
         }
 
         if (in_array(static::PASSWORD_POLICY_CHARSET_UPPER_CASE, $requiredCharsets)) {
             if (!$this->hasUpperCase($password)) {
-                $this->addError($resultTransfer, static::PASSWORD_POLICY_ERROR_UPPER_CASE);
+                $this->addError($customerResponseTransfer, static::PASSWORD_POLICY_ERROR_UPPER_CASE);
             }
         }
 
         if (in_array(static::PASSWORD_POLICY_CHARSET_SPECIAL, $requiredCharsets)) {
             if (!$this->hasSpecial($password, $specialChars)) {
-                $this->addError($resultTransfer, static::PASSWORD_POLICY_ERROR_SPECIAL);
+                $this->addError($customerResponseTransfer, static::PASSWORD_POLICY_ERROR_SPECIAL);
             }
         }
 
         if (!$this->checkAllowed($password, $specialChars)) {
-            $this->addError($resultTransfer, static::PASSWORD_POLICY_ERROR_CHARACTER_INVALID);
+            $this->addError($customerResponseTransfer, static::PASSWORD_POLICY_ERROR_CHARACTER_INVALID);
         }
 
-        return $resultTransfer;
+        return $customerResponseTransfer;
     }
 
     /**
      * @inheriDoc
      *
      * @param string $password
-     * @param \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer $resultTransfer
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
      * @param int[] $config
      *
-     * @return \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function validateSequence(
         string $password,
-        CustomerPasswordPolicyResultTransfer $resultTransfer,
+        CustomerResponseTransfer $customerResponseTransfer,
         array $config
-    ): CustomerPasswordPolicyResultTransfer {
+    ): CustomerResponseTransfer {
         $sequenceLengthLimit = $config[static::PASSWORD_POLICY_ATTRIBUTE_SEQUENCE_LIMIT];
-        $prevchar = '';
+        $previousChar = '';
         $counter = 1;
         foreach (str_split($password) as $char) {
-            if ($char === $prevchar) {
+            if ($char === $previousChar) {
                 $counter++;
             } else {
                 $counter = 1;
             }
             if ($sequenceLengthLimit < $counter) {
-                $this->addError($resultTransfer, static::PASSWORD_POLICY_ERROR_SEQUENCE);
+                $this->addError($customerResponseTransfer, static::PASSWORD_POLICY_ERROR_SEQUENCE);
 
                 break;
             }
-            $prevchar = $char;
+            $previousChar = $char;
         }
 
-        return $resultTransfer;
+        return $customerResponseTransfer;
     }
 
     /**
      * @param string $password
-     * @param \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer $resultTransfer
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
      * @param string[] $config
      *
-     * @return \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function validateBlacklist(
         string $password,
-        CustomerPasswordPolicyResultTransfer $resultTransfer,
+        CustomerResponseTransfer $customerResponseTransfer,
         array $config
-    ): CustomerPasswordPolicyResultTransfer {
+    ): CustomerResponseTransfer {
         if (in_array($password, $config)) {
-            $this->addError($resultTransfer, static::PASSWORD_POLICY_ERROR_BLACKLIST);
+            $this->addError($customerResponseTransfer, static::PASSWORD_POLICY_ERROR_BLACKLIST);
         }
 
-        return $resultTransfer;
+        return $customerResponseTransfer;
     }
 
     /**
@@ -195,7 +184,7 @@ class CustomerPasswordPolicyValidator implements CustomerPasswordPolicyValidator
     }
 
     /**
-     * Checks if word has at least one character of aplhabet in lower case.
+     * Checks if word has at least one character of alphabet in lower case.
      *
      * @param string $word
      *
@@ -207,7 +196,7 @@ class CustomerPasswordPolicyValidator implements CustomerPasswordPolicyValidator
     }
 
     /**
-     * Checks if word has it least one character of aplhabet in upper case.
+     * Checks if word has it least one character of alphabet in upper case.
      *
      * @param string $word
      *
@@ -262,25 +251,24 @@ class CustomerPasswordPolicyValidator implements CustomerPasswordPolicyValidator
     }
 
     /**
-     * Adds error MessageTransfer to CustomerPasswordPolicyResultTransfer.
+     * Adds error MessageTransfer to CustomerResponseTransfer.
      *
-     * @param \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer $resultTransfer
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
      * @param string $errorMessage
      * @param mixed[] $params
      *
-     * @return \Generated\Shared\Transfer\CustomerPasswordPolicyResultTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     protected function addError(
-        CustomerPasswordPolicyResultTransfer $resultTransfer,
+        CustomerResponseTransfer $customerResponseTransfer,
         string $errorMessage,
         array $params = []
-    ): CustomerPasswordPolicyResultTransfer {
-        $message = (new MessageTransfer())
-            ->setValue($errorMessage)
-            ->setParameters($params);
+    ): CustomerResponseTransfer {
+        $messageTransfer = (new CustomerErrorTransfer())
+            ->setMessage($errorMessage);
 
-        return $resultTransfer
-            ->setIsSuccessful(false)
-            ->addMessage($message);
+        return $customerResponseTransfer
+            ->setIsSuccess(false)
+            ->addError($messageTransfer);
     }
 }
