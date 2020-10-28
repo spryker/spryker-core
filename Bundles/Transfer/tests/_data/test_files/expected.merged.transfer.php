@@ -65,6 +65,7 @@ class FooBarTransfer extends AbstractTransfer
     protected $transferMetadata = [
         self::NAME => [
             'type' => 'string',
+            'type_shim' => null,
             'name_underscore' => 'name',
             'is_collection' => false,
             'is_transfer' => false,
@@ -75,6 +76,7 @@ class FooBarTransfer extends AbstractTransfer
         ],
         self::BLA => [
             'type' => 'int',
+            'type_shim' => null,
             'name_underscore' => 'bla',
             'is_collection' => false,
             'is_transfer' => false,
@@ -85,6 +87,7 @@ class FooBarTransfer extends AbstractTransfer
         ],
         self::STOCK => [
             'type' => 'Spryker\DecimalObject\Decimal',
+            'type_shim' => null,
             'name_underscore' => 'stock',
             'is_collection' => false,
             'is_transfer' => false,
@@ -95,6 +98,7 @@ class FooBarTransfer extends AbstractTransfer
         ],
         self::SELF_REFERENCE => [
             'type' => 'Generated\Shared\Transfer\FooBarTransfer',
+            'type_shim' => null,
             'name_underscore' => 'self_reference',
             'is_collection' => true,
             'is_transfer' => true,

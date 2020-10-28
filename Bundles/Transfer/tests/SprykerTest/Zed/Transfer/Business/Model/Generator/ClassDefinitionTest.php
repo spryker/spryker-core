@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Transfer\Business\Model\Generator;
 
 use Codeception\Test\Unit;
+use Spryker\Shared\Transfer\TransferConstants;
 use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeTypeException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeValueException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidNameException;
@@ -202,6 +203,8 @@ class ClassDefinitionTest extends Unit
      */
     public function testSimplePropertyShouldHaveOnlyGetterAndSetter(): void
     {
+        $this->tester->mockEnvironmentConfig(TransferConstants::IS_DEBUG_ENABLED, false);
+
         $transferDefinition = [
             'name' => 'name',
             'property' => [$this->getProperty('property1', 'string')],
@@ -226,6 +229,8 @@ class ClassDefinitionTest extends Unit
      */
     public function testSimpleStringPropertyShouldHaveOnlySetterWithoutTypeHint(): void
     {
+        $this->tester->mockEnvironmentConfig(TransferConstants::IS_DEBUG_ENABLED, false);
+
         $transferDefinition = [
             'name' => 'name',
             'property' => [$this->getProperty('property1', 'string')],
@@ -360,6 +365,7 @@ class ClassDefinitionTest extends Unit
      * @param array $bundles
      * @param bool|null $hasDefaultNull
      * @param bool|null $valueObject
+     * @param bool $isTypeAssertionEnabled
      *
      * @return array
      */
@@ -372,13 +378,15 @@ class ClassDefinitionTest extends Unit
         ?string $constant = null,
         array $bundles = [],
         ?bool $hasDefaultNull = null,
-        ?bool $valueObject = null
+        ?bool $valueObject = null,
+        bool $isTypeAssertionEnabled = false
     ): array {
         $method = [
             'name' => $method,
             'property' => $property,
             'bundles' => $bundles,
             'deprecationDescription' => null,
+            'isTypeAssertionEnabled' => $isTypeAssertionEnabled,
         ];
 
         if ($var !== null) {
@@ -431,6 +439,7 @@ class ClassDefinitionTest extends Unit
         $method = $this->getMethod($method, $property, $var, $return, $typeHint, $constant, $bundles, $hasDefaultNull);
         unset($method['typeHint']);
         unset($method['shimNotice']);
+        unset($method['isTypeAssertionEnabled']);
 
         return $method;
     }

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
 use ArrayObject;
 use Spryker\DecimalObject\Decimal;
+use Spryker\Shared\Transfer\TypeValidation\TransferTypeValidatorTrait;
 use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeTypeException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeValueException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidNameException;
@@ -108,6 +109,7 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         $this->addEntityNamespace($definition);
+        $this->addExtraUseStatements();
 
         if (isset($definition['property'])) {
             $definition = $this->shimTransferDefinitionPropertyTypes($definition);
@@ -744,6 +746,7 @@ class ClassDefinition implements ClassDefinitionInterface
         ];
         $method = $this->addTypeHint($property, $method);
         $method = $this->addDefaultNull($method, $property);
+        $method = $this->setTypeAssertionMode($method);
 
         if ($this->propertyHasTypeShim($property)) {
             $method['typeShimNotice'] = $this->buildTypeShimNotice(
@@ -806,6 +809,7 @@ class ClassDefinition implements ClassDefinitionInterface
             $method['typeHintValue'] = $this->getAddTypeHint($property);
         }
 
+        $method = $this->setTypeAssertionMode($method);
         $this->methods[$methodName] = $method;
     }
 
@@ -995,6 +999,14 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
+     * @return bool
+     */
+    public function isDebugMode(): bool
+    {
+        return $this->transferConfig->isDebugEnabled();
+    }
+
+    /**
      * @param string $fullyQualifiedClassName
      *
      * @return string
@@ -1178,5 +1190,35 @@ class ClassDefinition implements ClassDefinitionInterface
     protected function buildTypeShimNotice(string $type, ?string $typeShim): string
     {
         return sprintf(static::SHIM_NOTICE_TEMPLATE, $typeShim, $type);
+    }
+
+    /**
+     * @param array $method
+     *
+     * @return array
+     */
+    protected function setTypeAssertionMode(array $method): array
+    {
+        $method['isTypeAssertionEnabled'] = false;
+        $methodArgumentType = $method['varValue'] ?? $method['var'];
+
+        if (!$this->isDebugMode() || $this->getEntityNamespace() || $methodArgumentType === 'mixed') {
+            return $method;
+        }
+
+        $methodArgumentTypeHint = $method['typeHintValue'] ?? $method['typeHint'] ?? null;
+        $method['isTypeAssertionEnabled'] = empty($methodArgumentTypeHint) || $methodArgumentTypeHint === 'array';
+
+        return $method;
+    }
+
+    /**
+     * @return void
+     */
+    protected function addExtraUseStatements(): void
+    {
+        if ($this->isDebugMode() && !$this->getEntityNamespace()) {
+            $this->addUseStatement(TransferTypeValidatorTrait::class);
+        }
     }
 }

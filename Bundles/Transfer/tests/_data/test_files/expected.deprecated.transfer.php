@@ -81,6 +81,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     protected $transferMetadata = [
         self::SCALAR_FIELD => [
             'type' => 'string',
+            'type_shim' => null,
             'name_underscore' => 'scalar_field',
             'is_collection' => false,
             'is_transfer' => false,
@@ -91,6 +92,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
         ],
         self::ARRAY_FIELD => [
             'type' => 'array',
+            'type_shim' => null,
             'name_underscore' => 'array_field',
             'is_collection' => false,
             'is_transfer' => false,
@@ -101,6 +103,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
         ],
         self::TRANSFER_FIELD => [
             'type' => 'Generated\Shared\Transfer\DeprecatedFooBarTransfer',
+            'type_shim' => null,
             'name_underscore' => 'transfer_field',
             'is_collection' => false,
             'is_transfer' => true,
@@ -111,6 +114,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
         ],
         self::TRANSFER_COLLECTION_FIELD => [
             'type' => 'Generated\Shared\Transfer\DeprecatedFooBarTransfer',
+            'type_shim' => null,
             'name_underscore' => 'transfer_collection_field',
             'is_collection' => true,
             'is_transfer' => true,
