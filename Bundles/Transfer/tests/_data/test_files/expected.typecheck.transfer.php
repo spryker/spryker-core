@@ -7,7 +7,7 @@
 namespace Generated\Shared\Transfer;
 
 use ArrayObject;
-use Spryker\Zed\Transfer\Business\Transfer\TypeValidation\TransferTypeValidatorTrait;
+use Spryker\Shared\Transfer\TypeValidation\TransferTypeValidatorTrait;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 /**
