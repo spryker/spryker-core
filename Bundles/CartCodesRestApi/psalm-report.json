@@ -3,30 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 39,
-            "line_to": 39,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CartCodesRestApi/src/Spryker/Client/CartCodesRestApi/CartCodesRestApiDependencyProvider.php",
-            "snippet": "            return new CartCodesRestApiToZedRequestClientBridge($container->getLocator()->zedRequest()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 45,
-            "line_to": 45,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::resource does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CartCodesRestApi/src/Spryker/Glue/CartCodesRestApi/CartCodesRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->cartsRestApi()->resource()",
-            "selected_text": "resource",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 57,
             "line_to": 57,
             "type": "PossiblyNullArgument",
@@ -183,8 +159,8 @@
         },
         {
             "severity": "info",
-            "line_from": 48,
-            "line_to": 48,
+            "line_from": 53,
+            "line_to": 53,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\CartCodesRestApi\\Dependency\\Facade\\CartCodesRestApiToCartsRestApiFacadeInterface::findQuoteByUuid cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CartCodesRestApi/src/Spryker/Zed/CartCodesRestApi/Business/CartCodeAdder/CartCodeAdder.php",
@@ -252,30 +228,6 @@
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\DiscountTransfer[]",
             "error_level": 4,
             "shortcode": 141
-        },
-        {
-            "severity": "info",
-            "line_from": 45,
-            "line_to": 45,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CartCodesRestApi/src/Spryker/Zed/CartCodesRestApi/CartCodesRestApiDependencyProvider.php",
-            "snippet": "            return new CartCodesRestApiToCartCodeFacadeBridge($container->getLocator()->cartCode()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 59,
-            "line_to": 59,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CartCodesRestApi/src/Spryker/Zed/CartCodesRestApi/CartCodesRestApiDependencyProvider.php",
-            "snippet": "            return new CartCodesRestApiToCartsRestApiFacadeBridge($container->getLocator()->cartsRestApi()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

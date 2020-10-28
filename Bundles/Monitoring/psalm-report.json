@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 66,
-            "line_to": 66,
+            "line_from": 64,
+            "line_to": 64,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getName on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Monitoring/src/Spryker/Yves/Monitoring/EventHandler/EventHandler.php",
@@ -15,32 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Monitoring/src/Spryker/Yves/Monitoring/MonitoringDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->monitoring()->service();",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 58,
-            "line_to": 58,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Monitoring/src/Spryker/Yves/Monitoring/MonitoringDependencyProvider.php",
-            "snippet": "                $container->getLocator()->utilNetwork()->service()",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 66,
-            "line_to": 66,
+            "line_from": 64,
+            "line_to": 64,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getName on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Monitoring/src/Spryker/Zed/Monitoring/Business/EventHandler/EventHandler.php",
@@ -60,69 +36,9 @@
             "selected_text": "getName",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Monitoring/src/Spryker/Zed/Monitoring/MonitoringDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->monitoring()->service();",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 77,
-            "line_to": 77,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Monitoring/src/Spryker/Zed/Monitoring/MonitoringDependencyProvider.php",
-            "snippet": "                $container->getLocator()->store()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 95,
-            "line_to": 95,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Monitoring/src/Spryker/Zed/Monitoring/MonitoringDependencyProvider.php",
-            "snippet": "                $container->getLocator()->locale()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 113,
-            "line_to": 113,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Monitoring/src/Spryker/Zed/Monitoring/MonitoringDependencyProvider.php",
-            "snippet": "                $container->getLocator()->utilNetwork()->service()",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Monitoring/src/Spryker/Yves/Monitoring/Plugin/ControllerListener.php",
-            "snippet": "     * @param \\Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent $event",
-            "selected_text": "\\Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent",
-            "error_level": 2,
-            "shortcode": 98
-        },
         {
             "severity": "info",
             "line_from": 60,
@@ -134,30 +50,6 @@
             "selected_text": "$app",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 76,
-            "line_to": 76,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Monitoring/src/Spryker/Zed/Monitoring/Communication/Plugin/ControllerListener.php",
-            "snippet": "     * @param \\Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent $event",
-            "selected_text": "\\Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 37,
-            "line_to": 37,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Monitoring/src/Spryker/Zed/Monitoring/Communication/Plugin/GatewayControllerListener.php",
-            "snippet": "     * @param \\Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent $event",
-            "selected_text": "\\Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent",
-            "error_level": 2,
-            "shortcode": 98
         },
         {
             "severity": "info",

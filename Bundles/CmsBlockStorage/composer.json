@@ -4,7 +4,7 @@
   "description": "CmsBlockStorage module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/cms-block": "^3.0.0",
     "spryker/cms-block-storage-extension": "^1.0.0",
     "spryker/event-behavior": "^1.1.0",

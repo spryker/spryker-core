@@ -11,20 +11,44 @@
             "selected_text": "[$companyUserTransfer->getIdCompanyUser()]",
             "error_level": 6,
             "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Zed\\QuoteRequest\\Communication\\Plugin\\Checkout\\CloseQuoteRequestCheckoutPostSaveHookPlugin::executeHook has wrong name $checkoutResponseTransfer, expecting $checkoutResponse as defined by Spryker\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutPostSaveHookInterface::executeHook",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Communication/Plugin/Checkout/CloseQuoteRequestCheckoutPostSaveHookPlugin.php",
+            "snippet": "    public function executeHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)",
+            "selected_text": "$checkoutResponseTransfer",
+            "error_level": 7,
+            "shortcode": 230
         }
     ],
     "warning": [
         {
             "severity": "info",
-            "line_from": 23,
-            "line_to": 23,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Client/Kernel/PermissionAwareTrait.php",
-            "snippet": "            return Locator::getInstance()->permission()->client()->can($permissionKey, $context);",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
+            "line_from": 94,
+            "line_to": 94,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getSourcePrice on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Client/QuoteRequest/Checker/QuoteChecker.php",
+            "snippet": "            return $shipmentTransfer->getMethod()->getSourcePrice();",
+            "selected_text": "getSourcePrice",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 72,
+            "line_to": 72,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of strtotime cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Client/QuoteRequest/Converter/QuoteRequestConverter.php",
+            "snippet": "        if ($quoteRequestTransfer->getValidUntil() && strtotime($quoteRequestTransfer->getValidUntil()) < time()) {",
+            "selected_text": "$quoteRequestTransfer->getValidUntil()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -100,51 +124,15 @@
         },
         {
             "severity": "info",
-            "line_from": 53,
-            "line_to": 53,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Client/QuoteRequest/QuoteRequestDependencyProvider.php",
-            "snippet": "            return new QuoteRequestToZedRequestClientBridge($container->getLocator()->zedRequest()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 67,
-            "line_to": 67,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Client/QuoteRequest/QuoteRequestDependencyProvider.php",
-            "snippet": "            return new QuoteRequestToPersistentCartClientBridge($container->getLocator()->persistentCart()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 81,
-            "line_to": 81,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Client/QuoteRequest/QuoteRequestDependencyProvider.php",
-            "snippet": "            return new QuoteRequestToQuoteClientBridge($container->getLocator()->quote()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 95,
-            "line_to": 95,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Client/QuoteRequest/QuoteRequestDependencyProvider.php",
-            "snippet": "            return new QuoteRequestToCartClientBridge($container->getLocator()->cart()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
+            "line_from": 37,
+            "line_to": 37,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCompanyUserTransfer on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Client/QuoteRequest/Validator/QuoteValidator.php",
+            "snippet": "        if (!$quoteTransfer->getCustomer() || !$quoteTransfer->getCustomer()->getCompanyUserTransfer()) {",
+            "selected_text": "getCompanyUserTransfer",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -400,6 +388,30 @@
         },
         {
             "severity": "info",
+            "line_from": 163,
+            "line_to": 163,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getMethod on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Business/Sanitizer/QuoteRequestVersionSanitizer.php",
+            "snippet": "            if ($itemTransfer->getShipment() && $itemTransfer->getShipment()->getMethod()) {",
+            "selected_text": "getMethod",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 164,
+            "line_to": 164,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getMethod on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Business/Sanitizer/QuoteRequestVersionSanitizer.php",
+            "snippet": "                $itemTransfer->getShipment()->getMethod()->setSourcePrice(null);",
+            "selected_text": "getMethod",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 164,
             "line_to": 164,
             "type": "PossiblyNullReference",
@@ -407,6 +419,30 @@
             "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Business/Sanitizer/QuoteRequestVersionSanitizer.php",
             "snippet": "                $itemTransfer->getShipment()->getMethod()->setSourcePrice(null);",
             "selected_text": "setSourcePrice",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 180,
+            "line_to": 180,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getMethod on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Business/Sanitizer/QuoteRequestVersionSanitizer.php",
+            "snippet": "        if ($quoteTransfer->getShipment() && $quoteTransfer->getShipment()->getMethod()) {",
+            "selected_text": "getMethod",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 181,
+            "line_to": 181,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getMethod on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Business/Sanitizer/QuoteRequestVersionSanitizer.php",
+            "snippet": "            $quoteTransfer->getShipment()->getMethod()->setSourcePrice(null);",
+            "selected_text": "getMethod",
             "error_level": 3,
             "shortcode": 83
         },
@@ -544,6 +580,18 @@
         },
         {
             "severity": "info",
+            "line_from": 93,
+            "line_to": 93,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of strtotime cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Business/Sender/QuoteRequestUserSender.php",
+            "snippet": "        if ($quoteRequestTransfer->getValidUntil() && strtotime($quoteRequestTransfer->getValidUntil()) < time()) {",
+            "selected_text": "$quoteRequestTransfer->getValidUntil()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
             "line_from": 124,
             "line_to": 124,
             "type": "PossiblyNullArgument",
@@ -604,6 +652,18 @@
         },
         {
             "severity": "info",
+            "line_from": 134,
+            "line_to": 134,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of strtotime cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Business/Validator/QuoteRequestTimeValidator.php",
+            "snippet": "        if ($quoteRequestTransfer->getValidUntil() && strtotime($quoteRequestTransfer->getValidUntil()) < time()) {",
+            "selected_text": "$quoteRequestTransfer->getValidUntil()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
             "line_from": 96,
             "line_to": 96,
             "type": "PossiblyNullArgument",
@@ -611,6 +671,18 @@
             "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Business/Writer/QuoteRequestTerminator.php",
             "snippet": "        if (!$this->quoteRequestStatus->isQuoteRequestCancelable($quoteRequestTransfer)) {",
             "selected_text": "$quoteRequestTransfer",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 132,
+            "line_to": 132,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\QuoteRequest\\Persistence\\QuoteRequestRepositoryInterface::findQuoteRequestByVersionReference cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Business/Writer/QuoteRequestTerminator.php",
+            "snippet": "            ->findQuoteRequestByVersionReference($quoteTransfer->getQuoteRequestVersionReference());",
+            "selected_text": "$quoteTransfer->getQuoteRequestVersionReference()",
             "error_level": 3,
             "shortcode": 78
         },
@@ -829,6 +901,18 @@
             "selected_text": "count",
             "error_level": 3,
             "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 298,
+            "line_to": 298,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of strtotime cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Business/Writer/QuoteRequestUserWriter.php",
+            "snippet": "        if ($quoteRequestTransfer->getValidUntil() && strtotime($quoteRequestTransfer->getValidUntil()) < time()) {",
+            "selected_text": "$quoteRequestTransfer->getValidUntil()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1168,18 +1252,6 @@
         },
         {
             "severity": "info",
-            "line_from": 47,
-            "line_to": 47,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Orm\\Zed\\CompanyBusinessUnit\\Persistence\\SpyCompanyBusinessUnitQuery::orderbyidquoterequest does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Persistence/QuoteRequestRepository.php",
-            "snippet": "            ->orderByIdQuoteRequest(Criteria::DESC);",
-            "selected_text": "orderByIdQuoteRequest",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 53,
             "line_to": 53,
             "type": "PossiblyInvalidArgument",
@@ -1189,6 +1261,30 @@
             "selected_text": "$quoteRequestQuery->find()",
             "error_level": 3,
             "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdQuoteRequest on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Persistence/QuoteRequestRepository.php",
+            "snippet": "        if ($quoteRequestVersionFilterTransfer->getQuoteRequest() && $quoteRequestVersionFilterTransfer->getQuoteRequest()->getIdQuoteRequest()) {",
+            "selected_text": "getIdQuoteRequest",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 71,
+            "line_to": 71,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdQuoteRequest on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Persistence/QuoteRequestRepository.php",
+            "snippet": "            $quoteRequestVersionQuery->filterByFkQuoteRequest($quoteRequestVersionFilterTransfer->getQuoteRequest()->getIdQuoteRequest());",
+            "selected_text": "getIdQuoteRequest",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -1204,22 +1300,10 @@
         },
         {
             "severity": "info",
-            "line_from": 121,
-            "line_to": 121,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Orm\\Zed\\CompanyBusinessUnit\\Persistence\\SpyCompanyBusinessUnitQuery::usespyquoterequestversionquery does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Persistence/QuoteRequestRepository.php",
-            "snippet": "            ->useSpyQuoteRequestVersionQuery()",
-            "selected_text": "useSpyQuoteRequestVersionQuery",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 147,
             "line_to": 147,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\QuoteRequest\\Persistence\\SpyQuoteRequest|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\QuoteRequest\\Persistence\\SpyQuoteRequest> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Persistence/QuoteRequestRepository.php",
             "snippet": "            ->toArray();",
             "selected_text": "toArray",
@@ -1228,10 +1312,46 @@
         },
         {
             "severity": "info",
+            "line_from": 164,
+            "line_to": 164,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCompanyUser on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Persistence/QuoteRequestRepository.php",
+            "snippet": "        if ($quoteRequestFilterTransfer->getCompanyUser() && $quoteRequestFilterTransfer->getCompanyUser()->getIdCompanyUser()) {",
+            "selected_text": "getIdCompanyUser",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 165,
+            "line_to": 165,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCompanyUser on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Persistence/QuoteRequestRepository.php",
+            "snippet": "            $quoteRequestQuery->filterByFkCompanyUser($quoteRequestFilterTransfer->getCompanyUser()->getIdCompanyUser());",
+            "selected_text": "getIdCompanyUser",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 181,
+            "line_to": 181,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\QuoteRequest\\Persistence\\QuoteRequestRepository::preparePagination cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Persistence/QuoteRequestRepository.php",
+            "snippet": "            $quoteRequestQuery = $this->preparePagination($quoteRequestQuery, $quoteRequestFilterTransfer->getPagination());",
+            "selected_text": "$quoteRequestFilterTransfer->getPagination()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
             "line_from": 210,
             "line_to": 210,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\QuoteRequest\\Persistence\\SpyQuoteRequest|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\QuoteRequest\\Persistence\\SpyQuoteRequest> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Persistence/QuoteRequestRepository.php",
             "snippet": "            ->toArray();",
             "selected_text": "toArray",
@@ -1261,54 +1381,6 @@
             "selected_text": "$maxPerPage",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 63,
-            "line_to": 63,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/QuoteRequestDependencyProvider.php",
-            "snippet": "            return new QuoteRequestToCompanyUserFacadeBridge($container->getLocator()->companyUser()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 77,
-            "line_to": 77,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/QuoteRequestDependencyProvider.php",
-            "snippet": "            return new QuoteRequestToCalculationFacadeBridge($container->getLocator()->calculation()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 91,
-            "line_to": 91,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/QuoteRequestDependencyProvider.php",
-            "snippet": "            return new QuoteRequestToCartFacadeBridge($container->getLocator()->cart()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 105,
-            "line_to": 105,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/QuoteRequestDependencyProvider.php",
-            "snippet": "            return new QuoteRequestToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

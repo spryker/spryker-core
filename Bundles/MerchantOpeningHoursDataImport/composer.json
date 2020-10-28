@@ -4,7 +4,7 @@
   "description": "MerchantOpeningHoursDataImport module",
   "license": "MIT",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/data-import": "^1.3.0",
     "spryker/kernel": "^3.33.0",
     "spryker/merchant": "^3.0.0",

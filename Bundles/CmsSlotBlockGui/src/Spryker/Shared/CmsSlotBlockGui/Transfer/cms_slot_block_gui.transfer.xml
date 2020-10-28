@@ -58,4 +58,20 @@
         <property name="orderBy" type="string"/>
     </transfer>
 
+    <transfer name="Pagination">
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="lastPage" type="int"/>
+    </transfer>
+
+    <transfer name="CmsBlockCriteria">
+        <property name="namePattern" type="string"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="CmsBlockCollection">
+        <property name="cmsBlocks" type="CmsBlock[]" singular="cmsBlocks"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
 </transfers>

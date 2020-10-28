@@ -36,30 +36,6 @@
             "selected_text": "getShoppingLists",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListSession/src/Spryker/Client/ShoppingListSession/ShoppingListSessionDependencyProvider.php",
-            "snippet": "            return new ShoppingListSessionToSessionClientBridge($container->getLocator()->session()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 60,
-            "line_to": 60,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListSession/src/Spryker/Client/ShoppingListSession/ShoppingListSessionDependencyProvider.php",
-            "snippet": "            return new ShoppingListSessionToShoppingListClientBridge($container->getLocator()->shoppingList()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

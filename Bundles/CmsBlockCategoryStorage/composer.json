@@ -4,7 +4,7 @@
   "description": "CmsBlockCategoryStorage module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/category": "^4.3.0",
     "spryker/cms-block": "^1.5.0 || ^2.0.0 || ^3.0.0",
     "spryker/cms-block-category-connector": "^2.1.0",

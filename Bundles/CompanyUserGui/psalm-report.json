@@ -10,8 +10,7 @@
             "snippet": "     * @return int[] [company name => company id]",
             "selected_text": "int[]",
             "error_level": 6,
-            "shortcode": 11,
-            "taint_trace": null
+            "shortcode": 11
         },
         {
             "severity": "error",
@@ -23,8 +22,7 @@
             "snippet": "        return $result;",
             "selected_text": "$result",
             "error_level": 6,
-            "shortcode": 128,
-            "taint_trace": null
+            "shortcode": 128
         },
         {
             "severity": "error",
@@ -36,8 +34,7 @@
             "snippet": "     * @return int[] [company name => company id]",
             "selected_text": "int[]",
             "error_level": 6,
-            "shortcode": 11,
-            "taint_trace": null
+            "shortcode": 11
         },
         {
             "severity": "error",
@@ -49,8 +46,7 @@
             "snippet": "        return $companies;",
             "selected_text": "$companies",
             "error_level": 6,
-            "shortcode": 128,
-            "taint_trace": null
+            "shortcode": 128
         }
     ],
     "warning": [
@@ -64,8 +60,7 @@
             "snippet": "                $request->query->get(static::PARAM_REDIRECT_URL, static::URL_REDIRECT_COMPANY_USER_PAGE)",
             "selected_text": "$request->query->get(static::PARAM_REDIRECT_URL, static::URL_REDIRECT_COMPANY_USER_PAGE)",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -77,8 +72,7 @@
             "snippet": "                        $this->addErrorMessage($responseMessageTransfer->getText());",
             "selected_text": "$responseMessageTransfer->getText()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -90,8 +84,7 @@
             "snippet": "                    $companyUserResponseTransfer->getMessages()->getArrayCopy()",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -103,8 +96,7 @@
             "snippet": "                $request->query->get(static::PARAM_REDIRECT_URL, static::URL_REDIRECT_COMPANY_USER_PAGE)",
             "selected_text": "$request->query->get(static::PARAM_REDIRECT_URL, static::URL_REDIRECT_COMPANY_USER_PAGE)",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -116,8 +108,7 @@
             "snippet": "                $this->addErrorMessage($message->getText());",
             "selected_text": "$message->getText()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -129,8 +120,7 @@
             "snippet": "            $this->addSuccessMessage($message->getText());",
             "selected_text": "$message->getText()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -142,8 +132,7 @@
             "snippet": "            $result[$company->getName()] = $company->getIdCompany();",
             "selected_text": "$result",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -155,34 +144,7 @@
             "snippet": "            $companies[$companyTransfer->getName()] = $companyTransfer->getIdCompany();",
             "selected_text": "$companies",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 191,
-            "line_to": 191,
-            "type": "MoreSpecificReturnType",
-            "message": "The declared return type 'Orm\\Zed\\CompanyUser\\Persistence\\SpyCompanyUserQuery' for Spryker\\Zed\\CompanyUserGui\\Communication\\Table\\CompanyUserTable::prepareQuery is more specific than the inferred return type 'Propel\\Runtime\\ActiveQuery\\ModelCriteria'",
-            "file_name": "vendor/spryker/spryker/Bundles/CompanyUserGui/src/Spryker/Zed/CompanyUserGui/Communication/Table/CompanyUserTable.php",
-            "snippet": "     * @return \\Orm\\Zed\\CompanyUser\\Persistence\\SpyCompanyUserQuery",
-            "selected_text": "\\Orm\\Zed\\CompanyUser\\Persistence\\SpyCompanyUserQuery",
-            "error_level": 3,
-            "shortcode": 70,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 195,
-            "line_to": 204,
-            "type": "LessSpecificReturnStatement",
-            "message": "The type 'Orm\\Zed\\CompanyUser\\Persistence\\SpyCompanyUserQuery&static|Propel\\Runtime\\ActiveQuery\\ModelCriteria' is more general than the declared return type 'Orm\\Zed\\CompanyUser\\Persistence\\SpyCompanyUserQuery' for Spryker\\Zed\\CompanyUserGui\\Communication\\Table\\CompanyUserTable::prepareQuery",
-            "file_name": "vendor/spryker/spryker/Bundles/CompanyUserGui/src/Spryker/Zed/CompanyUserGui/Communication/Table/CompanyUserTable.php",
-            "snippet": "        return $companyUserQuery->joinCustomer()\n            ->useCustomerQuery()\n            ->filterByAnonymizedAt(null, Criteria::EQUAL)\n            ->endUse()\n            ->withColumn(\n                'CONCAT(' . SpyCustomerTableMap::COL_FIRST_NAME . ', \\' \\', ' . SpyCustomerTableMap::COL_LAST_NAME . ')',\n                static::COL_COMPANY_USER_NAME\n            )\n            ->joinCompany()\n            ->withColumn(SpyCompanyTableMap::COL_NAME, static::COL_COMPANY_NAME);",
-            "selected_text": "$companyUserQuery->joinCustomer()\n            ->useCustomerQuery()\n            ->filterByAnonymizedAt(null, Criteria::EQUAL)\n            ->endUse()\n            ->withColumn(\n                'CONCAT(' . SpyCustomerTableMap::COL_FIRST_NAME . ', \\' \\', ' . SpyCustomerTableMap::COL_LAST_NAME . ')',\n                static::COL_COMPANY_USER_NAME\n            )\n            ->joinCompany()\n            ->withColumn(SpyCompanyTableMap::COL_NAME, static::COL_COMPANY_NAME)",
-            "error_level": 3,
-            "shortcode": 129,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -194,8 +156,7 @@
             "snippet": "                $buttonTransfer->getUrl(),",
             "selected_text": "$buttonTransfer->getUrl()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -207,8 +168,7 @@
             "snippet": "                $buttonTransfer->getTitle(),",
             "selected_text": "$buttonTransfer->getTitle()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         }
     ],
     "deprecation": []

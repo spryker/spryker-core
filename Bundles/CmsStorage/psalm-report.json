@@ -2,6 +2,102 @@
     "error": [
         {
             "severity": "error",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\CmsStorage\\Communication\\Plugin\\Event\\Listener\\CmsPageStorageListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Communication/Plugin/Event/Listener/CmsPageStorageListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\CmsStorage\\Communication\\Plugin\\Event\\Listener\\CmsPageStoragePublishListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Communication/Plugin/Event/Listener/CmsPageStoragePublishListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\CmsStorage\\Communication\\Plugin\\Event\\Listener\\CmsPageStorageUnpublishListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Communication/Plugin/Event/Listener/CmsPageStorageUnpublishListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\CmsStorage\\Communication\\Plugin\\Event\\Listener\\CmsPageStoreStorageListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Communication/Plugin/Event/Listener/CmsPageStoreStorageListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\CmsStorage\\Communication\\Plugin\\Event\\Listener\\CmsPageUrlStorageListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Communication/Plugin/Event/Listener/CmsPageUrlStorageListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\CmsStorage\\Communication\\Plugin\\Event\\Listener\\CmsPageUrlStoragePublishListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Communication/Plugin/Event/Listener/CmsPageUrlStoragePublishListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\CmsStorage\\Communication\\Plugin\\Event\\Listener\\CmsPageUrlStorageUnpublishListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Communication/Plugin/Event/Listener/CmsPageUrlStorageUnpublishListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\CmsStorage\\Communication\\Plugin\\Event\\Listener\\CmsPageVersionStorageListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Communication/Plugin/Event/Listener/CmsPageVersionStorageListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
             "line_from": 45,
             "line_to": 45,
             "type": "InvalidReturnType",
@@ -10,8 +106,7 @@
             "snippet": "     * @return \\Orm\\Zed\\Cms\\Persistence\\SpyCmsPageQuery",
             "selected_text": "\\Orm\\Zed\\Cms\\Persistence\\SpyCmsPageQuery",
             "error_level": 6,
-            "shortcode": 11,
-            "taint_trace": null
+            "shortcode": 11
         },
         {
             "severity": "error",
@@ -23,8 +118,7 @@
             "snippet": "        return $this->getFactory()\n            ->getCmsQueryContainer()\n            ->queryPages()\n            ->filterByIdCmsPage_In($cmsPageIds)\n            ->joinWithSpyUrl()\n            ->joinWith('SpyUrl.SpyLocale')\n            ->joinWithSpyCmsVersion()\n            ->where(sprintf('%s = (%s)', SpyCmsVersionTableMap::COL_VERSION, $this->getMaxVersionSubQuery()))\n            ->joinWithSpyCmsPageStore(Criteria::LEFT_JOIN)\n            ->useSpyCmsPageStoreQuery()\n                ->joinWithSpyStore()\n            ->endUse();",
             "selected_text": "$this->getFactory()\n            ->getCmsQueryContainer()\n            ->queryPages()\n            ->filterByIdCmsPage_In($cmsPageIds)\n            ->joinWithSpyUrl()\n            ->joinWith('SpyUrl.SpyLocale')\n            ->joinWithSpyCmsVersion()\n            ->where(sprintf('%s = (%s)', SpyCmsVersionTableMap::COL_VERSION, $this->getMaxVersionSubQuery()))\n            ->joinWithSpyCmsPageStore(Criteria::LEFT_JOIN)\n            ->useSpyCmsPageStoreQuery()\n                ->joinWithSpyStore()\n            ->endUse()",
             "error_level": 6,
-            "shortcode": 128,
-            "taint_trace": null
+            "shortcode": 128
         }
     ],
     "warning": [
@@ -38,8 +132,7 @@
             "snippet": "        $synchronizationDataTransfer->setReference($idCmsPage);",
             "selected_text": "$idCmsPage",
             "error_level": 4,
-            "shortcode": 12,
-            "taint_trace": null
+            "shortcode": 12
         },
         {
             "severity": "info",
@@ -51,8 +144,7 @@
             "snippet": "    public function publish(array $cmsPageIds): void",
             "selected_text": "$cmsPageIds",
             "error_level": 5,
-            "shortcode": 140,
-            "taint_trace": null
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -64,8 +156,7 @@
             "snippet": "    public function unpublish(array $cmsPageIds): void",
             "selected_text": "$cmsPageIds",
             "error_level": 5,
-            "shortcode": 140,
-            "taint_trace": null
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -77,8 +168,7 @@
             "snippet": "        return $this->queryContainer->queryCmsPageVersionByIds($cmsPageIds)->find()->getData();",
             "selected_text": "getData",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -90,8 +180,7 @@
             "snippet": "            $cmsPageStorageEntitiesByIdAndLocale[$entity->getFkCmsPage()][$entity->getLocale()][$entity->getStore()] = $entity;",
             "selected_text": "$cmsPageStorageEntitiesByIdAndLocale[$entity->getFkCmsPage()][$entity->getLocale()]",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -103,8 +192,7 @@
             "snippet": "            ->getData(), $localeName);",
             "selected_text": "getData",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -116,8 +204,19 @@
             "snippet": "            ->extractCmsVersionDataTransfer($cmsPageEntity->getSpyCmsVersions()->getFirst()->getData());",
             "selected_text": "getFirst",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 231,
+            "line_to": 231,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CmsStorage\\Business\\Storage\\CmsPageStorageWriter::convertDateTimeToString expects DateTime|null, possibly different type DateTime|string provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Business/Storage/CmsPageStorageWriter.php",
+            "snippet": "        $localeCmsPageDataTransfer->setValidFrom($this->convertDateTimeToString($cmsPageEntity->getValidFrom()));",
+            "selected_text": "$cmsPageEntity->getValidFrom()",
+            "error_level": 3,
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -126,76 +225,58 @@
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of Spryker\\Zed\\CmsStorage\\Business\\Storage\\CmsPageStorageWriter::convertDateTimeToString expects DateTime|null, possibly different type DateTime|string provided",
             "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Business/Storage/CmsPageStorageWriter.php",
-            "snippet": "        $localeCmsPageDataTransfer->setValidFrom($this->convertDateTimeToString($cmsPageEntity->getValidFrom()));",
-            "selected_text": "$cmsPageEntity->getValidFrom()",
-            "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 233,
-            "line_to": 233,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\CmsStorage\\Business\\Storage\\CmsPageStorageWriter::convertDateTimeToString expects DateTime|null, possibly different type DateTime|string provided",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Business/Storage/CmsPageStorageWriter.php",
             "snippet": "        $localeCmsPageDataTransfer->setValidTo($this->convertDateTimeToString($cmsPageEntity->getValidTo()));",
             "selected_text": "$cmsPageEntity->getValidTo()",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
-            "line_from": 338,
-            "line_to": 338,
+            "line_from": 337,
+            "line_to": 337,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $localeNameMap using possibly null offset mixed|null|string",
             "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Business/Storage/CmsPageStorageWriter.php",
             "snippet": "            $localeNames = $localeNameMap[$storeName];",
             "selected_text": "$localeNameMap",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
-            "line_from": 352,
-            "line_to": 352,
+            "line_from": 351,
+            "line_to": 351,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $cmsPageStorageEntities[$idCmsPage][$localeName] using possibly null offset mixed|null|string",
             "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Business/Storage/CmsPageStorageWriter.php",
             "snippet": "                unset($cmsPageStorageEntities[$idCmsPage][$localeName][$storeName]);",
             "selected_text": "$cmsPageStorageEntities[$idCmsPage][$localeName]",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
-            "line_from": 389,
-            "line_to": 389,
+            "line_from": 388,
+            "line_to": 388,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $localeNameMapByStoreName[null|string] using possibly null offset null|string",
             "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Business/Storage/CmsPageStorageWriter.php",
             "snippet": "            $localeNameMapByStoreName[$storeTransfer->getName()] = $storeTransfer->getAvailableLocaleIsoCodes();",
             "selected_text": "$localeNameMapByStoreName",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
-            "line_from": 106,
-            "line_to": 106,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::withColumn does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Persistence/CmsStorageQueryContainer.php",
-            "snippet": "            ->withColumn(sprintf('MAX(%s)', SpyCmsVersionTableMap::COL_VERSION))",
-            "selected_text": "withColumn",
-            "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "line_from": 46,
+            "line_to": 46,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\CmsStorage\\Communication\\Plugin\\Event\\CmsEventResourceQueryContainerPlugin::queryData has the more specific type 'array<array-key, int>', expecting 'array<array-key, int|string>' as defined by Spryker\\Zed\\EventBehavior\\Dependency\\Plugin\\EventResourceQueryContainerPluginInterface::queryData",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Communication/Plugin/Event/CmsEventResourceQueryContainerPlugin.php",
+            "snippet": "    public function queryData(array $ids = []): ?ModelCriteria",
+            "selected_text": "$ids",
+            "error_level": 5,
+            "shortcode": 140
         }
     ],
     "deprecation": [
@@ -209,8 +290,7 @@
             "snippet": "            $this->getConfig()->isSendingToQueue()",
             "selected_text": "isSendingToQueue",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -222,8 +302,7 @@
             "snippet": "        $this->isSendingToQueue = $isSendingToQueue;",
             "selected_text": "$this->isSendingToQueue",
             "error_level": 2,
-            "shortcode": 99,
-            "taint_trace": null
+            "shortcode": 99
         },
         {
             "severity": "info",
@@ -235,8 +314,7 @@
             "snippet": "        $cmsPageStorageEntity->setIsSendingToQueue($this->isSendingToQueue);",
             "selected_text": "setIsSendingToQueue",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -248,8 +326,7 @@
             "snippet": "    use DatabaseTransactionHandlerTrait;",
             "selected_text": "DatabaseTransactionHandlerTrait",
             "error_level": 2,
-            "shortcode": 171,
-            "taint_trace": null
+            "shortcode": 171
         },
         {
             "severity": "info",
@@ -261,8 +338,7 @@
             "snippet": "    use DatabaseTransactionHandlerTrait;",
             "selected_text": "DatabaseTransactionHandlerTrait",
             "error_level": 2,
-            "shortcode": 171,
-            "taint_trace": null
+            "shortcode": 171
         },
         {
             "severity": "info",
@@ -274,8 +350,7 @@
             "snippet": "    use DatabaseTransactionHandlerTrait;",
             "selected_text": "DatabaseTransactionHandlerTrait",
             "error_level": 2,
-            "shortcode": 171,
-            "taint_trace": null
+            "shortcode": 171
         },
         {
             "severity": "info",
@@ -287,8 +362,7 @@
             "snippet": "    use DatabaseTransactionHandlerTrait;",
             "selected_text": "DatabaseTransactionHandlerTrait",
             "error_level": 2,
-            "shortcode": 171,
-            "taint_trace": null
+            "shortcode": 171
         },
         {
             "severity": "info",
@@ -300,8 +374,7 @@
             "snippet": "    use DatabaseTransactionHandlerTrait;",
             "selected_text": "DatabaseTransactionHandlerTrait",
             "error_level": 2,
-            "shortcode": 171,
-            "taint_trace": null
+            "shortcode": 171
         },
         {
             "severity": "info",
@@ -313,8 +386,7 @@
             "snippet": "    use DatabaseTransactionHandlerTrait;",
             "selected_text": "DatabaseTransactionHandlerTrait",
             "error_level": 2,
-            "shortcode": 171,
-            "taint_trace": null
+            "shortcode": 171
         },
         {
             "severity": "info",
@@ -326,8 +398,7 @@
             "snippet": "    use DatabaseTransactionHandlerTrait;",
             "selected_text": "DatabaseTransactionHandlerTrait",
             "error_level": 2,
-            "shortcode": 171,
-            "taint_trace": null
+            "shortcode": 171
         },
         {
             "severity": "info",
@@ -339,8 +410,7 @@
             "snippet": "    use DatabaseTransactionHandlerTrait;",
             "selected_text": "DatabaseTransactionHandlerTrait",
             "error_level": 2,
-            "shortcode": 171,
-            "taint_trace": null
+            "shortcode": 171
         }
     ]
 }

@@ -4,7 +4,7 @@
   "description": "SalesReclamation module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/kernel": "^3.30.0",
     "spryker/sales": "^8.3.0 || ^10.0.0 || ^11.0.0"
   },

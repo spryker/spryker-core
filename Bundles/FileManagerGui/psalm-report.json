@@ -2,6 +2,18 @@
     "error": [
         {
             "severity": "error",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\FileManagerGui\\Communication\\Form\\Validator\\Constraints\\FileValidator::validate has wrong name $fileUploadTransfer, expecting $value as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
+            "file_name": "vendor/spryker/spryker/Bundles/FileManagerGui/src/Spryker/Zed/FileManagerGui/Communication/Form/Validator/Constraints/FileValidator.php",
+            "snippet": "    public function validate($fileUploadTransfer, Constraint $constraint)",
+            "selected_text": "$fileUploadTransfer",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
             "line_from": 43,
             "line_to": 43,
             "type": "InvalidPropertyAssignmentValue",
@@ -340,8 +352,8 @@
         },
         {
             "severity": "info",
-            "line_from": 52,
-            "line_to": 52,
+            "line_from": 53,
+            "line_to": 53,
             "type": "PossiblyNullPropertyAssignmentValue",
             "message": "$this->fileDirectoryId with non-nullable declared type 'int' cannot be assigned nullable type 'int|null'",
             "file_name": "vendor/spryker/spryker/Bundles/FileManagerGui/src/Spryker/Zed/FileManagerGui/Communication/Table/FileTable.php",
@@ -349,30 +361,6 @@
             "selected_text": "$fileDirectoryId",
             "error_level": 3,
             "shortcode": 148
-        },
-        {
-            "severity": "info",
-            "line_from": 52,
-            "line_to": 52,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/FileManagerGui/src/Spryker/Zed/FileManagerGui/FileManagerGuiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->fileManager()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 68,
-            "line_to": 68,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/FileManagerGui/src/Spryker/Zed/FileManagerGui/FileManagerGuiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->locale()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

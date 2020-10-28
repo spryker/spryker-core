@@ -1,5 +1,30 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 152,
+            "line_to": 152,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Glue\\CustomersRestApi\\Processor\\Customer\\CustomerWriter::updateCustomer has wrong name $restCustomerAttributesTransfer, expecting $restCustomerTransfer as defined by Spryker\\Glue\\CustomersRestApi\\Processor\\Customer\\CustomerWriterInterface::updateCustomer",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Processor/Customer/CustomerWriter.php",
+            "snippet": "        RestCustomersAttributesTransfer $restCustomerAttributesTransfer",
+            "selected_text": "$restCustomerAttributesTransfer",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Glue\\CustomersRestApi\\Processor\\Mapper\\AddressResourceMapper::mapAddressTransferToRestAddressAttributesTransfer has wrong name $addressTransfer, expecting $addressesTransfer as defined by Spryker\\Glue\\CustomersRestApi\\Processor\\Mapper\\AddressResourceMapperInterface::mapAddressTransferToRestAddressAttributesTransfer",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Processor/Mapper/AddressResourceMapper.php",
+            "snippet": "        AddressTransfer $addressTransfer,",
+            "selected_text": "$addressTransfer",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -11,8 +36,7 @@
             "snippet": "            $this->getAllAddresses($customerResponseTransfer->getCustomerTransfer(), $restResponse);",
             "selected_text": "$customerResponseTransfer->getCustomerTransfer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -24,8 +48,7 @@
             "snippet": "        return $this->getAddressByCustomerTransfer($customerResponseTransfer->getCustomerTransfer(), $restRequest->getResource()->getId(), $restResponse);",
             "selected_text": "$customerResponseTransfer->getCustomerTransfer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -37,8 +60,7 @@
             "snippet": "        return $this->getAddressByCustomerTransfer($customerResponseTransfer->getCustomerTransfer(), $restRequest->getResource()->getId(), $restResponse);",
             "selected_text": "$restRequest->getResource()->getId()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -50,8 +72,7 @@
             "snippet": "        $customerTransfer = (new CustomerTransfer())->setIdCustomer((int)$restRequest->getUser()->getSurrogateIdentifier());",
             "selected_text": "getSurrogateIdentifier",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -63,8 +84,7 @@
             "snippet": "        foreach ($customerTransfer->getAddresses()->getAddresses() as $addressTransfer) {",
             "selected_text": "getAddresses",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -76,8 +96,7 @@
             "snippet": "        foreach ($customerTransfer->getAddresses()->getAddresses() as $addressTransfer) {",
             "selected_text": "getAddresses",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -89,8 +108,7 @@
             "snippet": "            $customerTransfer->getCustomerReference(),",
             "selected_text": "$customerTransfer->getCustomerReference()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -102,8 +120,7 @@
             "snippet": "            $addressTransfer->getUuid()",
             "selected_text": "$addressTransfer->getUuid()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -115,8 +132,7 @@
             "snippet": "        $addressTransfer->setFkCustomer((int)$restRequest->getUser()->getSurrogateIdentifier());",
             "selected_text": "getSurrogateIdentifier",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -128,8 +144,7 @@
             "snippet": "        $lastAddedAddress = $this->getLastAddedAddress($customerTransfer->getAddresses());",
             "selected_text": "$customerTransfer->getAddresses()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -141,8 +156,7 @@
             "snippet": "        $addressTransfer = $this->addressReader->findAddressByUuid($restRequest, $restRequest->getResource()->getId());",
             "selected_text": "$restRequest->getResource()->getId()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -154,8 +168,7 @@
             "snippet": "        $addressTransfer = $this->addressReader->findAddressByUuid($restRequest, $restRequest->getResource()->getId());",
             "selected_text": "$restRequest->getResource()->getId()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -167,8 +180,7 @@
             "snippet": "        foreach ($customerTransfer->getAddresses()->getAddresses() as $addressTransfer) {",
             "selected_text": "getAddresses",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -180,8 +192,7 @@
             "snippet": "            $customerTransfer->getCustomerReference(),",
             "selected_text": "$customerTransfer->getCustomerReference()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -193,8 +204,7 @@
             "snippet": "            $addressTransfer->getUuid()",
             "selected_text": "$addressTransfer->getUuid()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -206,8 +216,7 @@
             "snippet": "                $customerResponseTransfer->getCustomerTransfer(),",
             "selected_text": "$customerResponseTransfer->getCustomerTransfer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -219,8 +228,7 @@
             "snippet": "            $customerResponseTransfer->getCustomerTransfer()->getCustomerReference(),",
             "selected_text": "getCustomerReference",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -232,8 +240,7 @@
             "snippet": "        $customerTransfer = (new CustomerTransfer())->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());",
             "selected_text": "getNaturalIdentifier",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -245,8 +252,7 @@
             "snippet": "        $customerTransfer = $this->executeCustomerPostCreatePlugins($restRequest, $customerTransfer);",
             "selected_text": "$customerTransfer",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -258,8 +264,7 @@
             "snippet": "            $customerResponseTransfer->getCustomerTransfer()->getCustomerReference(),",
             "selected_text": "getCustomerReference",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -271,8 +276,7 @@
             "snippet": "        $customerResponseTransfer->getCustomerTransfer()->fromArray(",
             "selected_text": "fromArray",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -284,8 +288,7 @@
             "snippet": "        $customerResponseTransfer = $this->customerClient->updateCustomer($customerResponseTransfer->getCustomerTransfer());",
             "selected_text": "$customerResponseTransfer->getCustomerTransfer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -297,8 +300,7 @@
             "snippet": "                $customerResponseTransfer->getCustomerTransfer(),",
             "selected_text": "$customerResponseTransfer->getCustomerTransfer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -310,8 +312,7 @@
             "snippet": "            $customerResponseTransfer->getCustomerTransfer()->getCustomerReference(),",
             "selected_text": "getCustomerReference",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -323,8 +324,7 @@
             "snippet": "        if ($resourceId && $resourceId !== $restRequest->getUser()->getNaturalIdentifier()) {",
             "selected_text": "getNaturalIdentifier",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -336,8 +336,7 @@
             "snippet": "        $customerTransfer->fromArray($passwordAttributesTransfer->toArray(), true);",
             "selected_text": "fromArray",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -349,8 +348,7 @@
             "snippet": "        if (!$customerResponseTransfer->getErrors()->count()) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -362,8 +360,7 @@
             "snippet": "        $this->customerClient->anonymizeCustomer($customerResponseTransfer->getCustomerTransfer());",
             "selected_text": "$customerResponseTransfer->getCustomerTransfer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -375,8 +372,7 @@
             "snippet": "        foreach ($customerResponseTransfer->getCustomerTransfer()->getAddresses()->getAddresses() as $addressTransfer) {",
             "selected_text": "getAddresses",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -388,8 +384,7 @@
             "snippet": "        foreach ($customerResponseTransfer->getCustomerTransfer()->getAddresses()->getAddresses() as $addressTransfer) {",
             "selected_text": "getAddresses",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -401,8 +396,7 @@
             "snippet": "                    $customerResponseTransfer->getCustomerTransfer()",
             "selected_text": "$customerResponseTransfer->getCustomerTransfer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -414,8 +408,7 @@
             "snippet": "            $customerTransfer->getCustomerReference(),",
             "selected_text": "$customerTransfer->getCustomerReference()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -427,8 +420,7 @@
             "snippet": "            $addressTransfer->getUuid()",
             "selected_text": "$addressTransfer->getUuid()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -440,8 +432,7 @@
             "snippet": "            ->setCountry($addressTransfer->getCountry()->getName())",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -453,8 +444,7 @@
             "snippet": "            $customerTransfer,",
             "selected_text": "$customerTransfer",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -466,8 +456,7 @@
             "snippet": "            $customerTransfer->getCustomerReference(),",
             "selected_text": "$customerTransfer->getCustomerReference()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -479,8 +468,7 @@
             "snippet": "        return $restRequest->getUser()->getNaturalIdentifier() === $customerResource->getId();",
             "selected_text": "getNaturalIdentifier",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -492,8 +480,7 @@
             "snippet": "        return mb_strlen($passwordAttributesTransfer->getNewPassword()) > 1;",
             "selected_text": "$passwordAttributesTransfer->getNewPassword()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -505,8 +492,7 @@
             "snippet": "                $restCheckoutRequestAttributesTransfer->getBillingAddress(),",
             "selected_text": "$restCheckoutRequestAttributesTransfer->getBillingAddress()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -518,8 +504,7 @@
             "snippet": "                $restCheckoutRequestAttributesTransfer->getCustomer()",
             "selected_text": "$restCheckoutRequestAttributesTransfer->getCustomer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -531,8 +516,7 @@
             "snippet": "                $restCheckoutRequestAttributesTransfer->getShippingAddress(),",
             "selected_text": "$restCheckoutRequestAttributesTransfer->getShippingAddress()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -544,8 +528,7 @@
             "snippet": "                $restCheckoutRequestAttributesTransfer->getCustomer()",
             "selected_text": "$restCheckoutRequestAttributesTransfer->getCustomer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -557,8 +540,19 @@
             "snippet": "            $itemTransfer->getShipment()->setShippingAddress($addressTransfer);",
             "selected_text": "setShippingAddress",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CustomersRestApi\\Dependency\\Facade\\CustomersRestApiToCustomerFacadeInterface::findCustomerByReference cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Zed/CustomersRestApi/Business/Mapper/CustomerQuoteMapper.php",
+            "snippet": "        $customerResponseTransfer = $this->customerFacade->findCustomerByReference($restCustomerTransfer->getCustomerReference());",
+            "selected_text": "$restCustomerTransfer->getCustomerReference()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -570,8 +564,7 @@
             "snippet": "            ->setCustomerReference($customerResponseTransfer->getCustomerTransfer()->getCustomerReference())",
             "selected_text": "getCustomerReference",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         }
     ],
     "deprecation": [
@@ -585,8 +578,7 @@
             "snippet": "        $container = $this->addSessionClient($container);",
             "selected_text": "addSessionClient",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -598,8 +590,7 @@
             "snippet": "        $container->set(static::CLIENT_SESSION, function (Container $container) {",
             "selected_text": "static::CLIENT_SESSION",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
+            "shortcode": 170
         },
         {
             "severity": "info",
@@ -611,8 +602,7 @@
             "snippet": "            return new CustomersRestApiToSessionClientBridge($container->getLocator()->session()->client());",
             "selected_text": "new CustomersRestApiToSessionClientBridge($container->getLocator()->session()->client())",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -624,8 +614,7 @@
             "snippet": "     * @return \\Spryker\\Glue\\CustomersRestApi\\Dependency\\Client\\CustomersRestApiToSessionClientInterface",
             "selected_text": "\\Spryker\\Glue\\CustomersRestApi\\Dependency\\Client\\CustomersRestApiToSessionClientInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -637,8 +626,7 @@
             "snippet": "    public function getSessionClient(): CustomersRestApiToSessionClientInterface",
             "selected_text": "CustomersRestApiToSessionClientInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -650,8 +638,7 @@
             "snippet": "        return $this->getProvidedDependency(CustomersRestApiDependencyProvider::CLIENT_SESSION);",
             "selected_text": "CustomersRestApiDependencyProvider::CLIENT_SESSION",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
+            "shortcode": 170
         },
         {
             "severity": "info",
@@ -663,8 +650,7 @@
             "snippet": "class CustomersRestApiToSessionClientBridge implements CustomersRestApiToSessionClientInterface",
             "selected_text": "CustomersRestApiToSessionClientBridge",
             "error_level": 2,
-            "shortcode": 152,
-            "taint_trace": null
+            "shortcode": 152
         },
         {
             "severity": "info",
@@ -676,8 +662,7 @@
             "snippet": "        $customerTransfer = (new CustomerTransfer())->setIdCustomer((int)$restRequest->getUser()->getSurrogateIdentifier());",
             "selected_text": "getUser",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -689,8 +674,7 @@
             "snippet": "        $addressTransfer->setFkCustomer((int)$restRequest->getUser()->getSurrogateIdentifier());",
             "selected_text": "getUser",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -702,8 +686,7 @@
             "snippet": "        if ($resourceId && $resourceId !== $restRequest->getUser()->getNaturalIdentifier()) {",
             "selected_text": "getUser",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -715,8 +698,7 @@
             "snippet": "        return $restRequest->getUser()->getNaturalIdentifier() === $customerResource->getId();",
             "selected_text": "getUser",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -728,8 +710,7 @@
             "snippet": "            $quoteTransfer->setShippingAddress($shippingAddress);",
             "selected_text": "setShippingAddress",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -741,8 +722,7 @@
             "snippet": "        $this->getFacade()->updateCustomerAddressUuid();",
             "selected_text": "updateCustomerAddressUuid",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         }
     ]
 }

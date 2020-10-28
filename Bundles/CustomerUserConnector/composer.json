@@ -4,7 +4,7 @@
   "description": "CustomerUserConnector module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/customer": "^6.3.0 || ^7.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/user": "^3.0.0"

@@ -5,7 +5,7 @@
   "license": "proprietary",
   "require": {
     "league/flysystem-aws-s3-v3": "^1.0.1",
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/kernel": "^3.30.0"
   },
   "require-dev": {
