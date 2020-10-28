@@ -67,8 +67,15 @@ class ProductConfigurationFacadeTest extends Unit
             ->getIterator()->current();
 
         //Assert
-        $this->assertNotEmpty($productConfigurationCollectionTransfer->getProductConfigurations());
-        $this->assertSame($productTransfer->getIdProductConcrete(), $createdProductConfigurationTransfer->getFkProduct());
+        $this->assertNotEmpty(
+            $productConfigurationCollectionTransfer->getProductConfigurations(),
+            'Expects not empty product configuration collection.'
+        );
+        $this->assertSame(
+            $productTransfer->getIdProductConcrete(),
+            $createdProductConfigurationTransfer->getFkProduct(),
+            'Expects correct fk of product id inside product configuration.'
+        );
     }
 
     /**
@@ -85,7 +92,10 @@ class ProductConfigurationFacadeTest extends Unit
             ->getProductConfigurationCollection($productConfigurationCriteriaTransfer);
 
         //Assert
-        $this->assertEmpty($productConfigurationCollectionTransfer->getProductConfigurations());
+        $this->assertEmpty(
+            $productConfigurationCollectionTransfer->getProductConfigurations(),
+            'Expects empty collection when wrong fk product configuration passed to the criteria.'
+        );
     }
 
     /**
@@ -121,7 +131,11 @@ class ProductConfigurationFacadeTest extends Unit
         $expandedItemTransfer = $expandedCartChangeTransfer->getItems()->getIterator()->current();
 
         //Assert
-        $this->assertSame($itemProductConfigurationGroupKey, $expandedItemTransfer->getGroupKey());
+        $this->assertSame(
+            $itemProductConfigurationGroupKey,
+            $expandedItemTransfer->getGroupKey(),
+            'Expects that item group key will be expanded with product configuration hash.'
+        );
     }
 
     /**
@@ -144,7 +158,11 @@ class ProductConfigurationFacadeTest extends Unit
         $expandedItemTransfer = $expandedCartChangeTransfer->getItems()->getIterator()->current();
 
         //Assert
-        $this->assertSame(static::TEST_GROUP_KEY, $expandedItemTransfer->getGroupKey());
+        $this->assertSame(
+            static::TEST_GROUP_KEY,
+            $expandedItemTransfer->getGroupKey(),
+            'Expects that item group key will be expanded with product configuration hash.'
+        );
     }
 
     /**
@@ -167,7 +185,10 @@ class ProductConfigurationFacadeTest extends Unit
             ->isQuoteProductConfigurationValid($quoteTransfer, new CheckoutResponseTransfer());
 
         //Assert
-        $this->assertTrue($isQuoteProductConfigurationValid);
+        $this->assertTrue(
+            $isQuoteProductConfigurationValid,
+            'Expects that quote transfer will be valid when product configuration is valid.'
+        );
     }
 
     /**
@@ -190,7 +211,10 @@ class ProductConfigurationFacadeTest extends Unit
             ->isQuoteProductConfigurationValid($quoteTransfer, new CheckoutResponseTransfer());
 
         //Assert
-        $this->assertFalse($isQuoteProductConfigurationValid);
+        $this->assertFalse(
+            $isQuoteProductConfigurationValid,
+            'Expects that quote transfer will be not valid when product configuration not valid.'
+        );
     }
 
     /**
@@ -210,7 +234,10 @@ class ProductConfigurationFacadeTest extends Unit
             ->isQuoteProductConfigurationValid($quoteTransfer, new CheckoutResponseTransfer());
 
         //Assert
-        $this->assertTrue($isQuoteProductConfigurationValid);
+        $this->assertTrue(
+            $isQuoteProductConfigurationValid,
+            'Expects that quote transfer will be valid when product configuration was not set.'
+        );
     }
 
     /**
@@ -237,7 +264,11 @@ class ProductConfigurationFacadeTest extends Unit
             );
 
         //Assert
-        $this->assertCount(2, $priceProductTransfersResult);
+        $this->assertCount(
+            2,
+            $priceProductTransfersResult,
+            'Expects that prices will be expanded with product configuration prices.'
+        );
     }
 
     /**
@@ -258,7 +289,11 @@ class ProductConfigurationFacadeTest extends Unit
             );
 
         //Assert
-        $this->assertCount(1, $priceProductTransfersResult);
+        $this->assertCount(
+            1,
+            $priceProductTransfersResult,
+            'Expects that prices wont be changed when no product configuration.'
+        );
     }
 
     /**
@@ -273,7 +308,11 @@ class ProductConfigurationFacadeTest extends Unit
         $cartItemQuantity = $this->tester->getFacade()->calculateCartItemQuantity(new ArrayObject(), $itemTransfer);
 
         //Assert
-        $this->assertSame(0, $cartItemQuantity->getQuantity());
+        $this->assertSame(
+            0,
+            $cartItemQuantity->getQuantity(),
+            'Expects that default cart item quantity when no items in the cart.'
+        );
     }
 
     /**
@@ -293,6 +332,10 @@ class ProductConfigurationFacadeTest extends Unit
             ->calculateCartItemQuantity($itemsInCart, $itemTransferAddedToCart);
 
         //Assert
-        $this->assertSame(3, $cartItemQuantity->getQuantity());
+        $this->assertSame(
+            3,
+            $cartItemQuantity->getQuantity(),
+            'Expects that item quantity will be calculated correctly.'
+        );
     }
 }

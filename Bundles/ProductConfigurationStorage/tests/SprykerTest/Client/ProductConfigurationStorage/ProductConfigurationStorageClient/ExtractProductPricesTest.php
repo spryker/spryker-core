@@ -53,12 +53,25 @@ class ExtractProductPricesTest extends Unit
         $priceProductTransfer = array_shift($priceProductTransfers);
 
         // Assert
-        $this->assertSame(3, $priceProductTransfer->getVolumeQuantity());
-        $this->assertSame(385, $priceProductTransfer->getMoneyValue()->getGrossAmount());
-        $this->assertSame(350, $priceProductTransfer->getMoneyValue()->getNetAmount());
+        $this->assertSame(
+            3,
+            $priceProductTransfer->getVolumeQuantity(),
+            'Expects that exactly 3 volume prices will be extracted.'
+        );
+        $this->assertSame(
+            385,
+            $priceProductTransfer->getMoneyValue()->getGrossAmount(),
+            'Expects that extracted volume price will have correct price.'
+        );
+        $this->assertSame(
+            350,
+            $priceProductTransfer->getMoneyValue()->getNetAmount(),
+            'Expects that extracted volume price will have correct price.'
+        );
         $this->assertSame(
             sprintf('%s-%s', static::TEST_PRICE_PRODUCT_GROUP_KEY, 3),
-            $priceProductTransfer->getGroupKey()
+            $priceProductTransfer->getGroupKey(),
+            'Expects that extracted volume price will have correct group key.'
         );
     }
 
@@ -80,7 +93,11 @@ class ExtractProductPricesTest extends Unit
             ->extractProductConfigurationVolumePrices($priceProductTransfers);
 
         // Assert
-        $this->assertCount(2, $priceProductTransfers);
+        $this->assertCount(
+            2,
+            $priceProductTransfers,
+            'Expects that volume prices will be extracted successfully.'
+        );
     }
 
     /**
@@ -97,7 +114,11 @@ class ExtractProductPricesTest extends Unit
             ->extractProductConfigurationVolumePrices($priceProductTransfers);
 
         // Assert
-        $this->assertsame([], $priceProductTransfers);
+        $this->assertsame(
+            [],
+            $priceProductTransfers,
+            'Expects no extracted volume prices when price is empty.'
+        );
     }
 
     /**
@@ -118,6 +139,10 @@ class ExtractProductPricesTest extends Unit
             ->extractProductConfigurationVolumePrices($priceProductTransfers);
 
         // Assert
-        $this->assertsame([], $priceProductTransfers);
+        $this->assertsame(
+            [],
+            $priceProductTransfers,
+            'Expects no extracted volume prices when price data is empty.'
+        );
     }
 }

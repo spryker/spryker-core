@@ -49,8 +49,15 @@ class ExpandPriceProductFilterWithProductConfigurationInstanceTest extends Unit
             ->expandPriceProductFilterWithProductConfigurationInstance($productViewTransfer, new PriceProductFilterTransfer());
 
         // Assert
-        $this->assertNotNull($priceProductFilterTransfer->getProductConfigurationInstance());
-        $this->assertEquals($productConfigurationInstanceTransfer, $priceProductFilterTransfer->getProductConfigurationInstance());
+        $this->assertNotNull(
+            $priceProductFilterTransfer->getProductConfigurationInstance(),
+            'Expects that filter will be expanded with product configuration.'
+        );
+        $this->assertEquals(
+            $productConfigurationInstanceTransfer,
+            $priceProductFilterTransfer->getProductConfigurationInstance(),
+            'Expects that filter will be expanded with product configuration.'
+        );
     }
 
     /**
@@ -66,6 +73,9 @@ class ExpandPriceProductFilterWithProductConfigurationInstanceTest extends Unit
             ->expandPriceProductFilterWithProductConfigurationInstance(new ProductViewTransfer(), new PriceProductFilterTransfer());
 
         // Assert
-        $this->assertNull($priceProductFilterTransfer->getProductConfigurationInstance());
+        $this->assertNull(
+            $priceProductFilterTransfer->getProductConfigurationInstance(),
+            'Expects that filter will not be expanded with product configuration when no product configuration.'
+        );
     }
 }

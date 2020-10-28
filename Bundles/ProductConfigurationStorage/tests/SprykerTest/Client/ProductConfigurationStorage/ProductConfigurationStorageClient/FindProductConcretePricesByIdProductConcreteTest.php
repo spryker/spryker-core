@@ -72,7 +72,11 @@ class FindProductConcretePricesByIdProductConcreteTest extends Unit
             ->findProductConcretePricesByIdProductConcrete($productConcreteTransfer->getIdProductConcrete());
 
         // Assert
-        $this->assertCount(2, $priceProductTransfers);
+        $this->assertCount(
+            2,
+            $priceProductTransfers,
+            'Expects that price product concrete will be found with product configuration instance in storage.'
+        );
     }
 
     /**
@@ -102,7 +106,10 @@ class FindProductConcretePricesByIdProductConcreteTest extends Unit
             ->findProductConcretePricesByIdProductConcrete($productConcreteTransfer->getIdProductConcrete());
 
         // Assert
-        $this->assertEmpty($priceProductTransfers);
+        $this->assertEmpty(
+            $priceProductTransfers,
+            'Expects that price product concrete wont be found when product configuration instance has empty prices.'
+        );
     }
 
     /**
@@ -128,7 +135,10 @@ class FindProductConcretePricesByIdProductConcreteTest extends Unit
             ->findProductConcretePricesByIdProductConcrete($productConcreteTransfer->getIdProductConcrete());
 
         // Assert
-        $this->assertEmpty($priceProductTransfers);
+        $this->assertEmpty(
+            $priceProductTransfers,
+            'Expects that price product concrete wont be found when no product configuration instance in storage.'
+        );
     }
 
     /**
@@ -171,7 +181,10 @@ class FindProductConcretePricesByIdProductConcreteTest extends Unit
             ->findProductConcretePricesByIdProductConcrete($productConcreteTransfer->getIdProductConcrete());
 
         // Assert
-        $this->assertEmpty($priceProductTransfers);
+        $this->assertEmpty(
+            $priceProductTransfers,
+            'Expects that price product concrete wont be found when no product concrete was found.'
+        );
     }
 
     /**

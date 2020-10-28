@@ -56,8 +56,15 @@ class FindProductConfigurationInstanceBySkuTest extends Unit
             ->findProductConfigurationInstanceBySku($productConcreteTransfer->getSku());
 
         // Assert
-        $this->assertNotNull($productConfigurationInstanceTransfer);
-        $this->assertInstanceOf(ProductConfigurationInstanceTransfer::class, $productConfigurationInstanceTransfer);
+        $this->assertNotNull(
+            $productConfigurationInstanceTransfer,
+            'Expects that product configuration instance will be found from session.'
+        );
+        $this->assertInstanceOf(
+            ProductConfigurationInstanceTransfer::class,
+            $productConfigurationInstanceTransfer,
+            'Expects that product configuration instance will be found from session.'
+        );
     }
 
     /**
@@ -83,8 +90,15 @@ class FindProductConfigurationInstanceBySkuTest extends Unit
             ->findProductConfigurationInstanceBySku($productConcreteTransfer->getSku());
 
         // Assert
-        $this->assertNotNull($productConfigurationInstanceTransfer);
-        $this->assertInstanceOf(ProductConfigurationInstanceTransfer::class, $productConfigurationInstanceTransfer);
+        $this->assertNotNull(
+            $productConfigurationInstanceTransfer,
+            'Expects that product configuration instance will be found from storage.'
+        );
+        $this->assertInstanceOf(
+            ProductConfigurationInstanceTransfer::class,
+            $productConfigurationInstanceTransfer,
+            'Expects that product configuration instance will be found from storage.'
+        );
     }
 
     /**
@@ -101,7 +115,10 @@ class FindProductConfigurationInstanceBySkuTest extends Unit
             ->findProductConfigurationInstanceBySku($productConcreteTransfer->getSku());
 
         // Assert
-        $this->assertNull($productConfigurationInstanceTransfer);
+        $this->assertNull(
+            $productConfigurationInstanceTransfer,
+            'Expects that product configuration instance wont be found.'
+        );
     }
 
     /**

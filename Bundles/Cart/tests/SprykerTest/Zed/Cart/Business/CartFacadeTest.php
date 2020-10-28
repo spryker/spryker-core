@@ -364,11 +364,16 @@ class CartFacadeTest extends Unit
         $quoteResponseTransfer = $this->getCartFacade()->replaceItem($cartItemReplaceTransfer);
 
         // Assert
-        $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
-        $this->assertCount(1, $quoteResponseTransfer->getQuoteTransfer()->getItems());
+        $this->assertTrue($quoteResponseTransfer->getIsSuccessful(), 'Expected is successful quote response response.');
+        $this->assertCount(
+            1,
+            $quoteResponseTransfer->getQuoteTransfer()->getItems(),
+            'Expected that items count in the quote after replace will be equal to 1.'
+        );
         $this->assertSame(
             static::DUMMY_1_SKU_CONCRETE_PRODUCT,
-            $quoteResponseTransfer->getQuoteTransfer()->getItems()->getIterator()->current()->getSku()
+            $quoteResponseTransfer->getQuoteTransfer()->getItems()->getIterator()->current()->getSku(),
+            'Expected that new item will be added to quote after replaceItem call.'
         );
     }
 

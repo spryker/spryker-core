@@ -60,8 +60,15 @@ class ExpandCartChangeWithProductConfigurationInstanceTest extends Unit
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
         $itemTransfer = $cartChangeTransfer->getItems()->offsetGet(0);
 
-        $this->assertNotNull($itemTransfer->getProductConfigurationInstance());
-        $this->assertEquals($productConfigurationInstanceTransfer, $itemTransfer->getProductConfigurationInstance());
+        $this->assertNotNull(
+            $itemTransfer->getProductConfigurationInstance(),
+            'Expects that item will be expanded with product configuration instance.'
+        );
+        $this->assertEquals(
+            $productConfigurationInstanceTransfer,
+            $itemTransfer->getProductConfigurationInstance(),
+            'Expects that item will be expanded with product configuration instance.'
+        );
     }
 
     /**
@@ -78,7 +85,10 @@ class ExpandCartChangeWithProductConfigurationInstanceTest extends Unit
             ->expandCartChangeWithProductConfigurationInstance($cartChangeTransfer, []);
 
         // Assert
-        $this->assertEmpty($cartChangeTransfer->getItems());
+        $this->assertEmpty(
+            $cartChangeTransfer->getItems(),
+            'Expects no items in cart change transfer when call expander with empty cart change transfer.'
+        );
     }
 
     /**
@@ -110,7 +120,10 @@ class ExpandCartChangeWithProductConfigurationInstanceTest extends Unit
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
         $itemTransfer = $cartChangeTransfer->getItems()->offsetGet(0);
 
-        $this->assertNotNull($itemTransfer->getProductConfigurationInstance());
+        $this->assertNotNull(
+            $itemTransfer->getProductConfigurationInstance(),
+            'Expects item will be expanded with product configuration from storage.'
+        );
     }
 
     /**
@@ -131,7 +144,10 @@ class ExpandCartChangeWithProductConfigurationInstanceTest extends Unit
             ->expandCartChangeWithProductConfigurationInstance($cartChangeTransfer, []);
 
         // Assert
-        $this->assertNull($cartChangeTransfer->getItems()->offsetGet(0)->getProductConfigurationInstance());
+        $this->assertNull(
+            $cartChangeTransfer->getItems()->offsetGet(0)->getProductConfigurationInstance(),
+            'Expects item without product configuration when no product configuration.'
+        );
     }
 
     /**
