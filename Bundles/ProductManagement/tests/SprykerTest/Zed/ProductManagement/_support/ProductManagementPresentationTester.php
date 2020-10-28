@@ -52,8 +52,6 @@ class ProductManagementPresentationTester extends Actor
         });
     }
 
-
-
     /**
      * @return void
      */
