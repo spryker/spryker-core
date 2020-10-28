@@ -16,7 +16,7 @@ use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationTo
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToPriceClientBridge;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToStoreClientBridge;
 use Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToGuzzleHttpClientAdapter;
-use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToProductConfigurationDataChecksumGeneratorBridge;
+use Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToSprykerProductConfigurationDataChecksumGeneratorAdapter;
 use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingBridge;
 use Spryker\Client\ProductConfiguration\Exception\MissingDefaultProductConfigurationRequestPluginException;
 use Spryker\Client\ProductConfiguration\Exception\MissingDefaultProductConfiguratorResponsePluginException;
@@ -280,7 +280,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     protected function addProductConfigurationDataChecksumGenerator(Container $container): Container
     {
         $container->set(static::SERVICE_PRODUCT_CONFIGURATION_DATA_CHECKSUM_GENERATOR, function () {
-            return new ProductConfigurationToProductConfigurationDataChecksumGeneratorBridge(
+            return new ProductConfigurationToSprykerProductConfigurationDataChecksumGeneratorAdapter(
                 $this->getProductConfigurationDataChecksumGenerator()
             );
         });

@@ -16,7 +16,7 @@ use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationTo
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToPriceClientInterface;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToStoreClientInterface;
 use Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToHttpClientInterface;
-use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToProductConfigurationDataChecksumGeneratorInterface;
+use Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToProductConfigurationDataChecksumGeneratorInterface;
 use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingInterface;
 use Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataExpander;
 use Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataExpanderInterface;
@@ -154,7 +154,7 @@ class ProductConfigurationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToProductConfigurationDataChecksumGeneratorInterface
+     * @return \Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToProductConfigurationDataChecksumGeneratorInterface
      */
     public function getProductConfigurationDataChecksumGenerator(): ProductConfigurationToProductConfigurationDataChecksumGeneratorInterface
     {

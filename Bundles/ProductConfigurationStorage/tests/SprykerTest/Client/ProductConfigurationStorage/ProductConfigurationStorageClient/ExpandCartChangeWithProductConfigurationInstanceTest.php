@@ -67,7 +67,7 @@ class ExpandCartChangeWithProductConfigurationInstanceTest extends Unit
         $this->assertEquals(
             $productConfigurationInstanceTransfer,
             $itemTransfer->getProductConfigurationInstance(),
-            'Expects that item will be expanded with product configuration instance.'
+            'Expects that item will be expanded with the same product configuration instance.'
         );
     }
 
