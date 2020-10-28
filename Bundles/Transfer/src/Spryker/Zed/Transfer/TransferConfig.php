@@ -263,4 +263,18 @@ class TransferConfig extends AbstractBundleConfig
     {
         return $this->get(TransferConstants::IS_DEBUG_ENABLED, false);
     }
+
+    /**
+     * Specification:
+     * - Returns full path to the transfer type errors log file.
+     * - Only for core level introspection, do not use for projects.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getTransferTypeErrorLogFilePath(): string
+    {
+        return sys_get_temp_dir() . '/transfer-type-error.log';
+    }
 }

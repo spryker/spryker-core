@@ -8,12 +8,16 @@
 namespace Spryker\Zed\Transfer\Business\Transfer\TypeValidation;
 
 use InvalidArgumentException;
+use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
 
 /**
  * @property array $transferMetadata
+ * @method \Spryker\Zed\Transfer\TransferConfig getConfig()
  */
 trait TransferTypeValidatorTrait
 {
+    use BundleConfigResolverAwareTrait;
+
     /**
      * @param string $propertyName
      * @param mixed $value
@@ -213,6 +217,6 @@ trait TransferTypeValidatorTrait
      */
     protected function getLogFilePath(): string
     {
-        return sys_get_temp_dir() . '/transfer-type-error.log';
+        return $this->getConfig()->getTransferTypeErrorLogFilePath();
     }
 }
