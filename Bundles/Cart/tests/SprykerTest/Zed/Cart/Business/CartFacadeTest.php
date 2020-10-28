@@ -364,7 +364,7 @@ class CartFacadeTest extends Unit
         $quoteResponseTransfer = $this->getCartFacade()->replaceItem($cartItemReplaceTransfer);
 
         // Assert
-        $this->assertTrue($quoteResponseTransfer->getIsSuccessful(), 'Expected is successful quote response response.');
+        $this->assertTrue($quoteResponseTransfer->getIsSuccessful(), 'Expected successful quote response.');
         $this->assertCount(
             1,
             $quoteResponseTransfer->getQuoteTransfer()->getItems(),

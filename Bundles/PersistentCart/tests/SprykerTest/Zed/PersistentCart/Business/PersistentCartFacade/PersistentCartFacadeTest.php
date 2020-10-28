@@ -87,7 +87,7 @@ class PersistentCartFacadeTest extends Unit
         );
         $this->assertFalse(
             $quoteResponseTransfer->getIsSuccessful(),
-            'Expected that quote response is successful will be set to false when item to be replaced does not exist in quote.'
+            'Expected that quote response isSuccessful will be set to false when item to be replaced does not exist in quote.'
         );
     }
 
@@ -111,7 +111,7 @@ class PersistentCartFacadeTest extends Unit
         // Assert
         $this->assertTrue(
             $quoteResponseTransfer->getIsSuccessful(),
-            'Expected that quote response is successful will be set to true when decreasing quantity for provided items.'
+            'Expected that quote response isSuccessful will be set to true when decreasing quantity for provided items.'
         );
         $this->assertSame(
             2,
@@ -150,7 +150,7 @@ class PersistentCartFacadeTest extends Unit
         // Assert
         $this->assertTrue(
             $quoteResponseTransfer->getIsSuccessful(),
-            'Expected that quote response is successful will be set to true when increasing quantity for provided items.'
+            'Expected that quote response isSuccessful will be set to true when increasing quantity for provided items.'
         );
         $this->assertSame(
             7,
@@ -190,7 +190,7 @@ class PersistentCartFacadeTest extends Unit
         // Assert
         $this->assertTrue(
             $quoteResponseTransfer->getIsSuccessful(),
-            'Expected that quote response is successful will be set to true when changing quantity for provided items.'
+            'Expected that quote response isSuccessful will be set to true when changing quantity for provided items.'
         );
         $this->assertSame(
             1,
@@ -227,7 +227,7 @@ class PersistentCartFacadeTest extends Unit
         // Assert
         $this->assertTrue(
             $quoteResponseTransfer->getIsSuccessful(),
-            'Expected that quote response is successful will be set to true when updating cart items quantity with empty persistent cart change transfer .'
+            'Expected that quote response isSuccessful will be set to true when updating cart items quantity with empty persistent cart change transfer .'
         );
         $this->assertSame(
             5,
@@ -267,7 +267,7 @@ class PersistentCartFacadeTest extends Unit
         // Assert
         $this->assertTrue(
             $quoteResponseTransfer->getIsSuccessful(),
-            'Expected that quote response is successful will be set to true when updating cart items quantity with same items quantity in the persistent cart change transfer .'
+            'Expected that quote response isSuccessful will be set to true when updating cart items quantity with same items quantity in the persistent cart change transfer .'
         );
         $this->assertSame(
             5,
@@ -306,7 +306,7 @@ class PersistentCartFacadeTest extends Unit
         // Assert
         $this->assertTrue(
             $quoteResponseTransfer->getIsSuccessful(),
-            'Expected that quote response is successful will be set to true when replacing item in quote.'
+            'Expected that quote response isSuccessful will be set to true when replacing item in quote.'
         );
         $this->assertCount(
             3,
@@ -335,7 +335,7 @@ class PersistentCartFacadeTest extends Unit
         // Assert
         $this->assertFalse(
             $quoteResponseTransfer->getIsSuccessful(),
-            'Expected that quote response is successful will be set to false when trying to decrease more item quantity that exits in quote.'
+            'Expected that quote response isSuccessful will be set to false when trying to decrease more item quantity that exits in quote.'
         );
         $this->assertSame(
             5,
@@ -375,7 +375,7 @@ class PersistentCartFacadeTest extends Unit
         // Assert
         $this->assertFalse(
             $quoteResponseTransfer->getIsSuccessful(),
-            'Expected that quote response is successful will be set to false when trying to decrease more item quantity that exits in quote.'
+            'Expected that quote response isSuccessful will be set to false when trying to decrease more item quantity that exits in quote.'
         );
         $this->assertSame(
             5,
