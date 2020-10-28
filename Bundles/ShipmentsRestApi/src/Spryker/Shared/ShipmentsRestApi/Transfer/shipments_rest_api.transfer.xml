@@ -11,7 +11,7 @@
     <transfer name="RestShipments">
         <property name="items" type="string[]" singular="item" restRequestParameter="yes"/>
         <property name="shippingAddress" type="RestAddress" restRequestParameter="yes"/>
-        <property name="shipmentMethodId" type="int" restRequestParameter="yes"/>
+        <property name="idShipmentMethod" type="int" restRequestParameter="yes"/>
         <property name="requestedDeliveryDate" type="string" restRequestParameter="yes"/>
     </transfer>
 

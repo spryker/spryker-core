@@ -90,7 +90,7 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
                 )
                 ->setMethod(
                     (new ShipmentMethodTransfer())
-                        ->setIdShipmentMethod($restShipmentsTransfer->getShipmentMethodId())
+                        ->setIdShipmentMethod($restShipmentsTransfer->getIdShipmentMethod())
                 )
                 ->setRequestedDeliveryDate($restShipmentsTransfer->getRequestedDeliveryDate());
 
