@@ -12,42 +12,6 @@
             "selected_text": "$this->storeClient->getCurrentStore()->getDefaultCurrencyIsoCode()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 47,
-            "line_to": 47,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/StoresRestApi/src/Spryker/Glue/StoresRestApi/StoresRestApiDependencyProvider.php",
-            "snippet": "            return new StoresRestApiToCountryClientBridge($container->getLocator()->country()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/StoresRestApi/src/Spryker/Glue/StoresRestApi/StoresRestApiDependencyProvider.php",
-            "snippet": "            return new StoresRestApiToCurrencyClientBridge($container->getLocator()->currency()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 75,
-            "line_to": 75,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/StoresRestApi/src/Spryker/Glue/StoresRestApi/StoresRestApiDependencyProvider.php",
-            "snippet": "            return new StoresRestApiToStoreClientBridge($container->getLocator()->store()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

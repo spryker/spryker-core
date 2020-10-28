@@ -2,18 +2,6 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "MethodSignatureMismatch",
-            "message": "Argument 1 of Spryker\\Client\\ProductCustomerPermission\\Plugin\\ProductCustomerPermissionQueryExpanderPlugin::expandQuery has wrong type 'Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface', expecting 'Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface' as defined by Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryExpanderPluginInterface::expandQuery",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Client/ProductCustomerPermission/Plugin/ProductCustomerPermissionQueryExpanderPlugin.php",
-            "snippet": "    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = []): QueryInterface",
-            "selected_text": "$searchQuery",
-            "error_level": 7,
-            "shortcode": 42
-        },
-        {
-            "severity": "error",
             "line_from": 127,
             "line_to": 127,
             "type": "InvalidReturnType",
@@ -59,21 +47,33 @@
             "selected_text": "$idProductAbstracts",
             "error_level": 6,
             "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Zed\\ProductCustomerPermission\\Business\\Model\\ProductCustomerPermissionSaver::savePermissions has wrong name $idProductAbstracts, expecting $idProductAbstractAbstracts as defined by Spryker\\Zed\\ProductCustomerPermission\\Business\\Model\\ProductCustomerPermissionSaverInterface::savePermissions",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Zed/ProductCustomerPermission/Business/Model/ProductCustomerPermissionSaver.php",
+            "snippet": "    public function savePermissions(int $idCustomer, array $idProductAbstracts): void",
+            "selected_text": "$idProductAbstracts",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 123,
+            "line_to": 123,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Zed\\ProductCustomerPermission\\Business\\Model\\ProductCustomerPermissionSaver::deletePermissions has wrong name $idProductAbstracts, expecting $idProductAbstractAbstracts as defined by Spryker\\Zed\\ProductCustomerPermission\\Business\\Model\\ProductCustomerPermissionSaverInterface::deletePermissions",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Zed/ProductCustomerPermission/Business/Model/ProductCustomerPermissionSaver.php",
+            "snippet": "    public function deletePermissions(int $idCustomer, array $idProductAbstracts): void",
+            "selected_text": "$idProductAbstracts",
+            "error_level": 7,
+            "shortcode": 230
         }
     ],
     "warning": [
-        {
-            "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "ImplementedParamTypeMismatch",
-            "message": "Argument 1 of Spryker\\Client\\ProductCustomerPermission\\Plugin\\ProductCustomerPermissionQueryExpanderPlugin::expandQuery has wrong type 'Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface', expecting 'Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface' as defined by Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryExpanderPluginInterface::expandQuery",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Client/ProductCustomerPermission/Plugin/ProductCustomerPermissionQueryExpanderPlugin.php",
-            "snippet": "    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = []): QueryInterface",
-            "selected_text": "$searchQuery",
-            "error_level": 4,
-            "shortcode": 199
-        },
         {
             "severity": "info",
             "line_from": 45,
@@ -88,39 +88,15 @@
         },
         {
             "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Client/ProductCustomerPermission/ProductCustomerPermissionDependencyProvider.php",
-            "snippet": "            return new ProductCustomerPermissionToCustomerClientBridge($container->getLocator()->customer()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 58,
-            "line_to": 58,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Client/ProductCustomerPermission/ProductCustomerPermissionDependencyProvider.php",
-            "snippet": "            return new ProductCustomerPermissionToLocaleClientBridge($container->getLocator()->locale()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 72,
-            "line_to": 72,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Client/ProductCustomerPermission/ProductCustomerPermissionDependencyProvider.php",
-            "snippet": "            return new ProductCustomerPermissionToStorageClientBridge($container->getLocator()->storage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
+            "line_from": 67,
+            "line_to": 67,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of get_class expects object, possibly different type Elastica\\Query\\AbstractQuery|array<array-key, mixed> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Client/ProductCustomerPermission/Plugin/ProductCustomerPermissionQueryExpanderPlugin.php",
+            "snippet": "                get_class($boolQuery)",
+            "selected_text": "$boolQuery",
+            "error_level": 3,
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -217,42 +193,6 @@
             "selected_text": "\\Traversable|\\Orm\\Zed\\ProductCustomerPermission\\Persistence\\SpyProductCustomerPermission[]",
             "error_level": 4,
             "shortcode": 141
-        },
-        {
-            "severity": "info",
-            "line_from": 47,
-            "line_to": 47,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Zed/ProductCustomerPermission/ProductCustomerPermissionDependencyProvider.php",
-            "snippet": "            return new ProductCustomerPermissionToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Zed/ProductCustomerPermission/ProductCustomerPermissionDependencyProvider.php",
-            "snippet": "            return new ProductCustomerPermissionToProductFacadeBridge($container->getLocator()->product()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 75,
-            "line_to": 75,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Zed/ProductCustomerPermission/ProductCustomerPermissionDependencyProvider.php",
-            "snippet": "            return new ProductCustomerPermissionToTouchFacadeBridge($container->getLocator()->touch()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

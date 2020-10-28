@@ -11,8 +11,7 @@
             "snippet": "            $this->contentKeyProvider->getContentKeyByIdContent($contentTransfer->getIdContent())",
             "selected_text": "$contentTransfer->getIdContent()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -24,8 +23,7 @@
             "snippet": "     * @return string",
             "selected_text": "string",
             "error_level": 5,
-            "shortcode": 144,
-            "taint_trace": null
+            "shortcode": 144
         },
         {
             "severity": "info",
@@ -37,8 +35,7 @@
             "snippet": "        return $contentTransfer->getKey();",
             "selected_text": "$contentTransfer->getKey()",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -50,8 +47,31 @@
             "snippet": "        return $contentTransfer->getKey();",
             "selected_text": "getKey",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $contentEntities has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\Content\\Persistence\\SpyContent>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
+            "file_name": "vendor/spryker/spryker/Bundles/Content/src/Spryker/Zed/Content/Persistence/Propel/Mapper/ContentMapper.php",
+            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Content\\Persistence\\SpyContent[] $contentEntities",
+            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Content\\Persistence\\SpyContent[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 24,
+            "line_to": 24,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $contentEntities has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\Content\\Persistence\\SpyContent>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
+            "file_name": "vendor/spryker/spryker/Bundles/Content/src/Spryker/Zed/Content/Persistence/Propel/Mapper/ContentMapperInterface.php",
+            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Content\\Persistence\\SpyContent[] $contentEntities",
+            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Content\\Persistence\\SpyContent[]",
+            "error_level": 4,
+            "shortcode": 141
         }
     ],
     "deprecation": []

@@ -37,18 +37,6 @@
             "selected_text": "$productImages",
             "error_level": 3,
             "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 29,
-            "line_to": 29,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductImageCartConnector/src/Spryker/Zed/ProductImageCartConnector/ProductImageCartConnectorDependencyProvider.php",
-            "snippet": "            return new ProductImageCartConnectorToProductImageBridge($container->getLocator()->productImage()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

@@ -63,30 +63,6 @@
         },
         {
             "severity": "info",
-            "line_from": 70,
-            "line_to": 70,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Orm\\Zed\\Country\\Persistence\\SpyCountryQuery::orderbyidsalesorder does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesDataExport/src/Spryker/Zed/SalesDataExport/Persistence/SalesDataExportRepository.php",
-            "snippet": "            ->orderByIdSalesOrder()",
-            "selected_text": "orderByIdSalesOrder",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 74,
-            "line_to": 74,
-            "type": "ArgumentTypeCoercion",
-            "message": "Argument 2 of Spryker\\Zed\\SalesDataExport\\Persistence\\SalesDataExportRepository::applyFilterCriteriaToSalesOrderQuery expects Orm\\Zed\\Sales\\Persistence\\SpySalesOrderQuery, parent type Orm\\Zed\\Sales\\Persistence\\SpySalesOrderQuery&static|Propel\\Runtime\\ActiveQuery\\ModelCriteria provided",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesDataExport/src/Spryker/Zed/SalesDataExport/Persistence/SalesDataExportRepository.php",
-            "snippet": "        $salesOrderQuery = $this->applyFilterCriteriaToSalesOrderQuery($dataExportConfigurationTransfer->getFilterCriteria(), $salesOrderQuery);",
-            "selected_text": "$salesOrderQuery",
-            "error_level": 3,
-            "shortcode": 193
-        },
-        {
-            "severity": "info",
             "line_from": 77,
             "line_to": 77,
             "type": "PossiblyInvalidMethodCall",
@@ -99,22 +75,10 @@
         },
         {
             "severity": "info",
-            "line_from": 138,
-            "line_to": 138,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Orm\\Zed\\Sales\\Persistence\\SpySalesOrderQuery::orderbyfksalesorder does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesDataExport/src/Spryker/Zed/SalesDataExport/Persistence/SalesDataExportRepository.php",
-            "snippet": "            ->orderByFkSalesOrder()",
-            "selected_text": "orderByFkSalesOrder",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 144,
             "line_to": 144,
             "type": "PossiblyInvalidArgument",
-            "message": "Argument 2 of Spryker\\Zed\\SalesDataExport\\Persistence\\SalesDataExportRepository::applyFilterCriteriaToSalesOrderItemQuery expects Orm\\Zed\\Sales\\Persistence\\SpySalesOrderItemQuery, possibly different type Orm\\Zed\\GiftCardBalance\\Persistence\\SpyGiftCardBalanceLogQuery&static|Orm\\Zed\\MerchantSalesOrder\\Persistence\\SpyMerchantSalesOrderQuery&static|Orm\\Zed\\Oms\\Persistence\\SpyOmsTransitionLogQuery&static|Orm\\Zed\\Payment\\Persistence\\SpySalesPaymentQuery&static|Orm\\Zed\\Refund\\Persistence\\SpyRefundQuery&static|Orm\\Zed\\SalesReclamation\\Persistence\\SpySalesReclamationQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesDiscountQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesExpenseQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderCommentQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderItemQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderNoteQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderTotalsQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesShipmentQuery&static|Propel\\Runtime\\ActiveQuery\\ModelCriteria provided",
+            "message": "Argument 2 of Spryker\\Zed\\SalesDataExport\\Persistence\\SalesDataExportRepository::applyFilterCriteriaToSalesOrderItemQuery expects Orm\\Zed\\Sales\\Persistence\\SpySalesOrderItemQuery, possibly different type Orm\\Zed\\GiftCardBalance\\Persistence\\SpyGiftCardBalanceLogQuery&static|Orm\\Zed\\MerchantSalesOrder\\Persistence\\SpyMerchantSalesOrderQuery&static|Orm\\Zed\\Oms\\Persistence\\SpyOmsTransitionLogQuery&static|Orm\\Zed\\Payment\\Persistence\\SpySalesPaymentQuery&static|Orm\\Zed\\Payone\\Persistence\\SpyPaymentPayoneQuery&static|Orm\\Zed\\Refund\\Persistence\\SpyRefundQuery&static|Orm\\Zed\\SalesInvoice\\Persistence\\SpySalesOrderInvoiceQuery&static|Orm\\Zed\\SalesReclamation\\Persistence\\SpySalesReclamationQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesDiscountQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesExpenseQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderCommentQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderItemQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderNoteQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderTotalsQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesShipmentQuery&static provided",
             "file_name": "vendor/spryker/spryker/Bundles/SalesDataExport/src/Spryker/Zed/SalesDataExport/Persistence/SalesDataExportRepository.php",
             "snippet": "            $salesOrderItemQuery",
             "selected_text": "$salesOrderItemQuery",
@@ -132,18 +96,6 @@
             "selected_text": "getArrayCopy",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 192,
-            "line_to": 192,
-            "type": "ArgumentTypeCoercion",
-            "message": "Argument 2 of Spryker\\Zed\\SalesDataExport\\Persistence\\SalesDataExportRepository::applyFilterCriteriaToSalesExpenseQuery expects Orm\\Zed\\Sales\\Persistence\\SpySalesExpenseQuery, parent type Orm\\Zed\\Sales\\Persistence\\SpySalesExpenseQuery&static|Propel\\Runtime\\ActiveQuery\\ModelCriteria provided",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesDataExport/src/Spryker/Zed/SalesDataExport/Persistence/SalesDataExportRepository.php",
-            "snippet": "            $salesExpenseQuery",
-            "selected_text": "$salesExpenseQuery",
-            "error_level": 3,
-            "shortcode": 193
         },
         {
             "severity": "info",
@@ -168,30 +120,6 @@
             "selected_text": "count",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 112,
-            "line_to": 112,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesDataExport/src/Spryker/Zed/SalesDataExport/SalesDataExportDependencyProvider.php",
-            "snippet": "                $container->getLocator()->utilEncoding()->service()",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 128,
-            "line_to": 128,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Generated\\Zed\\Ide\\AutoCompletion::dataExport does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesDataExport/src/Spryker/Zed/SalesDataExport/SalesDataExportDependencyProvider.php",
-            "snippet": "                $container->getLocator()->dataExport()->service()",
-            "selected_text": "dataExport",
-            "error_level": 3,
-            "shortcode": 108
         }
     ],
     "deprecation": []

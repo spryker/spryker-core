@@ -1,43 +1,6 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 81,
-            "line_to": 81,
-            "type": "InvalidArrayOffset",
-            "message": "Cannot access value on variable $selectedAttributes using a string offset, expecting int",
-            "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Yves/DiscountPromotion/Mapper/PromotionProductMapper.php",
-            "snippet": "        return isset($selectedAttributes[$abstractSku]) ? $this->filterEmptyAttributes($selectedAttributes[$abstractSku]) : [];",
-            "selected_text": "$selectedAttributes[$abstractSku]",
-            "error_level": 6,
-            "shortcode": 115
-        },
-        {
-            "severity": "error",
-            "line_from": 81,
-            "line_to": 81,
-            "type": "InvalidArgument",
-            "message": "Argument 1 of Spryker\\Yves\\DiscountPromotion\\Mapper\\PromotionProductMapper::filterEmptyAttributes expects array<array-key, mixed>, string provided",
-            "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Yves/DiscountPromotion/Mapper/PromotionProductMapper.php",
-            "snippet": "        return isset($selectedAttributes[$abstractSku]) ? $this->filterEmptyAttributes($selectedAttributes[$abstractSku]) : [];",
-            "selected_text": "$selectedAttributes[$abstractSku]",
-            "error_level": 6,
-            "shortcode": 4
-        }
-    ],
+    "error": [],
     "warning": [
-        {
-            "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Yves/DiscountPromotion/DiscountPromotionDependencyProvider.php",
-            "snippet": "            return new DiscountPromotionToProductBridge($container->getLocator()->product()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
         {
             "severity": "info",
             "line_from": 60,
@@ -52,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 102,
-            "line_to": 102,
+            "line_from": 103,
+            "line_to": 103,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Yves\\DiscountPromotion\\Dependency\\Client\\DiscountPromotionToProductInterface::getProductAbstractFromStorageByIdForCurrentLocale cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Yves/DiscountPromotion/Mapper/PromotionProductMapper.php",
@@ -64,8 +27,8 @@
         },
         {
             "severity": "info",
-            "line_from": 122,
-            "line_to": 122,
+            "line_from": 123,
+            "line_to": 123,
             "type": "PossiblyNullOperand",
             "message": "Cannot concatenate with a possibly null null|string",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Yves/DiscountPromotion/Mapper/PromotionProductMapper.php",
@@ -76,8 +39,8 @@
         },
         {
             "severity": "info",
-            "line_from": 122,
-            "line_to": 122,
+            "line_from": 123,
+            "line_to": 123,
             "type": "PossiblyNullOperand",
             "message": "Cannot concatenate with a possibly null int|null",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Yves/DiscountPromotion/Mapper/PromotionProductMapper.php",
@@ -340,6 +303,30 @@
         },
         {
             "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getDiscountPromotion on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Zed/DiscountPromotion/Communication/Plugin/Discount/DiscountPromotionFilterCollectedItemsPlugin.php",
+            "snippet": "        $discountPromotionTransfer = $collectedDiscountTransfer->getDiscount()->getDiscountPromotion();",
+            "selected_text": "getDiscountPromotion",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdDiscountPromotion on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Zed/DiscountPromotion/Communication/Plugin/Discount/DiscountPromotionFilterCollectedItemsPlugin.php",
+            "snippet": "            if ($itemTransfer->getOriginalItem() && $itemTransfer->getOriginalItem()->getIdDiscountPromotion()) {",
+            "selected_text": "getIdDiscountPromotion",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 36,
             "line_to": 36,
             "type": "PossiblyNullReference",
@@ -373,30 +360,6 @@
             "selected_text": "getDiscountPromotion",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Zed/DiscountPromotion/DiscountPromotionDependencyProvider.php",
-            "snippet": "            return new DiscountPromotionToProductBridge($container->getLocator()->product()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 58,
-            "line_to": 58,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Zed/DiscountPromotion/DiscountPromotionDependencyProvider.php",
-            "snippet": "            return new DiscountPromotionToAvailabilityBridge($container->getLocator()->availability()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         },
         {
             "severity": "info",
