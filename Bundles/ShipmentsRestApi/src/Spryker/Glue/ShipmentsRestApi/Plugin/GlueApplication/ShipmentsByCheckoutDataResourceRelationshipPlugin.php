@@ -1,0 +1,77 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Glue\ShipmentsRestApi\Plugin\GlueApplication;
+
+use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
+use Spryker\Glue\Kernel\AbstractPlugin;
+use Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiConfig;
+
+/**
+ * @Glue({
+ *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestShipmentsAttributesTransfer"
+ * })
+ *
+ * @method \Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiFactory getFactory()
+ */
+class ShipmentsByCheckoutDataResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+{
+    /**
+     * {@inheritDoc}
+     * - Adds shipments resource as relationship.
+     *
+     * @api
+     *
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return void
+     */
+    public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
+    {
+        if (!$this->isApplicable($restRequest)) {
+            return;
+        }
+
+        $this->getFactory()
+            ->createShipmentByCheckoutDataExpander()
+            ->addResourceRelationships($resources, $restRequest);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getRelationshipResourceType(): string
+    {
+        return ShipmentsRestApiConfig::RESOURCE_SHIPMENTS;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return bool
+     */
+    protected function isApplicable(RestRequestInterface $restRequest): bool
+    {
+        $restCheckoutRequestAttributesTransfer = $restRequest->getResource()->getAttributes();
+        if (
+            $restCheckoutRequestAttributesTransfer instanceof RestCheckoutRequestAttributesTransfer
+            && !$restCheckoutRequestAttributesTransfer->getShippingAddress()
+            && !$restCheckoutRequestAttributesTransfer->getShipment()
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+}

@@ -8,6 +8,13 @@
         <property name="shipments" type="RestShipments[]" singular="shipment" restRequestParameter="yes"/>
     </transfer>
 
+    <transfer name="RestShipmentsAttributes">
+        <property name="items" type="string[]" singular="item"/>
+        <property name="shippingAddress" type="RestAddress"/>
+        <property name="selectedShipmentMethod" type="RestShipmentMethod"/>
+        <property name="requestedDeliveryDate" type="string"/>
+    </transfer>
+
     <transfer name="RestShipments">
         <property name="items" type="string[]" singular="item" restRequestParameter="yes"/>
         <property name="shippingAddress" type="RestAddress" restRequestParameter="yes"/>
@@ -111,6 +118,7 @@
 
     <transfer name="RestCheckoutData">
         <property name="shipmentMethods" type="ShipmentMethods" singular="shipmentMethod"/>
+        <property name="quote" type="Quote"/>
     </transfer>
 
     <transfer name="RestCheckoutDataResponseAttributes">
