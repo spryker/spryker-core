@@ -114,7 +114,7 @@ class MerchantTranslator implements MerchantTranslatorInterface
     {
         $glossaryKeys = [];
 
-        foreach ($merchantSearchCollectionTransfer->getMerchantSearches() as $merchantSearchTransfer) {
+        foreach ($merchantSearchCollectionTransfer->getMerchants() as $merchantSearchTransfer) {
             $merchantSearchTransferGlossaryKeys = [
                 $merchantSearchTransfer->getMerchantProfile()->getBannerUrlGlossaryKey(),
                 $merchantSearchTransfer->getMerchantProfile()->getCancellationPolicyGlossaryKey(),
@@ -184,7 +184,7 @@ class MerchantTranslator implements MerchantTranslatorInterface
     ): MerchantSearchCollectionTransfer {
         $translatedMerchantSearchTransfers = [];
 
-        foreach ($merchantSearchCollectionTransfer->getMerchantSearches() as $merchantSearchTransfer) {
+        foreach ($merchantSearchCollectionTransfer->getMerchants() as $merchantSearchTransfer) {
             $merchantSearchProfileTransfer = $merchantSearchTransfer->getMerchantProfile();
 
             if (isset($translations[$merchantSearchProfileTransfer->getBannerUrlGlossaryKey()])) {
@@ -212,6 +212,6 @@ class MerchantTranslator implements MerchantTranslatorInterface
             $translatedMerchantSearchTransfers[] = $merchantSearchTransfer->setMerchantProfile($merchantSearchProfileTransfer);
         }
 
-        return $merchantSearchCollectionTransfer->setMerchantSearches(new ArrayObject($translatedMerchantSearchTransfers));
+        return $merchantSearchCollectionTransfer->setMerchants(new ArrayObject($translatedMerchantSearchTransfers));
     }
 }

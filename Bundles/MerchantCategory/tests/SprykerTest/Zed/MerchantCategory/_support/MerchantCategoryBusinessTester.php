@@ -28,8 +28,4 @@ use Codeception\Actor;
 class MerchantCategoryBusinessTester extends Actor
 {
     use _generated\MerchantCategoryBusinessTesterActions;
-
-    /**
-     * Define custom actions here
-     */
 }

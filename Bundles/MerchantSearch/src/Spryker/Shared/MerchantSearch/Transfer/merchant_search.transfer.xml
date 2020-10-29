@@ -9,7 +9,7 @@
 
     <transfer name="MerchantSearchCollection">
         <property name="nbResults" type="int"/>
-        <property name="merchantSearches" type="MerchantSearch[]" singular="merchantSearch"/>
+        <property name="merchants" type="MerchantSearch[]" singular="merchant"/>
     </transfer>
 
     <transfer name="MerchantCriteria">
@@ -46,6 +46,21 @@
 
     <transfer name="Store">
         <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Filter">
+    </transfer>
+
+    <transfer name="StoreRelation">
+    </transfer>
+
+    <transfer name="SynchronizationData">
+    </transfer>
+
+    <transfer name="SearchContext">
+    </transfer>
+
+    <transfer name="Url">
     </transfer>
 
 </transfers>

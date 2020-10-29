@@ -4,6 +4,7 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Merchant">
+        <property name="idMerchant" type="int"/>
         <property name="categories" type="Category[]" singular="category"/>
     </transfer>
 
@@ -19,5 +20,18 @@
 
     <transfer name="MerchantCategoryResponse">
         <property name="categories" type="Category[]" singular="category"/>
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
+    <transfer name="Category">
+        <property name="localizedAttributes" type="CategoryLocalizedAttributes[]" singular="localizedAttributes"/>
+    </transfer>
+
+    <transfer name="CategoryLocalizedAttributes">
+        <property name="locale" type="Locale"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Locale">
     </transfer>
 </transfers>

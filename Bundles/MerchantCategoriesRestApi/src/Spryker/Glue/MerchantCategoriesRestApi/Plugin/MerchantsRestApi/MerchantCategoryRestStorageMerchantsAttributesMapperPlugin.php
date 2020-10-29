@@ -18,6 +18,11 @@ use Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\RestStorageMerchant
 class MerchantCategoryRestStorageMerchantsAttributesMapperPlugin extends AbstractPlugin implements RestStorageMerchantsAttributesMapperPluginInterface
 {
     /**
+     * Specification:
+     * - Maps MerchantStorageTransfer.categories to RestMerchantsAttributesTransfer.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\MerchantStorageTransfer $merchantStorageTransfer
      * @param \Generated\Shared\Transfer\RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer
      * @param string $localeName

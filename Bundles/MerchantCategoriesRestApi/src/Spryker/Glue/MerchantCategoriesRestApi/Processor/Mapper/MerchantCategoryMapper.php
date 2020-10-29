@@ -33,7 +33,11 @@ class MerchantCategoryMapper implements MerchantCategoryMapperInterface
             $restMerchantsCategoryAttributesTransfer = (new RestMerchantCategoryAttributesTransfer())
                 ->fromArray($categoryTransfer->toArray(), true);
 
+            /**
+             * @var \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer
+             */
             $categoryLocalizedAttributesTransfer = $this->findLocalizedAttributesByLocaleName($categoryTransfer, $localeName);
+
             $restMerchantsCategoryAttributesTransfer->setName($categoryLocalizedAttributesTransfer->getName());
 
             $restMerchantsCategoryAttributesTransfers[] = $restMerchantsCategoryAttributesTransfer;
@@ -51,7 +55,12 @@ class MerchantCategoryMapper implements MerchantCategoryMapperInterface
     protected function findLocalizedAttributesByLocaleName(CategoryTransfer $categoryTransfer, string $localeName): ?CategoryLocalizedAttributesTransfer
     {
         foreach ($categoryTransfer->getLocalizedAttributes() as $categoryLocalizedAttributesTransfer) {
-            if ($categoryLocalizedAttributesTransfer->getLocale()->getLocaleName() === $localeName) {
+            /**
+             * @var \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+             */
+            $localeTransfer = $categoryLocalizedAttributesTransfer->getLocale();
+
+            if ($localeTransfer->getLocaleName() === $localeName) {
                 return $categoryLocalizedAttributesTransfer;
             }
         }

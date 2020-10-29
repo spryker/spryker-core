@@ -38,14 +38,12 @@ class MerchantSearchResultFormatterPlugin extends AbstractElasticsearchResultFor
         $merchantSearchCollection = new MerchantSearchCollectionTransfer();
 
         foreach ($searchResult->getResults() as $document) {
-            $merchantSearchCollection->addMerchantSearch(
+            $merchantSearchCollection->addMerchant(
                 $this->getMappedMerchantSearchTransfer($document->getSource()[MerchantIndexMap::SEARCH_RESULT_DATA])
             );
         }
 
-        $merchantSearchCollection->setNbResults(
-            $searchResult->getResponse()->getData()['hits']['total'] ?? 0
-        );
+        $merchantSearchCollection->setNbResults($searchResult->getTotalHits());
 
         return $merchantSearchCollection;
     }

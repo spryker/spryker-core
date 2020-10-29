@@ -4,7 +4,7 @@
   "description": "MerchantCategorySearch module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/kernel": "^3.33.0",
     "spryker/merchant-category": "^0.1.1",
     "spryker/merchant-search-extension": "^0.1.0",

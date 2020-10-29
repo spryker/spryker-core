@@ -15,9 +15,9 @@ interface MerchantSearchDataExpanderPluginInterface
      *
      * @api
      *
-     * @param array $merchantSearchData
+     * @param mixed[] $merchantSearchData
      *
-     * @return array
+     * @return mixed[]
      */
     public function expand(array $merchantSearchData): array;
 }

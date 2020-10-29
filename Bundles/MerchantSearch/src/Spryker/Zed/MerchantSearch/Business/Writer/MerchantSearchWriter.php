@@ -113,7 +113,7 @@ class MerchantSearchWriter implements MerchantSearchWriterInterface
      */
     protected function writeCollection(MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer): void
     {
-        foreach ($merchantSearchCollectionTransfer->getMerchantSearches() as $merchantSearchTransfer) {
+        foreach ($merchantSearchCollectionTransfer->getMerchants() as $merchantSearchTransfer) {
             $this->entityManager->saveMerchantSearch($merchantSearchTransfer);
         }
     }
@@ -125,7 +125,7 @@ class MerchantSearchWriter implements MerchantSearchWriterInterface
      */
     protected function expandMerchantSearchData(MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer): MerchantSearchCollectionTransfer
     {
-        foreach ($merchantSearchCollectionTransfer->getMerchantSearches() as $merchantSearchTransfer) {
+        foreach ($merchantSearchCollectionTransfer->getMerchants() as $merchantSearchTransfer) {
             $merchantSearchTransfer->setData(
                 $this->executeMerchantSearchDataExpanderPlugins($merchantSearchTransfer->getData())
             );

@@ -10,6 +10,9 @@ namespace Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\MerchantSearchTransfer;
 use Generated\Shared\Transfer\RestMerchantsAttributesTransfer;
 
+/**
+ * Provides ability to map MerchantCategorySearch transfer to RestAttributesTransfer.
+ */
 interface RestSearchMerchantsAttributesMapperPluginInterface
 {
     /**

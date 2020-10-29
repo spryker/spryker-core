@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\MerchantCategory\Helper;
+namespace SprykerTest\Shared\MerchantCategory\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\MerchantCategoryBuilder;
@@ -39,6 +39,16 @@ class MerchantCategoryHelper extends Module
             $seedData[MerchantCategoryTransfer::FK_MERCHANT] = $merchantTransfer->getIdMerchant();
         }
 
+        return $this->createMerchantCategory($seedData);
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\MerchantCategoryTransfer
+     */
+    protected function createMerchantCategory(array $seedData): MerchantCategoryTransfer
+    {
         /** @var \Generated\Shared\Transfer\MerchantCategoryTransfer $merchantCategoryTransfer */
         $merchantCategoryTransfer = (new MerchantCategoryBuilder($seedData))->build();
         $merchantCategoryEntity = new SpyMerchantCategory();
@@ -50,7 +60,9 @@ class MerchantCategoryHelper extends Module
         $merchantCategoryTransfer->fromArray($merchantCategoryEntity->toArray(), true);
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($merchantCategoryTransfer) {
-            $this->getMerchantCategoryPropelQuery()->filterByIdMerchantCategory($merchantCategoryTransfer->getIdMerchantCategory());
+            $this->getMerchantCategoryPropelQuery()
+                ->filterByIdMerchantCategory($merchantCategoryTransfer->getIdMerchantCategory())
+                ->deleteAll();
         });
 
         return $merchantCategoryTransfer;
