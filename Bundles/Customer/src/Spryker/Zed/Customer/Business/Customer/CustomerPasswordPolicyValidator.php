@@ -9,7 +9,6 @@ namespace Spryker\Zed\Customer\Business\Customer;
 
 use Generated\Shared\Transfer\CustomerErrorTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
-use Generated\Shared\Transfer\MessageTransfer;
 
 class CustomerPasswordPolicyValidator implements CustomerPasswordPolicyValidatorInterface
 {

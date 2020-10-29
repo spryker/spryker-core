@@ -38,23 +38,26 @@ class CustomerPasswordPolicyManager implements CustomerPasswordPolicyManagerInte
         array $customerPasswordPolicyConfig,
         array $customerPasswordWhiteList
     ): CustomerResponseTransfer {
-        $customerResponseTransfer = new CustomerResponseTransfer();
-        $customerResponseTransfer->setIsSuccess(true);
+        $customerResponseTransfer = (new CustomerResponseTransfer())
+            ->setIsSuccess(true);
+        if (in_array($password, $customerPasswordWhiteList, true)) {
+            return $customerResponseTransfer;
+        }
 
-        if (!in_array($password, $customerPasswordWhiteList)) {
-            foreach ($this->customerPasswordPolicyPlugins as $customerPasswordPolicyPlugin) {
-                $passwordPolicyPluginName = $customerPasswordPolicyPlugin->getName();
-                $passwordPolicyPluginConfig = isset($customerPasswordPolicyConfig[$passwordPolicyPluginName]) ?
-                    $customerPasswordPolicyConfig[$customerPasswordPolicyPlugin->getName()] :
-                    null;
-                if ($passwordPolicyPluginConfig) {
-                    $customerPasswordPolicyPlugin->validate(
-                        $password,
-                        $customerResponseTransfer,
-                        $passwordPolicyPluginConfig
-                    );
-                }
+        foreach ($this->customerPasswordPolicyPlugins as $customerPasswordPolicyPlugin) {
+            $passwordPolicyPluginName = $customerPasswordPolicyPlugin->getName();
+            $passwordPolicyPluginConfig = isset($customerPasswordPolicyConfig[$passwordPolicyPluginName]) ?
+                $customerPasswordPolicyConfig[$customerPasswordPolicyPlugin->getName()] :
+                null;
+            if (!$passwordPolicyPluginConfig) {
+                return $customerResponseTransfer;
             }
+
+            $customerPasswordPolicyPlugin->validate(
+                $password,
+                $customerResponseTransfer,
+                $passwordPolicyPluginConfig
+            );
         }
 
         return $customerResponseTransfer;

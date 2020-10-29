@@ -10,11 +10,7 @@ namespace Spryker\Zed\Customer;
 use Spryker\Service\Customer\CustomerServiceInterface;
 use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\Customer\Communication\Customer\CustomerPasswordPolicyValidator;
-use Spryker\Zed\Customer\Communication\Plugin\PasswordPolicy\CustomerPasswordBlacklistPolicyPlugin;
-use Spryker\Zed\Customer\Communication\Plugin\PasswordPolicy\CustomerPasswordCharsetPolicyPlugin;
 use Spryker\Zed\Customer\Communication\Plugin\PasswordPolicy\CustomerPasswordLengthPolicyPlugin;
-use Spryker\Zed\Customer\Communication\Plugin\PasswordPolicy\CustomerPasswordSequencePolicyPlugin;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
@@ -329,7 +325,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function addCustomerPasswordPolicyPlugins(Container $container)
+    public function addCustomerPasswordPolicyPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_CUSTOMER_PASSWORD_POLICY, function (Container $container) {
             return $this->getCustomerPasswordPolicyPlugins();
@@ -344,19 +340,8 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     public function getCustomerPasswordPolicyPlugins(): array
     {
         return [
-            new CustomerPasswordBlacklistPolicyPlugin(),
-            new CustomerPasswordCharsetPolicyPlugin(),
             new CustomerPasswordLengthPolicyPlugin(),
-            new CustomerPasswordSequencePolicyPlugin(),
         ];
-    }
-
-    /**
-     * @return \Spryker\Zed\Customer\Business\Customer\CustomerPasswordPolicyValidator
-     */
-    protected function getCustomerPasswordPolicyValidator(): CustomerPasswordPolicyValidator
-    {
-        return new CustomerPasswordPolicyValidator();
     }
 
     /**

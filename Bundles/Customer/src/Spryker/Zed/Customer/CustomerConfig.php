@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\SequenceNumber\SequenceNumberConstants;
+use Spryker\Zed\Customer\Business\Customer\CustomerPasswordPolicyValidator;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 /**
@@ -135,7 +136,12 @@ class CustomerConfig extends AbstractBundleConfig
      */
     public function getCustomerPasswordPolicy(): array
     {
-        return [];
+        return [
+            CustomerPasswordPolicyValidator::PASSWORD_POLICY_LENGTH => [
+                CustomerPasswordPolicyValidator::PASSWORD_POLICY_ATTRIBUTE_MIN => static::MIN_LENGTH_CUSTOMER_PASSWORD,
+                CustomerPasswordPolicyValidator::PASSWORD_POLICY_ATTRIBUTE_MAX => static::MAX_LENGTH_CUSTOMER_PASSWORD,
+            ],
+        ];
     }
 
     /**
