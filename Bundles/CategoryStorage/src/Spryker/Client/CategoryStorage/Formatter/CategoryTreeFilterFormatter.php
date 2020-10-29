@@ -8,9 +8,7 @@
 namespace Spryker\Client\CategoryStorage\Formatter;
 
 use ArrayObject;
-use Elastica\ResultSet;
 use Generated\Shared\Transfer\CategoryNodeSearchResultTransfer;
-use Spryker\Client\CategoryStorage\CategoryStorageConfig;
 use Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToLocaleClientInterface;
 use Spryker\Client\CategoryStorage\Storage\CategoryTreeStorageReaderInterface;
 
@@ -32,11 +30,6 @@ class CategoryTreeFilterFormatter implements CategoryTreeFilterFormatterInterfac
     protected const KEY_KEY = 'key';
 
     /**
-     * @var \Spryker\Client\CategoryStorage\CategoryStorageConfig
-     */
-    protected $categoryStorageConfig;
-
-    /**
      * @var \Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToLocaleClientInterface
      */
     protected $localeClient;
@@ -47,28 +40,25 @@ class CategoryTreeFilterFormatter implements CategoryTreeFilterFormatterInterfac
     protected $categoryTreeStorageReader;
 
     /**
-     * @param \Spryker\Client\CategoryStorage\CategoryStorageConfig $categoryStorageConfig
      * @param \Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToLocaleClientInterface $localeClient
      * @param \Spryker\Client\CategoryStorage\Storage\CategoryTreeStorageReaderInterface $categoryTreeStorageReader
      */
     public function __construct(
-        CategoryStorageConfig $categoryStorageConfig,
         CategoryStorageToLocaleClientInterface $localeClient,
         CategoryTreeStorageReaderInterface $categoryTreeStorageReader
     ) {
-        $this->categoryStorageConfig = $categoryStorageConfig;
         $this->localeClient = $localeClient;
         $this->categoryTreeStorageReader = $categoryTreeStorageReader;
     }
 
     /**
-     * @param \Elastica\ResultSet $searchResult
+     * @param array $docCountAggregation
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]
      */
-    public function formatCategoryTreeFilter(ResultSet $searchResult): ArrayObject
+    public function formatCategoryTreeFilter(array $docCountAggregation): ArrayObject
     {
-        $categoryDocCounts = $this->getMappedCategoryDocCountsByNodeId($searchResult);
+        $categoryDocCounts = $this->getMappedCategoryDocCountsByNodeId($docCountAggregation);
 
         $categoryNodeStorageTransfers = $this->categoryTreeStorageReader->getCategories(
             $this->localeClient->getCurrentLocale()
@@ -141,20 +131,13 @@ class CategoryTreeFilterFormatter implements CategoryTreeFilterFormatterInterfac
     }
 
     /**
-     * @param \Elastica\ResultSet $searchResult
+     * @param array $docCountAggregation
      *
      * @return int[]
      */
-    protected function getMappedCategoryDocCountsByNodeId(ResultSet $searchResult): array
+    protected function getMappedCategoryDocCountsByNodeId(array $docCountAggregation): array
     {
         $categoryDocCounts = [];
-        $name = $this->categoryStorageConfig->getCategoryFacetAggregationName();
-        $docCountAggregation = $searchResult->getAggregations()[$name] ?? [];
-
-        if (!$docCountAggregation) {
-            return $categoryDocCounts;
-        }
-
         $categoryBuckets = $docCountAggregation[static::KEY_BUCKETS] ?? [];
 
         foreach ($categoryBuckets as $categoryBucket) {

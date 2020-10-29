@@ -13,6 +13,7 @@ use Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\AbstractElasticsea
 
 /**
  * @method \Spryker\Client\CategoryStorage\CategoryStorageClient getClient()
+ * @method \Spryker\Client\CategoryStorage\CategoryStorageFactory getFactory()
  */
 class CategoryTreeFilterPageSearchResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
@@ -36,6 +37,9 @@ class CategoryTreeFilterPageSearchResultFormatterPlugin extends AbstractElastics
      */
     protected function formatSearchResult(ResultSet $searchResult, array $requestParameters): ArrayObject
     {
-        return $this->getClient()->formatCategoryTreeFilter($searchResult);
+        $name = $this->getFactory()->getConfig()->getCategoryFacetAggregationName();
+        $docCountAggregation = $searchResult->getAggregations()[$name] ?? [];
+
+        return $this->getClient()->formatCategoryTreeFilter($docCountAggregation);
     }
 }

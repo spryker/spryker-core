@@ -8,14 +8,13 @@
 namespace Spryker\Client\CategoryStorage\Formatter;
 
 use ArrayObject;
-use Elastica\ResultSet;
 
 interface CategoryTreeFilterFormatterInterface
 {
     /**
-     * @param \Elastica\ResultSet $searchResult
+     * @param array $docCountAggregation
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]
      */
-    public function formatCategoryTreeFilter(ResultSet $searchResult): ArrayObject;
+    public function formatCategoryTreeFilter(array $docCountAggregation): ArrayObject;
 }

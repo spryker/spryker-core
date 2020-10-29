@@ -8,7 +8,6 @@
 namespace Spryker\Client\CategoryStorage;
 
 use ArrayObject;
-use Elastica\ResultSet;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -71,14 +70,14 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
      *
      * @api
      *
-     * @param \Elastica\ResultSet $searchResult
+     * @param array $docCountAggregation
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]
      */
-    public function formatCategoryTreeFilter(ResultSet $searchResult): ArrayObject
+    public function formatCategoryTreeFilter(array $docCountAggregation): ArrayObject
     {
         return $this->getFactory()
             ->createCategoryTreeFilterFormatter()
-            ->formatCategoryTreeFilter($searchResult);
+            ->formatCategoryTreeFilter($docCountAggregation);
     }
 }
