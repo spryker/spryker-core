@@ -1,90 +1,17 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 33,
-            "line_to": 33,
-            "type": "MethodSignatureMismatch",
-            "message": "Argument 1 of Spryker\\Client\\CatalogPriceProductConnector\\Plugin\\ProductPriceQueryExpanderPlugin::expandQuery has wrong type 'Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface', expecting 'Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface' as defined by Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryExpanderPluginInterface::expandQuery",
-            "file_name": "vendor/spryker/spryker/Bundles/CatalogPriceProductConnector/src/Spryker/Client/CatalogPriceProductConnector/Plugin/ProductPriceQueryExpanderPlugin.php",
-            "snippet": "    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = [])",
-            "selected_text": "$searchQuery",
-            "error_level": 7,
-            "shortcode": 42
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
-            "line_from": 47,
-            "line_to": 47,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CatalogPriceProductConnector/src/Spryker/Client/CatalogPriceProductConnector/CatalogPriceProductConnectorDependencyProvider.php",
-            "snippet": "            return new CatalogPriceProductConnectorToPriceProductClientBridge($container->getLocator()->priceProduct()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CatalogPriceProductConnector/src/Spryker/Client/CatalogPriceProductConnector/CatalogPriceProductConnectorDependencyProvider.php",
-            "snippet": "            return new CatalogPriceProductConnectorToPriceClientBridge($container->getLocator()->price()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 75,
-            "line_to": 75,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CatalogPriceProductConnector/src/Spryker/Client/CatalogPriceProductConnector/CatalogPriceProductConnectorDependencyProvider.php",
-            "snippet": "            return new CatalogPriceProductConnectorToCurrencyClientBridge($container->getLocator()->currency()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 89,
-            "line_to": 89,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CatalogPriceProductConnector/src/Spryker/Client/CatalogPriceProductConnector/CatalogPriceProductConnectorDependencyProvider.php",
-            "snippet": "            return new CatalogPriceProductConnectorToPriceProductStorageClientBridge($container->getLocator()->priceProductStorage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 25,
-            "line_to": 25,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $rawCatalogSearchResultFormatterPlugin has wrong type 'Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\ResultFormatterPluginInterface|Spryker\\Client\\Search\\Dependency\\Plugin\\ResultFormatterPluginInterface', should be 'Spryker\\Client\\Search\\Dependency\\Plugin\\ResultFormatterPluginInterface'",
-            "file_name": "vendor/spryker/spryker/Bundles/CatalogPriceProductConnector/src/Spryker/Client/CatalogPriceProductConnector/Plugin/CurrencyAwareSuggestionByTypeResultFormatter.php",
-            "snippet": "     * @param \\Spryker\\Client\\Search\\Dependency\\Plugin\\ResultFormatterPluginInterface|\\Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\ResultFormatterPluginInterface $rawCatalogSearchResultFormatterPlugin",
-            "selected_text": "\\Spryker\\Client\\Search\\Dependency\\Plugin\\ResultFormatterPluginInterface|\\Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\ResultFormatterPluginInterface",
-            "error_level": 4,
-            "shortcode": 141
-        },
-        {
-            "severity": "info",
-            "line_from": 33,
-            "line_to": 33,
-            "type": "ImplementedParamTypeMismatch",
-            "message": "Argument 1 of Spryker\\Client\\CatalogPriceProductConnector\\Plugin\\ProductPriceQueryExpanderPlugin::expandQuery has wrong type 'Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface', expecting 'Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface' as defined by Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryExpanderPluginInterface::expandQuery",
+            "line_from": 62,
+            "line_to": 62,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of get_class expects object, possibly different type Elastica\\Query\\AbstractQuery|array<array-key, mixed> provided",
             "file_name": "vendor/spryker/spryker/Bundles/CatalogPriceProductConnector/src/Spryker/Client/CatalogPriceProductConnector/Plugin/ProductPriceQueryExpanderPlugin.php",
-            "snippet": "    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = [])",
-            "selected_text": "$searchQuery",
-            "error_level": 4,
-            "shortcode": 199
+            "snippet": "                get_class($boolQuery)",
+            "selected_text": "$boolQuery",
+            "error_level": 3,
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -109,18 +36,6 @@
             "selected_text": "static::$currencyIsoCode",
             "error_level": 5,
             "shortcode": 139
-        },
-        {
-            "severity": "info",
-            "line_from": 26,
-            "line_to": 26,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Client\\Search\\Plugin\\Elasticsearch\\ResultFormatter\\AbstractElasticsearchResultFormatterPlugin::formatResult has the more specific type 'Elastica\\ResultSet', expecting 'mixed' as defined by Spryker\\Client\\Search\\Dependency\\Plugin\\ResultFormatterPluginInterface::formatResult",
-            "file_name": "vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Plugin/Elasticsearch/ResultFormatter/AbstractElasticsearchResultFormatterPlugin.php",
-            "snippet": "    public function formatResult($searchResult, array $requestParameters = [])",
-            "selected_text": "$searchResult",
-            "error_level": 5,
-            "shortcode": 140
         }
     ],
     "deprecation": [

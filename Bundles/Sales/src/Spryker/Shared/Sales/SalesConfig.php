@@ -7,9 +7,9 @@
 
 namespace Spryker\Shared\Sales;
 
-use Spryker\Shared\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Kernel\AbstractSharedConfig;
 
-class SalesConfig extends AbstractBundleConfig
+class SalesConfig extends AbstractSharedConfig
 {
     protected const ORDER_SEARCH_TYPES = [
         'all',

@@ -46,7 +46,7 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
         $container = $this->addPriceDimensionPlugins($container);
         $container = $this->addPriceProductPricesExtractorPlugins($container);
         $container = $this->addPriceProductFilterExpanderPlugins($container);
-        
+
         return $container;
     }
 

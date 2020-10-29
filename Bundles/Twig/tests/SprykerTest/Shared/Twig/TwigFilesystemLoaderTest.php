@@ -8,6 +8,7 @@
 namespace SprykerTest\Shared\Twig;
 
 use Codeception\Test\Unit;
+use ReflectionClass;
 use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Shared\Twig\Cache\CacheInterface;
 use Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceBridge;
@@ -123,6 +124,24 @@ class TwigFilesystemLoaderTest extends Unit
         $this->expectExceptionMessage('Unable to find template "NotExistent/index.twig');
 
         $filesystemLoader->getSource('@Bundle/NotExistent/index.twig');
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsPathInSplit(): void
+    {
+        $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_ZED_PROJECT);
+
+        $reflection = new ReflectionClass(get_class($filesystemLoader));
+        $method = $reflection->getMethod('isPathInSplit');
+        $method->setAccessible(true);
+
+        $result = $method->invokeArgs($filesystemLoader, ['vendor/spryker/spryker/Bundles/Foo/']);
+        $this->assertFalse($result);
+
+        $result = $method->invokeArgs($filesystemLoader, ['vendor/spryker/foo/']);
+        $this->assertTrue($result);
     }
 
     /**

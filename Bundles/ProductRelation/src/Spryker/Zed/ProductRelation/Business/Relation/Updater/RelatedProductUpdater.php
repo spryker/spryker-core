@@ -43,7 +43,7 @@ class RelatedProductUpdater implements RelatedProductUpdaterInterface
     public function updateAllRelatedProducts(ProductRelationTransfer $productRelationTransfer): void
     {
         $productRelationTransfer->requireIdProductRelation();
-        
+
         foreach ($this->relatedProductReader->getRelatedProducts($productRelationTransfer) as $relatedProductTransfers) {
             $productAbstractIds = $this->collectProductAbstractIds($relatedProductTransfers);
 

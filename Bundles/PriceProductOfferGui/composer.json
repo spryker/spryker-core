@@ -4,7 +4,7 @@
   "description": "PriceProductOfferGui module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/kernel": "^3.33.0",
     "spryker/price": "^5.6.0",
     "spryker/price-product": "^4.16.0",

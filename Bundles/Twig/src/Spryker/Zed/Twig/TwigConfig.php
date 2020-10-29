@@ -19,7 +19,7 @@ use Symfony\Bridge\Twig\Extension\FormExtension;
 class TwigConfig extends AbstractBundleConfig
 {
     protected const APPLICATION_ZED = 'ZED';
-    
+
     /**
      * @uses \Spryker\Yves\Twig\TwigConfig::APPLICATION_YVES
      */

@@ -3,7 +3,7 @@
   "description": "Spryker Framework",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2"
+    "php": ">=7.3"
   },
   "require-dev": {
     "spryker/code-sniffer": "dev-master"
@@ -33,6 +33,7 @@
     "spryker/agent": "*",
     "spryker/agent-auth-rest-api": "*",
     "spryker/agent-gui": "*",
+    "spryker/agent-extension": "*",
     "spryker/alternative-products-rest-api": "*",
     "spryker/api": "*",
     "spryker/api-query-builder": "*",
@@ -208,6 +209,7 @@
     "spryker/config": "*",
     "spryker/configurable-bundle": "*",
     "spryker/configurable-bundle-cart": "*",
+    "spryker/configurable-bundle-carts-rest-api": "*",
     "spryker/configurable-bundle-data-import": "*",
     "spryker/configurable-bundle-gui": "*",
     "spryker/configurable-bundle-gui-extension": "*",
@@ -215,6 +217,8 @@
     "spryker/configurable-bundle-page-search": "*",
     "spryker/configurable-bundle-page-search-extension": "*",
     "spryker/configurable-bundle-storage": "*",
+    "spryker/configurable-bundles-products-resource-relationship": "*",
+    "spryker/configurable-bundles-rest-api": "*",
     "spryker/console": "*",
     "spryker/container": "*",
     "spryker/content": "*",
@@ -478,6 +482,7 @@
     "spryker/product-api": "*",
     "spryker/product-attribute": "*",
     "spryker/product-attribute-gui": "*",
+    "spryker/product-attributes-rest-api": "*",
     "spryker/product-availabilities-rest-api": "*",
     "spryker/product-barcode": "*",
     "spryker/product-barcode-gui": "*",

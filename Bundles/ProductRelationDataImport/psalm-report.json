@@ -114,7 +114,7 @@
             "line_from": 39,
             "line_to": 39,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductRelation\\Persistence\\SpyProductRelation|Orm\\Zed\\Store\\Persistence\\SpyStore|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductRelation\\Persistence\\SpyProductRelation|Orm\\Zed\\Store\\Persistence\\SpyStore> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationDataImport/src/Spryker/Zed/ProductRelationDataImport/Business/Writer/ProductRelation/ProductAndRelationTypeAndStoreValidatorStep.php",
             "snippet": "            ->getData();",
             "selected_text": "getData",
@@ -126,7 +126,7 @@
             "line_from": 54,
             "line_to": 54,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductRelation\\Persistence\\SpyProductRelation|Orm\\Zed\\Store\\Persistence\\SpyStore|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductRelation\\Persistence\\SpyProductRelation|Orm\\Zed\\Store\\Persistence\\SpyStore> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationDataImport/src/Spryker/Zed/ProductRelationDataImport/Business/Writer/ProductRelation/ProductAndRelationTypeAndStoreValidatorStep.php",
             "snippet": "            ->getData();",
             "selected_text": "getData",
@@ -144,18 +144,6 @@
             "selected_text": "$productRelationEntity->getQuerySetData()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::useproductrelationquery does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductRelationDataImport/src/Spryker/Zed/ProductRelationDataImport/Business/Writer/ProductRelationStore/StoreValidatorStep.php",
-            "snippet": "            ->useProductRelationQuery()",
-            "selected_text": "useProductRelationQuery",
-            "error_level": 4,
-            "shortcode": 219
         },
         {
             "severity": "info",
@@ -180,30 +168,6 @@
             "selected_text": "getData",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 45,
-            "line_to": 45,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductRelationDataImport/src/Spryker/Zed/ProductRelationDataImport/ProductRelationDataImportDependencyProvider.php",
-            "snippet": "                $container->getLocator()->utilEncoding()->service()",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductRelationDataImport/src/Spryker/Zed/ProductRelationDataImport/ProductRelationDataImportDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productRelation()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

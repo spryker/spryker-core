@@ -11,8 +11,7 @@
             "snippet": "            ->findCompanyUserByCustomerId($customerTransfer->getIdCustomer());",
             "selected_text": "$customerTransfer->getIdCustomer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -24,8 +23,7 @@
             "snippet": "            ->findActiveCompanyUserByCustomerId($customerTransfer->getIdCustomer());",
             "selected_text": "$customerTransfer->getIdCustomer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -37,8 +35,7 @@
             "snippet": "            ->countActiveCompanyUsersByIdCustomer($customerTransfer->getIdCustomer());",
             "selected_text": "$customerTransfer->getIdCustomer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -50,8 +47,7 @@
             "snippet": "                $companyUserTransfer->getIdCompanyUser()",
             "selected_text": "$companyUserTransfer->getIdCompanyUser()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -63,8 +59,7 @@
             "snippet": "            $this->companyUserEntityManager->deleteCompanyUserById($companyUserTransfer->getIdCompanyUser());",
             "selected_text": "$companyUserTransfer->getIdCompanyUser()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -76,8 +71,7 @@
             "snippet": "            $this->customerFacade->anonymizeCustomer($companyUserTransfer->getCustomer());",
             "selected_text": "$companyUserTransfer->getCustomer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -89,8 +83,7 @@
             "snippet": "        $companyUserCollectionTransfer = $this->companyUserRepository->getActiveCompanyUsersByCustomerReference($customerTransfer->getCustomerReference());",
             "selected_text": "$customerTransfer->getCustomerReference()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -102,8 +95,7 @@
             "snippet": "        $companyUserTransfer = $this->companyUserEntityManager->saveCompanyUser($companyUserTransfer);",
             "selected_text": "$companyUserTransfer",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -115,8 +107,7 @@
             "snippet": "        $companyUserResponseTransfer->getCompanyUser()->requireCustomer();",
             "selected_text": "requireCustomer",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -128,8 +119,7 @@
             "snippet": "        $companyUserTransfer = $this->companyUserEntityManager->saveCompanyUser($companyUserTransfer);",
             "selected_text": "$companyUserTransfer",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -141,8 +131,7 @@
             "snippet": "        $companyUserTransfer->setCustomer($companyUserResponseTransfer->getCompanyUser()->getCustomer());",
             "selected_text": "getCustomer",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -154,8 +143,7 @@
             "snippet": "        $customerResponseTransfer = $this->customerFacade->updateCustomer($companyUserTransfer->getCustomer());",
             "selected_text": "$companyUserTransfer->getCustomer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -167,8 +155,7 @@
             "snippet": "        $customerResponseTransfer = $this->customerFacade->updateCustomer($companyUserTransfer->getCustomer());",
             "selected_text": "getCustomer",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -180,8 +167,7 @@
             "snippet": "        $companyUserResponseTransfer->getCompanyUser()->requireCustomer();",
             "selected_text": "requireCustomer",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -193,8 +179,7 @@
             "snippet": "        $customerTransfer = $companyUserTransfer->getCustomer();",
             "selected_text": "getCustomer",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -206,8 +191,7 @@
             "snippet": "        if ($customerTransfer->getIdCustomer()) {",
             "selected_text": "getIdCustomer",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -219,8 +203,19 @@
             "snippet": "                    ->getIdCustomer()",
             "selected_text": "getIdCustomer",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 336,
+            "line_to": 336,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getValue on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Business/Model/CompanyUser.php",
+            "snippet": "                    (new ResponseMessageTransfer())->setText($customerResponseTransfer->getMessage()->getValue())",
+            "selected_text": "getValue",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -232,8 +227,7 @@
             "snippet": "        $companyResponseTransfer->getCompanyTransfer()->requireIdCompany()->requireInitialUserTransfer();",
             "selected_text": "requireIdCompany",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -245,8 +239,7 @@
             "snippet": "        $companyUserTransfer = $companyTransfer->getInitialUserTransfer()",
             "selected_text": "getInitialUserTransfer",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -258,8 +251,7 @@
             "snippet": "            ->setFkCompany($companyTransfer->getIdCompany());",
             "selected_text": "setFkCompany",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -271,8 +263,7 @@
             "snippet": "        $companyResponseTransfer->getCompanyTransfer()->setInitialUserTransfer($companyUserResponseTransfer->getCompanyUser());",
             "selected_text": "setInitialUserTransfer",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -284,8 +275,7 @@
             "snippet": "        $companyUserTransfer = $this->companyUserRepository->findActiveCompanyUserByUuid($companyUserTransfer->getUuid());",
             "selected_text": "$companyUserTransfer->getUuid()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -297,8 +287,7 @@
             "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ResponseMessageTransfer[] $messages",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ResponseMessageTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -310,8 +299,7 @@
             "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\CustomerErrorTransfer[] $errors",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\CustomerErrorTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -323,8 +311,7 @@
             "snippet": "        $this->companyUserEntityManager->deleteCompanyUserById($companyUserTransfer->getIdCompanyUser());",
             "selected_text": "$companyUserTransfer->getIdCompanyUser()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -336,8 +323,7 @@
             "snippet": "        return $this->getFacade()->getCompanyUserById($companyUserTransfer->getIdCompanyUser());",
             "selected_text": "$companyUserTransfer->getIdCompanyUser()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -349,8 +335,31 @@
             "snippet": "        if ($companyResponseTransfer->getCompanyTransfer()->getInitialUserTransfer() !== null) {",
             "selected_text": "getInitialUserTransfer",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCompanyUser on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Communication/Plugin/Customer/CompanyUserReloadCustomerTransferExpanderPlugin.php",
+            "snippet": "        if (!$customerTransfer->getCompanyUserTransfer() || !$customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()) {",
+            "selected_text": "getIdCompanyUser",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCompanyUser on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Communication/Plugin/Customer/CompanyUserReloadCustomerTransferExpanderPlugin.php",
+            "snippet": "        $idCompanyUser = $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser();",
+            "selected_text": "getIdCompanyUser",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -362,8 +371,7 @@
             "snippet": "        $companyUserTransfer = $this->getFacade()->getCompanyUserById($idCompanyUser);",
             "selected_text": "$idCompanyUser",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -375,8 +383,19 @@
             "snippet": "/**\n * @method \\Spryker\\Zed\\CompanyUser\\Persistence\\CompanyUserPersistenceFactory getFactory()\n * @method \\Generated\\Shared\\Transfer\\SpyCompanyUserEntityTransfer save(\\Generated\\Shared\\Transfer\\SpyCompanyUserEntityTransfer $spyCompanyUserEntityTransfer)\n */\nclass CompanyUserEntityManager extends AbstractEntityManager implements CompanyUserEntityManagerInterface",
             "selected_text": "/**\n * @method \\Spryker\\Zed\\CompanyUser\\Persistence\\CompanyUserPersistenceFactory getFactory()\n * @method \\Generated\\Shared\\Transfer\\SpyCompanyUserEntityTransfer save(\\Generated\\Shared\\Transfer\\SpyCompanyUserEntityTransfer $spyCompanyUserEntityTransfer)\n */\nc",
             "error_level": 5,
-            "shortcode": 140,
-            "taint_trace": null
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 110,
+            "line_to": 110,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CompanyUser\\Persistence\\Mapper\\CompanyUserMapperInterface::mapCompanyUserCollection expects array<array-key, Generated\\Shared\\Transfer\\SpyCompanyUserEntityTransfer>, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Persistence/CompanyUserRepository.php",
+            "snippet": "            ->mapCompanyUserCollection($collection);",
+            "selected_text": "$collection",
+            "error_level": 3,
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -388,21 +407,19 @@
             "snippet": "        $this->applyFilters($queryCompanyUser, $criteriaFilterTransfer);",
             "selected_text": "$queryCompanyUser",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
             "line_from": 185,
             "line_to": 185,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CompanyUser\\Persistence\\SpyCompanyUser|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CompanyUser\\Persistence\\SpyCompanyUser> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Persistence/CompanyUserRepository.php",
             "snippet": "            ->toArray();",
             "selected_text": "toArray",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -414,8 +431,7 @@
             "snippet": "            $paginationModel = $query->paginate($page, $maxPerPage);",
             "selected_text": "$page",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -427,21 +443,19 @@
             "snippet": "            $paginationModel = $query->paginate($page, $maxPerPage);",
             "selected_text": "$maxPerPage",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
             "line_from": 420,
             "line_to": 420,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Comment\\Persistence\\SpyComment|Orm\\Zed\\CompanyUser\\Persistence\\SpyCompanyUser|Orm\\Zed\\CustomerGroup\\Persistence\\SpyCustomerGroupToCustomer|Orm\\Zed\\CustomerNote\\Persistence\\SpyCustomerNote|Orm\\Zed\\Customer\\Persistence\\SpyCustomerAddress|Orm\\Zed\\Locale\\Persistence\\SpyLocale|Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriber|Orm\\Zed\\ProductCustomerPermission\\Persistence\\SpyProductCustomerPermission|Orm\\Zed\\User\\Persistence\\SpyUser|Orm\\Zed\\Wishlist\\Persistence\\SpyWishlist|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Comment\\Persistence\\SpyComment|Orm\\Zed\\CompanyUser\\Persistence\\SpyCompanyUser|Orm\\Zed\\CustomerGroup\\Persistence\\SpyCustomerGroupToCustomer|Orm\\Zed\\CustomerNote\\Persistence\\SpyCustomerNote|Orm\\Zed\\Customer\\Persistence\\SpyCustomerAddress|Orm\\Zed\\Locale\\Persistence\\SpyLocale|Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriber|Orm\\Zed\\ProductCustomerPermission\\Persistence\\SpyProductCustomerPermission|Orm\\Zed\\User\\Persistence\\SpyUser|Orm\\Zed\\Wishlist\\Persistence\\SpyWishlist> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Persistence/CompanyUserRepository.php",
             "snippet": "        return $query->find()->getData();",
             "selected_text": "getData",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -453,8 +467,55 @@
             "snippet": "        $queryPattern = $companyUserCriteriaTransfer->getPattern() . '%';",
             "selected_text": "$companyUserCriteriaTransfer->getPattern()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 449,
+            "line_to": 449,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\Customer\\Persistence\\SpyCustomerAddressQuery::limit cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Persistence/CompanyUserRepository.php",
+            "snippet": "            $companyUsersQuery->limit($companyUserCriteriaTransfer->getLimit());",
+            "selected_text": "$companyUserCriteriaTransfer->getLimit()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 456,
+            "line_to": 456,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CompanyUser\\Persistence\\Mapper\\CompanyUserMapperInterface::mapCompanyUserCollection expects array<array-key, Generated\\Shared\\Transfer\\SpyCompanyUserEntityTransfer>, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Persistence/CompanyUserRepository.php",
+            "snippet": "            ->mapCompanyUserCollection($companyUserEntityTransferCollection);",
+            "selected_text": "$companyUserEntityTransferCollection",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method modifiedToArray on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Persistence/Mapper/CompanyUserMapper.php",
+            "snippet": "                $companyUserEntityTransfer->getCustomer()->modifiedToArray(),",
+            "selected_text": "modifiedToArray",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method modifiedToArray on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Persistence/Mapper/CompanyUserMapper.php",
+            "snippet": "                $companyUserEntityTransfer->getCompany()->modifiedToArray(),",
+            "selected_text": "modifiedToArray",
+            "error_level": 3,
+            "shortcode": 83
         }
     ],
     "deprecation": []

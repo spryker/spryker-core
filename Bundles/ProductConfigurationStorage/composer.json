@@ -4,7 +4,7 @@
   "description": "ProductConfigurationStorage module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/availability-storage-extension": "^1.0.0",
     "spryker/cart": "^7.0.0",
     "spryker/cart-extension": "^4.0.0",

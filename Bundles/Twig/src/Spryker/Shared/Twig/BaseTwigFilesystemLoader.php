@@ -226,7 +226,7 @@ abstract class BaseTwigFilesystemLoader implements FilesystemLoaderInterface
      */
     protected function isPathInSplit($path)
     {
-        return preg_match('/vendor\/spryker\/[a-zA-Z0-9._-]+\/Bundles/', $path) === 0 && strpos($path, 'vendor/') > 0;
+        return strpos($path, 'vendor/') !== false && !preg_match('/vendor\/spryker\/[a-zA-Z0-9._-]+\/Bundles/', $path);
     }
 
     /**

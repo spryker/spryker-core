@@ -204,30 +204,6 @@
             "selected_text": "getNaturalIdentifier",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 47,
-            "line_to": 47,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesReturnsRestApi/src/Spryker/Glue/SalesReturnsRestApi/SalesReturnsRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->salesReturn()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 63,
-            "line_to": 63,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Generated\\Glue\\Ide\\AutoCompletion::salesReturnSearch does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesReturnsRestApi/src/Spryker/Glue/SalesReturnsRestApi/SalesReturnsRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->salesReturnSearch()->client()",
-            "selected_text": "salesReturnSearch",
-            "error_level": 3,
-            "shortcode": 108
         }
     ],
     "deprecation": []

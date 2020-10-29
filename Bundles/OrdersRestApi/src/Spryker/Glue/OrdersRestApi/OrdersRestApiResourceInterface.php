@@ -15,7 +15,7 @@ interface OrdersRestApiResourceInterface
     /**
      * Specification:
      * - Maps `ItemTransfer` to `RestOrderItemsAttributesTransfer`.
-     * - Runs the stack of `\Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderItemsAttributesMapperPluginInterface` plugins.
+     * - Runs the stack of {@link \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderItemsAttributesMapperPluginInterface} plugins.
      *
      * @api
      *

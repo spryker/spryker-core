@@ -1,5 +1,31 @@
 {
-    "error": [],
-    "warning": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\OmsMultiThread\\Communication\\Plugin\\Sales\\OmsMultiThreadProcessorIdentifierOrderExpanderPreSavePlugin::expand has wrong name $salesOrderEntityTransfer, expecting $spySalesOrderEntityTransfer as defined by Spryker\\Zed\\Sales\\Dependency\\Plugin\\OrderExpanderPreSavePluginInterface::expand",
+            "file_name": "vendor/spryker/spryker/Bundles/OmsMultiThread/src/Spryker/Zed/OmsMultiThread/Communication/Plugin/Sales/OmsMultiThreadProcessorIdentifierOrderExpanderPreSavePlugin.php",
+            "snippet": "    public function expand(SpySalesOrderEntityTransfer $salesOrderEntityTransfer, QuoteTransfer $quoteTransfer): SpySalesOrderEntityTransfer",
+            "selected_text": "$salesOrderEntityTransfer",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "InvalidScalarArgument",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\SpySalesOrderEntityTransfer::setOmsProcessorIdentifier expects null|string, int provided",
+            "file_name": "vendor/spryker/spryker/Bundles/OmsMultiThread/src/Spryker/Zed/OmsMultiThread/Business/OrderExpander/OrderExpander.php",
+            "snippet": "        $salesOrderEntityTransfer->setOmsProcessorIdentifier($this->omsProcessorIdGenerator->generateOmsProcessorIdentifier());",
+            "selected_text": "$this->omsProcessorIdGenerator->generateOmsProcessorIdentifier()",
+            "error_level": 4,
+            "shortcode": 12
+        }
+    ],
     "deprecation": []
 }

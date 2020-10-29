@@ -1,5 +1,18 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Glue\\ShipmentsRestApi\\Processor\\RestResponseBuilder\\ShipmentMethodRestResponseBuilder::createShipmentMethodRestResource has wrong name $restShipmentMethodAttributesTransfer, expecting $shipmentMethodTransfer as defined by Spryker\\Glue\\ShipmentsRestApi\\Processor\\RestResponseBuilder\\ShipmentMethodRestResponseBuilderInterface::createShipmentMethodRestResource",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentsRestApi/src/Spryker/Glue/ShipmentsRestApi/Processor/RestResponseBuilder/ShipmentMethodRestResponseBuilder.php",
+            "snippet": "        RestShipmentMethodsAttributesTransfer $restShipmentMethodAttributesTransfer",
+            "selected_text": "$restShipmentMethodAttributesTransfer",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -24,6 +37,18 @@
             "selected_text": "$restShipmentMethodsAttributesTransfers",
             "error_level": 3,
             "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdShipmentMethod on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentsRestApi/src/Spryker/Glue/ShipmentsRestApi/Processor/Mapper/ShipmentMethodMapper.php",
+            "snippet": "            $restCheckoutRequestAttributesTransfer->getShipment()->getIdShipmentMethod() : null;",
+            "selected_text": "getIdShipmentMethod",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -72,6 +97,30 @@
             "selected_text": "$resourceValue",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdShipmentMethod on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentsRestApi/src/Spryker/Zed/ShipmentsRestApi/Business/Quote/ShipmentQuoteMapper.php",
+            "snippet": "            || !$restCheckoutRequestAttributesTransfer->getShipment()->getIdShipmentMethod()",
+            "selected_text": "getIdShipmentMethod",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdShipmentMethod on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentsRestApi/src/Spryker/Zed/ShipmentsRestApi/Business/Quote/ShipmentQuoteMapper.php",
+            "snippet": "        $idShipmentMethod = $restCheckoutRequestAttributesTransfer->getShipment()->getIdShipmentMethod();",
+            "selected_text": "getIdShipmentMethod",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -132,18 +181,6 @@
             "selected_text": "getIdShipmentMethod",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 42,
-            "line_to": 42,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShipmentsRestApi/src/Spryker/Zed/ShipmentsRestApi/ShipmentsRestApiDependencyProvider.php",
-            "snippet": "            return new ShipmentsRestApiToShipmentFacadeBridge($container->getLocator()->shipment()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

@@ -2,6 +2,30 @@
     "error": [
         {
             "severity": "error",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantProfileMerchantPortalGui\\Communication\\Form\\Constraint\\UniqueEmailValidator::validate has wrong name $email, expecting $value as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileMerchantPortalGui/src/Spryker/Zed/MerchantProfileMerchantPortalGui/Communication/Form/Constraint/UniqueEmailValidator.php",
+            "snippet": "    public function validate($email, Constraint $uniqueEmailConstraint): void",
+            "selected_text": "$email",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Zed\\MerchantProfileMerchantPortalGui\\Communication\\Form\\Constraint\\UniqueEmailValidator::validate has wrong name $uniqueEmailConstraint, expecting $constraint as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileMerchantPortalGui/src/Spryker/Zed/MerchantProfileMerchantPortalGui/Communication/Form/Constraint/UniqueEmailValidator.php",
+            "snippet": "    public function validate($email, Constraint $uniqueEmailConstraint): void",
+            "selected_text": "$uniqueEmailConstraint",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
             "line_from": 28,
             "line_to": 28,
             "type": "InvalidReturnType",
@@ -97,6 +121,30 @@
             "selected_text": "$value",
             "error_level": 5,
             "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantProfileMerchantPortalGui\\Communication\\Form\\Constraint\\UniqueUrlValidator::hasUrlCaseInsensitive cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileMerchantPortalGui/src/Spryker/Zed/MerchantProfileMerchantPortalGui/Communication/Form/Constraint/UniqueUrlValidator.php",
+            "snippet": "        if ($this->hasUrlCaseInsensitive($value->getUrl())) {",
+            "selected_text": "$value->getUrl()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileMerchantPortalGui/src/Spryker/Zed/MerchantProfileMerchantPortalGui/Communication/Form/Constraint/UniqueUrlValidator.php",
+            "snippet": "                ->buildViolation(sprintf('Provided URL \"%s\" is already taken.', $value->getUrl()))",
+            "selected_text": "$value->getUrl()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -273,82 +321,10 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of preg_match cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileMerchantPortalGui/src/Spryker/Zed/MerchantProfileMerchantPortalGui/Communication/Form/Transformer/MerchantProfileUrlCollectionDataTransformer.php",
-            "snippet": "        return preg_match('#^' . $urlPrefix . '#i', $url) > 0;",
+            "snippet": "        return (bool)preg_match('#^' . $urlPrefix . '#i', $url) > 0;",
             "selected_text": "$url",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 58,
-            "line_to": 58,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileMerchantPortalGui/src/Spryker/Zed/MerchantProfileMerchantPortalGui/MerchantProfileMerchantPortalGuiDependencyProvider.php",
-            "snippet": "            return new MerchantProfileMerchantPortalGuiToMerchantFacadeBridge($container->getLocator()->merchant()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 72,
-            "line_to": 72,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileMerchantPortalGui/src/Spryker/Zed/MerchantProfileMerchantPortalGui/MerchantProfileMerchantPortalGuiDependencyProvider.php",
-            "snippet": "            return new MerchantProfileMerchantPortalGuiToMerchantUserFacadeBridge($container->getLocator()->merchantUser()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 86,
-            "line_to": 86,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileMerchantPortalGui/src/Spryker/Zed/MerchantProfileMerchantPortalGui/MerchantProfileMerchantPortalGuiDependencyProvider.php",
-            "snippet": "            return new MerchantProfileMerchantPortalGuiToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 100,
-            "line_to": 100,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileMerchantPortalGui/src/Spryker/Zed/MerchantProfileMerchantPortalGui/MerchantProfileMerchantPortalGuiDependencyProvider.php",
-            "snippet": "            return new MerchantProfileMerchantPortalGuiToLocaleFacadeBridge($container->getLocator()->locale()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 114,
-            "line_to": 114,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileMerchantPortalGui/src/Spryker/Zed/MerchantProfileMerchantPortalGui/MerchantProfileMerchantPortalGuiDependencyProvider.php",
-            "snippet": "            return new MerchantProfileMerchantPortalGuiToUrlFacadeBridge($container->getLocator()->url()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 128,
-            "line_to": 128,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileMerchantPortalGui/src/Spryker/Zed/MerchantProfileMerchantPortalGui/MerchantProfileMerchantPortalGuiDependencyProvider.php",
-            "snippet": "            return new MerchantProfileMerchantPortalGuiToCountryFacadeBridge($container->getLocator()->country()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []
