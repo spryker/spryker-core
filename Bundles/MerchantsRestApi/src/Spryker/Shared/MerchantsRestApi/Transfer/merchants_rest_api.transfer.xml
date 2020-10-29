@@ -132,41 +132,6 @@
 
     <transfer name="MerchantSearch">
         <property name="idMerchant" type="int"/>
-        <property name="name" type="string"/>
-        <property name="merchantReference" type="string"/>
-        <property name="urlCollection" type="Url[]" singular="url"/>
-        <property name="merchantProfile" type="MerchantSearchProfile"/>
-    </transfer>
-
-    <transfer name="MerchantSearchProfile">
-        <property name="contactPersonRole" type="string"/>
-        <property name="contactPersonTitle" type="string"/>
-        <property name="contactPersonFirstName" type="string"/>
-        <property name="contactPersonLastName" type="string"/>
-        <property name="contactPersonPhone" type="string"/>
-        <property name="logoUrl" type="string"/>
-        <property name="publicEmail" type="string"/>
-        <property name="publicPhone" type="string"/>
-        <property name="descriptionGlossaryKey" type="string"/>
-        <property name="bannerUrlGlossaryKey" type="string"/>
-        <property name="deliveryTimeGlossaryKey" type="string"/>
-        <property name="termsConditionsGlossaryKey" type="string"/>
-        <property name="cancellationPolicyGlossaryKey" type="string"/>
-        <property name="imprintGlossaryKey" type="string"/>
-        <property name="dataPrivacyGlossaryKey" type="string"/>
-        <property name="description" type="string"/>
-        <property name="bannerUrl" type="string"/>
-        <property name="deliveryTime" type="string"/>
-        <property name="termsConditions" type="string"/>
-        <property name="cancellationPolicy" type="string"/>
-        <property name="imprint" type="string"/>
-        <property name="dataPrivacy" type="string"/>
-        <property name="latitude" type="string"/>
-        <property name="longitude" type="string"/>
-        <property name="faxNumber" type="string"/>
-    </transfer>
-
-    <transfer name="Category">
     </transfer>
 
 </transfers>

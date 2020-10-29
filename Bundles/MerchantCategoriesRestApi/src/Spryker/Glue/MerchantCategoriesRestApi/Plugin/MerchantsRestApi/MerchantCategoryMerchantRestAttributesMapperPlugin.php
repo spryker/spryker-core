@@ -7,32 +7,37 @@
 
 namespace Spryker\Glue\MerchantCategoriesRestApi\Plugin\MerchantsRestApi;
 
-use Generated\Shared\Transfer\MerchantSearchTransfer;
+use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\RestMerchantsAttributesTransfer;
 use Spryker\Glue\Kernel\AbstractPlugin;
-use Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\RestSearchMerchantsAttributesMapperPluginInterface;
+use Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\MerchantRestAttributesMapperPluginInterface;
 
 /**
  * @method \Spryker\Glue\MerchantCategoriesRestApi\MerchantCategoriesRestApiFactory getFactory()
  */
-class MerchantCategoryRestSearchMerchantsAttributesMapperPlugin extends AbstractPlugin implements RestSearchMerchantsAttributesMapperPluginInterface
+class MerchantCategoryMerchantRestAttributesMapperPlugin extends AbstractPlugin implements MerchantRestAttributesMapperPluginInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantSearchTransfer $merchantSearchTransfer
+     * Specification:
+     * - Maps MerchantStorageTransfer.categories to RestMerchantsAttributesTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantStorageTransfer $merchantStorageTransfer
      * @param \Generated\Shared\Transfer\RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\RestMerchantsAttributesTransfer
      */
-    public function mapMerchantSearchTransferToRestMerchantsAttributesTransfer(
-        MerchantSearchTransfer $merchantSearchTransfer,
+    public function mapMerchantStorageTransferToRestMerchantsAttributesTransfer(
+        MerchantStorageTransfer $merchantStorageTransfer,
         RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer,
         string $localeName
     ): RestMerchantsAttributesTransfer {
         return $this->getFactory()
             ->createMerchantCategoryMapper()
             ->mapCategoryTransfersToRestMerchantsAttributesTransfer(
-                $merchantSearchTransfer->getCategories()->getArrayCopy(),
+                $merchantStorageTransfer->getCategories()->getArrayCopy(),
                 $restMerchantsAttributesTransfer,
                 $localeName
             );

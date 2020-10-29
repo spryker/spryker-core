@@ -12,10 +12,6 @@
         <property name="name" type="string"/>
     </transfer>
 
-    <transfer name="MerchantSearch">
-        <property name="categories" type="Category[]" singular="category"/>
-    </transfer>
-
     <transfer name="MerchantStorage">
         <property name="categories" type="Category[]" singular="category"/>
     </transfer>

@@ -20,14 +20,9 @@
 
     <transfer name="MerchantSearch">
         <property name="idMerchant" type="int"/>
-        <property name="merchantKey" type="string"/>
         <property name="name" type="string"/>
-        <property name="registrationNumber" type="string"/>
-        <property name="email" type="string"/>
-        <property name="merchantReference" type="string"/>
         <property name="data" type="array" singular="data"/>
         <property name="structuredData" type="string"/>
-        <property name="urlCollection" type="Url[]" singular="url"/>
     </transfer>
 
     <transfer name="MerchantSearchRequest">

@@ -115,6 +115,7 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
     /**
      * @param \Generated\Shared\Transfer\MerchantSearchRequestTransfer $merchantSearchRequestTransfer
      * @param \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer
+     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
      * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
@@ -122,18 +123,17 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
     public function createMerchantListRestResponse(
         MerchantSearchRequestTransfer $merchantSearchRequestTransfer,
         MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer,
+        array $merchantStorageTransfers,
         string $localeName
     ): RestResponseInterface {
-        $restMerchantsAttributesTransfers = [];
-
         $restResponse = $this->restResourceBuilder->createRestResponse(
             $merchantSearchCollectionTransfer->getNbResults(),
             $merchantSearchRequestTransfer->getRequestParameters()[static::ITEMS_PER_PAGE] ?? 0
         );
 
-        foreach ($merchantSearchCollectionTransfer->getMerchants() as $key => $merchantSearchTransfer) {
+        foreach ($merchantStorageTransfers as $merchantSearchTransfer) {
             $restMerchantsAttributesTransfer = $this->merchantMapper
-                ->mapMerchantSearchTransferToRestMerchantsAttributesTransfer(
+                ->mapMerchantStorageTransferToRestMerchantsAttributesTransfer(
                     $merchantSearchTransfer,
                     new RestMerchantsAttributesTransfer(),
                     $localeName

@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\MerchantsRestApi\Processor\Reader;
 
+use Generated\Shared\Transfer\MerchantSearchCollectionTransfer;
 use Generated\Shared\Transfer\MerchantSearchRequestTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -140,16 +141,37 @@ class MerchantReader implements MerchantReaderInterface
         /** @var \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer */
         $merchantSearchCollectionTransfer = $searchResult[static::KEY_MERCHANT_SEARCH_COLLECTION];
 
-        $merchantSearchCollectionTransfer = $this->merchantTranslator->translateMerchantSearchCollection(
-            $merchantSearchCollectionTransfer,
+        $merchantStorageTransfers = $this->merchantStorageClient->get(
+            $this->extractMerchantIds($merchantSearchCollectionTransfer)
+        );
+
+        $merchantStorageTransfers = $this->merchantTranslator->translateMerchantStorageTransfers(
+            $merchantStorageTransfers,
             $restRequest->getMetadata()->getLocale()
         );
 
         return $this->merchantRestResponseBuilder->createMerchantListRestResponse(
             $merchantSearchRequestTransfer,
             $merchantSearchCollectionTransfer,
+            $merchantStorageTransfers,
             $restRequest->getMetadata()->getLocale()
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer
+     *
+     * @return int[]
+     */
+    protected function extractMerchantIds(MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer): array
+    {
+        $merchantIds = [];
+
+        foreach ($merchantSearchCollectionTransfer->getMerchants() as $merchantSearchTransfer) {
+            $merchantIds[] = $merchantSearchTransfer->getIdMerchant();
+        }
+
+        return $merchantIds;
     }
 
     /**
