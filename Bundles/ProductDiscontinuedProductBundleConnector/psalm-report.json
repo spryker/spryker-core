@@ -88,39 +88,27 @@
         },
         {
             "severity": "info",
+            "line_from": 104,
+            "line_to": 104,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getBundledProducts on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedProductBundleConnector/src/Spryker/Zed/ProductDiscontinuedProductBundleConnector/Business/ProductBundleDiscontinued/ProductBundleDiscontinuedWriter.php",
+            "snippet": "        foreach ($productConcreteTransfer->getProductBundle()->getBundledProducts() as $productForBundleTransfer) {",
+            "selected_text": "getBundledProducts",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 43,
             "line_to": 43,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductDiscontinued\\Persistence\\SpyProductDiscontinued|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductDiscontinued\\Persistence\\SpyProductDiscontinued> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedProductBundleConnector/src/Spryker/Zed/ProductDiscontinuedProductBundleConnector/Persistence/ProductDiscontinuedProductBundleConnectorRepository.php",
             "snippet": "            ->toArray();",
             "selected_text": "toArray",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedProductBundleConnector/src/Spryker/Zed/ProductDiscontinuedProductBundleConnector/ProductDiscontinuedProductBundleConnectorDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productDiscontinued()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 77,
-            "line_to": 77,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedProductBundleConnector/src/Spryker/Zed/ProductDiscontinuedProductBundleConnector/ProductDiscontinuedProductBundleConnectorDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productBundle()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

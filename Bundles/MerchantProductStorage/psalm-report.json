@@ -10,8 +10,7 @@
             "snippet": "        $this->productStorageFacade->publishAbstractProducts($productAbstractIds);",
             "selected_text": "$productAbstractIds",
             "error_level": 6,
-            "shortcode": 4,
-            "taint_trace": null
+            "shortcode": 4
         }
     ],
     "warning": [
@@ -25,8 +24,7 @@
             "snippet": "            ->findOne($productViewTransfer->getIdProductAbstract());",
             "selected_text": "$productViewTransfer->getIdProductAbstract()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -38,21 +36,7 @@
             "snippet": "        if (!$merchantProductCollectionTransfer->getMerchantProducts()->count()) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 80,
-            "line_to": 80,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Generated\\Zed\\Ide\\AutoCompletion::merchantProduct does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductStorage/src/Spryker/Zed/MerchantProductStorage/MerchantProductStorageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->merchantProduct()->facade()",
-            "selected_text": "merchantProduct",
-            "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 113
         }
     ],
     "deprecation": []

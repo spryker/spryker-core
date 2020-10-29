@@ -1,30 +1,67 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 37,
+            "line_to": 37,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\AvailabilityStorage\\Communication\\Plugin\\Event\\Listener\\AvailabilityProductStorageListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityStorage/src/Spryker/Zed/AvailabilityStorage/Communication/Plugin/Event/Listener/AvailabilityProductStorageListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\AvailabilityStorage\\Communication\\Plugin\\Event\\Listener\\AvailabilityStockStorageListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityStorage/src/Spryker/Zed/AvailabilityStorage/Communication/Plugin/Event/Listener/AvailabilityStockStorageListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\AvailabilityStorage\\Communication\\Plugin\\Event\\Listener\\AvailabilityStorageListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityStorage/src/Spryker/Zed/AvailabilityStorage/Communication/Plugin/Event/Listener/AvailabilityStorageListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\AvailabilityStorage\\Communication\\Plugin\\Event\\Listener\\AvailabilityStoragePublishListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityStorage/src/Spryker/Zed/AvailabilityStorage/Communication/Plugin/Event/Listener/AvailabilityStoragePublishListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\AvailabilityStorage\\Communication\\Plugin\\Event\\Listener\\AvailabilityStorageUnpublishListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityStorage/src/Spryker/Zed/AvailabilityStorage/Communication/Plugin/Event/Listener/AvailabilityStorageUnpublishListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
     "warning": [
-        {
-            "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityStorage/src/Spryker/Client/AvailabilityStorage/AvailabilityStorageDependencyProvider.php",
-            "snippet": "            return new AvailabilityStorageToStorageClientBridge($container->getLocator()->storage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 63,
-            "line_to": 63,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityStorage/src/Spryker/Client/AvailabilityStorage/AvailabilityStorageDependencyProvider.php",
-            "snippet": "            return new AvailabilityStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
         {
             "severity": "info",
             "line_from": 45,
@@ -147,54 +184,6 @@
         },
         {
             "severity": "info",
-            "line_from": 169,
-            "line_to": 169,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityStorage/src/Spryker/Client/AvailabilityStorage/Storage/AvailabilityStorageReader.php",
-            "snippet": "        $availabilityClient = $clientLocatorClassName::getInstance()->availability()->client();",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 36,
-            "line_to": 36,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityStorage/src/Spryker/Zed/AvailabilityStorage/AvailabilityStorageDependencyProvider.php",
-            "snippet": "            return new AvailabilityStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 64,
-            "line_to": 64,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityStorage/src/Spryker/Zed/AvailabilityStorage/AvailabilityStorageDependencyProvider.php",
-            "snippet": "            return new AvailabilityStorageToAvailabilityQueryContainerBridge($container->getLocator()->availability()->queryContainer());",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 68,
-            "line_to": 68,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityStorage/src/Spryker/Zed/AvailabilityStorage/AvailabilityStorageDependencyProvider.php",
-            "snippet": "            return new AvailabilityStorageToProductQueryContainerBridge($container->getLocator()->product()->queryContainer());",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 131,
             "line_to": 131,
             "type": "PossiblyInvalidMethodCall",
@@ -216,6 +205,18 @@
             "selected_text": "toKeyIndex",
             "error_level": 3,
             "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\AvailabilityStorage\\Communication\\Plugin\\Event\\AvailabilityEventResourceQueryContainerPlugin::queryData has the more specific type 'array<array-key, int>', expecting 'array<array-key, int|string>' as defined by Spryker\\Zed\\EventBehavior\\Dependency\\Plugin\\EventResourceQueryContainerPluginInterface::queryData",
+            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityStorage/src/Spryker/Zed/AvailabilityStorage/Communication/Plugin/Event/AvailabilityEventResourceQueryContainerPlugin.php",
+            "snippet": "    public function queryData(array $ids = []): ?ModelCriteria",
+            "selected_text": "$ids",
+            "error_level": 5,
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -252,42 +253,6 @@
             "selected_text": "toKeyIndex",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 95,
-            "line_to": 95,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::filterbyidavailabilityabstract_in does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityStorage/src/Spryker/Zed/AvailabilityStorage/Persistence/AvailabilityStorageQueryContainer.php",
-            "snippet": "            ->filterByIdAvailabilityAbstract_In($availabilityAbstractIds)",
-            "selected_text": "filterByIdAvailabilityAbstract_In",
-            "error_level": 3,
-            "shortcode": 108
-        },
-        {
-            "severity": "info",
-            "line_from": 107,
-            "line_to": 107,
-            "type": "MoreSpecificReturnType",
-            "message": "The declared return type 'Orm\\Zed\\Availability\\Persistence\\SpyAvailabilityAbstractQuery' for Spryker\\Zed\\AvailabilityStorage\\Persistence\\AvailabilityStorageQueryContainer::queryAvailabilityAbstractByAbstractProductSkus is more specific than the inferred return type 'Propel\\Runtime\\ActiveQuery\\ModelCriteria'",
-            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityStorage/src/Spryker/Zed/AvailabilityStorage/Persistence/AvailabilityStorageQueryContainer.php",
-            "snippet": "     * @return \\Orm\\Zed\\Availability\\Persistence\\SpyAvailabilityAbstractQuery",
-            "selected_text": "\\Orm\\Zed\\Availability\\Persistence\\SpyAvailabilityAbstractQuery",
-            "error_level": 3,
-            "shortcode": 70
-        },
-        {
-            "severity": "info",
-            "line_from": 111,
-            "line_to": 115,
-            "type": "LessSpecificReturnStatement",
-            "message": "The type 'Orm\\Zed\\Availability\\Persistence\\SpyAvailabilityAbstractQuery&static|Propel\\Runtime\\ActiveQuery\\ModelCriteria' is more general than the declared return type 'Orm\\Zed\\Availability\\Persistence\\SpyAvailabilityAbstractQuery' for Spryker\\Zed\\AvailabilityStorage\\Persistence\\AvailabilityStorageQueryContainer::queryAvailabilityAbstractByAbstractProductSkus",
-            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityStorage/src/Spryker/Zed/AvailabilityStorage/Persistence/AvailabilityStorageQueryContainer.php",
-            "snippet": "        return $this->getFactory()\n            ->getAvailabilityQueryContainer()\n            ->queryAllAvailabilityAbstracts()\n            ->filterByAbstractSku_In($abstractProductSkus)\n            ->select([SpyAvailabilityAbstractTableMap::COL_ID_AVAILABILITY_ABSTRACT]);",
-            "selected_text": "$this->getFactory()\n            ->getAvailabilityQueryContainer()\n            ->queryAllAvailabilityAbstracts()\n            ->filterByAbstractSku_In($abstractProductSkus)\n            ->select([SpyAvailabilityAbstractTableMap::COL_ID_AVAILABILITY_ABSTRACT])",
-            "error_level": 3,
-            "shortcode": 129
         }
     ],
     "deprecation": [
@@ -314,18 +279,6 @@
             "selected_text": "ProductViewAvailabilityStorageExpanderPlugin",
             "error_level": 2,
             "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 77,
-            "line_to": 77,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Client\\AvailabilityStorage\\Storage\\AvailabilityStorageReader::getAvailabilityAbstract has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityStorage/src/Spryker/Client/AvailabilityStorage/Storage/AvailabilityStorageReader.php",
-            "snippet": "        $spyAvailabilityAbstractTransfer = $this->getAvailabilityAbstract($idProductAbstract);",
-            "selected_text": "getAvailabilityAbstract",
-            "error_level": 2,
-            "shortcode": 1
         },
         {
             "severity": "info",
@@ -401,8 +354,8 @@
         },
         {
             "severity": "info",
-            "line_from": 25,
-            "line_to": 25,
+            "line_from": 26,
+            "line_to": 26,
             "type": "DeprecatedTrait",
             "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/AvailabilityStorage/src/Spryker/Zed/AvailabilityStorage/Communication/Plugin/Event/Listener/AvailabilityStorageListener.php",

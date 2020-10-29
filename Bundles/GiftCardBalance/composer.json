@@ -4,7 +4,7 @@
   "description": "GiftCardBalance module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/gift-card": "^1.0.0",
     "spryker/gui": "^3.12.0",
     "spryker/kernel": "^3.30.0",

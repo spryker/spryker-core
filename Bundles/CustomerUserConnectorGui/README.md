@@ -1,6 +1,6 @@
 # CustomerUserConnectorGui Module
 [![Build Status](https://travis-ci.org/spryker/customer-user-connector-gui.svg)](https://travis-ci.org/spryker/customer-user-connector-gui)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 CustomerUserConnector provides Zed Administrative Interface to manage customer user connections.
 

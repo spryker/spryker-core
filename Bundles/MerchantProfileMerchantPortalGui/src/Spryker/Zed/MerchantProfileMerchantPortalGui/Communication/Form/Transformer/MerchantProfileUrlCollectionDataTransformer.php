@@ -85,6 +85,6 @@ class MerchantProfileUrlCollectionDataTransformer implements DataTransformerInte
      */
     protected function hasUrlPrefix(?string $url, string $urlPrefix): bool
     {
-        return preg_match('#^' . $urlPrefix . '#i', $url) > 0;
+        return (bool)preg_match('#^' . $urlPrefix . '#i', $url);
     }
 }

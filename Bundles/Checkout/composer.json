@@ -4,7 +4,7 @@
   "description": "Checkout module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/checkout-extension": "^1.2.0",
     "spryker/error-handler": "^2.1.0",
     "spryker/kernel": "^3.30.0",

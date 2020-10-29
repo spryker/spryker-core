@@ -4,7 +4,7 @@
   "description": "MerchantShipment module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker-shop/cart-page-extension": "^1.0.0",
     "spryker-shop/checkout-page-extension": "^1.3.0",
     "spryker-shop/customer-page-extension": "^1.3.0"

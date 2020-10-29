@@ -76,18 +76,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesReturn/src/Spryker/Client/SalesReturn/SalesReturnDependencyProvider.php",
-            "snippet": "            return new SalesReturnToZedRequestClientBridge($container->getLocator()->zedRequest()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 37,
             "line_to": 37,
             "type": "PossiblyNullOperand",
@@ -280,6 +268,18 @@
         },
         {
             "severity": "info",
+            "line_from": 72,
+            "line_to": 72,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of DateTime::__construct cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReturn/src/Spryker/Zed/SalesReturn/Business/Setter/IsReturnableSetter.php",
+            "snippet": "        $returnableTillDateTime = (new DateTime($itemTransfer->getCreatedAt()))",
+            "selected_text": "$itemTransfer->getCreatedAt()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
             "line_from": 99,
             "line_to": 99,
             "type": "PossiblyNullReference",
@@ -301,6 +301,18 @@
             "selected_text": "getName",
             "error_level": 3,
             "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 121,
+            "line_to": 121,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of DateTime::__construct cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReturn/src/Spryker/Zed/SalesReturn/Business/Setter/IsReturnableSetter.php",
+            "snippet": "        $createdAt = (new DateTime($itemTransfer->getCreatedAt()))->setTime(0, 0);",
+            "selected_text": "$itemTransfer->getCreatedAt()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -652,6 +664,18 @@
         },
         {
             "severity": "info",
+            "line_from": 317,
+            "line_to": 317,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCustomerReference on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReturn/src/Spryker/Zed/SalesReturn/Business/Writer/ReturnWriter.php",
+            "snippet": "        return $returnCreateRequestTransfer->getCustomer()->getCustomerReference();",
+            "selected_text": "getCustomerReference",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 45,
             "line_to": 45,
             "type": "PossiblyNullArgument",
@@ -703,7 +727,7 @@
             "line_from": 69,
             "line_to": 69,
             "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\SalesReturn\\Persistence\\Propel\\Mapper\\ReturnReasonMapper::mapReturnReasonEntityCollectionToReturnReasonCollection expects Propel\\Runtime\\Collection\\ObjectCollection, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed>|mixed provided",
+            "message": "Argument 1 of Spryker\\Zed\\SalesReturn\\Persistence\\Propel\\Mapper\\ReturnReasonMapper::mapReturnReasonEntityCollectionToReturnReasonCollection expects Propel\\Runtime\\Collection\\ObjectCollection, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed provided",
             "file_name": "vendor/spryker/spryker/Bundles/SalesReturn/src/Spryker/Zed/SalesReturn/Persistence/SalesReturnRepository.php",
             "snippet": "            ->mapReturnReasonEntityCollectionToReturnReasonCollection($returnReasonQuery->find())",
             "selected_text": "$returnReasonQuery->find()",
@@ -748,18 +772,6 @@
         },
         {
             "severity": "info",
-            "line_from": 99,
-            "line_to": 99,
-            "type": "ArgumentTypeCoercion",
-            "message": "Argument 1 of Spryker\\Zed\\SalesReturn\\Persistence\\SalesReturnRepository::setSalesReturnFilters expects Orm\\Zed\\SalesReturn\\Persistence\\SpySalesReturnQuery, parent type Orm\\Zed\\SalesReturn\\Persistence\\SpySalesReturnQuery&static|Propel\\Runtime\\ActiveQuery\\ModelCriteria provided",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesReturn/src/Spryker/Zed/SalesReturn/Persistence/SalesReturnRepository.php",
-            "snippet": "        $salesReturnQuery = $this->setSalesReturnFilters($salesReturnQuery, $returnFilterTransfer);",
-            "selected_text": "$salesReturnQuery",
-            "error_level": 3,
-            "shortcode": 193
-        },
-        {
-            "severity": "info",
             "line_from": 106,
             "line_to": 106,
             "type": "PossiblyInvalidArgument",
@@ -772,6 +784,30 @@
         },
         {
             "severity": "info",
+            "line_from": 113,
+            "line_to": 113,
+            "type": "PossiblyNullOperand",
+            "message": "Left operand cannot be nullable, got int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReturn/src/Spryker/Zed/SalesReturn/Persistence/SalesReturnRepository.php",
+            "snippet": "            $page = $filterTransfer->getOffset() / $filterTransfer->getLimit() + 1;",
+            "selected_text": "$filterTransfer->getOffset()",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 113,
+            "line_to": 113,
+            "type": "PossiblyNullOperand",
+            "message": "Right operand cannot be nullable, got int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReturn/src/Spryker/Zed/SalesReturn/Persistence/SalesReturnRepository.php",
+            "snippet": "            $page = $filterTransfer->getOffset() / $filterTransfer->getLimit() + 1;",
+            "selected_text": "$filterTransfer->getLimit()",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
             "line_from": 117,
             "line_to": 117,
             "type": "PossiblyInvalidArgument",
@@ -779,6 +815,18 @@
             "file_name": "vendor/spryker/spryker/Bundles/SalesReturn/src/Spryker/Zed/SalesReturn/Persistence/SalesReturnRepository.php",
             "snippet": "        $paginationTransfer = $this->getPagination($propelModelPager);",
             "selected_text": "$propelModelPager",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 121,
+            "line_to": 121,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\SalesReturn\\Persistence\\Propel\\Mapper\\ReturnMapper::mapReturnEntityCollectionToReturnCollectionTransfer expects Propel\\Runtime\\Collection\\ObjectCollection, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReturn/src/Spryker/Zed/SalesReturn/Persistence/SalesReturnRepository.php",
+            "snippet": "            ->mapReturnEntityCollectionToReturnCollectionTransfer($propelModelPager->getQuery()->find())",
+            "selected_text": "$propelModelPager->getQuery()->find()",
             "error_level": 3,
             "shortcode": 92
         },
@@ -805,54 +853,6 @@
             "selected_text": "$salesReturnItemQuery->find()",
             "error_level": 3,
             "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 70,
-            "line_to": 70,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesReturn/src/Spryker/Zed/SalesReturn/SalesReturnDependencyProvider.php",
-            "snippet": "            return new SalesReturnToStoreFacadeBridge($container->getLocator()->store()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 84,
-            "line_to": 84,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesReturn/src/Spryker/Zed/SalesReturn/SalesReturnDependencyProvider.php",
-            "snippet": "            return new SalesReturnToSalesFacadeBridge($container->getLocator()->sales()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 98,
-            "line_to": 98,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesReturn/src/Spryker/Zed/SalesReturn/SalesReturnDependencyProvider.php",
-            "snippet": "            return new SalesReturnToOmsFacadeBridge($container->getLocator()->oms()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 129,
-            "line_to": 129,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesReturn/src/Spryker/Zed/SalesReturn/SalesReturnDependencyProvider.php",
-            "snippet": "                $container->getLocator()->utilDateTime()->service()",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

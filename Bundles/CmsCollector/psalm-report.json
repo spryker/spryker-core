@@ -1,5 +1,54 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Zed\\CmsCollector\\Business\\Map\\CmsDataPageMapBuilder::buildPageMap has wrong name $cmsPageData, expecting $data as defined by Spryker\\Zed\\Search\\Dependency\\Plugin\\PageMapInterface::buildPageMap",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsCollector/src/Spryker/Zed/CmsCollector/Business/Map/CmsDataPageMapBuilder.php",
+            "snippet": "    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $cmsPageData, LocaleTransfer $localeTransfer)",
+            "selected_text": "$cmsPageData",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "ParamNameMismatch",
+            "message": "Argument 3 of Spryker\\Zed\\CmsCollector\\Business\\Map\\CmsDataPageMapBuilder::buildPageMap has wrong name $localeTransfer, expecting $locale as defined by Spryker\\Zed\\Search\\Dependency\\Plugin\\PageMapInterface::buildPageMap",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsCollector/src/Spryker/Zed/CmsCollector/Business/Map/CmsDataPageMapBuilder.php",
+            "snippet": "    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $cmsPageData, LocaleTransfer $localeTransfer)",
+            "selected_text": "$localeTransfer",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Zed\\CmsCollector\\Communication\\Plugin\\CmsVersionPageCollectorSearchPlugin::run has wrong name $localeTransfer, expecting $locale as defined by Spryker\\Zed\\Collector\\Dependency\\Plugin\\CollectorPluginInterface::run",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsCollector/src/Spryker/Zed/CmsCollector/Communication/Plugin/CmsVersionPageCollectorSearchPlugin.php",
+            "snippet": "        LocaleTransfer $localeTransfer,",
+            "selected_text": "$localeTransfer",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Zed\\CmsCollector\\Communication\\Plugin\\CmsVersionPageCollectorStoragePlugin::run has wrong name $localeTransfer, expecting $locale as defined by Spryker\\Zed\\Collector\\Dependency\\Plugin\\CollectorPluginInterface::run",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsCollector/src/Spryker/Zed/CmsCollector/Communication/Plugin/CmsVersionPageCollectorStoragePlugin.php",
+            "snippet": "        LocaleTransfer $localeTransfer,",
+            "selected_text": "$localeTransfer",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -72,78 +121,6 @@
             "selected_text": "$localeCmsPageDataTransfer->getName()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 37,
-            "line_to": 37,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsCollector/src/Spryker/Zed/CmsCollector/CmsCollectorDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->utilDataReader()->service();",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsCollector/src/Spryker/Zed/CmsCollector/CmsCollectorDependencyProvider.php",
-            "snippet": "            return new CmsCollectorToCollectorBridge($container->getLocator()->collector()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 45,
-            "line_to": 45,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsCollector/src/Spryker/Zed/CmsCollector/CmsCollectorDependencyProvider.php",
-            "snippet": "            return new CmsCollectorToSearchBridge($container->getLocator()->search()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsCollector/src/Spryker/Zed/CmsCollector/CmsCollectorDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->touch()->queryContainer();",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 65,
-            "line_to": 65,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsCollector/src/Spryker/Zed/CmsCollector/CmsCollectorDependencyProvider.php",
-            "snippet": "            return new CmsCollectorToCmsBridge($container->getLocator()->cms()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 72,
-            "line_to": 72,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::withcolumn does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsCollector/src/Spryker/Zed/CmsCollector/Persistence/Collector/AbstractCmsVersionPageCollector.php",
-            "snippet": "            ->withColumn(sprintf('MAX(%s)', SpyCmsVersionTableMap::COL_VERSION))",
-            "selected_text": "withColumn",
-            "error_level": 3,
-            "shortcode": 108
         }
     ],
     "deprecation": [

@@ -121,42 +121,6 @@
             "selected_text": "array",
             "error_level": 5,
             "shortcode": 166
-        },
-        {
-            "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelDiscountConnector/src/Spryker/Zed/ProductLabelDiscountConnector/ProductLabelDiscountConnectorDependencyProvider.php",
-            "snippet": "            return new ProductLabelDiscountConnectorToProductLabelBridge($container->getLocator()->productLabel()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelDiscountConnector/src/Spryker/Zed/ProductLabelDiscountConnector/ProductLabelDiscountConnectorDependencyProvider.php",
-            "snippet": "            return new ProductLabelDiscountConnectorToDiscountBridge($container->getLocator()->discount()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 73,
-            "line_to": 73,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelDiscountConnector/src/Spryker/Zed/ProductLabelDiscountConnector/ProductLabelDiscountConnectorDependencyProvider.php",
-            "snippet": "            return new ProductLabelDiscountConnectorToProductLabelQueryContainerBridge($container->getLocator()->productLabel()->queryContainer());",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

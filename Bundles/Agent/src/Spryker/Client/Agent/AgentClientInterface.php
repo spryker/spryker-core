@@ -71,4 +71,15 @@ interface AgentClientInterface
      * @return \Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer
      */
     public function findCustomersByQuery(CustomerQueryTransfer $customerQueryTransfer): CustomerAutocompleteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Executes ImpersonationSessionFinisherPluginInterface plugins.
+     * - Removes customer information from session.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function finishImpersonationSession(): void;
 }

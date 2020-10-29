@@ -74,22 +74,10 @@
         },
         {
             "severity": "error",
-            "line_from": 50,
-            "line_to": 55,
-            "type": "UndefinedDocblockClass",
-            "message": "Docblock-defined class or interface Orm\\Zed\\ProductMerchantConnector\\Persistence\\SpyProductAbstractMerchantQuery does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/Persistence/ProductSearchQueryContainer.php",
-            "snippet": "        $query\n            ->useSpyProductAbstractQuery()\n                ->useSpyProductAbstractLocalizedAttributesQuery()\n                        ->filterByFkLocale($locale->getIdLocale())\n                ->endUse()\n            ->endUse()",
-            "selected_text": "$query\n            ->useSpyProductAbstractQuery()\n                ->useSpyProductAbstractLocalizedAttributesQuery()\n                        ->filterByFkLocale($locale->getIdLocale())\n                ->endUse()\n            ->endUse()",
-            "error_level": -1,
-            "shortcode": 200
-        },
-        {
-            "severity": "error",
             "line_from": 304,
             "line_to": 304,
             "type": "InvalidReturnType",
-            "message": "The declared return type 'Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery' for Spryker\\Zed\\ProductSearch\\Persistence\\ProductSearchQueryContainer::queryProductAbstractByAttributeName is incorrect, got 'Orm\\Zed\\CompanySupplier\\Persistence\\SpyCompanySupplierToProductQuery|Orm\\Zed\\GiftCard\\Persistence\\SpyGiftCardProductConfigurationLinkQuery|Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationshipQuery|Orm\\Zed\\PriceProductSchedule\\Persistence\\SpyPriceProductScheduleQuery|Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProductQuery|Orm\\Zed\\ProductAlternative\\Persistence\\SpyProductAlternativeQuery|Orm\\Zed\\ProductBundle\\Persistence\\SpyProductBundleQuery|Orm\\Zed\\ProductDiscontinued\\Persistence\\SpyProductDiscontinuedQuery|Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSetQuery|Orm\\Zed\\ProductList\\Persistence\\SpyProductListProductConcreteQuery|Orm\\Zed\\ProductMeasurementUnit\\Persistence\\SpyProductMeasurementSalesUnitQuery|Orm\\Zed\\ProductPackagingUnit\\Persistence\\SpyProductPackagingUnitQuery|Orm\\Zed\\ProductQuantity\\Persistence\\SpyProductQuantityQuery|Orm\\Zed\\ProductSearch\\Persistence\\SpyProductSearchQuery|Orm\\Zed\\ProductValidity\\Persistence\\SpyProductValidityQuery|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery|Orm\\Zed\\Product\\Persistence\\SpyProductLocalizedAttributesQuery|Orm\\Zed\\Stock\\Persistence\\SpyStockProductQuery|Orm\\Zed\\Wishlist\\Persistence\\SpyWishlistItemQuery'",
+            "message": "The declared return type 'Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery' for Spryker\\Zed\\ProductSearch\\Persistence\\ProductSearchQueryContainer::queryProductAbstractByAttributeName is incorrect, got 'Orm\\Zed\\CompanySupplier\\Persistence\\SpyCompanySupplierToProductQuery|Orm\\Zed\\GiftCard\\Persistence\\SpyGiftCardProductConfigurationLinkQuery|Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationshipQuery|Orm\\Zed\\PriceProductSchedule\\Persistence\\SpyPriceProductScheduleQuery|Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProductQuery|Orm\\Zed\\ProductAlternative\\Persistence\\SpyProductAlternativeQuery|Orm\\Zed\\ProductBundle\\Persistence\\SpyProductBundleQuery|Orm\\Zed\\ProductConfiguration\\Persistence\\SpyProductConfigurationQuery|Orm\\Zed\\ProductDiscontinued\\Persistence\\SpyProductDiscontinuedQuery|Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSetQuery|Orm\\Zed\\ProductList\\Persistence\\SpyProductListProductConcreteQuery|Orm\\Zed\\ProductMeasurementUnit\\Persistence\\SpyProductMeasurementSalesUnitQuery|Orm\\Zed\\ProductPackagingUnit\\Persistence\\SpyProductPackagingUnitQuery|Orm\\Zed\\ProductQuantity\\Persistence\\SpyProductQuantityQuery|Orm\\Zed\\ProductSearch\\Persistence\\SpyProductSearchQuery|Orm\\Zed\\ProductValidity\\Persistence\\SpyProductValidityQuery|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery|Orm\\Zed\\Product\\Persistence\\SpyProductLocalizedAttributesQuery|Orm\\Zed\\Stock\\Persistence\\SpyStockProductQuery|Orm\\Zed\\Wishlist\\Persistence\\SpyWishlistItemQuery'",
             "file_name": "vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/Persistence/ProductSearchQueryContainer.php",
             "snippet": "     * @return \\Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery",
             "selected_text": "\\Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery",
@@ -101,7 +89,7 @@
             "line_from": 321,
             "line_to": 321,
             "type": "InvalidReturnStatement",
-            "message": "The inferred type 'Orm\\Zed\\CompanySupplier\\Persistence\\SpyCompanySupplierToProductQuery|Orm\\Zed\\GiftCard\\Persistence\\SpyGiftCardProductConfigurationLinkQuery|Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationshipQuery|Orm\\Zed\\PriceProductSchedule\\Persistence\\SpyPriceProductScheduleQuery|Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProductQuery|Orm\\Zed\\ProductAlternative\\Persistence\\SpyProductAlternativeQuery|Orm\\Zed\\ProductBundle\\Persistence\\SpyProductBundleQuery|Orm\\Zed\\ProductDiscontinued\\Persistence\\SpyProductDiscontinuedQuery|Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSetQuery|Orm\\Zed\\ProductList\\Persistence\\SpyProductListProductConcreteQuery|Orm\\Zed\\ProductMeasurementUnit\\Persistence\\SpyProductMeasurementSalesUnitQuery|Orm\\Zed\\ProductPackagingUnit\\Persistence\\SpyProductPackagingUnitQuery|Orm\\Zed\\ProductQuantity\\Persistence\\SpyProductQuantityQuery|Orm\\Zed\\ProductSearch\\Persistence\\SpyProductSearchQuery|Orm\\Zed\\ProductValidity\\Persistence\\SpyProductValidityQuery|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery|Orm\\Zed\\Product\\Persistence\\SpyProductLocalizedAttributesQuery|Orm\\Zed\\Stock\\Persistence\\SpyStockProductQuery|Orm\\Zed\\Wishlist\\Persistence\\SpyWishlistItemQuery' does not match the declared return type 'Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery' for Spryker\\Zed\\ProductSearch\\Persistence\\ProductSearchQueryContainer::queryProductAbstractByAttributeName",
+            "message": "The inferred type 'Orm\\Zed\\CompanySupplier\\Persistence\\SpyCompanySupplierToProductQuery|Orm\\Zed\\GiftCard\\Persistence\\SpyGiftCardProductConfigurationLinkQuery|Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationshipQuery|Orm\\Zed\\PriceProductSchedule\\Persistence\\SpyPriceProductScheduleQuery|Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProductQuery|Orm\\Zed\\ProductAlternative\\Persistence\\SpyProductAlternativeQuery|Orm\\Zed\\ProductBundle\\Persistence\\SpyProductBundleQuery|Orm\\Zed\\ProductConfiguration\\Persistence\\SpyProductConfigurationQuery|Orm\\Zed\\ProductDiscontinued\\Persistence\\SpyProductDiscontinuedQuery|Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSetQuery|Orm\\Zed\\ProductList\\Persistence\\SpyProductListProductConcreteQuery|Orm\\Zed\\ProductMeasurementUnit\\Persistence\\SpyProductMeasurementSalesUnitQuery|Orm\\Zed\\ProductPackagingUnit\\Persistence\\SpyProductPackagingUnitQuery|Orm\\Zed\\ProductQuantity\\Persistence\\SpyProductQuantityQuery|Orm\\Zed\\ProductSearch\\Persistence\\SpyProductSearchQuery|Orm\\Zed\\ProductValidity\\Persistence\\SpyProductValidityQuery|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery|Orm\\Zed\\Product\\Persistence\\SpyProductLocalizedAttributesQuery|Orm\\Zed\\Stock\\Persistence\\SpyStockProductQuery|Orm\\Zed\\Wishlist\\Persistence\\SpyWishlistItemQuery' does not match the declared return type 'Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery' for Spryker\\Zed\\ProductSearch\\Persistence\\ProductSearchQueryContainer::queryProductAbstractByAttributeName",
             "file_name": "vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/Persistence/ProductSearchQueryContainer.php",
             "snippet": "        return $query;",
             "selected_text": "$query",
@@ -110,18 +98,6 @@
         }
     ],
     "warning": [
-        {
-            "severity": "info",
-            "line_from": 56,
-            "line_to": 56,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Client/ProductSearch/ProductSearchDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->storage()->client();",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
         {
             "severity": "info",
             "line_from": 62,
@@ -472,30 +448,6 @@
         },
         {
             "severity": "info",
-            "line_from": 121,
-            "line_to": 121,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::find does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/Business/Marker/AbstractAttributeMarker.php",
-            "snippet": "            ->find();",
-            "selected_text": "find",
-            "error_level": 3,
-            "shortcode": 108
-        },
-        {
-            "severity": "info",
-            "line_from": 172,
-            "line_to": 172,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::find does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/Business/Marker/AbstractAttributeMarker.php",
-            "snippet": "            ->find();",
-            "selected_text": "find",
-            "error_level": 3,
-            "shortcode": 108
-        },
-        {
-            "severity": "info",
             "line_from": 60,
             "line_to": 60,
             "type": "PossiblyNullArgument",
@@ -541,18 +493,6 @@
             "selected_text": "$this->localeFacade\n            ->getCurrentLocale()\n            ->getIdLocale()",
             "error_level": 5,
             "shortcode": 139
-        },
-        {
-            "severity": "info",
-            "line_from": 29,
-            "line_to": 29,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery::filterbyissearchable does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/Business/Model/ProductAbstractSearchReader.php",
-            "snippet": "            ->filterByIsSearchable(true)",
-            "selected_text": "filterByIsSearchable",
-            "error_level": 4,
-            "shortcode": 219
         },
         {
             "severity": "info",
@@ -616,8 +556,8 @@
         },
         {
             "severity": "info",
-            "line_from": 194,
-            "line_to": 194,
+            "line_from": 205,
+            "line_to": 205,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductSearch\\Business\\ProductSearchFacadeInterface::suggestUnusedProductSearchAttributeKeys cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/Communication/Controller/FilterPreferencesController.php",
@@ -652,75 +592,15 @@
         },
         {
             "severity": "info",
-            "line_from": 89,
-            "line_to": 89,
-            "type": "MoreSpecificReturnType",
-            "message": "The declared return type 'Orm\\Zed\\ProductSearch\\Persistence\\SpyProductSearchAttributeMapQuery' for Spryker\\Zed\\ProductSearch\\Persistence\\ProductSearchQueryContainer::queryProductSearchAttributeMap is more specific than the inferred return type 'Propel\\Runtime\\ActiveQuery\\ModelCriteria'",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/Persistence/ProductSearchQueryContainer.php",
-            "snippet": "     * @return \\Orm\\Zed\\ProductSearch\\Persistence\\SpyProductSearchAttributeMapQuery",
-            "selected_text": "\\Orm\\Zed\\ProductSearch\\Persistence\\SpyProductSearchAttributeMapQuery",
-            "error_level": 3,
-            "shortcode": 70
-        },
-        {
-            "severity": "info",
-            "line_from": 98,
-            "line_to": 98,
-            "type": "LessSpecificReturnStatement",
-            "message": "The type 'Orm\\Zed\\ProductSearch\\Persistence\\SpyProductSearchAttributeMapQuery&static|Propel\\Runtime\\ActiveQuery\\ModelCriteria' is more general than the declared return type 'Orm\\Zed\\ProductSearch\\Persistence\\SpyProductSearchAttributeMapQuery' for Spryker\\Zed\\ProductSearch\\Persistence\\ProductSearchQueryContainer::queryProductSearchAttributeMap",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/Persistence/ProductSearchQueryContainer.php",
-            "snippet": "        return $productSearchAttributeMapQuery;",
-            "selected_text": "$productSearchAttributeMapQuery",
-            "error_level": 3,
-            "shortcode": 129
-        },
-        {
-            "severity": "info",
-            "line_from": 149,
-            "line_to": 149,
-            "type": "MoreSpecificReturnType",
-            "message": "The declared return type 'Orm\\Zed\\ProductSearch\\Persistence\\SpyProductSearchAttributeQuery' for Spryker\\Zed\\ProductSearch\\Persistence\\ProductSearchQueryContainer::queryFilterPreferencesTable is more specific than the inferred return type 'Propel\\Runtime\\ActiveQuery\\ModelCriteria'",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/Persistence/ProductSearchQueryContainer.php",
-            "snippet": "     * @return \\Orm\\Zed\\ProductSearch\\Persistence\\SpyProductSearchAttributeQuery",
-            "selected_text": "\\Orm\\Zed\\ProductSearch\\Persistence\\SpyProductSearchAttributeQuery",
-            "error_level": 3,
-            "shortcode": 70
-        },
-        {
-            "severity": "info",
-            "line_from": 158,
-            "line_to": 158,
-            "type": "LessSpecificReturnStatement",
-            "message": "The type 'Orm\\Zed\\ProductSearch\\Persistence\\SpyProductSearchAttributeQuery&static|Propel\\Runtime\\ActiveQuery\\ModelCriteria' is more general than the declared return type 'Orm\\Zed\\ProductSearch\\Persistence\\SpyProductSearchAttributeQuery' for Spryker\\Zed\\ProductSearch\\Persistence\\ProductSearchQueryContainer::queryFilterPreferencesTable",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/Persistence/ProductSearchQueryContainer.php",
-            "snippet": "        return $query;",
-            "selected_text": "$query",
-            "error_level": 3,
-            "shortcode": 129
-        },
-        {
-            "severity": "info",
             "line_from": 318,
             "line_to": 318,
             "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\ProductSearch\\Persistence\\ProductSearchQueryContainer::addAttributeOrConditions expects Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery, possibly different type Orm\\Zed\\CompanySupplier\\Persistence\\SpyCompanySupplierToProductQuery|Orm\\Zed\\GiftCard\\Persistence\\SpyGiftCardProductConfigurationLinkQuery|Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationshipQuery|Orm\\Zed\\PriceProductSchedule\\Persistence\\SpyPriceProductScheduleQuery|Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProductQuery|Orm\\Zed\\ProductAlternative\\Persistence\\SpyProductAlternativeQuery|Orm\\Zed\\ProductBundle\\Persistence\\SpyProductBundleQuery|Orm\\Zed\\ProductDiscontinued\\Persistence\\SpyProductDiscontinuedQuery|Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSetQuery|Orm\\Zed\\ProductList\\Persistence\\SpyProductListProductConcreteQuery|Orm\\Zed\\ProductMeasurementUnit\\Persistence\\SpyProductMeasurementSalesUnitQuery|Orm\\Zed\\ProductPackagingUnit\\Persistence\\SpyProductPackagingUnitQuery|Orm\\Zed\\ProductQuantity\\Persistence\\SpyProductQuantityQuery|Orm\\Zed\\ProductSearch\\Persistence\\SpyProductSearchQuery|Orm\\Zed\\ProductValidity\\Persistence\\SpyProductValidityQuery|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery|Orm\\Zed\\Product\\Persistence\\SpyProductLocalizedAttributesQuery|Orm\\Zed\\Stock\\Persistence\\SpyStockProductQuery|Orm\\Zed\\Wishlist\\Persistence\\SpyWishlistItemQuery provided",
+            "message": "Argument 1 of Spryker\\Zed\\ProductSearch\\Persistence\\ProductSearchQueryContainer::addAttributeOrConditions expects Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery, possibly different type Orm\\Zed\\CompanySupplier\\Persistence\\SpyCompanySupplierToProductQuery|Orm\\Zed\\GiftCard\\Persistence\\SpyGiftCardProductConfigurationLinkQuery|Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationshipQuery|Orm\\Zed\\PriceProductSchedule\\Persistence\\SpyPriceProductScheduleQuery|Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProductQuery|Orm\\Zed\\ProductAlternative\\Persistence\\SpyProductAlternativeQuery|Orm\\Zed\\ProductBundle\\Persistence\\SpyProductBundleQuery|Orm\\Zed\\ProductConfiguration\\Persistence\\SpyProductConfigurationQuery|Orm\\Zed\\ProductDiscontinued\\Persistence\\SpyProductDiscontinuedQuery|Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSetQuery|Orm\\Zed\\ProductList\\Persistence\\SpyProductListProductConcreteQuery|Orm\\Zed\\ProductMeasurementUnit\\Persistence\\SpyProductMeasurementSalesUnitQuery|Orm\\Zed\\ProductPackagingUnit\\Persistence\\SpyProductPackagingUnitQuery|Orm\\Zed\\ProductQuantity\\Persistence\\SpyProductQuantityQuery|Orm\\Zed\\ProductSearch\\Persistence\\SpyProductSearchQuery|Orm\\Zed\\ProductValidity\\Persistence\\SpyProductValidityQuery|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery|Orm\\Zed\\Product\\Persistence\\SpyProductLocalizedAttributesQuery|Orm\\Zed\\Stock\\Persistence\\SpyStockProductQuery|Orm\\Zed\\Wishlist\\Persistence\\SpyWishlistItemQuery provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/Persistence/ProductSearchQueryContainer.php",
             "snippet": "            $this->addAttributeOrConditions($query, $attributeName);",
             "selected_text": "$query",
             "error_level": 3,
             "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 361,
-            "line_to": 361,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::useSpyProductSearchAttributeQuery does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/Persistence/ProductSearchQueryContainer.php",
-            "snippet": "            ->useSpyProductSearchAttributeQuery(null, Criteria::LEFT_JOIN);",
-            "selected_text": "useSpyProductSearchAttributeQuery",
-            "error_level": 3,
-            "shortcode": 108
         },
         {
             "severity": "info",
@@ -733,102 +613,6 @@
             "selected_text": "$connection",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 83,
-            "line_to": 83,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/ProductSearchDependencyProvider.php",
-            "snippet": "            return new ProductSearchToProductBridge($container->getLocator()->product()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 95,
-            "line_to": 95,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/ProductSearchDependencyProvider.php",
-            "snippet": "            return new ProductSearchToLocaleBridge($container->getLocator()->locale()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 107,
-            "line_to": 107,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/ProductSearchDependencyProvider.php",
-            "snippet": "            return new ProductSearchToGlossaryBridge($container->getLocator()->glossary()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 119,
-            "line_to": 119,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/ProductSearchDependencyProvider.php",
-            "snippet": "            return new ProductSearchToTouchBridge($container->getLocator()->touch()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 131,
-            "line_to": 131,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/ProductSearchDependencyProvider.php",
-            "snippet": "            return new ProductSearchToEventFacadeBridge($container->getLocator()->event()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 143,
-            "line_to": 143,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/ProductSearchDependencyProvider.php",
-            "snippet": "            return new ProductSearchToCollectorBridge($container->getLocator()->collector()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 155,
-            "line_to": 155,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/ProductSearchDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->touch()->queryContainer();",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 167,
-            "line_to": 167,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/ProductSearchDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->utilDataReader()->service();",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

@@ -3,18 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Price/src/Spryker/Client/Price/PriceDependencyProvider.php",
-            "snippet": "            return new PriceToQuoteClientBridge($container->getLocator()->quote()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 26,
             "line_to": 26,
             "type": "InvalidNullableReturnType",
@@ -36,33 +24,9 @@
             "selected_text": "static::$priceModeCache",
             "error_level": 5,
             "shortcode": 139
-        },
-        {
-            "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Price/src/Spryker/Yves/Price/PriceDependencyProvider.php",
-            "snippet": "            return new PriceToQuoteClientBridge($container->getLocator()->quote()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 52,
-            "line_to": 52,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Yves\\Kernel\\Controller\\AbstractController::redirectResponseExternal has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Price/src/Spryker/Yves/Price/Controller/PriceModeSwitchController.php",
-            "snippet": "        return $this->redirectResponseExternal(",
-            "selected_text": "redirectResponseExternal",
-            "error_level": 2,
-            "shortcode": 1
-        },
         {
             "severity": "info",
             "line_from": 35,

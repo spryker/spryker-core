@@ -11,8 +11,7 @@
             "snippet": "            return $this->redirectResponse($request->headers->get(static::REFERER_HEADER));",
             "selected_text": "$request->headers->get(static::REFERER_HEADER)",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -24,8 +23,7 @@
             "snippet": "            $this->addErrorMessage($error->getMessage());",
             "selected_text": "getMessage",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         }
     ],
     "deprecation": []

@@ -36,54 +36,6 @@
             "selected_text": "getVersionReference",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 48,
-            "line_to": 48,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequestAgent/src/Spryker/Client/QuoteRequestAgent/QuoteRequestAgentDependencyProvider.php",
-            "snippet": "            return new QuoteRequestAgentToZedRequestClientBridge($container->getLocator()->zedRequest()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequestAgent/src/Spryker/Client/QuoteRequestAgent/QuoteRequestAgentDependencyProvider.php",
-            "snippet": "            return new QuoteRequestAgentToQuoteClientBridge($container->getLocator()->quote()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 76,
-            "line_to": 76,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequestAgent/src/Spryker/Client/QuoteRequestAgent/QuoteRequestAgentDependencyProvider.php",
-            "snippet": "            return new QuoteRequestAgentToQuoteRequestClientBridge($container->getLocator()->quoteRequest()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 42,
-            "line_to": 42,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequestAgent/src/Spryker/Zed/QuoteRequestAgent/QuoteRequestAgentDependencyProvider.php",
-            "snippet": "            return new QuoteRequestAgentToQuoteRequestFacadeBridge($container->getLocator()->quoteRequest()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []
