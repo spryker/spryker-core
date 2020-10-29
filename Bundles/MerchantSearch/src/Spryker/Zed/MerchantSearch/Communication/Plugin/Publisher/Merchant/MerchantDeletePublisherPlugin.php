@@ -46,7 +46,6 @@ class MerchantDeletePublisherPlugin extends AbstractPlugin implements PublisherP
     {
         return [
             MerchantSearchConfig::MERCHANT_PUBLISH,
-            MerchantSearchConfig::MERCHANT_PUBLISH_DELETE,
             MerchantSearchConfig::ENTITY_SPY_MERCHANT_DELETE,
         ];
     }
