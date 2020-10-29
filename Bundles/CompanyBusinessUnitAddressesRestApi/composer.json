@@ -10,6 +10,7 @@
     "spryker/glue-application": "^1.15.0",
     "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",
+    "spryker/shipments-rest-api-extension": "^1.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/uuid-behavior": "^1.0.0"
   },

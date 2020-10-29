@@ -109,40 +109,9 @@ checkout-data:
                         - Type:
                             type: string
                     shippingAddress:
-                    - Optional:
-                        constraints:
-                        - Collection:
-                            fields:
-                                salutation:
-                                - NotBlank
-                                firstName:
-                                - NotBlank
-                                lastName:
-                                - NotBlank
-                                address1:
-                                - NotBlank
-                                address2:
-                                - NotBlank
-                                zipCode:
-                                - NotBlank
-                                city:
-                                - NotBlank
-                                - Length:
-                                    min: 3
-                                iso2Code:
-                                - NotBlank
-                                isDefaultBilling:
-                                - Optional:
-                                    constraints:
-                                    - Type:
-                                        type: boolean
-                                isDefaultShipping:
-                                - Optional:
-                                    constraints:
-                                    - Type:
-                                        type: boolean
+                    - Optional
                     idShipmentMethod:
-                    - NotBlank
+                    - Optional
                     - Type:
                         type: numeric
                     requestedDeliveryDate:
@@ -255,36 +224,7 @@ checkout:
                             - Type:
                                 type: string
                         shippingAddress:
-                        - Collection:
-                            fields:
-                                salutation:
-                                - NotBlank
-                                firstName:
-                                - NotBlank
-                                lastName:
-                                - NotBlank
-                                address1:
-                                - NotBlank
-                                address2:
-                                - NotBlank
-                                zipCode:
-                                - NotBlank
-                                city:
-                                - NotBlank
-                                - Length:
-                                    min: 3
-                                iso2Code:
-                                - NotBlank
-                                isDefaultBilling:
-                                - Optional:
-                                    constraints:
-                                    - Type:
-                                        type: boolean
-                                isDefaultShipping:
-                                - Optional:
-                                    constraints:
-                                    - Type:
-                                        type: boolean
+                        - Optional
                         idShipmentMethod:
                         - NotBlank
                         - Type:
