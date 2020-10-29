@@ -450,7 +450,7 @@ class ProductConfigurationClientTest extends Unit
         //Assert
         $this->assertFalse(
             $productConfiguratorRedirectTransfer->getIsSuccessful(),
-            'Expects that isSuccessful flag  will contain false when request fail.'
+            'Expects that isSuccessful flag will contain false when request fail.'
         );
     }
 
@@ -549,7 +549,7 @@ class ProductConfigurationClientTest extends Unit
         //Assert
         $this->assertFalse(
             $productConfiguratorResponseProcessorResponseTransferValidated->getIsSuccessful(),
-            'Expects that return not valid  processor response after first checksum validator fail.'
+            'Expects that return not valid processor response after first checksum validator fail.'
         );
     }
 
@@ -567,11 +567,11 @@ class ProductConfigurationClientTest extends Unit
                 'createProductConfiguratorAccessTokenRedirectResolver',
                 'createProductConfiguratorRequestDataExpanderComposite',
                 'createProductConfiguratorCheckSumResponseValidatorComposite',
-                'createProductConfigurationDataCurrencyExpander',
-                'createProductConfigurationDataCustomerExpander',
-                'createProductConfigurationDataStoreExpander',
-                'createProductConfigurationDataLocaleExpander',
-                'createProductConfigurationDataPriceExpander',
+                'createProductConfiguratorRequestDataCurrencyExpander',
+                'createProductConfiguratorRequestDataCustomerExpander',
+                'createProductConfiguratorRequestDataStoreExpander',
+                'createProductConfiguratorRequestDataLocaleExpander',
+                'createProductConfiguratorRequestDataPriceExpander',
             ])
             ->getMock();
 

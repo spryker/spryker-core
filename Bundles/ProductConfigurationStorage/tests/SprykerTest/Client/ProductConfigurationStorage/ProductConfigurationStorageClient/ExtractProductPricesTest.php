@@ -56,17 +56,17 @@ class ExtractProductPricesTest extends Unit
         $this->assertSame(
             3,
             $priceProductTransfer->getVolumeQuantity(),
-            'Expects that exactly 3 volume prices will be extracted.'
+            'Expects that volume quantity will be equal to 3.'
         );
         $this->assertSame(
             385,
             $priceProductTransfer->getMoneyValue()->getGrossAmount(),
-            'Expects that extracted volume price will have correct price.'
+            'Expects that extracted volume price will have correct gross price.'
         );
         $this->assertSame(
             350,
             $priceProductTransfer->getMoneyValue()->getNetAmount(),
-            'Expects that extracted volume price will have correct price.'
+            'Expects that extracted volume price will have correct net price.'
         );
         $this->assertSame(
             sprintf('%s-%s', static::TEST_PRICE_PRODUCT_GROUP_KEY, 3),

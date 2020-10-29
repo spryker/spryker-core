@@ -171,7 +171,7 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
         // Assert
         $this->assertTrue(
             $productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful(),
-            'Expects that will replace item to the quote when source type cart.'
+            'Expects that will replace the item in the quote when source type cart.'
         );
     }
 
@@ -297,7 +297,7 @@ class ProcessProductConfiguratorCheckSumResponseTest extends Unit
         // Assert
         $this->assertFalse(
             $productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful(),
-            'Expects that will result to not success result when cart item replace fail.'
+            'Expects that will result in not successful result when cart item replace fail.'
         );
     }
 

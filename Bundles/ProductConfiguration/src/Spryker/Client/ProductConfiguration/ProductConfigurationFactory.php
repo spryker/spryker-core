@@ -63,11 +63,11 @@ class ProductConfigurationFactory extends AbstractFactory
     {
         return new ProductConfiguratorRequestDataExpanderComposite(
             [
-                $this->createProductConfigurationDataCustomerExpander(),
-                $this->createProductConfigurationDataStoreExpander(),
-                $this->createProductConfigurationDataLocaleExpander(),
-                $this->createProductConfigurationDataCurrencyExpander(),
-                $this->createProductConfigurationDataPriceExpander(),
+                $this->createProductConfiguratorRequestDataCustomerExpander(),
+                $this->createProductConfiguratorRequestDataStoreExpander(),
+                $this->createProductConfiguratorRequestDataLocaleExpander(),
+                $this->createProductConfiguratorRequestDataCurrencyExpander(),
+                $this->createProductConfiguratorRequestDataPriceExpander(),
             ]
         );
     }
@@ -75,7 +75,7 @@ class ProductConfigurationFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataExpanderInterface
      */
-    protected function createProductConfigurationDataCurrencyExpander(): ProductConfiguratorRequestDataExpanderInterface
+    protected function createProductConfiguratorRequestDataCurrencyExpander(): ProductConfiguratorRequestDataExpanderInterface
     {
         return new ProductConfiguratorRequestDataCurrencyExpander($this->getCurrencyClient());
     }
@@ -83,7 +83,7 @@ class ProductConfigurationFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataExpanderInterface
      */
-    protected function createProductConfigurationDataCustomerExpander(): ProductConfiguratorRequestDataExpanderInterface
+    protected function createProductConfiguratorRequestDataCustomerExpander(): ProductConfiguratorRequestDataExpanderInterface
     {
         return new ProductConfiguratorRequestDataCustomerExpander($this->getCustomerClient());
     }
@@ -91,7 +91,7 @@ class ProductConfigurationFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataExpanderInterface
      */
-    protected function createProductConfigurationDataStoreExpander(): ProductConfiguratorRequestDataExpanderInterface
+    protected function createProductConfiguratorRequestDataStoreExpander(): ProductConfiguratorRequestDataExpanderInterface
     {
         return new ProductConfiguratorRequestDataStoreExpander($this->getStoreClient());
     }
@@ -99,7 +99,7 @@ class ProductConfigurationFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataExpanderInterface
      */
-    protected function createProductConfigurationDataLocaleExpander(): ProductConfiguratorRequestDataExpanderInterface
+    protected function createProductConfiguratorRequestDataLocaleExpander(): ProductConfiguratorRequestDataExpanderInterface
     {
         return new ProductConfiguratorRequestDataLocaleExpander($this->getLocaleClient());
     }
@@ -107,7 +107,7 @@ class ProductConfigurationFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataExpanderInterface
      */
-    protected function createProductConfigurationDataPriceExpander(): ProductConfiguratorRequestDataExpanderInterface
+    protected function createProductConfiguratorRequestDataPriceExpander(): ProductConfiguratorRequestDataExpanderInterface
     {
         return new ProductConfiguratorRequestDataPriceExpander($this->getPriceClient());
     }

@@ -74,7 +74,7 @@ class ProductConfigurationFacadeTest extends Unit
         $this->assertSame(
             $productTransfer->getIdProductConcrete(),
             $createdProductConfigurationTransfer->getFkProduct(),
-            'Expects correct fk of product id inside product configuration.'
+            'Expects correct product identified inside product configuration.'
         );
     }
 
@@ -94,7 +94,7 @@ class ProductConfigurationFacadeTest extends Unit
         //Assert
         $this->assertEmpty(
             $productConfigurationCollectionTransfer->getProductConfigurations(),
-            'Expects empty collection when wrong fk product configuration passed to the criteria.'
+            'Expects empty collection when wrong product identifier passed to the criteria.'
         );
     }
 
@@ -161,7 +161,7 @@ class ProductConfigurationFacadeTest extends Unit
         $this->assertSame(
             static::TEST_GROUP_KEY,
             $expandedItemTransfer->getGroupKey(),
-            'Expects that item group key will be expanded with product configuration hash.'
+            'Expects that item group key will not be expanded with product configuration hash.'
         );
     }
 
@@ -299,7 +299,7 @@ class ProductConfigurationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateCartItemQuantityWithoutItemsInCartWillReturnDefaultQuantity(): void
+    public function testCountCartItemQuantityWithoutItemsInCartWillReturnDefaultQuantity(): void
     {
         //Arrange
         $itemTransfer = (new ItemBuilder())->build();
@@ -318,7 +318,7 @@ class ProductConfigurationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateCartItemQuantityWillCalculateQuantityCorrectly(): void
+    public function testCountCartItemQuantityWillCountQuantityCorrectly(): void
     {
         //Arrange
         $itemTransferInCartOne = (new ItemBuilder([ItemTransfer::QUANTITY => 3]))->build();
@@ -335,7 +335,7 @@ class ProductConfigurationFacadeTest extends Unit
         $this->assertSame(
             3,
             $cartItemQuantity->getQuantity(),
-            'Expects that item quantity will be calculated correctly.'
+            'Expects that item quantity will be counted correctly.'
         );
     }
 }

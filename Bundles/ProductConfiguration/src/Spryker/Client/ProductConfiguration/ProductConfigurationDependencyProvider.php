@@ -294,7 +294,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     protected function getProductConfigurationDataChecksumGenerator(): ProductConfigurationDataChecksumGeneratorInterface
     {
         return new CrcProductConfigurationDataChecksumGenerator(
-            $this->getConfig()->getProductConfigurationHexInitializationVector()
+            $this->getConfig()->getProductConfiguratorHexInitializationVector()
         );
     }
 

@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransf
 use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToCartClientInterface;
-use Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageConfig;
 
 class QuoteItemReplacer implements QuoteItemReplacerInterface
 {
@@ -43,8 +42,6 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
         ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer,
         ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
     ): ProductConfiguratorResponseProcessorResponseTransfer {
-
-
         $itemReplaceTransfer = $this->createItemReplaceTransfer($productConfiguratorResponseTransfer);
 
         $quoteResponseTransfer = $this->cartClient->replaceItem($itemReplaceTransfer);

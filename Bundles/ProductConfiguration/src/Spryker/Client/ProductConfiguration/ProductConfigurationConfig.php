@@ -24,9 +24,9 @@ class ProductConfigurationConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getProductConfigurationEncryptionKey(): string
+    public function getProductConfiguratorEncryptionKey(): string
     {
-        return $this->getSharedConfig()->getEncryptionKey();
+        return $this->getSharedConfig()->getProductConfiguratorEncryptionKey();
     }
 
     /**
@@ -34,9 +34,9 @@ class ProductConfigurationConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getProductConfigurationHexInitializationVector(): string
+    public function getProductConfiguratorHexInitializationVector(): string
     {
-        return $this->getSharedConfig()->getHexInitializationVector();
+        return $this->getSharedConfig()->getProductConfiguratorHexInitializationVector();
     }
 
     /**

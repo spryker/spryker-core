@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\Container;
 class AvailabilityCartConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
-    public const PLUGINS_CART_ITEM_QUANTITY_CALCULATOR_STRATEGY = 'PLUGINS_CART_ITEM_QUANTITY_CALCULATOR_STRATEGY';
+    public const PLUGINS_CART_ITEM_QUANTITY_COUNTER_STRATEGY = 'PLUGINS_CART_ITEM_QUANTITY_COUNTER_STRATEGY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -24,7 +24,7 @@ class AvailabilityCartConnectorDependencyProvider extends AbstractBundleDependen
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container = $this->addAvailabilityFacade($container);
-        $container = $this->addCartItemQuantityCalculatorStrategyPlugins($container);
+        $container = $this->addCartItemQuantityCounterStrategyPlugins($container);
 
         return $container;
     }
@@ -48,10 +48,10 @@ class AvailabilityCartConnectorDependencyProvider extends AbstractBundleDependen
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCartItemQuantityCalculatorStrategyPlugins(Container $container): Container
+    protected function addCartItemQuantityCounterStrategyPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_CART_ITEM_QUANTITY_CALCULATOR_STRATEGY, function () {
-            return $this->getCartItemQuantityCalculatorStrategyPlugins();
+        $container->set(static::PLUGINS_CART_ITEM_QUANTITY_COUNTER_STRATEGY, function () {
+            return $this->getCartItemQuantityCounterStrategyPlugins();
         });
 
         return $container;
@@ -60,7 +60,7 @@ class AvailabilityCartConnectorDependencyProvider extends AbstractBundleDependen
     /**
      * @return \Spryker\Zed\AvailabilityCartConnectorExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface[]
      */
-    public function getCartItemQuantityCalculatorStrategyPlugins(): array
+    public function getCartItemQuantityCounterStrategyPlugins(): array
     {
         return [];
     }

@@ -97,7 +97,7 @@ class ProductConfigurationStorageFacadeTest extends Unit
         $this->assertSame(
             $productTransfer->getSku(),
             $productConfigurationStorageEntity->getSku(),
-            'Expects that will save product configuration to the storage.'
+            'Expected that product configuration will be saved to the storage.'
         );
 
         $this->assertSame(
@@ -141,7 +141,7 @@ class ProductConfigurationStorageFacadeTest extends Unit
         // Assert
         $this->assertEmpty(
             $productConfigurationStorageEntity,
-            'Expects that will remove product configuration from the storage.'
+            'Expected that product configuration will be removed from the storage.'
         );
     }
 

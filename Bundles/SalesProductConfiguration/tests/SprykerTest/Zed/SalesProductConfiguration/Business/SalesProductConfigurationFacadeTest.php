@@ -92,7 +92,7 @@ class SalesProductConfigurationFacadeTest extends Unit
         //Assert
         $this->assertNull(
             $result,
-            'Expects that sales order configuration will be skipped when no product configuration.'
+            'Expects that sales order configuration saving will be skipped when no product configuration.'
         );
     }
 

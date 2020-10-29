@@ -19,13 +19,14 @@ interface ProductConfigurationConstants
      *
      * @api
      */
-    public const SPRYKER_CONFIGURATOR_ENCRYPTION_KEY = 'SPRYKER_CONFIGURATOR_ENCRYPTION_KEY';
+    public const SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY = 'SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY';
 
     /**
      * Specification:
      * - Provides hex initialization vector for checksum validation.
+     * - Used for the product configurator data checksum generation as hex initialization vector.
      *
      * @api
      */
-    public const SPRYKER_CONFIGURATOR_HEX_INITIALIZATION_VECTOR = 'SPRYKER_CONFIGURATOR_HEX_INITIALIZATION_VECTOR';
+    public const SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR = 'SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR';
 }

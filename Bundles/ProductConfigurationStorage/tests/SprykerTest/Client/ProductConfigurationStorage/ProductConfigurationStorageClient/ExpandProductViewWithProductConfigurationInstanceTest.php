@@ -67,7 +67,7 @@ class ExpandProductViewWithProductConfigurationInstanceTest extends Unit
         $this->assertEquals(
             $productConfigurationInstanceTransfer,
             $productViewTransfer->getProductConfigurationInstance(),
-            'Expects that product view will be expanded with product configuration.'
+            'Expects that product view will be expanded with same product configuration.'
         );
     }
 

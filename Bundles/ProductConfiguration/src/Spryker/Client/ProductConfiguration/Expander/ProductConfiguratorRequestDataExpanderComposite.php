@@ -31,8 +31,8 @@ class ProductConfiguratorRequestDataExpanderComposite implements ProductConfigur
      */
     public function expand(ProductConfiguratorRequestDataTransfer $productConfiguratorRequestDataTransfer): ProductConfiguratorRequestDataTransfer
     {
-        foreach ($this->productConfiguratorRequestDataExpanders as $productConfiguratorRequestDataExpanders) {
-            $productConfiguratorRequestDataTransfer = $productConfiguratorRequestDataExpanders->expand(
+        foreach ($this->productConfiguratorRequestDataExpanders as $productConfiguratorRequestDataExpander) {
+            $productConfiguratorRequestDataTransfer = $productConfiguratorRequestDataExpander->expand(
                 $productConfiguratorRequestDataTransfer
             );
         }

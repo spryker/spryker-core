@@ -44,15 +44,15 @@ class ProductConfigurationConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getEncryptionKey(): string
+    public function getProductConfiguratorEncryptionKey(): string
     {
-        $encryptionKey = $this->get(ProductConfigurationConstants::SPRYKER_CONFIGURATOR_ENCRYPTION_KEY, false);
+        $encryptionKey = $this->get(ProductConfigurationConstants::SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY, false);
 
         if ($encryptionKey) {
             return $encryptionKey;
         }
 
-        throw new EncryptionKeyNotPreConfigured('Encryption key is not pre-configured, please set SPRYKER_CONFIGURATOR_ENCRYPTION_KEY configuration value.');
+        throw new EncryptionKeyNotPreConfigured('Encryption key is not pre-configured, please set SPRYKER_PRODUCT_CONFIGURATOR_ENCRYPTION_KEY configuration value.');
     }
 
     /**
@@ -62,10 +62,10 @@ class ProductConfigurationConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getHexInitializationVector(): string
+    public function getProductConfiguratorHexInitializationVector(): string
     {
         $hexInitializationVector = $this->get(
-            ProductConfigurationConstants::SPRYKER_CONFIGURATOR_HEX_INITIALIZATION_VECTOR,
+            ProductConfigurationConstants::SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR,
             false
         );
 
@@ -74,7 +74,7 @@ class ProductConfigurationConfig extends AbstractBundleConfig
         }
 
         throw new HexInitializationVectorNotPreConfigured(
-            'Hex initialization vector is not pre-configured, please update SPRYKER_CONFIGURATOR_HEX_INITIALIZATION_VECTOR env variable.'
+            'Hex initialization vector is not pre-configured, please update SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR env variable.'
         );
     }
 }
