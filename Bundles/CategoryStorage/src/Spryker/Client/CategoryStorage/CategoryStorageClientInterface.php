@@ -8,7 +8,6 @@
 namespace Spryker\Client\CategoryStorage;
 
 use ArrayObject;
-use Elastica\ResultSet;
 
 interface CategoryStorageClientInterface
 {
@@ -58,9 +57,9 @@ interface CategoryStorageClientInterface
      *
      * @api
      *
-     * @param \Elastica\ResultSet $searchResult
+     * @param array $docCountAggregation
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]
      */
-    public function formatCategoryTreeFilter(ResultSet $searchResult): ArrayObject;
+    public function formatCategoryTreeFilter(array $docCountAggregation): ArrayObject;
 }

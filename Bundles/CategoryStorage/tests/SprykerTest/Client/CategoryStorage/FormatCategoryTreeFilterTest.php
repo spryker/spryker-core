@@ -9,7 +9,6 @@ namespace SprykerTest\Client\CategoryStorage;
 
 use ArrayObject;
 use Codeception\Test\Unit;
-use Elastica\ResultSet;
 use Generated\Shared\DataBuilder\CategoryNodeStorageBuilder;
 use Spryker\Client\CategoryStorage\CategoryStorageFactory;
 use Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToStorageBridge;
@@ -46,7 +45,7 @@ class FormatCategoryTreeFilterTest extends Unit
     public function testFormatCategoryTreeFilterFormatsCategoryTree(): void
     {
         // Arrange
-        $searchResultMock = $this->getResultSetMock($this->getAggregationResult());
+        $docCountAggregation = $this->getAggregationResult();
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\CategoryStorage\CategoryStorageFactory $categoryStorageFactoryMock */
         $categoryStorageFactoryMock = $this->getMockBuilder(CategoryStorageFactory::class)
@@ -60,7 +59,7 @@ class FormatCategoryTreeFilterTest extends Unit
         // Act
         $categoryNodeSearchResultTransfers = $this->tester
             ->getClientMock($categoryStorageFactoryMock)
-            ->formatCategoryTreeFilter($searchResultMock);
+            ->formatCategoryTreeFilter($docCountAggregation);
 
         // Assert
         /** @var \Generated\Shared\Transfer\CategoryNodeSearchResultTransfer $categoryNodeSearchResultTransfer */
@@ -91,8 +90,6 @@ class FormatCategoryTreeFilterTest extends Unit
     public function testFormatCategoryTreeFilterTryToFormatTreeWhenCategoryDocCountsAreEmpty(): void
     {
         // Arrange
-        $searchResultMock = $this->getResultSetMock([]);
-
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\CategoryStorage\CategoryStorageFactory $categoryStorageFactoryMock */
         $categoryStorageFactoryMock = $this->getMockBuilder(CategoryStorageFactory::class)
             ->onlyMethods(['getStorage', 'getConfig'])
@@ -105,7 +102,7 @@ class FormatCategoryTreeFilterTest extends Unit
         // Act
         $categoryNodeSearchResultTransfers = $this->tester
             ->getClientMock($categoryStorageFactoryMock)
-            ->formatCategoryTreeFilter($searchResultMock);
+            ->formatCategoryTreeFilter([]);
 
         // Assert
         $this->assertSame(
@@ -121,7 +118,7 @@ class FormatCategoryTreeFilterTest extends Unit
     public function testFormatCategoryTreeFilterTryToFormatTreeWhenCategoryNodeStoragesAreEmpty(): void
     {
         // Arrange
-        $searchResultMock = $this->getResultSetMock($this->getAggregationResult());
+        $docCountAggregation = $this->getAggregationResult();
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\CategoryStorage\CategoryStorageFactory $categoryStorageFactoryMock */
         $categoryStorageFactoryMock = $this->getMockBuilder(CategoryStorageFactory::class)
@@ -135,7 +132,7 @@ class FormatCategoryTreeFilterTest extends Unit
         // Act
         $categoryNodeSearchResultTransfers = $this->tester
             ->getClientMock($categoryStorageFactoryMock)
-            ->formatCategoryTreeFilter($searchResultMock);
+            ->formatCategoryTreeFilter($docCountAggregation);
 
         // Assert
         $this->assertEmpty($categoryNodeSearchResultTransfers, 'Expects empty collection in case empty category storage data.');
@@ -144,10 +141,10 @@ class FormatCategoryTreeFilterTest extends Unit
     /**
      * @return void
      */
-    public function testFormatCategoryTreeFilterTryToFormatTreeWithoutMandatoryBucketsKey(): void
+    public function testFormatCategoryTreeFilterTryToFormatTreeWithEmptyBucketsKey(): void
     {
         // Arrange
-        $searchResultMock = $this->getResultSetMock(['category.all-parents.category' => []]);
+        $docCountAggregation = ['buckets' => []];
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\CategoryStorage\CategoryStorageFactory $categoryStorageFactoryMock */
         $categoryStorageFactoryMock = $this->getMockBuilder(CategoryStorageFactory::class)
@@ -161,7 +158,7 @@ class FormatCategoryTreeFilterTest extends Unit
         // Act
         $categoryNodeSearchResultTransfers = $this->tester
             ->getClientMock($categoryStorageFactoryMock)
-            ->formatCategoryTreeFilter($searchResultMock);
+            ->formatCategoryTreeFilter($docCountAggregation);
 
         // Assert
         $this->assertSame(
@@ -177,13 +174,11 @@ class FormatCategoryTreeFilterTest extends Unit
     public function testFormatCategoryTreeFilterTryToFormatTreeWithoutMandatoryKeyOrDocCount(): void
     {
         // Arrange
-        $searchResultMock = $this->getResultSetMock([
-            'category.all-parents.category' => [
-                'buckets' => [
-                    ['key1' => static::FIRST_CATEGORY_NODE_ID, 'doc_count1' => static::FIRST_CATEGORY_DOC_COUNT],
-                ],
+        $docCountAggregation = [
+            'buckets' => [
+                ['key1' => static::FIRST_CATEGORY_NODE_ID, 'doc_count1' => static::FIRST_CATEGORY_DOC_COUNT],
             ],
-        ]);
+        ];
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\CategoryStorage\CategoryStorageFactory $categoryStorageFactoryMock */
         $categoryStorageFactoryMock = $this->getMockBuilder(CategoryStorageFactory::class)
@@ -197,7 +192,7 @@ class FormatCategoryTreeFilterTest extends Unit
         // Act
         $categoryNodeSearchResultTransfers = $this->tester
             ->getClientMock($categoryStorageFactoryMock)
-            ->formatCategoryTreeFilter($searchResultMock);
+            ->formatCategoryTreeFilter($docCountAggregation);
 
         // Assert
         $this->assertSame(
@@ -205,24 +200,6 @@ class FormatCategoryTreeFilterTest extends Unit
             $categoryNodeSearchResultTransfers->offsetGet(0)->getDocCount(),
             'For invalid keys and values in buckets - expects fallback zero.'
         );
-    }
-
-    /**
-     * @param array $aggregationResult
-     *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Elastica\ResultSet
-     */
-    protected function getResultSetMock(array $aggregationResult): ResultSet
-    {
-        $searchResultMock = $this->getMockBuilder(ResultSet::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $searchResultMock
-            ->method('getAggregations')
-            ->willReturn($aggregationResult);
-
-        return $searchResultMock;
     }
 
     /**
@@ -261,12 +238,10 @@ class FormatCategoryTreeFilterTest extends Unit
     protected function getAggregationResult(): array
     {
         return [
-            'category.all-parents.category' => [
-                'buckets' => [
-                    ['key' => static::FIRST_CATEGORY_NODE_ID, 'doc_count' => static::FIRST_CATEGORY_DOC_COUNT],
-                    ['key' => static::SECOND_CATEGORY_NODE_ID, 'doc_count' => static::SECOND_CATEGORY_DOC_COUNT],
-                    ['key' => static::THIRD_CATEGORY_NODE_ID, 'doc_count' => static::THIRD_CATEGORY_DOC_COUNT],
-                ],
+            'buckets' => [
+                ['key' => static::FIRST_CATEGORY_NODE_ID, 'doc_count' => static::FIRST_CATEGORY_DOC_COUNT],
+                ['key' => static::SECOND_CATEGORY_NODE_ID, 'doc_count' => static::SECOND_CATEGORY_DOC_COUNT],
+                ['key' => static::THIRD_CATEGORY_NODE_ID, 'doc_count' => static::THIRD_CATEGORY_DOC_COUNT],
             ],
         ];
     }
