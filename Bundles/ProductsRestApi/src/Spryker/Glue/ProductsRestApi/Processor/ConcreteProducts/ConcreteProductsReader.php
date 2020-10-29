@@ -302,6 +302,8 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
                     $productConcreteStorageData[static::KEY_SKU] !== $concreteProductRestResource->getId()
                     || !isset($productAbstractSkus[$productConcreteStorageData[static::KEY_ID_PRODUCT_ABSTRACT]])
                 ) {
+                    $expandedRestResources[$productConcreteStorageData[static::KEY_SKU]] = $concreteProductRestResource;
+
                     continue;
                 }
 
