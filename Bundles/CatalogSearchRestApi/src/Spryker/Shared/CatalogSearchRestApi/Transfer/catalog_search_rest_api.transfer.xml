@@ -32,6 +32,14 @@
         <property name="currentPage" type="int"/>
         <property name="maxPage" type="int"/>
         <property name="currentItemsPerPage" type="int"/>
+        <property name="config" type="RestCatalogSearchPaginationConfig"/>
+    </transfer>
+
+    <transfer name="RestCatalogSearchPaginationConfig">
+        <property name="parameterName" type="string"/>
+        <property name="itemsPerPageParameterName" type="string"/>
+        <property name="defaultItemsPerPage" type="int"/>
+        <property name="validItemsPerPageOptions" type="array" singular="validItemsPerPageOptions"/>
     </transfer>
 
     <transfer name="RestCatalogSearchAbstractProducts">
