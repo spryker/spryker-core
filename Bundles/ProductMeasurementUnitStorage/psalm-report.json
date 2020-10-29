@@ -71,45 +71,129 @@
             "selected_text": "(new ProductMeasurementUnitStorageTransfer())\n                    ->fromArray($productMeasurementUnitTransfer->toArray(), true)\n                    ->toArray()",
             "error_level": 6,
             "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\ProductMeasurementUnitStorage\\Communication\\Plugin\\Event\\Listener\\ProductConcreteMeasurementUnitStorageListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitStorage/src/Spryker/Zed/ProductMeasurementUnitStorage/Communication/Plugin/Event/Listener/ProductConcreteMeasurementUnitStorageListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\ProductMeasurementUnitStorage\\Communication\\Plugin\\Event\\Listener\\ProductMeasurementUnitStorageListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitStorage/src/Spryker/Zed/ProductMeasurementUnitStorage/Communication/Plugin/Event/Listener/ProductMeasurementUnitStorageListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyProductMeasurementUnitStorageEntityTransfer>' for Spryker\\Zed\\ProductMeasurementUnitStorage\\Persistence\\ProductMeasurementUnitStorageRepository::findProductMeasurementUnitStorageEntities",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitStorage/src/Spryker/Zed/ProductMeasurementUnitStorage/Persistence/ProductMeasurementUnitStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($query)->find();",
+            "selected_text": "$this->buildQueryFromCriteria($query)->find()",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyProductMeasurementUnitStorageEntityTransfer>' for Spryker\\Zed\\ProductMeasurementUnitStorage\\Persistence\\ProductMeasurementUnitStorageRepository::findAllProductMeasurementUnitStorageEntities",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitStorage/src/Spryker/Zed/ProductMeasurementUnitStorage/Persistence/ProductMeasurementUnitStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($query)->find();",
+            "selected_text": "$this->buildQueryFromCriteria($query)->find()",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 62,
+            "line_to": 62,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyProductConcreteMeasurementUnitStorageEntityTransfer>' for Spryker\\Zed\\ProductMeasurementUnitStorage\\Persistence\\ProductMeasurementUnitStorageRepository::findProductConcreteMeasurementUnitStorageEntities",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitStorage/src/Spryker/Zed/ProductMeasurementUnitStorage/Persistence/ProductMeasurementUnitStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($query)->find();",
+            "selected_text": "$this->buildQueryFromCriteria($query)->find()",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 72,
+            "line_to": 72,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyProductConcreteMeasurementUnitStorageEntityTransfer>' for Spryker\\Zed\\ProductMeasurementUnitStorage\\Persistence\\ProductMeasurementUnitStorageRepository::findAllProductConcreteMeasurementUnitStorageEntities",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitStorage/src/Spryker/Zed/ProductMeasurementUnitStorage/Persistence/ProductMeasurementUnitStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($query)->find();",
+            "selected_text": "$this->buildQueryFromCriteria($query)->find()",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 89,
+            "line_to": 91,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SynchronizationDataTransfer>' for Spryker\\Zed\\ProductMeasurementUnitStorage\\Persistence\\ProductMeasurementUnitStorageRepository::findFilteredProductMeasurementUnitStorageDataTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitStorage/src/Spryker/Zed/ProductMeasurementUnitStorage/Persistence/ProductMeasurementUnitStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($productMeasurementUnitStoragePropelQuery, $filterTransfer)\n            ->setFormatter(SynchronizationDataTransferObjectFormatter::class)\n            ->find();",
+            "selected_text": "$this->buildQueryFromCriteria($productMeasurementUnitStoragePropelQuery, $filterTransfer)\n            ->setFormatter(SynchronizationDataTransferObjectFormatter::class)\n            ->find()",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 108,
+            "line_to": 108,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyProductConcreteMeasurementUnitStorageEntityTransfer>' for Spryker\\Zed\\ProductMeasurementUnitStorage\\Persistence\\ProductMeasurementUnitStorageRepository::findFilteredProductConcreteMeasurementUnitStorageEntities",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitStorage/src/Spryker/Zed/ProductMeasurementUnitStorage/Persistence/ProductMeasurementUnitStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();",
+            "selected_text": "$this->buildQueryFromCriteria($query, $filterTransfer)->find()",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 126,
+            "line_to": 126,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyProductMeasurementSalesUnitEntityTransfer>' for Spryker\\Zed\\ProductMeasurementUnitStorage\\Persistence\\ProductMeasurementUnitStorageRepository::getProductMeasurementSalesUnitEntityTransfersByIds",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitStorage/src/Spryker/Zed/ProductMeasurementUnitStorage/Persistence/ProductMeasurementUnitStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($query)->find();",
+            "selected_text": "$this->buildQueryFromCriteria($query)->find()",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 144,
+            "line_to": 144,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyProductMeasurementUnitEntityTransfer>' for Spryker\\Zed\\ProductMeasurementUnitStorage\\Persistence\\ProductMeasurementUnitStorageRepository::getProductMeasurementUnitEntityTransfersByIds",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitStorage/src/Spryker/Zed/ProductMeasurementUnitStorage/Persistence/ProductMeasurementUnitStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($query)->find();",
+            "selected_text": "$this->buildQueryFromCriteria($query)->find()",
+            "error_level": 6,
+            "shortcode": 128
         }
     ],
     "warning": [
-        {
-            "severity": "info",
-            "line_from": 47,
-            "line_to": 47,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitStorage/src/Spryker/Client/ProductMeasurementUnitStorage/ProductMeasurementUnitStorageDependencyProvider.php",
-            "snippet": "            return new ProductMeasurementUnitStorageToStorageClientBridge($container->getLocator()->storage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitStorage/src/Spryker/Client/ProductMeasurementUnitStorage/ProductMeasurementUnitStorageDependencyProvider.php",
-            "snippet": "            return new ProductMeasurementUnitStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 75,
-            "line_to": 75,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitStorage/src/Spryker/Client/ProductMeasurementUnitStorage/ProductMeasurementUnitStorageDependencyProvider.php",
-            "snippet": "            return new ProductMeasurementUnitStorageToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
         {
             "severity": "info",
             "line_from": 169,
@@ -340,6 +424,30 @@
         },
         {
             "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\ProductMeasurementUnitStorage\\Communication\\Plugin\\Event\\ProductConcreteMeasurementUnitEventResourceRepositoryPlugin::getData has the more specific type 'array<array-key, int>', expecting 'array<array-key, int|string>' as defined by Spryker\\Zed\\EventBehavior\\Dependency\\Plugin\\EventResourceRepositoryPluginInterface::getData",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitStorage/src/Spryker/Zed/ProductMeasurementUnitStorage/Communication/Plugin/Event/ProductConcreteMeasurementUnitEventResourceRepositoryPlugin.php",
+            "snippet": "    public function getData(array $ids = []): array",
+            "selected_text": "$ids",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\ProductMeasurementUnitStorage\\Communication\\Plugin\\Event\\ProductMeasurementUnitEventResourceRepositoryPlugin::getData has the more specific type 'array<array-key, int>', expecting 'array<array-key, int|string>' as defined by Spryker\\Zed\\EventBehavior\\Dependency\\Plugin\\EventResourceRepositoryPluginInterface::getData",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitStorage/src/Spryker/Zed/ProductMeasurementUnitStorage/Communication/Plugin/Event/ProductMeasurementUnitEventResourceRepositoryPlugin.php",
+            "snippet": "    public function getData(array $ids = []): array",
+            "selected_text": "$ids",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
             "line_from": 51,
             "line_to": 51,
             "type": "PossiblyNullReference",
@@ -361,30 +469,6 @@
             "selected_text": "delete",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 65,
-            "line_to": 65,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitStorage/src/Spryker/Zed/ProductMeasurementUnitStorage/ProductMeasurementUnitStorageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->eventBehavior()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 81,
-            "line_to": 81,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitStorage/src/Spryker/Zed/ProductMeasurementUnitStorage/ProductMeasurementUnitStorageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productMeasurementUnit()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

@@ -47,7 +47,7 @@ class ReturnMapper
 
         return $salesReturnItemEntity;
     }
-    
+
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $salesReturnEntities
      *

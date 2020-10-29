@@ -11,8 +11,7 @@
             "snippet": "                    return $this->beautifyLabel($item->getName());",
             "selected_text": "$item->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         }
     ],
     "deprecation": []

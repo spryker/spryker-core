@@ -4,7 +4,7 @@
   "description": "AuthMailConnector module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/auth-mail-connector-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/mail": "^4.6.0"

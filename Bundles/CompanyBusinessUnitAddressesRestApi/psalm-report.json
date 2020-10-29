@@ -11,8 +11,19 @@
             "snippet": "        foreach ($companyBusinessUnitTransfer->getAddressCollection()->getCompanyUnitAddresses() as $companyUnitAddressTransfer) {",
             "selected_text": "getCompanyUnitAddresses",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 68,
+            "line_to": 68,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCompanyUnitAddresses on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyBusinessUnitAddressesRestApi/src/Spryker/Glue/CompanyBusinessUnitAddressesRestApi/Processor/CompanyBusinessUnitAddress/Mapper/CompanyBusinessUnitAddressMapper.php",
+            "snippet": "            && $companyBusinessUnitTransfer->getAddressCollection()->getCompanyUnitAddresses()->count() > 0;",
+            "selected_text": "getCompanyUnitAddresses",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -24,8 +35,7 @@
             "snippet": "            && $companyBusinessUnitTransfer->getAddressCollection()->getCompanyUnitAddresses()->count() > 0;",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -37,8 +47,7 @@
             "snippet": "            || !$this->isCurrentCompanyUserInCompany($restRequest, $companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer())",
             "selected_text": "$companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -50,8 +59,7 @@
             "snippet": "                $companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer(),",
             "selected_text": "$companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -63,8 +71,7 @@
             "snippet": "                $companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getUuid(),",
             "selected_text": "$companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getUuid()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -76,8 +83,7 @@
             "snippet": "                $companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getUuid(),",
             "selected_text": "getUuid",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -89,8 +95,7 @@
             "snippet": "            && $restRequest->getRestUser()->getIdCompany()",
             "selected_text": "getIdCompany",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -102,8 +107,7 @@
             "snippet": "            && $restRequest->getRestUser()->getIdCompany() === $companyUnitAddressTransfer->getFkCompany();",
             "selected_text": "getIdCompany",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -115,8 +119,19 @@
             "snippet": "            $companyUnitAddressTransfer->getUuid(),",
             "selected_text": "$companyUnitAddressTransfer->getUuid()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCompanyUnitAddresses on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyBusinessUnitAddressesRestApi/src/Spryker/Glue/CompanyBusinessUnitAddressesRestApi/Processor/CompanyBusinessUnitAddress/Relationship/CompanyBusinessUnitAddressCollectionByCompanyBusinessUnitTransferResourceRelationshipExpander.php",
+            "snippet": "            && $companyBusinessUnitTransfer->getAddressCollection()->getCompanyUnitAddresses()->count() > 0;",
+            "selected_text": "getCompanyUnitAddresses",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -128,8 +143,7 @@
             "snippet": "            && $companyBusinessUnitTransfer->getAddressCollection()->getCompanyUnitAddresses()->count() > 0;",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         }
     ],
     "deprecation": []

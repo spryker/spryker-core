@@ -60,66 +60,6 @@
             "selected_text": "$itemTransfer->getUnitGrossPrice()",
             "error_level": 5,
             "shortcode": 139
-        },
-        {
-            "severity": "info",
-            "line_from": 23,
-            "line_to": 23,
-            "type": "MoreSpecificReturnType",
-            "message": "The declared return type 'Orm\\Zed\\Product\\Persistence\\SpyProductAttributeKeyQuery' for Spryker\\Zed\\ProductDiscountConnector\\Persistence\\ProductDiscountConnectorQueryContainer::queryProductAttributeKeys is more specific than the inferred return type 'Propel\\Runtime\\ActiveQuery\\ModelCriteria'",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscountConnector/src/Spryker/Zed/ProductDiscountConnector/Persistence/ProductDiscountConnectorQueryContainer.php",
-            "snippet": "     * @return \\Orm\\Zed\\Product\\Persistence\\SpyProductAttributeKeyQuery",
-            "selected_text": "\\Orm\\Zed\\Product\\Persistence\\SpyProductAttributeKeyQuery",
-            "error_level": 3,
-            "shortcode": 70
-        },
-        {
-            "severity": "info",
-            "line_from": 27,
-            "line_to": 29,
-            "type": "LessSpecificReturnStatement",
-            "message": "The type 'Orm\\Zed\\Product\\Persistence\\SpyProductAttributeKeyQuery&static|Propel\\Runtime\\ActiveQuery\\ModelCriteria' is more general than the declared return type 'Orm\\Zed\\Product\\Persistence\\SpyProductAttributeKeyQuery' for Spryker\\Zed\\ProductDiscountConnector\\Persistence\\ProductDiscountConnectorQueryContainer::queryProductAttributeKeys",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscountConnector/src/Spryker/Zed/ProductDiscountConnector/Persistence/ProductDiscountConnectorQueryContainer.php",
-            "snippet": "        return $this->getFactory()\n            ->createProductAttributesKeyQuery()\n            ->select(SpyProductAttributeKeyTableMap::COL_KEY);",
-            "selected_text": "$this->getFactory()\n            ->createProductAttributesKeyQuery()\n            ->select(SpyProductAttributeKeyTableMap::COL_KEY)",
-            "error_level": 3,
-            "shortcode": 129
-        },
-        {
-            "severity": "info",
-            "line_from": 35,
-            "line_to": 35,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscountConnector/src/Spryker/Zed/ProductDiscountConnector/ProductDiscountConnectorDependencyProvider.php",
-            "snippet": "            return new ProductDiscountConnectorToDiscountBridge($container->getLocator()->discount()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 39,
-            "line_to": 39,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscountConnector/src/Spryker/Zed/ProductDiscountConnector/ProductDiscountConnectorDependencyProvider.php",
-            "snippet": "            return new ProductDiscountConnectorToLocaleBridge($container->getLocator()->locale()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscountConnector/src/Spryker/Zed/ProductDiscountConnector/ProductDiscountConnectorDependencyProvider.php",
-            "snippet": "            return new ProductDiscountConnectorToProductBridge($container->getLocator()->product()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

@@ -12,18 +12,6 @@
             "selected_text": "$concreteProductsRestAttributesTransfer->getSku()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedRestApi/src/Spryker/Glue/ProductDiscontinuedRestApi/ProductDiscontinuedRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productDiscontinuedStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

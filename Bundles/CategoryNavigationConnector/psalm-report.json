@@ -61,42 +61,6 @@
             "selected_text": "$categoryTransfer->getIsActive()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 47,
-            "line_to": 47,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryNavigationConnector/src/Spryker/Zed/CategoryNavigationConnector/CategoryNavigationConnectorDependencyProvider.php",
-            "snippet": "            return new CategoryNavigationConnectorToCategoryQueryContainerBridge($container->getLocator()->category()->queryContainer());",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 59,
-            "line_to": 59,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryNavigationConnector/src/Spryker/Zed/CategoryNavigationConnector/CategoryNavigationConnectorDependencyProvider.php",
-            "snippet": "            return new CategoryNavigationConnectorToNavigationQueryContainerBridge($container->getLocator()->navigation()->queryContainer());",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 71,
-            "line_to": 71,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryNavigationConnector/src/Spryker/Zed/CategoryNavigationConnector/CategoryNavigationConnectorDependencyProvider.php",
-            "snippet": "            return new CategoryNavigationConnectorToNavigationFacadeBridge($container->getLocator()->navigation()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

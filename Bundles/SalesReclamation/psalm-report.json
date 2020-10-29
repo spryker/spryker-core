@@ -183,6 +183,18 @@
         },
         {
             "severity": "info",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\SalesReclamation\\Persistence\\SpySalesReclamation::setFkSalesOrder cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReclamation/src/Spryker/Zed/SalesReclamation/Persistence/Propel/Mapper/SalesReclamationMapper.php",
+            "snippet": "            $salesReclamationEntity->setFkSalesOrder($orderTransfer->getIdSalesOrder());",
+            "selected_text": "$orderTransfer->getIdSalesOrder()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
             "line_from": 52,
             "line_to": 52,
             "type": "PossiblyInvalidArgument",
@@ -195,6 +207,18 @@
         },
         {
             "severity": "info",
+            "line_from": 79,
+            "line_to": 79,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\SalesReclamation\\Persistence\\SpySalesReclamationItem::setFkSalesOrderItem cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReclamation/src/Spryker/Zed/SalesReclamation/Persistence/Propel/Mapper/SalesReclamationMapper.php",
+            "snippet": "            $salesReclamationItemEntity->setFkSalesOrderItem($itemTransfer->getIdSalesOrderItem());",
+            "selected_text": "$itemTransfer->getIdSalesOrderItem()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
             "line_from": 49,
             "line_to": 49,
             "type": "PossiblyInvalidMethodCall",
@@ -204,18 +228,6 @@
             "selected_text": "getArrayCopy",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 36,
-            "line_to": 36,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Orm\\Zed\\Sales\\Persistence\\SpySalesOrderItemQuery::filterbyidsalesreclamation does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesReclamation/src/Spryker/Zed/SalesReclamation/Persistence/SalesReclamationRepository.php",
-            "snippet": "            ->filterByIdSalesReclamation($reclamationTransfer->getIdSalesReclamation())",
-            "selected_text": "filterByIdSalesReclamation",
-            "error_level": 4,
-            "shortcode": 219
         },
         {
             "severity": "info",
@@ -240,18 +252,6 @@
             "selected_text": "count",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 52,
-            "line_to": 52,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesReclamation/src/Spryker/Zed/SalesReclamation/SalesReclamationDependencyProvider.php",
-            "snippet": "            return new SalesReclamationToSalesFacadeBridge($container->getLocator()->sales()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

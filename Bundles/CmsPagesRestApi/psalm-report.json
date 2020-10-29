@@ -1,5 +1,163 @@
 {
-    "error": [],
-    "warning": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 15,
+            "line_to": 15,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<string, Generated\\Shared\\Transfer\\RestCmsPagesAttributesTransfer>' for Spryker\\Glue\\CmsPagesRestApi\\Processor\\Mapper\\CmsPageMapper::mapCmsPageStorageTransfersToRestCmsPagesAttributesTransfers is incorrect, got 'array<int(0)|string, Generated\\Shared\\Transfer\\RestCmsPagesAttributesTransfer>'",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPagesRestApi/src/Spryker/Glue/CmsPagesRestApi/Processor/Mapper/CmsPageMapper.php",
+            "snippet": "     * @phpstan-return array<string, \\Generated\\Shared\\Transfer\\RestCmsPagesAttributesTransfer>",
+            "selected_text": "array<string, \\Generated\\Shared\\Transfer\\RestCmsPagesAttributesTransfer>",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 29,
+            "line_to": 29,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'array<int(0)|string, Generated\\Shared\\Transfer\\RestCmsPagesAttributesTransfer>' does not match the declared return type 'array<string, Generated\\Shared\\Transfer\\RestCmsPagesAttributesTransfer>' for Spryker\\Glue\\CmsPagesRestApi\\Processor\\Mapper\\CmsPageMapper::mapCmsPageStorageTransfersToRestCmsPagesAttributesTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPagesRestApi/src/Spryker/Glue/CmsPagesRestApi/Processor/Mapper/CmsPageMapper.php",
+            "snippet": "        return $restCmsPagesAttributesTransfers;",
+            "selected_text": "$restCmsPagesAttributesTransfers",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 116,
+            "line_to": 116,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of Spryker\\Glue\\CmsPagesRestApi\\Dependency\\Client\\CmsPagesRestApiToCmsStorageClientInterface::getCmsPageStorageByUuids expects array<array-key, string>, array{null|string} provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPagesRestApi/src/Spryker/Glue/CmsPagesRestApi/Processor/Reader/CmsPageReader.php",
+            "snippet": "            [$cmsPageUuid],",
+            "selected_text": "[$cmsPageUuid]",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of Spryker\\Glue\\CmsPagesRestApi\\Dependency\\Client\\CmsPagesRestApiToCmsStorageClientInterface::getCmsPageStorageByIds expects array<array-key, int>, array{int|null} provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPagesRestApi/src/Spryker/Glue/CmsPagesRestApi/Processor/UrlResolver/CmsPageUrlResolver.php",
+            "snippet": "            [$urlStorageTransfer->getFkResourcePage()],",
+            "selected_text": "[$urlStorageTransfer->getFkResourcePage()]",
+            "error_level": 6,
+            "shortcode": 4
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 25,
+            "line_to": 25,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $restCmsPagesAttributesTransfers[null|string] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPagesRestApi/src/Spryker/Glue/CmsPagesRestApi/Processor/Mapper/CmsPageMapper.php",
+            "snippet": "            $restCmsPagesAttributesTransfers[$cmsPageStorageTransfer->getUuid()] = (new RestCmsPagesAttributesTransfer())",
+            "selected_text": "$restCmsPagesAttributesTransfers",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 89,
+            "line_to": 89,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\CmsPagesRestApi\\Dependency\\Client\\CmsPagesRestApiToCmsPageSearchClientInterface::search cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPagesRestApi/src/Spryker/Glue/CmsPagesRestApi/Processor/Reader/CmsPageReader.php",
+            "snippet": "        $searchResult = $this->cmsPageSearchClient->search($searchString, $requestParameters);",
+            "selected_text": "$searchString",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 100,
+            "line_to": 100,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of Spryker\\Glue\\CmsPagesRestApi\\Dependency\\Client\\CmsPagesRestApiToCmsStorageClientInterface::getCmsPageStorageByIds cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPagesRestApi/src/Spryker/Glue/CmsPagesRestApi/Processor/Reader/CmsPageReader.php",
+            "snippet": "            $this->storeClient->getCurrentStore()->getName()",
+            "selected_text": "$this->storeClient->getCurrentStore()->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 118,
+            "line_to": 118,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of Spryker\\Glue\\CmsPagesRestApi\\Dependency\\Client\\CmsPagesRestApiToCmsStorageClientInterface::getCmsPageStorageByUuids cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPagesRestApi/src/Spryker/Glue/CmsPagesRestApi/Processor/Reader/CmsPageReader.php",
+            "snippet": "            $this->storeClient->getCurrentStore()->getName()",
+            "selected_text": "$this->storeClient->getCurrentStore()->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 144,
+            "line_to": 144,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getLimit on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPagesRestApi/src/Spryker/Glue/CmsPagesRestApi/Processor/Reader/CmsPageReader.php",
+            "snippet": "            $params[static::PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME] = $restRequest->getPage()->getLimit();",
+            "selected_text": "getLimit",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 145,
+            "line_to": 145,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getOffset on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPagesRestApi/src/Spryker/Glue/CmsPagesRestApi/Processor/Reader/CmsPageReader.php",
+            "snippet": "            $params[static::PAGINATION_PARAMETER_NAME_PAGE] = ($restRequest->getPage()->getOffset() / $restRequest->getPage()->getLimit()) + 1;",
+            "selected_text": "getOffset",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 145,
+            "line_to": 145,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getLimit on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPagesRestApi/src/Spryker/Glue/CmsPagesRestApi/Processor/Reader/CmsPageReader.php",
+            "snippet": "            $params[static::PAGINATION_PARAMETER_NAME_PAGE] = ($restRequest->getPage()->getOffset() / $restRequest->getPage()->getLimit()) + 1;",
+            "selected_text": "getLimit",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\CmsPagesRestApi\\Processor\\RestResponseBuilder\\CmsPageRestResponseBuilder::createCmsPageRestResource cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPagesRestApi/src/Spryker/Glue/CmsPagesRestApi/Processor/RestResponseBuilder/CmsPageRestResponseBuilder.php",
+            "snippet": "        $cmsPageRestResource = $this->createCmsPageRestResource($cmsPageStorageTransfer->getUuid(), $restCmsPagesAttributesTransfer);",
+            "selected_text": "$cmsPageStorageTransfer->getUuid()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of Spryker\\Glue\\CmsPagesRestApi\\Dependency\\Client\\CmsPagesRestApiToCmsStorageClientInterface::getCmsPageStorageByIds cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPagesRestApi/src/Spryker/Glue/CmsPagesRestApi/Processor/UrlResolver/CmsPageUrlResolver.php",
+            "snippet": "            $this->cmsStoreClient->getCurrentStore()->getName()",
+            "selected_text": "$this->cmsStoreClient->getCurrentStore()->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
     "deprecation": []
 }

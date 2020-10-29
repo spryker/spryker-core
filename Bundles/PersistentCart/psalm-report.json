@@ -1,58 +1,23 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 85,
+            "line_to": 85,
+            "type": "InvalidArgument",
+            "message": "Argument 2 of Spryker\\Zed\\PersistentCart\\Business\\Replacer\\CartItemReplacer::executeReplaceItem expects array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>, array{Generated\\Shared\\Transfer\\ItemTransfer|null} provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Replacer/CartItemReplacer.php",
+            "snippet": "        $quoteResponseTransfer = $this->executeReplaceItem($itemsToRemoval, $itemsToAdding, $quoteTransfer);",
+            "selected_text": "$itemsToAdding",
+            "error_level": 6,
+            "shortcode": 4
+        }
+    ],
     "warning": [
         {
             "severity": "info",
-            "line_from": 24,
-            "line_to": 24,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/PermissionAwareTrait.php",
-            "snippet": "            return Locator::getInstance()->permission()->facade()->can($permissionKey, $identifier, $context);",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Client/PersistentCart/PersistentCartDependencyProvider.php",
-            "snippet": "            return new PersistentCartToQuoteClientBridge($container->getLocator()->quote()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 69,
-            "line_to": 69,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Client/PersistentCart/PersistentCartDependencyProvider.php",
-            "snippet": "            return new PersistentCartToCustomerClientBridge($container->getLocator()->customer()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 83,
-            "line_to": 83,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Client/PersistentCart/PersistentCartDependencyProvider.php",
-            "snippet": "            return new PersistentCartToZedRequestClientBridge($container->getLocator()->zedRequest()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 121,
-            "line_to": 121,
+            "line_from": 124,
+            "line_to": 124,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdQuote on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Client/PersistentCart/Plugin/DatabaseQuoteStorageStrategy.php",
@@ -63,8 +28,8 @@
         },
         {
             "severity": "info",
-            "line_from": 176,
-            "line_to": 176,
+            "line_from": 179,
+            "line_to": 179,
             "type": "MismatchingDocblockParamType",
             "message": "Parameter $itemTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>', should be 'ArrayObject'",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Client/PersistentCart/Plugin/DatabaseQuoteStorageStrategy.php",
@@ -75,8 +40,8 @@
         },
         {
             "severity": "info",
-            "line_from": 443,
-            "line_to": 443,
+            "line_from": 472,
+            "line_to": 472,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Client\\PersistentCart\\Dependency\\Client\\PersistentCartToQuoteClientInterface::setQuote cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Client/PersistentCart/Plugin/DatabaseQuoteStorageStrategy.php",
@@ -615,6 +580,18 @@
         },
         {
             "severity": "info",
+            "line_from": 150,
+            "line_to": 150,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCompanyUser on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/QuoteDeleter.php",
+            "snippet": "                && $this->can('WriteSharedCartPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(), $quoteTransfer->getIdQuote())",
+            "selected_text": "getIdCompanyUser",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 83,
             "line_to": 83,
             "type": "PossiblyNullArgument",
@@ -708,6 +685,18 @@
             "selected_text": "$customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 192,
+            "line_to": 192,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCompanyUser on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/QuoteItemOperation.php",
+            "snippet": "                && $this->can('WriteSharedCartPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(), $quoteTransfer->getIdQuote())",
+            "selected_text": "getIdCompanyUser",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -864,6 +853,18 @@
             "selected_text": "$customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 191,
+            "line_to": 191,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCompanyUser on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/QuoteResolver.php",
+            "snippet": "                && $this->can('ReadSharedCartPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(), $quoteTransfer->getIdQuote())",
+            "selected_text": "getIdCompanyUser",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -1095,51 +1096,75 @@
         },
         {
             "severity": "info",
-            "line_from": 75,
-            "line_to": 75,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/PersistentCartDependencyProvider.php",
-            "snippet": "            return new PersistentCartToQuoteFacadeBridge($container->getLocator()->quote()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
+            "line_from": 70,
+            "line_to": 70,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\PersistentCart\\Business\\Model\\QuoteResolverInterface::resolveCustomerQuote cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Replacer/CartItemReplacer.php",
+            "snippet": "            $persistentItemReplaceTransfer->getCustomer()",
+            "selected_text": "$persistentItemReplaceTransfer->getCustomer()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 78,
+            "line_to": 78,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method toArray on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Replacer/CartItemReplacer.php",
+            "snippet": "            (new QuoteTransfer())->fromArray($persistentQuoteResponseTransfer->getQuoteTransfer()->toArray(), true),",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
             "line_from": 89,
             "line_to": 89,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/PersistentCartDependencyProvider.php",
-            "snippet": "            return new PersistentCartToCartFacadeBridge($container->getLocator()->cart()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\PersistentCart\\Dependency\\Facade\\PersistentCartToQuoteFacadeInterface::updateQuote cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Replacer/CartItemReplacer.php",
+            "snippet": "                ->updateQuote($persistentQuoteResponseTransfer->getQuoteTransfer())",
+            "selected_text": "$persistentQuoteResponseTransfer->getQuoteTransfer()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 103,
-            "line_to": 103,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/PersistentCartDependencyProvider.php",
-            "snippet": "            return new PersistentCartToStoreFacadeBridge($container->getLocator()->store()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
+            "line_from": 118,
+            "line_to": 118,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\PersistentCart\\Business\\Model\\QuoteItemOperationInterface::addItems cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Replacer/CartItemReplacer.php",
+            "snippet": "            return $this->quoteItemOperation->addItems($itemsToAdding, $quoteResponseTransfer->getQuoteTransfer());",
+            "selected_text": "$quoteResponseTransfer->getQuoteTransfer()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 117,
-            "line_to": 117,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/PersistentCartDependencyProvider.php",
-            "snippet": "            return new PersistentCartToMessengerFacadeBridge($container->getLocator()->messenger()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
+            "line_from": 149,
+            "line_to": 149,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\PersistentCart\\Business\\Replacer\\CartItemReplacer::findItemInQuote cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Replacer/CartItemReplacer.php",
+            "snippet": "        $quoteItem = $this->findItemInQuote($persistentItemReplaceTransfer->getItemToBeReplaced(), $quoteTransfer);",
+            "selected_text": "$persistentItemReplaceTransfer->getItemToBeReplaced()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 162,
+            "line_to": 162,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\PersistentCartExtension\\Dependency\\Plugin\\QuoteItemFinderPluginInterface::findItem cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Replacer/CartItemReplacer.php",
+            "snippet": "        return $this->itemFinderPlugin->findItem($quoteTransfer, $itemTransfer->getSku(), $itemTransfer->getGroupKey());",
+            "selected_text": "$itemTransfer->getSku()",
+            "error_level": 3,
+            "shortcode": 78
         }
     ],
     "deprecation": [

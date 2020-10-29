@@ -81,6 +81,41 @@ class ConfigurableBundleCartFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testUpdateConfiguredBundleQuantityForQuoteDoNotAdjustsBundleQuantityWhenQuantityPerSlotIsZero(): void
+    {
+        // Arrange
+        $quoteTransfer = (new QuoteBuilder())
+            ->withItem([
+                ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
+                ItemTransfer::QUANTITY => 2,
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1, 0),
+                ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(),
+            ])
+            ->withItem([
+                ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
+                ItemTransfer::QUANTITY => 2,
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_2, 0),
+                ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(),
+            ])
+            ->withItem([
+                ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
+                ItemTransfer::QUANTITY => 6,
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => null,
+                ItemTransfer::CONFIGURED_BUNDLE => null,
+            ])
+            ->build();
+
+        // Act
+        $quoteTransfer = $this->tester->getFacade()->updateConfiguredBundleQuantityForQuote($quoteTransfer);
+
+        // Assert
+        $this->assertNull($quoteTransfer->getItems()->offsetGet(0)->getConfiguredBundle()->getQuantity());
+        $this->assertNull($quoteTransfer->getItems()->offsetGet(1)->getConfiguredBundle()->getQuantity());
+    }
+
+    /**
+     * @return void
+     */
     public function testUpdateConfiguredBundleQuantityForQuoteThrowsExceptionWhenQuantityPerSlotIsNotSet(): void
     {
         // Arrange

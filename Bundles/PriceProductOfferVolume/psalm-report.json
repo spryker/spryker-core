@@ -3,18 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 40,
-            "line_to": 40,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductOfferVolume/src/Spryker/Client/PriceProductOfferVolume/PriceProductOfferVolumeDependencyProvider.php",
-            "snippet": "            return new PriceProductOfferVolumeToUtilEncodingServiceServiceBridge($container->getLocator()->utilEncoding()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 53,
             "line_to": 53,
             "type": "PossiblyNullReference",

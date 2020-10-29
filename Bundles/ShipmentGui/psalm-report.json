@@ -352,6 +352,42 @@
         },
         {
             "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $itemTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentGui/src/Spryker/Zed/ShipmentGui/Communication/Provider/ShipmentOrderItemTemplateProvider.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ItemTransfer[] $itemTransfers",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ItemTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ShipmentGuiExtension\\Dependency\\Plugin\\ShipmentOrderItemTemplatePluginInterface::getTemplateData expects ArrayObject<int, Generated\\Shared\\Transfer\\ItemTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentGui/src/Spryker/Zed/ShipmentGui/Communication/Provider/ShipmentOrderItemTemplateProvider.php",
+            "snippet": "            $templateData[$shipmentOrderItemTemplatePlugin->getTemplatePath()] = $shipmentOrderItemTemplatePlugin->getTemplateData($itemTransfers);",
+            "selected_text": "$itemTransfers",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 17,
+            "line_to": 17,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $itemTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentGui/src/Spryker/Zed/ShipmentGui/Communication/Provider/ShipmentOrderItemTemplateProviderInterface.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ItemTransfer[] $itemTransfers",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ItemTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
             "line_from": 176,
             "line_to": 176,
             "type": "PossiblyNullArgument",
@@ -409,66 +445,6 @@
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ShipmentGroupTransfer[]",
             "error_level": 4,
             "shortcode": 142
-        },
-        {
-            "severity": "info",
-            "line_from": 67,
-            "line_to": 67,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShipmentGui/src/Spryker/Zed/ShipmentGui/ShipmentGuiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->tax()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 146,
-            "line_to": 146,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShipmentGui/src/Spryker/Zed/ShipmentGui/ShipmentGuiDependencyProvider.php",
-            "snippet": "            return new ShipmentGuiToSalesFacadeBridge($container->getLocator()->sales()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 160,
-            "line_to": 160,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShipmentGui/src/Spryker/Zed/ShipmentGui/ShipmentGuiDependencyProvider.php",
-            "snippet": "            return new ShipmentGuiToShipmentFacadeBridge($container->getLocator()->shipment()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 174,
-            "line_to": 174,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShipmentGui/src/Spryker/Zed/ShipmentGui/ShipmentGuiDependencyProvider.php",
-            "snippet": "            return new ShipmentGuiToCustomerFacadeBridge($container->getLocator()->customer()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 188,
-            "line_to": 188,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShipmentGui/src/Spryker/Zed/ShipmentGui/ShipmentGuiDependencyProvider.php",
-            "snippet": "            return new ShipmentGuiToShipmentServiceBridge($container->getLocator()->shipment()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

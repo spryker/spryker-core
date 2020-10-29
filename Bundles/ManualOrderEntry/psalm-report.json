@@ -1,6 +1,31 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\ManualOrderEntry\\Communication\\Plugin\\Sales\\OrderSourceExpanderPreSavePlugin::expand has wrong name $salesOrderEntityTransfer, expecting $spySalesOrderEntityTransfer as defined by Spryker\\Zed\\Sales\\Dependency\\Plugin\\OrderExpanderPreSavePluginInterface::expand",
+            "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntry/src/Spryker/Zed/ManualOrderEntry/Communication/Plugin/Sales/OrderSourceExpanderPreSavePlugin.php",
+            "snippet": "    public function expand(SpySalesOrderEntityTransfer $salesOrderEntityTransfer, QuoteTransfer $quoteTransfer): SpySalesOrderEntityTransfer",
+            "selected_text": "$salesOrderEntityTransfer",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
     "warning": [
+        {
+            "severity": "info",
+            "line_from": 24,
+            "line_to": 24,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdOrderSource on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntry/src/Spryker/Zed/ManualOrderEntry/Business/Model/OrderSource/OrderSourceHydrator.php",
+            "snippet": "            $salesOrderEntityTransfer->setFkOrderSource($quoteTransfer->getOrderSource()->getIdOrderSource());",
+            "selected_text": "getIdOrderSource",
+            "error_level": 3,
+            "shortcode": 83
+        },
         {
             "severity": "info",
             "line_from": 32,
