@@ -54,7 +54,11 @@ class {{ className }} extends {{ abstractClass }}
 {{ macro.addSet(method) -}}
 {% endif %}
 {% if methodName starts with 'get' %}
+{% if methodName ends with 'OrFail' %}
+{{ macro.addGetOrFail(method) -}}
+{% else %}
 {{ macro.addGet(method) -}}
+{% endif %}
 {% endif %}
 {% if methodName starts with 'add' %}
 {% if not method.is_associative %}

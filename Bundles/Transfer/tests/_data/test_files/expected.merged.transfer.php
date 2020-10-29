@@ -137,6 +137,20 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @module Test
      *
+     * @return string
+     */
+    public function getNameOrFail()
+    {
+        if ($this->name === null) {
+            $this->throwNullValueException(static::NAME);
+        }
+
+        return $this->name;
+    }
+
+    /**
+     * @module Test
+     *
      * @return $this
      */
     public function requireName()
@@ -168,6 +182,20 @@ class FooBarTransfer extends AbstractTransfer
      */
     public function getBla()
     {
+        return $this->bla;
+    }
+
+    /**
+     * @module Test|Test2
+     *
+     * @return int
+     */
+    public function getBlaOrFail()
+    {
+        if ($this->bla === null) {
+            $this->throwNullValueException(static::BLA);
+        }
+
         return $this->bla;
     }
 
@@ -209,6 +237,20 @@ class FooBarTransfer extends AbstractTransfer
      */
     public function getStock()
     {
+        return $this->stock;
+    }
+
+    /**
+     * @module Test
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    public function getStockOrFail()
+    {
+        if ($this->stock === null) {
+            $this->throwNullValueException(static::STOCK);
+        }
+
         return $this->stock;
     }
 
