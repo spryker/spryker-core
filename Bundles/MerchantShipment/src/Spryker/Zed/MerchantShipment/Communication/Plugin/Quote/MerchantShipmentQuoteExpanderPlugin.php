@@ -31,6 +31,6 @@ class MerchantShipmentQuoteExpanderPlugin extends AbstractPlugin implements Quot
     {
         return $this->getFactory()
             ->createShipmentExpander()
-            ->expandShipmentWithMerchantReference($quoteTransfer);
+            ->expandQuoteShipmentWithMerchantReference($quoteTransfer);
     }
 }

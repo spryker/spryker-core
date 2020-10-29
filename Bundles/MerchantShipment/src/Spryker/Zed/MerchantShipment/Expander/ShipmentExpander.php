@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantShipment\Expander;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 class ShipmentExpander implements ShipmentExpanderInterface
@@ -16,16 +18,42 @@ class ShipmentExpander implements ShipmentExpanderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function expandShipmentWithMerchantReference(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function expandQuoteShipmentWithMerchantReference(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getShipment()) {
-                continue;
-            }
-
-            $itemTransfer->getShipment()->setMerchantReference($itemTransfer->getMerchantReference());
+            $this->expandItemShipmentWithMerchantReference($itemTransfer);
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandCartChangeShipmentWithMerchantReference(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            $this->expandItemShipmentWithMerchantReference($itemTransfer);
+        }
+
+        return $cartChangeTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function expandItemShipmentWithMerchantReference(ItemTransfer $itemTransfer): ItemTransfer
+    {
+        if (!$itemTransfer->getShipment()) {
+            return $itemTransfer;
+        }
+
+        $itemTransfer->getShipment()->setMerchantReference($itemTransfer->getMerchantReference());
+
+        return $itemTransfer;
     }
 }

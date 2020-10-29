@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\CartPageExtension\Dependency\Plugin\PreAddToCartPluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\MerchantShipment\Communication\Plugin\Quote\MerchantShipmentQuoteExpanderPlugin} instead.
+ * @deprecated Use {@link \Spryker\Zed\MerchantShipment\Communication\Plugin\Cart\MerchantShipmentItemExpanderPlugin} instead.
  */
 class MerchantShipmentPreAddToCartPlugin extends AbstractPlugin implements PreAddToCartPluginInterface
 {

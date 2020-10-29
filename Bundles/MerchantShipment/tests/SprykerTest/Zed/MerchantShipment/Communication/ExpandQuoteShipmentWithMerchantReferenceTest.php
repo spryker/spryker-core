@@ -19,10 +19,10 @@ use Generated\Shared\Transfer\ShipmentTransfer;
  * @group Zed
  * @group MerchantShipment
  * @group Communication
- * @group ExpandShipmentWithMerchantReferenceTest
+ * @group ExpandQuoteShipmentWithMerchantReferenceTest
  * Add your own group annotations below this line
  */
-class ExpandShipmentWithMerchantReferenceTest extends Unit
+class ExpandQuoteShipmentWithMerchantReferenceTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\MerchantShipment\MerchantShipmentCommunicationTester
@@ -32,7 +32,7 @@ class ExpandShipmentWithMerchantReferenceTest extends Unit
     /**
      * @return void
      */
-    public function testExpandShipmentWithMerchantReferenceExpandsItemShipmentWithMerchantReference(): void
+    public function testExpandQuoteShipmentWithMerchantReferenceExpandsItemShipmentWithMerchantReference(): void
     {
         // Arrange
         $quoteTransfer = (new QuoteTransfer())
@@ -41,7 +41,7 @@ class ExpandShipmentWithMerchantReferenceTest extends Unit
 
         // Act
         $expandedQuoteTransfer = $this->tester->getShipmentExpander()
-            ->expandShipmentWithMerchantReference($quoteTransfer);
+            ->expandQuoteShipmentWithMerchantReference($quoteTransfer);
 
         // Assert
         $this->assertSame(
@@ -57,7 +57,7 @@ class ExpandShipmentWithMerchantReferenceTest extends Unit
     /**
      * @return void
      */
-    public function testExpandShipmentWithMerchantReferenceExpandsItemShipmentWithoutShipment(): void
+    public function testExpandQuoteShipmentWithMerchantReferenceExpandsItemShipmentWithoutShipment(): void
     {
         // Arrange
         $quoteTransfer = (new QuoteTransfer())
@@ -66,7 +66,7 @@ class ExpandShipmentWithMerchantReferenceTest extends Unit
 
         // Act
         $expandedQuoteTransfer = $this->tester->getShipmentExpander()
-            ->expandShipmentWithMerchantReference($quoteTransfer);
+            ->expandQuoteShipmentWithMerchantReference($quoteTransfer);
 
         // Assert
         $this->assertNull($expandedQuoteTransfer->getItems()->offsetGet(0)->getShipment());
