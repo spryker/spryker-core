@@ -13,6 +13,7 @@ use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeTypeException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeValueException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidNameException;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
+use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinitionInterface;
 use Spryker\Zed\Transfer\TransferConfig;
 
 /**
@@ -646,8 +647,7 @@ class ClassDefinitionTest extends Unit
     public function testTransferDefinitionTypeIsCorrectlyShimmed(array $shimConfig, array $expectedTypesTypes): void
     {
         // Arrange
-        $transferConfigMock = $this->getTransferConfigMock();
-        $transferConfigMock->method('getTypeShims')->willReturn($shimConfig);
+        $this->tester->mockConfigMethod('getTypeShims', $shimConfig);
         $definition = [
             'name' => 'FooBar',
             'property' => [
@@ -675,7 +675,7 @@ class ClassDefinitionTest extends Unit
                 ],
             ],
         ];
-        $classDefinition = $this->createClassDefinition($transferConfigMock);
+        $classDefinition = $this->createClassDefinition();
 
         // Act
         $classDefinition->setDefinition($definition);
@@ -733,12 +733,12 @@ class ClassDefinitionTest extends Unit
     }
 
     /**
-     * @param \Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition $classDefinition
+     * @param \Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinitionInterface $classDefinition
      * @param string[] $expectedTypes
      *
      * @return void
      */
-    protected function assertMethodHasCorrectTypeShim(ClassDefinition $classDefinition, array $expectedTypes): void
+    protected function assertMethodHasCorrectTypeShim(ClassDefinitionInterface $classDefinition, array $expectedTypes): void
     {
         $methods = $classDefinition->getMethods();
         [$propertyName, $expectedVarTypes] = $expectedTypes;
@@ -756,14 +756,13 @@ class ClassDefinitionTest extends Unit
     }
 
     /**
-     * @param \Spryker\Zed\Transfer\TransferConfig|null $configMock
-     *
      * @return \Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition
      */
-    protected function createClassDefinition(?TransferConfig $configMock = null): ClassDefinition
+    protected function createClassDefinition(): ClassDefinition
     {
-        $config = $configMock ?? new TransferConfig();
-        $classDefinition = new ClassDefinition($config);
+        $classDefinition = new ClassDefinition(
+            $this->tester->getModuleConfig()
+        );
 
         return $classDefinition;
     }

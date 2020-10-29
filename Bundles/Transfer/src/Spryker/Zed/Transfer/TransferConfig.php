@@ -206,7 +206,7 @@ class TransferConfig extends AbstractBundleConfig
      * as a whole.
      *
      * This list can be reduced on project level where needed (e.g. to preserve full BC in edge cases).
-     * But we recommend to fix the project code instead fo use the same intended type as the actual type
+     * But we recommend to fix the project code instead to use the same intended type as the actual type
      * going in and out on core level here.
      *
      * Only scalar values and arrays are allowed to be shimmed and this list is only used from core level perspective.
@@ -253,9 +253,10 @@ class TransferConfig extends AbstractBundleConfig
     /**
      * Specification:
      * - When enabled, some extra integrity checks are performed.
-     * - Only for core level introspection, do not use for projects.
      *
      * @api
+     *
+     * @internal Only for core level introspection.
      *
      * @return bool
      */
