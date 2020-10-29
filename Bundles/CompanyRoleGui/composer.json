@@ -4,7 +4,7 @@
   "description": "CompanyRoleGui module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/business-on-behalf-gui-extension": "^1.0.0",
     "spryker/company": "^1.1.0",
     "spryker/company-role": "^1.4.0",

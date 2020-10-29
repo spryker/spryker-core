@@ -88,8 +88,8 @@
         },
         {
             "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
+            "line_from": 50,
+            "line_to": 50,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Cache\\CacheConfig::getCachePath has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Cache/src/Spryker/Zed/Cache/Business/Model/CacheClearer.php",
@@ -100,8 +100,8 @@
         },
         {
             "severity": "info",
-            "line_from": 88,
-            "line_to": 88,
+            "line_from": 96,
+            "line_to": 96,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Cache\\CacheConfig::getAutoloaderCachePath has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Cache/src/Spryker/Zed/Cache/Business/Model/CacheClearer.php",

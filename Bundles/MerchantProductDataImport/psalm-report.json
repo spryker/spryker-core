@@ -2,30 +2,6 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 33,
-            "line_to": 33,
-            "type": "UndefinedClass",
-            "message": "Class or interface Orm\\Zed\\MerchantProduct\\Persistence\\Base\\SpyMerchantProductAbstractQuery does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductDataImport/src/Spryker/Zed/MerchantProductDataImport/Business/MerchantProduct/Step/MerchantProductAbstractWriterStep.php",
-            "snippet": "        $merchantProductAbstractEntity = $this->createMerchantProductAbstractPropelQuery()",
-            "selected_text": "$this->createMerchantProductAbstractPropelQuery()",
-            "error_level": -1,
-            "shortcode": 19
-        },
-        {
-            "severity": "error",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "UndefinedClass",
-            "message": "Class or interface Orm\\Zed\\MerchantProduct\\Persistence\\Base\\SpyMerchantProductAbstractQuery does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductDataImport/src/Spryker/Zed/MerchantProductDataImport/Business/MerchantProduct/Step/MerchantProductAbstractWriterStep.php",
-            "snippet": "    protected function createMerchantProductAbstractPropelQuery(): SpyMerchantProductAbstractQuery",
-            "selected_text": "SpyMerchantProductAbstractQuery",
-            "error_level": -1,
-            "shortcode": 19
-        },
-        {
-            "severity": "error",
             "line_from": 25,
             "line_to": 25,
             "type": "InvalidReturnType",

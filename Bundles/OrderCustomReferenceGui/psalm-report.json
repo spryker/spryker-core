@@ -48,18 +48,6 @@
             "selected_text": "$messageTransfer->getValue()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 40,
-            "line_to": 40,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/OrderCustomReferenceGui/src/Spryker/Zed/OrderCustomReferenceGui/OrderCustomReferenceGuiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->orderCustomReference()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

@@ -26,10 +26,22 @@
         },
         {
             "severity": "error",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'Orm\\Zed\\CmsBlockProductConnector\\Persistence\\SpyCmsBlockProductConnectorQuery' for Spryker\\Zed\\CmsBlockProductConnector\\Persistence\\CmsBlockProductConnectorQueryContainer::queryCmsBlockProductConnectorWithNameByIdCmsBlock is incorrect, got 'Orm\\Zed\\AvailabilityNotification\\Persistence\\SpyAvailabilityNotificationSubscriptionQuery|Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImageSetQuery|Orm\\Zed\\Category\\Persistence\\SpyCategoryAttributeQuery|Orm\\Zed\\CmsBlockProductConnector\\Persistence\\SpyCmsBlockProductConnectorQuery|Orm\\Zed\\Cms\\Persistence\\SpyCmsPageLocalizedAttributesQuery|Orm\\Zed\\Content\\Persistence\\SpyContentLocalizedQuery|Orm\\Zed\\Customer\\Persistence\\SpyCustomerQuery|Orm\\Zed\\Dataset\\Persistence\\SpyDatasetLocalizedAttributesQuery|Orm\\Zed\\FileManager\\Persistence\\SpyFileDirectoryLocalizedAttributesQuery|Orm\\Zed\\FileManager\\Persistence\\SpyFileLocalizedAttributesQuery|Orm\\Zed\\GiftCard\\Persistence\\SpyGiftCardProductAbstractConfigurationLinkQuery|Orm\\Zed\\Glossary\\Persistence\\SpyGlossaryTranslationQuery|Orm\\Zed\\MerchantProduct\\Persistence\\SpyMerchantProductAbstractQuery|Orm\\Zed\\Navigation\\Persistence\\SpyNavigationNodeLocalizedAttributesQuery|Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationshipQuery|Orm\\Zed\\PriceProductSchedule\\Persistence\\SpyPriceProductScheduleQuery|Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProductQuery|Orm\\Zed\\ProductAlternative\\Persistence\\SpyProductAlternativeQuery|Orm\\Zed\\ProductAttribute\\Persistence\\SpyProductManagementAttributeValueTranslationQuery|Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategoryQuery|Orm\\Zed\\ProductCustomerPermission\\Persistence\\SpyProductCustomerPermissionQuery|Orm\\Zed\\ProductDiscontinued\\Persistence\\SpyProductDiscontinuedNoteQuery|Orm\\Zed\\ProductGroup\\Persistence\\SpyProductAbstractGroupQuery|Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSetQuery|Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelLocalizedAttributesQuery|Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelProductAbstractQuery|Orm\\Zed\\ProductMeasurementUnit\\Persistence\\SpyProductMeasurementBaseUnitQuery|Orm\\Zed\\ProductOption\\Persistence\\SpyProductAbstractProductOptionGroupQuery|Orm\\Zed\\ProductRelation\\Persistence\\SpyProductRelationProductAbstractQuery|Orm\\Zed\\ProductRelation\\Persistence\\SpyProductRelationQuery|Orm\\Zed\\ProductReview\\Persistence\\SpyProductReviewQuery|Orm\\Zed\\ProductSearch\\Persistence\\SpyProductSearchQuery|Orm\\Zed\\ProductSet\\Persistence\\SpyProductAbstractSetQuery|Orm\\Zed\\ProductSet\\Persistence\\SpyProductSetDataQuery|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractLocalizedAttributesQuery|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractStoreQuery|Orm\\Zed\\Product\\Persistence\\SpyProductLocalizedAttributesQuery|Orm\\Zed\\Product\\Persistence\\SpyProductQuery|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderQuery|Orm\\Zed\\Tax\\Persistence\\SpyTaxSetQuery|Orm\\Zed\\Touch\\Persistence\\SpyTouchSearchQuery|Orm\\Zed\\Touch\\Persistence\\SpyTouchStorageQuery|Orm\\Zed\\Url\\Persistence\\SpyUrlQuery|Orm\\Zed\\User\\Persistence\\SpyUserQuery'",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductConnector/src/Spryker/Zed/CmsBlockProductConnector/Persistence/CmsBlockProductConnectorQueryContainer.php",
+            "snippet": "     * @return \\Orm\\Zed\\CmsBlockProductConnector\\Persistence\\SpyCmsBlockProductConnectorQuery",
+            "selected_text": "\\Orm\\Zed\\CmsBlockProductConnector\\Persistence\\SpyCmsBlockProductConnectorQuery",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
             "line_from": 59,
             "line_to": 67,
             "type": "InvalidReturnStatement",
-            "message": "The inferred type 'Orm\\Zed\\AvailabilityNotification\\Persistence\\SpyAvailabilityNotificationSubscriptionQuery|Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImageSetQuery|Orm\\Zed\\Category\\Persistence\\SpyCategoryAttributeQuery|Orm\\Zed\\CmsBlockProductConnector\\Persistence\\SpyCmsBlockProductConnectorQuery|Orm\\Zed\\Cms\\Persistence\\SpyCmsPageLocalizedAttributesQuery|Orm\\Zed\\Content\\Persistence\\SpyContentLocalizedQuery|Orm\\Zed\\Customer\\Persistence\\SpyCustomerQuery|Orm\\Zed\\Dataset\\Persistence\\SpyDatasetLocalizedAttributesQuery|Orm\\Zed\\FileManager\\Persistence\\SpyFileDirectoryLocalizedAttributesQuery|Orm\\Zed\\FileManager\\Persistence\\SpyFileLocalizedAttributesQuery|Orm\\Zed\\GiftCard\\Persistence\\SpyGiftCardProductAbstractConfigurationLinkQuery|Orm\\Zed\\Glossary\\Persistence\\SpyGlossaryTranslationQuery|Orm\\Zed\\Navigation\\Persistence\\SpyNavigationNodeLocalizedAttributesQuery|Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationshipQuery|Orm\\Zed\\PriceProductSchedule\\Persistence\\SpyPriceProductScheduleQuery|Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProductQuery|Orm\\Zed\\ProductAlternative\\Persistence\\SpyProductAlternativeQuery|Orm\\Zed\\ProductAttribute\\Persistence\\SpyProductManagementAttributeValueTranslationQuery|Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategoryQuery|Orm\\Zed\\ProductCustomerPermission\\Persistence\\SpyProductCustomerPermissionQuery|Orm\\Zed\\ProductDiscontinued\\Persistence\\SpyProductDiscontinuedNoteQuery|Orm\\Zed\\ProductGroup\\Persistence\\SpyProductAbstractGroupQuery|Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSetQuery|Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelLocalizedAttributesQuery|Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelProductAbstractQuery|Orm\\Zed\\ProductMeasurementUnit\\Persistence\\SpyProductMeasurementBaseUnitQuery|Orm\\Zed\\ProductMerchantConnector\\Persistence\\SpyProductAbstractMerchantQuery|Orm\\Zed\\ProductOption\\Persistence\\SpyProductAbstractProductOptionGroupQuery|Orm\\Zed\\ProductRelation\\Persistence\\SpyProductRelationProductAbstractQuery|Orm\\Zed\\ProductRelation\\Persistence\\SpyProductRelationQuery|Orm\\Zed\\ProductReview\\Persistence\\SpyProductReviewQuery|Orm\\Zed\\ProductSearch\\Persistence\\SpyProductSearchQuery|Orm\\Zed\\ProductSet\\Persistence\\SpyProductAbstractSetQuery|Orm\\Zed\\ProductSet\\Persistence\\SpyProductSetDataQuery|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractLocalizedAttributesQuery|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractStoreQuery|Orm\\Zed\\Product\\Persistence\\SpyProductLocalizedAttributesQuery|Orm\\Zed\\Product\\Persistence\\SpyProductQuery|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderQuery|Orm\\Zed\\Tax\\Persistence\\SpyTaxSetQuery|Orm\\Zed\\Touch\\Persistence\\SpyTouchSearchQuery|Orm\\Zed\\Touch\\Persistence\\SpyTouchStorageQuery|Orm\\Zed\\Url\\Persistence\\SpyUrlQuery|Orm\\Zed\\User\\Persistence\\SpyUserQuery|Propel\\Runtime\\ActiveQuery\\ModelCriteria' does not match the declared return type 'Orm\\Zed\\CmsBlockProductConnector\\Persistence\\SpyCmsBlockProductConnectorQuery' for Spryker\\Zed\\CmsBlockProductConnector\\Persistence\\CmsBlockProductConnectorQueryContainer::queryCmsBlockProductConnectorWithNameByIdCmsBlock",
+            "message": "The inferred type 'Orm\\Zed\\AvailabilityNotification\\Persistence\\SpyAvailabilityNotificationSubscriptionQuery|Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImageSetQuery|Orm\\Zed\\Category\\Persistence\\SpyCategoryAttributeQuery|Orm\\Zed\\CmsBlockProductConnector\\Persistence\\SpyCmsBlockProductConnectorQuery|Orm\\Zed\\Cms\\Persistence\\SpyCmsPageLocalizedAttributesQuery|Orm\\Zed\\Content\\Persistence\\SpyContentLocalizedQuery|Orm\\Zed\\Customer\\Persistence\\SpyCustomerQuery|Orm\\Zed\\Dataset\\Persistence\\SpyDatasetLocalizedAttributesQuery|Orm\\Zed\\FileManager\\Persistence\\SpyFileDirectoryLocalizedAttributesQuery|Orm\\Zed\\FileManager\\Persistence\\SpyFileLocalizedAttributesQuery|Orm\\Zed\\GiftCard\\Persistence\\SpyGiftCardProductAbstractConfigurationLinkQuery|Orm\\Zed\\Glossary\\Persistence\\SpyGlossaryTranslationQuery|Orm\\Zed\\MerchantProduct\\Persistence\\SpyMerchantProductAbstractQuery|Orm\\Zed\\Navigation\\Persistence\\SpyNavigationNodeLocalizedAttributesQuery|Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationshipQuery|Orm\\Zed\\PriceProductSchedule\\Persistence\\SpyPriceProductScheduleQuery|Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProductQuery|Orm\\Zed\\ProductAlternative\\Persistence\\SpyProductAlternativeQuery|Orm\\Zed\\ProductAttribute\\Persistence\\SpyProductManagementAttributeValueTranslationQuery|Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategoryQuery|Orm\\Zed\\ProductCustomerPermission\\Persistence\\SpyProductCustomerPermissionQuery|Orm\\Zed\\ProductDiscontinued\\Persistence\\SpyProductDiscontinuedNoteQuery|Orm\\Zed\\ProductGroup\\Persistence\\SpyProductAbstractGroupQuery|Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSetQuery|Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelLocalizedAttributesQuery|Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelProductAbstractQuery|Orm\\Zed\\ProductMeasurementUnit\\Persistence\\SpyProductMeasurementBaseUnitQuery|Orm\\Zed\\ProductOption\\Persistence\\SpyProductAbstractProductOptionGroupQuery|Orm\\Zed\\ProductRelation\\Persistence\\SpyProductRelationProductAbstractQuery|Orm\\Zed\\ProductRelation\\Persistence\\SpyProductRelationQuery|Orm\\Zed\\ProductReview\\Persistence\\SpyProductReviewQuery|Orm\\Zed\\ProductSearch\\Persistence\\SpyProductSearchQuery|Orm\\Zed\\ProductSet\\Persistence\\SpyProductAbstractSetQuery|Orm\\Zed\\ProductSet\\Persistence\\SpyProductSetDataQuery|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractLocalizedAttributesQuery|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractStoreQuery|Orm\\Zed\\Product\\Persistence\\SpyProductLocalizedAttributesQuery|Orm\\Zed\\Product\\Persistence\\SpyProductQuery|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderQuery|Orm\\Zed\\Tax\\Persistence\\SpyTaxSetQuery|Orm\\Zed\\Touch\\Persistence\\SpyTouchSearchQuery|Orm\\Zed\\Touch\\Persistence\\SpyTouchStorageQuery|Orm\\Zed\\Url\\Persistence\\SpyUrlQuery|Orm\\Zed\\User\\Persistence\\SpyUserQuery' does not match the declared return type 'Orm\\Zed\\CmsBlockProductConnector\\Persistence\\SpyCmsBlockProductConnectorQuery' for Spryker\\Zed\\CmsBlockProductConnector\\Persistence\\CmsBlockProductConnectorQueryContainer::queryCmsBlockProductConnectorWithNameByIdCmsBlock",
             "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductConnector/src/Spryker/Zed/CmsBlockProductConnector/Persistence/CmsBlockProductConnectorQueryContainer.php",
             "snippet": "        return $this->queryCmsBlockProductConnectorByIdCmsBlock($idCmsBlock)\n            ->joinProductAbstract()\n            ->useProductAbstractQuery()\n                ->useSpyProductAbstractLocalizedAttributesQuery()\n                    ->filterByFkLocale($idLocale)\n                    ->endUse()\n                ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_PRODUCT_ABSTRACT_NAME)\n                ->withColumn(SpyProductAbstractTableMap::COL_SKU, static::COL_PRODUCT_ABSTRACT_SKU)\n                ->endUse();",
             "selected_text": "$this->queryCmsBlockProductConnectorByIdCmsBlock($idCmsBlock)\n            ->joinProductAbstract()\n            ->useProductAbstractQuery()\n                ->useSpyProductAbstractLocalizedAttributesQuery()\n                    ->filterByFkLocale($idLocale)\n                    ->endUse()\n                ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_PRODUCT_ABSTRACT_NAME)\n                ->withColumn(SpyProductAbstractTableMap::COL_SKU, static::COL_PRODUCT_ABSTRACT_SKU)\n                ->endUse()",
@@ -85,90 +97,6 @@
             "selected_text": "$cmsBlockTransfer->getIdCmsBlock()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 85,
-            "line_to": 85,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductConnector/src/Spryker/Zed/CmsBlockProductConnector/CmsBlockProductConnectorDependencyProvider.php",
-            "snippet": "            return new CmsBlockProductConnectorToLocaleBridge($container->getLocator()->locale()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 99,
-            "line_to": 99,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductConnector/src/Spryker/Zed/CmsBlockProductConnector/CmsBlockProductConnectorDependencyProvider.php",
-            "snippet": "            return new CmsBlockProductConnectorToProductFacadeBridge($container->getLocator()->product()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 113,
-            "line_to": 113,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductConnector/src/Spryker/Zed/CmsBlockProductConnector/CmsBlockProductConnectorDependencyProvider.php",
-            "snippet": "            return new CmsBlockProductConnectorToProductAbstractQueryContainerBridge($container->getLocator()->product()->queryContainer());",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 127,
-            "line_to": 127,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductConnector/src/Spryker/Zed/CmsBlockProductConnector/CmsBlockProductConnectorDependencyProvider.php",
-            "snippet": "            return new CmsBlockProductConnectorToTouchBridge($container->getLocator()->touch()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 141,
-            "line_to": 141,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductConnector/src/Spryker/Zed/CmsBlockProductConnector/CmsBlockProductConnectorDependencyProvider.php",
-            "snippet": "            return new CmsBlockProductConnectorToCollectorBridge($container->getLocator()->collector()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 155,
-            "line_to": 155,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductConnector/src/Spryker/Zed/CmsBlockProductConnector/CmsBlockProductConnectorDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->utilDataReader()->service();",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 169,
-            "line_to": 169,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductConnector/src/Spryker/Zed/CmsBlockProductConnector/CmsBlockProductConnectorDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->touch()->queryContainer();",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
         },
         {
             "severity": "info",
@@ -232,6 +160,18 @@
         },
         {
             "severity": "info",
+            "line_from": 74,
+            "line_to": 74,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CmsBlockProductConnector\\Persistence\\CmsBlockProductConnectorRepositoryInterface::getAssignedProductAbstractIds cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductConnector/src/Spryker/Zed/CmsBlockProductConnector/Communication/DataProvider/CmsBlockProductDataProvider.php",
+            "snippet": "            $idProductAbstracts = $this->cmsBlockProductConnectorRepository->getAssignedProductAbstractIds($cmsBlockTransfer->getIdCmsBlock());",
+            "selected_text": "$cmsBlockTransfer->getIdCmsBlock()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
             "line_from": 99,
             "line_to": 99,
             "type": "PossiblyNullArgument",
@@ -277,18 +217,6 @@
             "selected_text": "$productAbstractTransfer->getSku()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "MoreSpecificReturnType",
-            "message": "The declared return type 'Orm\\Zed\\CmsBlockProductConnector\\Persistence\\SpyCmsBlockProductConnectorQuery' for Spryker\\Zed\\CmsBlockProductConnector\\Persistence\\CmsBlockProductConnectorQueryContainer::queryCmsBlockProductConnectorWithNameByIdCmsBlock is more specific than the inferred return type 'Orm\\Zed\\ProductMerchantConnector\\Persistence\\SpyProductAbstractMerchantQuery|Propel\\Runtime\\ActiveQuery\\ModelCriteria'",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductConnector/src/Spryker/Zed/CmsBlockProductConnector/Persistence/CmsBlockProductConnectorQueryContainer.php",
-            "snippet": "     * @return \\Orm\\Zed\\CmsBlockProductConnector\\Persistence\\SpyCmsBlockProductConnectorQuery",
-            "selected_text": "\\Orm\\Zed\\CmsBlockProductConnector\\Persistence\\SpyCmsBlockProductConnectorQuery",
-            "error_level": 3,
-            "shortcode": 70
         },
         {
             "severity": "info",

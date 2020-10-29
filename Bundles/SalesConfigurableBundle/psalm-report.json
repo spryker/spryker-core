@@ -2,6 +2,30 @@
     "error": [
         {
             "severity": "error",
+            "line_from": 89,
+            "line_to": 89,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, int>' for Spryker\\Zed\\SalesConfigurableBundle\\Business\\Expander\\OrderItemExpander::getSalesOrderItemIds is incorrect, got 'list<int|null>'",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesConfigurableBundle/src/Spryker/Zed/SalesConfigurableBundle/Business/Expander/OrderItemExpander.php",
+            "snippet": "     * @return int[]",
+            "selected_text": "int[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 101,
+            "line_to": 101,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<int|null>' does not match the declared return type 'array<array-key, int>' for Spryker\\Zed\\SalesConfigurableBundle\\Business\\Expander\\OrderItemExpander::getSalesOrderItemIds",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesConfigurableBundle/src/Spryker/Zed/SalesConfigurableBundle/Business/Expander/OrderItemExpander.php",
+            "snippet": "        return $salesOrderItemIds;",
+            "selected_text": "$salesOrderItemIds",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
             "line_from": 135,
             "line_to": 135,
             "type": "InvalidReturnType",
@@ -205,6 +229,18 @@
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\SalesOrderConfiguredBundleTransfer[]",
             "error_level": 4,
             "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 28,
+            "line_to": 28,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getQuantity on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesConfigurableBundle/src/Spryker/Zed/SalesConfigurableBundle/Business/Transformer/ConfigurableBundleItemTransformer.php",
+            "snippet": "            if (!$itemTransfer->getConfiguredBundle() || $itemTransfer->getConfiguredBundle()->getQuantity() <= 1) {",
+            "selected_text": "getQuantity",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -433,18 +469,6 @@
             "selected_text": "$salesOrderConfiguredBundleQuery->find()",
             "error_level": 3,
             "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 42,
-            "line_to": 42,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesConfigurableBundle/src/Spryker/Zed/SalesConfigurableBundle/SalesConfigurableBundleDependencyProvider.php",
-            "snippet": "            return new SalesConfigurableBundleToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

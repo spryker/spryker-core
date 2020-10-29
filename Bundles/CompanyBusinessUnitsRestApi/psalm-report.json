@@ -11,8 +11,7 @@
             "snippet": "        if ($this->isResourceIdentifierCurrentUser($restRequest->getResource()->getId())) {",
             "selected_text": "$restRequest->getResource()->getId()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -24,8 +23,7 @@
             "snippet": "        if (!$restRequest->getRestUser()->getIdCompany()) {",
             "selected_text": "getIdCompany",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -37,8 +35,7 @@
             "snippet": "            (new CompanyBusinessUnitCriteriaFilterTransfer())->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser())",
             "selected_text": "getIdCompanyUser",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -50,8 +47,7 @@
             "snippet": "        if (!$companyBusinessUnitCollection->getCompanyBusinessUnits()->count()) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -63,8 +59,7 @@
             "snippet": "            || !$this->isCurrentCompanyUserInCompany($restRequest, $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer())",
             "selected_text": "$companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -76,8 +71,7 @@
             "snippet": "            $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer(),",
             "selected_text": "$companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -89,8 +83,7 @@
             "snippet": "            $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getUuid(),",
             "selected_text": "$companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getUuid()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -102,8 +95,7 @@
             "snippet": "            $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getUuid(),",
             "selected_text": "getUuid",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -115,8 +107,7 @@
             "snippet": "                $companyBusinessUnitTransfer->getUuid(),",
             "selected_text": "$companyBusinessUnitTransfer->getUuid()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -128,8 +119,7 @@
             "snippet": "            && $restRequest->getRestUser()->getIdCompany()",
             "selected_text": "getIdCompany",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -141,8 +131,7 @@
             "snippet": "            && $restRequest->getRestUser()->getIdCompany() === $companyBusinessUnitTransfer->getFkCompany();",
             "selected_text": "getIdCompany",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -154,8 +143,7 @@
             "snippet": "    public function createCompanyBusinessUnitCollectionRestResponse(array $companyBusinessUnitRestResources): RestResponseInterface",
             "selected_text": "$companyBusinessUnitRestResources",
             "error_level": 5,
-            "shortcode": 140,
-            "taint_trace": null
+            "shortcode": 140
         }
     ],
     "deprecation": []

@@ -3,42 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ApiQueryBuilder/src/Spryker/Zed/ApiQueryBuilder/ApiQueryBuilderDependencyProvider.php",
-            "snippet": "            return new ApiQueryBuilderToApiBridge($container->getLocator()->api()->queryContainer());",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 76,
-            "line_to": 76,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ApiQueryBuilder/src/Spryker/Zed/ApiQueryBuilder/ApiQueryBuilderDependencyProvider.php",
-            "snippet": "            return new ApiQueryBuilderToPropelQueryBuilderBridge($container->getLocator()->propelQueryBuilder()->queryContainer());",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 90,
-            "line_to": 90,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ApiQueryBuilder/src/Spryker/Zed/ApiQueryBuilder/ApiQueryBuilderDependencyProvider.php",
-            "snippet": "            return new ApiQueryBuilderToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 30,
             "line_to": 30,
             "type": "InvalidNullableReturnType",

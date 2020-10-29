@@ -4,7 +4,7 @@
   "description": "ProductSetCollector module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/collector": "^5.1.1 || ^6.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/product-set": "^1.0.0",

@@ -3,18 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CartCurrencyConnector/src/Spryker/Client/CartCurrencyConnector/CartCurrencyConnectorDependencyProvider.php",
-            "snippet": "            return new CartCurrencyConnectorToCartClientBridge($container->getLocator()->cart()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 27,
             "line_to": 27,
             "type": "InvalidNullableReturnType",
@@ -48,30 +36,6 @@
             "selected_text": "$quoteResponseTransfer->getIsSuccessful()",
             "error_level": 5,
             "shortcode": 139
-        },
-        {
-            "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CartCurrencyConnector/src/Spryker/Yves/CartCurrencyConnector/CartCurrencyConnectorDependencyProvider.php",
-            "snippet": "            return new CartCurrencyConnectorToCartClientBridge($container->getLocator()->cart()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CartCurrencyConnector/src/Spryker/Yves/CartCurrencyConnector/CartCurrencyConnectorDependencyProvider.php",
-            "snippet": "            return new CartCurrencyConnectorToZedRequestClientBridge($container->getLocator()->zedRequest()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

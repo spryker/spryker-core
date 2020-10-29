@@ -3,30 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 45,
-            "line_to": 45,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetProductSearchConnector/src/Spryker/Yves/CmsContentWidgetProductSearchConnector/CmsContentWidgetProductSearchConnectorDependencyProvider.php",
-            "snippet": "                $container->getLocator()->product()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetProductSearchConnector/src/Spryker/Yves/CmsContentWidgetProductSearchConnector/CmsContentWidgetProductSearchConnectorDependencyProvider.php",
-            "snippet": "                $container->getLocator()->search()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 61,
             "line_to": 61,
             "type": "PossiblyNullArgument",

@@ -72,54 +72,6 @@
             "selected_text": "$productAlternativeTransfer->getIdProduct()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 52,
-            "line_to": 52,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductAlternativeProductLabelConnector/src/Spryker/Zed/ProductAlternativeProductLabelConnector/ProductAlternativeProductLabelConnectorDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productLabel()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 68,
-            "line_to": 68,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductAlternativeProductLabelConnector/src/Spryker/Zed/ProductAlternativeProductLabelConnector/ProductAlternativeProductLabelConnectorDependencyProvider.php",
-            "snippet": "                $container->getLocator()->product()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 84,
-            "line_to": 84,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductAlternativeProductLabelConnector/src/Spryker/Zed/ProductAlternativeProductLabelConnector/ProductAlternativeProductLabelConnectorDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productAlternative()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 100,
-            "line_to": 100,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductAlternativeProductLabelConnector/src/Spryker/Zed/ProductAlternativeProductLabelConnector/ProductAlternativeProductLabelConnectorDependencyProvider.php",
-            "snippet": "                $container->getLocator()->locale()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

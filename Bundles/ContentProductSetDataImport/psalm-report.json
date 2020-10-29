@@ -11,8 +11,7 @@
             "snippet": "        $dataSetStepBroker->addStep($this->createCheckContentDataStep());",
             "selected_text": "addStep",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
@@ -24,8 +23,7 @@
             "snippet": "        $dataSetStepBroker->addStep($this->createAddLocalesStep());",
             "selected_text": "addStep",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
@@ -37,8 +35,7 @@
             "snippet": "        $dataSetStepBroker->addStep($this->createProductSetKeyToIdStep());",
             "selected_text": "addStep",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
@@ -50,8 +47,7 @@
             "snippet": "        $dataSetStepBroker->addStep($this->createPrepareLocalizedItemsStep());",
             "selected_text": "addStep",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
@@ -63,8 +59,7 @@
             "snippet": "        $dataSetStepBroker->addStep($this->createContentProductSetWriterStep());",
             "selected_text": "addStep",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
@@ -76,8 +71,7 @@
             "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
             "selected_text": "addDataSetStepBroker",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
@@ -89,8 +83,7 @@
             "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
             "selected_text": "$dataSetStepBroker",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -102,8 +95,7 @@
             "snippet": "        return $this->getFactory()->getContentProductSetDataImport()->import($dataImporterConfigurationTransfer);",
             "selected_text": "import",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
@@ -115,8 +107,7 @@
             "snippet": "            ->delete();",
             "selected_text": "delete",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -128,8 +119,7 @@
             "snippet": "        return $this->getFacade()->importProductSetTerm($dataImporterConfigurationTransfer);",
             "selected_text": "$dataImporterConfigurationTransfer",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         }
     ],
     "deprecation": []

@@ -1,5 +1,54 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 125,
+            "line_to": 125,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'Orm\\Zed\\CmsBlock\\Persistence\\SpyCmsBlockQuery' for Spryker\\Zed\\CmsSlotBlock\\Persistence\\CmsSlotBlockRepository::buildCmsBlockWithSlotRelationQuery is incorrect, got 'Orm\\Zed\\CmsBlock\\Persistence\\SpyCmsBlockQuery|Orm\\Zed\\Store\\Persistence\\SpyStoreQuery'",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlock/src/Spryker/Zed/CmsSlotBlock/Persistence/CmsSlotBlockRepository.php",
+            "snippet": "     * @return \\Orm\\Zed\\CmsBlock\\Persistence\\SpyCmsBlockQuery",
+            "selected_text": "\\Orm\\Zed\\CmsBlock\\Persistence\\SpyCmsBlockQuery",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 129,
+            "line_to": 137,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Orm\\Zed\\CmsBlock\\Persistence\\SpyCmsBlockQuery|Orm\\Zed\\Store\\Persistence\\SpyStoreQuery' does not match the declared return type 'Orm\\Zed\\CmsBlock\\Persistence\\SpyCmsBlockQuery' for Spryker\\Zed\\CmsSlotBlock\\Persistence\\CmsSlotBlockRepository::buildCmsBlockWithSlotRelationQuery",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlock/src/Spryker/Zed/CmsSlotBlock/Persistence/CmsSlotBlockRepository.php",
+            "snippet": "        return $this->getFactory()\n            ->getCmsBlockQuery()\n            ->filterByIdCmsBlock_In($cmsBlockIds)\n            ->groupByIdCmsBlock()\n            ->leftJoinWithSpyCmsSlotBlock()\n            ->useSpyCmsBlockStoreQuery(null, Criteria::LEFT_JOIN)\n                ->leftJoinSpyStore('stores')\n                ->withColumn('GROUP_CONCAT(stores.name)', CmsBlockTransfer::STORE_NAMES)\n            ->endUse();",
+            "selected_text": "$this->getFactory()\n            ->getCmsBlockQuery()\n            ->filterByIdCmsBlock_In($cmsBlockIds)\n            ->groupByIdCmsBlock()\n            ->leftJoinWithSpyCmsSlotBlock()\n            ->useSpyCmsBlockStoreQuery(null, Criteria::LEFT_JOIN)\n                ->leftJoinSpyStore('stores')\n                ->withColumn('GROUP_CONCAT(stores.name)', CmsBlockTransfer::STORE_NAMES)\n            ->endUse()",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 173,
+            "line_to": 173,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'Propel\\Runtime\\Util\\PropelModelPager' for Spryker\\Zed\\CmsSlotBlock\\Persistence\\CmsSlotBlockRepository::getPaginationFromQuery is incorrect, got 'Propel\\Runtime\\Util\\PropelModelPager|array<array-key, Orm\\Zed\\CmsBlock\\Persistence\\SpyCmsBlock>'",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlock/src/Spryker/Zed/CmsSlotBlock/Persistence/CmsSlotBlockRepository.php",
+            "snippet": "     * @return \\Propel\\Runtime\\Util\\PropelModelPager",
+            "selected_text": "\\Propel\\Runtime\\Util\\PropelModelPager",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 182,
+            "line_to": 182,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Util\\PropelModelPager|array<array-key, Orm\\Zed\\CmsBlock\\Persistence\\SpyCmsBlock>' does not match the declared return type 'Propel\\Runtime\\Util\\PropelModelPager' for Spryker\\Zed\\CmsSlotBlock\\Persistence\\CmsSlotBlockRepository::getPaginationFromQuery",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlock/src/Spryker/Zed/CmsSlotBlock/Persistence/CmsSlotBlockRepository.php",
+            "snippet": "        return $cmsBlockQuery->paginate($page, $maxPerPage);",
+            "selected_text": "$cmsBlockQuery->paginate($page, $maxPerPage)",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -39,46 +88,10 @@
         },
         {
             "severity": "info",
-            "line_from": 63,
-            "line_to": 63,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlock/src/Spryker/Zed/CmsSlotBlock/CmsSlotBlockDependencyProvider.php",
-            "snippet": "                $container->getLocator()->utilEncoding()->service()",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 78,
-            "line_to": 78,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlock/src/Spryker/Zed/CmsSlotBlock/CmsSlotBlockDependencyProvider.php",
-            "snippet": "            return new CmsSlotBlockToEventFacadeBridge($container->getLocator()->event()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 92,
-            "line_to": 92,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlock/src/Spryker/Zed/CmsSlotBlock/CmsSlotBlockDependencyProvider.php",
-            "snippet": "            return new CmsSlotBlockToCmsSlotFacadeBridge($container->getLocator()->cmsSlot()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 56,
-            "line_to": 56,
+            "line_from": 61,
+            "line_to": 61,
             "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\CmsSlotBlock\\Persistence\\Propel\\Mapper\\CmsSlotBlockMapperInterface::mapCmsSlotBlockEntityCollectionToTransferCollection expects Propel\\Runtime\\Collection\\Collection, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed>|mixed provided",
+            "message": "Argument 1 of Spryker\\Zed\\CmsSlotBlock\\Persistence\\Propel\\Mapper\\CmsSlotBlockMapperInterface::mapCmsSlotBlockEntityCollectionToTransferCollection expects Propel\\Runtime\\Collection\\Collection, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed provided",
             "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlock/src/Spryker/Zed/CmsSlotBlock/Persistence/CmsSlotBlockRepository.php",
             "snippet": "                $cmsSlotBlockEntities,",
             "selected_text": "$cmsSlotBlockEntities",
@@ -90,7 +103,7 @@
             "line_from": 85,
             "line_to": 85,
             "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Propel\\Runtime\\ActiveQuery\\ModelCriteria::orderBy cannot be null, possibly null value provided",
+            "message": "Argument 1 of Orm\\Zed\\CmsBlock\\Persistence\\SpyCmsBlockQuery::orderBy cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlock/src/Spryker/Zed/CmsSlotBlock/Persistence/CmsSlotBlockRepository.php",
             "snippet": "            ->orderBy($filterTransfer->getOrderBy(), $filterTransfer->getOrderDirection())",
             "selected_text": "$filterTransfer->getOrderBy()",
@@ -102,7 +115,7 @@
             "line_from": 85,
             "line_to": 85,
             "type": "PossiblyNullArgument",
-            "message": "Argument 2 of Propel\\Runtime\\ActiveQuery\\ModelCriteria::orderBy cannot be null, possibly null value provided",
+            "message": "Argument 2 of Orm\\Zed\\CmsBlock\\Persistence\\SpyCmsBlockQuery::orderBy cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlock/src/Spryker/Zed/CmsSlotBlock/Persistence/CmsSlotBlockRepository.php",
             "snippet": "            ->orderBy($filterTransfer->getOrderBy(), $filterTransfer->getOrderDirection())",
             "selected_text": "$filterTransfer->getOrderDirection()",
@@ -114,7 +127,7 @@
             "line_from": 90,
             "line_to": 90,
             "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\CmsSlotBlock\\Persistence\\Propel\\Mapper\\CmsSlotBlockMapperInterface::mapCmsBlockEntitiesToTransfers expects Propel\\Runtime\\Collection\\Collection, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\CmsBlock\\Persistence\\SpyCmsBlock|Orm\\Zed\\Store\\Persistence\\SpyStore|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed>|mixed provided",
+            "message": "Argument 1 of Spryker\\Zed\\CmsSlotBlock\\Persistence\\Propel\\Mapper\\CmsSlotBlockMapperInterface::mapCmsBlockEntitiesToTransfers expects Propel\\Runtime\\Collection\\Collection, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\CmsBlock\\Persistence\\SpyCmsBlock> provided",
             "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlock/src/Spryker/Zed/CmsSlotBlock/Persistence/CmsSlotBlockRepository.php",
             "snippet": "            ->mapCmsBlockEntitiesToTransfers($cmsBlockEntities);",
             "selected_text": "$cmsBlockEntities",
@@ -123,10 +136,34 @@
         },
         {
             "severity": "info",
-            "line_from": 104,
-            "line_to": 104,
+            "line_from": 107,
+            "line_to": 107,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\CmsSlotBlock\\Persistence\\CmsSlotBlockRepository::getPaginatedCmsBlockIds cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlock/src/Spryker/Zed/CmsSlotBlock/Persistence/CmsSlotBlockRepository.php",
+            "snippet": "        $cmsBlockIds = $this->getPaginatedCmsBlockIds($cmsBlockCriteriaTransfer, $paginationTransfer);",
+            "selected_text": "$paginationTransfer",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 119,
+            "line_to": 119,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CmsSlotBlock\\Persistence\\Propel\\Mapper\\CmsSlotBlockMapperInterface::mapCmsBlockEntitiesToCmsBlockCollectionTransfer expects Propel\\Runtime\\Collection\\Collection, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\CmsBlock\\Persistence\\SpyCmsBlock> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlock/src/Spryker/Zed/CmsSlotBlock/Persistence/CmsSlotBlockRepository.php",
+            "snippet": "            ->mapCmsBlockEntitiesToCmsBlockCollectionTransfer($cmsBlockEntities, $cmsBlockCollectionTransfer);",
+            "selected_text": "$cmsBlockEntities",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 166,
+            "line_to": 166,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlock/src/Spryker/Zed/CmsSlotBlock/Persistence/CmsSlotBlockRepository.php",
             "snippet": "            ->toArray();",
             "selected_text": "toArray",
@@ -135,8 +172,20 @@
         },
         {
             "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
+            "line_from": 196,
+            "line_to": 196,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlock/src/Spryker/Zed/CmsSlotBlock/Persistence/CmsSlotBlockRepository.php",
+            "snippet": "            ->toArray();",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Orm\\Zed\\CmsSlotBlock\\Persistence\\SpyCmsSlotBlock::setFkCmsSlot cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlock/src/Spryker/Zed/CmsSlotBlock/Persistence/Propel/Mapper/CmsSlotBlockMapper.php",
@@ -147,8 +196,8 @@
         },
         {
             "severity": "info",
-            "line_from": 45,
-            "line_to": 45,
+            "line_from": 47,
+            "line_to": 47,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Orm\\Zed\\CmsSlotBlock\\Persistence\\SpyCmsSlotBlock::setFkCmsBlock cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlock/src/Spryker/Zed/CmsSlotBlock/Persistence/Propel/Mapper/CmsSlotBlockMapper.php",
@@ -159,8 +208,8 @@
         },
         {
             "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
+            "line_from": 48,
+            "line_to": 48,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Orm\\Zed\\CmsSlotBlock\\Persistence\\SpyCmsSlotBlock::setFkCmsSlotTemplate cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlock/src/Spryker/Zed/CmsSlotBlock/Persistence/Propel/Mapper/CmsSlotBlockMapper.php",
@@ -171,8 +220,8 @@
         },
         {
             "severity": "info",
-            "line_from": 47,
-            "line_to": 47,
+            "line_from": 49,
+            "line_to": 49,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Orm\\Zed\\CmsSlotBlock\\Persistence\\SpyCmsSlotBlock::setPosition cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlock/src/Spryker/Zed/CmsSlotBlock/Persistence/Propel/Mapper/CmsSlotBlockMapper.php",
@@ -183,8 +232,8 @@
         },
         {
             "severity": "info",
-            "line_from": 107,
-            "line_to": 107,
+            "line_from": 127,
+            "line_to": 127,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of Spryker\\Zed\\CmsSlotBlock\\Persistence\\Propel\\Mapper\\CmsSlotBlockMapper::mapCmsSlotBlockEntityCollectionToTransferCollection expects Propel\\Runtime\\Collection\\Collection, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\CmsSlotBlock\\Persistence\\SpyCmsSlotBlock> provided",
             "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlock/src/Spryker/Zed/CmsSlotBlock/Persistence/Propel/Mapper/CmsSlotBlockMapper.php",
@@ -195,8 +244,8 @@
         },
         {
             "severity": "info",
-            "line_from": 133,
-            "line_to": 133,
+            "line_from": 153,
+            "line_to": 153,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\CmsSlotBlock\\Dependency\\Service\\CmsSlotBlockToUtilEncodingServiceInterface::decodeJson cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlock/src/Spryker/Zed/CmsSlotBlock/Persistence/Propel/Mapper/CmsSlotBlockMapper.php",
@@ -207,8 +256,8 @@
         },
         {
             "severity": "info",
-            "line_from": 134,
-            "line_to": 134,
+            "line_from": 154,
+            "line_to": 154,
             "type": "PossiblyNullIterator",
             "message": "Cannot iterate over nullable var mixed|null",
             "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlock/src/Spryker/Zed/CmsSlotBlock/Persistence/Propel/Mapper/CmsSlotBlockMapper.php",
@@ -218,5 +267,18 @@
             "shortcode": 97
         }
     ],
-    "deprecation": []
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 84,
+            "line_to": 84,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\CmsSlotBlock\\Persistence\\CmsSlotBlockRepositoryInterface::getCmsBlocksWithSlotRelations has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlock/src/Spryker/Zed/CmsSlotBlock/Business/CmsSlotBlockFacade.php",
+            "snippet": "        return $this->getRepository()->getCmsBlocksWithSlotRelations($filterTransfer);",
+            "selected_text": "getCmsBlocksWithSlotRelations",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
 }

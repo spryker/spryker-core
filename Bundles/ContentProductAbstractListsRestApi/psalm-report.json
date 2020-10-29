@@ -1,32 +1,140 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 60,
+            "line_to": 60,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Glue\\ContentProductAbstractListsRestApi\\Processor\\AbstractProduct\\Expander\\ProductAbstractByContentProductAbstractListExpander::getContentProductAbstractListKeys is incorrect, got 'list<null|string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentProductAbstractListsRestApi/src/Spryker/Glue/ContentProductAbstractListsRestApi/Processor/AbstractProduct/Expander/ProductAbstractByContentProductAbstractListExpander.php",
+            "snippet": "     * @return string[]",
+            "selected_text": "string[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 74,
+            "line_to": 74,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Glue\\ContentProductAbstractListsRestApi\\Processor\\AbstractProduct\\Expander\\ProductAbstractByContentProductAbstractListExpander::getContentProductAbstractListKeys",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentProductAbstractListsRestApi/src/Spryker/Glue/ContentProductAbstractListsRestApi/Processor/AbstractProduct/Expander/ProductAbstractByContentProductAbstractListExpander.php",
+            "snippet": "        return $contentProductAbstractListKeys;",
+            "selected_text": "$contentProductAbstractListKeys",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 74,
+            "line_to": 74,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ContentProductAbstractListsRestApi\\Processor\\Reader\\ContentProductAbstractListReader::getContentProductAbstractListsResources expects array<array-key, string>, array{null|string} provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentProductAbstractListsRestApi/src/Spryker/Glue/ContentProductAbstractListsRestApi/Processor/Reader/ContentProductAbstractListReader.php",
+            "snippet": "            [$restRequest->getResource()->getId()],",
+            "selected_text": "[$restRequest->getResource()->getId()]",
+            "error_level": 6,
+            "shortcode": 4
+        }
+    ],
     "warning": [
         {
             "severity": "info",
-            "line_from": 75,
-            "line_to": 75,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Glue\\ContentProductAbstractListsRestApi\\Dependency\\Client\\ContentProductAbstractListsRestApiToContentProductClientInterface::executeProductAbstractListTypeByKey cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ContentProductAbstractListsRestApi/src/Spryker/Glue/ContentProductAbstractListsRestApi/Processor/ContentProductAbstractListReader.php",
-            "snippet": "                $parentResource->getId(),",
-            "selected_text": "$parentResource->getId()",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productAbstractRestResources using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentProductAbstractListsRestApi/src/Spryker/Glue/ContentProductAbstractListsRestApi/Processor/AbstractProduct/Expander/ProductAbstractByContentProductAbstractListExpander.php",
+            "snippet": "            foreach ($productAbstractRestResources[$restResource->getId()] as $productAbstractRestResource) {",
+            "selected_text": "$productAbstractRestResources",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
-            "line_from": 90,
-            "line_to": 90,
+            "line_from": 77,
+            "line_to": 77,
             "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Glue\\GlueApplication\\Rest\\JsonApi\\RestResponseInterface::addResource cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ContentProductAbstractListsRestApi/src/Spryker/Glue/ContentProductAbstractListsRestApi/Processor/ContentProductAbstractListReader.php",
-            "snippet": "            $restResponse->addResource($abstractProductResource);",
-            "selected_text": "$abstractProductResource",
+            "message": "Argument 1 of Spryker\\Glue\\ContentProductAbstractListsRestApi\\Dependency\\Client\\ContentProductAbstractListsRestApiToContentProductClientInterface::executeProductAbstractListTypeByKey cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentProductAbstractListsRestApi/src/Spryker/Glue/ContentProductAbstractListsRestApi/Processor/AbstractProduct/Reader/ProductAbstractReader.php",
+            "snippet": "                $parentResource->getId(),",
+            "selected_text": "$parentResource->getId()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 91,
+            "line_to": 91,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of Spryker\\Glue\\ContentProductAbstractListsRestApi\\Dependency\\RestApiResource\\ContentProductAbstractListsRestApiToProductsRestApiResourceInterface::getProductAbstractsByIds cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentProductAbstractListsRestApi/src/Spryker/Glue/ContentProductAbstractListsRestApi/Processor/AbstractProduct/Reader/ProductAbstractReader.php",
+            "snippet": "            $this->storeClient->getCurrentStore()->getName()",
+            "selected_text": "$this->storeClient->getCurrentStore()->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 125,
+            "line_to": 125,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of Spryker\\Glue\\ContentProductAbstractListsRestApi\\Dependency\\RestApiResource\\ContentProductAbstractListsRestApiToProductsRestApiResourceInterface::getProductAbstractsByIds cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentProductAbstractListsRestApi/src/Spryker/Glue/ContentProductAbstractListsRestApi/Processor/AbstractProduct/Reader/ProductAbstractReader.php",
+            "snippet": "            $this->storeClient->getCurrentStore()->getName()",
+            "selected_text": "$this->storeClient->getCurrentStore()->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 83,
+            "line_to": 83,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $contentProductAbstractListsResources using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentProductAbstractListsRestApi/src/Spryker/Glue/ContentProductAbstractListsRestApi/Processor/Reader/ContentProductAbstractListReader.php",
+            "snippet": "            ->createContentProductAbstractListRestResponse($contentProductAbstractListsResources[$restRequest->getResource()->getId()]);",
+            "selected_text": "$contentProductAbstractListsResources",
+            "error_level": 3,
+            "shortcode": 125
         }
     ],
-    "deprecation": []
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "DeprecatedConstant",
+            "message": "Constant Spryker\\Glue\\ContentProductAbstractListsRestApi\\ContentProductAbstractListsRestApiConfig::ACTION_RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS_GET is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentProductAbstractListsRestApi/src/Spryker/Glue/ContentProductAbstractListsRestApi/Plugin/ContentProductAbstractListRoutePlugin.php",
+            "snippet": "            ContentProductAbstractListsRestApiConfig::ACTION_RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS_GET,",
+            "selected_text": "ContentProductAbstractListsRestApiConfig::ACTION_RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS_GET",
+            "error_level": 2,
+            "shortcode": 170
+        },
+        {
+            "severity": "info",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "DeprecatedConstant",
+            "message": "Constant Spryker\\Glue\\ContentProductAbstractListsRestApi\\ContentProductAbstractListsRestApiConfig::RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS_PRODUCTS is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentProductAbstractListsRestApi/src/Spryker/Glue/ContentProductAbstractListsRestApi/Plugin/ContentProductAbstractListRoutePlugin.php",
+            "snippet": "        return ContentProductAbstractListsRestApiConfig::RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS_PRODUCTS;",
+            "selected_text": "ContentProductAbstractListsRestApiConfig::RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS_PRODUCTS",
+            "error_level": 2,
+            "shortcode": 170
+        },
+        {
+            "severity": "info",
+            "line_from": 62,
+            "line_to": 62,
+            "type": "DeprecatedConstant",
+            "message": "Constant Spryker\\Glue\\ContentProductAbstractListsRestApi\\ContentProductAbstractListsRestApiConfig::CONTROLLER_CONTENT_PRODUCT_ABSTRACT_LIST is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentProductAbstractListsRestApi/src/Spryker/Glue/ContentProductAbstractListsRestApi/Plugin/ContentProductAbstractListRoutePlugin.php",
+            "snippet": "        return ContentProductAbstractListsRestApiConfig::CONTROLLER_CONTENT_PRODUCT_ABSTRACT_LIST;",
+            "selected_text": "ContentProductAbstractListsRestApiConfig::CONTROLLER_CONTENT_PRODUCT_ABSTRACT_LIST",
+            "error_level": 2,
+            "shortcode": 170
+        }
+    ]
 }
