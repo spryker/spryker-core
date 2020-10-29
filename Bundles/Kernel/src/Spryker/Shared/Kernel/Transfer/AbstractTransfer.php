@@ -417,7 +417,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
      *
      * @return void
      */
-    protected function thrownNullValueException(string $propertyName): void
+    protected function throwNullValueException(string $propertyName): void
     {
         throw new NullValueException(
             sprintf('Property "%s" of transfer `%s` is null.', $propertyName, static::class)

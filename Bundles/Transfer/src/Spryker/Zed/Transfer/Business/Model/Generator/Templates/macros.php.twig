@@ -135,7 +135,7 @@
     public function {{ method.name }}()
     {
         if ($this->{{ method.property }} === null) {
-            $this->thrownNullValueException(static::{{ method.propertyConst }});
+            $this->throwNullValueException(static::{{ method.propertyConst }});
         }
 
         return $this->{{ method.property }};

@@ -183,7 +183,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     public function getScalarFieldOrFail()
     {
         if ($this->scalarField === null) {
-            $this->thrownNullValueException(static::SCALAR_FIELD);
+            $this->throwNullValueException(static::SCALAR_FIELD);
         }
 
         return $this->scalarField;
@@ -306,7 +306,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     public function getTransferFieldOrFail()
     {
         if ($this->transferField === null) {
-            $this->thrownNullValueException(static::TRANSFER_FIELD);
+            $this->throwNullValueException(static::TRANSFER_FIELD);
         }
 
         return $this->transferField;
@@ -425,7 +425,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     public function getProjectLevelDeprecatedFieldOrFail()
     {
         if ($this->projectLevelDeprecatedField === null) {
-            $this->thrownNullValueException(static::PROJECT_LEVEL_DEPRECATED_FIELD);
+            $this->throwNullValueException(static::PROJECT_LEVEL_DEPRECATED_FIELD);
         }
 
         return $this->projectLevelDeprecatedField;

@@ -217,7 +217,7 @@ class CatFaceTransfer extends AbstractTransfer
     public function getNameOrFail()
     {
         if ($this->name === null) {
-            $this->thrownNullValueException(static::NAME);
+            $this->throwNullValueException(static::NAME);
         }
 
         return $this->name;
@@ -268,7 +268,7 @@ class CatFaceTransfer extends AbstractTransfer
     public function getItemOrFail()
     {
         if ($this->item === null) {
-            $this->thrownNullValueException(static::ITEM);
+            $this->throwNullValueException(static::ITEM);
         }
 
         return $this->item;

@@ -138,7 +138,7 @@ class FooBarTransfer extends AbstractTransfer
     public function getNameOrFail()
     {
         if ($this->name === null) {
-            $this->thrownNullValueException(static::NAME);
+            $this->throwNullValueException(static::NAME);
         }
 
         return $this->name;
@@ -189,7 +189,7 @@ class FooBarTransfer extends AbstractTransfer
     public function getBlaOrFail()
     {
         if ($this->bla === null) {
-            $this->thrownNullValueException(static::BLA);
+            $this->throwNullValueException(static::BLA);
         }
 
         return $this->bla;
@@ -244,7 +244,7 @@ class FooBarTransfer extends AbstractTransfer
     public function getStockOrFail()
     {
         if ($this->stock === null) {
-            $this->thrownNullValueException(static::STOCK);
+            $this->throwNullValueException(static::STOCK);
         }
 
         return $this->stock;
