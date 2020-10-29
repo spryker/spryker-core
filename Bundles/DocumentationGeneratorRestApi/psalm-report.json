@@ -65,7 +65,7 @@
             "line_from": 40,
             "line_to": 40,
             "type": "InvalidReturnType",
-            "message": "The declared return type 'array<array-key, mixed>' for Spryker\\Zed\\DocumentationGeneratorRestApi\\Business\\Renderer\\Component\\PathResponseSpecificationComponent::getSpecificationComponentData is incorrect, got 'array<null|string, non-empty-array<array-key, array<array-key, array<array-key, array<array-key, non-empty-string>>>|null|string>>'",
+            "message": "The declared return type 'array<array-key, mixed>' for Spryker\\Zed\\DocumentationGeneratorRestApi\\Business\\Renderer\\Component\\PathResponseSpecificationComponent::getSpecificationComponentData is incorrect, got 'array<null|string, non-empty-array<array-key, array<array-key, array<array-key, array<array-key, null|string>>>|null|string>>'",
             "file_name": "vendor/spryker/spryker/Bundles/DocumentationGeneratorRestApi/src/Spryker/Zed/DocumentationGeneratorRestApi/Business/Renderer/Component/PathResponseSpecificationComponent.php",
             "snippet": "     * @return array",
             "selected_text": "array",
@@ -77,7 +77,7 @@
             "line_from": 54,
             "line_to": 54,
             "type": "InvalidReturnStatement",
-            "message": "The inferred type 'non-empty-array<null|string, non-empty-array<array-key, array<array-key, array<array-key, array<array-key, non-empty-string>>>|null|string>>' does not match the declared return type 'array<array-key, mixed>' for Spryker\\Zed\\DocumentationGeneratorRestApi\\Business\\Renderer\\Component\\PathResponseSpecificationComponent::getSpecificationComponentData",
+            "message": "The inferred type 'non-empty-array<null|string, non-empty-array<array-key, array<array-key, array<array-key, array<array-key, null|string>>>|null|string>>' does not match the declared return type 'array<array-key, mixed>' for Spryker\\Zed\\DocumentationGeneratorRestApi\\Business\\Renderer\\Component\\PathResponseSpecificationComponent::getSpecificationComponentData",
             "file_name": "vendor/spryker/spryker/Bundles/DocumentationGeneratorRestApi/src/Spryker/Zed/DocumentationGeneratorRestApi/Business/Renderer/Component/PathResponseSpecificationComponent.php",
             "snippet": "        return [$this->pathResponseComponentTransfer->getCode() => $result];",
             "selected_text": "[$this->pathResponseComponentTransfer->getCode() => $result]",
@@ -155,6 +155,30 @@
             "selected_text": "[$pathMethodDataTransfer->getPath() => $pathMethodSpecificationData]",
             "error_level": 6,
             "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 28,
+            "line_to": 28,
+            "type": "UndefinedClass",
+            "message": "Class or interface Doctrine\\Common\\Inflector\\Inflector does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/DocumentationGeneratorRestApi/src/Spryker/Zed/DocumentationGeneratorRestApi/Dependency/External/DocumentationGeneratorRestApiToDoctrineInflectorAdapter.php",
+            "snippet": "        return Inflector::classify($word);",
+            "selected_text": "Inflector",
+            "error_level": -1,
+            "shortcode": 19
+        },
+        {
+            "severity": "error",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "UndefinedClass",
+            "message": "Class or interface Doctrine\\Common\\Inflector\\Inflector does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/DocumentationGeneratorRestApi/src/Spryker/Zed/DocumentationGeneratorRestApi/Dependency/External/DocumentationGeneratorRestApiToDoctrineInflectorAdapter.php",
+            "snippet": "        return Inflector::singularize($word);",
+            "selected_text": "Inflector",
+            "error_level": -1,
+            "shortcode": 19
         }
     ],
     "warning": [
@@ -280,6 +304,18 @@
         },
         {
             "severity": "info",
+            "line_from": 343,
+            "line_to": 343,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\DocumentationGeneratorRestApi\\Business\\Generator\\OpenApiSpecificationSchemaGenerator::validatePluginTransfer cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/DocumentationGeneratorRestApi/src/Spryker/Zed/DocumentationGeneratorRestApi/Business/Generator/OpenApiSpecificationSchemaGenerator.php",
+            "snippet": "        $this->validatePluginTransfer($plugin, $transferClassName);",
+            "selected_text": "$transferClassName",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
             "line_from": 320,
             "line_to": 320,
             "type": "PossiblyNullArgument",
@@ -313,6 +349,42 @@
             "selected_text": "$pathMethodDataTransfer->getPath()",
             "error_level": 1,
             "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 89,
+            "line_to": 89,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\DocumentationGeneratorRestApi\\Business\\Processor\\ResourceSchemaNameStorageProcessor::addResponseResourceDataSchemaNameToStorage cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/DocumentationGeneratorRestApi/src/Spryker/Zed/DocumentationGeneratorRestApi/Business/Processor/ResourceSchemaNameStorageProcessor.php",
+            "snippet": "            $this->addResponseResourceDataSchemaNameToStorage($plugin, $pathAnnotationsTransfer->getGetResourceById());",
+            "selected_text": "$pathAnnotationsTransfer->getGetResourceById()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 92,
+            "line_to": 92,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\DocumentationGeneratorRestApi\\Business\\Processor\\ResourceSchemaNameStorageProcessor::addResponseCollectionDataSchemaNameToStorage cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/DocumentationGeneratorRestApi/src/Spryker/Zed/DocumentationGeneratorRestApi/Business/Processor/ResourceSchemaNameStorageProcessor.php",
+            "snippet": "            $this->addResponseCollectionDataSchemaNameToStorage($plugin, $pathAnnotationsTransfer->getGetCollection());",
+            "selected_text": "$pathAnnotationsTransfer->getGetCollection()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 156,
+            "line_to": 156,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\DocumentationGeneratorRestApi\\Business\\Analyzer\\ResourceTransferAnalyzerInterface::createResponseResourceDataSchemaNameFromTransferClassName cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/DocumentationGeneratorRestApi/src/Spryker/Zed/DocumentationGeneratorRestApi/Business/Processor/ResourceSchemaNameStorageProcessor.php",
+            "snippet": "                        $pluginAnnotationsTransfer->getResourceAttributesClassName()",
+            "selected_text": "$pluginAnnotationsTransfer->getResourceAttributesClassName()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -628,6 +700,18 @@
         },
         {
             "severity": "info",
+            "line_from": 90,
+            "line_to": 90,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\DocumentationGeneratorRestApi\\Business\\Renderer\\PathMethodRenderer::addRequestComponent cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/DocumentationGeneratorRestApi/src/Spryker/Zed/DocumentationGeneratorRestApi/Business/Renderer/PathMethodRenderer.php",
+            "snippet": "            $this->addRequestComponent($pathMethodComponentTransfer, $pathMethodDataTransfer->getRequestSchema());",
+            "selected_text": "$pathMethodDataTransfer->getRequestSchema()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
             "line_from": 97,
             "line_to": 97,
             "type": "PossiblyInvalidMethodCall",
@@ -649,6 +733,30 @@
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\PathSchemaDataTransfer[]",
             "error_level": 4,
             "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 218,
+            "line_to": 218,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/DocumentationGeneratorRestApi/src/Spryker/Zed/DocumentationGeneratorRestApi/Business/Renderer/PathMethodRenderer.php",
+            "snippet": "            $parameterComponentTransfer->setRef(sprintf(static::PATTERN_PARAMETER_REFERENCE, $parameterComponentTransfer->getRef()));",
+            "selected_text": "$parameterComponentTransfer->getRef()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\DocumentationGeneratorRestApi\\Business\\Renderer\\SchemaRenderer::addRelationshipSchemaItems cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/DocumentationGeneratorRestApi/src/Spryker/Zed/DocumentationGeneratorRestApi/Business/Renderer/SchemaRenderer.php",
+            "snippet": "            $this->addRelationshipSchemaItems($schemaComponentTransfer, $schemaDataTransfer->getItems());",
+            "selected_text": "$schemaDataTransfer->getItems()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -697,18 +805,6 @@
             "selected_text": "APPLICATION_ENV === 'devtest'",
             "error_level": 4,
             "shortcode": 56
-        },
-        {
-            "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/DocumentationGeneratorRestApi/src/Spryker/Zed/DocumentationGeneratorRestApi/DocumentationGeneratorRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->utilEncoding()->service()",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

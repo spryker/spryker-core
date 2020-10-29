@@ -11,8 +11,7 @@
             "snippet": "                $localizedContentTransfer = $form->getParent()->getData();",
             "selected_text": "getData",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -24,8 +23,7 @@
             "snippet": "            $view->parent->vars['name']",
             "selected_text": "$view->parent->vars",
             "error_level": 3,
-            "shortcode": 82,
-            "taint_trace": null
+            "shortcode": 82
         },
         {
             "severity": "info",
@@ -37,8 +35,7 @@
             "snippet": "            $view->parent->vars['name']",
             "selected_text": "$view->parent->vars['name']",
             "error_level": 3,
-            "shortcode": 79,
-            "taint_trace": null
+            "shortcode": 79
         },
         {
             "severity": "info",
@@ -50,8 +47,7 @@
             "snippet": "            $view->parent->vars['name']",
             "selected_text": "$view->parent->vars['name']",
             "error_level": 3,
-            "shortcode": 79,
-            "taint_trace": null
+            "shortcode": 79
         },
         {
             "severity": "info",
@@ -63,8 +59,7 @@
             "snippet": "        $this->setTableIdentifier(sprintf('%s-%s', static::TABLE_IDENTIFIER, $this->identifierSuffix));",
             "selected_text": "$this->identifierSuffix",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -76,8 +71,7 @@
             "snippet": "        $this->setTableIdentifier(sprintf('%s-%s', static::TABLE_IDENTIFIER, $this->identifierSuffix));",
             "selected_text": "$this->identifierSuffix",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         }
     ],
     "deprecation": []

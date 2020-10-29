@@ -23,6 +23,18 @@
             "selected_text": "$shoppingListItemIds",
             "error_level": 6,
             "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 26,
+            "line_to": 26,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Zed\\ShoppingListNote\\Persistence\\Propel\\Mapper\\ShoppingListItemNoteMapper::mapShoppingListItemNoteTransfer has wrong name $shoppingListItemNoteTransfer, expecting $shoppingListTransfer as defined by Spryker\\Zed\\ShoppingListNote\\Persistence\\Propel\\Mapper\\ShoppingListItemNoteMapperInterface::mapShoppingListItemNoteTransfer",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListNote/src/Spryker/Zed/ShoppingListNote/Persistence/Propel/Mapper/ShoppingListItemNoteMapper.php",
+            "snippet": "        ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer",
+            "selected_text": "$shoppingListItemNoteTransfer",
+            "error_level": 7,
+            "shortcode": 230
         }
     ],
     "warning": [
@@ -49,18 +61,6 @@
             "selected_text": "getNote",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListNote/src/Spryker/Client/ShoppingListNote/ShoppingListNoteDependencyProvider.php",
-            "snippet": "            return new ShoppingListNoteToCartClientBridge($container->getLocator()->cart()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         },
         {
             "severity": "info",
@@ -124,15 +124,15 @@
         },
         {
             "severity": "info",
-            "line_from": 112,
-            "line_to": 112,
-            "type": "PossiblyUndefinedVariable",
-            "message": "Possibly undefined variable $shoppingListItemIds, first seen on line 112",
+            "line_from": 94,
+            "line_to": 94,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ShoppingListNote\\Persistence\\ShoppingListNoteEntityManagerInterface::deleteShoppingListItemNoteById cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ShoppingListNote/src/Spryker/Zed/ShoppingListNote/Business/ShoppingListItemNote/ShoppingListItemNoteWriter.php",
-            "snippet": "            $shoppingListItemIds[] = $shoppingListItemNoteTransfer->getIdShoppingListItemNote();",
-            "selected_text": "$shoppingListItemIds",
+            "snippet": "            $this->shoppingListNoteEntityManager->deleteShoppingListItemNoteById($shoppingListItemNoteTransfer->getIdShoppingListItemNote());",
+            "selected_text": "$shoppingListItemNoteTransfer->getIdShoppingListItemNote()",
             "error_level": 3,
-            "shortcode": 18
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -306,8 +306,8 @@
         },
         {
             "severity": "info",
-            "line_from": 18,
-            "line_to": 18,
+            "line_from": 20,
+            "line_to": 20,
             "type": "DeprecatedInterface",
             "message": "Spryker\\Zed\\ShoppingListExtension\\Dependency\\Plugin\\ShoppingListItemPostSavePluginInterface is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ShoppingListNote/src/Spryker/Zed/ShoppingListNote/Communication/Plugin/ShoppingListItemNotePostSavePlugin.php",

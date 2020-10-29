@@ -10,8 +10,7 @@
             "snippet": "        return $this->countryRepository->findCountriesByIso2Codes($iso2Codes);",
             "selected_text": "$iso2Codes",
             "error_level": 6,
-            "shortcode": 4,
-            "taint_trace": null
+            "shortcode": 4
         }
     ],
     "warning": [
@@ -25,8 +24,7 @@
             "snippet": "        return $this->createCountry($countryTransfer->getIso2Code(), $countryTransfer->toArray());",
             "selected_text": "$countryTransfer->getIso2Code()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -38,8 +36,7 @@
             "snippet": "        $billingAddressCountryIso2Code = $checkoutDataTransfer->getBillingAddress()->getIso2Code();",
             "selected_text": "getIso2Code",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -51,8 +48,7 @@
             "snippet": "        if (!$this->countryManager->hasCountry($billingAddressCountryIso2Code)) {",
             "selected_text": "$billingAddressCountryIso2Code",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -64,8 +60,7 @@
             "snippet": "        $shippingAddressCountryIso2Code = $checkoutDataTransfer->getShippingAddress()->getIso2Code();",
             "selected_text": "getIso2Code",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -77,8 +72,19 @@
             "snippet": "        if (!$this->countryManager->hasCountry($shippingAddressCountryIso2Code)) {",
             "selected_text": "$shippingAddressCountryIso2Code",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Country\\Persistence\\Propel\\Mapper\\CountryMapperInterface::mapCountryTransferCollection expects array<array-key, Generated\\Shared\\Transfer\\SpyCountryEntityTransfer>, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Country/src/Spryker/Zed/Country/Persistence/CountryRepository.php",
+            "snippet": "            ->mapCountryTransferCollection($countries);",
+            "selected_text": "$countries",
+            "error_level": 3,
+            "shortcode": 92
         }
     ],
     "deprecation": [
@@ -92,8 +98,7 @@
             "snippet": "        return $this->createCountry($countryTransfer->getIso2Code(), $countryTransfer->toArray());",
             "selected_text": "createCountry",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         }
     ]
 }

@@ -1,5 +1,30 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'array<string, mixed>' for Spryker\\Zed\\ProductOfferGuiExtension\\Dependency\\Plugin\\ProductOfferViewSectionPluginInterface::getData is more specific than the implemented return type for Spryker\\Zed\\ProductOfferValidityGui\\Communication\\Plugin\\ProductOfferGui\\ProductOfferValidityProductOfferViewSectionPlugin::getdata 'array<array-key, mixed>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferValidityGui/src/Spryker/Zed/ProductOfferValidityGui/Communication/Plugin/ProductOfferGui/ProductOfferValidityProductOfferViewSectionPlugin.php",
+            "snippet": "     * @phpstan-return array<mixed>",
+            "selected_text": "array<mixed>",
+            "error_level": 5,
+            "shortcode": 166
+        },
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method toArray on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferValidityGui/src/Spryker/Zed/ProductOfferValidityGui/Communication/Plugin/ProductOfferGui/ProductOfferValidityProductOfferViewSectionPlugin.php",
+            "snippet": "        return $productOfferTransfer->getProductOfferValidity()->toArray();",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
     "deprecation": []
 }

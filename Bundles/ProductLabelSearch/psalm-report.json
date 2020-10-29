@@ -23,6 +23,78 @@
             "selected_text": "$productLabelIdsMap",
             "error_level": 6,
             "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\ProductLabelSearch\\Communication\\Plugin\\Event\\Listener\\ProductLabelProductAbstractSearchListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/Communication/Plugin/Event/Listener/ProductLabelProductAbstractSearchListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\ProductLabelSearch\\Communication\\Plugin\\Event\\Listener\\ProductLabelSearchListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/Communication/Plugin/Event/Listener/ProductLabelSearchListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\ProductLabelSearch\\Communication\\Plugin\\Publisher\\ProductLabel\\ProductLabelWritePublisherPlugin::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/Communication/Plugin/Publisher/ProductLabel/ProductLabelWritePublisherPlugin.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\ProductLabelSearch\\Communication\\Plugin\\Publisher\\ProductLabelProductAbstract\\ProductLabelProductAbstractWritePublisherPlugin::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/Communication/Plugin/Publisher/ProductLabelProductAbstract/ProductLabelProductAbstractWritePublisherPlugin.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\ProductLabelSearch\\Communication\\Plugin\\Publisher\\ProductLabelStore\\ProductLabelStoreWritePublisherPlugin::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/Communication/Plugin/Publisher/ProductLabelStore/ProductLabelStoreWritePublisherPlugin.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyProductLabelEntityTransfer>' for Spryker\\Zed\\ProductLabelSearch\\Persistence\\ProductLabelSearchRepository::getProductLabelsByIdProductAbstractIn",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/Persistence/ProductLabelSearchRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($query)->find();",
+            "selected_text": "$this->buildQueryFromCriteria($query)->find()",
+            "error_level": 6,
+            "shortcode": 128
         }
     ],
     "warning": [
@@ -79,7 +151,7 @@
             "line_from": 39,
             "line_to": 39,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelProductAbstract|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelProductAbstract|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/Communication/Plugin/Event/Listener/ProductLabelSearchListener.php",
             "snippet": "        $productAbstractIds = $this->getQueryContainer()->queryProductLabelByProductLabelIds($productLabelIds)->find()->getData();",
             "selected_text": "getData",
@@ -91,60 +163,12 @@
             "line_from": 49,
             "line_to": 49,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelProductAbstract|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelProductAbstract> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/Persistence/ProductLabelSearchRepository.php",
             "snippet": "            ->getData();",
             "selected_text": "getData",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 100,
-            "line_to": 100,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/ProductLabelSearchDependencyProvider.php",
-            "snippet": "                $container->getLocator()->utilSanitize()->service()",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 116,
-            "line_to": 116,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/ProductLabelSearchDependencyProvider.php",
-            "snippet": "                $container->getLocator()->eventBehavior()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 132,
-            "line_to": 132,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/ProductLabelSearchDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productLabel()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 148,
-            "line_to": 148,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/ProductLabelSearchDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productPageSearch()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [
@@ -179,7 +203,7 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\ProductLabel\\Dependency\\ProductLabelEvents is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/Communication/Plugin/Event/Subscriber/ProductLabelSearchEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_CREATE, new ProductLabelProductAbstractSearchListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_CREATE, new ProductLabelProductAbstractSearchListener(), 0, null, $this->getConfig()->getEventQueueName());",
             "selected_text": "ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_CREATE",
             "error_level": 2,
             "shortcode": 98
@@ -191,7 +215,7 @@
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\ProductLabelSearch\\Communication\\Plugin\\Event\\Listener\\ProductLabelProductAbstractSearchListener is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/Communication/Plugin/Event/Subscriber/ProductLabelSearchEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_CREATE, new ProductLabelProductAbstractSearchListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_CREATE, new ProductLabelProductAbstractSearchListener(), 0, null, $this->getConfig()->getEventQueueName());",
             "selected_text": "new ProductLabelProductAbstractSearchListener()",
             "error_level": 2,
             "shortcode": 98
@@ -203,7 +227,7 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\ProductLabel\\Dependency\\ProductLabelEvents is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/Communication/Plugin/Event/Subscriber/ProductLabelSearchEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_UPDATE, new ProductLabelProductAbstractSearchListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_UPDATE, new ProductLabelProductAbstractSearchListener(), 0, null, $this->getConfig()->getEventQueueName());",
             "selected_text": "ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_UPDATE",
             "error_level": 2,
             "shortcode": 98
@@ -215,7 +239,7 @@
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\ProductLabelSearch\\Communication\\Plugin\\Event\\Listener\\ProductLabelProductAbstractSearchListener is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/Communication/Plugin/Event/Subscriber/ProductLabelSearchEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_UPDATE, new ProductLabelProductAbstractSearchListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_UPDATE, new ProductLabelProductAbstractSearchListener(), 0, null, $this->getConfig()->getEventQueueName());",
             "selected_text": "new ProductLabelProductAbstractSearchListener()",
             "error_level": 2,
             "shortcode": 98
@@ -227,7 +251,7 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\ProductLabel\\Dependency\\ProductLabelEvents is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/Communication/Plugin/Event/Subscriber/ProductLabelSearchEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_DELETE, new ProductLabelProductAbstractSearchListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_DELETE, new ProductLabelProductAbstractSearchListener(), 0, null, $this->getConfig()->getEventQueueName());",
             "selected_text": "ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_DELETE",
             "error_level": 2,
             "shortcode": 98
@@ -239,7 +263,7 @@
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\ProductLabelSearch\\Communication\\Plugin\\Event\\Listener\\ProductLabelProductAbstractSearchListener is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/Communication/Plugin/Event/Subscriber/ProductLabelSearchEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_DELETE, new ProductLabelProductAbstractSearchListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_DELETE, new ProductLabelProductAbstractSearchListener(), 0, null, $this->getConfig()->getEventQueueName());",
             "selected_text": "new ProductLabelProductAbstractSearchListener()",
             "error_level": 2,
             "shortcode": 98
@@ -251,7 +275,7 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\ProductLabel\\Dependency\\ProductLabelEvents is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/Communication/Plugin/Event/Subscriber/ProductLabelSearchEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_UPDATE, new ProductLabelSearchListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_UPDATE, new ProductLabelSearchListener(), 0, null, $this->getConfig()->getEventQueueName());",
             "selected_text": "ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_UPDATE",
             "error_level": 2,
             "shortcode": 98
@@ -263,7 +287,7 @@
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\ProductLabelSearch\\Communication\\Plugin\\Event\\Listener\\ProductLabelSearchListener is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/Communication/Plugin/Event/Subscriber/ProductLabelSearchEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_UPDATE, new ProductLabelSearchListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_UPDATE, new ProductLabelSearchListener(), 0, null, $this->getConfig()->getEventQueueName());",
             "selected_text": "new ProductLabelSearchListener()",
             "error_level": 2,
             "shortcode": 98
@@ -275,7 +299,7 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\ProductLabel\\Dependency\\ProductLabelEvents is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/Communication/Plugin/Event/Subscriber/ProductLabelSearchEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_DELETE, new ProductLabelSearchListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_DELETE, new ProductLabelSearchListener(), 0, null, $this->getConfig()->getEventQueueName());",
             "selected_text": "ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_DELETE",
             "error_level": 2,
             "shortcode": 98
@@ -287,7 +311,7 @@
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\ProductLabelSearch\\Communication\\Plugin\\Event\\Listener\\ProductLabelSearchListener is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/Communication/Plugin/Event/Subscriber/ProductLabelSearchEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_DELETE, new ProductLabelSearchListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_DELETE, new ProductLabelSearchListener(), 0, null, $this->getConfig()->getEventQueueName());",
             "selected_text": "new ProductLabelSearchListener()",
             "error_level": 2,
             "shortcode": 98
