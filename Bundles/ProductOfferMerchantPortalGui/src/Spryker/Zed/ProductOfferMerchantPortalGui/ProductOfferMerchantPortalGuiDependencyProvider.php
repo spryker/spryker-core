@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui;
 
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageQuery;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
@@ -64,6 +65,7 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
     public const PROPEL_QUERY_PRODUCT_OFFER = 'PROPEL_QUERY_PRODUCT_OFFER';
     public const PROPEL_QUERY_STORE = 'PROPEL_QUERY_STORE';
     public const PROPEL_QUERY_PRODUCT_OFFER_STORE = 'PROPEL_PRODUCT_OFFER_STORE';
+    public const PROPEL_QUERY_PRICE_PRODUCT_STORE = 'PROPEL_QUERY_PRICE_PRODUCT_STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -101,6 +103,7 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
         $container = $this->addProductOfferPropelQuery($container);
         $container = $this->addStorePropelQuery($container);
         $container = $this->addProductOfferStorePropelQuery($container);
+        $container = $this->addPriceProductStorePropelQuery($container);
         $container = $this->addUtilEncodingService($container);
 
         return $container;
@@ -389,6 +392,20 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
     {
         $container->set(static::PROPEL_QUERY_PRODUCT_OFFER_STORE, $container->factory(function () {
             return SpyProductOfferStoreQuery::create();
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceProductStorePropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_PRICE_PRODUCT_STORE, $container->factory(function () {
+            return SpyPriceProductStoreQuery::create();
         }));
 
         return $container;

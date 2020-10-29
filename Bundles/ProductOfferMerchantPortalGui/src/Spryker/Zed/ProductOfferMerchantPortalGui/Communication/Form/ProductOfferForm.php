@@ -220,23 +220,6 @@ class ProductOfferForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addPricesSubform(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_PRICES, CollectionType::class, [
-            'label' => false,
-            'entry_type' => PriceProductForm::class,
-            'allow_add' => true,
-            'allow_delete' => true,
-        ]);
-
-        return $this;
-    }
-
-    /**
      * @param \Symfony\Component\Form\FormView $formViewCollection
      * @param \Symfony\Component\Form\FormInterface $form
      * @param array $options

@@ -17,6 +17,7 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameB
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\GuiTableConfigurationProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductGuiTableConfigurationProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferPriceGuiTableConfigurationProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\OffersDashboardCardProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\OffersDashboardCardProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\ProductGuiTableDataProvider;
@@ -73,6 +74,19 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
             $this->getStoreFacade(),
             $this->getTranslatorFacade(),
             $this->getGuiTableFactory()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\GuiTableConfigurationProviderInterface
+     */
+    public function createProductOfferPriceGuiTableConfigurationProvider(): GuiTableConfigurationProviderInterface
+    {
+        return new ProductOfferPriceGuiTableConfigurationProvider(
+            $this->getGuiTableFactory(),
+            $this-$this->getPriceProductFacade(),
+            $this->getStoreFacade(),
+            $this->getCurrencyFacade()
         );
     }
 

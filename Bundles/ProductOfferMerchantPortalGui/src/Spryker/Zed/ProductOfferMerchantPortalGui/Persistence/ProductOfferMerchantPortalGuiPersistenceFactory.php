@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Persistence;
 
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageQuery;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
@@ -90,5 +91,13 @@ class ProductOfferMerchantPortalGuiPersistenceFactory extends AbstractPersistenc
     public function getUtilEncodingService(): ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(ProductOfferMerchantPortalGuiDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery
+     */
+    public function getPriceProductStorePropelQuery(): SpyPriceProductStoreQuery
+    {
+        return $this->getProvidedDependency(ProductOfferMerchantPortalGuiDependencyProvider::PROPEL_QUERY_PRICE_PRODUCT_STORE);
     }
 }

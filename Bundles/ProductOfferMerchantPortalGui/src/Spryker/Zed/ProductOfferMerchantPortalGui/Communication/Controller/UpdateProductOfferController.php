@@ -10,9 +10,11 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOfferResponseTransfer;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\GuiTableConfigurationProviderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -59,7 +61,15 @@ class UpdateProductOfferController extends AbstractProductOfferController
         $productOfferResponseTransfer = $productOfferResponseTransfer ?? new ProductOfferResponseTransfer();
         $productOfferResponseTransfer->setProductOffer($productOfferTransfer);
 
-        return $this->getResponse($productOfferForm, $productConcreteTransfer, $productAbstractTransfer, $productOfferResponseTransfer);
+        $productOfferPriceTableConfiguration = $this->getFactory()->createProductOfferPriceGuiTableConfigurationProvider()->getConfiguration();
+
+        return $this->getResponse(
+            $productOfferForm,
+            $productConcreteTransfer,
+            $productAbstractTransfer,
+            $productOfferResponseTransfer,
+            $productOfferPriceTableConfiguration
+        );
     }
 
     /**
@@ -74,7 +84,8 @@ class UpdateProductOfferController extends AbstractProductOfferController
         FormInterface $productOfferForm,
         ProductConcreteTransfer $productConcreteTransfer,
         ProductAbstractTransfer $productAbstractTransfer,
-        ProductOfferResponseTransfer $productOfferResponseTransfer
+        ProductOfferResponseTransfer $productOfferResponseTransfer,
+        GuiTableConfigurationProviderInterface $productOfferPriceTableConfiguration
     ): JsonResponse {
         $localeTransfer = $this->getFactory()
             ->getLocaleFacade()
@@ -87,6 +98,7 @@ class UpdateProductOfferController extends AbstractProductOfferController
                 'productName' => $this->getFactory()->createProductNameBuilder()->buildProductConcreteName($productConcreteTransfer, $localeTransfer),
                 'productAttributes' => $this->getProductAttributes($localeTransfer, $productConcreteTransfer, $productAbstractTransfer),
                 'productOfferReference' => $productOfferResponseTransfer->getProductOffer()->getProductOfferReference(),
+                'productOfferPriceTableConfiguration' => $productOfferPriceTableConfiguration
             ])->getContent(),
         ];
 
@@ -121,5 +133,19 @@ class UpdateProductOfferController extends AbstractProductOfferController
         }
 
         return new JsonResponse($responseData);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function priceTableDataAction(Request $request): Response
+    {
+        return $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
+            $request,
+            $this->getFactory()->createProductOfferTableDataProvider(),
+            $this->getFactory()->createProductOfferPriceGuiTableConfigurationProvider()->getConfiguration()
+        );
     }
 }

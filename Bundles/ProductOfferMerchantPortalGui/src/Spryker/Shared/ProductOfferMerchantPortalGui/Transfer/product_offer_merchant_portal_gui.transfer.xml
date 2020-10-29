@@ -287,4 +287,15 @@
         <property name="productOfferReference" type="string"/>
     </transfer>
 
+    <transfer name="PriceProductOfferTableCriteria">
+        <property name="filterInStores" type="int[]" singular="inStore"/>
+        <property name="filterInCurrencies" type="string[]" singular="inCurrency"/>
+        <property name="idProductOffer" type="int"/>
+    </transfer>
+
+    <transfer name="PriceProductOfferCollection">
+        <property name="priceProductOffers" type="PriceProductOffer[]" singular="priceProductOffer"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
 </transfers>

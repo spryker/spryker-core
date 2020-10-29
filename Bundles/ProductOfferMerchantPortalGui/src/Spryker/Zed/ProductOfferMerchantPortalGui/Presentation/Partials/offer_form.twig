@@ -155,6 +155,15 @@
                 </div>
             </web-spy-card>
 
+            <web-mp-offers-list
+                cloak
+                table-id="web-mp-offers-list"
+                table-config='{{ guiTableConfiguration(productOfferPriceTableConfiguration) }}'>
+                <span title>{{ 'List of Prices' | trans }}</span>
+
+{#                <web-spy-button-link action url="/product-offer-merchant-portal-gui/product-list" size="lg">{{ 'Add Offer' | trans }}</web-spy-button-link>#}
+            </web-mp-offers-list>
+
             {{ _self.spyFormItemPriceProduct(form) }}
 
             {% set dates = {

@@ -11,6 +11,8 @@ use DateTime;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\MerchantProductOfferCountsTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\PriceProductOfferCollectionTransfer;
+use Generated\Shared\Transfer\PriceProductOfferTableCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
@@ -20,6 +22,12 @@ use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\ProductOfferValidityTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Currency\Persistence\Map\SpyCurrencyTableMap;
+use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
+use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
+use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceTypeTableMap;
+use Orm\Zed\PriceProductOffer\Persistence\Map\SpyPriceProductOfferTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
@@ -900,5 +908,48 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         $merchantProductOfferCountsTransfer->setInactive($inactiveCount > 0 ? $inactiveCount : 0);
 
         return $merchantProductOfferCountsTransfer;
+    }
+
+    public function getProductOfferPriceTableData(
+        PriceProductOfferTableCriteriaTransfer $productOfferPriceTableCriteriaTransfer
+    ): PriceProductOfferCollectionTransfer {
+        $priceProductStoreQuery = $this->getFactory()
+            ->getPriceProductStorePropelQuery()
+            ->innerJoinSpyPriceProductOffer()
+            ->usePriceProductQuery()
+                ->innerJoinPriceType()
+            ->endUse()
+            ->innerJoinStore()
+            ->innerJoinCurrency()
+            ->select([
+                SpyStoreTableMap::COL_NAME,
+                SpyCurrencyTableMap::COL_CODE
+            ])
+            ->addAsColumn(
+                'price_product_offer_ids',
+                'GROUP_CONCAT(' . SpyPriceProductOfferTableMap::COL_ID_PRICE_PRODUCT_OFFER . ')'
+            )
+            ->addAsColumn(
+                'type_price_product_offer_ids',
+                'GROUP_CONCAT(CONCAT(' . SpyPriceTypeTableMap::COL_NAME . ',:,' . SpyPriceProductOfferTableMap::COL_ID_PRICE_PRODUCT_OFFER . '))'
+            )
+            ->addAsColumn(
+                'default_gross',
+                'IF(' . SpyPriceProductTableMap::COL_FK_PRICE_TYPE . ' = 1, ' . SpyPriceProductStoreTableMap::COL_GROSS_PRICE . ', "")'
+            )
+            ->addAsColumn(
+                'original_gross',
+                'IF(' . SpyPriceProductTableMap::COL_FK_PRICE_TYPE . ' = 2  , ' . SpyPriceProductStoreTableMap::COL_GROSS_PRICE . ', "")'
+            )
+            ->addAsColumn(
+                'default_net',
+                'IF(' . SpyPriceProductTableMap::COL_FK_PRICE_TYPE . ' = 1, ' . SpyPriceProductStoreTableMap::COL_NET_PRICE . ', "")'
+            )
+            ->addAsColumn(
+                'original_net',
+                'IF(' . SpyPriceProductTableMap::COL_FK_PRICE_TYPE . ' = 2, ' . SpyPriceProductStoreTableMap::COL_NET_PRICE . ', "")'
+            )->filterByFkStore_In($productOfferPriceTableCriteriaTransfer->getFilterInStores())
+            ->filterBy(SpyCurrencyTableMap::COL_CODE, $productOfferPriceTableCriteriaTransfer->getFilterInCurrencies(), Criteria::IN)
+            ->find();
     }
 }
