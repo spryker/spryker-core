@@ -22,7 +22,7 @@ class MerchantSearchClient extends AbstractClient implements MerchantSearchClien
      *
      * @param \Generated\Shared\Transfer\MerchantSearchRequestTransfer $merchantSearchRequestTransfer
      *
-     * @return array
+     * @return mixed
      */
     public function merchantSearch(MerchantSearchRequestTransfer $merchantSearchRequestTransfer): array
     {

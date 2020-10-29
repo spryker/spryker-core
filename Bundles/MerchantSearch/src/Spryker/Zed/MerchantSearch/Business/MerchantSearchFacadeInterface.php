@@ -16,7 +16,6 @@ interface MerchantSearchFacadeInterface
      * - Retrieves all Merchants using IDs from `$eventTransfers`.
      * - Updates entities from `spy_merchant_search` with actual data from obtained Merchants.
      * - Runs merchant search data expander plugins
-     * - Sends a copy of data to queue based on module config.
      *
      * @api
      *
@@ -32,7 +31,6 @@ interface MerchantSearchFacadeInterface
      *     - IDs from `$eventTransfers`
      *     - Merchant activity
      *     - Merchant status
-     * - Sends delete message to queue based on module config.
      *
      * @api
      *
