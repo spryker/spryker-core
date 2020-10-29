@@ -4,7 +4,7 @@
   "description": "ProductDiscontinued module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/kernel": "^3.49.0",
     "spryker/locale": "^3.0.0",
     "spryker/log": "^2.0.0 || ^3.0.0",

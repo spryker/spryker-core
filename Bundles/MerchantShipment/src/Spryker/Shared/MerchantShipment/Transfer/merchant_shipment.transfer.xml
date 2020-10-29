@@ -16,4 +16,8 @@
         <property name="merchantReference" type="string"/>
     </transfer>
 
+    <transfer name="CartChange">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
 </transfers>

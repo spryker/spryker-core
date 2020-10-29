@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
+use Generated\Shared\Transfer\RestShipmentsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\ShipmentsRestApi\ShipmentsRestApiConfig;
@@ -82,25 +83,13 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
             return $quoteTransfer;
         }
 
-        foreach ($restCheckoutRequestAttributesTransfer->getShipments() as $restShipmentsAttributesTransfer) {
-            $shipmentTransfer = (new ShipmentTransfer())
-                ->setShippingAddress(
-                    (new AddressTransfer())
-                        ->fromArray($restShipmentsAttributesTransfer->getShippingAddress()->toArray(), true)
-                )
-                ->setMethod(
-                    (new ShipmentMethodTransfer())
-                        ->setIdShipmentMethod($restShipmentsAttributesTransfer->getIdShipmentMethod())
-                )
-                ->setRequestedDeliveryDate($restShipmentsAttributesTransfer->getRequestedDeliveryDate());
-
-            foreach ($quoteTransfer->getItems() as $itemTransfer) {
-                if (!in_array($itemTransfer->getGroupKey(), $restShipmentsAttributesTransfer->getItems())) {
-                    continue;
-                }
-
-                $itemTransfer->setShipment($shipmentTransfer);
-            }
+        foreach ($restCheckoutRequestAttributesTransfer->getShipments() as $restShipmentsTransfer) {
+            $shipmentTransfer = $this->createShipmentTransfer($restShipmentsTransfer);
+            $quoteTransfer = $this->assignShipmentTransferToItems(
+                $quoteTransfer,
+                $restShipmentsTransfer->getItems(),
+                $shipmentTransfer
+            );
         }
 
         return $quoteTransfer;
@@ -135,6 +124,54 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
         $quoteTransfer->setShipment($shipmentTransfer);
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $itemTransfer->setShipment($shipmentTransfer);
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestShipmentsTransfer $restShipmentsTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
+     */
+    protected function createShipmentTransfer(RestShipmentsTransfer $restShipmentsTransfer): ShipmentTransfer
+    {
+        return (new ShipmentTransfer())
+            ->setShippingAddress(
+                (new AddressTransfer())
+                    ->fromArray($restShipmentsTransfer->getShippingAddress()->toArray(), true)
+            )
+            ->setMethod(
+                (new ShipmentMethodTransfer())
+                    ->setIdShipmentMethod($restShipmentsTransfer->getIdShipmentMethod())
+            )
+            ->setRequestedDeliveryDate($restShipmentsTransfer->getRequestedDeliveryDate());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string[] $itemsGroupKeys
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function assignShipmentTransferToItems(
+        QuoteTransfer $quoteTransfer,
+        array $itemsGroupKeys,
+        ShipmentTransfer $shipmentTransfer
+    ): QuoteTransfer {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if (!in_array($itemTransfer->getGroupKey(), $itemsGroupKeys)) {
+                continue;
+            }
+
+            if (!$itemTransfer->getShipment()) {
+                $itemTransfer->setShipment($shipmentTransfer);
+
+                continue;
+            }
+
+            $itemTransfer->getShipment()->fromArray($shipmentTransfer->modifiedToArray());
         }
 
         return $quoteTransfer;

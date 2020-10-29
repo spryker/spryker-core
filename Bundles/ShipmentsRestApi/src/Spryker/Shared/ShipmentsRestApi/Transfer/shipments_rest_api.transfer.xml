@@ -133,4 +133,10 @@
     <transfer name="Address">
     </transfer>
 
+    <transfer name="RestErrorCollection">
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+    </transfer>
+
 </transfers>

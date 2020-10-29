@@ -16,6 +16,8 @@ use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUn
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Relationship\CompanyBusinessUnitAddressCollectionResourceRelationshipExpanderInterface;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\RestResponseBuilder\CompanyBusinessUnitAddressRestResponseBuilder;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\RestResponseBuilder\CompanyBusinessUnitAddressRestResponseBuilderInterface;
+use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Validator\CompanyBusinessUnitAddressIdValidator;
+use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Validator\CompanyBusinessUnitAddressIdValidatorInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 class CompanyBusinessUnitAddressesRestApiFactory extends AbstractFactory
@@ -65,5 +67,13 @@ class CompanyBusinessUnitAddressesRestApiFactory extends AbstractFactory
     public function getCompanyBusinessUnitAddressClient(): CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressClientInterface
     {
         return $this->getProvidedDependency(CompanyBusinessUnitAddressesRestApiDependencyProvider::CLIENT_COMPANY_UNIT_ADDRESS);
+    }
+
+    /**
+     * @return \Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Validator\CompanyBusinessUnitAddressIdValidatorInterface
+     */
+    public function createCompanyBusinessUnitAddressIdValidator(): CompanyBusinessUnitAddressIdValidatorInterface
+    {
+        return new CompanyBusinessUnitAddressIdValidator();
     }
 }

@@ -4,7 +4,7 @@
   "description": "ConfigurableBundleStorage module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/configurable-bundle": "^2.1.0",
     "spryker/event-behavior": "^1.0.0",
     "spryker/kernel": "^3.33.0",
@@ -14,7 +14,8 @@
     "spryker/storage": "^3.0.0",
     "spryker/synchronization": "^1.0.0",
     "spryker/synchronization-behavior": "^1.0.0",
-    "spryker/synchronization-extension": "^1.0.0"
+    "spryker/synchronization-extension": "^1.0.0",
+    "spryker/util-encoding": "^2.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

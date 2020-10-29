@@ -10,8 +10,7 @@
             "snippet": "     * @return int[] [company name => company id]",
             "selected_text": "int[]",
             "error_level": 6,
-            "shortcode": 11,
-            "taint_trace": null
+            "shortcode": 11
         },
         {
             "severity": "error",
@@ -23,8 +22,7 @@
             "snippet": "        return $result;",
             "selected_text": "$result",
             "error_level": 6,
-            "shortcode": 128,
-            "taint_trace": null
+            "shortcode": 128
         }
     ],
     "warning": [
@@ -38,8 +36,7 @@
             "snippet": "        if ($companyBusinessUnits->count() > 0) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -51,8 +48,7 @@
             "snippet": "            $companyBusinessUnitName = $companyBusinessUnits->offsetGet(0)->getName();",
             "selected_text": "offsetGet",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -64,8 +60,7 @@
             "snippet": "            return $this->redirectResponse($redirectUrl);",
             "selected_text": "$redirectUrl",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -77,8 +72,7 @@
             "snippet": "                    ->getName(),",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -90,8 +84,7 @@
             "snippet": "                ->getName(),",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -103,8 +96,7 @@
             "snippet": "            return $this->redirectResponse($redirectUrl);",
             "selected_text": "$redirectUrl",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -116,8 +108,7 @@
             "snippet": "            $result[$company->getName()] = $company->getIdCompany();",
             "selected_text": "$result",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -129,8 +120,7 @@
             "snippet": "            $unitKey = sprintf('%s - %s', $businessUnit->getIdCompanyBusinessUnit(), $businessUnit->getName());",
             "selected_text": "$businessUnit->getIdCompanyBusinessUnit()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -142,8 +132,7 @@
             "snippet": "            $unitKey = sprintf('%s - %s', $businessUnit->getIdCompanyBusinessUnit(), $businessUnit->getName());",
             "selected_text": "$businessUnit->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -155,8 +144,7 @@
             "snippet": "        return sprintf(static::FORMAT_NAME, $companyBusinessUnitTransfer->getName(), $companyBusinessUnitTransfer->getIdCompanyBusinessUnit());",
             "selected_text": "$companyBusinessUnitTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -168,8 +156,7 @@
             "snippet": "        return sprintf(static::FORMAT_NAME, $companyBusinessUnitTransfer->getName(), $companyBusinessUnitTransfer->getIdCompanyBusinessUnit());",
             "selected_text": "$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -181,8 +168,7 @@
             "snippet": "        if (!$spyCompanyUnitAddress->isEmpty()) {",
             "selected_text": "isEmpty",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         }
     ],
     "deprecation": []

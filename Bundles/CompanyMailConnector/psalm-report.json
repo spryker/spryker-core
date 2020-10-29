@@ -11,8 +11,7 @@
             "snippet": "        $companyUserTransfer = $this->companyUserFacade->findInitialCompanyUserByCompanyId($companyTransfer->getIdCompany());",
             "selected_text": "$companyTransfer->getIdCompany()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -24,8 +23,7 @@
             "snippet": "        if ($companyTransfer->isPropertyModified(CompanyTransfer::STATUS)) {",
             "selected_text": "isPropertyModified",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -37,8 +35,7 @@
             "snippet": "            $customerTransfer->getEmail(),",
             "selected_text": "$customerTransfer->getEmail()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -50,8 +47,7 @@
             "snippet": "            $customerTransfer->getEmail(),",
             "selected_text": "getEmail",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -63,8 +59,7 @@
             "snippet": "            $customerTransfer->getFirstName() . ' ' . $customerTransfer->getLastName()",
             "selected_text": "$customerTransfer->getFirstName()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -76,8 +71,7 @@
             "snippet": "            $customerTransfer->getFirstName() . ' ' . $customerTransfer->getLastName()",
             "selected_text": "$customerTransfer->getLastName()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         }
     ],
     "deprecation": []

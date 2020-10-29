@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ConfigurableBundleStorage\Reader;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
 
 interface ConfigurableBundleStorageReaderInterface
@@ -29,4 +30,13 @@ interface ConfigurableBundleStorageReaderInterface
         string $configurableBundleTemplateUuid,
         string $localeName
     ): ?ConfigurableBundleTemplateStorageTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageFilterTransfer $configurableBundleTemplateStorageFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[]
+     */
+    public function getConfigurableBundleTemplateStorageCollection(
+        ConfigurableBundleTemplateStorageFilterTransfer $configurableBundleTemplateStorageFilterTransfer
+    ): array;
 }

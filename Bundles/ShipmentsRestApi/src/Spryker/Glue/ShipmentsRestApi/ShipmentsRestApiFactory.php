@@ -23,6 +23,10 @@ use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentRestResp
 use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentRestResponseBuilderInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Sorter\ShipmentMethodSorter;
 use Spryker\Glue\ShipmentsRestApi\Processor\Sorter\ShipmentMethodSorterInterface;
+use Spryker\Glue\ShipmentsRestApi\Processor\Validator\AddressSourceCheckoutDataValidator;
+use Spryker\Glue\ShipmentsRestApi\Processor\Validator\AddressSourceCheckoutDataValidatorInterface;
+use Spryker\Glue\ShipmentsRestApi\Processor\Validator\ShipmentCheckoutDataValidator;
+use Spryker\Glue\ShipmentsRestApi\Processor\Validator\ShipmentCheckoutDataValidatorInterface;
 
 class ShipmentsRestApiFactory extends AbstractFactory
 {
@@ -88,6 +92,30 @@ class ShipmentsRestApiFactory extends AbstractFactory
     public function createShipmentMethodSorter(): ShipmentMethodSorterInterface
     {
         return new ShipmentMethodSorter();
+    }
+
+    /**
+     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Validator\ShipmentCheckoutDataValidatorInterface
+     */
+    public function createShipmentCheckoutDataValidator(): ShipmentCheckoutDataValidatorInterface
+    {
+        return new ShipmentCheckoutDataValidator();
+    }
+
+    /**
+     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Validator\AddressSourceCheckoutDataValidatorInterface
+     */
+    public function createAddressSourceCheckoutDataValidator(): AddressSourceCheckoutDataValidatorInterface
+    {
+        return new AddressSourceCheckoutDataValidator($this->getAddressSourceProviderPlugins());
+    }
+
+    /**
+     * @return \Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceProvidePluginInterface[]
+     */
+    public function getAddressSourceProviderPlugins(): array
+    {
+        return $this->getProvidedDependency(ShipmentsRestApiDependencyProvider::PLUGINS_ADDRESS_SOURCE_PROVIDER);
     }
 
     /**

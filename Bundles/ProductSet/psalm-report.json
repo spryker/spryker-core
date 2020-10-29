@@ -2,42 +2,6 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 35,
-            "line_to": 35,
-            "type": "InvalidArgument",
-            "message": "Argument 1 of Spryker\\Client\\Search\\SearchClientInterface::search expects Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface, Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSet/src/Spryker/Client/ProductSet/ProductSetClient.php",
-            "snippet": "            ->search($searchQuery, $resultFormatters);",
-            "selected_text": "$searchQuery",
-            "error_level": 6,
-            "shortcode": 4
-        },
-        {
-            "severity": "error",
-            "line_from": 35,
-            "line_to": 35,
-            "type": "InvalidArgument",
-            "message": "Argument 2 of Spryker\\Client\\Search\\SearchClientInterface::search expects array<array-key, Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\ResultFormatterPluginInterface>, array<array-key, Spryker\\Client\\Search\\Dependency\\Plugin\\ResultFormatterPluginInterface> provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSet/src/Spryker/Client/ProductSet/ProductSetClient.php",
-            "snippet": "            ->search($searchQuery, $resultFormatters);",
-            "selected_text": "$resultFormatters",
-            "error_level": 6,
-            "shortcode": 4
-        },
-        {
-            "severity": "error",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "InvalidReturnType",
-            "message": "The declared return type 'Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface' for Spryker\\Client\\ProductSet\\ProductSetFactory::createProductSetListQuery is incorrect, got 'Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface'",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSet/src/Spryker/Client/ProductSet/ProductSetFactory.php",
-            "snippet": "     * @return \\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface",
-            "selected_text": "\\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface",
-            "error_level": 6,
-            "shortcode": 11
-        },
-        {
-            "severity": "error",
             "line_from": 30,
             "line_to": 30,
             "type": "InvalidArgument",
@@ -47,18 +11,6 @@
             "selected_text": "$searchQuery",
             "error_level": 6,
             "shortcode": 4
-        },
-        {
-            "severity": "error",
-            "line_from": 32,
-            "line_to": 32,
-            "type": "InvalidReturnStatement",
-            "message": "The inferred type 'Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface' does not match the declared return type 'Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface' for Spryker\\Client\\ProductSet\\ProductSetFactory::createProductSetListQuery",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSet/src/Spryker/Client/ProductSet/ProductSetFactory.php",
-            "snippet": "        return $searchQuery;",
-            "selected_text": "$searchQuery",
-            "error_level": 6,
-            "shortcode": 128
         },
         {
             "severity": "error",
@@ -86,42 +38,6 @@
         }
     ],
     "warning": [
-        {
-            "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSet/src/Spryker/Client/ProductSet/ProductSetDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->search()->client();",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 101,
-            "line_to": 101,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSet/src/Spryker/Client/ProductSet/ProductSetDependencyProvider.php",
-            "snippet": "            return new ProductSetToStorageBridge($container->getLocator()->storage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 113,
-            "line_to": 113,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSet/src/Spryker/Client/ProductSet/ProductSetDependencyProvider.php",
-            "snippet": "            return new ProductSetToLocaleBridge($container->getLocator()->locale()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
         {
             "severity": "info",
             "line_from": 58,
@@ -481,81 +397,21 @@
             "selected_text": "$productSetTransfer->getIdProductSet()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 65,
-            "line_to": 65,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSet/src/Spryker/Zed/ProductSet/ProductSetDependencyProvider.php",
-            "snippet": "            return new ProductSetToTouchBridge($container->getLocator()->touch()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 77,
-            "line_to": 77,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSet/src/Spryker/Zed/ProductSet/ProductSetDependencyProvider.php",
-            "snippet": "            return new ProductSetToUrlBridge($container->getLocator()->url()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 89,
-            "line_to": 89,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSet/src/Spryker/Zed/ProductSet/ProductSetDependencyProvider.php",
-            "snippet": "            return new ProductSetToProductImageBridge($container->getLocator()->productImage()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 101,
-            "line_to": 101,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSet/src/Spryker/Zed/ProductSet/ProductSetDependencyProvider.php",
-            "snippet": "            return new ProductSetToUrlQueryContainerBridge($container->getLocator()->url()->queryContainer());",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 113,
-            "line_to": 113,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSet/src/Spryker/Zed/ProductSet/ProductSetDependencyProvider.php",
-            "snippet": "            return new ProductSetToProductImageQueryContainerBridge($container->getLocator()->productImage()->queryContainer());",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 26,
-            "line_to": 26,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Client\\Search\\Plugin\\Elasticsearch\\ResultFormatter\\AbstractElasticsearchResultFormatterPlugin::formatResult has the more specific type 'Elastica\\ResultSet', expecting 'mixed' as defined by Spryker\\Client\\Search\\Dependency\\Plugin\\ResultFormatterPluginInterface::formatResult",
-            "file_name": "vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Plugin/Elasticsearch/ResultFormatter/AbstractElasticsearchResultFormatterPlugin.php",
-            "snippet": "    public function formatResult($searchResult, array $requestParameters = [])",
-            "selected_text": "$searchResult",
-            "error_level": 5,
-            "shortcode": 140
         }
     ],
     "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 21,
+            "line_to": 21,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\SearchContextAwareQueryInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductSet/src/Spryker/Client/ProductSet/Plugin/Elasticsearch/Query/ProductSetListQueryPlugin.php",
+            "snippet": "class ProductSetListQueryPlugin extends AbstractPlugin implements QueryInterface, SearchContextAwareQueryInterface",
+            "selected_text": "ProductSetListQueryPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        },
         {
             "severity": "info",
             "line_from": 17,

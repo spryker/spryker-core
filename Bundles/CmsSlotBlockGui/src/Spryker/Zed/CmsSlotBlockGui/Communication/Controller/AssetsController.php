@@ -11,6 +11,7 @@ use Spryker\Shared\CmsSlotBlock\CmsSlotBlockConfig;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
+ * @method \Spryker\Zed\CmsSlotBlockGui\Business\CmsSlotBlockGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\CmsSlotBlockGui\Communication\CmsSlotBlockGuiCommunicationFactory getFactory()
  */
 class AssetsController extends AbstractController

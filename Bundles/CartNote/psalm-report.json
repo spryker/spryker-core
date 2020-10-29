@@ -3,30 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CartNote/src/Spryker/Client/CartNote/CartNoteDependencyProvider.php",
-            "snippet": "            return new CartNoteToQuoteClientBridge($container->getLocator()->quote()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 58,
-            "line_to": 58,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CartNote/src/Spryker/Client/CartNote/CartNoteDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->zedRequest()->client();",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 63,
             "line_to": 63,
             "type": "PossiblyNullReference",
@@ -58,6 +34,18 @@
             "file_name": "vendor/spryker/spryker/Bundles/CartNote/src/Spryker/Zed/CartNote/Business/Model/CartNoteSaver.php",
             "snippet": "        $this->saveOrderNote($saveOrderTransfer->getIdSalesOrder(), $quoteTransfer->getCartNote());",
             "selected_text": "$saveOrderTransfer->getIdSalesOrder()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\CartNote\\Business\\Model\\CartNoteSaver::saveOrderNote cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CartNote/src/Spryker/Zed/CartNote/Business/Model/CartNoteSaver.php",
+            "snippet": "        $this->saveOrderNote($saveOrderTransfer->getIdSalesOrder(), $quoteTransfer->getCartNote());",
+            "selected_text": "$quoteTransfer->getCartNote()",
             "error_level": 3,
             "shortcode": 78
         },
@@ -132,18 +120,6 @@
             "selected_text": "$quoteItemCartNoteRequestTransfer->getCartNote()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 70,
-            "line_to": 70,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CartNote/src/Spryker/Zed/CartNote/CartNoteDependencyProvider.php",
-            "snippet": "            return new CartNoteToQuoteFacadeBridge($container->getLocator()->quote()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         },
         {
             "severity": "info",

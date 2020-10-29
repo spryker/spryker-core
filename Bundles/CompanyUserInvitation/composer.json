@@ -4,7 +4,7 @@
   "description": "CompanyUserInvitation module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/application": "^3.9.0",
     "spryker/company-business-unit": "^1.1.0 || ^2.0.0",
     "spryker/company-user": "^1.0.0 || ^2.0.0",

@@ -1,5 +1,54 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'Symfony\\Component\\HttpFoundation\\Request' for Spryker\\Zed\\MerchantProductOfferGui\\Communication\\MerchantProductOfferGuiCommunicationFactory::getRequest is not nullable, but 'Symfony\\Component\\HttpFoundation\\Request|null' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferGui/src/Spryker/Zed/MerchantProductOfferGui/Communication/MerchantProductOfferGuiCommunicationFactory.php",
+            "snippet": "     * @return \\Symfony\\Component\\HttpFoundation\\Request",
+            "selected_text": "\\Symfony\\Component\\HttpFoundation\\Request",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'Symfony\\Component\\HttpFoundation\\Request' for Spryker\\Zed\\MerchantProductOfferGui\\Communication\\MerchantProductOfferGuiCommunicationFactory::getRequest is not nullable, but the function returns 'Symfony\\Component\\HttpFoundation\\Request|null'",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferGui/src/Spryker/Zed/MerchantProductOfferGui/Communication/MerchantProductOfferGuiCommunicationFactory.php",
+            "snippet": "        return $this->getRequestStack()->getCurrentRequest();",
+            "selected_text": "$this->getRequestStack()->getCurrentRequest()",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getName on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferGui/src/Spryker/Zed/MerchantProductOfferGui/Communication/Reader/MerchantProductOfferReader.php",
+            "snippet": "            'merchantName' => $merchantTransfer->getName(),",
+            "selected_text": "getName",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferGui/src/Spryker/Zed/MerchantProductOfferGui/Persistence/MerchantProductOfferGuiRepository.php",
+            "snippet": "            $queryJoinTransfer->setCondition(sprintf('%s = %d', SpyProductOfferTableMap::COL_FK_MERCHANT, $merchantProductOfferCriteriaTransfer->getIdMerchant()));",
+            "selected_text": "$merchantProductOfferCriteriaTransfer->getIdMerchant()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
     "deprecation": []
 }

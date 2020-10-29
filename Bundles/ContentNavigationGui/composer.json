@@ -4,7 +4,7 @@
   "description": "ContentNavigationGui module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/content-gui-extension": "^1.1.0",
     "spryker/content-navigation": "^1.0.0",
     "spryker/gui": "^3.0.0",

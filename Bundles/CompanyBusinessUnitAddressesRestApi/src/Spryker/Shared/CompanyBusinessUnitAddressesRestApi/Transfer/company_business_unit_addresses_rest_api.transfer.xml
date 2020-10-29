@@ -51,4 +51,8 @@
     <transfer name="CompanyUnitAddressCriteriaFilter">
     </transfer>
 
+    <transfer name="RestAddress">
+        <property name="companyBusinessUnitAddressId" type="string" restRequestParameter="yes"/>
+    </transfer>
+
 </transfers>

@@ -44,16 +44,16 @@ class EntityTransferDefinitionLoader extends TransferDefinitionLoader
     /**
      * @param array $definition
      * @param string $module
-     * @param string $containingBundle
+     * @param string $containingModule
      *
      * @return void
      */
-    protected function addDefinition(array $definition, $module, $containingBundle)
+    protected function addDefinition(array $definition, $module, $containingModule)
     {
         if (isset($definition[static::KEY_TABLE][0])) {
             foreach ($definition[static::KEY_TABLE] as $table) {
                 $table[self::KEY_BUNDLE] = $module;
-                $table[self::KEY_CONTAINING_BUNDLE] = $containingBundle;
+                $table[self::KEY_CONTAINING_BUNDLE] = $containingModule;
                 $table[self::ENTITY_NAMESPACE] = $definition[self::ENTITY_NAMESPACE];
 
                 $this->assertDefinitionHasColumns($table, $definition[static::ENTITY_SCHEMA_PATHNAME]);
@@ -63,7 +63,7 @@ class EntityTransferDefinitionLoader extends TransferDefinitionLoader
             $table = $definition[static::KEY_TABLE];
 
             $table[self::KEY_BUNDLE] = $module;
-            $table[self::KEY_CONTAINING_BUNDLE] = $containingBundle;
+            $table[self::KEY_CONTAINING_BUNDLE] = $containingModule;
             $table[self::ENTITY_NAMESPACE] = $definition[self::ENTITY_NAMESPACE];
 
             $this->assertDefinitionHasColumns($table, $definition[static::ENTITY_SCHEMA_PATHNAME]);

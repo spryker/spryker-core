@@ -4,7 +4,7 @@
   "description": "ManualOrderEntryGui module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/calculation": "^4.2.2",
     "spryker/cart": "^5.0.0 || ^7.0.0",
     "spryker/checkout": "^4.1.0 || ^6.0.0",

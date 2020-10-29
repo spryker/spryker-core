@@ -47,7 +47,7 @@ class SalesUnitReader implements SalesUnitReaderInterface
         $this->productMeasurementUnitStorageClient = $productMeasurementUnitStorageClient;
         $this->productStorageClient = $productStorageClient;
     }
-    
+
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
