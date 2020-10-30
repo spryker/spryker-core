@@ -37,7 +37,7 @@ class MerchantCategoryRepository extends AbstractRepository implements MerchantC
                 ->endUse()
             ->endUse();
 
-        $merchantCategoryQuery = $this->applyFilters($merchantCategoryQuery, $merchantCategoryCriteriaTransfer);
+        $merchantCategoryQuery = $this->applyCriteria($merchantCategoryQuery, $merchantCategoryCriteriaTransfer);
         $merchantCategoryEntities = $merchantCategoryQuery->find();
 
         $categoryTransfers = [];
@@ -57,7 +57,7 @@ class MerchantCategoryRepository extends AbstractRepository implements MerchantC
      *
      * @return \Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery
      */
-    protected function applyFilters(
+    protected function applyCriteria(
         SpyMerchantCategoryQuery $merchantCategoryQuery,
         MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer
     ): SpyMerchantCategoryQuery {
