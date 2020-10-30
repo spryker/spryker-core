@@ -11,6 +11,16 @@ coverage:
         include:
             - '../../../../src/*'
 suites:
+    Communication:
+        path: Communication
+        class_name: MerchantCategoryCommunicationTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
     Business:
         path: Business
         class_name: MerchantCategoryBusinessTester
@@ -24,4 +34,5 @@ suites:
                 - \SprykerTest\Zed\Category\Helper\CategoryHelper
                 - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
                 - \SprykerTest\Shared\MerchantCategory\Helper\MerchantCategoryHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper

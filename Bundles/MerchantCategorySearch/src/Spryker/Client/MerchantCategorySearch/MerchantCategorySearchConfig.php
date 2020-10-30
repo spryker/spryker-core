@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantCategorySearch;
+namespace Spryker\Client\MerchantCategorySearch;
 
-use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Client\Kernel\AbstractBundleConfig;
 
-class MerchantCategorySearch extends AbstractBundleConfig
+class MerchantCategorySearchConfig extends AbstractBundleConfig
 {
 }

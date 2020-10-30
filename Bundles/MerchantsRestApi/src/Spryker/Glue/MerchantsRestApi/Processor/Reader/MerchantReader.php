@@ -94,21 +94,7 @@ class MerchantReader implements MerchantReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function get(RestRequestInterface $restRequest): RestResponseInterface
-    {
-        if ($restRequest->getResource()->getId()) {
-            return $this->getMerchant($restRequest);
-        }
-
-        return $this->getMerchants($restRequest);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function getMerchant(RestRequestInterface $restRequest): RestResponseInterface
+    public function getMerchant(RestRequestInterface $restRequest): RestResponseInterface
     {
         $merchantStorageTransfer = $this->merchantStorageClient->findOneByMerchantReference($restRequest->getResource()->getId());
         if (!$merchantStorageTransfer) {
@@ -131,7 +117,7 @@ class MerchantReader implements MerchantReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function getMerchants(RestRequestInterface $restRequest): RestResponseInterface
+    public function getMerchants(RestRequestInterface $restRequest): RestResponseInterface
     {
         $merchantSearchRequestTransfer = $this->createMerchantSearchRequest($restRequest);
         $searchResult = $this->merchantSearchClient->merchantSearch(

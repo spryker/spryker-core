@@ -29,7 +29,7 @@ class MerchantCategoryMerchantSearchQueryExpanderPlugin extends AbstractPlugin i
 
     /**
      * {@inheritDoc}
-     * - Adds filter by merchant category id to query.
+     * - Adds filter by category keys to query.
      *
      * @api
      *

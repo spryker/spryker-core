@@ -13,6 +13,7 @@ use Spryker\Zed\MerchantSearchExtension\Dependency\Plugin\MerchantSearchDataExpa
 
 /**
  * @method \Spryker\Zed\MerchantCategorySearch\Communication\MerchantCategorySearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\MerchantCategorySearch\MerchantCategorySearchConfig getConfig()
  */
 class MerchantCategoryMerchantSearchDataExpanderPlugin extends AbstractPlugin implements MerchantSearchDataExpanderPluginInterface
 {

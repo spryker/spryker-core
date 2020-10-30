@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer;
 use Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\MerchantCategory\MerchantCategoryConfig;
+use Spryker\Zed\MerchantCategory\Persistence\Exception\MerchantCategoryLimitException;
 
 /**
  * @method \Spryker\Zed\MerchantCategory\Persistence\MerchantCategoryPersistenceFactory getFactory()
@@ -19,6 +21,8 @@ class MerchantCategoryRepository extends AbstractRepository implements MerchantC
 {
     /**
      * @param \Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer
+     *
+     * @throws \Spryker\Zed\MerchantCategory\Persistence\Exception\MerchantCategoryLimitException
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer[]
      */
@@ -38,6 +42,13 @@ class MerchantCategoryRepository extends AbstractRepository implements MerchantC
             ->endUse();
 
         $merchantCategoryQuery = $this->applyFilters($merchantCategoryQuery, $merchantCategoryCriteriaTransfer);
+
+        if ($merchantCategoryQuery->count() > MerchantCategoryConfig::MAX_CATEGORY_SELECT_COUNT) {
+            throw new MerchantCategoryLimitException(
+                'Maximal merchant category select limit reached. Please adjust configuration.'
+            );
+        }
+
         $merchantCategoryEntities = $merchantCategoryQuery->find();
 
         $categoryTransfers = [];

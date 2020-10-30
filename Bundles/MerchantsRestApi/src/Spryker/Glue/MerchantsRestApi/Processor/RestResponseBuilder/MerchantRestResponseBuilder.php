@@ -128,7 +128,7 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
     ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse(
             $merchantSearchCollectionTransfer->getNbResults(),
-            $merchantSearchRequestTransfer->getRequestParameters()[static::ITEMS_PER_PAGE] ?? 0
+            $merchantSearchCollectionTransfer->getIpp()
         );
 
         foreach ($merchantStorageTransfers as $merchantSearchTransfer) {

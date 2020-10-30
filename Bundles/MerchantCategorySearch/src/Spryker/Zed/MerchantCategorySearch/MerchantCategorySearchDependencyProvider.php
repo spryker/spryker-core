@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantCategorySearch\Dependency\Facade\MerchantCategorySearchToMerchantCategoryFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\MerchantCategorySearch\MerchantCategorySearchConfig getConfig()
+ */
 class MerchantCategorySearchDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_MERCHANT_CATEGORY = 'FACADE_MERCHANT_CATEGORY';
