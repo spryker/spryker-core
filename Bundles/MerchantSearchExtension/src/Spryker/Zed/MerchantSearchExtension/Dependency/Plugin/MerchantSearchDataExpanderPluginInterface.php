@@ -13,7 +13,7 @@ interface MerchantSearchDataExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Allows to expand merchant search data before saving to Elastica.
+     * - Allows to expand merchant search data before saving to Database search engine.
      *
      * @api
      *
