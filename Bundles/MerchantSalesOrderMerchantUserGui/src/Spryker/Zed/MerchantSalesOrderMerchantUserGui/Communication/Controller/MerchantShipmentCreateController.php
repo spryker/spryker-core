@@ -41,18 +41,19 @@ class MerchantShipmentCreateController extends AbstractMerchantShipmentControlle
         }
 
         $dataProvider = $this->getFactory()->createMerchantShipmentGroupFormDataProvider();
+        $merchantReference = $merchantOrderTransfer->getMerchantReference();
 
-        if (!$merchantOrderTransfer->getMerchantReference()) {
+        if (!$merchantReference) {
             $this->addErrorMessage(static::MESSAGE_MERCHANT_REFERENCE_NOT_FOUND);
             $redirectUrl = Url::generate(static::REDIRECT_URL_DEFAULT)->build();
 
             return $this->redirectResponse($redirectUrl);
         }
 
-        $shipmentTransfer = $this->findShipment($merchantOrderTransfer->getMerchantReference());
+        $shipmentTransfer = $this->findShipment($merchantReference);
 
         if (!$shipmentTransfer) {
-            $this->addErrorMessage(static::MESSAGE_SHIPMENT_NOT_FOUND, ['%s' => $merchantOrderTransfer->getMerchantReference()]);
+            $this->addErrorMessage(static::MESSAGE_SHIPMENT_NOT_FOUND, ['%s' => $merchantReference]);
             $redirectUrl = Url::generate(static::REDIRECT_URL_DEFAULT)->build();
 
             return $this->redirectResponse($redirectUrl);

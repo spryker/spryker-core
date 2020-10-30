@@ -103,6 +103,13 @@ class OmsTriggerController extends AbstractController
     {
         $redirect = $request->query->get('redirect', static::URL_PARAM_REDIRECT);
 
+        if (!$redirect) {
+            $this->addErrorMessage(static::MESSAGE_REDIRECT_NOT_FOUND_ERROR);
+            $redirectUrl = Url::generate(static::REDIRECT_URL_DEFAULT)->build();
+
+            return $this->redirectResponse($redirectUrl);
+        }
+
         $form = $this->getFactory()
             ->createEventItemTriggerForm()
             ->handleRequest($request);

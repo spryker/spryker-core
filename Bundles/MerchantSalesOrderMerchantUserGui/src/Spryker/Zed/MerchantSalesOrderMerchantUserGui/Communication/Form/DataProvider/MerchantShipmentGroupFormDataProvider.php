@@ -84,10 +84,15 @@ class MerchantShipmentGroupFormDataProvider
     public function getData(MerchantOrderTransfer $merchantOrderTransfer, ShipmentTransfer $shipmentTransfer): ShipmentGroupTransfer
     {
         $shipmentTransfer = $this->hydrateShipmentTransfer($shipmentTransfer, $merchantOrderTransfer);
+        $orderTransfer = $merchantOrderTransfer->getOrder();
+
+        if (!$orderTransfer) {
+            return new ShipmentGroupTransfer();
+        }
 
         $shipmentGroupTransfer = new ShipmentGroupTransfer();
         $shipmentGroupTransfer->setShipment($shipmentTransfer);
-        $shipmentGroupTransfer->setItems($merchantOrderTransfer->getOrder()->getItems());
+        $shipmentGroupTransfer->setItems($orderTransfer->getItems());
 
         return $shipmentGroupTransfer;
     }
@@ -132,8 +137,10 @@ class MerchantShipmentGroupFormDataProvider
             $shipmentAddressTransfer = $this->findOrderItemShippingAddressTransfer($merchantOrderTransfer, $idSalesShipment);
         }
 
-        if ($shipmentAddressTransfer !== null) {
-            $shipmentAddressTransfer->setFkCustomer($merchantOrderTransfer->getOrder()->getFkCustomer());
+        $orderTransfer = $merchantOrderTransfer->getOrder();
+
+        if ($shipmentAddressTransfer !== null && $orderTransfer) {
+            $shipmentAddressTransfer->setFkCustomer($orderTransfer->getFkCustomer());
         }
 
         return $shipmentTransfer;
@@ -164,9 +171,10 @@ class MerchantShipmentGroupFormDataProvider
         }
 
         $options[static::FIELD_SHIPMENT_SELECTED_ITEMS] = $shipmentSelectedItemsIds;
+        $orderTransfer = $merchantOrderTransfer->getOrder();
 
-        if ($merchantOrderTransfer->getOrder()) {
-            $options[static::OPTION_ORDER_ITEMS_CHOICES] = $merchantOrderTransfer->getOrder()->getItems();
+        if ($orderTransfer) {
+            $options[static::OPTION_ORDER_ITEMS_CHOICES] = $orderTransfer->getItems();
         }
 
         return $options;
@@ -182,7 +190,13 @@ class MerchantShipmentGroupFormDataProvider
      */
     protected function getShipmentSelectedItemsIds(MerchantOrderTransfer $merchantOrderTransfer, ShipmentTransfer $shipmentTransfer): array
     {
-        $salesOrderItemTransfers = $merchantOrderTransfer->getOrder()->getItems();
+        $orderTransfer = $merchantOrderTransfer->getOrder();
+
+        if (!$orderTransfer) {
+            return [];
+        }
+
+        $salesOrderItemTransfers = $orderTransfer->getItems();
 
         $itemsIds = [];
         foreach ($salesOrderItemTransfers as $salesOrderItemTransfer) {
@@ -191,7 +205,13 @@ class MerchantShipmentGroupFormDataProvider
                 continue;
             }
 
-            if ($shipmentTransfer->getIdSalesShipment() !== $salesOrderItemTransfer->getShipment()->getIdSalesShipment()) {
+            $salesOrderItemShipmentTransfer = $salesOrderItemTransfer->getShipment();
+
+            if (!$salesOrderItemShipmentTransfer) {
+                continue;
+            }
+
+            if ($shipmentTransfer->getIdSalesShipment() !== $salesOrderItemShipmentTransfer->getIdSalesShipment()) {
                 continue;
             }
 
@@ -209,8 +229,13 @@ class MerchantShipmentGroupFormDataProvider
     protected function getShippingAddressesOptions(MerchantOrderTransfer $merchantOrderTransfer): array
     {
         $newAddressChoice = [static::ADDRESS_CHOICE_NEW_ADDRESS_LABEL => ''];
+        $orderTransfer = $merchantOrderTransfer->getOrder();
 
-        $customerTransfer = $merchantOrderTransfer->getOrder()->getCustomer();
+        if (!$orderTransfer) {
+            return [];
+        }
+
+        $customerTransfer = $orderTransfer->getCustomer();
         if ($customerTransfer === null) {
             return $newAddressChoice;
         }
@@ -361,11 +386,13 @@ class MerchantShipmentGroupFormDataProvider
         MerchantOrderTransfer $merchantOrderTransfer,
         int $idSalesShipment
     ): ?AddressTransfer {
-        if ($merchantOrderTransfer->getOrder()->getItems()->count() === 0) {
+        $orderTransfer = $merchantOrderTransfer->getOrder();
+
+        if (!$orderTransfer || $orderTransfer->getItems()->count() === 0) {
             return null;
         }
 
-        foreach ($merchantOrderTransfer->getOrder()->getItems() as $itemTransfer) {
+        foreach ($orderTransfer->getItems() as $itemTransfer) {
             $shipmentTransfer = $itemTransfer->getShipment();
             if ($shipmentTransfer === null) {
                 continue;

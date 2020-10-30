@@ -80,6 +80,10 @@ class MerchantOrderDiscountFilter implements MerchantOrderDiscountFilterInterfac
         $itemsCalculatedDiscountTransfers = [];
 
         foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
+            if (!$merchantOrderItemTransfer->getOrderItem()) {
+                continue;
+            }
+
             foreach ($merchantOrderItemTransfer->getOrderItem()->getCalculatedDiscounts() as $calculatedDiscountTransfer) {
                 if (!isset($itemsCalculatedDiscountTransfers[$calculatedDiscountTransfer->getDisplayName()])) {
                     $itemsCalculatedDiscountTransfers[$calculatedDiscountTransfer->getDisplayName()] = $calculatedDiscountTransfer;

@@ -158,14 +158,20 @@ class MerchantOrderTable extends AbstractTable
      * @module MerchantOms
      * @module Sales
      *
-     * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery
+     * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery|null
      */
-    protected function prepareQuery(): SpyMerchantSalesOrderQuery
+    protected function prepareQuery(): ?SpyMerchantSalesOrderQuery
     {
-        $merchantReference = $this->merchantUserFacade
+        $merchantTransfer = $this->merchantUserFacade
             ->getCurrentMerchantUser()
             ->requireMerchant()
-            ->getMerchant()
+            ->getMerchant();
+
+        if (!$merchantTransfer) {
+            return null;
+        }
+
+        $merchantReference = $merchantTransfer
             ->requireMerchantReference()
             ->getMerchantReference();
 
@@ -211,7 +217,13 @@ class MerchantOrderTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
-        $queryResults = $this->runQuery($this->prepareQuery(), $config);
+        $query = $this->prepareQuery();
+
+        if (!$query) {
+            return [];
+        }
+
+        $queryResults = $this->runQuery($query, $config);
         $results = [];
 
         foreach ($queryResults as $item) {

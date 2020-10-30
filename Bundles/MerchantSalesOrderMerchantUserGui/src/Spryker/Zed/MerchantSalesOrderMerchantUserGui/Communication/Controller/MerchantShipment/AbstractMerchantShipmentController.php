@@ -50,14 +50,15 @@ abstract class AbstractMerchantShipmentController extends AbstractController
     protected function findMerchantOrder(int $idMerchantSalesOrder): ?MerchantOrderTransfer
     {
         $merchantUserTransfer = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser();
+        $merchantTransfer = $merchantUserTransfer->getMerchant();
 
-        if (!$merchantUserTransfer->getMerchant()) {
+        if (!$merchantTransfer) {
             return null;
         }
 
         $merchantOrderCriteriaTransfer = (new MerchantOrderCriteriaTransfer())
             ->setIdMerchantOrder($idMerchantSalesOrder)
-            ->setMerchantReference($merchantUserTransfer->getMerchant()->getMerchantReference())
+            ->setMerchantReference($merchantTransfer->getMerchantReference())
             ->setWithItems(true)
             ->setWithOrder(true);
 
@@ -113,11 +114,13 @@ abstract class AbstractMerchantShipmentController extends AbstractController
         $groupedMerchantOrderItems = [];
 
         foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItem) {
-            if (!$merchantOrderItem->getOrderItem()) {
+            $itemTransfer = $merchantOrderItem->getOrderItem();
+
+            if (!$itemTransfer) {
                 continue;
             }
 
-            $groupedMerchantOrderItems[$merchantOrderItem->getOrderItem()->getIdSalesOrderItem()] = $merchantOrderItem;
+            $groupedMerchantOrderItems[$itemTransfer->getIdSalesOrderItem()] = $merchantOrderItem;
         }
 
         return $groupedMerchantOrderItems;
@@ -161,9 +164,15 @@ abstract class AbstractMerchantShipmentController extends AbstractController
             ->getShipmentFacade()
             ->createShipmentGroupTransferWithListedItems($form->getData(), $this->getItemListUpdatedStatus($form));
 
+        $orderTransfer = $merchantOrderTransfer->getOrder();
+
+        if (!$orderTransfer) {
+            return (new ShipmentGroupResponseTransfer())->setIsSuccessful(false);
+        }
+
         return $this->getFactory()
             ->getShipmentFacade()
-            ->saveShipment($shipmentGroupTransfer, $merchantOrderTransfer->getOrder());
+            ->saveShipment($shipmentGroupTransfer, $orderTransfer);
     }
 
     /**

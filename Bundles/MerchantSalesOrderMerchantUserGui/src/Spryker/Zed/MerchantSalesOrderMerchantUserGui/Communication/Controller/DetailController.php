@@ -57,8 +57,9 @@ class DetailController extends AbstractController
         }
 
         $merchantOrderTransfer = $this->findMerchantSalesOrder($idMerchantSalesOrder, $idMerchant);
+        $salesOrder = $merchantOrderTransfer->getOrder();
 
-        if (!$merchantOrderTransfer || !$merchantOrderTransfer->getOrder()) {
+        if (!$merchantOrderTransfer || !$salesOrder) {
             $this->addErrorMessage(static::MESSAGE_MERCHANT_ORDER_NOT_FOUND_ERROR, ['%d' => $idMerchantSalesOrder]);
             $redirectUrl = Url::generate(static::ROUTE_REDIRECT)->build();
 
@@ -79,7 +80,7 @@ class DetailController extends AbstractController
             $merchantOrderTransfer
         );
         $groupedMerchantOrderItemsByShipment = $this->getFactory()->getShipmentService()->groupItemsByShipment(
-            $merchantOrderTransfer->getOrder()->getItems()
+            $salesOrder->getItems()
         );
 
         $groupedMerchantOrderItems = $this->groupMerchantOrderItemsByIdSalesOrderItem($merchantOrderTransfer);
@@ -194,11 +195,13 @@ class DetailController extends AbstractController
                 $eventsForGroup = array_merge($eventsForGroup, $merchantOrderItemTransfer->getManualEvents());
             }
 
-            if (!$shipmentGroupTransfer->getShipment()) {
+            $shipmentTransfer = $shipmentGroupTransfer->getShipment();
+
+            if (!$shipmentTransfer) {
                 continue;
             }
 
-            $events[$shipmentGroupTransfer->getShipment()->getIdSalesShipment()] = array_unique($eventsForGroup);
+            $events[$shipmentTransfer->getIdSalesShipment()] = array_unique($eventsForGroup);
         }
 
         return $events;
@@ -273,11 +276,13 @@ class DetailController extends AbstractController
         $groupedOrderItemsWithOrderItemIdKey = [];
 
         foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
-            if (!$merchantOrderItemTransfer->getOrderItem()) {
+            $itemTransfer = $merchantOrderItemTransfer->getOrderItem();
+
+            if (!$itemTransfer) {
                 continue;
             }
 
-            $groupedOrderItemsWithOrderItemIdKey[$merchantOrderItemTransfer->getOrderItem()->getIdSalesOrderItem()] = $merchantOrderItemTransfer;
+            $groupedOrderItemsWithOrderItemIdKey[$itemTransfer->getIdSalesOrderItem()] = $merchantOrderItemTransfer;
         }
 
         return $groupedOrderItemsWithOrderItemIdKey;

@@ -43,15 +43,16 @@ class MerchantShipmentEditController extends AbstractMerchantShipmentController
         }
 
         $idShipment = $this->castId($request->query->get(static::PARAM_ID_SHIPMENT));
+        $merchantReference = $merchantOrderTransfer->getMerchantReference();
 
-        if (!$merchantOrderTransfer->getMerchantReference()) {
+        if (!$merchantReference) {
             $this->addErrorMessage(static::MESSAGE_MERCHANT_REFERENCE_NOT_FOUND);
             $redirectUrl = Url::generate(static::REDIRECT_URL_DEFAULT)->build();
 
             return $this->redirectResponse($redirectUrl);
         }
 
-        $shipmentTransfer = $this->findShipment($merchantOrderTransfer->getMerchantReference(), $idShipment);
+        $shipmentTransfer = $this->findShipment($merchantReference, $idShipment);
 
         if (!$shipmentTransfer) {
             $this->addErrorMessage(static::MESSAGE_SHIPMENT_NOT_FOUND_ERROR, ['%d' => $idShipment]);
