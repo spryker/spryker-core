@@ -21,6 +21,7 @@
 
     <transfer name="MerchantSearch">
         <property name="idMerchant" type="int"/>
+        <property name="merchantReference" type="string"/>
         <property name="name" type="string"/>
         <property name="data" type="array" singular="data"/>
         <property name="structuredData" type="string"/>
