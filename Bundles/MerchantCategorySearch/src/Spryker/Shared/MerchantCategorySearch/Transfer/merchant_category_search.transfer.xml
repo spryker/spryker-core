@@ -19,4 +19,12 @@
     <transfer name="DataImporterConfiguration">
     </transfer>
 
+    <transfer name="MerchantSearchCollection">
+        <property name="merchants" type="MerchantSearch[]" singular="merchant"/>
+    </transfer>
+
+    <transfer name="MerchantSearch">
+        <property name="data" type="array"/>
+    </transfer>
+
 </transfers>

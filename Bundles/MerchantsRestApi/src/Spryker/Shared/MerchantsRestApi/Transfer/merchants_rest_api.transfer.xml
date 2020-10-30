@@ -127,11 +127,15 @@
 
     <transfer name="MerchantSearchCollection">
         <property name="nbResults" type="int"/>
+        <property name="ipp" type="int"/>
         <property name="merchants" type="MerchantSearch[]" singular="merchant"/>
     </transfer>
 
     <transfer name="MerchantSearch">
         <property name="idMerchant" type="int"/>
+    </transfer>
+
+    <transfer name="Category">
     </transfer>
 
 </transfers>
