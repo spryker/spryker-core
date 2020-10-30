@@ -910,17 +910,16 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         return $merchantProductOfferCountsTransfer;
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductOfferTableCriteriaTransfer $productOfferPriceTableCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer
+     */
     public function getProductOfferPriceTableData(
         PriceProductOfferTableCriteriaTransfer $productOfferPriceTableCriteriaTransfer
     ): PriceProductOfferCollectionTransfer {
         $priceProductStoreQuery = $this->getFactory()
             ->getPriceProductStorePropelQuery()
-            ->innerJoinSpyPriceProductOffer()
-            ->usePriceProductQuery()
-                ->innerJoinPriceType()
-            ->endUse()
-            ->innerJoinStore()
-            ->innerJoinCurrency()
             ->select([
                 SpyStoreTableMap::COL_NAME,
                 SpyCurrencyTableMap::COL_CODE
@@ -931,25 +930,72 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             )
             ->addAsColumn(
                 'type_price_product_offer_ids',
-                'GROUP_CONCAT(CONCAT(' . SpyPriceTypeTableMap::COL_NAME . ',:,' . SpyPriceProductOfferTableMap::COL_ID_PRICE_PRODUCT_OFFER . '))'
+                "GROUP_CONCAT(CONCAT(" . SpyPriceTypeTableMap::COL_NAME . ", ':'," . SpyPriceProductOfferTableMap::COL_ID_PRICE_PRODUCT_OFFER . "))"
             )
             ->addAsColumn(
                 'default_gross',
-                'IF(' . SpyPriceProductTableMap::COL_FK_PRICE_TYPE . ' = 1, ' . SpyPriceProductStoreTableMap::COL_GROSS_PRICE . ', "")'
+                'MAX(CASE WHEN ' . SpyPriceProductTableMap::COL_FK_PRICE_TYPE . ' = 1 THEN ' . SpyPriceProductStoreTableMap::COL_GROSS_PRICE . ' END)'
             )
             ->addAsColumn(
                 'original_gross',
-                'IF(' . SpyPriceProductTableMap::COL_FK_PRICE_TYPE . ' = 2  , ' . SpyPriceProductStoreTableMap::COL_GROSS_PRICE . ', "")'
+                'MAX(CASE WHEN ' . SpyPriceProductTableMap::COL_FK_PRICE_TYPE . ' = 2 THEN ' . SpyPriceProductStoreTableMap::COL_GROSS_PRICE . ' END)'
             )
             ->addAsColumn(
                 'default_net',
-                'IF(' . SpyPriceProductTableMap::COL_FK_PRICE_TYPE . ' = 1, ' . SpyPriceProductStoreTableMap::COL_NET_PRICE . ', "")'
+                'MAX(CASE WHEN ' . SpyPriceProductTableMap::COL_FK_PRICE_TYPE . ' = 1 THEN ' . SpyPriceProductStoreTableMap::COL_NET_PRICE . ' END)'
             )
             ->addAsColumn(
                 'original_net',
-                'IF(' . SpyPriceProductTableMap::COL_FK_PRICE_TYPE . ' = 2, ' . SpyPriceProductStoreTableMap::COL_NET_PRICE . ', "")'
-            )->filterByFkStore_In($productOfferPriceTableCriteriaTransfer->getFilterInStores())
-            ->filterBy(SpyCurrencyTableMap::COL_CODE, $productOfferPriceTableCriteriaTransfer->getFilterInCurrencies(), Criteria::IN)
-            ->find();
+                'MAX(CASE WHEN ' . SpyPriceProductTableMap::COL_FK_PRICE_TYPE . ' = 2 THEN ' . SpyPriceProductStoreTableMap::COL_NET_PRICE . ' END)'
+            )
+            ->useSpyPriceProductOfferQuery()
+                ->filterByFkProductOffer($productOfferPriceTableCriteriaTransfer->getIdProductOffer())
+            ->endUse()
+            ;
+        if (count($productOfferPriceTableCriteriaTransfer->getFilterInStores()) > 0) {
+            $priceProductStoreQuery
+                ->useStoreQuery(SpyStoreTableMap::TABLE_NAME, Criteria::INNER_JOIN)
+                    ->filterByIdStore_In($productOfferPriceTableCriteriaTransfer->getFilterInStores())
+                ->endUse();
+        } else {
+            $priceProductStoreQuery->innerJoinStore();
+        }
+
+        if (count($productOfferPriceTableCriteriaTransfer->getFilterInCurrencies()) > 0) {
+            $priceProductStoreQuery->useCurrencyQuery()
+                ->filterByCode_In($productOfferPriceTableCriteriaTransfer->getFilterInCurrencies())
+            ->endUse();
+        } else {
+            $priceProductStoreQuery->innerJoinCurrency();
+        }
+        $priceProductStoreQuery
+            ->usePriceProductQuery()
+                ->innerJoinPriceType()
+            ->endUse()
+            ->groupBy(SpyStoreTableMap::COL_NAME)
+            ->groupBy(SpyCurrencyTableMap::COL_CODE);
+foreach ($priceProductStoreQuery->find() as $item) {
+    var_dump($item);
+}
+die();
+
+
+//        $paginate = $priceProductStoreQuery->paginate(
+//            $productOfferPriceTableCriteriaTransfer->requirePage()->getPage(),
+//            $productOfferPriceTableCriteriaTransfer->requirePageSize()->getPageSize()
+//        );
+
+
+
+//        $paginationTransfer = $this->hydratePaginationTransfer($paginate);
+
+//        $priceProductOfferCollectionTransfer = $productConcreteMapper->mapProductTableDataArrayToProductConcreteCollectionTransfer(
+//            $propelPager->getResults()->getData(),
+//            new ProductConcreteCollectionTransfer()
+//        );
+//
+//        $priceProductOfferCollectionTransfer->setPagination($paginationTransfer);
+//
+//        return $priceProductOfferCollectionTransfer;
     }
 }

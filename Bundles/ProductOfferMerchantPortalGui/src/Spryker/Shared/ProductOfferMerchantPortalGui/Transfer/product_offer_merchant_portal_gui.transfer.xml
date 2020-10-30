@@ -291,6 +291,10 @@
         <property name="filterInStores" type="int[]" singular="inStore"/>
         <property name="filterInCurrencies" type="string[]" singular="inCurrency"/>
         <property name="idProductOffer" type="int"/>
+        <property name="page" type="int"/>
+        <property name="pageSize" type="int"/>
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
     </transfer>
 
     <transfer name="PriceProductOfferCollection">

@@ -41,42 +41,42 @@
     </web-spy-card>
 {% endmacro %}
 
-{% macro spyFormItemPriceProduct(priceProduct) %}
-    <web-spy-card spy-title="{{ 'Price' | trans }}">
-        {% for storeName, pricesByStore in priceProduct.vars.pricesFormTable %}
-            <web-spy-collapsible
-                class="mp-edit-offer__prices-container"
-                spy-title="{{ storeName }}"
-                {% if loop.first %}active{% endif %}
-            >
-                <div class="mp-edit-offer__prices">
-                    {% for amountType, pricesByAmountType in pricesByStore %}
-                        {% for priceType, pricesByPriceType in pricesByAmountType %}
-                                <div class="mp-edit-offer__prices-col">
-                                    <web-spy-form-item no-spaces="true">
-                                        {{ amountType ~ ' ' ~ priceType | trans }}
-                                        <div control>
-                                            {% for priceField in pricesByPriceType %}
-                                                <div class="mp-edit-offer__prices-item">
-                                                    {% if not priceField.isRendered %}
-                                                        {{ form_widget(priceField, {attr: {
-                                                            'outer-prefix': priceField.vars.label,
-                                                        }}) }}
-                                                    {% endif %}
-                                                </div>
+{#{% macro spyFormItemPriceProduct(priceProduct) %}#}
+{#    <web-spy-card spy-title="{{ 'Price' | trans }}">#}
+{#        {% for storeName, pricesByStore in priceProduct.vars.pricesFormTable %}#}
+{#            <web-spy-collapsible#}
+{#                class="mp-edit-offer__prices-container"#}
+{#                spy-title="{{ storeName }}"#}
+{#                {% if loop.first %}active{% endif %}#}
+{#            >#}
+{#                <div class="mp-edit-offer__prices">#}
+{#                    {% for amountType, pricesByAmountType in pricesByStore %}#}
+{#                        {% for priceType, pricesByPriceType in pricesByAmountType %}#}
+{#                                <div class="mp-edit-offer__prices-col">#}
+{#                                    <web-spy-form-item no-spaces="true">#}
+{#                                        {{ amountType ~ ' ' ~ priceType | trans }}#}
+{#                                        <div control>#}
+{#                                            {% for priceField in pricesByPriceType %}#}
+{#                                                <div class="mp-edit-offer__prices-item">#}
+{#                                                    {% if not priceField.isRendered %}#}
+{#                                                        {{ form_widget(priceField, {attr: {#}
+{#                                                            'outer-prefix': priceField.vars.label,#}
+{#                                                        }}) }}#}
+{#                                                    {% endif %}#}
+{#                                                </div>#}
 
-                                                {% do priceField.setRendered %}
-                                            {% endfor %}
-                                        </div>
-                                    </web-spy-form-item>
-                                </div>
-                        {% endfor %}
-                    {% endfor %}
-                </div>
-            </web-spy-collapsible>
-        {% endfor %}
-    </web-spy-card>
-{% endmacro %}
+{#                                                {% do priceField.setRendered %}#}
+{#                                            {% endfor %}#}
+{#                                        </div>#}
+{#                                    </web-spy-form-item>#}
+{#                                </div>#}
+{#                        {% endfor %}#}
+{#                    {% endfor %}#}
+{#                </div>#}
+{#            </web-spy-collapsible>#}
+{#        {% endfor %}#}
+{#    </web-spy-card>#}
+{#{% endmacro %}#}
 
 <web-mp-edit-offer
     images="{{ images | json_encode() }}"
@@ -158,13 +158,13 @@
             <web-mp-offers-list
                 cloak
                 table-id="web-mp-offers-list"
-                table-config='{{ guiTableConfiguration(productOfferPriceTableConfiguration) }}'>
+                table-config='{{ guiTableConfiguration(priceProductOfferTableConfiguration) }}'>
                 <span title>{{ 'List of Prices' | trans }}</span>
 
 {#                <web-spy-button-link action url="/product-offer-merchant-portal-gui/product-list" size="lg">{{ 'Add Offer' | trans }}</web-spy-button-link>#}
             </web-mp-offers-list>
 
-            {{ _self.spyFormItemPriceProduct(form) }}
+{#            {{ _self.spyFormItemPriceProduct(form) }}#}
 
             {% set dates = {
                 from: form.children.productOfferValidity.children.validFrom.vars.value,

@@ -14,13 +14,15 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerc
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToStoreFacadeInterface;
 
-class ProductOfferPriceGuiTableConfigurationProvider implements GuiTableConfigurationProviderInterface
+class ProductOfferPriceGuiTableConfigurationProvider implements ProductOfferPriceGuiTableConfigurationProviderInterface
 {
     public const COL_ID_STORE = 'idStore';
     public const COL_CURRENCY = 'currency';
 
+    protected const PARAM_ID_PRODUCT_OFFER = '$OFFER_ID';
+
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\ProductOffersController::tableDataAction()
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\UpdateProductOfferController::priceTableDataAction()
      */
     protected const DATA_URL = '/product-offer-merchant-portal-gui/update-product-offer/price-table-data?product-offer-id=$OFFER_ID';
 
@@ -63,9 +65,11 @@ class ProductOfferPriceGuiTableConfigurationProvider implements GuiTableConfigur
     }
 
     /**
+     * @param int $idProductOffer
+     *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
-    public function getConfiguration(): GuiTableConfigurationTransfer
+    public function getConfiguration(int $idProductOffer): GuiTableConfigurationTransfer
     {
         $guiTableConfigurationBuilder = $this->guiTableFactory->createConfigurationBuilder();
 
@@ -75,7 +79,7 @@ class ProductOfferPriceGuiTableConfigurationProvider implements GuiTableConfigur
 
         $guiTableConfigurationBuilder
             ->setTableTitle('List of Prices')
-            ->setDataSourceUrl(static::DATA_URL)
+            ->setDataSourceUrl(str_replace(static::PARAM_ID_PRODUCT_OFFER,  $idProductOffer, static::DATA_URL))
             ->setIsItemSelectionEnabled(false)
             ->setDefaultPageSize(25);
 

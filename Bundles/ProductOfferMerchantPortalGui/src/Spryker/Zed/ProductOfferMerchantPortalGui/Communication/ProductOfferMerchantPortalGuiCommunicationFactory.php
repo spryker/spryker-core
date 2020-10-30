@@ -18,10 +18,12 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvide
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductGuiTableConfigurationProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferPriceGuiTableConfigurationProvider;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferPriceGuiTableConfigurationProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\OffersDashboardCardProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\OffersDashboardCardProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\ProductGuiTableDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\ProductOfferGuiTableDataProvider;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\ProductOfferPriceGuiTableDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Expander\MerchantOrderItemTableExpander;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Expander\MerchantOrderItemTableExpanderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\DataProvider\ProductOfferCreateFormDataProvider;
@@ -78,13 +80,13 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\GuiTableConfigurationProviderInterface
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferPriceGuiTableConfigurationProviderInterface
      */
-    public function createProductOfferPriceGuiTableConfigurationProvider(): GuiTableConfigurationProviderInterface
+    public function createProductOfferPriceGuiTableConfigurationProvider(): ProductOfferPriceGuiTableConfigurationProviderInterface
     {
         return new ProductOfferPriceGuiTableConfigurationProvider(
             $this->getGuiTableFactory(),
-            $this-$this->getPriceProductFacade(),
+            $this->getPriceProductFacade(),
             $this->getStoreFacade(),
             $this->getCurrencyFacade()
         );
@@ -115,6 +117,19 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
             $this->createProductNameBuilder(),
             $this->getMerchantUserFacade(),
             $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @param int $idProductOffer
+     *
+     * @return \Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface
+     */
+    public function createProductOfferPriceTableDataProvider(int $idProductOffer): GuiTableDataProviderInterface
+    {
+        return new ProductOfferPriceGuiTableDataProvider(
+            $idProductOffer,
+            $this->getRepository()
         );
     }
 
