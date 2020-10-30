@@ -22,5 +22,5 @@ interface MerchantSearchClientInterface
      *
      * @return mixed
      */
-    public function merchantSearch(MerchantSearchRequestTransfer $merchantSearchRequestTransfer): array;
+    public function merchantSearch(MerchantSearchRequestTransfer $merchantSearchRequestTransfer);
 }

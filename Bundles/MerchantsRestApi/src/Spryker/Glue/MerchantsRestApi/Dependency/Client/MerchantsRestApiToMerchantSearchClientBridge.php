@@ -29,7 +29,7 @@ class MerchantsRestApiToMerchantSearchClientBridge implements MerchantsRestApiTo
      *
      * @return mixed
      */
-    public function merchantSearch(MerchantSearchRequestTransfer $merchantSearchRequestTransfer): array
+    public function merchantSearch(MerchantSearchRequestTransfer $merchantSearchRequestTransfer)
     {
         return $this->merchantSearchClient->merchantSearch($merchantSearchRequestTransfer);
     }
