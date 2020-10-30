@@ -19,6 +19,8 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBu
  */
 class MerchantSynchronizationDataBulkRepositoryPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
 {
+    protected const PARAM_TYPE = 'merchant';
+
     /**
      * {@inheritDoc}
      *
@@ -52,7 +54,7 @@ class MerchantSynchronizationDataBulkRepositoryPlugin extends AbstractPlugin imp
      */
     public function getParams(): array
     {
-        return ['type' => 'merchant'];
+        return ['type' => static::PARAM_TYPE];
     }
 
     /**

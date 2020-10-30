@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantSearch\Persistence;
 
-use Generated\Shared\Transfer\MerchantSearchTransfer;
+use Generated\Shared\Transfer\MerchantSearchCollectionTransfer;
 
 interface MerchantSearchEntityManagerInterface
 {
@@ -19,9 +19,9 @@ interface MerchantSearchEntityManagerInterface
     public function deleteMerchantSearchByMerchantIds(array $merchantIds): void;
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantSearchTransfer $merchantSearchTransfer
+     * @param \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer
      *
      * @return void
      */
-    public function saveMerchantSearch(MerchantSearchTransfer $merchantSearchTransfer): void;
+    public function saveMerchantSearches(MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer): void;
 }

@@ -24,7 +24,10 @@
   },
   "suggest": {
     "spryker/elastica": "If you want to use Elastica plugins.",
-    "spryker/search-elasticsearch": "If you want to use search plugins."
+    "spryker/search-elasticsearch": "If you want to use search plugins.",
+    "spryker/merchant-profile": "If you want to use Entity.spy_merchant_profile.update Event",
+    "spryker/merchant-category": "If you want to use Entity.spy_merchant_category.update Event",
+    "spryker/category": "If you want to use Entity.spy_category.update Event"
   },
   "autoload": {
     "psr-4": {

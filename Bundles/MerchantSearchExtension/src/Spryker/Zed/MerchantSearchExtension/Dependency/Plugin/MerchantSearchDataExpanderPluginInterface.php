@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantSearchExtension\Dependency\Plugin;
 
+use Generated\Shared\Transfer\MerchantSearchCollectionTransfer;
+
 interface MerchantSearchDataExpanderPluginInterface
 {
     /**
@@ -15,9 +17,9 @@ interface MerchantSearchDataExpanderPluginInterface
      *
      * @api
      *
-     * @param mixed[] $merchantSearchData
+     * @param \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer
      *
-     * @return mixed[]
+     * @return \Generated\Shared\Transfer\MerchantSearchCollectionTransfer
      */
-    public function expand(array $merchantSearchData): array;
+    public function expand(MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer): MerchantSearchCollectionTransfer;
 }

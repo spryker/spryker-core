@@ -41,7 +41,7 @@ class MerchantCategoryRepository extends AbstractRepository implements MerchantC
                 ->endUse()
             ->endUse();
 
-        $merchantCategoryQuery = $this->applyFilters($merchantCategoryQuery, $merchantCategoryCriteriaTransfer);
+        $merchantCategoryQuery = $this->applyCriteria($merchantCategoryQuery, $merchantCategoryCriteriaTransfer);
 
         if ($merchantCategoryQuery->count() > MerchantCategoryConfig::MAX_CATEGORY_SELECT_COUNT) {
             throw new MerchantCategoryLimitException(
@@ -68,7 +68,7 @@ class MerchantCategoryRepository extends AbstractRepository implements MerchantC
      *
      * @return \Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery
      */
-    protected function applyFilters(
+    protected function applyCriteria(
         SpyMerchantCategoryQuery $merchantCategoryQuery,
         MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer
     ): SpyMerchantCategoryQuery {

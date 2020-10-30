@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantCategorySearch\Communication\Plugin\MerchantSearch;
 
 use Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantSearchCollectionTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantSearchExtension\Dependency\Plugin\MerchantSearchDataExpanderPluginInterface;
 
@@ -28,11 +29,27 @@ class MerchantCategoryMerchantSearchDataExpanderPlugin extends AbstractPlugin im
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantSearchCollectionTransfer
+     */
+    public function expand(MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer): MerchantSearchCollectionTransfer
+    {
+        foreach ($merchantSearchCollectionTransfer->getMerchantSearches() as $merchantSearchTransfer) {
+            $merchantSearchTransfer->setData(
+                $this->expandMerchantSearchData($merchantSearchTransfer->getData())
+            );
+        }
+
+        return $merchantSearchCollectionTransfer;
+    }
+
+    /**
      * @param mixed[] $merchantSearchData
      *
      * @return mixed[]
      */
-    public function expand(array $merchantSearchData): array
+    protected function expandMerchantSearchData(array $merchantSearchData): array
     {
         $merchantCategoryResponseTransfer = $this->getFactory()
             ->getMerchantCategoryFacade()
