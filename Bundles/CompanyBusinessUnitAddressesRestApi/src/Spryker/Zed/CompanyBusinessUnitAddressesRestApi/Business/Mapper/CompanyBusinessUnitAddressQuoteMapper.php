@@ -61,7 +61,7 @@ class CompanyBusinessUnitAddressQuoteMapper implements CompanyBusinessUnitAddres
         }
 
         $quoteTransfer->setBillingAddress(
-            $this->createAddressTransfer($restAddressTransfer, $quoteTransfer)
+            $this->getAddressTransferByCompanyBusinessUnitAddressUuid($restAddressTransfer, $quoteTransfer)
         );
 
         return $quoteTransfer;
@@ -82,7 +82,7 @@ class CompanyBusinessUnitAddressQuoteMapper implements CompanyBusinessUnitAddres
             return $quoteTransfer;
         }
 
-        $addressTransfer = $this->createAddressTransfer($restAddressTransfer, $quoteTransfer);
+        $addressTransfer = $this->getAddressTransferByCompanyBusinessUnitAddressUuid($restAddressTransfer, $quoteTransfer);
         $quoteTransfer = $this->setItemLevelShippingAddresses($quoteTransfer, $addressTransfer);
 
         /**
@@ -99,7 +99,7 @@ class CompanyBusinessUnitAddressQuoteMapper implements CompanyBusinessUnitAddres
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function createAddressTransfer(
+    protected function getAddressTransferByCompanyBusinessUnitAddressUuid(
         RestAddressTransfer $restAddressTransfer,
         QuoteTransfer $quoteTransfer
     ): AddressTransfer {

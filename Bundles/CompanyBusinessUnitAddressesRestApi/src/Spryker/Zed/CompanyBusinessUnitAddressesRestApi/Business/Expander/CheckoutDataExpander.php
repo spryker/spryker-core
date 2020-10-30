@@ -38,10 +38,12 @@ class CheckoutDataExpander implements CheckoutDataExpanderInterface
         RestCheckoutDataTransfer $restCheckoutDataTransfer,
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestCheckoutDataTransfer {
-        $restCheckoutRequestAttributesTransfer
-            ->requireCustomer()
-            ->getCustomer()
-                ->requireIdCompanyBusinessUnit();
+        if (
+            !$restCheckoutRequestAttributesTransfer->getCustomer() ||
+            !$restCheckoutRequestAttributesTransfer->getCustomer()->getIdCompanyBusinessUnit()
+        ) {
+            return $restCheckoutDataTransfer;
+        }
 
         $companyUnitAddressCriteriaFilterTransfer = (new CompanyUnitAddressCriteriaFilterTransfer())
             ->setIdCompanyBusinessUnit(

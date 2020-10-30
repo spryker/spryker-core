@@ -45,7 +45,7 @@ class AddressCheckoutDataResponseMapper implements CheckoutDataResponseMapperInt
     }
 
     /**
-     * @deprecated Exists for BC reasons. Will be removed in nex major.
+     * @deprecated Exists for BC reasons. Will be removed in the next major release.
      *
      * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
      * @param \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer

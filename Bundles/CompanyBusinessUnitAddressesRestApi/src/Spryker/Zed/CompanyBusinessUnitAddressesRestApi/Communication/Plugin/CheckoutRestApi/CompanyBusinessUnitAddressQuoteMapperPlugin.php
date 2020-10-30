@@ -23,7 +23,7 @@ class CompanyBusinessUnitAddressQuoteMapperPlugin extends AbstractPlugin impleme
      * - Applicable to rest request addresses which have companyBusinessUnitAddressId property.
      * - Maps rest request billing company business unit address information to quote.
      * - Maps rest request shipping company business unit address information to quote level (BC) and item level shipping addresses.
-     * - Must be set after `AddressQuoteMapperPlugin`.
+     * - Must be setup after `AddressQuoteMapperPlugin`.
      *
      * @api
      *

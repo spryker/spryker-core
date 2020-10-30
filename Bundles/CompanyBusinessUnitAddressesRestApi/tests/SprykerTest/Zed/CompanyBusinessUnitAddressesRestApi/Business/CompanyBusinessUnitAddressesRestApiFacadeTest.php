@@ -21,10 +21,10 @@ use SprykerTest\Zed\CompanyBusinessUnitAddressesRestApi\CompanyBusinessUnitAddre
  *
  * @group SprykerTest
  * @group Zed
- * @group CheckoutRestApi
+ * @group CompanyBusinessUnitAddressesRestApi
  * @group Business
  * @group Facade
- * @group CheckoutRestApiFacadeTest
+ * @group CompanyBusinessUnitAddressesRestApiFacadeTest
  * Add your own group annotations below this line
  */
 class CompanyBusinessUnitAddressesRestApiFacadeTest extends Unit

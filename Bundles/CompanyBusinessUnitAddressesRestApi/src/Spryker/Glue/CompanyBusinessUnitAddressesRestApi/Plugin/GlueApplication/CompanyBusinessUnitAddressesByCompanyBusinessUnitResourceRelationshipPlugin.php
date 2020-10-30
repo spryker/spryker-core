@@ -20,7 +20,7 @@ class CompanyBusinessUnitAddressesByCompanyBusinessUnitResourceRelationshipPlugi
     /**
      * {@inheritDoc}
      * - Adds company business unit addresses resources as relationship.
-     * - Requires a CompanyUnitAddressCollectionTransfer to be provided in resource payload.
+     * - Requires a `CompanyUnitAddressCollectionTransfer` to be provided in resource payload.
      *
      * @api
      *

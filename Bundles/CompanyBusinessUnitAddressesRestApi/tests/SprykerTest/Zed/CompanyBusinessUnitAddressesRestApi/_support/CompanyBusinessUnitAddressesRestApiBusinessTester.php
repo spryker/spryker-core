@@ -27,6 +27,7 @@ use Generated\Shared\Transfer\RestCustomerTransfer;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -40,16 +41,16 @@ use Generated\Shared\Transfer\RestCustomerTransfer;
  * @method \Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\CompanyBusinessUnitAddressesRestApiFacade getFacade()
  *
  * @SuppressWarnings(PHPMD)
-*/
+ */
 class CompanyBusinessUnitAddressesRestApiBusinessTester extends Actor
 {
     use _generated\CompanyBusinessUnitAddressesRestApiBusinessTesterActions;
 
     public const FAKE_COMPANY_BUSINESS_UNIT_ADDRESS1 = 'Address1';
     public const FAKE_COMPANY_BUSINESS_UNIT_ADDRESS2 = 'Address2';
-    public const FAKE_ID_COMPANY_BUSINESS_UNIT = 777;
-    public const FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_UUID = 'fake-company-business-unit-address-uuid';
-    public const FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_ID = 12345;
+    protected const FAKE_ID_COMPANY_BUSINESS_UNIT = 777;
+    protected const FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_UUID = 'fake-company-business-unit-address-uuid';
+    protected const FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_ID = 12345;
 
     /**
      * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
@@ -73,7 +74,7 @@ class CompanyBusinessUnitAddressesRestApiBusinessTester extends Actor
                 CompanyUnitAddressTransfer::UUID => static::FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_UUID,
                 CompanyUnitAddressTransfer::ADDRESS1 => static::FAKE_COMPANY_BUSINESS_UNIT_ADDRESS1,
                 CompanyUnitAddressTransfer::ADDRESS2 => static::FAKE_COMPANY_BUSINESS_UNIT_ADDRESS2,
-                CompanyUnitAddressTransfer::COMPANY => (new CompanyBuilder())->build()
+                CompanyUnitAddressTransfer::COMPANY => (new CompanyBuilder())->build(),
             ])
             ->build();
     }
