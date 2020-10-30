@@ -4,7 +4,7 @@
   "description": "OauthExtension module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2"
+    "php": ">=7.3"
   },
   "require-dev": {
     "psr/http-message": "^1.0.0",

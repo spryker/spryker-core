@@ -3,18 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 40,
-            "line_to": 40,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantSwitcher/src/Spryker/Client/MerchantSwitcher/MerchantSwitcherDependencyProvider.php",
-            "snippet": "            return new MerchantSwitcherToZedRequestClientBridge($container->getLocator()->zedRequest()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 69,
             "line_to": 69,
             "type": "PossiblyNullReference",
@@ -84,42 +72,6 @@
             "selected_text": "$this->getFacade()\n            ->switchMerchantInQuoteItems($merchantSwitcherRequestTransfer)\n            ->getQuote()",
             "error_level": 5,
             "shortcode": 139
-        },
-        {
-            "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantSwitcher/src/Spryker/Zed/MerchantSwitcher/MerchantSwitcherDependencyProvider.php",
-            "snippet": "            return new MerchantSwitcherToQuoteFacadeBridge($container->getLocator()->quote()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 63,
-            "line_to": 63,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantSwitcher/src/Spryker/Zed/MerchantSwitcher/MerchantSwitcherDependencyProvider.php",
-            "snippet": "            return new MerchantSwitcherToCartFacadeBridge($container->getLocator()->cart()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 77,
-            "line_to": 77,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantSwitcher/src/Spryker/Zed/MerchantSwitcher/MerchantSwitcherDependencyProvider.php",
-            "snippet": "            return new MerchantSwitcherToMerchantProductOfferFacadeBridge($container->getLocator()->merchantProductOffer()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

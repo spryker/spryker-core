@@ -4,7 +4,7 @@
   "description": "Shipment module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/calculation": "^4.8.0",
     "spryker/calculation-extension": "^1.0.0",
     "spryker/country": "^3.0.0",

@@ -64,18 +64,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 37,
-            "line_to": 37,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Calculation/src/Spryker/Client/Calculation/CalculationDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->zedRequest()->client();",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 42,
             "line_to": 42,
             "type": "MismatchingDocblockParamType",
@@ -1984,8 +1972,8 @@
         },
         {
             "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
+            "line_from": 42,
+            "line_to": 42,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Calculation\\Business\\Model\\Executor\\OrderCalculatorExecutor::mapOrderTransfer cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Calculation/src/Spryker/Zed/Calculation/Business/Model/Executor/OrderCalculatorExecutor.php",
@@ -1993,18 +1981,6 @@
             "selected_text": "$calculableObjectTransfer->getOriginalOrder()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Calculation/src/Spryker/Zed/Calculation/CalculationDependencyProvider.php",
-            "snippet": "            return new CalculationToUtilTextBridge($container->getLocator()->utilText()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

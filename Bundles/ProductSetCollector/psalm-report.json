@@ -1,5 +1,54 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Zed\\ProductSetCollector\\Business\\Map\\ProductSetPageMapBuilder::buildPageMap has wrong name $productSetData, expecting $data as defined by Spryker\\Zed\\Search\\Dependency\\Plugin\\PageMapInterface::buildPageMap",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductSetCollector/src/Spryker/Zed/ProductSetCollector/Business/Map/ProductSetPageMapBuilder.php",
+            "snippet": "    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $productSetData, LocaleTransfer $localeTransfer)",
+            "selected_text": "$productSetData",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "ParamNameMismatch",
+            "message": "Argument 3 of Spryker\\Zed\\ProductSetCollector\\Business\\Map\\ProductSetPageMapBuilder::buildPageMap has wrong name $localeTransfer, expecting $locale as defined by Spryker\\Zed\\Search\\Dependency\\Plugin\\PageMapInterface::buildPageMap",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductSetCollector/src/Spryker/Zed/ProductSetCollector/Business/Map/ProductSetPageMapBuilder.php",
+            "snippet": "    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $productSetData, LocaleTransfer $localeTransfer)",
+            "selected_text": "$localeTransfer",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Zed\\ProductSetCollector\\Communication\\Plugin\\ProductSetCollectorSearchPlugin::run has wrong name $localeTransfer, expecting $locale as defined by Spryker\\Zed\\Collector\\Dependency\\Plugin\\CollectorPluginInterface::run",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductSetCollector/src/Spryker/Zed/ProductSetCollector/Communication/Plugin/ProductSetCollectorSearchPlugin.php",
+            "snippet": "        LocaleTransfer $localeTransfer,",
+            "selected_text": "$localeTransfer",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Zed\\ProductSetCollector\\Communication\\Plugin\\ProductSetCollectorStoragePlugin::run has wrong name $localeTransfer, expecting $locale as defined by Spryker\\Zed\\Collector\\Dependency\\Plugin\\CollectorPluginInterface::run",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductSetCollector/src/Spryker/Zed/ProductSetCollector/Communication/Plugin/ProductSetCollectorStoragePlugin.php",
+            "snippet": "        LocaleTransfer $localeTransfer,",
+            "selected_text": "$localeTransfer",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -84,66 +133,6 @@
             "selected_text": "$localeTransfer->getIdLocale()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 53,
-            "line_to": 53,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSetCollector/src/Spryker/Zed/ProductSetCollector/ProductSetCollectorDependencyProvider.php",
-            "snippet": "            return new ProductSetCollectorToCollectorBridge($container->getLocator()->collector()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 65,
-            "line_to": 65,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSetCollector/src/Spryker/Zed/ProductSetCollector/ProductSetCollectorDependencyProvider.php",
-            "snippet": "            return new ProductSetCollectorToSearchBridge($container->getLocator()->search()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 77,
-            "line_to": 77,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSetCollector/src/Spryker/Zed/ProductSetCollector/ProductSetCollectorDependencyProvider.php",
-            "snippet": "            return new ProductSetCollectorToProductSetBridge($container->getLocator()->productSet()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 89,
-            "line_to": 89,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSetCollector/src/Spryker/Zed/ProductSetCollector/ProductSetCollectorDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->utilDataReader()->service();",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 101,
-            "line_to": 101,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSetCollector/src/Spryker/Zed/ProductSetCollector/ProductSetCollectorDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->touch()->queryContainer();",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

@@ -4,7 +4,7 @@
   "description": "Currency module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/currency-extension": "^1.0.0",
     "spryker/kernel": "^3.52.0",
     "spryker/messenger": "^3.1.0",

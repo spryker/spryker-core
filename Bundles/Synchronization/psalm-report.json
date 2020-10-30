@@ -99,6 +99,18 @@
         },
         {
             "severity": "info",
+            "line_from": 230,
+            "line_to": 230,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Synchronization\\Dependency\\Service\\SynchronizationToUtilEncodingServiceInterface::decodeJson cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Synchronization/src/Spryker/Zed/Synchronization/Business/Export/RepositoryExporter.php",
+            "snippet": "            $synchronizationMappings = $this->utilEncodingService->decodeJson($synchronizationDataTransfer->getAliasKeys(), true);",
+            "selected_text": "$synchronizationDataTransfer->getAliasKeys()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
             "line_from": 42,
             "line_to": 42,
             "type": "PossiblyNullReference",
@@ -114,7 +126,7 @@
             "line_from": 45,
             "line_to": 45,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/Synchronization/src/Spryker/Zed/Synchronization/Business/Iterator/SynchronizationDataQueryContainerPluginIterator.php",
             "snippet": "            ->getData();",
             "selected_text": "getData",
@@ -255,18 +267,6 @@
         },
         {
             "severity": "info",
-            "line_from": 57,
-            "line_to": 57,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Zed\\Synchronization\\Business\\Message\\QueueMessageHelper::encodeJson cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Synchronization/src/Spryker/Zed/Synchronization/Business/Message/QueueMessageHelper.php",
-            "snippet": "        $queueMessageTransfer->getQueueMessage()->setBody($this->encodeJson($queueMessageBody));",
-            "selected_text": "$queueMessageBody",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
             "line_from": 42,
             "line_to": 42,
             "type": "LessSpecificImplementedReturnType",
@@ -396,54 +396,6 @@
             "selected_text": "$this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options)",
             "error_level": 5,
             "shortcode": 139
-        },
-        {
-            "severity": "info",
-            "line_from": 64,
-            "line_to": 64,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Synchronization/src/Spryker/Zed/Synchronization/SynchronizationDependencyProvider.php",
-            "snippet": "            return new SynchronizationToStorageClientBridge($container->getLocator()->storage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 78,
-            "line_to": 78,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Synchronization/src/Spryker/Zed/Synchronization/SynchronizationDependencyProvider.php",
-            "snippet": "            return new SynchronizationToSearchClientBridge($container->getLocator()->search()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 92,
-            "line_to": 92,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Synchronization/src/Spryker/Zed/Synchronization/SynchronizationDependencyProvider.php",
-            "snippet": "            return new SynchronizationToQueueClientBridge($container->getLocator()->queue()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 106,
-            "line_to": 106,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Synchronization/src/Spryker/Zed/Synchronization/SynchronizationDependencyProvider.php",
-            "snippet": "            return new SynchronizationToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

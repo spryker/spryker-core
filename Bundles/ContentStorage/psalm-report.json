@@ -1,5 +1,18 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 103,
+            "line_to": 103,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyContentEntityTransfer>' for Spryker\\Zed\\ContentStorage\\Persistence\\ContentStorageRepository::findContentByContentIds",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentStorage/src/Spryker/Zed/ContentStorage/Persistence/ContentStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($query)->find();",
+            "selected_text": "$this->buildQueryFromCriteria($query)->find()",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -11,8 +24,7 @@
             "snippet": "                    $contentStorageTransfers[$contentTransfer->getIdContent()][$availableLocale->getLocaleName()]->toArray()",
             "selected_text": "$contentStorageTransfers",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -24,8 +36,7 @@
             "snippet": "                    ContentStorageConfig::CONTENT_KEY => $this->utilEncodingService->decodeJson($localizedContentTransfer->getParameters(), true),",
             "selected_text": "$localizedContentTransfer->getParameters()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -37,8 +48,7 @@
             "snippet": "            $localizedContentTransfers[$localeKey] = $localizedContentTransfer;",
             "selected_text": "$localizedContentTransfers",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -50,8 +60,7 @@
             "snippet": "            $contentStorageList[$contentStorageTransfer->getFkContent()][$contentStorageTransfer->getLocale()] = $contentStorageTransfer;",
             "selected_text": "$contentStorageList",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -63,8 +72,19 @@
             "snippet": "    public function publish(array $contentIds): void",
             "selected_text": "$contentIds",
             "error_level": 5,
-            "shortcode": 140,
-            "taint_trace": null
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\ContentStorage\\Communication\\Plugin\\Event\\ContentStorageEventResourceRepositoryPlugin::getData has the more specific type 'array<array-key, int>', expecting 'array<array-key, int|string>' as defined by Spryker\\Zed\\EventBehavior\\Dependency\\Plugin\\EventResourceRepositoryPluginInterface::getData",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentStorage/src/Spryker/Zed/ContentStorage/Communication/Plugin/Event/ContentStorageEventResourceRepositoryPlugin.php",
+            "snippet": "    public function getData(array $ids = []): array",
+            "selected_text": "$ids",
+            "error_level": 5,
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -76,8 +96,7 @@
             "snippet": "     * @return string",
             "selected_text": "string",
             "error_level": 5,
-            "shortcode": 144,
-            "taint_trace": null
+            "shortcode": 144
         },
         {
             "severity": "info",
@@ -89,8 +108,7 @@
             "snippet": "        return $this->utilEncodingService->encodeJson($value, $options, $depth);",
             "selected_text": "$this->utilEncodingService->encodeJson($value, $options, $depth)",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -102,8 +120,7 @@
             "snippet": "        return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);",
             "selected_text": "$this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options)",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -115,8 +132,7 @@
             "snippet": "                $localizedContentTransfer->setLocaleName($contentLocalizedEntity->getSpyLocale()->getLocaleName());",
             "selected_text": "getLocaleName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -128,8 +144,7 @@
             "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Content\\Persistence\\SpyContent[] $contentEntityCollection",
             "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Content\\Persistence\\SpyContent[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -141,8 +156,7 @@
             "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Content\\Persistence\\SpyContent[] $contentEntityCollection",
             "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Content\\Persistence\\SpyContent[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         }
     ],
     "deprecation": [
@@ -156,8 +170,7 @@
             "snippet": "class ContentStorageEventResourceRepositoryPlugin extends AbstractPlugin implements EventResourceRepositoryPluginInterface",
             "selected_text": "ContentStorageEventResourceRepositoryPlugin",
             "error_level": 2,
-            "shortcode": 152,
-            "taint_trace": null
+            "shortcode": 152
         },
         {
             "severity": "info",
@@ -169,8 +182,7 @@
             "snippet": "        return $this->getRepository()->findContentByContentIds($ids);",
             "selected_text": "findContentByContentIds",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -182,8 +194,7 @@
             "snippet": "class ContentStorageSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface",
             "selected_text": "ContentStorageSynchronizationDataPlugin",
             "error_level": 2,
-            "shortcode": 152,
-            "taint_trace": null
+            "shortcode": 152
         }
     ]
 }

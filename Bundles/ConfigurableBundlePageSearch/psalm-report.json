@@ -10,8 +10,7 @@
             "snippet": "     * @return array",
             "selected_text": "array",
             "error_level": 6,
-            "shortcode": 11,
-            "taint_trace": null
+            "shortcode": 11
         },
         {
             "severity": "error",
@@ -23,8 +22,7 @@
             "snippet": "        return $this->getFactory()\n            ->getSearchClient()\n            ->search($searchQuery, $resultFormatters, $requestParameters);",
             "selected_text": "$this->getFactory()\n            ->getSearchClient()\n            ->search($searchQuery, $resultFormatters, $requestParameters)",
             "error_level": 6,
-            "shortcode": 128,
-            "taint_trace": null
+            "shortcode": 128
         },
         {
             "severity": "error",
@@ -36,8 +34,7 @@
             "snippet": "     * @return \\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface",
             "selected_text": "\\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface",
             "error_level": 6,
-            "shortcode": 11,
-            "taint_trace": null
+            "shortcode": 11
         },
         {
             "severity": "error",
@@ -49,8 +46,43 @@
             "snippet": "        return new ConfigurableBundleTemplatePageSearchQueryPlugin($configurableBundleTemplatePageSearchRequestTransfer);",
             "selected_text": "new ConfigurableBundleTemplatePageSearchQueryPlugin($configurableBundleTemplatePageSearchRequestTransfer)",
             "error_level": 6,
-            "shortcode": 128,
-            "taint_trace": null
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\ConfigurableBundlePageSearch\\Communication\\Plugin\\Event\\Listener\\ConfigurableBundleTemplateConfigurableBundlePageSearchPublishListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlePageSearch/src/Spryker/Zed/ConfigurableBundlePageSearch/Communication/Plugin/Event/Listener/ConfigurableBundleTemplateConfigurableBundlePageSearchPublishListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\ConfigurableBundlePageSearch\\Communication\\Plugin\\Event\\Listener\\ConfigurableBundleTemplateConfigurableBundlePageSearchUnpublishListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlePageSearch/src/Spryker/Zed/ConfigurableBundlePageSearch/Communication/Plugin/Event/Listener/ConfigurableBundleTemplateConfigurableBundlePageSearchUnpublishListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\ConfigurableBundlePageSearch\\Communication\\Plugin\\Event\\Listener\\ProductImageSetConfigurableBundlePageSearchPublishListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlePageSearch/src/Spryker/Zed/ConfigurableBundlePageSearch/Communication/Plugin/Event/Listener/ProductImageSetConfigurableBundlePageSearchPublishListener.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
         }
     ],
     "warning": [
@@ -64,8 +96,7 @@
             "snippet": "            $configurableBundleTemplatePageSearchTransfer->getLocale()",
             "selected_text": "$configurableBundleTemplatePageSearchTransfer->getLocale()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -77,8 +108,7 @@
             "snippet": "            $this->executePublishTransaction($configurableBundleTemplateTransfers->getConfigurableBundleTemplates()->getArrayCopy(), $configurableBundleTemplatePageSearchTransfers);",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -90,8 +120,7 @@
             "snippet": "            $groupedConfigurableBundleTemplatePageSearchTransfers[$fkConfigurableBundleTemplate][$locale] = $configurableBundleTemplatePageSearchTransfer;",
             "selected_text": "$groupedConfigurableBundleTemplatePageSearchTransfers",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -103,8 +132,7 @@
             "snippet": "                    ->requireLocaleName();",
             "selected_text": "requireLocaleName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -116,8 +144,7 @@
             "snippet": "                $localeTransfer,",
             "selected_text": "$localeTransfer",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -129,8 +156,7 @@
             "snippet": "                $configurableBundleTemplatePageSearchTransfers[$localeTransfer->getLocaleName()] ?? new ConfigurableBundleTemplatePageSearchTransfer()",
             "selected_text": "getLocaleName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -142,8 +168,7 @@
             "snippet": "            ->getArrayCopy();",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -155,8 +180,7 @@
             "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ProductImageSetTransfer[] $productImageSetTransfers",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ProductImageSetTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -168,8 +192,7 @@
             "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\ProductImageSetTransfer[]",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ProductImageSetTransfer[]",
             "error_level": 4,
-            "shortcode": 142,
-            "taint_trace": null
+            "shortcode": 142
         },
         {
             "severity": "info",
@@ -181,8 +204,7 @@
             "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ProductImageSetTransfer[] $productImageSetTransfers",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ProductImageSetTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -194,8 +216,7 @@
             "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\ProductImageSetTransfer[]",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ProductImageSetTransfer[]",
             "error_level": 4,
-            "shortcode": 142,
-            "taint_trace": null
+            "shortcode": 142
         },
         {
             "severity": "info",
@@ -207,8 +228,7 @@
             "snippet": "            ->findOneByIdConfigurableBundleTemplatePageSearch($configurableBundleTemplatePageSearchTransfer->getIdConfigurableBundleTemplatePageSearch());",
             "selected_text": "$configurableBundleTemplatePageSearchTransfer->getIdConfigurableBundleTemplatePageSearch()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -220,8 +240,7 @@
             "snippet": "            ->findOneByIdConfigurableBundleTemplatePageSearch($configurableBundleTemplatePageSearchTransfer->getIdConfigurableBundleTemplatePageSearch());",
             "selected_text": "$configurableBundleTemplatePageSearchTransfer->getIdConfigurableBundleTemplatePageSearch()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -233,21 +252,19 @@
             "snippet": "        if (!$configurableBundleTemplatePageSearchEntities->count()) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
             "line_from": 73,
             "line_to": 73,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlePageSearch/src/Spryker/Zed/ConfigurableBundlePageSearch/Persistence/ConfigurableBundlePageSearchRepository.php",
             "snippet": "            ->toArray();",
             "selected_text": "toArray",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -259,8 +276,19 @@
             "snippet": "            $configurableBundleTemplatePageSearchQuery->setOffset($configurableBundleTemplatePageSearchFilterTransfer->getOffset());",
             "selected_text": "$configurableBundleTemplatePageSearchFilterTransfer->getOffset()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 107,
+            "line_to": 107,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\ConfigurableBundlePageSearch\\Persistence\\SpyConfigurableBundleTemplatePageSearchQuery::setLimit cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlePageSearch/src/Spryker/Zed/ConfigurableBundlePageSearch/Persistence/ConfigurableBundlePageSearchRepository.php",
+            "snippet": "            $configurableBundleTemplatePageSearchQuery->setLimit($configurableBundleTemplatePageSearchFilterTransfer->getLimit());",
+            "selected_text": "$configurableBundleTemplatePageSearchFilterTransfer->getLimit()",
+            "error_level": 3,
+            "shortcode": 78
         }
     ],
     "deprecation": [
@@ -274,8 +302,7 @@
             "snippet": "     * @return \\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryExpanderPluginInterface[]",
             "selected_text": "\\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryExpanderPluginInterface[]",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -287,8 +314,7 @@
             "snippet": "     * @return \\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryExpanderPluginInterface[]",
             "selected_text": "\\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryExpanderPluginInterface[]",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -300,8 +326,7 @@
             "snippet": "     * @param \\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryExpanderPluginInterface[] $searchQueryExpanders",
             "selected_text": "\\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryExpanderPluginInterface[]",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -313,8 +338,19 @@
             "snippet": "     * @param \\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryExpanderPluginInterface[] $searchQueryExpanders",
             "selected_text": "\\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryExpanderPluginInterface[]",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 21,
+            "line_to": 21,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\SearchContextAwareQueryInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlePageSearch/src/Spryker/Client/ConfigurableBundlePageSearch/Plugin/Elasticsearch/Query/ConfigurableBundleTemplatePageSearchQueryPlugin.php",
+            "snippet": "class ConfigurableBundleTemplatePageSearchQueryPlugin extends AbstractPlugin implements QueryInterface, SearchContextAwareQueryInterface",
+            "selected_text": "ConfigurableBundleTemplatePageSearchQueryPlugin",
+            "error_level": 2,
+            "shortcode": 152
         },
         {
             "severity": "info",
@@ -326,8 +362,7 @@
             "snippet": "class ConfigurableBundleTemplatePageSearchResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin",
             "selected_text": "AbstractElasticsearchResultFormatterPlugin",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -339,8 +374,7 @@
             "snippet": "    use DatabaseTransactionHandlerTrait;",
             "selected_text": "DatabaseTransactionHandlerTrait",
             "error_level": 2,
-            "shortcode": 171,
-            "taint_trace": null
+            "shortcode": 171
         },
         {
             "severity": "info",
@@ -352,8 +386,7 @@
             "snippet": "    use DatabaseTransactionHandlerTrait;",
             "selected_text": "DatabaseTransactionHandlerTrait",
             "error_level": 2,
-            "shortcode": 171,
-            "taint_trace": null
+            "shortcode": 171
         },
         {
             "severity": "info",
@@ -365,8 +398,7 @@
             "snippet": "    use DatabaseTransactionHandlerTrait;",
             "selected_text": "DatabaseTransactionHandlerTrait",
             "error_level": 2,
-            "shortcode": 171,
-            "taint_trace": null
+            "shortcode": 171
         },
         {
             "severity": "info",
@@ -378,8 +410,7 @@
             "snippet": "class ConfigurableBundleTemplatePageMapPlugin extends AbstractPlugin implements NamedPageMapInterface",
             "selected_text": "ConfigurableBundleTemplatePageMapPlugin",
             "error_level": 2,
-            "shortcode": 152,
-            "taint_trace": null
+            "shortcode": 152
         },
         {
             "severity": "info",
@@ -391,8 +422,7 @@
             "snippet": "     * @param \\Spryker\\Zed\\Search\\Business\\Model\\Elasticsearch\\DataMapper\\PageMapBuilderInterface $pageMapBuilder",
             "selected_text": "\\Spryker\\Zed\\Search\\Business\\Model\\Elasticsearch\\DataMapper\\PageMapBuilderInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -404,8 +434,7 @@
             "snippet": "     * @param \\Spryker\\Zed\\Search\\Business\\Model\\Elasticsearch\\DataMapper\\PageMapBuilderInterface $pageMapBuilder",
             "selected_text": "\\Spryker\\Zed\\Search\\Business\\Model\\Elasticsearch\\DataMapper\\PageMapBuilderInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -417,8 +446,7 @@
             "snippet": "        return $this->searchFacade->transformPageMapToDocumentByMapperName($data, $localeTransfer, $mapperName);",
             "selected_text": "transformPageMapToDocumentByMapperName",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         }
     ]
 }

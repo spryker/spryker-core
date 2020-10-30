@@ -9,4 +9,8 @@
         <property name="isActive" dataBuilderRule="=true"/>
     </transfer>
 
+    <transfer name="ProductRelationType">
+        <property name="key" dataBuilderRule="word(1)"/>
+    </transfer>
+
 </transfers>

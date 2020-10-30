@@ -10,8 +10,7 @@
             "snippet": "     * @return \\Generated\\Shared\\Transfer\\ApiCollectionTransfer",
             "selected_text": "\\Generated\\Shared\\Transfer\\ApiCollectionTransfer",
             "error_level": 6,
-            "shortcode": 11,
-            "taint_trace": null
+            "shortcode": 11
         },
         {
             "severity": "error",
@@ -23,8 +22,19 @@
             "snippet": "        return $apiCollectionTransfer;",
             "selected_text": "$apiCollectionTransfer",
             "error_level": 6,
-            "shortcode": 128,
-            "taint_trace": null
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 62,
+            "line_to": 62,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\CustomerApi\\Communication\\Plugin\\Api\\CustomerApiResourcePlugin::update has wrong name $idCustomer, expecting $id as defined by Spryker\\Zed\\Api\\Dependency\\Plugin\\ApiResourcePluginInterface::update",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerApi/src/Spryker/Zed/CustomerApi/Communication/Plugin/Api/CustomerApiResourcePlugin.php",
+            "snippet": "    public function update($idCustomer, ApiDataTransfer $apiDataTransfer)",
+            "selected_text": "$idCustomer",
+            "error_level": 7,
+            "shortcode": 230
         }
     ],
     "warning": [
@@ -33,13 +43,12 @@
             "line_from": 199,
             "line_to": 199,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProduct|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProduct|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/CustomerApi/src/Spryker/Zed/CustomerApi/Business/Model/CustomerApi.php",
             "snippet": "            $query->find()->toArray()",
             "selected_text": "toArray",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -51,8 +60,7 @@
             "snippet": "            $collection[$k] = $this->get($customerApiTransfer->getIdCustomer())->getData();",
             "selected_text": "$customerApiTransfer->getIdCustomer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -64,8 +72,7 @@
             "snippet": "        $page = $apiRequestTransfer->getFilter()->getLimit() ? ($apiRequestTransfer->getFilter()->getOffset() / $apiRequestTransfer->getFilter()->getLimit() + 1) : 1;",
             "selected_text": "getLimit",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -77,8 +84,7 @@
             "snippet": "        $page = $apiRequestTransfer->getFilter()->getLimit() ? ($apiRequestTransfer->getFilter()->getOffset() / $apiRequestTransfer->getFilter()->getLimit() + 1) : 1;",
             "selected_text": "$apiRequestTransfer->getFilter()->getOffset()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -90,8 +96,7 @@
             "snippet": "        $page = $apiRequestTransfer->getFilter()->getLimit() ? ($apiRequestTransfer->getFilter()->getOffset() / $apiRequestTransfer->getFilter()->getLimit() + 1) : 1;",
             "selected_text": "getOffset",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -103,8 +108,7 @@
             "snippet": "        $page = $apiRequestTransfer->getFilter()->getLimit() ? ($apiRequestTransfer->getFilter()->getOffset() / $apiRequestTransfer->getFilter()->getLimit() + 1) : 1;",
             "selected_text": "$apiRequestTransfer->getFilter()->getLimit()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -116,8 +120,7 @@
             "snippet": "        $page = $apiRequestTransfer->getFilter()->getLimit() ? ($apiRequestTransfer->getFilter()->getOffset() / $apiRequestTransfer->getFilter()->getLimit() + 1) : 1;",
             "selected_text": "getLimit",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -129,8 +132,7 @@
             "snippet": "        $pageTotal = ($total && $apiRequestTransfer->getFilter()->getLimit()) ? (int)ceil($total / $apiRequestTransfer->getFilter()->getLimit()) : 1;",
             "selected_text": "getLimit",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -142,8 +144,7 @@
             "snippet": "        $pageTotal = ($total && $apiRequestTransfer->getFilter()->getLimit()) ? (int)ceil($total / $apiRequestTransfer->getFilter()->getLimit()) : 1;",
             "selected_text": "$apiRequestTransfer->getFilter()->getLimit()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -155,8 +156,7 @@
             "snippet": "        $pageTotal = ($total && $apiRequestTransfer->getFilter()->getLimit()) ? (int)ceil($total / $apiRequestTransfer->getFilter()->getLimit()) : 1;",
             "selected_text": "getLimit",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -168,8 +168,7 @@
             "snippet": "        $apiPaginationTransfer->setItemsPerPage($apiRequestTransfer->getFilter()->getLimit());",
             "selected_text": "getLimit",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -181,8 +180,7 @@
             "snippet": "        $apiPaginationTransfer->setPage($page);",
             "selected_text": "$page",
             "error_level": 4,
-            "shortcode": 12,
-            "taint_trace": null
+            "shortcode": 12
         },
         {
             "severity": "info",
@@ -194,8 +192,7 @@
             "snippet": "     * @return \\Generated\\Shared\\Transfer\\CustomerTransfer",
             "selected_text": "\\Generated\\Shared\\Transfer\\CustomerTransfer",
             "error_level": 5,
-            "shortcode": 144,
-            "taint_trace": null
+            "shortcode": 144
         },
         {
             "severity": "info",
@@ -207,8 +204,7 @@
             "snippet": "        return $this->customerFacade->findCustomerById($customerTransfer);",
             "selected_text": "$this->customerFacade->findCustomerById($customerTransfer)",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
         }
     ],
     "deprecation": []

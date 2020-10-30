@@ -11,8 +11,7 @@
             "snippet": "     * @return string",
             "selected_text": "string",
             "error_level": 5,
-            "shortcode": 144,
-            "taint_trace": null
+            "shortcode": 144
         },
         {
             "severity": "info",
@@ -24,8 +23,7 @@
             "snippet": "        return $this->getFactory()->getStoreClient()->getCurrentStore()->getName();",
             "selected_text": "$this->getFactory()->getStoreClient()->getCurrentStore()->getName()",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
         }
     ],
     "deprecation": []

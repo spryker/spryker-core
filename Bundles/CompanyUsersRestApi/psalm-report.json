@@ -10,8 +10,7 @@
             "snippet": "     * @return \\Propel\\Runtime\\Collection\\ObjectCollection",
             "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection",
             "error_level": 6,
-            "shortcode": 11,
-            "taint_trace": null
+            "shortcode": 11
         },
         {
             "severity": "error",
@@ -23,8 +22,7 @@
             "snippet": "        return $queryCompanyRole->find();",
             "selected_text": "$queryCompanyRole->find()",
             "error_level": 6,
-            "shortcode": 128,
-            "taint_trace": null
+            "shortcode": 128
         }
     ],
     "warning": [
@@ -38,8 +36,7 @@
             "snippet": "        return $this->getCompanyUser($idResource, $restRequest);",
             "selected_text": "$idResource",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -51,8 +48,7 @@
             "snippet": "        $idCompany = $restRequest->getRestUser()->getIdCompany();",
             "selected_text": "getIdCompany",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -64,8 +60,7 @@
             "snippet": "            $companyUserCollectionTransfer->getTotal(),",
             "selected_text": "$companyUserCollectionTransfer->getTotal()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -77,8 +72,7 @@
             "snippet": "            $companyUserCollectionTransfer->getFilter()->getLimit()",
             "selected_text": "$companyUserCollectionTransfer->getFilter()->getLimit()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -90,8 +84,7 @@
             "snippet": "            $companyUserCollectionTransfer->getFilter()->getLimit()",
             "selected_text": "getLimit",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -103,8 +96,7 @@
             "snippet": "        if ($companyUserTransfer->getCompany()->getIdCompany() !== $restRequest->getRestUser()->getIdCompany()) {",
             "selected_text": "getIdCompany",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -116,8 +108,7 @@
             "snippet": "        if ($companyUserTransfer->getCompany()->getIdCompany() !== $restRequest->getRestUser()->getIdCompany()) {",
             "selected_text": "getIdCompany",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -129,8 +120,7 @@
             "snippet": "            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());",
             "selected_text": "getNaturalIdentifier",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -142,8 +132,7 @@
             "snippet": "            ->setOffset($restRequest->getPage() ? $restRequest->getPage()->getOffset() : 0)",
             "selected_text": "getOffset",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -155,8 +144,7 @@
             "snippet": "            ->setLimit($restRequest->getPage() ? $restRequest->getPage()->getLimit() : 0);",
             "selected_text": "getLimit",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -168,8 +156,175 @@
             "snippet": "            $companyUserTransfer->getUuid(),",
             "selected_text": "$companyUserTransfer->getUuid()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method setIdCompanyUser on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUsersRestApi/src/Spryker/Glue/CompanyUsersRestApi/Processor/Expander/CheckoutRequestExpander.php",
+            "snippet": "        $restCustomerTransfer->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser())",
+            "selected_text": "setIdCompanyUser",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCompanyUser on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUsersRestApi/src/Spryker/Glue/CompanyUsersRestApi/Processor/Expander/CheckoutRequestExpander.php",
+            "snippet": "        $restCustomerTransfer->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser())",
+            "selected_text": "getIdCompanyUser",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCompany on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUsersRestApi/src/Spryker/Glue/CompanyUsersRestApi/Processor/Expander/CheckoutRequestExpander.php",
+            "snippet": "            ->setIdCompany($restRequest->getRestUser()->getIdCompany())",
+            "selected_text": "getIdCompany",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCompanyBusinessUnit on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUsersRestApi/src/Spryker/Glue/CompanyUsersRestApi/Processor/Expander/CheckoutRequestExpander.php",
+            "snippet": "            ->setIdCompanyBusinessUnit($restRequest->getRestUser()->getIdCompanyBusinessUnit())",
+            "selected_text": "getIdCompanyBusinessUnit",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCompanyUser on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUsersRestApi/src/Spryker/Glue/CompanyUsersRestApi/Processor/Expander/CheckoutRequestExpander.php",
+            "snippet": "            ->setCompanyUserTransfer((new CompanyUserTransfer())->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser()));",
+            "selected_text": "getIdCompanyUser",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCompanyUser on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUsersRestApi/src/Spryker/Glue/CompanyUsersRestApi/Processor/Expander/CheckoutRequestExpander.php",
+            "snippet": "            && $restRequest->getRestUser()->getIdCompanyUser()",
+            "selected_text": "getIdCompanyUser",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 37,
+            "line_to": 37,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CompanyUsersRestApi\\Business\\Expander\\CompanyUserExpander::isCompanyUser cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUsersRestApi/src/Spryker/Zed/CompanyUsersRestApi/Business/Expander/CompanyUserExpander.php",
+            "snippet": "        if (!$this->isCompanyUser($quoteTransfer->getCustomer())) {",
+            "selected_text": "$quoteTransfer->getCustomer()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCompanyUserTransfer on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUsersRestApi/src/Spryker/Zed/CompanyUsersRestApi/Business/Expander/CompanyUserExpander.php",
+            "snippet": "        $idCompanyUser = $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser();",
+            "selected_text": "getCompanyUserTransfer",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCompanyUser on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUsersRestApi/src/Spryker/Zed/CompanyUsersRestApi/Business/Expander/CompanyUserExpander.php",
+            "snippet": "        $idCompanyUser = $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser();",
+            "selected_text": "getIdCompanyUser",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CompanyUsersRestApi\\Dependency\\Facade\\CompanyUsersRestApiToCompanyUserFacadeInterface::findCompanyUserById cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUsersRestApi/src/Spryker/Zed/CompanyUsersRestApi/Business/Expander/CompanyUserExpander.php",
+            "snippet": "        $companyUserTransfer = $this->companyUserFacade->findCompanyUserById($idCompanyUser);",
+            "selected_text": "$idCompanyUser",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method setCompanyUserTransfer on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUsersRestApi/src/Spryker/Zed/CompanyUsersRestApi/Business/Expander/CompanyUserExpander.php",
+            "snippet": "        $quoteTransfer->getCustomer()->setCompanyUserTransfer($companyUserTransfer);",
+            "selected_text": "setCompanyUserTransfer",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCompanyUser on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUsersRestApi/src/Spryker/Zed/CompanyUsersRestApi/Business/Expander/CompanyUserExpander.php",
+            "snippet": "        $idCompanyUser = $restCheckoutRequestAttributesTransfer->getCustomer()->getIdCompanyUser();",
+            "selected_text": "getIdCompanyUser",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method setCompanyUserTransfer on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUsersRestApi/src/Spryker/Zed/CompanyUsersRestApi/Business/Expander/CompanyUserExpander.php",
+            "snippet": "        $quoteTransfer->getCustomer()->setCompanyUserTransfer($companyUserTransfer);",
+            "selected_text": "setCompanyUserTransfer",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 79,
+            "line_to": 79,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCompanyUser on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUsersRestApi/src/Spryker/Zed/CompanyUsersRestApi/Business/Expander/CompanyUserExpander.php",
+            "snippet": "            && $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser();",
+            "selected_text": "getIdCompanyUser",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -181,8 +336,7 @@
             "snippet": "        $queryCompanyUser = $this->applyFilters($queryCompanyUser, $companyUserCriteriaFilterTransfer);",
             "selected_text": "$queryCompanyUser",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -194,8 +348,7 @@
             "snippet": "            ->mapCompanyUserEntitiesToCompanyUserCollectionTransfer($companyUserEntityCollection, new CompanyUserCollectionTransfer());",
             "selected_text": "$companyUserEntityCollection",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -207,8 +360,31 @@
             "snippet": "            $companyUserEntityCollection->getColumnValues(SpyCompanyUserEntityTransfer::ID_COMPANY_USER)",
             "selected_text": "getColumnValues",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 215,
+            "line_to": 215,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\CompanyUser\\Persistence\\SpyCompanyUserQuery::setLimit cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUsersRestApi/src/Spryker/Zed/CompanyUsersRestApi/Persistence/CompanyUsersRestApiRepository.php",
+            "snippet": "            $queryCompanyUser->setLimit($filterTransfer->getLimit());",
+            "selected_text": "$filterTransfer->getLimit()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 219,
+            "line_to": 219,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\CompanyUser\\Persistence\\SpyCompanyUserQuery::setOffset cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUsersRestApi/src/Spryker/Zed/CompanyUsersRestApi/Persistence/CompanyUsersRestApiRepository.php",
+            "snippet": "            $queryCompanyUser->setOffset($filterTransfer->getOffset());",
+            "selected_text": "$filterTransfer->getOffset()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -220,8 +396,7 @@
             "snippet": "                $indexedCompanyRoles[$companyUserTransfer->getIdCompanyUser()],",
             "selected_text": "$indexedCompanyRoles",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         }
     ],
     "deprecation": []

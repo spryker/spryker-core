@@ -1,6 +1,19 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 178,
+            "line_to": 178,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of get_class expects object, possibly different type Elastica\\Query\\AbstractQuery|array<array-key, mixed> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerCatalog/src/Spryker/Client/CustomerCatalog/Plugin/Search/ProductListQueryExpanderPlugin.php",
+            "snippet": "                get_class($boolQuery)",
+            "selected_text": "$boolQuery",
+            "error_level": 3,
+            "shortcode": 92
+        }
+    ],
     "deprecation": [
         {
             "severity": "info",
@@ -12,8 +25,7 @@
             "snippet": "class ProductListQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface",
             "selected_text": "ProductListQueryExpanderPlugin",
             "error_level": 2,
-            "shortcode": 152,
-            "taint_trace": null
+            "shortcode": 152
         }
     ]
 }

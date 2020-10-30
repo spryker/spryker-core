@@ -4,7 +4,7 @@
   "description": "Search module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/config": "^3.0.0",
     "spryker/elastica": "^4.0.0 || ^5.0.0 || ^6.0.0",
     "spryker/gui": "^3.0.0",

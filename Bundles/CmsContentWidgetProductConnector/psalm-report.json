@@ -3,18 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 26,
-            "line_to": 26,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetProductConnector/src/Spryker/Yves/CmsContentWidgetProductConnector/CmsContentWidgetProductConnectorDependencyProvider.php",
-            "snippet": "            return new CmsContentWidgetProductConnectorToProductBridge($container->getLocator()->product()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 38,
             "line_to": 38,
             "type": "PossiblyInvalidMethodCall",
@@ -24,30 +12,6 @@
             "selected_text": "toArray",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 30,
-            "line_to": 30,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetProductConnector/src/Spryker/Zed/CmsContentWidgetProductConnector/CmsContentWidgetProductConnectorDependencyProvider.php",
-            "snippet": "                $container->getLocator()->product()->queryContainer()",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 37,
-            "line_to": 37,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::filterbysku does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetProductConnector/src/Spryker/Zed/CmsContentWidgetProductConnector/Persistence/CmsContentWidgetProductConnectorQueryContainer.php",
-            "snippet": "            ->filterBySku($skuList, Criteria::IN);",
-            "selected_text": "filterBySku",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []
