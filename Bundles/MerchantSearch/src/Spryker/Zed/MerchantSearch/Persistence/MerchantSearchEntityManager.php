@@ -42,7 +42,7 @@ class MerchantSearchEntityManager extends AbstractEntityManager implements Merch
         $merchantSearchEntityCollection = new ObjectCollection();
         $merchantSearchEntityCollection->setModel(SpyMerchantSearch::class);
 
-        foreach ($merchantSearchCollectionTransfer->getMerchantSearches() as $merchantSearchTransfer) {
+        foreach ($merchantSearchCollectionTransfer->getMerchants() as $merchantSearchTransfer) {
             $merchantSearchEntityCollection->append($this->getMerchantSearchEntityByMerchantSearchTransfer($merchantSearchTransfer));
         }
 

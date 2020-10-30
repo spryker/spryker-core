@@ -75,14 +75,14 @@ class MerchantCategoryMerchantSearchDataExpanderPluginTest extends Unit
         $merchantSearchTransfer->setData([
             static::SEARCH_RESULT_DATA => [static::ID_MERCHANT => 1],
         ]);
-        $merchantSearchCollectionTransfer->addMerchantSearch($merchantSearchTransfer);
+        $merchantSearchCollectionTransfer->addMerchant($merchantSearchTransfer);
         $plugin->setFactory($factoryMock);
 
         // Act
         $resultMerchantSearchData = $plugin->expand($merchantSearchCollectionTransfer);
 
         // Assert
-        $this->assertCount(1, $resultMerchantSearchData->getMerchantSearches());
+        $this->assertCount(1, $resultMerchantSearchData->get());
 
         $this->assertSame(
             [
@@ -91,7 +91,7 @@ class MerchantCategoryMerchantSearchDataExpanderPluginTest extends Unit
                 ],
                 static::CATEGORY_KEYS => [1, 2],
             ],
-            $resultMerchantSearchData->getMerchantSearches()[0]->getData()
+            $resultMerchantSearchData->getMerchants()[0]->getData()
         );
     }
 
@@ -104,7 +104,7 @@ class MerchantCategoryMerchantSearchDataExpanderPluginTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\MerchantCategorySearch\Communication\MerchantCategorySearchCommunicationFactory
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\MerchantCategorySearch\Communication\MerchantCategorySearchCommunicationFactory
      */
     protected function getFactoryMock(): MerchantCategorySearchCommunicationFactory
     {
@@ -114,7 +114,7 @@ class MerchantCategoryMerchantSearchDataExpanderPluginTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\MerchantCategorySearch\Dependency\Facade\MerchantCategorySearchToMerchantCategoryFacadeInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\MerchantCategorySearch\Dependency\Facade\MerchantCategorySearchToMerchantCategoryFacadeInterface
      */
     protected function getMerchantCategorySearchToMerchantCategoryFacadeBuilderMock(): MerchantCategorySearchToMerchantCategoryFacadeInterface
     {

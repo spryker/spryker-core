@@ -34,7 +34,7 @@ class MerchantCategoryMerchantSearchQueryExpanderPlugin extends AbstractPlugin i
      * @api
      *
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
-     * @param array $requestParameters
+     * @param mixed[] $requestParameters
      *
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
@@ -47,7 +47,7 @@ class MerchantCategoryMerchantSearchQueryExpanderPlugin extends AbstractPlugin i
 
     /**
      * @param \Elastica\Query $query
-     * @param array $requestParameters
+     * @param mixed[] $requestParameters
      *
      * @return void
      */

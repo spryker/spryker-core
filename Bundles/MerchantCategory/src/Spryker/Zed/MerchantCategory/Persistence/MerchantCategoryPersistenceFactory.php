@@ -18,7 +18,7 @@ use Spryker\Zed\MerchantCategory\Persistence\Propel\Mapper\MerchantCategoryMappe
 class MerchantCategoryPersistenceFactory extends AbstractPersistenceFactory
 {
     /**
-     * @return \Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery
+     * @return \Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery<\Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery>
      */
     public function getMerchantCategoryPropelQuery(): SpyMerchantCategoryQuery
     {

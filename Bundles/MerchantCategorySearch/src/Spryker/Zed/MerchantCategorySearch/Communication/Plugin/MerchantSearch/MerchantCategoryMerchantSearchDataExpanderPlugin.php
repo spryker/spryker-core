@@ -35,7 +35,7 @@ class MerchantCategoryMerchantSearchDataExpanderPlugin extends AbstractPlugin im
      */
     public function expand(MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer): MerchantSearchCollectionTransfer
     {
-        foreach ($merchantSearchCollectionTransfer->getMerchantSearches() as $merchantSearchTransfer) {
+        foreach ($merchantSearchCollectionTransfer->getMerchants() as $merchantSearchTransfer) {
             $merchantSearchTransfer->setData(
                 $this->expandMerchantSearchData($merchantSearchTransfer->getData())
             );

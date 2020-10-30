@@ -11,15 +11,11 @@ use Codeception\Module;
 use Generated\Shared\DataBuilder\MerchantCategoryBuilder;
 use Generated\Shared\Transfer\MerchantCategoryTransfer;
 use Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategory;
-use Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery;
-use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Zed\Category\Helper\CategoryHelper;
 use SprykerTest\Zed\Merchant\Helper\MerchantHelper;
 
 class MerchantCategoryHelper extends Module
 {
-    use DataCleanupHelperTrait;
-
     /**
      * @param array $seedData
      *
@@ -59,12 +55,6 @@ class MerchantCategoryHelper extends Module
 
         $merchantCategoryTransfer->fromArray($merchantCategoryEntity->toArray(), true);
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($merchantCategoryTransfer) {
-            $this->getMerchantCategoryPropelQuery()
-                ->filterByIdMerchantCategory($merchantCategoryTransfer->getIdMerchantCategory())
-                ->deleteAll();
-        });
-
         return $merchantCategoryTransfer;
     }
 
@@ -88,13 +78,5 @@ class MerchantCategoryHelper extends Module
         $categoryHelper = $this->getModule('\\' . CategoryHelper::class);
 
         return $categoryHelper;
-    }
-
-    /**
-     * @return \Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery
-     */
-    protected function getMerchantCategoryPropelQuery(): SpyMerchantCategoryQuery
-    {
-        return SpyMerchantCategoryQuery::create();
     }
 }
