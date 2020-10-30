@@ -79,7 +79,11 @@ class GetFilteredProductConfigurationStorageDataTransfersTest extends Unit
             );
 
         // Assert
-        $this->assertCount(1, $synchronizationDataTransfers);
+        $this->assertCount(
+            1,
+            $synchronizationDataTransfers,
+            'Expects that will return synchronization data transfers.'
+        );
     }
 
     /**
@@ -101,7 +105,11 @@ class GetFilteredProductConfigurationStorageDataTransfersTest extends Unit
             );
 
         // Assert
-        $this->assertCount(0, $synchronizationDataTransfers);
+        $this->assertCount(
+            0,
+            $synchronizationDataTransfers,
+            'Expects that will return empty synchronization data transfers when use fake id.'
+        );
     }
 
     /**
@@ -129,7 +137,11 @@ class GetFilteredProductConfigurationStorageDataTransfersTest extends Unit
             ->getFilteredProductConfigurationStorageDataTransfers($filterTransfer, []);
 
         // Assert
-        $this->assertCount(1, $synchronizationDataTransfers);
+        $this->assertCount(
+            1,
+            $synchronizationDataTransfers,
+            'Expects that will return synchronization data transfers when no ids specified.'
+        );
     }
 
     /**
@@ -165,7 +177,11 @@ class GetFilteredProductConfigurationStorageDataTransfersTest extends Unit
             ->getFilteredProductConfigurationStorageDataTransfers($filterTransfer, []);
 
         // Assert
-        $this->assertCount(1, $synchronizationDataTransfers);
+        $this->assertCount(
+            1,
+            $synchronizationDataTransfers,
+            'Expects that will return synchronization data transfers when limit is specified.'
+        );
     }
 
     /**
@@ -203,11 +219,13 @@ class GetFilteredProductConfigurationStorageDataTransfersTest extends Unit
         // Assert
         $this->assertSame(
             $firstProductConfigurationStorageTransfer->toArray()['fk_product_configuration'],
-            $synchronizationDataTransfers[0]->getData()['fk_product_configuration']
+            $synchronizationDataTransfers[0]->getData()['fk_product_configuration'],
+            'Expects that will return synchronization data transfer with expected product configuration fk when offset is 0.'
         );
         $this->assertSame(
             $firstProductConfigurationStorageTransfer->toArray()['sku'],
-            $synchronizationDataTransfers[0]->getData()['sku']
+            $synchronizationDataTransfers[0]->getData()['sku'],
+            'Expects that will return synchronization data transfer with expected sku when offset is 0.'
         );
     }
 
@@ -246,11 +264,13 @@ class GetFilteredProductConfigurationStorageDataTransfersTest extends Unit
         // Assert
         $this->assertSame(
             $secondProductConfigurationStorageTransfer->toArray()['fk_product_configuration'],
-            $synchronizationDataTransfers[0]->getData()['fk_product_configuration']
+            $synchronizationDataTransfers[0]->getData()['fk_product_configuration'],
+            'Expects that will return synchronization data transfer with expected product configuration fk when offset is 1.'
         );
         $this->assertSame(
             $secondProductConfigurationStorageTransfer->toArray()['sku'],
-            $synchronizationDataTransfers[0]->getData()['sku']
+            $synchronizationDataTransfers[0]->getData()['sku'],
+            'Expects that will return synchronization data transfer with expected sku when offset is 1.'
         );
     }
 }

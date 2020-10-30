@@ -85,6 +85,10 @@ class ProductConfiguratorCheckSumResponseProcessor implements ProductConfigurato
 
         $this->storeProductConfigurationInstance($productConfiguratorResponseTransfer);
 
+        if ($productConfiguratorResponseTransfer->getSourceType() !== ProductConfigurationStorageConfig::SOURCE_TYPE_CART) {
+            return $productConfiguratorResponseProcessorResponseTransfer;
+        }
+
         return $this->quoteItemReplacer->replaceItemInQuote(
             $productConfiguratorResponseTransfer,
             $productConfiguratorResponseProcessorResponseTransfer

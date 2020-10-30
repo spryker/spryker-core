@@ -67,7 +67,11 @@ class WriteCollectionByProductConfigurationEventsTest extends Unit
         $this->tester->getFacade()->writeCollectionByProductConfigurationEvents($eventTransfers);
 
         // Assert
-        $this->assertSame(1, $this->tester->countProductConfigurationStorageEntities());
+        $this->assertSame(
+            1,
+            $this->tester->countProductConfigurationStorageEntities(),
+            'Expects that will save product configuration to the storage.'
+        );
     }
 
     /**
@@ -96,7 +100,11 @@ class WriteCollectionByProductConfigurationEventsTest extends Unit
         $this->tester->getFacade()->writeCollectionByProductConfigurationEvents($eventTransfers);
 
         // Assert
-        $this->assertSame(2, $this->tester->countProductConfigurationStorageEntities());
+        $this->assertSame(
+            2,
+            $this->tester->countProductConfigurationStorageEntities(),
+            'Expects that will save product configuration to the storage for multiple events.'
+        );
     }
 
     /**
@@ -115,7 +123,11 @@ class WriteCollectionByProductConfigurationEventsTest extends Unit
         $this->tester->getFacade()->writeCollectionByProductConfigurationEvents($eventTransfers);
 
         // Assert
-        $this->assertSame(0, $this->tester->countProductConfigurationStorageEntities());
+        $this->assertSame(
+            0,
+            $this->tester->countProductConfigurationStorageEntities(),
+            'Expects that wont save product configuration to the storage when id not specified.'
+        );
     }
 
     /**
@@ -132,6 +144,10 @@ class WriteCollectionByProductConfigurationEventsTest extends Unit
         $this->tester->getFacade()->writeCollectionByProductConfigurationEvents($eventTransfers);
 
         // Assert
-        $this->assertSame(0, $this->tester->countProductConfigurationStorageEntities());
+        $this->assertSame(
+            0,
+            $this->tester->countProductConfigurationStorageEntities(),
+            'Expects that wont save product configuration to the storage when fake id specified.'
+        );
     }
 }

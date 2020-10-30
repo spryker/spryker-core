@@ -16,10 +16,15 @@ use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationTo
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToPriceClientInterface;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToStoreClientInterface;
 use Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToHttpClientInterface;
-use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToProductConfigurationDataChecksumGeneratorInterface;
+use Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToProductConfigurationDataChecksumGeneratorInterface;
 use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingInterface;
-use Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataExpander;
+use Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataCurrencyExpander;
+use Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataCustomerExpander;
+use Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataExpanderComposite;
 use Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataExpanderInterface;
+use Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataLocaleExpander;
+use Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataPriceExpander;
+use Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataStoreExpander;
 use Spryker\Client\ProductConfiguration\Processor\ProductConfiguratorResponseProcessor;
 use Spryker\Client\ProductConfiguration\Processor\ProductConfiguratorResponseProcessorInterface;
 use Spryker\Client\ProductConfiguration\Resolver\ProductConfiguratorAccessTokenRedirectResolver;
@@ -47,22 +52,64 @@ class ProductConfigurationFactory extends AbstractFactory
         return new ProductConfiguratorRedirectResolver(
             $this->getProductConfiguratorRequestPlugins(),
             $this->getDefaultProductConfiguratorRequestPlugin(),
-            $this->createProductConfiguratorRequestDataExpander()
+            $this->createProductConfiguratorRequestDataExpanderComposite()
         );
     }
 
     /**
      * @return \Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataExpanderInterface
      */
-    public function createProductConfiguratorRequestDataExpander(): ProductConfiguratorRequestDataExpanderInterface
+    public function createProductConfiguratorRequestDataExpanderComposite(): ProductConfiguratorRequestDataExpanderInterface
     {
-        return new ProductConfiguratorRequestDataExpander(
-            $this->getCustomerClient(),
-            $this->getStoreClient(),
-            $this->getLocaleClient(),
-            $this->getPriceClient(),
-            $this->getCurrencyClient()
+        return new ProductConfiguratorRequestDataExpanderComposite(
+            [
+                $this->createProductConfiguratorRequestDataCustomerExpander(),
+                $this->createProductConfiguratorRequestDataStoreExpander(),
+                $this->createProductConfiguratorRequestDataLocaleExpander(),
+                $this->createProductConfiguratorRequestDataCurrencyExpander(),
+                $this->createProductConfiguratorRequestDataPriceExpander(),
+            ]
         );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataExpanderInterface
+     */
+    protected function createProductConfiguratorRequestDataCurrencyExpander(): ProductConfiguratorRequestDataExpanderInterface
+    {
+        return new ProductConfiguratorRequestDataCurrencyExpander($this->getCurrencyClient());
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataExpanderInterface
+     */
+    protected function createProductConfiguratorRequestDataCustomerExpander(): ProductConfiguratorRequestDataExpanderInterface
+    {
+        return new ProductConfiguratorRequestDataCustomerExpander($this->getCustomerClient());
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataExpanderInterface
+     */
+    protected function createProductConfiguratorRequestDataStoreExpander(): ProductConfiguratorRequestDataExpanderInterface
+    {
+        return new ProductConfiguratorRequestDataStoreExpander($this->getStoreClient());
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataExpanderInterface
+     */
+    protected function createProductConfiguratorRequestDataLocaleExpander(): ProductConfiguratorRequestDataExpanderInterface
+    {
+        return new ProductConfiguratorRequestDataLocaleExpander($this->getLocaleClient());
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataExpanderInterface
+     */
+    protected function createProductConfiguratorRequestDataPriceExpander(): ProductConfiguratorRequestDataExpanderInterface
+    {
+        return new ProductConfiguratorRequestDataPriceExpander($this->getPriceClient());
     }
 
     /**
@@ -154,7 +201,7 @@ class ProductConfigurationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToProductConfigurationDataChecksumGeneratorInterface
+     * @return \Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToProductConfigurationDataChecksumGeneratorInterface
      */
     public function getProductConfigurationDataChecksumGenerator(): ProductConfigurationToProductConfigurationDataChecksumGeneratorInterface
     {

@@ -60,8 +60,15 @@ class FindProductConfigurationInstanceInQuoteTest extends Unit
             );
 
         // Assert
-        $this->assertNotNull($productConfigurationInstanceTransfer);
-        $this->assertInstanceOf(ProductConfigurationInstanceTransfer::class, $productConfigurationInstanceTransfer);
+        $this->assertNotNull(
+            $productConfigurationInstanceTransfer,
+            'Expects that product configuration instance will be found in the quote.'
+        );
+        $this->assertInstanceOf(
+            ProductConfigurationInstanceTransfer::class,
+            $productConfigurationInstanceTransfer,
+            'Expects that product configuration instance will be found in the quote.'
+        );
     }
 
     /**
@@ -82,7 +89,10 @@ class FindProductConfigurationInstanceInQuoteTest extends Unit
             );
 
         // Assert
-        $this->assertNull($productConfigurationInstanceTransfer);
+        $this->assertNull(
+            $productConfigurationInstanceTransfer,
+            'Expects that product configuration instance wont be found in the quote.'
+        );
     }
 
     /**

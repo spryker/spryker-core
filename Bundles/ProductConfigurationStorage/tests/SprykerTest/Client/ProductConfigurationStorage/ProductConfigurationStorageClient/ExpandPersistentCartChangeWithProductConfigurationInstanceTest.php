@@ -60,8 +60,15 @@ class ExpandPersistentCartChangeWithProductConfigurationInstanceTest extends Uni
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
         $itemTransfer = $persistentCartChangeTransfer->getItems()->offsetGet(0);
 
-        $this->assertNotNull($itemTransfer->getProductConfigurationInstance());
-        $this->assertEquals($productConfigurationInstanceTransfer, $itemTransfer->getProductConfigurationInstance());
+        $this->assertNotNull(
+            $itemTransfer->getProductConfigurationInstance(),
+            'Expects that item will be expanded with product configuration instance.'
+        );
+        $this->assertEquals(
+            $productConfigurationInstanceTransfer,
+            $itemTransfer->getProductConfigurationInstance(),
+            'Expects that item will be expanded with product configuration instance.'
+        );
     }
 
     /**
@@ -78,7 +85,10 @@ class ExpandPersistentCartChangeWithProductConfigurationInstanceTest extends Uni
             ->expandPersistentCartChangeWithProductConfigurationInstance($persistentCartChangeTransfer, []);
 
         // Assert
-        $this->assertEmpty($persistentCartChangeTransfer->getItems());
+        $this->assertEmpty(
+            $persistentCartChangeTransfer->getItems(),
+            'Expects no items in cart change transfer when call expander with empty cart change transfer.'
+        );
     }
 
     /**
@@ -110,7 +120,10 @@ class ExpandPersistentCartChangeWithProductConfigurationInstanceTest extends Uni
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
         $itemTransfer = $persistentCartChangeTransfer->getItems()->offsetGet(0);
 
-        $this->assertNotNull($itemTransfer->getProductConfigurationInstance());
+        $this->assertNotNull(
+            $itemTransfer->getProductConfigurationInstance(),
+            'Expects item will be expanded with product configuration from storage.'
+        );
     }
 
     /**
@@ -131,7 +144,10 @@ class ExpandPersistentCartChangeWithProductConfigurationInstanceTest extends Uni
             ->expandPersistentCartChangeWithProductConfigurationInstance($persistentCartChangeTransfer, []);
 
         // Assert
-        $this->assertNull($persistentCartChangeTransfer->getItems()->offsetGet(0)->getProductConfigurationInstance());
+        $this->assertNull(
+            $persistentCartChangeTransfer->getItems()->offsetGet(0)->getProductConfigurationInstance(),
+            'Expects item without product configuration when no product configuration.'
+        );
     }
 
     /**

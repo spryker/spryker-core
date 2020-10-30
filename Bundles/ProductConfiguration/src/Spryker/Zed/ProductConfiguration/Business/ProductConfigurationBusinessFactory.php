@@ -8,10 +8,10 @@
 namespace Spryker\Zed\ProductConfiguration\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductConfiguration\Business\Calculator\ProductConfigurationCartItemQuantityCalculator;
-use Spryker\Zed\ProductConfiguration\Business\Calculator\ProductConfigurationCartItemQuantityCalculatorInterface;
 use Spryker\Zed\ProductConfiguration\Business\Checker\ProductConfigurationChecker;
 use Spryker\Zed\ProductConfiguration\Business\Checker\ProductConfigurationCheckerInterface;
+use Spryker\Zed\ProductConfiguration\Business\Counter\ProductConfigurationCartItemQuantityCounter;
+use Spryker\Zed\ProductConfiguration\Business\Counter\ProductConfigurationCartItemQuantityCounterInterface;
 use Spryker\Zed\ProductConfiguration\Business\Expander\ProductConfigurationGroupKeyItemExpander;
 use Spryker\Zed\ProductConfiguration\Business\Expander\ProductConfigurationGroupKeyItemExpanderInterface;
 use Spryker\Zed\ProductConfiguration\Business\Expander\ProductConfigurationPriceProductExpander;
@@ -54,11 +54,11 @@ class ProductConfigurationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductConfiguration\Business\Calculator\ProductConfigurationCartItemQuantityCalculatorInterface
+     * @return \Spryker\Zed\ProductConfiguration\Business\Counter\ProductConfigurationCartItemQuantityCounterInterface
      */
-    public function createProductConfigurationCartItemQuantityCalculator(): ProductConfigurationCartItemQuantityCalculatorInterface
+    public function createProductConfigurationCartItemQuantityCounter(): ProductConfigurationCartItemQuantityCounterInterface
     {
-        return new ProductConfigurationCartItemQuantityCalculator();
+        return new ProductConfigurationCartItemQuantityCounter();
     }
 
     /**

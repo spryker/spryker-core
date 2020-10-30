@@ -64,7 +64,11 @@ class SalesProductConfigurationFacadeTest extends Unit
             ->findOne();
 
         //Assert
-        $this->assertSame($itemTransfer->getIdSalesOrderItem(), $productConfigurationEntity->getFkSalesOrderItem());
+        $this->assertSame(
+            $itemTransfer->getIdSalesOrderItem(),
+            $productConfigurationEntity->getFkSalesOrderItem(),
+            'Expects that sales order configuration will be saved successfully.'
+        );
     }
 
     /**
@@ -86,7 +90,10 @@ class SalesProductConfigurationFacadeTest extends Unit
         $result = $this->tester->getFacade()->saveSalesOrderItemConfigurationsFromQuote($quoteTransfer);
 
         //Assert
-        $this->assertNull($result);
+        $this->assertNull(
+            $result,
+            'Expects that sales order configuration saving will be skipped when no product configuration.'
+        );
     }
 
     /**
@@ -156,6 +163,10 @@ class SalesProductConfigurationFacadeTest extends Unit
             ->getConfiguratorKey();
 
         //Assert
-        $this->assertSame(static::PRODUCT_CONFIGURATION_TEST_KEY, $salesProductConfigurationKey);
+        $this->assertSame(
+            static::PRODUCT_CONFIGURATION_TEST_KEY,
+            $salesProductConfigurationKey,
+            'Expects that order items will be successfully expanded with product configuration.'
+        );
     }
 }

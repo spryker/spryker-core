@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductConfiguration\Communication\Plugin\AvailabilityCart
 use ArrayObject;
 use Generated\Shared\Transfer\CartItemQuantityTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Zed\AvailabilityCartConnectorExtension\Dependency\Plugin\CartItemQuantityCalculatorStrategyPluginInterface;
+use Spryker\Zed\AvailabilityCartConnectorExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ProductConfiguration\Business\ProductConfigurationFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductConfiguration\Communication\ProductConfigurationCommunicationFactory getFactory()
  */
-class ProductConfigurationCartItemQuantityCalculatorStrategyPlugin extends AbstractPlugin implements CartItemQuantityCalculatorStrategyPluginInterface
+class ProductConfigurationCartItemQuantityCounterStrategyPlugin extends AbstractPlugin implements CartItemQuantityCounterStrategyPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -38,7 +38,8 @@ class ProductConfigurationCartItemQuantityCalculatorStrategyPlugin extends Abstr
 
     /**
      * {@inheritDoc}
-     * - Calculates item quantity by item group key.
+     *  - Finds given item in the cart.
+     * - Counts item quantity by item group key.
      * - Returns quantity for the item.
      *
      * @api
@@ -48,8 +49,8 @@ class ProductConfigurationCartItemQuantityCalculatorStrategyPlugin extends Abstr
      *
      * @return \Generated\Shared\Transfer\CartItemQuantityTransfer
      */
-    public function calculateCartItemQuantity(ArrayObject $itemsInCart, ItemTransfer $itemTransfer): CartItemQuantityTransfer
+    public function countCartItemQuantity(ArrayObject $itemsInCart, ItemTransfer $itemTransfer): CartItemQuantityTransfer
     {
-        return $this->getFacade()->calculateCartItemQuantity($itemsInCart, $itemTransfer);
+        return $this->getFacade()->countCartItemQuantity($itemsInCart, $itemTransfer);
     }
 }

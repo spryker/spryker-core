@@ -101,10 +101,10 @@ class ProductConfigurationFacade extends AbstractFacade implements ProductConfig
      *
      * @return \Generated\Shared\Transfer\CartItemQuantityTransfer
      */
-    public function calculateCartItemQuantity(ArrayObject $itemsInCart, ItemTransfer $itemTransfer): CartItemQuantityTransfer
+    public function countCartItemQuantity(ArrayObject $itemsInCart, ItemTransfer $itemTransfer): CartItemQuantityTransfer
     {
         return $this->getFactory()
-            ->createProductConfigurationCartItemQuantityCalculator()
-            ->calculateCartItemQuantity($itemsInCart, $itemTransfer);
+            ->createProductConfigurationCartItemQuantityCounter()
+            ->countCartItemQuantity($itemsInCart, $itemTransfer);
     }
 }

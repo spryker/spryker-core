@@ -50,7 +50,10 @@ class IsProductConcreteAvailableTest extends Unit
             ->isProductConcreteAvailable($productViewTransfer);
 
         // Assert
-        $this->assertTrue($isProductConcreteAvailable);
+        $this->assertTrue(
+            $isProductConcreteAvailable,
+            'Expects that product concrete will be available.'
+        );
     }
 
     /**
@@ -75,7 +78,10 @@ class IsProductConcreteAvailableTest extends Unit
             ->isProductConcreteAvailable($productViewTransfer);
 
         // Assert
-        $this->assertFalse($isProductConcreteAvailable);
+        $this->assertFalse(
+            $isProductConcreteAvailable,
+            'Expects that product concrete wont be available.'
+        );
     }
 
     /**
@@ -100,7 +106,10 @@ class IsProductConcreteAvailableTest extends Unit
             ->isProductConcreteAvailable($productViewTransfer);
 
         // Assert
-        $this->assertFalse($isProductConcreteAvailable);
+        $this->assertFalse(
+            $isProductConcreteAvailable,
+            'Expects that product concrete wont be available when available quantity of product configuration is null.'
+        );
     }
 
     /**
@@ -123,7 +132,10 @@ class IsProductConcreteAvailableTest extends Unit
             ->isProductConcreteAvailable($productViewTransfer);
 
         // Assert
-        $this->assertFalse($isProductConcreteAvailable);
+        $this->assertFalse(
+            $isProductConcreteAvailable,
+            'Expects that product concrete wont be available when no product configuration and no availability in product view.'
+        );
     }
 
     /**
@@ -146,6 +158,9 @@ class IsProductConcreteAvailableTest extends Unit
             ->isProductConcreteAvailable($productViewTransfer);
 
         // Assert
-        $this->assertTrue($isProductConcreteAvailable);
+        $this->assertTrue(
+            $isProductConcreteAvailable,
+            'Expects that product concrete will be available when no product configuration but available in product view.'
+        );
     }
 }

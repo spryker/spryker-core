@@ -143,7 +143,11 @@ class ProductConfigurationClientTest extends Unit
             ->prepareProductConfiguratorRedirect($productConfigurationRequestTransfer);
 
         //Assert
-        $this->assertSame(static::TEST_CONFIGURATOR_REDIRECT_RESPONSE, $productConfiguratorRedirect->getConfiguratorRedirectUrl());
+        $this->assertSame(
+            static::TEST_CONFIGURATOR_REDIRECT_RESPONSE,
+            $productConfiguratorRedirect->getConfiguratorRedirectUrl(),
+            'Will successfully resolve redirect URL.'
+        );
     }
 
     /**
@@ -167,7 +171,11 @@ class ProductConfigurationClientTest extends Unit
             ->prepareProductConfiguratorRedirect($productConfigurationRequestTransfer);
 
         //Assert
-        $this->assertSame(static::TEST_CONFIGURATOR_REDIRECT_RESPONSE, $productConfiguratorRedirect->getConfiguratorRedirectUrl());
+        $this->assertSame(
+            static::TEST_CONFIGURATOR_REDIRECT_RESPONSE,
+            $productConfiguratorRedirect->getConfiguratorRedirectUrl(),
+            'Expects that will use default plugin for the redirect URL resolve.'
+        );
     }
 
     /**
@@ -191,7 +199,10 @@ class ProductConfigurationClientTest extends Unit
             ->processProductConfiguratorResponse($productConfigurationResponseTransfer, []);
 
         //Assert
-        $this->assertTrue($productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful());
+        $this->assertTrue(
+            $productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful(),
+            'Expects that will successfully handle response.'
+        );
     }
 
     /**
@@ -215,7 +226,10 @@ class ProductConfigurationClientTest extends Unit
             ->processProductConfiguratorResponse($productConfigurationResponseTransfer, []);
 
         //Assert
-        $this->assertTrue($productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful());
+        $this->assertTrue(
+            $productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful(),
+            'Expects that will successfully handle response and use default plugin for the process.'
+        );
     }
 
     /**
@@ -237,7 +251,10 @@ class ProductConfigurationClientTest extends Unit
         );
 
         //Assert
-        $this->assertTrue($isQuoteProductConfigurationValid);
+        $this->assertTrue(
+            $isQuoteProductConfigurationValid,
+            'Expects that product configuration will be valid.'
+        );
     }
 
     /**
@@ -259,7 +276,10 @@ class ProductConfigurationClientTest extends Unit
         );
 
         //Assert
-        $this->assertFalse($isQuoteProductConfigurationValid);
+        $this->assertFalse(
+            $isQuoteProductConfigurationValid,
+            'Expects that product configuration will be not valid with not completed product configuration.'
+        );
     }
 
     /**
@@ -273,7 +293,10 @@ class ProductConfigurationClientTest extends Unit
         );
 
         //Assert
-        $this->assertTrue($isQuoteProductConfigurationValid);
+        $this->assertTrue(
+            $isQuoteProductConfigurationValid,
+            'Expects that product configuration will be valid with empty quote.'
+        );
     }
 
     /**
@@ -289,7 +312,10 @@ class ProductConfigurationClientTest extends Unit
         );
 
         //Assert
-        $this->assertTrue($isQuoteProductConfigurationValid);
+        $this->assertTrue(
+            $isQuoteProductConfigurationValid,
+            'Expects that product configuration will be valid when item does not have product configuration.'
+        );
     }
 
     /**
@@ -348,10 +374,14 @@ class ProductConfigurationClientTest extends Unit
             ->resolveProductConfiguratorAccessTokenRedirect($productConfigurationRequestTransfer);
 
         //Assert
-        $this->assertTrue($productConfiguratorRedirectTransfer->getIsSuccessful());
+        $this->assertTrue(
+            $productConfiguratorRedirectTransfer->getIsSuccessful(),
+            'Expects that redirect URL will be resolved successfully.'
+        );
         $this->assertSame(
             'testUrl',
-            $productConfiguratorRedirectTransfer->getConfiguratorRedirectUrl()
+            $productConfiguratorRedirectTransfer->getConfiguratorRedirectUrl(),
+            'Expects that redirect URL will be equal to `testUrl`.'
         );
     }
 
@@ -418,7 +448,10 @@ class ProductConfigurationClientTest extends Unit
             ->resolveProductConfiguratorAccessTokenRedirect($productConfigurationRequestTransfer);
 
         //Assert
-        $this->assertFalse($productConfiguratorRedirectTransfer->getIsSuccessful());
+        $this->assertFalse(
+            $productConfiguratorRedirectTransfer->getIsSuccessful(),
+            'Expects that isSuccessful flag will contain false when request fail.'
+        );
     }
 
     /**
@@ -438,7 +471,10 @@ class ProductConfigurationClientTest extends Unit
             ->validateProductConfiguratorCheckSumResponse($productConfiguratorResponseProcessorResponseTransfer, []);
 
         //Assert
-        $this->assertTrue($productConfiguratorResponseProcessorResponseTransferValidated->getIsSuccessful());
+        $this->assertTrue(
+            $productConfiguratorResponseProcessorResponseTransferValidated->getIsSuccessful(),
+            'Expects valid processor response after checksum validators.'
+        );
     }
 
     /**
@@ -469,7 +505,10 @@ class ProductConfigurationClientTest extends Unit
             ->validateProductConfiguratorCheckSumResponse($productConfiguratorResponseProcessorResponseTransfer, []);
 
         //Assert
-        $this->assertFalse($productConfiguratorResponseProcessorResponseTransferValidated->getIsSuccessful());
+        $this->assertFalse(
+            $productConfiguratorResponseProcessorResponseTransferValidated->getIsSuccessful(),
+            'Expects not valid processor response after checksum validator fail.'
+        );
     }
 
     /**
@@ -508,7 +547,10 @@ class ProductConfigurationClientTest extends Unit
             ->validateProductConfiguratorCheckSumResponse($productConfiguratorResponseProcessorResponseTransfer, []);
 
         //Assert
-        $this->assertFalse($productConfiguratorResponseProcessorResponseTransferValidated->getIsSuccessful());
+        $this->assertFalse(
+            $productConfiguratorResponseProcessorResponseTransferValidated->getIsSuccessful(),
+            'Expects that return not valid processor response after first checksum validator fail.'
+        );
     }
 
     /**
@@ -523,8 +565,13 @@ class ProductConfigurationClientTest extends Unit
                 'createProductConfiguratorResponseProcessor',
                 'createQuoteProductConfigurationChecker',
                 'createProductConfiguratorAccessTokenRedirectResolver',
-                'createProductConfiguratorRequestDataExpander',
+                'createProductConfiguratorRequestDataExpanderComposite',
                 'createProductConfiguratorCheckSumResponseValidatorComposite',
+                'createProductConfiguratorRequestDataCurrencyExpander',
+                'createProductConfiguratorRequestDataCustomerExpander',
+                'createProductConfiguratorRequestDataStoreExpander',
+                'createProductConfiguratorRequestDataLocaleExpander',
+                'createProductConfiguratorRequestDataPriceExpander',
             ])
             ->getMock();
 

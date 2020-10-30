@@ -30,20 +30,20 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     protected $availabilityFacade;
 
     /**
-     * @var \Spryker\Zed\AvailabilityCartConnectorExtension\Dependency\Plugin\CartItemQuantityCalculatorStrategyPluginInterface[]
+     * @var \Spryker\Zed\AvailabilityCartConnectorExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface[]
      */
-    protected $cartItemQuantityCalculatorStrategyPlugins;
+    protected $cartItemQuantityCounterStrategyPlugins;
 
     /**
      * @param \Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConnectorToAvailabilityInterface $availabilityFacade
-     * @param \Spryker\Zed\AvailabilityCartConnectorExtension\Dependency\Plugin\CartItemQuantityCalculatorStrategyPluginInterface[] $cartItemQuantityCalculatorStrategyPlugins
+     * @param \Spryker\Zed\AvailabilityCartConnectorExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface[] $cartItemQuantityCounterStrategyPlugins
      */
     public function __construct(
         AvailabilityCartConnectorToAvailabilityInterface $availabilityFacade,
-        array $cartItemQuantityCalculatorStrategyPlugins
+        array $cartItemQuantityCounterStrategyPlugins
     ) {
         $this->availabilityFacade = $availabilityFacade;
-        $this->cartItemQuantityCalculatorStrategyPlugins = $cartItemQuantityCalculatorStrategyPlugins;
+        $this->cartItemQuantityCounterStrategyPlugins = $cartItemQuantityCounterStrategyPlugins;
     }
 
     /**
@@ -101,9 +101,9 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
      */
     protected function calculateCurrentCartItemQuantity(ArrayObject $itemsInCart, ItemTransfer $itemTransfer): int
     {
-        foreach ($this->cartItemQuantityCalculatorStrategyPlugins as $cartItemQuantityCalculatorStrategyPlugin) {
-            if ($cartItemQuantityCalculatorStrategyPlugin->isApplicable($itemsInCart, $itemTransfer)) {
-                $cartItemQuantityTransfer = $cartItemQuantityCalculatorStrategyPlugin->calculateCartItemQuantity(
+        foreach ($this->cartItemQuantityCounterStrategyPlugins as $cartItemQuantityCounterStrategyPlugin) {
+            if ($cartItemQuantityCounterStrategyPlugin->isApplicable($itemsInCart, $itemTransfer)) {
+                $cartItemQuantityTransfer = $cartItemQuantityCounterStrategyPlugin->countCartItemQuantity(
                     $itemsInCart,
                     $itemTransfer
                 );

@@ -83,7 +83,8 @@ interface ProductConfigurationFacadeInterface
 
     /**
      * Specification:
-     * - Calculates item quantity by item group key.
+     * - Finds given item in the cart.
+     * - Counts item quantity by item group key.
      * - Returns quantity for the item.
      *
      * @api
@@ -93,5 +94,5 @@ interface ProductConfigurationFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CartItemQuantityTransfer
      */
-    public function calculateCartItemQuantity(ArrayObject $itemsInCart, ItemTransfer $itemTransfer): CartItemQuantityTransfer;
+    public function countCartItemQuantity(ArrayObject $itemsInCart, ItemTransfer $itemTransfer): CartItemQuantityTransfer;
 }

@@ -10,7 +10,7 @@ namespace Spryker\Client\ProductConfiguration\Validator;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
-use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToProductConfigurationDataChecksumGeneratorInterface;
+use Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToProductConfigurationDataChecksumGeneratorInterface;
 use Spryker\Client\ProductConfiguration\ProductConfigurationConfig;
 
 class ProductConfiguratorCheckSumResponseValidator implements ProductConfiguratorResponseValidatorInterface
@@ -18,7 +18,7 @@ class ProductConfiguratorCheckSumResponseValidator implements ProductConfigurato
     protected const GLOSSARY_KEY_PRODUCT_CONFIGURATION_NOT_VALID_RESPONSE_CHECKSUM = 'product_configuration.validation.error.not_valid_response_checksum';
 
     /**
-     * @var \Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToProductConfigurationDataChecksumGeneratorInterface
+     * @var \Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToProductConfigurationDataChecksumGeneratorInterface
      */
     protected $productConfigurationDataChecksumGenerator;
 
@@ -29,7 +29,7 @@ class ProductConfiguratorCheckSumResponseValidator implements ProductConfigurato
 
     /**
      * @param \Spryker\Client\ProductConfiguration\ProductConfigurationConfig $productConfigurationConfig
-     * @param \Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToProductConfigurationDataChecksumGeneratorInterface $productConfigurationDataChecksumGenerator
+     * @param \Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToProductConfigurationDataChecksumGeneratorInterface $productConfigurationDataChecksumGenerator
      */
     public function __construct(
         ProductConfigurationConfig $productConfigurationConfig,
@@ -53,14 +53,12 @@ class ProductConfiguratorCheckSumResponseValidator implements ProductConfigurato
 
         $productConfiguratorResponseTransfer = $productConfiguratorResponseProcessorResponseTransfer
             ->getProductConfiguratorResponse();
-        $encryptionKey = $this->productConfigurationConfig->getProductConfigurationEncryptionKey();
+        $encryptionKey = $this->productConfigurationConfig->getProductConfiguratorEncryptionKey();
 
         $plainCopyOfConfiguredResponseData = $configuratorResponseData;
-        unset($plainCopyOfConfiguredResponseData[ProductConfiguratorResponseTransfer::CHECK_SUM]);
-        unset($plainCopyOfConfiguredResponseData[ProductConfiguratorResponseTransfer::TIMESTAMP]);
 
         $responseChecksum = $this->productConfigurationDataChecksumGenerator->generateProductConfigurationDataChecksum(
-            $plainCopyOfConfiguredResponseData,
+            $this->sanitizeProductConfiguratorResponseData($plainCopyOfConfiguredResponseData),
             $encryptionKey
         );
 
@@ -72,6 +70,19 @@ class ProductConfiguratorCheckSumResponseValidator implements ProductConfigurato
             $productConfiguratorResponseProcessorResponseTransfer,
             static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_NOT_VALID_RESPONSE_CHECKSUM
         );
+    }
+
+    /**
+     * @param array $configuratorResponseData
+     *
+     * @return array
+     */
+    protected function sanitizeProductConfiguratorResponseData(array $configuratorResponseData): array
+    {
+        unset($configuratorResponseData[ProductConfiguratorResponseTransfer::CHECK_SUM]);
+        unset($configuratorResponseData[ProductConfiguratorResponseTransfer::TIMESTAMP]);
+
+        return $configuratorResponseData;
     }
 
     /**
