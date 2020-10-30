@@ -32,7 +32,8 @@ class DetailController extends AbstractController
      */
     protected const SERVICE_SUB_REQUEST = 'sub_request';
 
-    protected const MESSAGE_ORDER_NOT_FOUND_ERROR = 'Merchant sales order #%d not found.';
+    protected const MESSAGE_MERCHANT_NOT_FOUND_ERROR = 'Merchant for current user not found.';
+    protected const MESSAGE_MERCHANT_ORDER_NOT_FOUND_ERROR = 'Merchant sales order #%d not found.';
 
     /**
      * @phpstan-return array<mixed>|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -48,10 +49,17 @@ class DetailController extends AbstractController
         );
         $idMerchant = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser()->getIdMerchant();
 
+        if (!$idMerchant) {
+            $this->addErrorMessage(static::MESSAGE_MERCHANT_NOT_FOUND_ERROR);
+            $redirectUrl = Url::generate(static::ROUTE_REDIRECT)->build();
+
+            return $this->redirectResponse($redirectUrl);
+        }
+
         $merchantOrderTransfer = $this->findMerchantSalesOrder($idMerchantSalesOrder, $idMerchant);
 
-        if (!$merchantOrderTransfer) {
-            $this->addErrorMessage(static::MESSAGE_ORDER_NOT_FOUND_ERROR, ['%d' => $idMerchantSalesOrder]);
+        if (!$merchantOrderTransfer || !$merchantOrderTransfer->getOrder()) {
+            $this->addErrorMessage(static::MESSAGE_MERCHANT_ORDER_NOT_FOUND_ERROR, ['%d' => $idMerchantSalesOrder]);
             $redirectUrl = Url::generate(static::ROUTE_REDIRECT)->build();
 
             return $this->redirectResponse($redirectUrl);
@@ -185,6 +193,11 @@ class DetailController extends AbstractController
                 $merchantOrderItemTransfer = $merchantOrderItemsWithOrderItemIdKey[$itemTransfer->getIdSalesOrderItem()];
                 $eventsForGroup = array_merge($eventsForGroup, $merchantOrderItemTransfer->getManualEvents());
             }
+
+            if (!$shipmentGroupTransfer->getShipment()) {
+                continue;
+            }
+
             $events[$shipmentGroupTransfer->getShipment()->getIdSalesShipment()] = array_unique($eventsForGroup);
         }
 
@@ -260,6 +273,10 @@ class DetailController extends AbstractController
         $groupedOrderItemsWithOrderItemIdKey = [];
 
         foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
+            if (!$merchantOrderItemTransfer->getOrderItem()) {
+                continue;
+            }
+
             $groupedOrderItemsWithOrderItemIdKey[$merchantOrderItemTransfer->getOrderItem()->getIdSalesOrderItem()] = $merchantOrderItemTransfer;
         }
 

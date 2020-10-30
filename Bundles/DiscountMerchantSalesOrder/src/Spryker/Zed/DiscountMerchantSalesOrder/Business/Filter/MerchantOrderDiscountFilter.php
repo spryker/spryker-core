@@ -20,11 +20,12 @@ class MerchantOrderDiscountFilter implements MerchantOrderDiscountFilterInterfac
      */
     public function filterMerchantDiscounts(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer
     {
-        if (!$merchantOrderTransfer->getOrder()) {
+        $orderTransfer = $merchantOrderTransfer->getOrder();
+
+        if (!$orderTransfer) {
             return $merchantOrderTransfer;
         }
 
-        $orderTransfer = $merchantOrderTransfer->getOrder();
         $generalCalculatedDiscountTransfers = $this->filterGeneralDiscounts(
             $orderTransfer,
             $merchantOrderTransfer->getMerchantOrderItems()->count()

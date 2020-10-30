@@ -159,12 +159,15 @@ class MerchantShipmentGroupFormDataProvider
         ];
 
         $shipmentSelectedItemsIds = [];
-        if ($shipmentTransfer !== null) {
+        if ($shipmentTransfer) {
             $shipmentSelectedItemsIds = $this->getShipmentSelectedItemsIds($merchantOrderTransfer, $shipmentTransfer);
         }
 
         $options[static::FIELD_SHIPMENT_SELECTED_ITEMS] = $shipmentSelectedItemsIds;
-        $options[static::OPTION_ORDER_ITEMS_CHOICES] = $merchantOrderTransfer->getOrder()->getItems();
+
+        if ($merchantOrderTransfer->getOrder()) {
+            $options[static::OPTION_ORDER_ITEMS_CHOICES] = $merchantOrderTransfer->getOrder()->getItems();
+        }
 
         return $options;
     }

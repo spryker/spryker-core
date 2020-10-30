@@ -162,7 +162,12 @@ class MerchantOrderTable extends AbstractTable
      */
     protected function prepareQuery(): SpyMerchantSalesOrderQuery
     {
-        $merchantReference = $this->merchantUserFacade->getCurrentMerchantUser()->getMerchant()->getMerchantReference();
+        $merchantReference = $this->merchantUserFacade
+            ->getCurrentMerchantUser()
+            ->requireMerchant()
+            ->getMerchant()
+            ->requireMerchantReference()
+            ->getMerchantReference();
 
         $this->merchantSalesOrderQuery
             ->groupByIdMerchantSalesOrder()

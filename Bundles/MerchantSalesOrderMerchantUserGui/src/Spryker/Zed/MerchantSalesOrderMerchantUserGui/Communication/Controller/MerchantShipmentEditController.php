@@ -21,6 +21,7 @@ class MerchantShipmentEditController extends AbstractMerchantShipmentController
     protected const MESSAGE_SHIPMENT_UPDATE_SUCCESS = 'Shipment has been successfully updated.';
     protected const MESSAGE_SHIPMENT_UPDATE_FAIL = 'Shipment has not been updated.';
     protected const MESSAGE_SHIPMENT_NOT_FOUND_ERROR = 'Shipment #%d not found.';
+    protected const MESSAGE_MERCHANT_REFERENCE_NOT_FOUND = 'Merchant reference not found.';
 
     /**
      * @phpstan-return array<mixed>|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -42,6 +43,14 @@ class MerchantShipmentEditController extends AbstractMerchantShipmentController
         }
 
         $idShipment = $this->castId($request->query->get(static::PARAM_ID_SHIPMENT));
+
+        if (!$merchantOrderTransfer->getMerchantReference()) {
+            $this->addErrorMessage(static::MESSAGE_MERCHANT_REFERENCE_NOT_FOUND);
+            $redirectUrl = Url::generate(static::REDIRECT_URL_DEFAULT)->build();
+
+            return $this->redirectResponse($redirectUrl);
+        }
+
         $shipmentTransfer = $this->findShipment($merchantOrderTransfer->getMerchantReference(), $idShipment);
 
         if (!$shipmentTransfer) {

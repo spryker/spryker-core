@@ -23,6 +23,7 @@ use Symfony\Component\Form\FormInterface;
 abstract class AbstractMerchantShipmentController extends AbstractController
 {
     protected const PARAM_ID_MERCHANT_SALES_ORDER = 'id-merchant-sales-order';
+    protected const MESSAGE_MERCHANT_NOT_FOUND_ERROR = 'Merchant for current user not found.';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\DetailController::ROUTE_REDIRECT
@@ -49,6 +50,11 @@ abstract class AbstractMerchantShipmentController extends AbstractController
     protected function findMerchantOrder(int $idMerchantSalesOrder): ?MerchantOrderTransfer
     {
         $merchantUserTransfer = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser();
+
+        if (!$merchantUserTransfer->getMerchant()) {
+            return null;
+        }
+
         $merchantOrderCriteriaTransfer = (new MerchantOrderCriteriaTransfer())
             ->setIdMerchantOrder($idMerchantSalesOrder)
             ->setMerchantReference($merchantUserTransfer->getMerchant()->getMerchantReference())
@@ -107,6 +113,10 @@ abstract class AbstractMerchantShipmentController extends AbstractController
         $groupedMerchantOrderItems = [];
 
         foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItem) {
+            if (!$merchantOrderItem->getOrderItem()) {
+                continue;
+            }
+
             $groupedMerchantOrderItems[$merchantOrderItem->getOrderItem()->getIdSalesOrderItem()] = $merchantOrderItem;
         }
 

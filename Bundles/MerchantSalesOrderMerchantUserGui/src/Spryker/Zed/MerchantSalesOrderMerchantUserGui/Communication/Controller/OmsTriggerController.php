@@ -35,6 +35,7 @@ class OmsTriggerController extends AbstractController
     protected const REDIRECT_URL_DEFAULT = '/merchant-sales-order-merchant-user-gui/detail';
 
     protected const MESSAGE_ORDER_NOT_FOUND_ERROR = 'Merchant sales order #%d not found.';
+    protected const MESSAGE_REDIRECT_NOT_FOUND_ERROR = 'Parameter redirect not found.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -44,6 +45,13 @@ class OmsTriggerController extends AbstractController
     public function submitTriggerEventAction(Request $request): RedirectResponse
     {
         $redirect = $request->query->get('redirect', static::URL_PARAM_REDIRECT);
+
+        if (!$redirect) {
+            $this->addErrorMessage(static::MESSAGE_REDIRECT_NOT_FOUND_ERROR);
+            $redirectUrl = Url::generate(static::REDIRECT_URL_DEFAULT)->build();
+
+            return $this->redirectResponse($redirectUrl);
+        }
 
         $form = $this->getFactory()
             ->createEventTriggerForm()

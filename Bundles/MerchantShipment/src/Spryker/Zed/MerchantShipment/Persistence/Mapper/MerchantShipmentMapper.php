@@ -51,13 +51,15 @@ class MerchantShipmentMapper
         AddressTransfer $addressTransfer,
         SpySalesShipment $salesShipment
     ): AddressTransfer {
-        if (!$salesShipment->getSpySalesOrderAddress()) {
+        $salesOrderAddress = $salesShipment->getSpySalesOrderAddress();
+
+        if (!$salesOrderAddress) {
             return $addressTransfer;
         }
 
-        $addressTransfer->fromArray($salesShipment->getSpySalesOrderAddress()->toArray(), true);
+        $addressTransfer->fromArray($salesOrderAddress->toArray(), true);
         $countryTransfer = (new CountryTransfer())->fromArray(
-            $salesShipment->getSpySalesOrderAddress()->getCountry()->toArray(),
+            $salesOrderAddress->getCountry()->toArray(),
             true
         );
 
