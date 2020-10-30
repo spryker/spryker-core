@@ -1,12 +1,25 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 64,
+            "line_to": 64,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\ProductApi\\Communication\\Plugin\\Api\\ProductApiResourcePlugin::update has wrong name $idProductAbstract, expecting $id as defined by Spryker\\Zed\\Api\\Dependency\\Plugin\\ApiResourcePluginInterface::update",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductApi/src/Spryker/Zed/ProductApi/Communication/Plugin/Api/ProductApiResourcePlugin.php",
+            "snippet": "    public function update($idProductAbstract, ApiDataTransfer $apiDataTransfer)",
+            "selected_text": "$idProductAbstract",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
     "warning": [
         {
             "severity": "info",
             "line_from": 177,
             "line_to": 177,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProduct|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProduct|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ProductApi/src/Spryker/Zed/ProductApi/Business/Model/ProductApi.php",
             "snippet": "            $query->find()->toArray()",
             "selected_text": "toArray",
@@ -144,54 +157,6 @@
             "selected_text": "$page",
             "error_level": 4,
             "shortcode": 12
-        },
-        {
-            "severity": "info",
-            "line_from": 79,
-            "line_to": 79,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductApi/src/Spryker/Zed/ProductApi/ProductApiDependencyProvider.php",
-            "snippet": "            return new ProductApiToApiBridge($container->getLocator()->api()->queryContainer());",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 93,
-            "line_to": 93,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductApi/src/Spryker/Zed/ProductApi/ProductApiDependencyProvider.php",
-            "snippet": "            return new ProductApiToApiQueryBuilderBridge($container->getLocator()->apiQueryBuilder()->queryContainer());",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 107,
-            "line_to": 107,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductApi/src/Spryker/Zed/ProductApi/ProductApiDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->utilDateTime()->service();",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 121,
-            "line_to": 121,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductApi/src/Spryker/Zed/ProductApi/ProductApiDependencyProvider.php",
-            "snippet": "            return new ProductApiToProductBridge($container->getLocator()->product()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

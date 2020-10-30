@@ -60,30 +60,6 @@
             "selected_text": "$options",
             "error_level": 5,
             "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitGui/src/Spryker/Zed/ProductPackagingUnitGui/ProductPackagingUnitGuiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productPackagingUnit()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 71,
-            "line_to": 71,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitGui/src/Spryker/Zed/ProductPackagingUnitGui/ProductPackagingUnitGuiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->locale()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

@@ -36,42 +36,6 @@
             "selected_text": "$cmsPageTransfer->getFkPage()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 47,
-            "line_to": 47,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsNavigationConnector/src/Spryker/Zed/CmsNavigationConnector/CmsNavigationConnectorDependencyProvider.php",
-            "snippet": "            return new CmsNavigationConnectorToCmsQueryContainerBridge($container->getLocator()->cms()->queryContainer());",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 59,
-            "line_to": 59,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsNavigationConnector/src/Spryker/Zed/CmsNavigationConnector/CmsNavigationConnectorDependencyProvider.php",
-            "snippet": "            return new CmsNavigationConnectorToNavigationQueryContainerBridge($container->getLocator()->navigation()->queryContainer());",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 71,
-            "line_to": 71,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsNavigationConnector/src/Spryker/Zed/CmsNavigationConnector/CmsNavigationConnectorDependencyProvider.php",
-            "snippet": "            return new CmsNavigationConnectorToNavigationFacadeBridge($container->getLocator()->navigation()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

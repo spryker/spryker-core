@@ -128,6 +128,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
             ->filterByFkProduct_In($productIds)
             ->innerJoinSpyProductList()
             ->groupByFkProductList()
+            ->groupByFkProduct()
             ->find()
             ->toArray();
     }

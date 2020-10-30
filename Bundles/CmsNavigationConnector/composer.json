@@ -4,7 +4,7 @@
   "description": "CmsNavigationConnector module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/cms": "^6.5.0 || ^7.0.0",
     "spryker/cms-extension": "^1.1.0",
     "spryker/kernel": "^3.30.0",

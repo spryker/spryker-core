@@ -4,7 +4,7 @@
   "description": "ConfigurableBundlesProductsResourceRelationship module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/catalog": "^5.5.0",
     "spryker/configurable-bundles-rest-api": "^1.0.0",
     "spryker/glue-application": "^1.9.0",

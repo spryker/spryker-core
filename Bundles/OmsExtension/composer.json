@@ -4,7 +4,7 @@
   "description": "OmsExtension module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/transfer": "^3.8.0"
   },
   "require-dev": {

@@ -10,8 +10,7 @@
             "snippet": "     * @return string[]",
             "selected_text": "string[]",
             "error_level": 6,
-            "shortcode": 11,
-            "taint_trace": null
+            "shortcode": 11
         },
         {
             "severity": "error",
@@ -23,8 +22,7 @@
             "snippet": "        return $expiredData;",
             "selected_text": "$expiredData",
             "error_level": 6,
-            "shortcode": 128,
-            "taint_trace": null
+            "shortcode": 128
         },
         {
             "severity": "error",
@@ -36,8 +34,7 @@
             "snippet": "     * @return \\Spryker\\Zed\\Collector\\Business\\Exporter\\Reader\\ReaderInterface",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Exporter\\Reader\\ReaderInterface",
             "error_level": 6,
-            "shortcode": 11,
-            "taint_trace": null
+            "shortcode": 11
         },
         {
             "severity": "error",
@@ -49,8 +46,139 @@
             "snippet": "        return $configurableSearchReader;",
             "selected_text": "$configurableSearchReader",
             "error_level": 6,
-            "shortcode": 128,
-            "taint_trace": null
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 80,
+            "line_to": 80,
+            "type": "UndefinedDocblockClass",
+            "message": "Docblock-defined class or interface Elastica\\Type\\Mapping does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Exporter/Writer/Search/ElasticsearchMarkerWriter.php",
+            "snippet": "            $mapping->setMeta($this->metaData)->send();",
+            "selected_text": "$mapping",
+            "error_level": -1,
+            "shortcode": 200
+        },
+        {
+            "severity": "error",
+            "line_from": 95,
+            "line_to": 95,
+            "type": "UndefinedDocblockClass",
+            "message": "Docblock-defined class or interface Elastica\\Type\\Mapping does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Exporter/Writer/Search/ElasticsearchMarkerWriter.php",
+            "snippet": "        $response = $mapping->setMeta(['' => ''])->send(); // Empty mapping causes ClassCastException[java.util.ArrayList cannot be cast to java.util.Map]",
+            "selected_text": "$mapping",
+            "error_level": -1,
+            "shortcode": 200
+        },
+        {
+            "severity": "error",
+            "line_from": 135,
+            "line_to": 135,
+            "type": "UndefinedDocblockClass",
+            "message": "Docblock-defined class or interface Elastica\\Type\\Mapping does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Exporter/Writer/Search/ElasticsearchMarkerWriter.php",
+            "snippet": "     * @return \\Elastica\\Type\\Mapping|\\Spryker\\Zed\\Collector\\Business\\Mapping\\MappingAdapterInterface",
+            "selected_text": "\\Elastica\\Type\\Mapping|\\Spryker\\Zed\\Collector\\Business\\Mapping\\MappingAdapterInterface",
+            "error_level": -1,
+            "shortcode": 200
+        },
+        {
+            "severity": "error",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "UndefinedClass",
+            "message": "Class or interface Elastica\\Type does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Index/TypeAwareIndexAdapter.php",
+            "snippet": "        return $this->getType()->getDocument($id, $options);",
+            "selected_text": "$this->getType()",
+            "error_level": -1,
+            "shortcode": 19
+        },
+        {
+            "severity": "error",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "UndefinedClass",
+            "message": "Class or interface Elastica\\Type does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Index/TypeAwareIndexAdapter.php",
+            "snippet": "        return $this->getType()->addDocuments($documents, $options);",
+            "selected_text": "$this->getType()",
+            "error_level": -1,
+            "shortcode": 19
+        },
+        {
+            "severity": "error",
+            "line_from": 65,
+            "line_to": 65,
+            "type": "UndefinedClass",
+            "message": "Class or interface Elastica\\Type does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Index/TypeAwareIndexAdapter.php",
+            "snippet": "        $typeName = $mappingType->getName();",
+            "selected_text": "$mappingType",
+            "error_level": -1,
+            "shortcode": 19
+        },
+        {
+            "severity": "error",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "UndefinedClass",
+            "message": "Class or interface Elastica\\Type does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Index/TypeAwareIndexAdapter.php",
+            "snippet": "        $mapping = $mappingType->getMapping();",
+            "selected_text": "$mappingType",
+            "error_level": -1,
+            "shortcode": 19
+        },
+        {
+            "severity": "error",
+            "line_from": 91,
+            "line_to": 91,
+            "type": "UndefinedClass",
+            "message": "Class or interface Elastica\\Type does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Index/TypeAwareIndexAdapter.php",
+            "snippet": "    protected function getType(): Type",
+            "selected_text": "Type",
+            "error_level": -1,
+            "shortcode": 19
+        },
+        {
+            "severity": "error",
+            "line_from": 22,
+            "line_to": 22,
+            "type": "UndefinedDocblockClass",
+            "message": "Docblock-defined class or interface Elastica\\Type\\Mapping does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Mapping/MappingFactory.php",
+            "snippet": "     * @return \\Elastica\\Type\\Mapping|\\Spryker\\Zed\\Collector\\Business\\Mapping\\MappingAdapterInterface",
+            "selected_text": "\\Elastica\\Type\\Mapping|\\Spryker\\Zed\\Collector\\Business\\Mapping\\MappingAdapterInterface",
+            "error_level": -1,
+            "shortcode": 200
+        },
+        {
+            "severity": "error",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "UndefinedClass",
+            "message": "Class or interface Elastica\\Type\\Mapping does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Mapping/MappingFactory.php",
+            "snippet": "            return new Mapping(",
+            "selected_text": "Mapping",
+            "error_level": -1,
+            "shortcode": 19
+        },
+        {
+            "severity": "error",
+            "line_from": 20,
+            "line_to": 20,
+            "type": "UndefinedDocblockClass",
+            "message": "Docblock-defined class or interface Elastica\\Type\\Mapping does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Mapping/MappingFactoryInterface.php",
+            "snippet": "     * @return \\Elastica\\Type\\Mapping|\\Spryker\\Zed\\Collector\\Business\\Mapping\\MappingAdapterInterface",
+            "selected_text": "\\Elastica\\Type\\Mapping|\\Spryker\\Zed\\Collector\\Business\\Mapping\\MappingAdapterInterface",
+            "error_level": -1,
+            "shortcode": 200
         }
     ],
     "warning": [
@@ -64,8 +192,7 @@
             "snippet": "                $locale->getLocaleName(),",
             "selected_text": "$locale->getLocaleName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -77,8 +204,7 @@
             "snippet": "                $locale->getLocaleName(),",
             "selected_text": "$locale->getLocaleName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -90,21 +216,7 @@
             "snippet": "        $deleteQuery = $this->touchQueryContainer->queryTouchDeleteStorageAndSearch($itemType, $this->getCurrentStore()->getIdStore(), $this->locale->getIdLocale());",
             "selected_text": "$this->getCurrentStore()->getIdStore()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 269,
-            "line_to": 269,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::setFormatter does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Collector/AbstractCollector.php",
-            "snippet": "            ->setFormatter(StatementFormatter::class);",
-            "selected_text": "setFormatter",
-            "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -116,8 +228,7 @@
             "snippet": "            $statement->bindParam(':p' . $step, $value);",
             "selected_text": "bindParam",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -129,8 +240,7 @@
             "snippet": "        $statement->execute($sqlParams);",
             "selected_text": "execute",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -142,8 +252,7 @@
             "snippet": "        return $statement->fetchAll(PDO::FETCH_ASSOC);",
             "selected_text": "fetchAll",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -155,8 +264,7 @@
             "snippet": "            $locale->getIdLocale(),",
             "selected_text": "$locale->getIdLocale()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -168,8 +276,7 @@
             "snippet": "            $this->getCurrentStore()->getIdStore(),",
             "selected_text": "$this->getCurrentStore()->getIdStore()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -181,8 +288,7 @@
             "snippet": "        $touchUpdater->deleteTouchKeyEntities($touchKeys, $locale->getIdLocale());",
             "selected_text": "$locale->getIdLocale()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -194,8 +300,7 @@
             "snippet": "            $this->locale->getIdLocale()",
             "selected_text": "$this->locale->getIdLocale()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -207,21 +312,7 @@
             "snippet": "        $touchIds = $this->queryObsoleteTouchIds($itemType, $batchItemIds)->find()->getData();",
             "selected_text": "getData",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 332,
-            "line_to": 332,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::withColumn does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Collector/AbstractDatabaseCollector.php",
-            "snippet": "            ->withColumn(SpyTouchTableMap::COL_ID_TOUCH, static::ID_TOUCH)",
-            "selected_text": "withColumn",
-            "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -233,8 +324,7 @@
             "snippet": "        $configurableSearchReader->setSearchCollectorConfiguration($this->getCollectorConfiguration());",
             "selected_text": "setSearchCollectorConfiguration",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
@@ -246,8 +336,7 @@
             "snippet": "                $batchResult->getProcessedLocale(),",
             "selected_text": "$batchResult->getProcessedLocale()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -259,8 +348,7 @@
             "snippet": "        $output->writeln(sprintf('<fg=yellow>Locale:</fg=yellow> <fg=white>%s</fg=white>', $locale->getLocaleName()));",
             "selected_text": "$locale->getLocaleName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -272,8 +360,7 @@
             "snippet": "            if ($result instanceof BatchResultInterface) {",
             "selected_text": "$result instanceof BatchResultInterface",
             "error_level": 4,
-            "shortcode": 122,
-            "taint_trace": null
+            "shortcode": 122
         },
         {
             "severity": "info",
@@ -285,8 +372,7 @@
             "snippet": "                    $result->getProcessedLocale() ? $result->getProcessedLocale()->getLocaleName() : null,",
             "selected_text": "$result->getProcessedLocale() ? $result->getProcessedLocale()->getLocaleName() : null",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -298,60 +384,43 @@
             "snippet": "                    $result->getProcessedLocale() ? $result->getProcessedLocale()->getLocaleName() : null,",
             "selected_text": "getLocaleName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
             "line_from": 188,
             "line_to": 188,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Touch\\Persistence\\SpyTouch|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Touch\\Persistence\\SpyTouch> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Exporter/CollectorExporter.php",
             "snippet": "            ->toArray();",
             "selected_text": "toArray",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
-            "line_from": 214,
-            "line_to": 214,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 2 of array_merge expects array<array-key, mixed>, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\Touch\\Persistence\\SpyTouch> provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Exporter/CollectorExporter.php",
-            "snippet": "        return array_unique(array_merge($types, $availableTypes));",
-            "selected_text": "$availableTypes",
-            "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 218,
-            "line_to": 218,
+            "line_from": 219,
+            "line_to": 219,
             "type": "InvalidNullableReturnType",
             "message": "The declared return type 'string' for Spryker\\Zed\\Collector\\Business\\Exporter\\CollectorExporter::getStoreName is not nullable, but 'null|string' contains null",
             "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Exporter/CollectorExporter.php",
             "snippet": "     * @return string",
             "selected_text": "string",
             "error_level": 5,
-            "shortcode": 144,
-            "taint_trace": null
+            "shortcode": 144
         },
         {
             "severity": "info",
-            "line_from": 223,
-            "line_to": 223,
+            "line_from": 224,
+            "line_to": 224,
             "type": "NullableReturnStatement",
             "message": "The declared return type 'string' for Spryker\\Zed\\Collector\\Business\\Exporter\\CollectorExporter::getStoreName is not nullable, but the function returns 'null|string'",
             "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Exporter/CollectorExporter.php",
             "snippet": "            return $this->storeFacade->getCurrentStore()->getName();",
             "selected_text": "$this->storeFacade->getCurrentStore()->getName()",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -363,8 +432,7 @@
             "snippet": "            ->read($this->keyBuilder->generateKey($exportType, $locale->getLocaleName()), $exportType);",
             "selected_text": "$locale->getLocaleName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -376,112 +444,79 @@
             "snippet": "        $timestampKey = $this->keyBuilder->generateKey($exportType, $locale->getLocaleName());",
             "selected_text": "$locale->getLocaleName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 86,
-            "line_to": 86,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Elastica\\Client::getIndex cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Exporter/Reader/Search/ElasticsearchReader.php",
-            "snippet": "            ->getIndex($this->searchCollectorConfiguration->getIndexName())",
-            "selected_text": "$this->searchCollectorConfiguration->getIndexName()",
-            "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 87,
-            "line_to": 87,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Elastica\\Index::getType cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Exporter/Reader/Search/ElasticsearchReader.php",
-            "snippet": "            ->getType($this->searchCollectorConfiguration->getTypeName());",
-            "selected_text": "$this->searchCollectorConfiguration->getTypeName()",
-            "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 105,
-            "line_to": 105,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Elastica\\Client::getIndex cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Exporter/Writer/Search/ElasticsearchMarkerWriter.php",
-            "snippet": "        return $this->client->getIndex($this->searchCollectorConfiguration->getIndexName());",
-            "selected_text": "$this->searchCollectorConfiguration->getIndexName()",
-            "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
             "line_from": 113,
             "line_to": 113,
             "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Elastica\\Index::getType cannot be null, possibly null value provided",
+            "message": "Argument 1 of Elastica\\Client::getIndex cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Exporter/Writer/Search/ElasticsearchMarkerWriter.php",
-            "snippet": "        return $this->getIndex()->getType($this->searchCollectorConfiguration->getTypeName());",
-            "selected_text": "$this->searchCollectorConfiguration->getTypeName()",
-            "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 98,
-            "line_to": 98,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Elastica\\Client::getIndex cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Exporter/Writer/Search/ElasticsearchUpdateWriter.php",
             "snippet": "        return $this->client->getIndex($this->searchCollectorConfiguration->getIndexName());",
             "selected_text": "$this->searchCollectorConfiguration->getIndexName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 106,
-            "line_to": 106,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Elastica\\Index::getType cannot be null, possibly null value provided",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\Collector\\Business\\Index\\IndexAdapterInterface::updateDocuments does not exist",
             "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Exporter/Writer/Search/ElasticsearchUpdateWriter.php",
-            "snippet": "        return $this->getIndex()->getType($this->searchCollectorConfiguration->getTypeName());",
-            "selected_text": "$this->searchCollectorConfiguration->getTypeName()",
+            "snippet": "        $this->getIndex()->updateDocuments($this->createDocuments($dataSet));",
+            "selected_text": "updateDocuments",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
-            "line_from": 155,
-            "line_to": 155,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Elastica\\Client::getIndex cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Exporter/Writer/Search/ElasticsearchWriter.php",
-            "snippet": "        return $this->client->getIndex($this->searchCollectorConfiguration->getIndexName());",
-            "selected_text": "$this->searchCollectorConfiguration->getIndexName()",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\Collector\\Business\\Index\\IndexAdapterInterface::refresh does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Exporter/Writer/Search/ElasticsearchUpdateWriter.php",
+            "snippet": "        $response = $this->getIndex()->refresh();",
+            "selected_text": "refresh",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
-            "line_from": 163,
-            "line_to": 163,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Elastica\\Index::getType cannot be null, possibly null value provided",
+            "line_from": 68,
+            "line_to": 68,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\Collector\\Business\\Index\\IndexAdapterInterface::refresh does not exist",
             "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Exporter/Writer/Search/ElasticsearchWriter.php",
-            "snippet": "        return $this->getIndex()->getType($this->searchCollectorConfiguration->getTypeName());",
-            "selected_text": "$this->searchCollectorConfiguration->getTypeName()",
+            "snippet": "        $response = $this->getIndex()->refresh();",
+            "selected_text": "refresh",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 102,
+            "line_to": 102,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\Collector\\Business\\Index\\IndexAdapterInterface::deleteDocuments does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Exporter/Writer/Search/ElasticsearchWriter.php",
+            "snippet": "        $response = $this->getIndex()->deleteDocuments($documents);",
+            "selected_text": "deleteDocuments",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 103,
+            "line_to": 103,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\Collector\\Business\\Index\\IndexAdapterInterface::flush does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Exporter/Writer/Search/ElasticsearchWriter.php",
+            "snippet": "        $this->getIndex()->flush();",
+            "selected_text": "flush",
+            "error_level": 3,
+            "shortcode": 108
         },
         {
             "severity": "info",
@@ -493,8 +528,55 @@
             "snippet": "        return $this->redis->deleteMulti($dataSet);",
             "selected_text": "$this->redis->deleteMulti($dataSet)",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 28,
+            "line_to": 28,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Elastica\\Client::getIndex cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Index/IndexFactory.php",
+            "snippet": "        return $elasticaClient->getIndex($searchCollectorConfigurationTransfer->getIndexName());",
+            "selected_text": "$searchCollectorConfigurationTransfer->getIndexName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Elastica\\Client::getIndex cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Index/TypeAwareIndexAdapter.php",
+            "snippet": "        $this->elasticaIndex = $elasticaClient->getIndex($searchCollectorConfigurationTransfer->getIndexName());",
+            "selected_text": "$searchCollectorConfigurationTransfer->getIndexName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Elastica\\Client::getIndex cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Mapping/MappingFactory.php",
+            "snippet": "                $elasticaClient->getIndex($searchCollectorConfigurationTransfer->getIndexName())->getType($searchCollectorConfigurationTransfer->getTypeName()),",
+            "selected_text": "$searchCollectorConfigurationTransfer->getIndexName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 82,
+            "line_to": 82,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Elastica\\Client::getIndex cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Mapping/TypelessMappingAdapter.php",
+            "snippet": "            $this->searchCollectorConfigurationTransfer->getIndexName()",
+            "selected_text": "$this->searchCollectorConfigurationTransfer->getIndexName()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -506,8 +588,7 @@
             "snippet": "     * @return \\Spryker\\Zed\\Collector\\Persistence\\Pdo\\BulkUpdateTouchKeyByIdQueryInterface",
             "selected_text": "\\Spryker\\Zed\\Collector\\Persistence\\Pdo\\BulkUpdateTouchKeyByIdQueryInterface",
             "error_level": 3,
-            "shortcode": 70,
-            "taint_trace": null
+            "shortcode": 70
         },
         {
             "severity": "info",
@@ -519,8 +600,7 @@
             "snippet": "        return new $resolvedClassName();",
             "selected_text": "new $resolvedClassName()",
             "error_level": 3,
-            "shortcode": 129,
-            "taint_trace": null
+            "shortcode": 129
         },
         {
             "severity": "info",
@@ -532,8 +612,7 @@
             "snippet": "     * @return \\Spryker\\Zed\\Collector\\Persistence\\Pdo\\BulkDeleteTouchByIdQueryInterface",
             "selected_text": "\\Spryker\\Zed\\Collector\\Persistence\\Pdo\\BulkDeleteTouchByIdQueryInterface",
             "error_level": 3,
-            "shortcode": 70,
-            "taint_trace": null
+            "shortcode": 70
         },
         {
             "severity": "info",
@@ -545,8 +624,7 @@
             "snippet": "        return new $resolvedClassName();",
             "selected_text": "new $resolvedClassName()",
             "error_level": 3,
-            "shortcode": 129,
-            "taint_trace": null
+            "shortcode": 129
         },
         {
             "severity": "info",
@@ -558,8 +636,7 @@
             "snippet": "     * @return mixed",
             "selected_text": "mixed",
             "error_level": 5,
-            "shortcode": 166,
-            "taint_trace": null
+            "shortcode": 166
         },
         {
             "severity": "info",
@@ -571,8 +648,7 @@
             "snippet": "        $key = $this->getKeyName($key, $prefix);",
             "selected_text": "$prefix",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -584,8 +660,7 @@
             "snippet": "     * @return \\Spryker\\Zed\\Collector\\Business\\Storage\\Adapter\\KeyValue\\ReadInterface|\\Spryker\\Zed\\Collector\\Business\\Storage\\Adapter\\KeyValue\\ReadWriteInterface",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Storage\\Adapter\\KeyValue\\ReadInterface|\\Spryker\\Zed\\Collector\\Business\\Storage\\Adapter\\KeyValue\\ReadWriteInterface",
             "error_level": 3,
-            "shortcode": 70,
-            "taint_trace": null
+            "shortcode": 70
         },
         {
             "severity": "info",
@@ -597,8 +672,7 @@
             "snippet": "        static::$storageInstances[$storageAdapter] = $storage;",
             "selected_text": "static::$storageInstances",
             "error_level": 3,
-            "shortcode": 198,
-            "taint_trace": null
+            "shortcode": 198
         },
         {
             "severity": "info",
@@ -610,8 +684,7 @@
             "snippet": "        return static::$storageInstances[$storageAdapter];",
             "selected_text": "static::$storageInstances[$storageAdapter]",
             "error_level": 3,
-            "shortcode": 129,
-            "taint_trace": null
+            "shortcode": 129
         },
         {
             "severity": "info",
@@ -623,8 +696,19 @@
             "snippet": "        $config['transport'] = ucfirst(Config::get(SearchConstants::ELASTICA_PARAMETER__TRANSPORT));",
             "selected_text": "$config",
             "error_level": 3,
-            "shortcode": 18,
-            "taint_trace": null
+            "shortcode": 18
+        },
+        {
+            "severity": "info",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "RedundantCondition",
+            "message": "The call to strtolower is unnecessary",
+            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/CollectorConfig.php",
+            "snippet": "        return Config::get(CollectorConstants::ELASTICA_PARAMETER__INDEX_NAME, sprintf('%s_search', strtolower(APPLICATION_STORE)));",
+            "selected_text": "strtolower",
+            "error_level": 4,
+            "shortcode": 122
         }
     ],
     "deprecation": [
@@ -638,8 +722,7 @@
             "snippet": "class CollectorClient extends AbstractClient implements UrlMatcherInterface, CollectorClientInterface",
             "selected_text": "CollectorClient",
             "error_level": 2,
-            "shortcode": 152,
-            "taint_trace": null
+            "shortcode": 152
         },
         {
             "severity": "info",
@@ -651,8 +734,7 @@
             "snippet": "     * @return \\Spryker\\Client\\Collector\\Matcher\\UrlMatcherInterface",
             "selected_text": "\\Spryker\\Client\\Collector\\Matcher\\UrlMatcherInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -664,8 +746,7 @@
             "snippet": "        return new UrlMatcher(\n            $this->createUrlKeyBuilder(),\n            $this->getStorageClient()\n        );",
             "selected_text": "new UrlMatcher(\n            $this->createUrlKeyBuilder(),\n            $this->getStorageClient()\n        )",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -677,8 +758,7 @@
             "snippet": "     * @return \\Spryker\\Client\\Collector\\KeyBuilder\\UrlKeyBuilder",
             "selected_text": "\\Spryker\\Client\\Collector\\KeyBuilder\\UrlKeyBuilder",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -690,8 +770,7 @@
             "snippet": "        $urlKeyBuilder = new UrlKeyBuilder();",
             "selected_text": "new UrlKeyBuilder()",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -703,8 +782,7 @@
             "snippet": "class UrlMatcher implements UrlMatcherInterface",
             "selected_text": "UrlMatcher",
             "error_level": 2,
-            "shortcode": 152,
-            "taint_trace": null
+            "shortcode": 152
         },
         {
             "severity": "info",
@@ -716,8 +794,7 @@
             "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $batchResult",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -729,8 +806,7 @@
             "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $batchResult",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -742,8 +818,7 @@
             "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $batchResult",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -755,8 +830,7 @@
             "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $batchResult",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -768,8 +842,7 @@
             "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $batchResult",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -781,60 +854,55 @@
             "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $batchResult",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 141,
-            "line_to": 141,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\FailedResultInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/CollectorBusinessFactory.php",
-            "snippet": "     * @return \\Spryker\\Zed\\Collector\\Business\\Model\\FailedResultInterface",
-            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\FailedResultInterface",
-            "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
             "line_from": 145,
             "line_to": 145,
             "type": "DeprecatedClass",
-            "message": "Spryker\\Zed\\Collector\\Business\\Model\\FailedResult is marked deprecated",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\FailedResultInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/CollectorBusinessFactory.php",
-            "snippet": "        return new FailedResult();",
-            "selected_text": "new FailedResult()",
+            "snippet": "     * @return \\Spryker\\Zed\\Collector\\Business\\Model\\FailedResultInterface",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\FailedResultInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
             "line_from": 149,
             "line_to": 149,
             "type": "DeprecatedClass",
-            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "message": "Spryker\\Zed\\Collector\\Business\\Model\\FailedResult is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/CollectorBusinessFactory.php",
-            "snippet": "     * @return \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
-            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "snippet": "        return new FailedResult();",
+            "selected_text": "new FailedResult()",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
             "line_from": 153,
             "line_to": 153,
             "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/CollectorBusinessFactory.php",
+            "snippet": "     * @return \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 157,
+            "line_to": 157,
+            "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\Collector\\Business\\Model\\BatchResult is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/CollectorBusinessFactory.php",
             "snippet": "        return new BatchResult();",
             "selected_text": "new BatchResult()",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -846,8 +914,7 @@
             "snippet": "     * @return \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface[]",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface[]",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -859,8 +926,7 @@
             "snippet": "     * @return \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface[]",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface[]",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -872,8 +938,7 @@
             "snippet": "     * @return \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface[]",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface[]",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -885,8 +950,7 @@
             "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -898,8 +962,7 @@
             "snippet": "     * @return \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface[]",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface[]",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -911,8 +974,7 @@
             "snippet": "     * @return \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface[]",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface[]",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -924,8 +986,7 @@
             "snippet": "     * @return \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface[]",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface[]",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -937,8 +998,7 @@
             "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -950,8 +1010,7 @@
             "snippet": "     * @var \\Spryker\\Zed\\Collector\\Business\\Model\\FailedResultInterface",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\FailedResultInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -963,8 +1022,7 @@
             "snippet": "     * @var \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -976,8 +1034,7 @@
             "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\FailedResultInterface $failedResultPrototype",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\FailedResultInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -989,8 +1046,7 @@
             "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $batchResultPrototype",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -1002,8 +1058,7 @@
             "snippet": "     * @return \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -1015,8 +1070,7 @@
             "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $batchResult",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -1028,8 +1082,7 @@
             "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -1041,8 +1094,7 @@
             "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -1054,8 +1106,7 @@
             "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -1067,8 +1118,7 @@
             "snippet": "     * @return \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -1080,8 +1130,7 @@
             "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -1093,8 +1142,7 @@
             "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -1106,8 +1154,7 @@
             "snippet": "class BatchResult implements BatchResultInterface",
             "selected_text": "BatchResult",
             "error_level": 2,
-            "shortcode": 152,
-            "taint_trace": null
+            "shortcode": 152
         },
         {
             "severity": "info",
@@ -1119,8 +1166,19 @@
             "snippet": "     * @var \\Spryker\\Zed\\Collector\\Business\\Model\\FailedResultInterface[]",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\FailedResultInterface[]",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\FailedResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Model/BatchResult.php",
+            "snippet": "    /**\n     * @var \\Spryker\\Zed\\Collector\\Business\\Model\\FailedResultInterface[]\n     */\n    protected $failed = [];",
+            "selected_text": "protected $failed = [];",
+            "error_level": 2,
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -1132,8 +1190,7 @@
             "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\FailedResultInterface $failed",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\FailedResultInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -1145,8 +1202,7 @@
             "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\FailedResultInterface $failed",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\FailedResultInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -1158,8 +1214,7 @@
             "snippet": "class FailedResult implements FailedResultInterface",
             "selected_text": "FailedResult",
             "error_level": 2,
-            "shortcode": 152,
-            "taint_trace": null
+            "shortcode": 152
         },
         {
             "severity": "info",
@@ -1171,8 +1226,7 @@
             "snippet": "        $isPersistent = (bool)Config::get(StorageConstants::STORAGE_PERSISTENT_CONNECTION, false);",
             "selected_text": "StorageConstants::STORAGE_PERSISTENT_CONNECTION",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
+            "shortcode": 170
         },
         {
             "severity": "info",
@@ -1184,8 +1238,7 @@
             "snippet": "        if (Config::hasKey(StorageConstants::STORAGE_PREDIS_CLIENT_CONFIGURATION)) {",
             "selected_text": "StorageConstants::STORAGE_PREDIS_CLIENT_CONFIGURATION",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
+            "shortcode": 170
         },
         {
             "severity": "info",
@@ -1197,8 +1250,7 @@
             "snippet": "            return Config::get(StorageConstants::STORAGE_PREDIS_CLIENT_CONFIGURATION);",
             "selected_text": "StorageConstants::STORAGE_PREDIS_CLIENT_CONFIGURATION",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
+            "shortcode": 170
         },
         {
             "severity": "info",
@@ -1210,8 +1262,7 @@
             "snippet": "            'protocol' => Config::get(StorageConstants::STORAGE_REDIS_PROTOCOL),",
             "selected_text": "StorageConstants::STORAGE_REDIS_PROTOCOL",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
+            "shortcode": 170
         },
         {
             "severity": "info",
@@ -1223,8 +1274,7 @@
             "snippet": "            'port' => Config::get(StorageConstants::STORAGE_REDIS_PORT),",
             "selected_text": "StorageConstants::STORAGE_REDIS_PORT",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
+            "shortcode": 170
         },
         {
             "severity": "info",
@@ -1236,8 +1286,7 @@
             "snippet": "            'host' => Config::get(StorageConstants::STORAGE_REDIS_HOST),",
             "selected_text": "StorageConstants::STORAGE_REDIS_HOST",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
+            "shortcode": 170
         },
         {
             "severity": "info",
@@ -1249,8 +1298,7 @@
             "snippet": "            'database' => Config::get(StorageConstants::STORAGE_REDIS_DATABASE, static::DEFAULT_REDIS_DATABASE),",
             "selected_text": "StorageConstants::STORAGE_REDIS_DATABASE",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
+            "shortcode": 170
         },
         {
             "severity": "info",
@@ -1262,8 +1310,7 @@
             "snippet": "        $password = Config::get(StorageConstants::STORAGE_REDIS_PASSWORD, false);",
             "selected_text": "StorageConstants::STORAGE_REDIS_PASSWORD",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
+            "shortcode": 170
         },
         {
             "severity": "info",
@@ -1275,8 +1322,7 @@
             "snippet": "        if (Config::hasKey(StorageConstants::STORAGE_PERSISTENT_CONNECTION)) {",
             "selected_text": "StorageConstants::STORAGE_PERSISTENT_CONNECTION",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
+            "shortcode": 170
         },
         {
             "severity": "info",
@@ -1288,8 +1334,7 @@
             "snippet": "            $config['persistent'] = (bool)Config::get(StorageConstants::STORAGE_PERSISTENT_CONNECTION);",
             "selected_text": "StorageConstants::STORAGE_PERSISTENT_CONNECTION",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
+            "shortcode": 170
         },
         {
             "severity": "info",
@@ -1301,8 +1346,7 @@
             "snippet": "        if (Config::hasValue(SearchConstants::ELASTICA_CLIENT_CONFIGURATION)) {",
             "selected_text": "SearchConstants::ELASTICA_CLIENT_CONFIGURATION",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
+            "shortcode": 170
         },
         {
             "severity": "info",
@@ -1314,8 +1358,7 @@
             "snippet": "            return Config::get(SearchConstants::ELASTICA_CLIENT_CONFIGURATION);",
             "selected_text": "SearchConstants::ELASTICA_CLIENT_CONFIGURATION",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
+            "shortcode": 170
         },
         {
             "severity": "info",
@@ -1327,8 +1370,7 @@
             "snippet": "        if (Config::hasValue(SearchConstants::ELASTICA_PARAMETER__EXTRA)) {",
             "selected_text": "SearchConstants::ELASTICA_PARAMETER__EXTRA",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
+            "shortcode": 170
         },
         {
             "severity": "info",
@@ -1340,8 +1382,7 @@
             "snippet": "            $config = Config::get(SearchConstants::ELASTICA_PARAMETER__EXTRA);",
             "selected_text": "SearchConstants::ELASTICA_PARAMETER__EXTRA",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
+            "shortcode": 170
         },
         {
             "severity": "info",
@@ -1353,8 +1394,7 @@
             "snippet": "        $config['transport'] = ucfirst(Config::get(SearchConstants::ELASTICA_PARAMETER__TRANSPORT));",
             "selected_text": "SearchConstants::ELASTICA_PARAMETER__TRANSPORT",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
+            "shortcode": 170
         },
         {
             "severity": "info",
@@ -1366,8 +1406,7 @@
             "snippet": "        $config['port'] = Config::get(SearchConstants::ELASTICA_PARAMETER__PORT);",
             "selected_text": "SearchConstants::ELASTICA_PARAMETER__PORT",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
+            "shortcode": 170
         },
         {
             "severity": "info",
@@ -1379,8 +1418,7 @@
             "snippet": "        $config['host'] = Config::get(SearchConstants::ELASTICA_PARAMETER__HOST);",
             "selected_text": "SearchConstants::ELASTICA_PARAMETER__HOST",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
+            "shortcode": 170
         },
         {
             "severity": "info",
@@ -1392,8 +1430,7 @@
             "snippet": "        if (Config::hasValue(SearchConstants::ELASTICA_PARAMETER__AUTH_HEADER)) {",
             "selected_text": "SearchConstants::ELASTICA_PARAMETER__AUTH_HEADER",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
+            "shortcode": 170
         },
         {
             "severity": "info",
@@ -1405,8 +1442,7 @@
             "snippet": "                'Authorization' => 'Basic ' . Config::get(SearchConstants::ELASTICA_PARAMETER__AUTH_HEADER),",
             "selected_text": "SearchConstants::ELASTICA_PARAMETER__AUTH_HEADER",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
+            "shortcode": 170
         },
         {
             "severity": "info",
@@ -1418,8 +1454,7 @@
             "snippet": "        if (Config::hasKey(StorageConstants::STORAGE_PREDIS_CLIENT_OPTIONS)) {",
             "selected_text": "StorageConstants::STORAGE_PREDIS_CLIENT_OPTIONS",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
+            "shortcode": 170
         },
         {
             "severity": "info",
@@ -1431,8 +1466,31 @@
             "snippet": "            return Config::get(StorageConstants::STORAGE_PREDIS_CLIENT_OPTIONS);",
             "selected_text": "StorageConstants::STORAGE_PREDIS_CLIENT_OPTIONS",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
+            "shortcode": 170
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "DeprecatedConstant",
+            "message": "Constant Spryker\\Shared\\Collector\\CollectorConstants::ZED_DB_ENGINE_MYSQL is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/CollectorConfig.php",
+            "snippet": "        return Config::get(CollectorConstants::ZED_DB_ENGINE_MYSQL, PropelConfig::DB_ENGINE_MYSQL);",
+            "selected_text": "CollectorConstants::ZED_DB_ENGINE_MYSQL",
+            "error_level": 2,
+            "shortcode": 170
+        },
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "DeprecatedConstant",
+            "message": "Constant Spryker\\Shared\\Collector\\CollectorConstants::ZED_DB_ENGINE_PGSQL is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/CollectorConfig.php",
+            "snippet": "        return Config::get(CollectorConstants::ZED_DB_ENGINE_PGSQL, PropelConfig::DB_ENGINE_PGSQL);",
+            "selected_text": "CollectorConstants::ZED_DB_ENGINE_PGSQL",
+            "error_level": 2,
+            "shortcode": 170
         },
         {
             "severity": "info",
@@ -1444,8 +1502,7 @@
             "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface[] $resultData",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface[]",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -1457,8 +1514,7 @@
             "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -1470,8 +1526,7 @@
             "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -1483,8 +1538,7 @@
             "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -1496,8 +1550,7 @@
             "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         }
     ]
 }

@@ -11,8 +11,7 @@
             "snippet": "                unset($customerAccessContentTypeResourceType[$contentTypeAccessTransfer->getContentType()]);",
             "selected_text": "$customerAccessContentTypeResourceType",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -24,8 +23,7 @@
             "snippet": "        return !array_key_exists($contentTypeAccessTransfer->getContentType(), $customerAccessContentTypeResourceType) || !$contentTypeAccessTransfer->getIsRestricted();",
             "selected_text": "$contentTypeAccessTransfer->getContentType()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         }
     ],
     "deprecation": []

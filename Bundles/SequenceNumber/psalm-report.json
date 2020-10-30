@@ -108,18 +108,6 @@
             "selected_text": "$settings->getIncrementMaximum()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Orm\\Zed\\SequenceNumber\\Persistence\\SpySequenceNumberQuery::filterbyfksalesorder does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SequenceNumber/src/Spryker/Zed/SequenceNumber/Persistence/SequenceNumberQueryContainer.php",
-            "snippet": "        $query->filterByFkSalesOrder($idSalesOrder);",
-            "selected_text": "filterByFkSalesOrder",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

@@ -36,7 +36,7 @@ class SalesStatisticsFacadeTest extends Unit
     public function testOrderStatisticByCountDay(): void
     {
         $this->markTestIncomplete('Test code and code behind MUST be fixed.');
-        
+
         // Arrange
         $spySalesOrder = $this->tester->haveOrderWithOneItem();
 

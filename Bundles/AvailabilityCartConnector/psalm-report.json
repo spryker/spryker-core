@@ -3,18 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityCartConnector/src/Spryker/Zed/AvailabilityCartConnector/AvailabilityCartConnectorDependencyProvider.php",
-            "snippet": "            return new AvailabilityCartConnectorToAvailabilityBridge($container->getLocator()->availability()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 51,
             "line_to": 51,
             "type": "PossiblyInvalidClone",

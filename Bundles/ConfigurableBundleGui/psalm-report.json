@@ -10,8 +10,7 @@
             "snippet": "     * @return \\Generated\\Shared\\Transfer\\ConfigurableBundleTemplateSlotEditFormTransfer",
             "selected_text": "\\Generated\\Shared\\Transfer\\ConfigurableBundleTemplateSlotEditFormTransfer",
             "error_level": 6,
-            "shortcode": 11,
-            "taint_trace": null
+            "shortcode": 11
         },
         {
             "severity": "error",
@@ -23,8 +22,7 @@
             "snippet": "        return $configurableBundleTemplateSlotEditForm;",
             "selected_text": "$configurableBundleTemplateSlotEditForm",
             "error_level": 6,
-            "shortcode": 128,
-            "taint_trace": null
+            "shortcode": 128
         },
         {
             "severity": "error",
@@ -36,8 +34,7 @@
             "snippet": "        return $this->productListFacade->getProductConcreteIdsByProductListIds([$configurableBundleTemplateSlotEntity->getFkProductList()]);",
             "selected_text": "[$configurableBundleTemplateSlotEntity->getFkProductList()]",
             "error_level": 6,
-            "shortcode": 4,
-            "taint_trace": null
+            "shortcode": 4
         }
     ],
     "warning": [
@@ -51,8 +48,19 @@
             "snippet": "                    ->getIdConfigurableBundleTemplateSlot();",
             "selected_text": "getIdConfigurableBundleTemplateSlot",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 258,
+            "line_to": 258,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getProductList on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleGui/src/Spryker/Zed/ConfigurableBundleGui/Communication/Controller/SlotController.php",
+            "snippet": "            (string)$configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot()->getProductList()->getIdProductList()",
+            "selected_text": "getProductList",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -64,8 +72,7 @@
             "snippet": "            (string)$configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot()->getProductList()->getIdProductList()",
             "selected_text": "getIdProductList",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -77,8 +84,19 @@
             "snippet": "            $configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot()->getFkConfigurableBundleTemplate()",
             "selected_text": "$configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot()->getFkConfigurableBundleTemplate()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 262,
+            "line_to": 262,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getFkConfigurableBundleTemplate on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleGui/src/Spryker/Zed/ConfigurableBundleGui/Communication/Controller/SlotController.php",
+            "snippet": "            $configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot()->getFkConfigurableBundleTemplate()",
+            "selected_text": "getFkConfigurableBundleTemplate",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -90,8 +108,7 @@
             "snippet": "        $productListTransfer = $configurableBundleTemplateSlotTransfer->getProductList();",
             "selected_text": "getProductList",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -103,8 +120,7 @@
             "snippet": "            ->setProductListCategoryRelation($productListAggregateFormTransfer->getProductListCategoryRelation())",
             "selected_text": "setProductListCategoryRelation",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -116,8 +132,7 @@
             "snippet": "            ->setProductListCategoryRelation($productListAggregateFormTransfer->getProductListCategoryRelation())",
             "selected_text": "getProductListCategoryRelation",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -129,8 +144,7 @@
             "snippet": "                    ->getIdConfigurableBundleTemplate();",
             "selected_text": "getIdConfigurableBundleTemplate",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -142,8 +156,7 @@
             "snippet": "                ->requireIdProductList();",
             "selected_text": "requireIdProductList",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -155,8 +168,7 @@
             "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ConfigurableBundleTemplateSlotTransfer[] $configurableBundleTemplateSlotTransfers",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ConfigurableBundleTemplateSlotTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -168,8 +180,7 @@
             "snippet": "                $configurableBundleTemplateSlotEditForm,",
             "selected_text": "$configurableBundleTemplateSlotEditForm",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -181,8 +192,7 @@
             "snippet": "        $configurableBundleTemplateSlotTransfer->getConfigurableBundleTemplate()->requireTranslations();",
             "selected_text": "requireTranslations",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -194,8 +204,7 @@
             "snippet": "            ->getTranslations()[0]",
             "selected_text": "getTranslations",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -207,8 +216,7 @@
             "snippet": "            $configurableBundleTemplateName,",
             "selected_text": "$configurableBundleTemplateName",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -220,8 +228,7 @@
             "snippet": "            $configurableBundleTemplateSlotName",
             "selected_text": "$configurableBundleTemplateSlotName",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -233,8 +240,7 @@
             "snippet": "        return $configurableBundleTemplateSlotProducts->getData();",
             "selected_text": "getData",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -246,21 +252,7 @@
             "snippet": "                $this->localeFacade->getCurrentLocale()->getIdLocale()",
             "selected_text": "$this->localeFacade->getCurrentLocale()->getIdLocale()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 160,
-            "line_to": 160,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::withColumn does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleGui/src/Spryker/Zed/ConfigurableBundleGui/Communication/Table/ConfigurableBundleTemplateSlotTable.php",
-            "snippet": "            ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, static::COL_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_NAME_TRANSLATION)",
-            "selected_text": "withColumn",
-            "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -272,8 +264,7 @@
             "snippet": "                $this->localeFacade->getCurrentLocale()->getIdLocale()",
             "selected_text": "$this->localeFacade->getCurrentLocale()->getIdLocale()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -285,21 +276,7 @@
             "snippet": "        if ($configurableBundleTemplateEntityCollection->count() === 0) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 153,
-            "line_to": 153,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::withColumn does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleGui/src/Spryker/Zed/ConfigurableBundleGui/Communication/Table/ConfigurableBundleTemplateTable.php",
-            "snippet": "            ->withColumn(",
-            "selected_text": "withColumn",
-            "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -311,8 +288,7 @@
             "snippet": "                    $this->localeFacade->getCurrentLocale()\n                        ->getIdLocale()",
             "selected_text": "$this->localeFacade->getCurrentLocale()\n                        ->getIdLocale()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -324,8 +300,7 @@
             "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\ConfigurableBundle\\Persistence\\SpyConfigurableBundleTemplate[] $configurableBundleTemplateEntityCollection",
             "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\ConfigurableBundle\\Persistence\\SpyConfigurableBundleTemplate[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         }
     ],
     "deprecation": []

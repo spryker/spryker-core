@@ -4,7 +4,7 @@
   "description": "ProductOptionsRestApi module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/carts-rest-api-extension": "^1.5.0",
     "spryker/currency": "^3.2.0",
     "spryker/glossary-storage": "^1.5.0",

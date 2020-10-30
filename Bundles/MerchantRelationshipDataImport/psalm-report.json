@@ -48,42 +48,6 @@
             "selected_text": "import",
             "error_level": 3,
             "shortcode": 108
-        },
-        {
-            "severity": "info",
-            "line_from": 85,
-            "line_to": 85,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::findonebykey does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipDataImport/src/Spryker/Zed/MerchantRelationshipDataImport/Business/Model/Step/CompanyBusinessUnitAssigneeKeysToIdCompanyBusinessUnitCollectionStep.php",
-            "snippet": "                ->findOneByKey($companyBusinessUnitKey);",
-            "selected_text": "findOneByKey",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::findonebykey does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipDataImport/src/Spryker/Zed/MerchantRelationshipDataImport/Business/Model/Step/CompanyBusinessUnitOwnerKeyToIdCompanyBusinessUnitStep.php",
-            "snippet": "                ->findOneByKey($companyBusinessUnitKey);",
-            "selected_text": "findOneByKey",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::findonebymerchantkey does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipDataImport/src/Spryker/Zed/MerchantRelationshipDataImport/Business/Model/Step/MerchantKeyToIdMerchantStep.php",
-            "snippet": "                ->findOneByMerchantKey($merchantKey);",
-            "selected_text": "findOneByMerchantKey",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []
