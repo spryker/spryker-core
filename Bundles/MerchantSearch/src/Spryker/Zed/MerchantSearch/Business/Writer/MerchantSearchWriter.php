@@ -30,12 +30,12 @@ class MerchantSearchWriter implements MerchantSearchWriterInterface
     /**
      * @var \Spryker\Zed\MerchantSearch\Business\Mapper\MerchantSearchMapperInterface
      */
-    protected $merchantMapper;
+    protected $merchantSearchMapper;
 
     /**
      * @var \Spryker\Zed\MerchantSearch\Persistence\MerchantSearchEntityManagerInterface
      */
-    protected $entityManager;
+    protected $merchantSearchEntityManager;
 
     /**
      * @var \Spryker\Zed\MerchantSearchExtension\Dependency\Plugin\MerchantSearchDataExpanderPluginInterface[]
@@ -45,21 +45,21 @@ class MerchantSearchWriter implements MerchantSearchWriterInterface
     /**
      * @param \Spryker\Zed\MerchantSearch\Dependency\Facade\MerchantSearchToMerchantFacadeInterface $merchantFacade
      * @param \Spryker\Zed\MerchantSearch\Dependency\Facade\MerchantSearchToEventBehaviorFacadeInterface $eventBehaviorFacade
-     * @param \Spryker\Zed\MerchantSearch\Business\Mapper\MerchantSearchMapperInterface $merchantMapper
-     * @param \Spryker\Zed\MerchantSearch\Persistence\MerchantSearchEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\MerchantSearch\Business\Mapper\MerchantSearchMapperInterface $merchantSearchMapper
+     * @param \Spryker\Zed\MerchantSearch\Persistence\MerchantSearchEntityManagerInterface $merchantSearchEntityManager
      * @param \Spryker\Zed\MerchantSearchExtension\Dependency\Plugin\MerchantSearchDataExpanderPluginInterface[] $merchantSearchDataExpanderPlugins
      */
     public function __construct(
         MerchantSearchToMerchantFacadeInterface $merchantFacade,
         MerchantSearchToEventBehaviorFacadeInterface $eventBehaviorFacade,
-        MerchantSearchMapperInterface $merchantMapper,
-        MerchantSearchEntityManagerInterface $entityManager,
+        MerchantSearchMapperInterface $merchantSearchMapper,
+        MerchantSearchEntityManagerInterface $merchantSearchEntityManager,
         array $merchantSearchDataExpanderPlugins
     ) {
         $this->merchantFacade = $merchantFacade;
         $this->eventBehaviorFacade = $eventBehaviorFacade;
-        $this->merchantMapper = $merchantMapper;
-        $this->entityManager = $entityManager;
+        $this->merchantSearchMapper = $merchantSearchMapper;
+        $this->merchantSearchEntityManager = $merchantSearchEntityManager;
         $this->merchantSearchDataExpanderPlugins = $merchantSearchDataExpanderPlugins;
     }
 
@@ -96,7 +96,7 @@ class MerchantSearchWriter implements MerchantSearchWriterInterface
             return;
         }
 
-        $merchantSearchCollectionTransfer = $this->merchantMapper->mapMerchantCollectionTransferToMerchantSearchCollectionTransfer(
+        $merchantSearchCollectionTransfer = $this->merchantSearchMapper->mapMerchantCollectionTransferToMerchantSearchCollectionTransfer(
             $merchantCollectionTransfer,
             new MerchantSearchCollectionTransfer()
         );
@@ -113,9 +113,7 @@ class MerchantSearchWriter implements MerchantSearchWriterInterface
      */
     protected function writeCollection(MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer): void
     {
-        foreach ($merchantSearchCollectionTransfer->getMerchants() as $merchantSearchTransfer) {
-            $this->entityManager->saveMerchantSearch($merchantSearchTransfer);
-        }
+        $this->merchantSearchEntityManager->saveMerchantSearches($merchantSearchCollectionTransfer);
     }
 
     /**
@@ -125,26 +123,10 @@ class MerchantSearchWriter implements MerchantSearchWriterInterface
      */
     protected function expandMerchantSearchData(MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer): MerchantSearchCollectionTransfer
     {
-        foreach ($merchantSearchCollectionTransfer->getMerchants() as $merchantSearchTransfer) {
-            $merchantSearchTransfer->setData(
-                $this->executeMerchantSearchDataExpanderPlugins($merchantSearchTransfer->getData())
-            );
+        foreach ($this->merchantSearchDataExpanderPlugins as $merchantSearchDataExpanderPlugin) {
+            $merchantSearchCollectionTransfer = $merchantSearchDataExpanderPlugin->expand($merchantSearchCollectionTransfer);
         }
 
         return $merchantSearchCollectionTransfer;
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return array
-     */
-    protected function executeMerchantSearchDataExpanderPlugins(array $data): array
-    {
-        foreach ($this->merchantSearchDataExpanderPlugins as $merchantSearchDataExpanderPlugin) {
-            $data = $merchantSearchDataExpanderPlugin->expand($data);
-        }
-
-        return $data;
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\MerchantSearch\Persistence;
 
+use Generated\Shared\Transfer\MerchantSearchCollectionTransfer;
 use Generated\Shared\Transfer\MerchantSearchTransfer;
+use Orm\Zed\MerchantSearch\Persistence\SpyMerchantSearch;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -30,12 +33,30 @@ class MerchantSearchEntityManager extends AbstractEntityManager implements Merch
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantSearchTransfer $merchantSearchTransfer
+     * @param \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer
      *
      * @return void
      */
-    public function saveMerchantSearch(MerchantSearchTransfer $merchantSearchTransfer): void
+    public function saveMerchantSearches(MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer): void
     {
+        $merchantSearchEntityCollection = new ObjectCollection();
+        $merchantSearchEntityCollection->setModel(SpyMerchantSearch::class);
+
+        foreach ($merchantSearchCollectionTransfer->getMerchantSearches() as $merchantSearchTransfer) {
+            $merchantSearchEntityCollection->append($this->getMerchantSearchEntityByMerchantSearchTransfer($merchantSearchTransfer));
+        }
+
+        $merchantSearchEntityCollection->save();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantSearchTransfer $merchantSearchTransfer
+     *
+     * @return \Orm\Zed\MerchantSearch\Persistence\SpyMerchantSearch
+     */
+    protected function getMerchantSearchEntityByMerchantSearchTransfer(
+        MerchantSearchTransfer $merchantSearchTransfer
+    ): SpyMerchantSearch {
         $merchantSearchEntity = $this->getFactory()
             ->getMerchantSearchPropelQuery()
             ->filterByFkMerchant($merchantSearchTransfer->getIdMerchant())
@@ -45,6 +66,7 @@ class MerchantSearchEntityManager extends AbstractEntityManager implements Merch
             $merchantSearchTransfer->toArray()
         );
         $merchantSearchEntity->setFkMerchant($merchantSearchTransfer->getIdMerchant());
-        $merchantSearchEntity->save();
+
+        return $merchantSearchEntity;
     }
 }
