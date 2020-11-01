@@ -10,16 +10,14 @@ namespace Spryker\Glue\ShipmentsRestApi;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentMethodByCheckoutDataExpander;
 use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentMethodByCheckoutDataExpanderInterface;
-use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentsByOrderExpander;
-use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentsByOrderExpanderInterface;
+use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentsByOrderResourceRelationshipExpander;
+use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentsByOrderResourceRelationshipExpanderInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderDetailsAttributesMapper;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderDetailsAttributesMapperInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderShipmentsMapper;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderShipmentsMapperInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodMapper;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodMapperInterface;
-use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\OrderShipmentsRestResponseBuilder;
-use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\OrderShipmentsRestResponseBuilderInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentMethodRestResponseBuilder;
 use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentMethodRestResponseBuilderInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Sorter\ShipmentMethodSorter;
@@ -64,22 +62,14 @@ class ShipmentsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentsByOrderExpanderInterface
+     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentsByOrderResourceRelationshipExpanderInterface
      */
-    public function createShipmentsByOrderExpander(): ShipmentsByOrderExpanderInterface
+    public function createShipmentsByOrderResourceRelationshipExpander(): ShipmentsByOrderResourceRelationshipExpanderInterface
     {
-        return new ShipmentsByOrderExpander(
-            $this->createOrderShipmentsRestResponseBuilder(),
+        return new ShipmentsByOrderResourceRelationshipExpander(
+            $this->getResourceBuilder(),
             $this->createOrderShipmentsMapper(),
         );
-    }
-
-    /**
-     * @return \Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\OrderShipmentsRestResponseBuilderInterface
-     */
-    public function createOrderShipmentsRestResponseBuilder(): OrderShipmentsRestResponseBuilderInterface
-    {
-        return new OrderShipmentsRestResponseBuilder($this->getResourceBuilder());
     }
 
     /**

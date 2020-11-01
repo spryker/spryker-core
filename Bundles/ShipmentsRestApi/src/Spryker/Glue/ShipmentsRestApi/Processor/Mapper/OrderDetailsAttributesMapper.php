@@ -27,13 +27,9 @@ class OrderDetailsAttributesMapper implements OrderDetailsAttributesMapperInterf
         OrderTransfer $orderTransfer,
         RestOrderDetailsAttributesTransfer $restOrderDetailsAttributesTransfer
     ): RestOrderDetailsAttributesTransfer {
-        if (!$orderTransfer->getItems()->count()) {
-            return $restOrderDetailsAttributesTransfer;
-        }
-
         $restOrderItemsAttributesTransfers = new ArrayObject();
         foreach ($orderTransfer->getItems() as $itemTransfer) {
-            $restOrderItemsAttributesTransfer = $this->mapItemTransferRestOrderItemsAttributesTransfer(
+            $restOrderItemsAttributesTransfer = $this->mapItemTransferToRestOrderItemsAttributesTransfer(
                 $itemTransfer,
                 new RestOrderItemsAttributesTransfer()
             );
@@ -62,7 +58,7 @@ class OrderDetailsAttributesMapper implements OrderDetailsAttributesMapperInterf
      *
      * @return \Generated\Shared\Transfer\RestOrderItemsAttributesTransfer
      */
-    protected function mapItemTransferRestOrderItemsAttributesTransfer(
+    protected function mapItemTransferToRestOrderItemsAttributesTransfer(
         ItemTransfer $itemTransfer,
         RestOrderItemsAttributesTransfer $restOrderItemsAttributesTransfer
     ): RestOrderItemsAttributesTransfer {

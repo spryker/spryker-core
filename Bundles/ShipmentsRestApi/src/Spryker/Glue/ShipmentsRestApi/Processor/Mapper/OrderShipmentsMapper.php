@@ -30,11 +30,8 @@ class OrderShipmentsMapper implements OrderShipmentsMapperInterface
                 ->setShippingAddress($shipmentTransfer->getShippingAddress())
                 ->setMethodName($shipmentTransfer->getMethod()->getName())
                 ->setCarrierName($shipmentTransfer->getCarrier()->getName())
-                ->setRequestedDeliveryDate(
-                    $shipmentTransfer->getRequestedDeliveryDate() ?
-                        $shipmentTransfer->getRequestedDeliveryDate() : null
-                );
-            //TODO fix the shipmentId of ItemTransfer to be set to the $restOrderShipmentsAttributesTransfers as a key.
+                ->setRequestedDeliveryDate($shipmentTransfer->getRequestedDeliveryDate() ?? null);
+
             $restOrderShipmentsAttributesTransfers[$shipmentTransfer->getIdSalesShipment()] = $restOrderShipmentsAttributesTransfer;
         }
 

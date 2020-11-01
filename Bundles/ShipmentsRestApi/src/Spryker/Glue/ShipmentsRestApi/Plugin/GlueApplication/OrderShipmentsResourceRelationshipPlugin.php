@@ -14,7 +14,7 @@ use Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiConfig;
 
 /**
  * @Glue({
- *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\"
+ *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestOrderShipmentsAttributesTransfer"
  * })
  *
  * @method \Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiFactory getFactory()
@@ -23,7 +23,7 @@ class OrderShipmentsResourceRelationshipPlugin extends AbstractPlugin implements
 {
     /**
      * {@inheritDoc}
-     * - Adds shipments resource as relationship in case OrderTransfer is provided as payload.
+     * - Adds order-shipments resource as relationship in case OrderTransfer is provided as a payload.
      *
      * @api
      *
@@ -35,7 +35,7 @@ class OrderShipmentsResourceRelationshipPlugin extends AbstractPlugin implements
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createShipmentsByOrderExpander()
+            ->createShipmentsByOrderResourceRelationshipExpander()
             ->addResourceRelationships($resources, $restRequest);
     }
 

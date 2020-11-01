@@ -19,6 +19,7 @@ class RestOrderDetailsAttributesMapperPlugin extends AbstractPlugin implements R
 {
     /**
      * {@inheritDoc}
+     * - Maps `RestOrderDetailsAttributesTransfer.items` and `RestOrderDetailsAttributesTransfer.expenses`.
      *
      * @api
      *
