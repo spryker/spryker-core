@@ -24,7 +24,7 @@
     </transfer>
 
     <transfer name="MerchantSearch">
-        <property name="data" type="array"/>
+        <property name="data" type="array" singular="data"/>
     </transfer>
 
 </transfers>
