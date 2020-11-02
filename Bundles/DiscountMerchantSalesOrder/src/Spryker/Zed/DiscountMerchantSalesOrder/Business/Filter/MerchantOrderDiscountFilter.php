@@ -8,6 +8,7 @@
 namespace Spryker\Zed\DiscountMerchantSalesOrder\Business\Filter;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
@@ -84,7 +85,10 @@ class MerchantOrderDiscountFilter implements MerchantOrderDiscountFilterInterfac
                 continue;
             }
 
-            foreach ($merchantOrderItemTransfer->getOrderItem()->getCalculatedDiscounts() as $calculatedDiscountTransfer) {
+            /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+            $itemTransfer = $merchantOrderItemTransfer->requireOrderItem()->getOrderItem();
+
+            foreach ($itemTransfer->getCalculatedDiscounts() as $calculatedDiscountTransfer) {
                 if (!isset($itemsCalculatedDiscountTransfers[$calculatedDiscountTransfer->getDisplayName()])) {
                     $itemsCalculatedDiscountTransfers[$calculatedDiscountTransfer->getDisplayName()] = $calculatedDiscountTransfer;
 

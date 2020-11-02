@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\MerchantSalesOrderMerchantUserGuiConfig;
@@ -57,9 +58,8 @@ class DetailController extends AbstractController
         }
 
         $merchantOrderTransfer = $this->findMerchantSalesOrder($idMerchantSalesOrder, $idMerchant);
-        $salesOrder = $merchantOrderTransfer->getOrder();
 
-        if (!$merchantOrderTransfer || !$salesOrder) {
+        if (!$merchantOrderTransfer || !$merchantOrderTransfer->getOrder()) {
             $this->addErrorMessage(static::MESSAGE_MERCHANT_ORDER_NOT_FOUND_ERROR, ['%d' => $idMerchantSalesOrder]);
             $redirectUrl = Url::generate(static::ROUTE_REDIRECT)->build();
 
@@ -79,6 +79,10 @@ class DetailController extends AbstractController
             $this->getFactory()->getMerchantSalesOrderDetailExternalBlocksUrls(),
             $merchantOrderTransfer
         );
+
+        /** @var \Generated\Shared\Transfer\OrderTransfer $salesOrder */
+        $salesOrder = $merchantOrderTransfer->requireOrder()->getOrder();
+
         $groupedMerchantOrderItemsByShipment = $this->getFactory()->getShipmentService()->groupItemsByShipment(
             $salesOrder->getItems()
         );
