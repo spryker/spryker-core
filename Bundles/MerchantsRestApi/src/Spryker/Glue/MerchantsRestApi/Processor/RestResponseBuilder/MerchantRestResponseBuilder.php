@@ -134,20 +134,9 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
             $itemsPerPage
         );
 
-        foreach ($merchantStorageTransfers as $merchantSearchTransfer) {
-            $restMerchantsAttributesTransfer = $this->merchantMapper
-                ->mapMerchantStorageTransferToRestMerchantsAttributesTransfer(
-                    $merchantSearchTransfer,
-                    new RestMerchantsAttributesTransfer(),
-                    $localeName
-                );
-
+        foreach ($merchantStorageTransfers as $merchantStorageTransfer) {
             $restResponse->addResource(
-                $this->restResourceBuilder->createRestResource(
-                    MerchantsRestApiConfig::RESOURCE_MERCHANTS,
-                    $merchantSearchTransfer->getMerchantReference(),
-                    $restMerchantsAttributesTransfer
-                )
+                $this->createMerchantsRestResource($merchantStorageTransfer, $localeName)
             );
         }
 
