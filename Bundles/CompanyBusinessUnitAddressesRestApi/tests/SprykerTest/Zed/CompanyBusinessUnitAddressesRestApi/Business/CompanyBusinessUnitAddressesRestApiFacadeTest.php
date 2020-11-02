@@ -35,28 +35,18 @@ class CompanyBusinessUnitAddressesRestApiFacadeTest extends Unit
     protected $tester;
 
     /**
-     * @var \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    protected $product;
-
-    /**
-     * @var \Generated\Shared\Transfer\CustomerTransfer
-     */
-    protected $customer;
-
-    /**
      * @return void
      */
-    public function testExpandCheckoutDataWithCompanyBusinessUnitAddresses(): void
+    public function testFacadeExpandCheckoutDataWithCompanyBusinessUnitAddresses(): void
     {
         // Arrange
-        $CompanyBusinessUnitAddressesRestApiFacade = $this->tester->getFacade();
-        $CompanyBusinessUnitAddressesRestApiFacade->setFactory(
+        $companyBusinessUnitAddressesRestApiFacade = $this->tester->getFacade();
+        $companyBusinessUnitAddressesRestApiFacade->setFactory(
             $this->getCompanyBusinessUnitAddressesRestApiBusinessFactoryMock()
         );
 
         // Act
-        $restCheckoutDataTransfer = $CompanyBusinessUnitAddressesRestApiFacade->expandCheckoutDataWithCompanyBusinessUnitAddresses(
+        $restCheckoutDataTransfer = $companyBusinessUnitAddressesRestApiFacade->expandCheckoutDataWithCompanyBusinessUnitAddresses(
             $this->tester->createRestCheckoutDataTransfer(),
             $this->tester->createRestCheckoutRequestAttributesTransfer()
         );
@@ -78,16 +68,16 @@ class CompanyBusinessUnitAddressesRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testMapCompanyBusinessUnitAddressesToQuote(): void
+    public function testFacadeMapCompanyBusinessUnitAddressesToQuote(): void
     {
         // Arrange
-        $CompanyBusinessUnitAddressesRestApiFacade = $this->tester->getFacade();
-        $CompanyBusinessUnitAddressesRestApiFacade->setFactory(
+        $companyBusinessUnitAddressesRestApiFacade = $this->tester->getFacade();
+        $companyBusinessUnitAddressesRestApiFacade->setFactory(
             $this->getCompanyBusinessUnitAddressesRestApiBusinessFactoryMock()
         );
 
         // Act
-        $quoteTransfer = $CompanyBusinessUnitAddressesRestApiFacade->mapCompanyBusinessUnitAddressesToQuote(
+        $quoteTransfer = $companyBusinessUnitAddressesRestApiFacade->mapCompanyBusinessUnitAddressesToQuote(
             $this->tester->createRestCheckoutRequestAttributesTransfer(),
             $this->tester->createQuoteTransfer()
         );
