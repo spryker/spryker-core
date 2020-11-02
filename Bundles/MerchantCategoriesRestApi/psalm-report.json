@@ -1,0 +1,18 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\CategoryTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantCategoriesRestApi/src/Spryker/Glue/MerchantCategoriesRestApi/Plugin/MerchantsRestApi/MerchantCategoryMerchantRestAttributesMapperPlugin.php",
+            "snippet": "                $merchantStorageTransfer->getCategories()->getArrayCopy(),",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": []
+}
