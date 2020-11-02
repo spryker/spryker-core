@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\MerchantCategory;
 
 use Codeception\Actor;
+use Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery;
 
 /**
  * Inherited Methods
@@ -28,4 +29,20 @@ use Codeception\Actor;
 class MerchantCategoryBusinessTester extends Actor
 {
     use _generated\MerchantCategoryBusinessTesterActions;
+
+    /**
+     * @return void
+     */
+    public function cleanUpDatabase(): void
+    {
+        $this->cleanUpMerchantCategoryTable();
+    }
+
+    /**
+     * @return void
+     */
+    protected function cleanUpMerchantCategoryTable(): void
+    {
+        SpyMerchantCategoryQuery::create()->deleteAll();
+    }
 }

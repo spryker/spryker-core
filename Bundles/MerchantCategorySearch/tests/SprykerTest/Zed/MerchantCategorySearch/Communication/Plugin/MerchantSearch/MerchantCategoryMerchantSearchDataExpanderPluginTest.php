@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\MerchantCategorySearch\Communication\Plugin\MerchantSearch;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\DataBuilder\CategoryBuilder;
 use Generated\Shared\Transfer\MerchantCategoryResponseTransfer;
 use Generated\Shared\Transfer\MerchantSearchCollectionTransfer;
 use Generated\Shared\Transfer\MerchantSearchTransfer;
@@ -46,6 +46,8 @@ class MerchantCategoryMerchantSearchDataExpanderPluginTest extends Unit
      */
     protected const SEARCH_RESULT_DATA = 'search-result-data';
 
+    protected const CATEGORY_TRANSFER_COUNT = 3;
+
     /**
      * @var \SprykerTest\Zed\MerchantCategorySearch\MerchantCategorySearchCommunicationTester
      */
@@ -65,8 +67,11 @@ class MerchantCategoryMerchantSearchDataExpanderPluginTest extends Unit
             ->willReturn($facadeMock);
 
         $merchantCategoryResponseTransfer = new MerchantCategoryResponseTransfer();
-        $merchantCategoryResponseTransfer->addCategory((new CategoryTransfer())->setCategoryKey(1));
-        $merchantCategoryResponseTransfer->addCategory((new CategoryTransfer())->setCategoryKey(2));
+        $categoryTransferKeys = $this->addCategoriesToMerchantCategoryResponseTransfer(
+            $merchantCategoryResponseTransfer,
+            static::CATEGORY_TRANSFER_COUNT
+        );
+
         $facadeMock->method('get')
             ->willReturn($merchantCategoryResponseTransfer);
 
@@ -89,7 +94,7 @@ class MerchantCategoryMerchantSearchDataExpanderPluginTest extends Unit
                 static::SEARCH_RESULT_DATA => [
                     static::ID_MERCHANT => 1,
                 ],
-                static::CATEGORY_KEYS => [1, 2],
+                static::CATEGORY_KEYS => $categoryTransferKeys,
             ],
             $resultMerchantSearchData->getMerchants()[0]->getData()
         );
@@ -121,5 +126,25 @@ class MerchantCategoryMerchantSearchDataExpanderPluginTest extends Unit
         return $this->getMockBuilder(MerchantCategorySearchToMerchantCategoryFacadeInterface::class)
             ->setMethods(['get'])
             ->getMock();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantCategoryResponseTransfer $merchantCategoryResponseTransfer
+     * @param int $categoryTransferCount
+     *
+     * @return int[]
+     */
+    protected function addCategoriesToMerchantCategoryResponseTransfer(
+        MerchantCategoryResponseTransfer $merchantCategoryResponseTransfer,
+        int $categoryTransferCount
+    ): array {
+        $categoryTransferKeys = [];
+        while ($categoryTransferCount--) {
+            $categoryTransfer = (new CategoryBuilder())->build();
+            $merchantCategoryResponseTransfer->addCategory($categoryTransfer);
+            $categoryTransferKeys[] = $categoryTransfer->getCategoryKey();
+        }
+
+        return $categoryTransferKeys;
     }
 }

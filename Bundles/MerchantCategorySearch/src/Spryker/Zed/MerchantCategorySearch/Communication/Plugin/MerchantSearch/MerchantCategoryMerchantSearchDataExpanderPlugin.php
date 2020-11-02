@@ -21,11 +21,14 @@ class MerchantCategoryMerchantSearchDataExpanderPlugin extends AbstractPlugin im
     protected const ID_MERCHANT = 'id_merchant';
     protected const CATEGORY_KEYS = 'category-keys';
 
+    /**
+     * @uses \Generated\Shared\Search\MerchantIndexMap::SEARCH_RESULT_DATA
+     */
     protected const SEARCH_RESULT_DATA = 'search-result-data';
 
     /**
      * {@inheritDoc}
-     * - Expands merchant search data with merchant category ids.
+     * - Expands merchant search data with merchant category keys.
      *
      * @api
      *

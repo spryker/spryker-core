@@ -12,14 +12,14 @@ use Generated\Shared\Transfer\RestMerchantsAttributesTransfer;
 interface MerchantCategoryMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer[] $categoryTransfers
+     * @param \Generated\Shared\Transfer\MerchantCategoryStorageTransfer[] $merchantStorageCategoryTransfers
      * @param \Generated\Shared\Transfer\RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\RestMerchantsAttributesTransfer
      */
     public function mapCategoryTransfersToRestMerchantsAttributesTransfer(
-        array $categoryTransfers,
+        array $merchantStorageCategoryTransfers,
         RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer,
         string $localeName
     ): RestMerchantsAttributesTransfer;

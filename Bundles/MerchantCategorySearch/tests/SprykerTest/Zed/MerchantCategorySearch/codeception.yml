@@ -15,4 +15,3 @@ suites:
     Communication:
         path: Communication
         class_name: MerchantCategorySearchCommunicationTester
-

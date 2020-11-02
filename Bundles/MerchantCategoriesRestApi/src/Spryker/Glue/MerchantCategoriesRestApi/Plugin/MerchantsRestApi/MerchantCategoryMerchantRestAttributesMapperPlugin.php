@@ -18,8 +18,7 @@ use Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\MerchantRestAttribu
 class MerchantCategoryMerchantRestAttributesMapperPlugin extends AbstractPlugin implements MerchantRestAttributesMapperPluginInterface
 {
     /**
-     * Specification:
-     * - Maps MerchantStorageTransfer.categories to RestMerchantsAttributesTransfer.
+     * {@inheritDoc}
      *
      * @api
      *

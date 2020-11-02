@@ -15,7 +15,7 @@ interface MerchantSearchFacadeInterface
      * Specification:
      * - Retrieves all Merchants using IDs from $eventTransfers.
      * - Updates entities from `spy_merchant_search` with actual data from obtained Merchants.
-     * - Runs merchant search data expander plugins
+     * - Runs merchant search data expander plugins.
      *
      * @api
      *

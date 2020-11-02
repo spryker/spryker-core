@@ -13,14 +13,14 @@
     </transfer>
 
     <transfer name="MerchantStorage">
-        <property name="categories" type="Category[]" singular="category"/>
+        <property name="categories" type="MerchantCategoryStorage[]" singular="category"/>
     </transfer>
 
-    <transfer name="Category">
-        <property name="localizedAttributes" type="CategoryLocalizedAttributes[]" singular="localizedAttributes"/>
+    <transfer name="MerchantCategoryStorage">
+        <property name="localizedAttributes" type="MerchantCategoryLocalizedAttributes[]" singular="localizedAttributes"/>
     </transfer>
 
-    <transfer name="CategoryLocalizedAttributes">
+    <transfer name="MerchantCategoryLocalizedAttributes">
         <property name="locale" type="Locale"/>
         <property name="name" type="string"/>
     </transfer>

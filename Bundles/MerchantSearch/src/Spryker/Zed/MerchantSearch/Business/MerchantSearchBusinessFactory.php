@@ -18,6 +18,7 @@ use Spryker\Zed\MerchantSearch\Business\Writer\MerchantSearchWriter;
 use Spryker\Zed\MerchantSearch\Business\Writer\MerchantSearchWriterInterface;
 use Spryker\Zed\MerchantSearch\Dependency\Facade\MerchantSearchToEventBehaviorFacadeInterface;
 use Spryker\Zed\MerchantSearch\Dependency\Facade\MerchantSearchToMerchantFacadeInterface;
+use Spryker\Zed\MerchantSearch\Dependency\Service\MerchantSearchToUtilEncodingServiceInterface;
 use Spryker\Zed\MerchantSearch\MerchantSearchDependencyProvider;
 
 /**
@@ -49,7 +50,7 @@ class MerchantSearchBusinessFactory extends AbstractBusinessFactory
     public function createMerchantSearchMapper(): MerchantSearchMapperInterface
     {
         return new MerchantSearchMapper(
-            $this->getProvidedDependency(MerchantSearchDependencyProvider::SERVICE_UTIL_ENCODING),
+            $this->getUtilEncodingService(),
             $this->createMerchantSearchDataMapper()
         );
     }
@@ -94,5 +95,13 @@ class MerchantSearchBusinessFactory extends AbstractBusinessFactory
     public function getMerchantSearchDataExpanderPlugins(): array
     {
         return $this->getProvidedDependency(MerchantSearchDependencyProvider::PLUGINS_MERCHANT_SEARCH_DATA_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSearch\Dependency\Service\MerchantSearchToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): MerchantSearchToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(MerchantSearchDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

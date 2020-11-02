@@ -45,7 +45,7 @@ class MerchantCategoryRepository extends AbstractRepository implements MerchantC
 
         if ($merchantCategoryQuery->count() > MerchantCategoryConfig::MAX_CATEGORY_SELECT_COUNT) {
             throw new MerchantCategoryLimitException(
-                'Maximal merchant category select limit reached. Please adjust configuration.'
+                'Maximum of merchant category select limit is reached. Please adjust configuration.'
             );
         }
 
