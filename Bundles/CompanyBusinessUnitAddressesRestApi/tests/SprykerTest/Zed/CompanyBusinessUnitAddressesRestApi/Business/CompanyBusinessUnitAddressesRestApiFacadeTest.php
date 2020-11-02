@@ -37,7 +37,7 @@ class CompanyBusinessUnitAddressesRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFacadeExpandCheckoutDataWithCompanyBusinessUnitAddresses(): void
+    public function testExpandCheckoutDataWithCompanyBusinessUnitAddressesWillUseExistingBusinessUnitAddress(): void
     {
         // Arrange
         $companyBusinessUnitAddressesRestApiFacade = $this->tester->getFacade();
@@ -55,20 +55,20 @@ class CompanyBusinessUnitAddressesRestApiFacadeTest extends Unit
         $this->assertInstanceOf(
             CompanyUnitAddressCollectionTransfer::class,
             $restCheckoutDataTransfer->getCompanyBusinessUnitAddresses(),
-            'Expected `RestCheckoutDataTransfer` contains `CompanyUnitAddressCollectionTransfer`.'
+            'Expected `RestCheckoutDataTransfer` to contain `CompanyUnitAddressCollectionTransfer`.'
         );
 
         $this->assertCount(
             2,
             $restCheckoutDataTransfer->getCompanyBusinessUnitAddresses()->getCompanyUnitAddresses(),
-            'Expected `CompanyUnitAddressCollectionTransfer` contains two `CompanyUnitAddressTransfer`.'
+            'Expected `CompanyUnitAddressCollectionTransfer` to contain two `CompanyUnitAddressTransfer`.'
         );
     }
 
     /**
      * @return void
      */
-    public function testFacadeMapCompanyBusinessUnitAddressesToQuote(): void
+    public function testMapCompanyBusinessUnitAddressesToQuoteWillMapExistingBusinessUnitAddress(): void
     {
         // Arrange
         $companyBusinessUnitAddressesRestApiFacade = $this->tester->getFacade();
