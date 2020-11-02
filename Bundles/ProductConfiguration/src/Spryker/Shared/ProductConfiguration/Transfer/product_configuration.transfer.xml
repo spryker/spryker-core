@@ -115,6 +115,7 @@
     </transfer>
 
     <transfer name="PriceProduct">
+        <property name="skuProduct" type="string"/>
     </transfer>
 
     <transfer name="CartItemQuantity">

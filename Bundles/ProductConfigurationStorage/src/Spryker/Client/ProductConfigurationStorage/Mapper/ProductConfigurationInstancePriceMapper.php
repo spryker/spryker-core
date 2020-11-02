@@ -118,7 +118,6 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
             );
 
         return (new PriceProductTransfer())
-            ->setSkuProduct($configuratorResponseData[static::PRICES_SKU_KEY])
             ->setPriceTypeName(static::DEFAULT_PRICE_TYPE_NAME)
             ->setIsMergeable(static::IS_PRICE_MERGEABLE)
             ->setPriceDimension($priceProductDimensionTransfer)

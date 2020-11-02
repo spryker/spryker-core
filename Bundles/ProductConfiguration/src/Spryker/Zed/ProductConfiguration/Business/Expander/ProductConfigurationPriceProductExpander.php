@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductConfiguration\Business\Expander;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 
 class ProductConfigurationPriceProductExpander implements ProductConfigurationPriceProductExpanderInterface
 {
@@ -23,14 +25,48 @@ class ProductConfigurationPriceProductExpander implements ProductConfigurationPr
     ): array {
         $productConfigurationPriceProductTransfers = [];
 
-        foreach ($cartChangeTransfer->getItems() as $item) {
-            $productConfigurationInstance = $item->getProductConfigurationInstance();
-
-            if ($productConfigurationInstance && $productConfigurationInstance->getPrices()->count()) {
-                $productConfigurationPriceProductTransfers[] = $productConfigurationInstance->getPrices()->getArrayCopy();
+        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            if (!$this->hasProductConfigurationPrices($itemTransfer)) {
+                continue;
             }
+
+            $productConfigurationInstance = $this->fillProductConfigurationPricesWithSku(
+                $itemTransfer->getProductConfigurationInstance(),
+                $itemTransfer
+            );
+
+            $productConfigurationPriceProductTransfers[] = $productConfigurationInstance->getPrices()->getArrayCopy();
         }
 
         return array_merge($priceProductTransfers, ...$productConfigurationPriceProductTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer $productConfigurationInstance
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer
+     */
+    protected function fillProductConfigurationPricesWithSku(
+        ProductConfigurationInstanceTransfer $productConfigurationInstance,
+        ItemTransfer $itemTransfer
+    ): ProductConfigurationInstanceTransfer {
+        foreach ($productConfigurationInstance->getPrices() as $priceProductTransfer) {
+            $priceProductTransfer->setSkuProduct($itemTransfer->getSku());
+        }
+
+        return $productConfigurationInstance;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function hasProductConfigurationPrices(ItemTransfer $itemTransfer)
+    {
+        $productConfigurationInstance = $itemTransfer->getProductConfigurationInstance();
+
+        return $productConfigurationInstance && $productConfigurationInstance->getPrices()->count();
     }
 }
