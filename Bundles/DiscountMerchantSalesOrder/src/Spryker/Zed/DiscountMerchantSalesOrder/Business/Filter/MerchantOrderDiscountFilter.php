@@ -8,7 +8,6 @@
 namespace Spryker\Zed\DiscountMerchantSalesOrder\Business\Filter;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
