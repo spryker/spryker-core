@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ZedNavigation\Business\Strategy;
 
-use Zend\Config\Config;
+use Laminas\Config\Config;
 
 interface NavigationMergeStrategyInterface
 {
@@ -17,9 +17,9 @@ interface NavigationMergeStrategyInterface
     public function getMergeStrategy(): string;
 
     /**
-     * @param \Zend\Config\Config $navigationDefinition
-     * @param \Zend\Config\Config $rootDefinition
-     * @param \Zend\Config\Config $coreNavigationDefinition
+     * @param \Laminas\Config\Config $navigationDefinition
+     * @param \Laminas\Config\Config $rootDefinition
+     * @param \Laminas\Config\Config $coreNavigationDefinition
      *
      * @return array
      */

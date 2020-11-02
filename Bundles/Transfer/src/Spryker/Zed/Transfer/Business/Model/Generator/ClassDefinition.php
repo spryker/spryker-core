@@ -8,14 +8,14 @@
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
 use ArrayObject;
+use Laminas\Filter\Word\CamelCaseToUnderscore;
+use Laminas\Filter\Word\UnderscoreToCamelCase;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Shared\Transfer\TypeValidation\TransferTypeValidatorTrait;
 use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeTypeException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeValueException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidNameException;
 use Spryker\Zed\Transfer\TransferConfig;
-use Zend\Filter\Word\CamelCaseToUnderscore;
-use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class ClassDefinition implements ClassDefinitionInterface
 {
