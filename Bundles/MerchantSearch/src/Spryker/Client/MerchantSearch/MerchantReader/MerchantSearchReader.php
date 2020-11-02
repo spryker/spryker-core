@@ -56,7 +56,7 @@ class MerchantSearchReader implements MerchantSearchReaderInterface
      *
      * @return mixed
      */
-    public function merchantSearch(MerchantSearchRequestTransfer $merchantSearchRequestTransfer): array
+    public function merchantSearch(MerchantSearchRequestTransfer $merchantSearchRequestTransfer)
     {
         $requestParameters = $merchantSearchRequestTransfer->getRequestParameters();
         $searchQuery = $this->searchClient->expandQuery(

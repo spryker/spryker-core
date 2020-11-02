@@ -82,7 +82,7 @@ class MerchantCategoryMerchantSearchDataExpanderPluginTest extends Unit
         $resultMerchantSearchData = $plugin->expand($merchantSearchCollectionTransfer);
 
         // Assert
-        $this->assertCount(1, $resultMerchantSearchData->get());
+        $this->assertCount(1, $resultMerchantSearchData->getMerchants());
 
         $this->assertSame(
             [
