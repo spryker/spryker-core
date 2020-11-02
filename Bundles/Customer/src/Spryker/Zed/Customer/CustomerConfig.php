@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\SequenceNumber\SequenceNumberConstants;
-use Spryker\Zed\Customer\Business\Customer\CustomerPasswordPolicyValidator;
+use Spryker\Zed\Customer\Business\Model\CustomerPasswordPolicy\CustomerPasswordPolicyLength;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 /**
@@ -134,13 +134,11 @@ class CustomerConfig extends AbstractBundleConfig
      *
      * @return mixed[][]
      */
-    public function getCustomerPasswordPolicy(): array
+    public function getCustomerPasswordPolicyLength(): array
     {
         return [
-            CustomerPasswordPolicyValidator::PASSWORD_POLICY_LENGTH => [
-                CustomerPasswordPolicyValidator::PASSWORD_POLICY_ATTRIBUTE_MIN => static::MIN_LENGTH_CUSTOMER_PASSWORD,
-                CustomerPasswordPolicyValidator::PASSWORD_POLICY_ATTRIBUTE_MAX => static::MAX_LENGTH_CUSTOMER_PASSWORD,
-            ],
+            CustomerPasswordPolicyLength::PASSWORD_POLICY_ATTRIBUTE_MIN => static::MIN_LENGTH_CUSTOMER_PASSWORD,
+            CustomerPasswordPolicyLength::PASSWORD_POLICY_ATTRIBUTE_MAX => static::MAX_LENGTH_CUSTOMER_PASSWORD,
         ];
     }
 
@@ -150,6 +148,66 @@ class CustomerConfig extends AbstractBundleConfig
      * @return string[]
      */
     public function getCustomerPasswordWhitelist(): array
+    {
+        return [];
+    }
+
+    /**
+     * @api
+     *
+     * @return string[]
+     */
+    public function getCustomerPasswordDigit(): array
+    {
+        return [];
+    }
+
+    /**
+     * @api
+     *
+     * @return string[]
+     */
+    public function getCustomerPasswordUpperCase(): array
+    {
+        return [];
+    }
+
+    /**
+     * @api
+     *
+     * @return string[]
+     */
+    public function getCustomerPasswordLowerCase(): array
+    {
+        return [];
+    }
+
+    /**
+     * @api
+     *
+     * @return string[]
+     */
+    public function getCustomerPasswordSpecial(): array
+    {
+        return [];
+    }
+
+    /**
+     * @api
+     *
+     * @return string[]
+     */
+    public function getCustomerPasswordSequenceLimit(): array
+    {
+        return [];
+    }
+
+    /**
+     * @api
+     *
+     * @return string[]
+     */
+    public function getCustomerPasswordBlackList(): array
     {
         return [];
     }

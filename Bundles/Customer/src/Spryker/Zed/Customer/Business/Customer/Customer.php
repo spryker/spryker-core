@@ -25,6 +25,7 @@ use Spryker\Shared\Customer\Code\Messages;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
+use Spryker\Zed\Customer\Business\Model\CustomerPasswordPolicy\CustomerPasswordPolicyInterface;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface;
 use Spryker\Zed\Customer\Communication\Plugin\Mail\CustomerRestoredPasswordConfirmationMailTypePlugin;
 use Spryker\Zed\Customer\Communication\Plugin\Mail\CustomerRestorePasswordMailTypePlugin;
@@ -95,9 +96,9 @@ class Customer implements CustomerInterface
     protected $postCustomerRegistrationPlugins;
 
     /**
-     * @var \Spryker\Zed\Customer\Business\Customer\CustomerPasswordPolicyManagerInterface;
+     * @var \Spryker\Zed\Customer\Business\Model\CustomerPasswordPolicy\CustomerPasswordPolicyInterface;
      */
-    protected $passwordPolicyManager;
+    protected $passwordPolicy;
 
     /**
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $queryContainer
@@ -108,7 +109,7 @@ class Customer implements CustomerInterface
      * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface $customerExpander
-     * @param \Spryker\Zed\Customer\Business\Customer\CustomerPasswordPolicyManagerInterface $passwordPolicyManager
+     * @param \Spryker\Zed\Customer\Business\Model\CustomerPasswordPolicy\CustomerPasswordPolicyInterface $passwordPolicy
      * @param \Spryker\Zed\CustomerExtension\Dependency\Plugin\PostCustomerRegistrationPluginInterface[] $postCustomerRegistrationPlugins
      */
     public function __construct(
@@ -120,7 +121,7 @@ class Customer implements CustomerInterface
         LocaleQueryContainerInterface $localeQueryContainer,
         Store $store,
         CustomerExpanderInterface $customerExpander,
-        CustomerPasswordPolicyManagerInterface $passwordPolicyManager,
+        CustomerPasswordPolicyInterface $passwordPolicy,
         array $postCustomerRegistrationPlugins = []
     ) {
         $this->queryContainer = $queryContainer;
@@ -131,7 +132,7 @@ class Customer implements CustomerInterface
         $this->localeQueryContainer = $localeQueryContainer;
         $this->store = $store;
         $this->customerExpander = $customerExpander;
-        $this->passwordPolicyManager = $passwordPolicyManager;
+        $this->passwordPolicy = $passwordPolicy;
         $this->postCustomerRegistrationPlugins = $postCustomerRegistrationPlugins;
     }
 
@@ -993,11 +994,10 @@ class Customer implements CustomerInterface
      */
     protected function validateCustomerPassword(string $password): CustomerResponseTransfer
     {
-        return $this->passwordPolicyManager->validate(
-            $password,
-            $this->customerConfig->getCustomerPasswordPolicy(),
-            $this->customerConfig->getCustomerPasswordWhitelist()
-        );
+        $customerResponseTransfer = (new CustomerResponseTransfer())
+            ->setIsSuccess(true);
+
+        return $this->passwordPolicy->validatePassword($password, $customerResponseTransfer);
     }
 
     /**

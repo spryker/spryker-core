@@ -14,13 +14,13 @@ use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaverInterface;
 use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaverWithMultiShippingAddress;
 use Spryker\Zed\Customer\Business\Customer\Address;
 use Spryker\Zed\Customer\Business\Customer\Customer;
-use Spryker\Zed\Customer\Business\Customer\CustomerPasswordPolicyManager;
-use Spryker\Zed\Customer\Business\Customer\CustomerPasswordPolicyManagerInterface;
 use Spryker\Zed\Customer\Business\Customer\CustomerReader;
 use Spryker\Zed\Customer\Business\Customer\CustomerReaderInterface;
 use Spryker\Zed\Customer\Business\Customer\EmailValidator;
 use Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpander;
 use Spryker\Zed\Customer\Business\Model\CustomerOrderSaver as ObsoleteCustomerOrderSaver;
+use Spryker\Zed\Customer\Business\Model\CustomerPasswordPolicy\CustomerPasswordPolicyInterface;
+use Spryker\Zed\Customer\Business\Model\CustomerPasswordPolicy\CustomerPasswordPolicyProvider;
 use Spryker\Zed\Customer\Business\Model\PreConditionChecker;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGenerator;
 use Spryker\Zed\Customer\Business\Sales\CustomerOrderHydrator;
@@ -53,22 +53,11 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
             $this->getLocaleQueryContainer(),
             $this->getStore(),
             $this->createCustomerExpander(),
-            $this->createPasswordPolicyManager(),
+            $this->getPasswordPolicy(),
             $this->getPostCustomerRegistrationPlugins()
         );
 
         return $customer;
-    }
-
-    /**
-     * @return \Spryker\Zed\Customer\Business\Customer\CustomerPasswordPolicyManagerInterface
-     */
-    public function createPasswordPolicyManager(): CustomerPasswordPolicyManagerInterface
-    {
-        $customerPasswordPolicyManager = new CustomerPasswordPolicyManager();
-        $customerPasswordPolicyManager->setPlugins($this->getCustomerPasswordPolicyPlugins());
-
-        return $customerPasswordPolicyManager;
     }
 
     /**
@@ -81,6 +70,24 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createAddress(),
             $this->createCustomerExpander()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\Model\CustomerPasswordPolicy\CustomerPasswordPolicyInterface
+     */
+    public function getPasswordPolicy(): CustomerPasswordPolicyInterface
+    {
+        return $this->createCustomerPasswordPolicyPovider()->getPasswordPolicy();
+    }
+
+    /**
+     * @return Spryker\Zed\Customer\Business\Model\CustomerPasswordPolicy\CustomerPasswordPolicyProvider
+     */
+    public function createCustomerPasswordPolicyPovider(): CustomerPasswordPolicyProvider
+    {
+        return new CustomerPasswordPolicyProvider(
+            $this->getCustomerPasswordPolicies()
         );
     }
 
@@ -262,11 +269,11 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerPasswordPolicyPluginInterface[]
+     * @return \Spryker\Zed\Customer\Business\Model\CustomerPasswordPolicy\CustomerPasswordPolicyInterface[]
      */
-    public function getCustomerPasswordPolicyPlugins()
+    public function getCustomerPasswordPolicies(): array
     {
-        return $this->getProvidedDependency(CustomerDependencyProvider::PLUGINS_CUSTOMER_PASSWORD_POLICY);
+        return $this->getProvidedDependency(CustomerDependencyProvider::CUSTOMER_PASSWORD_POLICY);
     }
 
     /**

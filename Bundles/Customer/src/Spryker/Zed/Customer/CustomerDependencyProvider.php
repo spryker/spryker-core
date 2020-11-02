@@ -10,7 +10,7 @@ namespace Spryker\Zed\Customer;
 use Spryker\Service\Customer\CustomerServiceInterface;
 use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\Customer\Communication\Plugin\PasswordPolicy\CustomerPasswordLengthPolicyPlugin;
+use Spryker\Zed\Customer\Business\Model\CustomerPasswordPolicy\CustomerPasswordPolicyLength;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
@@ -52,7 +52,8 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_CUSTOMER_ANONYMIZER = 'PLUGINS_CUSTOMER_ANONYMIZER';
     public const PLUGINS_CUSTOMER_TRANSFER_EXPANDER = 'PLUGINS_CUSTOMER_TRANSFER_EXPANDER';
     public const PLUGINS_POST_CUSTOMER_REGISTRATION = 'PLUGINS_POST_CUSTOMER_REGISTRATION';
-    public const PLUGINS_CUSTOMER_PASSWORD_POLICY = 'PLUGINS_CUSTOMER_PASSWORD_POLICY';
+
+    public const CUSTOMER_PASSWORD_POLICY = 'CUSTOMER_PASSWORD_POLICY';
 
     public const PLUGINS_CUSTOMER_TABLE_ACTION_EXPANDER = 'PLUGINS_CUSTOMER_TABLE_ACTION_EXPANDER';
 
@@ -75,7 +76,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addLocaleFacade($container);
         $container = $this->addCustomerTransferExpanderPlugins($container);
         $container = $this->addPostCustomerRegistrationPlugins($container);
-        $container = $this->addCustomerPasswordPolicyPlugins($container);
+        $container = $this->addCustomerPasswordPolicy($container);
         $container = $this->addCustomerService($container);
 
         return $container;
@@ -325,22 +326,22 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function addCustomerPasswordPolicyPlugins(Container $container): Container
+    public function addCustomerPasswordPolicy(Container $container)
     {
-        $container->set(static::PLUGINS_CUSTOMER_PASSWORD_POLICY, function (Container $container) {
-            return $this->getCustomerPasswordPolicyPlugins();
+        $container->set(static::CUSTOMER_PASSWORD_POLICY, function (Container $container) {
+            return $this->getCustomerPasswordPolicy();
         });
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerPasswordPolicyPluginInterface[]
+     * @return \Spryker\Zed\Customer\Business\Model\CustomerPasswordPolicy\CustomerPasswordPolicyInterface[]
      */
-    public function getCustomerPasswordPolicyPlugins(): array
+    public function getCustomerPasswordPolicy(): array
     {
         return [
-            new CustomerPasswordLengthPolicyPlugin(),
+            new CustomerPasswordPolicyLength($this->getConfig()->getCustomerPasswordPolicyLength()),
         ];
     }
 
