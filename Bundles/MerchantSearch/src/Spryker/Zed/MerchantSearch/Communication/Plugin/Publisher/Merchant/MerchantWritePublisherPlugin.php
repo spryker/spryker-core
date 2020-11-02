@@ -26,14 +26,14 @@ class MerchantWritePublisherPlugin extends AbstractPlugin implements PublisherPl
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName): void
+    public function handleBulk(array $transfers, $eventName): void
     {
-        $this->getFacade()->writeCollectionByMerchantEvents($eventTransfers);
+        $this->getFacade()->writeCollectionByMerchantEvents($transfers);
     }
 
     /**
