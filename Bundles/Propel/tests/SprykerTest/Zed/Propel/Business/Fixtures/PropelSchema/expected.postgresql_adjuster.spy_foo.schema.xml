@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Namespace" package="Package">
+    <table name="spy_foo" phpName="SpyFoo">
+        <column name="id_spy_foo" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="name" required="true" type="INTEGER"/>
+        <id-method-parameter value="spy_foo_pk_seq"/>
+    </table>
+</database>
