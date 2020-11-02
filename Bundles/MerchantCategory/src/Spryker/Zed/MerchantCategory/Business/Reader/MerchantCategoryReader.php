@@ -17,14 +17,14 @@ class MerchantCategoryReader implements MerchantCategoryReaderInterface
     /**
      * @var \Spryker\Zed\MerchantCategory\Persistence\MerchantCategoryRepositoryInterface
      */
-    protected $repository;
+    protected $merchantCategoryRepository;
 
     /**
-     * @param \Spryker\Zed\MerchantCategory\Persistence\MerchantCategoryRepositoryInterface $repository
+     * @param \Spryker\Zed\MerchantCategory\Persistence\MerchantCategoryRepositoryInterface $merchantCategoryRepository
      */
-    public function __construct(MerchantCategoryRepositoryInterface $repository)
+    public function __construct(MerchantCategoryRepositoryInterface $merchantCategoryRepository)
     {
-        $this->repository = $repository;
+        $this->merchantCategoryRepository = $merchantCategoryRepository;
     }
 
     /**
@@ -34,7 +34,7 @@ class MerchantCategoryReader implements MerchantCategoryReaderInterface
      */
     public function get(MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer): MerchantCategoryResponseTransfer
     {
-        $categoryTransfers = $this->repository->getCategories($merchantCategoryCriteriaTransfer);
+        $categoryTransfers = $this->merchantCategoryRepository->getCategories($merchantCategoryCriteriaTransfer);
 
         return (new MerchantCategoryResponseTransfer())
             ->setCategories(new ArrayObject($categoryTransfers))
