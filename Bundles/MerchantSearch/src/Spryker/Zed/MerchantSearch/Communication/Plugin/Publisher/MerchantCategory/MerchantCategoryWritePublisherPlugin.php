@@ -5,9 +5,8 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantSearch\Communication\Plugin\Publisher\Merchant;
+namespace Spryker\Zed\MerchantSearch\Communication\Plugin\Publisher\MerchantCategory;
 
-use Spryker\Shared\MerchantSearch\MerchantSearchConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
@@ -16,11 +15,21 @@ use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
  * @method \Spryker\Zed\MerchantSearch\Business\MerchantSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantSearch\Communication\MerchantSearchCommunicationFactory getFactory()
  */
-class MerchantWritePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
+class MerchantCategoryWritePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
 {
     /**
+     * @uses \Spryker\Zed\MerchantCategory\Dependency\MerchantCategoryEvents::ENTITY_SPY_MERCHANT_CATEGORY_UPDATE
+     */
+    protected const ENTITY_SPY_MERCHANT_CATEGORY_UPDATE = 'Entity.spy_merchant_category.update';
+
+    /**
+     * @uses \Spryker\Zed\MerchantCategory\Dependency\MerchantCategoryEvents::ENTITY_SPY_MERCHANT_CATEGORY_CREATE
+     */
+    protected const ENTITY_SPY_MERCHANT_CATEGORY_CREATE = 'Entity.spy_merchant_category.create';
+
+    /**
      * {@inheritDoc}
-     * - Retrieves all Merchants using IDs from $eventTransfers.
+     * - Retrieves all Merchants using foreign keys from $eventTransfers.
      * - Updates entities from `spy_merchant_search` with actual data from obtained Merchants.
      * - Sends a copy of data to queue based on module config.
      *
@@ -33,7 +42,7 @@ class MerchantWritePublisherPlugin extends AbstractPlugin implements PublisherPl
      */
     public function handleBulk(array $transfers, $eventName): void
     {
-        $this->getFacade()->writeCollectionByMerchantEvents($transfers);
+        $this->getFacade()->writeCollectionByMerchantCategoryEvents($transfers);
     }
 
     /**
@@ -46,9 +55,8 @@ class MerchantWritePublisherPlugin extends AbstractPlugin implements PublisherPl
     public function getSubscribedEvents(): array
     {
         return [
-            MerchantSearchConfig::MERCHANT_PUBLISH,
-            MerchantSearchConfig::ENTITY_SPY_MERCHANT_CREATE,
-            MerchantSearchConfig::ENTITY_SPY_MERCHANT_UPDATE,
+            static::ENTITY_SPY_MERCHANT_CATEGORY_UPDATE,
+            static::ENTITY_SPY_MERCHANT_CATEGORY_CREATE,
         ];
     }
 }

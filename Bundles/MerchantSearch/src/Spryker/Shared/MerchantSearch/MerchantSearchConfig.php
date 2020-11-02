@@ -37,21 +37,6 @@ class MerchantSearchConfig extends AbstractBundleConfig
     public const ENTITY_SPY_MERCHANT_UPDATE = 'Entity.spy_merchant.update';
 
     /**
-     * This events will be used for spy_merchant_profile entity changes.
-     */
-    public const ENTITY_SPY_MERCHANT_PROFILE_UPDATE = 'Entity.spy_merchant_profile.update';
-
-    /**
-     * This events will be used for spy_merchant_category entity changes.
-     */
-    public const ENTITY_SPY_MERCHANT_CATEGORY_UPDATE = 'Entity.spy_merchant_category.update';
-
-    /**
-     * This events will be used for spy_category entity changes.
-     */
-    public const ENTITY_SPY_CATEGORY_UPDATE = 'Entity.spy_category.update';
-
-    /**
      * This events will be used for spy_merchant entity deletion.
      */
     public const ENTITY_SPY_MERCHANT_DELETE = 'Entity.spy_merchant.delete';

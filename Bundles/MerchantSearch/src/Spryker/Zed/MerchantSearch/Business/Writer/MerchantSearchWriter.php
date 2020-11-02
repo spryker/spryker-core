@@ -18,6 +18,11 @@ use Spryker\Zed\MerchantSearch\Persistence\MerchantSearchEntityManagerInterface;
 class MerchantSearchWriter implements MerchantSearchWriterInterface
 {
     /**
+     * @uses \Orm\Zed\MerchantCategory\Persistence\Map\SpyMerchantCategoryTableMap::COL_FK_MERCHANT
+     */
+    protected const FK_CATEGORY_MERCHANT = 'spy_merchant_category.fk_merchant';
+
+    /**
      * @var \Spryker\Zed\MerchantSearch\Dependency\Facade\MerchantSearchToMerchantFacadeInterface
      */
     protected $merchantFacade;
@@ -71,6 +76,17 @@ class MerchantSearchWriter implements MerchantSearchWriterInterface
     public function writeCollectionByMerchantEvents(array $eventTransfers): void
     {
         $merchantIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
+        $this->writeCollectionByMerchantIds($merchantIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByMerchantCategoryEvents(array $eventTransfers): void
+    {
+        $merchantIds = $this->eventBehaviorFacade->getEventTransferForeignKeys($eventTransfers, static::FK_CATEGORY_MERCHANT);
         $this->writeCollectionByMerchantIds($merchantIds);
     }
 

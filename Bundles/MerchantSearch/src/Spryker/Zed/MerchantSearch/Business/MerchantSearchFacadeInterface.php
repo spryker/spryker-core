@@ -13,7 +13,7 @@ interface MerchantSearchFacadeInterface
 {
     /**
      * Specification:
-     * - Retrieves all Merchants using IDs from `$eventTransfers`.
+     * - Retrieves all Merchants using IDs from $eventTransfers.
      * - Updates entities from `spy_merchant_search` with actual data from obtained Merchants.
      * - Runs merchant search data expander plugins
      *
@@ -24,6 +24,20 @@ interface MerchantSearchFacadeInterface
      * @return void
      */
     public function writeCollectionByMerchantEvents(array $eventTransfers): void;
+
+    /**
+     * Specification:
+     * - Retrieves all Merchants using foreign keys from $eventTransfers.
+     * - Updates entities from `spy_merchant_search` with actual data from obtained Merchants.
+     * - Runs merchant search data expander plugins
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByMerchantCategoryEvents(array $eventTransfers): void;
 
     /**
      * Specification:
