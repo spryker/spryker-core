@@ -7,6 +7,7 @@
 namespace Generated\Shared\Transfer;
 
 use ArrayObject;
+use Spryker\Shared\Transfer\TypeValidation\TransferTypeValidatorTrait;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 /**
@@ -15,6 +16,8 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
  */
 class CatFaceTransfer extends AbstractTransfer
 {
+    use TransferTypeValidatorTrait;
+
     public const NAME = 'name';
 
     public const ITEM = 'item';
@@ -201,6 +204,8 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function setName($name)
     {
+        $this->validateAddSetValueType($name, 'string|null', __METHOD__);
+
         $this->name = $name;
         $this->modifiedProperties[self::NAME] = true;
 
@@ -355,6 +360,8 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function setTypedArray(array $typedArray = null)
     {
+        $this->validateAddSetValueType($typedArray, 'string[]', __METHOD__);
+
         if ($typedArray === null) {
             $typedArray = [];
         }
@@ -384,6 +391,8 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function addTypedArray($typedArray)
     {
+        $this->validateAddSetValueType($typedArray, 'string', __METHOD__);
+
         $this->typedArray[] = $typedArray;
         $this->modifiedProperties[self::TYPED_ARRAY] = true;
 
@@ -411,6 +420,8 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function setTypedAssociativeStringArray($typedAssociativeStringArray)
     {
+        $this->validateAddSetValueType($typedAssociativeStringArray, 'string[]', __METHOD__);
+
         $this->typedAssociativeStringArray = $typedAssociativeStringArray;
         $this->modifiedProperties[self::TYPED_ASSOCIATIVE_STRING_ARRAY] = true;
 
@@ -437,6 +448,8 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function addTypedAssociativeStringArray($typedAssociativeStringArrayKey, $typedAssociativeStringArrayValue)
     {
+        $this->validateAddSetValueType($typedAssociativeStringArrayValue, 'string', __METHOD__);
+
         $this->typedAssociativeStringArray[$typedAssociativeStringArrayKey] = $typedAssociativeStringArrayValue;
         $this->modifiedProperties[self::TYPED_ASSOCIATIVE_STRING_ARRAY] = true;
 
@@ -517,6 +530,8 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function setTypedNotAssociativeStringArray($typedNotAssociativeStringArray)
     {
+        $this->validateAddSetValueType($typedNotAssociativeStringArray, 'string[]', __METHOD__);
+
         $this->typedNotAssociativeStringArray = $typedNotAssociativeStringArray;
         $this->modifiedProperties[self::TYPED_NOT_ASSOCIATIVE_STRING_ARRAY] = true;
 
@@ -542,6 +557,8 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function addTypedNotAssociativeStringArray($typedNotAssociativeStringArray)
     {
+        $this->validateAddSetValueType($typedNotAssociativeStringArray, 'string', __METHOD__);
+
         $this->typedNotAssociativeStringArray[] = $typedNotAssociativeStringArray;
         $this->modifiedProperties[self::TYPED_NOT_ASSOCIATIVE_STRING_ARRAY] = true;
 
@@ -569,6 +586,8 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function setTypedNotAssociativeArray($typedNotAssociativeArray)
     {
+        $this->validateAddSetValueType($typedNotAssociativeArray, 'array', __METHOD__);
+
         $this->typedNotAssociativeArray = $typedNotAssociativeArray;
         $this->modifiedProperties[self::TYPED_NOT_ASSOCIATIVE_ARRAY] = true;
 
@@ -621,6 +640,10 @@ class CatFaceTransfer extends AbstractTransfer
     {
         foreach ($data as $property => $value) {
             $normalizedPropertyName = $this->transferPropertyNameMap[$property] ?? null;
+
+            if ($normalizedPropertyName !== null) {
+                $this->validateFromArrayValueType($normalizedPropertyName, $value);
+            }
 
             switch ($normalizedPropertyName) {
                 case 'name':
