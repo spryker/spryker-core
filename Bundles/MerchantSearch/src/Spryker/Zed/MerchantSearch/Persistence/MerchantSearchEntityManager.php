@@ -65,7 +65,14 @@ class MerchantSearchEntityManager extends AbstractEntityManager implements Merch
         $merchantSearchEntity->fromArray(
             $merchantSearchTransfer->toArray()
         );
-        $merchantSearchEntity->setFkMerchant($merchantSearchTransfer->getIdMerchant());
+
+        /**
+         * @var int $idMerchant
+         */
+        $idMerchant = $merchantSearchTransfer->requireIdMerchant()
+            ->getIdMerchant();
+
+        $merchantSearchEntity->setFkMerchant($idMerchant);
 
         return $merchantSearchEntity;
     }

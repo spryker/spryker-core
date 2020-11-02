@@ -61,7 +61,13 @@ class MerchantSearchPaginationConfigBuilder implements PaginationConfigBuilderIn
             return (int)$requestParameters[$paramName];
         }
 
-        return $this->paginationConfigTransfer->getDefaultItemsPerPage();
+        /**
+         * @var int $defaultItemsPerPage
+         */
+        $defaultItemsPerPage = $this->paginationConfigTransfer->requireDefaultItemsPerPage()
+            ->getDefaultItemsPerPage();
+
+        return $defaultItemsPerPage;
     }
 
     /**
