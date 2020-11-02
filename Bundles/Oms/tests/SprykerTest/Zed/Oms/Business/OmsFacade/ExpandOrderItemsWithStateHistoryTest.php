@@ -10,9 +10,6 @@ namespace SprykerTest\Zed\Oms\Business\OmsFacade;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemStateTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Propel\PropelConstants;
-use Spryker\Zed\Propel\PropelConfig;
 
 /**
  * Auto-generated group annotations
@@ -53,7 +50,7 @@ class ExpandOrderItemsWithStateHistoryTest extends Unit
      */
     public function testExpandOrderItemsWithStateHistoryExpandOrderItemsWithStateHistory(): void
     {
-        $this->skipIfMySql();
+//        $this->skipIfMySql();
 
         // Arrange
         $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME);
@@ -96,13 +93,12 @@ class ExpandOrderItemsWithStateHistoryTest extends Unit
     }
 
     /**
+     * @group mysql
+     *
      * @return void
      */
     public function testExpandOrderItemsWithStateHistoryCompareIdSalesOrderItemIds(): void
     {
-        $this->skipIfMySql();
-
-        // Arrange
         $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME);
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
         $itemTransfer = $orderTransfer->getItems()->getIterator()->current();
@@ -145,15 +141,5 @@ class ExpandOrderItemsWithStateHistoryTest extends Unit
 
         // Assert
         $this->assertEmpty($itemTransfers[0]->getStateHistory());
-    }
-
-    /**
-     * @return void
-     */
-    protected function skipIfMySql(): void
-    {
-        if (Config::get(PropelConstants::ZED_DB_ENGINE) === PropelConfig::DB_ENGINE_MYSQL) {
-            $this->markTestSkipped('Not MYSQL related test');
-        }
     }
 }
