@@ -21,7 +21,6 @@ class AutoloadUpdater implements UpdaterInterface
     public const BASE_SRC_DIRECTORY = 'src';
     public const BASE_SUPPORT_DIRECTORY = '_support';
     public const BASE_HELPER_DIRECTORY = 'Helper';
-    public const BASE_STUB_DIRECTORY = 'Stub';
     protected const BASE_PAGE_OBJECT_DIRECTORY = 'PageObject';
     public const BASE_TESTER_DIRECTORY = 'Tester';
     public const BASE_FIXTURES_DIRECTORY = 'Fixtures';
@@ -75,22 +74,16 @@ class AutoloadUpdater implements UpdaterInterface
      */
     protected $autoloadPSR4Whitelist = [
         self::SPRYKER_NAMESPACE,
-        self::SPRYKER_TEST_NAMESPACE,
         self::SPRYKER_SHOP_NAMESPACE,
-        self::SPRYKER_SHOP_TEST_NAMESPACE,
         self::SPRYKER_ECO_NAMESPACE,
-        self::SPRYKER_ECO_TEST_NAMESPACE,
-        self::SPRYKER_SDK_NAMESPACE,
-        self::SPRYKER_SDK_TEST_NAMESPACE,
-        self::SPRYKER_MERCHANT_PORTAL_NAMESPACE,
-        self::SPRYKER_MERCHANT_PORTAL_SHOP_TEST_NAMESPACE,
         self::BASE_HELPER_DIRECTORY,
-        self::BASE_STUB_DIRECTORY,
         self::BASE_PAGE_OBJECT_DIRECTORY,
         self::BASE_TESTER_DIRECTORY,
         self::BASE_STEP_OVERRIDE_DIRECTORY,
         self::BASE_FIXTURES_DIRECTORY,
         self::BASE_FILTER_DIRECTORY,
+        self::SPRYKER_SDK_NAMESPACE,
+        self::SPRYKER_MERCHANT_PORTAL_NAMESPACE,
     ];
 
     /**
@@ -241,7 +234,9 @@ class AutoloadUpdater implements UpdaterInterface
      */
     protected function getLastPartOfPath($path)
     {
-        return basename($path);
+        $pathArray = explode(DIRECTORY_SEPARATOR, rtrim($path, DIRECTORY_SEPARATOR));
+
+        return end($pathArray);
     }
 
     /**
@@ -341,7 +336,7 @@ class AutoloadUpdater implements UpdaterInterface
      */
     protected function getPath(array $pathParts)
     {
-        return rtrim(implode(DIRECTORY_SEPARATOR, $pathParts), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        return implode(DIRECTORY_SEPARATOR, $pathParts) . DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -406,7 +401,7 @@ class AutoloadUpdater implements UpdaterInterface
             $composerJson,
             [
                 static::AUTOLOAD_KEY => [$this, 'removeInvalidAutoloadPaths'],
-                static::AUTOLOAD_DEV_KEY => [$this, 'removeInvalidAutoloadPaths'],
+                static::AUTOLOAD_DEV_KEY => [$this, 'removeInvalidAutoloadNamespaces'],
             ],
             $modulePath
         );
@@ -462,6 +457,33 @@ class AutoloadUpdater implements UpdaterInterface
                     continue;
                 }
 
+                unset($autoload[$namespace]);
+            }
+        }
+
+        return $autoload;
+    }
+
+    /**
+     * @param array $autoload
+     * @param string $modulePath
+     *
+     * @return array
+     */
+    protected function removeInvalidAutoloadNamespaces(array $autoload, $modulePath)
+    {
+        foreach ($autoload as $namespace => $relativeDirectory) {
+            if ($this->isReservedNamespace($relativeDirectory)) {
+                continue;
+            }
+
+            $pathParts = [
+                rtrim($modulePath, DIRECTORY_SEPARATOR),
+                static::BASE_TESTS_DIRECTORY,
+                rtrim($namespace, '\\'),
+            ];
+
+            if (!$this->pathExists($this->getPath($pathParts))) {
                 unset($autoload[$namespace]);
             }
         }
