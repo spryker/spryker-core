@@ -76,7 +76,7 @@ class MerchantCategoryMerchantExpanderPluginTest extends Unit
     /**
      * @param \Generated\Shared\Transfer\MerchantCategoryResponseTransfer $merchantCategoryResponseTransfer
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\MerchantCategory\Communication\Plugin\Merchant\MerchantCategoryMerchantExpanderPlugin
+     * @return \Spryker\Zed\MerchantCategory\Communication\Plugin\Merchant\MerchantCategoryMerchantExpanderPlugin
      */
     protected function createMerchantCategoryMerchantExpanderPluginMock(
         MerchantCategoryResponseTransfer $merchantCategoryResponseTransfer
@@ -85,14 +85,9 @@ class MerchantCategoryMerchantExpanderPluginTest extends Unit
         $merchantCategoryFacadeMock->method('get')
             ->willReturn($merchantCategoryResponseTransfer);
 
-        $merchantCategoryMerchantExpanderPluginMock = $this->createPartialMock(MerchantCategoryMerchantExpanderPlugin::class, ['getFacade']);
-        $merchantCategoryMerchantExpanderPluginMock->method('getFacade')
-            ->willReturn($merchantCategoryFacadeMock);
+        $merchantCategoryMerchantExpanderPlugin = new MerchantCategoryMerchantExpanderPlugin();
+        $merchantCategoryMerchantExpanderPlugin->setFacade($merchantCategoryFacadeMock);
 
-        $merchantCategoryMerchantExpanderPluginMock->setFacade(
-            $merchantCategoryFacadeMock
-        );
-
-        return $merchantCategoryMerchantExpanderPluginMock;
+        return $merchantCategoryMerchantExpanderPlugin;
     }
 }
