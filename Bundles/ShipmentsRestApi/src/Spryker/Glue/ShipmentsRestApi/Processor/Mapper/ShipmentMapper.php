@@ -26,18 +26,8 @@ class ShipmentMapper implements ShipmentMapperInterface
     ): RestShipmentsAttributesTransfer {
         $restShipmentsAttributesTransfer
             ->setItems($this->getItemsGroupKeys($shipmentGroupTransfer))
-            ->setShippingAddress(
-                (new RestAddressTransfer())->fromArray(
-                    $shipmentGroupTransfer->getShipment()->getShippingAddress()->toArray(),
-                    true
-                )
-            )
-            ->setSelectedShipmentMethod(
-                (new RestShipmentMethodTransfer())->fromArray(
-                    $shipmentGroupTransfer->getShipment()->getMethod()->toArray(),
-                    true
-                )
-            )
+            ->setShippingAddress($this->createRestAddressTransfer($shipmentGroupTransfer))
+            ->setSelectedShipmentMethod($this->createRestShipmentMethodTransfer($shipmentGroupTransfer))
             ->setRequestedDeliveryDate($shipmentGroupTransfer->getShipment()->getRequestedDeliveryDate());
 
         return $restShipmentsAttributesTransfer;
@@ -56,5 +46,41 @@ class ShipmentMapper implements ShipmentMapperInterface
         }
 
         return $groupKeys;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestAddressTransfer
+     */
+    protected function createRestAddressTransfer(ShipmentGroupTransfer $shipmentGroupTransfer): RestAddressTransfer
+    {
+        $addressTransfer = $shipmentGroupTransfer->getShipment()->getShippingAddress();
+        if (!$addressTransfer) {
+            return new RestAddressTransfer();
+        }
+
+        return (new RestAddressTransfer())
+            ->fromArray($addressTransfer->toArray(), true)
+            ->setId($addressTransfer->getUuid());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestShipmentMethodTransfer
+     */
+    protected function createRestShipmentMethodTransfer(
+        ShipmentGroupTransfer $shipmentGroupTransfer
+    ): RestShipmentMethodTransfer {
+        $shipmentMethodTransfer = $shipmentGroupTransfer->getShipment()->getMethod();
+        if (!$shipmentMethodTransfer) {
+            return new RestShipmentMethodTransfer();
+        }
+
+        return (new RestShipmentMethodTransfer())
+            ->fromArray($shipmentMethodTransfer->toArray(), true)
+            ->setPrice($shipmentMethodTransfer->getStoreCurrencyPrice())
+            ->setId($shipmentMethodTransfer->getIdShipmentMethod());
     }
 }

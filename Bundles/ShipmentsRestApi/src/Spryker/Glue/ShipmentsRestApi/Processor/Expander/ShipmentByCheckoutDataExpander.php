@@ -71,10 +71,7 @@ class ShipmentByCheckoutDataExpander implements ShipmentByCheckoutDataExpanderIn
                     );
 
                 $shipmentsRestResource = $this->shipmentRestResponseBuilder
-                    ->createShipmentRestResource(
-                        $shipmentGroupTransfer->getHash(),
-                        $restShipmentsAttributesTransfers
-                    );
+                    ->createShipmentRestResource($shipmentGroupTransfer, $restShipmentsAttributesTransfers);
 
                 $resource->addRelationship($shipmentsRestResource);
             }

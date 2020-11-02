@@ -13,6 +13,8 @@ use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentByCheckoutDataExpan
 use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentByCheckoutDataExpanderInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentMethodByCheckoutDataExpander;
 use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentMethodByCheckoutDataExpanderInterface;
+use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentMethodByShipmentExpander;
+use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentMethodByShipmentExpanderInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMapper;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMapperInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodMapper;
@@ -48,6 +50,18 @@ class ShipmentsRestApiFactory extends AbstractFactory
     public function createShipmentMethodByCheckoutDataExpander(): ShipmentMethodByCheckoutDataExpanderInterface
     {
         return new ShipmentMethodByCheckoutDataExpander(
+            $this->createShipmentMethodRestResponseBuilder(),
+            $this->createShipmentMethodMapper(),
+            $this->createShipmentMethodSorter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentMethodByShipmentExpanderInterface
+     */
+    public function createShipmentMethodByShipmentExpander(): ShipmentMethodByShipmentExpanderInterface
+    {
+        return new ShipmentMethodByShipmentExpander(
             $this->createShipmentMethodRestResponseBuilder(),
             $this->createShipmentMethodMapper(),
             $this->createShipmentMethodSorter()

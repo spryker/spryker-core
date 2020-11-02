@@ -24,7 +24,9 @@ class ShipmentsByCheckoutDataResourceRelationshipPlugin extends AbstractPlugin i
 {
     /**
      * {@inheritDoc}
-     * - Adds shipments resource as relationship.
+     * - Adds `shipments` resource as relationship if `RestCheckoutDataTransfer` is provided as payload.
+     * - Uses `ShipmentService::groupItemsByShipment()` which exists in `Shipment` module from version `^7.0.0`.
+     * - Is not applicable if `RestCheckoutDataTransfer` contains `shippingAddress` or `shipment` attributes.
      *
      * @api
      *

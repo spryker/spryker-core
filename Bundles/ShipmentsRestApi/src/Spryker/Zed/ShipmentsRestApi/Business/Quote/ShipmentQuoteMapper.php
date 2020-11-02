@@ -84,7 +84,7 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
         }
 
         foreach ($restCheckoutRequestAttributesTransfer->getShipments() as $restShipmentsTransfer) {
-            $shipmentTransfer = $this->createShipmentTransfer($restShipmentsTransfer);
+            $shipmentTransfer = $this->createShipmentTransfer($restShipmentsTransfer, $quoteTransfer);
             $quoteTransfer = $this->assignShipmentTransferToItems(
                 $quoteTransfer,
                 $restShipmentsTransfer->getItems(),
@@ -131,21 +131,31 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\RestShipmentsTransfer $restShipmentsTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
-    protected function createShipmentTransfer(RestShipmentsTransfer $restShipmentsTransfer): ShipmentTransfer
-    {
-        return (new ShipmentTransfer())
+    protected function createShipmentTransfer(
+        RestShipmentsTransfer $restShipmentsTransfer,
+        QuoteTransfer $quoteTransfer
+    ): ShipmentTransfer {
+        $shipmentTransfer = (new ShipmentTransfer())
             ->setShippingAddress(
                 (new AddressTransfer())
                     ->fromArray($restShipmentsTransfer->getShippingAddress()->toArray(), true)
             )
-            ->setMethod(
-                (new ShipmentMethodTransfer())
-                    ->setIdShipmentMethod($restShipmentsTransfer->getIdShipmentMethod())
-            )
             ->setRequestedDeliveryDate($restShipmentsTransfer->getRequestedDeliveryDate());
+
+        $shipmentMethodTransfer = $this->shipmentFacade
+            ->findAvailableMethodById($restShipmentsTransfer->getIdShipmentMethod(), $quoteTransfer);
+
+        if (!$shipmentMethodTransfer) {
+            return $shipmentTransfer;
+        }
+
+        return $shipmentTransfer
+            ->setMethod($shipmentMethodTransfer)
+            ->setShipmentSelection((string)$shipmentMethodTransfer->getIdShipmentMethod());
     }
 
     /**
