@@ -50,8 +50,6 @@ class ExpandOrderItemsWithStateHistoryTest extends Unit
      */
     public function testExpandOrderItemsWithStateHistoryExpandOrderItemsWithStateHistory(): void
     {
-//        $this->skipIfMySql();
-
         // Arrange
         $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME);
 
