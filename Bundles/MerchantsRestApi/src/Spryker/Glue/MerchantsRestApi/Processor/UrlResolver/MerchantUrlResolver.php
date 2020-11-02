@@ -34,9 +34,11 @@ class MerchantUrlResolver implements MerchantUrlResolverInterface
      */
     public function resolveMerchantUrl(UrlStorageTransfer $urlStorageTransfer): ?RestUrlResolverAttributesTransfer
     {
-        $urlStorageTransfer->requireFkResourceMerchant();
-
-        $merchantStorageTransfer = $this->merchantStorageClient->findOne($urlStorageTransfer->getFkResourceMerchant());
+        /**
+         * @var int $fkResourceMerchant
+         */
+        $fkResourceMerchant = $urlStorageTransfer->requireFkResourceMerchant()->getFkResourceMerchant();
+        $merchantStorageTransfer = $this->merchantStorageClient->findOne($fkResourceMerchant);
 
         if (!$merchantStorageTransfer) {
             return null;

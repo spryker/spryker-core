@@ -22,11 +22,6 @@ use Symfony\Component\HttpFoundation\Response;
 class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterface
 {
     /**
-     * @uses \Spryker\Client\MerchantSearch\MerchantSearchConfig::PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME
-     */
-    protected const ITEMS_PER_PAGE = 'ipp';
-
-    /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
     protected $restResourceBuilder;
@@ -126,9 +121,17 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
         array $merchantStorageTransfers,
         string $localeName
     ): RestResponseInterface {
+        /**
+         * @var int $resultsNumber
+         */
+        $resultsNumber = $merchantSearchCollectionTransfer->requireNbResults()->getNbResults();
+        /**
+         * @var int $itemsPerPage
+         */
+        $itemsPerPage = $merchantSearchCollectionTransfer->requireIpp()->getIpp();
         $restResponse = $this->restResourceBuilder->createRestResponse(
-            $merchantSearchCollectionTransfer->getNbResults(),
-            $merchantSearchCollectionTransfer->getIpp()
+            $resultsNumber,
+            $itemsPerPage
         );
 
         foreach ($merchantStorageTransfers as $merchantSearchTransfer) {

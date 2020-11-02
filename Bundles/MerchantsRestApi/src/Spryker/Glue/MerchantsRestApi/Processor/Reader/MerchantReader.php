@@ -96,7 +96,12 @@ class MerchantReader implements MerchantReaderInterface
      */
     public function getMerchant(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $merchantStorageTransfer = $this->merchantStorageClient->findOneByMerchantReference($restRequest->getResource()->getId());
+        /**
+         * @var string $merchantReference
+         */
+        $merchantReference = $restRequest->getResource()->getId();
+        $merchantStorageTransfer = $this->merchantStorageClient->findOneByMerchantReference($merchantReference);
+
         if (!$merchantStorageTransfer) {
             return $this->merchantRestResponseBuilder->createMerchantNotFoundErrorResponse();
         }
@@ -154,7 +159,12 @@ class MerchantReader implements MerchantReaderInterface
         $merchantIds = [];
 
         foreach ($merchantSearchCollectionTransfer->getMerchants() as $merchantSearchTransfer) {
-            $merchantIds[] = $merchantSearchTransfer->getIdMerchant();
+            /**
+             * @var int $idMerchant
+             */
+            $idMerchant = $merchantSearchTransfer->requireIdMerchant()->getIdMerchant();
+
+            $merchantIds[] = $idMerchant;
         }
 
         return $merchantIds;

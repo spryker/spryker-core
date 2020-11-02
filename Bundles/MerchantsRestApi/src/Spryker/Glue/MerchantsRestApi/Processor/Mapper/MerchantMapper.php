@@ -39,7 +39,11 @@ class MerchantMapper implements MerchantMapperInterface
         RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer,
         string $localeName
     ): RestMerchantsAttributesTransfer {
-        $merchantStorageProfileTransfer = $merchantStorageTransfer->getMerchantProfile();
+        /**
+         * @var \Generated\Shared\Transfer\MerchantStorageProfileTransfer $merchantStorageProfileTransfer
+         */
+        $merchantStorageProfileTransfer = $merchantStorageTransfer->requireMerchantProfile()
+            ->getMerchantProfile();
 
         $restLegalInformationTransfer = (new RestLegalInformationTransfer())
             ->setCancellationPolicy($merchantStorageProfileTransfer->getCancellationPolicy())
