@@ -59,7 +59,6 @@
         <property name="merchantReference" type="string"/>
         <property name="urlCollection" type="Url[]" singular="url"/>
         <property name="merchantProfile" type="MerchantStorageProfile"/>
-        <property name="categories" type="MerchantCategoryStorage[]" singular="category"/>
     </transfer>
 
     <transfer name="MerchantStorageProfile">
@@ -133,9 +132,6 @@
 
     <transfer name="MerchantSearch">
         <property name="idMerchant" type="int"/>
-    </transfer>
-
-    <transfer name="MerchantCategoryStorage">
     </transfer>
 
 </transfers>

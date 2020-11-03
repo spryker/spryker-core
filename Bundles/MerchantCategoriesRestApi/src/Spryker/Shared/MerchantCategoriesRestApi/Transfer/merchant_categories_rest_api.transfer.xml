@@ -17,6 +17,7 @@
     </transfer>
 
     <transfer name="MerchantCategoryStorage">
+        <property name="categoryKey" type="string"/>
         <property name="localizedAttributes" type="MerchantCategoryLocalizedAttributes[]" singular="localizedAttributes"/>
     </transfer>
 
