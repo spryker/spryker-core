@@ -209,7 +209,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     {
         return $this->getFactory()
             ->createShoppingListReader()
-            ->getShoppingListOverviewByConfig($shoppingListOverviewRequestTransfer, $this->getFactory()->getConfig()->isShoppingListOverviewWithShoppingLists());
+            ->getShoppingListOverview($shoppingListOverviewRequestTransfer);
     }
 
     /**
