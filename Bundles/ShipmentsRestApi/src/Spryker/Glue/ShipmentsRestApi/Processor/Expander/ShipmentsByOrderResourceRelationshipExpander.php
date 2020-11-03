@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\ShipmentsRestApi\Dependency\Service\ShipmentsRestApiToShipmentServiceInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderShipmentsMapperInterface;
 use Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiConfig;
 
@@ -27,15 +28,23 @@ class ShipmentsByOrderResourceRelationshipExpander implements ShipmentsByOrderRe
     protected $orderShipmentsMapper;
 
     /**
+     * @var \Spryker\Glue\ShipmentsRestApi\Dependency\Service\ShipmentsRestApiToShipmentServiceInterface
+     */
+    protected $shipmentService;
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderShipmentsMapperInterface $orderShipmentsMapper
+     * @param \Spryker\Glue\ShipmentsRestApi\Dependency\Service\ShipmentsRestApiToShipmentServiceInterface $shipmentService
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
-        OrderShipmentsMapperInterface $orderShipmentsMapper
+        OrderShipmentsMapperInterface $orderShipmentsMapper,
+        ShipmentsRestApiToShipmentServiceInterface $shipmentService
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->orderShipmentsMapper = $orderShipmentsMapper;
+        $this->shipmentService = $shipmentService;
     }
 
     /**
@@ -60,9 +69,11 @@ class ShipmentsByOrderResourceRelationshipExpander implements ShipmentsByOrderRe
                 continue;
             }
 
+            $shipmentGroupTransfers = $this->shipmentService->groupItemsByShipment($itemTransfers);
+
             $restOrderShipmentsAttributesTransfers = $this->orderShipmentsMapper
-                ->mapItemTransfersToRestOrderShipmentsAttributesTransfer(
-                    $itemTransfers
+                ->mapShipmentGroupsTransfersToRestOrderShipmentsAttributesTransfer(
+                    $shipmentGroupTransfers
                 );
             $this->addOrderShipmentsResourceRelationships($restOrderShipmentsAttributesTransfers, $resource);
         }

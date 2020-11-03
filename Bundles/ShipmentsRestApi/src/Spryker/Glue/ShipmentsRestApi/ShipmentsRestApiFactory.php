@@ -8,6 +8,7 @@
 namespace Spryker\Glue\ShipmentsRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
+use Spryker\Glue\ShipmentsRestApi\Dependency\Service\ShipmentsRestApiToShipmentServiceInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentMethodByCheckoutDataExpander;
 use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentMethodByCheckoutDataExpanderInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentsByOrderResourceRelationshipExpander;
@@ -69,7 +70,16 @@ class ShipmentsRestApiFactory extends AbstractFactory
         return new ShipmentsByOrderResourceRelationshipExpander(
             $this->getResourceBuilder(),
             $this->createOrderShipmentsMapper(),
+            $this->getShipmentService()
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\ShipmentsRestApi\Dependency\Service\ShipmentsRestApiToShipmentServiceInterface
+     */
+    public function getShipmentService(): ShipmentsRestApiToShipmentServiceInterface
+    {
+        return $this->getProvidedDependency(ShipmentsRestApiDependencyProvider::SERVICE_SHIPMENT);
     }
 
     /**

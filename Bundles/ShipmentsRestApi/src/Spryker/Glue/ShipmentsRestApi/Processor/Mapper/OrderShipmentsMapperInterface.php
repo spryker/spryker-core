@@ -12,13 +12,13 @@ use ArrayObject;
 interface OrderShipmentsMapperInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupsTransfers
      * @param \Generated\Shared\Transfer\RestOrderShipmentsAttributesTransfer[] $restOrderShipmentsAttributesTransfers
      *
      * @return \Generated\Shared\Transfer\RestOrderShipmentsAttributesTransfer[]
      */
-    public function mapItemTransfersToRestOrderShipmentsAttributesTransfer(
-        ArrayObject $itemTransfers,
+    public function mapShipmentGroupsTransfersToRestOrderShipmentsAttributesTransfer(
+        ArrayObject $shipmentGroupsTransfers,
         array $restOrderShipmentsAttributesTransfers = []
     ): array;
 }
