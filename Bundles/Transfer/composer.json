@@ -12,7 +12,7 @@
     "spryker/propel": "^3.21.0",
     "spryker/symfony": "^3.0.0",
     "spryker/twig": "^3.0.0",
-    "spryker/util-glob": "^1.0.0",
+    "spryker/util-glob": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
