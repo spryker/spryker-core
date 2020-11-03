@@ -8,11 +8,11 @@
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
 use InvalidArgumentException;
-use Zend\Config\Factory;
-use Zend\Filter\FilterChain;
-use Zend\Filter\Word\CamelCaseToUnderscore;
-use Zend\Filter\Word\DashToCamelCase;
-use Zend\Filter\Word\UnderscoreToCamelCase;
+use Laminas\Config\Factory;
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\Word\CamelCaseToUnderscore;
+use Laminas\Filter\Word\DashToCamelCase;
+use Laminas\Filter\Word\UnderscoreToCamelCase;
 
 class TransferDefinitionLoader implements LoaderInterface
 {
@@ -37,7 +37,7 @@ class TransferDefinitionLoader implements LoaderInterface
     protected $transferDefinitions = [];
 
     /**
-     * @var \Zend\Filter\FilterChain
+     * @var \Laminas\Filter\FilterChain
      */
     protected static $filter;
 
@@ -166,7 +166,7 @@ class TransferDefinitionLoader implements LoaderInterface
     }
 
     /**
-     * @return \Zend\Filter\FilterChain
+     * @return \Laminas\Filter\FilterChain
      */
     protected function getFilter()
     {

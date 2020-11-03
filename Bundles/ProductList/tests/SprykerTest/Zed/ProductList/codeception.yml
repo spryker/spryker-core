@@ -26,3 +26,18 @@ suites:
                 - \SprykerTest\Zed\ProductList\Helper\ProductListHelper
                 - \SprykerTest\Zed\Category\Helper\CategoryDataHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+    Persistence:
+        path: Persistence
+        class_name: ProductListPersistenceTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Zed\ProductList\Helper\ProductListHelper
+                - \SprykerTest\Zed\Category\Helper\CategoryDataHelper
+                - \SprykerTest\Zed\ProductCategory\Helper\AssignHelper
+                - \SprykerTest\Shared\Product\Helper\ProductDataHelper

@@ -50,6 +50,6 @@ class DropMySqlDatabase implements DropDatabaseInterface
      */
     protected function getQuery()
     {
-        return 'DROP DATABASE IF EXISTS ' . Config::get(PropelConstants::ZED_DB_DATABASE);
+        return 'DROP DATABASE IF EXISTS `' . Config::get(PropelConstants::ZED_DB_DATABASE) . '`';
     }
 }

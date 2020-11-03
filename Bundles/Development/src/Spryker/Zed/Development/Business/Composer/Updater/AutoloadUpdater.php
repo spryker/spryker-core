@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Development\Business\Composer\Updater;
 
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\Word\DashToCamelCase;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
-use Zend\Filter\FilterChain;
-use Zend\Filter\Word\DashToCamelCase;
 
 class AutoloadUpdater implements UpdaterInterface
 {

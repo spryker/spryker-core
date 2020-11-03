@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Development\Business\DependencyTree\Finder\PathBuilder;
 
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\StringToLower;
+use Laminas\Filter\Word\CamelCaseToDash;
 use Spryker\Zed\Development\DevelopmentConfig;
-use Zend\Filter\FilterChain;
-use Zend\Filter\StringToLower;
-use Zend\Filter\Word\CamelCaseToDash;
 
 class AbstractPathBuilder
 {

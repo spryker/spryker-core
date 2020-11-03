@@ -8,14 +8,14 @@
 namespace Spryker\Zed\Development\Business\CodeBuilder\Bridge;
 
 use Generated\Shared\Transfer\BridgeBuilderDataTransfer;
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\Word\CamelCaseToDash;
+use Laminas\Filter\Word\UnderscoreToCamelCase;
 use ReflectionClass;
 use ReflectionMethod;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Filesystem\Filesystem;
-use Zend\Filter\FilterChain;
-use Zend\Filter\Word\CamelCaseToDash;
-use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class BridgeBuilder
 {
