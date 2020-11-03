@@ -52,30 +52,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 51,
-            "line_to": 51,
-            "type": "UndefinedInterfaceMethod",
-            "message": "Method Spryker\\Service\\Container\\ContainerInterface::offsetSet does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Locale/src/Spryker/Yves/Locale/Plugin/Application/LocaleApplicationPlugin.php",
-            "snippet": "        $container[static::BC_FEATURE_FLAG_LOCALE_LISTENER] = false;",
-            "selected_text": "$container",
-            "error_level": 5,
-            "shortcode": 181
-        },
-        {
-            "severity": "info",
-            "line_from": 52,
-            "line_to": 52,
-            "type": "UndefinedInterfaceMethod",
-            "message": "Method Spryker\\Service\\Container\\ContainerInterface::offsetSet does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Locale/src/Spryker/Yves/Locale/Plugin/Application/LocaleApplicationPlugin.php",
-            "snippet": "        $container[static::SERVICE_LOCALE] = function (ContainerInterface $container) {",
-            "selected_text": "$container",
-            "error_level": 5,
-            "shortcode": 181
-        },
-        {
-            "severity": "info",
             "line_from": 54,
             "line_to": 54,
             "type": "PossiblyNullArgument",
@@ -112,12 +88,36 @@
         },
         {
             "severity": "info",
-            "line_from": 36,
-            "line_to": 36,
+            "line_from": 51,
+            "line_to": 51,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable Spryker\\Zed\\Locale\\Business\\Cache\\LocaleCache::$localeCache[null|string] using possibly null offset null|string",
             "file_name": "vendor/spryker/spryker/Bundles/Locale/src/Spryker/Zed/Locale/Business/Cache/LocaleCache.php",
             "snippet": "        static::$localeCache[$localeTransfer->getLocaleName()] = $localeTransfer;",
+            "selected_text": "static::$localeCache",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable Spryker\\Zed\\Locale\\Business\\Cache\\LocaleCache::$localeCacheById[int|null] using possibly null offset int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/Locale/src/Spryker/Zed/Locale/Business/Cache/LocaleCache.php",
+            "snippet": "        static::$localeCacheById[$localeTransfer->getIdLocale()] = &static::$localeCache[$localeTransfer->getLocaleName()];",
+            "selected_text": "static::$localeCacheById",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable Spryker\\Zed\\Locale\\Business\\Cache\\LocaleCache::$localeCache using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/Locale/src/Spryker/Zed/Locale/Business/Cache/LocaleCache.php",
+            "snippet": "        static::$localeCacheById[$localeTransfer->getIdLocale()] = &static::$localeCache[$localeTransfer->getLocaleName()];",
             "selected_text": "static::$localeCache",
             "error_level": 3,
             "shortcode": 125
@@ -196,36 +196,12 @@
         },
         {
             "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "UndefinedInterfaceMethod",
-            "message": "Method Spryker\\Service\\Container\\ContainerInterface::offsetSet does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Locale/src/Spryker/Zed/Locale/Communication/Plugin/Application/LocaleApplicationPlugin.php",
-            "snippet": "        $container[static::BC_FEATURE_FLAG_LOCALE_LISTENER] = false;",
-            "selected_text": "$container",
-            "error_level": 5,
-            "shortcode": 181
-        },
-        {
-            "severity": "info",
-            "line_from": 42,
-            "line_to": 42,
-            "type": "UndefinedInterfaceMethod",
-            "message": "Method Spryker\\Service\\Container\\ContainerInterface::offsetSet does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Locale/src/Spryker/Zed/Locale/Communication/Plugin/Application/LocaleApplicationPlugin.php",
-            "snippet": "        $container[static::SERVICE_LOCALE] = function (ContainerInterface $container): string {",
-            "selected_text": "$container",
-            "error_level": 5,
-            "shortcode": 181
-        },
-        {
-            "severity": "info",
             "line_from": 42,
             "line_to": 42,
             "type": "InvalidNullableReturnType",
-            "message": "The declared return type 'string' for /media/mark/f42d91bd-14bc-4e71-936f-96ed99135be4/www/suite-nonsplit/project/vendor/spryker/spryker/bundles/locale/src/spryker/zed/locale/communication/plugin/application/localeapplicationplugin.php:42:1472:-:closure is not nullable, but 'null|string' contains null",
+            "message": "The declared return type 'string' for /media/mark/f42d91bd-14bc-4e71-936f-96ed99135be4/www/devvm/project/vendor/spryker/spryker/bundles/locale/src/spryker/zed/locale/communication/plugin/application/localeapplicationplugin.php:42:1479:-:closure is not nullable, but 'null|string' contains null",
             "file_name": "vendor/spryker/spryker/Bundles/Locale/src/Spryker/Zed/Locale/Communication/Plugin/Application/LocaleApplicationPlugin.php",
-            "snippet": "        $container[static::SERVICE_LOCALE] = function (ContainerInterface $container): string {",
+            "snippet": "        $container->set(static::SERVICE_LOCALE, function (ContainerInterface $container): string {",
             "selected_text": "string",
             "error_level": 5,
             "shortcode": 144
@@ -235,7 +211,7 @@
             "line_from": 47,
             "line_to": 47,
             "type": "NullableReturnStatement",
-            "message": "The declared return type 'string' for /media/mark/f42d91bd-14bc-4e71-936f-96ed99135be4/www/suite-nonsplit/project/vendor/spryker/spryker/bundles/locale/src/spryker/zed/locale/communication/plugin/application/localeapplicationplugin.php:42:1472:-:closure is not nullable, but the function returns 'null|string'",
+            "message": "The declared return type 'string' for /media/mark/f42d91bd-14bc-4e71-936f-96ed99135be4/www/devvm/project/vendor/spryker/spryker/bundles/locale/src/spryker/zed/locale/communication/plugin/application/localeapplicationplugin.php:42:1479:-:closure is not nullable, but the function returns 'null|string'",
             "file_name": "vendor/spryker/spryker/Bundles/Locale/src/Spryker/Zed/Locale/Communication/Plugin/Application/LocaleApplicationPlugin.php",
             "snippet": "            return $localeTransfer->getLocaleName();",
             "selected_text": "$localeTransfer->getLocaleName()",
@@ -244,8 +220,8 @@
         },
         {
             "severity": "info",
-            "line_from": 54,
-            "line_to": 54,
+            "line_from": 74,
+            "line_to": 74,
             "type": "MismatchingDocblockParamType",
             "message": "Parameter $localeEntities has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\Locale\\Persistence\\SpyLocale>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
             "file_name": "vendor/spryker/spryker/Bundles/Locale/src/Spryker/Zed/Locale/Persistence/LocaleRepository.php",
@@ -255,30 +231,5 @@
             "shortcode": 141
         }
     ],
-    "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Locale/src/Spryker/Yves/Locale/Plugin/EventDispatcher/LocaleEventDispatcherPlugin.php",
-            "snippet": "            function (GetResponseEvent $event) use ($container) {",
-            "selected_text": "GetResponseEvent",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Locale/src/Spryker/Zed/Locale/Communication/Plugin/EventDispatcher/LocaleEventDispatcherPlugin.php",
-            "snippet": "            function (GetResponseEvent $event) use ($container) {",
-            "selected_text": "GetResponseEvent",
-            "error_level": 2,
-            "shortcode": 98
-        }
-    ]
+    "deprecation": []
 }

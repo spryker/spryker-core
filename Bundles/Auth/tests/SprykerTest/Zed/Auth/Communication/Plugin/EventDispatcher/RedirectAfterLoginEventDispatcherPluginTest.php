@@ -14,7 +14,7 @@ use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Communication\Plugin\EventDispatcher\RedirectAfterLoginEventDispatcherPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -60,7 +60,7 @@ class RedirectAfterLoginEventDispatcherPluginTest extends Unit
         $request->server->set(static::REQUEST_URI, static::REDIRECT_URL_VALID);
         $response = new RedirectResponse(AuthConfig::DEFAULT_URL_LOGIN);
 
-        $event = new FilterResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
+        $event = new ResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
 
         $redirectAfterLoginEventDispatcherPlugin = $this->getRedirectAfterLoginEventDispatcherPlugin(['isAuthenticated']);
         $redirectAfterLoginEventDispatcherPlugin->expects($this->never())
@@ -82,7 +82,7 @@ class RedirectAfterLoginEventDispatcherPluginTest extends Unit
         $request->server->set(static::REQUEST_URI, static::REDIRECT_URL_VALID);
         $response = new RedirectResponse(AuthConfig::DEFAULT_URL_LOGIN);
 
-        $event = new FilterResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
+        $event = new ResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
 
         $redirectAfterLoginEventDispatcherPlugin = $this->getRedirectAfterLoginEventDispatcherPlugin(['isAuthenticated']);
         $redirectAfterLoginEventDispatcherPlugin->expects($this->never())
@@ -102,7 +102,7 @@ class RedirectAfterLoginEventDispatcherPluginTest extends Unit
         $request = new Request();
         $request->server->set(static::REQUEST_URI, AuthConfig::DEFAULT_URL_LOGIN);
         $response = new RedirectResponse(AuthConfig::DEFAULT_URL_REDIRECT);
-        $event = new FilterResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
+        $event = new ResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
 
         $redirectAfterLoginEventDispatcherPlugin = $this->getRedirectAfterLoginEventDispatcherPlugin(['isAuthenticated']);
         $redirectAfterLoginEventDispatcherPlugin->expects($this->once())
@@ -124,7 +124,7 @@ class RedirectAfterLoginEventDispatcherPluginTest extends Unit
         $request->server->set(static::REQUEST_URI, AuthConfig::DEFAULT_URL_LOGIN);
         $request->query->set(static::REFERER, static::REDIRECT_URL_INVALID);
         $response = new RedirectResponse(AuthConfig::DEFAULT_URL_REDIRECT);
-        $event = new FilterResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
+        $event = new ResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
 
         $redirectAfterLoginEventDispatcherPlugin = $this->getRedirectAfterLoginEventDispatcherPlugin(['isAuthenticated']);
         $redirectAfterLoginEventDispatcherPlugin->expects($this->once())
@@ -146,7 +146,7 @@ class RedirectAfterLoginEventDispatcherPluginTest extends Unit
         $request->server->set(static::REQUEST_URI, AuthConfig::DEFAULT_URL_LOGIN);
         $request->query->set(static::REFERER, static::REDIRECT_URL_VALID);
         $response = new RedirectResponse(AuthConfig::DEFAULT_URL_REDIRECT);
-        $event = new FilterResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
+        $event = new ResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
 
         $redirectAfterLoginEventDispatcherPlugin = $this->getRedirectAfterLoginEventDispatcherPlugin(['isAuthenticated']);
         $redirectAfterLoginEventDispatcherPlugin->expects($this->once())
@@ -168,7 +168,7 @@ class RedirectAfterLoginEventDispatcherPluginTest extends Unit
         $request->server->set(static::REQUEST_URI, AuthConfig::DEFAULT_URL_LOGIN);
         $request->query->set(static::REFERER, static::REDIRECT_URL_VALID);
         $response = new RedirectResponse(AuthConfig::DEFAULT_URL_REDIRECT);
-        $event = new FilterResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
+        $event = new ResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST, $response);
 
         $redirectAfterLoginEventDispatcherPlugin = $this->getRedirectAfterLoginEventDispatcherPlugin(['isAuthenticated']);
         $redirectAfterLoginEventDispatcherPlugin->expects($this->once())
@@ -183,19 +183,19 @@ class RedirectAfterLoginEventDispatcherPluginTest extends Unit
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
      * @param \Spryker\Zed\Auth\Communication\Plugin\EventDispatcher\RedirectAfterLoginEventDispatcherPlugin $redirectAfterLoginEventDispatcherPlugin
      *
-     * @return \Symfony\Component\HttpKernel\Event\FilterResponseEvent
+     * @return \Symfony\Component\HttpKernel\Event\ResponseEvent
      */
     protected function dispatchEvent(
-        FilterResponseEvent $event,
+        ResponseEvent $event,
         RedirectAfterLoginEventDispatcherPlugin $redirectAfterLoginEventDispatcherPlugin
-    ): FilterResponseEvent {
+    ): ResponseEvent {
         $eventDispatcher = new EventDispatcher();
         $redirectAfterLoginEventDispatcherPlugin->extend($eventDispatcher, new Container());
 
-        /** @var \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event */
+        /** @var \Symfony\Component\HttpKernel\Event\ResponseEvent $event */
         $event = $eventDispatcher->dispatch($event, KernelEvents::RESPONSE);
 
         return $event;

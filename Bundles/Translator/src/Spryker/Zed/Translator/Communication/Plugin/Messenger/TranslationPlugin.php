@@ -62,7 +62,7 @@ class TranslationPlugin extends AbstractPlugin implements TranslationPluginInter
     }
 
     /**
-     * deprecated `\Spryker\Zed\Translator\Business\Translator\Translator` should not be used anymore.
+     * Deprecated: {@link \Spryker\Zed\Translator\Business\Translator\Translator} should not be used anymore.
      *
      * @return \Spryker\Shared\TranslatorExtension\Dependency\Plugin\TranslatorPluginInterface|\Spryker\Zed\Translator\Business\Translator\Translator
      */

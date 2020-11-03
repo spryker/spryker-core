@@ -148,99 +148,15 @@
         },
         {
             "severity": "info",
-            "line_from": 75,
-            "line_to": 75,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryConnector/src/Spryker/Zed/CmsBlockCategoryConnector/CmsBlockCategoryConnectorDependencyProvider.php",
-            "snippet": "            return new CmsBlockCategoryConnectorToLocaleBridge($container->getLocator()->locale()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 89,
-            "line_to": 89,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryConnector/src/Spryker/Zed/CmsBlockCategoryConnector/CmsBlockCategoryConnectorDependencyProvider.php",
-            "snippet": "            return new CmsBlockCategoryConnectorToTouchBridge($container->getLocator()->touch()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 103,
-            "line_to": 103,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryConnector/src/Spryker/Zed/CmsBlockCategoryConnector/CmsBlockCategoryConnectorDependencyProvider.php",
-            "snippet": "            return new CmsBlockCategoryConnectorToCategoryQueryContainerBridge($container->getLocator()->category()->queryContainer());",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 117,
-            "line_to": 117,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryConnector/src/Spryker/Zed/CmsBlockCategoryConnector/CmsBlockCategoryConnectorDependencyProvider.php",
-            "snippet": "            return new CmsBlockCategoryConnectorToCollectorBridge($container->getLocator()->collector()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 131,
-            "line_to": 131,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryConnector/src/Spryker/Zed/CmsBlockCategoryConnector/CmsBlockCategoryConnectorDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->utilDataReader()->service();",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 145,
-            "line_to": 145,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryConnector/src/Spryker/Zed/CmsBlockCategoryConnector/CmsBlockCategoryConnectorDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->touch()->queryContainer();",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 159,
-            "line_to": 159,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryConnector/src/Spryker/Zed/CmsBlockCategoryConnector/CmsBlockCategoryConnectorDependencyProvider.php",
-            "snippet": "            return new CmsBlockCategoryConnectorToCmsBlockQueryContainerBridge($container->getLocator()->cmsBlock()->queryContainer());",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 173,
-            "line_to": 173,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryConnector/src/Spryker/Zed/CmsBlockCategoryConnector/CmsBlockCategoryConnectorDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->utilEncoding()->service();",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
+            "line_from": 87,
+            "line_to": 87,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CmsBlockCategoryConnector\\Communication\\DataProvider\\CategoryDataProvider::getAssignedIdCmsBlocksByIdCategory cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryConnector/src/Spryker/Zed/CmsBlockCategoryConnector/Communication/DataProvider/CategoryDataProvider.php",
+            "snippet": "            $idCmsBlocks = $this->getAssignedIdCmsBlocksByIdCategory($categoryTransfer->getIdCategory());",
+            "selected_text": "$categoryTransfer->getIdCategory()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -253,6 +169,18 @@
             "selected_text": "$assignedBlocks[$cmsBlockCategoryEntity->getFkCategoryTemplate()]",
             "error_level": 3,
             "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 136,
+            "line_to": 136,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CmsBlockCategoryConnector\\Persistence\\CmsBlockCategoryConnectorQueryContainerInterface::queryCmsBlockCategoryWithBlocksByIdCategory cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryConnector/src/Spryker/Zed/CmsBlockCategoryConnector/Communication/DataProvider/CategoryDataProvider.php",
+            "snippet": "            ->queryCmsBlockCategoryWithBlocksByIdCategory($categoryTransfer->getIdCategory());",
+            "selected_text": "$categoryTransfer->getIdCategory()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -301,6 +229,18 @@
             "selected_text": "toKeyValue",
             "error_level": 3,
             "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 78,
+            "line_to": 78,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CmsBlockCategoryConnector\\Communication\\DataProvider\\CmsBlockDataProvider::getAssignedCategoryIds cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryConnector/src/Spryker/Zed/CmsBlockCategoryConnector/Communication/DataProvider/CmsBlockDataProvider.php",
+            "snippet": "            $categoryIds = $this->getAssignedCategoryIds($cmsBlockTransfer->getIdCmsBlock());",
+            "selected_text": "$cmsBlockTransfer->getIdCmsBlock()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -421,54 +361,6 @@
             "selected_text": "$cmsBlocks",
             "error_level": 3,
             "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "MoreSpecificReturnType",
-            "message": "The declared return type 'Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnectorQuery' for Spryker\\Zed\\CmsBlockCategoryConnector\\Persistence\\CmsBlockCategoryConnectorQueryContainer::queryCmsBlockCategoryConnectorByIdCmsBlock is more specific than the inferred return type 'Propel\\Runtime\\ActiveQuery\\Criteria'",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryConnector/src/Spryker/Zed/CmsBlockCategoryConnector/Persistence/CmsBlockCategoryConnectorQueryContainer.php",
-            "snippet": "     * @return \\Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnectorQuery",
-            "selected_text": "\\Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnectorQuery",
-            "error_level": 3,
-            "shortcode": 70
-        },
-        {
-            "severity": "info",
-            "line_from": 45,
-            "line_to": 51,
-            "type": "LessSpecificReturnStatement",
-            "message": "The type 'Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnectorQuery&static|Propel\\Runtime\\ActiveQuery\\Criteria' is more general than the declared return type 'Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnectorQuery' for Spryker\\Zed\\CmsBlockCategoryConnector\\Persistence\\CmsBlockCategoryConnectorQueryContainer::queryCmsBlockCategoryConnectorByIdCmsBlock",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryConnector/src/Spryker/Zed/CmsBlockCategoryConnector/Persistence/CmsBlockCategoryConnectorQueryContainer.php",
-            "snippet": "        return $this->queryCmsBlockCategoryConnector()\n            ->filterByFkCmsBlock($idCmsBlock)\n            ->addJoin(\n                [SpyCmsBlockCategoryConnectorTableMap::COL_FK_CATEGORY, SpyCmsBlockCategoryConnectorTableMap::COL_FK_CATEGORY_TEMPLATE],\n                [SpyCategoryTableMap::COL_ID_CATEGORY, SpyCategoryTableMap::COL_FK_CATEGORY_TEMPLATE],\n                Criteria::JOIN\n            );",
-            "selected_text": "$this->queryCmsBlockCategoryConnector()\n            ->filterByFkCmsBlock($idCmsBlock)\n            ->addJoin(\n                [SpyCmsBlockCategoryConnectorTableMap::COL_FK_CATEGORY, SpyCmsBlockCategoryConnectorTableMap::COL_FK_CATEGORY_TEMPLATE],\n                [SpyCategoryTableMap::COL_ID_CATEGORY, SpyCategoryTableMap::COL_FK_CATEGORY_TEMPLATE],\n                Criteria::JOIN\n            )",
-            "error_level": 3,
-            "shortcode": 129
-        },
-        {
-            "severity": "info",
-            "line_from": 79,
-            "line_to": 79,
-            "type": "MoreSpecificReturnType",
-            "message": "The declared return type 'Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnectorQuery' for Spryker\\Zed\\CmsBlockCategoryConnector\\Persistence\\CmsBlockCategoryConnectorQueryContainer::queryCmsBlockCategoryWithNamesByIdBlock is more specific than the inferred return type 'Propel\\Runtime\\ActiveQuery\\Criteria'",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryConnector/src/Spryker/Zed/CmsBlockCategoryConnector/Persistence/CmsBlockCategoryConnectorQueryContainer.php",
-            "snippet": "     * @return \\Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnectorQuery",
-            "selected_text": "\\Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnectorQuery",
-            "error_level": 3,
-            "shortcode": 70
-        },
-        {
-            "severity": "info",
-            "line_from": 83,
-            "line_to": 94,
-            "type": "LessSpecificReturnStatement",
-            "message": "The type 'Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnectorQuery&static|Propel\\Runtime\\ActiveQuery\\Criteria' is more general than the declared return type 'Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnectorQuery' for Spryker\\Zed\\CmsBlockCategoryConnector\\Persistence\\CmsBlockCategoryConnectorQueryContainer::queryCmsBlockCategoryWithNamesByIdBlock",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryConnector/src/Spryker/Zed/CmsBlockCategoryConnector/Persistence/CmsBlockCategoryConnectorQueryContainer.php",
-            "snippet": "        return $this->queryCmsBlockCategoryConnectorByIdCmsBlock($idCmsBlock)\n            ->addJoin(\n                [\n                    SpyCategoryTableMap::COL_ID_CATEGORY,\n                    SpyCategoryAttributeTableMap::COL_FK_LOCALE,\n                ],\n                [\n                    SpyCategoryAttributeTableMap::COL_FK_CATEGORY,\n                    $idLocale,\n                ],\n                Criteria::INNER_JOIN\n            );",
-            "selected_text": "$this->queryCmsBlockCategoryConnectorByIdCmsBlock($idCmsBlock)\n            ->addJoin(\n                [\n                    SpyCategoryTableMap::COL_ID_CATEGORY,\n                    SpyCategoryAttributeTableMap::COL_FK_LOCALE,\n                ],\n                [\n                    SpyCategoryAttributeTableMap::COL_FK_CATEGORY,\n                    $idLocale,\n                ],\n                Criteria::INNER_JOIN\n            )",
-            "error_level": 3,
-            "shortcode": 129
         }
     ],
     "deprecation": [

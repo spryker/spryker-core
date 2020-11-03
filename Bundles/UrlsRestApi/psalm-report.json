@@ -15,6 +15,18 @@
         },
         {
             "severity": "info",
+            "line_from": 96,
+            "line_to": 96,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\UrlsRestApi\\Dependency\\Client\\UrlsRestApiToUrlStorageClientInterface::findUrlRedirectStorageById cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/UrlsRestApi/src/Spryker/Glue/UrlsRestApi/Processor/Url/Resolver/UrlResolver.php",
+            "snippet": "            $urlStorageTransfer->getFkResourceRedirect()",
+            "selected_text": "$urlStorageTransfer->getFkResourceRedirect()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
             "line_from": 103,
             "line_to": 103,
             "type": "PossiblyNullArgument",
@@ -24,18 +36,6 @@
             "selected_text": "$urlRedirectStorageTransfer->getToUrl()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/UrlsRestApi/src/Spryker/Glue/UrlsRestApi/UrlsRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->urlStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

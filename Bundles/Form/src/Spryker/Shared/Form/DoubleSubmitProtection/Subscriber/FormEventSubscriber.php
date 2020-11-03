@@ -13,7 +13,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class FormEventSubscriber implements EventSubscriberInterface
 {
@@ -38,7 +38,7 @@ class FormEventSubscriber implements EventSubscriberInterface
     protected $fieldName;
 
     /**
-     * @var \Symfony\Component\Translation\TranslatorInterface|null
+     * @var \Symfony\Contracts\Translation\TranslatorInterface|null
      */
     protected $translator;
 
@@ -57,7 +57,7 @@ class FormEventSubscriber implements EventSubscriberInterface
      * @param \Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\StorageInterface $storage
      * @param string $fieldName
      * @param string $errorMessage
-     * @param \Symfony\Component\Translation\TranslatorInterface|null $translator
+     * @param \Symfony\Contracts\Translation\TranslatorInterface|null $translator
      * @param string|null $translationDomain
      */
     public function __construct(

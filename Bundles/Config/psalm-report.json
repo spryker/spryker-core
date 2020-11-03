@@ -10,8 +10,7 @@
             "snippet": "        return sprintf('twig.loader.%s', strtolower(APPLICATION));",
             "selected_text": "APPLICATION",
             "error_level": -1,
-            "shortcode": 20,
-            "taint_trace": null
+            "shortcode": 20
         },
         {
             "severity": "error",
@@ -23,11 +22,22 @@
             "snippet": "        return sprintf('twig.loader.%s', strtolower(APPLICATION));",
             "selected_text": "APPLICATION",
             "error_level": -1,
-            "shortcode": 20,
-            "taint_trace": null
+            "shortcode": 20
         }
     ],
     "warning": [
+        {
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "UnsafeInstantiation",
+            "message": "Cannot safely instantiate class Spryker\\Shared\\Config\\Config with \"new static\" as its constructor might change in child classes",
+            "file_name": "vendor/spryker/spryker/Bundles/Config/src/Spryker/Shared/Config/Config.php",
+            "snippet": "            static::$instance = new static();",
+            "selected_text": "new static()",
+            "error_level": 2,
+            "shortcode": 229
+        },
         {
             "severity": "info",
             "line_from": 69,
@@ -38,8 +48,7 @@
             "snippet": "        $value = static::$config[$key];",
             "selected_text": "static::$config[$key]",
             "error_level": 3,
-            "shortcode": 79,
-            "taint_trace": null
+            "shortcode": 79
         },
         {
             "severity": "info",
@@ -51,8 +60,7 @@
             "snippet": "        $value = static::$config[$key];",
             "selected_text": "static::$config",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -64,8 +72,7 @@
             "snippet": "        return static::$profiler->getProfileData();",
             "selected_text": "getProfileData",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -77,8 +84,7 @@
             "snippet": "        return isset(static::$config[$key]);",
             "selected_text": "static::$config",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -90,8 +96,7 @@
             "snippet": "            if (method_exists($loader, 'addPath')) {",
             "selected_text": "method_exists($loader, 'addPath')",
             "error_level": 4,
-            "shortcode": 122,
-            "taint_trace": null
+            "shortcode": 122
         },
         {
             "severity": "info",
@@ -103,8 +108,7 @@
             "snippet": "            if ($pathToTemplates && method_exists($loader, 'addPath')) {",
             "selected_text": "$pathToTemplates && method_exists($loader, 'addPath')",
             "error_level": 4,
-            "shortcode": 122,
-            "taint_trace": null
+            "shortcode": 122
         },
         {
             "severity": "info",
@@ -116,8 +120,7 @@
             "snippet": "     * @return array",
             "selected_text": "array",
             "error_level": 5,
-            "shortcode": 144,
-            "taint_trace": null
+            "shortcode": 144
         },
         {
             "severity": "info",
@@ -129,8 +132,7 @@
             "snippet": "        ksort($this->profileData);",
             "selected_text": "$this->profileData",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -142,8 +144,7 @@
             "snippet": "        return $this->profileData;",
             "selected_text": "$this->profileData",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
         }
     ],
     "deprecation": [
@@ -157,8 +158,7 @@
             "snippet": "        static::defineStore();",
             "selected_text": "static::defineStore()",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -170,8 +170,7 @@
             "snippet": "        static::defineCodeBucket();",
             "selected_text": "static::defineCodeBucket()",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -183,8 +182,7 @@
             "snippet": "        $app['data_collector.templates'] = $app->extend('data_collector.templates', function ($templates) {",
             "selected_text": "$app",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -196,8 +194,7 @@
             "snippet": "        return (Config::get(ConfigConstants::ENABLE_WEB_PROFILER, false) && $this->loaderExists($app));",
             "selected_text": "ConfigConstants::ENABLE_WEB_PROFILER",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
+            "shortcode": 170
         },
         {
             "severity": "info",
@@ -209,8 +206,7 @@
             "snippet": "        return (isset($app[$this->getLoaderKey()]));",
             "selected_text": "$app",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -222,8 +218,7 @@
             "snippet": "        $app[$loaderKey] = $app->extend($loaderKey, function (TwigFilesystemLoader $loader) {",
             "selected_text": "$app",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -235,8 +230,7 @@
             "snippet": "        $app['data_collector.templates'] = $app->extend('data_collector.templates', function ($templates) {",
             "selected_text": "$app",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -248,8 +242,7 @@
             "snippet": "        return (Config::get(ConfigConstants::ENABLE_WEB_PROFILER, false) && $this->loaderExists($app));",
             "selected_text": "ConfigConstants::ENABLE_WEB_PROFILER",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
+            "shortcode": 170
         },
         {
             "severity": "info",
@@ -261,8 +254,7 @@
             "snippet": "        return (isset($app[$this->getLoaderKey()]));",
             "selected_text": "$app",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -274,8 +266,7 @@
             "snippet": "        $app[$loaderKey] = $app->extend($loaderKey, function (TwigFilesystemLoader $loader) {",
             "selected_text": "$app",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -287,8 +278,7 @@
             "snippet": "class ConfigProfilerCollector implements DataCollectorInterface, ConfigProfilerCollectorInterface",
             "selected_text": "ConfigProfilerCollector",
             "error_level": 2,
-            "shortcode": 152,
-            "taint_trace": null
+            "shortcode": 152
         },
         {
             "severity": "info",
@@ -300,8 +290,7 @@
             "snippet": "     * @return \\Spryker\\Shared\\Config\\Profiler\\ConfigProfilerCollectorInterface",
             "selected_text": "\\Spryker\\Shared\\Config\\Profiler\\ConfigProfilerCollectorInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -313,8 +302,7 @@
             "snippet": "class ConfigProfilerServiceProvider extends SharedConfigProfilerServiceProvider",
             "selected_text": "SharedConfigProfilerServiceProvider",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -326,8 +314,7 @@
             "snippet": "class ConfigProfilerServiceProvider extends SharedConfigProfilerServiceProvider",
             "selected_text": "SharedConfigProfilerServiceProvider",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         }
     ]
 }

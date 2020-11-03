@@ -78,7 +78,7 @@ class RefundPresentationTester extends Actor
         $i = $this;
         $rows = $i->grabMultiple(SalesDetailPage::SELECTOR_REFUND_ROW);
 
-        $this->assertEquals($expectedNumberOfRefundRows, count($rows));
+        $this->assertSame($expectedNumberOfRefundRows, count($rows));
     }
 
     /**

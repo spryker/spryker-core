@@ -96,7 +96,7 @@ class PersistQuoteTest extends Unit
         $this->assertNotNull($actualQuoteTransfer->getIdQuote());
         $this->assertEquals($actualQuoteTransfer->getCurrency(), $expectedQuoteTransfer->getCurrency());
         $this->assertEquals($actualQuoteTransfer->getStore(), $expectedQuoteTransfer->getStore());
-        $this->assertEquals($actualQuoteTransfer->getCustomerReference(), $expectedQuoteTransfer->getCustomerReference());
+        $this->assertSame($actualQuoteTransfer->getCustomerReference(), $expectedQuoteTransfer->getCustomerReference());
     }
 
     /**

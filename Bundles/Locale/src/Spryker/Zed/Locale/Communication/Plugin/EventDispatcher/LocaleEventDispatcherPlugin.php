@@ -12,7 +12,7 @@ use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -41,7 +41,7 @@ class LocaleEventDispatcherPlugin extends AbstractPlugin implements EventDispatc
     {
         $eventDispatcher->addListener(
             KernelEvents::REQUEST,
-            function (GetResponseEvent $event) use ($container) {
+            function (RequestEvent $event) use ($container) {
                 $request = $event->getRequest();
                 $request->setDefaultLocale($this->getLocale($container));
 

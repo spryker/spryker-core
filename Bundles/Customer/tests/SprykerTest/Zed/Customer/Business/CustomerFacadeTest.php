@@ -613,7 +613,7 @@ class CustomerFacadeTest extends Unit
 
         // Assert
         $this->assertTrue($customerResponse->getIsSuccess(), 'Customer response must be successful.');
-        $this->assertEquals(static::TESTER_NAME, $customerTransfer->getLastName(), 'Last name was not saved.');
+        $this->assertSame(static::TESTER_NAME, $customerTransfer->getLastName(), 'Last name was not saved.');
         $this->tester->assertPasswordsEqual($customerTransfer->getPassword(), static::TESTER_NEW_PASSWORD);
     }
 
@@ -936,7 +936,7 @@ class CustomerFacadeTest extends Unit
 
         // Assert
         $this->assertTrue($customerResponseTransfer->getIsSuccess());
-        $this->assertEquals($customerTransfer->getCustomerReference(), $customerResponseTransfer->getCustomerTransfer()->getCustomerReference());
+        $this->assertSame($customerTransfer->getCustomerReference(), $customerResponseTransfer->getCustomerTransfer()->getCustomerReference());
     }
 
     /**
@@ -1087,16 +1087,24 @@ class CustomerFacadeTest extends Unit
     /**
      * @param array $data
      *
-     * @return int
+     * @return void
      */
-    protected function createCustomerUsingCustomerDataProviderUserData(array $data): int
+    protected function createCustomerUsingCustomerDataProviderUserData(array $data): void
     {
-        return (new SpyCustomer())
+        $customerEntity = (new SpyCustomer())
             ->setEmail($data['email'])
             ->setPassword($data['password'])
             ->setRestorePasswordKey($data['passwordRestoreKey'])
-            ->setCustomerReference($data['customerReference'])
-            ->save();
+            ->setCustomerReference($data['customerReference']);
+
+        $customerEntity->save();
+
+        $customerTransfer = new CustomerTransfer();
+        $customerTransfer->fromArray($customerEntity->toArray(), true);
+
+        $this->tester->addCleanup(function () use ($customerTransfer): void {
+            $this->tester->getFacade()->deleteCustomer($customerTransfer);
+        });
     }
 
     /**

@@ -120,18 +120,6 @@
             "selected_text": "$productConcreteTransfer->getIdProductConcrete()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 39,
-            "line_to": 39,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductValidity/src/Spryker/Zed/ProductValidity/ProductValidityDependencyProvider.php",
-            "snippet": "            return new ProductValidityToProductFacadeBridge($container->getLocator()->product()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

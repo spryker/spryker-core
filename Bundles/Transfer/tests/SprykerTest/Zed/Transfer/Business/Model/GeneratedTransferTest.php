@@ -12,6 +12,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\GeneratedNestedTransfer;
 use Generated\Shared\Transfer\GeneratedTransfer;
 use Spryker\DecimalObject\Decimal;
+use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
@@ -591,6 +592,18 @@ class GeneratedTransferTest extends Unit
         $this->assertInstanceOf(ArrayObject::class, $normalized['associative_nested_transfers']);
         $this->assertArrayHasKey('one', $normalized['associative_nested_transfers']);
         $this->assertInstanceOf(GeneratedNestedTransfer::class, $normalized['associative_nested_transfers']['one']);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetOrFailMethodThrowsExceptionWhenValueIsNull(): void
+    {
+        $this->expectException(NullValueException::class);
+        $this->expectExceptionMessage('Property "testInt" of transfer `Generated\Shared\Transfer\GeneratedTransfer` is null.');
+
+        $generatedTransfer = new GeneratedTransfer();
+        $generatedTransfer->getTestIntOrFail();
     }
 
     /**

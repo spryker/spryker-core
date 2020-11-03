@@ -176,7 +176,7 @@ class SessionHandlerMysql implements SessionHandlerInterface
 
         $startTime = microtime(true);
 
-        $query = sprintf('DELETE FROM session WHERE key = "%s"', $key);
+        $query = sprintf('DELETE FROM session WHERE `key` = "%s"', $key);
 
         $this->connection->exec($query);
         $this->monitoringService->addCustomParameter(self::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);

@@ -83,18 +83,6 @@
             "selected_text": "$shoppingListItemIds",
             "error_level": 6,
             "shortcode": 4
-        },
-        {
-            "severity": "error",
-            "line_from": 47,
-            "line_to": 55,
-            "type": "UndefinedDocblockClass",
-            "message": "Docblock-defined class or interface Orm\\Zed\\ProductMerchantConnector\\Persistence\\SpyProductAbstractMerchantQuery does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListProductOptionConnector/src/Spryker/Zed/ShoppingListProductOptionConnector/Persistence/ShoppingListProductOptionConnectorRepository.php",
-            "snippet": "        $shoppingListProductOptionEntityCollection = $this->getFactory()\n            ->createSpyShoppingListProductOptionQuery()\n            ->joinSpyShoppingListItem()\n            ->useSpyProductOptionValueQuery()\n                ->useSpyProductOptionGroupQuery()\n                    ->useSpyProductAbstractProductOptionGroupQuery()\n                        ->useSpyProductAbstractQuery()\n                            ->joinSpyProduct()\n                        ->endUse()",
-            "selected_text": "$this->getFactory()\n            ->createSpyShoppingListProductOptionQuery()\n            ->joinSpyShoppingListItem()\n            ->useSpyProductOptionValueQuery()\n                ->useSpyProductOptionGroupQuery()\n                    ->useSpyProductAbstractProductOptionGroupQuery()\n                        ->useSpyProductAbstractQuery()\n                            ->joinSpyProduct()\n                        ->endUse()",
-            "error_level": -1,
-            "shortcode": 200
         }
     ],
     "warning": [
@@ -367,36 +355,12 @@
             "line_from": 33,
             "line_to": 33,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ShoppingListProductOptionConnector\\Persistence\\SpyShoppingListProductOption|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ShoppingListProductOptionConnector\\Persistence\\SpyShoppingListProductOption> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ShoppingListProductOptionConnector/src/Spryker/Zed/ShoppingListProductOptionConnector/Persistence/ShoppingListProductOptionConnectorRepository.php",
             "snippet": "            ->getArrayCopy();",
             "selected_text": "getArrayCopy",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 59,
-            "line_to": 59,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Orm\\Zed\\Category\\Persistence\\SpyCategoryNodeQuery::filterbyfkshoppinglistitem_in does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListProductOptionConnector/src/Spryker/Zed/ShoppingListProductOptionConnector/Persistence/ShoppingListProductOptionConnectorRepository.php",
-            "snippet": "            ->filterByFkShoppingListItem_In($shoppingListItemIds)",
-            "selected_text": "filterByFkShoppingListItem_In",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 42,
-            "line_to": 42,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListProductOptionConnector/src/Spryker/Zed/ShoppingListProductOptionConnector/ShoppingListProductOptionConnectorDependencyProvider.php",
-            "snippet": "            return new ShoppingListProductOptionConnectorToProductOptionFacadeBridge($container->getLocator()->productOption()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [
@@ -462,8 +426,8 @@
         },
         {
             "severity": "info",
-            "line_from": 18,
-            "line_to": 18,
+            "line_from": 20,
+            "line_to": 20,
             "type": "DeprecatedInterface",
             "message": "Spryker\\Zed\\ShoppingListExtension\\Dependency\\Plugin\\ShoppingListItemPostSavePluginInterface is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ShoppingListProductOptionConnector/src/Spryker/Zed/ShoppingListProductOptionConnector/Communication/Plugin/ShoppingList/ShoppingListItemProductOptionPostSavePlugin.php",

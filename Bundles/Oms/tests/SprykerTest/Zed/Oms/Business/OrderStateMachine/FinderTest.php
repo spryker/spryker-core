@@ -49,7 +49,7 @@ class FinderTest extends Unit
 
         $displayName = $finder->getStateDisplayName($salesOrderItemEntity);
 
-        $this->assertEquals(static::STATE_DISPLAY_VALUE, $displayName);
+        $this->assertSame(static::STATE_DISPLAY_VALUE, $displayName);
     }
 
     /**
@@ -64,7 +64,7 @@ class FinderTest extends Unit
 
         $displayName = $finder->getStateDisplayName($salesOrderItemEntity);
 
-        $this->assertEquals(static::STATE_SUB_PROCESS_DISPLAY_VALUE, $displayName);
+        $this->assertSame(static::STATE_SUB_PROCESS_DISPLAY_VALUE, $displayName);
     }
 
     /**

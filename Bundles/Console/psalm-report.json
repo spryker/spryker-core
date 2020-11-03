@@ -1,5 +1,30 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 108,
+            "line_to": 108,
+            "type": "UndefinedMethod",
+            "message": "Method Spryker\\Zed\\Kernel\\Business\\AbstractFacade::preRun does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Console/src/Spryker/Zed/Console/Communication/Bootstrap/ConsoleBootstrap.php",
+            "snippet": "            $this->getFacade()->preRun($input, $output);",
+            "selected_text": "preRun",
+            "error_level": 6,
+            "shortcode": 22
+        },
+        {
+            "severity": "error",
+            "line_from": 114,
+            "line_to": 114,
+            "type": "UndefinedMethod",
+            "message": "Method Spryker\\Zed\\Kernel\\Business\\AbstractFacade::postRun does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Console/src/Spryker/Zed/Console/Communication/Bootstrap/ConsoleBootstrap.php",
+            "snippet": "            $this->getFacade()->postRun($input, $output);",
+            "selected_text": "postRun",
+            "error_level": 6,
+            "shortcode": 22
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -7,25 +32,47 @@
             "line_to": 112,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $commands[null|string] using possibly null offset null|string",
-            "file_name": "vendor/spryker/spryker/Bundles/Console/src/Spryker/Yves/Console/ConsoleBootstrap.php",
+            "file_name": "vendor/spryker/spryker/Bundles/Console/src/Spryker/Glue/Console/ConsoleBootstrap.php",
             "snippet": "            $commands[$command->getName()] = $command;",
             "selected_text": "$commands",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
-            "line_from": 122,
-            "line_to": 122,
+            "line_from": 70,
+            "line_to": 70,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $commands[null|string] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/Console/src/Spryker/Yves/Console/Bootstrap/ConsoleBootstrap.php",
+            "snippet": "            $commands[$command->getName()] = $command;",
+            "selected_text": "$commands",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 68,
+            "line_to": 68,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $commands[null|string] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/Console/src/Spryker/Zed/Console/Communication/Bootstrap/ConsoleBootstrap.php",
+            "snippet": "            $commands[$command->getName()] = $command;",
+            "selected_text": "$commands",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 124,
+            "line_to": 124,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $commands[null|string] using possibly null offset null|string",
             "file_name": "vendor/spryker/spryker/Bundles/Console/src/Spryker/Zed/Console/Communication/ConsoleBootstrap.php",
             "snippet": "            $commands[$command->getName()] = $command;",
             "selected_text": "$commands",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -37,8 +84,7 @@
             "snippet": "        $this->getLogger()->info(sprintf('CLI command \"%s\" started', $event->getCommand()->getName()), $context);",
             "selected_text": "info",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -50,8 +96,7 @@
             "snippet": "        $this->getLogger()->info(sprintf('CLI command \"%s\" started', $event->getCommand()->getName()), $context);",
             "selected_text": "$event->getCommand()->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -63,8 +108,7 @@
             "snippet": "        $this->getLogger()->info(sprintf('CLI command \"%s\" started', $event->getCommand()->getName()), $context);",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -76,8 +120,7 @@
             "snippet": "        $this->getLogger()->info(sprintf('CLI command \"%s\" terminated', $event->getCommand()->getName()));",
             "selected_text": "info",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -89,8 +132,7 @@
             "snippet": "        $this->getLogger()->info(sprintf('CLI command \"%s\" terminated', $event->getCommand()->getName()));",
             "selected_text": "$event->getCommand()->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -102,8 +144,7 @@
             "snippet": "        $this->getLogger()->info(sprintf('CLI command \"%s\" terminated', $event->getCommand()->getName()));",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -115,8 +156,7 @@
             "snippet": "        $this->getLogger()->error(sprintf(",
             "selected_text": "error",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -128,8 +168,7 @@
             "snippet": "     * @return string",
             "selected_text": "string",
             "error_level": 5,
-            "shortcode": 144,
-            "taint_trace": null
+            "shortcode": 144
         },
         {
             "severity": "info",
@@ -141,8 +180,43 @@
             "snippet": "            return $consoleEvent->getCommand()->getName();",
             "selected_text": "$consoleEvent->getCommand()->getName()",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 83,
+            "line_to": 83,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getName on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/Console/src/Spryker/Zed/Console/Communication/Plugin/ConsoleLogPlugin.php",
+            "snippet": "            return $consoleEvent->getCommand()->getName();",
+            "selected_text": "getName",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'Spryker\\Glue\\Console\\ConsoleConfig' for Spryker\\Glue\\Kernel\\BundleConfigResolverAwareTrait::getConfig is more specific than the inferred return type 'Spryker\\Glue\\Kernel\\AbstractBundleConfig'",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Glue/Kernel/BundleConfigResolverAwareTrait.php",
+            "snippet": "     * @return \\Spryker\\Glue\\Kernel\\AbstractBundleConfig",
+            "selected_text": "\\Spryker\\Glue\\Kernel\\AbstractBundleConfig",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'Spryker\\Glue\\Kernel\\AbstractBundleConfig' for Spryker\\Glue\\Kernel\\BundleConfigResolverAwareTrait::resolveBundleConfig is more specific than the inferred return type 'Spryker\\Shared\\Kernel\\AbstractBundleConfig'",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Glue/Kernel/BundleConfigResolverAwareTrait.php",
+            "snippet": "     * @return \\Spryker\\Glue\\Kernel\\AbstractBundleConfig",
+            "selected_text": "\\Spryker\\Glue\\Kernel\\AbstractBundleConfig",
+            "error_level": 3,
+            "shortcode": 70
         },
         {
             "severity": "info",
@@ -154,8 +228,19 @@
             "snippet": "     * @return \\Spryker\\Yves\\Kernel\\AbstractBundleConfig",
             "selected_text": "\\Spryker\\Yves\\Kernel\\AbstractBundleConfig",
             "error_level": 3,
-            "shortcode": 70,
-            "taint_trace": null
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'Spryker\\Yves\\Console\\ConsoleFactory' for Spryker\\Yves\\Kernel\\FactoryResolverAwareTrait::getFactory is more specific than the inferred return type 'Spryker\\Yves\\Kernel\\FactoryInterface'",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Yves/Kernel/FactoryResolverAwareTrait.php",
+            "snippet": "     * @return \\Spryker\\Yves\\Kernel\\FactoryInterface",
+            "selected_text": "\\Spryker\\Yves\\Kernel\\FactoryInterface",
+            "error_level": 3,
+            "shortcode": 70
         },
         {
             "severity": "info",
@@ -167,8 +252,7 @@
             "snippet": "     * @return \\Spryker\\Zed\\Kernel\\AbstractBundleConfig",
             "selected_text": "\\Spryker\\Zed\\Kernel\\AbstractBundleConfig",
             "error_level": 3,
-            "shortcode": 70,
-            "taint_trace": null
+            "shortcode": 70
         },
         {
             "severity": "info",
@@ -180,8 +264,31 @@
             "snippet": "     * @return \\Spryker\\Zed\\Kernel\\AbstractBundleConfig",
             "selected_text": "\\Spryker\\Zed\\Kernel\\AbstractBundleConfig",
             "error_level": 3,
-            "shortcode": 70,
-            "taint_trace": null
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'Spryker\\Zed\\Console\\Business\\ConsoleFacade' for Spryker\\Zed\\Kernel\\Communication\\FacadeResolverAwareTrait::getFacade is more specific than the inferred return type 'Spryker\\Zed\\Kernel\\Business\\AbstractFacade'",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Communication/FacadeResolverAwareTrait.php",
+            "snippet": "     * @return \\Spryker\\Zed\\Kernel\\Business\\AbstractFacade",
+            "selected_text": "\\Spryker\\Zed\\Kernel\\Business\\AbstractFacade",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'Spryker\\Zed\\Console\\Communication\\ConsoleCommunicationFactory' for Spryker\\Zed\\Kernel\\Communication\\FactoryResolverAwareTrait::getFactory is more specific than the inferred return type 'Spryker\\Zed\\Kernel\\Communication\\AbstractCommunicationFactory'",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Communication/FactoryResolverAwareTrait.php",
+            "snippet": "     * @return \\Spryker\\Zed\\Kernel\\Communication\\AbstractCommunicationFactory",
+            "selected_text": "\\Spryker\\Zed\\Kernel\\Communication\\AbstractCommunicationFactory",
+            "error_level": 3,
+            "shortcode": 70
         }
     ],
     "deprecation": [
@@ -195,8 +302,7 @@
             "snippet": "        return $this->getProvidedDependency(ConsoleDependencyProvider::SERVICE_PROVIDERS);",
             "selected_text": "ConsoleDependencyProvider::SERVICE_PROVIDERS",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
+            "shortcode": 170
         },
         {
             "severity": "info",
@@ -208,8 +314,7 @@
             "snippet": "     * @return \\Spryker\\Zed\\Console\\Dependency\\Plugin\\ConsolePreRunHookPluginInterface[]",
             "selected_text": "\\Spryker\\Zed\\Console\\Dependency\\Plugin\\ConsolePreRunHookPluginInterface[]",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -221,8 +326,7 @@
             "snippet": "     * @return \\Spryker\\Zed\\Console\\Dependency\\Plugin\\ConsolePostRunHookPluginInterface[]",
             "selected_text": "\\Spryker\\Zed\\Console\\Dependency\\Plugin\\ConsolePostRunHookPluginInterface[]",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -234,8 +338,7 @@
             "snippet": "        return $this->getFactory()->getServiceProviders();",
             "selected_text": "getServiceProviders",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -247,8 +350,7 @@
             "snippet": "class ConsoleRunnerHook implements ConsoleRunnerHookInterface",
             "selected_text": "ConsoleRunnerHook",
             "error_level": 2,
-            "shortcode": 152,
-            "taint_trace": null
+            "shortcode": 152
         },
         {
             "severity": "info",
@@ -260,8 +362,7 @@
             "snippet": "     * @var \\Spryker\\Zed\\Console\\Dependency\\Plugin\\ConsolePreRunHookPluginInterface[]",
             "selected_text": "\\Spryker\\Zed\\Console\\Dependency\\Plugin\\ConsolePreRunHookPluginInterface[]",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -273,8 +374,7 @@
             "snippet": "     * @var \\Spryker\\Zed\\Console\\Dependency\\Plugin\\ConsolePostRunHookPluginInterface[]",
             "selected_text": "\\Spryker\\Zed\\Console\\Dependency\\Plugin\\ConsolePostRunHookPluginInterface[]",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -286,8 +386,7 @@
             "snippet": "     * @param \\Spryker\\Zed\\Console\\Dependency\\Plugin\\ConsolePreRunHookPluginInterface[] $preHookPlugins",
             "selected_text": "\\Spryker\\Zed\\Console\\Dependency\\Plugin\\ConsolePreRunHookPluginInterface[]",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -299,34 +398,55 @@
             "snippet": "     * @param \\Spryker\\Zed\\Console\\Dependency\\Plugin\\ConsolePostRunHookPluginInterface[] $postHookPlugins",
             "selected_text": "\\Spryker\\Zed\\Console\\Dependency\\Plugin\\ConsolePostRunHookPluginInterface[]",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 63,
-            "line_to": 63,
+            "line_from": 65,
+            "line_to": 65,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Console\\Communication\\ConsoleBootstrap::registerServiceProviders has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Console/src/Spryker/Zed/Console/Communication/ConsoleBootstrap.php",
             "snippet": "        $this->registerServiceProviders();",
             "selected_text": "registerServiceProviders",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
-            "line_from": 105,
-            "line_to": 105,
+            "line_from": 68,
+            "line_to": 68,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Zed\\Kernel\\Communication\\Plugin\\Pimple is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Console/src/Spryker/Zed/Console/Communication/ConsoleBootstrap.php",
+            "snippet": "        Pimple::setApplication($this->application);",
+            "selected_text": "Pimple::setApplication($this->application)",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 107,
+            "line_to": 107,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Console\\Business\\ConsoleFacadeInterface::getServiceProviders has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Console/src/Spryker/Zed/Console/Communication/ConsoleBootstrap.php",
             "snippet": "        $serviceProviders = $this->getFacade()->getServiceProviders();",
             "selected_text": "getServiceProviders",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\Console\\Business\\ConsoleFacade::getServiceProviders has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Console/src/Spryker/Zed/Console/Communication/ConsoleBootstrapElector.php",
+            "snippet": "        $serviceProviders = $this->getFacade()->getServiceProviders();",
+            "selected_text": "getServiceProviders",
+            "error_level": 2,
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -338,60 +458,79 @@
             "snippet": "        $container = $this->addServiceProviders($container);",
             "selected_text": "addServiceProviders",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
-            "line_from": 116,
-            "line_to": 116,
+            "line_from": 131,
+            "line_to": 131,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Console\\Dependency\\Plugin\\ConsolePreRunHookPluginInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Console/src/Spryker/Zed/Console/ConsoleDependencyProvider.php",
             "snippet": "     * @return \\Spryker\\Zed\\Console\\Dependency\\Plugin\\ConsolePreRunHookPluginInterface[]",
             "selected_text": "\\Spryker\\Zed\\Console\\Dependency\\Plugin\\ConsolePreRunHookPluginInterface[]",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 126,
-            "line_to": 126,
+            "line_from": 141,
+            "line_to": 141,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Console\\Dependency\\Plugin\\ConsolePostRunHookPluginInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Console/src/Spryker/Zed/Console/ConsoleDependencyProvider.php",
             "snippet": "     * @return \\Spryker\\Zed\\Console\\Dependency\\Plugin\\ConsolePostRunHookPluginInterface[]",
             "selected_text": "\\Spryker\\Zed\\Console\\Dependency\\Plugin\\ConsolePostRunHookPluginInterface[]",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 166,
-            "line_to": 166,
+            "line_from": 181,
+            "line_to": 181,
             "type": "DeprecatedConstant",
             "message": "Constant Spryker\\Zed\\Console\\ConsoleDependencyProvider::SERVICE_PROVIDERS is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Console/src/Spryker/Zed/Console/ConsoleDependencyProvider.php",
             "snippet": "        $container->set(static::SERVICE_PROVIDERS, function (Container $container) {",
             "selected_text": "static::SERVICE_PROVIDERS",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
+            "shortcode": 170
         },
         {
             "severity": "info",
-            "line_from": 167,
-            "line_to": 167,
+            "line_from": 182,
+            "line_to": 182,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Console\\ConsoleDependencyProvider::getServiceProviders has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Console/src/Spryker/Zed/Console/ConsoleDependencyProvider.php",
             "snippet": "            return $this->getServiceProviders($container);",
             "selected_text": "getServiceProviders",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Console\\Communication\\ConsoleBootstrap is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/BundleConfigResolverAwareTrait.php",
+            "snippet": "     * @return $this",
+            "selected_text": "$this",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Console\\Communication\\ConsoleBootstrapElector is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Communication/FacadeResolverAwareTrait.php",
+            "snippet": "     * @return $this",
+            "selected_text": "$this",
+            "error_level": 2,
+            "shortcode": 98
         }
     ]
 }

@@ -4,7 +4,7 @@
   "description": "PriceDataFeed module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/kernel": "^3.30.0",
     "spryker/price-product": "^1.0.0 || ^2.0.0 || ^4.0.0"
   },

@@ -58,7 +58,7 @@ class PriceClientTest extends Unit
         $priceMode = $priceClient->getCurrentPriceMode();
 
         //Assert
-        $this->assertEquals($this->createPriceConfig()->getDefaultPriceMode(), $priceMode);
+        $this->assertSame($this->createPriceConfig()->getDefaultPriceMode(), $priceMode);
     }
 
     /**
@@ -74,7 +74,7 @@ class PriceClientTest extends Unit
         $priceMode = $priceClient->getCurrentPriceMode();
 
         //Assert
-        $this->assertEquals(static::CACHED_PRICE_MODE, $priceMode);
+        $this->assertSame(static::CACHED_PRICE_MODE, $priceMode);
     }
 
     /**
@@ -93,7 +93,7 @@ class PriceClientTest extends Unit
 
         //Assert
         $this->assertNotNull($priceModeCache);
-        $this->assertEquals($defaultPriceMode, $priceModeCache);
+        $this->assertSame($defaultPriceMode, $priceModeCache);
     }
 
     /**

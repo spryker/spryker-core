@@ -1,6 +1,43 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Zed\\ProductLabelCollector\\Communication\\Plugin\\ProductLabelDictionaryCollectorStoragePlugin::run has wrong name $localeTransfer, expecting $locale as defined by Spryker\\Zed\\Collector\\Dependency\\Plugin\\CollectorPluginInterface::run",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelCollector/src/Spryker/Zed/ProductLabelCollector/Communication/Plugin/ProductLabelDictionaryCollectorStoragePlugin.php",
+            "snippet": "        LocaleTransfer $localeTransfer,",
+            "selected_text": "$localeTransfer",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
     "warning": [
+        {
+            "severity": "info",
+            "line_from": 107,
+            "line_to": 107,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of DateTime::__construct cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelCollector/src/Spryker/Zed/ProductLabelCollector/Business/Collector/Storage/LabelDictionaryCollector.php",
+            "snippet": "        $validFromDate = new DateTime($productLabelTransfer->getValidFrom());",
+            "selected_text": "$productLabelTransfer->getValidFrom()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 128,
+            "line_to": 128,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of DateTime::__construct cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelCollector/src/Spryker/Zed/ProductLabelCollector/Business/Collector/Storage/LabelDictionaryCollector.php",
+            "snippet": "        $validToDate = new DateTime($productLabelTransfer->getValidTo());",
+            "selected_text": "$productLabelTransfer->getValidTo()",
+            "error_level": 3,
+            "shortcode": 78
+        },
         {
             "severity": "info",
             "line_from": 147,
@@ -24,54 +61,6 @@
             "selected_text": "$productLabelTransfer->getName()",
             "error_level": 5,
             "shortcode": 139
-        },
-        {
-            "severity": "info",
-            "line_from": 48,
-            "line_to": 48,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelCollector/src/Spryker/Zed/ProductLabelCollector/ProductLabelCollectorDependencyProvider.php",
-            "snippet": "            return new ProductLabelCollectorToProductLabelBridge($container->getLocator()->productLabel()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelCollector/src/Spryker/Zed/ProductLabelCollector/ProductLabelCollectorDependencyProvider.php",
-            "snippet": "            return new ProductLabelCollectorToCollectorBridge($container->getLocator()->collector()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 76,
-            "line_to": 76,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelCollector/src/Spryker/Zed/ProductLabelCollector/ProductLabelCollectorDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->utilDataReader()->service();",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 90,
-            "line_to": 90,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelCollector/src/Spryker/Zed/ProductLabelCollector/ProductLabelCollectorDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->touch()->queryContainer();",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

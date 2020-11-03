@@ -1,1 +1,103 @@
-{}
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, int>' for Spryker\\Zed\\SalesProductConfiguration\\Business\\Expander\\OrderItemExpander::getSalesOrderItemIds is incorrect, got 'list<int|null>'",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesProductConfiguration/src/Spryker/Zed/SalesProductConfiguration/Business/Expander/OrderItemExpander.php",
+            "snippet": "     * @return int[]",
+            "selected_text": "int[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 67,
+            "line_to": 67,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<int|null>' does not match the declared return type 'array<array-key, int>' for Spryker\\Zed\\SalesProductConfiguration\\Business\\Expander\\OrderItemExpander::getSalesOrderItemIds",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesProductConfiguration/src/Spryker/Zed/SalesProductConfiguration/Business/Expander/OrderItemExpander.php",
+            "snippet": "        return $salesOrderItemIds;",
+            "selected_text": "$salesOrderItemIds",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 80,
+            "line_to": 80,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $indexedSalesOrderItemConfigurationTransfers[int|null] using possibly null offset int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesProductConfiguration/src/Spryker/Zed/SalesProductConfiguration/Business/Expander/OrderItemExpander.php",
+            "snippet": "            $indexedSalesOrderItemConfigurationTransfers[$salesOrderItemConfigurationTransfer->getIdSalesOrderItem()] =",
+            "selected_text": "$indexedSalesOrderItemConfigurationTransfers",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 92,
+            "line_to": 92,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method toArray on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesProductConfiguration/src/Spryker/Zed/SalesProductConfiguration/Business/Writer/SalesOrderItemConfigurationWriter.php",
+            "snippet": "            ->fromArray($itemTransfer->getProductConfigurationInstance()->toArray(), true)",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 96,
+            "line_to": 96,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $salesOrderItemConfigurationTransfers[int|null] using possibly null offset int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesProductConfiguration/src/Spryker/Zed/SalesProductConfiguration/Business/Writer/SalesOrderItemConfigurationWriter.php",
+            "snippet": "            $salesOrderItemConfigurationTransfers[$itemTransfer->getIdSalesOrderItem()] = $salesOrderItemConfigurationTransfer;",
+            "selected_text": "$salesOrderItemConfigurationTransfers",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 112,
+            "line_to": 112,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method requireConfiguratorKey on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesProductConfiguration/src/Spryker/Zed/SalesProductConfiguration/Business/Writer/SalesOrderItemConfigurationWriter.php",
+            "snippet": "                ->requireConfiguratorKey();",
+            "selected_text": "requireConfiguratorKey",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 27,
+            "line_to": 27,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\SalesProductConfiguration\\Persistence\\SpySalesOrderItemConfiguration::setFkSalesOrderItem cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesProductConfiguration/src/Spryker/Zed/SalesProductConfiguration/Persistence/Propel/Mapper/SalesOrderItemConfigurationMapper.php",
+            "snippet": "        $salesOrderItemConfigurationEntity->setFkSalesOrderItem($salesOrderItemConfigurationTransfer->getIdSalesOrderItem());",
+            "selected_text": "$salesOrderItemConfigurationTransfer->getIdSalesOrderItem()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $salesOrderItemConfigurationEntityCollection has wrong type 'Propel\\Runtime\\Collection\\Collection|array<array-key, Orm\\Zed\\SalesProductConfiguration\\Persistence\\SpySalesOrderItemConfiguration>', should be 'Propel\\Runtime\\Collection\\Collection'",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesProductConfiguration/src/Spryker/Zed/SalesProductConfiguration/Persistence/Propel/Mapper/SalesOrderItemConfigurationMapper.php",
+            "snippet": "     * @param \\Propel\\Runtime\\Collection\\Collection|\\Orm\\Zed\\SalesProductConfiguration\\Persistence\\SpySalesOrderItemConfiguration[] $salesOrderItemConfigurationEntityCollection",
+            "selected_text": "\\Propel\\Runtime\\Collection\\Collection|\\Orm\\Zed\\SalesProductConfiguration\\Persistence\\SpySalesOrderItemConfiguration[]",
+            "error_level": 4,
+            "shortcode": 141
+        }
+    ],
+    "deprecation": []
+}

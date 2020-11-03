@@ -84,18 +84,6 @@
             "selected_text": "$vaultDepositEntity",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 42,
-            "line_to": 42,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Vault/src/Spryker/Zed/Vault/VaultDependencyProvider.php",
-            "snippet": "                $container->getLocator()->utilEncryption()->service()",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

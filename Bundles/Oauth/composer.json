@@ -5,7 +5,8 @@
   "license": "proprietary",
   "require": {
     "league/oauth2-server": "^8.0.0",
-    "php": ">=7.2",
+    "php": ">=7.3",
+    "psr/http-message": "^1.0.0",
     "spryker/config": "^3.0.0",
     "spryker/guzzle": "^2.0.0",
     "spryker/kernel": "^3.30.0",

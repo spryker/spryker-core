@@ -7,16 +7,16 @@
 
 namespace Spryker\Yves\Kernel\Validator;
 
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 interface RedirectUrlValidatorInterface
 {
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
      *
      * @throws \Spryker\Yves\Kernel\Exception\ForbiddenExternalRedirectException
      *
      * @return void
      */
-    public function validateRedirectUrl(FilterResponseEvent $event): void;
+    public function validateRedirectUrl(ResponseEvent $event): void;
 }

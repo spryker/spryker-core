@@ -122,12 +122,12 @@ class LegacyUrlFacadeTest extends Unit
 
         $url = $this->urlFacade->saveUrl($url);
 
-        $this->assertEquals($redirect1->getIdUrlRedirect(), $urlQuery->findOne()->getResourceId());
+        $this->assertSame($redirect1->getIdUrlRedirect(), $urlQuery->findOne()->getResourceId());
 
         $url->setResourceId($redirect2->getIdUrlRedirect());
         $this->urlFacade->saveUrl($url);
 
-        $this->assertEquals($redirect2->getIdUrlRedirect(), $urlQuery->findOne()->getResourceId());
+        $this->assertSame($redirect2->getIdUrlRedirect(), $urlQuery->findOne()->getResourceId());
     }
 
     /**
@@ -157,7 +157,7 @@ class LegacyUrlFacadeTest extends Unit
         $this->assertNotNull($url);
 
         $this->assertSame('/someOtherPageUrl', $url->getUrl());
-        $this->assertEquals($locale->getIdLocale(), $url->getFkLocale());
+        $this->assertSame($locale->getIdLocale(), $url->getFkLocale());
     }
 
     /**
@@ -174,7 +174,7 @@ class LegacyUrlFacadeTest extends Unit
         $this->assertNotNull($url);
 
         $this->assertSame('/someOtherPageUrl2', $url->getUrl());
-        $this->assertEquals($locale->getIdLocale(), $url->getFkLocale());
+        $this->assertSame($locale->getIdLocale(), $url->getFkLocale());
     }
 
     /**

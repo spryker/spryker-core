@@ -7,20 +7,20 @@
 
 namespace Spryker\Yves\Router\Plugin\RouteProvider;
 
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\StringToLower;
+use Laminas\Filter\Word\CamelCaseToDash;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\Kernel\BundleControllerAction;
 use Spryker\Yves\Kernel\ClassResolver\Controller\ControllerResolver;
 use Spryker\Yves\Router\Route\Route;
 use Spryker\Yves\RouterExtension\Dependency\Plugin\RouteProviderPluginInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Zend\Filter\FilterChain;
-use Zend\Filter\StringToLower;
-use Zend\Filter\Word\CamelCaseToDash;
 
 abstract class AbstractRouteProviderPlugin extends AbstractPlugin implements RouteProviderPluginInterface
 {
     /**
-     * @var \Zend\Filter\FilterChain|null
+     * @var \Laminas\Filter\FilterChain|null
      */
     protected $filterChain;
 
@@ -86,7 +86,7 @@ abstract class AbstractRouteProviderPlugin extends AbstractPlugin implements Rou
     }
 
     /**
-     * @return \Zend\Filter\FilterChain
+     * @return \Laminas\Filter\FilterChain
      */
     protected function getFilterChain(): FilterChain
     {

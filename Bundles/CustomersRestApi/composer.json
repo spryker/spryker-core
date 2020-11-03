@@ -4,7 +4,7 @@
   "description": "CustomersRestApi module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/checkout-rest-api-extension": "^1.0.0",
     "spryker/customer": "^7.21.0",
     "spryker/customers-rest-api-extension": "^1.1.0",

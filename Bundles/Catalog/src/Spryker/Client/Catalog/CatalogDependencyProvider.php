@@ -237,9 +237,9 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function addProductConcreteCatalogSearchQueryPlugin(Container $container): Container
     {
-        $container->set(static::PLUGIN_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY, function () {
+        $container->set(static::PLUGIN_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY, $container->factory(function () {
             return $this->createProductConcreteCatalogSearchQueryPlugin();
-        });
+        }));
 
         return $container;
     }

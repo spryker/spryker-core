@@ -65,6 +65,7 @@ class FooBarTransfer extends AbstractTransfer
     protected $transferMetadata = [
         self::NAME => [
             'type' => 'string',
+            'type_shim' => null,
             'name_underscore' => 'name',
             'is_collection' => false,
             'is_transfer' => false,
@@ -75,6 +76,7 @@ class FooBarTransfer extends AbstractTransfer
         ],
         self::BLA => [
             'type' => 'int',
+            'type_shim' => null,
             'name_underscore' => 'bla',
             'is_collection' => false,
             'is_transfer' => false,
@@ -85,6 +87,7 @@ class FooBarTransfer extends AbstractTransfer
         ],
         self::STOCK => [
             'type' => 'Spryker\DecimalObject\Decimal',
+            'type_shim' => null,
             'name_underscore' => 'stock',
             'is_collection' => false,
             'is_transfer' => false,
@@ -95,6 +98,7 @@ class FooBarTransfer extends AbstractTransfer
         ],
         self::SELF_REFERENCE => [
             'type' => 'Generated\Shared\Transfer\FooBarTransfer',
+            'type_shim' => null,
             'name_underscore' => 'self_reference',
             'is_collection' => true,
             'is_transfer' => true,
@@ -127,6 +131,20 @@ class FooBarTransfer extends AbstractTransfer
      */
     public function getName()
     {
+        return $this->name;
+    }
+
+    /**
+     * @module Test
+     *
+     * @return string
+     */
+    public function getNameOrFail()
+    {
+        if ($this->name === null) {
+            $this->throwNullValueException(static::NAME);
+        }
+
         return $this->name;
     }
 
@@ -170,6 +188,20 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @module Test|Test2
      *
+     * @return int
+     */
+    public function getBlaOrFail()
+    {
+        if ($this->bla === null) {
+            $this->throwNullValueException(static::BLA);
+        }
+
+        return $this->bla;
+    }
+
+    /**
+     * @module Test|Test2
+     *
      * @return $this
      */
     public function requireBla()
@@ -205,6 +237,20 @@ class FooBarTransfer extends AbstractTransfer
      */
     public function getStock()
     {
+        return $this->stock;
+    }
+
+    /**
+     * @module Test
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    public function getStockOrFail()
+    {
+        if ($this->stock === null) {
+            $this->throwNullValueException(static::STOCK);
+        }
+
         return $this->stock;
     }
 

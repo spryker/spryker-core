@@ -1,0 +1,20 @@
+namespace: SprykerTest\Zed\Store
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    log: ../../../_output
+
+suites:
+    Business:
+        path: Business
+        class_name: StoreBusinessTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper

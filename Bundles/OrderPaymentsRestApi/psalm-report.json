@@ -3,18 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 39,
-            "line_to": 39,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/OrderPaymentsRestApi/src/Spryker/Client/OrderPaymentsRestApi/OrderPaymentsRestApiDependencyProvider.php",
-            "snippet": "            return new OrderPaymentsRestApiToZedRequestClientBridge($container->getLocator()->zedRequest()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 55,
             "line_to": 55,
             "type": "LessSpecificImplementedReturnType",

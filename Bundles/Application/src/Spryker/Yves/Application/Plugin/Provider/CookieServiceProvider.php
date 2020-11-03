@@ -10,7 +10,7 @@ namespace Spryker\Yves\Application\Plugin\Provider;
 use ArrayObject;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -40,11 +40,11 @@ class CookieServiceProvider implements ServiceProviderInterface
     /**
      * Handles transparent Cookie insertion
      *
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event The event to handle
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event The event to handle
      *
      * @return void
      */
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event)
     {
         $response = $event->getResponse();
 

@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Development\Business\DependencyTree;
 
 use Exception;
+use Laminas\Filter\Word\CamelCaseToDash;
 use Symfony\Component\Finder\SplFileInfo;
-use Zend\Filter\Word\CamelCaseToDash;
 
 class FileInfoExtractor
 {

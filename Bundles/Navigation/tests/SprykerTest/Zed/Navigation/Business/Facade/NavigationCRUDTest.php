@@ -145,8 +145,8 @@ class NavigationCRUDTest extends Unit
 
         //Assert
         $this->assertNotNull($navigationTransfer, 'Result should not be null.');
-        $this->assertEquals(static::TEST_NAVIGATION_KEY, $navigationTransfer->getKey(), 'Navigation key does not match expected value.');
-        $this->assertEquals(static::TEST_NAVIGATION_NAME, $navigationTransfer->getName(), 'Navigation name does not match expected value.');
+        $this->assertSame(static::TEST_NAVIGATION_KEY, $navigationTransfer->getKey(), 'Navigation key does not match expected value.');
+        $this->assertSame(static::TEST_NAVIGATION_NAME, $navigationTransfer->getName(), 'Navigation name does not match expected value.');
     }
 
     /**
@@ -164,8 +164,8 @@ class NavigationCRUDTest extends Unit
 
         //Assert
         $this->assertNotNull($resultNavigationTransfer, 'Result should not be null.');
-        $this->assertEquals(static::TEST_NAVIGATION_KEY, $resultNavigationTransfer->getKey(), 'Navigation key does not match expected value.');
-        $this->assertEquals(static::TEST_NAVIGATION_NAME, $resultNavigationTransfer->getName(), 'Navigation name does not match expected value.');
+        $this->assertSame(static::TEST_NAVIGATION_KEY, $resultNavigationTransfer->getKey(), 'Navigation key does not match expected value.');
+        $this->assertSame(static::TEST_NAVIGATION_NAME, $resultNavigationTransfer->getName(), 'Navigation name does not match expected value.');
     }
 
     /**
@@ -224,26 +224,26 @@ class NavigationCRUDTest extends Unit
             = $navigationNodeTransfer->getNavigationNodeLocalizedAttributes();
         [$duplicatedNavigationNodeLocalizedAttributesTransfer1, $duplicatedNavigationNodeLocalizedAttributesTransfer2]
             = $duplicatedNavigationNodeTransfer1->getNavigationNodeLocalizedAttributes();
-        $this->assertEquals($duplicateNavigationTransfer->getName(), $actualNavigationTransfer->getName());
-        $this->assertEquals($duplicateNavigationTransfer->getKey(), $actualNavigationTransfer->getKey());
-        $this->assertEquals($duplicatedNavigationNodeTransfer1->getIsActive(), $navigationNodeTransfer->getIsActive());
-        $this->assertEquals(
+        $this->assertSame($duplicateNavigationTransfer->getName(), $actualNavigationTransfer->getName());
+        $this->assertSame($duplicateNavigationTransfer->getKey(), $actualNavigationTransfer->getKey());
+        $this->assertSame($duplicatedNavigationNodeTransfer1->getIsActive(), $navigationNodeTransfer->getIsActive());
+        $this->assertSame(
             $duplicatedNavigationNodeTransfer2->getFkParentNavigationNode(),
             $duplicatedNavigationNodeTransfer1->getIdNavigationNode()
         );
-        $this->assertEquals(
+        $this->assertSame(
             $duplicatedNavigationNodeLocalizedAttributesTransfer1->getExternalUrl(),
             $navigationNodeLocalizedAttributesTransfer1->getExternalUrl()
         );
-        $this->assertEquals(
+        $this->assertSame(
             $duplicatedNavigationNodeLocalizedAttributesTransfer1->getTitle(),
             $navigationNodeLocalizedAttributesTransfer1->getTitle()
         );
-        $this->assertEquals(
+        $this->assertSame(
             $duplicatedNavigationNodeLocalizedAttributesTransfer2->getExternalUrl(),
             $navigationNodeLocalizedAttributesTransfer2->getExternalUrl()
         );
-        $this->assertEquals(
+        $this->assertSame(
             $duplicatedNavigationNodeLocalizedAttributesTransfer2->getTitle(),
             $navigationNodeLocalizedAttributesTransfer2->getTitle()
         );
@@ -266,7 +266,7 @@ class NavigationCRUDTest extends Unit
 
         // Assert
         $this->assertFalse($navigationResponseTransfer->getIsSuccessful());
-        $this->assertEquals(
+        $this->assertSame(
             static::ERROR_MESSAGE_NAVIGATION_TREE_NOT_FOUND,
             $navigationResponseTransfer->getErrors()[0]->getMessage()
         );
@@ -290,7 +290,7 @@ class NavigationCRUDTest extends Unit
 
         // Assert
         $this->assertFalse($navigationResponseTransfer->getIsSuccessful());
-        $this->assertEquals(
+        $this->assertSame(
             static::ERROR_MESSAGE_NAVIGATION_KEY_ALREADY_EXISTS,
             $navigationResponseTransfer->getErrors()[0]->getMessage()
         );

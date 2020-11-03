@@ -10,8 +10,7 @@
             "snippet": "            $twigExpression = $this->domDocument->createTextNode($widget->getAttribute('data-twig-expression'));",
             "selected_text": "getAttribute",
             "error_level": 6,
-            "shortcode": 22,
-            "taint_trace": null
+            "shortcode": 22
         }
     ],
     "warning": [
@@ -25,8 +24,7 @@
             "snippet": "        if ($cmsGlossaryAttributesTransfers->count() === 0) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -38,8 +36,7 @@
             "snippet": "        if ($cmsGlossaryAttributesTransfers->count() === 0) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -51,8 +48,7 @@
             "snippet": "            $nextKey = $key + 1;",
             "selected_text": "$key",
             "error_level": 4,
-            "shortcode": 58,
-            "taint_trace": null
+            "shortcode": 58
         },
         {
             "severity": "info",
@@ -64,8 +60,7 @@
             "snippet": "                    $this->translatorFacade->trans($contentWidgetTemplateTransfer->getName())",
             "selected_text": "$contentWidgetTemplateTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -77,8 +72,7 @@
             "snippet": "            $replacements[$twigExpressionTransfer->getTwigExpression()] = $this->getWidgetByTwigExpression($twigExpressionTransfer);",
             "selected_text": "$replacements",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -90,8 +84,7 @@
             "snippet": "            $this->contentGuiConfig->getParameterId() => $twigExpressionTransfer->getContent()->getIdContent(),",
             "selected_text": "getIdContent",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -103,8 +96,7 @@
             "snippet": "            $this->contentGuiConfig->getParameterKey() => $twigExpressionTransfer->getContent()->getKey(),",
             "selected_text": "getKey",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -116,8 +108,7 @@
             "snippet": "            $this->contentGuiConfig->getParameterType() => $twigExpressionTransfer->getContent()->getContentTypeKey(),",
             "selected_text": "getContentTypeKey",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -129,8 +120,7 @@
             "snippet": "            $this->contentGuiConfig->getParameterDisplayType() => $this->translatorFacade->trans($twigExpressionTransfer->getContent()->getContentTypeKey()),",
             "selected_text": "$twigExpressionTransfer->getContent()->getContentTypeKey()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -142,8 +132,7 @@
             "snippet": "            $this->contentGuiConfig->getParameterDisplayType() => $this->translatorFacade->trans($twigExpressionTransfer->getContent()->getContentTypeKey()),",
             "selected_text": "getContentTypeKey",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -155,8 +144,7 @@
             "snippet": "            $this->contentGuiConfig->getParameterName() => $twigExpressionTransfer->getContent()->getName(),",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -168,8 +156,7 @@
             "snippet": "            $this->contentGuiConfig->getParameterTemplate() => $twigExpressionTransfer->getContentWidgetTemplate()->getIdentifier(),",
             "selected_text": "getIdentifier",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -181,8 +168,7 @@
             "snippet": "            $this->contentGuiConfig->getParameterTemplateDisplayName() => $twigExpressionTransfer->getContentWidgetTemplate()->getName(),",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -194,8 +180,7 @@
             "snippet": "                $request->query->get(\n                    static::PARAM_REDIRECT_URL,\n                    static::URL_REDIRECT_CONTENT_LIST_PAGE\n                )",
             "selected_text": "$request->query->get(\n                    static::PARAM_REDIRECT_URL,\n                    static::URL_REDIRECT_CONTENT_LIST_PAGE\n                )",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -207,8 +192,7 @@
             "snippet": "                $request->query->get(static::PARAM_REDIRECT_URL, static::URL_REDIRECT_CONTENT_LIST_PAGE)",
             "selected_text": "$request->query->get(static::PARAM_REDIRECT_URL, static::URL_REDIRECT_CONTENT_LIST_PAGE)",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -220,8 +204,7 @@
             "snippet": "        $contentByTypeTable = $this->getFactory()->createContentByTypeTable($contentType, $contentKey);",
             "selected_text": "$contentType",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -233,8 +216,7 @@
             "snippet": "        $contentByTypeTable = $this->getFactory()->createContentByTypeTable($contentType, $contentKey);",
             "selected_text": "$contentType",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -246,8 +228,7 @@
             "snippet": "        $contentPlugin = $this->contentResolver->getContentPlugin($termKey);",
             "selected_text": "$termKey",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -259,8 +240,7 @@
             "snippet": "                $localizedContentTransfer->fromArray($localizedContents[$locale->getIdLocale()]->toArray());",
             "selected_text": "$localizedContents",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -272,8 +252,7 @@
             "snippet": "         * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\LocalizedContentTransfer[] $localizedContents",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\LocalizedContentTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -285,8 +264,7 @@
             "snippet": "            $indexLocalizedContents[$localizedContent->getFkLocale()] = $localizedContent;",
             "selected_text": "$indexLocalizedContents",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -298,8 +276,7 @@
             "snippet": "        $locales[$defaultLocale->getLocaleName()] = $defaultLocale;",
             "selected_text": "$locales",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -311,8 +288,7 @@
             "snippet": "        $selectedKeyColumn = sprintf(\"(CASE WHEN $keyColumn = '%s' THEN 0 ELSE 1 END)\", $this->contentKey);",
             "selected_text": "$this->contentKey",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         }
     ],
     "deprecation": []

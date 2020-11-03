@@ -91,6 +91,7 @@ class ProductQuantityBusinessTester extends Actor
         $cartChangeTransfer->getQuote()->addItem(
             (new ItemTransfer())
                 ->setSku($sku)
+                ->setGroupKey($sku)
                 ->setQuantity($quantity)
         );
 

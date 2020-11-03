@@ -12,7 +12,6 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Validator\Plugin\Validator\ConstraintValidatorFactoryValidatorPlugin;
 use Symfony\Component\Validator\ValidatorBuilder;
-use Symfony\Component\Validator\ValidatorBuilderInterface;
 
 /**
  * Auto-generated group annotations
@@ -46,13 +45,13 @@ class ConstraintFactoryValidatorPluginTest extends Unit
         $result = $plugin->extend($validatorBuilder, $container);
 
         //Arrange
-        $this->assertInstanceOf(ValidatorBuilderInterface::class, $result);
+        $this->assertInstanceOf(ValidatorBuilder::class, $result);
     }
 
     /**
-     * @return \Symfony\Component\Validator\ValidatorBuilderInterface
+     * @return \Symfony\Component\Validator\ValidatorBuilder
      */
-    protected function createValidatorBuilder(): ValidatorBuilderInterface
+    protected function createValidatorBuilder(): ValidatorBuilder
     {
         return new ValidatorBuilder();
     }

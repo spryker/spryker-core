@@ -45,6 +45,7 @@ abstract class AbstractSubForm extends AbstractSubFormType implements SubFormInt
                 'required' => true,
                 'widget' => 'single_text',
                 'format' => 'dd.MM.yyyy',
+                'html5' => false,
                 'input' => 'string',
                 'attr' => [
                     'placeholder' => 'customer.birth_date',

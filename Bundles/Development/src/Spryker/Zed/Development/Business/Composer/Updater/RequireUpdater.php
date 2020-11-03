@@ -13,7 +13,7 @@ class RequireUpdater implements UpdaterInterface
 {
     public const KEY_REQUIRE = 'require';
     public const KEY_REQUIRE_PHP = 'php';
-    public const PHP_MINIMUM = '>=7.2';
+    public const PHP_MINIMUM = '>=7.3';
 
     /**
      * @param array $composerJson

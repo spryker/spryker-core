@@ -68,7 +68,7 @@ class TaxAmountCalculatorTest extends Unit
         $recalculatedNonSplitSumTaxAmount = $this->tester->sumTaxAmount($calculableObjectTransfer);
 
         // Assert
-        $this->assertEquals($expected, $recalculatedNonSplitSumTaxAmount);
+        $this->assertSame($expected, $recalculatedNonSplitSumTaxAmount);
     }
 
     /**
@@ -96,7 +96,7 @@ class TaxAmountCalculatorTest extends Unit
         $recalculatedSplitSumTaxAmount = $this->tester->sumTaxAmount($calculableObjectTransfer);
 
         // Assert
-        $this->assertEquals($expected, $recalculatedSplitSumTaxAmount);
+        $this->assertSame($expected, $recalculatedSplitSumTaxAmount);
     }
 
     /**
@@ -128,7 +128,7 @@ class TaxAmountCalculatorTest extends Unit
         $recalculatedSplitSumTaxAmount = $this->tester->sumTaxAmount($calculableSplitObjectTransfer);
 
         // Assert
-        $this->assertEquals($recalculatedNonSplitSumTaxAmount, $recalculatedSplitSumTaxAmount);
+        $this->assertSame($recalculatedNonSplitSumTaxAmount, $recalculatedSplitSumTaxAmount);
     }
 
     /**

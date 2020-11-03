@@ -48,30 +48,6 @@
             "selected_text": "$taxStorageTransfer->getUuid()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductTaxSetsRestApi/src/Spryker/Glue/ProductTaxSetsRestApi/ProductTaxSetsRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->taxProductStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductTaxSetsRestApi/src/Spryker/Glue/ProductTaxSetsRestApi/ProductTaxSetsRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->taxStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

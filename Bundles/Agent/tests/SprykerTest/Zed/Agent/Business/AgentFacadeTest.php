@@ -135,7 +135,7 @@ class AgentFacadeTest extends Unit
         );
         foreach ($customerAutocompleteResponseTransfer->getCustomers() as $index => $actualCustomerTransfer) {
             $expectedCustomerTransfer = $this->customerTransfers[$expectedOffset + $index];
-            $this->assertEquals(
+            $this->assertSame(
                 $expectedCustomerTransfer->getCustomerReference(),
                 $actualCustomerTransfer->getCustomerReference(),
                 'Returned customers collection must have the correct offset.'

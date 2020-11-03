@@ -1,0 +1,114 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\GlueApplication\\Rest\\JsonApi\\RestResourceBuilderInterface::createRestResponse cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductAttributesRestApi/src/Spryker/Glue/ProductAttributesRestApi/Processor/Builder/RestProductAttributeResponseBuilder.php",
+            "snippet": "                $productManagementAttributeCollectionTransfer->getPagination()->getNbResults(),",
+            "selected_text": "$productManagementAttributeCollectionTransfer->getPagination()->getNbResults()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getNbResults on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductAttributesRestApi/src/Spryker/Glue/ProductAttributesRestApi/Processor/Builder/RestProductAttributeResponseBuilder.php",
+            "snippet": "                $productManagementAttributeCollectionTransfer->getPagination()->getNbResults(),",
+            "selected_text": "getNbResults",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getLimit on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductAttributesRestApi/src/Spryker/Glue/ProductAttributesRestApi/Processor/Builder/RestProductAttributeResponseBuilder.php",
+            "snippet": "                $productManagementAttributeFilterTransfer->getFilter()->getLimit() ?? 0",
+            "selected_text": "getLimit",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 37,
+            "line_to": 37,
+            "type": "MismatchingDocblockReturnType",
+            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\RestLocalizedProductManagementAttributeKeyAttributesTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductAttributesRestApi/src/Spryker/Glue/ProductAttributesRestApi/Processor/Mapper/ProductAttributeMapper.php",
+            "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\RestLocalizedProductManagementAttributeKeyAttributesTransfer[]",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\RestLocalizedProductManagementAttributeKeyAttributesTransfer[]",
+            "error_level": 4,
+            "shortcode": 142
+        },
+        {
+            "severity": "info",
+            "line_from": 80,
+            "line_to": 80,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\ProductManagementAttributeFilterTransfer::addKey cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductAttributesRestApi/src/Spryker/Glue/ProductAttributesRestApi/Processor/Reader/ProductAttributeReader.php",
+            "snippet": "            ->addKey($restRequest->getResource()->getId());",
+            "selected_text": "$restRequest->getResource()->getId()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 85,
+            "line_to": 85,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductManagementAttributeTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductAttributesRestApi/src/Spryker/Glue/ProductAttributesRestApi/Processor/Reader/ProductAttributeReader.php",
+            "snippet": "            ->getIterator()",
+            "selected_text": "getIterator",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 106,
+            "line_to": 106,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getOffset on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductAttributesRestApi/src/Spryker/Glue/ProductAttributesRestApi/Processor/Reader/ProductAttributeReader.php",
+            "snippet": "                ->setOffset($restRequest->getPage()->getOffset())",
+            "selected_text": "getOffset",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 107,
+            "line_to": 107,
+            "type": "TypeDoesNotContainType",
+            "message": "int is always defined and non-null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductAttributesRestApi/src/Spryker/Glue/ProductAttributesRestApi/Processor/Reader/ProductAttributeReader.php",
+            "snippet": "                ->setLimit($restRequest->getPage()->getLimit() ?? 0);",
+            "selected_text": "$restRequest->getPage()->getLimit()",
+            "error_level": 4,
+            "shortcode": 56
+        },
+        {
+            "severity": "info",
+            "line_from": 107,
+            "line_to": 107,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getLimit on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductAttributesRestApi/src/Spryker/Glue/ProductAttributesRestApi/Processor/Reader/ProductAttributeReader.php",
+            "snippet": "                ->setLimit($restRequest->getPage()->getLimit() ?? 0);",
+            "selected_text": "getLimit",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
+    "deprecation": []
+}

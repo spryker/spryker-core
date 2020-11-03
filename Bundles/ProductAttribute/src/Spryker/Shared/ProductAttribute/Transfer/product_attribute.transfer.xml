@@ -29,6 +29,7 @@
         <property name="idProductManagementAttributeValue" type="int"/>
         <property name="fkProductManagementAttributeValue" type="int"/>
         <property name="fkLocale" type="int"/>
+        <property name="localeName" type="string"/>
         <property name="translation" type="string"/>
     </transfer>
 
@@ -75,6 +76,27 @@
     <transfer name="LocalizedAttributes">
         <property name="locale" type="Locale"/>
         <property name="attributes" type="array" singular="attribute"/>
+    </transfer>
+
+    <transfer name="ProductManagementAttributeFilter">
+        <property name="keys" type="string[]" singular="key"/>
+        <property name="filter" type="Filter"/>
+    </transfer>
+
+    <transfer name="ProductManagementAttributeCollection">
+        <property name="productManagementAttributes" type="ProductManagementAttribute[]" singular="productManagementAttribute"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="nbResults" type="int"/>
     </transfer>
 
 </transfers>

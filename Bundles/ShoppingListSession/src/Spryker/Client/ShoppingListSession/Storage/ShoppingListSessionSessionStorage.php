@@ -45,4 +45,12 @@ class ShoppingListSessionSessionStorage implements ShoppingListSessionStorageInt
     {
         return $this->sessionClient->get(static::SESSION_KEY_SHOPPING_LIST_COLLECTION);
     }
+
+    /**
+     * @return void
+     */
+    public function removeShoppingListCollection(): void
+    {
+        $this->sessionClient->remove(static::SESSION_KEY_SHOPPING_LIST_COLLECTION);
+    }
 }
