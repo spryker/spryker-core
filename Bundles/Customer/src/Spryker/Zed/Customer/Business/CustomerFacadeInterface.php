@@ -129,6 +129,7 @@ interface CustomerFacadeInterface
      * - Stores new password for customer in persistent storage.
      * - Removes password restoration key from customer.
      * - Sends password restoration confirmation email.
+     * - Password validation can be enabled in this method through isCustomerPasswordCheckEnabledOnRestorePassword()
      *
      * @api
      *
