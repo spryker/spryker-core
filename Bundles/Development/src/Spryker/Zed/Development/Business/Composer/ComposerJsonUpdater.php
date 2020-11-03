@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Development\Business\Composer;
 
+use Laminas\Filter\Word\CamelCaseToDash;
 use RuntimeException;
 use Spryker\Zed\Development\Business\Composer\Updater\UpdaterInterface;
 use Spryker\Zed\Development\Business\Exception\DependencyTree\InvalidComposerJsonException;
 use Symfony\Component\Finder\SplFileInfo;
-use Zend\Filter\Word\CamelCaseToDash;
 
 class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
 {
