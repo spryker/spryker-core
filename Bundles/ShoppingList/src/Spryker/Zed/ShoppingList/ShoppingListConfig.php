@@ -18,8 +18,6 @@ class ShoppingListConfig extends AbstractBundleConfig
 {
     protected const DEFAULT_SHOPPING_LIST_NAME = 'Shopping List';
 
-    protected const SHOPPING_LIST_OVERVIEW_WITH_SHOPPING_LISTS = true;
-
     /**
      * @api
      *
@@ -53,7 +51,7 @@ class ShoppingListConfig extends AbstractBundleConfig
      */
     public function isShoppingListOverviewWithShoppingLists(): bool
     {
-        return static::SHOPPING_LIST_OVERVIEW_WITH_SHOPPING_LISTS;
+        return false;
     }
 
     /**
