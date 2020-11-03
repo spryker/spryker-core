@@ -341,7 +341,10 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     public function getCustomerPasswordPolicy(): array
     {
         return [
-            new CustomerPasswordPolicyLength($this->getConfig()->getCustomerPasswordPolicyLength()),
+            new CustomerPasswordPolicyLength(
+                $this->getConfig()->getCustomerPasswordMinLength(),
+                $this->getConfig()->getCustomerPasswordMaxLength()
+            ),
         ];
     }
 

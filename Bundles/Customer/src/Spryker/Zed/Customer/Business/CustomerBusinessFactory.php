@@ -78,11 +78,11 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     public function getPasswordPolicy(): CustomerPasswordPolicyInterface
     {
-        return $this->createCustomerPasswordPolicyPovider()->getPasswordPolicy();
+        return $this->createCustomerPasswordPolicyPovider()->getCustomerPasswordPolicy();
     }
 
     /**
-     * @return Spryker\Zed\Customer\Business\Model\CustomerPasswordPolicy\CustomerPasswordPolicyProvider
+     * @return \Spryker\Zed\Customer\Business\Model\CustomerPasswordPolicy\CustomerPasswordPolicyProvider
      */
     public function createCustomerPasswordPolicyPovider(): CustomerPasswordPolicyProvider
     {

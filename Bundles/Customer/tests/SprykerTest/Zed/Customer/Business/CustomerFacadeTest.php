@@ -70,6 +70,8 @@ class CustomerFacadeTest extends Unit
     protected const MIN_LENGTH_CUSTOMER_PASSWORD = 6;
     protected const MAX_LENGTH_CUSTOMER_PASSWORD = 12;
 
+    protected const CUSTOMER_PASSWORD_DIGIT_REQUIRED = true;
+
     protected const VALUE_SHORT_PASSWORD = 'p2c';
     protected const VALUE_LONG_PASSWORD = 'p2cfGyY4p2cfGyY4p';
 
@@ -103,6 +105,7 @@ class CustomerFacadeTest extends Unit
         $this->tester->mockConfigMethod('getCustomerReferenceDefaults', new SequenceNumberSettingsTransfer());
         $this->tester->mockConfigMethod('getCustomerPasswordMinLength', static::MIN_LENGTH_CUSTOMER_PASSWORD);
         $this->tester->mockConfigMethod('getCustomerPasswordMaxLength', static::MAX_LENGTH_CUSTOMER_PASSWORD);
+        $this->tester->mockConfigMethod('getCustomerPasswordDigitRequired', static::CUSTOMER_PASSWORD_DIGIT_REQUIRED);
     }
 
     /**

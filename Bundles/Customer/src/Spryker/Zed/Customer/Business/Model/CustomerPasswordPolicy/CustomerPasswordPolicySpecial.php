@@ -23,7 +23,7 @@ class CustomerPasswordPolicySpecial extends AbstractCustomerPasswordPolicy imple
     /**
      * @param bool $specialRequired
      */
-    public function __construct(bool $specialRequired)
+    public function __construct(bool $specialRequired = false)
     {
         $this->specialRequired = $specialRequired;
     }

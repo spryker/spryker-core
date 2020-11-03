@@ -23,7 +23,7 @@ class CustomerPasswordPolicyDigit extends AbstractCustomerPasswordPolicy impleme
     /**
      * @param bool $digitRequired
      */
-    public function __construct(bool $digitRequired)
+    public function __construct(bool $digitRequired = false)
     {
         $this->digitRequired = $digitRequired;
     }

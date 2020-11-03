@@ -21,7 +21,7 @@ class CustomerPasswordPolicySequence extends AbstractCustomerPasswordPolicy impl
     /**
      * @param int $sequenceLengthLimit
      */
-    public function __construct(int $sequenceLengthLimit)
+    public function __construct(int $sequenceLengthLimit = 0)
     {
         $this->sequenceLengthLimit = $sequenceLengthLimit;
     }
