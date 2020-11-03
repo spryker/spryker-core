@@ -33,7 +33,7 @@ class CustomerPasswordPolicyWhitelist extends AbstractCustomerPasswordPolicy imp
      */
     public function validatePassword(string $password, CustomerResponseTransfer $customerResponseTransfer): CustomerResponseTransfer
     {
-        if (in_array($password, $this->config, true)) {
+        if (in_array($password, $this->passwordWhiteList, true)) {
             return $customerResponseTransfer->setIsSuccess(true)->setErrors(new ArrayObject());
         }
 

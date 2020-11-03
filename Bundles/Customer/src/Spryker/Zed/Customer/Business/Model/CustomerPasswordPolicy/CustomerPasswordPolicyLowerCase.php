@@ -21,7 +21,7 @@ class CustomerPasswordPolicyLowerCase extends AbstractCustomerPasswordPolicy imp
     protected $lowerCaseRequired;
 
     /**
-     * @param bool $config
+     * @param bool $lowerCaseRequired
      */
     public function __construct(bool $lowerCaseRequired)
     {

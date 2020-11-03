@@ -16,7 +16,7 @@ class CustomerPasswordPolicyBlacklist extends AbstractCustomerPasswordPolicy imp
     public const PASSWORD_POLICY_ERROR_BLACK_LIST = 'customer.password.error.black_list';
 
     /**
-     * @var int
+     * @var string[]
      */
     protected $passwordBlackList;
 

@@ -29,7 +29,7 @@ abstract class AbstractCustomerPasswordPolicy implements CustomerPasswordPolicyI
         if (!isset($this->nextCustomerPasswordPolicy)) {
             $this->nextCustomerPasswordPolicy = $customerPasswordPolicy;
         } else {
-            $this->nextCustomerPasswordPolicy->addPolicygit ($customerPasswordPolicy);
+            $this->nextCustomerPasswordPolicy->addPolicy($customerPasswordPolicy);
         }
     }
 

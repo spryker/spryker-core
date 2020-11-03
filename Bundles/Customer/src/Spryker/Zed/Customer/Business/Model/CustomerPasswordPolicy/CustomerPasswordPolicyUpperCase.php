@@ -21,7 +21,7 @@ class CustomerPasswordPolicyUpperCase extends AbstractCustomerPasswordPolicy imp
     protected $upperCaseRequired;
 
     /**
-     * @param bool $config
+     * @param bool $upperCaseRequired
      */
     public function __construct(bool $upperCaseRequired)
     {
