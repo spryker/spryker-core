@@ -4,7 +4,6 @@
   "description": "ChecksumGenerator module",
   "license": "proprietary",
   "require": {
-    "ext-openssl": "*",
     "php": ">=7.3",
     "spryker/kernel": "^3.30.0",
     "spryker/util-encryption": "^1.1.0"
