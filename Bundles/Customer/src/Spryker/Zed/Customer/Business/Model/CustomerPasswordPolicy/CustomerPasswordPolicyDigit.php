@@ -36,7 +36,7 @@ class CustomerPasswordPolicyDigit extends AbstractCustomerPasswordPolicy impleme
      */
     public function validatePassword(string $password, CustomerResponseTransfer $customerResponseTransfer): CustomerResponseTransfer
     {
-        if ($this->digitRequired && preg_match(static::PASSWORD_POLICY_CHARSET_DIGIT, $password)) {
+        if ($this->digitRequired && !preg_match(static::PASSWORD_POLICY_CHARSET_DIGIT, $password)) {
             $this->addError($customerResponseTransfer, static::PASSWORD_POLICY_ERROR_DIGIT);
         }
 
