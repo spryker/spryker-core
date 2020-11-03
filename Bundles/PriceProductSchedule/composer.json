@@ -4,7 +4,7 @@
   "description": "PriceProductSchedule module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/currency": "^3.8.0",
     "spryker/kernel": "^3.32.0",
     "spryker/price-product": "^4.6.0",

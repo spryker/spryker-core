@@ -11,8 +11,7 @@
             "snippet": "        $dataSetStepBroker->addStep(new CompanyUserWriterStep());",
             "selected_text": "addStep",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
@@ -24,8 +23,7 @@
             "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
             "selected_text": "addDataSetStepBroker",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
@@ -37,8 +35,7 @@
             "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
             "selected_text": "$dataSetStepBroker",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -50,8 +47,7 @@
             "snippet": "        return $this->getFactory()->createCompanyUserDataImport()->import($dataImporterConfigurationTransfer);",
             "selected_text": "import",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         }
     ],
     "deprecation": []

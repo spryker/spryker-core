@@ -74,4 +74,5 @@ suites:
                     restart: false
                 - \SprykerTest\Shared\Discount\Helper\DiscountDataHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Testify\Helper\BrowserHelper
                 - \SprykerTest\Shared\Application\Helper\ZedHelper

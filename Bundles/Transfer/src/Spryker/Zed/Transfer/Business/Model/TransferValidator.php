@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Transfer\Business\Model;
 
+use Laminas\Config\Factory;
+use Laminas\Filter\Word\UnderscoreToCamelCase;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface;
 use Spryker\Zed\Transfer\TransferConfig;
-use Zend\Config\Factory;
-use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class TransferValidator implements TransferValidatorInterface
 {

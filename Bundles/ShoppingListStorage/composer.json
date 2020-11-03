@@ -4,7 +4,7 @@
   "description": "ShoppingListStorage module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/company-business-unit": "^2.2.0",
     "spryker/company-user": "^1.4.0 || ^2.0.0",
     "spryker/customer": "^7.0.0",
@@ -20,7 +20,9 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/event": "*"
+    "spryker/event": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0"

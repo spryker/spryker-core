@@ -1,18 +1,5 @@
 {
     "error": [],
-    "warning": [
-        {
-            "severity": "info",
-            "line_from": 42,
-            "line_to": 42,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/AuthMailConnector/src/Spryker/Zed/AuthMailConnector/AuthMailConnectorDependencyProvider.php",
-            "snippet": "            return new AuthMailConnectorToMailBridge($container->getLocator()->mail()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        }
-    ],
+    "warning": [],
     "deprecation": []
 }

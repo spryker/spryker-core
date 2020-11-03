@@ -11,8 +11,7 @@
             "snippet": "            $request->headers->get(static::PARAM_REFERER, static::REDIRECT_URL_DEFAULT)",
             "selected_text": "$request->headers->get(static::PARAM_REFERER, static::REDIRECT_URL_DEFAULT)",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -24,8 +23,7 @@
             "snippet": "                if (!$companyRoleCollectionTransfer->getRoles()->count()) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -37,8 +35,7 @@
             "snippet": "        $defaultCompanyRole = $this->companyRoleFacade->findDefaultCompanyRoleByIdCompany($companyUserTransfer->getCompany()->getIdCompany());",
             "selected_text": "$companyUserTransfer->getCompany()->getIdCompany()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -50,8 +47,7 @@
             "snippet": "        $defaultCompanyRole = $this->companyRoleFacade->findDefaultCompanyRoleByIdCompany($companyUserTransfer->getCompany()->getIdCompany());",
             "selected_text": "getIdCompany",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -63,8 +59,7 @@
             "snippet": "            ->addRole($defaultCompanyRole);",
             "selected_text": "$defaultCompanyRole",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -76,8 +71,7 @@
             "snippet": "            (new CompanyRoleCriteriaFilterTransfer())->setIdCompany($companyUserTransfer->getCompany()->getIdCompany())",
             "selected_text": "getIdCompany",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -89,8 +83,7 @@
             "snippet": "        return sprintf('%s (id: %s)', $companyRoleTransfer->getName(), $companyRoleTransfer->getIdCompanyRole());",
             "selected_text": "$companyRoleTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -102,8 +95,7 @@
             "snippet": "        return sprintf('%s (id: %s)', $companyRoleTransfer->getName(), $companyRoleTransfer->getIdCompanyRole());",
             "selected_text": "$companyRoleTransfer->getIdCompanyRole()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -115,8 +107,7 @@
             "snippet": "                if (!$companyRoleCollectionTransfer->getRoles()->count()) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -128,8 +119,7 @@
             "snippet": "            $preparedCompanies[$companyTransfer->getName()] = $companyTransfer->getIdCompany();",
             "selected_text": "$preparedCompanies",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -141,8 +131,7 @@
             "snippet": "        return sprintf(static::FORMAT_NAME, $companyRoleTransfer->getName(), $companyRoleTransfer->getIdCompanyRole());",
             "selected_text": "$companyRoleTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -154,8 +143,7 @@
             "snippet": "        return sprintf(static::FORMAT_NAME, $companyRoleTransfer->getName(), $companyRoleTransfer->getIdCompanyRole());",
             "selected_text": "$companyRoleTransfer->getIdCompanyRole()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         }
     ],
     "deprecation": []

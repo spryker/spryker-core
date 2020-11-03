@@ -27,54 +27,6 @@
         },
         {
             "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Agent/src/Spryker/Client/Agent/AgentDependencyProvider.php",
-            "snippet": "                $container->getLocator()->zedRequest()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 60,
-            "line_to": 60,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Agent/src/Spryker/Client/Agent/AgentDependencyProvider.php",
-            "snippet": "                $container->getLocator()->session()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Zed\\Agent\\Persistence\\AgentRepositoryInterface::findCustomersByQuery cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Agent/src/Spryker/Zed/Agent/Business/Customer/CustomerReader.php",
-            "snippet": "            $customerQueryTransfer->getQuery(),",
-            "selected_text": "$customerQueryTransfer->getQuery()",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 39,
-            "line_to": 39,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 2 of Spryker\\Zed\\Agent\\Persistence\\AgentRepositoryInterface::findCustomersByQuery cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Agent/src/Spryker/Zed/Agent/Business/Customer/CustomerReader.php",
-            "snippet": "            $customerQueryTransfer->getLimit()",
-            "selected_text": "$customerQueryTransfer->getLimit()",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
             "line_from": 29,
             "line_to": 29,
             "type": "PossiblyNullArgument",
@@ -84,6 +36,30 @@
             "selected_text": "$userTransfer->getUsername()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 76,
+            "line_to": 76,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Customer\\Persistence\\SpyCustomer> variable $pager",
+            "file_name": "vendor/spryker/spryker/Bundles/Agent/src/Spryker/Zed/Agent/Persistence/AgentRepository.php",
+            "snippet": "        $customers = $pager->getResults()->getData();",
+            "selected_text": "getResults",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 79,
+            "line_to": 79,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 2 of Spryker\\Zed\\Agent\\Persistence\\Propel\\Mapper\\AgentMapper::mapCustomerDataToCustomerAutocompleteResponseTransfer expects Propel\\Runtime\\Util\\PropelModelPager, possibly different type Propel\\Runtime\\Util\\PropelModelPager|array<array-key, Orm\\Zed\\Customer\\Persistence\\SpyCustomer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Agent/src/Spryker/Zed/Agent/Persistence/AgentRepository.php",
+            "snippet": "            ->mapCustomerDataToCustomerAutocompleteResponseTransfer($customers, $pager);",
+            "selected_text": "$pager",
+            "error_level": 3,
+            "shortcode": 92
         }
     ],
     "deprecation": []

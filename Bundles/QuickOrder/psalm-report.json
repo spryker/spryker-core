@@ -73,30 +73,6 @@
             "selected_text": "getArrayCopy",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/QuickOrder/src/Spryker/Client/QuickOrder/QuickOrderDependencyProvider.php",
-            "snippet": "            return new QuickOrderToLocaleClientBridge($container->getLocator()->locale()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 104,
-            "line_to": 104,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/QuickOrder/src/Spryker/Client/QuickOrder/QuickOrderDependencyProvider.php",
-            "snippet": "            return new QuickOrderToProductStorageClientBridge($container->getLocator()->productStorage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

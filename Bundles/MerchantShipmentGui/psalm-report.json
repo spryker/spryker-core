@@ -1,5 +1,30 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "PossiblyUndefinedVariable",
+            "message": "Possibly undefined variable $merchantTemplateData, first seen on line 49",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantShipmentGui/src/Spryker/Zed/MerchantShipmentGui/Communication/ShipmentGui/MerchantShipmentOrderItemTemplatePlugin.php",
+            "snippet": "        $merchantTemplateData[static::MERCHANT_NAME] = [];",
+            "selected_text": "$merchantTemplateData",
+            "error_level": 3,
+            "shortcode": 18
+        },
+        {
+            "severity": "info",
+            "line_from": 64,
+            "line_to": 64,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $merchantTemplateData[static::MERCHANT_NAME][mixed|null|string] using possibly null offset mixed|null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantShipmentGui/src/Spryker/Zed/MerchantShipmentGui/Communication/ShipmentGui/MerchantShipmentOrderItemTemplatePlugin.php",
+            "snippet": "            $merchantTemplateData[static::MERCHANT_NAME][$merchantTransfer->getMerchantReference()] = $merchantTransfer->getName();",
+            "selected_text": "$merchantTemplateData[static::MERCHANT_NAME]",
+            "error_level": 3,
+            "shortcode": 125
+        }
+    ],
     "deprecation": []
 }

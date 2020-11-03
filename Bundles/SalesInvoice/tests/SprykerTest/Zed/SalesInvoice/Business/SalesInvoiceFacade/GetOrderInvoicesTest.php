@@ -112,7 +112,7 @@ class GetOrderInvoicesTest extends Unit
         // Assert
         $this->assertCount(1, $orderInvoiceCollectionTransfer->getOrderInvoices());
         foreach ($orderInvoiceCollectionTransfer->getOrderInvoices() as $orderInvoiceTransfer) {
-            $this->assertEquals($idSalesOrder, $orderInvoiceTransfer->getIdSalesOrder());
+            $this->assertSame($idSalesOrder, $orderInvoiceTransfer->getIdSalesOrder());
         }
     }
 

@@ -83,7 +83,7 @@ class ShipmentCartExpanderTest extends Test
             'Quote shipment should not have been set.'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $expectedPrice,
             $actualCartChangeTransfer->getQuote()->getExpenses()[0]->getUnitNetPrice(),
             sprintf('Shipment price should not have been changed for shipment expense.')
@@ -125,7 +125,7 @@ class ShipmentCartExpanderTest extends Test
             'Shipment price should not have been changed.'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $expectedPrice,
             $actualCartChangeTransfer->getQuote()->getExpenses()[0]->getUnitNetPrice(),
             sprintf('Shipment price should not have been changed for shipment expense.')
@@ -236,7 +236,7 @@ class ShipmentCartExpanderTest extends Test
         // Assert
         foreach ($actualCartChangeTransfer->getQuote()->getExpenses() as $i => $expenseTransfer) {
             $shipmentMethodTransfer = $expenseTransfer->getShipment()->getMethod();
-            $this->assertEquals(
+            $this->assertSame(
                 $expectedPrices[$shipmentMethodTransfer->getName()][$cartChangeTransfer->getQuote()->getCurrency()->getCode()],
                 $expenseTransfer->getUnitNetPrice(),
                 sprintf('Shipment price should have been changed for shipment expense #%s.', $i)

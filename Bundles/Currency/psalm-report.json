@@ -3,58 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 28,
-            "line_to": 28,
-            "type": "InvalidNullableReturnType",
-            "message": "The declared return type 'string' for Spryker\\Shared\\Currency\\Dependency\\Internationalization\\CurrencyToInternationalizationBridge::getSymbolByIsoCode is not nullable, but 'null|string' contains null",
-            "file_name": "vendor/spryker/spryker/Bundles/Currency/src/Spryker/Shared/Currency/Dependency/Internationalization/CurrencyToInternationalizationBridge.php",
-            "snippet": "     * @return string",
-            "selected_text": "string",
-            "error_level": 5,
-            "shortcode": 144,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
-            "type": "NullableReturnStatement",
-            "message": "The declared return type 'string' for Spryker\\Shared\\Currency\\Dependency\\Internationalization\\CurrencyToInternationalizationBridge::getSymbolByIsoCode is not nullable, but the function returns 'null|string'",
-            "file_name": "vendor/spryker/spryker/Bundles/Currency/src/Spryker/Shared/Currency/Dependency/Internationalization/CurrencyToInternationalizationBridge.php",
-            "snippet": "        return $this->currencyBundle->getCurrencySymbol($isoCode);",
-            "selected_text": "$this->currencyBundle->getCurrencySymbol($isoCode)",
-            "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "InvalidNullableReturnType",
-            "message": "The declared return type 'string' for Spryker\\Shared\\Currency\\Dependency\\Internationalization\\CurrencyToInternationalizationBridge::getNameByIsoCode is not nullable, but 'null|string' contains null",
-            "file_name": "vendor/spryker/spryker/Bundles/Currency/src/Spryker/Shared/Currency/Dependency/Internationalization/CurrencyToInternationalizationBridge.php",
-            "snippet": "     * @return string",
-            "selected_text": "string",
-            "error_level": 5,
-            "shortcode": 144,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 42,
-            "line_to": 42,
-            "type": "NullableReturnStatement",
-            "message": "The declared return type 'string' for Spryker\\Shared\\Currency\\Dependency\\Internationalization\\CurrencyToInternationalizationBridge::getNameByIsoCode is not nullable, but the function returns 'null|string'",
-            "file_name": "vendor/spryker/spryker/Bundles/Currency/src/Spryker/Shared/Currency/Dependency/Internationalization/CurrencyToInternationalizationBridge.php",
-            "snippet": "        return $this->currencyBundle->getCurrencyName($isoCode);",
-            "selected_text": "$this->currencyBundle->getCurrencyName($isoCode)",
-            "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
             "line_from": 84,
             "line_to": 84,
             "type": "PossiblyNullArgument",
@@ -63,8 +11,7 @@
             "snippet": "            $this->messengerClient->addErrorMessage($messageTransfer->getValue());",
             "selected_text": "$messageTransfer->getValue()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -76,8 +23,7 @@
             "snippet": "            $this->getStoreFacade()->getCurrentStore()->getDefaultCurrencyIsoCode(),",
             "selected_text": "$this->getStoreFacade()->getCurrentStore()->getDefaultCurrencyIsoCode()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -89,8 +35,7 @@
             "snippet": "            $this->getStoreFacade()->getCurrentStore()->getSelectedCurrencyIsoCode()",
             "selected_text": "$this->getStoreFacade()->getCurrentStore()->getSelectedCurrencyIsoCode()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -102,8 +47,7 @@
             "snippet": "            $this->currencyRepository->getFractionDigits($currencyEntity->getCode())",
             "selected_text": "$currencyEntity->getCode()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -115,8 +59,7 @@
             "snippet": "        return $this->getByIsoCode($defaultCurrencyIsoCode);",
             "selected_text": "$defaultCurrencyIsoCode",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -128,8 +71,31 @@
             "snippet": "        $storeTransfer = $this->storeFacade->findStoreByName($quoteTransfer->getStore()->getName());",
             "selected_text": "$quoteTransfer->getStore()->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getName on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/Currency/src/Spryker/Zed/Currency/Business/Validator/QuoteValidator.php",
+            "snippet": "        $storeTransfer = $this->storeFacade->findStoreByName($quoteTransfer->getStore()->getName());",
+            "selected_text": "getName",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Currency\\Business\\CurrencyFacade::findCurrencyByIsoCode cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Currency/src/Spryker/Zed/Currency/Communication/Plugin/Sales/CurrencyOrderExpanderPlugin.php",
+            "snippet": "        $currencyTransfer = $this->getFacade()->findCurrencyByIsoCode($orderTransfer->getCurrencyIsoCode());",
+            "selected_text": "$orderTransfer->getCurrencyIsoCode()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -141,8 +107,7 @@
             "snippet": "        return $currencySymbol;",
             "selected_text": "$currencySymbol",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -154,8 +119,7 @@
             "snippet": "            return $currencyTransfer->getSymbol();",
             "selected_text": "$currencyTransfer->getSymbol()",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -167,8 +131,7 @@
             "snippet": "        $fractionDigits = $this->currencyInternationalization->getFractionDigits($currencyEntity->getCode());",
             "selected_text": "$currencyEntity->getCode()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -180,8 +143,7 @@
             "snippet": "        if ($currencyEntities->count() === 0) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -193,76 +155,10 @@
             "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Currency\\Persistence\\SpyCurrency[] $currencyEntities",
             "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Currency\\Persistence\\SpyCurrency[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         }
     ],
     "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 84,
-            "line_to": 84,
-            "type": "DeprecatedMethod",
-            "message": "The method Symfony\\Component\\Intl\\Intl::getCurrencyBundle has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Currency/src/Spryker/Client/Currency/CurrencyDependencyProvider.php",
-            "snippet": "                Intl::getCurrencyBundle()",
-            "selected_text": "Intl::getCurrencyBundle()",
-            "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 84,
-            "line_to": 84,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\Intl\\ResourceBundle\\CurrencyBundleInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Currency/src/Spryker/Client/Currency/CurrencyDependencyProvider.php",
-            "snippet": "                Intl::getCurrencyBundle()",
-            "selected_text": "Intl::getCurrencyBundle()",
-            "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 13,
-            "line_to": 13,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\Intl\\ResourceBundle\\CurrencyBundleInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Currency/src/Spryker/Shared/Currency/Dependency/Internationalization/CurrencyToInternationalizationBridge.php",
-            "snippet": "     * @var \\Symfony\\Component\\Intl\\ResourceBundle\\CurrencyBundleInterface",
-            "selected_text": "\\Symfony\\Component\\Intl\\ResourceBundle\\CurrencyBundleInterface",
-            "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 18,
-            "line_to": 18,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\Intl\\ResourceBundle\\CurrencyBundleInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Currency/src/Spryker/Shared/Currency/Dependency/Internationalization/CurrencyToInternationalizationBridge.php",
-            "snippet": "     * @param \\Symfony\\Component\\Intl\\ResourceBundle\\CurrencyBundleInterface $currencyBundle",
-            "selected_text": "\\Symfony\\Component\\Intl\\ResourceBundle\\CurrencyBundleInterface",
-            "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Yves\\Kernel\\Controller\\AbstractController::redirectResponseExternal has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Currency/src/Spryker/Yves/Currency/Controller/CurrencySwitchController.php",
-            "snippet": "        return $this->redirectResponseExternal(",
-            "selected_text": "redirectResponseExternal",
-            "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
-        },
         {
             "severity": "info",
             "line_from": 17,
@@ -273,8 +169,7 @@
             "snippet": "class CurrencyPostChangePluginExecutor implements CurrencyPostChangePluginExecutorInterface",
             "selected_text": "CurrencyPostChangePluginExecutor",
             "error_level": 2,
-            "shortcode": 152,
-            "taint_trace": null
+            "shortcode": 152
         },
         {
             "severity": "info",
@@ -286,8 +181,19 @@
             "snippet": "     * @var \\Spryker\\Yves\\Currency\\Dependency\\CurrencyPostChangePluginInterface[]",
             "selected_text": "\\Spryker\\Yves\\Currency\\Dependency\\CurrencyPostChangePluginInterface[]",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 22,
+            "line_to": 22,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Yves\\Currency\\Dependency\\CurrencyPostChangePluginInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Currency/src/Spryker/Yves/Currency/CurrencyChange/CurrencyPostChangePluginExecutor.php",
+            "snippet": "    /**\n     * @var \\Spryker\\Yves\\Currency\\Dependency\\CurrencyPostChangePluginInterface[]\n     */\n    protected $currencyPostChangePlugins = [];",
+            "selected_text": "protected $currencyPostChangePlugins = [];",
+            "error_level": 2,
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -299,47 +205,19 @@
             "snippet": "     * @param \\Spryker\\Yves\\Currency\\Dependency\\CurrencyPostChangePluginInterface[] $currencyPostChangePlugins",
             "selected_text": "\\Spryker\\Yves\\Currency\\Dependency\\CurrencyPostChangePluginInterface[]",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 70,
-            "line_to": 70,
-            "type": "DeprecatedMethod",
-            "message": "The method Symfony\\Component\\Intl\\Intl::getCurrencyBundle has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Currency/src/Spryker/Yves/Currency/CurrencyDependencyProvider.php",
-            "snippet": "                Intl::getCurrencyBundle()",
-            "selected_text": "Intl::getCurrencyBundle()",
-            "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 70,
-            "line_to": 70,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\Intl\\ResourceBundle\\CurrencyBundleInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Currency/src/Spryker/Yves/Currency/CurrencyDependencyProvider.php",
-            "snippet": "                Intl::getCurrencyBundle()",
-            "selected_text": "Intl::getCurrencyBundle()",
-            "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 136,
-            "line_to": 136,
+            "line_from": 131,
+            "line_to": 131,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Yves\\Currency\\Dependency\\CurrencyPostChangePluginInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Currency/src/Spryker/Yves/Currency/CurrencyDependencyProvider.php",
             "snippet": "     * @return \\Spryker\\Yves\\Currency\\Dependency\\CurrencyPostChangePluginInterface[]",
             "selected_text": "\\Spryker\\Yves\\Currency\\Dependency\\CurrencyPostChangePluginInterface[]",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -351,8 +229,7 @@
             "snippet": "     * @return \\Spryker\\Yves\\Currency\\CurrencyChange\\CurrencyPostChangePluginExecutorInterface",
             "selected_text": "\\Spryker\\Yves\\Currency\\CurrencyChange\\CurrencyPostChangePluginExecutorInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -364,8 +241,7 @@
             "snippet": "        return new CurrencyPostChangePluginExecutor(\n            $this->getCurrencyPostChangePlugins(),\n            $this->createCurrencyPersistence(),\n            $this->getZedRequestClient(),\n            $this->getMessengerClient()\n        );",
             "selected_text": "new CurrencyPostChangePluginExecutor(\n            $this->getCurrencyPostChangePlugins(),\n            $this->createCurrencyPersistence(),\n            $this->getZedRequestClient(),\n            $this->getMessengerClient()\n        )",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -377,8 +253,7 @@
             "snippet": "     * @return \\Spryker\\Yves\\Currency\\Dependency\\CurrencyPostChangePluginInterface[]",
             "selected_text": "\\Spryker\\Yves\\Currency\\Dependency\\CurrencyPostChangePluginInterface[]",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -390,8 +265,7 @@
             "snippet": "        $app['twig'] = $app->share(",
             "selected_text": "$app",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -403,8 +277,7 @@
             "snippet": "        $app['twig'] = $app->share(",
             "selected_text": "share",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -416,8 +289,7 @@
             "snippet": "        $app['twig'] = $app->share(",
             "selected_text": "$app",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -429,34 +301,7 @@
             "snippet": "        $app['twig'] = $app->share(",
             "selected_text": "share",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 58,
-            "line_to": 58,
-            "type": "DeprecatedMethod",
-            "message": "The method Symfony\\Component\\Intl\\Intl::getCurrencyBundle has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Currency/src/Spryker/Zed/Currency/CurrencyDependencyProvider.php",
-            "snippet": "            return new CurrencyToInternationalizationBridge(Intl::getCurrencyBundle());",
-            "selected_text": "Intl::getCurrencyBundle()",
-            "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 58,
-            "line_to": 58,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\Intl\\ResourceBundle\\CurrencyBundleInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Currency/src/Spryker/Zed/Currency/CurrencyDependencyProvider.php",
-            "snippet": "            return new CurrencyToInternationalizationBridge(Intl::getCurrencyBundle());",
-            "selected_text": "Intl::getCurrencyBundle()",
-            "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 1
         }
     ]
 }

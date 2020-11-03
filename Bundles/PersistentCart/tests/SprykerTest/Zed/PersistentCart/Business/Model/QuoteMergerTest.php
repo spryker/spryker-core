@@ -68,7 +68,7 @@ class QuoteMergerTest extends Unit
         // Assert
         $changedItems = $quoteTransfer->getItems();
         $this->assertCount(2, $changedItems);
-        $this->assertEquals($quoteTransfer->getCurrency()->getCode(), $quoteMergeRequestTransfer->getTargetQuote()->getCurrency()->getCode());
+        $this->assertSame($quoteTransfer->getCurrency()->getCode(), $quoteMergeRequestTransfer->getTargetQuote()->getCurrency()->getCode());
 
         $skuIndex = [];
         foreach ($changedItems as $key => $changedItem) {
@@ -76,10 +76,10 @@ class QuoteMergerTest extends Unit
         }
 
         $existingItem = $changedItems[$skuIndex[static::EXISTING_ITEM_SKU]];
-        $this->assertEquals($existingItem->getQuantity(), 2);
+        $this->assertSame(2, $existingItem->getQuantity());
 
         $newItem = $changedItems[$skuIndex[static::NEW_ITEM_SKU]];
-        $this->assertEquals($newItem->getQuantity(), 1);
+        $this->assertSame(1, $newItem->getQuantity());
     }
 
     /**

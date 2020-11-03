@@ -84,30 +84,6 @@
             "selected_text": "$productConcreteAvailabilityTransfer->getSku()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 47,
-            "line_to": 47,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductAvailabilitiesRestApi/src/Spryker/Glue/ProductAvailabilitiesRestApi/ProductAvailabilitiesRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->availabilityStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductAvailabilitiesRestApi/src/Spryker/Glue/ProductAvailabilitiesRestApi/ProductAvailabilitiesRestApiDependencyProvider.php",
-            "snippet": "            return new ProductAvailabilitiesRestApiToProductStorageClientBridge($container->getLocator()->productStorage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

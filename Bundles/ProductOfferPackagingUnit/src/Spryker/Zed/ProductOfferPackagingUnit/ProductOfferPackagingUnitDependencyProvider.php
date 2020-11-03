@@ -26,7 +26,7 @@ class ProductOfferPackagingUnitDependencyProvider extends AbstractBundleDependen
     public function providePersistenceLayerDependencies(Container $container): Container
     {
         $container = parent::providePersistenceLayerDependencies($container);
-        
+
         $container = $this->addSalesOrderItemPropelQuery($container);
 
         return $container;

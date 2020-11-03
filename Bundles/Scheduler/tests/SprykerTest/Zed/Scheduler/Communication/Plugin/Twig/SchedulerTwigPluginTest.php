@@ -35,6 +35,6 @@ class SchedulerTwigPluginTest extends Unit
         putenv('TEST=' . static::TEST_ENV_NAME);
         $environmentVariable = $schedulerTwigPlugin->getEnvironmentVariableValueByName(static::TEST_ENV_NAME);
 
-        $this->assertEquals(static::TEST_ENV_NAME, $environmentVariable);
+        $this->assertSame(static::TEST_ENV_NAME, $environmentVariable);
     }
 }

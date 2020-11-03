@@ -94,7 +94,7 @@ class ContentFacadeTest extends Test
         ))->build();
         $createdContentTransfer = $this->tester->getFacade()->create($contentTransfer);
 
-        $this->assertEquals($createdContentTransfer->getKey(), static::KEY);
+        $this->assertSame(static::KEY, $createdContentTransfer->getKey());
     }
 
     /**
@@ -130,7 +130,7 @@ class ContentFacadeTest extends Test
 
         $updatedContentTransfer = $this->tester->getFacade()->findContentById($contentTransfer->getIdContent());
 
-        $this->assertEquals($contentTransfer->getName(), $updatedContentTransfer->getName());
+        $this->assertSame($contentTransfer->getName(), $updatedContentTransfer->getName());
         $this->assertEquals(
             $contentTransfer->getLocalizedContents()[0]->getParameters(),
             $updatedContentTransfer->getLocalizedContents()[0]->getParameters()

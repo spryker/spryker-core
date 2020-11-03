@@ -1,6 +1,6 @@
 # ProductMeasurementUnit Module
 [![Build Status](https://travis-ci.org/spryker/product-measurement-unit.svg)](https://travis-ci.org/spryker/product-measurement-unit)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Provides basic infrastructure and operations for handling measurement units for products.
 

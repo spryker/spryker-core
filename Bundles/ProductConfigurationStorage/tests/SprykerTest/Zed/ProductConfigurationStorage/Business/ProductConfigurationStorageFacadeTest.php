@@ -94,12 +94,12 @@ class ProductConfigurationStorageFacadeTest extends Unit
             $productConfigurationTransfer->getIdProductConfiguration()
         )->findOne();
 
-        $this->assertEquals(
+        $this->assertSame(
             $productTransfer->getSku(),
             $productConfigurationStorageEntity->getSku()
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $productConfigurationTransfer->getIdProductConfiguration(),
             $productConfigurationStorageEntity->getFkProductConfiguration()
         );

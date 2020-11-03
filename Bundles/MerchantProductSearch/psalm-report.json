@@ -11,8 +11,7 @@
             "snippet": "        array $productData,",
             "selected_text": "$productData",
             "error_level": 5,
-            "shortcode": 140,
-            "taint_trace": null
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -24,8 +23,7 @@
             "snippet": "        foreach ($productData[static::KEY_MERCHANT_NAMES][$pageMapTransfer->getStore()] as $merchantName) {",
             "selected_text": "$productData[static::KEY_MERCHANT_NAMES]",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -37,8 +35,7 @@
             "snippet": "    public function expandProductPageData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer): void",
             "selected_text": "$productData",
             "error_level": 5,
-            "shortcode": 140,
-            "taint_trace": null
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -50,47 +47,43 @@
             "snippet": "            $updatedPayLoadTransfers[$payloadTransfer->getIdProductAbstract()] = $this->setMerchantDataToPayloadTransfer($payloadTransfer, $productAbstractMerchantData);",
             "selected_text": "$updatedPayLoadTransfers",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
             "line_from": 39,
             "line_to": 39,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\MerchantProduct\\Persistence\\SpyMerchantProductAbstract|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\MerchantProduct\\Persistence\\SpyMerchantProductAbstract> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantProductSearch/src/Spryker/Zed/MerchantProductSearch/Persistence/MerchantProductSearchRepository.php",
             "snippet": "            ->getData();",
             "selected_text": "getData",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
             "line_from": 56,
             "line_to": 56,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\MerchantProduct\\Persistence\\SpyMerchantProductAbstract|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\MerchantProduct\\Persistence\\SpyMerchantProductAbstract> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantProductSearch/src/Spryker/Zed/MerchantProductSearch/Persistence/MerchantProductSearchRepository.php",
             "snippet": "            ->getData();",
             "selected_text": "getData",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
             "line_from": 86,
             "line_to": 86,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\MerchantOpeningHours\\Persistence\\SpyMerchantOpeningHoursDateSchedule|Orm\\Zed\\MerchantOpeningHours\\Persistence\\SpyMerchantOpeningHoursWeekdaySchedule|Orm\\Zed\\MerchantProduct\\Persistence\\SpyMerchantProductAbstract|Orm\\Zed\\MerchantProfile\\Persistence\\SpyMerchantProfile|Orm\\Zed\\MerchantRelationship\\Persistence\\SpyMerchantRelationship|Orm\\Zed\\MerchantStock\\Persistence\\SpyMerchantStock|Orm\\Zed\\MerchantUser\\Persistence\\SpyMerchantUser|Orm\\Zed\\Merchant\\Persistence\\SpyMerchantStore|Orm\\Zed\\ProductOffer\\Persistence\\SpyProductOffer|Orm\\Zed\\StateMachine\\Persistence\\SpyStateMachineProcess|Orm\\Zed\\Url\\Persistence\\SpyUrl|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\MerchantCategory\\Persistence\\SpyMerchantCategory|Orm\\Zed\\MerchantOpeningHours\\Persistence\\SpyMerchantOpeningHoursDateSchedule|Orm\\Zed\\MerchantOpeningHours\\Persistence\\SpyMerchantOpeningHoursWeekdaySchedule|Orm\\Zed\\MerchantProduct\\Persistence\\SpyMerchantProductAbstract|Orm\\Zed\\MerchantProfile\\Persistence\\SpyMerchantProfile|Orm\\Zed\\MerchantRelationship\\Persistence\\SpyMerchantRelationship|Orm\\Zed\\MerchantStock\\Persistence\\SpyMerchantStock|Orm\\Zed\\MerchantUser\\Persistence\\SpyMerchantUser|Orm\\Zed\\Merchant\\Persistence\\SpyMerchantStore|Orm\\Zed\\ProductOffer\\Persistence\\SpyProductOffer|Orm\\Zed\\StateMachine\\Persistence\\SpyStateMachineProcess|Orm\\Zed\\Url\\Persistence\\SpyUrl> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantProductSearch/src/Spryker/Zed/MerchantProductSearch/Persistence/MerchantProductSearchRepository.php",
             "snippet": "            ->getData();",
             "selected_text": "getData",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         }
     ],
     "deprecation": []

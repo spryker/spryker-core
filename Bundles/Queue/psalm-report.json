@@ -1,18 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 194,
-            "line_to": 194,
-            "type": "InvalidArgument",
-            "message": "Argument 1 of Symfony\\Component\\Process\\Process::__construct expects array<array-key, mixed>, string provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Queue/src/Spryker/Zed/Queue/Business/Process/ProcessManager.php",
-            "snippet": "        return new Process($command);",
-            "selected_text": "$command",
-            "error_level": 6,
-            "shortcode": 4
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
@@ -148,8 +135,8 @@
         },
         {
             "severity": "info",
-            "line_from": 155,
-            "line_to": 155,
+            "line_from": 165,
+            "line_to": 165,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Queue\\Business\\Process\\ProcessManagerInterface::isProcessRunning cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Queue/src/Spryker/Zed/Queue/Business/Worker/Worker.php",
@@ -217,85 +204,13 @@
             "selected_text": "$input->getArgument('queue')",
             "error_level": 3,
             "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 27,
-            "line_to": 27,
-            "type": "MoreSpecificReturnType",
-            "message": "The declared return type 'Orm\\Zed\\Queue\\Persistence\\SpyQueueProcessQuery' for Spryker\\Zed\\Queue\\Persistence\\QueueQueryContainer::queryProcessesByServerIdAndQueueName is more specific than the inferred return type 'Propel\\Runtime\\ActiveQuery\\ModelCriteria'",
-            "file_name": "vendor/spryker/spryker/Bundles/Queue/src/Spryker/Zed/Queue/Persistence/QueueQueryContainer.php",
-            "snippet": "     * @return \\Orm\\Zed\\Queue\\Persistence\\SpyQueueProcessQuery",
-            "selected_text": "\\Orm\\Zed\\Queue\\Persistence\\SpyQueueProcessQuery",
-            "error_level": 3,
-            "shortcode": 70
-        },
-        {
-            "severity": "info",
-            "line_from": 31,
-            "line_to": 35,
-            "type": "LessSpecificReturnStatement",
-            "message": "The type 'Orm\\Zed\\Queue\\Persistence\\SpyQueueProcessQuery&static|Propel\\Runtime\\ActiveQuery\\ModelCriteria' is more general than the declared return type 'Orm\\Zed\\Queue\\Persistence\\SpyQueueProcessQuery' for Spryker\\Zed\\Queue\\Persistence\\QueueQueryContainer::queryProcessesByServerIdAndQueueName",
-            "file_name": "vendor/spryker/spryker/Bundles/Queue/src/Spryker/Zed/Queue/Persistence/QueueQueryContainer.php",
-            "snippet": "        return $this->getFactory()\n            ->createSpyQueueProcessQuery()\n            ->filterByServerId($serverId)\n            ->filterByQueueName($queueName)\n            ->select(SpyQueueProcessTableMap::COL_PROCESS_PID);",
-            "selected_text": "$this->getFactory()\n            ->createSpyQueueProcessQuery()\n            ->filterByServerId($serverId)\n            ->filterByQueueName($queueName)\n            ->select(SpyQueueProcessTableMap::COL_PROCESS_PID)",
-            "error_level": 3,
-            "shortcode": 129
-        },
-        {
-            "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "MoreSpecificReturnType",
-            "message": "The declared return type 'Orm\\Zed\\Queue\\Persistence\\SpyQueueProcessQuery' for Spryker\\Zed\\Queue\\Persistence\\QueueQueryContainer::queryProcessesByServerId is more specific than the inferred return type 'Propel\\Runtime\\ActiveQuery\\ModelCriteria'",
-            "file_name": "vendor/spryker/spryker/Bundles/Queue/src/Spryker/Zed/Queue/Persistence/QueueQueryContainer.php",
-            "snippet": "     * @return \\Orm\\Zed\\Queue\\Persistence\\SpyQueueProcessQuery",
-            "selected_text": "\\Orm\\Zed\\Queue\\Persistence\\SpyQueueProcessQuery",
-            "error_level": 3,
-            "shortcode": 70
-        },
-        {
-            "severity": "info",
-            "line_from": 65,
-            "line_to": 68,
-            "type": "LessSpecificReturnStatement",
-            "message": "The type 'Orm\\Zed\\Queue\\Persistence\\SpyQueueProcessQuery&static|Propel\\Runtime\\ActiveQuery\\ModelCriteria' is more general than the declared return type 'Orm\\Zed\\Queue\\Persistence\\SpyQueueProcessQuery' for Spryker\\Zed\\Queue\\Persistence\\QueueQueryContainer::queryProcessesByServerId",
-            "file_name": "vendor/spryker/spryker/Bundles/Queue/src/Spryker/Zed/Queue/Persistence/QueueQueryContainer.php",
-            "snippet": "        return $this->getFactory()\n            ->createSpyQueueProcessQuery()\n            ->filterByServerId($serverId)\n            ->select(SpyQueueProcessTableMap::COL_PROCESS_PID);",
-            "selected_text": "$this->getFactory()\n            ->createSpyQueueProcessQuery()\n            ->filterByServerId($serverId)\n            ->select(SpyQueueProcessTableMap::COL_PROCESS_PID)",
-            "error_level": 3,
-            "shortcode": 129
-        },
-        {
-            "severity": "info",
-            "line_from": 31,
-            "line_to": 31,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Queue/src/Spryker/Zed/Queue/QueueDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->queue()->client();",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 39,
-            "line_to": 39,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Queue/src/Spryker/Zed/Queue/QueueDependencyProvider.php",
-            "snippet": "            return new QueueToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 293,
-            "line_to": 293,
+            "line_from": 303,
+            "line_to": 303,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Queue\\QueueConfig::getIsWorkerLoopEnabled has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Queue/src/Spryker/Zed/Queue/Business/Worker/Worker.php",
@@ -306,8 +221,8 @@
         },
         {
             "severity": "info",
-            "line_from": 172,
-            "line_to": 172,
+            "line_from": 192,
+            "line_to": 192,
             "type": "DeprecatedConstant",
             "message": "Constant Spryker\\Shared\\Queue\\QueueConstants::QUEUE_WORKER_LOOP is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Queue/src/Spryker/Zed/Queue/QueueConfig.php",

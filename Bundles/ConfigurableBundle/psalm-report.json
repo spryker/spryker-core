@@ -10,8 +10,7 @@
             "snippet": "     * @return int[]",
             "selected_text": "int[]",
             "error_level": 6,
-            "shortcode": 11,
-            "taint_trace": null
+            "shortcode": 11
         },
         {
             "severity": "error",
@@ -23,8 +22,7 @@
             "snippet": "        return $localeIds;",
             "selected_text": "$localeIds",
             "error_level": 6,
-            "shortcode": 128,
-            "taint_trace": null
+            "shortcode": 128
         }
     ],
     "warning": [
@@ -38,8 +36,7 @@
             "snippet": "                ->requireIdProductList();",
             "selected_text": "requireIdProductList",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -51,8 +48,7 @@
             "snippet": "        return $this->createProductListResponse($productListTransfer, $configurableBundleTemplateSlotCollectionTransfer);",
             "selected_text": "$productListTransfer",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -64,8 +60,7 @@
             "snippet": "        if (!$configurableBundleTemplateSlotCollectionTransfer->getConfigurableBundleTemplateSlots()->count()) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -77,8 +72,7 @@
             "snippet": "                    ->requireTranslations();",
             "selected_text": "requireTranslations",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -90,8 +84,7 @@
             "snippet": "            ->getTranslations()[0]",
             "selected_text": "getTranslations",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -103,8 +96,7 @@
             "snippet": "            return $this->executeDeleteConfigurableBundleTemplateTransaction($configurableBundleTemplateTransfer);",
             "selected_text": "$configurableBundleTemplateTransfer",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -116,8 +108,7 @@
             "snippet": "        $this->configurableBundleEntityManager->deleteConfigurableBundleTemplateSlotsByIdTemplate($idConfigurableBundleTemplate);",
             "selected_text": "$idConfigurableBundleTemplate",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -129,8 +120,7 @@
             "snippet": "            ->getIdConfigurableBundleTemplateSlot();",
             "selected_text": "getIdConfigurableBundleTemplateSlot",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -142,8 +132,31 @@
             "snippet": "        $this->configurableBundleEntityManager->deleteConfigurableBundleTemplateSlotById($idConfigurableBundleTemplateSlot);",
             "selected_text": "$idConfigurableBundleTemplateSlot",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 78,
+            "line_to": 78,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getTemplate on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundle/src/Spryker/Zed/ConfigurableBundle/Business/Cleaner/ConfiguredBundleItemCleaner.php",
+            "snippet": "        if (!$itemTransfer->getConfiguredBundle() || !$itemTransfer->getConfiguredBundle()->getTemplate()) {",
+            "selected_text": "getTemplate",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 83,
+            "line_to": 83,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getTemplate on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundle/src/Spryker/Zed/ConfigurableBundle/Business/Cleaner/ConfiguredBundleItemCleaner.php",
+            "snippet": "            ->getTemplate()",
+            "selected_text": "getTemplate",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -155,8 +168,7 @@
             "snippet": "            ->getUuid();",
             "selected_text": "getUuid",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -168,8 +180,7 @@
             "snippet": "        $this->eventTriggerer->triggerConfigurableBundleTemplatePublishEvent($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());",
             "selected_text": "$configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -181,8 +192,7 @@
             "snippet": "            ->getConfigurableBundleTemplateById($configurableBundleTemplateSlotTransfer->getFkConfigurableBundleTemplate());",
             "selected_text": "$configurableBundleTemplateSlotTransfer->getFkConfigurableBundleTemplate()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -194,8 +204,7 @@
             "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\MessageTransfer[] $messageTransfers",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\MessageTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -207,8 +216,7 @@
             "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\LocaleTransfer[] $localeTransfers",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\LocaleTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -220,8 +228,7 @@
             "snippet": "        $productImageSetTransfers = $this->configurableBundleRepository->getConfigurableBundleTemplateImageSets($idConfigurableBundleTemplate, $localeIds);",
             "selected_text": "$idConfigurableBundleTemplate",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -233,8 +240,7 @@
             "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\LocaleTransfer[] $localeTransfers",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\LocaleTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -246,8 +252,7 @@
             "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\LocaleTransfer[] $localeTransfers",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\LocaleTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -259,8 +264,7 @@
             "snippet": "                ->requireIdProductList();",
             "selected_text": "requireIdProductList",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -272,8 +276,7 @@
             "snippet": "        $productListTransfer = $this->productListFacade->getProductListById($configurableBundleTemplateSlotTransfer->getProductList());",
             "selected_text": "$configurableBundleTemplateSlotTransfer->getProductList()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -285,8 +288,7 @@
             "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\LocaleTransfer[] $localeTransfers",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\LocaleTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -298,8 +300,7 @@
             "snippet": "        if (!$localeTransfers->count()) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -311,8 +312,7 @@
             "snippet": "            $localeTransfers->exchangeArray($this->localeFacade->getLocaleCollection());",
             "selected_text": "exchangeArray",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -324,8 +324,7 @@
             "snippet": "            $this->getTranslations($configurableBundleTemplateTransfer->getName(), $localeTransfers),",
             "selected_text": "$configurableBundleTemplateTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -337,8 +336,7 @@
             "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\LocaleTransfer[] $localeTransfers",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\LocaleTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -350,8 +348,7 @@
             "snippet": "        if (!$localeTransfers->count()) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -363,8 +360,7 @@
             "snippet": "            $localeTransfers->exchangeArray($this->localeFacade->getLocaleCollection());",
             "selected_text": "exchangeArray",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -376,8 +372,7 @@
             "snippet": "            $this->getTranslations($configurableBundleTemplateSlotTransfer->getName(), $localeTransfers),",
             "selected_text": "$configurableBundleTemplateSlotTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -389,8 +384,7 @@
             "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\LocaleTransfer[] $localeTransfers",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\LocaleTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -402,8 +396,7 @@
             "snippet": "        if ($localeTransfers->count() === 1) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -415,8 +408,7 @@
             "snippet": "            return [$this->getSingleLocaleTranslation($translationKey, $localeTransfers->getIterator()->current())];",
             "selected_text": "getIterator",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -428,8 +420,7 @@
             "snippet": "        return $this->glossaryFacade->getTranslationsByGlossaryKeyAndLocales($translationKey, $localeTransfers->getArrayCopy());",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -441,8 +432,7 @@
             "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\LocaleTransfer[] $localeTransfers",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\LocaleTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -454,8 +444,7 @@
             "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\ConfigurableBundleTemplateTranslationTransfer[]",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ConfigurableBundleTemplateTranslationTransfer[]",
             "error_level": 4,
-            "shortcode": 142,
-            "taint_trace": null
+            "shortcode": 142
         },
         {
             "severity": "info",
@@ -467,8 +456,7 @@
             "snippet": "                $configurableBundleTemplateTranslationTransfer->setName($translationTransfers[$localeTransfer->getIdLocale()]->getValue());",
             "selected_text": "$translationTransfers",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -480,8 +468,7 @@
             "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\LocaleTransfer[] $localeTransfers",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\LocaleTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -493,8 +480,7 @@
             "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\ConfigurableBundleTemplateSlotTranslationTransfer[]",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ConfigurableBundleTemplateSlotTranslationTransfer[]",
             "error_level": 4,
-            "shortcode": 142,
-            "taint_trace": null
+            "shortcode": 142
         },
         {
             "severity": "info",
@@ -506,8 +492,7 @@
             "snippet": "                $configurableBundleTemplateSlotTranslationTransfer->setName($translationTransfers[$localeTransfer->getIdLocale()]->getValue());",
             "selected_text": "$translationTransfers",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -519,8 +504,7 @@
             "snippet": "            $indexedTranslationTransfers[$translationTransfer->getFkLocale()] = $translationTransfer;",
             "selected_text": "$indexedTranslationTransfers",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -532,8 +516,7 @@
             "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\LocaleTransfer[] $localeTransfers",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\LocaleTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -545,8 +528,7 @@
             "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\LocaleTransfer[] $localeTransfers",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\LocaleTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -558,8 +540,7 @@
             "snippet": "            $configurableBundleTemplateTransfer->getTranslations()[0]->getName(),",
             "selected_text": "$configurableBundleTemplateTransfer->getTranslations()[0]->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -571,8 +552,7 @@
             "snippet": "            $configurableBundleTemplateSlotTransfer->getTranslations()[0]->getName(),",
             "selected_text": "$configurableBundleTemplateSlotTransfer->getTranslations()[0]->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -584,8 +564,7 @@
             "snippet": "                ->requireTranslations();",
             "selected_text": "requireTranslations",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -597,8 +576,7 @@
             "snippet": "            $configurableBundleTemplateSlotTransfer->getConfigurableBundleTemplate()->getTranslations()[0]->getName(),",
             "selected_text": "$configurableBundleTemplateSlotTransfer->getConfigurableBundleTemplate()->getTranslations()[0]->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -610,8 +588,7 @@
             "snippet": "            $configurableBundleTemplateSlotTransfer->getConfigurableBundleTemplate()->getTranslations()[0]->getName(),",
             "selected_text": "getTranslations",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -623,8 +600,7 @@
             "snippet": "            $configurableBundleTemplateSlotTransfer->getTranslations()[0]->getName()",
             "selected_text": "$configurableBundleTemplateSlotTransfer->getTranslations()[0]->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -636,8 +612,7 @@
             "snippet": "                $configurableBundleTemplateSlotTransfer->getConfigurableBundleTemplate(),",
             "selected_text": "$configurableBundleTemplateSlotTransfer->getConfigurableBundleTemplate()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -649,8 +624,7 @@
             "snippet": "                $configurableBundleTemplateSlotResponseTransfer->getConfigurableBundleTemplateSlot()->getConfigurableBundleTemplate()",
             "selected_text": "getConfigurableBundleTemplate",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -662,8 +636,7 @@
             "snippet": "            ->getConfigurableBundleTemplateSlotById($configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot());",
             "selected_text": "$configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -675,8 +648,7 @@
             "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\MessageTransfer[] $messageTransfers",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\MessageTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -688,8 +660,7 @@
             "snippet": "        if ($configurableBundleTemplateTransfer->getIsActive() === true) {",
             "selected_text": "getIsActive",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -701,8 +672,7 @@
             "snippet": "        $this->eventTriggerer->triggerConfigurableBundleTemplatePublishEvent($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());",
             "selected_text": "$configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -714,8 +684,7 @@
             "snippet": "        if ($configurableBundleTemplateTransfer->getIsActive() === false) {",
             "selected_text": "getIsActive",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -727,8 +696,7 @@
             "snippet": "        $this->eventTriggerer->triggerConfigurableBundleTemplatePublishEvent($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());",
             "selected_text": "$configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -740,8 +708,7 @@
             "snippet": "        $this->eventTriggerer->triggerConfigurableBundleTemplatePublishEvent($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());",
             "selected_text": "$configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -753,8 +720,7 @@
             "snippet": "            ->getConfigurableBundleTemplateById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());",
             "selected_text": "$configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -766,8 +732,7 @@
             "snippet": "        if (!$this->glossaryFacade->hasKey($translationKey)) {",
             "selected_text": "$translationKey",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -779,8 +744,7 @@
             "snippet": "            $this->glossaryFacade->createKey($translationKey);",
             "selected_text": "$translationKey",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -792,8 +756,7 @@
             "snippet": "            $this->persistTemplateNameTranslation($configurableBundleTemplateTranslationTransfer, $translationKey);",
             "selected_text": "$translationKey",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -805,8 +768,7 @@
             "snippet": "        if (!$this->glossaryFacade->hasKey($translationKey)) {",
             "selected_text": "$translationKey",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -818,8 +780,7 @@
             "snippet": "            $this->glossaryFacade->createKey($translationKey);",
             "selected_text": "$translationKey",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -831,8 +792,7 @@
             "snippet": "            $this->persistTemplateSlotNameTranslation($configurableBundleTemplateSlotTranslationTransfer, $translationKey);",
             "selected_text": "$translationKey",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -844,8 +804,7 @@
             "snippet": "            $configurableBundleTemplateTranslationTransfer->getName(),",
             "selected_text": "$configurableBundleTemplateTranslationTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -857,8 +816,7 @@
             "snippet": "            $configurableBundleTemplateTranslationTransfer->getLocale()",
             "selected_text": "$configurableBundleTemplateTranslationTransfer->getLocale()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -870,8 +828,7 @@
             "snippet": "            $configurableBundleTemplateSlotTranslationTransfer->getName(),",
             "selected_text": "$configurableBundleTemplateSlotTranslationTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -883,8 +840,7 @@
             "snippet": "            $configurableBundleTemplateSlotTranslationTransfer->getLocale()",
             "selected_text": "$configurableBundleTemplateSlotTranslationTransfer->getLocale()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -896,8 +852,7 @@
             "snippet": "                ->requireIdProductList();",
             "selected_text": "requireIdProductList",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -909,8 +864,7 @@
             "snippet": "        $productListTransfer->setTitle($this->productListTitleGenerator->generateProductListTitle($configurableBundleTemplateSlotTransfer));",
             "selected_text": "setTitle",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -922,8 +876,7 @@
             "snippet": "            ->mapTemplateTransferToTemplateEntity($configurableBundleTemplateTransfer, $configurableBundleTemplateEntity);",
             "selected_text": "$configurableBundleTemplateEntity",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -935,8 +888,7 @@
             "snippet": "            ->mapTemplateSlotTransferToTemplateSlotEntity($configurableBundleTemplateSlotTransfer, $configurableBundleTemplateSlotEntity);",
             "selected_text": "$configurableBundleTemplateSlotEntity",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -948,8 +900,7 @@
             "snippet": "            ->mapTemplateEntityCollectionToTemplateTransferCollection($configurableBundleTemplateQuery->find());",
             "selected_text": "$configurableBundleTemplateQuery->find()",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -961,21 +912,19 @@
             "snippet": "            ->mapTemplateSlotEntityCollectionToTemplateSlotTransferCollection($configurableBundleTemplateSlotQuery->find());",
             "selected_text": "$configurableBundleTemplateSlotQuery->find()",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
             "line_from": 144,
             "line_to": 144,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ConfigurableBundle\\Persistence\\SpyConfigurableBundleTemplate|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ConfigurableBundle\\Persistence\\SpyConfigurableBundleTemplate> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundle/src/Spryker/Zed/ConfigurableBundle/Persistence/ConfigurableBundleRepository.php",
             "snippet": "            ->toArray();",
             "selected_text": "toArray",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -987,8 +936,7 @@
             "snippet": "     * @return \\Orm\\Zed\\ConfigurableBundle\\Persistence\\SpyConfigurableBundleTemplateQuery",
             "selected_text": "\\Orm\\Zed\\ConfigurableBundle\\Persistence\\SpyConfigurableBundleTemplateQuery",
             "error_level": 3,
-            "shortcode": 70,
-            "taint_trace": null
+            "shortcode": 70
         },
         {
             "severity": "info",
@@ -1000,8 +948,31 @@
             "snippet": "        return $configurableBundleTemplateQuery;",
             "selected_text": "$configurableBundleTemplateQuery",
             "error_level": 3,
-            "shortcode": 129,
-            "taint_trace": null
+            "shortcode": 129
+        },
+        {
+            "severity": "info",
+            "line_from": 193,
+            "line_to": 193,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdProductList on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundle/src/Spryker/Zed/ConfigurableBundle/Persistence/ConfigurableBundleRepository.php",
+            "snippet": "            && $configurableBundleTemplateSlotFilterTransfer->getProductList()->getIdProductList()",
+            "selected_text": "getIdProductList",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 196,
+            "line_to": 196,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdProductList on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundle/src/Spryker/Zed/ConfigurableBundle/Persistence/ConfigurableBundleRepository.php",
+            "snippet": "                $configurableBundleTemplateSlotFilterTransfer->getProductList()->getIdProductList()",
+            "selected_text": "getIdProductList",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -1013,8 +984,7 @@
             "snippet": "            ->mapProductImageSetEntityCollectionToProductImageSetTransfers($productImageSetQuery->find());",
             "selected_text": "$productImageSetQuery->find()",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -1026,8 +996,7 @@
             "snippet": "            ->setFkProductList($configurableBundleTemplateSlotTransfer->getProductList()->getIdProductList());",
             "selected_text": "getIdProductList",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -1039,8 +1008,7 @@
             "snippet": "            $productImageSetTransfer->setLocale($this->mapLocaleEntityToLocaleTransfer($productImageSetEntity->getSpyLocale(), new LocaleTransfer()));",
             "selected_text": "$productImageSetEntity->getSpyLocale()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         }
     ],
     "deprecation": []

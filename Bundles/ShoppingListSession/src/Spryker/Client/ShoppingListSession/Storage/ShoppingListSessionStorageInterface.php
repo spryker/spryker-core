@@ -22,4 +22,9 @@ interface ShoppingListSessionStorageInterface
      * @return \Generated\Shared\Transfer\ShoppingListSessionTransfer|null
      */
     public function findShoppingListCollection(): ?ShoppingListSessionTransfer;
+
+    /**
+     * @return void
+     */
+    public function removeShoppingListCollection(): void;
 }

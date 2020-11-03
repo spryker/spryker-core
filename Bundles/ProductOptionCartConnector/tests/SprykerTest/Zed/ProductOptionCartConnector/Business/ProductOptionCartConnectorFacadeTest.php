@@ -166,7 +166,7 @@ class ProductOptionCartConnectorFacadeTest extends Unit
         $actualResult = $this->productOptionCartConnectorFacade->validateProductOptionValuePrices($cartChangeTransfer);
 
         // Assert
-        $this->assertEquals($expectedProductOptionErrorCount, $actualResult->getMessages()->count());
+        $this->assertSame($expectedProductOptionErrorCount, $actualResult->getMessages()->count());
     }
 
     /**
@@ -214,7 +214,7 @@ class ProductOptionCartConnectorFacadeTest extends Unit
         $actualResponse = $this->productOptionCartConnectorFacade->validateProductOptionValuePrices($cartChangeTransfer);
 
         // Assert
-        $this->assertEquals($expectedResult, $actualResponse->getIsSuccess());
+        $this->assertSame($expectedResult, $actualResponse->getIsSuccess());
     }
 
     /**
@@ -269,7 +269,7 @@ class ProductOptionCartConnectorFacadeTest extends Unit
         $actualResponse = $this->productOptionCartConnectorFacade->validateProductOptionValuePrices($cartChangeTransfer);
 
         // Assert
-        $this->assertEquals($expectedResult, $actualResponse->getIsSuccess());
+        $this->assertSame($expectedResult, $actualResponse->getIsSuccess());
     }
 
     /**
@@ -308,7 +308,7 @@ class ProductOptionCartConnectorFacadeTest extends Unit
         $actualResponse = $this->productOptionCartConnectorFacade->validateProductOptionValuePrices($cartChangeTransfer);
 
         // Assert
-        $this->assertEquals($expectedResult, $actualResponse->getIsSuccess());
+        $this->assertSame($expectedResult, $actualResponse->getIsSuccess());
     }
 
     /**
@@ -340,7 +340,7 @@ class ProductOptionCartConnectorFacadeTest extends Unit
         $actualResponse = $this->productOptionCartConnectorFacade->validateProductOptionValuePrices($cartChangeTransfer);
 
         // Assert
-        $this->assertEquals($expectedResult, $actualResponse->getIsSuccess());
+        $this->assertSame($expectedResult, $actualResponse->getIsSuccess());
     }
 
     /**
@@ -372,7 +372,7 @@ class ProductOptionCartConnectorFacadeTest extends Unit
         $actualResponse = $this->productOptionCartConnectorFacade->validateProductOptionValuePrices($cartChangeTransfer);
 
         // Assert
-        $this->assertEquals($expectedResult, $actualResponse->getIsSuccess());
+        $this->assertSame($expectedResult, $actualResponse->getIsSuccess());
     }
 
     /**

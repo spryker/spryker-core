@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ProductManagementAttributeValueTransfer;
 use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute;
 use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Zed\ProductAttribute\Business\Mapper\TranslationMapperInterface;
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToGlossaryInterface;
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToLocaleInterface;
 
@@ -35,18 +36,26 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
     protected $glossaryKeyBuilder;
 
     /**
+     * @var \Spryker\Zed\ProductAttribute\Business\Mapper\TranslationMapperInterface
+     */
+    protected $translationMapper;
+
+    /**
      * @param \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToLocaleInterface $localeFacade
      * @param \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToGlossaryInterface $glossaryFacade
      * @param \Spryker\Shared\ProductAttribute\Code\KeyBuilder\GlossaryKeyBuilderInterface $glossaryKeyBuilder
+     * @param \Spryker\Zed\ProductAttribute\Business\Mapper\TranslationMapperInterface $translationMapper
      */
     public function __construct(
         ProductAttributeToLocaleInterface $localeFacade,
         ProductAttributeToGlossaryInterface $glossaryFacade,
-        $glossaryKeyBuilder
+        $glossaryKeyBuilder,
+        TranslationMapperInterface $translationMapper
     ) {
         $this->localeFacade = $localeFacade;
         $this->glossaryFacade = $glossaryFacade;
         $this->glossaryKeyBuilder = $glossaryKeyBuilder;
+        $this->translationMapper = $translationMapper;
     }
 
     /**
@@ -87,76 +96,14 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
             $glossaryKeys,
             $localeTransfers
         );
-        $indexedTranslationTransfers = $this
-            ->indexTranslationsByKeyNameAndLocaleName($translationTransfers, $localeTransfers, $glossaryKeyTransfers);
+        $indexedTranslationTransfers = $this->translationMapper
+            ->mapTranslationsByKeyNameAndLocaleName($translationTransfers, $localeTransfers, $glossaryKeyTransfers);
 
         foreach ($productAttributeEntityCollection as $productAttributeEntity) {
             $transferList[] = $this->convertProductAttribute($productAttributeEntity, $indexedTranslationTransfers);
         }
 
         return $transferList;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\TranslationTransfer[] $translationTransfers
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
-     * @param \Generated\Shared\Transfer\GlossaryKeyTransfer[] $glossaryKeyTransfers
-     *
-     * @return string[][]
-     */
-    protected function indexTranslationsByKeyNameAndLocaleName(
-        array $translationTransfers,
-        array $localeTransfers,
-        array $glossaryKeyTransfers
-    ): array {
-        $indexedTranslationTransfers = [];
-        $indexedLocaleTransfers = $this->indexLocaleTransfersByIdLocale($localeTransfers);
-        $indexedGlossaryKeyTransfers = $this->indexGlossaryKeyTransfersByIdGlossaryKey($glossaryKeyTransfers);
-
-        foreach ($translationTransfers as $translationTransfer) {
-            $localeTransfer = $indexedLocaleTransfers[$translationTransfer->getFkLocale()] ?? null;
-            $glossaryKeyTransfer = $indexedGlossaryKeyTransfers[$translationTransfer->getFkGlossaryKey()] ?? null;
-
-            if (!$localeTransfer || !$glossaryKeyTransfer) {
-                continue;
-            }
-
-            $indexedTranslationTransfers[$glossaryKeyTransfer->getKey()][$localeTransfer->getLocaleName()] = $translationTransfer->getValue();
-        }
-
-        return $indexedTranslationTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
-     */
-    protected function indexLocaleTransfersByIdLocale(array $localeTransfers): array
-    {
-        $indexedLocaleTransfers = [];
-
-        foreach ($localeTransfers as $localeTransfer) {
-            $indexedLocaleTransfers[$localeTransfer->getIdLocale()] = $localeTransfer;
-        }
-
-        return $indexedLocaleTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\GlossaryKeyTransfer[] $glossaryKeyTransfers
-     *
-     * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
-     */
-    protected function indexGlossaryKeyTransfersByIdGlossaryKey(array $glossaryKeyTransfers): array
-    {
-        $indexedGlossaryKeyTransfers = [];
-
-        foreach ($glossaryKeyTransfers as $glossaryKeyTransfer) {
-            $indexedGlossaryKeyTransfers[$glossaryKeyTransfer->getIdGlossaryKey()] = $glossaryKeyTransfer;
-        }
-
-        return $indexedGlossaryKeyTransfers;
     }
 
     /**

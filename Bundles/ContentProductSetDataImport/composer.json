@@ -4,7 +4,7 @@
   "description": "ContentProductSetDataImport module",
   "license": "MIT",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/content": "^2.1.0",
     "spryker/data-import": "^1.5.0",
     "spryker/kernel": "^3.33.0",

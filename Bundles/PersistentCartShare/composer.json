@@ -4,7 +4,7 @@
   "description": "PersistentCartShare module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/kernel": "^3.30.0",
     "spryker/persistent-cart-share-extension": "^1.0.0",
     "spryker/quote": "^2.0.0",

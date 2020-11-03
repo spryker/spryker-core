@@ -11,8 +11,7 @@
             "snippet": "        $dataSetStepBroker->addStep($this->createAddLocalesStep());",
             "selected_text": "addStep",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
@@ -24,8 +23,7 @@
             "snippet": "        $dataSetStepBroker->addStep($this->createContentProductAbstractListCheckContentDataStep());",
             "selected_text": "addStep",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
@@ -37,8 +35,7 @@
             "snippet": "        $dataSetStepBroker->addStep($this->createContentProductAbstractListSkusToIdsStep());",
             "selected_text": "addStep",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
@@ -50,8 +47,7 @@
             "snippet": "        $dataSetStepBroker->addStep($this->createContentProductAbstractListPrepareLocalizedTermsStep());",
             "selected_text": "addStep",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
@@ -63,8 +59,7 @@
             "snippet": "        $dataSetStepBroker->addStep($this->createContentProductAbstractListWriterStep());",
             "selected_text": "addStep",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
@@ -76,8 +71,7 @@
             "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
             "selected_text": "addDataSetStepBroker",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
@@ -89,8 +83,7 @@
             "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
             "selected_text": "$dataSetStepBroker",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -102,8 +95,7 @@
             "snippet": "        return $this->getFactory()->getContentProductAbstractListDataImport()->import($dataImporterConfigurationTransfer);",
             "selected_text": "import",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
@@ -115,8 +107,7 @@
             "snippet": "            ->delete();",
             "selected_text": "delete",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -128,8 +119,7 @@
             "snippet": "            $localizedProductAbstractListTermParameter[SpyContentLocalizedTableMap::COL_FK_LOCALE] = $idLocale ?? $idLocale;",
             "selected_text": "$localizedProductAbstractListTermParameter",
             "error_level": 3,
-            "shortcode": 18,
-            "taint_trace": null
+            "shortcode": 18
         },
         {
             "severity": "info",
@@ -141,8 +131,7 @@
             "snippet": "            ->offsetGet(0)",
             "selected_text": "offsetGet",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -154,21 +143,19 @@
             "snippet": "        return sprintf('%s %s', $messageTransfer->getValue(), static::ERROR_MESSAGE_SUFFIX);",
             "selected_text": "$messageTransfer->getValue()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
             "line_from": 122,
             "line_to": 122,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProductAbstract|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable $productAbstractEntity",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProductAbstract> variable $productAbstractEntity",
             "file_name": "vendor/spryker/spryker/Bundles/ContentProductDataImport/src/Spryker/Zed/ContentProductDataImport/Business/Model/Step/ContentProductAbstractListSkusToIdsStep.php",
             "snippet": "        foreach ($productAbstractEntity->toArray() as $productAbstract) {",
             "selected_text": "toArray",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -180,8 +167,7 @@
             "snippet": "        return $this->getFacade()->importProductAbstractListTerm($dataImporterConfigurationTransfer);",
             "selected_text": "$dataImporterConfigurationTransfer",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         }
     ],
     "deprecation": []

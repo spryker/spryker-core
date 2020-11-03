@@ -11,8 +11,7 @@
             "snippet": "        foreach ($quoteTransfer->getItems() as $itemTransfer) {",
             "selected_text": "getItems",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -24,8 +23,7 @@
             "snippet": "            if ($itemTransfer->getConfiguredBundle()->getGroupKey() !== $configuredBundleTransfer->getGroupKey()) {",
             "selected_text": "getGroupKey",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -37,8 +35,7 @@
             "snippet": "            if ($itemTransfer->getConfiguredBundle()->getGroupKey() !== $configuredBundleTransfer->getGroupKey()) {",
             "selected_text": "getGroupKey",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -50,8 +47,7 @@
             "snippet": "            $itemTransfer->getConfiguredBundle()->setNote($configuredBundleTransfer->getNote());",
             "selected_text": "setNote",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -63,8 +59,7 @@
             "snippet": "                $configuredBundleNoteRequestTransfer->getQuote()->getIdQuote()",
             "selected_text": "$configuredBundleNoteRequestTransfer->getQuote()->getIdQuote()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -76,8 +71,7 @@
             "snippet": "                $configuredBundleNoteRequestTransfer->getQuote()->getIdQuote()",
             "selected_text": "getIdQuote",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -89,8 +83,7 @@
             "snippet": "        $quoteTransfer->setCustomer($configuredBundleNoteRequestTransfer->getQuote()->getCustomer());",
             "selected_text": "setCustomer",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -102,8 +95,7 @@
             "snippet": "        $quoteTransfer->setCustomer($configuredBundleNoteRequestTransfer->getQuote()->getCustomer());",
             "selected_text": "getCustomer",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -115,8 +107,7 @@
             "snippet": "        foreach ($quoteTransfer->getItems() as $itemTransfer) {",
             "selected_text": "getItems",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -128,8 +119,7 @@
             "snippet": "            if ($itemTransfer->getConfiguredBundle()->getGroupKey() !== $configuredBundleTransfer->getGroupKey()) {",
             "selected_text": "getGroupKey",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -141,8 +131,7 @@
             "snippet": "            if ($itemTransfer->getConfiguredBundle()->getGroupKey() !== $configuredBundleTransfer->getGroupKey()) {",
             "selected_text": "getGroupKey",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -154,8 +143,7 @@
             "snippet": "            $itemTransfer->getConfiguredBundle()->setNote($configuredBundleTransfer->getNote());",
             "selected_text": "setNote",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         }
     ],
     "deprecation": []

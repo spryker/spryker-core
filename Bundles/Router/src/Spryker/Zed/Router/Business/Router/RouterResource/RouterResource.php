@@ -8,6 +8,9 @@
 namespace Spryker\Zed\Router\Business\Router\RouterResource;
 
 use Exception;
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\StringToLower;
+use Laminas\Filter\Word\CamelCaseToDash;
 use ReflectionClass;
 use ReflectionMethod;
 use Spryker\Zed\Kernel\ClassResolver\Controller\ControllerResolver;
@@ -18,9 +21,6 @@ use Spryker\Zed\Router\Business\RouterResource\ResourceInterface;
 use Spryker\Zed\Router\RouterConfig;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
-use Zend\Filter\FilterChain;
-use Zend\Filter\StringToLower;
-use Zend\Filter\Word\CamelCaseToDash;
 
 class RouterResource implements ResourceInterface
 {
@@ -33,7 +33,7 @@ class RouterResource implements ResourceInterface
     protected $config;
 
     /**
-     * @var \Zend\Filter\FilterChain|null
+     * @var \Laminas\Filter\FilterChain|null
      */
     protected $filterChain;
 
@@ -207,7 +207,7 @@ class RouterResource implements ResourceInterface
     }
 
     /**
-     * @return \Zend\Filter\FilterChain
+     * @return \Laminas\Filter\FilterChain
      */
     protected function getFilterChain(): FilterChain
     {
@@ -249,7 +249,7 @@ class RouterResource implements ResourceInterface
             $routeName = 'home';
         }
 
-        $routeCollection->add($routeName, $route);
+        $routeCollection->add($routeName, $route, 0);
 
         return $routeCollection;
     }

@@ -1,5 +1,30 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 64,
+            "line_to": 64,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<string, Generated\\Shared\\Transfer\\ContentBannerTypeTransfer>' for Spryker\\Client\\ContentBanner\\Mapper\\ContentBannerTypeMapper::executeBannerTypeByKeys is incorrect, got 'array<int(0)|string, Generated\\Shared\\Transfer\\ContentBannerTypeTransfer>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentBanner/src/Spryker/Client/ContentBanner/Mapper/ContentBannerTypeMapper.php",
+            "snippet": "     * @phpstan-return array<string, \\Generated\\Shared\\Transfer\\ContentBannerTypeTransfer>",
+            "selected_text": "array<string, \\Generated\\Shared\\Transfer\\ContentBannerTypeTransfer>",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 94,
+            "line_to": 94,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'non-empty-array<int(0)|string, Generated\\Shared\\Transfer\\ContentBannerTypeTransfer>' does not match the declared return type 'array<string, Generated\\Shared\\Transfer\\ContentBannerTypeTransfer>' for Spryker\\Client\\ContentBanner\\Mapper\\ContentBannerTypeMapper::executeBannerTypeByKeys",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentBanner/src/Spryker/Client/ContentBanner/Mapper/ContentBannerTypeMapper.php",
+            "snippet": "        return $contentBannerTypeTransfers;",
+            "selected_text": "$contentBannerTypeTransfers",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -11,8 +36,19 @@
             "snippet": "            throw new MissingBannerTermException(sprintf('There is no ContentBanner Term which can work with the term %s.', $term));",
             "selected_text": "$term",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 91,
+            "line_to": 91,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $contentBannerTypeTransfers[null|string] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentBanner/src/Spryker/Client/ContentBanner/Mapper/ContentBannerTypeMapper.php",
+            "snippet": "            $contentBannerTypeTransfers[$contentTypeContextTransfer->getKey()] = $bannerTermToBannerTypeExecutor->execute($contentTypeContextTransfer);",
+            "selected_text": "$contentBannerTypeTransfers",
+            "error_level": 3,
+            "shortcode": 125
         }
     ],
     "deprecation": []

@@ -4,13 +4,14 @@
   "description": "Container module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "psr/container": "^1.0.0",
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/kernel": "*"
+    "spryker/kernel": "*",
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {

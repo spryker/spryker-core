@@ -1,4 +1,6 @@
 namespace: ProductRelationGui
+include:
+    - tests/SprykerTest/Zed/ProductRelationGui
 actor: Tester
 paths:
     tests: tests
