@@ -16,7 +16,7 @@
     "spryker/sales": "^11.0.0",
     "spryker/shipment": "^8.0.0",
     "spryker/state-machine": "^2.12.0",
-    "spryker/symfony": "^3.0.0",
+    "spryker/symfony": "^3.5.0",
     "spryker/util-date-time": "^1.0.0",
     "spryker/util-sanitize": "^2.0.0",
     "spryker/util-text": "^1.1.0"
