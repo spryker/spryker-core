@@ -106,6 +106,7 @@
     "spryker/checkout-extension": "*",
     "spryker/checkout-rest-api": "*",
     "spryker/checkout-rest-api-extension": "*",
+    "spryker/checksum-generator": "*",
     "spryker/cms": "*",
     "spryker/cms-block": "*",
     "spryker/cms-block-category-connector": "*",
