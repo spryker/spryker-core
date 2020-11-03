@@ -95,9 +95,11 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
         );
 
         $companyUnitAddressTransfer->setIso2Code($companyUnitAddressEntity->getCountry()->getIso2Code());
-        $companyUnitAddressTransfer->setCompany(
-            (new CompanyTransfer())->fromArray($companyUnitAddressEntity->getCompany()->toArray(), true)
-        );
+        if ($companyUnitAddressEntity->getFkCompany()) {
+            $companyUnitAddressTransfer->setCompany(
+                (new CompanyTransfer())->fromArray($companyUnitAddressEntity->getCompany()->toArray(), true)
+            );
+        }
 
         return $companyUnitAddressTransfer;
     }
