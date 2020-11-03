@@ -216,6 +216,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
             ->createCompanyUnitAddressQuery()
             ->filterByUuid($companyBusinessUnitAddressUuid)
             ->leftJoinWithCountry()
+            ->leftJoinWithCompany()
             ->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
                 ->leftJoinCompanyBusinessUnit()
             ->endUse()

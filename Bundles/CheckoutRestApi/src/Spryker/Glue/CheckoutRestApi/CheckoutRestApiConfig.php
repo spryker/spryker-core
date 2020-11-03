@@ -109,7 +109,7 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
      *  ],
      * ]
      *
-     * @return array
+     * @return string[][]
      */
     public function getPaymentProviderMethodToStateMachineMapping(): array
     {
@@ -152,6 +152,16 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
      * @return bool
      */
     public function isPaymentProvidersMappedToAttributes(): bool
+    {
+        return true;
+    }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isAddressesMappedToAttributes(): bool
     {
         return true;
     }

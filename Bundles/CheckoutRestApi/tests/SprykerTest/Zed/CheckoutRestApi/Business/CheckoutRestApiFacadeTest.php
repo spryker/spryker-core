@@ -185,6 +185,7 @@ class CheckoutRestApiFacadeTest extends Unit
                 'getQuoteMapperPlugins',
                 'getCheckoutDataValidatorPlugins',
                 'getCalculationFacade',
+                'getCheckoutDataExpanderPlugins',
             ]
         );
 
