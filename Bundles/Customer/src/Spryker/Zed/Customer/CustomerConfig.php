@@ -130,74 +130,14 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
-     * @api
+     * This method provides a list of strings that will be accepted as a password for customer bypassing any policy
+     * validations.
      *
-     * @return mixed[][]
-     */
-    public function getCustomerPasswordPolicyLength(): array
-    {
-        return [
-            CustomerPasswordPolicyLength::PASSWORD_POLICY_ATTRIBUTE_MIN => static::MIN_LENGTH_CUSTOMER_PASSWORD,
-            CustomerPasswordPolicyLength::PASSWORD_POLICY_ATTRIBUTE_MAX => static::MAX_LENGTH_CUSTOMER_PASSWORD,
-        ];
-    }
-
-    /**
      * @api
      *
      * @return string[]
      */
-    public function getCustomerPasswordWhitelist(): array
-    {
-        return [];
-    }
-
-    /**
-     * @api
-     *
-     * @return string[]
-     */
-    public function getCustomerPasswordDigit(): array
-    {
-        return [];
-    }
-
-    /**
-     * @api
-     *
-     * @return string[]
-     */
-    public function getCustomerPasswordUpperCase(): array
-    {
-        return [];
-    }
-
-    /**
-     * @api
-     *
-     * @return string[]
-     */
-    public function getCustomerPasswordLowerCase(): array
-    {
-        return [];
-    }
-
-    /**
-     * @api
-     *
-     * @return string[]
-     */
-    public function getCustomerPasswordSpecial(): array
-    {
-        return [];
-    }
-
-    /**
-     * @api
-     *
-     * @return string[]
-     */
-    public function getCustomerPasswordSequenceLimit(): array
+    public function getCustomerPasswordWhiteList(): array
     {
         return [];
     }
@@ -215,13 +155,58 @@ class CustomerConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @uses \Spryker\Shared\Customer\CustomerConfig::isDoubleOptInEnabled()
+     * @return bool
+     */
+    public function getCustomerPasswordDigitRequired(): bool
+    {
+        return false;
+    }
+
+    /**
+     * @api
      *
      * @return bool
      */
-    public function isDoubleOptInEnabled(): bool
+    public function getCustomerPasswordUpperCaseRequired(): bool
     {
-        return $this->getSharedConfig()->isDoubleOptInEnabled();
+        return false;
+    }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function getCustomerPasswordLowerCaseRequired(): bool
+    {
+        return false;
+    }
+
+    /**
+     * This method provides a string of characters that are forbidden to be used as a part of a customer password.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getCustomerPasswordForbiddenCharacters(): string
+    {
+        return '';
+    }
+
+    /**
+     * This method provides a limit of a sequence of the same character in password.
+     *
+     * Example:
+     *  0: will disable length validation.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getCustomerPasswordSequenceLimit(): int
+    {
+        return 0;
     }
 
     /**
@@ -231,9 +216,21 @@ class CustomerConfig extends AbstractBundleConfig
      *
      * @return bool
      */
-    public function isCustomerPasswordCheckEnabledOnRestorePassword()
+    public function isCustomerPasswordCheckEnabledOnRestorePassword(): bool
     {
         return false;
+    }
+
+    /**
+     * @api
+     *
+     * @uses \Spryker\Shared\Customer\CustomerConfig::isDoubleOptInEnabled()
+     *
+     * @return bool
+     */
+    public function isDoubleOptInEnabled(): bool
+    {
+        return $this->getSharedConfig()->isDoubleOptInEnabled();
     }
 
     /**

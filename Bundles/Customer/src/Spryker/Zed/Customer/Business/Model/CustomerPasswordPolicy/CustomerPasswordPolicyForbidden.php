@@ -11,8 +11,6 @@ use Generated\Shared\Transfer\CustomerResponseTransfer;
 
 class CustomerPasswordPolicyForbidden extends AbstractCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
 {
-    public const PASSWORD_POLICY_ATTRIBUTE_FORBIDDEN = 'forbidden';
-
     public const PASSWORD_POLICY_ERROR_FORBIDDEN = 'customer.password.error.forbidden';
 
     /**
@@ -21,11 +19,11 @@ class CustomerPasswordPolicyForbidden extends AbstractCustomerPasswordPolicy imp
     protected $forbiddenCharacters;
 
     /**
-     * @param string[] $config
+     * @param string $forbiddenCharacters
      */
-    public function __construct(array $config)
+    public function __construct(string $forbiddenCharacters = '')
     {
-        $this->forbiddenCharacters = $config[static::PASSWORD_POLICY_ATTRIBUTE_FORBIDDEN] ?? '';
+        $this->forbiddenCharacters = $forbiddenCharacters;
     }
 
     /**
@@ -36,7 +34,7 @@ class CustomerPasswordPolicyForbidden extends AbstractCustomerPasswordPolicy imp
      */
     public function validatePassword(string $password, CustomerResponseTransfer $customerResponseTransfer): CustomerResponseTransfer
     {
-        if (empty($this->config)) {
+        if (empty($this->forbiddenCharacters)) {
             return $this->proceed($password, $customerResponseTransfer);
         }
 

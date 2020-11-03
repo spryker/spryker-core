@@ -11,8 +11,6 @@ use Generated\Shared\Transfer\CustomerResponseTransfer;
 
 class CustomerPasswordPolicyBlacklist extends AbstractCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
 {
-    public const PASSWORD_POLICY_ATTRIBUTE_UPPER_CASE_REQUIRED = 'required';
-
     public const PASSWORD_POLICY_ERROR_BLACK_LIST = 'customer.password.error.black_list';
 
     /**

@@ -11,8 +11,6 @@ use Generated\Shared\Transfer\CustomerResponseTransfer;
 
 class CustomerPasswordPolicySequence extends AbstractCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
 {
-    public const PASSWORD_POLICY_ATTRIBUTE_LIMIT = 'limit';
-
     public const PASSWORD_POLICY_ERROR_SEQUENCE = 'customer.password.error.sequence';
 
     /**
@@ -21,11 +19,11 @@ class CustomerPasswordPolicySequence extends AbstractCustomerPasswordPolicy impl
     protected $sequenceLengthLimit;
 
     /**
-     * @param bool[] $config
+     * @param int $sequenceLengthLimit
      */
-    public function __construct(array $config)
+    public function __construct(int $sequenceLengthLimit)
     {
-        $this->sequenceLengthLimit = $config[static::PASSWORD_POLICY_ATTRIBUTE_LIMIT] ?? -1;
+        $this->sequenceLengthLimit = $sequenceLengthLimit;
     }
 
     /**
@@ -38,17 +36,16 @@ class CustomerPasswordPolicySequence extends AbstractCustomerPasswordPolicy impl
         string $password,
         CustomerResponseTransfer $customerResponseTransfer
     ): CustomerResponseTransfer {
-        if ($this->sequenceLengthLimit < 0) {
+        if (!$this->sequenceLengthLimit) {
             return $this->proceed($password, $customerResponseTransfer);
         }
         $counter = 0;
         $prevChar = '';
-        $encoding = mb_internal_encoding();
-        foreach (mb_str_split($password, '') as $char) {
+        foreach (mb_str_split($password) as $char) {
             if ($char === $prevChar) {
                 $counter++;
             }
-            if ($this->sequenceLengthLimit < $counter) {
+            if ($this->sequenceLengthLimit <= $counter) {
                 $this->addError($customerResponseTransfer, self::PASSWORD_POLICY_ERROR_SEQUENCE);
 
                 break;

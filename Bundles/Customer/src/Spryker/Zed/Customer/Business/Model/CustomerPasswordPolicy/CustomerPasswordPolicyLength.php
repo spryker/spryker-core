@@ -30,12 +30,13 @@ class CustomerPasswordPolicyLength extends AbstractCustomerPasswordPolicy implem
     protected $passwordLengthMax;
 
     /**
-     * @param string[] $config
+     * @param int $min
+     * @param int $max
      */
-    public function __construct(array $config)
+    public function __construct(int $min, int $max)
     {
-        $this->passwordLengthMin = $config[static::PASSWORD_POLICY_ATTRIBUTE_MIN] ?? 0;
-        $this->passwordLengthMax = $config[static::PASSWORD_POLICY_ATTRIBUTE_MAX] ?? 0;
+        $this->passwordLengthMin = $min;
+        $this->passwordLengthMax = $max;
     }
 
     /**
