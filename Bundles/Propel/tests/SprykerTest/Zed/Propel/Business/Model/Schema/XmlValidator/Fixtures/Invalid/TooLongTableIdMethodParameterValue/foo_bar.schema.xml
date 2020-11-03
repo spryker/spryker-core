@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Namespace" package="Package">
+    <table name="table_a" phpName="TableA">
+        <id-method-parameter value="value_is_too_long_so_the_validation_should_fail_and_transfer_with_error_should_be_returned"/>
+    </table>
+</database>

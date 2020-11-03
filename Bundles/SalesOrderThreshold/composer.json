@@ -22,6 +22,7 @@
   "require-dev": {
     "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
+    "spryker/country": "*",
     "spryker/installer": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
