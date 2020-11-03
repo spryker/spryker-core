@@ -28,9 +28,6 @@ class MerchantCategoryRepository extends AbstractRepository implements MerchantC
      */
     public function getCategories(MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer): array
     {
-        /**
-         * @var \Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery<\Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategory> $merchantCategoryQuery
-         */
         $merchantCategoryQuery = $this->getFactory()
             ->getMerchantCategoryPropelQuery()
             ->joinWithSpyCategory()
@@ -63,10 +60,14 @@ class MerchantCategoryRepository extends AbstractRepository implements MerchantC
     }
 
     /**
-     * @param \Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery<\Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategory> $merchantCategoryQuery
+     * @phpstan-param \Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery<\Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategory> $merchantCategoryQuery
+     *
+     * @phpstan-return \Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery<\Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategory>
+     *
+     * @param \Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery $merchantCategoryQuery
      * @param \Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer
      *
-     * @return \Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery<\Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategory>
+     * @return \Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery
      */
     protected function applyCriteria(
         SpyMerchantCategoryQuery $merchantCategoryQuery,

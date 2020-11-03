@@ -59,7 +59,7 @@ class MerchantCategoryMerchantSearchDataExpanderPluginTest extends Unit
     public function testExpandSuccess(): void
     {
         // Arrange
-        $plugin = $this->getMerchantCategoryMerchantSearchDataExpanderPlugin();
+        $plugin = new MerchantCategoryMerchantSearchDataExpanderPlugin();
         $factoryMock = $this->getFactoryMock();
         $facadeMock = $this->getMerchantCategorySearchToMerchantCategoryFacadeBuilderMock();
 
@@ -98,14 +98,6 @@ class MerchantCategoryMerchantSearchDataExpanderPluginTest extends Unit
             ],
             $resultMerchantSearchData->getMerchants()[0]->getData()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantSearchExtension\Dependency\Plugin\MerchantSearchDataExpanderPluginInterface
-     */
-    protected function getMerchantCategoryMerchantSearchDataExpanderPlugin(): MerchantSearchDataExpanderPluginInterface
-    {
-        return new MerchantCategoryMerchantSearchDataExpanderPlugin();
     }
 
     /**
