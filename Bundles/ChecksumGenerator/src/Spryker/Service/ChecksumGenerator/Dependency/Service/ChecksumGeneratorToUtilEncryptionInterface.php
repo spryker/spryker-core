@@ -7,7 +7,7 @@
 
 namespace Spryker\Service\ChecksumGenerator\Dependency\Service;
 
-interface CheckSumToUtilEncryptionInterface
+interface ChecksumGeneratorToUtilEncryptionInterface
 {
     /**
      * @param string $plainText

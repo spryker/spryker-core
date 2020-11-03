@@ -7,7 +7,7 @@
 
 namespace Spryker\Service\ChecksumGenerator;
 
-use Spryker\Service\ChecksumGenerator\Dependency\Service\CheckSumToUtilEncryptionInterface;
+use Spryker\Service\ChecksumGenerator\Dependency\Service\ChecksumGeneratorToUtilEncryptionInterface;
 use Spryker\Service\ChecksumGenerator\Generator\ChecksumOpenSslGeneratorInterface;
 use Spryker\Service\ChecksumGenerator\Generator\CrcChecksumOpenSslGenerator;
 use Spryker\Service\Kernel\AbstractServiceFactory;
@@ -23,9 +23,9 @@ class ChecksumGeneratorServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\ChecksumGenerator\Dependency\Service\CheckSumToUtilEncryptionInterface
+     * @return \Spryker\Service\ChecksumGenerator\Dependency\Service\ChecksumGeneratorToUtilEncryptionInterface
      */
-    public function getProductConfigurationDataChecksumGenerator(): CheckSumToUtilEncryptionInterface
+    public function getProductConfigurationDataChecksumGenerator(): ChecksumGeneratorToUtilEncryptionInterface
     {
         return $this->getProvidedDependency(ChecksumGeneratorDependencyProvider::SERVICE_UTIL_ENCRYPTION);
     }

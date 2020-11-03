@@ -16,7 +16,7 @@ use Spryker\Service\ChecksumGenerator\ChecksumGeneratorServiceInterface;
  * @group SprykerTest
  * @group Service
  * @group ChecksumGenerator
- * @group ProductConfigurationDataChecksumGeneratorTest
+ * @group ChecksumGeneratorServiceTest
  * Add your own group annotations below this line
  */
 class ChecksumGeneratorServiceTest extends Unit

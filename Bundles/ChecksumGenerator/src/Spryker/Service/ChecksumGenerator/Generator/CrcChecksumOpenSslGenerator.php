@@ -7,19 +7,19 @@
 
 namespace Spryker\Service\ChecksumGenerator\Generator;
 
-use Spryker\Service\ChecksumGenerator\Dependency\Service\CheckSumToUtilEncryptionInterface;
+use Spryker\Service\ChecksumGenerator\Dependency\Service\ChecksumGeneratorToUtilEncryptionInterface;
 
 class CrcChecksumOpenSslGenerator implements ChecksumOpenSslGeneratorInterface
 {
     /**
-     * @var \Spryker\Service\ChecksumGenerator\Dependency\Service\CheckSumToUtilEncryptionInterface
+     * @var \Spryker\Service\ChecksumGenerator\Dependency\Service\ChecksumGeneratorToUtilEncryptionInterface
      */
     protected $encryptionService;
 
     /**
-     * @param \Spryker\Service\ChecksumGenerator\Dependency\Service\CheckSumToUtilEncryptionInterface $encryptionService
+     * @param \Spryker\Service\ChecksumGenerator\Dependency\Service\ChecksumGeneratorToUtilEncryptionInterface $encryptionService
      */
-    public function __construct(CheckSumToUtilEncryptionInterface $encryptionService)
+    public function __construct(ChecksumGeneratorToUtilEncryptionInterface $encryptionService)
     {
         $this->encryptionService = $encryptionService;
     }
@@ -40,7 +40,7 @@ class CrcChecksumOpenSslGenerator implements ChecksumOpenSslGeneratorInterface
     }
 
     /**
-     * @param $hexInitializationVector
+     * @param string $hexInitializationVector
      *
      * @return string
      */
@@ -59,6 +59,6 @@ class CrcChecksumOpenSslGenerator implements ChecksumOpenSslGeneratorInterface
         $serializedData = serialize($data);
         $dataChecksum = crc32($serializedData);
 
-        return strval($dataChecksum);
+        return (string)$dataChecksum;
     }
 }

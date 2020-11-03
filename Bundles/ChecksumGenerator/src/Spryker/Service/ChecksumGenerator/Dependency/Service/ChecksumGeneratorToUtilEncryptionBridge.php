@@ -7,7 +7,7 @@
 
 namespace Spryker\Service\ChecksumGenerator\Dependency\Service;
 
-class CheckSumToUtilEncryptionBridge implements CheckSumToUtilEncryptionInterface
+class ChecksumGeneratorToUtilEncryptionBridge implements ChecksumGeneratorToUtilEncryptionInterface
 {
     /**
      * @var \Spryker\Service\UtilEncryption\UtilEncryptionServiceInterface
