@@ -56,16 +56,13 @@ class ShipmentsByOrderResourceRelationshipExpander implements ShipmentsByOrderRe
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
-            if (!$resource->getPayload()) {
-                continue;
-            }
             $orderTransfer = $resource->getPayload();
-            if (!$orderTransfer instanceof OrderTransfer) {
+            if (!$orderTransfer || !$orderTransfer instanceof OrderTransfer) {
                 continue;
             }
 
             $itemTransfers = $orderTransfer->getItems();
-            if (empty($itemTransfers)) {
+            if (!$itemTransfers->count()) {
                 continue;
             }
 

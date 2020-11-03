@@ -98,7 +98,7 @@
     </transfer>
 
     <transfer name="RestOrderShipmentsAttributes">
-        <property name="itemUuids" type="array"/>
+        <property name="itemUuids" singular="itemUuid" type="array"/>
         <property name="shippingAddress" type="Address"/>
         <property name="methodName" type="string"/>
         <property name="carrierName" type="string"/>

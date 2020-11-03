@@ -25,6 +25,8 @@ class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvide
      */
     public function provideDependencies(Container $container): Container
     {
+        $container = parent::provideDependencies($container);
+
         $container = $this->addShipmentService($container);
 
         return $container;
