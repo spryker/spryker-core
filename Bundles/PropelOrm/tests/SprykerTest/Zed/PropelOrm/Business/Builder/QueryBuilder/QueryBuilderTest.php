@@ -8,10 +8,8 @@
 namespace SprykerTest\Zed\PropelOrm\Business\Builder\QueryBuilder;
 
 use Codeception\Test\Unit;
-use Propel\Generator\Builder\Om\AbstractOMBuilder;
 use Propel\Generator\Builder\Om\ObjectBuilder;
 use Propel\Generator\Builder\Om\TableMapBuilder;
-use Propel\Generator\Config\QuickGeneratorConfig;
 use Propel\Generator\Model\Column;
 use Propel\Generator\Model\Database;
 use Propel\Generator\Model\PropelTypes;
@@ -35,6 +33,11 @@ use Spryker\Zed\PropelOrm\Business\Builder\QueryBuilder;
 class QueryBuilderTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\PropelOrm\PropelOrmBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return array
      */
     protected function getFilesToGenerate(): array
@@ -51,28 +54,13 @@ class QueryBuilderTest extends Unit
      */
     protected function _before(): void
     {
-        $config = new QuickGeneratorConfig();
         $table = new Table('Foo');
         $column = new Column('testColumn', PropelTypes::INTEGER);
         $table->addColumn($column);
         $table->setNamespace('SprykerTest\Zed\PropelOrm\Business\Builder\QueryBuilder');
         $table->setDatabase(new Database('TestDB', new DefaultPlatform()));
 
-        foreach ($this->getFilesToGenerate() as $fileName => $builderClass) {
-            $builder = new $builderClass($table);
-            $builder->setGeneratorConfig($config);
-            $this->writePropelFile($builder, $fileName);
-        }
-    }
-
-    /**
-     * @return void
-     */
-    protected function _after(): void
-    {
-        foreach (array_keys($this->getFilesToGenerate()) as $fileName) {
-            $this->deletePropelFile($fileName);
-        }
+        $this->tester->writePropelFiles($this->getFilesToGenerate(), $table);
     }
 
     /**
@@ -82,31 +70,5 @@ class QueryBuilderTest extends Unit
     {
         $testQuery = new FooQuery();
         $testQuery->filterByTestColumn([1, 2, 3], Criteria::NOT_IN);
-    }
-
-    /**
-     * @param \Propel\Generator\Builder\Om\AbstractOMBuilder $queryBuilder
-     * @param string $fileName
-     *
-     * @return void
-     */
-    protected function writePropelFile(AbstractOMBuilder $queryBuilder, string $fileName): void
-    {
-        $fileContent = $queryBuilder->build();
-        $directory = dirname($fileName);
-        if (!is_dir($directory)) {
-            mkdir($directory, 0777, true);
-        }
-        file_put_contents($fileName, $fileContent);
-    }
-
-    /**
-     * @param string $fileName
-     *
-     * @return void
-     */
-    protected function deletePropelFile(string $fileName): void
-    {
-        unlink($fileName);
     }
 }

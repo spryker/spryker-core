@@ -27,8 +27,6 @@ class PriceProductFilterExpander implements PriceProductFilterExpanderInterface
             return $priceProductFilterTransfer;
         }
 
-        $priceProductFilterTransfer->setSku($productViewTransfer->getSku());
-
         return $priceProductFilterTransfer->setProductConfigurationInstance($productConfigurationInstance);
     }
 }

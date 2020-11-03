@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Namespace" package="Package">
+    <table name="spy_foo" idMethod="native">
+        <column name="fk_spy_bar" type="INTEGER"/>
+        <column name="project_column" type="BOOLEAN"/>
+        <unique name="spy_foo-unique">
+            <unique-column name="fk_spy_bar"/>
+            <unique-column name="project_column"/>
+        </unique>
+        <index name="index-spy_foo-project_column">
+            <index-column name="project_column"/>
+        </index>
+    </table>
+</database>

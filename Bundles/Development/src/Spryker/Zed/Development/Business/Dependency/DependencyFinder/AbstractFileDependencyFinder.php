@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\Development\Business\Dependency\DependencyFinder;
 
-use Zend\Filter\FilterChain;
-use Zend\Filter\StringToLower;
-use Zend\Filter\Word\CamelCaseToDash;
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\StringToLower;
+use Laminas\Filter\Word\CamelCaseToDash;
 
 abstract class AbstractFileDependencyFinder implements DependencyFinderInterface
 {
     /**
-     * @var \Zend\Filter\FilterChain|null
+     * @var \Laminas\Filter\FilterChain|null
      */
     protected $filter;
 
@@ -63,7 +63,7 @@ abstract class AbstractFileDependencyFinder implements DependencyFinderInterface
     }
 
     /**
-     * @return \Zend\Filter\FilterChain
+     * @return \Laminas\Filter\FilterChain
      */
     protected function getFilter(): FilterChain
     {
