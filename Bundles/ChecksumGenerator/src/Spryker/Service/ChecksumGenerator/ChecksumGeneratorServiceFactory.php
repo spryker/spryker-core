@@ -17,15 +17,15 @@ class ChecksumGeneratorServiceFactory extends AbstractServiceFactory
     /**
      * @return \Spryker\Service\ChecksumGenerator\Generator\ChecksumOpenSslGeneratorInterface
      */
-    public function createOpenSslChecksumGenerator(): ChecksumOpenSslGeneratorInterface
+    public function createCrcChecksumOpenSslGenerator(): ChecksumOpenSslGeneratorInterface
     {
-        return new CrcChecksumOpenSslGenerator($this->getProductConfigurationDataChecksumGenerator());
+        return new CrcChecksumOpenSslGenerator($this->getUtilEncryptionService());
     }
 
     /**
      * @return \Spryker\Service\ChecksumGenerator\Dependency\Service\ChecksumGeneratorToUtilEncryptionInterface
      */
-    public function getProductConfigurationDataChecksumGenerator(): ChecksumGeneratorToUtilEncryptionInterface
+    public function getUtilEncryptionService(): ChecksumGeneratorToUtilEncryptionInterface
     {
         return $this->getProvidedDependency(ChecksumGeneratorDependencyProvider::SERVICE_UTIL_ENCRYPTION);
     }

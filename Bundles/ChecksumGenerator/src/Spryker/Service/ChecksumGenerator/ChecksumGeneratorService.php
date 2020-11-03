@@ -28,7 +28,7 @@ class ChecksumGeneratorService extends AbstractService implements ChecksumGenera
     public function generateOpenSslChecksum(array $data, string $encryptionKey, string $hexInitializationVector): string
     {
         return $this->getFactory()
-            ->createOpenSslChecksumGenerator()
+            ->createCrcChecksumOpenSslGenerator()
             ->generateOpenSslChecksum($data, $encryptionKey, $hexInitializationVector);
     }
 }

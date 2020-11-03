@@ -14,14 +14,14 @@ class CrcChecksumOpenSslGenerator implements ChecksumOpenSslGeneratorInterface
     /**
      * @var \Spryker\Service\ChecksumGenerator\Dependency\Service\ChecksumGeneratorToUtilEncryptionInterface
      */
-    protected $encryptionService;
+    protected $utilEncryptionService;
 
     /**
-     * @param \Spryker\Service\ChecksumGenerator\Dependency\Service\ChecksumGeneratorToUtilEncryptionInterface $encryptionService
+     * @param \Spryker\Service\ChecksumGenerator\Dependency\Service\ChecksumGeneratorToUtilEncryptionInterface $utilEncryptionService
      */
-    public function __construct(ChecksumGeneratorToUtilEncryptionInterface $encryptionService)
+    public function __construct(ChecksumGeneratorToUtilEncryptionInterface $utilEncryptionService)
     {
-        $this->encryptionService = $encryptionService;
+        $this->utilEncryptionService = $utilEncryptionService;
     }
 
     /**
@@ -36,7 +36,7 @@ class CrcChecksumOpenSslGenerator implements ChecksumOpenSslGeneratorInterface
         $dataChecksum = $this->prepareDataCheckSum($data);
         $initializationVector = $this->prepareInitializationVector($hexInitializationVector);
 
-        return $this->encryptionService->encryptOpenSsl($dataChecksum, $initializationVector, $encryptionKey);
+        return $this->utilEncryptionService->encryptOpenSsl($dataChecksum, $initializationVector, $encryptionKey);
     }
 
     /**
