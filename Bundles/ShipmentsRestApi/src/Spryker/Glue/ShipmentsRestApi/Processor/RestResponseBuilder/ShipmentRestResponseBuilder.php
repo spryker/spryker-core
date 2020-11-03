@@ -8,7 +8,7 @@
 namespace Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder;
 
 use Generated\Shared\Transfer\RestShipmentsAttributesTransfer;
-use Generated\Shared\Transfer\ShipmentGroupTransfer;
+use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiConfig;
@@ -29,19 +29,19 @@ class ShipmentRestResponseBuilder implements ShipmentRestResponseBuilderInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
      * @param \Generated\Shared\Transfer\RestShipmentsAttributesTransfer $restShipmentsAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
     public function createShipmentRestResource(
-        ShipmentGroupTransfer $shipmentGroupTransfer,
+        ShipmentMethodsTransfer $shipmentMethodsTransfer,
         RestShipmentsAttributesTransfer $restShipmentsAttributesTransfer
     ): RestResourceInterface {
         return $this->restResourceBuilder->createRestResource(
             ShipmentsRestApiConfig::RESOURCE_SHIPMENTS,
-            $shipmentGroupTransfer->getHash(),
+            $shipmentMethodsTransfer->getShipmentHash(),
             $restShipmentsAttributesTransfer
-        )->setPayload($shipmentGroupTransfer);
+        )->setPayload($shipmentMethodsTransfer);
     }
 }

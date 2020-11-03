@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ShipmentsRestApi\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ShipmentsRestApi\Business\Expander\CheckoutDataExpander;
+use Spryker\Zed\ShipmentsRestApi\Business\Expander\CheckoutDataExpanderInterface;
 use Spryker\Zed\ShipmentsRestApi\Business\Quote\ShipmentQuoteMapper;
 use Spryker\Zed\ShipmentsRestApi\Business\Quote\ShipmentQuoteMapperInterface;
 use Spryker\Zed\ShipmentsRestApi\Business\Validator\ShipmentMethodCheckoutDataValidator;
@@ -20,6 +22,14 @@ use Spryker\Zed\ShipmentsRestApi\ShipmentsRestApiDependencyProvider;
  */
 class ShipmentsRestApiBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\ShipmentsRestApi\Business\Expander\CheckoutDataExpanderInterface
+     */
+    public function createCheckoutDataExpander():CheckoutDataExpanderInterface
+    {
+        return new CheckoutDataExpander($this->getShipmentFacade());
+    }
+
     /**
      * @return \Spryker\Zed\ShipmentsRestApi\Business\Quote\ShipmentQuoteMapperInterface
      */

@@ -7,9 +7,7 @@
 
 namespace Spryker\Glue\ShipmentsRestApi\Processor\Expander;
 
-use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodMapperInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentMethodRestResponseBuilderInterface;
@@ -56,8 +54,8 @@ class ShipmentMethodByShipmentExpander implements ShipmentMethodByShipmentExpand
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
-            $shipmentMethodsTransfer = $this->findShipmentMethodsTransferInPayload($resource);
-            if (!$shipmentMethodsTransfer) {
+            $shipmentMethodsTransfer = $resource->getPayload();
+            if (!$shipmentMethodsTransfer instanceof ShipmentMethodsTransfer) {
                 continue;
             }
 
@@ -76,20 +74,5 @@ class ShipmentMethodByShipmentExpander implements ShipmentMethodByShipmentExpand
                 $resource->addRelationship($shipmentMethodRestResource);
             }
         }
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
-     *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer|null
-     */
-    protected function findShipmentMethodsTransferInPayload(RestResourceInterface $resource): ?ShipmentMethodsTransfer
-    {
-        $shipmentGroupTransfer = $resource->getPayload();
-        if (!$shipmentGroupTransfer instanceof ShipmentGroupTransfer) {
-            return null;
-        }
-
-        return $shipmentGroupTransfer->getAvailableShipmentMethods();
     }
 }

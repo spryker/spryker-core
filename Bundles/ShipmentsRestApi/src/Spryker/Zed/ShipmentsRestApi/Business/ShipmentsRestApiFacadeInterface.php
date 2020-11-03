@@ -10,6 +10,7 @@ namespace Spryker\Zed\ShipmentsRestApi\Business;
 use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 
 interface ShipmentsRestApiFacadeInterface
@@ -59,4 +60,21 @@ interface ShipmentsRestApiFacadeInterface
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Expands `RestCheckoutDataTransfer` with available shipment methods.
+     * - Requires `RestCheckoutDataTransfer.Quote` to be provided.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestCheckoutDataTransfer
+     */
+    public function expandCheckoutDataWithAvailableShipmentMethods(
+        RestCheckoutDataTransfer $restCheckoutDataTransfer,
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+    ): RestCheckoutDataTransfer;
 }

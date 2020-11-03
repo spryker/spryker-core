@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShipmentsRestApi\Dependency\Facade;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
 
 class ShipmentsRestApiToShipmentFacadeBridge implements ShipmentsRestApiToShipmentFacadeInterface
 {
@@ -43,5 +44,15 @@ class ShipmentsRestApiToShipmentFacadeBridge implements ShipmentsRestApiToShipme
     public function findMethodById($idShipmentMethod)
     {
         return $this->shipmentFacade->findMethodById($idShipmentMethod);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer
+     */
+    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentMethodsCollectionTransfer
+    {
+        return $this->shipmentFacade->getAvailableMethodsByShipment($quoteTransfer);
     }
 }
