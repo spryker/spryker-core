@@ -12,5 +12,5 @@ interface CustomerPasswordPolicyProviderInterface
     /**
      * @return \Spryker\Zed\Customer\Business\Model\CustomerPasswordPolicy\CustomerPasswordPolicyInterface
      */
-    public function getPasswordPolicy(): CustomerPasswordPolicyInterface;
+    public function getCustomerPasswordPolicy(): CustomerPasswordPolicyInterface;
 }

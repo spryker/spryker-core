@@ -13,11 +13,6 @@ use Generated\Shared\Transfer\CustomerResponseTransfer;
 abstract class AbstractCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
 {
     /**
-     * @var mixed[]
-     */
-    protected $config;
-
-    /**
      * @var \Spryker\Zed\Customer\Business\Model\CustomerPasswordPolicy\CustomerPasswordPolicyInterface
      */
     protected $nextCustomerPasswordPolicy;
@@ -25,27 +20,17 @@ abstract class AbstractCustomerPasswordPolicy implements CustomerPasswordPolicyI
     protected const PASSWORD_POLICY_ATTRIBUTE_REQUIRED = 'required';
 
     /**
-     * @param mixed[] $config
-     */
-    public function __construct(array $config = [])
-    {
-        $this->config = $config;
-    }
-
-    /**
      * @param \Spryker\Zed\Customer\Business\Model\CustomerPasswordPolicy\CustomerPasswordPolicyInterface $customerPasswordPolicy
      *
-     * @return \Spryker\Zed\Customer\Business\Model\CustomerPasswordPolicy\CustomerPasswordPolicyInterface
+     * @return void
      */
-    public function addPolicy(CustomerPasswordPolicyInterface $customerPasswordPolicy): CustomerPasswordPolicyInterface
+    public function addPolicy(CustomerPasswordPolicyInterface $customerPasswordPolicy): void
     {
         if (!isset($this->nextCustomerPasswordPolicy)) {
             $this->nextCustomerPasswordPolicy = $customerPasswordPolicy;
         } else {
-            $this->nextCustomerPasswordPolicy->addPolicy($customerPasswordPolicy);
+            $this->nextCustomerPasswordPolicy->addPolicygit ($customerPasswordPolicy);
         }
-
-        return $this;
     }
 
     /**

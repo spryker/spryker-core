@@ -19,11 +19,10 @@ class CustomerPasswordPolicyProvider implements CustomerPasswordPolicyProviderIn
      */
     public function __construct(array $customerPasswordPolicies)
     {
-        $defaultCustomerPasswordPolicy = new CustomerPasswordPolicyDefault();
+        $this->customerPasswordPolicy = new CustomerPasswordPolicyDefault();
         foreach ($customerPasswordPolicies as $customerPasswordPolicy) {
-            $defaultCustomerPasswordPolicy->addPolicy($customerPasswordPolicy);
+            $this->customerPasswordPolicy->addPolicy($customerPasswordPolicy);
         }
-        $this->customerPasswordPolicy = $defaultCustomerPasswordPolicy;
     }
 
     /**

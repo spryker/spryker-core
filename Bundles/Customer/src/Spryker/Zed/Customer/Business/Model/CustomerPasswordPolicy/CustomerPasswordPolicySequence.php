@@ -16,6 +16,19 @@ class CustomerPasswordPolicySequence extends AbstractCustomerPasswordPolicy impl
     public const PASSWORD_POLICY_ERROR_SEQUENCE = 'customer.password.error.sequence';
 
     /**
+     * @var int
+     */
+    protected $sequenceLengthLimit;
+
+    /**
+     * @param bool[] $config
+     */
+    public function __construct(array $config)
+    {
+        $this->sequenceLengthLimit = $config[static::PASSWORD_POLICY_ATTRIBUTE_LIMIT] ?? -1;
+    }
+
+    /**
      * @param string $password
      * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
      *
@@ -25,10 +38,9 @@ class CustomerPasswordPolicySequence extends AbstractCustomerPasswordPolicy impl
         string $password,
         CustomerResponseTransfer $customerResponseTransfer
     ): CustomerResponseTransfer {
-        if (empty($this->config)) {
+        if ($this->sequenceLengthLimit < 0) {
             return $this->proceed($password, $customerResponseTransfer);
         }
-        $sequenceLimit = $this->config[static::PASSWORD_POLICY_ATTRIBUTE_LIMIT];
         $counter = 0;
         $prevChar = '';
         $encoding = mb_internal_encoding();
@@ -36,7 +48,7 @@ class CustomerPasswordPolicySequence extends AbstractCustomerPasswordPolicy impl
             if ($char === $prevChar) {
                 $counter++;
             }
-            if ($sequenceLimit < $counter) {
+            if ($this->sequenceLengthLimit < $counter) {
                 $this->addError($customerResponseTransfer, self::PASSWORD_POLICY_ERROR_SEQUENCE);
 
                 break;

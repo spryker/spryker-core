@@ -16,6 +16,19 @@ class CustomerPasswordPolicyDigit extends AbstractCustomerPasswordPolicy impleme
     public const PASSWORD_POLICY_CHARSET_DIGIT = '/\p{N}+/';
 
     /**
+     * @var bool
+     */
+    protected $digitRequired;
+
+    /**
+     * @param bool $digitRequired
+     */
+    public function __construct(bool $digitRequired)
+    {
+        $this->digitRequired = $digitRequired;
+    }
+
+    /**
      * @param string $password
      * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
      *
@@ -23,12 +36,7 @@ class CustomerPasswordPolicyDigit extends AbstractCustomerPasswordPolicy impleme
      */
     public function validatePassword(string $password, CustomerResponseTransfer $customerResponseTransfer): CustomerResponseTransfer
     {
-        if (empty($this->config)) {
-            return $this->nextCustomerPasswordPolicy->validatePassword($password, $customerResponseTransfer);
-        }
-
-        $digitRequired = $this->config[static::PASSWORD_POLICY_ATTRIBUTE_REQUIRED] ?? false;
-        if ($digitRequired && preg_match(static::PASSWORD_POLICY_CHARSET_DIGIT, $password)) {
+        if ($this->digitRequired && preg_match(static::PASSWORD_POLICY_CHARSET_DIGIT, $password)) {
             $this->addError($customerResponseTransfer, static::PASSWORD_POLICY_ERROR_DIGIT);
         }
 

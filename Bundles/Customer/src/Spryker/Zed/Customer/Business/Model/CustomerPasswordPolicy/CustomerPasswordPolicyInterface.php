@@ -14,9 +14,9 @@ interface CustomerPasswordPolicyInterface
     /**
      * @param \Spryker\Zed\Customer\Business\Model\CustomerPasswordPolicy\CustomerPasswordPolicyInterface $customerPasswordPolicy
      *
-     * @return self
+     * @return void
      */
-    public function addPolicy(CustomerPasswordPolicyInterface $customerPasswordPolicy): self;
+    public function addPolicy(CustomerPasswordPolicyInterface $customerPasswordPolicy): void;
 
     /**
      * @param string $password

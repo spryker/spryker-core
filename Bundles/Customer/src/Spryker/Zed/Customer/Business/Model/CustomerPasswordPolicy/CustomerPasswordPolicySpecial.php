@@ -16,6 +16,19 @@ class CustomerPasswordPolicySpecial extends AbstractCustomerPasswordPolicy imple
     public const PASSWORD_POLICY_CHARSET_SPECIAL = '/[^(\p{N}|\p{L})+]/';
 
     /**
+     * @var bool
+     */
+    protected $specialRequired;
+
+    /**
+     * @param bool $specialRequired
+     */
+    public function __construct(bool $specialRequired)
+    {
+        $this->specialRequired = $specialRequired;
+    }
+
+    /**
      * @param string $password
      * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
      *
@@ -23,12 +36,7 @@ class CustomerPasswordPolicySpecial extends AbstractCustomerPasswordPolicy imple
      */
     public function validatePassword(string $password, CustomerResponseTransfer $customerResponseTransfer): CustomerResponseTransfer
     {
-        if (empty($this->config)) {
-            return $this->nextCustomerPasswordPolicy->validatePassword($password, $customerResponseTransfer);
-        }
-
-        $lowerCaseRequired = $this->config[static::PASSWORD_POLICY_ATTRIBUTE_REQUIRED] ?? false;
-        if ($lowerCaseRequired && preg_match(static::PASSWORD_POLICY_CHARSET_SPECIAL, $password)) {
+        if ($this->specialRequired && !preg_match(static::PASSWORD_POLICY_CHARSET_SPECIAL, $password)) {
             $this->addError($customerResponseTransfer, static::PASSWORD_POLICY_ERROR_SPECIAL);
         }
 

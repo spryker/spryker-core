@@ -20,6 +20,25 @@ class CustomerPasswordPolicyLength extends AbstractCustomerPasswordPolicy implem
     public const PASSWORD_POLICY_ERROR_MAX = 'customer.password.error.max_length';
 
     /**
+     * @var int
+     */
+    protected $passwordLengthMin;
+
+    /**
+     * @var int
+     */
+    protected $passwordLengthMax;
+
+    /**
+     * @param string[] $config
+     */
+    public function __construct(array $config)
+    {
+        $this->passwordLengthMin = $config[static::PASSWORD_POLICY_ATTRIBUTE_MIN] ?? 0;
+        $this->passwordLengthMax = $config[static::PASSWORD_POLICY_ATTRIBUTE_MAX] ?? 0;
+    }
+
+    /**
      * @param string $password
      * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
      *
@@ -27,35 +46,15 @@ class CustomerPasswordPolicyLength extends AbstractCustomerPasswordPolicy implem
      */
     public function validatePassword(string $password, CustomerResponseTransfer $customerResponseTransfer): CustomerResponseTransfer
     {
-        if (empty($this->config)) {
-            return $this->nextCustomerPasswordPolicy->validatePassword($password, $customerResponseTransfer);
-        }
-
         $passwordLength = mb_strlen($password);
-        if ($this->getPasswordPolicyConfigMinLimit() && $passwordLength < $this->getPasswordPolicyConfigMinLimit()) {
+        if ($this->passwordLengthMin && $passwordLength < $this->passwordLengthMin) {
             $this->addError($customerResponseTransfer, static::PASSWORD_POLICY_ERROR_MIN);
         }
 
-        if ($this->getPasswordPolicyConfigMaxLimit() && $passwordLength > $this->getPasswordPolicyConfigMaxLimit()) {
+        if ($this->passwordLengthMax && $passwordLength > $this->passwordLengthMax) {
             $this->addError($customerResponseTransfer, static::PASSWORD_POLICY_ERROR_MAX);
         }
 
         return $this->proceed($password, $customerResponseTransfer);
-    }
-
-    /**
-     * @return int|null
-     */
-    protected function getPasswordPolicyConfigMaxLimit(): ?int
-    {
-        return $this->config[static::PASSWORD_POLICY_ATTRIBUTE_MAX] ?? null;
-    }
-
-    /**
-     * @return int|null
-     */
-    protected function getPasswordPolicyConfigMinLimit(): ?int
-    {
-        return $this->config[static::PASSWORD_POLICY_ATTRIBUTE_MIN] ?? null;
     }
 }

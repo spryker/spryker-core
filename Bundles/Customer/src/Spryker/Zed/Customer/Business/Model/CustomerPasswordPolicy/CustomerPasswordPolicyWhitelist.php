@@ -13,6 +13,19 @@ use Generated\Shared\Transfer\CustomerResponseTransfer;
 class CustomerPasswordPolicyWhitelist extends AbstractCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
 {
     /**
+     * @var string[]
+     */
+    protected $passwordWhiteList;
+
+    /**
+     * @param string[] $passwordWhiteList
+     */
+    public function __construct(array $passwordWhiteList = [])
+    {
+        $this->passwordWhiteList = $passwordWhiteList;
+    }
+
+    /**
      * @param string $password
      * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
      *
@@ -20,7 +33,7 @@ class CustomerPasswordPolicyWhitelist extends AbstractCustomerPasswordPolicy imp
      */
     public function validatePassword(string $password, CustomerResponseTransfer $customerResponseTransfer): CustomerResponseTransfer
     {
-        if (!empty($this->config) && in_array($password, $this->config, true)) {
+        if (in_array($password, $this->config, true)) {
             return $customerResponseTransfer->setIsSuccess(true)->setErrors(new ArrayObject());
         }
 

@@ -16,6 +16,19 @@ class CustomerPasswordPolicyUpperCase extends AbstractCustomerPasswordPolicy imp
     public const PASSWORD_POLICY_CHARSET_UPPER_CASE = '/\p{Lu}+/';
 
     /**
+     * @var bool
+     */
+    protected $upperCaseRequired;
+
+    /**
+     * @param bool $config
+     */
+    public function __construct(bool $upperCaseRequired)
+    {
+        $this->upperCaseRequired = $upperCaseRequired;
+    }
+
+    /**
      * @param string $password
      * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
      *
@@ -23,12 +36,7 @@ class CustomerPasswordPolicyUpperCase extends AbstractCustomerPasswordPolicy imp
      */
     public function validatePassword(string $password, CustomerResponseTransfer $customerResponseTransfer): CustomerResponseTransfer
     {
-        if (empty($this->config)) {
-            return $this->nextCustomerPasswordPolicy->validatePassword($password, $customerResponseTransfer);
-        }
-
-        $upperCaseRequired = $this->config[static::PASSWORD_POLICY_ATTRIBUTE_REQUIRED] ?? false;
-        if ($upperCaseRequired && preg_match(static::PASSWORD_POLICY_CHARSET_UPPER_CASE, $password)) {
+        if ($this->upperCaseRequired && preg_match(static::PASSWORD_POLICY_CHARSET_UPPER_CASE, $password)) {
             $this->addError($customerResponseTransfer, static::PASSWORD_POLICY_ERROR_UPPER_CASE);
         }
 

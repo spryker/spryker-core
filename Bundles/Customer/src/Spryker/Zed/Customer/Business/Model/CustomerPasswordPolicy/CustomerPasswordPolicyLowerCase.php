@@ -16,6 +16,19 @@ class CustomerPasswordPolicyLowerCase extends AbstractCustomerPasswordPolicy imp
     public const PASSWORD_POLICY_CHARSET_LOWER_CASE = '/\p{Ll}+/';
 
     /**
+     * @var bool
+     */
+    protected $lowerCaseRequired;
+
+    /**
+     * @param bool $config
+     */
+    public function __construct(bool $lowerCaseRequired)
+    {
+        $this->lowerCaseRequired = $lowerCaseRequired;
+    }
+
+    /**
      * @param string $password
      * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
      *
@@ -25,12 +38,7 @@ class CustomerPasswordPolicyLowerCase extends AbstractCustomerPasswordPolicy imp
         string $password,
         CustomerResponseTransfer $customerResponseTransfer
     ): CustomerResponseTransfer {
-        if (empty($this->config)) {
-            return $this->nextCustomerPasswordPolicy->validatePassword($password, $customerResponseTransfer);
-        }
-
-        $lowerCaseRequired = $this->config[static::PASSWORD_POLICY_ATTRIBUTE_REQUIRED] ?? false;
-        if ($lowerCaseRequired && preg_match(static::PASSWORD_POLICY_CHARSET_LOWER_CASE, $password)) {
+        if ($this->lowerCaseRequired && !preg_match(static::PASSWORD_POLICY_CHARSET_LOWER_CASE, $password)) {
             $this->addError($customerResponseTransfer, static::PASSWORD_POLICY_ERROR_LOWER_CASE);
         }
 
