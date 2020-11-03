@@ -7,19 +7,19 @@
 
 namespace Spryker\Client\ProductConfiguration\Dependency\Service;
 
-class ProductConfigurationToChecksumGeneratorBridge implements ProductConfigurationToChecksumGeneratorInterface
+class ProductConfigurationToChecksumGeneratorServiceBridge implements ProductConfigurationToChecksumGeneratorServiceInterface
 {
     /**
      * @var \Spryker\Service\ChecksumGenerator\Generator\ChecksumOpenSslGeneratorInterface
      */
-    protected $productConfigurationDataChecksumGenerator;
+    protected $checksumGeneratorService;
 
     /**
-     * @param \Spryker\Service\ChecksumGenerator\Generator\ChecksumOpenSslGeneratorInterface $productConfigurationDataChecksumGenerator
+     * @param \Spryker\Service\ChecksumGenerator\Generator\ChecksumOpenSslGeneratorInterface $checksumGeneratorService
      */
-    public function __construct($productConfigurationDataChecksumGenerator)
+    public function __construct($checksumGeneratorService)
     {
-        $this->productConfigurationDataChecksumGenerator = $productConfigurationDataChecksumGenerator;
+        $this->checksumGeneratorService = $checksumGeneratorService;
     }
 
     /**
@@ -31,7 +31,7 @@ class ProductConfigurationToChecksumGeneratorBridge implements ProductConfigurat
      */
     public function generateOpenSslChecksum(array $data, string $encryptionKey, string $hexInitializationVector): string
     {
-        return $this->productConfigurationDataChecksumGenerator->generateOpenSslChecksum(
+        return $this->checksumGeneratorService->generateOpenSslChecksum(
             $data,
             $encryptionKey,
             $hexInitializationVector

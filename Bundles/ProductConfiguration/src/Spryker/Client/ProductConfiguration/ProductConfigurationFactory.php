@@ -16,7 +16,7 @@ use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationTo
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToPriceClientInterface;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToStoreClientInterface;
 use Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToHttpClientInterface;
-use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToChecksumGeneratorInterface;
+use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToChecksumGeneratorServiceInterface;
 use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingInterface;
 use Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataCurrencyExpander;
 use Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataCustomerExpander;
@@ -172,7 +172,7 @@ class ProductConfigurationFactory extends AbstractFactory
     {
         return new ProductConfiguratorCheckSumResponseValidator(
             $this->getConfig(),
-            $this->getProductConfigurationDataChecksumGenerator()
+            $this->getChecksumGeneratorService()
         );
     }
 
@@ -201,9 +201,9 @@ class ProductConfigurationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToChecksumGeneratorInterface
+     * @return \Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToChecksumGeneratorServiceInterface
      */
-    public function getProductConfigurationDataChecksumGenerator(): ProductConfigurationToChecksumGeneratorInterface
+    public function getChecksumGeneratorService(): ProductConfigurationToChecksumGeneratorServiceInterface
     {
         return $this->getProvidedDependency(ProductConfigurationDependencyProvider::SERVICE_CHECKSUM_GENERATOR);
     }

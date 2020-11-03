@@ -7,19 +7,19 @@
 
 namespace Spryker\Service\ChecksumGenerator\Generator;
 
-use Spryker\Service\ChecksumGenerator\Dependency\Service\ChecksumGeneratorToUtilEncryptionInterface;
+use Spryker\Service\ChecksumGenerator\Dependency\Service\CheckSumToUtilEncryptionServiceInterface;
 
 class CrcChecksumOpenSslGenerator implements ChecksumOpenSslGeneratorInterface
 {
     /**
-     * @var \Spryker\Service\ChecksumGenerator\Dependency\Service\ChecksumGeneratorToUtilEncryptionInterface
+     * @var \Spryker\Service\ChecksumGenerator\Dependency\Service\CheckSumToUtilEncryptionServiceInterface
      */
     protected $utilEncryptionService;
 
     /**
-     * @param \Spryker\Service\ChecksumGenerator\Dependency\Service\ChecksumGeneratorToUtilEncryptionInterface $utilEncryptionService
+     * @param \Spryker\Service\ChecksumGenerator\Dependency\Service\CheckSumToUtilEncryptionServiceInterface $utilEncryptionService
      */
-    public function __construct(ChecksumGeneratorToUtilEncryptionInterface $utilEncryptionService)
+    public function __construct(CheckSumToUtilEncryptionServiceInterface $utilEncryptionService)
     {
         $this->utilEncryptionService = $utilEncryptionService;
     }

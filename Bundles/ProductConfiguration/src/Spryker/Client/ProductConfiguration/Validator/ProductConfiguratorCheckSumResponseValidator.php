@@ -10,7 +10,7 @@ namespace Spryker\Client\ProductConfiguration\Validator;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
-use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToChecksumGeneratorInterface;
+use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToChecksumGeneratorServiceInterface;
 use Spryker\Client\ProductConfiguration\ProductConfigurationConfig;
 
 class ProductConfiguratorCheckSumResponseValidator implements ProductConfiguratorResponseValidatorInterface
@@ -18,9 +18,9 @@ class ProductConfiguratorCheckSumResponseValidator implements ProductConfigurato
     protected const GLOSSARY_KEY_PRODUCT_CONFIGURATION_NOT_VALID_RESPONSE_CHECKSUM = 'product_configuration.validation.error.not_valid_response_checksum';
 
     /**
-     * @var \Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToChecksumGeneratorInterface
+     * @var \Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToChecksumGeneratorServiceInterface
      */
-    protected $checksumGenerator;
+    protected $checksumGeneratorService;
 
     /**
      * @var \Spryker\Client\ProductConfiguration\ProductConfigurationConfig
@@ -29,13 +29,13 @@ class ProductConfiguratorCheckSumResponseValidator implements ProductConfigurato
 
     /**
      * @param \Spryker\Client\ProductConfiguration\ProductConfigurationConfig $productConfigurationConfig
-     * @param \Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToChecksumGeneratorInterface $checksumGenerator
+     * @param \Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToChecksumGeneratorServiceInterface $checksumGeneratorService
      */
     public function __construct(
         ProductConfigurationConfig $productConfigurationConfig,
-        ProductConfigurationToChecksumGeneratorInterface $checksumGenerator
+        ProductConfigurationToChecksumGeneratorServiceInterface $checksumGeneratorService
     ) {
-        $this->checksumGenerator = $checksumGenerator;
+        $this->checksumGeneratorService = $checksumGeneratorService;
         $this->productConfigurationConfig = $productConfigurationConfig;
     }
 
@@ -56,7 +56,7 @@ class ProductConfiguratorCheckSumResponseValidator implements ProductConfigurato
 
         $plainCopyOfConfiguredResponseData = $configuratorResponseData;
 
-        $responseChecksum = $this->checksumGenerator->generateOpenSslChecksum(
+        $responseChecksum = $this->checksumGeneratorService->generateOpenSslChecksum(
             $this->sanitizeProductConfiguratorResponseData($plainCopyOfConfiguredResponseData),
             $this->productConfigurationConfig->getProductConfiguratorEncryptionKey(),
             $this->productConfigurationConfig->getProductConfiguratorHexInitializationVector()

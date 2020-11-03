@@ -7,7 +7,7 @@
 
 namespace Spryker\Service\ChecksumGenerator;
 
-use Spryker\Service\ChecksumGenerator\Dependency\Service\ChecksumGeneratorToUtilEncryptionBridge;
+use Spryker\Service\ChecksumGenerator\Dependency\Service\ChecksumGeneratorToUtilEncryptionServiceBridge;
 use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Service\Kernel\Container;
 
@@ -37,7 +37,7 @@ class ChecksumGeneratorDependencyProvider extends AbstractBundleDependencyProvid
     protected function addUtilEncryptionService(Container $container): Container
     {
         $container->set(static::SERVICE_UTIL_ENCRYPTION, function (Container $container) {
-            return new ChecksumGeneratorToUtilEncryptionBridge(
+            return new ChecksumGeneratorToUtilEncryptionServiceBridge(
                 $container->getLocator()->utilEncryption()->service()
             );
         });

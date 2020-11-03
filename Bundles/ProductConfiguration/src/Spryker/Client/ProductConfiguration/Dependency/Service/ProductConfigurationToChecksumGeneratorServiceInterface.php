@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductConfiguration\Dependency\Service;
 
-interface ProductConfigurationToChecksumGeneratorInterface
+interface ProductConfigurationToChecksumGeneratorServiceInterface
 {
     /**
      * @param array $data
