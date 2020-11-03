@@ -166,6 +166,16 @@ class CustomerConfig extends AbstractBundleConfig
      *
      * @return bool
      */
+    public function getCustomerPasswordSpecialRequired(): bool
+    {
+        return false;
+    }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
     public function getCustomerPasswordUpperCaseRequired(): bool
     {
         return false;
