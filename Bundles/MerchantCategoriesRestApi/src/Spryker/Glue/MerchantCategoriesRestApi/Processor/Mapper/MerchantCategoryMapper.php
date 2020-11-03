@@ -16,20 +16,20 @@ use Generated\Shared\Transfer\RestMerchantsAttributesTransfer;
 class MerchantCategoryMapper implements MerchantCategoryMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantCategoryStorageTransfer[] $merchantStorageCategoryTransfers
+     * @param \Generated\Shared\Transfer\MerchantCategoryStorageTransfer[] $merchantCategoryStorageTransfers
      * @param \Generated\Shared\Transfer\RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\RestMerchantsAttributesTransfer
      */
     public function mapCategoryTransfersToRestMerchantsAttributesTransfer(
-        array $merchantStorageCategoryTransfers,
+        array $merchantCategoryStorageTransfers,
         RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer,
         string $localeName
     ): RestMerchantsAttributesTransfer {
         $restMerchantsCategoryAttributesTransfers = [];
 
-        foreach ($merchantStorageCategoryTransfers as $categoryTransfer) {
+        foreach ($merchantCategoryStorageTransfers as $categoryTransfer) {
             $restMerchantsCategoryAttributesTransfer = (new RestMerchantCategoryAttributesTransfer())
                 ->fromArray($categoryTransfer->toArray(), true);
 
