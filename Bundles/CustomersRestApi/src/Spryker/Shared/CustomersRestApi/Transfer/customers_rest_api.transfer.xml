@@ -154,4 +154,9 @@
         <property name="message" type="string"/>
     </transfer>
 
+    <transfer name="RestCheckoutData">
+        <property name="addresses" type="Addresses"/>
+        <property name="quote" type="Quote"/>
+    </transfer>
+
 </transfers>

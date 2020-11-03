@@ -188,7 +188,7 @@ class CheckoutRestApiFactory extends AbstractFactory
      */
     public function createAddressCheckoutDataResponseMapper(): CheckoutDataResponseMapperInterface
     {
-        return new AddressCheckoutDataResponseMapper();
+        return new AddressCheckoutDataResponseMapper($this->getConfig());
     }
 
     /**
