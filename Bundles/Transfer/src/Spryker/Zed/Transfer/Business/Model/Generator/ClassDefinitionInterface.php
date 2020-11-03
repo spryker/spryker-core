@@ -56,4 +56,9 @@ interface ClassDefinitionInterface extends DefinitionInterface
      * @return string|null
      */
     public function getEntityNamespace(): ?string;
+
+    /**
+     * @return bool
+     */
+    public function isDebugMode(): bool;
 }

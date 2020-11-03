@@ -41,7 +41,7 @@ class JsonMapper implements JsonMapperInterface
             static::JSON_EXTRACT_PATTERN,
             $ruleSetTransfer->getField(),
             $attributeName,
-            Criteria::EQUAL,
+            $operator->getOperator(),
             $operator->getValue($ruleSetTransfer)
         );
     }

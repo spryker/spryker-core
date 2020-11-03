@@ -9,6 +9,9 @@ namespace Spryker\Client\ProductStorage\Storage;
 
 use Generated\Shared\Transfer\ProductConcreteStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\StringToLower;
+use Laminas\Filter\Word\CamelCaseToUnderscore;
 use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleInterface;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface;
@@ -18,9 +21,6 @@ use Spryker\Client\ProductStorage\Exception\ProductConcreteDataCacheNotFoundExce
 use Spryker\Client\ProductStorage\ProductStorageConfig;
 use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
-use Zend\Filter\FilterChain;
-use Zend\Filter\StringToLower;
-use Zend\Filter\Word\CamelCaseToUnderscore;
 
 class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterface
 {

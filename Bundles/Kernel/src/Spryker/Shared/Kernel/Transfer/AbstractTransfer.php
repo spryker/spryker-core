@@ -15,6 +15,7 @@ use InvalidArgumentException;
 use Serializable;
 use Spryker\Service\UtilEncoding\Model\Json;
 use Spryker\Shared\Kernel\Transfer\Exception\ArrayAccessReadyOnlyException;
+use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\Kernel\Transfer\Exception\TransferUnserializationException;
 
@@ -407,5 +408,19 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     public function offsetUnset($offset)
     {
         throw new ArrayAccessReadyOnlyException('Transfer object as an array is available only for read');
+    }
+
+    /**
+     * @param string $propertyName
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
+     * @return void
+     */
+    protected function throwNullValueException(string $propertyName): void
+    {
+        throw new NullValueException(
+            sprintf('Property "%s" of transfer `%s` is null.', $propertyName, static::class)
+        );
     }
 }

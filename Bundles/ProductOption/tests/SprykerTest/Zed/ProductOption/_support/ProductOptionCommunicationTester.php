@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductOption;
 
 use Codeception\Actor;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
 
 /**
  * @method void wantToTest($text)
@@ -26,4 +27,20 @@ use Codeception\Actor;
 class ProductOptionCommunicationTester extends Actor
 {
     use _generated\ProductOptionCommunicationTesterActions;
+
+    /**
+     * @param string $sku
+     * @param int $idProductOptionGroup
+     *
+     * @return void
+     */
+    public function createProductOptionValueEntity(string $sku, int $idProductOptionGroup): void
+    {
+        $productOptionValue = new SpyProductOptionValue();
+        $productOptionValue->setSku($sku);
+        $productOptionValue->setValue($sku);
+        $productOptionValue->setFkProductOptionGroup($idProductOptionGroup);
+
+        $productOptionValue->save();
+    }
 }

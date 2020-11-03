@@ -16,7 +16,11 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/customer": "*",
+    "spryker/decimal-object": "*",
     "spryker/event": "*",
+    "spryker/locale": "*",
+    "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/propel-orm": "*",
     "spryker/search": "*",
