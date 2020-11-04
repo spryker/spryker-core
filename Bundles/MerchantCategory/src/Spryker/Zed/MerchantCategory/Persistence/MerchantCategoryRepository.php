@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantCategoryTransfer;
 use Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
-use Spryker\Zed\MerchantCategory\MerchantCategoryConfig;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
