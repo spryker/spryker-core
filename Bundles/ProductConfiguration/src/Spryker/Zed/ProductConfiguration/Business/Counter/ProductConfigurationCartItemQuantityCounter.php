@@ -21,12 +21,14 @@ class ProductConfigurationCartItemQuantityCounter implements ProductConfiguratio
      *
      * @return \Generated\Shared\Transfer\CartItemQuantityTransfer
      */
-    public function countCartItemQuantity(ArrayObject $itemsInCart, ItemTransfer $itemTransfer): CartItemQuantityTransfer
-    {
+    public function countCartItemQuantity(
+        ArrayObject $itemsInCart,
+        ItemTransfer $itemTransfer
+    ): CartItemQuantityTransfer {
         $cartItemQuantityTransfer = (new CartItemQuantityTransfer())->setQuantity(static::DEFAULT_ITEM_QUANTITY);
 
         foreach ($itemsInCart as $itemInCartTransfer) {
-            if ($itemInCartTransfer->getGroupKey() !== $itemTransfer->getGroupKey()) {
+            if (!$this->isSameProductConfigurationItem($itemInCartTransfer, $itemTransfer)) {
                 continue;
             }
 
@@ -36,5 +38,19 @@ class ProductConfigurationCartItemQuantityCounter implements ProductConfiguratio
         }
 
         return $cartItemQuantityTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemInCartTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function isSameProductConfigurationItem(
+        ItemTransfer $itemInCartTransfer,
+        ItemTransfer $itemTransfer
+    ): bool {
+        return $itemInCartTransfer->getSku() === $itemTransfer->getSku()
+            && $itemInCartTransfer->getProductConfigurationInstance() == $itemTransfer->getProductConfigurationInstance();
     }
 }

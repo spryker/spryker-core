@@ -38,7 +38,7 @@ class ProductConfigurationCartItemQuantityCounterStrategyPlugin extends Abstract
 
     /**
      * {@inheritDoc}
-     *  - Finds given item in the cart.
+     * - Finds given item in the cart.
      * - Counts item quantity by item group key.
      * - Returns quantity for the item.
      *

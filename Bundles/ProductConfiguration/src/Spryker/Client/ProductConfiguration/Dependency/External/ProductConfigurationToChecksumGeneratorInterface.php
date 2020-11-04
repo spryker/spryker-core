@@ -7,13 +7,13 @@
 
 namespace Spryker\Client\ProductConfiguration\Dependency\External;
 
-interface ProductConfigurationToProductConfigurationDataChecksumGeneratorInterface
+interface ProductConfigurationToChecksumGeneratorInterface
 {
     /**
-     * @param array $productConfiguration
+     * @param array $data
      * @param string $encryptionKey
      *
      * @return string
      */
-    public function generateProductConfigurationDataChecksum(array $productConfiguration, string $encryptionKey): string;
+    public function generateChecksum(array $data, string $encryptionKey): string;
 }
