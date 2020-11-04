@@ -15,8 +15,8 @@ use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationTo
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToLocaleInterface;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToPriceClientInterface;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToStoreClientInterface;
+use Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToChecksumGeneratorInterface;
 use Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToHttpClientInterface;
-use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToChecksumGeneratorServiceInterface;
 use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingInterface;
 use Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataCurrencyExpander;
 use Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataCustomerExpander;
@@ -172,7 +172,7 @@ class ProductConfigurationFactory extends AbstractFactory
     {
         return new ProductConfiguratorCheckSumResponseValidator(
             $this->getConfig(),
-            $this->getChecksumGeneratorService()
+            $this->getChecksumGenerator()
         );
     }
 
@@ -201,11 +201,11 @@ class ProductConfigurationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToChecksumGeneratorServiceInterface
+     * @return \Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToChecksumGeneratorInterface
      */
-    public function getChecksumGeneratorService(): ProductConfigurationToChecksumGeneratorServiceInterface
+    public function getChecksumGenerator(): ProductConfigurationToChecksumGeneratorInterface
     {
-        return $this->getProvidedDependency(ProductConfigurationDependencyProvider::SERVICE_CHECKSUM_GENERATOR);
+        return $this->getProvidedDependency(ProductConfigurationDependencyProvider::CHECKSUM_GENERATOR);
     }
 
     /**

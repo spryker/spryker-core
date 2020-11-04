@@ -8,6 +8,8 @@
 namespace Spryker\Client\ProductConfiguration;
 
 use GuzzleHttp\Client as GuzzleHttpClient;
+use Spryker\ChecksumGenerator\Checksum\ChecksumGeneratorInterface;
+use Spryker\ChecksumGenerator\Checksum\CrcOpenSslChecksumGenerator;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToCurrencyClientBridge;
@@ -16,7 +18,7 @@ use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationTo
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToPriceClientBridge;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToStoreClientBridge;
 use Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToGuzzleHttpClientAdapter;
-use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToChecksumGeneratorServiceBridge;
+use Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToSprykerChecksumGeneratorAdapter;
 use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingBridge;
 use Spryker\Client\ProductConfiguration\Exception\MissingDefaultProductConfigurationRequestPluginException;
 use Spryker\Client\ProductConfiguration\Exception\MissingDefaultProductConfiguratorResponsePluginException;
@@ -44,7 +46,8 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_HTTP = 'CLIENT_HTTP';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
-    public const SERVICE_CHECKSUM_GENERATOR = 'SERVICE_CHECKSUM_GENERATOR';
+
+    public const CHECKSUM_GENERATOR = 'CHECKSUM_GENERATOR';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -67,7 +70,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
         $container = $this->addProductConfigurationRequestExpanderPlugins($container);
         $container = $this->addHttpClient($container);
         $container = $this->addUtilEncodingService($container);
-        $container = $this->addChecksumGeneratorService($container);
+        $container = $this->addChecksumGenerator($container);
 
         return $container;
     }
@@ -275,15 +278,25 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addChecksumGeneratorService(Container $container): Container
+    protected function addChecksumGenerator(Container $container): Container
     {
-        $container->set(static::SERVICE_CHECKSUM_GENERATOR, function (Container $container) {
-            return new ProductConfigurationToChecksumGeneratorServiceBridge(
-                $container->getLocator()->checksumGenerator()->service()
+        $container->set(static::CHECKSUM_GENERATOR, function () {
+            return new ProductConfigurationToSprykerChecksumGeneratorAdapter(
+                $this->getChecksumGenerator()
             );
         });
 
         return $container;
+    }
+
+    /**
+     * @return \Spryker\ChecksumGenerator\Checksum\ChecksumGeneratorInterface
+     */
+    protected function getChecksumGenerator(): ChecksumGeneratorInterface
+    {
+        return new CrcOpenSslChecksumGenerator(
+            $this->getConfig()->getProductConfiguratorHexInitializationVector()
+        );
     }
 
     /**
