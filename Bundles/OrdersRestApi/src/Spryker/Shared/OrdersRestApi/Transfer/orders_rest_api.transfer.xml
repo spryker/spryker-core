@@ -63,7 +63,7 @@
         <property name="orderReference" type="string"/>
         <property name="uuid" type="string"/>
         <property name="isReturnable" type="bool"/>
-        <property name="shipmentId" type="int"/>
+        <property name="idShipment" type="int"/>
     </transfer>
 
     <transfer name="RestOrderTotalsAttributes">
@@ -93,7 +93,7 @@
         <property name="unitPriceToPayAggregation" type="int"/>
         <property name="sumPriceToPayAggregation" type="int"/>
         <property name="taxAmountAfterCancellation" type="int"/>
-        <property name="shipmentId" type="int"/>
+        <property name="idShipment" type="int"/>
     </transfer>
 
     <transfer name="RestOrderAddress">

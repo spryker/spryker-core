@@ -64,7 +64,7 @@ class OrderDetailsAttributesMapper implements OrderDetailsAttributesMapperInterf
     ): RestOrderItemsAttributesTransfer {
         return $restOrderItemsAttributesTransfer
             ->fromArray($itemTransfer->toArray(), true)
-            ->setShipmentId($itemTransfer->getShipment()->getIdSalesShipment());
+            ->setIdShipment($itemTransfer->getShipment()->getIdSalesShipment());
     }
 
     /**
@@ -79,6 +79,6 @@ class OrderDetailsAttributesMapper implements OrderDetailsAttributesMapperInterf
     ): RestOrderExpensesAttributesTransfer {
         return $restOrderExpensesAttributesTransfer
             ->fromArray($expenseTransfer->toArray(), true)
-            ->setShipmentId($expenseTransfer->getShipment()->getIdSalesShipment());
+            ->setIdShipment($expenseTransfer->getShipment()->getIdSalesShipment());
     }
 }

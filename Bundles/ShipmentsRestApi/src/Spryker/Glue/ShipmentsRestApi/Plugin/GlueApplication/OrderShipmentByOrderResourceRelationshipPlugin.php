@@ -19,7 +19,7 @@ use Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiConfig;
  *
  * @method \Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiFactory getFactory()
  */
-class OrderShipmentsResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class OrderShipmentByOrderResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritDoc}
