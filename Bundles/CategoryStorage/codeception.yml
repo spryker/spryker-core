@@ -1,5 +1,6 @@
 namespace: SprykerTest
 include:
+    - tests/SprykerTest/Client/CategoryStorage
     - tests/SprykerTest/Zed/CategoryStorage
 paths:
     tests: tests
