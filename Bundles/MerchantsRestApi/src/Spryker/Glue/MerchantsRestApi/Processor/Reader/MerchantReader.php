@@ -125,7 +125,7 @@ class MerchantReader implements MerchantReaderInterface
     public function getMerchants(RestRequestInterface $restRequest): RestResponseInterface
     {
         $merchantSearchRequestTransfer = $this->createMerchantSearchRequest($restRequest);
-        $searchResult = $this->merchantSearchClient->merchantSearch(
+        $searchResult = $this->merchantSearchClient->search(
             $merchantSearchRequestTransfer
         );
 

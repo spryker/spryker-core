@@ -7,31 +7,21 @@
 
 namespace Spryker\Client\MerchantSearch\PaginationConfigBuilder;
 
-use Generated\Shared\Transfer\PaginationConfigTransfer;
+use Spryker\Client\MerchantSearch\MerchantSearchConfig;
 
 class MerchantSearchPaginationConfigBuilder implements PaginationConfigBuilderInterface
 {
     /**
-     * @var \Generated\Shared\Transfer\PaginationConfigTransfer
+     * @var \Spryker\Client\MerchantSearch\MerchantSearchConfig
      */
-    protected $paginationConfigTransfer;
+    protected $merchantSearchConfig;
 
     /**
-     * @param \Generated\Shared\Transfer\PaginationConfigTransfer $paginationConfigTransfer
-     *
-     * @return void
+     * @param \Spryker\Client\MerchantSearch\MerchantSearchConfig $merchantSearchConfig
      */
-    public function setPaginationConfigTransfer(PaginationConfigTransfer $paginationConfigTransfer): void
+    public function __construct(MerchantSearchConfig $merchantSearchConfig)
     {
-        $this->paginationConfigTransfer = $paginationConfigTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\PaginationConfigTransfer
-     */
-    public function getPaginationConfigTransfer(): PaginationConfigTransfer
-    {
-        return $this->paginationConfigTransfer;
+        $this->merchantSearchConfig = $merchantSearchConfig;
     }
 
     /**
@@ -41,9 +31,7 @@ class MerchantSearchPaginationConfigBuilder implements PaginationConfigBuilderIn
      */
     public function getCurrentPage(array $requestParameters): int
     {
-        $paramName = $this->paginationConfigTransfer
-            ->requireParameterName()
-            ->getParameterName();
+        $paramName = $this->merchantSearchConfig->getPageParameterName();
 
         return isset($requestParameters[$paramName]) ? max((int)$requestParameters[$paramName], 1) : 1;
     }
@@ -55,19 +43,13 @@ class MerchantSearchPaginationConfigBuilder implements PaginationConfigBuilderIn
      */
     public function getCurrentItemsPerPage(array $requestParameters): int
     {
-        $paramName = $this->paginationConfigTransfer->getItemsPerPageParameterName();
+        $paramName = $this->merchantSearchConfig->getItemsPerPageParameterName();
 
         if ($this->isValidItemsPerPage($requestParameters)) {
             return (int)$requestParameters[$paramName];
         }
 
-        /**
-         * @var int $defaultItemsPerPage
-         */
-        $defaultItemsPerPage = $this->paginationConfigTransfer->requireDefaultItemsPerPage()
-            ->getDefaultItemsPerPage();
-
-        return $defaultItemsPerPage;
+        return $this->merchantSearchConfig->getDefaultItemsPerPage();
     }
 
     /**
@@ -77,8 +59,8 @@ class MerchantSearchPaginationConfigBuilder implements PaginationConfigBuilderIn
      */
     protected function isValidItemsPerPage(array $requestParameters): bool
     {
-        $perPage = $requestParameters[$this->paginationConfigTransfer->getItemsPerPageParameterName()] ?? null;
+        $perPage = $requestParameters[$this->merchantSearchConfig->getItemsPerPageParameterName()] ?? null;
 
-        return $perPage > 0 && $perPage <= $this->paginationConfigTransfer->getMaxItemsPerPage();
+        return $perPage > 0 && $perPage <= $this->merchantSearchConfig->getMaxItemsPerPage();
     }
 }

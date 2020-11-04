@@ -8,10 +8,9 @@
 namespace Spryker\Zed\MerchantSearch\Persistence;
 
 use Generated\Shared\Transfer\MerchantSearchCollectionTransfer;
-use Generated\Shared\Transfer\MerchantSearchTransfer;
 use Orm\Zed\MerchantSearch\Persistence\SpyMerchantSearch;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\MerchantSearch\Persistence\MerchantSearchPersistenceFactory getFactory()
@@ -37,43 +36,39 @@ class MerchantSearchEntityManager extends AbstractEntityManager implements Merch
      *
      * @return void
      */
-    public function saveMerchantSearches(MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer): void
+    public function saveCollection(MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer): void
     {
-        $merchantSearchEntityCollection = new ObjectCollection();
-        $merchantSearchEntityCollection->setModel(SpyMerchantSearch::class);
+        $merchantSearchTransferIdMerchantMap = [];
 
         foreach ($merchantSearchCollectionTransfer->getMerchants() as $merchantSearchTransfer) {
-            $merchantSearchEntityCollection->append($this->getMerchantSearchEntityByMerchantSearchTransfer($merchantSearchTransfer));
+            $merchantSearchTransferIdMerchantMap[$merchantSearchTransfer->getIdMerchant()] = $merchantSearchTransfer;
+        }
+
+        $merchantSearchEntityCollection = $this->getFactory()
+            ->getMerchantSearchPropelQuery()
+            ->filterByFkMerchant(array_keys($merchantSearchTransferIdMerchantMap), Criteria::IN)
+            ->find();
+
+        $merchantSearchMapper = $this->getFactory()->createMerchantSearchMapper();
+
+        foreach ($merchantSearchEntityCollection as $merchantSearchEntity) {
+            $merchantSearchEntity = $merchantSearchMapper->mapMerchantSearchTransferToMerchantSearchEntity(
+                $merchantSearchTransferIdMerchantMap[$merchantSearchEntity->getFkMerchant()],
+                $merchantSearchEntity
+            );
+
+            unset($merchantSearchTransferIdMerchantMap[$merchantSearchEntity->getFkMerchant()]);
+        }
+
+        foreach ($merchantSearchTransferIdMerchantMap as $merchantSearchTransfer) {
+            $merchantSearchEntity = $merchantSearchMapper->mapMerchantSearchTransferToMerchantSearchEntity(
+                $merchantSearchTransfer,
+                new SpyMerchantSearch()
+            );
+
+            $merchantSearchEntityCollection->append($merchantSearchEntity);
         }
 
         $merchantSearchEntityCollection->save();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantSearchTransfer $merchantSearchTransfer
-     *
-     * @return \Orm\Zed\MerchantSearch\Persistence\SpyMerchantSearch
-     */
-    protected function getMerchantSearchEntityByMerchantSearchTransfer(
-        MerchantSearchTransfer $merchantSearchTransfer
-    ): SpyMerchantSearch {
-        $merchantSearchEntity = $this->getFactory()
-            ->getMerchantSearchPropelQuery()
-            ->filterByFkMerchant($merchantSearchTransfer->getIdMerchant())
-            ->findOneOrCreate();
-
-        $merchantSearchEntity->fromArray(
-            $merchantSearchTransfer->toArray()
-        );
-
-        /**
-         * @var int $idMerchant
-         */
-        $idMerchant = $merchantSearchTransfer->requireIdMerchant()
-            ->getIdMerchant();
-
-        $merchantSearchEntity->setFkMerchant($idMerchant);
-
-        return $merchantSearchEntity;
     }
 }

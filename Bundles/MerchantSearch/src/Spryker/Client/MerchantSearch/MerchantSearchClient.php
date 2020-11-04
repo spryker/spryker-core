@@ -24,10 +24,10 @@ class MerchantSearchClient extends AbstractClient implements MerchantSearchClien
      *
      * @return mixed
      */
-    public function merchantSearch(MerchantSearchRequestTransfer $merchantSearchRequestTransfer)
+    public function search(MerchantSearchRequestTransfer $merchantSearchRequestTransfer)
     {
         return $this->getFactory()
             ->createMerchantSearchReader()
-            ->merchantSearch($merchantSearchRequestTransfer);
+            ->search($merchantSearchRequestTransfer);
     }
 }

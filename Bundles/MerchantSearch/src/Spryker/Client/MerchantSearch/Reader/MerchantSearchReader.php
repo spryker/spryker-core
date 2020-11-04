@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\MerchantSearch\MerchantReader;
+namespace Spryker\Client\MerchantSearch\Reader;
 
 use Generated\Shared\Transfer\MerchantSearchRequestTransfer;
 use Spryker\Client\MerchantSearch\Dependency\Client\MerchantSearchToSearchClientInterface;
@@ -56,7 +56,7 @@ class MerchantSearchReader implements MerchantSearchReaderInterface
      *
      * @return mixed
      */
-    public function merchantSearch(MerchantSearchRequestTransfer $merchantSearchRequestTransfer)
+    public function search(MerchantSearchRequestTransfer $merchantSearchRequestTransfer)
     {
         $requestParameters = $merchantSearchRequestTransfer->getRequestParameters();
         $searchQuery = $this->searchClient->expandQuery(

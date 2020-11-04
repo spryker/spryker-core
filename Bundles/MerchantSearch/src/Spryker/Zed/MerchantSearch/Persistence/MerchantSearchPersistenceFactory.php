@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantSearch\Persistence;
 
 use Orm\Zed\MerchantSearch\Persistence\SpyMerchantSearchQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\MerchantSearch\Persistence\Propel\Mapper\MerchantSearchMapper;
 
 /**
  * @method \Spryker\Zed\MerchantSearch\MerchantSearchConfig getConfig()
@@ -23,5 +24,13 @@ class MerchantSearchPersistenceFactory extends AbstractPersistenceFactory
     public function getMerchantSearchPropelQuery(): SpyMerchantSearchQuery
     {
         return SpyMerchantSearchQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSearch\Persistence\Propel\Mapper\MerchantSearchMapper
+     */
+    public function createMerchantSearchMapper(): MerchantSearchMapper
+    {
+        return new MerchantSearchMapper();
     }
 }

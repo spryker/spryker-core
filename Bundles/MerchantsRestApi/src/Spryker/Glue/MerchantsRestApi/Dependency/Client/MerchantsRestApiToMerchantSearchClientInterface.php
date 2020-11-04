@@ -16,5 +16,5 @@ interface MerchantsRestApiToMerchantSearchClientInterface
      *
      * @return mixed
      */
-    public function merchantSearch(MerchantSearchRequestTransfer $merchantSearchRequestTransfer);
+    public function search(MerchantSearchRequestTransfer $merchantSearchRequestTransfer);
 }

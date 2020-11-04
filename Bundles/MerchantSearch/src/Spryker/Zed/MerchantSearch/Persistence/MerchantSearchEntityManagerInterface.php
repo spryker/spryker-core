@@ -23,5 +23,5 @@ interface MerchantSearchEntityManagerInterface
      *
      * @return void
      */
-    public function saveMerchantSearches(MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer): void;
+    public function saveCollection(MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer): void;
 }

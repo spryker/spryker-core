@@ -129,7 +129,7 @@ class MerchantSearchWriter implements MerchantSearchWriterInterface
      */
     protected function writeCollection(MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer): void
     {
-        $this->merchantSearchEntityManager->saveMerchantSearches($merchantSearchCollectionTransfer);
+        $this->merchantSearchEntityManager->saveCollection($merchantSearchCollectionTransfer);
     }
 
     /**
