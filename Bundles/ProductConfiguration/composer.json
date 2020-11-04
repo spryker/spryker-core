@@ -9,7 +9,7 @@
     "spryker/availability-cart-connector-extension": "^1.0.0",
     "spryker/cart-extension": "^4.2.0",
     "spryker/checkout-extension": "^1.2.0",
-    "spryker/checksum-generator": "dev-bugfix/cc-10508/dev-configurable-product-phase2",
+    "spryker/checksum-generator": "^0.1.0",
     "spryker/currency": "^3.2.0",
     "spryker/customer": "^7.0.0",
     "spryker/guzzle": "^2.2.0",
@@ -41,12 +41,6 @@
       "SprykerTest\\": "tests/SprykerTest/"
     }
   },
-  "repositories": [
-    {
-      "type": "git",
-      "url": "git@github.com:spryker/checksum-generator.git"
-    }
-  ],
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
