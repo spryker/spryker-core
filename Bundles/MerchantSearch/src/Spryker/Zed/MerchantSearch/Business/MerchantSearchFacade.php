@@ -75,7 +75,7 @@ class MerchantSearchFacade extends AbstractFacade implements MerchantSearchFacad
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getSynchronizationDataTransfersByMerchantIds(FilterTransfer $filterTransfer, array $merchantIds): array
+    public function getSynchronizationDataTransfersByMerchantIds(FilterTransfer $filterTransfer, array $merchantIds = []): array
     {
         return $this->getRepository()
             ->getSynchronizationDataTransfersByMerchantIds($filterTransfer, $merchantIds);
