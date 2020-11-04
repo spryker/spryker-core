@@ -91,8 +91,6 @@ class ExpandOrderItemsWithStateHistoryTest extends Unit
     }
 
     /**
-     * @group mysql
-     *
      * @return void
      */
     public function testExpandOrderItemsWithStateHistoryCompareIdSalesOrderItemIds(): void
