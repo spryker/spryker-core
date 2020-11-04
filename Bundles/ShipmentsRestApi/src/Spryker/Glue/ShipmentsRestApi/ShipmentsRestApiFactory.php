@@ -8,7 +8,8 @@
 namespace Spryker\Glue\ShipmentsRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
-use Spryker\Glue\ShipmentsRestApi\Dependency\Service\ShipmentsRestApiToShipmentServiceInterface;
+use Spryker\Glue\ShipmentsRestApi\Processor\Creator\ShipmentServiceFactory;
+use Spryker\Glue\ShipmentsRestApi\Processor\Creator\ShipmentServiceFactoryInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentMethodByCheckoutDataExpander;
 use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentMethodByCheckoutDataExpanderInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentsByOrderResourceRelationshipExpander;
@@ -75,11 +76,11 @@ class ShipmentsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ShipmentsRestApi\Dependency\Service\ShipmentsRestApiToShipmentServiceInterface
+     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Creator\ShipmentServiceFactoryInterface
      */
-    public function getShipmentService(): ShipmentsRestApiToShipmentServiceInterface
+    public function getShipmentService(): ShipmentServiceFactoryInterface
     {
-        return $this->getProvidedDependency(ShipmentsRestApiDependencyProvider::SERVICE_SHIPMENT);
+        return $this->createShipmentServiceFactory();
     }
 
     /**
@@ -96,5 +97,13 @@ class ShipmentsRestApiFactory extends AbstractFactory
     public function createOrderDetailsAttributesMapper(): OrderDetailsAttributesMapperInterface
     {
         return new OrderDetailsAttributesMapper();
+    }
+
+    /**
+     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Creator\ShipmentServiceFactoryInterface
+     */
+    public function createShipmentServiceFactory(): ShipmentServiceFactoryInterface
+    {
+        return new ShipmentServiceFactory();
     }
 }

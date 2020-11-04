@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ShipmentsRestApi\Dependency\Service\ShipmentsRestApiToShipmentServiceInterface;
+use Spryker\Glue\ShipmentsRestApi\Processor\Creator\ShipmentServiceFactoryInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderShipmentsMapperInterface;
 use Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiConfig;
 
@@ -28,23 +28,23 @@ class ShipmentsByOrderResourceRelationshipExpander implements ShipmentsByOrderRe
     protected $orderShipmentsMapper;
 
     /**
-     * @var \Spryker\Glue\ShipmentsRestApi\Dependency\Service\ShipmentsRestApiToShipmentServiceInterface
+     * @var \Spryker\Glue\ShipmentsRestApi\Processor\Creator\ShipmentServiceFactoryInterface
      */
-    protected $shipmentService;
+    protected $shipmentServiceFactory;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderShipmentsMapperInterface $orderShipmentsMapper
-     * @param \Spryker\Glue\ShipmentsRestApi\Dependency\Service\ShipmentsRestApiToShipmentServiceInterface $shipmentService
+     * @param \Spryker\Glue\ShipmentsRestApi\Processor\Creator\ShipmentServiceFactoryInterface $shipmentServiceFactory
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         OrderShipmentsMapperInterface $orderShipmentsMapper,
-        ShipmentsRestApiToShipmentServiceInterface $shipmentService
+        ShipmentServiceFactoryInterface $shipmentServiceFactory
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->orderShipmentsMapper = $orderShipmentsMapper;
-        $this->shipmentService = $shipmentService;
+        $this->shipmentServiceFactory = $shipmentServiceFactory;
     }
 
     /**
@@ -57,7 +57,10 @@ class ShipmentsByOrderResourceRelationshipExpander implements ShipmentsByOrderRe
     {
         foreach ($resources as $resource) {
             $orderTransfer = $resource->getPayload();
-            if (!$orderTransfer || !$orderTransfer instanceof OrderTransfer) {
+            if (
+                !$orderTransfer || !($orderTransfer instanceof OrderTransfer) ||
+                $orderTransfer->getShippingAddress()
+            ) {
                 continue;
             }
 
@@ -66,7 +69,9 @@ class ShipmentsByOrderResourceRelationshipExpander implements ShipmentsByOrderRe
                 continue;
             }
 
-            $shipmentGroupTransfers = $this->shipmentService->groupItemsByShipment($itemTransfers);
+            $shipmentGroupTransfers = $this->shipmentServiceFactory
+                ->getShipmentService()
+                ->groupItemsByShipment($itemTransfers);
 
             $restOrderShipmentsAttributesTransfers = $this->orderShipmentsMapper
                 ->mapShipmentGroupsTransfersToRestOrderShipmentsAttributesTransfer(
