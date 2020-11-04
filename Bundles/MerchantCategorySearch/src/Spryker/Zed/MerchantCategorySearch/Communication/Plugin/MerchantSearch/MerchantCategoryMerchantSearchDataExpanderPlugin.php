@@ -54,6 +54,10 @@ class MerchantCategoryMerchantSearchDataExpanderPlugin extends AbstractPlugin im
      */
     protected function expandMerchantSearchData(array $merchantSearchData): array
     {
+        if (!isset($merchantSearchData[static::SEARCH_RESULT_DATA][static::ID_MERCHANT])) {
+            return $merchantSearchData;
+        }
+
         $merchantCategoryResponseTransfer = $this->getFactory()
             ->getMerchantCategoryFacade()
             ->get(
