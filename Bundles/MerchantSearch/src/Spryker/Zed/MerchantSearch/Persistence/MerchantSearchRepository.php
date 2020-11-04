@@ -58,7 +58,7 @@ class MerchantSearchRepository extends AbstractRepository implements MerchantSea
         $merchantSearchQuery = $this->getFactory()->getMerchantSearchPropelQuery();
 
         if ($merchantIds) {
-            $merchantSearchQuery->filterByFkMerchant($merchantIds);
+            $merchantSearchQuery->filterByFkMerchant_In($merchantIds);
         }
 
         return $this->buildQueryFromCriteria($merchantSearchQuery, $filterTransfer)
