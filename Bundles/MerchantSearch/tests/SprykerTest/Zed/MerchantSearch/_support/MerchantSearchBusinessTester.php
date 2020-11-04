@@ -9,13 +9,13 @@ namespace SprykerTest\Zed\MerchantSearch;
 
 use Codeception\Actor;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Orm\Zed\MerchantSearch\Persistence\SpyMerchantSearchQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
-use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * Inherited Methods
@@ -115,16 +115,26 @@ class MerchantSearchBusinessTester extends Actor
     {
         $merchantTransfers = [];
         for ($i = 0; $i < $merchantCount; $i++) {
-            $merchantTransfer = $this->haveMerchant()
-                ->setStatus(static::MERCHANT_STATUS_APPROVED);
-            $merchantResponseTransfer = $this->updateMerchant($merchantTransfer);
-            $merchantTransfers[] = $merchantResponseTransfer->getMerchant();
+            $merchantTransfers[] = $this->haveMerchant([MerchantTransfer::STATUS => static::MERCHANT_STATUS_APPROVED]);
         }
         $merchantIds = $this->extractMerchantIdsFromMerchantTransfers($merchantTransfers);
         $eventEntityTransfers = $this->createEventEntityTransfersFromIds($merchantIds);
         $this->getFacade()->writeCollectionByMerchantEvents($eventEntityTransfers);
 
         return $merchantTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
+     */
+    public function updateMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
+    {
+        return $this->getLocator()
+            ->merchant()
+            ->facade()
+            ->updateMerchant($merchantTransfer);
     }
 
     /**
@@ -136,7 +146,7 @@ class MerchantSearchBusinessTester extends Actor
     {
         $merchantSearchQuery = $this->createMerchantSearchQuery();
         if ($merchantIds) {
-            $merchantSearchQuery->filterByFkMerchant($merchantIds, Criteria::IN);
+            $merchantSearchQuery->filterByFkMerchant_In($merchantIds);
         }
 
         $merchantSearchEntityCollection = $merchantSearchQuery->setFormatter(ModelCriteria::FORMAT_OBJECT)

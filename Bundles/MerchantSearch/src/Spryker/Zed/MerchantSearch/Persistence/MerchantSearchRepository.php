@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
-use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\MerchantSearch\Persistence\MerchantSearchPersistenceFactory getFactory()
@@ -59,7 +58,7 @@ class MerchantSearchRepository extends AbstractRepository implements MerchantSea
         $merchantSearchQuery = $this->getFactory()->getMerchantSearchPropelQuery();
 
         if ($merchantIds) {
-            $merchantSearchQuery->filterByFkMerchant($merchantIds, Criteria::IN);
+            $merchantSearchQuery->filterByFkMerchant_In($merchantIds);
         }
 
         return $this->buildQueryFromCriteria($merchantSearchQuery, $filterTransfer)

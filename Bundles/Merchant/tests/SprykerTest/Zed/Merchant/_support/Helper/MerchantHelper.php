@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\Merchant\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\MerchantBuilder;
 use Generated\Shared\DataBuilder\StoreRelationBuilder;
-use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
@@ -41,24 +40,20 @@ class MerchantHelper extends Module
             ->createMerchant($merchantTransfer);
         $merchantTransfer = $merchantResponseTransfer->getMerchant();
 
+        if (isset($seedData[MerchantTransfer::STATUS])) {
+            $merchantTransfer->setStatus($seedData[MerchantTransfer::STATUS]);
+            $merchantTransfer = $this->getLocator()
+                ->merchant()
+                ->facade()
+                ->updateMerchant($merchantTransfer)
+                ->getMerchant();
+        }
+
         $this->getDataCleanupHelper()->_addCleanup(function () use ($merchantTransfer) {
             $this->getMerchantQuery()->filterByIdMerchant($merchantTransfer->getIdMerchant())->delete();
         });
 
         return $merchantTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
-     */
-    public function updateMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
-    {
-        return $this->getLocator()
-            ->merchant()
-            ->facade()
-            ->updateMerchant($merchantTransfer);
     }
 
     /**
