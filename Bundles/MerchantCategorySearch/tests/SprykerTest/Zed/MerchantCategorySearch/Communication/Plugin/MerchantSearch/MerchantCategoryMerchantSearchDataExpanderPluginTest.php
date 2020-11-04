@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\MerchantSearchTransfer;
 use Spryker\Zed\MerchantCategorySearch\Communication\MerchantCategorySearchCommunicationFactory;
 use Spryker\Zed\MerchantCategorySearch\Communication\Plugin\MerchantSearch\MerchantCategoryMerchantSearchDataExpanderPlugin;
 use Spryker\Zed\MerchantCategorySearch\Dependency\Facade\MerchantCategorySearchToMerchantCategoryFacadeInterface;
-use Spryker\Zed\MerchantSearchExtension\Dependency\Plugin\MerchantSearchDataExpanderPluginInterface;
 
 /**
  * Auto-generated group annotations
