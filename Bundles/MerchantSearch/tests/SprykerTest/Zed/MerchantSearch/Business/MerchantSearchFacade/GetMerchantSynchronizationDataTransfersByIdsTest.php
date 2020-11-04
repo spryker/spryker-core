@@ -29,6 +29,18 @@ class GetMerchantSynchronizationDataTransfersByIdsTest extends Unit
     protected const MERCHANT_COUNT = 3;
 
     /**
+     * @uses \Generated\Shared\Search\MerchantIndexMap::SEARCH_RESULT_DATA
+     */
+    protected const SEARCH_RESULT_DATA = 'search-result-data';
+
+    protected const ID_MERCHANT = 'id_merchant';
+
+    /**
+     * @uses \Orm\Zed\MerchantSearch\Persistence\Map\SpyMerchantSearchTableMap::COL_FK_MERCHANT
+     */
+    protected const COL_FK_MERCHANT = 'spy_merchant_search.fk_merchant';
+
+    /**
      * @var \SprykerTest\Zed\MerchantSearch\MerchantSearchBusinessTester
      */
     protected $tester;
@@ -50,7 +62,7 @@ class GetMerchantSynchronizationDataTransfersByIdsTest extends Unit
     public function testGetSynchronizationDataTransfersByMerchantIdsWorksWithIds(): void
     {
         // Arrange
-        $merchantTransfers = $this->tester->createActiveMerchants();
+        $merchantTransfers = $this->tester->createActiveMerchants(static::MERCHANT_COUNT);
         $merchantIds = $this->tester->extractMerchantIdsFromMerchantTransfers($merchantTransfers);
 
         // Act
@@ -61,9 +73,9 @@ class GetMerchantSynchronizationDataTransfersByIdsTest extends Unit
             );
 
         // Assert
-        $this->assertSame(
+        $this->assertCount(
             static::MERCHANT_COUNT,
-            count($synchronizationDataTransfers)
+            $synchronizationDataTransfers
         );
     }
 
@@ -73,17 +85,19 @@ class GetMerchantSynchronizationDataTransfersByIdsTest extends Unit
     public function testGetSynchronizationDataTransfersByMerchantIdsWorksWithFilter(): void
     {
         // Arrange
-        $merchantTransfers = $this->tester->createActiveMerchants();
+        $merchantTransfers = $this->tester->createActiveMerchants(static::MERCHANT_COUNT);
         $merchantIds = $this->tester->extractMerchantIdsFromMerchantTransfers($merchantTransfers);
 
         // Act
         $synchronizationDataTransfers = $this->tester->getFacade()
             ->getSynchronizationDataTransfersByMerchantIds(
-                (new FilterTransfer())->setOffset(1)->setLimit(1)
+                (new FilterTransfer())->setOffset(0)->setLimit(1)->setOrderBy(static::COL_FK_MERCHANT)
             );
+        $synchronizationData = $synchronizationDataTransfers[0]->getData();
 
         // Assert
         $this->assertCount(1, $synchronizationDataTransfers);
+        $this->assertSame($merchantIds[0], $synchronizationData[static::SEARCH_RESULT_DATA][static::ID_MERCHANT]);
     }
 
     /**
