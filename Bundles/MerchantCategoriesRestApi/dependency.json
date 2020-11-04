@@ -1,6 +1,6 @@
 {
     "include": {
-        "spryker/glue-application": "Added for future compatability.",
-        "spryker/merchant-category": "Added for future compatability."
+        "spryker/glue-application": "Added for future compatibility.",
+        "spryker/merchant-category": "Added for future compatibility."
     }
 }
