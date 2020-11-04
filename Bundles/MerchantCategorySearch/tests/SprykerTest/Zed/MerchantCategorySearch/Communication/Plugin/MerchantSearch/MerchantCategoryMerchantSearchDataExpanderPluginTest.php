@@ -55,6 +55,7 @@ class MerchantCategoryMerchantSearchDataExpanderPluginTest extends Unit
                 (new MerchantCategoryResponseTransfer())
                     ->addMerchantCategory(
                         (new MerchantCategoryTransfer())
+                            ->setFkMerchant(1)
                             ->setCategory(
                                 (new CategoryTransfer())
                                     ->setCategoryKey($expectedCategoryKey)
@@ -70,7 +71,10 @@ class MerchantCategoryMerchantSearchDataExpanderPluginTest extends Unit
         $plugin->setFactory($factoryMock);
 
         $merchantSearchCollectionTransfer = (new MerchantSearchCollectionTransfer())
-            ->addMerchant(new MerchantSearchTransfer());
+            ->addMerchant(
+                (new MerchantSearchTransfer())
+                    ->setIdMerchant(1)
+            );
 
         // Act
         $expandedMerchantSearchCollectionTransfer = $plugin->expand($merchantSearchCollectionTransfer);

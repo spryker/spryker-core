@@ -46,7 +46,7 @@ class MerchantCategorySearchExpander implements MerchantCategorySearchExpanderIn
              * @var \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
              */
             $categoryTransfer = $merchantCategoryTransfer->getCategory();
-            $categoryKeysIndexedByIdMerchant[$merchantCategoryTransfer][] = $categoryTransfer->getCategoryKey();
+            $categoryKeysIndexedByIdMerchant[$merchantCategoryTransfer->getFkMerchant()][] = $categoryTransfer->getCategoryKey();
         }
 
         foreach ($merchantSearchCollectionTransfer->getMerchants() as $merchantSearchTransfer) {
