@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestShipmentsTransfer;
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\ShipmentsRestApi\ShipmentsRestApiConfig;
 use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeInterface;
@@ -146,16 +145,7 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
             )
             ->setRequestedDeliveryDate($restShipmentsTransfer->getRequestedDeliveryDate());
 
-        $shipmentMethodTransfer = $this->shipmentFacade
-            ->findAvailableMethodById($restShipmentsTransfer->getIdShipmentMethod(), $quoteTransfer);
-
-        if (!$shipmentMethodTransfer) {
-            return $shipmentTransfer;
-        }
-
-        return $shipmentTransfer
-            ->setMethod($shipmentMethodTransfer)
-            ->setShipmentSelection((string)$shipmentMethodTransfer->getIdShipmentMethod());
+        return $this->mapRestShipmentsTransferToShipmentTransfer($restShipmentsTransfer, $shipmentTransfer, $quoteTransfer);
     }
 
     /**
@@ -185,5 +175,33 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestShipmentsTransfer $restShipmentsTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
+     */
+    protected function mapRestShipmentsTransferToShipmentTransfer(
+        RestShipmentsTransfer $restShipmentsTransfer,
+        ShipmentTransfer $shipmentTransfer,
+        QuoteTransfer $quoteTransfer
+    ): ShipmentTransfer {
+        if (!$restShipmentsTransfer->getIdShipmentMethod()) {
+            return $shipmentTransfer;
+        }
+
+        $shipmentMethodTransfer = $this->shipmentFacade
+            ->findAvailableMethodById($restShipmentsTransfer->getIdShipmentMethod(), $quoteTransfer);
+
+        if (!$shipmentMethodTransfer) {
+            return $shipmentTransfer;
+        }
+
+        return $shipmentTransfer
+            ->setMethod($shipmentMethodTransfer)
+            ->setShipmentSelection((string)$shipmentMethodTransfer->getIdShipmentMethod());
     }
 }

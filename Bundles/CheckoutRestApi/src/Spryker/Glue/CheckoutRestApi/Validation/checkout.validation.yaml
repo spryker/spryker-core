@@ -97,25 +97,6 @@ checkout-data:
                     - NotBlank
                     - Type:
                         type: numeric
-        shipments:
-        - All:
-            constraints:
-            - Collection:
-                fields:
-                    items:
-                    - All:
-                        constraints:
-                        - NotBlank
-                        - Type:
-                            type: string
-                    shippingAddress:
-                    - Optional
-                    idShipmentMethod:
-                    - Optional
-                    - Type:
-                        type: numeric
-                    requestedDeliveryDate:
-                    - Optional
 checkout:
     post:
         idCart:
@@ -210,25 +191,3 @@ checkout:
                     - NotBlank
                     - Type:
                         type: numeric
-        shipments:
-        - Optional:
-            constraints:
-            - All:
-                constraints:
-                - Collection:
-                    fields:
-                        items:
-                        - All:
-                            constraints:
-                            - NotBlank
-                            - Type:
-                                type: string
-                        shippingAddress:
-                        - Optional
-                        idShipmentMethod:
-                        - NotBlank
-                        - Type:
-                            type: numeric
-                        requestedDeliveryDate:
-                        - Optional
-                        - Date
