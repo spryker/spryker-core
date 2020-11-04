@@ -34,10 +34,10 @@ class MerchantCategoryReader implements MerchantCategoryReaderInterface
      */
     public function get(MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer): MerchantCategoryResponseTransfer
     {
-        $categoryTransfers = $this->merchantCategoryRepository->getCategories($merchantCategoryCriteriaTransfer);
+        $merchantCategoryTransfers = $this->merchantCategoryRepository->get($merchantCategoryCriteriaTransfer);
 
         return (new MerchantCategoryResponseTransfer())
-            ->setCategories(new ArrayObject($categoryTransfers))
+            ->setMerchantCategories(new ArrayObject($merchantCategoryTransfers))
             ->setIsSuccessful(true);
     }
 }

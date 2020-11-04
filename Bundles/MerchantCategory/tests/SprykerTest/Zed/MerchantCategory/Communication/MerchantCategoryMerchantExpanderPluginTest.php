@@ -7,10 +7,10 @@
 
 namespace SprykerTest\Zed\MerchantCategory\Communication;
 
-use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\MerchantCategoryResponseTransfer;
+use Generated\Shared\Transfer\MerchantCategoryTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\MerchantCategory\Business\MerchantCategoryFacade;
 use Spryker\Zed\MerchantCategory\Communication\Plugin\Merchant\MerchantCategoryMerchantExpanderPlugin;
@@ -35,9 +35,10 @@ class MerchantCategoryMerchantExpanderPluginTest extends Unit
         // Arrange
         $merchantCategoryMerchantExpanderPluginMock = $this->createMerchantCategoryMerchantExpanderPluginMock(
             (new MerchantCategoryResponseTransfer())
-                ->setCategories(new ArrayObject([
-                    new CategoryTransfer(),
-                ]))
+                ->addMerchantCategory(
+                    (new MerchantCategoryTransfer())
+                        ->setCategory(new CategoryTransfer())
+                )
                 ->setIsSuccessful(true)
         );
 
@@ -58,9 +59,10 @@ class MerchantCategoryMerchantExpanderPluginTest extends Unit
         // Arrange
         $merchantCategoryMerchantExpanderPluginMock = $this->createMerchantCategoryMerchantExpanderPluginMock(
             (new MerchantCategoryResponseTransfer())
-                ->setCategories(new ArrayObject([
-                    new CategoryTransfer(),
-                ]))
+                ->addMerchantCategory(
+                    (new MerchantCategoryTransfer())
+                        ->setCategory(new CategoryTransfer())
+                )
                 ->setIsSuccessful(false)
         );
 

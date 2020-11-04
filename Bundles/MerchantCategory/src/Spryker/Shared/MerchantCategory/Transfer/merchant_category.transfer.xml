@@ -10,16 +10,18 @@
 
     <transfer name="MerchantCategoryCriteria">
         <property name="idMerchant" type="int"/>
+        <property name="merchantIds" type="int[]" singular="idMerchant"/>
     </transfer>
 
     <transfer name="MerchantCategory">
         <property name="idMerchantCategory" type="int"/>
         <property name="fkCategory" type="int"/>
         <property name="fkMerchant" type="int"/>
+        <property name="category" type="Category"/>
     </transfer>
 
     <transfer name="MerchantCategoryResponse">
-        <property name="categories" type="Category[]" singular="category"/>
+        <property name="merchantCategories" type="MerchantCategory[]" singular="merchantCategory"/>
         <property name="isSuccessful" type="bool"/>
     </transfer>
 

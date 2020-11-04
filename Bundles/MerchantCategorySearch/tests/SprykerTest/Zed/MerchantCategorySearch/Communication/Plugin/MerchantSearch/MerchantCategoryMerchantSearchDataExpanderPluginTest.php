@@ -8,8 +8,9 @@
 namespace SprykerTest\Zed\MerchantCategorySearch\Communication\Plugin\MerchantSearch;
 
 use Codeception\Test\Unit;
-use Generated\Shared\DataBuilder\CategoryBuilder;
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\MerchantCategoryResponseTransfer;
+use Generated\Shared\Transfer\MerchantCategoryTransfer;
 use Generated\Shared\Transfer\MerchantSearchCollectionTransfer;
 use Generated\Shared\Transfer\MerchantSearchTransfer;
 use Spryker\Zed\MerchantCategorySearch\Communication\MerchantCategorySearchCommunicationFactory;
@@ -31,21 +32,9 @@ use Spryker\Zed\MerchantCategorySearch\Dependency\Facade\MerchantCategorySearchT
 class MerchantCategoryMerchantSearchDataExpanderPluginTest extends Unit
 {
     /**
-     * @uses \Spryker\Zed\MerchantCategorySearch\Communication\Plugin\MerchantSearch\MerchantCategoryMerchantSearchDataExpanderPlugin::ID_MERCHANT
-     */
-    protected const ID_MERCHANT = 'id_merchant';
-
-    /**
-     * @uses \Spryker\Zed\MerchantCategorySearch\Communication\Plugin\MerchantSearch\MerchantCategoryMerchantSearchDataExpanderPlugin::CATEGORY_IDS
+     * @uses \Spryker\Zed\MerchantCategorySearch\Communication\Expander\MerchantCategorySearchExpander::CATEGORY_KEYS
      */
     protected const CATEGORY_KEYS = 'category-keys';
-
-    /**
-     * @uses \Spryker\Zed\MerchantCategorySearch\Communication\Plugin\MerchantSearch\MerchantCategoryMerchantSearchDataExpanderPlugin::SEARCH_RESULT_DATA
-     */
-    protected const SEARCH_RESULT_DATA = 'search-result-data';
-
-    protected const CATEGORY_TRANSFER_COUNT = 3;
 
     /**
      * @var \SprykerTest\Zed\MerchantCategorySearch\MerchantCategorySearchCommunicationTester
@@ -58,44 +47,41 @@ class MerchantCategoryMerchantSearchDataExpanderPluginTest extends Unit
     public function testExpandSuccess(): void
     {
         // Arrange
-        $plugin = new MerchantCategoryMerchantSearchDataExpanderPlugin();
-        $factoryMock = $this->getFactoryMock();
-        $facadeMock = $this->getMerchantCategorySearchToMerchantCategoryFacadeBuilderMock();
+        $expectedCategoryKey = 'example';
 
+        $facadeMock = $this->getMerchantCategoryFacadeMock();
+        $facadeMock->method('get')
+            ->willReturn(
+                (new MerchantCategoryResponseTransfer())
+                    ->addMerchantCategory(
+                        (new MerchantCategoryTransfer())
+                            ->setCategory(
+                                (new CategoryTransfer())
+                                    ->setCategoryKey($expectedCategoryKey)
+                            )
+                    )
+            );
+
+        $factoryMock = $this->getFactoryMock();
         $factoryMock->method('getMerchantCategoryFacade')
             ->willReturn($facadeMock);
 
-        $merchantCategoryResponseTransfer = new MerchantCategoryResponseTransfer();
-        $categoryTransferKeys = $this->addCategoriesToMerchantCategoryResponseTransfer(
-            $merchantCategoryResponseTransfer,
-            static::CATEGORY_TRANSFER_COUNT
-        );
-
-        $facadeMock->method('get')
-            ->willReturn($merchantCategoryResponseTransfer);
-
-        $merchantSearchCollectionTransfer = new MerchantSearchCollectionTransfer();
-        $merchantSearchTransfer = new MerchantSearchTransfer();
-        $merchantSearchTransfer->setData([
-            static::SEARCH_RESULT_DATA => [static::ID_MERCHANT => 1],
-        ]);
-        $merchantSearchCollectionTransfer->addMerchant($merchantSearchTransfer);
+        $plugin = new MerchantCategoryMerchantSearchDataExpanderPlugin();
         $plugin->setFactory($factoryMock);
 
+        $merchantSearchCollectionTransfer = (new MerchantSearchCollectionTransfer())
+            ->addMerchant(new MerchantSearchTransfer());
+
         // Act
-        $resultMerchantSearchData = $plugin->expand($merchantSearchCollectionTransfer);
+        $expandedMerchantSearchCollectionTransfer = $plugin->expand($merchantSearchCollectionTransfer);
 
         // Assert
-        $this->assertCount(1, $resultMerchantSearchData->getMerchants());
-
+        $this->assertNotEmpty($expandedMerchantSearchCollectionTransfer->getMerchants());
         $this->assertSame(
             [
-                static::SEARCH_RESULT_DATA => [
-                    static::ID_MERCHANT => 1,
-                ],
-                static::CATEGORY_KEYS => $categoryTransferKeys,
+                static::CATEGORY_KEYS => [$expectedCategoryKey],
             ],
-            $resultMerchantSearchData->getMerchants()[0]->getData()
+            $expandedMerchantSearchCollectionTransfer->getMerchants()[0]->getData()
         );
     }
 
@@ -112,30 +98,10 @@ class MerchantCategoryMerchantSearchDataExpanderPluginTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\MerchantCategorySearch\Dependency\Facade\MerchantCategorySearchToMerchantCategoryFacadeInterface
      */
-    protected function getMerchantCategorySearchToMerchantCategoryFacadeBuilderMock(): MerchantCategorySearchToMerchantCategoryFacadeInterface
+    protected function getMerchantCategoryFacadeMock(): MerchantCategorySearchToMerchantCategoryFacadeInterface
     {
         return $this->getMockBuilder(MerchantCategorySearchToMerchantCategoryFacadeInterface::class)
             ->setMethods(['get'])
             ->getMock();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantCategoryResponseTransfer $merchantCategoryResponseTransfer
-     * @param int $categoryTransferCount
-     *
-     * @return int[]
-     */
-    protected function addCategoriesToMerchantCategoryResponseTransfer(
-        MerchantCategoryResponseTransfer $merchantCategoryResponseTransfer,
-        int $categoryTransferCount
-    ): array {
-        $categoryTransferKeys = [];
-        while ($categoryTransferCount--) {
-            $categoryTransfer = (new CategoryBuilder())->build();
-            $merchantCategoryResponseTransfer->addCategory($categoryTransfer);
-            $categoryTransferKeys[] = $categoryTransfer->getCategoryKey();
-        }
-
-        return $categoryTransferKeys;
     }
 }

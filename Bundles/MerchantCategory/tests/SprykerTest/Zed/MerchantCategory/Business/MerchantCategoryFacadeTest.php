@@ -54,7 +54,7 @@ class MerchantCategoryFacadeTest extends Unit
             );
 
         // Assert
-        $this->assertCount(1, $merchantCategoryResponseTransfer->getCategories());
+        $this->assertCount(1, $merchantCategoryResponseTransfer->getMerchantCategories());
     }
 
     /**
@@ -73,7 +73,7 @@ class MerchantCategoryFacadeTest extends Unit
             );
 
         // Assert
-        $this->assertEmpty($merchantCategoryResponseTransfer->getCategories());
+        $this->assertEmpty($merchantCategoryResponseTransfer->getMerchantCategories());
     }
 
     /**
@@ -89,6 +89,6 @@ class MerchantCategoryFacadeTest extends Unit
             ->get(new MerchantCategoryCriteriaTransfer());
 
         // Assert
-        $this->assertCount(1, $merchantCategoryResponseTransfer->getCategories());
+        $this->assertCount(1, $merchantCategoryResponseTransfer->getMerchantCategories());
     }
 }

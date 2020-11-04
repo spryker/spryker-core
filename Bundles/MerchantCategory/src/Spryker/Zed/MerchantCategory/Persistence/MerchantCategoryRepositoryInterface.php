@@ -14,7 +14,7 @@ interface MerchantCategoryRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\CategoryTransfer[]
+     * @return \Generated\Shared\Transfer\MerchantCategoryTransfer[]
      */
-    public function getCategories(MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer): array;
+    public function get(MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer): array;
 }

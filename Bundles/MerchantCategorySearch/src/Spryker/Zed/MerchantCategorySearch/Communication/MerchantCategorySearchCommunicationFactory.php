@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantCategorySearch\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\MerchantCategorySearch\Communication\Expander\MerchantCategorySearchExpander;
+use Spryker\Zed\MerchantCategorySearch\Communication\Expander\MerchantCategorySearchExpanderInterface;
 use Spryker\Zed\MerchantCategorySearch\Dependency\Facade\MerchantCategorySearchToMerchantCategoryFacadeInterface;
 use Spryker\Zed\MerchantCategorySearch\MerchantCategorySearchDependencyProvider;
 
@@ -22,5 +24,15 @@ class MerchantCategorySearchCommunicationFactory extends AbstractCommunicationFa
     public function getMerchantCategoryFacade(): MerchantCategorySearchToMerchantCategoryFacadeInterface
     {
         return $this->getProvidedDependency(MerchantCategorySearchDependencyProvider::FACADE_MERCHANT_CATEGORY);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantCategorySearch\Communication\Expander\MerchantCategorySearchExpanderInterface
+     */
+    public function createMerchantCategorySearchExpander(): MerchantCategorySearchExpanderInterface
+    {
+        return new MerchantCategorySearchExpander(
+            $this->getMerchantCategoryFacade()
+        );
     }
 }

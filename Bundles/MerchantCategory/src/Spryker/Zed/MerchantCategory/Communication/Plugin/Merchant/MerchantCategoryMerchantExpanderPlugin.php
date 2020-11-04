@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantCategory\Communication\Plugin\Merchant;
 
+use ArrayObject;
 use Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -40,7 +41,18 @@ class MerchantCategoryMerchantExpanderPlugin extends AbstractPlugin implements M
             return $merchantTransfer;
         }
 
-        $merchantTransfer->setCategories($merchantCategoryResponseTransfer->getCategories());
+        $categoryTransfers = [];
+
+        foreach ($merchantCategoryResponseTransfer->getMerchantCategories() as $merchantCategoryTransfer) {
+            /**
+             * @var \Generated\Shared\Transfer\CategoryTransfer
+             */
+            $categoryTransfer = $merchantCategoryTransfer->getCategory();
+
+            $categoryTransfers[] = $categoryTransfer;
+        }
+
+        $merchantTransfer->setCategories(new ArrayObject($categoryTransfers));
 
         return $merchantTransfer;
     }

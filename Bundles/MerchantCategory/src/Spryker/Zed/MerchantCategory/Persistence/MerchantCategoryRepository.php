@@ -7,12 +7,13 @@
 
 namespace Spryker\Zed\MerchantCategory\Persistence;
 
-use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantCategoryTransfer;
 use Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\MerchantCategory\MerchantCategoryConfig;
 use Spryker\Zed\MerchantCategory\Persistence\Exception\MerchantCategoryLimitException;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\MerchantCategory\Persistence\MerchantCategoryPersistenceFactory getFactory()
@@ -24,13 +25,12 @@ class MerchantCategoryRepository extends AbstractRepository implements MerchantC
      *
      * @throws \Spryker\Zed\MerchantCategory\Persistence\Exception\MerchantCategoryLimitException
      *
-     * @return \Generated\Shared\Transfer\CategoryTransfer[]
+     * @return \Generated\Shared\Transfer\MerchantCategoryTransfer[]
      */
-    public function getCategories(MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer): array
+    public function get(MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer): array
     {
-        $merchantCategoryQuery = $this->getFactory()
-            ->getMerchantCategoryPropelQuery()
-            ->joinWithSpyCategory()
+        $merchantCategoryQuery = $this->getFactory()->getMerchantCategoryPropelQuery();
+        $merchantCategoryQuery->joinWithSpyCategory()
             ->useSpyCategoryQuery()
                 ->leftJoinWithAttribute()
                 ->useAttributeQuery()
@@ -48,15 +48,15 @@ class MerchantCategoryRepository extends AbstractRepository implements MerchantC
 
         $merchantCategoryEntities = $merchantCategoryQuery->find();
 
-        $categoryTransfers = [];
+        $merchantCategoryTransfers = [];
 
         foreach ($merchantCategoryEntities as $merchantCategoryEntity) {
-            $categoryTransfers[] = $this->getFactory()
+            $merchantCategoryTransfers[] = $this->getFactory()
                 ->createMerchantCategoryMapper()
-                ->mapMerchantCategoryEntityToCategoryTransfer($merchantCategoryEntity, new CategoryTransfer());
+                ->mapMerchantCategoryEntityToMerchantCategoryTransfer($merchantCategoryEntity, new MerchantCategoryTransfer());
         }
 
-        return $categoryTransfers;
+        return $merchantCategoryTransfers;
     }
 
     /**
@@ -75,6 +75,10 @@ class MerchantCategoryRepository extends AbstractRepository implements MerchantC
     ): SpyMerchantCategoryQuery {
         if ($merchantCategoryCriteriaTransfer->getIdMerchant()) {
             $merchantCategoryQuery->filterByFkMerchant($merchantCategoryCriteriaTransfer->getIdMerchant());
+        }
+
+        if ($merchantCategoryCriteriaTransfer->getMerchantIds()) {
+            $merchantCategoryQuery->filterByFkMerchant($merchantCategoryCriteriaTransfer->getMerchantIds(), Criteria::IN);
         }
 
         return $merchantCategoryQuery;
