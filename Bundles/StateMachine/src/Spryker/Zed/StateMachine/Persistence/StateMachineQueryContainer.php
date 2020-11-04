@@ -175,7 +175,7 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
             ->joinProcess()
             ->filterByName($states, Criteria::IN)
             ->useStateHistoryQuery()
-                ->orderByCreatedAt($historySortDirection)
+                ->orderByIdStateMachineItemStateHistory($historySortDirection)
             ->endUse();
     }
 
