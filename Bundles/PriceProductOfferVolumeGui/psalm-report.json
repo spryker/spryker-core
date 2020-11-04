@@ -1,5 +1,102 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getProductOfferReference on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductOfferVolumeGui/src/Spryker/Zed/PriceProductOfferVolumeGui/Communication/Controller/ViewController.php",
+            "snippet": "            'productOfferReference' => $productOfferTransfer->getProductOfferReference(),",
+            "selected_text": "getProductOfferReference",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\PriceProductOfferVolumeGui\\Dependency\\Service\\PriceProductOfferVolumeGuiToUtilEncodingServiceInterface::decodeJson cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductOfferVolumeGui/src/Spryker/Zed/PriceProductOfferVolumeGui/Communication/Reader/PriceProductOfferVolumeReader.php",
+            "snippet": "                ->decodeJson($priceProductTransfer->getMoneyValue()->getPriceData(), true);",
+            "selected_text": "$priceProductTransfer->getMoneyValue()->getPriceData()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getPriceData on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductOfferVolumeGui/src/Spryker/Zed/PriceProductOfferVolumeGui/Communication/Reader/PriceProductOfferVolumeReader.php",
+            "snippet": "                ->decodeJson($priceProductTransfer->getMoneyValue()->getPriceData(), true);",
+            "selected_text": "getPriceData",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCurrency on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductOfferVolumeGui/src/Spryker/Zed/PriceProductOfferVolumeGui/Communication/Reader/PriceProductOfferVolumeReader.php",
+            "snippet": "                $moneyValueTransfer->getCurrency()->getCode() === $currencyCode",
+            "selected_text": "getCurrency",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCode on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductOfferVolumeGui/src/Spryker/Zed/PriceProductOfferVolumeGui/Communication/Reader/PriceProductOfferVolumeReader.php",
+            "snippet": "                $moneyValueTransfer->getCurrency()->getCode() === $currencyCode",
+            "selected_text": "getCode",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getStore on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductOfferVolumeGui/src/Spryker/Zed/PriceProductOfferVolumeGui/Communication/Reader/PriceProductOfferVolumeReader.php",
+            "snippet": "                && $moneyValueTransfer->getStore()->getName() === $storeName",
+            "selected_text": "getStore",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getName on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductOfferVolumeGui/src/Spryker/Zed/PriceProductOfferVolumeGui/Communication/Reader/PriceProductOfferVolumeReader.php",
+            "snippet": "                && $moneyValueTransfer->getStore()->getName() === $storeName",
+            "selected_text": "getName",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "PossiblyNullArrayAccess",
+            "message": "Cannot access array value on possibly null variable $priceData of type mixed|null",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductOfferVolumeGui/src/Spryker/Zed/PriceProductOfferVolumeGui/Communication/Reader/PriceProductOfferVolumeReader.php",
+            "snippet": "                $data['volumePrices'] = $priceData['volume_prices'];",
+            "selected_text": "$priceData['volume_prices']",
+            "error_level": 3,
+            "shortcode": 79
+        }
+    ],
     "deprecation": []
 }

@@ -217,30 +217,6 @@
             "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Sales\\Persistence\\SpySalesOrderItemMetadata[]",
             "error_level": 4,
             "shortcode": 141
-        },
-        {
-            "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesProductConnector/src/Spryker/Zed/SalesProductConnector/SalesProductConnectorDependencyProvider.php",
-            "snippet": "            return new ProductToSalesProductConnectorQueryContainerBridge($container->getLocator()->product()->queryContainer());",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 76,
-            "line_to": 76,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesProductConnector/src/Spryker/Zed/SalesProductConnector/SalesProductConnectorDependencyProvider.php",
-            "snippet": "                $container->getLocator()->utilEncoding()->service()",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

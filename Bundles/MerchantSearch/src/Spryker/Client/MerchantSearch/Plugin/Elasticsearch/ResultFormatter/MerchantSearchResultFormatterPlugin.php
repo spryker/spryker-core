@@ -16,6 +16,7 @@ use Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\AbstractElasticsea
 class MerchantSearchResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
     protected const NAME = 'MerchantSearchCollection';
+    protected const ITEMS_PER_PAGE = 'from';
 
     /**
      * @api
@@ -38,14 +39,15 @@ class MerchantSearchResultFormatterPlugin extends AbstractElasticsearchResultFor
         $merchantSearchCollection = new MerchantSearchCollectionTransfer();
 
         foreach ($searchResult->getResults() as $document) {
-            $merchantSearchCollection->addMerchantSearch(
+            $merchantSearchCollection->addMerchant(
                 $this->getMappedMerchantSearchTransfer($document->getSource()[MerchantIndexMap::SEARCH_RESULT_DATA])
             );
         }
 
-        $merchantSearchCollection->setNbResults(
-            $searchResult->getResponse()->getData()['hits']['total'] ?? 0
-        );
+        $merchantSearchCollection->setNbResults($searchResult->getTotalHits())
+            ->setIpp(
+                $searchResult->getQuery()->getParam(static::ITEMS_PER_PAGE)
+            );
 
         return $merchantSearchCollection;
     }

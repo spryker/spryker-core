@@ -1,5 +1,163 @@
 {
     "error": [],
-    "warning": [],
-    "deprecation": []
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdAgent on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/AgentAuthRestApi/src/Spryker/Glue/AgentAuthRestApi/Processor/Creator/AgentCustomerImpersonationAccessTokenCreator.php",
+            "snippet": "        if (!$restRequest->getRestUser() || !$restRequest->getRestUser()->getIdAgent()) {",
+            "selected_text": "getIdAgent",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\AgentAuthRestApi\\Dependency\\Service\\AgentAuthRestApiToUtilEncodingServiceInterface::decodeJson cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/AgentAuthRestApi/src/Spryker/Glue/AgentAuthRestApi/Processor/Reader/AgentAuthorizationHeaderReader.php",
+            "snippet": "        $decodedOauthUserId = $this->utilEncodingService->decodeJson($oauthAccessTokenDataTransfer->getOauthUserId(), true);",
+            "selected_text": "$oauthAccessTokenDataTransfer->getOauthUserId()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdAgent on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/AgentAuthRestApi/src/Spryker/Glue/AgentAuthRestApi/Processor/Reader/CustomerReader.php",
+            "snippet": "        if (!$restRequest->getRestUser() || !$restRequest->getRestUser()->getIdAgent()) {",
+            "selected_text": "getIdAgent",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 80,
+            "line_to": 80,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getOffset on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/AgentAuthRestApi/src/Spryker/Glue/AgentAuthRestApi/Processor/Reader/CustomerReader.php",
+            "snippet": "            $offset = $restRequest->getPage()->getOffset();",
+            "selected_text": "getOffset",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 81,
+            "line_to": 81,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getLimit on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/AgentAuthRestApi/src/Spryker/Glue/AgentAuthRestApi/Processor/Reader/CustomerReader.php",
+            "snippet": "            $limit = $restRequest->getPage()->getLimit();",
+            "selected_text": "getLimit",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 94,
+            "line_to": 94,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\GlueApplication\\Rest\\JsonApi\\RestResourceBuilderInterface::createRestResponse cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/AgentAuthRestApi/src/Spryker/Glue/AgentAuthRestApi/Processor/RestResponseBuilder/AgentAccessTokenRestResponseBuilder.php",
+            "snippet": "            $customerAutocompleteResponseTransfer->getPagination()->getNbResults(),",
+            "selected_text": "$customerAutocompleteResponseTransfer->getPagination()->getNbResults()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 94,
+            "line_to": 94,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getNbResults on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/AgentAuthRestApi/src/Spryker/Glue/AgentAuthRestApi/Processor/RestResponseBuilder/AgentAccessTokenRestResponseBuilder.php",
+            "snippet": "            $customerAutocompleteResponseTransfer->getPagination()->getNbResults(),",
+            "selected_text": "getNbResults",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 95,
+            "line_to": 95,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\GlueApplication\\Rest\\JsonApi\\RestResourceBuilderInterface::createRestResponse cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/AgentAuthRestApi/src/Spryker/Glue/AgentAuthRestApi/Processor/RestResponseBuilder/AgentAccessTokenRestResponseBuilder.php",
+            "snippet": "            $customerAutocompleteResponseTransfer->getPagination()->getMaxPerPage()",
+            "selected_text": "$customerAutocompleteResponseTransfer->getPagination()->getMaxPerPage()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 95,
+            "line_to": 95,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getMaxPerPage on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/AgentAuthRestApi/src/Spryker/Glue/AgentAuthRestApi/Processor/RestResponseBuilder/AgentAccessTokenRestResponseBuilder.php",
+            "snippet": "            $customerAutocompleteResponseTransfer->getPagination()->getMaxPerPage()",
+            "selected_text": "getMaxPerPage",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 107,
+            "line_to": 107,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\GlueApplication\\Rest\\Request\\Data\\Page::__construct cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/AgentAuthRestApi/src/Spryker/Glue/AgentAuthRestApi/Processor/RestResponseBuilder/AgentAccessTokenRestResponseBuilder.php",
+            "snippet": "            $restRequest->setPage(new Page(0, $customerAutocompleteResponseTransfer->getPagination()->getMaxPerPage()));",
+            "selected_text": "$customerAutocompleteResponseTransfer->getPagination()->getMaxPerPage()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 107,
+            "line_to": 107,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getMaxPerPage on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/AgentAuthRestApi/src/Spryker/Glue/AgentAuthRestApi/Processor/RestResponseBuilder/AgentAccessTokenRestResponseBuilder.php",
+            "snippet": "            $restRequest->setPage(new Page(0, $customerAutocompleteResponseTransfer->getPagination()->getMaxPerPage()));",
+            "selected_text": "getMaxPerPage",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 74,
+            "line_to": 74,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdAgent on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/AgentAuthRestApi/src/Spryker/Glue/AgentAuthRestApi/Processor/Validator/AgentValidator.php",
+            "snippet": "        return (bool)$restRequest->getRestUser()->getIdAgent();",
+            "selected_text": "getIdAgent",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 48,
+            "line_to": 48,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Client\\Oauth\\OauthClientInterface::validateAccessToken has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/AgentAuthRestApi/src/Spryker/Glue/AgentAuthRestApi/Dependency/Client/AgentAuthRestApiToOauthClientBridge.php",
+            "snippet": "        return $this->oauthClient->validateAccessToken($authAccessTokenValidationRequestTransfer);",
+            "selected_text": "validateAccessToken",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
 }

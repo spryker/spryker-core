@@ -7,17 +7,19 @@
 
 namespace Spryker\Zed\MerchantSearchExtension\Dependency\Plugin;
 
+use Generated\Shared\Transfer\MerchantSearchCollectionTransfer;
+
 interface MerchantSearchDataExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Allows to expand merchant search data before saving to Elastica.
+     * - Allows to expand merchant search data before saving to search engine.
      *
      * @api
      *
-     * @param array $merchantSearchData
+     * @param \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\MerchantSearchCollectionTransfer
      */
-    public function expand(array $merchantSearchData): array;
+    public function expand(MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer): MerchantSearchCollectionTransfer;
 }

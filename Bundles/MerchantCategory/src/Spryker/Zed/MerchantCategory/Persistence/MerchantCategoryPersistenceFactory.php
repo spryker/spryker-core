@@ -18,6 +18,8 @@ use Spryker\Zed\MerchantCategory\Persistence\Propel\Mapper\MerchantCategoryMappe
 class MerchantCategoryPersistenceFactory extends AbstractPersistenceFactory
 {
     /**
+     * @phpstan-return \Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery<\Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategory>
+     *
      * @return \Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery
      */
     public function getMerchantCategoryPropelQuery(): SpyMerchantCategoryQuery

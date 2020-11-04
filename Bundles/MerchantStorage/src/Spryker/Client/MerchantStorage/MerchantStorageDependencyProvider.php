@@ -33,7 +33,7 @@ class MerchantStorageDependencyProvider extends AbstractDependencyProvider
         $container = $this->addStorageClient($container);
         $container = $this->addUtilEncodingService($container);
         $container = $this->addStoreClient($container);
-        
+
         return $container;
     }
 

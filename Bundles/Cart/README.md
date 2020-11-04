@@ -1,6 +1,6 @@
 # Cart Module
 [![Build Status](https://travis-ci.org/spryker/cart.svg)](https://travis-ci.org/spryker/cart)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Cart consists of a few components in Yves and Zed. The Yves components create the cart requests and persist the cart into the session. The Zed components persist the data into the database and expand the items with data obtained from plugins.
 

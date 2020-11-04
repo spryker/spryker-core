@@ -8,9 +8,26 @@
     </transfer>
 
     <transfer name="RestMerchantCategoryAttributes">
-        <property name="idCategory" type="int"/>
         <property name="categoryKey" type="string"/>
-        <property name="isActive" type="bool"/>
         <property name="name" type="string"/>
     </transfer>
+
+    <transfer name="MerchantStorage">
+        <property name="categories" type="MerchantCategoryStorage[]" singular="category"/>
+    </transfer>
+
+    <transfer name="MerchantCategoryStorage">
+        <property name="categoryKey" type="string"/>
+        <property name="localizedAttributes" type="MerchantCategoryLocalizedAttributes[]" singular="localizedAttributes"/>
+    </transfer>
+
+    <transfer name="MerchantCategoryLocalizedAttributes">
+        <property name="locale" type="Locale"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+    </transfer>
+
 </transfers>

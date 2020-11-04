@@ -22,11 +22,6 @@ use Symfony\Component\HttpFoundation\Response;
 class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterface
 {
     /**
-     * @uses \Spryker\Client\MerchantSearch\MerchantSearchConfig::PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME
-     */
-    protected const ITEMS_PER_PAGE = 'ipp';
-
-    /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
     protected $restResourceBuilder;
@@ -115,6 +110,7 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
     /**
      * @param \Generated\Shared\Transfer\MerchantSearchRequestTransfer $merchantSearchRequestTransfer
      * @param \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer
+     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
      * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
@@ -122,31 +118,25 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
     public function createMerchantListRestResponse(
         MerchantSearchRequestTransfer $merchantSearchRequestTransfer,
         MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer,
+        array $merchantStorageTransfers,
         string $localeName
     ): RestResponseInterface {
-        $restMerchantsAttributesTransfers = [];
-
-        foreach ($merchantSearchCollectionTransfer->getMerchantSearches() as $key => $merchantSearchTransfer) {
-            $restMerchantsAttributesTransfers[$key] = $this->merchantMapper
-                ->mapMerchantSearchTransferToRestMerchantsAttributesTransfer(
-                    $merchantSearchTransfer,
-                    new RestMerchantsAttributesTransfer(),
-                    $localeName
-                );
-        }
-
+        /**
+         * @var int $resultsNumber
+         */
+        $resultsNumber = $merchantSearchCollectionTransfer->requireNbResults()->getNbResults();
+        /**
+         * @var int $itemsPerPage
+         */
+        $itemsPerPage = $merchantSearchCollectionTransfer->requireIpp()->getIpp();
         $restResponse = $this->restResourceBuilder->createRestResponse(
-            $merchantSearchCollectionTransfer->getNbResults(),
-            $merchantSearchRequestTransfer->getRequestParameters()[static::ITEMS_PER_PAGE] ?? 0
+            $resultsNumber,
+            $itemsPerPage
         );
 
-        foreach ($restMerchantsAttributesTransfers as $key => $restMerchantsAttributesTransfer) {
+        foreach ($merchantStorageTransfers as $merchantStorageTransfer) {
             $restResponse->addResource(
-                $this->restResourceBuilder->createRestResource(
-                    MerchantsRestApiConfig::RESOURCE_MERCHANTS,
-                    $merchantSearchCollectionTransfer->getMerchantSearches()[$key]->getMerchantReference(),
-                    $restMerchantsAttributesTransfer
-                )
+                $this->createMerchantsRestResource($merchantStorageTransfer, $localeName)
             );
         }
 

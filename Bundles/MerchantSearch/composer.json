@@ -4,12 +4,12 @@
   "description": "MerchantSearch module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/event-behavior": "^1.0.0",
     "spryker/kernel": "^3.33.0",
-    "spryker/merchant": "^3.0.0",
+    "spryker/merchant": "^3.1.0",
     "spryker/merchant-search-extension": "^0.1.0",
-    "spryker/propel-orm": "^1.5.0",
+    "spryker/propel-orm": "^1.0.0",
     "spryker/publisher-extension": "^1.0.0",
     "spryker/search": "^8.0.0",
     "spryker/search-extension": "^1.0.0",
@@ -23,8 +23,11 @@
     "spryker/search-elasticsearch": "*"
   },
   "suggest": {
-    "spryker/elastica": "If you want to use search functionality from MerchantSearchClient.",
-    "spryker/search-elasticsearch": "If you want to use search plugins."
+    "spryker/elastica": "If you want to use Elastica plugins.",
+    "spryker/search-elasticsearch": "If you want to use search plugins.",
+    "spryker/merchant-profile": "If you want to use Entity.spy_merchant_profile.update Event",
+    "spryker/merchant-category": "If you want to use Entity.spy_merchant_category.update Event",
+    "spryker/category": "If you want to use Entity.spy_category.update Event"
   },
   "autoload": {
     "psr-4": {

@@ -110,29 +110,29 @@ class TransferDefinitionLoader implements LoaderInterface
 
     /**
      * @param array $definition
-     * @param string $bundle
-     * @param string $containingBundle
+     * @param string $module
+     * @param string $containingModule
      *
      * @return void
      */
-    protected function addDefinition(array $definition, $bundle, $containingBundle)
+    protected function addDefinition(array $definition, $module, $containingModule)
     {
         if (isset($definition[self::KEY_TRANSFER][0])) {
             foreach ($definition[self::KEY_TRANSFER] as $transfer) {
-                $this->assertCasing($transfer, $bundle);
+                $this->assertCasing($transfer, $module);
 
-                $transfer[self::KEY_BUNDLE] = $bundle;
-                $transfer[self::KEY_CONTAINING_BUNDLE] = $containingBundle;
+                $transfer[self::KEY_BUNDLE] = $module;
+                $transfer[self::KEY_CONTAINING_BUNDLE] = $containingModule;
 
                 $transfer = $this->normalize($transfer);
                 $this->transferDefinitions[] = $transfer;
             }
         } else {
             $transfer = $definition[self::KEY_TRANSFER];
-            $this->assertCasing($transfer, $bundle);
+            $this->assertCasing($transfer, $module);
 
-            $transfer[self::KEY_BUNDLE] = $bundle;
-            $transfer[self::KEY_CONTAINING_BUNDLE] = $containingBundle;
+            $transfer[self::KEY_BUNDLE] = $module;
+            $transfer[self::KEY_CONTAINING_BUNDLE] = $containingModule;
 
             $transfer = $this->normalize($transfer);
             $this->transferDefinitions[] = $transfer;

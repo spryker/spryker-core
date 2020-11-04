@@ -4,11 +4,11 @@
   "description": "MerchantCategory module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/category": "^4.0.0",
     "spryker/kernel": "^3.33.0",
-    "spryker/merchant": "^3.0.0",
-    "spryker/merchant-extension": "^1.2.0"
+    "spryker/merchant": "^3.1.0",
+    "spryker/merchant-extension": "^1.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -18,7 +18,7 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Zed\\MerchantCategory\\Helper\\": "tests/SprykerTest/Zed/MerchantCategory/_support/Helper/"
+      "SprykerTest\\Shared\\MerchantCategory\\Helper\\": "tests/SprykerTest/Shared/MerchantCategory/_support/Helper/"
     }
   },
   "autoload-dev": {

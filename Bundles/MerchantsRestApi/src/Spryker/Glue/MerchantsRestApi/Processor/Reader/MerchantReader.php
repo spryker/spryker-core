@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\MerchantsRestApi\Processor\Reader;
 
+use Generated\Shared\Transfer\MerchantSearchCollectionTransfer;
 use Generated\Shared\Transfer\MerchantSearchRequestTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -93,23 +94,14 @@ class MerchantReader implements MerchantReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function get(RestRequestInterface $restRequest): RestResponseInterface
+    public function getMerchant(RestRequestInterface $restRequest): RestResponseInterface
     {
-        if ($restRequest->getResource()->getId()) {
-            return $this->getMerchant($restRequest);
-        }
+        /**
+         * @var string $merchantReference
+         */
+        $merchantReference = $restRequest->getResource()->getId();
+        $merchantStorageTransfer = $this->merchantStorageClient->findOneByMerchantReference($merchantReference);
 
-        return $this->getMerchants($restRequest);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function getMerchant(RestRequestInterface $restRequest): RestResponseInterface
-    {
-        $merchantStorageTransfer = $this->merchantStorageClient->findOneByMerchantReference($restRequest->getResource()->getId());
         if (!$merchantStorageTransfer) {
             return $this->merchantRestResponseBuilder->createMerchantNotFoundErrorResponse();
         }
@@ -130,7 +122,7 @@ class MerchantReader implements MerchantReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function getMerchants(RestRequestInterface $restRequest): RestResponseInterface
+    public function getMerchants(RestRequestInterface $restRequest): RestResponseInterface
     {
         $merchantSearchRequestTransfer = $this->createMerchantSearchRequest($restRequest);
         $searchResult = $this->merchantSearchClient->merchantSearch(
@@ -140,16 +132,42 @@ class MerchantReader implements MerchantReaderInterface
         /** @var \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer */
         $merchantSearchCollectionTransfer = $searchResult[static::KEY_MERCHANT_SEARCH_COLLECTION];
 
-        $merchantSearchCollectionTransfer = $this->merchantTranslator->translateMerchantSearchCollection(
-            $merchantSearchCollectionTransfer,
+        $merchantStorageTransfers = $this->merchantStorageClient->get(
+            $this->extractMerchantIds($merchantSearchCollectionTransfer)
+        );
+
+        $merchantStorageTransfers = $this->merchantTranslator->translateMerchantStorageTransfers(
+            $merchantStorageTransfers,
             $restRequest->getMetadata()->getLocale()
         );
 
         return $this->merchantRestResponseBuilder->createMerchantListRestResponse(
             $merchantSearchRequestTransfer,
             $merchantSearchCollectionTransfer,
+            $merchantStorageTransfers,
             $restRequest->getMetadata()->getLocale()
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer
+     *
+     * @return int[]
+     */
+    protected function extractMerchantIds(MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer): array
+    {
+        $merchantIds = [];
+
+        foreach ($merchantSearchCollectionTransfer->getMerchants() as $merchantSearchTransfer) {
+            /**
+             * @var int $idMerchant
+             */
+            $idMerchant = $merchantSearchTransfer->requireIdMerchant()->getIdMerchant();
+
+            $merchantIds[] = $idMerchant;
+        }
+
+        return $merchantIds;
     }
 
     /**

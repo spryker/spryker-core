@@ -75,7 +75,7 @@ class MerchantSearchMapper implements MerchantSearchMapperInterface
                 $merchantTransfer,
                 new MerchantSearchTransfer()
             );
-            $merchantSearchCollectionTransfer->addMerchantSearch($merchantSearchTransfer);
+            $merchantSearchCollectionTransfer->addMerchant($merchantSearchTransfer);
         }
 
         return $merchantSearchCollectionTransfer;

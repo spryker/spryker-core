@@ -46,8 +46,12 @@ class MerchantsResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        return $this->getFactory()
-            ->createMerchantReader()
-            ->get($restRequest);
+        $merchantReader = $this->getFactory()->createMerchantReader();
+
+        if ($restRequest->getResource()->getId()) {
+            return $merchantReader->getMerchant($restRequest);
+        }
+
+        return $merchantReader->getMerchants($restRequest);
     }
 }

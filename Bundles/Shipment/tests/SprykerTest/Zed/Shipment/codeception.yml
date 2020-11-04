@@ -32,3 +32,19 @@ suites:
                 - \SprykerTest\Shared\Sales\Helper\SalesHelper
                 - \SprykerTest\Shared\Tax\Helper\TaxSetDataHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
+    Persistence:
+        path: Persistence
+        class_name: ShipmentPersistenceTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Shipment\Helper\ShipmentCarrierDataHelper
+                - \SprykerTest\Shared\Shipment\Helper\ShipmentDataHelper
+                - \SprykerTest\Shared\Shipment\Helper\ShipmentMethodDataHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper

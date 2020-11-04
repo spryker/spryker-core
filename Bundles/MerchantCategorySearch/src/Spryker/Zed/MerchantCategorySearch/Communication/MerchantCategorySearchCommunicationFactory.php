@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantCategorySearch\Dependency\Facade\MerchantCategorySearchToMerchantCategoryFacadeInterface;
 use Spryker\Zed\MerchantCategorySearch\MerchantCategorySearchDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\MerchantCategorySearch\MerchantCategorySearchConfig getConfig()
+ */
 class MerchantCategorySearchCommunicationFactory extends AbstractCommunicationFactory
 {
     /**

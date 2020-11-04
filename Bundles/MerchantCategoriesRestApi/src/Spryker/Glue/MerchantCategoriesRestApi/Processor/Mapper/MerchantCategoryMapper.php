@@ -8,32 +8,36 @@
 namespace Spryker\Glue\MerchantCategoriesRestApi\Processor\Mapper;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
-use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\MerchantCategoryLocalizedAttributesTransfer;
+use Generated\Shared\Transfer\MerchantCategoryStorageTransfer;
 use Generated\Shared\Transfer\RestMerchantCategoryAttributesTransfer;
 use Generated\Shared\Transfer\RestMerchantsAttributesTransfer;
 
 class MerchantCategoryMapper implements MerchantCategoryMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer[] $categoryTransfers
+     * @param \Generated\Shared\Transfer\MerchantCategoryStorageTransfer[] $merchantCategoryStorageTransfers
      * @param \Generated\Shared\Transfer\RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\RestMerchantsAttributesTransfer
      */
     public function mapCategoryTransfersToRestMerchantsAttributesTransfer(
-        array $categoryTransfers,
+        array $merchantCategoryStorageTransfers,
         RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer,
         string $localeName
     ): RestMerchantsAttributesTransfer {
         $restMerchantsCategoryAttributesTransfers = [];
 
-        foreach ($categoryTransfers as $categoryTransfer) {
+        foreach ($merchantCategoryStorageTransfers as $categoryTransfer) {
             $restMerchantsCategoryAttributesTransfer = (new RestMerchantCategoryAttributesTransfer())
                 ->fromArray($categoryTransfer->toArray(), true);
 
             $categoryLocalizedAttributesTransfer = $this->findLocalizedAttributesByLocaleName($categoryTransfer, $localeName);
+            if (!$categoryLocalizedAttributesTransfer) {
+                continue;
+            }
+
             $restMerchantsCategoryAttributesTransfer->setName($categoryLocalizedAttributesTransfer->getName());
 
             $restMerchantsCategoryAttributesTransfers[] = $restMerchantsCategoryAttributesTransfer;
@@ -43,15 +47,19 @@ class MerchantCategoryMapper implements MerchantCategoryMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\MerchantCategoryStorageTransfer $merchantCategoryStorageTransfer
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer|null
+     * @return \Generated\Shared\Transfer\MerchantCategoryLocalizedAttributesTransfer|null
      */
-    protected function findLocalizedAttributesByLocaleName(CategoryTransfer $categoryTransfer, string $localeName): ?CategoryLocalizedAttributesTransfer
-    {
-        foreach ($categoryTransfer->getLocalizedAttributes() as $categoryLocalizedAttributesTransfer) {
-            if ($categoryLocalizedAttributesTransfer->getLocale()->getLocaleName() === $localeName) {
+    protected function findLocalizedAttributesByLocaleName(
+        MerchantCategoryStorageTransfer $merchantCategoryStorageTransfer,
+        string $localeName
+    ): ?MerchantCategoryLocalizedAttributesTransfer {
+        foreach ($merchantCategoryStorageTransfer->getLocalizedAttributes() as $categoryLocalizedAttributesTransfer) {
+            $localeTransfer = $categoryLocalizedAttributesTransfer->getLocale();
+
+            if ($localeTransfer && $localeTransfer->getLocaleName() === $localeName) {
                 return $categoryLocalizedAttributesTransfer;
             }
         }

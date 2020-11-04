@@ -31,6 +31,16 @@ class MerchantCategoryFacadeTest extends Unit
     /**
      * @return void
      */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->tester->cleanUpDatabase();
+    }
+
+    /**
+     * @return void
+     */
     public function testGetReturnsListOfMerchantCategoriesByMerchantId(): void
     {
         // Arrange
@@ -64,5 +74,21 @@ class MerchantCategoryFacadeTest extends Unit
 
         // Assert
         $this->assertEmpty($merchantCategoryResponseTransfer->getCategories());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetReturnsNothingForNoMerchantId(): void
+    {
+        // Arrange
+        $this->tester->haveMerchantCategory();
+
+        // Act
+        $merchantCategoryResponseTransfer = $this->tester->getFacade()
+            ->get(new MerchantCategoryCriteriaTransfer());
+
+        // Assert
+        $this->assertCount(1, $merchantCategoryResponseTransfer->getCategories());
     }
 }

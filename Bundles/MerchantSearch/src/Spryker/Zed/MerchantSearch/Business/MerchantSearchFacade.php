@@ -42,6 +42,22 @@ class MerchantSearchFacade extends AbstractFacade implements MerchantSearchFacad
      *
      * @return void
      */
+    public function writeCollectionByMerchantCategoryEvents(array $eventTransfers): void
+    {
+        $this->getFactory()
+            ->createMerchantSearchWriter()
+            ->writeCollectionByMerchantCategoryEvents($eventTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
     public function deleteCollectionByMerchantEvents(array $eventTransfers): void
     {
         $this->getFactory()

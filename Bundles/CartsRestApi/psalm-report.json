@@ -1,30 +1,19 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 67,
+            "line_to": 67,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Glue\\CartsRestApi\\Processor\\CartItem\\CartItemAdder::addItem has wrong name $restCartItemsAttributesTransfer, expecting $restCartItemsAttributesResponseTransfer as defined by Spryker\\Glue\\CartsRestApi\\Processor\\CartItem\\CartItemAdderInterface::addItem",
+            "file_name": "vendor/spryker/spryker/Bundles/CartsRestApi/src/Spryker/Glue/CartsRestApi/Processor/CartItem/CartItemAdder.php",
+            "snippet": "        RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer",
+            "selected_text": "$restCartItemsAttributesTransfer",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
     "warning": [
-        {
-            "severity": "info",
-            "line_from": 39,
-            "line_to": 39,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CartsRestApi/src/Spryker/Client/CartsRestApi/CartsRestApiDependencyProvider.php",
-            "snippet": "            return new CartsRestApiToZedRequestClientBridge($container->getLocator()->zedRequest()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 52,
-            "line_to": 52,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CartsRestApi/src/Spryker/Glue/CartsRestApi/CartsRestApiDependencyProvider.php",
-            "snippet": "            return new CartsRestApiToPersistentCartClientBridge($container->getLocator()->persistentCart()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
         {
             "severity": "info",
             "line_from": 79,
@@ -279,6 +268,30 @@
         },
         {
             "severity": "info",
+            "line_from": 65,
+            "line_to": 65,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/CartsRestApi/src/Spryker/Glue/CartsRestApi/Processor/Expander/CartItemByQuoteResourceRelationshipExpander.php",
+            "snippet": "                $quoteTransfer->getItems()->getArrayCopy(),",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 99,
+            "line_to": 99,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/CartsRestApi/src/Spryker/Glue/CartsRestApi/Processor/Expander/CartItemByQuoteResourceRelationshipExpander.php",
+            "snippet": "                $quoteTransfer->getItems()->getArrayCopy(),",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
             "line_from": 58,
             "line_to": 58,
             "type": "PossiblyNullReference",
@@ -483,8 +496,8 @@
         },
         {
             "severity": "info",
-            "line_from": 106,
-            "line_to": 106,
+            "line_from": 113,
+            "line_to": 113,
             "type": "MismatchingDocblockParamType",
             "message": "Parameter $errors has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\QuoteErrorTransfer>', should be 'ArrayObject'",
             "file_name": "vendor/spryker/spryker/Bundles/CartsRestApi/src/Spryker/Glue/CartsRestApi/Processor/RestResponseBuilder/CartRestResponseBuilder.php",
@@ -492,6 +505,18 @@
             "selected_text": "\\Generated\\Shared\\Transfer\\QuoteErrorTransfer[]|\\ArrayObject",
             "error_level": 4,
             "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 184,
+            "line_to": 184,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/CartsRestApi/src/Spryker/Glue/CartsRestApi/Processor/RestResponseBuilder/CartRestResponseBuilder.php",
+            "snippet": "            $quoteTransfer->getItems()->getArrayCopy(),",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -507,8 +532,8 @@
         },
         {
             "severity": "info",
-            "line_from": 88,
-            "line_to": 88,
+            "line_from": 101,
+            "line_to": 101,
             "type": "MismatchingDocblockParamType",
             "message": "Parameter $errors has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\QuoteErrorTransfer>', should be 'ArrayObject'",
             "file_name": "vendor/spryker/spryker/Bundles/CartsRestApi/src/Spryker/Glue/CartsRestApi/Processor/RestResponseBuilder/GuestCartRestResponseBuilder.php",
@@ -516,6 +541,18 @@
             "selected_text": "\\Generated\\Shared\\Transfer\\QuoteErrorTransfer[]|\\ArrayObject",
             "error_level": 4,
             "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 138,
+            "line_to": 138,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/CartsRestApi/src/Spryker/Glue/CartsRestApi/Processor/RestResponseBuilder/GuestCartRestResponseBuilder.php",
+            "snippet": "            $quoteTransfer->getItems()->getArrayCopy(),",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -531,8 +568,8 @@
         },
         {
             "severity": "info",
-            "line_from": 106,
-            "line_to": 106,
+            "line_from": 109,
+            "line_to": 109,
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CartsRestApi/src/Spryker/Glue/CartsRestApi/Processor/RestResponseBuilder/ItemResponseBuilder.php",
@@ -543,8 +580,8 @@
         },
         {
             "severity": "info",
-            "line_from": 108,
-            "line_to": 108,
+            "line_from": 111,
+            "line_to": 111,
             "type": "PossiblyNullArgument",
             "message": "Argument 5 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CartsRestApi/src/Spryker/Glue/CartsRestApi/Processor/RestResponseBuilder/ItemResponseBuilder.php",
@@ -555,8 +592,8 @@
         },
         {
             "severity": "info",
-            "line_from": 130,
-            "line_to": 130,
+            "line_from": 133,
+            "line_to": 133,
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CartsRestApi/src/Spryker/Glue/CartsRestApi/Processor/RestResponseBuilder/ItemResponseBuilder.php",
@@ -567,8 +604,8 @@
         },
         {
             "severity": "info",
-            "line_from": 132,
-            "line_to": 132,
+            "line_from": 135,
+            "line_to": 135,
             "type": "PossiblyNullArgument",
             "message": "Argument 5 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CartsRestApi/src/Spryker/Glue/CartsRestApi/Processor/RestResponseBuilder/ItemResponseBuilder.php",
@@ -576,6 +613,42 @@
             "selected_text": "$itemTransfer->getGroupKey()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCustomerReference on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CartsRestApi/src/Spryker/Zed/CartsRestApi/Business/PermissionChecker/QuotePermissionChecker.php",
+            "snippet": "        if ($quoteTransfer->getCustomer()->getCustomerReference() === $quoteTransfer->getCustomerReference()) {",
+            "selected_text": "getCustomerReference",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCompanyUserTransfer on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CartsRestApi/src/Spryker/Zed/CartsRestApi/Business/PermissionChecker/QuotePermissionChecker.php",
+            "snippet": "            !$quoteTransfer->getCustomer()->getCompanyUserTransfer()",
+            "selected_text": "getCompanyUserTransfer",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 67,
+            "line_to": 67,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCompanyUserTransfer on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CartsRestApi/src/Spryker/Zed/CartsRestApi/Business/PermissionChecker/QuotePermissionChecker.php",
+            "snippet": "            || !$quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser()",
+            "selected_text": "getCompanyUserTransfer",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -600,6 +673,18 @@
             "selected_text": "$quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 74,
+            "line_to": 74,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCompanyUserTransfer on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CartsRestApi/src/Spryker/Zed/CartsRestApi/Business/PermissionChecker/QuotePermissionChecker.php",
+            "snippet": "            $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser(),",
+            "selected_text": "getCompanyUserTransfer",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -1011,25 +1096,25 @@
         },
         {
             "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "PossiblyNullReference",
-            "message": "Cannot call method getItems on possibly null value",
+            "line_from": 69,
+            "line_to": 69,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\CartsRestApi\\Business\\QuoteItem\\QuoteItemReader::isCartItemInQuote cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CartsRestApi/src/Spryker/Zed/CartsRestApi/Business/QuoteItem/QuoteItemReader.php",
-            "snippet": "            $quoteResponseTransfer->getQuoteTransfer()->getItems()->getArrayCopy()",
-            "selected_text": "getItems",
+            "snippet": "            $quoteResponseTransfer->getQuoteTransfer()",
+            "selected_text": "$quoteResponseTransfer->getQuoteTransfer()",
             "error_level": 3,
-            "shortcode": 83
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
+            "line_from": 107,
+            "line_to": 107,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/CartsRestApi/src/Spryker/Zed/CartsRestApi/Business/QuoteItem/QuoteItemReader.php",
-            "snippet": "            $quoteResponseTransfer->getQuoteTransfer()->getItems()->getArrayCopy()",
-            "selected_text": "getArrayCopy",
+            "snippet": "        if (!$quoteTransfer->getItems()->count()) {",
+            "selected_text": "count",
             "error_level": 3,
             "shortcode": 113
         },
@@ -1071,75 +1156,15 @@
         },
         {
             "severity": "info",
-            "line_from": 92,
-            "line_to": 92,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CartsRestApi/src/Spryker/Zed/CartsRestApi/CartsRestApiDependencyProvider.php",
-            "snippet": "            return new CartsRestApiToQuoteFacadeBridge($container->getLocator()->quote()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 106,
-            "line_to": 106,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CartsRestApi/src/Spryker/Zed/CartsRestApi/CartsRestApiDependencyProvider.php",
-            "snippet": "            return new CartsRestApiToPersistentCartFacadeBridge($container->getLocator()->persistentCart()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 120,
-            "line_to": 120,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CartsRestApi/src/Spryker/Zed/CartsRestApi/CartsRestApiDependencyProvider.php",
-            "snippet": "            return new CartsRestApiToCartFacadeBridge($container->getLocator()->cart()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 134,
-            "line_to": 134,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CartsRestApi/src/Spryker/Zed/CartsRestApi/CartsRestApiDependencyProvider.php",
-            "snippet": "            return new CartsRestApiToStoreFacadeBridge($container->getLocator()->store()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 36,
             "line_to": 36,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Quote\\Persistence\\SpyQuote|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable $quotes",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Quote\\Persistence\\SpyQuote> variable $quotes",
             "file_name": "vendor/spryker/spryker/Bundles/CartsRestApi/src/Spryker/Zed/CartsRestApi/Persistence/CartsRestApiEntityManager.php",
             "snippet": "        } while ($quotes->count());",
             "selected_text": "count",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 24,
-            "line_to": 24,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/PermissionAwareTrait.php",
-            "snippet": "            return Locator::getInstance()->permission()->facade()->can($permissionKey, $identifier, $context);",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

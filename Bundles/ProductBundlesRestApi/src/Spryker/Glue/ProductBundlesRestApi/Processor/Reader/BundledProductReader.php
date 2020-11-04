@@ -60,10 +60,10 @@ class BundledProductReader implements BundledProductReaderInterface
             ProductBundlesRestApiConfig::RESOURCE_CONCRETE_PRODUCTS
         );
 
-        $productConcreteSku = $productConcreteResource->getId();
-        if (!$productConcreteResource || !$productConcreteSku) {
+        if (!$productConcreteResource || !$productConcreteResource->getId()) {
             return $this->bundledProductRestResponseBuilder->createProductConcreteSkuNotSpecifiedErrorResponse();
         }
+        $productConcreteSku = (string)$productConcreteResource->getId();
 
         $bundledProductRestResources = $this->getBundledProductRestResourcesByProductConcreteSkus(
             [$productConcreteSku],

@@ -46,6 +46,7 @@ interface MerchantRestResponseBuilderInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantSearchRequestTransfer $merchantSearchRequestTransfer
      * @param \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer
+     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
      * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
@@ -53,6 +54,7 @@ interface MerchantRestResponseBuilderInterface
     public function createMerchantListRestResponse(
         MerchantSearchRequestTransfer $merchantSearchRequestTransfer,
         MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer,
+        array $merchantStorageTransfers,
         string $localeName
     ): RestResponseInterface;
 }

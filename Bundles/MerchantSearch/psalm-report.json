@@ -3,40 +3,101 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantSearch/src/Spryker/Client/MerchantSearch/MerchantSearchDependencyProvider.php",
-            "snippet": "            return new MerchantSearchToZedRequestClientBridge($container->getLocator()->zedRequest()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
+            "line_from": 61,
+            "line_to": 61,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $requestParameters using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSearch/src/Spryker/Client/MerchantSearch/PaginationConfigBuilder/MerchantSearchPaginationConfigBuilder.php",
+            "snippet": "            return (int)$requestParameters[$paramName];",
+            "selected_text": "$requestParameters",
+            "error_level": 3,
+            "shortcode": 125
         },
         {
             "severity": "info",
-            "line_from": 57,
-            "line_to": 57,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantSearch/src/Spryker/Client/MerchantSearch/MerchantSearchDependencyProvider.php",
-            "snippet": "            return new MerchantSearchToStoreClientBridge($container->getLocator()->store()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
+            "line_from": 68,
+            "line_to": 68,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\MerchantTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSearch/src/Spryker/Zed/MerchantSearch/Business/Deleter/MerchantSearchDeleter.php",
+            "snippet": "        }, $merchantCollectionTransfer->getMerchants()->getArrayCopy());",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
         },
         {
             "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantSearch/src/Spryker/Zed/MerchantSearch/MerchantSearchDependencyProvider.php",
-            "snippet": "            return new MerchantSearchToMerchantFacadeBridge($container->getLocator()->merchant()->facade());",
-            "selected_text": "facade",
+            "line_from": 95,
+            "line_to": 95,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\MerchantTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSearch/src/Spryker/Zed/MerchantSearch/Business/Writer/MerchantSearchWriter.php",
+            "snippet": "        if (!$merchantCollectionTransfer->getMerchants()->count()) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\MerchantSearch\\Persistence\\SpyMerchantSearch> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSearch/src/Spryker/Zed/MerchantSearch/Persistence/MerchantSearchEntityManager.php",
+            "snippet": "            ->delete();",
+            "selected_text": "delete",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "MismatchingDocblockReturnType",
+            "message": "Docblock has incorrect return type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\MerchantSearch\\Persistence\\SpyMerchantSearch>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSearch/src/Spryker/Zed/MerchantSearch/Persistence/MerchantSearchRepository.php",
+            "snippet": "     * @return \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\MerchantSearch\\Persistence\\SpyMerchantSearch[]",
+            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\MerchantSearch\\Persistence\\SpyMerchantSearch[]",
             "error_level": 4,
-            "shortcode": 219
+            "shortcode": 142
+        },
+        {
+            "severity": "info",
+            "line_from": 64,
+            "line_to": 66,
+            "type": "LessSpecificReturnStatement",
+            "message": "The type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' is more general than the declared return type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\MerchantSearch\\Persistence\\SpyMerchantSearch>' for Spryker\\Zed\\MerchantSearch\\Persistence\\MerchantSearchRepository::getMerchantSearchEntityCollection",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSearch/src/Spryker/Zed/MerchantSearch/Persistence/MerchantSearchRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($merchantSearchQuery, $filterTransfer)\n            ->setFormatter(ModelCriteria::FORMAT_OBJECT)\n            ->find();",
+            "selected_text": "$this->buildQueryFromCriteria($merchantSearchQuery, $filterTransfer)\n            ->setFormatter(ModelCriteria::FORMAT_OBJECT)\n            ->find()",
+            "error_level": 3,
+            "shortcode": 129
+        },
+        {
+            "severity": "info",
+            "line_from": 27,
+            "line_to": 27,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Client\\SearchElasticsearch\\Plugin\\ResultFormatter\\AbstractElasticsearchResultFormatterPlugin::formatResult has the more specific type 'Elastica\\ResultSet', expecting 'mixed' as defined by Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\ResultFormatterPluginInterface::formatResult",
+            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Client/SearchElasticsearch/Plugin/ResultFormatter/AbstractElasticsearchResultFormatterPlugin.php",
+            "snippet": "    public function formatResult($searchResult, array $requestParameters = [])",
+            "selected_text": "$searchResult",
+            "error_level": 5,
+            "shortcode": 140
         }
     ],
-    "deprecation": []
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\SearchContextAwareQueryInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSearch/src/Spryker/Client/MerchantSearch/Plugin/Elasticsearch/Query/MerchantSearchQueryPlugin.php",
+            "snippet": "class MerchantSearchQueryPlugin extends AbstractPlugin implements QueryInterface, SearchContextAwareQueryInterface",
+            "selected_text": "MerchantSearchQueryPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        }
+    ]
 }

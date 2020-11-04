@@ -28,15 +28,15 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOffersRestApi/src/Spryker/Glue/MerchantProductOffersRestApi/MerchantProductOffersRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->merchantProductOfferStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
+            "line_from": 44,
+            "line_to": 44,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\MerchantProductOffersRestApi\\Dependency\\Client\\MerchantProductOffersRestApiToMerchantProductOfferStorageClientInterface::findProductOfferStorageByReference cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOffersRestApi/src/Spryker/Glue/MerchantProductOffersRestApi/Processor/CartItem/Expander/CartItemExpander.php",
+            "snippet": "            $restCartItemsAttributesTransfer->getProductOfferReference()",
+            "selected_text": "$restCartItemsAttributesTransfer->getProductOfferReference()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",

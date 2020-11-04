@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer;
 use Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\MerchantCategory\MerchantCategoryConfig;
+use Spryker\Zed\MerchantCategory\Persistence\Exception\MerchantCategoryLimitException;
 
 /**
  * @method \Spryker\Zed\MerchantCategory\Persistence\MerchantCategoryPersistenceFactory getFactory()
@@ -20,13 +22,12 @@ class MerchantCategoryRepository extends AbstractRepository implements MerchantC
     /**
      * @param \Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer
      *
+     * @throws \Spryker\Zed\MerchantCategory\Persistence\Exception\MerchantCategoryLimitException
+     *
      * @return \Generated\Shared\Transfer\CategoryTransfer[]
      */
     public function getCategories(MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer): array
     {
-        /**
-         * @var \Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery $merchantCategoryQuery
-         */
         $merchantCategoryQuery = $this->getFactory()
             ->getMerchantCategoryPropelQuery()
             ->joinWithSpyCategory()
@@ -37,7 +38,14 @@ class MerchantCategoryRepository extends AbstractRepository implements MerchantC
                 ->endUse()
             ->endUse();
 
-        $merchantCategoryQuery = $this->applyFilters($merchantCategoryQuery, $merchantCategoryCriteriaTransfer);
+        $merchantCategoryQuery = $this->applyCriteria($merchantCategoryQuery, $merchantCategoryCriteriaTransfer);
+
+        if ($merchantCategoryQuery->count() > MerchantCategoryConfig::MAX_CATEGORY_SELECT_COUNT) {
+            throw new MerchantCategoryLimitException(
+                'Maximum of merchant category select limit is reached. Please adjust configuration.'
+            );
+        }
+
         $merchantCategoryEntities = $merchantCategoryQuery->find();
 
         $categoryTransfers = [];
@@ -52,12 +60,16 @@ class MerchantCategoryRepository extends AbstractRepository implements MerchantC
     }
 
     /**
+     * @phpstan-param \Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery<\Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategory> $merchantCategoryQuery
+     *
+     * @phpstan-return \Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery<\Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategory>
+     *
      * @param \Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery $merchantCategoryQuery
      * @param \Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer
      *
      * @return \Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery
      */
-    protected function applyFilters(
+    protected function applyCriteria(
         SpyMerchantCategoryQuery $merchantCategoryQuery,
         MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer
     ): SpyMerchantCategoryQuery {

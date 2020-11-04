@@ -50,6 +50,16 @@ class VirtualFilesystemHelper extends Module
 
     /**
      * @param string $path
+     *
+     * @return string
+     */
+    public function getVirtualDirectoryFileContent(string $path): string
+    {
+        return $this->getVirtualRootDirectory()->getChild($path)->getContent();
+    }
+
+    /**
+     * @param string $path
      * @param string $message
      *
      * @return void

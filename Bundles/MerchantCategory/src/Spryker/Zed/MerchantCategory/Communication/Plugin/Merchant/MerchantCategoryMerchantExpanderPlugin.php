@@ -30,13 +30,17 @@ class MerchantCategoryMerchantExpanderPlugin extends AbstractPlugin implements M
      */
     public function expand(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        $merchantCategoryTransfer = $this->getFacade()
+        $merchantCategoryResponseTransfer = $this->getFacade()
             ->get(
                 (new MerchantCategoryCriteriaTransfer())
-                    ->setIdMerchant($merchantTransfer->getIdMerchant())
+                    ->setIdMerchant($merchantTransfer->requireIdMerchant()->getIdMerchant())
             );
 
-        $merchantTransfer->setCategories($merchantCategoryTransfer->getCategories());
+        if (!$merchantCategoryResponseTransfer->getIsSuccessful()) {
+            return $merchantTransfer;
+        }
+
+        $merchantTransfer->setCategories($merchantCategoryResponseTransfer->getCategories());
 
         return $merchantTransfer;
     }

@@ -7,8 +7,6 @@
 
 namespace Spryker\Glue\MerchantsRestApi\Processor\Translator;
 
-use ArrayObject;
-use Generated\Shared\Transfer\MerchantSearchCollectionTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToGlossaryStorageClientInterface;
 
@@ -63,23 +61,6 @@ class MerchantTranslator implements MerchantTranslatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\MerchantSearchCollectionTransfer
-     */
-    public function translateMerchantSearchCollection(
-        MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer,
-        string $localeName
-    ): MerchantSearchCollectionTransfer {
-        $glossarySearchKeys = $this->getGlossaryStorageKeysFromMerchantSearchCollection($merchantSearchCollectionTransfer);
-
-        $translations = $this->glossaryStorageClient->translateBulk($glossarySearchKeys, $localeName);
-
-        return $this->setTranslationsToMerchantSearchCollection($merchantSearchCollectionTransfer, $translations);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
      *
      * @return string[]
@@ -89,43 +70,22 @@ class MerchantTranslator implements MerchantTranslatorInterface
         $glossaryKeys = [];
 
         foreach ($merchantStorageTransfers as $merchantStorageTransfer) {
+            /**
+             * @var \Generated\Shared\Transfer\MerchantStorageProfileTransfer $merchantStorageProfileTransfer
+             */
+            $merchantStorageProfileTransfer = $merchantStorageTransfer->requireMerchantProfile()->getMerchantProfile();
+
             $merchantStorageTransferGlossaryKeys = [
-                $merchantStorageTransfer->getMerchantProfile()->getBannerUrlGlossaryKey(),
-                $merchantStorageTransfer->getMerchantProfile()->getCancellationPolicyGlossaryKey(),
-                $merchantStorageTransfer->getMerchantProfile()->getDataPrivacyGlossaryKey(),
-                $merchantStorageTransfer->getMerchantProfile()->getDeliveryTimeGlossaryKey(),
-                $merchantStorageTransfer->getMerchantProfile()->getDescriptionGlossaryKey(),
-                $merchantStorageTransfer->getMerchantProfile()->getImprintGlossaryKey(),
-                $merchantStorageTransfer->getMerchantProfile()->getTermsConditionsGlossaryKey(),
+                $merchantStorageProfileTransfer->getBannerUrlGlossaryKey(),
+                $merchantStorageProfileTransfer->getCancellationPolicyGlossaryKey(),
+                $merchantStorageProfileTransfer->getDataPrivacyGlossaryKey(),
+                $merchantStorageProfileTransfer->getDeliveryTimeGlossaryKey(),
+                $merchantStorageProfileTransfer->getDescriptionGlossaryKey(),
+                $merchantStorageProfileTransfer->getImprintGlossaryKey(),
+                $merchantStorageProfileTransfer->getTermsConditionsGlossaryKey(),
             ];
 
             $glossaryKeys = array_merge($glossaryKeys, $merchantStorageTransferGlossaryKeys);
-        }
-
-        return array_unique(array_filter($glossaryKeys));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer
-     *
-     * @return string[]
-     */
-    protected function getGlossaryStorageKeysFromMerchantSearchCollection(MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer): array
-    {
-        $glossaryKeys = [];
-
-        foreach ($merchantSearchCollectionTransfer->getMerchantSearches() as $merchantSearchTransfer) {
-            $merchantSearchTransferGlossaryKeys = [
-                $merchantSearchTransfer->getMerchantProfile()->getBannerUrlGlossaryKey(),
-                $merchantSearchTransfer->getMerchantProfile()->getCancellationPolicyGlossaryKey(),
-                $merchantSearchTransfer->getMerchantProfile()->getDataPrivacyGlossaryKey(),
-                $merchantSearchTransfer->getMerchantProfile()->getDeliveryTimeGlossaryKey(),
-                $merchantSearchTransfer->getMerchantProfile()->getDescriptionGlossaryKey(),
-                $merchantSearchTransfer->getMerchantProfile()->getImprintGlossaryKey(),
-                $merchantSearchTransfer->getMerchantProfile()->getTermsConditionsGlossaryKey(),
-            ];
-
-            $glossaryKeys = array_merge($glossaryKeys, $merchantSearchTransferGlossaryKeys);
         }
 
         return array_unique(array_filter($glossaryKeys));
@@ -142,7 +102,10 @@ class MerchantTranslator implements MerchantTranslatorInterface
         $translatedMerchantStorageTransfers = [];
 
         foreach ($merchantStorageTransfers as $merchantStorageTransfer) {
-            $merchantStorageProfileTransfer = $merchantStorageTransfer->getMerchantProfile();
+            /**
+             * @var \Generated\Shared\Transfer\MerchantStorageProfileTransfer $merchantStorageProfileTransfer
+             */
+            $merchantStorageProfileTransfer = $merchantStorageTransfer->requireMerchantProfile()->getMerchantProfile();
 
             if (isset($translations[$merchantStorageProfileTransfer->getBannerUrlGlossaryKey()])) {
                 $merchantStorageProfileTransfer->setBannerUrl($translations[$merchantStorageProfileTransfer->getBannerUrlGlossaryKey()]);
@@ -170,48 +133,5 @@ class MerchantTranslator implements MerchantTranslatorInterface
         }
 
         return $translatedMerchantStorageTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer
-     * @param string[] $translations
-     *
-     * @return \Generated\Shared\Transfer\MerchantSearchCollectionTransfer
-     */
-    protected function setTranslationsToMerchantSearchCollection(
-        MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer,
-        array $translations
-    ): MerchantSearchCollectionTransfer {
-        $translatedMerchantSearchTransfers = [];
-
-        foreach ($merchantSearchCollectionTransfer->getMerchantSearches() as $merchantSearchTransfer) {
-            $merchantSearchProfileTransfer = $merchantSearchTransfer->getMerchantProfile();
-
-            if (isset($translations[$merchantSearchProfileTransfer->getBannerUrlGlossaryKey()])) {
-                $merchantSearchProfileTransfer->setBannerUrl($translations[$merchantSearchProfileTransfer->getBannerUrlGlossaryKey()]);
-            }
-            if (isset($translations[$merchantSearchProfileTransfer->getCancellationPolicyGlossaryKey()])) {
-                $merchantSearchProfileTransfer->setCancellationPolicy($translations[$merchantSearchProfileTransfer->getCancellationPolicyGlossaryKey()]);
-            }
-            if (isset($translations[$merchantSearchProfileTransfer->getDataPrivacyGlossaryKey()])) {
-                $merchantSearchProfileTransfer->setDataPrivacy($translations[$merchantSearchProfileTransfer->getDataPrivacyGlossaryKey()]);
-            }
-            if (isset($translations[$merchantSearchProfileTransfer->getDeliveryTimeGlossaryKey()])) {
-                $merchantSearchProfileTransfer->setDeliveryTime($translations[$merchantSearchProfileTransfer->getDeliveryTimeGlossaryKey()]);
-            }
-            if (isset($translations[$merchantSearchProfileTransfer->getDescriptionGlossaryKey()])) {
-                $merchantSearchProfileTransfer->setDescription($translations[$merchantSearchProfileTransfer->getDescriptionGlossaryKey()]);
-            }
-            if (isset($translations[$merchantSearchProfileTransfer->getImprintGlossaryKey()])) {
-                $merchantSearchProfileTransfer->setImprint($translations[$merchantSearchProfileTransfer->getImprintGlossaryKey()]);
-            }
-            if (isset($translations[$merchantSearchProfileTransfer->getTermsConditionsGlossaryKey()])) {
-                $merchantSearchProfileTransfer->setTermsConditions($translations[$merchantSearchProfileTransfer->getTermsConditionsGlossaryKey()]);
-            }
-
-            $translatedMerchantSearchTransfers[] = $merchantSearchTransfer->setMerchantProfile($merchantSearchProfileTransfer);
-        }
-
-        return $merchantSearchCollectionTransfer->setMerchantSearches(new ArrayObject($translatedMerchantSearchTransfers));
     }
 }

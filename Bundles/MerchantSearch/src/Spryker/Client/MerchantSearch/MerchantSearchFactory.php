@@ -23,7 +23,7 @@ class MerchantSearchFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\MerchantSearch\Dependency\Client\MerchantSearchToSearchClientInterface
      */
-    public function getSerchClient(): MerchantSearchToSearchClientInterface
+    public function getSearchClient(): MerchantSearchToSearchClientInterface
     {
         return $this->getProvidedDependency(MerchantSearchDependencyProvider::CLIENT_SEARCH);
     }
@@ -34,7 +34,7 @@ class MerchantSearchFactory extends AbstractFactory
     public function createMerchantSearchReader(): MerchantSearchReaderInterface
     {
         return new MerchantSearchReader(
-            $this->getSerchClient(),
+            $this->getSearchClient(),
             $this->getMerchantSearchQueryPlugin(),
             $this->getMerchantSearchQueryExpanderPlugins(),
             $this->getMerchantSearchResultFormatterPlugins()

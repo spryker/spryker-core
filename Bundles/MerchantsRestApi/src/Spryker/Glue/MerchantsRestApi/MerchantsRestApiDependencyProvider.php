@@ -22,8 +22,7 @@ class MerchantsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     public const CLIENT_MERCHANT_SEARCH = 'CLIENT_MERCHANT_SEARCH';
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
-    public const PLUGINS_REST_STORAGE_MERCHANTS_ATTRIBUTES_MAPPER = 'PLUGINS_REST_STORAGE_MERCHANTS_ATTRIBUTES_MAPPER';
-    public const PLUGINS_REST_SEARCH_MERCHANTS_ATTRIBUTES_MAPPER = 'PLUGINS_REST_SEARCH_MERCHANTS_ATTRIBUTES_MAPPER';
+    public const PLUGINS_MERCHANT_REST_ATTRIBUTES_MAPPER = 'PLUGINS_MERCHANT_REST_ATTRIBUTES_MAPPER';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -38,8 +37,7 @@ class MerchantsRestApiDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addMerchantSearchClient($container);
         $container = $this->addGlossaryStorageClient($container);
 
-        $container = $this->addRestStorageMerchantsAttributesMapperPlugins($container);
-        $container = $this->addRestSearchMerchantsAttributesMapperPlugins($container);
+        $container = $this->addMerchantRestAttributesMapperPlugins($container);
 
         return $container;
     }
@@ -97,41 +95,19 @@ class MerchantsRestApiDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addRestStorageMerchantsAttributesMapperPlugins(Container $container): Container
+    protected function addMerchantRestAttributesMapperPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_REST_STORAGE_MERCHANTS_ATTRIBUTES_MAPPER, function (Container $container) {
-            return $this->getRestStorageMerchantsAttributesMapperPlugins();
+        $container->set(static::PLUGINS_MERCHANT_REST_ATTRIBUTES_MAPPER, function (Container $container) {
+            return $this->getMerchantRestAttributesMapperPlugins();
         });
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\RestStorageMerchantsAttributesMapperPluginInterface[]
+     * @return \Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\MerchantRestAttributesMapperPluginInterface[]
      */
-    public function getRestStorageMerchantsAttributesMapperPlugins(): array
-    {
-        return [];
-    }
-
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
-    protected function addRestSearchMerchantsAttributesMapperPlugins(Container $container): Container
-    {
-        $container->set(static::PLUGINS_REST_SEARCH_MERCHANTS_ATTRIBUTES_MAPPER, function (Container $container) {
-            return $this->getRestSearchMerchantsAttributesMapperPlugins();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @return \Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\RestSearchMerchantsAttributesMapperPluginInterface[]
-     */
-    public function getRestSearchMerchantsAttributesMapperPlugins(): array
+    public function getMerchantRestAttributesMapperPlugins(): array
     {
         return [];
     }

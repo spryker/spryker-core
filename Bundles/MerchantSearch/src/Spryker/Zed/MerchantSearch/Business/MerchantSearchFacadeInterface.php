@@ -15,7 +15,7 @@ interface MerchantSearchFacadeInterface
      * Specification:
      * - Retrieves all Merchants using IDs from $eventTransfers.
      * - Updates entities from `spy_merchant_search` with actual data from obtained Merchants.
-     * - Sends a copy of data to queue based on module config.
+     * - Runs merchant search data expander plugins.
      *
      * @api
      *
@@ -27,8 +27,24 @@ interface MerchantSearchFacadeInterface
 
     /**
      * Specification:
-     * - Deletes entities from `spy_merchant_search` based on IDs from $eventTransfers.
-     * - Sends delete message to queue based on module config.
+     * - Retrieves all Merchants using foreign keys from $eventTransfers.
+     * - Updates entities from `spy_merchant_search` with actual data from obtained Merchants.
+     * - Runs merchant search data expander plugins
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByMerchantCategoryEvents(array $eventTransfers): void;
+
+    /**
+     * Specification:
+     * - Deletes entities from `spy_merchant_search` based on:
+     *     - IDs from `$eventTransfers`
+     *     - Merchant activity
+     *     - Merchant status
      *
      * @api
      *
@@ -40,7 +56,7 @@ interface MerchantSearchFacadeInterface
 
     /**
      * Specification:
-     * - Reads entities from `spy_merchant_search` based on criteria from FilterTransfer and $merchantIds.
+     * - Reads entities from `spy_merchant_search` based on criteria from FilterTransfer and `$merchantIds`.
      * - Returns array of SynchronizationDataTransfer filled with data from search entities.
 
      * @api

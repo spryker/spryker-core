@@ -3,7 +3,7 @@
   "description": "Spryker Framework",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2"
+    "php": ">=7.3"
   },
   "require-dev": {
     "spryker/code-sniffer": "dev-master"
@@ -33,6 +33,7 @@
     "spryker/agent": "*",
     "spryker/agent-auth-rest-api": "*",
     "spryker/agent-gui": "*",
+    "spryker/agent-extension": "*",
     "spryker/alternative-products-rest-api": "*",
     "spryker/api": "*",
     "spryker/api-query-builder": "*",
@@ -336,6 +337,8 @@
     "spryker/merchant": "*",
     "spryker/merchant-category": "*",
     "spryker/merchant-category-data-import": "*",
+    "spryker/merchant-category-search": "*",
+    "spryker/merchant-categories-rest-api": "*",
     "spryker/merchant-data-import": "*",
     "spryker/merchant-extension": "*",
     "spryker/merchant-gui": "*",
@@ -378,6 +381,7 @@
     "spryker/merchant-sales-order": "*",
     "spryker/merchant-sales-order-extension": "*",
     "spryker/merchant-search": "*",
+    "spryker/merchant-search-extension": "*",
     "spryker/merchant-shipment": "*",
     "spryker/merchant-shipment-gui": "*",
     "spryker/merchant-stock": "*",
@@ -388,6 +392,7 @@
     "spryker/merchant-user": "*",
     "spryker/merchant-user-gui": "*",
     "spryker/merchants-rest-api": "*",
+    "spryker/merchants-rest-api-extension": "*",
     "spryker/messenger": "*",
     "spryker/messenger-extension": "*",
     "spryker/module-finder": "*",

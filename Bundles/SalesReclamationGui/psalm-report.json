@@ -64,18 +64,6 @@
         },
         {
             "severity": "info",
-            "line_from": 92,
-            "line_to": 92,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesReclamationGui/src/Spryker/Zed/SalesReclamationGui/Communication/Controller/DetailController.php",
-            "snippet": "            sprintf('Reclamation with id %s closed', $reclamationTransfer->getIdSalesReclamation())",
-            "selected_text": "$reclamationTransfer->getIdSalesReclamation()",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
             "line_from": 15,
             "line_to": 15,
             "type": "MismatchingDocblockParamType",
@@ -133,54 +121,6 @@
             "selected_text": "$queryResults",
             "error_level": 3,
             "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 57,
-            "line_to": 57,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesReclamationGui/src/Spryker/Zed/SalesReclamationGui/SalesReclamationGuiDependencyProvider.php",
-            "snippet": "            return new SalesReclamationGuiToSalesReclamationFacadeBridge($container->getLocator()->salesReclamation()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 72,
-            "line_to": 72,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesReclamationGui/src/Spryker/Zed/SalesReclamationGui/SalesReclamationGuiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->utilDateTime()->service()",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 101,
-            "line_to": 101,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesReclamationGui/src/Spryker/Zed/SalesReclamationGui/SalesReclamationGuiDependencyProvider.php",
-            "snippet": "            return new SalesReclamationGuiToSalesFacadeBridge($container->getLocator()->sales()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 115,
-            "line_to": 115,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesReclamationGui/src/Spryker/Zed/SalesReclamationGui/SalesReclamationGuiDependencyProvider.php",
-            "snippet": "            return new SalesReclamationGuiToOmsFacadeBridge($container->getLocator()->oms()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []
