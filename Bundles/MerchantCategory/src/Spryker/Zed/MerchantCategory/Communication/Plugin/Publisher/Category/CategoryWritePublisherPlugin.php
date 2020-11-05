@@ -35,7 +35,7 @@ class CategoryWritePublisherPlugin extends AbstractPlugin implements PublisherPl
      */
     public function handleBulk(array $transfers, $eventName): void
     {
-        $this->getFacade()->publishCategoryMerchantEventsByCategoryEvents($transfers);
+        $this->getFacade()->publishMerchantCategoryEventsByCategoryEvents($transfers);
     }
 
     /**

@@ -38,7 +38,7 @@ class MerchantCategorySearchExpander implements MerchantCategorySearchExpanderIn
         $merchantCategoryResponseTransfer = $this->merchantCategoryFacade->get(
             (new MerchantCategoryCriteriaTransfer())
                 ->setMerchantIds($this->extractMerchantIds($merchantSearchCollectionTransfer))
-                ->setIsActive(true)
+                ->setIsCategoryActive(true)
         );
 
         $categoryKeysIndexedByIdMerchant = [];

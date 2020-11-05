@@ -14,5 +14,5 @@ interface MerchantCategoryPublisherInterface
      *
      * @return void
      */
-    public function publishCategoryMerchantEventsByCategoryEvents(array $eventTransfers): void;
+    public function publishMerchantCategoryEventsByCategoryEvents(array $eventTransfers): void;
 }

@@ -42,10 +42,10 @@ class MerchantCategoryFacade extends AbstractFacade implements MerchantCategoryF
      *
      * @return void
      */
-    public function publishCategoryMerchantEventsByCategoryEvents(array $transfers): void
+    public function publishMerchantCategoryEventsByCategoryEvents(array $transfers): void
     {
         $this->getFactory()
             ->createMerchantCategoryPublisher()
-            ->publishCategoryMerchantEventsByCategoryEvents($transfers);
+            ->publishMerchantCategoryEventsByCategoryEvents($transfers);
     }
 }

@@ -52,7 +52,7 @@ class MerchantCategoryPublisher implements MerchantCategoryPublisherInterface
      *
      * @return void
      */
-    public function publishCategoryMerchantEventsByCategoryEvents(array $eventTransfers): void
+    public function publishMerchantCategoryEventsByCategoryEvents(array $eventTransfers): void
     {
         $categoryIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
         $merchantCategoryCriteriaTransfer = new MerchantCategoryCriteriaTransfer();

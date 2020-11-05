@@ -27,7 +27,7 @@ interface MerchantCategoryFacadeInterface
     /**
      * Specification:
      * - Triggers `MerchantCategory.merchant_category.publish` event with the list of merchant categories Ids and merchant Ids
-     * by provided Categoria Ids in the collection of EventEntityTransfer.
+     * by provided Category Ids in the collection of EventEntityTransfer.
      *
      * @api
      *
@@ -35,5 +35,5 @@ interface MerchantCategoryFacadeInterface
      *
      * @return void
      */
-    public function publishCategoryMerchantEventsByCategoryEvents(array $transfers): void;
+    public function publishMerchantCategoryEventsByCategoryEvents(array $transfers): void;
 }
