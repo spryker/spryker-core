@@ -38,4 +38,7 @@
 
     <transfer name="Locale">
     </transfer>
+
+    <transfer name="EventEntity">
+    </transfer>
 </transfers>
