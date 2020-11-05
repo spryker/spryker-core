@@ -68,7 +68,7 @@
     </transfer>
 
     <transfer name="RestAddress">
-        <property name="companyBusinessUnitAddressId" type="string"/>
+        <property name="idCompanyBusinessUnitAddress" type="string"/>
     </transfer>
 
     <transfer name="Company">
