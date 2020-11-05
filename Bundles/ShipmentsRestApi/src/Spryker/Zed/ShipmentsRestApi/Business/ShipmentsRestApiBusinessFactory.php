@@ -35,7 +35,10 @@ class ShipmentsRestApiBusinessFactory extends AbstractBusinessFactory
      */
     public function createShipmentQuoteMapper(): ShipmentQuoteMapperInterface
     {
-        return new ShipmentQuoteMapper($this->getShipmentFacade());
+        return new ShipmentQuoteMapper(
+            $this->getShipmentFacade(),
+            $this->getAddressProviderStrategyPlugins()
+        );
     }
 
     /**
@@ -52,5 +55,13 @@ class ShipmentsRestApiBusinessFactory extends AbstractBusinessFactory
     public function getShipmentFacade(): ShipmentsRestApiToShipmentFacadeInterface
     {
         return $this->getProvidedDependency(ShipmentsRestApiDependencyProvider::FACADE_SHIPMENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentsRestApiExtension\Dependency\Plugin\AddressProviderStrategyPluginInterface[]
+     */
+    public function getAddressProviderStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(ShipmentsRestApiDependencyProvider::PLUGINS_ADDRESS_PROVIDER_STRATEGY);
     }
 }

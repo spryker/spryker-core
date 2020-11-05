@@ -17,6 +17,7 @@ use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFac
 class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
+    public const PLUGINS_ADDRESS_PROVIDER_STRATEGY = 'PLUGINS_ADDRESS_PROVIDER_STRATEGY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -27,6 +28,7 @@ class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addShipmentFacade($container);
+        $container = $this->addAddressProviderStrategyPlugins($container);
 
         return $container;
     }
@@ -43,5 +45,27 @@ class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvide
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addAddressProviderStrategyPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ADDRESS_PROVIDER_STRATEGY, function () {
+            return $this->getAddressProviderStrategyPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentsRestApiExtension\Dependency\Plugin\AddressProviderStrategyPluginInterface[]
+     */
+    protected function getAddressProviderStrategyPlugins(): array
+    {
+        return [];
     }
 }

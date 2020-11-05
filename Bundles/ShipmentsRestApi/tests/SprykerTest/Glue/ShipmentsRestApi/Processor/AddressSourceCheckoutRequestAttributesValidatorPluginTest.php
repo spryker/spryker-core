@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestShipmentsTransfer;
 use Spryker\Glue\ShipmentsRestApi\Plugin\CheckoutRestApi\AddressSourceCheckoutRequestAttributesValidatorPlugin;
 use Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiFactory;
-use Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceProvidePluginInterface;
+use Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceProviderPluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -38,7 +38,7 @@ class AddressSourceCheckoutRequestAttributesValidatorPluginTest extends Unit
     public function testAddressSourceCheckoutRequestAttributesValidatorPluginTestWillCallAddressSourceValidatorPlugins(): void
     {
         // Arrange
-        $addressSourceProvidePluginMock = $this->getMockBuilder(AddressSourceProvidePluginInterface::class)->getMock();
+        $addressSourceProvidePluginMock = $this->getMockBuilder(AddressSourceProviderPluginInterface::class)->getMock();
         $addressSourceProvidePluginMock->expects($this->once())->method('isAddressSourceProvided');
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiFactory $shipmentsRestApiFactoryMock */

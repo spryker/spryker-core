@@ -83,6 +83,7 @@
     </transfer>
 
     <transfer name="Address">
+        <property name="uuid" type="string"/>
         <property name="isAddressSavingSkipped" type="bool"/>
         <property name="email" type="string"/>
         <property name="firstName" type="string"/>
@@ -104,10 +105,6 @@
         <property name="firstName" type="string"/>
         <property name="lastName" type="string"/>
         <property name="salutation" type="string"/>
-    </transfer>
-
-    <transfer name="RestAddress">
-        <property name="companyBusinessUnitAddressId" type="string" restRequestParameter="yes"/>
     </transfer>
 
 </transfers>

@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\RestAddressTransfer;
  * Runs during `/checkout-data` and `/checkout` requests.
  * Should be used to only validate the data is provided.
  */
-interface AddressSourceProvidePluginInterface
+interface AddressSourceProviderPluginInterface
 {
     /**
      * Specification:

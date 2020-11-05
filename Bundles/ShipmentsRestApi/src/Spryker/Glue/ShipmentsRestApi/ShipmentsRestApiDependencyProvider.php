@@ -17,7 +17,7 @@ use Spryker\Glue\ShipmentsRestApi\Dependency\Service\ShipmentsRestApiToShipmentS
 class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
-    public const PLUGINS_ADDRESS_SOURCE_PROVIDER = 'PLUGINS_ADDRESS_SOURCE_VALIDATOR';
+    public const PLUGINS_ADDRESS_SOURCE_PROVIDER = 'PLUGINS_ADDRESS_SOURCE_PROVIDER';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -28,7 +28,7 @@ class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container = parent::provideDependencies($container);
         $container = $this->addShipmentService($container);
-        $this->addAddressSourceValidatorPlugins($container);
+        $container = $this->addAddressSourceProviderPlugins($container);
 
         return $container;
     }
@@ -52,7 +52,7 @@ class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addAddressSourceValidatorPlugins(Container $container): Container
+    protected function addAddressSourceProviderPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_ADDRESS_SOURCE_PROVIDER, function () {
             return $this->getAddressSourceProviderPlugins();
@@ -62,7 +62,7 @@ class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
-     * @return \Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceProvidePluginInterface[]
+     * @return \Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceProviderPluginInterface[]
      */
     protected function getAddressSourceProviderPlugins(): array
     {

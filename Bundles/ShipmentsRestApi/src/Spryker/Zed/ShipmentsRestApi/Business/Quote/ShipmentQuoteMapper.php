@@ -10,6 +10,7 @@ namespace Spryker\Zed\ShipmentsRestApi\Business\Quote;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestAddressTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestShipmentsTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
@@ -24,12 +25,20 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
     protected $shipmentFacade;
 
     /**
+     * @var \Spryker\Zed\ShipmentsRestApiExtension\Dependency\Plugin\AddressProviderStrategyPluginInterface[]
+     */
+    protected $addressProviderStrategyPlugins;
+
+    /**
      * @param \Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeInterface $shipmentFacade
+     * @param \Spryker\Zed\ShipmentsRestApiExtension\Dependency\Plugin\AddressProviderStrategyPluginInterface[] $addressProviderStrategyPlugins
      */
     public function __construct(
-        ShipmentsRestApiToShipmentFacadeInterface $shipmentFacade
+        ShipmentsRestApiToShipmentFacadeInterface $shipmentFacade,
+        array $addressProviderStrategyPlugins
     ) {
         $this->shipmentFacade = $shipmentFacade;
+        $this->addressProviderStrategyPlugins = $addressProviderStrategyPlugins;
     }
 
     /**
@@ -83,7 +92,21 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
         }
 
         foreach ($restCheckoutRequestAttributesTransfer->getShipments() as $restShipmentsTransfer) {
-            $shipmentTransfer = $this->createShipmentTransfer($restShipmentsTransfer, $quoteTransfer);
+            $shipmentTransfer = (new ShipmentTransfer())
+                ->setRequestedDeliveryDate($restShipmentsTransfer->getRequestedDeliveryDate());
+
+            $shipmentTransfer = $this->expandShipmentTransferWithShippingAddress(
+                $restShipmentsTransfer,
+                $quoteTransfer,
+                $shipmentTransfer
+            );
+
+            $shipmentTransfer = $this->expandShipmentTransferWithShipmentMethod(
+                $restShipmentsTransfer,
+                $quoteTransfer,
+                $shipmentTransfer
+            );
+
             $quoteTransfer = $this->assignShipmentTransferToItems(
                 $quoteTransfer,
                 $restShipmentsTransfer->getItems(),
@@ -129,26 +152,6 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestShipmentsTransfer $restShipmentsTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentTransfer
-     */
-    protected function createShipmentTransfer(
-        RestShipmentsTransfer $restShipmentsTransfer,
-        QuoteTransfer $quoteTransfer
-    ): ShipmentTransfer {
-        $shipmentTransfer = (new ShipmentTransfer())
-            ->setShippingAddress(
-                (new AddressTransfer())
-                    ->fromArray($restShipmentsTransfer->getShippingAddress()->toArray(), true)
-            )
-            ->setRequestedDeliveryDate($restShipmentsTransfer->getRequestedDeliveryDate());
-
-        return $this->mapRestShipmentsTransferToShipmentTransfer($restShipmentsTransfer, $shipmentTransfer, $quoteTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string[] $itemsGroupKeys
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
@@ -179,15 +182,15 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\RestShipmentsTransfer $restShipmentsTransfer
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
-    protected function mapRestShipmentsTransferToShipmentTransfer(
+    protected function expandShipmentTransferWithShipmentMethod(
         RestShipmentsTransfer $restShipmentsTransfer,
-        ShipmentTransfer $shipmentTransfer,
-        QuoteTransfer $quoteTransfer
+        QuoteTransfer $quoteTransfer,
+        ShipmentTransfer $shipmentTransfer
     ): ShipmentTransfer {
         if (!$restShipmentsTransfer->getIdShipmentMethod()) {
             return $shipmentTransfer;
@@ -203,5 +206,49 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
         return $shipmentTransfer
             ->setMethod($shipmentMethodTransfer)
             ->setShipmentSelection((string)$shipmentMethodTransfer->getIdShipmentMethod());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestShipmentsTransfer $restShipmentsTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
+     */
+    protected function expandShipmentTransferWithShippingAddress(
+        RestShipmentsTransfer $restShipmentsTransfer,
+        QuoteTransfer $quoteTransfer,
+        ShipmentTransfer $shipmentTransfer
+    ): ShipmentTransfer {
+        if (!$restShipmentsTransfer->getShippingAddress()) {
+            return $shipmentTransfer;
+        }
+
+        $shipmentTransfer->setShippingAddress(
+            $this->getAddressTransfer($restShipmentsTransfer->getShippingAddress(), $quoteTransfer)
+        );
+
+        return $shipmentTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestAddressTransfer $restAddressTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function getAddressTransfer(
+        RestAddressTransfer $restAddressTransfer,
+        QuoteTransfer $quoteTransfer
+    ): AddressTransfer {
+        foreach ($this->addressProviderStrategyPlugins as $addressProviderStrategyPlugin) {
+            if (!$addressProviderStrategyPlugin->isApplicable($restAddressTransfer)) {
+                continue;
+            }
+
+            return $addressProviderStrategyPlugin->provideAddress($restAddressTransfer, $quoteTransfer);
+        }
+
+        return (new AddressTransfer())->fromArray($restAddressTransfer->toArray(), true);
     }
 }

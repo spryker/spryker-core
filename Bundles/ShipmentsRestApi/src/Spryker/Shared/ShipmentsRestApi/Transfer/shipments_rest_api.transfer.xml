@@ -43,7 +43,6 @@
         <property name="phone" type="string" restRequestParameter="required"/>
         <property name="isDefaultBilling" type="bool" restRequestParameter="yes"/>
         <property name="isDefaultShipping" type="bool" restRequestParameter="yes"/>
-        <property name="companyBusinessUnitAddressId" type="string" restRequestParameter="yes"/>
     </transfer>
 
     <transfer name="Quote">

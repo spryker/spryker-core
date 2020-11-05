@@ -9,12 +9,12 @@ namespace Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Plugin\ShipmentsRestA
 
 use Generated\Shared\Transfer\RestAddressTransfer;
 use Spryker\Glue\Kernel\AbstractPlugin;
-use Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceProvidePluginInterface;
+use Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceProviderPluginInterface;
 
 /**
  * @method \Spryker\Glue\CompanyBusinessUnitAddressesRestApi\CompanyBusinessUnitAddressesRestApiFactory getFactory()
  */
-class CompanyBusinessUnitAddressSourceProvidePlugin extends AbstractPlugin implements AddressSourceProvidePluginInterface
+class CompanyBusinessUnitAddressSourceProviderPlugin extends AbstractPlugin implements AddressSourceProviderPluginInterface
 {
     /**
      * {@inheritDoc}

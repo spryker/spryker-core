@@ -18,6 +18,6 @@ class CompanyBusinessUnitAddressIdValidator implements CompanyBusinessUnitAddres
      */
     public function validateCompanyBusinessUnitAddressIdProvided(RestAddressTransfer $restAddressTransfer): bool
     {
-        return $restAddressTransfer->getCompanyBusinessUnitAddressId() !== null;
+        return $restAddressTransfer->getIdCompanyBusinessUnitAddress() !== null;
     }
 }

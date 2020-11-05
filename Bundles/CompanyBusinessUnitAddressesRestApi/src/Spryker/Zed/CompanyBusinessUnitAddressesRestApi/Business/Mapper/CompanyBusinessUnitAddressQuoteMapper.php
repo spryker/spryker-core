@@ -8,25 +8,23 @@
 namespace Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Mapper;
 
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\RestAddressTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
-use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Dependency\Facade\CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressFacadeInterface;
+use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Provider\CompanyBusinessUnitAddressProviderInterface;
 
 class CompanyBusinessUnitAddressQuoteMapper implements CompanyBusinessUnitAddressQuoteMapperInterface
 {
     /**
-     * @var \Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Dependency\Facade\CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressFacadeInterface
+     * @var \Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Provider\CompanyBusinessUnitAddressProviderInterface
      */
-    protected $companyUnitAddressFacade;
+    protected $companyBusinessUnitAddressProvider;
 
     /**
-     * @param \Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Dependency\Facade\CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressFacadeInterface $companyUnitAddressFacade
+     * @param \Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Provider\CompanyBusinessUnitAddressProviderInterface $companyBusinessUnitAddressProvider
      */
-    public function __construct(CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressFacadeInterface $companyUnitAddressFacade)
+    public function __construct(CompanyBusinessUnitAddressProviderInterface $companyBusinessUnitAddressProvider)
     {
-        $this->companyUnitAddressFacade = $companyUnitAddressFacade;
+        $this->companyBusinessUnitAddressProvider = $companyBusinessUnitAddressProvider;
     }
 
     /**
@@ -60,9 +58,10 @@ class CompanyBusinessUnitAddressQuoteMapper implements CompanyBusinessUnitAddres
             return $quoteTransfer;
         }
 
-        $quoteTransfer->setBillingAddress(
-            $this->getAddressTransferByCompanyBusinessUnitAddressUuid($restAddressTransfer, $quoteTransfer)
-        );
+        $addressTransfer = $this->companyBusinessUnitAddressProvider
+            ->provideCompanyBusinessUnitAddress($restAddressTransfer, $quoteTransfer);
+
+        $quoteTransfer->setBillingAddress($addressTransfer);
 
         return $quoteTransfer;
     }
@@ -82,7 +81,9 @@ class CompanyBusinessUnitAddressQuoteMapper implements CompanyBusinessUnitAddres
             return $quoteTransfer;
         }
 
-        $addressTransfer = $this->getAddressTransferByCompanyBusinessUnitAddressUuid($restAddressTransfer, $quoteTransfer);
+        $addressTransfer = $this->companyBusinessUnitAddressProvider
+            ->provideCompanyBusinessUnitAddress($restAddressTransfer, $quoteTransfer);
+
         $quoteTransfer = $this->setItemLevelShippingAddresses($quoteTransfer, $addressTransfer);
 
         /**
@@ -91,37 +92,6 @@ class CompanyBusinessUnitAddressQuoteMapper implements CompanyBusinessUnitAddres
         $quoteTransfer->setShippingAddress($addressTransfer);
 
         return $quoteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestAddressTransfer $restAddressTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
-    protected function getAddressTransferByCompanyBusinessUnitAddressUuid(
-        RestAddressTransfer $restAddressTransfer,
-        QuoteTransfer $quoteTransfer
-    ): AddressTransfer {
-        $companyUnitAddressResponseTransfer = $this->companyUnitAddressFacade->findCompanyBusinessUnitAddressByUuid(
-            (new CompanyUnitAddressTransfer())->setUuid($restAddressTransfer->getIdCompanyBusinessUnitAddress())
-        );
-
-        if (
-            !$companyUnitAddressResponseTransfer->getIsSuccessful()
-            || !$companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()
-        ) {
-            return (new AddressTransfer())->fromArray($restAddressTransfer->toArray(), true);
-        }
-
-        return (new AddressTransfer())
-            ->fromArray($companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->toArray(), true)
-            ->setIsAddressSavingSkipped(true)
-            ->setEmail($quoteTransfer->getCustomer()->getEmail())
-            ->setFirstName($quoteTransfer->getCustomer()->getFirstName())
-            ->setLastName($quoteTransfer->getCustomer()->getLastName())
-            ->setSalutation($quoteTransfer->getCustomer()->getSalutation())
-            ->setCompany($companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getCompany()->getName());
     }
 
     /**

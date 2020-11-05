@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestAddressTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 
@@ -47,4 +49,22 @@ interface CompanyBusinessUnitAddressesRestApiFacadeInterface
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Finds company business unit address based by provided uuid in `RestAddressTransfer.idCompanyBusinessUnitAddress`.
+     * - Returns `AddressTransfer` filled with company business unit address information if it was found.
+     * - Returns `AddressTransfer` filled with attributes from `RestAddressTransfer` otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RestAddressTransfer $restAddressTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function provideCompanyBusinessUnitAddress(
+        RestAddressTransfer $restAddressTransfer,
+        QuoteTransfer $quoteTransfer
+    ): AddressTransfer;
 }

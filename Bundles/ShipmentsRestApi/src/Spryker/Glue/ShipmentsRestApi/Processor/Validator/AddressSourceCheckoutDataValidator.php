@@ -16,16 +16,16 @@ use Symfony\Component\HttpFoundation\Response;
 class AddressSourceCheckoutDataValidator implements AddressSourceCheckoutDataValidatorInterface
 {
     /**
-     * @var \Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceProvidePluginInterface[]
+     * @var \Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceProviderPluginInterface[]
      */
-    protected $addressSourceProvidePlugins;
+    protected $addressSourceProviderPlugins;
 
     /**
-     * @param \Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceProvidePluginInterface[] $addressSourceProviderPlugins
+     * @param \Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceProviderPluginInterface[] $addressSourceProviderPlugins
      */
     public function __construct(array $addressSourceProviderPlugins)
     {
-        $this->addressSourceProvidePlugins = $addressSourceProviderPlugins;
+        $this->addressSourceProviderPlugins = $addressSourceProviderPlugins;
     }
 
     /**
@@ -43,8 +43,8 @@ class AddressSourceCheckoutDataValidator implements AddressSourceCheckoutDataVal
                 continue;
             }
 
-            foreach ($this->addressSourceProvidePlugins as $addressSourceProvidePlugin) {
-                if ($addressSourceProvidePlugin->isAddressSourceProvided($restShipmentsTransfer->getShippingAddress())) {
+            foreach ($this->addressSourceProviderPlugins as $addressSourceProviderPlugin) {
+                if ($addressSourceProviderPlugin->isAddressSourceProvided($restShipmentsTransfer->getShippingAddress())) {
                     continue 2;
                 }
             }
