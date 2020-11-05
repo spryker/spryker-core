@@ -26,13 +26,13 @@ class CustomerPasswordPolicySequence extends AbstractCustomerPasswordPolicy impl
         if (!$this->config->getCustomerPasswordSequenceLimit()) {
             return $this->proceed($password, $customerResponseTransfer);
         }
-        $counter = 0;
+        $counter = 1;
         $prevChar = '';
         foreach (mb_str_split($password) as $char) {
             if ($char === $prevChar) {
                 $counter++;
             }
-            if ($this->$this->config->getCustomerPasswordSequenceLimit() <= $counter) {
+            if ($this->config->getCustomerPasswordSequenceLimit() < $counter) {
                 $this->addError($customerResponseTransfer, self::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE);
 
                 break;

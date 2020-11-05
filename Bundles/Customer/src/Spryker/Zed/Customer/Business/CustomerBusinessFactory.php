@@ -20,6 +20,7 @@ use Spryker\Zed\Customer\Business\Customer\EmailValidator;
 use Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpander;
 use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyBlacklist;
 use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyDigit;
+use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyForbidden;
 use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface;
 use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyLength;
 use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyLowerCase;
@@ -114,8 +115,16 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
             $this->createCustomerPasswordPolicyLowerCase(),
             $this->createCustomerPasswordPolicySpecial(),
             $this->createCustomerPasswordPolicyDigit(),
-            $this->createCustomerPasswordPolicySequence(),
+            $this->createCustomerPasswordPolicyForbidden(),
         ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface
+     */
+    public function createCustomerPasswordPolicyForbidden(): CustomerPasswordPolicyInterface
+    {
+        return new CustomerPasswordPolicyForbidden($this->getConfig());
     }
 
     /**

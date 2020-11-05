@@ -14,19 +14,6 @@ class CustomerPasswordPolicyForbidden extends AbstractCustomerPasswordPolicy imp
     public const PASSWORD_POLICY_ERROR_FORBIDDEN = 'customer.password.error.forbidden';
 
     /**
-     * @var string
-     */
-    protected $forbiddenCharacters;
-
-    /**
-     * @param string $forbiddenCharacters
-     */
-    public function __construct(string $forbiddenCharacters = '')
-    {
-        $this->forbiddenCharacters = $forbiddenCharacters;
-    }
-
-    /**
      * @param string $password
      * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
      *
@@ -34,12 +21,12 @@ class CustomerPasswordPolicyForbidden extends AbstractCustomerPasswordPolicy imp
      */
     public function validatePassword(string $password, CustomerResponseTransfer $customerResponseTransfer): CustomerResponseTransfer
     {
-        if (empty($this->forbiddenCharacters)) {
+        if (empty($this->config->getCustomerPasswordForbiddenCharacters())) {
             return $this->proceed($password, $customerResponseTransfer);
         }
 
         foreach (mb_str_split($password) as $character) {
-            if (strpos($character, $this->forbiddenCharacters) !== false) {
+            if (strpos($character, $this->config->getCustomerPasswordForbiddenCharacters()) !== false) {
                 $this->addError($customerResponseTransfer, static::PASSWORD_POLICY_ERROR_FORBIDDEN);
 
                 break;
