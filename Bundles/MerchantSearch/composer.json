@@ -20,9 +20,9 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/elastica": "*",
-    "spryker/search-elasticsearch": "*",
     "spryker/propel": "*",
     "spryker/queue": "*",
+    "spryker/search-elasticsearch": "*",
     "spryker/testify": "*"
   },
   "suggest": {
