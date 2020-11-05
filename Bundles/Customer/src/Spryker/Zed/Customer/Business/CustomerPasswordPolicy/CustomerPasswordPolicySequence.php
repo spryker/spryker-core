@@ -5,26 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Customer\Business\Model\CustomerPasswordPolicy;
+namespace Spryker\Zed\Customer\Business\CustomerPasswordPolicy;
 
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 
 class CustomerPasswordPolicySequence extends AbstractCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
 {
-    public const PASSWORD_POLICY_ERROR_SEQUENCE = 'customer.password.error.sequence';
-
-    /**
-     * @var int
-     */
-    protected $sequenceLengthLimit;
-
-    /**
-     * @param int $sequenceLengthLimit
-     */
-    public function __construct(int $sequenceLengthLimit = 0)
-    {
-        $this->sequenceLengthLimit = $sequenceLengthLimit;
-    }
+    public const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE = 'customer.password.error.sequence';
 
     /**
      * @param string $password
@@ -36,7 +23,7 @@ class CustomerPasswordPolicySequence extends AbstractCustomerPasswordPolicy impl
         string $password,
         CustomerResponseTransfer $customerResponseTransfer
     ): CustomerResponseTransfer {
-        if (!$this->sequenceLengthLimit) {
+        if (!$this->config->getCustomerPasswordSequenceLimit()) {
             return $this->proceed($password, $customerResponseTransfer);
         }
         $counter = 0;
@@ -45,8 +32,8 @@ class CustomerPasswordPolicySequence extends AbstractCustomerPasswordPolicy impl
             if ($char === $prevChar) {
                 $counter++;
             }
-            if ($this->sequenceLengthLimit <= $counter) {
-                $this->addError($customerResponseTransfer, self::PASSWORD_POLICY_ERROR_SEQUENCE);
+            if ($this->$this->config->getCustomerPasswordSequenceLimit() <= $counter) {
+                $this->addError($customerResponseTransfer, self::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE);
 
                 break;
             }

@@ -5,22 +5,36 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Customer\Business\Model\CustomerPasswordPolicy;
+namespace Spryker\Zed\Customer\Business\CustomerPasswordPolicy;
 
 use Generated\Shared\Transfer\CustomerErrorTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
+use Spryker\Zed\Customer\CustomerConfig;
 
 abstract class AbstractCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
 {
     /**
-     * @var \Spryker\Zed\Customer\Business\Model\CustomerPasswordPolicy\CustomerPasswordPolicyInterface
+     * @var \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface
      */
     protected $nextCustomerPasswordPolicy;
+
+    /**
+     * @var \Spryker\Zed\Customer\CustomerConfig
+     */
+    protected $config;
 
     protected const PASSWORD_POLICY_ATTRIBUTE_REQUIRED = 'required';
 
     /**
-     * @param \Spryker\Zed\Customer\Business\Model\CustomerPasswordPolicy\CustomerPasswordPolicyInterface $customerPasswordPolicy
+     * @param \Spryker\Zed\Customer\CustomerConfig $config
+     */
+    public function __construct(CustomerConfig $config)
+    {
+        $this->config = $config;
+    }
+
+    /**
+     * @param \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface $customerPasswordPolicy
      *
      * @return void
      */

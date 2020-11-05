@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Customer\Business\Model\CustomerPasswordPolicy;
+namespace Spryker\Zed\Customer\Business\CustomerPasswordPolicy;
 
 interface CustomerPasswordPolicyProviderInterface
 {
     /**
-     * @return \Spryker\Zed\Customer\Business\Model\CustomerPasswordPolicy\CustomerPasswordPolicyInterface
+     * @return \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface
      */
     public function getCustomerPasswordPolicy(): CustomerPasswordPolicyInterface;
 }

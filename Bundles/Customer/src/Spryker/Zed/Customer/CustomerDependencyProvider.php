@@ -10,7 +10,6 @@ namespace Spryker\Zed\Customer;
 use Spryker\Service\Customer\CustomerServiceInterface;
 use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\Customer\Business\Model\CustomerPasswordPolicy\CustomerPasswordPolicyLength;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
@@ -53,8 +52,6 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_CUSTOMER_TRANSFER_EXPANDER = 'PLUGINS_CUSTOMER_TRANSFER_EXPANDER';
     public const PLUGINS_POST_CUSTOMER_REGISTRATION = 'PLUGINS_POST_CUSTOMER_REGISTRATION';
 
-    public const CUSTOMER_PASSWORD_POLICY = 'CUSTOMER_PASSWORD_POLICY';
-
     public const PLUGINS_CUSTOMER_TABLE_ACTION_EXPANDER = 'PLUGINS_CUSTOMER_TABLE_ACTION_EXPANDER';
 
     public const SUB_REQUEST_HANDLER = 'SUB_REQUEST_HANDLER';
@@ -76,7 +73,6 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addLocaleFacade($container);
         $container = $this->addCustomerTransferExpanderPlugins($container);
         $container = $this->addPostCustomerRegistrationPlugins($container);
-        $container = $this->addCustomerPasswordPolicy($container);
         $container = $this->addCustomerService($container);
 
         return $container;
@@ -319,33 +315,6 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     protected function getPostCustomerRegistrationPlugins(): array
     {
         return [];
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function addCustomerPasswordPolicy(Container $container)
-    {
-        $container->set(static::CUSTOMER_PASSWORD_POLICY, function (Container $container) {
-            return $this->getCustomerPasswordPolicy();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @return \Spryker\Zed\Customer\Business\Model\CustomerPasswordPolicy\CustomerPasswordPolicyInterface[]
-     */
-    public function getCustomerPasswordPolicy(): array
-    {
-        return [
-            new CustomerPasswordPolicyLength(
-                $this->getConfig()->getCustomerPasswordMinLength(),
-                $this->getConfig()->getCustomerPasswordMaxLength()
-            ),
-        ];
     }
 
     /**

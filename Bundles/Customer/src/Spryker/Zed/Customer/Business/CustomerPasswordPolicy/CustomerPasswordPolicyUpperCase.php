@@ -5,25 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Customer\Business\Model\CustomerPasswordPolicy;
+namespace Spryker\Zed\Customer\Business\CustomerPasswordPolicy;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 
-class CustomerPasswordPolicyWhitelist extends AbstractCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
+class CustomerPasswordPolicyUpperCase extends AbstractCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
 {
-    /**
-     * @var string[]
-     */
-    protected $passwordWhiteList;
+    public const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_UPPER_CASE = 'customer.password.error.upper_case';
 
-    /**
-     * @param string[] $passwordWhiteList
-     */
-    public function __construct(array $passwordWhiteList = [])
-    {
-        $this->passwordWhiteList = $passwordWhiteList;
-    }
+    public const PASSWORD_POLICY_CHARSET_UPPER_CASE = '/\p{Lu}+/';
 
     /**
      * @param string $password
@@ -33,8 +23,8 @@ class CustomerPasswordPolicyWhitelist extends AbstractCustomerPasswordPolicy imp
      */
     public function validatePassword(string $password, CustomerResponseTransfer $customerResponseTransfer): CustomerResponseTransfer
     {
-        if (in_array($password, $this->passwordWhiteList, true)) {
-            return $customerResponseTransfer->setIsSuccess(true)->setErrors(new ArrayObject());
+        if ($this->config->getCustomerPasswordUpperCaseRequired() && !preg_match(static::PASSWORD_POLICY_CHARSET_UPPER_CASE, $password)) {
+            $this->addError($customerResponseTransfer, static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_UPPER_CASE);
         }
 
         return $this->proceed($password, $customerResponseTransfer);
