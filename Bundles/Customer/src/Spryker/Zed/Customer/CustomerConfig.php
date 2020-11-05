@@ -143,8 +143,8 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
-     * This method provides a list of strings that will be accepted as a password for customer bypassing any policy
-     * validations.
+     * Specification:
+     * - Provides a list of strings that will be accepted as a password for customer bypassing any policy validations.
      *
      * @api
      *
@@ -206,7 +206,8 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
-     * This method provides a string of characters that are forbidden to be used as a part of a customer password.
+     * Specification:
+     * - Provides a string of characters that are forbidden to be used as a part of a customer password.
      *
      * @api
      *
@@ -218,7 +219,8 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
-     * This method provides a limit of a sequence of the same character in password.
+     * Specification:
+     * - Provides a limit of a sequence of the same character in password.
      *
      * Example:
      *  0: will disable length validation.
@@ -236,7 +238,8 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
-     * This method enables password check for Customer::restorePassword() in BC way.
+     * Specification:
+     * - Enables password check for Customer::restorePassword() in BC way.
      *
      * @api
      *
@@ -248,6 +251,9 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Enables extended customer password policy validation.
+     *
      * @api
      *
      * @return bool

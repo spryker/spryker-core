@@ -32,7 +32,10 @@ class CustomerPasswordPolicyProvider implements CustomerPasswordPolicyProviderIn
         array $customerPasswordPolicies
     ) {
         $this->customerPasswordPolicy = $defaultPolicy;
-        if ($config->isCustomerPasswordCheckEnabledOnRestorePassword())
+
+        if (!$config->isCustomerPasswordPolicyCheckEnabled()) {
+            return;
+        }
         foreach ($customerPasswordPolicies as $customerPasswordPolicy) {
             $this->customerPasswordPolicy->addPolicy($customerPasswordPolicy);
         }
