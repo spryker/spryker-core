@@ -11,8 +11,4 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class MerchantCategoryConfig extends AbstractBundleConfig
 {
-    /**
-     * Provides a limit of merchant categories that can be retrieved by one request.
-     */
-    public const MAX_CATEGORY_SELECT_COUNT = 1000;
 }

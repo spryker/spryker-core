@@ -9,7 +9,7 @@ namespace Spryker\Client\MerchantSearch\PaginationConfigBuilder;
 
 use Spryker\Client\MerchantSearch\MerchantSearchConfig;
 
-class MerchantSearchPaginationConfigBuilder implements PaginationConfigBuilderInterface
+class MerchantSearchPaginationConfigBuilder implements MerchantSearchPaginationConfigBuilderInterface
 {
     /**
      * @var \Spryker\Client\MerchantSearch\MerchantSearchConfig

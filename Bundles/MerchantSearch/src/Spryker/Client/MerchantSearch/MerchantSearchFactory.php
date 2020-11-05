@@ -10,7 +10,7 @@ namespace Spryker\Client\MerchantSearch;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\MerchantSearch\Dependency\Client\MerchantSearchToSearchClientInterface;
 use Spryker\Client\MerchantSearch\PaginationConfigBuilder\MerchantSearchPaginationConfigBuilder;
-use Spryker\Client\MerchantSearch\PaginationConfigBuilder\PaginationConfigBuilderInterface;
+use Spryker\Client\MerchantSearch\PaginationConfigBuilder\MerchantSearchPaginationConfigBuilderInterface;
 use Spryker\Client\MerchantSearch\Reader\MerchantSearchReader;
 use Spryker\Client\MerchantSearch\Reader\MerchantSearchReaderInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
@@ -66,9 +66,9 @@ class MerchantSearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\MerchantSearch\PaginationConfigBuilder\PaginationConfigBuilderInterface
+     * @return \Spryker\Client\MerchantSearch\PaginationConfigBuilder\MerchantSearchPaginationConfigBuilderInterface
      */
-    public function createMerchantSearchPaginationConfigBuilder(): PaginationConfigBuilderInterface
+    public function createMerchantSearchPaginationConfigBuilder(): MerchantSearchPaginationConfigBuilderInterface
     {
         return new MerchantSearchPaginationConfigBuilder(
             $this->getConfig()

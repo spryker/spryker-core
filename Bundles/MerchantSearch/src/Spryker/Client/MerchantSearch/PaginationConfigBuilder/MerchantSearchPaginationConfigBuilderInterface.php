@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\MerchantSearch\PaginationConfigBuilder;
 
-interface PaginationConfigBuilderInterface
+interface MerchantSearchPaginationConfigBuilderInterface
 {
     /**
      * @param array $requestParameters
