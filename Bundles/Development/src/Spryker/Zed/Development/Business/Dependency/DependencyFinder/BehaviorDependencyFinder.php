@@ -7,18 +7,18 @@
 
 namespace Spryker\Zed\Development\Business\Dependency\DependencyFinder;
 
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\Word\DashToCamelCase;
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContextInterface;
 use Spryker\Zed\Development\Dependency\Facade\DevelopmentToModuleFinderFacadeInterface;
-use Zend\Filter\FilterChain;
-use Zend\Filter\Word\DashToCamelCase;
 
 class BehaviorDependencyFinder implements DependencyFinderInterface
 {
     public const TYPE_PERSISTENCE = 'persistence';
 
     /**
-     * @var \Zend\Filter\FilterChain|null
+     * @var \Laminas\Filter\FilterChain|null
      */
     protected $filter;
 
@@ -94,7 +94,7 @@ class BehaviorDependencyFinder implements DependencyFinderInterface
     }
 
     /**
-     * @return \Zend\Filter\FilterChain
+     * @return \Laminas\Filter\FilterChain
      */
     protected function getFilter(): FilterChain
     {

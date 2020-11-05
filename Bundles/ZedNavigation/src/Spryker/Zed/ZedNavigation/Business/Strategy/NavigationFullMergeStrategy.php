@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ZedNavigation\Business\Strategy;
 
+use Laminas\Config\Config;
 use Spryker\Zed\ZedNavigation\ZedNavigationConfig;
-use Zend\Config\Config;
 
 class NavigationFullMergeStrategy implements NavigationMergeStrategyInterface
 {
@@ -21,9 +21,9 @@ class NavigationFullMergeStrategy implements NavigationMergeStrategyInterface
     }
 
     /**
-     * @param \Zend\Config\Config $navigationDefinition
-     * @param \Zend\Config\Config $rootDefinition
-     * @param \Zend\Config\Config $coreNavigationDefinition
+     * @param \Laminas\Config\Config $navigationDefinition
+     * @param \Laminas\Config\Config $rootDefinition
+     * @param \Laminas\Config\Config $coreNavigationDefinition
      *
      * @return array
      */
