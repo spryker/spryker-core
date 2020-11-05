@@ -4,7 +4,7 @@
   "description": "Config module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/kernel": "^3.48.0",
     "spryker/symfony": "^3.0.0",
     "spryker/web-profiler-extension": "^1.0.0"

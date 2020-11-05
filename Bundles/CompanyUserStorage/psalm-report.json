@@ -11,8 +11,7 @@
             "snippet": "            $companyUserTransfer->getUuid()",
             "selected_text": "$companyUserTransfer->getUuid()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -24,8 +23,7 @@
             "snippet": "        $companyUserStorageEntity->setFkCompanyUser($companyUserTransfer->getIdCompanyUser())",
             "selected_text": "$companyUserTransfer->getIdCompanyUser()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -37,8 +35,7 @@
             "snippet": "                unset($companyUserStorageEntitiesToDelete[$companyUserTransfer->getIdCompanyUser()]);",
             "selected_text": "$companyUserStorageEntitiesToDelete",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -50,8 +47,7 @@
             "snippet": "            ->getArrayCopy();",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -63,8 +59,7 @@
             "snippet": "     * @return array",
             "selected_text": "array",
             "error_level": 5,
-            "shortcode": 166,
-            "taint_trace": null
+            "shortcode": 166
         },
         {
             "severity": "info",
@@ -76,8 +71,7 @@
             "snippet": "            ->getArrayCopy(SpyCompanyUserStorageEntityTransfer::FK_COMPANY_USER); // indexing resulting array with corresponding companyUserIds",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -89,8 +83,7 @@
             "snippet": "            ->getArrayCopy();",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -102,8 +95,7 @@
             "snippet": "        $spyCompanyUserEntityTransfer->setFkCompanyUser($companyUserStorageTransfer->getIdCompanyUser());",
             "selected_text": "$companyUserStorageTransfer->getIdCompanyUser()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -115,8 +107,7 @@
             "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\CompanyUserStorage\\Persistence\\SpyCompanyUserStorage[] $companyUserStorageEntityCollection",
             "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\CompanyUserStorage\\Persistence\\SpyCompanyUserStorage[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -128,8 +119,7 @@
             "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\CompanyUserStorage\\Persistence\\SpyCompanyUserStorage[] $companyUserStorageEntityCollection",
             "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\CompanyUserStorage\\Persistence\\SpyCompanyUserStorage[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         }
     ],
     "deprecation": [
@@ -143,8 +133,7 @@
             "snippet": "        $indexedCompanyUserStorageEntities = $this->companyUserStorageRepository->findCompanyUserStorageEntities($companyUserIds);",
             "selected_text": "findCompanyUserStorageEntities",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -156,8 +145,7 @@
             "snippet": "        $companyUserStorageEntities = $this->companyUserStorageRepository->findCompanyUserStorageEntities($companyUserIds);",
             "selected_text": "findCompanyUserStorageEntities",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -169,8 +157,7 @@
             "snippet": "    use DatabaseTransactionHandlerTrait;",
             "selected_text": "DatabaseTransactionHandlerTrait",
             "error_level": 2,
-            "shortcode": 171,
-            "taint_trace": null
+            "shortcode": 171
         },
         {
             "severity": "info",
@@ -182,8 +169,7 @@
             "snippet": "    use DatabaseTransactionHandlerTrait;",
             "selected_text": "DatabaseTransactionHandlerTrait",
             "error_level": 2,
-            "shortcode": 171,
-            "taint_trace": null
+            "shortcode": 171
         },
         {
             "severity": "info",
@@ -195,8 +181,7 @@
             "snippet": "    use DatabaseTransactionHandlerTrait;",
             "selected_text": "DatabaseTransactionHandlerTrait",
             "error_level": 2,
-            "shortcode": 171,
-            "taint_trace": null
+            "shortcode": 171
         },
         {
             "severity": "info",
@@ -208,8 +193,7 @@
             "snippet": "class CompanyUserSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface",
             "selected_text": "CompanyUserSynchronizationDataPlugin",
             "error_level": 2,
-            "shortcode": 152,
-            "taint_trace": null
+            "shortcode": 152
         },
         {
             "severity": "info",
@@ -221,8 +205,7 @@
             "snippet": "            return $this->getRepository()->findAllCompanyUserStorageEntities();",
             "selected_text": "findAllCompanyUserStorageEntities",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -234,8 +217,7 @@
             "snippet": "        return $this->getRepository()->findCompanyUserStorageEntities($ids);",
             "selected_text": "findCompanyUserStorageEntities",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         }
     ]
 }

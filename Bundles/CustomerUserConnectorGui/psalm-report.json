@@ -11,8 +11,7 @@
             "snippet": "     * @param \\Orm\\Zed\\Customer\\Persistence\\SpyCustomer[]|\\Propel\\Runtime\\Collection\\ObjectCollection $customerEntities",
             "selected_text": "\\Orm\\Zed\\Customer\\Persistence\\SpyCustomer[]|\\Propel\\Runtime\\Collection\\ObjectCollection",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -24,21 +23,7 @@
             "snippet": "                $this->userTransfer->getIdUser()",
             "selected_text": "$this->userTransfer->getIdUser()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::leftJoinSpyUser does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CustomerUserConnectorGui/src/Spryker/Zed/CustomerUserConnectorGui/Communication/Table/AssignedCustomerTable.php",
-            "snippet": "            ->leftJoinSpyUser()",
-            "selected_text": "leftJoinSpyUser",
-            "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -50,8 +35,7 @@
             "snippet": "        return $customerEntity->getSpyUser()->getUsername();",
             "selected_text": "getUsername",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -63,21 +47,7 @@
             "snippet": "                $this->userTransfer->getIdUser()",
             "selected_text": "$this->userTransfer->getIdUser()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 58,
-            "line_to": 58,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::leftJoinSpyUser does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CustomerUserConnectorGui/src/Spryker/Zed/CustomerUserConnectorGui/Communication/Table/AvailableCustomerTable.php",
-            "snippet": "            ->leftJoinSpyUser()",
-            "selected_text": "leftJoinSpyUser",
-            "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -89,8 +59,7 @@
             "snippet": "            $this->getEditCustomerUserConnectionsUrl($customerEntity->getSpyUser()->getIdUser()),",
             "selected_text": "getIdUser",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -102,8 +71,7 @@
             "snippet": "            $customerEntity->getSpyUser()->getUsername()",
             "selected_text": "getUsername",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         }
     ],
     "deprecation": []

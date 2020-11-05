@@ -18,7 +18,9 @@ use Elastica\Index;
 use Elastica\Request;
 use Elastica\Snapshot;
 use Elastica\Type;
+use ReflectionClass;
 use RuntimeException;
+use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactory;
 use Spryker\Shared\SearchElasticsearch\SearchElasticsearchConfig;
 use SprykerTest\Shared\Testify\Helper\VirtualFilesystemHelper;
 
@@ -35,7 +37,7 @@ class ElasticsearchHelper extends Module
     protected $cleanup = [];
 
     /**
-     * @var \Elastica\Client
+     * @var \Elastica\Client|null
      */
     protected static $client;
 
@@ -189,6 +191,19 @@ class ElasticsearchHelper extends Module
         foreach ($this->cleanup as $indexName => $cleanup) {
             $cleanup();
         }
+
+        $this->resetClient();
+    }
+
+    /**
+     * @return void
+     */
+    protected function resetClient(): void
+    {
+        $factoryReflectionClass = new ReflectionClass(ElasticaClientFactory::class);
+        $clientProperty = $factoryReflectionClass->getProperty('client');
+        $clientProperty->setAccessible(true);
+        $clientProperty->setValue(null);
     }
 
     /**
@@ -204,7 +219,7 @@ class ElasticsearchHelper extends Module
      */
     protected function getClient(): Client
     {
-        if (!static::$client) {
+        if (static::$client === null) {
             static::$client = new Client($this->getConfig()->getClientConfig());
         }
 
@@ -294,7 +309,18 @@ class ElasticsearchHelper extends Module
      */
     public function getVirtualRepositoryLocation(): string
     {
-        return $this->getModule('\\' . VirtualFilesystemHelper::class)->getVirtualDirectory() . static::REPOSITORY_LOCATION_FILE_NAME;
+        return $this->getVirtualFilesystemHelper()->getVirtualDirectory() . static::REPOSITORY_LOCATION_FILE_NAME;
+    }
+
+    /**
+     * @return \SprykerTest\Shared\Testify\Helper\VirtualFilesystemHelper
+     */
+    protected function getVirtualFilesystemHelper(): VirtualFilesystemHelper
+    {
+        /** @var \SprykerTest\Shared\Testify\Helper\VirtualFilesystemHelper $virtualFilesystemHelper */
+        $virtualFilesystemHelper = $this->getModule('\\' . VirtualFilesystemHelper::class);
+
+        return $virtualFilesystemHelper;
     }
 
     /**

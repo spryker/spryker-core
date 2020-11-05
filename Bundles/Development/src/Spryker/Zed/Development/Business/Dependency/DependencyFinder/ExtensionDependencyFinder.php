@@ -26,7 +26,7 @@ class ExtensionDependencyFinder extends AbstractFileDependencyFinder
     protected $moduleFinderFacade;
 
     /**
-     * @var \Zend\Filter\FilterChain|null
+     * @var \Laminas\Filter\FilterChain|null
      */
     protected $filter;
 

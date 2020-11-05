@@ -3,18 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 40,
-            "line_to": 40,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalf/src/Spryker/Client/BusinessOnBehalf/BusinessOnBehalfDependencyProvider.php",
-            "snippet": "            return new BusinessOnBehalfToZedRequestClientBridge($container->getLocator()->zedRequest()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 47,
             "line_to": 47,
             "type": "PossiblyNullArgument",
@@ -63,18 +51,6 @@
         },
         {
             "severity": "info",
-            "line_from": 69,
-            "line_to": 69,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalf/src/Spryker/Zed/BusinessOnBehalf/BusinessOnBehalfDependencyProvider.php",
-            "snippet": "            return new BusinessOnBehalfToCompanyUserFacadeBridge($container->getLocator()->companyUser()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 32,
             "line_to": 32,
             "type": "PossiblyNullReference",
@@ -120,18 +96,6 @@
             "selected_text": "method_exists($companyUserQuery, 'filterByIsActive')",
             "error_level": 4,
             "shortcode": 122
-        },
-        {
-            "severity": "info",
-            "line_from": 64,
-            "line_to": 64,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Orm\\Zed\\CompanySupplier\\Persistence\\SpyCompanyTypeQuery::orderbyidcompanyuser does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalf/src/Spryker/Zed/BusinessOnBehalf/Persistence/BusinessOnBehalfRepository.php",
-            "snippet": "            ->orderByIdCompanyUser()",
-            "selected_text": "orderByIdCompanyUser",
-            "error_level": 4,
-            "shortcode": 219
         },
         {
             "severity": "info",

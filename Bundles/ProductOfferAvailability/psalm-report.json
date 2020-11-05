@@ -24,30 +24,6 @@
             "selected_text": "$reservationResponseTransfer->getReservationQuantity()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferAvailability/src/Spryker/Zed/ProductOfferAvailability/ProductOfferAvailabilityDependencyProvider.php",
-            "snippet": "            return new ProductOfferAvailabilityToOmsFacadeBridge($container->getLocator()->oms()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 60,
-            "line_to": 60,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferAvailability/src/Spryker/Zed/ProductOfferAvailability/ProductOfferAvailabilityDependencyProvider.php",
-            "snippet": "            return new ProductOfferAvailabilityToProductOfferStockFacadeBridge($container->getLocator()->productOfferStock()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

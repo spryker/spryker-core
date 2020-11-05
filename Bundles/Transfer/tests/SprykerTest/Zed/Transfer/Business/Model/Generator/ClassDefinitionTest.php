@@ -8,10 +8,12 @@
 namespace SprykerTest\Zed\Transfer\Business\Model\Generator;
 
 use Codeception\Test\Unit;
+use Spryker\Shared\Transfer\TransferConstants;
 use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeTypeException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeValueException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidNameException;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
+use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinitionInterface;
 use Spryker\Zed\Transfer\TransferConfig;
 
 /**
@@ -25,6 +27,7 @@ use Spryker\Zed\Transfer\TransferConfig;
  * @group Generator
  * @group ClassDefinitionTest
  * Add your own group annotations below this line
+ * @property \SprykerTest\Zed\Transfer\TransferBusinessTester $tester
  */
 class ClassDefinitionTest extends Unit
 {
@@ -201,6 +204,8 @@ class ClassDefinitionTest extends Unit
      */
     public function testSimplePropertyShouldHaveOnlyGetterAndSetter(): void
     {
+        $this->tester->mockEnvironmentConfig(TransferConstants::IS_DEBUG_ENABLED, false);
+
         $transferDefinition = [
             'name' => 'name',
             'property' => [$this->getProperty('property1', 'string')],
@@ -225,6 +230,8 @@ class ClassDefinitionTest extends Unit
      */
     public function testSimpleStringPropertyShouldHaveOnlySetterWithoutTypeHint(): void
     {
+        $this->tester->mockEnvironmentConfig(TransferConstants::IS_DEBUG_ENABLED, false);
+
         $transferDefinition = [
             'name' => 'name',
             'property' => [$this->getProperty('property1', 'string')],
@@ -359,6 +366,7 @@ class ClassDefinitionTest extends Unit
      * @param array $bundles
      * @param bool|null $hasDefaultNull
      * @param bool|null $valueObject
+     * @param bool $isTypeAssertionEnabled
      *
      * @return array
      */
@@ -371,13 +379,15 @@ class ClassDefinitionTest extends Unit
         ?string $constant = null,
         array $bundles = [],
         ?bool $hasDefaultNull = null,
-        ?bool $valueObject = null
+        ?bool $valueObject = null,
+        bool $isTypeAssertionEnabled = false
     ): array {
         $method = [
             'name' => $method,
             'property' => $property,
             'bundles' => $bundles,
             'deprecationDescription' => null,
+            'isTypeAssertionEnabled' => $isTypeAssertionEnabled,
         ];
 
         if ($var !== null) {
@@ -429,6 +439,8 @@ class ClassDefinitionTest extends Unit
     ): array {
         $method = $this->getMethod($method, $property, $var, $return, $typeHint, $constant, $bundles, $hasDefaultNull);
         unset($method['typeHint']);
+        unset($method['shimNotice']);
+        unset($method['isTypeAssertionEnabled']);
 
         return $method;
     }
@@ -458,6 +470,7 @@ class ClassDefinitionTest extends Unit
         $method = $this->getMethod($method, $property, $var, $return, $typeHint, $constant, $bundles);
         $method['parent'] = $parent;
         $method['is_associative'] = false;
+        unset($method['shimNotice']);
 
         return $method;
     }
@@ -624,12 +637,131 @@ class ClassDefinitionTest extends Unit
     }
 
     /**
+     * @dataProvider transferDefinitionTypeIsCorrectlyShimmedDataProvider
+     *
+     * @param array $shimConfig
+     * @param string[] $expectedTypesTypes
+     *
+     * @return void
+     */
+    public function testTransferDefinitionTypeIsCorrectlyShimmed(array $shimConfig, array $expectedTypesTypes): void
+    {
+        // Arrange
+        $this->tester->mockConfigMethod('getTypeShims', $shimConfig);
+        $definition = [
+            'name' => 'FooBar',
+            'property' => [
+                'property1' => [
+                    'name' => 'property1',
+                    'type' => 'int',
+                    'is_typed_array' => false,
+                    'bundles' => [],
+                    'is_associative' => false,
+                ],
+                'property2' => [
+                    'name' => 'property2',
+                    'type' => 'string[]',
+                    'is_typed_array' => true,
+                    'bundles' => [],
+                    'is_associative' => false,
+                ],
+                'property3' => [
+                    'name' => 'property3',
+                    'type' => 'array',
+                    'is_transfer' => true,
+                    'is_typed_array' => false,
+                    'bundles' => [],
+                    'is_associative' => false,
+                ],
+            ],
+        ];
+        $classDefinition = $this->createClassDefinition();
+
+        // Act
+        $classDefinition->setDefinition($definition);
+
+        // Assert
+        $this->assertMethodHasCorrectTypeShim($classDefinition, $expectedTypesTypes);
+    }
+
+    /**
+     * @return array
+     */
+    public function transferDefinitionTypeIsCorrectlyShimmedDataProvider(): array
+    {
+        return [
+            'scalar type' => [
+                'shim config' => [
+                    'FooBar' => [
+                        'property1' => [
+                            'int' => 'string',
+                        ],
+                    ],
+                ],
+                'expected types' => [
+                    'property1',
+                    'string|int|null',
+                ],
+            ],
+            'typed array type' => [
+                'shim config' => [
+                    'FooBar' => [
+                        'property2' => [
+                            'string[]' => 'bool',
+                        ],
+                    ],
+                ],
+                'expected types' => [
+                    'property2',
+                    'bool|string[]',
+                ],
+            ],
+            'transfer type' => [
+                'shim config' => [
+                    'FooBar' => [
+                        'property3' => [
+                            'array' => 'int',
+                        ],
+                    ],
+                ],
+                'expected types' => [
+                    'property3',
+                    'int|array',
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @param \Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinitionInterface $classDefinition
+     * @param string[] $expectedTypes
+     *
+     * @return void
+     */
+    protected function assertMethodHasCorrectTypeShim(ClassDefinitionInterface $classDefinition, array $expectedTypes): void
+    {
+        $methods = $classDefinition->getMethods();
+        [$propertyName, $expectedVarTypes] = $expectedTypes;
+        $methodName = 'set' . ucfirst($propertyName);
+        $this->assertTrue(isset($methods[$methodName]));
+        $this->assertEquals($expectedVarTypes, $methods[$methodName]['var']);
+    }
+
+    /**
+     * @return \Spryker\Zed\Transfer\TransferConfig|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getTransferConfigMock(): TransferConfig
+    {
+        return $this->createMock(TransferConfig::class);
+    }
+
+    /**
      * @return \Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition
      */
     protected function createClassDefinition(): ClassDefinition
     {
         $classDefinition = new ClassDefinition(
-            new TransferConfig()
+            $this->tester->getModuleConfig()
         );
 
         return $classDefinition;

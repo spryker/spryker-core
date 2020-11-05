@@ -8,9 +8,9 @@
 namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Generator;
 
 use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
+use Laminas\Filter\Word\UnderscoreToCamelCase;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
-use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class IndexMapGenerator implements IndexMapGeneratorInterface
 {

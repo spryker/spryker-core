@@ -4,7 +4,7 @@
   "description": "Calculation module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/calculation-extension": "^1.1.0",
     "spryker/kernel": "^3.30.0",
     "spryker/util-text": "^1.1.0",

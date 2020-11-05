@@ -1,18 +1,5 @@
 {
     "error": [],
-    "warning": [
-        {
-            "severity": "info",
-            "line_from": 37,
-            "line_to": 37,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryExporter/src/Spryker/Client/CategoryExporter/CategoryExporterDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->storage()->client();",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        }
-    ],
+    "warning": [],
     "deprecation": []
 }

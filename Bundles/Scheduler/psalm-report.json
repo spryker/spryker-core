@@ -1,5 +1,18 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\Scheduler\\Communication\\Plugin\\Scheduler\\PhpScheduleReaderPlugin::readSchedule has wrong name $filterTransfer, expecting $schedulerFilterTransfer as defined by Spryker\\Zed\\SchedulerExtension\\Dependency\\Plugin\\ScheduleReaderPluginInterface::readSchedule",
+            "file_name": "vendor/spryker/spryker/Bundles/Scheduler/src/Spryker/Zed/Scheduler/Communication/Plugin/Scheduler/PhpScheduleReaderPlugin.php",
+            "snippet": "        SchedulerFilterTransfer $filterTransfer,",
+            "selected_text": "$filterTransfer",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -27,8 +40,8 @@
         },
         {
             "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
+            "line_from": 44,
+            "line_to": 44,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Scheduler/src/Spryker/Zed/Scheduler/Communication/Console/AbstractSchedulerConsole.php",
@@ -39,8 +52,8 @@
         },
         {
             "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
+            "line_from": 44,
+            "line_to": 44,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdScheduler on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Scheduler/src/Spryker/Zed/Scheduler/Communication/Console/AbstractSchedulerConsole.php",
@@ -51,8 +64,8 @@
         },
         {
             "severity": "info",
-            "line_from": 53,
-            "line_to": 53,
+            "line_from": 54,
+            "line_to": 54,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Symfony\\Component\\Console\\Output\\OutputInterface::writeln cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Scheduler/src/Spryker/Zed/Scheduler/Communication/Console/AbstractSchedulerConsole.php",
@@ -63,8 +76,8 @@
         },
         {
             "severity": "info",
-            "line_from": 66,
-            "line_to": 66,
+            "line_from": 70,
+            "line_to": 70,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getJobs on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Scheduler/src/Spryker/Zed/Scheduler/Communication/Console/AbstractSchedulerConsole.php",

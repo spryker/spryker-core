@@ -8,12 +8,12 @@
 namespace Spryker\Zed\Development\Business\ArchitectureSniffer;
 
 use Exception;
+use Laminas\Config\Reader\ReaderInterface;
 use PHPMD\RuleSetFactory;
 use PHPMD\TextUI\CommandLineOptions;
 use Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigurationBuilderInterface;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Process\Process;
-use Zend\Config\Reader\ReaderInterface;
 
 class ArchitectureSniffer implements ArchitectureSnifferInterface
 {
@@ -31,7 +31,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     protected $command;
 
     /**
-     * @var \Zend\Config\Reader\ReaderInterface
+     * @var \Laminas\Config\Reader\ReaderInterface
      */
     protected $xmlReader;
 
@@ -41,7 +41,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     protected $configurationBuilder;
 
     /**
-     * @param \Zend\Config\Reader\ReaderInterface $xmlReader
+     * @param \Laminas\Config\Reader\ReaderInterface $xmlReader
      * @param string $command
      * @param \Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigurationBuilderInterface $configurationBuilder
      */

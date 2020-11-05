@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Development\Business\Composer;
 
+use Laminas\Filter\Word\CamelCaseToDash;
 use RuntimeException;
 use Spryker\Zed\Development\Business\Composer\Updater\UpdaterInterface;
 use Spryker\Zed\Development\Business\Exception\DependencyTree\InvalidComposerJsonException;
 use Symfony\Component\Finder\SplFileInfo;
-use Zend\Filter\Word\CamelCaseToDash;
 
 class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
 {
@@ -73,6 +73,10 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
     {
         $composerJson = $composerJsonFile->getContents();
         $composerJsonArray = json_decode($composerJson, true);
+
+        if (!empty($composerJsonArray['abandoned']) || $composerJsonArray['name'] === 'spryker/zend') {
+            return false;
+        }
 
         $this->assertCorrectName($composerJsonArray['name'], $composerJsonFile);
 

@@ -15,7 +15,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\Kernel\Communication\Form\AbstractType} for Zed and `Spryker\Yves\Kernel\Form\AbstractType` for Yves instead.
+ * @deprecated Use {@link \Spryker\Zed\Kernel\Communication\Form\AbstractType} for Zed and {@link \Spryker\Yves\Kernel\Form\AbstractType} for Yves instead.
  */
 abstract class AbstractForm implements FormTypeInterface
 {

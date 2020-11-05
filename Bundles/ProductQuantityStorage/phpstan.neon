@@ -1,5 +1,4 @@
 parameters:
     checkMissingIterableValueType: false
     ignoreErrors:
-        - '#Parameter \#1 \$data of method .+SpyProductQuantityStorageEntityTransfer::setData\(\) expects string\|null, array given.#'
         - '#Parameter \#1 \$reference of method .+SynchronizationDataTransfer::setReference\(\) expects string\|null, int given.#'

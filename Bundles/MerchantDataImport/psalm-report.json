@@ -23,30 +23,6 @@
             "selected_text": "$dataImporter",
             "error_level": 6,
             "shortcode": 128
-        },
-        {
-            "severity": "error",
-            "line_from": 26,
-            "line_to": 26,
-            "type": "MissingDependency",
-            "message": "Orm\\Zed\\Merchant\\Persistence\\SpyMerchantStoreQuery depends on class or interface orm\\zed\\merchant\\persistence\\base\\spymerchantstorequery that does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantDataImport/src/Spryker/Zed/MerchantDataImport/Business/MerchantStore/Step/MerchantStoreWriterStep.php",
-            "snippet": "        $merchantStoreEntity = SpyMerchantStoreQuery::create()",
-            "selected_text": "SpyMerchantStoreQuery",
-            "error_level": -1,
-            "shortcode": 157
-        },
-        {
-            "severity": "error",
-            "line_from": 67,
-            "line_to": 67,
-            "type": "InvalidMethodCall",
-            "message": "Cannot call method on array<array-key, mixed> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantDataImport/src/Spryker/Zed/MerchantDataImport/Business/Model/MerchantWriterStep.php",
-            "snippet": "            ->save();",
-            "selected_text": "save",
-            "error_level": 6,
-            "shortcode": 91
         }
     ],
     "warning": [
@@ -133,18 +109,6 @@
             "selected_text": "import",
             "error_level": 3,
             "shortcode": 108
-        },
-        {
-            "severity": "info",
-            "line_from": 131,
-            "line_to": 131,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Orm\\Zed\\Url\\Persistence\\SpyUrlQuery::filterbyfkresourcemerchant does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantDataImport/src/Spryker/Zed/MerchantDataImport/Business/Model/MerchantWriterStep.php",
-            "snippet": "            ->filterByFkResourceMerchant($idMerchant)",
-            "selected_text": "filterByFkResourceMerchant",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

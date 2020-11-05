@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductAttribute\Business;
 
 use Spryker\Shared\ProductAttribute\Code\KeyBuilder\AttributeGlossaryKeyBuilder;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductAttribute\Business\Mapper\TranslationMapper;
+use Spryker\Zed\ProductAttribute\Business\Mapper\TranslationMapperInterface;
 use Spryker\Zed\ProductAttribute\Business\Model\Attribute\AttributeReader;
 use Spryker\Zed\ProductAttribute\Business\Model\Attribute\AttributeTranslationReader;
 use Spryker\Zed\ProductAttribute\Business\Model\Attribute\AttributeTranslator;
@@ -22,6 +24,10 @@ use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttribute;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeReader;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeWriter;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductReader;
+use Spryker\Zed\ProductAttribute\Business\Reader\ProductManagementAttributeReader;
+use Spryker\Zed\ProductAttribute\Business\Reader\ProductManagementAttributeReaderInterface;
+use Spryker\Zed\ProductAttribute\Business\Translator\ProductManagementAttributeTranslator;
+use Spryker\Zed\ProductAttribute\Business\Translator\ProductManagementAttributeTranslatorInterface;
 use Spryker\Zed\ProductAttribute\Dependency\Service\ProductAttributeToUtilSanitizeXssServiceInterface;
 use Spryker\Zed\ProductAttribute\ProductAttributeDependencyProvider;
 
@@ -149,6 +155,40 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductAttribute\Business\Reader\ProductManagementAttributeReaderInterface
+     */
+    public function createProductManagementAttributeReader(): ProductManagementAttributeReaderInterface
+    {
+        return new ProductManagementAttributeReader(
+            $this->getRepository(),
+            $this->createProductManagementAttributeTranslator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAttribute\Business\Translator\ProductManagementAttributeTranslatorInterface
+     */
+    public function createProductManagementAttributeTranslator(): ProductManagementAttributeTranslatorInterface
+    {
+        return new ProductManagementAttributeTranslator(
+            $this->getLocaleFacade(),
+            $this->getGlossaryFacade(),
+            $this->createAttributeGlossaryKeyBuilder(),
+            $this->createTranslationMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAttribute\Business\Mapper\TranslationMapperInterface
+     */
+    public function createTranslationMapper(): TranslationMapperInterface
+    {
+        return new TranslationMapper(
+            $this->createAttributeGlossaryKeyBuilder()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ProductAttribute\Business\Model\Attribute\AttributeValueWriterInterface
      */
     protected function createAttributeValueWriter()
@@ -166,7 +206,8 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
         return new ProductAttributeTransferMapper(
             $this->getLocaleFacade(),
             $this->getGlossaryFacade(),
-            $this->createAttributeGlossaryKeyBuilder()
+            $this->createAttributeGlossaryKeyBuilder(),
+            $this->createTranslationMapper()
         );
     }
 

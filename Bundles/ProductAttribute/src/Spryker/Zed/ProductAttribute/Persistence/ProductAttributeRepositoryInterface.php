@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductAttribute\Persistence;
 
+use Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer;
+use Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer;
+
 interface ProductAttributeRepositoryInterface
 {
     /**
@@ -15,4 +18,20 @@ interface ProductAttributeRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
      */
     public function findSuperAttributesFromAttributesList(array $attributes): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer $productManagementAttributeFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer
+     */
+    public function getProductManagementAttributes(
+        ProductManagementAttributeFilterTransfer $productManagementAttributeFilterTransfer
+    ): ProductManagementAttributeCollectionTransfer;
+
+    /**
+     * @param int[] $productManagementAttributeIds
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer[]
+     */
+    public function getProductManagementAttributeValues(array $productManagementAttributeIds): array;
 }

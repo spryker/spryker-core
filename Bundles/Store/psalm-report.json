@@ -26,8 +26,8 @@
         },
         {
             "severity": "error",
-            "line_from": 164,
-            "line_to": 164,
+            "line_from": 168,
+            "line_to": 168,
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\Store\\Communication\\Form\\Type\\StoreRelationToggleType::getStoreNameMap is incorrect, got 'array<int, null|string>'",
             "file_name": "vendor/spryker/spryker/Bundles/Store/src/Spryker/Zed/Store/Communication/Form/Type/StoreRelationToggleType.php",
@@ -38,8 +38,8 @@
         },
         {
             "severity": "error",
-            "line_from": 175,
-            "line_to": 175,
+            "line_from": 179,
+            "line_to": 179,
             "type": "InvalidReturnStatement",
             "message": "The inferred type 'array<int, null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\Store\\Communication\\Form\\Type\\StoreRelationToggleType::getStoreNameMap",
             "file_name": "vendor/spryker/spryker/Bundles/Store/src/Spryker/Zed/Store/Communication/Form/Type/StoreRelationToggleType.php",
@@ -136,6 +136,18 @@
         },
         {
             "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Store\\Business\\Model\\StoreReaderInterface::findStoreByName cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Store/src/Spryker/Zed/Store/Business/Model/StoreValidator.php",
+            "snippet": "        $storeTransfer = $this->storeReader->findStoreByName($storeTransfer->getName());",
+            "selected_text": "$storeTransfer->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
             "line_from": 19,
             "line_to": 19,
             "type": "MoreSpecificImplementedParamType",
@@ -172,8 +184,8 @@
         },
         {
             "severity": "info",
-            "line_from": 172,
-            "line_to": 172,
+            "line_from": 176,
+            "line_to": 176,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $storeNameMap[int|null] using possibly null offset int|null",
             "file_name": "vendor/spryker/spryker/Bundles/Store/src/Spryker/Zed/Store/Communication/Form/Type/StoreRelationToggleType.php",
