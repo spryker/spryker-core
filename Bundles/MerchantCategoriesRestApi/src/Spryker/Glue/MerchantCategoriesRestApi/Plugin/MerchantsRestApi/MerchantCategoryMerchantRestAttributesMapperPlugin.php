@@ -19,6 +19,7 @@ class MerchantCategoryMerchantRestAttributesMapperPlugin extends AbstractPlugin 
 {
     /**
      * {@inheritDoc}
+     * - Maps active categories from MerchantStorageTransfer to RestMerchantsAttributesTransfer.
      *
      * @api
      *

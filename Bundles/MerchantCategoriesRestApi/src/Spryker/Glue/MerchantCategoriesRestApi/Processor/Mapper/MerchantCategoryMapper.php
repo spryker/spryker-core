@@ -29,11 +29,15 @@ class MerchantCategoryMapper implements MerchantCategoryMapperInterface
     ): RestMerchantsAttributesTransfer {
         $restMerchantsCategoryAttributesTransfers = [];
 
-        foreach ($merchantCategoryStorageTransfers as $categoryTransfer) {
-            $restMerchantsCategoryAttributesTransfer = (new RestMerchantCategoryAttributesTransfer())
-                ->fromArray($categoryTransfer->toArray(), true);
+        foreach ($merchantCategoryStorageTransfers as $merchantCategoryStorageTransfer) {
+            if (!$merchantCategoryStorageTransfer->getIsActive()) {
+                continue;
+            }
 
-            $categoryLocalizedAttributesTransfer = $this->findLocalizedAttributesByLocaleName($categoryTransfer, $localeName);
+            $restMerchantsCategoryAttributesTransfer = (new RestMerchantCategoryAttributesTransfer())
+                ->fromArray($merchantCategoryStorageTransfer->toArray(), true);
+
+            $categoryLocalizedAttributesTransfer = $this->findLocalizedAttributesByLocaleName($merchantCategoryStorageTransfer, $localeName);
             if (!$categoryLocalizedAttributesTransfer) {
                 continue;
             }
