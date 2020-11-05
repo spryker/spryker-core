@@ -8,9 +8,9 @@
 namespace Spryker\Zed\Development\Business\PhpMd;
 
 use ErrorException;
+use Laminas\Filter\Word\UnderscoreToCamelCase;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Process\Process;
-use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class PhpMdRunner
 {

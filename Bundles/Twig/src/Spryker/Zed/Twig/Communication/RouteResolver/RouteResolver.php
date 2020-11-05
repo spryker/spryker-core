@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Twig\Communication\RouteResolver;
 
-use Zend\Filter\Word\CamelCaseToDash;
+use Laminas\Filter\Word\CamelCaseToDash;
 
 class RouteResolver implements RouteResolverInterface
 {

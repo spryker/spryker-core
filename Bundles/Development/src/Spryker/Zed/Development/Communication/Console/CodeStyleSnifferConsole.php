@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\Development\Communication\Console;
 
+use Laminas\Filter\Word\UnderscoreToCamelCase;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Zend\Filter\Word\UnderscoreToCamelCase;
 
 /**
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
+use Laminas\Config\Factory;
 use Spryker\Zed\Transfer\Business\Exception\EmptyEntityTransferDefinitionException;
-use Zend\Config\Factory;
 
 class EntityTransferDefinitionLoader extends TransferDefinitionLoader
 {
