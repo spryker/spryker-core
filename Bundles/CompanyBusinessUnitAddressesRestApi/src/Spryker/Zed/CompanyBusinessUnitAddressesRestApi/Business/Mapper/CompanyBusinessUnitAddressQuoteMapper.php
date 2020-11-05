@@ -56,7 +56,7 @@ class CompanyBusinessUnitAddressQuoteMapper implements CompanyBusinessUnitAddres
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer {
         $restAddressTransfer = $restCheckoutRequestAttributesTransfer->getBillingAddress();
-        if (!$restAddressTransfer || !$restAddressTransfer->getCompanyBusinessUnitAddressId()) {
+        if (!$restAddressTransfer || !$restAddressTransfer->getIdCompanyBusinessUnitAddress()) {
             return $quoteTransfer;
         }
 
@@ -78,7 +78,7 @@ class CompanyBusinessUnitAddressQuoteMapper implements CompanyBusinessUnitAddres
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer {
         $restAddressTransfer = $restCheckoutRequestAttributesTransfer->getShippingAddress();
-        if (!$restAddressTransfer || !$restAddressTransfer->getCompanyBusinessUnitAddressId()) {
+        if (!$restAddressTransfer || !$restAddressTransfer->getIdCompanyBusinessUnitAddress()) {
             return $quoteTransfer;
         }
 
@@ -104,7 +104,7 @@ class CompanyBusinessUnitAddressQuoteMapper implements CompanyBusinessUnitAddres
         QuoteTransfer $quoteTransfer
     ): AddressTransfer {
         $companyUnitAddressResponseTransfer = $this->companyUnitAddressFacade->findCompanyBusinessUnitAddressByUuid(
-            (new CompanyUnitAddressTransfer())->setUuid($restAddressTransfer->getCompanyBusinessUnitAddressId())
+            (new CompanyUnitAddressTransfer())->setUuid($restAddressTransfer->getIdCompanyBusinessUnitAddress())
         );
 
         if (
