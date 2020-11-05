@@ -25,19 +25,17 @@ class ProductConfigurationCartItemQuantityCounter implements ProductConfiguratio
         ArrayObject $itemsInCart,
         ItemTransfer $itemTransfer
     ): CartItemQuantityTransfer {
-        $cartItemQuantityTransfer = (new CartItemQuantityTransfer())->setQuantity(static::DEFAULT_ITEM_QUANTITY);
+        $currentItemQuantity = static::DEFAULT_ITEM_QUANTITY;
 
         foreach ($itemsInCart as $itemInCartTransfer) {
             if (!$this->isSameProductConfigurationItem($itemInCartTransfer, $itemTransfer)) {
                 continue;
             }
 
-            return $cartItemQuantityTransfer->setQuantity(
-                $itemInCartTransfer->getQuantity() ?? static::DEFAULT_ITEM_QUANTITY
-            );
+            $currentItemQuantity += $itemInCartTransfer->getQuantity() ?? static::DEFAULT_ITEM_QUANTITY;
         }
 
-        return $cartItemQuantityTransfer;
+        return (new CartItemQuantityTransfer())->setQuantity($currentItemQuantity);
     }
 
     /**

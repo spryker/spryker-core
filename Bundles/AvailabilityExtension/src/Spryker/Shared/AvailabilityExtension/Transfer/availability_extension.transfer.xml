@@ -12,4 +12,8 @@
     <transfer name="Store">
     </transfer>
 
+    <transfer name="CartItemQuantity">
+        <property name="quantity" type="int"/>
+    </transfer>
+
 </transfers>
