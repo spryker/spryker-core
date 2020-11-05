@@ -32,4 +32,20 @@ class MerchantCategoryFacade extends AbstractFacade implements MerchantCategoryF
             ->createMerchantCategoryReader()
             ->get($merchantCategoryCriteriaTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
+     *
+     * @return void
+     */
+    public function publishCategoryMerchantEventsByCategoryEvents(array $transfers): void
+    {
+        $this->getFactory()
+            ->createMerchantCategoryPublisher()
+            ->publishCategoryMerchantEventsByCategoryEvents($transfers);
+    }
 }

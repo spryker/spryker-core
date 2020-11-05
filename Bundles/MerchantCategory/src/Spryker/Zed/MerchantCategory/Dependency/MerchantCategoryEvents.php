@@ -18,4 +18,9 @@ class MerchantCategoryEvents
      * This events will be used for spy_merchant_category entity creation.
      */
     public const ENTITY_SPY_MERCHANT_CATEGORY_CREATE = 'Entity.spy_merchant_category.create';
+
+    /**
+     * This events will be used for spy_merchant_category publishing.
+     */
+    public const MERCHANT_CATEGORY_PUBLISH = 'MerchantCategory.merchant_category.publish';
 }

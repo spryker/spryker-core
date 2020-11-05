@@ -23,4 +23,17 @@ interface MerchantCategoryFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantCategoryResponseTransfer
      */
     public function get(MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer): MerchantCategoryResponseTransfer;
+
+    /**
+     * Specification:
+     * - Triggers `MerchantCategory.merchant_category.publish` event with the list of merchant categories Ids and merchant Ids
+     * by provided Categoria Ids in the collection of EventEntityTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
+     *
+     * @return void
+     */
+    public function publishCategoryMerchantEventsByCategoryEvents(array $transfers): void;
 }

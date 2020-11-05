@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantSearch\Communication\Plugin\Publisher\MerchantCategory;
 
+use Spryker\Shared\MerchantSearch\MerchantSearchConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
@@ -17,16 +18,6 @@ use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
  */
 class MerchantCategoryWritePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
 {
-    /**
-     * @uses \Spryker\Zed\MerchantCategory\Dependency\MerchantCategoryEvents::ENTITY_SPY_MERCHANT_CATEGORY_UPDATE
-     */
-    protected const ENTITY_SPY_MERCHANT_CATEGORY_UPDATE = 'Entity.spy_merchant_category.update';
-
-    /**
-     * @uses \Spryker\Zed\MerchantCategory\Dependency\MerchantCategoryEvents::ENTITY_SPY_MERCHANT_CATEGORY_CREATE
-     */
-    protected const ENTITY_SPY_MERCHANT_CATEGORY_CREATE = 'Entity.spy_merchant_category.create';
-
     /**
      * {@inheritDoc}
      * - Retrieves all Merchants using foreign keys from $eventTransfers.
@@ -55,8 +46,9 @@ class MerchantCategoryWritePublisherPlugin extends AbstractPlugin implements Pub
     public function getSubscribedEvents(): array
     {
         return [
-            static::ENTITY_SPY_MERCHANT_CATEGORY_UPDATE,
-            static::ENTITY_SPY_MERCHANT_CATEGORY_CREATE,
+            MerchantSearchConfig::MERCHANT_CATEGORY_PUBLISH,
+            MerchantSearchConfig::ENTITY_SPY_MERCHANT_CATEGORY_UPDATE,
+            MerchantSearchConfig::ENTITY_SPY_MERCHANT_CATEGORY_CREATE,
         ];
     }
 }

@@ -66,6 +66,10 @@ class MerchantCategoryRepository extends AbstractRepository implements MerchantC
             $merchantCategoryQuery->filterByFkMerchant($merchantCategoryCriteriaTransfer->getIdMerchant());
         }
 
+        if ($merchantCategoryCriteriaTransfer->getCategoryIds()) {
+            $merchantCategoryQuery->filterByFkCategory_In($merchantCategoryCriteriaTransfer->getCategoryIds());
+        }
+
         if ($merchantCategoryCriteriaTransfer->getMerchantIds()) {
             $merchantCategoryQuery->filterByFkMerchant($merchantCategoryCriteriaTransfer->getMerchantIds(), Criteria::IN);
         }

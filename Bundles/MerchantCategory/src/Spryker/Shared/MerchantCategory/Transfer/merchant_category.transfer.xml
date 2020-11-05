@@ -11,6 +11,7 @@
     <transfer name="MerchantCategoryCriteria">
         <property name="idMerchant" type="int"/>
         <property name="merchantIds" type="int[]" singular="idMerchant"/>
+        <property name="categoryIds" type="int[]" singular="idCategory"/>
     </transfer>
 
     <transfer name="MerchantCategory">

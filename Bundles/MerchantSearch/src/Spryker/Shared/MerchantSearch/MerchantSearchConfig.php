@@ -27,6 +27,21 @@ class MerchantSearchConfig extends AbstractBundleConfig
     public const MERCHANT_PUBLISH = 'Merchant.merchant.publish';
 
     /**
+     * @uses \Spryker\Zed\MerchantCategory\Dependency\MerchantCategoryEvents::ENTITY_SPY_MERCHANT_CATEGORY_UPDATE
+     */
+    public const ENTITY_SPY_MERCHANT_CATEGORY_UPDATE = 'Entity.spy_merchant_category.update';
+
+    /**
+     * @uses \Spryker\Zed\MerchantCategory\Dependency\MerchantCategoryEvents::ENTITY_SPY_MERCHANT_CATEGORY_CREATE
+     */
+    public const ENTITY_SPY_MERCHANT_CATEGORY_CREATE = 'Entity.spy_merchant_category.create';
+
+    /**
+     * This events that will be used when spy_category changes happened.
+     */
+    public const MERCHANT_CATEGORY_PUBLISH = 'MerchantCategory.merchant_category.publish';
+
+    /**
      * This events will be used for spy_merchant entity creation.
      */
     public const ENTITY_SPY_MERCHANT_CREATE = 'Entity.spy_merchant.create';
