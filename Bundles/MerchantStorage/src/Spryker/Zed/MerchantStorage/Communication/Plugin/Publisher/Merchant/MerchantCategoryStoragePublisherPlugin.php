@@ -46,6 +46,8 @@ class MerchantCategoryStoragePublisherPlugin extends AbstractPlugin implements P
     {
         return [
             MerchantCategoryEvents::MERCHANT_CATEGORY_PUBLISH,
+            MerchantCategoryEvents::ENTITY_SPY_MERCHANT_CATEGORY_UPDATE,
+            MerchantCategoryEvents::ENTITY_SPY_MERCHANT_CATEGORY_CREATE,
         ];
     }
 }
