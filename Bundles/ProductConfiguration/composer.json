@@ -10,7 +10,7 @@
     "spryker/availability-extension": "^1.1.0",
     "spryker/cart-extension": "^4.2.0",
     "spryker/checkout-extension": "^1.2.0",
-    "spryker/checksum-generator": "^0.1.0",
+    "spryker/checksum-generator": "^1.0.0",
     "spryker/currency": "^3.2.0",
     "spryker/customer": "^7.0.0",
     "spryker/guzzle": "^2.2.0",
