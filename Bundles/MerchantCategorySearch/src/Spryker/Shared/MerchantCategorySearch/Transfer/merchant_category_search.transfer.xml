@@ -10,7 +10,7 @@
 
     <transfer name="MerchantCategoryCriteria">
         <property name="merchantIds" type="int[]" singular="idMerchant"/>
-        <property name="isActive" type="bool"/>
+        <property name="isCategoryActive" type="bool"/>
     </transfer>
 
     <transfer name="MerchantCategoryResponse">

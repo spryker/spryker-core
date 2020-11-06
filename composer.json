@@ -14,11 +14,6 @@
     "use-include-path": true,
     "process-timeout": 1200
   },
-  "autoload": {
-    "files": [
-      "autoload.php"
-    ]
-  },
   "bin": [
     "Bundles/Console/bin/console",
     "Bundles/Console/bin/yves",
