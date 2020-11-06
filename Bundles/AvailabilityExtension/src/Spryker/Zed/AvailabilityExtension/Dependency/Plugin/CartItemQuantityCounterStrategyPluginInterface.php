@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CartItemQuantityTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 
 /**
- * Allows changing the cart item quantity counter strategy during item availability check.
+ * Allows changing the cart item quantity counter strategy during item availability check on checkout condition check.
  */
 interface CartItemQuantityCounterStrategyPluginInterface
 {
