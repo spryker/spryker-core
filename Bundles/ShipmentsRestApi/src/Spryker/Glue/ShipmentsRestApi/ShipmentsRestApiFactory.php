@@ -121,15 +121,15 @@ class ShipmentsRestApiFactory extends AbstractFactory
      */
     public function createAddressSourceCheckoutDataValidator(): AddressSourceCheckoutDataValidatorInterface
     {
-        return new AddressSourceCheckoutDataValidator($this->getAddressSourceProviderPlugins());
+        return new AddressSourceCheckoutDataValidator($this->getAddressSourceCheckerPlugins());
     }
 
     /**
-     * @return \Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceProviderPluginInterface[]
+     * @return \Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceCheckerPluginInterface[]
      */
-    public function getAddressSourceProviderPlugins(): array
+    public function getAddressSourceCheckerPlugins(): array
     {
-        return $this->getProvidedDependency(ShipmentsRestApiDependencyProvider::PLUGINS_ADDRESS_SOURCE_PROVIDER);
+        return $this->getProvidedDependency(ShipmentsRestApiDependencyProvider::PLUGINS_ADDRESS_SOURCE_CHECKER);
     }
 
     /**

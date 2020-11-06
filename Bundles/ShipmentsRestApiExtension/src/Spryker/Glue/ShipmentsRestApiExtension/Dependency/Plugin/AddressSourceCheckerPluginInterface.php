@@ -15,11 +15,11 @@ use Generated\Shared\Transfer\RestAddressTransfer;
  * Runs during `/checkout-data` and `/checkout` requests.
  * Should be used to only validate the data is provided.
  */
-interface AddressSourceProviderPluginInterface
+interface AddressSourceCheckerPluginInterface
 {
     /**
      * Specification:
-     * - Checks if the address id is provided.
+     * - Checks if the address identifier is provided.
      *
      * @api
      *

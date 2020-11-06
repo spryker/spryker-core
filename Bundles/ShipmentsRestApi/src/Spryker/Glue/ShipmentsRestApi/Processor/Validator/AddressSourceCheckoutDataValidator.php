@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ShipmentsRestApi\Processor\Validator;
 
+use Generated\Shared\Transfer\RestAddressTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
@@ -16,16 +17,16 @@ use Symfony\Component\HttpFoundation\Response;
 class AddressSourceCheckoutDataValidator implements AddressSourceCheckoutDataValidatorInterface
 {
     /**
-     * @var \Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceProviderPluginInterface[]
+     * @var \Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceCheckerPluginInterface[]
      */
-    protected $addressSourceProviderPlugins;
+    protected $addressSourceCheckerPlugins;
 
     /**
-     * @param \Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceProviderPluginInterface[] $addressSourceProviderPlugins
+     * @param \Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceCheckerPluginInterface[] $addressSourceCheckerPlugins
      */
-    public function __construct(array $addressSourceProviderPlugins)
+    public function __construct(array $addressSourceCheckerPlugins)
     {
-        $this->addressSourceProviderPlugins = $addressSourceProviderPlugins;
+        $this->addressSourceCheckerPlugins = $addressSourceCheckerPlugins;
     }
 
     /**
@@ -43,43 +44,56 @@ class AddressSourceCheckoutDataValidator implements AddressSourceCheckoutDataVal
                 continue;
             }
 
-            foreach ($this->addressSourceProviderPlugins as $addressSourceProviderPlugin) {
-                if ($addressSourceProviderPlugin->isAddressSourceProvided($restShipmentsTransfer->getShippingAddress())) {
-                    continue 2;
-                }
-            }
-
-            if (
-                $restShipmentsTransfer->getShippingAddress()->getId()
-                || $restShipmentsTransfer->getShippingAddress()->getAddress1()
-                && $restShipmentsTransfer->getShippingAddress()->getAddress2()
-                && $restShipmentsTransfer->getShippingAddress()->getCity()
-                && $restShipmentsTransfer->getShippingAddress()->getZipCode()
-                && $restShipmentsTransfer->getShippingAddress()->getIso2Code()
-                && $restShipmentsTransfer->getShippingAddress()->getPhone()
-                && $restShipmentsTransfer->getShippingAddress()->getSalutation()
-                && $restShipmentsTransfer->getShippingAddress()->getFirstName()
-                && $restShipmentsTransfer->getShippingAddress()->getLastName()
-            ) {
+            if ($this->executeAddressSourceCheckerPlugins($restShipmentsTransfer->getShippingAddress())) {
                 continue;
             }
 
-            $restErrorCollectionTransfer->addRestError($this->createdRestErrorMessage());
+            if ($this->validateAddressAttributes($restShipmentsTransfer->getShippingAddress())) {
+                continue;
+            }
 
-            return $restErrorCollectionTransfer;
+            $restErrorCollectionTransfer->addRestError(
+                (new RestErrorMessageTransfer())
+                    ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+                    ->setCode(ShipmentsRestApiConfig::ERROR_RESPONSE_CODE_ADDRESS_NOT_VALID)
+                    ->setDetail(ShipmentsRestApiConfig::ERROR_RESPONSE_DETAIL_ADDRESS_NOT_VALID)
+            );
         }
 
         return $restErrorCollectionTransfer;
     }
 
     /**
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     * @param \Generated\Shared\Transfer\RestAddressTransfer $restAddressTransfer
+     *
+     * @return bool
      */
-    protected function createdRestErrorMessage(): RestErrorMessageTransfer
+    protected function executeAddressSourceCheckerPlugins(RestAddressTransfer $restAddressTransfer): bool
     {
-        return (new RestErrorMessageTransfer())
-            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->setCode(ShipmentsRestApiConfig::ERROR_RESPONSE_CODE_ADDRESS_NOT_VALID)
-            ->setDetail(ShipmentsRestApiConfig::ERROR_RESPONSE_DETAIL_ADDRESS_NOT_VALID);
+        foreach ($this->addressSourceCheckerPlugins as $addressSourceProviderPlugin) {
+            if ($addressSourceProviderPlugin->isAddressSourceProvided($restAddressTransfer)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestAddressTransfer $restAddressTransfer
+     *
+     * @return bool
+     */
+    protected function validateAddressAttributes(RestAddressTransfer $restAddressTransfer): bool
+    {
+        return $restAddressTransfer->getAddress1()
+            && $restAddressTransfer->getAddress2()
+            && $restAddressTransfer->getCity()
+            && $restAddressTransfer->getZipCode()
+            && $restAddressTransfer->getIso2Code()
+            && $restAddressTransfer->getPhone()
+            && $restAddressTransfer->getSalutation()
+            && $restAddressTransfer->getFirstName()
+            && $restAddressTransfer->getLastName();
     }
 }

@@ -9,12 +9,12 @@ namespace Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Plugin\ShipmentsRestA
 
 use Generated\Shared\Transfer\RestAddressTransfer;
 use Spryker\Glue\Kernel\AbstractPlugin;
-use Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceProviderPluginInterface;
+use Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceCheckerPluginInterface;
 
 /**
  * @method \Spryker\Glue\CompanyBusinessUnitAddressesRestApi\CompanyBusinessUnitAddressesRestApiFactory getFactory()
  */
-class CompanyBusinessUnitAddressSourceProviderPlugin extends AbstractPlugin implements AddressSourceProviderPluginInterface
+class CompanyBusinessUnitAddressSourceCheckerPlugin extends AbstractPlugin implements AddressSourceCheckerPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -28,8 +28,6 @@ class CompanyBusinessUnitAddressSourceProviderPlugin extends AbstractPlugin impl
      */
     public function isAddressSourceProvided(RestAddressTransfer $restAddressTransfer): bool
     {
-        return $this->getFactory()
-            ->createCompanyBusinessUnitAddressIdValidator()
-            ->validateCompanyBusinessUnitAddressIdProvided($restAddressTransfer);
+        return $restAddressTransfer->getIdCompanyBusinessUnitAddress() !== null;
     }
 }

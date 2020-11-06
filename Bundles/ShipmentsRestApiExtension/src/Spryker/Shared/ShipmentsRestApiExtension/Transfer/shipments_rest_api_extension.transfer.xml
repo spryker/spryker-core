@@ -6,4 +6,10 @@
     <transfer name="RestAddress">
     </transfer>
 
+    <transfer name="Address">
+    </transfer>
+
+    <transfer name="Quote">
+    </transfer>
+
 </transfers>
