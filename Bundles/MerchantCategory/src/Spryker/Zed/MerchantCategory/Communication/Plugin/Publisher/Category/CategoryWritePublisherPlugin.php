@@ -17,9 +17,9 @@ use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 class CategoryWritePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
 {
     /**
-     * @uses \Spryker\Zed\Category\Dependency\CategoryEvents::ENTITY_SPY_CATEGORY_UPDATE
+     * @uses \Spryker\Zed\Category\Dependency\CategoryEvents::CATEGORY_AFTER_PUBLISH_UPDATE
      */
-    public const ENTITY_SPY_CATEGORY_UPDATE = 'Entity.spy_category.update';
+    public const CATEGORY_AFTER_PUBLISH_UPDATE = 'Category.after.publish_update';
 
     /**
      * {@inheritDoc}
@@ -48,7 +48,7 @@ class CategoryWritePublisherPlugin extends AbstractPlugin implements PublisherPl
     public function getSubscribedEvents(): array
     {
         return [
-            static::ENTITY_SPY_CATEGORY_UPDATE,
+            static::CATEGORY_AFTER_PUBLISH_UPDATE,
         ];
     }
 }
