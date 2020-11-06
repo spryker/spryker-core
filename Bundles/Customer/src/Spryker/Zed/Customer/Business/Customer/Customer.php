@@ -107,7 +107,7 @@ class Customer implements CustomerInterface
      * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface $customerExpander
-     * @param \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface $passwordPolicy
+     * @param \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface $customerPasswordPolicy
      * @param \Spryker\Zed\CustomerExtension\Dependency\Plugin\PostCustomerRegistrationPluginInterface[] $postCustomerRegistrationPlugins
      */
     public function __construct(
@@ -130,7 +130,7 @@ class Customer implements CustomerInterface
         $this->localeQueryContainer = $localeQueryContainer;
         $this->store = $store;
         $this->customerExpander = $customerExpander;
-        $this->passwordPolicy = $customerPasswordPolicy;
+        $this->customerPasswordPolicy = $customerPasswordPolicy;
         $this->postCustomerRegistrationPlugins = $postCustomerRegistrationPlugins;
     }
 
@@ -455,7 +455,7 @@ class Customer implements CustomerInterface
      */
     public function restorePassword(CustomerTransfer $customerTransfer)
     {
-        if ($this->customerConfig->isCustomerPasswordCheckEnabledOnRestorePassword()) {
+        if ($this->customerConfig->isCustomerPasswordValidationOnRestorePasswordEnabled()) {
             $customerResponseTransfer = $this->validateCustomerPassword($customerTransfer->getPassword());
             if (!$customerResponseTransfer->getIsSuccess()) {
                 return $customerResponseTransfer;

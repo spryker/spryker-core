@@ -65,6 +65,8 @@ interface CustomerFacadeInterface
     /**
      * Specification:
      * - Checks customer password min and max length according to configuration if it is provided.
+     * - Extended password validation can be enabled in this method through
+     *      isCustomerPasswordPolicyExtendedValidationEnabled().
      * - Validates provided customer email information.
      * - Encrypts provided plain text password.
      * - Assigns current locale to customer if it is not set already.
