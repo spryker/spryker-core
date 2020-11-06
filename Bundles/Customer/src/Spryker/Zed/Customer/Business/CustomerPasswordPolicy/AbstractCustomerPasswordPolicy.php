@@ -23,8 +23,6 @@ abstract class AbstractCustomerPasswordPolicy implements CustomerPasswordPolicyI
      */
     protected $config;
 
-    protected const PASSWORD_POLICY_ATTRIBUTE_REQUIRED = 'required';
-
     /**
      * @param \Spryker\Zed\Customer\CustomerConfig $config
      */
@@ -63,8 +61,6 @@ abstract class AbstractCustomerPasswordPolicy implements CustomerPasswordPolicyI
     }
 
     /**
-     * Adds error MessageTransfer to CustomerResponseTransfer.
-     *
      * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
      * @param string $errorMessage
      *

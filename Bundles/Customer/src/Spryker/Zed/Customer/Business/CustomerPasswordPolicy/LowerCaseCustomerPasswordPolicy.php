@@ -9,7 +9,7 @@ namespace Spryker\Zed\Customer\Business\CustomerPasswordPolicy;
 
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 
-class CustomerPasswordPolicyLowerCase extends AbstractCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
+class LowerCaseCustomerPasswordPolicy extends AbstractCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
 {
     public const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_LOWER_CASE = 'customer.password.error.lower_case';
 

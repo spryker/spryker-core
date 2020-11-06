@@ -44,8 +44,6 @@ class Customer implements CustomerInterface
     protected const BCRYPT_SALT = '';
 
     protected const GLOSSARY_PARAM_VALIDATION_LENGTH = '{{ limit }}';
-    protected const GLOSSARY_KEY_MIN_LENGTH_ERROR = 'customer.password.error.min_length';
-    protected const GLOSSARY_KEY_MAX_LENGTH_ERROR = 'customer.password.error.max_length';
     protected const GLOSSARY_KEY_CONFIRM_EMAIL_LINK_INVALID_OR_USED = 'customer.error.confirm_email_link.invalid_or_used';
     protected const GLOSSARY_KEY_CUSTOMER_AUTHORIZATION_VALIDATE_EMAIL_ADDRESS = 'customer.authorization.validate_email_address';
     protected const GLOSSARY_KEY_CUSTOMER_REGISTRATION_SUCCESS = 'customer.registration.success';
@@ -98,7 +96,7 @@ class Customer implements CustomerInterface
     /**
      * @var \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface;
      */
-    protected $passwordPolicy;
+    protected $customerPasswordPolicy;
 
     /**
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $queryContainer
@@ -121,7 +119,7 @@ class Customer implements CustomerInterface
         LocaleQueryContainerInterface $localeQueryContainer,
         Store $store,
         CustomerExpanderInterface $customerExpander,
-        CustomerPasswordPolicyInterface $passwordPolicy,
+        CustomerPasswordPolicyInterface $customerPasswordPolicy,
         array $postCustomerRegistrationPlugins = []
     ) {
         $this->queryContainer = $queryContainer;
@@ -132,7 +130,7 @@ class Customer implements CustomerInterface
         $this->localeQueryContainer = $localeQueryContainer;
         $this->store = $store;
         $this->customerExpander = $customerExpander;
-        $this->passwordPolicy = $passwordPolicy;
+        $this->passwordPolicy = $customerPasswordPolicy;
         $this->postCustomerRegistrationPlugins = $postCustomerRegistrationPlugins;
     }
 

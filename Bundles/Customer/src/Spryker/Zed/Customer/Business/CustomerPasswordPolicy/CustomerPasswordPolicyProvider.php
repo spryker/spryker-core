@@ -33,7 +33,7 @@ class CustomerPasswordPolicyProvider implements CustomerPasswordPolicyProviderIn
     ) {
         $this->customerPasswordPolicy = $defaultPolicy;
 
-        if (!$config->isCustomerPasswordPolicyCheckEnabled()) {
+        if (!$config->isCustomerPasswordPolicyExtendedValidationEnabled()) {
             return;
         }
         foreach ($customerPasswordPolicies as $customerPasswordPolicy) {
@@ -42,8 +42,6 @@ class CustomerPasswordPolicyProvider implements CustomerPasswordPolicyProviderIn
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @return \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface
      */
     public function getCustomerPasswordPolicy(): CustomerPasswordPolicyInterface

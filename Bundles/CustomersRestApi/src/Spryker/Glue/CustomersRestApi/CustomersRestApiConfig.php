@@ -81,7 +81,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_MESSAGE_CUSTOMER_PASSWORD_TOO_LONG = 'The password is too long.';
 
     public const RESPONSE_CODE_CUSTOMER_PASSWORD_SPECIAL_REQUIRED = '420';
-    public const RESPONSE_MESSAGE_CUSTOMER_PASSWORD_SPECIAL_REQUIRED = 'The password is required to contain at leas 1 special character.';
+    public const RESPONSE_MESSAGE_CUSTOMER_PASSWORD_SPECIAL_REQUIRED = 'The password is required to contain at least 1 special character.';
 
     public const RESPONSE_CODE_CUSTOMER_PASSWORD_UPPER_CASE_REQUIRED = '421';
     public const RESPONSE_MESSAGE_CUSTOMER_PASSWORD_UPPER_CASE_REQUIRED = 'The password is required to contain at leas 1 upper case character.';
@@ -96,7 +96,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_MESSAGE_CUSTOMER_PASSWORD_INVALID_CHAR = 'The password contains invalid character.';
 
     public const RESPONSE_CODE_CUSTOMER_PASSWORD_SEQUENCE_NOT_ALLOWED = '425';
-    public const RESPONSE_MESSAGE_CUSTOMER_PASSWORD_SEQUENCE_NOT_ALLOWED = 'The password contains sequence of  the same character.';
+    public const RESPONSE_MESSAGE_CUSTOMER_PASSWORD_SEQUENCE_NOT_ALLOWED = 'The password contains sequence of the same character.';
 
     public const RESPONSE_CODE_CUSTOMER_PASSWORD_BLACKLIST = '426';
     public const RESPONSE_MESSAGE_CUSTOMER_PASSWORD_BLACKLIST = 'The password is listed as common.';

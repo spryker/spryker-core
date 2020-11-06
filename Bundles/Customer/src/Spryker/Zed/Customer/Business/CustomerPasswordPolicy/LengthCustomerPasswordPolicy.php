@@ -9,7 +9,7 @@ namespace Spryker\Zed\Customer\Business\CustomerPasswordPolicy;
 
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 
-class CustomerPasswordPolicyLength extends AbstractCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
+class LengthCustomerPasswordPolicy extends AbstractCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
 {
     public const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_MIN = 'customer.password.error.min_length';
 

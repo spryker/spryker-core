@@ -7,12 +7,11 @@
 
 namespace Spryker\Zed\Customer\Business\CustomerPasswordPolicy;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 
-class CustomerPasswordPolicyForbidden extends AbstractCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
+class WhitelistCustomerPasswordPolicy extends AbstractCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
 {
-    public const PASSWORD_POLICY_ERROR_FORBIDDEN = 'customer.password.error.forbidden';
-
     /**
      * @param string $password
      * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
@@ -21,16 +20,8 @@ class CustomerPasswordPolicyForbidden extends AbstractCustomerPasswordPolicy imp
      */
     public function validatePassword(string $password, CustomerResponseTransfer $customerResponseTransfer): CustomerResponseTransfer
     {
-        if (empty($this->config->getCustomerPasswordForbiddenCharacters())) {
-            return $this->proceed($password, $customerResponseTransfer);
-        }
-
-        foreach (mb_str_split($password) as $character) {
-            if (strpos($character, $this->config->getCustomerPasswordForbiddenCharacters()) !== false) {
-                $this->addError($customerResponseTransfer, static::PASSWORD_POLICY_ERROR_FORBIDDEN);
-
-                break;
-            }
+        if (in_array($password, $this->config->getCustomerPasswordWhiteList(), true)) {
+            return $customerResponseTransfer->setIsSuccess(true)->setErrors(new ArrayObject());
         }
 
         return $this->proceed($password, $customerResponseTransfer);

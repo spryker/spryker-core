@@ -7,11 +7,12 @@
 
 namespace Spryker\Zed\Customer\Business\CustomerPasswordPolicy;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 
-class CustomerPasswordPolicyWhitelist extends AbstractCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
+class BlacklistCustomerPasswordPolicy extends AbstractCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
 {
+    public const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_BLACK_LIST = 'customer.password.error.black_list';
+
     /**
      * @param string $password
      * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
@@ -20,8 +21,10 @@ class CustomerPasswordPolicyWhitelist extends AbstractCustomerPasswordPolicy imp
      */
     public function validatePassword(string $password, CustomerResponseTransfer $customerResponseTransfer): CustomerResponseTransfer
     {
-        if (in_array($password, $this->config->getCustomerPasswordWhiteList(), true)) {
-            return $customerResponseTransfer->setIsSuccess(true)->setErrors(new ArrayObject());
+        if (in_array($password, $this->config->getCustomerPasswordBlackList(), true)) {
+            $customerResponseTransfer->setErrors(new \ArrayObject());
+
+            return $this->addError($customerResponseTransfer, static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_BLACK_LIST);
         }
 
         return $this->proceed($password, $customerResponseTransfer);

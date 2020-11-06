@@ -27,19 +27,19 @@ class CustomerConfig extends AbstractBundleConfig
     public const CUSTOMER_REGISTRATION_MAIL_TYPE = 'customer registration mail';
     public const CUSTOMER_REGISTRATION_WITH_CONFIRMATION_MAIL_TYPE = 'customer registration confirmation mail';
 
-    protected const IS_CUSTOMER_PASSWORD_POLICY_VALIDATION_ENABLED = true;
+    protected const IS_CUSTOMER_PASSWORD_POLICY_EXTENDED_VALIDATION_ENABLED = false;
 
-    protected const CUSTOMER_PASSWORD_POLICY_DIGIT_REQUIRED = true;
+    protected const CUSTOMER_PASSWORD_POLICY_DIGIT_REQUIRED = false;
 
-    protected const CUSTOMER_PASSWORD_POLICY_UPPER_CASE_REQUIRED = true;
+    protected const CUSTOMER_PASSWORD_POLICY_UPPER_CASE_REQUIRED = false;
 
-    protected const CUSTOMER_PASSWORD_POLICY_LOWER_CASE_REQUIRED = true;
+    protected const CUSTOMER_PASSWORD_POLICY_LOWER_CASE_REQUIRED = false;
 
-    protected const CUSTOMER_PASSWORD_POLICY_SPECIAL_REQUIRED = true;
+    protected const CUSTOMER_PASSWORD_POLICY_SPECIAL_REQUIRED = false;
 
     protected const CUSTOMER_PASSWORD_POLICY_SEQUENCE_LIMIT = 0;
 
-    protected const CUSTOMER_PASSWORD_POLICY_ON_PASSWORD_UPDATE_ENABLED = true;
+    protected const IS_CUSTOMER_PASSWORD_POLICY_VALIDATION_ON_RESTORE_PASSWORD_ENABLED = false;
 
     protected const MIN_LENGTH_CUSTOMER_PASSWORD = 1;
 
@@ -245,9 +245,9 @@ class CustomerConfig extends AbstractBundleConfig
      *
      * @return bool
      */
-    public function isCustomerPasswordCheckEnabledOnRestorePassword(): bool
+    public function isCustomerPasswordValidationOnRestorePasswordEnabled(): bool
     {
-        return static::CUSTOMER_PASSWORD_POLICY_ON_PASSWORD_UPDATE_ENABLED;
+        return static::IS_CUSTOMER_PASSWORD_POLICY_VALIDATION_ON_RESTORE_PASSWORD_ENABLED;
     }
 
     /**
@@ -258,9 +258,9 @@ class CustomerConfig extends AbstractBundleConfig
      *
      * @return bool
      */
-    public function isCustomerPasswordPolicyCheckEnabled(): bool
+    public function isCustomerPasswordPolicyExtendedValidationEnabled(): bool
     {
-        return static::IS_CUSTOMER_PASSWORD_POLICY_VALIDATION_ENABLED;
+        return static::IS_CUSTOMER_PASSWORD_POLICY_EXTENDED_VALIDATION_ENABLED;
     }
 
     /**

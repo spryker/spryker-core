@@ -9,11 +9,11 @@ namespace Spryker\Zed\Customer\Business\CustomerPasswordPolicy;
 
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 
-class CustomerPasswordPolicySpecial extends AbstractCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
+class UpperCaseCustomerPasswordPolicy extends AbstractCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
 {
-    public const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SPECIAL = 'customer.password.error.special';
+    public const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_UPPER_CASE = 'customer.password.error.upper_case';
 
-    public const PASSWORD_POLICY_CHARSET_SPECIAL = '/[^(\p{N}|\p{L})+]/';
+    public const PASSWORD_POLICY_CHARSET_UPPER_CASE = '/\p{Lu}+/';
 
     /**
      * @param string $password
@@ -23,8 +23,8 @@ class CustomerPasswordPolicySpecial extends AbstractCustomerPasswordPolicy imple
      */
     public function validatePassword(string $password, CustomerResponseTransfer $customerResponseTransfer): CustomerResponseTransfer
     {
-        if ($this->config->getCustomerPasswordSpecialRequired() && !preg_match(static::PASSWORD_POLICY_CHARSET_SPECIAL, $password)) {
-            $this->addError($customerResponseTransfer, static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SPECIAL);
+        if ($this->config->getCustomerPasswordUpperCaseRequired() && !preg_match(static::PASSWORD_POLICY_CHARSET_UPPER_CASE, $password)) {
+            $this->addError($customerResponseTransfer, static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_UPPER_CASE);
         }
 
         return $this->proceed($password, $customerResponseTransfer);

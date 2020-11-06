@@ -18,17 +18,17 @@ use Spryker\Zed\Customer\Business\Customer\CustomerReader;
 use Spryker\Zed\Customer\Business\Customer\CustomerReaderInterface;
 use Spryker\Zed\Customer\Business\Customer\EmailValidator;
 use Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpander;
-use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyBlacklist;
-use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyDigit;
-use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyForbidden;
+use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\BlacklistCustomerPasswordPolicy;
+use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\DigitCustomerPasswordPolicy;
+use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\ForbiddenCustomerPasswordPolicy;
 use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface;
-use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyLength;
-use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyLowerCase;
+use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\LengthCustomerPasswordPolicy;
+use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\LowerCaseCustomerPasswordPolicy;
 use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyProvider;
-use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicySequence;
-use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicySpecial;
-use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyUpperCase;
-use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyWhitelist;
+use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\SequenceCustomerPasswordPolicy;
+use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\SpecialCustomerPasswordPolicy;
+use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\UpperCaseCustomerPasswordPolicy;
+use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\WhitelistCustomerPasswordPolicy;
 use Spryker\Zed\Customer\Business\Model\CustomerOrderSaver as ObsoleteCustomerOrderSaver;
 use Spryker\Zed\Customer\Business\Model\PreConditionChecker;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGenerator;
@@ -62,7 +62,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
             $this->getLocaleQueryContainer(),
             $this->getStore(),
             $this->createCustomerExpander(),
-            $this->getPasswordPolicy(),
+            $this->getCustomerPasswordPolicy(),
             $this->getPostCustomerRegistrationPlugins()
         );
 
@@ -85,7 +85,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface
      */
-    public function getPasswordPolicy(): CustomerPasswordPolicyInterface
+    public function getCustomerPasswordPolicy(): CustomerPasswordPolicyInterface
     {
         return $this->createCustomerPasswordPolicyProvider()->getCustomerPasswordPolicy();
     }
@@ -124,7 +124,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     public function createCustomerPasswordPolicyForbidden(): CustomerPasswordPolicyInterface
     {
-        return new CustomerPasswordPolicyForbidden($this->getConfig());
+        return new ForbiddenCustomerPasswordPolicy($this->getConfig());
     }
 
     /**
@@ -132,7 +132,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     public function createCustomerPasswordPolicyDefault(): CustomerPasswordPolicyInterface
     {
-        return new CustomerPasswordPolicyLength($this->getConfig());
+        return new LengthCustomerPasswordPolicy($this->getConfig());
     }
 
     /**
@@ -140,7 +140,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     public function createCustomerPasswordPolicySequence(): CustomerPasswordPolicyInterface
     {
-        return new CustomerPasswordPolicySequence($this->getConfig());
+        return new SequenceCustomerPasswordPolicy($this->getConfig());
     }
 
     /**
@@ -148,7 +148,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     public function createCustomerPasswordPolicyDigit(): CustomerPasswordPolicyInterface
     {
-        return new CustomerPasswordPolicyDigit($this->getConfig());
+        return new DigitCustomerPasswordPolicy($this->getConfig());
     }
 
     /**
@@ -156,7 +156,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     public function createCustomerPasswordPolicySpecial(): CustomerPasswordPolicyInterface
     {
-        return new CustomerPasswordPolicySpecial($this->getConfig());
+        return new SpecialCustomerPasswordPolicy($this->getConfig());
     }
 
     /**
@@ -164,7 +164,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     public function createCustomerPasswordPolicyLowerCase(): CustomerPasswordPolicyInterface
     {
-        return new CustomerPasswordPolicyLowerCase($this->getConfig());
+        return new LowerCaseCustomerPasswordPolicy($this->getConfig());
     }
 
     /**
@@ -172,7 +172,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     public function createCustomerPasswordPolicyUpperCase(): CustomerPasswordPolicyInterface
     {
-        return new CustomerPasswordPolicyUpperCase($this->getConfig());
+        return new UpperCaseCustomerPasswordPolicy($this->getConfig());
     }
 
     /**
@@ -180,7 +180,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     public function createCustomerPasswordPolicyBlacklist(): CustomerPasswordPolicyInterface
     {
-        return new CustomerPasswordPolicyBlacklist($this->getConfig());
+        return new BlacklistCustomerPasswordPolicy($this->getConfig());
     }
 
     /**
@@ -188,7 +188,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     public function createCustomerPasswordPolicyWhitelist(): CustomerPasswordPolicyInterface
     {
-        return new CustomerPasswordPolicyWhitelist($this->getConfig());
+        return new WhitelistCustomerPasswordPolicy($this->getConfig());
     }
 
     /**

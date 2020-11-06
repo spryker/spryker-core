@@ -9,7 +9,7 @@ namespace Spryker\Zed\Customer\Business\CustomerPasswordPolicy;
 
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 
-class CustomerPasswordPolicySequence extends AbstractCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
+class SequenceCustomerPasswordPolicy extends AbstractCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
 {
     public const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE = 'customer.password.error.sequence';
 
@@ -33,7 +33,7 @@ class CustomerPasswordPolicySequence extends AbstractCustomerPasswordPolicy impl
                 $counter++;
             }
             if ($this->config->getCustomerPasswordSequenceLimit() < $counter) {
-                $this->addError($customerResponseTransfer, self::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE);
+                $this->addError($customerResponseTransfer, static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE);
 
                 break;
             }

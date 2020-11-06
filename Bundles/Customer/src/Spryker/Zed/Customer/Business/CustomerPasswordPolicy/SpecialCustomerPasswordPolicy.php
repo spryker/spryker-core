@@ -9,11 +9,11 @@ namespace Spryker\Zed\Customer\Business\CustomerPasswordPolicy;
 
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 
-class CustomerPasswordPolicyDigit extends AbstractCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
+class SpecialCustomerPasswordPolicy extends AbstractCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
 {
-    public const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_DIGIT = 'customer.password.error.digit';
+    public const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SPECIAL = 'customer.password.error.special';
 
-    public const PASSWORD_POLICY_CHARSET_DIGIT = '/\p{N}+/';
+    public const PASSWORD_POLICY_CHARSET_SPECIAL = '/[^(\p{N}|\p{L})+]/';
 
     /**
      * @param string $password
@@ -23,8 +23,8 @@ class CustomerPasswordPolicyDigit extends AbstractCustomerPasswordPolicy impleme
      */
     public function validatePassword(string $password, CustomerResponseTransfer $customerResponseTransfer): CustomerResponseTransfer
     {
-        if ($this->config->getCustomerPasswordDigitRequired() && !preg_match(static::PASSWORD_POLICY_CHARSET_DIGIT, $password)) {
-            $this->addError($customerResponseTransfer, static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_DIGIT);
+        if ($this->config->getCustomerPasswordSpecialRequired() && !preg_match(static::PASSWORD_POLICY_CHARSET_SPECIAL, $password)) {
+            $this->addError($customerResponseTransfer, static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SPECIAL);
         }
 
         return $this->proceed($password, $customerResponseTransfer);
