@@ -86,7 +86,7 @@ class MerchantCategoryMerchantSearchQueryExpanderPlugin extends AbstractPlugin i
             throw new InvalidArgumentException(sprintf(
                 'Merchant Category query expander available only with %s, got: %s',
                 BoolQuery::class,
-                is_object($boolQuery) ? get_class($boolQuery) : gettype($boolQuery)
+                get_class($boolQuery)
             ));
         }
 
