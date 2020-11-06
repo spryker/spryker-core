@@ -15,11 +15,12 @@ use Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderDetailsAttrib
 /**
  * @method \Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiFactory getFactory()
  */
-class RestOrderDetailsAttributesMapperPlugin extends AbstractPlugin implements RestOrderDetailsAttributesMapperPluginInterface
+class ShipmentRestOrderDetailsAttributesMapperPlugin extends AbstractPlugin implements RestOrderDetailsAttributesMapperPluginInterface
 {
     /**
      * {@inheritDoc}
      * - Maps `RestOrderDetailsAttributesTransfer.items` and `RestOrderDetailsAttributesTransfer.expenses`.
+     * - Updates `RestOrderItemsAttributesTransfer.idShipment` and `RestOrderExpensesAttributesTransfer.idShipment`.
      *
      * @api
      *

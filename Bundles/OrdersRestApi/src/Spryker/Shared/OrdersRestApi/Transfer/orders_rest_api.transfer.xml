@@ -94,6 +94,7 @@
         <property name="sumPriceToPayAggregation" type="int"/>
         <property name="taxAmountAfterCancellation" type="int"/>
         <property name="idShipment" type="int"/>
+        <property name="idSalesExpense" type="int"/>
     </transfer>
 
     <transfer name="RestOrderAddress">

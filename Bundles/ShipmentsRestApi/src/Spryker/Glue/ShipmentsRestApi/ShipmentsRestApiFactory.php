@@ -16,8 +16,6 @@ use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentsByOrderResourceRel
 use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentsByOrderResourceRelationshipExpanderInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderDetailsAttributesMapper;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderDetailsAttributesMapperInterface;
-use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderShipmentsMapper;
-use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderShipmentsMapperInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodMapper;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodMapperInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentMethodRestResponseBuilder;
@@ -70,7 +68,6 @@ class ShipmentsRestApiFactory extends AbstractFactory
     {
         return new ShipmentsByOrderResourceRelationshipExpander(
             $this->getResourceBuilder(),
-            $this->createOrderShipmentsMapper(),
             $this->getShipmentService()
         );
     }
@@ -81,14 +78,6 @@ class ShipmentsRestApiFactory extends AbstractFactory
     public function getShipmentService(): ShipmentServiceFactoryInterface
     {
         return $this->createShipmentServiceFactory();
-    }
-
-    /**
-     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderShipmentsMapperInterface
-     */
-    public function createOrderShipmentsMapper(): OrderShipmentsMapperInterface
-    {
-        return new OrderShipmentsMapper();
     }
 
     /**
