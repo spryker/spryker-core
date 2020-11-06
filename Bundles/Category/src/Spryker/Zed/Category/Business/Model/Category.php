@@ -226,6 +226,7 @@ class Category
 
         $this->triggerEvent(CategoryEvents::CATEGORY_AFTER_UPDATE, $categoryTransfer);
 
+        // Added as an CATEGORY_AFTER_UPDATE event alternative with event transfers support.
         $this->eventFacade->trigger(
             CategoryEvents::CATEGORY_AFTER_PUBLISH_UPDATE,
             (new EventEntityTransfer())->setId($categoryTransfer->getIdCategory())
