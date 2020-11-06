@@ -9,12 +9,19 @@ namespace SprykerTest\Zed\ShipmentsRestApi;
 
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\CheckoutDataBuilder;
+use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\RestCheckoutRequestAttributesBuilder;
 use Generated\Shared\DataBuilder\RestShipmentBuilder;
 use Generated\Shared\Transfer\CheckoutDataTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use PHPUnit\Framework\MockObject\MockObject;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacadeInterface;
+use Spryker\Zed\ShipmentsRestApi\ShipmentsRestApiDependencyProvider;
 
 /**
  * @method void wantToTest($text)
@@ -131,5 +138,37 @@ class ShipmentsRestApiBusinessTester extends Actor
         $quoteTransfer = (new QuoteBuilder())->build();
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function buildQuote(): QuoteTransfer
+    {
+        return (new QuoteBuilder())->build()
+            ->setCurrency((new CurrencyTransfer())->setCode('EUR'))
+            ->setStore($this->haveStore([StoreTransfer::NAME => 'DE']))
+            ->addItem((new ItemBuilder())->build())
+            ->addItem((new ItemBuilder())->build())
+            ->addItem((new ItemBuilder())->build());
+    }
+
+    /**
+     * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiBusinessFactory $shipmentsRestApiBusinessFactoryMock
+     *
+     * @return \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacadeInterface
+     */
+    public function getFacadeMock(MockObject $shipmentsRestApiBusinessFactoryMock): ShipmentsRestApiFacadeInterface
+    {
+        $container = new Container();
+        $shipmentsRestApiDependencyProvider = new ShipmentsRestApiDependencyProvider();
+        $shipmentsRestApiDependencyProvider->provideBusinessLayerDependencies($container);
+
+        $shipmentsRestApiBusinessFactoryMock->setContainer($container);
+
+        $shipmentsRestApiFacadeMock = $this->getFacade();
+        $shipmentsRestApiFacadeMock->setFactory($shipmentsRestApiBusinessFactoryMock);
+
+        return $shipmentsRestApiFacadeMock;
     }
 }

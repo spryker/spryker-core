@@ -25,7 +25,7 @@ class ShipmentsRestApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ShipmentsRestApi\Business\Expander\CheckoutDataExpanderInterface
      */
-    public function createCheckoutDataExpander():CheckoutDataExpanderInterface
+    public function createCheckoutDataExpander(): CheckoutDataExpanderInterface
     {
         return new CheckoutDataExpander($this->getShipmentFacade());
     }

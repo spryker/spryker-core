@@ -24,6 +24,10 @@ use Generated\Shared\Transfer\RestAddressTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestCustomerTransfer;
+use PHPUnit\Framework\MockObject\MockObject;
+use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\CompanyBusinessUnitAddressesRestApiFacadeInterface;
+use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\CompanyBusinessUnitAddressesRestApiDependencyProvider;
+use Spryker\Zed\Kernel\Container;
 
 /**
  * Inherited Methods
@@ -51,6 +55,25 @@ class CompanyBusinessUnitAddressesRestApiBusinessTester extends Actor
     protected const FAKE_ID_COMPANY_BUSINESS_UNIT = 777;
     protected const FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_UUID = 'fake-company-business-unit-address-uuid';
     protected const FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_ID = 12345;
+
+    /**
+     * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\CompanyBusinessUnitAddressesRestApiBusinessFactory $companyBusinessUnitAddressesRestApiBusinessFactoryMock
+     *
+     * @return \Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\CompanyBusinessUnitAddressesRestApiFacadeInterface
+     */
+    public function getFacadeMock(MockObject $companyBusinessUnitAddressesRestApiBusinessFactoryMock): CompanyBusinessUnitAddressesRestApiFacadeInterface
+    {
+        $container = new Container();
+        $companyBusinessUnitAddressesRestApiDependencyProvider = new CompanyBusinessUnitAddressesRestApiDependencyProvider();
+        $companyBusinessUnitAddressesRestApiDependencyProvider->provideBusinessLayerDependencies($container);
+
+        $companyBusinessUnitAddressesRestApiBusinessFactoryMock->setContainer($container);
+
+        $companyBusinessUnitAddressesRestApiFacadeMock = $this->getFacade();
+        $companyBusinessUnitAddressesRestApiFacadeMock->setFactory($companyBusinessUnitAddressesRestApiBusinessFactoryMock);
+
+        return $companyBusinessUnitAddressesRestApiFacadeMock;
+    }
 
     /**
      * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer

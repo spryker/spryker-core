@@ -8,16 +8,12 @@
 namespace SprykerTest\Zed\ShipmentsRestApi\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\DataBuilder\ItemBuilder;
-use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\RestAddressBuilder;
 use Generated\Shared\DataBuilder\RestShipmentsBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 
 /**
  * Auto-generated group annotations
@@ -55,7 +51,7 @@ class MapShipmentsToQuoteTest extends Unit
     public function testMapShipmentsToQuoteAssignsShipmentTransferToQuoteItems(): void
     {
         // Arrange
-        $quoteTransfer = $this->buildQuote();
+        $quoteTransfer = $this->tester->buildQuote();
         $restCheckoutRequestAttributesTransfer = $this->buildRestCheckoutRequestAttributes($quoteTransfer);
 
         // Act
@@ -93,7 +89,7 @@ class MapShipmentsToQuoteTest extends Unit
     public function testMapShipmentsToQuoteWithEmptyShipments(): void
     {
         // Arrange
-        $quoteTransfer = $this->buildQuote();
+        $quoteTransfer = $this->tester->buildQuote();
         $restCheckoutRequestAttributesTransfer = new RestCheckoutRequestAttributesTransfer();
 
         // Act
@@ -110,7 +106,7 @@ class MapShipmentsToQuoteTest extends Unit
     public function testMapShipmentsToQuoteWithFakeShipmentMethodId(): void
     {
         // Arrange
-        $quoteTransfer = $this->buildQuote();
+        $quoteTransfer = $this->tester->buildQuote();
         $restCheckoutRequestAttributesTransfer = $this->buildRestCheckoutRequestAttributes($quoteTransfer);
         $restCheckoutRequestAttributesTransfer->getShipments()
             ->offsetGet(0)
@@ -131,7 +127,7 @@ class MapShipmentsToQuoteTest extends Unit
     public function testMapShipmentsToQuoteWithFakeItemGroupKey(): void
     {
         // Arrange
-        $quoteTransfer = $this->buildQuote();
+        $quoteTransfer = $this->tester->buildQuote();
         $restCheckoutRequestAttributesTransfer = $this->buildRestCheckoutRequestAttributes($quoteTransfer);
         $quoteTransfer->getItems()
             ->offsetGet(0)
@@ -151,7 +147,7 @@ class MapShipmentsToQuoteTest extends Unit
     public function testMapShipmentsToQuoteOverridesItemShipment(): void
     {
         // Arrange
-        $quoteTransfer = $this->buildQuote();
+        $quoteTransfer = $this->tester->buildQuote();
         $restCheckoutRequestAttributesTransfer = $this->buildRestCheckoutRequestAttributes($quoteTransfer);
         $quoteTransfer->getItems()
             ->offsetGet(0)
@@ -169,19 +165,6 @@ class MapShipmentsToQuoteTest extends Unit
             $restCheckoutRequestAttributesTransfer->getShipments()->offsetGet(0)->getShippingAddress()->getAddress1(),
             $quoteTransfer->getItems()->offsetGet(0)->getShipment()->getShippingAddress()->getAddress1()
         );
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function buildQuote(): QuoteTransfer
-    {
-        return (new QuoteBuilder())->build()
-            ->setCurrency((new CurrencyTransfer())->setCode('EUR'))
-            ->setStore($this->tester->haveStore([StoreTransfer::NAME => 'DE']))
-            ->addItem((new ItemBuilder())->build())
-            ->addItem((new ItemBuilder())->build())
-            ->addItem((new ItemBuilder())->build());
     }
 
     /**
