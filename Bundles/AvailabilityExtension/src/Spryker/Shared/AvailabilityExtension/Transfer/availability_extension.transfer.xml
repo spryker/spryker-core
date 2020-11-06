@@ -12,4 +12,7 @@
     <transfer name="Store">
     </transfer>
 
+    <transfer name="CartItemQuantity">
+    </transfer>
+
 </transfers>
