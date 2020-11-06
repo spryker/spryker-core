@@ -1,0 +1,36 @@
+{
+  "name": "spryker/price-product-volumes-rest-api",
+  "type": "library",
+  "description": "PriceProductVolumesRestApi module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.3",
+    "spryker/kernel": "^3.30.0",
+    "spryker/price-product-volume": "^1.0.0 || ^3.0.0",
+    "spryker/product-prices-rest-api-extension": "^1.0.0",
+    "spryker/util-encoding": "^1.0.0 || ^2.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\RestProductPriceAttributesTransfer;
 use Generated\Shared\Transfer\RestProductPricesAttributesTransfer;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToCurrencyClientInterface;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceClientInterface;
+use Spryker\Glue\ProductPricesRestApi\Processor\PluginExecutor\ProductPricesMapperPluginExecutorInterface;
 
 class ProductPricesMapper implements ProductPricesMapperInterface
 {
@@ -42,6 +43,11 @@ class ProductPricesMapper implements ProductPricesMapperInterface
     protected $currencyClient;
 
     /**
+     * @var \Spryker\Glue\ProductPricesRestApi\Processor\PluginExecutor\ProductPricesMapperPluginExecutorInterface
+     */
+    protected $productPricesMapperPluginExecutor;
+
+    /**
      * @var \Generated\Shared\Transfer\RestCurrencyTransfer
      */
     protected static $restCurrencyTransfer;
@@ -49,13 +55,16 @@ class ProductPricesMapper implements ProductPricesMapperInterface
     /**
      * @param \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceClientInterface $priceClient
      * @param \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToCurrencyClientInterface $currencyClient
+     * @param \Spryker\Glue\ProductPricesRestApi\Processor\PluginExecutor\ProductPricesMapperPluginExecutorInterface $productPricesMapperPluginExecutor
      */
     public function __construct(
         ProductPricesRestApiToPriceClientInterface $priceClient,
-        ProductPricesRestApiToCurrencyClientInterface $currencyClient
+        ProductPricesRestApiToCurrencyClientInterface $currencyClient,
+        ProductPricesMapperPluginExecutorInterface $productPricesMapperPluginExecutor
     ) {
         $this->priceClient = $priceClient;
         $this->currencyClient = $currencyClient;
+        $this->productPricesMapperPluginExecutor = $productPricesMapperPluginExecutor;
     }
 
     /**
@@ -74,7 +83,10 @@ class ProductPricesMapper implements ProductPricesMapperInterface
             $productPricesRestAttributesTransfer->addPrice($restProductPriceAttributesTransfer);
         }
 
-        return $productPricesRestAttributesTransfer;
+        return $this->productPricesMapperPluginExecutor->mapRestProductPricesAttributes(
+            $currentProductPriceTransfer,
+            $productPricesRestAttributesTransfer
+        );
     }
 
     /**
