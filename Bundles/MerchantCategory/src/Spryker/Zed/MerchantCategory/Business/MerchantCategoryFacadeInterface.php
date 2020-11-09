@@ -36,4 +36,16 @@ interface MerchantCategoryFacadeInterface
      * @return void
      */
     public function publishMerchantCategoryEventsByCategoryEvents(array $transfers): void;
+
+    /**
+     * Specification:
+     * - Removes items from `spy_merchant_category` by `$idCategory`
+     *
+     * @api
+     *
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    public function removeAllMerchantMappingsForCategory(int $idCategory): void;
 }

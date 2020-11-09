@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\MerchantCategory\Business\MerchantCategoryBusinessFactory getFactory()
  * @method \Spryker\Zed\MerchantCategory\Persistence\MerchantCategoryRepositoryInterface getRepository()
+ * @method \Spryker\Zed\MerchantCategory\Persistence\MerchantCategoryEntityManagerInterface getEntityManager()
  */
 class MerchantCategoryFacade extends AbstractFacade implements MerchantCategoryFacadeInterface
 {
@@ -47,5 +48,22 @@ class MerchantCategoryFacade extends AbstractFacade implements MerchantCategoryF
         $this->getFactory()
             ->createMerchantCategoryPublisher()
             ->publishMerchantCategoryEventsByCategoryEvents($transfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    public function removeAllMerchantMappingsForCategory(int $idCategory): void
+    {
+        $this
+            ->getFactory()
+            ->createMerchantCategoryManager()
+            ->removeMappings($idCategory);
     }
 }

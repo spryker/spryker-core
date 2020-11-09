@@ -49,6 +49,7 @@ class MerchantCategoryWritePublisherPlugin extends AbstractPlugin implements Pub
             MerchantSearchConfig::MERCHANT_CATEGORY_PUBLISH,
             MerchantSearchConfig::ENTITY_SPY_MERCHANT_CATEGORY_UPDATE,
             MerchantSearchConfig::ENTITY_SPY_MERCHANT_CATEGORY_CREATE,
+            MerchantSearchConfig::ENTITY_SPY_MERCHANT_CATEGORY_DELETE,
         ];
     }
 }

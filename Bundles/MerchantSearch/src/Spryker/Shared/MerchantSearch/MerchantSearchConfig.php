@@ -37,6 +37,11 @@ class MerchantSearchConfig extends AbstractBundleConfig
     public const ENTITY_SPY_MERCHANT_CATEGORY_CREATE = 'Entity.spy_merchant_category.create';
 
     /**
+     * This events will be used for spy_merchant_category entity deletion.
+     */
+    public const ENTITY_SPY_MERCHANT_CATEGORY_DELETE = 'Entity.spy_merchant_category.delete';
+
+    /**
      * This events that will be used when spy_category changes happened.
      */
     public const MERCHANT_CATEGORY_PUBLISH = 'MerchantCategory.merchant_category.publish';

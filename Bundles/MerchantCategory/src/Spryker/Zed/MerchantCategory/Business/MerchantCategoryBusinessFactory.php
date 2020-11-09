@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantCategory\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantCategory\Business\Manager\MerchantCategoryManager;
+use Spryker\Zed\MerchantCategory\Business\Manager\MerchantCategoryManagerInterface;
 use Spryker\Zed\MerchantCategory\Business\Publisher\MerchantCategoryPublisher;
 use Spryker\Zed\MerchantCategory\Business\Publisher\MerchantCategoryPublisherInterface;
 use Spryker\Zed\MerchantCategory\Business\Reader\MerchantCategoryReader;
@@ -19,6 +21,7 @@ use Spryker\Zed\MerchantCategory\MerchantCategoryDependencyProvider;
 /**
  * @method \Spryker\Zed\MerchantCategory\Persistence\MerchantCategoryRepositoryInterface getRepository()
  * @method \Spryker\Zed\MerchantCategory\MerchantCategoryConfig getConfig()
+ * @method \Spryker\Zed\MerchantCategory\Persistence\MerchantCategoryEntityManagerInterface getEntityManager()
  */
 class MerchantCategoryBusinessFactory extends AbstractBusinessFactory
 {
@@ -42,6 +45,14 @@ class MerchantCategoryBusinessFactory extends AbstractBusinessFactory
             $this->getFacadeEventBehavior(),
             $this->getRepository()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantCategory\Business\Manager\MerchantCategoryManagerInterface
+     */
+    public function createMerchantCategoryManager(): MerchantCategoryManagerInterface
+    {
+        return new MerchantCategoryManager($this->getEntityManager());
     }
 
     /**
