@@ -9,6 +9,7 @@
     "spryker/glue-application": "^1.0.0",
     "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",
+    "spryker/orders-rest-api-extension": "^1.1.0",
     "spryker/shipment": "^6.2.0 || ^7.0.0 || ^8.0.0",
     "spryker/shipments-rest-api-extension": "^1.0.0",
     "spryker/symfony": "^3.3.0"

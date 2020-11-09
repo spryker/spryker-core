@@ -13,6 +13,7 @@ class ShipmentsRestApiConfig extends AbstractBundleConfig
 {
     public const RESOURCE_SHIPMENTS = 'shipments';
     public const RESOURCE_SHIPMENT_METHODS = 'shipment-methods';
+    public const RESOURCE_ORDER_SHIPMENTS = 'order-shipments';
 
     public const ERROR_RESPONSE_CODE_SINGLE_MULTI_SHIPMENT_MIX = '4301';
     public const ERROR_RESPONSE_DETAIL_SINGLE_MULTI_SHIPMENT_MIX = 'Single and multiple shipments attributes are not allowed in the same request.';
