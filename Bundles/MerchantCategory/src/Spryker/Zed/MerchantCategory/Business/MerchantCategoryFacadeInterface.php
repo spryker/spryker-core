@@ -39,8 +39,8 @@ interface MerchantCategoryFacadeInterface
 
     /**
      * Specification:
-     * - Deletes items from `spy_merchant_category` by MerchantCategoryCriteriaTransfer
-     * - Requires `MerchantCategoryCriteriaTransfer::fkCategory` to be provided
+     * - Deletes items from `spy_merchant_category` by MerchantCategoryCriteriaTransfer.
+     * - Requires `MerchantCategoryCriteriaTransfer::fkCategory` to be provided.
      *
      * @api
      *
