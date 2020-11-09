@@ -45,7 +45,9 @@
     </transfer>
 
     <transfer name="CartChange">
+        <property name="operation" type="string"/>
         <property name="items" type="Item[]" singular="item"/>
+        <property name="quote" type="Quote"/>
     </transfer>
 
     <transfer name="Quote">
@@ -116,10 +118,15 @@
 
     <transfer name="PriceProduct">
         <property name="skuProduct" type="string"/>
+        <property name="priceDimension" type="PriceProductDimension"/>
     </transfer>
 
     <transfer name="CartItemQuantity">
         <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="PriceProductDimension">
+        <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
     </transfer>
 
 </transfers>

@@ -84,7 +84,7 @@ interface ProductConfigurationFacadeInterface
     /**
      * Specification:
      * - Finds given item in the cart.
-     * - Counts item quantity by item group key.
+     * - Counts item quantity by item SKU and product configuration instance.
      * - Returns quantity for the item.
      *
      * @api
@@ -95,4 +95,19 @@ interface ProductConfigurationFacadeInterface
      * @return \Generated\Shared\Transfer\CartItemQuantityTransfer
      */
     public function countCartItemQuantity(ArrayObject $itemsInCart, ItemTransfer $itemTransfer): CartItemQuantityTransfer;
+
+    /**
+     * Specification:
+     * - Finds given item in the cart.
+     * - Counts item quantity by item SKU and product configuration instance in add and subtract directions.
+     * - Returns quantity for the item.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartItemQuantityTransfer
+     */
+    public function countItemQuantity(CartChangeTransfer $cartChangeTransfer, ItemTransfer $itemTransfer): CartItemQuantityTransfer;
 }

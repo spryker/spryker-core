@@ -31,7 +31,6 @@
 
     <transfer name="ProductConfigurationInstance">
         <property name="displayData" type="string"/>
-        <property name="displayDescription" type="string"/>
         <property name="configuration" type="string"/>
         <property name="configuratorKey" type="string"/>
         <property name="isComplete" type="bool"/>
@@ -42,12 +41,14 @@
 
     <transfer name="PriceProductFilter">
         <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
-        <property name="quantity" type="int"/>
+        <property name="quantity" type="PriceProductDimension"/>
+        <property name="priceDimension" type="int"/>
         <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="PriceProductDimension">
         <property name="productConfigurationConfiguratorKey" type="string"/>
+        <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
         <property name="type" type="string"/>
     </transfer>
 

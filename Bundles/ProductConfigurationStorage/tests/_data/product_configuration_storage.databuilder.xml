@@ -19,7 +19,6 @@
         <property name="configuration" dataBuilderRule="unique()->sentence"/>
         <property name="configuratorKey" dataBuilderRule="word"/>
         <property name="isComplete" dataBuilderRule="boolean(100)"/>
-        <property name="displayDescription" dataBuilderRule="sentence(2)"/>
         <property name="quantity" dataBuilderRule="randomNumber(1)"/>
         <property name="availableQuantity" dataBuilderRule="randomNumber(1)"/>
     </transfer>

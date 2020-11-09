@@ -12,6 +12,8 @@ use Spryker\Zed\ProductConfiguration\Business\Checker\ProductConfigurationChecke
 use Spryker\Zed\ProductConfiguration\Business\Checker\ProductConfigurationCheckerInterface;
 use Spryker\Zed\ProductConfiguration\Business\Counter\ProductConfigurationCartItemQuantityCounter;
 use Spryker\Zed\ProductConfiguration\Business\Counter\ProductConfigurationCartItemQuantityCounterInterface;
+use Spryker\Zed\ProductConfiguration\Business\Counter\ProductConfigurationItemQuantityCounter;
+use Spryker\Zed\ProductConfiguration\Business\Counter\ProductConfigurationItemQuantityCounterInterface;
 use Spryker\Zed\ProductConfiguration\Business\Expander\ProductConfigurationGroupKeyItemExpander;
 use Spryker\Zed\ProductConfiguration\Business\Expander\ProductConfigurationGroupKeyItemExpanderInterface;
 use Spryker\Zed\ProductConfiguration\Business\Expander\ProductConfigurationPriceProductExpander;
@@ -59,6 +61,14 @@ class ProductConfigurationBusinessFactory extends AbstractBusinessFactory
     public function createProductConfigurationCartItemQuantityCounter(): ProductConfigurationCartItemQuantityCounterInterface
     {
         return new ProductConfigurationCartItemQuantityCounter();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductConfiguration\Business\Counter\ProductConfigurationItemQuantityCounterInterface
+     */
+    public function createProductConfigurationItemQuantityCounter(): ProductConfigurationItemQuantityCounterInterface
+    {
+        return new ProductConfigurationItemQuantityCounter();
     }
 
     /**

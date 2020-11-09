@@ -79,6 +79,7 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
                 $priceData
             );
 
+            $priceProductTransfer->getPriceDimension()->setProductConfigurationInstance($productConfigurationInstanceTransfer);
             $priceProductTransfer->setGroupKey($this->priceProductService->buildPriceProductGroupKey($priceProductTransfer));
 
             $priceProductTransfers[] = $priceProductTransfer;

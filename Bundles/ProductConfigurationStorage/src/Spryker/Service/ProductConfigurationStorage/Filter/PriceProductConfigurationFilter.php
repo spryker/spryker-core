@@ -22,10 +22,16 @@ class PriceProductConfigurationFilter implements PriceProductConfigurationFilter
         PriceProductFilterTransfer $priceProductFilterTransfer
     ): array {
         if (!$priceProductFilterTransfer->getProductConfigurationInstance()) {
+            $priceProductTransfers = $this->filterOutProductConfigurationPrices($priceProductTransfers);
+
             return $priceProductTransfers;
         }
 
-        $productConfigurationPriceProductTransfers = $this->filterOutProductConfigurationPrices($priceProductTransfers);
+        $productConfigurationPriceProductTransfers = $this->filterOutPricesExceptCurrentProductConfigurationInstancePrices(
+            $priceProductTransfers,
+            $priceProductFilterTransfer
+        );
+
         if ($productConfigurationPriceProductTransfers !== []) {
             return $productConfigurationPriceProductTransfers;
         }
@@ -43,6 +49,28 @@ class PriceProductConfigurationFilter implements PriceProductConfigurationFilter
         return array_filter($priceProductTransfers, function ($priceProductTransfer) {
             /** @var \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer */
             return $priceProductTransfer->getPriceDimension()->getProductConfigurationConfiguratorKey() !== null;
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function filterOutPricesExceptCurrentProductConfigurationInstancePrices(
+        array $priceProductTransfers,
+        PriceProductFilterTransfer $priceProductFilterTransfer
+    ): array {
+        return array_filter($priceProductTransfers, function ($priceProductTransfer) use ($priceProductFilterTransfer) {
+            if (!$priceProductTransfer->getPriceDimension() || !$priceProductFilterTransfer->getPriceDimension()) {
+                return false;
+            }
+
+            $priceProductConfigurationInstance = $priceProductTransfer->getPriceDimension()
+                ->getProductConfigurationInstance();
+
+            return $priceProductConfigurationInstance == $priceProductFilterTransfer->getProductConfigurationInstance();
         });
     }
 }

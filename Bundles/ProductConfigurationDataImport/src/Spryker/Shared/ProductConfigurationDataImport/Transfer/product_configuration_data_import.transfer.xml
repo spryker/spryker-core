@@ -6,14 +6,12 @@
     <transfer name="ProductConfiguration">
         <property name="idProductConfiguration" type="int"/>
         <property name="fkProduct" type="int"/>
-        <property name="displayDescription" type="string"/>
         <property name="preConfiguration" type="string"/>
         <property name="configuratorKey" type="string"/>
         <property name="isComplete" type="bool"/>
     </transfer>
 
     <transfer name="ProductConfigurationInstance">
-        <property name="displayDescription" type="string"/>
         <property name="configuration" type="string"/>
         <property name="configuratorKey" type="string"/>
         <property name="isComplete" type="bool"/>

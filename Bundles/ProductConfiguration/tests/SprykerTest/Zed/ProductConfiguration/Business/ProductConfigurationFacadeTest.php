@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\ProductConfiguration\Business;
 
 use ArrayObject;
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\CartChangeBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
@@ -330,6 +331,51 @@ class ProductConfigurationFacadeTest extends Unit
         //Act
         $cartItemQuantity = $this->tester->getFacade()
             ->countCartItemQuantity($itemsInCart, $itemTransferAddedToCart);
+
+        //Assert
+        $this->assertSame(
+            3,
+            $cartItemQuantity->getQuantity(),
+            'Expects that item quantity will be counted correctly.'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCountItemQuantityWithoutItemsInCartWillReturnDefaultQuantity(): void
+    {
+        //Arrange
+        $itemTransfer = (new ItemBuilder())->build();
+        $cartChangeTransfer = (new CartChangeBuilder())->withQuote()->build();
+
+        //Act
+        $cartItemQuantity = $this->tester->getFacade()->countItemQuantity($cartChangeTransfer, $itemTransfer);
+
+        //Assert
+        $this->assertSame(
+            0,
+            $cartItemQuantity->getQuantity(),
+            'Expects that default cart item quantity when no items in the cart.'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCountItemQuantityWillCountQuantityCorrectly(): void
+    {
+        //Arrange
+        $itemTransferInCartOne = (new ItemBuilder([ItemTransfer::QUANTITY => 3]))->build();
+        $itemTransferInCartTwo = (new ItemBuilder([ItemTransfer::QUANTITY => 10]))->build();
+        $itemTransferAddedToCart = (clone $itemTransferInCartOne)->setQuantity(5);
+
+        $cartChangeTransfer = (new CartChangeBuilder())->withQuote()->build();
+        $cartChangeTransfer->getQuote()->setItems(new ArrayObject([$itemTransferInCartOne, $itemTransferInCartTwo]));
+
+        //Act
+        $cartItemQuantity = $this->tester->getFacade()
+            ->countItemQuantity($cartChangeTransfer, $itemTransferAddedToCart);
 
         //Assert
         $this->assertSame(
