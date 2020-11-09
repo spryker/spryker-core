@@ -59,11 +59,11 @@ class MerchantCategoryFacade extends AbstractFacade implements MerchantCategoryF
      *
      * @return void
      */
-    public function removeAllMerchantMappingsForCategory(int $idCategory): void
+    public function deleteMerchantCategorySetsByIdCategory(int $idCategory): void
     {
         $this
             ->getFactory()
-            ->createMerchantCategoryManager()
-            ->removeMappings($idCategory);
+            ->createMerchantCategorySetDeleter()
+            ->deleteMerchantCategorySetsByIdCategory($idCategory);
     }
 }

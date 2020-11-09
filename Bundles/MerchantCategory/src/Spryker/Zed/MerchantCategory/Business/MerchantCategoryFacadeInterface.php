@@ -39,7 +39,7 @@ interface MerchantCategoryFacadeInterface
 
     /**
      * Specification:
-     * - Removes items from `spy_merchant_category` by `$idCategory`
+     * - Deletes items from `spy_merchant_category` by `$idCategory`
      *
      * @api
      *
@@ -47,5 +47,5 @@ interface MerchantCategoryFacadeInterface
      *
      * @return void
      */
-    public function removeAllMerchantMappingsForCategory(int $idCategory): void;
+    public function deleteMerchantCategorySetsByIdCategory(int $idCategory): void;
 }

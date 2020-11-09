@@ -8,8 +8,8 @@
 namespace Spryker\Zed\MerchantCategory\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\MerchantCategory\Business\Manager\MerchantCategoryManager;
-use Spryker\Zed\MerchantCategory\Business\Manager\MerchantCategoryManagerInterface;
+use Spryker\Zed\MerchantCategory\Business\CategorySet\MerchantCategorySetDeleter;
+use Spryker\Zed\MerchantCategory\Business\CategorySet\MerchantCategorySetDeleterInterface;
 use Spryker\Zed\MerchantCategory\Business\Publisher\MerchantCategoryPublisher;
 use Spryker\Zed\MerchantCategory\Business\Publisher\MerchantCategoryPublisherInterface;
 use Spryker\Zed\MerchantCategory\Business\Reader\MerchantCategoryReader;
@@ -48,11 +48,11 @@ class MerchantCategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantCategory\Business\Manager\MerchantCategoryManagerInterface
+     * @return \Spryker\Zed\MerchantCategory\Business\CategorySet\MerchantCategorySetDeleterInterface
      */
-    public function createMerchantCategoryManager(): MerchantCategoryManagerInterface
+    public function createMerchantCategorySetDeleter(): MerchantCategorySetDeleterInterface
     {
-        return new MerchantCategoryManager($this->getEntityManager());
+        return new MerchantCategorySetDeleter($this->getEntityManager());
     }
 
     /**

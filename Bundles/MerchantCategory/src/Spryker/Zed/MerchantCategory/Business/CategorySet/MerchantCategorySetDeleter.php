@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantCategory\Business\Manager;
+namespace Spryker\Zed\MerchantCategory\Business\CategorySet;
 
 use Spryker\Zed\MerchantCategory\Persistence\MerchantCategoryEntityManagerInterface;
 
-class MerchantCategoryManager implements MerchantCategoryManagerInterface
+class MerchantCategorySetDeleter implements MerchantCategorySetDeleterInterface
 {
     /**
      * @var \Spryker\Zed\MerchantCategory\Persistence\MerchantCategoryEntityManagerInterface
@@ -30,7 +30,7 @@ class MerchantCategoryManager implements MerchantCategoryManagerInterface
      *
      * @return void
      */
-    public function removeMappings(int $idCategory): void
+    public function deleteMerchantCategorySetsByIdCategory(int $idCategory): void
     {
         $this->entityManager->deleteAllByFkCategory($idCategory);
     }

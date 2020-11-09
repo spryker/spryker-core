@@ -29,6 +29,6 @@ class RemoveMerchantCategoryRelationPlugin extends AbstractPlugin implements Cat
     {
         $this
             ->getFacade()
-            ->removeAllMerchantMappingsForCategory($idCategory);
+            ->deleteMerchantCategorySetsByIdCategory($idCategory);
     }
 }

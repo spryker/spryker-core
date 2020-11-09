@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantCategory\Business\Manager;
+namespace Spryker\Zed\MerchantCategory\Business\CategorySet;
 
-interface MerchantCategoryManagerInterface
+interface MerchantCategorySetDeleterInterface
 {
     /**
      * @param int $idCategory
      *
      * @return void
      */
-    public function removeMappings(int $idCategory): void;
+    public function deleteMerchantCategorySetsByIdCategory(int $idCategory): void;
 }

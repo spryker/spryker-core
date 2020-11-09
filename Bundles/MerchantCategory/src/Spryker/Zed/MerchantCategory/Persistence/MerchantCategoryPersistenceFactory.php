@@ -14,6 +14,7 @@ use Spryker\Zed\MerchantCategory\Persistence\Propel\Mapper\MerchantCategoryMappe
 /**
  * @method \Spryker\Zed\MerchantCategory\Persistence\MerchantCategoryRepositoryInterface getRepository()
  * @method \Spryker\Zed\MerchantCategory\MerchantCategoryConfig getConfig()
+ * @method \Spryker\Zed\MerchantCategory\Persistence\MerchantCategoryEntityManagerInterface getEntityManager()
  */
 class MerchantCategoryPersistenceFactory extends AbstractPersistenceFactory
 {
