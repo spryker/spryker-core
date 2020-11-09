@@ -69,7 +69,6 @@ class ShipmentsRestApiFactory extends AbstractFactory
     public function createShipmentsByOrderResourceRelationshipExpander(): ShipmentsByOrderResourceRelationshipExpanderInterface
     {
         return new ShipmentsByOrderResourceRelationshipExpander(
-            $this->createOrderShipmentMapper(),
             $this->createOrderShipmentRestResponseBuilder(),
             $this->createShipmentServiceFactory()
         );
@@ -96,7 +95,10 @@ class ShipmentsRestApiFactory extends AbstractFactory
      */
     public function createOrderShipmentRestResponseBuilder(): OrderShipmentRestResponseBuilderInterface
     {
-        return new OrderShipmentRestResponseBuilder($this->getResourceBuilder());
+        return new OrderShipmentRestResponseBuilder(
+            $this->createOrderShipmentMapper(),
+            $this->getResourceBuilder()
+        );
     }
 
     /**

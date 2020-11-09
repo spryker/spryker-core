@@ -8,20 +8,13 @@
 namespace Spryker\Glue\ShipmentsRestApi\Processor\Expander;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\RestOrderShipmentsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Factory\ShipmentServiceFactoryInterface;
-use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderShipmentMapperInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\OrderShipmentRestResponseBuilderInterface;
 
 class ShipmentsByOrderResourceRelationshipExpander implements ShipmentsByOrderResourceRelationshipExpanderInterface
 {
-    /**
-     * @var \Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderShipmentMapperInterface
-     */
-    protected $orderShipmentMapper;
-
     /**
      * @var \Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\OrderShipmentRestResponseBuilderInterface
      */
@@ -33,16 +26,13 @@ class ShipmentsByOrderResourceRelationshipExpander implements ShipmentsByOrderRe
     protected $shipmentServiceFactory;
 
     /**
-     * @param \Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderShipmentMapperInterface $orderShipmentMapper
      * @param \Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\OrderShipmentRestResponseBuilderInterface $orderShipmentRestResponseBuilder
      * @param \Spryker\Glue\ShipmentsRestApi\Processor\Factory\ShipmentServiceFactoryInterface $shipmentServiceFactory
      */
     public function __construct(
-        OrderShipmentMapperInterface $orderShipmentMapper,
         OrderShipmentRestResponseBuilderInterface $orderShipmentRestResponseBuilder,
         ShipmentServiceFactoryInterface $shipmentServiceFactory
     ) {
-        $this->orderShipmentMapper = $orderShipmentMapper;
         $this->orderShipmentRestResponseBuilder = $orderShipmentRestResponseBuilder;
         $this->shipmentServiceFactory = $shipmentServiceFactory;
     }
@@ -80,24 +70,15 @@ class ShipmentsByOrderResourceRelationshipExpander implements ShipmentsByOrderRe
             ->groupItemsByShipment($orderTransfer->getItems());
 
         foreach ($shipmentGroupTransfers as $shipmentGroupTransfer) {
-            $restOrderShipmentsAttributesTransfer = $this->orderShipmentMapper
-                ->mapShipmentGroupTransferToRestOrderShipmentsAttributesTransfer(
-                    $shipmentGroupTransfer,
-                    new RestOrderShipmentsAttributesTransfer()
-                );
-
             $orderShipmentsResource = $this->orderShipmentRestResponseBuilder
-                ->createOrderShipmentRestResource(
-                    $shipmentGroupTransfer->getShipment()->getIdSalesShipment(),
-                    $restOrderShipmentsAttributesTransfer
-                );
+                ->createOrderShipmentRestResource($shipmentGroupTransfer);
 
             $resource->addRelationship($orderShipmentsResource);
         }
     }
 
     /**
-     * Exists for BC reasons only.
+     * @deprecated Exists for BC reasons only.
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
