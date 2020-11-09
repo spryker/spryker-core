@@ -97,4 +97,33 @@
     <transfer name="Address">
     </transfer>
 
+    <transfer name="RestOrderShipmentsAttributes">
+        <property name="itemUuids" singular="itemUuid" type="string[]"/>
+        <property name="shippingAddress" type="RestOrderAddress"/>
+        <property name="methodName" type="string"/>
+        <property name="carrierName" type="string"/>
+        <property name="requestedDeliveryDate" type="string"/>
+    </transfer>
+
+    <transfer name="RestOrderAddress">
+        <property name="salutation" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="middleName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="address1" type="string"/>
+        <property name="address2" type="string"/>
+        <property name="address3" type="string"/>
+        <property name="company" type="string"/>
+        <property name="city" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="poBox" type="string"/>
+        <property name="phone" type="string"/>
+        <property name="cellPhone" type="string"/>
+        <property name="description" type="string"/>
+        <property name="comment" type="string"/>
+        <property name="email" type="string"/>
+        <property name="country" type="string"/>
+        <property name="iso2Code" type="string"/>
+    </transfer>
+
 </transfers>

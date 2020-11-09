@@ -12,4 +12,5 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 class ShipmentsRestApiConfig extends AbstractBundleConfig
 {
     public const RESOURCE_SHIPMENT_METHODS = 'shipment-methods';
+    public const RESOURCE_ORDER_SHIPMENTS = 'order-shipments';
 }
