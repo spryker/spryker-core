@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantCategory\Communication\Plugin;
 
+use Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer;
 use Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationDeletePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -27,8 +28,11 @@ class RemoveMerchantCategoryRelationPlugin extends AbstractPlugin implements Cat
      */
     public function delete($idCategory)
     {
+        $merchantCategoryCriteriaTransfer = new MerchantCategoryCriteriaTransfer();
+        $merchantCategoryCriteriaTransfer->setCategoryIds([$idCategory]);
+
         $this
             ->getFacade()
-            ->deleteMerchantCategorySetsByIdCategory($idCategory);
+            ->delete($merchantCategoryCriteriaTransfer);
     }
 }

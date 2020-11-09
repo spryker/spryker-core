@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantCategory\Persistence;
 
+use Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer;
+use Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -15,13 +17,35 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class MerchantCategoryEntityManager extends AbstractEntityManager implements MerchantCategoryEntityManagerInterface
 {
     /**
-     * @param int $categoryId
+     * @param \Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer
      *
      * @return void
      */
-    public function deleteAllByFkCategory(int $categoryId): void
+    public function delete(MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer): void
     {
         $merchantCategoryQuery = $this->getFactory()->getMerchantCategoryPropelQuery();
-        $merchantCategoryQuery->findByFkCategory($categoryId)->delete();
+        $merchantCategoryQuery = $this->applyCriteria($merchantCategoryQuery, $merchantCategoryCriteriaTransfer);
+        $merchantCategoryQuery->find()->delete();
+    }
+
+    /**
+     * @phpstan-param \Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery<\Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategory> $merchantCategoryQuery
+     *
+     * @phpstan-return \Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery<\Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategory>
+     *
+     * @param \Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery $merchantCategoryQuery
+     * @param \Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer
+     *
+     * @return \Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery
+     */
+    protected function applyCriteria(
+        SpyMerchantCategoryQuery $merchantCategoryQuery,
+        MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer
+    ): SpyMerchantCategoryQuery {
+        if ($merchantCategoryCriteriaTransfer->getCategoryIds()) {
+            $merchantCategoryQuery->filterByFkCategory_In($merchantCategoryCriteriaTransfer->getCategoryIds());
+        }
+
+        return $merchantCategoryQuery;
     }
 }

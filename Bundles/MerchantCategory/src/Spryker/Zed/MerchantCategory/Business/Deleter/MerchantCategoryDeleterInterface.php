@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantCategory\Persistence;
+namespace Spryker\Zed\MerchantCategory\Business\Deleter;
 
 use Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer;
 
-interface MerchantCategoryEntityManagerInterface
+interface MerchantCategoryDeleterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer

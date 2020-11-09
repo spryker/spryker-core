@@ -55,15 +55,15 @@ class MerchantCategoryFacade extends AbstractFacade implements MerchantCategoryF
      *
      * @api
      *
-     * @param int $idCategory
+     * @param \Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer
      *
      * @return void
      */
-    public function deleteMerchantCategorySetsByIdCategory(int $idCategory): void
+    public function delete(MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer): void
     {
         $this
             ->getFactory()
-            ->createMerchantCategorySetDeleter()
-            ->deleteMerchantCategorySetsByIdCategory($idCategory);
+            ->createMerchantCategoryDeleter()
+            ->delete($merchantCategoryCriteriaTransfer);
     }
 }

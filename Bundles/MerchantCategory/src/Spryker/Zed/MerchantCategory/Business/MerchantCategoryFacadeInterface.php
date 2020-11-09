@@ -39,13 +39,14 @@ interface MerchantCategoryFacadeInterface
 
     /**
      * Specification:
-     * - Deletes items from `spy_merchant_category` by `$idCategory`
+     * - Deletes items from `spy_merchant_category` by MerchantCategoryCriteriaTransfer
+     * - Requires `MerchantCategoryCriteriaTransfer::fkCategory` to be provided
      *
      * @api
      *
-     * @param int $idCategory
+     * @param \Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer
      *
      * @return void
      */
-    public function deleteMerchantCategorySetsByIdCategory(int $idCategory): void;
+    public function delete(MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer): void;
 }

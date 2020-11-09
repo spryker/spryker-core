@@ -5,11 +5,12 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantCategory\Business\CategorySet;
+namespace Spryker\Zed\MerchantCategory\Business\Deleter;
 
+use Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer;
 use Spryker\Zed\MerchantCategory\Persistence\MerchantCategoryEntityManagerInterface;
 
-class MerchantCategorySetDeleter implements MerchantCategorySetDeleterInterface
+class MerchantCategoryDeleter implements MerchantCategoryDeleterInterface
 {
     /**
      * @var \Spryker\Zed\MerchantCategory\Persistence\MerchantCategoryEntityManagerInterface
@@ -26,12 +27,14 @@ class MerchantCategorySetDeleter implements MerchantCategorySetDeleterInterface
     }
 
     /**
-     * @param int $idCategory
+     * @param \Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer
      *
      * @return void
      */
-    public function deleteMerchantCategorySetsByIdCategory(int $idCategory): void
+    public function delete(MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer): void
     {
-        $this->entityManager->deleteAllByFkCategory($idCategory);
+        $merchantCategoryCriteriaTransfer->requireCategoryIds();
+
+        $this->entityManager->delete($merchantCategoryCriteriaTransfer);
     }
 }
