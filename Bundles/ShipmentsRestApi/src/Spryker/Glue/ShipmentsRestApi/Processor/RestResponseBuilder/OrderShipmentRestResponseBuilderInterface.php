@@ -7,15 +7,19 @@
 
 namespace Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder;
 
-use Generated\Shared\Transfer\ShipmentGroupTransfer;
+use Generated\Shared\Transfer\RestOrderShipmentsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
 interface OrderShipmentRestResponseBuilderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param int $idSalesShipment
+     * @param \Generated\Shared\Transfer\RestOrderShipmentsAttributesTransfer $restOrderShipmentsAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function createOrderShipmentRestResource(ShipmentGroupTransfer $shipmentGroupTransfer): RestResourceInterface;
+    public function createOrderShipmentRestResource(
+        int $idSalesShipment,
+        RestOrderShipmentsAttributesTransfer $restOrderShipmentsAttributesTransfer
+    ): RestResourceInterface;
 }

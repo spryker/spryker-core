@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\RestOrderDetailsAttributesTransfer;
 use Generated\Shared\Transfer\RestOrderShipmentsAttributesTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 
-interface OrderMapperInterface
+interface OrderShipmentMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer

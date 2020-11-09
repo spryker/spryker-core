@@ -14,8 +14,8 @@ use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentsByOrderResourceRel
 use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentsByOrderResourceRelationshipExpanderInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Factory\ShipmentServiceFactory;
 use Spryker\Glue\ShipmentsRestApi\Processor\Factory\ShipmentServiceFactoryInterface;
-use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderMapper;
-use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderMapperInterface;
+use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderShipmentMapper;
+use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderShipmentMapperInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodMapper;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodMapperInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\OrderShipmentRestResponseBuilder;
@@ -69,17 +69,18 @@ class ShipmentsRestApiFactory extends AbstractFactory
     public function createShipmentsByOrderResourceRelationshipExpander(): ShipmentsByOrderResourceRelationshipExpanderInterface
     {
         return new ShipmentsByOrderResourceRelationshipExpander(
+            $this->createOrderShipmentMapper(),
             $this->createOrderShipmentRestResponseBuilder(),
             $this->createShipmentServiceFactory()
         );
     }
 
     /**
-     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderMapperInterface
+     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderShipmentMapperInterface
      */
-    public function createOrderMapper(): OrderMapperInterface
+    public function createOrderShipmentMapper(): OrderShipmentMapperInterface
     {
-        return new OrderMapper();
+        return new OrderShipmentMapper();
     }
 
     /**
@@ -95,7 +96,7 @@ class ShipmentsRestApiFactory extends AbstractFactory
      */
     public function createOrderShipmentRestResponseBuilder(): OrderShipmentRestResponseBuilderInterface
     {
-        return new OrderShipmentRestResponseBuilder($this->createOrderMapper(), $this->getResourceBuilder());
+        return new OrderShipmentRestResponseBuilder($this->getResourceBuilder());
     }
 
     /**

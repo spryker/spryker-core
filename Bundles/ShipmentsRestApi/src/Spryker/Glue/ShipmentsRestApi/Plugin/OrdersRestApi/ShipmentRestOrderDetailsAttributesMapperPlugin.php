@@ -34,7 +34,7 @@ class ShipmentRestOrderDetailsAttributesMapperPlugin extends AbstractPlugin impl
         RestOrderDetailsAttributesTransfer $restOrderDetailsAttributesTransfer
     ): RestOrderDetailsAttributesTransfer {
         return $this->getFactory()
-            ->createOrderMapper()
+            ->createOrderShipmentMapper()
             ->mapOrderTransferToRestOrderDetailsAttributesTransfer(
                 $orderTransfer,
                 $restOrderDetailsAttributesTransfer

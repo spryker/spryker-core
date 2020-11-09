@@ -8,49 +8,38 @@
 namespace Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder;
 
 use Generated\Shared\Transfer\RestOrderShipmentsAttributesTransfer;
-use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
-use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderMapperInterface;
 use Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiConfig;
 
 class OrderShipmentRestResponseBuilder implements OrderShipmentRestResponseBuilderInterface
 {
-    /**
-     * @var \Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderMapperInterface
-     */
-    protected $orderShipmentMapper;
-
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
     protected $restResourceBuilder;
 
     /**
-     * @param \Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderMapperInterface $orderMapper
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      */
-    public function __construct(
-        OrderMapperInterface $orderMapper,
-        RestResourceBuilderInterface $restResourceBuilder
-    ) {
-        $this->orderShipmentMapper = $orderMapper;
+    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
+    {
         $this->restResourceBuilder = $restResourceBuilder;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param int $idSalesShipment
+     * @param \Generated\Shared\Transfer\RestOrderShipmentsAttributesTransfer $restOrderShipmentsAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function createOrderShipmentRestResource(ShipmentGroupTransfer $shipmentGroupTransfer): RestResourceInterface
-    {
-        $restOrderShipmentsAttributesTransfer = $this->orderShipmentMapper
-            ->mapShipmentGroupTransferToRestOrderShipmentsAttributesTransfer($shipmentGroupTransfer, new RestOrderShipmentsAttributesTransfer());
-
+    public function createOrderShipmentRestResource(
+        int $idSalesShipment,
+        RestOrderShipmentsAttributesTransfer $restOrderShipmentsAttributesTransfer
+    ): RestResourceInterface {
         return $this->restResourceBuilder->createRestResource(
             ShipmentsRestApiConfig::RESOURCE_ORDER_SHIPMENTS,
-            (string)$shipmentGroupTransfer->getShipment()->getIdSalesShipment(),
+            (string)$idSalesShipment,
             $restOrderShipmentsAttributesTransfer
         );
     }
