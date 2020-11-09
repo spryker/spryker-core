@@ -647,7 +647,7 @@ class CalculationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testOrderTransferHasStoreSetAsSting(): void
+    public function testRecalculateOrderSuccessfulMappingStoreNameFromCalculableObjectToOrder(): void
     {
         // Arrange
         $calculationFacade = new CalculationFacade();
