@@ -23,7 +23,9 @@ class OrderShipmentByOrderResourceRelationshipPlugin extends AbstractPlugin impl
 {
     /**
      * {@inheritDoc}
-     * - Adds order-shipments resource as relationship in case OrderTransfer is provided as a payload.
+     * - Adds `order-shipments` resource as relationship in case `OrderTransfer` is provided as a payload.
+     * - Uses `ShipmentService` to group items in the order.
+     * - Does nothing if order is using the single shipment strategy (has `OrderTransfer.shippingAddress` and `OrderTransfer.idShipmentMethod`).
      *
      * @api
      *

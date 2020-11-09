@@ -8,16 +8,18 @@
 namespace Spryker\Glue\ShipmentsRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
-use Spryker\Glue\ShipmentsRestApi\Processor\Creator\ShipmentServiceFactory;
-use Spryker\Glue\ShipmentsRestApi\Processor\Creator\ShipmentServiceFactoryInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentMethodByCheckoutDataExpander;
 use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentMethodByCheckoutDataExpanderInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentsByOrderResourceRelationshipExpander;
 use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentsByOrderResourceRelationshipExpanderInterface;
-use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderDetailsAttributesMapper;
-use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderDetailsAttributesMapperInterface;
+use Spryker\Glue\ShipmentsRestApi\Processor\Factory\ShipmentServiceFactory;
+use Spryker\Glue\ShipmentsRestApi\Processor\Factory\ShipmentServiceFactoryInterface;
+use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderMapper;
+use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderMapperInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodMapper;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodMapperInterface;
+use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\OrderShipmentRestResponseBuilder;
+use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\OrderShipmentRestResponseBuilderInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentMethodRestResponseBuilder;
 use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentMethodRestResponseBuilderInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Sorter\ShipmentMethodSorter;
@@ -67,32 +69,40 @@ class ShipmentsRestApiFactory extends AbstractFactory
     public function createShipmentsByOrderResourceRelationshipExpander(): ShipmentsByOrderResourceRelationshipExpanderInterface
     {
         return new ShipmentsByOrderResourceRelationshipExpander(
-            $this->getResourceBuilder(),
-            $this->getShipmentService()
+            $this->createOrderShipmentRestResponseBuilder(),
+            $this->createShipmentServiceFactory()
         );
     }
 
     /**
-     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Creator\ShipmentServiceFactoryInterface
+     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderMapperInterface
      */
-    public function getShipmentService(): ShipmentServiceFactoryInterface
+    public function createOrderMapper(): OrderMapperInterface
     {
-        return $this->createShipmentServiceFactory();
+        return new OrderMapper();
     }
 
     /**
-     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderDetailsAttributesMapperInterface
-     */
-    public function createOrderDetailsAttributesMapper(): OrderDetailsAttributesMapperInterface
-    {
-        return new OrderDetailsAttributesMapper();
-    }
-
-    /**
-     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Creator\ShipmentServiceFactoryInterface
+     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Factory\ShipmentServiceFactoryInterface
      */
     public function createShipmentServiceFactory(): ShipmentServiceFactoryInterface
     {
         return new ShipmentServiceFactory();
+    }
+
+    /**
+     * @return \Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\OrderShipmentRestResponseBuilderInterface
+     */
+    public function createOrderShipmentRestResponseBuilder(): OrderShipmentRestResponseBuilderInterface
+    {
+        return new OrderShipmentRestResponseBuilder($this->createOrderMapper(), $this->getResourceBuilder());
+    }
+
+    /**
+     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Factory\ShipmentServiceFactoryInterface
+     */
+    public function getShipmentService(): ShipmentServiceFactoryInterface
+    {
+        return $this->getProvidedDependency(ShipmentsRestApiDependencyProvider::SERVICE_SHIPMENT);
     }
 }

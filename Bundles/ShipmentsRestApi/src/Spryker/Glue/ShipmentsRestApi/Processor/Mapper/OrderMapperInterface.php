@@ -9,8 +9,10 @@ namespace Spryker\Glue\ShipmentsRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RestOrderDetailsAttributesTransfer;
+use Generated\Shared\Transfer\RestOrderShipmentsAttributesTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 
-interface OrderDetailsAttributesMapperInterface
+interface OrderMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -22,4 +24,15 @@ interface OrderDetailsAttributesMapperInterface
         OrderTransfer $orderTransfer,
         RestOrderDetailsAttributesTransfer $restOrderDetailsAttributesTransfer
     ): RestOrderDetailsAttributesTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param \Generated\Shared\Transfer\RestOrderShipmentsAttributesTransfer $restOrderShipmentsAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestOrderShipmentsAttributesTransfer
+     */
+    public function mapShipmentGroupTransferToRestOrderShipmentsAttributesTransfer(
+        ShipmentGroupTransfer $shipmentGroupTransfer,
+        RestOrderShipmentsAttributesTransfer $restOrderShipmentsAttributesTransfer
+    ): RestOrderShipmentsAttributesTransfer;
 }

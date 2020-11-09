@@ -14,8 +14,10 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RestOrderDetailsAttributesTransfer;
 use Generated\Shared\Transfer\RestOrderExpensesAttributesTransfer;
 use Generated\Shared\Transfer\RestOrderItemsAttributesTransfer;
+use Generated\Shared\Transfer\RestOrderShipmentsAttributesTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 
-class OrderDetailsAttributesMapper implements OrderDetailsAttributesMapperInterface
+class OrderMapper implements OrderMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -36,7 +38,6 @@ class OrderDetailsAttributesMapper implements OrderDetailsAttributesMapperInterf
         );
 
         $expenseTransfers = $orderTransfer->getExpenses();
-
         $restOrderExpensesAttributesTransfers = $restOrderDetailsAttributesTransfer->getExpenses();
 
         $restOrderExpensesAttributesTransfers = $this->mapExpenseTransfersToRestOrderExpensesAttributesTransfers(
@@ -50,6 +51,36 @@ class OrderDetailsAttributesMapper implements OrderDetailsAttributesMapperInterf
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param \Generated\Shared\Transfer\RestOrderShipmentsAttributesTransfer $restOrderShipmentsAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestOrderShipmentsAttributesTransfer
+     */
+    public function mapShipmentGroupTransferToRestOrderShipmentsAttributesTransfer(
+        ShipmentGroupTransfer $shipmentGroupTransfer,
+        RestOrderShipmentsAttributesTransfer $restOrderShipmentsAttributesTransfer
+    ): RestOrderShipmentsAttributesTransfer {
+        $shipmentTransfer = $shipmentGroupTransfer->getShipment();
+        $itemsTransfers = $shipmentGroupTransfer->getItems();
+
+        $itemUuids = [];
+        foreach ($itemsTransfers as $itemTransfer) {
+            $itemUuids[] = $itemTransfer->getUuid();
+        }
+
+        $restOrderShipmentsAttributesTransfer->setItemUuids($itemUuids)
+            ->fromArray($shipmentTransfer->toArray(), true)
+            ->setMethodName($shipmentTransfer->getMethod()->getName())
+            ->setCarrierName($shipmentTransfer->getCarrier()->getName());
+
+        $restOrderShipmentsAttributesTransfer
+            ->getShippingAddress()
+            ->setCountry($shipmentTransfer->getShippingAddress()->getCountry()->getName());
+
+        return $restOrderShipmentsAttributesTransfer;
+    }
+
+    /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      * @param \ArrayObject|\Generated\Shared\Transfer\RestOrderItemsAttributesTransfer[] $restOrderItemsAttributesTransfers
      *
@@ -60,45 +91,18 @@ class OrderDetailsAttributesMapper implements OrderDetailsAttributesMapperInterf
         ArrayObject $restOrderItemsAttributesTransfers
     ): ArrayObject {
         foreach ($itemTransfers as $itemTransfer) {
-            $restOrderItemsAttributesTransfer = $this->findRestOrderItemsAttributesTransferToItemTransferByItemUuid(
-                $itemTransfer,
-                $restOrderItemsAttributesTransfers
-            );
+            $restOrderItemsAttributesTransfer = $this
+                ->findRestOrderItemInAttributesTransfer($itemTransfer, $restOrderItemsAttributesTransfers);
+
             if (!$restOrderItemsAttributesTransfer) {
                 return $restOrderItemsAttributesTransfers;
             }
+
             $restOrderItemsAttributesTransfer
-                ->fromArray($itemTransfer->toArray(), true)
                 ->setIdShipment($itemTransfer->getShipment()->getIdSalesShipment());
         }
 
         return $restOrderItemsAttributesTransfers;
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenseTransfers
-     * @param \ArrayObject|\Generated\Shared\Transfer\RestOrderExpensesAttributesTransfer[] $restOrderExpensesAttributesTransfers
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\RestOrderExpensesAttributesTransfer[]
-     */
-    protected function mapExpenseTransfersToRestOrderExpensesAttributesTransfers(
-        ArrayObject $expenseTransfers,
-        ArrayObject $restOrderExpensesAttributesTransfers
-    ): ArrayObject {
-        foreach ($expenseTransfers as $expenseTransfer) {
-            $restOrderExpensesAttributesTransfer = $this->findRestOrderExpensesAttributesTransferToExpenseTransferBy(
-                $expenseTransfer,
-                $restOrderExpensesAttributesTransfers
-            );
-            if (!$restOrderExpensesAttributesTransfer) {
-                return $restOrderExpensesAttributesTransfers;
-            }
-            $restOrderExpensesAttributesTransfer
-                ->fromArray($expenseTransfer->toArray(), true)
-                ->setIdShipment($expenseTransfer->getShipment()->getIdSalesShipment());
-        }
-
-        return $restOrderExpensesAttributesTransfers;
     }
 
     /**
@@ -107,7 +111,7 @@ class OrderDetailsAttributesMapper implements OrderDetailsAttributesMapperInterf
      *
      * @return \Generated\Shared\Transfer\RestOrderItemsAttributesTransfer|null
      */
-    protected function findRestOrderItemsAttributesTransferToItemTransferByItemUuid(
+    protected function findRestOrderItemInAttributesTransfer(
         ItemTransfer $itemTransfer,
         ArrayObject $restOrderItemsAttributesTransfers
     ): ?RestOrderItemsAttributesTransfer {
@@ -121,12 +125,37 @@ class OrderDetailsAttributesMapper implements OrderDetailsAttributesMapperInterf
     }
 
     /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenseTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\RestOrderExpensesAttributesTransfer[] $restOrderExpensesAttributesTransfers
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\RestOrderExpensesAttributesTransfer[]
+     */
+    protected function mapExpenseTransfersToRestOrderExpensesAttributesTransfers(
+        ArrayObject $expenseTransfers,
+        ArrayObject $restOrderExpensesAttributesTransfers
+    ): ArrayObject {
+        foreach ($expenseTransfers as $expenseTransfer) {
+            $restOrderExpensesAttributesTransfer = $this
+                ->findRestOrderExpenseInAttributesTransfer($expenseTransfer, $restOrderExpensesAttributesTransfers);
+
+            if (!$restOrderExpensesAttributesTransfer) {
+                return $restOrderExpensesAttributesTransfers;
+            }
+
+            $restOrderExpensesAttributesTransfer
+                ->setIdShipment($expenseTransfer->getShipment()->getIdSalesShipment());
+        }
+
+        return $restOrderExpensesAttributesTransfers;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
      * @param \ArrayObject|\Generated\Shared\Transfer\RestOrderExpensesAttributesTransfer[] $restOrderExpensesAttributesTransfers
      *
      * @return \Generated\Shared\Transfer\RestOrderExpensesAttributesTransfer|null
      */
-    protected function findRestOrderExpensesAttributesTransferToExpenseTransferBy(
+    protected function findRestOrderExpenseInAttributesTransfer(
         ExpenseTransfer $expenseTransfer,
         ArrayObject $restOrderExpensesAttributesTransfers
     ): ?RestOrderExpensesAttributesTransfer {

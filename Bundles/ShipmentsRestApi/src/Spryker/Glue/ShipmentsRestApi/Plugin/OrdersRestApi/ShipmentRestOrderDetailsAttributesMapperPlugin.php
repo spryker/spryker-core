@@ -19,8 +19,8 @@ class ShipmentRestOrderDetailsAttributesMapperPlugin extends AbstractPlugin impl
 {
     /**
      * {@inheritDoc}
-     * - Maps `RestOrderDetailsAttributesTransfer.items` and `RestOrderDetailsAttributesTransfer.expenses`.
-     * - Updates `RestOrderItemsAttributesTransfer.idShipment` and `RestOrderExpensesAttributesTransfer.idShipment`.
+     * - Maps `RestOrderDetailsAttributesTransfer.items[*].idShipment` from `OrderTransfer.items[*].shipment.idSalesShipment`.
+     * - Maps `RestOrderDetailsAttributesTransfer.expenses[*].idShipment` from `OrderTransfer.expenses[*].shipment.idSalesShipment`.
      *
      * @api
      *
@@ -34,7 +34,7 @@ class ShipmentRestOrderDetailsAttributesMapperPlugin extends AbstractPlugin impl
         RestOrderDetailsAttributesTransfer $restOrderDetailsAttributesTransfer
     ): RestOrderDetailsAttributesTransfer {
         return $this->getFactory()
-            ->createOrderDetailsAttributesMapper()
+            ->createOrderMapper()
             ->mapOrderTransferToRestOrderDetailsAttributesTransfer(
                 $orderTransfer,
                 $restOrderDetailsAttributesTransfer

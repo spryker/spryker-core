@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ShipmentsRestApi\Processor\Creator;
+namespace Spryker\Glue\ShipmentsRestApi\Processor\Factory;
 
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\ShipmentsRestApi\Dependency\Service\ShipmentsRestApiToShipmentServiceInterface;

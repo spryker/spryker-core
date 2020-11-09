@@ -9,34 +9,32 @@ namespace Spryker\Glue\ShipmentsRestApi\Processor\Expander;
 
 use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\RestOrderShipmentsAttributesTransfer;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ShipmentsRestApi\Processor\Creator\ShipmentServiceFactoryInterface;
-use Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiConfig;
+use Spryker\Glue\ShipmentsRestApi\Processor\Factory\ShipmentServiceFactoryInterface;
+use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\OrderShipmentRestResponseBuilderInterface;
 
 class ShipmentsByOrderResourceRelationshipExpander implements ShipmentsByOrderResourceRelationshipExpanderInterface
 {
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
+     * @var \Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\OrderShipmentRestResponseBuilderInterface
      */
-    protected $restResourceBuilder;
+    protected $orderShipmentRestResponseBuilder;
 
     /**
-     * @var \Spryker\Glue\ShipmentsRestApi\Processor\Creator\ShipmentServiceFactoryInterface
+     * @var \Spryker\Glue\ShipmentsRestApi\Processor\Factory\ShipmentServiceFactoryInterface
      */
     protected $shipmentServiceFactory;
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\ShipmentsRestApi\Processor\Creator\ShipmentServiceFactoryInterface $shipmentServiceFactory
+     * @param \Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\OrderShipmentRestResponseBuilderInterface $orderShipmentRestResponseBuilder
+     * @param \Spryker\Glue\ShipmentsRestApi\Processor\Factory\ShipmentServiceFactoryInterface $shipmentServiceFactory
      */
     public function __construct(
-        RestResourceBuilderInterface $restResourceBuilder,
+        OrderShipmentRestResponseBuilderInterface $orderShipmentRestResponseBuilder,
         ShipmentServiceFactoryInterface $shipmentServiceFactory
     ) {
-        $this->restResourceBuilder = $restResourceBuilder;
+        $this->orderShipmentRestResponseBuilder = $orderShipmentRestResponseBuilder;
         $this->shipmentServiceFactory = $shipmentServiceFactory;
     }
 
@@ -49,13 +47,14 @@ class ShipmentsByOrderResourceRelationshipExpander implements ShipmentsByOrderRe
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
-            $itemTransfers = $this->findItemTransfersInPayload($resource);
-            if (!$itemTransfers) {
+            $orderTransfer = $this->findOrderTransfersInPayload($resource);
+            if (!$orderTransfer || !$this->isOrderUsingSplitShipments($orderTransfer)) {
                 continue;
             }
+
             $shipmentGroupTransfers = $this->shipmentServiceFactory
                 ->getShipmentService()
-                ->groupItemsByShipment($itemTransfers);
+                ->groupItemsByShipment($orderTransfer->getItems());
 
             $this->addOrderShipmentsResourceRelationships($shipmentGroupTransfers, $resource);
         }
@@ -72,26 +71,8 @@ class ShipmentsByOrderResourceRelationshipExpander implements ShipmentsByOrderRe
         RestResourceInterface $resource
     ): void {
         foreach ($shipmentGroupTransfers as $shipmentGroupTransfer) {
-            $shipmentTransfer = $shipmentGroupTransfer->getShipment();
-            $itemsTransfers = $shipmentGroupTransfer->getItems();
-
-            $itemUuids = [];
-            foreach ($itemsTransfers as $itemTransfer) {
-                $itemUuids[] = $itemTransfer->getUuid();
-            }
-
-            $restOrderShipmentsAttributesTransfer = (new RestOrderShipmentsAttributesTransfer())
-                ->setItemUuids($itemUuids)
-                ->setShippingAddress($shipmentTransfer->getShippingAddress())
-                ->setMethodName($shipmentTransfer->getMethod()->getName())
-                ->setCarrierName($shipmentTransfer->getCarrier()->getName())
-                ->setRequestedDeliveryDate($shipmentTransfer->getRequestedDeliveryDate() ?? null);
-
-            $orderShipmentsResource = $this->restResourceBuilder->createRestResource(
-                ShipmentsRestApiConfig::RESOURCE_ORDER_SHIPMENTS,
-                (string)$shipmentTransfer->getIdSalesShipment(),
-                $restOrderShipmentsAttributesTransfer
-            );
+            $orderShipmentsResource = $this->orderShipmentRestResponseBuilder
+                ->createOrderShipmentRestResource($shipmentGroupTransfer);
 
             $resource->addRelationship($orderShipmentsResource);
         }
@@ -100,23 +81,25 @@ class ShipmentsByOrderResourceRelationshipExpander implements ShipmentsByOrderRe
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
      *
-     * @return \ArrayObject|null
+     * @return \Generated\Shared\Transfer\OrderTransfer|null
      */
-    protected function findItemTransfersInPayload(RestResourceInterface $resource): ?ArrayObject
+    protected function findOrderTransfersInPayload(RestResourceInterface $resource): ?OrderTransfer
     {
         $orderTransfer = $resource->getPayload();
-        if (
-            !$orderTransfer || !($orderTransfer instanceof OrderTransfer) ||
-            $orderTransfer->getShippingAddress()
-        ) {
+        if (!$orderTransfer || !($orderTransfer instanceof OrderTransfer)) {
             return null;
         }
 
-        $itemTransfers = $orderTransfer->getItems();
-        if (!$itemTransfers->count()) {
-            return null;
-        }
+        return $orderTransfer;
+    }
 
-        return $itemTransfers;
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return bool
+     */
+    protected function isOrderUsingSplitShipments(OrderTransfer $orderTransfer): bool
+    {
+        return (!$orderTransfer->getShippingAddress() && !$orderTransfer->getIdShipmentMethod());
     }
 }
