@@ -37,7 +37,7 @@ class ShipmentsByCheckoutDataResourceRelationshipPlugin extends AbstractPlugin i
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
-        if (!$this->isApplicable($restRequest)) {
+        if (!$this->isSingleShipmentRequest($restRequest)) {
             return;
         }
 
@@ -63,7 +63,7 @@ class ShipmentsByCheckoutDataResourceRelationshipPlugin extends AbstractPlugin i
      *
      * @return bool
      */
-    protected function isApplicable(RestRequestInterface $restRequest): bool
+    protected function isSingleShipmentRequest(RestRequestInterface $restRequest): bool
     {
         $restCheckoutRequestAttributesTransfer = $restRequest->getResource()->getAttributes();
         if (

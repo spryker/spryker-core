@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestAddressTransfer;
 
 /**
- * Plugin interface is used to provide address depends on the strategy.
+ * Plugin interface is used to provide address depending on the strategy.
  *
  * Runs during `/checkout-data` and `/checkout` requests.
  */
@@ -32,7 +32,7 @@ interface AddressProviderStrategyPluginInterface
 
     /**
      * Specification:
-     * - Provides address depends on the strategy.
+     * - Provides address depending on the strategy.
      *
      * @api
      *

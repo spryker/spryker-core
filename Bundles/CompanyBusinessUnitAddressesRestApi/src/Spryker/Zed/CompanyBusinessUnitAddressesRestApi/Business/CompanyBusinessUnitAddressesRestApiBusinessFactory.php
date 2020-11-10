@@ -11,8 +11,8 @@ use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Expander\CheckoutDa
 use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Expander\CheckoutDataExpanderInterface;
 use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Mapper\CompanyBusinessUnitAddressQuoteMapper;
 use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Mapper\CompanyBusinessUnitAddressQuoteMapperInterface;
-use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Provider\CompanyBusinessUnitAddressProvider;
-use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Provider\CompanyBusinessUnitAddressProviderInterface;
+use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Reader\CompanyBusinessUnitAddressReader;
+use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Reader\CompanyBusinessUnitAddressReaderInterface;
 use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\CompanyBusinessUnitAddressesRestApiDependencyProvider;
 use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Dependency\Facade\CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -35,15 +35,15 @@ class CompanyBusinessUnitAddressesRestApiBusinessFactory extends AbstractBusines
      */
     public function createCompanyBusinessUnitAddressQuoteMapper(): CompanyBusinessUnitAddressQuoteMapperInterface
     {
-        return new CompanyBusinessUnitAddressQuoteMapper($this->createCompanyBusinessUnitAddressProvider());
+        return new CompanyBusinessUnitAddressQuoteMapper($this->createCompanyBusinessUnitAddressReader());
     }
 
     /**
-     * @return \Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Provider\CompanyBusinessUnitAddressProviderInterface
+     * @return \Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Reader\CompanyBusinessUnitAddressReaderInterface
      */
-    public function createCompanyBusinessUnitAddressProvider(): CompanyBusinessUnitAddressProviderInterface
+    public function createCompanyBusinessUnitAddressReader(): CompanyBusinessUnitAddressReaderInterface
     {
-        return new CompanyBusinessUnitAddressProvider($this->getCompanyUnitAddressFacade());
+        return new CompanyBusinessUnitAddressReader($this->getCompanyUnitAddressFacade());
     }
 
     /**

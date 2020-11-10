@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CustomersRestApi\Business\Provider;
+namespace Spryker\Zed\CustomersRestApi\Business\Reader;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestAddressTransfer;
 use Spryker\Zed\CustomersRestApi\Dependency\Facade\CustomersRestApiToCustomerFacadeInterface;
 
-class CustomerAddressProvider implements CustomerAddressProviderInterface
+class CustomerAddressReader implements CustomerAddressReaderInterface
 {
     /**
      * @var \Spryker\Zed\CustomersRestApi\Dependency\Facade\CustomersRestApiToCustomerFacadeInterface
@@ -33,7 +33,7 @@ class CustomerAddressProvider implements CustomerAddressProviderInterface
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    public function provideCustomerAddress(
+    public function getCustomerAddress(
         RestAddressTransfer $restAddressTransfer,
         QuoteTransfer $quoteTransfer
     ): AddressTransfer {

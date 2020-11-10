@@ -59,7 +59,7 @@ class ProvideCustomerAddressTest extends Unit
 
         // Act
         $addressTransfer = $this->tester->getFacadeMock($customersRestApiBusinessFactoryMock)
-            ->provideCustomerAddress($restAddressTransfer, $quoteTransfer);
+            ->getCustomerAddress($restAddressTransfer, $quoteTransfer);
 
         // Assert
         $this->assertSame($addressesTransfer->getAddresses()->offsetGet(1), $addressTransfer);
@@ -85,7 +85,7 @@ class ProvideCustomerAddressTest extends Unit
 
         // Act
         $addressTransfer = $this->tester->getFacadeMock($customersRestApiBusinessFactoryMock)
-            ->provideCustomerAddress($restAddressTransfer, $quoteTransfer);
+            ->getCustomerAddress($restAddressTransfer, $quoteTransfer);
 
         // Assert
         $this->assertSame($restAddressTransfer->getAddress1(), $addressTransfer->getAddress1());
@@ -111,7 +111,7 @@ class ProvideCustomerAddressTest extends Unit
 
         // Act
         $addressTransfer = $this->tester->getFacadeMock($customersRestApiBusinessFactoryMock)
-            ->provideCustomerAddress($restAddressTransfer, $quoteTransfer);
+            ->getCustomerAddress($restAddressTransfer, $quoteTransfer);
 
         // Assert
         $this->assertSame($restAddressTransfer->getAddress1(), $addressTransfer->getAddress1());

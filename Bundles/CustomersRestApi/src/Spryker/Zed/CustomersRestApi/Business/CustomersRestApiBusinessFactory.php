@@ -13,8 +13,8 @@ use Spryker\Zed\CustomersRestApi\Business\Addresses\Mapper\AddressQuoteMapper;
 use Spryker\Zed\CustomersRestApi\Business\Addresses\Mapper\AddressQuoteMapperInterface;
 use Spryker\Zed\CustomersRestApi\Business\Mapper\CustomerQuoteMapper;
 use Spryker\Zed\CustomersRestApi\Business\Mapper\CustomerQuoteMapperInterface;
-use Spryker\Zed\CustomersRestApi\Business\Provider\CustomerAddressProvider;
-use Spryker\Zed\CustomersRestApi\Business\Provider\CustomerAddressProviderInterface;
+use Spryker\Zed\CustomersRestApi\Business\Reader\CustomerAddressReader;
+use Spryker\Zed\CustomersRestApi\Business\Reader\CustomerAddressReaderInterface;
 use Spryker\Zed\CustomersRestApi\CustomersRestApiDependencyProvider;
 use Spryker\Zed\CustomersRestApi\Dependency\Facade\CustomersRestApiToCustomerFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -50,11 +50,11 @@ class CustomersRestApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CustomersRestApi\Business\Provider\CustomerAddressProviderInterface
+     * @return \Spryker\Zed\CustomersRestApi\Business\Reader\CustomerAddressReaderInterface
      */
-    public function createCustomerAddressProvider(): CustomerAddressProviderInterface
+    public function createCustomerAddressReader(): CustomerAddressReaderInterface
     {
-        return new CustomerAddressProvider($this->getCustomerFacade());
+        return new CustomerAddressReader($this->getCustomerFacade());
     }
 
     /**

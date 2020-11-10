@@ -52,8 +52,9 @@ interface CompanyBusinessUnitAddressesRestApiFacadeInterface
 
     /**
      * Specification:
-     * - Finds company business unit address based by provided uuid in `RestAddressTransfer.idCompanyBusinessUnitAddress`.
+     * - Finds company business unit address based on UUID provided in `RestAddressTransfer.idCompanyBusinessUnitAddress`.
      * - Returns `AddressTransfer` filled with company business unit address information if it was found.
+     * - If company business unit address was found then address information provided in `RestAddressTransfer` will be skipped.
      * - Returns `AddressTransfer` filled with attributes from `RestAddressTransfer` otherwise.
      *
      * @api
@@ -63,7 +64,7 @@ interface CompanyBusinessUnitAddressesRestApiFacadeInterface
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    public function provideCompanyBusinessUnitAddress(
+    public function getCompanyBusinessUnitAddress(
         RestAddressTransfer $restAddressTransfer,
         QuoteTransfer $quoteTransfer
     ): AddressTransfer;

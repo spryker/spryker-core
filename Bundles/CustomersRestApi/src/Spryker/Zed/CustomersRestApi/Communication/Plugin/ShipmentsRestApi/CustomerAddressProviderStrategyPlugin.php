@@ -36,8 +36,9 @@ class CustomerAddressProviderStrategyPlugin extends AbstractPlugin implements Ad
 
     /**
      * {@inheritDoc}
-     * - Finds customer address based by provided uuid in `RestAddressTransfer.id`.
+     * - Finds customer address based on the UUID provided in `RestAddressTransfer.id`.
      * - Returns customer address if it was found.
+     * - If customer address was found then address information provided in `RestAddressTransfer` will be skipped.
      * - Returns `AddressTransfer` filled with attributes from `RestAddressTransfer` otherwise.
      *
      * @api
@@ -51,6 +52,6 @@ class CustomerAddressProviderStrategyPlugin extends AbstractPlugin implements Ad
         RestAddressTransfer $restAddressTransfer,
         QuoteTransfer $quoteTransfer
     ): AddressTransfer {
-        return $this->getFacade()->provideCustomerAddress($restAddressTransfer, $quoteTransfer);
+        return $this->getFacade()->getCustomerAddress($restAddressTransfer, $quoteTransfer);
     }
 }

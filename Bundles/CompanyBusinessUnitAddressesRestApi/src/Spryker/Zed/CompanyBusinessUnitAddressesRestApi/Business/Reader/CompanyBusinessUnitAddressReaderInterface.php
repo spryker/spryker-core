@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Provider;
+namespace Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Reader;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestAddressTransfer;
 
-interface CompanyBusinessUnitAddressProviderInterface
+interface CompanyBusinessUnitAddressReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\RestAddressTransfer $restAddressTransfer
@@ -19,7 +19,7 @@ interface CompanyBusinessUnitAddressProviderInterface
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    public function provideCompanyBusinessUnitAddress(
+    public function getCompanyBusinessUnitAddress(
         RestAddressTransfer $restAddressTransfer,
         QuoteTransfer $quoteTransfer
     ): AddressTransfer;

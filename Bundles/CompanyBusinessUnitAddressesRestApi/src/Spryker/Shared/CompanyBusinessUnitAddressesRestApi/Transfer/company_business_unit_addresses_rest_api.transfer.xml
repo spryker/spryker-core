@@ -24,7 +24,6 @@
     </transfer>
 
     <transfer name="CompanyUnitAddress">
-        <property name="uuid" type="string"/>
         <property name="fkCompany" type="int"/>
         <property name="idCompanyUnitAddress" type="int"/>
         <property name="company" type="Company"/>

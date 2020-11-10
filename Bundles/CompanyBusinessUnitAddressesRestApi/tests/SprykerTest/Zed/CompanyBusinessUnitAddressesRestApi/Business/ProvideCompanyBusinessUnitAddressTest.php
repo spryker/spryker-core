@@ -56,7 +56,7 @@ class ProvideCompanyBusinessUnitAddressTest extends Unit
 
         // Act
         $addressTransfer = $this->tester->getFacadeMock($companyBusinessUnitAddressesRestApiBusinessFactoryMock)
-            ->provideCompanyBusinessUnitAddress(
+            ->getCompanyBusinessUnitAddress(
                 $restAddressTransfer,
                 (new QuoteBuilder())->withCustomer()->build()
             );
@@ -88,7 +88,7 @@ class ProvideCompanyBusinessUnitAddressTest extends Unit
 
         // Act
         $addressTransfer = $this->tester->getFacadeMock($companyBusinessUnitAddressesRestApiBusinessFactoryMock)
-            ->provideCompanyBusinessUnitAddress(
+            ->getCompanyBusinessUnitAddress(
                 $restAddressTransfer,
                 (new QuoteBuilder())->withCustomer()->build()
             );

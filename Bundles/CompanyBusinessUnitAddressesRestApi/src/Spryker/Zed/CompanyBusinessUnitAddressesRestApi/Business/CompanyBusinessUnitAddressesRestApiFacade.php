@@ -70,12 +70,12 @@ class CompanyBusinessUnitAddressesRestApiFacade extends AbstractFacade implement
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    public function provideCompanyBusinessUnitAddress(
+    public function getCompanyBusinessUnitAddress(
         RestAddressTransfer $restAddressTransfer,
         QuoteTransfer $quoteTransfer
     ): AddressTransfer {
         return $this->getFactory()
-            ->createCompanyBusinessUnitAddressProvider()
-            ->provideCompanyBusinessUnitAddress($restAddressTransfer, $quoteTransfer);
+            ->createCompanyBusinessUnitAddressReader()
+            ->getCompanyBusinessUnitAddress($restAddressTransfer, $quoteTransfer);
     }
 }

@@ -77,12 +77,12 @@ class CustomersRestApiFacade extends AbstractFacade implements CustomersRestApiF
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    public function provideCustomerAddress(
+    public function getCustomerAddress(
         RestAddressTransfer $restAddressTransfer,
         QuoteTransfer $quoteTransfer
     ): AddressTransfer {
         return $this->getFactory()
-            ->createCustomerAddressProvider()
-            ->provideCustomerAddress($restAddressTransfer, $quoteTransfer);
+            ->createCustomerAddressReader()
+            ->getCustomerAddress($restAddressTransfer, $quoteTransfer);
     }
 }

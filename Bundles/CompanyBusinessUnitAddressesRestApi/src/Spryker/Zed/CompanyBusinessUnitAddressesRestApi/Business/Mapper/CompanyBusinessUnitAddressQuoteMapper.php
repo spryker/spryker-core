@@ -10,21 +10,21 @@ namespace Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Mapper;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
-use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Provider\CompanyBusinessUnitAddressProviderInterface;
+use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Reader\CompanyBusinessUnitAddressReaderInterface;
 
 class CompanyBusinessUnitAddressQuoteMapper implements CompanyBusinessUnitAddressQuoteMapperInterface
 {
     /**
-     * @var \Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Provider\CompanyBusinessUnitAddressProviderInterface
+     * @var \Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Reader\CompanyBusinessUnitAddressReaderInterface
      */
-    protected $companyBusinessUnitAddressProvider;
+    protected $companyBusinessUnitAddressReader;
 
     /**
-     * @param \Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Provider\CompanyBusinessUnitAddressProviderInterface $companyBusinessUnitAddressProvider
+     * @param \Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Reader\CompanyBusinessUnitAddressReaderInterface $companyBusinessUnitAddressReader
      */
-    public function __construct(CompanyBusinessUnitAddressProviderInterface $companyBusinessUnitAddressProvider)
+    public function __construct(CompanyBusinessUnitAddressReaderInterface $companyBusinessUnitAddressReader)
     {
-        $this->companyBusinessUnitAddressProvider = $companyBusinessUnitAddressProvider;
+        $this->companyBusinessUnitAddressReader = $companyBusinessUnitAddressReader;
     }
 
     /**
@@ -58,8 +58,8 @@ class CompanyBusinessUnitAddressQuoteMapper implements CompanyBusinessUnitAddres
             return $quoteTransfer;
         }
 
-        $addressTransfer = $this->companyBusinessUnitAddressProvider
-            ->provideCompanyBusinessUnitAddress($restAddressTransfer, $quoteTransfer);
+        $addressTransfer = $this->companyBusinessUnitAddressReader
+            ->getCompanyBusinessUnitAddress($restAddressTransfer, $quoteTransfer);
 
         $quoteTransfer->setBillingAddress($addressTransfer);
 
@@ -81,8 +81,8 @@ class CompanyBusinessUnitAddressQuoteMapper implements CompanyBusinessUnitAddres
             return $quoteTransfer;
         }
 
-        $addressTransfer = $this->companyBusinessUnitAddressProvider
-            ->provideCompanyBusinessUnitAddress($restAddressTransfer, $quoteTransfer);
+        $addressTransfer = $this->companyBusinessUnitAddressReader
+            ->getCompanyBusinessUnitAddress($restAddressTransfer, $quoteTransfer);
 
         $quoteTransfer = $this->setItemLevelShippingAddresses($quoteTransfer, $addressTransfer);
 

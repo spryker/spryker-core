@@ -62,8 +62,9 @@ interface CustomersRestApiFacadeInterface
 
     /**
      * Specification:
-     * - Finds customer address based by provided uuid in `RestAddressTransfer.id`.
+     * - Finds customer address based on the UUID provided in `RestAddressTransfer.id`.
      * - Returns customer address if it was found.
+     * - If customer address was found then address information provided in `RestAddressTransfer` will be skipped.
      * - Returns `AddressTransfer` filled with attributes from `RestAddressTransfer` otherwise.
      *
      * @api
@@ -73,7 +74,7 @@ interface CustomersRestApiFacadeInterface
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    public function provideCustomerAddress(
+    public function getCustomerAddress(
         RestAddressTransfer $restAddressTransfer,
         QuoteTransfer $quoteTransfer
     ): AddressTransfer;

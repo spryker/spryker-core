@@ -20,6 +20,7 @@ class MerchantShipmentQuoteExpanderPlugin extends AbstractPlugin implements Quot
      * {@inheritDoc}
      * - Expects `quote.items.shipment` to be set.
      * - Expands `quote.items.shipment` transfer object with merchant reference.
+     * - Uses `merchantReference` from `quote.items`.
      *
      * @api
      *
