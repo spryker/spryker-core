@@ -9,6 +9,7 @@ namespace Spryker\Zed\Category\Business\Model;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Category\Business\Exception\MissingCategoryException;
 use Spryker\Zed\Category\Business\Model\Category\CategoryInterface;
@@ -224,6 +225,12 @@ class Category
         $this->categoryExtraParents->update($categoryTransfer);
 
         $this->triggerEvent(CategoryEvents::CATEGORY_AFTER_UPDATE, $categoryTransfer);
+
+        // Added as an CATEGORY_AFTER_UPDATE event alternative with event transfers support.
+        $this->eventFacade->trigger(
+            CategoryEvents::CATEGORY_AFTER_PUBLISH_UPDATE,
+            (new EventEntityTransfer())->setId($categoryTransfer->getIdCategory())
+        );
 
         $this->categoryPluginExecutor->executePostUpdatePlugins($categoryTransfer);
     }
