@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.3",
     "spryker/kernel": "^3.30.0",
-    "spryker/user": "^3.12.0",
+    "spryker/user": "^3.0.0",
     "spryker/user-password-reset-extension": "^0.1.0",
     "spryker/util-text": "^1.2.2"
   },
