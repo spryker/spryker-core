@@ -138,7 +138,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     protected const POSITIONS = ['logout', 'pre_auth', 'guard', 'form', 'http', 'remember_me', 'anonymous', 'user_session_handler'];
 
     /**
-     * @var string[]
+     * @var string[][]
      */
     protected $securityRoutes = [];
 
@@ -942,7 +942,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     {
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_FORM_PROTO, $container->protect(function ($name, $options) use ($container) {
             return function () use ($container, $name, $options) {
-                $this->addSecurityRoute('match', $options['check_path'] ?? '/login_check');
+                $this->addSecurityRoute($options['check_path'] ?? '/login_check');
 
                 $class = $options['listener_class'] ?? UsernamePasswordFormAuthenticationListener::class;
 
@@ -1085,7 +1085,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     {
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_LOGOUT_PROTO, $container->protect(function ($name, $options) use ($container) {
             return function () use ($container, $name, $options) {
-                $this->addSecurityRoute('get', $options['logout_path'] ?? '/logout');
+                $this->addSecurityRoute($options['logout_path'] ?? '/logout');
 
                 $listener = new LogoutListener(
                     $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
@@ -1385,13 +1385,12 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     }
 
     /**
-     * @param string $method
      * @param string $routeNameOrUrl
      * @param string|null $routeName
      *
      * @return void
      */
-    protected function addSecurityRoute(string $method, string $routeNameOrUrl, ?string $routeName = null): void
+    protected function addSecurityRoute(string $routeNameOrUrl, ?string $routeName = null): void
     {
         $url = $this->buildUrl($routeNameOrUrl);
         $routeName = $this->buildRouteName($routeNameOrUrl, $routeName);

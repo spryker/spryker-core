@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface
 {
     /**
-     * @var string|null
+     * @var string
      */
     protected $username;
 
@@ -33,7 +33,9 @@ class User implements UserInterface
      */
     public function __construct(UserTransfer $userTransfer, array $roles = [])
     {
-        $this->username = $userTransfer->getUsername();
+        /** @var string $username */
+        $username = $userTransfer->requireUsername()->getUsername();
+        $this->username = $username;
         $this->password = $userTransfer->getPassword();
         $this->roles = $roles;
     }
@@ -55,7 +57,7 @@ class User implements UserInterface
     }
 
     /**
-     * @return string|null
+     * @return string
      */
     public function getUsername()
     {
