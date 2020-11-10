@@ -8,7 +8,7 @@
     "spryker/application-extension": "^1.0.0",
     "spryker/kernel": "^3.52.0",
     "spryker/security-extension": "^1.0.0",
-    "spryker/symfony": "^3.3.3",
+    "spryker/symfony": "^3.5.0",
     "spryker/validator-extension": "^1.0.0"
   },
   "require-dev": {
@@ -31,7 +31,8 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Yves\\Security\\Helper\\": "tests/SprykerTest/Yves/Security/_support/Helper/"
+      "SprykerTest\\Yves\\Security\\Helper\\": "tests/SprykerTest/Yves/Security/_support/Helper/",
+      "SprykerTest\\Zed\\Security\\Helper\\": "tests/SprykerTest/Zed/Security/_support/Helper/"
     }
   },
   "autoload-dev": {

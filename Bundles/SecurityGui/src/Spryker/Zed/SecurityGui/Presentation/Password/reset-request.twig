@@ -1,0 +1,13 @@
+{% extends '@SecurityGui/Layout/layout.twig' %}
+
+{% form_theme form '@SecurityGui/Layout/form.twig' %}
+
+{% block content %}
+
+    {% include '@SecurityGui/Partial/form-message.twig' %}
+
+    {{ form(form) }}
+    <div class="form-group text-center small">
+        <a href="/security-gui/login">{{ 'Login' | trans }}</a>
+    </div>
+{% endblock %}

@@ -1,6 +1,0 @@
-{
-  "include": {
-    "spryker/messenger": "Provides messenger func to the twig.",
-    "spryker/zed-ui": "If you want to use Zed Ui layout templates."
-  }
-}
