@@ -123,7 +123,7 @@ class ProductConfiguratorCheckSumResponseProcessor implements ProductConfigurato
         ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer,
         array $configuratorResponseData
     ): ProductConfiguratorResponseTransfer {
-        $productConfigurationInstanceTransfer = $productConfiguratorResponseTransfer->getProductConfigurationInstance();
+        $productConfigurationInstanceTransfer = $productConfiguratorResponseTransfer->getProductConfigurationInstanceOrFail();
 
         $productConfigurationInstanceTransfer = $this->productConfigurationInstancePriceMapper
             ->mapConfiguratorResponseDataPricesToProductConfigurationInstancePrices(

@@ -175,34 +175,34 @@ class PriceProductFilter implements PriceProductFilterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $cartChangeItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return int
      */
-    protected function getItemTotalQuantity(ItemTransfer $cartChangeItemTransfer, CartChangeTransfer $cartChangeTransfer): int
+    protected function getItemTotalQuantity(ItemTransfer $itemTransfer, CartChangeTransfer $cartChangeTransfer): int
     {
-        $quantity = $this->executeCartItemQuantityCounterStrategyPlugin($cartChangeItemTransfer, $cartChangeTransfer);
+        $quantity = $this->executeCartItemQuantityCounterStrategyPlugins($itemTransfer, $cartChangeTransfer);
 
         if ($quantity !== static::ZERO_QUANTITY_VALUE) {
             return $quantity;
         }
 
-        foreach ($cartChangeTransfer->getQuote()->getItems() as $itemTransfer) {
-            if ($itemTransfer->getSku() === $cartChangeItemTransfer->getSku()) {
-                $quantity += $itemTransfer->getQuantity();
+        foreach ($cartChangeTransfer->getQuote()->getItems() as $quoteItemTransfer) {
+            if ($quoteItemTransfer->getSku() === $itemTransfer->getSku()) {
+                $quantity += $quoteItemTransfer->getQuantity();
             }
         }
 
-        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getSku() === $cartChangeItemTransfer->getSku()) {
+        foreach ($cartChangeTransfer->getItems() as $cartChangeItemTransfer) {
+            if ($cartChangeItemTransfer->getSku() === $itemTransfer->getSku()) {
                 if ($cartChangeTransfer->getOperation() === PriceCartConnectorConfig::OPERATION_REMOVE) {
-                    $quantity -= $itemTransfer->getQuantity();
+                    $quantity -= $cartChangeItemTransfer->getQuantity();
 
                     continue;
                 }
 
-                $quantity += $itemTransfer->getQuantity();
+                $quantity += $cartChangeItemTransfer->getQuantity();
             }
         }
 
@@ -210,19 +210,19 @@ class PriceProductFilter implements PriceProductFilterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $cartChangeItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return int
      */
-    protected function executeCartItemQuantityCounterStrategyPlugin(
-        ItemTransfer $cartChangeItemTransfer,
+    protected function executeCartItemQuantityCounterStrategyPlugins(
+        ItemTransfer $itemTransfer,
         CartChangeTransfer $cartChangeTransfer
     ): int {
         foreach ($this->cartItemQuantityCounterStrategyPlugins as $cartItemQuantityCounterStrategyPlugin) {
-            if ($cartItemQuantityCounterStrategyPlugin->isApplicable($cartChangeTransfer, $cartChangeItemTransfer)) {
+            if ($cartItemQuantityCounterStrategyPlugin->isApplicable($cartChangeTransfer, $itemTransfer)) {
                 return $cartItemQuantityCounterStrategyPlugin
-                    ->countCartItemQuantity($cartChangeTransfer, $cartChangeItemTransfer)->getQuantity();
+                    ->countCartItemQuantity($cartChangeTransfer, $itemTransfer)->getQuantity();
             }
         }
 

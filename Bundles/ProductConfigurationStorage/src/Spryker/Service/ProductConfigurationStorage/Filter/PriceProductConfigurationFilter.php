@@ -8,6 +8,7 @@
 namespace Spryker\Service\ProductConfigurationStorage\Filter;
 
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 
 class PriceProductConfigurationFilter implements PriceProductConfigurationFilterInterface
 {
@@ -46,9 +47,8 @@ class PriceProductConfigurationFilter implements PriceProductConfigurationFilter
      */
     protected function filterOutProductConfigurationPrices(array $priceProductTransfers): array
     {
-        return array_filter($priceProductTransfers, function ($priceProductTransfer) {
-            /** @var \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer */
-            return $priceProductTransfer->getPriceDimension()->getProductConfigurationConfiguratorKey() !== null;
+        return array_filter($priceProductTransfers, function (PriceProductTransfer $priceProductTransfer) {
+            return $priceProductTransfer->getPriceDimension()->getProductConfigurationConfiguratorKey() === null;
         });
     }
 
@@ -63,7 +63,7 @@ class PriceProductConfigurationFilter implements PriceProductConfigurationFilter
         PriceProductFilterTransfer $priceProductFilterTransfer
     ): array {
         return array_filter($priceProductTransfers, function ($priceProductTransfer) use ($priceProductFilterTransfer) {
-            if (!$priceProductTransfer->getPriceDimension() || !$priceProductFilterTransfer->getPriceDimension()) {
+            if (!$priceProductTransfer->getPriceDimension()) {
                 return false;
             }
 

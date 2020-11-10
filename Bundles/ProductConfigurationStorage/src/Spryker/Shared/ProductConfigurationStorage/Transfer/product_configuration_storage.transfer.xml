@@ -41,8 +41,8 @@
 
     <transfer name="PriceProductFilter">
         <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
-        <property name="quantity" type="PriceProductDimension"/>
-        <property name="priceDimension" type="int"/>
+        <property name="quantity" type="int"/>
+        <property name="priceDimension" type="PriceProductDimension"/>
         <property name="sku" type="string"/>
     </transfer>
 

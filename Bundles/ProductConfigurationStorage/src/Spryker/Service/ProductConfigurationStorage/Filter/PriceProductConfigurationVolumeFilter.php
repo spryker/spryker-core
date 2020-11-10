@@ -17,14 +17,14 @@ class PriceProductConfigurationVolumeFilter implements PriceProductConfiguration
     /**
      * @var \Spryker\Service\ProductConfigurationStorage\Filter\PriceProductConfigurationFilterInterface
      */
-    protected $configurationFilter;
+    protected $priceProductConfigurationFilter;
 
     /**
-     * @param \Spryker\Service\ProductConfigurationStorage\Filter\PriceProductConfigurationFilterInterface $configurationFilter
+     * @param \Spryker\Service\ProductConfigurationStorage\Filter\PriceProductConfigurationFilterInterface $priceProductConfigurationFilter
      */
-    public function __construct(PriceProductConfigurationFilterInterface $configurationFilter)
+    public function __construct(PriceProductConfigurationFilterInterface $priceProductConfigurationFilter)
     {
-        $this->configurationFilter = $configurationFilter;
+        $this->priceProductConfigurationFilter = $priceProductConfigurationFilter;
     }
 
     /**
@@ -35,7 +35,7 @@ class PriceProductConfigurationVolumeFilter implements PriceProductConfiguration
      */
     public function filterProductConfigurationVolumePrices(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array
     {
-        $this->configurationFilter
+        $priceProductTransfers = $this->priceProductConfigurationFilter
             ->filterProductConfigurationPrices($priceProductTransfers, $priceProductFilterTransfer);
 
         if ($priceProductFilterTransfer->getQuantity() <= static::SINGLE_ITEM_QUANTITY) {

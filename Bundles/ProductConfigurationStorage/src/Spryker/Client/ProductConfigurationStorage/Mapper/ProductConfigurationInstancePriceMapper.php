@@ -79,13 +79,13 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
                 $priceData
             );
 
-            $priceProductTransfer->getPriceDimension()->setProductConfigurationInstance($productConfigurationInstanceTransfer);
             $priceProductTransfer->setGroupKey($this->priceProductService->buildPriceProductGroupKey($priceProductTransfer));
-
             $priceProductTransfers[] = $priceProductTransfer;
         }
 
         $priceProductTransfers = $this->executeProductConfigurationStoragePriceExtractorPlugins($priceProductTransfers);
+
+        $priceProductTransfers = $this->fillUpPriceDimensionWithProductConfigurationInstance($priceProductTransfers, $productConfigurationInstanceTransfer);
 
         $productConfigurationInstanceTransfer->setPrices(new ArrayObject($priceProductTransfers));
 
@@ -140,5 +140,22 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
         }
 
         return array_merge($priceProductTransfers, ...$extractedPriceProductTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function fillUpPriceDimensionWithProductConfigurationInstance(
+        array $priceProductTransfers,
+        ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
+    ): array {
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            $priceProductTransfer->getPriceDimension()->setProductConfigurationInstance(clone $productConfigurationInstanceTransfer);
+        }
+
+        return $priceProductTransfers;
     }
 }
