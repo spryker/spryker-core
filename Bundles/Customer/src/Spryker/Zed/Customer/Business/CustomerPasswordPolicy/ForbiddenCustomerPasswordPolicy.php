@@ -15,9 +15,14 @@ class ForbiddenCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
 {
     protected const PASSWORD_POLICY_ERROR_FORBIDDEN = 'customer.password.error.forbidden';
 
-    /** @var string[] */
+    /**
+     * @var string
+     */
     protected $forbiddenCharactersList;
 
+    /**
+     * @param \Spryker\Zed\Customer\CustomerConfig $customerConfig
+     */
     public function __construct(CustomerConfig $customerConfig)
     {
         $this->forbiddenCharactersList = $customerConfig->getCustomerPasswordForbiddenCharacters();
@@ -43,5 +48,7 @@ class ForbiddenCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
 
             return $customerResponseTransfer;
         }
+
+        return $customerResponseTransfer;
     }
 }

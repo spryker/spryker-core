@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Customer\Business\CustomerPasswordPolicy;
 
-
 use Generated\Shared\Transfer\CustomerErrorTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Spryker\Zed\Customer\CustomerConfig;
@@ -16,22 +15,29 @@ class CustomerPasswordPolicyValidator implements CustomerPasswordPolicyValidator
 {
     protected const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_BLACK_LIST = 'customer.password.error.black_list';
 
-
+    /**
+     * @var \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface[]
+     */
     protected $customerPasswordPolicies;
 
-    /** @var string[] */
+    /**
+     * @var string[]
+     */
     protected $customerPasswordWhitelist = [];
 
-    /** @var string[] */
+    /**
+     * @var string[]
+     */
     protected $customerPasswordBlacklist = [];
 
-
+    /**
+     * @param \Spryker\Zed\Customer\CustomerConfig $customerConfig
+     * @param \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface[] $customerPasswordPolicies
+     */
     public function __construct(CustomerConfig $customerConfig, array $customerPasswordPolicies)
     {
-
         $this->customerPasswordWhitelist = $customerConfig->getCustomerPasswordWhiteList();
         $this->customerPasswordBlacklist = $customerConfig->getCustomerPasswordBlackList();
-
         $this->customerPasswordPolicies = $customerPasswordPolicies;
     }
 
@@ -50,9 +56,7 @@ class CustomerPasswordPolicyValidator implements CustomerPasswordPolicyValidator
         if (in_array($password, $this->customerPasswordBlacklist)) {
             return $this->addPasswordInBlacklistError($customerResponseTransfer);
         }
-
         foreach ($this->customerPasswordPolicies as $customerPasswordPolicy) {
-
         }
 
         return $customerResponseTransfer;

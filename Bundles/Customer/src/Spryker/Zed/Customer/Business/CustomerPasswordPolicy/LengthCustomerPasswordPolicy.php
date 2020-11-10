@@ -17,12 +17,19 @@ class LengthCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
 
     protected const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_MAX = 'customer.password.error.max_length';
 
-    /** @var int */
+    /**
+     * @var int
+     */
     protected $customerPasswordMaxLength;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     protected $customerPasswordMinLength;
 
+    /**
+     * @param \Spryker\Zed\Customer\CustomerConfig $customerConfig
+     */
     public function __construct(CustomerConfig $customerConfig)
     {
         $this->customerPasswordMaxLength = $customerConfig->getCustomerPasswordMaxLength();
@@ -50,10 +57,10 @@ class LengthCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
     }
 
     /**
-     * @param CustomerResponseTransfer $customerResponseTransfer
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
      * @param string $errorMessage
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     protected function addError(CustomerResponseTransfer $customerResponseTransfer, string $errorMessage): CustomerResponseTransfer
     {

@@ -7,13 +7,20 @@
 
 namespace Spryker\Zed\Customer\Business\CustomerPasswordPolicy;
 
-
 use Generated\Shared\Transfer\CustomerErrorTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Spryker\Zed\Customer\CustomerConfig;
 
 class CharacterSetCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
 {
+    public const PASSWORD_POLICY_CHARACTER_SET_UPPER_CASE_PATTERN = '/\p{Lu}+/';
+
+    public const PASSWORD_POLICY_CHARACTER_SET_LOWER_CASE_PATTERN = '/\p{Ll}+/';
+
+    public const PASSWORD_POLICY_CHARACTER_SET_SPECIAL_PATTERN = '/[^(\p{N}|\p{L})+]/';
+
+    public const PASSWORD_POLICY_CHARACTER_SET_DIGIT_PATTERN = '/\p{N}+/';
+
     public const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_DIGIT = 'customer.password.error.digit';
 
     public const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_UPPER_CASE = 'customer.password.error.upper_case';
@@ -22,7 +29,9 @@ class CharacterSetCustomerPasswordPolicy implements CustomerPasswordPolicyInterf
 
     public const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SPECIAL = 'customer.password.error.special';
 
-    /** @var string[][] */
+    /**
+     * @var string[]
+     */
     protected $config;
 
     /**
@@ -35,9 +44,9 @@ class CharacterSetCustomerPasswordPolicy implements CustomerPasswordPolicyInterf
 
     /**
      * @param string $password
-     * @param CustomerResponseTransfer $customerResponseTransfer
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function validatePassword(string $password, CustomerResponseTransfer $customerResponseTransfer): CustomerResponseTransfer
     {

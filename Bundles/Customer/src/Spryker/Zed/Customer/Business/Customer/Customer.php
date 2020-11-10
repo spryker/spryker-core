@@ -94,7 +94,7 @@ class Customer implements CustomerInterface
     protected $postCustomerRegistrationPlugins;
 
     /**
-     * @var \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface;
+     * @var \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyValidatorInterface;
      */
     protected $customerPasswordPolicyValidator;
 

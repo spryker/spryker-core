@@ -18,20 +18,13 @@ use Spryker\Zed\Customer\Business\Customer\CustomerReader;
 use Spryker\Zed\Customer\Business\Customer\CustomerReaderInterface;
 use Spryker\Zed\Customer\Business\Customer\EmailValidator;
 use Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpander;
-use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\BlacklistCustomerPasswordPolicy;
 use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CharacterSetCustomerPasswordPolicy;
 use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface;
-use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyProvider;
 use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyValidator;
 use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyValidatorInterface;
-use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\DigitCustomerPasswordPolicy;
 use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\ForbiddenCustomerPasswordPolicy;
 use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\LengthCustomerPasswordPolicy;
-use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\LowerCaseCustomerPasswordPolicy;
 use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\SequenceCustomerPasswordPolicy;
-use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\SpecialCustomerPasswordPolicy;
-use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\UpperCaseCustomerPasswordPolicy;
-use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\WhitelistCustomerPasswordPolicy;
 use Spryker\Zed\Customer\Business\Model\CustomerOrderSaver as ObsoleteCustomerOrderSaver;
 use Spryker\Zed\Customer\Business\Model\PreConditionChecker;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGenerator;
@@ -65,7 +58,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
             $this->getLocaleQueryContainer(),
             $this->getStore(),
             $this->createCustomerExpander(),
-            $this->getCustomerPasswordPolicyValidator(),
+            $this->createCustomerPasswordPolicyValidator(),
             $this->getPostCustomerRegistrationPlugins()
         );
 
@@ -88,7 +81,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyValidatorInterface
      */
-    public function getCustomerPasswordPolicyValidator(): CustomerPasswordPolicyValidatorInterface
+    public function createCustomerPasswordPolicyValidator(): CustomerPasswordPolicyValidatorInterface
     {
         return new CustomerPasswordPolicyValidator($this->getConfig(), $this->getCustomerPasswordPolicies());
     }

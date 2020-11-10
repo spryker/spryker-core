@@ -104,24 +104,30 @@ class CustomerConfig extends AbstractBundleConfig
         return $sequenceNumberSettingsTransfer;
     }
 
-
     /**
      * Provides a configuration for character set password validation
      *
      * example:
      * [
-     *    'customer.password.error.digit' => '/\p{N}+/',
-     *    'customer.password.error.lower_case' => '/\p{Ll}+/',
-     *    'customer.password.error.upper_case' => '/\p{Lu}+/',
-     *    'customer.password.error.special' => '/[^(\p{N}|\p{L})+]/',
+     *    'CharacterSetCustomerPasswordPolicy::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_DIGIT' =>
+     *          CharacterSetCustomerPasswordPolicy::PASSWORD_POLICY_CHARACTER_SET_DIGIT_PATTERN,
+     *    'CharacterSetCustomerPasswordPolicy::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_LOWER_CASE' => '
+     *          CharacterSetCustomerPasswordPolicy::PASSWORD_POLICY_CHARACTER_SET_LOWER_CASE_PATTERN',
+     *    'CharacterSetCustomerPasswordPolicy::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_UPPER_CASE' =>
+     *          CharacterSetCustomerPasswordPolicy::PASSWORD_POLICY_CHARACTER_SET_UPPER_CASE_PATTERN',
+     *    'CharacterSetCustomerPasswordPolicy::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SPECIAL' =>
+     *          CharacterSetCustomerPasswordPolicy::PASSWORD_POLICY_CHARACTER_SET_SPECIAL_PATTERN,
      * ]
+     *
+     * @api
      *
      * @return string[]
      */
     public function getCharacterSetCustomerPasswordPolicy(): array
     {
+        return [];
+    }
 
-}
     /**
      * This method provides list of URLs to render blocks inside customer detail page.
      * URL defines path to external bundle controller. For example: /sales/customer/customer-orders would call sales bundle, customer controller, customerOrders action.

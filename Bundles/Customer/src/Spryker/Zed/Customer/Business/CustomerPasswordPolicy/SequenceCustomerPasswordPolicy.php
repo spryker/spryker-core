@@ -15,7 +15,9 @@ class SequenceCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
 {
     protected const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE = 'customer.password.error.sequence';
 
-    /** @var int */
+    /**
+     * @var int
+     */
     protected $customerPasswordSequenceLimit;
 
     /**
