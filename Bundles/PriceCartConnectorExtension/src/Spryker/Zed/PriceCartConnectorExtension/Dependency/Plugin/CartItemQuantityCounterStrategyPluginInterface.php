@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\PriceCartConnectorExtension\Dependency\Plugin;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartItemQuantityTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
