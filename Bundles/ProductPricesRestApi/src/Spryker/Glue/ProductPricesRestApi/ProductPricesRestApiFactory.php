@@ -28,8 +28,6 @@ use Spryker\Glue\ProductPricesRestApi\Processor\Expander\ConcreteProductPricesRe
 use Spryker\Glue\ProductPricesRestApi\Processor\Expander\ConcreteProductPricesRelationshipExpanderInterface;
 use Spryker\Glue\ProductPricesRestApi\Processor\Mapper\ProductPricesMapper;
 use Spryker\Glue\ProductPricesRestApi\Processor\Mapper\ProductPricesMapperInterface;
-use Spryker\Glue\ProductPricesRestApi\Processor\PluginExecutor\ProductPricesMapperPluginExecutor;
-use Spryker\Glue\ProductPricesRestApi\Processor\PluginExecutor\ProductPricesMapperPluginExecutorInterface;
 use Spryker\Glue\ProductPricesRestApi\Processor\PriceMode\PriceModeUpdater;
 use Spryker\Glue\ProductPricesRestApi\Processor\PriceMode\PriceModeUpdaterInterface;
 use Spryker\Glue\ProductPricesRestApi\Processor\PriceMode\PriceModeValidator;
@@ -48,7 +46,7 @@ class ProductPricesRestApiFactory extends AbstractFactory
         return new ProductPricesMapper(
             $this->getPriceClient(),
             $this->getCurrencyClient(),
-            $this->createProductPricesMapperPluginExecutor()
+            $this->getRestProductPricesAttributesMapperPlugins()
         );
     }
 
@@ -135,14 +133,6 @@ class ProductPricesRestApiFactory extends AbstractFactory
             $this->createConcreteProductPricesReader(),
             $this->getConfig()
         );
-    }
-
-    /**
-     * @return \Spryker\Glue\ProductPricesRestApi\Processor\PluginExecutor\ProductPricesMapperPluginExecutorInterface
-     */
-    public function createProductPricesMapperPluginExecutor(): ProductPricesMapperPluginExecutorInterface
-    {
-        return new ProductPricesMapperPluginExecutor($this->getRestProductPricesAttributesMapperPlugins());
     }
 
     /**

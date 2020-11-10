@@ -125,7 +125,7 @@ class PriceProductVolumeMapper implements PriceProductVolumeMapperInterface
      */
     protected function getVolumePriceQuantity(MoneyValueTransfer $moneyValueTransfer): int
     {
-        $priceData = $moneyValueTransfer->getPriceData();
+        $priceData = $moneyValueTransfer->getPriceDataOrFail();
         $priceDataDecoded = $this->utilEncodingService->decodeJson($priceData, true);
 
         return $priceDataDecoded[static::VOLUME_PRICE_QUANTITY];

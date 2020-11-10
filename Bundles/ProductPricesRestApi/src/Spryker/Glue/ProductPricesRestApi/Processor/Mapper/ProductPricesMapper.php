@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\RestProductPriceAttributesTransfer;
 use Generated\Shared\Transfer\RestProductPricesAttributesTransfer;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToCurrencyClientInterface;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceClientInterface;
-use Spryker\Glue\ProductPricesRestApi\Processor\PluginExecutor\ProductPricesMapperPluginExecutorInterface;
 
 class ProductPricesMapper implements ProductPricesMapperInterface
 {
@@ -43,9 +42,9 @@ class ProductPricesMapper implements ProductPricesMapperInterface
     protected $currencyClient;
 
     /**
-     * @var \Spryker\Glue\ProductPricesRestApi\Processor\PluginExecutor\ProductPricesMapperPluginExecutorInterface
+     * @var \Spryker\Glue\ProductPricesRestApiExtension\Dependency\Plugin\RestProductPricesAttributesMapperPluginInterface[]
      */
-    protected $productPricesMapperPluginExecutor;
+    protected $restProductPricesAttributesMapperPlugins;
 
     /**
      * @var \Generated\Shared\Transfer\RestCurrencyTransfer
@@ -55,16 +54,16 @@ class ProductPricesMapper implements ProductPricesMapperInterface
     /**
      * @param \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceClientInterface $priceClient
      * @param \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToCurrencyClientInterface $currencyClient
-     * @param \Spryker\Glue\ProductPricesRestApi\Processor\PluginExecutor\ProductPricesMapperPluginExecutorInterface $productPricesMapperPluginExecutor
+     * @param \Spryker\Glue\ProductPricesRestApiExtension\Dependency\Plugin\RestProductPricesAttributesMapperPluginInterface[] $restProductPricesAttributesMapperPlugins
      */
     public function __construct(
         ProductPricesRestApiToPriceClientInterface $priceClient,
         ProductPricesRestApiToCurrencyClientInterface $currencyClient,
-        ProductPricesMapperPluginExecutorInterface $productPricesMapperPluginExecutor
+        array $restProductPricesAttributesMapperPlugins
     ) {
         $this->priceClient = $priceClient;
         $this->currencyClient = $currencyClient;
-        $this->productPricesMapperPluginExecutor = $productPricesMapperPluginExecutor;
+        $this->restProductPricesAttributesMapperPlugins = $restProductPricesAttributesMapperPlugins;
     }
 
     /**
@@ -83,7 +82,7 @@ class ProductPricesMapper implements ProductPricesMapperInterface
             $productPricesRestAttributesTransfer->addPrice($restProductPriceAttributesTransfer);
         }
 
-        return $this->productPricesMapperPluginExecutor->mapRestProductPricesAttributes(
+        return $this->executeRestProductPricesAttributesMapperPlugins(
             $currentProductPriceTransfer,
             $productPricesRestAttributesTransfer
         );
@@ -110,6 +109,26 @@ class ProductPricesMapper implements ProductPricesMapperInterface
             $restProductPriceAttributesTransfer->setNetAmount($amount);
 
             return $restProductPriceAttributesTransfer;
+        }
+
+        return $restProductPriceAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
+     * @param \Generated\Shared\Transfer\RestProductPricesAttributesTransfer $restProductPriceAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestProductPricesAttributesTransfer
+     */
+    public function executeRestProductPricesAttributesMapperPlugins(
+        CurrentProductPriceTransfer $currentProductPriceTransfer,
+        RestProductPricesAttributesTransfer $restProductPriceAttributesTransfer
+    ): RestProductPricesAttributesTransfer {
+        foreach ($this->restProductPricesAttributesMapperPlugins as $restProductPricesAttributesMapperPlugin) {
+            $restProductPriceAttributesTransfer = $restProductPricesAttributesMapperPlugin->map(
+                $currentProductPriceTransfer,
+                $restProductPriceAttributesTransfer
+            );
         }
 
         return $restProductPriceAttributesTransfer;

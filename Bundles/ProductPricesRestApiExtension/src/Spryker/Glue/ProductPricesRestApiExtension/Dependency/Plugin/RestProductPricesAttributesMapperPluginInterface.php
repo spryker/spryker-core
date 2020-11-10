@@ -10,6 +10,9 @@ namespace Spryker\Glue\ProductPricesRestApiExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\RestProductPricesAttributesTransfer;
 
+/**
+ * Use this plugin to map additional data from `CurrentProductPriceTransfer` to `RestProductPricesAttributesTransfer`.
+ */
 interface RestProductPricesAttributesMapperPluginInterface
 {
     /**

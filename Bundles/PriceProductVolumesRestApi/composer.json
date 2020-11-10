@@ -6,9 +6,9 @@
   "require": {
     "php": ">=7.3",
     "spryker/kernel": "^3.30.0",
-    "spryker/price-product-volume": "^1.0.0 || ^3.0.0",
+    "spryker/price-product-volume": "^3.0.0",
     "spryker/product-prices-rest-api-extension": "^1.0.0",
-    "spryker/util-encoding": "^1.0.0 || ^2.0.0"
+    "spryker/util-encoding": "^2.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
