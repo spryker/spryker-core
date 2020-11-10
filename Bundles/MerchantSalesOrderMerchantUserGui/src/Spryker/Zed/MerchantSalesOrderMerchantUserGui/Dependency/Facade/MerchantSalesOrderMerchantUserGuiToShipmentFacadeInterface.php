@@ -10,17 +10,9 @@ namespace Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
 
 interface MerchantSalesOrderMerchantUserGuiToShipmentFacadeInterface
 {
-    /**
-     * @param int $idSalesShipment
-     *
-     * @return \Generated\Shared\Transfer\ShipmentTransfer|null
-     */
-    public function findShipmentById(int $idSalesShipment): ?ShipmentTransfer;
-
     /**
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
