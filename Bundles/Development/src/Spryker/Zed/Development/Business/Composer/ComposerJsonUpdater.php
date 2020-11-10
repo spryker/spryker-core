@@ -74,7 +74,7 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
         $composerJson = $composerJsonFile->getContents();
         $composerJsonArray = json_decode($composerJson, true);
 
-        if (!empty($composerJsonArray['abandoned']) || $composerJsonArray['name'] === 'spryker/zend') {
+        if (!empty($composerJsonArray['abandoned'])) {
             return false;
         }
 
