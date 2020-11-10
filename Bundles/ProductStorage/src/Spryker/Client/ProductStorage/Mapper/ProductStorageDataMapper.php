@@ -9,15 +9,15 @@ namespace Spryker\Client\ProductStorage\Mapper;
 
 use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\StringToLower;
+use Laminas\Filter\Word\CamelCaseToUnderscore;
 use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface;
 use Spryker\Client\ProductStorage\ProductStorageConfig;
 use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderByCriteriaPluginInterface;
 use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderPluginInterface;
 use Spryker\Shared\Kernel\Store;
-use Zend\Filter\FilterChain;
-use Zend\Filter\StringToLower;
-use Zend\Filter\Word\CamelCaseToUnderscore;
 
 class ProductStorageDataMapper implements ProductStorageDataMapperInterface
 {

@@ -14,11 +14,6 @@
     "use-include-path": true,
     "process-timeout": 1200
   },
-  "autoload": {
-    "files": [
-      "autoload.php"
-    ]
-  },
   "bin": [
     "Bundles/Console/bin/console",
     "Bundles/Console/bin/yves",
@@ -322,6 +317,7 @@
     "spryker/json-schema": "*",
     "spryker/kernel": "*",
     "spryker/key-builder": "*",
+    "spryker/laminas": "*",
     "spryker/locale": "*",
     "spryker/locale-extension": "*",
     "spryker/log": "*",
@@ -768,7 +764,6 @@
     "spryker/zed-navigation": "*",
     "spryker/zed-navigation-extension": "*",
     "spryker/zed-request": "*",
-    "spryker/zed-ui": "*",
-    "spryker/zend": "*"
+    "spryker/zed-ui": "*"
   }
 }

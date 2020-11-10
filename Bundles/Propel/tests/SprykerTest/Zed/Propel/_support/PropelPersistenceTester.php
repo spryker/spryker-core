@@ -11,15 +11,15 @@ use Codeception\Actor;
 use Codeception\Scenario;
 use DateTime;
 use Faker\Factory;
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\StringToLower;
+use Laminas\Filter\Word\CamelCaseToUnderscore;
+use Laminas\Filter\Word\UnderscoreToCamelCase;
 use PHPUnit\Framework\ExpectationFailedException;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Map\ColumnMap;
 use Symfony\Component\Finder\Finder;
 use Throwable;
-use Zend\Filter\FilterChain;
-use Zend\Filter\StringToLower;
-use Zend\Filter\Word\CamelCaseToUnderscore;
-use Zend\Filter\Word\UnderscoreToCamelCase;
 
 /**
  * @method void wantToTest($text)

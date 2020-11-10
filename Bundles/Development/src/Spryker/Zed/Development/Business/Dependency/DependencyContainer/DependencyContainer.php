@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\DependencyCollectionTransfer;
 use Generated\Shared\Transfer\DependencyModuleTransfer;
 use Generated\Shared\Transfer\DependencyTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
-use Zend\Filter\Word\DashToCamelCase;
+use Laminas\Filter\Word\DashToCamelCase;
 
 class DependencyContainer implements DependencyContainerInterface
 {

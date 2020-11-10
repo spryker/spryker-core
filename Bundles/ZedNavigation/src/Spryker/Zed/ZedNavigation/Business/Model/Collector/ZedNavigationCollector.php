@@ -9,11 +9,11 @@ namespace Spryker\Zed\ZedNavigation\Business\Model\Collector;
 
 use ErrorException;
 use Exception;
+use Laminas\Config\Config;
+use Laminas\Config\Factory;
 use Spryker\Zed\ZedNavigation\Business\Model\SchemaFinder\ZedNavigationSchemaFinderInterface;
 use Spryker\Zed\ZedNavigation\Business\Resolver\MergeNavigationStrategyResolverInterface;
 use Spryker\Zed\ZedNavigation\ZedNavigationConfig;
-use Zend\Config\Config;
-use Zend\Config\Factory;
 
 class ZedNavigationCollector implements ZedNavigationCollectorInterface
 {
@@ -64,7 +64,7 @@ class ZedNavigationCollector implements ZedNavigationCollectorInterface
         }
 
         try {
-            /** @var \Zend\Config\Config $navigationDefinition */
+            /** @var \Laminas\Config\Config $navigationDefinition */
             $navigationDefinition = Factory::fromFile($this->zedNavigationConfig->getRootNavigationSchema(), true);
             $rootDefinition = clone $navigationDefinition;
         } catch (Exception $e) {
@@ -77,7 +77,7 @@ class ZedNavigationCollector implements ZedNavigationCollectorInterface
             if (!file_exists($moduleNavigationFile->getPathname())) {
                 throw new ErrorException('Navigation-File does not exist: ' . $moduleNavigationFile);
             }
-            /** @var \Zend\Config\Config $configFromFile */
+            /** @var \Laminas\Config\Config $configFromFile */
             $configFromFile = Factory::fromFile($moduleNavigationFile->getPathname(), true);
             $navigationDefinition->merge($configFromFile);
             $coreNavigationDefinition->merge($configFromFile);
