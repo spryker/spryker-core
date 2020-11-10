@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\Customer\Business\CustomerPasswordPolicy;
 
+
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 
-interface CustomerPasswordPolicyInterface
+interface CustomerPasswordPolicyValidatorInterface
 {
     /**
      * @param string $password

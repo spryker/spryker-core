@@ -7,11 +7,24 @@
 
 namespace Spryker\Zed\Customer\Business\CustomerPasswordPolicy;
 
+use Generated\Shared\Transfer\CustomerErrorTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
+use Spryker\Zed\Customer\CustomerConfig;
 
-class SequenceCustomerPasswordPolicy extends AbstractCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
+class SequenceCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
 {
-    public const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE = 'customer.password.error.sequence';
+    protected const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE = 'customer.password.error.sequence';
+
+    /** @var int */
+    protected $customerPasswordSequenceLimit;
+
+    /**
+     * @param \Spryker\Zed\Customer\CustomerConfig $customerConfig
+     */
+    public function __construct(CustomerConfig $customerConfig)
+    {
+        $this->customerPasswordSequenceLimit = $customerConfig->getCustomerPasswordSequenceLimit();
+    }
 
     /**
      * @param string $password
@@ -23,23 +36,23 @@ class SequenceCustomerPasswordPolicy extends AbstractCustomerPasswordPolicy impl
         string $password,
         CustomerResponseTransfer $customerResponseTransfer
     ): CustomerResponseTransfer {
-        if (!$this->config->getCustomerPasswordSequenceLimit()) {
-            return $this->proceed($password, $customerResponseTransfer);
+        if ($this->customerPasswordSequenceLimit) {
+            return $customerResponseTransfer;
         }
         $counter = 1;
         $prevChar = '';
         foreach (mb_str_split($password) as $char) {
-            if ($char === $prevChar) {
-                $counter++;
-            }
-            if ($this->config->getCustomerPasswordSequenceLimit() < $counter) {
-                $this->addError($customerResponseTransfer, static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE);
+            $counter = $char === $prevChar ? ++$counter : $counter = 1;
+            if ($this->customerPasswordSequenceLimit < $counter) {
+                $customerErrorTransfer = (new CustomerErrorTransfer())
+                    ->setMessage(static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE);
 
-                break;
+                return $customerResponseTransfer->setIsSuccess(false)
+                    ->addError($customerErrorTransfer);
             }
             $prevChar = $char;
         }
 
-        return $this->proceed($password, $customerResponseTransfer);
+        return $customerResponseTransfer;
     }
 }

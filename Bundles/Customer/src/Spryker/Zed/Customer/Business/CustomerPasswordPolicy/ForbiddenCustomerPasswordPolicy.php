@@ -7,11 +7,21 @@
 
 namespace Spryker\Zed\Customer\Business\CustomerPasswordPolicy;
 
+use Generated\Shared\Transfer\CustomerErrorTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
+use Spryker\Zed\Customer\CustomerConfig;
 
-class ForbiddenCustomerPasswordPolicy extends AbstractCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
+class ForbiddenCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
 {
-    public const PASSWORD_POLICY_ERROR_FORBIDDEN = 'customer.password.error.forbidden';
+    protected const PASSWORD_POLICY_ERROR_FORBIDDEN = 'customer.password.error.forbidden';
+
+    /** @var string[] */
+    protected $forbiddenCharactersList;
+
+    public function __construct(CustomerConfig $customerConfig)
+    {
+        $this->forbiddenCharactersList = $customerConfig->getCustomerPasswordForbiddenCharacters();
+    }
 
     /**
      * @param string $password
@@ -21,15 +31,17 @@ class ForbiddenCustomerPasswordPolicy extends AbstractCustomerPasswordPolicy imp
      */
     public function validatePassword(string $password, CustomerResponseTransfer $customerResponseTransfer): CustomerResponseTransfer
     {
-        if (empty($this->config->getCustomerPasswordForbiddenCharacters())) {
-            return $this->proceed($password, $customerResponseTransfer);
+        if (empty($this->forbiddenCharactersList)) {
+            return $customerResponseTransfer;
         }
-        $forbiddenCharacters = mb_str_split($this->config->getCustomerPasswordForbiddenCharacters());
-
+        $forbiddenCharacters = mb_str_split($this->forbiddenCharactersList);
         if (!empty(array_intersect(mb_str_split($password), $forbiddenCharacters))) {
-            $this->addError($customerResponseTransfer, static::PASSWORD_POLICY_ERROR_FORBIDDEN);
-        }
+            $customerErrorTransfer = (new CustomerErrorTransfer())
+                ->setMessage(static::PASSWORD_POLICY_ERROR_FORBIDDEN);
+            $customerResponseTransfer->setIsSuccess(false)
+                ->addError($customerErrorTransfer);
 
-        return $this->proceed($password, $customerResponseTransfer);
+            return $customerResponseTransfer;
+        }
     }
 }

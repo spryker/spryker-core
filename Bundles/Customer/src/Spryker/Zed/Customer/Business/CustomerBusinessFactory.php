@@ -19,8 +19,11 @@ use Spryker\Zed\Customer\Business\Customer\CustomerReaderInterface;
 use Spryker\Zed\Customer\Business\Customer\EmailValidator;
 use Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpander;
 use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\BlacklistCustomerPasswordPolicy;
+use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CharacterSetCustomerPasswordPolicy;
 use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface;
 use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyProvider;
+use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyValidator;
+use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyValidatorInterface;
 use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\DigitCustomerPasswordPolicy;
 use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\ForbiddenCustomerPasswordPolicy;
 use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\LengthCustomerPasswordPolicy;
@@ -62,7 +65,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
             $this->getLocaleQueryContainer(),
             $this->getStore(),
             $this->createCustomerExpander(),
-            $this->getCustomerPasswordPolicy(),
+            $this->getCustomerPasswordPolicyValidator(),
             $this->getPostCustomerRegistrationPlugins()
         );
 
@@ -83,23 +86,11 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface
+     * @return \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyValidatorInterface
      */
-    public function getCustomerPasswordPolicy(): CustomerPasswordPolicyInterface
+    public function getCustomerPasswordPolicyValidator(): CustomerPasswordPolicyValidatorInterface
     {
-        return $this->createCustomerPasswordPolicyProvider()->getCustomerPasswordPolicy();
-    }
-
-    /**
-     * @return \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyProvider
-     */
-    public function createCustomerPasswordPolicyProvider(): CustomerPasswordPolicyProvider
-    {
-        return new CustomerPasswordPolicyProvider(
-            $this->getConfig(),
-            $this->createCustomerPasswordPolicyDefault(),
-            $this->getCustomerPasswordPolicies(),
-        );
+        return new CustomerPasswordPolicyValidator($this->getConfig(), $this->getCustomerPasswordPolicies());
     }
 
     /**
@@ -108,15 +99,19 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     public function getCustomerPasswordPolicies(): array
     {
         return [
-            $this->createCustomerPasswordPolicyWhitelist(),
-            $this->createCustomerPasswordPolicyBlacklist(),
+            $this->createLengthCustomerPasswordPolicy(),
             $this->createCustomerPasswordPolicySequence(),
-            $this->createCustomerPasswordPolicyUpperCase(),
-            $this->createCustomerPasswordPolicyLowerCase(),
-            $this->createCustomerPasswordPolicySpecial(),
-            $this->createCustomerPasswordPolicyDigit(),
             $this->createCustomerPasswordPolicyForbidden(),
+            $this->createCharacterSetCustomerPasswordPolicy(),
         ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface
+     */
+    public function createLengthCustomerPasswordPolicy(): CustomerPasswordPolicyInterface
+    {
+        return new LengthCustomerPasswordPolicy($this->getConfig());
     }
 
     /**
@@ -130,14 +125,6 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface
      */
-    public function createCustomerPasswordPolicyDefault(): CustomerPasswordPolicyInterface
-    {
-        return new LengthCustomerPasswordPolicy($this->getConfig());
-    }
-
-    /**
-     * @return \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface
-     */
     public function createCustomerPasswordPolicySequence(): CustomerPasswordPolicyInterface
     {
         return new SequenceCustomerPasswordPolicy($this->getConfig());
@@ -146,49 +133,9 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface
      */
-    public function createCustomerPasswordPolicyDigit(): CustomerPasswordPolicyInterface
+    public function createCharacterSetCustomerPasswordPolicy(): CustomerPasswordPolicyInterface
     {
-        return new DigitCustomerPasswordPolicy($this->getConfig());
-    }
-
-    /**
-     * @return \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface
-     */
-    public function createCustomerPasswordPolicySpecial(): CustomerPasswordPolicyInterface
-    {
-        return new SpecialCustomerPasswordPolicy($this->getConfig());
-    }
-
-    /**
-     * @return \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface
-     */
-    public function createCustomerPasswordPolicyLowerCase(): CustomerPasswordPolicyInterface
-    {
-        return new LowerCaseCustomerPasswordPolicy($this->getConfig());
-    }
-
-    /**
-     * @return \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface
-     */
-    public function createCustomerPasswordPolicyUpperCase(): CustomerPasswordPolicyInterface
-    {
-        return new UpperCaseCustomerPasswordPolicy($this->getConfig());
-    }
-
-    /**
-     * @return \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface
-     */
-    public function createCustomerPasswordPolicyBlacklist(): CustomerPasswordPolicyInterface
-    {
-        return new BlacklistCustomerPasswordPolicy($this->getConfig());
-    }
-
-    /**
-     * @return \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface
-     */
-    public function createCustomerPasswordPolicyWhitelist(): CustomerPasswordPolicyInterface
-    {
-        return new WhitelistCustomerPasswordPolicy($this->getConfig());
+        return new CharacterSetCustomerPasswordPolicy($this->getConfig());
     }
 
     /**
