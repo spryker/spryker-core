@@ -20,6 +20,11 @@ use Spryker\Zed\MerchantStorage\Persistence\MerchantStorageRepositoryInterface;
 class MerchantStorageWriter implements MerchantStorageWriterInterface
 {
     /**
+     * @uses \Orm\Zed\MerchantCategory\Persistence\Map\SpyMerchantCategoryTableMap::COL_FK_MERCHANT
+     */
+    protected const FK_CATEGORY_MERCHANT = 'spy_merchant_category.fk_merchant';
+
+    /**
      * @var \Spryker\Zed\MerchantStorage\Dependency\Facade\MerchantStorageToEventBehaviorFacadeInterface
      */
     protected $eventBehaviorFacade;
@@ -73,6 +78,22 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
     public function writeCollectionByMerchantEvents(array $eventTransfers): void
     {
         $merchantIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
+
+        if (!$merchantIds) {
+            return;
+        }
+
+        $this->writeCollectionByMerchantIds($merchantIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByMerchantCategoryEvents(array $eventTransfers): void
+    {
+        $merchantIds = $this->eventBehaviorFacade->getEventTransferForeignKeys($eventTransfers, static::FK_CATEGORY_MERCHANT);
 
         if (!$merchantIds) {
             return;
