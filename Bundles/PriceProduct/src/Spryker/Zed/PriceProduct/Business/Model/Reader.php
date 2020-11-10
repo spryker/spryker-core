@@ -10,6 +10,7 @@ namespace Spryker\Zed\PriceProduct\Business\Model;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
+use Generated\Shared\Transfer\PriceProductFilterIdentifierTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Service\PriceProduct\PriceProductServiceInterface;
@@ -572,7 +573,7 @@ class Reader implements ReaderInterface
 
         $resolvedPriceProductTransfers = [];
         foreach ($priceProductCriteriaTransfers as $index => $priceProductCriteriaTransfer) {
-            $priceProductCriteriaIdentifier = spl_object_hash($priceProductFilterTransfers[$index]);
+            $priceProductCriteriaIdentifier = $this->buildPriceProductFilterIdentifier($priceProductFilterTransfers[$index]);
             $resolvedItemPrice = $this->resolveProductPriceByPriceProductCriteria(
                 $priceProductCriteriaIdentifier,
                 $priceProductTransfers,
@@ -672,7 +673,7 @@ class Reader implements ReaderInterface
         $priceProductTransfersGroupedByFilterIdentifier = [];
 
         foreach ($priceProductFilterTransfers as $priceProductFilterTransfer) {
-            $priceProductFilterIdentifier = spl_object_hash($priceProductFilterTransfer);
+            $priceProductFilterIdentifier = $this->buildPriceProductFilterIdentifier($priceProductFilterTransfer);
             $priceProductTransfersGroupedByFilterIdentifier[$priceProductFilterIdentifier] = $this->priceProductService->resolveProductPricesByPriceProductFilter(
                 $priceProductTransfers,
                 $priceProductFilterTransfer
@@ -741,5 +742,20 @@ class Reader implements ReaderInterface
         }
 
         return $filteredPriceProductFilterTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return string
+     */
+    protected function buildPriceProductFilterIdentifier(PriceProductFilterTransfer $priceProductFilterTransfer): string
+    {
+        $priceProductFilterIdentifierTransfer = (new PriceProductFilterIdentifierTransfer())->fromArray(
+            $priceProductFilterTransfer->toArray(),
+            true
+        );
+
+        return md5(serialize($priceProductFilterIdentifierTransfer->toArray()));
     }
 }

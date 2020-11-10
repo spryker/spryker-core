@@ -117,4 +117,8 @@
     <transfer name="Quote">
     </transfer>
 
+    <transfer name="PriceProductFilterIdentifier">
+        <property name="sku" type="string"/>
+    </transfer>
+
 </transfers>
