@@ -13,14 +13,14 @@ use Symfony\Component\HttpFoundation\Request;
 class AcceptEncodingHeaderExpanderPlugin implements HeaderExpanderPluginInterface
 {
     /**
-     * @param array $header
+     * @param array $headers
      *
      * @return array
      */
-    public function expandHeader(array $header): array
+    public function expandHeader(array $headers): array
     {
-        $header['Accept-Encoding'] = Request::createFromGlobals()->headers->get('Accept-Encoding', '');
+        $headers['Accept-Encoding'] = Request::createFromGlobals()->headers->get('Accept-Encoding', '');
 
-        return $header;
+        return $headers;
     }
 }

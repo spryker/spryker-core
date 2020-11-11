@@ -16,14 +16,14 @@ use Spryker\Client\ZedRequestExtension\Dependency\Plugin\HeaderExpanderPluginInt
 class AuthTokenHeaderExpanderPlugin extends AbstractPlugin implements HeaderExpanderPluginInterface
 {
     /**
-     * @param array $header
+     * @param array $headers
      *
      * @return array
      */
-    public function expandHeader(array $header): array
+    public function expandHeader(array $headers): array
     {
-        $header['Auth-Token'] = $this->getClient()->getAuthToken();
+        $headers['Auth-Token'] = $this->getClient()->getAuthToken();
 
-        return $header;
+        return $headers;
     }
 }

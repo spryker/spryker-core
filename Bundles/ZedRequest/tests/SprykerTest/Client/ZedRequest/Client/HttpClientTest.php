@@ -36,7 +36,7 @@ class HttpClientTest extends Unit
     public function testAcceptEncodingHeaderIsSetWhenAcceptEncodingHeaderExpanderPluginIsUsed(): void
     {
         // Arrange
-        $this->tester->setDependency(ZedRequestDependencyProvider::PLUGIN_HEADER_EXPANDER, [
+        $this->tester->setDependency(ZedRequestDependencyProvider::PLUGINS_HEADER_EXPANDER, [
             new AcceptEncodingHeaderExpanderPlugin(),
         ]);
         $httpClient = $this->tester->getFactory()->createHttpClient();
@@ -54,7 +54,7 @@ class HttpClientTest extends Unit
     public function testAuthTokenHeaderIsSetWhenAuthTokenHeaderExpanderPluginIsUsed(): void
     {
         // Arrange
-        $this->tester->setDependency(ZedRequestDependencyProvider::PLUGIN_HEADER_EXPANDER, [
+        $this->tester->setDependency(ZedRequestDependencyProvider::PLUGINS_HEADER_EXPANDER, [
             new AuthTokenHeaderExpanderPlugin(),
         ]);
         $httpClient = $this->tester->getFactory()->createHttpClient();
@@ -72,7 +72,7 @@ class HttpClientTest extends Unit
     public function testRequestIdHeaderIsSetWhenRequestIdHeaderExpanderPluginIsUsed(): void
     {
         // Arrange
-        $this->tester->setDependency(ZedRequestDependencyProvider::PLUGIN_HEADER_EXPANDER, [
+        $this->tester->setDependency(ZedRequestDependencyProvider::PLUGINS_HEADER_EXPANDER, [
             new RequestIdHeaderExpanderPlugin(),
         ]);
         $httpClient = $this->tester->getFactory()->createHttpClient();

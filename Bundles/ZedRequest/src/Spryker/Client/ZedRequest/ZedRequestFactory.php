@@ -78,7 +78,7 @@ class ZedRequestFactory extends AbstractFactory
      */
     public function getHeaderExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(ZedRequestDependencyProvider::PLUGIN_HEADER_EXPANDER);
+        return $this->getProvidedDependency(ZedRequestDependencyProvider::PLUGINS_HEADER_EXPANDER);
     }
 
     /**

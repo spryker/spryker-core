@@ -18,7 +18,7 @@ class ClientHelper extends Module
 {
     use ClassResolverTrait;
 
-    protected const CLIENT_CLASS_NAME_PATTERN = '\%1$s\Client\%2$s\%2$sClient';
+    protected const CLIENT_CLASS_NAME_PATTERN = '\%1$s\Client\%3$s\%3$sClient';
     protected const MODULE_NAME_POSITION = 2;
 
     /**
