@@ -15,13 +15,6 @@
       "Spryker\\": "src/Spryker/"
     }
   },
-  "autoload-dev": {
-    "psr-4": {
-      "Config\\Module\\": "vendor/spryker/config/tests/_support/Module",
-      "Propel\\Module\\": "vendor/spryker/propel/tests/_support/Module",
-      "Transfer\\Module\\": "vendor/spryker/transfer/tests/_support/Module"
-    }
-  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
