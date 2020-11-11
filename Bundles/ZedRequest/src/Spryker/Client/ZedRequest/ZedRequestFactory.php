@@ -10,6 +10,10 @@ namespace Spryker\Client\ZedRequest;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ZedRequest\Client\HttpClient;
 use Spryker\Client\ZedRequest\Client\ZedClient;
+use Spryker\Client\ZedRequest\Header\AuthToken\AuthToken;
+use Spryker\Client\ZedRequest\Header\AuthToken\AuthTokenInterface;
+use Spryker\Client\ZedRequest\Header\RequestId\RequestId;
+use Spryker\Client\ZedRequest\Header\RequestId\RequestIdInterface;
 use Spryker\Client\ZedRequest\Messenger\Messenger;
 use Spryker\Client\ZedRequest\Messenger\MessengerInterface;
 
@@ -59,19 +63,38 @@ class ZedRequestFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ZedRequest\Client\HttpClientInterface|\Spryker\Shared\ZedRequest\Client\HttpClientInterface
      */
-    protected function createHttpClient()
+    public function createHttpClient()
     {
-        $httpClient = new HttpClient(
-            $this->getConfig()->getZedRequestBaseUrl(),
-            $this->getConfig()->getRawToken(),
-            true,
-            $this->getUtilTextService(),
+        return new HttpClient(
+            $this->getConfig(),
+            $this->getHeaderExpanderPlugins(),
             $this->getUtilNetworkService(),
-            $this->getConfig()->getTokenOptions(),
-            $this->getConfig()->getClientConfiguration()
+            $this->getUtilTextService()
         );
+    }
 
-        return $httpClient;
+    /**
+     * @return \Spryker\Client\ZedRequestExtension\Dependency\Plugin\HeaderExpanderPluginInterface[]
+     */
+    public function getHeaderExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ZedRequestDependencyProvider::PLUGIN_HEADER_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Client\ZedRequest\Header\AuthToken\AuthTokenInterface
+     */
+    public function createAuthToken(): AuthTokenInterface
+    {
+        return new AuthToken($this->getConfig(), $this->getUtilTextService());
+    }
+
+    /**
+     * @return \Spryker\Client\ZedRequest\Header\RequestId\RequestIdInterface
+     */
+    public function createRequestId(): RequestIdInterface
+    {
+        return new RequestId($this->getUtilNetworkService());
     }
 
     /**
@@ -87,7 +110,7 @@ class ZedRequestFactory extends AbstractFactory
     /**
      * @return \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface
      */
-    protected function getUtilNetworkService()
+    public function getUtilNetworkService()
     {
         return $this->getProvidedDependency(ZedRequestDependencyProvider::SERVICE_NETWORK);
     }
@@ -95,7 +118,7 @@ class ZedRequestFactory extends AbstractFactory
     /**
      * @return \Spryker\Service\UtilText\UtilTextServiceInterface
      */
-    protected function getUtilTextService()
+    public function getUtilTextService()
     {
         return $this->getProvidedDependency(ZedRequestDependencyProvider::SERVICE_TEXT);
     }

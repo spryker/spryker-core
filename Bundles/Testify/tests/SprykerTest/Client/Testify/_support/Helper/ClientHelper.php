@@ -12,9 +12,12 @@ use Codeception\Module;
 use Codeception\Stub;
 use Codeception\TestInterface;
 use Exception;
+use SprykerTest\Shared\Testify\Helper\ClassResolverTrait;
 
 class ClientHelper extends Module
 {
+    use ClassResolverTrait;
+
     protected const CLIENT_CLASS_NAME_PATTERN = '\%1$s\Client\%2$s\%2$sClient';
     protected const MODULE_NAME_POSITION = 2;
 
@@ -40,7 +43,7 @@ class ClientHelper extends Module
     public function mockClientMethod(string $methodName, $return, ?string $moduleName = null)
     {
         $moduleName = $this->getModuleName($moduleName);
-        $className = $this->getClassName($moduleName);
+        $className = $this->resolveClassName(static::CLIENT_CLASS_NAME_PATTERN, $moduleName);
 
         if (!method_exists($className, $methodName)) {
             throw new Exception(sprintf('You tried to mock a not existing method "%s". Available methods are "%s"', $methodName, implode(', ', get_class_methods($className))));
@@ -101,28 +104,9 @@ class ClientHelper extends Module
     protected function createClient(?string $moduleName = null)
     {
         $moduleName = $this->getModuleName($moduleName);
-        $moduleClientClassName = $this->getClassName($moduleName);
+        $moduleClientClassName = $this->resolveClassName(static::CLIENT_CLASS_NAME_PATTERN, $moduleName);
 
         return new $moduleClientClassName();
-    }
-
-    /**
-     * @param string $moduleName
-     *
-     * @return string
-     */
-    protected function getClassName(string $moduleName): string
-    {
-        $config = Configuration::config();
-        $namespaceParts = explode('\\', $config['namespace']);
-
-        $classNameCandidate = sprintf(static::CLIENT_CLASS_NAME_PATTERN, 'Spryker', $moduleName);
-
-        if ($namespaceParts[0] === 'SprykerShopTest' && class_exists($classNameCandidate)) {
-            return $classNameCandidate;
-        }
-
-        return sprintf(static::CLIENT_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $moduleName);
     }
 
     /**

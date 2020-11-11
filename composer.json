@@ -766,6 +766,7 @@
     "spryker/zed-navigation": "*",
     "spryker/zed-navigation-extension": "*",
     "spryker/zed-request": "*",
+    "spryker/zed-request-extension": "*",
     "spryker/zed-ui": "*"
   }
 }

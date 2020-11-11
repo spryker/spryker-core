@@ -20,6 +20,7 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
     public const SERVICE_TEXT = 'util text service';
     public const META_DATA_PROVIDER_PLUGINS = 'META_DATA_PROVIDER_PLUGINS';
     public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
+    public const PLUGIN_HEADER_EXPANDER = 'PLUGIN_HEADER_EXPANDER';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -32,6 +33,7 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
         $container = $this->addUtilTextService($container);
         $container = $this->addMetaDataProviderPlugins($container);
         $container = $this->addMessengerClient($container);
+        $container = $this->addHeaderExpanderPlugins($container);
 
         return $container;
     }
@@ -101,6 +103,28 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
      * @return \Spryker\Client\ZedRequest\Dependency\Plugin\MetaDataProviderPluginInterface[]
      */
     protected function getMetaDataProviderPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addHeaderExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGIN_HEADER_EXPANDER, function () {
+            return $this->getHeaderExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getHeaderExpanderPlugins(): array
     {
         return [];
     }

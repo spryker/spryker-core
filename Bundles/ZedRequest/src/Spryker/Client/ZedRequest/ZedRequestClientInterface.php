@@ -115,4 +115,24 @@ interface ZedRequestClientInterface
      * @return void
      */
     public function addResponseMessagesToMessenger(): void;
+
+    /**
+     * Specification:
+     * - Returns an authorization token.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getAuthToken(): string;
+
+    /**
+     * Specification:
+     * - Returns a request id to following the request flow.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getRequestId(): string;
 }
