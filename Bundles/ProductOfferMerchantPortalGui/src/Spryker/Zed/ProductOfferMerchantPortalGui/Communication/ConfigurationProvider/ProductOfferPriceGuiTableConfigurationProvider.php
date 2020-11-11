@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider;
@@ -79,7 +79,7 @@ class ProductOfferPriceGuiTableConfigurationProvider implements ProductOfferPric
 
         $guiTableConfigurationBuilder
             ->setTableTitle('List of Prices')
-            ->setDataSourceUrl(str_replace(static::PARAM_ID_PRODUCT_OFFER,  $idProductOffer, static::DATA_URL))
+            ->setDataSourceUrl(str_replace(static::PARAM_ID_PRODUCT_OFFER, $idProductOffer, static::DATA_URL))
             ->setIsItemSelectionEnabled(false)
             ->setDefaultPageSize(25);
 
@@ -101,12 +101,14 @@ class ProductOfferPriceGuiTableConfigurationProvider implements ProductOfferPric
                 mb_strtolower($priceTypeTransfer->getName()) . 'Net',
                 'Net ' . ucfirst(mb_strtolower($priceTypeTransfer->getName())),
                 false,
-                false
+                false,
+                true
             )->addColumnText(
                 mb_strtolower($priceTypeTransfer->getName()) . 'Gross',
                 'Gross ' . ucfirst(mb_strtolower($priceTypeTransfer->getName())),
                 false,
-                false
+                false,
+                true
             );
         }
 
