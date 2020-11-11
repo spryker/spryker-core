@@ -7,6 +7,8 @@
 
 namespace Spryker\Glue\MerchantsRestApi\Processor\RestResponseBuilder;
 
+use Generated\Shared\Transfer\MerchantSearchCollectionTransfer;
+use Generated\Shared\Transfer\MerchantSearchRequestTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestMerchantsAttributesTransfer;
@@ -103,6 +105,42 @@ class MerchantRestResponseBuilder implements MerchantRestResponseBuilderInterfac
                     ->setCode(MerchantsRestApiConfig::RESPONSE_CODE_MERCHANT_IDENTIFIER_MISSING)
                     ->setDetail(MerchantsRestApiConfig::RESPONSE_DETAIL_MERCHANT_IDENTIFIER_MISSING)
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantSearchRequestTransfer $merchantSearchRequestTransfer
+     * @param \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer
+     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
+     * @param string $localeName
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createMerchantListRestResponse(
+        MerchantSearchRequestTransfer $merchantSearchRequestTransfer,
+        MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer,
+        array $merchantStorageTransfers,
+        string $localeName
+    ): RestResponseInterface {
+        /**
+         * @var int $resultsNumber
+         */
+        $resultsNumber = $merchantSearchCollectionTransfer->requireNbResults()->getNbResults();
+        /**
+         * @var int $itemsPerPage
+         */
+        $itemsPerPage = $merchantSearchCollectionTransfer->requireIpp()->getIpp();
+        $restResponse = $this->restResourceBuilder->createRestResponse(
+            $resultsNumber,
+            $itemsPerPage
+        );
+
+        foreach ($merchantStorageTransfers as $merchantStorageTransfer) {
+            $restResponse->addResource(
+                $this->createMerchantsRestResource($merchantStorageTransfer, $localeName)
+            );
+        }
+
+        return $restResponse;
     }
 
     /**

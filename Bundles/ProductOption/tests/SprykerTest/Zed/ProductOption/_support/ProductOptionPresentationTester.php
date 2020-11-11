@@ -118,7 +118,7 @@ class ProductOptionPresentationTester extends Actor
     {
         $this->selectProductTab();
 
-        $this->wait(1);
+        $this->waitForElementNotVisible('.dataTables_processing');
 
         $productIds = [
             $this->grabTextFrom('//*[@id="product-table"]/tbody/tr[1]/td[1]'),
@@ -128,6 +128,8 @@ class ProductOptionPresentationTester extends Actor
         foreach ($productIds as $id) {
             $this->click('//*[@id="all_products_checkbox_' . $id . '"]');
         }
+
+        $this->waitForElementNotVisible('.dataTables_processing');
     }
 
     /**
@@ -136,8 +138,6 @@ class ProductOptionPresentationTester extends Actor
     public function unassignProduct(): void
     {
         $this->click('#products-to-be-assigned');
-
-        $this->wait(1);
 
         $idProduct = $this->grabTextFrom('//*[@id="selectedProductsTable"]/tbody/tr[1]/td[1]');
 

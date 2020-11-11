@@ -74,6 +74,10 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
         $composerJson = $composerJsonFile->getContents();
         $composerJsonArray = json_decode($composerJson, true);
 
+        if (!empty($composerJsonArray['abandoned'])) {
+            return false;
+        }
+
         $this->assertCorrectName($composerJsonArray['name'], $composerJsonFile);
 
         $composerJsonArray = $this->updater->update($composerJsonArray, $composerJsonFile);
