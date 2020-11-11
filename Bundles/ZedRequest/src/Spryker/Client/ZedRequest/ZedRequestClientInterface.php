@@ -128,7 +128,7 @@ interface ZedRequestClientInterface
 
     /**
      * Specification:
-     * - Returns a request id to following the request flow.
+     * - Returns a request id to follow the request flow.
      *
      * @api
      *
