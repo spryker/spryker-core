@@ -8,13 +8,13 @@
 namespace Spryker\Zed\MerchantShipment\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\MerchantShipment\Expander\ShipmentExpander;
-use Spryker\Zed\MerchantShipment\Expander\ShipmentExpanderInterface;
+use Spryker\Zed\MerchantShipment\Communication\Expander\ShipmentExpander;
+use Spryker\Zed\MerchantShipment\Communication\Expander\ShipmentExpanderInterface;
 
 class MerchantShipmentCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\MerchantShipment\Expander\ShipmentExpanderInterface
+     * @return \Spryker\Zed\MerchantShipment\Communication\Expander\ShipmentExpanderInterface
      */
     public function createShipmentExpander(): ShipmentExpanderInterface
     {

@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\MerchantShipment\Communication;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
 
 /**
  * Auto-generated group annotations
@@ -19,10 +18,10 @@ use Generated\Shared\Transfer\ShipmentTransfer;
  * @group Zed
  * @group MerchantShipment
  * @group Communication
- * @group ExpandCartChangeShipmentWithMerchantReferenceTest
+ * @group MerchantShipmentItemExpanderPluginTest
  * Add your own group annotations below this line
  */
-class ExpandCartChangeShipmentWithMerchantReferenceTest extends Unit
+class MerchantShipmentItemExpanderPluginTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\MerchantShipment\MerchantShipmentCommunicationTester
@@ -36,12 +35,13 @@ class ExpandCartChangeShipmentWithMerchantReferenceTest extends Unit
     {
         // Arrange
         $cartChangeTransfer = (new CartChangeTransfer())
-            ->addItem((new ItemBuilder())->build()->setShipment(new ShipmentTransfer()))
-            ->addItem((new ItemBuilder())->build()->setShipment(new ShipmentTransfer()));
+            ->addItem((new ItemBuilder())->withShipment()->build())
+            ->addItem((new ItemBuilder())->withShipment()->build());
 
         // Act
-        $expandedCartChangeTransfer = $this->tester->getShipmentExpander()
-            ->expandCartChangeShipmentWithMerchantReference($cartChangeTransfer);
+        $expandedCartChangeTransfer = $this->tester
+            ->createMerchantShipmentItemExpanderPlugin()
+            ->expandItems($cartChangeTransfer);
 
         // Assert
         $this->assertSame(
@@ -62,11 +62,12 @@ class ExpandCartChangeShipmentWithMerchantReferenceTest extends Unit
         // Arrange
         $cartChangeTransfer = (new CartChangeTransfer())
             ->addItem((new ItemBuilder())->build())
-            ->addItem((new ItemBuilder())->build()->setShipment(new ShipmentTransfer()));
+            ->addItem((new ItemBuilder())->withShipment()->build());
 
         // Act
-        $expandedCartChangeTransfer = $this->tester->getShipmentExpander()
-            ->expandCartChangeShipmentWithMerchantReference($cartChangeTransfer);
+        $expandedCartChangeTransfer = $this->tester
+            ->createMerchantShipmentItemExpanderPlugin()
+            ->expandItems($cartChangeTransfer);
 
         // Assert
         $this->assertNull($expandedCartChangeTransfer->getItems()->offsetGet(0)->getShipment());

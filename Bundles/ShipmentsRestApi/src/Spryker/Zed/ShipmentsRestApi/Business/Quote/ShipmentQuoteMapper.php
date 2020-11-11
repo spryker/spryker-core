@@ -93,7 +93,7 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
 
         foreach ($restCheckoutRequestAttributesTransfer->getShipments() as $restShipmentsTransfer) {
             $shipmentTransfer = (new ShipmentTransfer())
-                ->setRequestedDeliveryDate($restShipmentsTransfer->getRequestedDeliveryDate());
+                ->fromArray($restShipmentsTransfer->toArray(), true);
 
             $shipmentTransfer = $this->expandShipmentTransferWithShippingAddress(
                 $restShipmentsTransfer,

@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\ShipmentsRestApi\Processor\Expander;
 
-use Generated\Shared\Transfer\ShipmentMethodsTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodMapperInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentMethodRestResponseBuilderInterface;
@@ -54,14 +54,18 @@ class ShipmentMethodByShipmentExpander implements ShipmentMethodByShipmentExpand
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
-            $shipmentMethodsTransfer = $resource->getPayload();
-            if (!$shipmentMethodsTransfer instanceof ShipmentMethodsTransfer) {
+            $shipmentGroupTransfer = $resource->getPayload();
+            if (!$shipmentGroupTransfer instanceof ShipmentGroupTransfer) {
+                continue;
+            }
+
+            if (!$shipmentGroupTransfer->getAvailableShipmentMethods()) {
                 continue;
             }
 
             $restShipmentMethodsAttributesTransfers = $this->shipmentMethodMapper
                 ->mapShipmentMethodTransfersToRestShipmentMethodsAttributesTransfers(
-                    $shipmentMethodsTransfer->getMethods()
+                    $shipmentGroupTransfer->getAvailableShipmentMethods()->getMethods()
                 );
 
             $restShipmentMethodsAttributesTransfers = $this->shipmentMethodSorter

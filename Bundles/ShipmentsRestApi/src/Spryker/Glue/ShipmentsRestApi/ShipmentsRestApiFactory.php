@@ -29,8 +29,6 @@ use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\OrderShipmentRes
 use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\OrderShipmentRestResponseBuilderInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentMethodRestResponseBuilder;
 use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentMethodRestResponseBuilderInterface;
-use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentRestResponseBuilder;
-use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentRestResponseBuilderInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Sorter\ShipmentMethodSorter;
 use Spryker\Glue\ShipmentsRestApi\Processor\Sorter\ShipmentMethodSorterInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Validator\AddressSourceCheckoutDataValidator;
@@ -48,7 +46,7 @@ class ShipmentsRestApiFactory extends AbstractFactory
         return new ShipmentByCheckoutDataExpander(
             $this->getShipmentService(),
             $this->createShipmentMapper(),
-            $this->createShipmentRestResponseBuilder()
+            $this->getResourceBuilder()
         );
     }
 
@@ -90,14 +88,6 @@ class ShipmentsRestApiFactory extends AbstractFactory
     public function createShipmentMethodMapper(): ShipmentMethodMapperInterface
     {
         return new ShipmentMethodMapper();
-    }
-
-    /**
-     * @return \Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentRestResponseBuilderInterface
-     */
-    public function createShipmentRestResponseBuilder(): ShipmentRestResponseBuilderInterface
-    {
-        return new ShipmentRestResponseBuilder($this->getResourceBuilder());
     }
 
     /**

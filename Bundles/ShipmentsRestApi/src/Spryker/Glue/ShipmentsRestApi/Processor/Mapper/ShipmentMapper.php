@@ -25,10 +25,10 @@ class ShipmentMapper implements ShipmentMapperInterface
         RestShipmentsAttributesTransfer $restShipmentsAttributesTransfer
     ): RestShipmentsAttributesTransfer {
         $restShipmentsAttributesTransfer
+            ->fromArray($shipmentGroupTransfer->getShipment()->toArray(), true)
             ->setItems($this->getItemsGroupKeys($shipmentGroupTransfer))
             ->setShippingAddress($this->createRestAddressTransfer($shipmentGroupTransfer))
-            ->setSelectedShipmentMethod($this->createRestShipmentMethodTransfer($shipmentGroupTransfer))
-            ->setRequestedDeliveryDate($shipmentGroupTransfer->getShipment()->getRequestedDeliveryDate());
+            ->setSelectedShipmentMethod($this->createRestShipmentMethodTransfer($shipmentGroupTransfer));
 
         return $restShipmentsAttributesTransfer;
     }

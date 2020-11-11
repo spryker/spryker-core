@@ -10,6 +10,20 @@
     </transfer>
 
     <transfer name="CompanyUnitAddress">
+        <property name="uuid" dataBuilderRule="slug"/>
+        <property name="address1" dataBuilderRule="unique()->sentence(2)"/>
+        <property name="address2" dataBuilderRule="unique()->sentence(2)"/>
+        <property name="address3" dataBuilderRule="unique()->sentence(2)"/>
+        <property name="city" dataBuilderRule="=Berlin"/>
+        <property name="zipCode" dataBuilderRule="=10115"/>
+        <property name="phone" dataBuilderRule="=1234567890"/>
+        <property name="comment" dataBuilderRule="unique()->sentence(4)"/>
+        <property name="iso2Code" dataBuilderRule="=DE"/>
+        <property name="isDefaultBilling" dataBuilderRule="boolean(100)"/>
+    </transfer>
+
+    <transfer name="RestAddress">
+        <property name="idCompanyBusinessUnitAddress" dataBuilderRule="slug"/>
         <property name="salutation" dataBuilderRule="randomElement(['Mr', 'Mrs'])"/>
         <property name="firstName" dataBuilderRule="firstName"/>
         <property name="lastName" dataBuilderRule="lastName"/>

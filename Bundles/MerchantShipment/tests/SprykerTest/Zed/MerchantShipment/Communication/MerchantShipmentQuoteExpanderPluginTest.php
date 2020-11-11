@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\MerchantShipment\Communication;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
 
 /**
  * Auto-generated group annotations
@@ -19,10 +18,10 @@ use Generated\Shared\Transfer\ShipmentTransfer;
  * @group Zed
  * @group MerchantShipment
  * @group Communication
- * @group ExpandQuoteShipmentWithMerchantReferenceTest
+ * @group MerchantShipmentQuoteExpanderPluginTest
  * Add your own group annotations below this line
  */
-class ExpandQuoteShipmentWithMerchantReferenceTest extends Unit
+class MerchantShipmentQuoteExpanderPluginTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\MerchantShipment\MerchantShipmentCommunicationTester
@@ -36,12 +35,13 @@ class ExpandQuoteShipmentWithMerchantReferenceTest extends Unit
     {
         // Arrange
         $quoteTransfer = (new QuoteTransfer())
-            ->addItem((new ItemBuilder())->build()->setShipment(new ShipmentTransfer()))
-            ->addItem((new ItemBuilder())->build()->setShipment(new ShipmentTransfer()));
+            ->addItem((new ItemBuilder())->withShipment()->build())
+            ->addItem((new ItemBuilder())->withShipment()->build());
 
         // Act
-        $expandedQuoteTransfer = $this->tester->getShipmentExpander()
-            ->expandQuoteShipmentWithMerchantReference($quoteTransfer);
+        $expandedQuoteTransfer = $this->tester
+            ->createMerchantShipmentQuoteExpanderPlugin()
+            ->expand($quoteTransfer);
 
         // Assert
         $this->assertSame(
@@ -57,16 +57,17 @@ class ExpandQuoteShipmentWithMerchantReferenceTest extends Unit
     /**
      * @return void
      */
-    public function testExpandQuoteShipmentWithMerchantReferenceExpandsItemShipmentWithoutShipment(): void
+    public function testExpandQuoteShipmentWithMerchantReferenceDoesNotExpandItemShipmentWithoutShipment(): void
     {
         // Arrange
         $quoteTransfer = (new QuoteTransfer())
             ->addItem((new ItemBuilder())->build())
-            ->addItem((new ItemBuilder())->build()->setShipment(new ShipmentTransfer()));
+            ->addItem((new ItemBuilder())->withShipment()->build());
 
         // Act
-        $expandedQuoteTransfer = $this->tester->getShipmentExpander()
-            ->expandQuoteShipmentWithMerchantReference($quoteTransfer);
+        $expandedQuoteTransfer = $this->tester
+            ->createMerchantShipmentQuoteExpanderPlugin()
+            ->expand($quoteTransfer);
 
         // Assert
         $this->assertNull($expandedQuoteTransfer->getItems()->offsetGet(0)->getShipment());

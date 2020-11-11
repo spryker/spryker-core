@@ -23,10 +23,10 @@ use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Dependency\Facade\CompanyBus
  * @group Zed
  * @group CompanyBusinessUnitAddressesRestApi
  * @group Business
- * @group ProvideCompanyBusinessUnitAddressTest
+ * @group GetCompanyBusinessUnitAddressTest
  * Add your own group annotations below this line
  */
-class ProvideCompanyBusinessUnitAddressTest extends Unit
+class GetCompanyBusinessUnitAddressTest extends Unit
 {
     protected const FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_UUID = 'FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_UUID';
 
@@ -38,12 +38,11 @@ class ProvideCompanyBusinessUnitAddressTest extends Unit
     /**
      * @return void
      */
-    public function testProvideCompanyBusinessUnitAddressInCaseWhenAddressWasFound(): void
+    public function testGetCompanyBusinessUnitAddressInCaseAddressWasFound(): void
     {
         // Arrange
         $companyUnitAddressResponseTransfer = $this->getFakeCompanyUnitAddressResponseTransfer();
-        $restAddressTransfer = (new RestAddressBuilder())->build()
-            ->setIdCompanyBusinessUnitAddress(static::FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_UUID);
+        $quoteTransfer = (new QuoteBuilder())->withCustomer()->build();
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\CompanyBusinessUnitAddressesRestApiBusinessFactory $companyBusinessUnitAddressesRestApiBusinessFactoryMock */
         $companyBusinessUnitAddressesRestApiBusinessFactoryMock = $this->getMockBuilder(CompanyBusinessUnitAddressesRestApiBusinessFactory::class)
@@ -57,25 +56,29 @@ class ProvideCompanyBusinessUnitAddressTest extends Unit
         // Act
         $addressTransfer = $this->tester->getFacadeMock($companyBusinessUnitAddressesRestApiBusinessFactoryMock)
             ->getCompanyBusinessUnitAddress(
-                $restAddressTransfer,
-                (new QuoteBuilder())->withCustomer()->build()
+                (new RestAddressBuilder())->build(),
+                $quoteTransfer
             );
 
         // Assert
-        $this->assertSame(
-            $companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getAddress1(),
-            $addressTransfer->getAddress1()
-        );
+        $this->assertNull($addressTransfer->getUuid());
+        $this->assertTrue($addressTransfer->getIsAddressSavingSkipped());
+        $this->assertSame($companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getAddress1(), $addressTransfer->getAddress1());
+        $this->assertSame($companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getAddress2(), $addressTransfer->getAddress2());
+        $this->assertSame($companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getPhone(), $addressTransfer->getPhone());
+        $this->assertSame($quoteTransfer->getCustomer()->getEmail(), $addressTransfer->getEmail());
+        $this->assertSame($quoteTransfer->getCustomer()->getFirstName(), $addressTransfer->getFirstName());
+        $this->assertSame($quoteTransfer->getCustomer()->getLastName(), $addressTransfer->getLastName());
+        $this->assertSame($companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getCompany()->getName(), $addressTransfer->getCompany());
     }
 
     /**
      * @return void
      */
-    public function testProvideCompanyBusinessUnitAddressInCaseWhenCustomerAddressesWasNotFound(): void
+    public function testGetCompanyBusinessUnitAddressInCaseWhenCompanyUnitAddressWasNotFound(): void
     {
         // Arrange
-        $restAddressTransfer = (new RestAddressBuilder())->build()
-            ->setIdCompanyBusinessUnitAddress(static::FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_UUID);
+        $restAddressTransfer = (new RestAddressBuilder())->build();
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\CompanyBusinessUnitAddressesRestApiBusinessFactory $companyBusinessUnitAddressesRestApiBusinessFactoryMock */
         $companyBusinessUnitAddressesRestApiBusinessFactoryMock = $this->getMockBuilder(CompanyBusinessUnitAddressesRestApiBusinessFactory::class)
@@ -104,8 +107,7 @@ class ProvideCompanyBusinessUnitAddressTest extends Unit
     {
         return (new CompanyUnitAddressResponseTransfer())
             ->setIsSuccessful(true)
-            ->setCompanyUnitAddressTransfer((new CompanyUnitAddressBuilder())->withCompany()->build()
-                ->setUuid(static::FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_UUID));
+            ->setCompanyUnitAddressTransfer((new CompanyUnitAddressBuilder())->withCompany()->build());
     }
 
     /**

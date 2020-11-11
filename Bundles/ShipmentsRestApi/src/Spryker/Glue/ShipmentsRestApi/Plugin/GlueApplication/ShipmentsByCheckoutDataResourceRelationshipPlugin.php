@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\ShipmentsRestApi\Plugin\GlueApplication;
 
-use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
@@ -24,7 +23,9 @@ class ShipmentsByCheckoutDataResourceRelationshipPlugin extends AbstractPlugin i
 {
     /**
      * {@inheritDoc}
-     * - Adds `shipments` resource as relationship if `RestCheckoutDataTransfer` is provided as payload.
+     * - Adds `shipments` resource as relationship if `RestCheckoutDataTransfer`, is provided as payload.
+     * - Expects `RestCheckoutDataTransfer.quote` to be provided.
+     * - Expects `RestCheckoutDataTransfer.availableShipmentMethods` to be provided.
      * - Uses `ShipmentService::groupItemsByShipment()` which exists in `Shipment` module from version `^7.0.0`.
      * - Is not applicable if `RestCheckoutDataTransfer` contains `shippingAddress` or `shipment` attributes.
      *
@@ -37,10 +38,6 @@ class ShipmentsByCheckoutDataResourceRelationshipPlugin extends AbstractPlugin i
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
-        if (!$this->isSingleShipmentRequest($restRequest)) {
-            return;
-        }
-
         $this->getFactory()
             ->createShipmentByCheckoutDataExpander()
             ->addResourceRelationships($resources, $restRequest);
@@ -56,24 +53,5 @@ class ShipmentsByCheckoutDataResourceRelationshipPlugin extends AbstractPlugin i
     public function getRelationshipResourceType(): string
     {
         return ShipmentsRestApiConfig::RESOURCE_SHIPMENTS;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return bool
-     */
-    protected function isSingleShipmentRequest(RestRequestInterface $restRequest): bool
-    {
-        $restCheckoutRequestAttributesTransfer = $restRequest->getResource()->getAttributes();
-        if (
-            $restCheckoutRequestAttributesTransfer instanceof RestCheckoutRequestAttributesTransfer
-            && !$restCheckoutRequestAttributesTransfer->getShippingAddress()
-            && !$restCheckoutRequestAttributesTransfer->getShipment()
-        ) {
-            return true;
-        }
-
-        return false;
     }
 }

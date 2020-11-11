@@ -9,14 +9,17 @@ namespace Spryker\Glue\ShipmentsRestApi\Processor\Expander;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
+use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestShipmentsAttributesTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ShipmentsRestApi\Dependency\Service\ShipmentsRestApiToShipmentServiceInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMapperInterface;
-use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentRestResponseBuilderInterface;
+use Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiConfig;
 
 class ShipmentByCheckoutDataExpander implements ShipmentByCheckoutDataExpanderInterface
 {
@@ -31,23 +34,23 @@ class ShipmentByCheckoutDataExpander implements ShipmentByCheckoutDataExpanderIn
     protected $shipmentMapper;
 
     /**
-     * @var \Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentRestResponseBuilderInterface
+     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
-    protected $shipmentRestResponseBuilder;
+    protected $restResourceBuilder;
 
     /**
      * @param \Spryker\Glue\ShipmentsRestApi\Dependency\Service\ShipmentsRestApiToShipmentServiceInterface $shipmentService
      * @param \Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMapperInterface $shipmentMapper
-     * @param \Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentRestResponseBuilderInterface $shipmentRestResponseBuilder
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      */
     public function __construct(
         ShipmentsRestApiToShipmentServiceInterface $shipmentService,
         ShipmentMapperInterface $shipmentMapper,
-        ShipmentRestResponseBuilderInterface $shipmentRestResponseBuilder
+        RestResourceBuilderInterface $restResourceBuilder
     ) {
         $this->shipmentService = $shipmentService;
         $this->shipmentMapper = $shipmentMapper;
-        $this->shipmentRestResponseBuilder = $shipmentRestResponseBuilder;
+        $this->restResourceBuilder = $restResourceBuilder;
     }
 
     /**
@@ -58,36 +61,74 @@ class ShipmentByCheckoutDataExpander implements ShipmentByCheckoutDataExpanderIn
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
+        if ($this->isSingleShipmentRequest($restRequest)) {
+            return;
+        }
+
         foreach ($resources as $resource) {
             $quoteTransfer = $this->findQuoteTransferInPayload($resource);
             $shipmentMethodsCollectionTransfer = $this->findShipmentMethodsCollectionTransferInPayload($resource);
+
             if (!$quoteTransfer || !$shipmentMethodsCollectionTransfer) {
                 continue;
             }
 
+            $mappedShipmentMethodsByHash = $this->mapShipmentMethodsByHash($shipmentMethodsCollectionTransfer);
+
             $shipmentGroupTransfers = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
             foreach ($shipmentGroupTransfers as $shipmentGroupTransfer) {
-                $shipmentMethodsTransfer = $this->findShipmentMethodsTransferByHash(
-                    $shipmentGroupTransfer->getHash(),
-                    $shipmentMethodsCollectionTransfer
+                $this->addShipmentsResourceRelationships(
+                    $resource,
+                    $shipmentGroupTransfer,
+                    $mappedShipmentMethodsByHash[$shipmentGroupTransfer->getHash()] ?? null
                 );
-
-                if (!$shipmentMethodsTransfer) {
-                    continue;
-                }
-
-                $restShipmentsAttributesTransfers = $this->shipmentMapper
-                    ->mapShipmentGroupTransferToRestShipmentsAttributesTransfers(
-                        $shipmentGroupTransfer,
-                        new RestShipmentsAttributesTransfer()
-                    );
-
-                $shipmentsRestResource = $this->shipmentRestResponseBuilder
-                    ->createShipmentRestResource($shipmentMethodsTransfer, $restShipmentsAttributesTransfers);
-
-                $resource->addRelationship($shipmentsRestResource);
             }
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer $shipmentMethodsCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer[]
+     */
+    protected function mapShipmentMethodsByHash(ShipmentMethodsCollectionTransfer $shipmentMethodsCollectionTransfer): array
+    {
+        $mappedShipmentMethodsByHash = [];
+
+        foreach ($shipmentMethodsCollectionTransfer->getShipmentMethods() as $shipmentMethodsTransfer) {
+            $mappedShipmentMethodsByHash[$shipmentMethodsTransfer->getShipmentHash()] = $shipmentMethodsTransfer;
+        }
+
+        return $mappedShipmentMethodsByHash;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer|null $shipmentMethodsTransfer
+     *
+     * @return void
+     */
+    protected function addShipmentsResourceRelationships(
+        RestResourceInterface $resource,
+        ShipmentGroupTransfer $shipmentGroupTransfer,
+        ?ShipmentMethodsTransfer $shipmentMethodsTransfer
+    ): void {
+        $shipmentGroupTransfer->setAvailableShipmentMethods($shipmentMethodsTransfer);
+
+        $restShipmentsAttributesTransfer = $this->shipmentMapper
+            ->mapShipmentGroupTransferToRestShipmentsAttributesTransfers(
+                $shipmentGroupTransfer,
+                new RestShipmentsAttributesTransfer()
+            );
+
+        $shipmentsRestResource = $this->restResourceBuilder->createRestResource(
+            ShipmentsRestApiConfig::RESOURCE_SHIPMENTS,
+            $shipmentGroupTransfer->getHash(),
+            $restShipmentsAttributesTransfer
+        )->setPayload($shipmentGroupTransfer);
+
+        $resource->addRelationship($shipmentsRestResource);
     }
 
     /**
@@ -122,21 +163,18 @@ class ShipmentByCheckoutDataExpander implements ShipmentByCheckoutDataExpanderIn
     }
 
     /**
-     * @param string $shipmentHash
-     * @param \Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer $shipmentMethodsCollectionTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer|null
+     * @return bool
      */
-    protected function findShipmentMethodsTransferByHash(
-        string $shipmentHash,
-        ShipmentMethodsCollectionTransfer $shipmentMethodsCollectionTransfer
-    ): ?ShipmentMethodsTransfer {
-        foreach ($shipmentMethodsCollectionTransfer->getShipmentMethods() as $shipmentMethodsTransfer) {
-            if ($shipmentMethodsTransfer->getShipmentHash() === $shipmentHash) {
-                return $shipmentMethodsTransfer;
-            }
+    protected function isSingleShipmentRequest(RestRequestInterface $restRequest): bool
+    {
+        $restCheckoutRequestAttributesTransfer = $restRequest->getResource()->getAttributes();
+
+        if (!$restCheckoutRequestAttributesTransfer instanceof RestCheckoutRequestAttributesTransfer) {
+            return false;
         }
 
-        return null;
+        return $restCheckoutRequestAttributesTransfer->getShippingAddress() || $restCheckoutRequestAttributesTransfer->getShipment();
     }
 }

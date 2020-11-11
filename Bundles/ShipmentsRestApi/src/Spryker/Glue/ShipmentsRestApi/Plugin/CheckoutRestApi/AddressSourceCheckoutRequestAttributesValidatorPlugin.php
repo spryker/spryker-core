@@ -18,6 +18,12 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class AddressSourceCheckoutRequestAttributesValidatorPlugin extends AbstractPlugin implements CheckoutRequestAttributesValidatorPluginInterface
 {
     /**
+     * {@inheritDoc}
+     * - Executes `AddressSourceCheckerPluginInterface` plugin stack.
+     * - Validates the given shipments attributes and returns an array of errors if necessary.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer

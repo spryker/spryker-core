@@ -8,8 +8,8 @@
 namespace SprykerTest\Zed\MerchantShipment;
 
 use Codeception\Actor;
-use Spryker\Zed\MerchantShipment\Expander\ShipmentExpander;
-use Spryker\Zed\MerchantShipment\Expander\ShipmentExpanderInterface;
+use Spryker\Zed\MerchantShipment\Communication\Plugin\Cart\MerchantShipmentItemExpanderPlugin;
+use Spryker\Zed\MerchantShipment\Communication\Plugin\Quote\MerchantShipmentQuoteExpanderPlugin;
 
 /**
  * @method void wantToTest($text)
@@ -30,10 +30,18 @@ class MerchantShipmentCommunicationTester extends Actor
     use _generated\MerchantShipmentCommunicationTesterActions;
 
     /**
-     * @return \Spryker\Zed\MerchantShipment\Expander\ShipmentExpanderInterface
+     * @return \Spryker\Zed\MerchantShipment\Communication\Plugin\Quote\MerchantShipmentQuoteExpanderPlugin
      */
-    public function getShipmentExpander(): ShipmentExpanderInterface
+    public function createMerchantShipmentQuoteExpanderPlugin(): MerchantShipmentQuoteExpanderPlugin
     {
-        return new ShipmentExpander();
+        return new MerchantShipmentQuoteExpanderPlugin();
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantShipment\Communication\Plugin\Cart\MerchantShipmentItemExpanderPlugin
+     */
+    public function createMerchantShipmentItemExpanderPlugin(): MerchantShipmentItemExpanderPlugin
+    {
+        return new MerchantShipmentItemExpanderPlugin();
     }
 }
