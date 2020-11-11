@@ -182,15 +182,15 @@ interface CustomerFacadeInterface
     /**
      * Specification:
      * - Updates password if NewPassword property is set in provided transfer object:
-     *      - Check customer password min and max length according to configuration.
-     *      - If extended password validation enabled will check password according to the configaration:
-     *         - Required characters present (upper case, lower case, digit, special chars).
-     *         - Bypass password validation of any kind if the password is listed in whitelist.
-     *         - Check against the configurable blacklist of password that are considered common.
-     *         - Check if the password contains sequence of the same charactee longer that it's allowed.
-     *         - Check if the password contains any of preconfigured characters that are forbidden.
-     *      - Validates provided current plain text password using persistent storage.
-     *      - Encrypts provided plain text password before update.
+     * - Check customer password min and max length according to configuration.
+     * - If extended password validation enabled will check password according to the configaration:
+     * - Required characters present (upper case, lower case, digit, special chars).
+     * - Bypass password validation of any kind if the password is listed in whitelist.
+     * - Check against the configurable blacklist of password that are considered common.
+     * - Check if the password contains sequence of the same charactee longer that it's allowed.
+     * - Check if the password contains any of preconfigured characters that are forbidden.
+     * - Validates provided current plain text password using persistent storage.
+     * - Encrypts provided plain text password before update.
      * - Identifies customer by either customer ID, customer email, or password restoration key.
      * - Validates customer email information.
      * - Updates customer data which is set in provided transfer object (including password property - dismantles newPassword property).
@@ -208,12 +208,12 @@ interface CustomerFacadeInterface
      * Specification:
      * - Identifies customer by either customer ID, customer email, or password restoration key.
      * - Check customer password min and max length according to configuration if it is provided.
-     * - If extended password validation enabled will check password according to the configaration:
-     *         - Required characters present (upper case, lower case, digit, special chars).
-     *         - Bypass password validation of any kind if the password is listed in whitelist.
-     *         - Check against the configurable blacklist of password that are considered common.
-     *         - Check if the password contains sequence of the same charactee longer that it's allowed.
-     *         - Check if the password contains any of preconfigured characters that are forbidden.
+     * - If extended password validation enabled will check password according to the configuration:
+     * - Required characters present (upper case, lower case, digit, special characters).
+     * - Bypass password validation of any kind if the password is listed in whitelist.
+     * - Check against the configurable blacklist of password that are considered common.
+     * - Check if the password contains sequence of the same character longer that it's allowed.
+     * - Check if the password contains any of preconfigured characters that are forbidden.
      * - Validates provided current plain text password using persistent storage.
      * - Encrypts provided plain text password and stores it in persistent storage.
      *

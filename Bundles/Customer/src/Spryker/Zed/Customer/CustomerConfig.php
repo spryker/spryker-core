@@ -192,9 +192,9 @@ class CustomerConfig extends AbstractBundleConfig
      * - Provides a limit of a sequence of the same character in password.
      *
      * Example:
-     *  0: will disable length validation.
-     *  1: will forbid any duplicated characters.
-     *  2: will allow duplication of the same character.
+     *  0: Disables length validation.
+     *  1: Forbids any duplicated characters.
+     *  2: Allows duplication of the same character.
      *  3: ... etc.
      *
      * @api
@@ -207,10 +207,12 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
+     * @deprecated
+     *
      * Specification:
      * - Enables password check for Customer::restorePassword() in BC way.
-     *
-     * @api
      *
      * @return bool
      */
