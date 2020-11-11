@@ -38,11 +38,11 @@ class SequenceCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
         string $password,
         CustomerResponseTransfer $customerResponseTransfer
     ): CustomerResponseTransfer {
-        if (!$this->customerPasswordSequenceLimit || $this->customerPasswordSequenceLimit < 0) {
+        if (!$this->customerPasswordSequenceLimit || $this->customerPasswordSequenceLimit <= 1) {
             return $customerResponseTransfer;
         }
 
-        $regularExpression = '(.)' . str_repeat('\1', $this->customerPasswordSequenceLimit);
+        $regularExpression = '(.)' . str_repeat('\1', $this->customerPasswordSequenceLimit - 1);
         if (!preg_match('/' . $regularExpression . '/', $password)) {
             return $customerResponseTransfer;
         }
