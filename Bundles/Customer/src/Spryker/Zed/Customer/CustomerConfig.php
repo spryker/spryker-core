@@ -168,21 +168,18 @@ class CustomerConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Provides a limit of a sequence of the same character in password.
+     * - Provides a limit for character repeating if defined.
      *
-     * Example:
-     *  0: Disables length validation.
-     *  1: Forbids any duplicated characters.
-     *  2: Allows duplication of the same character.
-     *  3: ... etc.
+     * Example
+     * - Limit=4, forbids to use "aaaa" in password, but allows "aaa"
      *
      * @api
      *
-     * @return int
+     * @return int|null
      */
-    public function getCustomerPasswordSequenceLimit(): int
+    public function getCustomerPasswordSequenceLimit(): ?int
     {
-        return 0;
+        return null;
     }
 
     /**

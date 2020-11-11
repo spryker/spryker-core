@@ -16,7 +16,7 @@ class SequenceCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
     protected const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE = 'customer.password.error.sequence';
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $customerPasswordSequenceLimit;
 
@@ -38,7 +38,7 @@ class SequenceCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
         string $password,
         CustomerResponseTransfer $customerResponseTransfer
     ): CustomerResponseTransfer {
-        if (!$this->customerPasswordSequenceLimit) {
+        if (!$this->customerPasswordSequenceLimit || $this->customerPasswordSequenceLimit < 0) {
             return $customerResponseTransfer;
         }
 

@@ -47,9 +47,7 @@ interface CustomerFacadeInterface
 
     /**
      * Specification:
-     * - Check customer password min and max length according to configuration if it is provided.
-     * - Extended password validation can be enabled in this method through
-     *      isCustomerPasswordPolicyExtendedValidationEnabled().
+     * - Validates customer password according configuration.
      * - Validates provided customer email information.
      * - Encrypts provided plain text password.
      * - Assigns current locale to customer if it is not set already.
@@ -66,9 +64,7 @@ interface CustomerFacadeInterface
 
     /**
      * Specification:
-     * - Checks customer password min and max length according to configuration if it is provided.
-     * - Extended password validation can be enabled in this method through
-     *      isCustomerPasswordPolicyExtendedValidationEnabled().
+     * - Validates customer password according configuration.
      * - Validates provided customer email information.
      * - Encrypts provided plain text password.
      * - Assigns current locale to customer if it is not set already.
@@ -129,7 +125,7 @@ interface CustomerFacadeInterface
     /**
      * Specification:
      * - Identifies customer by either customer ID, customer email, or password restoration key.
-     * - Validates password if enabled in configuration.
+     * - Validates password only if enabled in configuration for backward compatibility reasons.
      * - Encrypts provided plain text password.
      * - Stores new password for customer in persistent storage.
      * - Removes password restoration key from customer.
@@ -182,13 +178,7 @@ interface CustomerFacadeInterface
     /**
      * Specification:
      * - Updates password if NewPassword property is set in provided transfer object:
-     * - Check customer password min and max length according to configuration.
-     * - If extended password validation enabled will check password according to the configaration:
-     * - Required characters present (upper case, lower case, digit, special chars).
-     * - Bypass password validation of any kind if the password is listed in whitelist.
-     * - Check against the configurable blacklist of password that are considered common.
-     * - Check if the password contains sequence of the same charactee longer that it's allowed.
-     * - Check if the password contains any of preconfigured characters that are forbidden.
+     * - Validates customer password according configuration.
      * - Validates provided current plain text password using persistent storage.
      * - Encrypts provided plain text password before update.
      * - Identifies customer by either customer ID, customer email, or password restoration key.
@@ -207,13 +197,7 @@ interface CustomerFacadeInterface
     /**
      * Specification:
      * - Identifies customer by either customer ID, customer email, or password restoration key.
-     * - Check customer password min and max length according to configuration if it is provided.
-     * - If extended password validation enabled will check password according to the configuration:
-     * - Required characters present (upper case, lower case, digit, special characters).
-     * - Bypass password validation of any kind if the password is listed in whitelist.
-     * - Check against the configurable blacklist of password that are considered common.
-     * - Check if the password contains sequence of the same character longer that it's allowed.
-     * - Check if the password contains any of preconfigured characters that are forbidden.
+     * - Validates customer password according configuration.
      * - Validates provided current plain text password using persistent storage.
      * - Encrypts provided plain text password and stores it in persistent storage.
      *
@@ -414,7 +398,7 @@ interface CustomerFacadeInterface
     /**
      * Specification:
      * - Does nothing if customer is guest.
-     * - - Extended password validation
+     * - Validates customer password according configuration.
      * - Registers customer if it does not exist in persistent storage.
      * - Updates customer if it exists in persistent storage.
      * - Updates customer addresses.
@@ -439,7 +423,7 @@ interface CustomerFacadeInterface
     /**
      * Specification:
      * - Does nothing if customer is guest.
-     * - - Extended password validation
+     * - Validates customer password according configuration.
      * - Registers customer if it does not exist in persistent storage.
      * - Updates customer if it exists in persistent storage.
      * - Updates customer addresses.
@@ -479,7 +463,7 @@ interface CustomerFacadeInterface
      * Specification:
      * - Identifies customer by either customer ID, customer email, or password restoration key.
      * - Applies configured CustomerAnonymizerPluginInterface plugins on customer data.
-     * - - Extended password validation
+     * - Validates anonymized customer password according regular password validation configuration.
      * - Anonymizes customer addresses.
      * - Anonymizes customer data.
      * - Updates persistent storage with anonymized data.

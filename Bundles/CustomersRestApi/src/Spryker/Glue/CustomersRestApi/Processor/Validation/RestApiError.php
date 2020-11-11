@@ -323,6 +323,12 @@ class RestApiError implements RestApiErrorInterface
                 continue;
             }
 
+            if ($customerErrorTransfer->getMessage() === static::ERROR_CUSTOMER_PASSWORD_CHARACTER_SET) {
+                $restResponse = $this->addPasswordInvalidCharacterSet($restResponse);
+
+                continue;
+            }
+
             if ($customerErrorTransfer->getMessage() === static::ERROR_CUSTOMER_PASSWORD_SEQUENCE) {
                 $restResponse = $this->addPasswordSequenceNotAllowed($restResponse);
 
@@ -435,12 +441,12 @@ class RestApiError implements RestApiErrorInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function addPasswordSpecialRequired(RestResponseInterface $restResponse): RestResponseInterface
+    protected function addPasswordInvalidCharacterSet(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_PASSWORD_SPECIAL_REQUIRED)
             ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_PASSWORD_SPECIAL_REQUIRED);
+            ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_PASSWORD_INVALID_CHARACTER_SET);
 
         return $restResponse->addError($restErrorMessageTransfer);
     }
