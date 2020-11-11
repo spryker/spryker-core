@@ -184,10 +184,11 @@ class PriceProductFilter implements PriceProductFilterInterface
     {
         $quantity = $this->executeCartItemQuantityCounterStrategyPlugins($itemTransfer, $cartChangeTransfer);
 
-        if ($quantity !== static::ZERO_QUANTITY_VALUE) {
+        if ($quantity !== null) {
             return $quantity;
         }
 
+        $quantity = static::ZERO_QUANTITY_VALUE;
         foreach ($cartChangeTransfer->getQuote()->getItems() as $quoteItemTransfer) {
             if ($quoteItemTransfer->getSku() === $itemTransfer->getSku()) {
                 $quantity += $quoteItemTransfer->getQuantity();
@@ -196,13 +197,11 @@ class PriceProductFilter implements PriceProductFilterInterface
 
         foreach ($cartChangeTransfer->getItems() as $cartChangeItemTransfer) {
             if ($cartChangeItemTransfer->getSku() === $itemTransfer->getSku()) {
-                if ($cartChangeTransfer->getOperation() === PriceCartConnectorConfig::OPERATION_REMOVE) {
-                    $quantity -= $cartChangeItemTransfer->getQuantity();
-
-                    continue;
-                }
-
-                $quantity += $cartChangeItemTransfer->getQuantity();
+                $quantity = $this->changeItemQuantityAccordingToOperation(
+                    $cartChangeTransfer->getOperation(),
+                    $quantity,
+                    $cartChangeItemTransfer->getQuantity()
+                );
             }
         }
 
@@ -218,7 +217,7 @@ class PriceProductFilter implements PriceProductFilterInterface
     protected function executeCartItemQuantityCounterStrategyPlugins(
         ItemTransfer $itemTransfer,
         CartChangeTransfer $cartChangeTransfer
-    ): int {
+    ): ?int {
         foreach ($this->cartItemQuantityCounterStrategyPlugins as $cartItemQuantityCounterStrategyPlugin) {
             if ($cartItemQuantityCounterStrategyPlugin->isApplicable($cartChangeTransfer, $itemTransfer)) {
                 return $cartItemQuantityCounterStrategyPlugin
@@ -226,6 +225,22 @@ class PriceProductFilter implements PriceProductFilterInterface
             }
         }
 
-        return static::ZERO_QUANTITY_VALUE;
+        return null;
+    }
+
+    /**
+     * @param string $operation
+     * @param int $currentItemQuantity
+     * @param int $deltaQuantity
+     *
+     * @return int
+     */
+    protected function changeItemQuantityAccordingToOperation(string $operation, int $currentItemQuantity, int $deltaQuantity): int
+    {
+        if ($operation === PriceCartConnectorConfig::OPERATION_REMOVE) {
+            return $currentItemQuantity - $deltaQuantity;
+        }
+
+        return $currentItemQuantity + $deltaQuantity;
     }
 }
