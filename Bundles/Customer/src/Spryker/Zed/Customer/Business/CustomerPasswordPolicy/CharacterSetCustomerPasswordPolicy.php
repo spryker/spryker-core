@@ -50,7 +50,7 @@ class CharacterSetCustomerPasswordPolicy implements CustomerPasswordPolicyInterf
      */
     public function validatePassword(string $password, CustomerResponseTransfer $customerResponseTransfer): CustomerResponseTransfer
     {
-        foreach ($this->config as $pattern => $errorMessage) {
+        foreach ($this->config as $errorMessage => $pattern) {
             if (preg_match($pattern, $password)) {
                 continue;
             }

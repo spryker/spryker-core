@@ -995,7 +995,7 @@ class Customer implements CustomerInterface
         $customerResponseTransfer = (new CustomerResponseTransfer())
             ->setIsSuccess(true);
 
-        return $this->passwordPolicy->validatePassword($password, $customerResponseTransfer);
+        return $this->customerPasswordPolicyValidator->validatePassword($password, $customerResponseTransfer);
     }
 
     /**

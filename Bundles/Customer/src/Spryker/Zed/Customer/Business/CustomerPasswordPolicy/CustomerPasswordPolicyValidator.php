@@ -57,6 +57,7 @@ class CustomerPasswordPolicyValidator implements CustomerPasswordPolicyValidator
             return $this->addPasswordInBlacklistError($customerResponseTransfer);
         }
         foreach ($this->customerPasswordPolicies as $customerPasswordPolicy) {
+            $customerPasswordPolicy->validatePassword($password, $customerResponseTransfer);
         }
 
         return $customerResponseTransfer;
