@@ -93,7 +93,7 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
 
         return (new ItemReplaceTransfer())
             ->setItemToBeReplaced($itemToBeReplacedTransfer)
-            ->setNewItem($newItemTransfer ?? null)
+            ->setNewItem($newItemTransfer)
             ->setQuote($quoteTransfer);
     }
 
