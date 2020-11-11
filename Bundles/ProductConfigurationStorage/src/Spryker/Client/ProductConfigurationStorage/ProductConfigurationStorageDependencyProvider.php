@@ -16,6 +16,7 @@ use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigur
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToSessionClientBridge;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToStorageClientBridge;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToPriceProductServiceBridge;
+use Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToProductConfigurationServiceBridge;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToSynchronizationServiceBridge;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToUtilEncodingServiceServiceBridge;
 
@@ -30,9 +31,12 @@ class ProductConfigurationStorageDependencyProvider extends AbstractDependencyPr
     public const CLIENT_CART = 'CLIENT_CART';
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
     public const CLIENT_PRODUCT_CONFIGURATION = 'CLIENT_PRODUCT_CONFIGURATION';
+
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
     public const SERVICE_PRICE_PRODUCT = 'SERVICE_PRICE_PRODUCT';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const SERVICE_PRODUCT_CONFIGURATION = 'SERVICE_PRODUCT_CONFIGURATION';
+
     public const PLUGINS_PRODUCT_CONFIGURATION_STORAGE_PRICE_EXTRACTOR = 'PLUGINS_PRODUCT_CONFIGURATION_STORAGE_PRICE_EXTRACTOR';
 
     /**
@@ -52,6 +56,7 @@ class ProductConfigurationStorageDependencyProvider extends AbstractDependencyPr
         $container = $this->addPriceProductService($container);
         $container = $this->addUtilEncodingService($container);
         $container = $this->addSynchronizationService($container);
+        $container = $this->addPriceProductService($container);
         $container = $this->addPriceProductConfigurationStoragePriceExtractorPlugins($container);
 
         return $container;
@@ -187,6 +192,22 @@ class ProductConfigurationStorageDependencyProvider extends AbstractDependencyPr
         $container->set(static::CLIENT_PRODUCT_CONFIGURATION, function (Container $container) {
             return new ProductConfigurationStorageToProductConfigurationClientBridge(
                 $container->getLocator()->productConfiguration()->client()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addProductConfigurationService(Container $container): Container
+    {
+        $container->set(static::SERVICE_PRODUCT_CONFIGURATION, function (Container $container) {
+            new ProductConfigurationStorageToProductConfigurationServiceBridge(
+                $container->getLocator()->productConfiguration()->service()
             );
         });
 

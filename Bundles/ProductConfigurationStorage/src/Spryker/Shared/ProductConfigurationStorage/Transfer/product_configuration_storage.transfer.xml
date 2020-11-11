@@ -37,6 +37,7 @@
         <property name="quantity" type="int"/>
         <property name="availableQuantity" type="int"/>
         <property name="prices" type="PriceProduct[]" singular="price"/>
+        <property name="productConfiguratorInstanceHash" type="string"/>
     </transfer>
 
     <transfer name="PriceProductFilter">
@@ -47,8 +48,7 @@
     </transfer>
 
     <transfer name="PriceProductDimension">
-        <property name="productConfigurationConfiguratorKey" type="string"/>
-        <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
+        <property name="productConfigurationInstanceHash" type="string"/>
         <property name="type" type="string"/>
     </transfer>
 

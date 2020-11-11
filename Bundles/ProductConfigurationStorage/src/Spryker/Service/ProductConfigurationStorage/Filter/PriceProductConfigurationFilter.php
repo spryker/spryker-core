@@ -48,7 +48,7 @@ class PriceProductConfigurationFilter implements PriceProductConfigurationFilter
     protected function filterOutProductConfigurationPrices(array $priceProductTransfers): array
     {
         return array_filter($priceProductTransfers, function (PriceProductTransfer $priceProductTransfer) {
-            return $priceProductTransfer->getPriceDimension()->getProductConfigurationConfiguratorKey() === null;
+            return $priceProductTransfer->getPriceDimension()->getProductConfigurationInstanceHash() === null;
         });
     }
 
@@ -67,10 +67,8 @@ class PriceProductConfigurationFilter implements PriceProductConfigurationFilter
                 return false;
             }
 
-            $priceProductConfigurationInstance = $priceProductTransfer->getPriceDimension()
-                ->getProductConfigurationInstance();
-
-            return $priceProductConfigurationInstance == $priceProductFilterTransfer->getProductConfigurationInstance();
+            return $priceProductTransfer->getPriceDimension()->getProductConfigurationInstanceHash()
+                === $priceProductFilterTransfer->getProductConfigurationInstance()->getProductConfiguratorInstanceHash();
         });
     }
 }

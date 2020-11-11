@@ -18,6 +18,7 @@
         <property name="configuratorKey" type="string"/>
         <property name="isComplete" type="bool"/>
         <property name="prices" type="PriceProduct[]" singular="price"/>
+        <property name="productConfigurationHash" type="string"/>
     </transfer>
 
     <transfer name="Item">

@@ -43,9 +43,9 @@ class ProductConfigurationItemQuantityCounter implements ProductConfigurationIte
         foreach ($cartChangeItemsTransfer as $cartChangeItemTransfer) {
             if ($this->isSameProductConfigurationItem($cartChangeItemTransfer, $itemTransfer)) {
                 $currentItemQuantity = $this->changeItemQuantityAccordingToOperation(
-                    $cartChangeTransfer->getOperation(),
                     $currentItemQuantity,
-                    $cartChangeItemTransfer->getQuantity()
+                    $cartChangeItemTransfer->getQuantity(),
+                    $cartChangeTransfer->getOperation()
                 );
             }
         }
@@ -68,13 +68,13 @@ class ProductConfigurationItemQuantityCounter implements ProductConfigurationIte
     }
 
     /**
-     * @param string $operation
      * @param int $currentItemQuantity
      * @param int $deltaQuantity
+     * @param string|null $operation
      *
      * @return int
      */
-    protected function changeItemQuantityAccordingToOperation(string $operation, int $currentItemQuantity, int $deltaQuantity): int
+    protected function changeItemQuantityAccordingToOperation(int $currentItemQuantity, int $deltaQuantity, ?string $operation): int
     {
         if ($operation === static::OPERATION_REMOVE) {
             return $currentItemQuantity - $deltaQuantity;

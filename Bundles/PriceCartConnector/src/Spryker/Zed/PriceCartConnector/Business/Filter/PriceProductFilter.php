@@ -198,9 +198,9 @@ class PriceProductFilter implements PriceProductFilterInterface
         foreach ($cartChangeTransfer->getItems() as $cartChangeItemTransfer) {
             if ($cartChangeItemTransfer->getSku() === $itemTransfer->getSku()) {
                 $quantity = $this->changeItemQuantityAccordingToOperation(
-                    $cartChangeTransfer->getOperation(),
                     $quantity,
-                    $cartChangeItemTransfer->getQuantity()
+                    $cartChangeItemTransfer->getQuantity(),
+                    $cartChangeTransfer->getOperation()
                 );
             }
         }
@@ -229,13 +229,13 @@ class PriceProductFilter implements PriceProductFilterInterface
     }
 
     /**
-     * @param string $operation
      * @param int $currentItemQuantity
      * @param int $deltaQuantity
+     * @param string|null $operation
      *
      * @return int
      */
-    protected function changeItemQuantityAccordingToOperation(string $operation, int $currentItemQuantity, int $deltaQuantity): int
+    protected function changeItemQuantityAccordingToOperation(int $currentItemQuantity, int $deltaQuantity, ?string $operation): int
     {
         if ($operation === PriceCartConnectorConfig::OPERATION_REMOVE) {
             return $currentItemQuantity - $deltaQuantity;

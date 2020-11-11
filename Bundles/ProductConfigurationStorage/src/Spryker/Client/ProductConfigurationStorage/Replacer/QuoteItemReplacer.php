@@ -20,6 +20,10 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
 {
     protected const GLOSSARY_KEY_PRODUCT_CONFIGURATION_ITEM_NOT_FOUND_IN_CART = 'product_configuration.error.configured_item_not_found_in_cart';
 
+    protected const MESSAGE_TYPE_ERROR = 'error';
+
+    protected const TRANSLATION_PARAMETER_SKU = '%sku%';
+
     /**
      * @var \Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToCartClientInterface
      */
@@ -53,7 +57,7 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
         if (!$itemToBeReplacedTransfer) {
             return $productConfiguratorResponseProcessorResponseTransfer
                 ->setIsSuccessful(false)
-                ->addMessage($this->createConfigurationItemNotFoundMessage());
+                ->addMessage($this->createConfigurationItemNotFoundMessage($productConfiguratorResponseTransfer->getSku()));
         }
 
         $itemReplaceTransfer = $this->createItemReplaceTransfer(
@@ -117,11 +121,15 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
     }
 
     /**
+     * @param string $sku
+     *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function createConfigurationItemNotFoundMessage(): MessageTransfer
+    protected function createConfigurationItemNotFoundMessage(string $sku): MessageTransfer
     {
         return (new MessageTransfer())
-            ->setValue(static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_ITEM_NOT_FOUND_IN_CART);
+            ->setType(static::MESSAGE_TYPE_ERROR)
+            ->setValue(static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_ITEM_NOT_FOUND_IN_CART)
+            ->setParameters([static::TRANSLATION_PARAMETER_SKU => $sku]);
     }
 }

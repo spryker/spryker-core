@@ -17,6 +17,7 @@ use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigur
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToSessionClientInterface;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToStorageClientInterface;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToPriceProductServiceInterface;
+use Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToProductConfigurationServiceInterface;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToUtilEncodingServiceInterface;
 use Spryker\Client\ProductConfigurationStorage\Expander\PriceProductFilterExpander;
@@ -74,7 +75,7 @@ class ProductConfigurationStorageFactory extends AbstractFactory
      */
     public function createProductConfigurationInstanceMapper(): ProductConfigurationInstanceMapperInterface
     {
-        return new ProductConfigurationInstanceMapper();
+        return new ProductConfigurationInstanceMapper($this->getProductConfigurationService());
     }
 
     /**
@@ -92,6 +93,7 @@ class ProductConfigurationStorageFactory extends AbstractFactory
     {
         return new ProductConfigurationInstancePriceMapper(
             $this->getPriceProductService(),
+            $this->getProductConfigurationService(),
             $this->getPriceProductConfigurationStoragePriceExtractorPlugins()
         );
     }
@@ -285,6 +287,14 @@ class ProductConfigurationStorageFactory extends AbstractFactory
     public function getUtilEncodingService(): ProductConfigurationStorageToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(ProductConfigurationStorageDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToProductConfigurationServiceInterface
+     */
+    public function getProductConfigurationService(): ProductConfigurationStorageToProductConfigurationServiceInterface
+    {
+        return $this->getProvidedDependency(ProductConfigurationStorageDependencyProvider::SERVICE_PRODUCT_CONFIGURATION);
     }
 
     /**

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductConfiguration\Business;
 
+use Spryker\Service\ProductConfiguration\ProductConfigurationServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductConfiguration\Business\Checker\ProductConfigurationChecker;
 use Spryker\Zed\ProductConfiguration\Business\Checker\ProductConfigurationCheckerInterface;
@@ -18,8 +19,6 @@ use Spryker\Zed\ProductConfiguration\Business\Expander\ProductConfigurationGroup
 use Spryker\Zed\ProductConfiguration\Business\Expander\ProductConfigurationGroupKeyItemExpanderInterface;
 use Spryker\Zed\ProductConfiguration\Business\Expander\ProductConfigurationPriceProductExpander;
 use Spryker\Zed\ProductConfiguration\Business\Expander\ProductConfigurationPriceProductExpanderInterface;
-use Spryker\Zed\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingServiceInterface;
-use Spryker\Zed\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilTextServiceInterface;
 use Spryker\Zed\ProductConfiguration\ProductConfigurationDependencyProvider;
 
 /**
@@ -33,10 +32,7 @@ class ProductConfigurationBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductConfigurationGroupKeyItemExpander(): ProductConfigurationGroupKeyItemExpanderInterface
     {
-        return new ProductConfigurationGroupKeyItemExpander(
-            $this->getUtilEncodingService(),
-            $this->getUtilTextService()
-        );
+        return new ProductConfigurationGroupKeyItemExpander($this->getProductConfigurationService());
     }
 
     /**
@@ -71,19 +67,8 @@ class ProductConfigurationBusinessFactory extends AbstractBusinessFactory
         return new ProductConfigurationItemQuantityCounter();
     }
 
-    /**
-     * @return \Spryker\Zed\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingServiceInterface
-     */
-    public function getUtilEncodingService(): ProductConfigurationToUtilEncodingServiceInterface
+    public function getProductConfigurationService(): ProductConfigurationServiceInterface
     {
-        return $this->getProvidedDependency(ProductConfigurationDependencyProvider::SERVICE_UTIL_ENCODING);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilTextServiceInterface
-     */
-    public function getUtilTextService(): ProductConfigurationToUtilTextServiceInterface
-    {
-        return $this->getProvidedDependency(ProductConfigurationDependencyProvider::SERVICE_UTIL_TEXT);
+        return $this->getProvidedDependency(ProductConfigurationDependencyProvider::SERVICE_PRODUCT_CONFIGURATION);
     }
 }
