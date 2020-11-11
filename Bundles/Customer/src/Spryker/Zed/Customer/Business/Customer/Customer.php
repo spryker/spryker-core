@@ -190,7 +190,7 @@ class Customer implements CustomerInterface
     public function add($customerTransfer)
     {
         if ($customerTransfer->getPassword()) {
-            $customerResponseTransfer = $this->validateCustomerPassword($customerTransfer->getPassword());
+            $customerResponseTransfer = $this->customerPasswordPolicyValidator->validatePassword($customerTransfer->getPassword());
             if (!$customerResponseTransfer->getIsSuccess()) {
                 return $customerResponseTransfer;
             }
@@ -455,8 +455,8 @@ class Customer implements CustomerInterface
      */
     public function restorePassword(CustomerTransfer $customerTransfer)
     {
-        if ($this->customerConfig->isCustomerPasswordValidationOnRestorePasswordEnabled()) {
-            $customerResponseTransfer = $this->validateCustomerPassword($customerTransfer->getPassword());
+        if ($this->customerConfig->isRestorePasswordValidationEnabled()) {
+            $customerResponseTransfer = $this->customerPasswordPolicyValidator->validatePassword($customerTransfer->getPassword());
             if (!$customerResponseTransfer->getIsSuccess()) {
                 return $customerResponseTransfer;
             }
@@ -625,7 +625,7 @@ class Customer implements CustomerInterface
             return $customerResponseTransfer;
         }
 
-        $customerResponseTransfer = $this->validateCustomerPassword($customerTransfer->getNewPassword());
+        $customerResponseTransfer = $this->customerPasswordPolicyValidator->validatePassword($customerTransfer->getNewPassword());
         if (!$customerResponseTransfer->getIsSuccess()) {
             return $customerResponseTransfer;
         }
@@ -983,19 +983,6 @@ class Customer implements CustomerInterface
         );
 
         return $customerResponseTransfer;
-    }
-
-    /**
-     * @param string $password
-     *
-     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
-     */
-    protected function validateCustomerPassword(string $password): CustomerResponseTransfer
-    {
-        $customerResponseTransfer = (new CustomerResponseTransfer())
-            ->setIsSuccess(true);
-
-        return $this->customerPasswordPolicyValidator->validatePassword($password, $customerResponseTransfer);
     }
 
     /**

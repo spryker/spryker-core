@@ -11,21 +11,21 @@ use Generated\Shared\Transfer\CustomerErrorTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Spryker\Zed\Customer\CustomerConfig;
 
-class CharacterSetCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
+class DenyListCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
 {
-    protected const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_CHARACTER_SET = 'customer.password.error.character_set';
+    protected const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_DENY_LIST = 'customer.password.error.deny_list';
 
     /**
-     * @var string
+     * @var string[]
      */
-    protected $regularExpression;
+    protected $customerPasswordDenyList = [];
 
     /**
      * @param \Spryker\Zed\Customer\CustomerConfig $customerConfig
      */
     public function __construct(CustomerConfig $customerConfig)
     {
-        $this->regularExpression = $customerConfig->getCharacterSetCustomerPasswordPolicy();
+        $this->customerPasswordDenyList = $customerConfig->getCustomerPasswordDenyList();
     }
 
     /**
@@ -36,15 +36,25 @@ class CharacterSetCustomerPasswordPolicy implements CustomerPasswordPolicyInterf
      */
     public function validatePassword(string $password, CustomerResponseTransfer $customerResponseTransfer): CustomerResponseTransfer
     {
-        if (preg_match($this->regularExpression, $password)) {
+        if (!in_array($password, $this->customerPasswordDenyList, true)) {
             return $customerResponseTransfer;
         }
 
-        $customerErrorTransfer = (new CustomerErrorTransfer())
-            ->setMessage(static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_CHARACTER_SET);
-        $customerResponseTransfer->setIsSuccess(false)
-            ->addError($customerErrorTransfer);
+        return $this->addPasswordInDenyListError($customerResponseTransfer);
+    }
 
-        return $customerResponseTransfer;
+    /**
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    protected function addPasswordInDenyListError(CustomerResponseTransfer $customerResponseTransfer): CustomerResponseTransfer
+    {
+        $customerErrorTransfer = (new CustomerErrorTransfer())
+            ->setMessage(static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_DENY_LIST);
+
+        return $customerResponseTransfer
+            ->setIsSuccess(false)
+            ->addError($customerErrorTransfer);
     }
 }

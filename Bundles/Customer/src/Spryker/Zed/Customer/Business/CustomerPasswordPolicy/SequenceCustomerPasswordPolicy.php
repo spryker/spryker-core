@@ -41,19 +41,16 @@ class SequenceCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
         if (!$this->customerPasswordSequenceLimit) {
             return $customerResponseTransfer;
         }
-        $counter = 1;
-        $prevChar = '';
-        foreach (mb_str_split($password) as $char) {
-            $counter = $char === $prevChar ? ++$counter : $counter = 1;
-            if ($this->customerPasswordSequenceLimit < $counter) {
-                $customerErrorTransfer = (new CustomerErrorTransfer())
-                    ->setMessage(static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE);
 
-                return $customerResponseTransfer->setIsSuccess(false)
-                    ->addError($customerErrorTransfer);
-            }
-            $prevChar = $char;
+        $regularExpression = '(.)' . str_repeat('\1', $this->customerPasswordSequenceLimit);
+        if (!preg_match($regularExpression, $password)) {
+            return $customerResponseTransfer;
         }
+
+        $customerErrorTransfer = (new CustomerErrorTransfer())
+          ->setMessage(static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE);
+        $customerResponseTransfer->setIsSuccess(false)
+          ->addError($customerErrorTransfer);
 
         return $customerResponseTransfer;
     }

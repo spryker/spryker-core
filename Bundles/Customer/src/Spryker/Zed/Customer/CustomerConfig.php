@@ -90,27 +90,16 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
-     * Provides a configuration for character set password validation
-     *
-     * example:
-     * [
-     *    'CharacterSetCustomerPasswordPolicy::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_DIGIT' =>
-     *          CharacterSetCustomerPasswordPolicy::PASSWORD_POLICY_CHARACTER_SET_DIGIT_PATTERN,
-     *    'CharacterSetCustomerPasswordPolicy::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_LOWER_CASE' => '
-     *          CharacterSetCustomerPasswordPolicy::PASSWORD_POLICY_CHARACTER_SET_LOWER_CASE_PATTERN',
-     *    'CharacterSetCustomerPasswordPolicy::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_UPPER_CASE' =>
-     *          CharacterSetCustomerPasswordPolicy::PASSWORD_POLICY_CHARACTER_SET_UPPER_CASE_PATTERN',
-     *    'CharacterSetCustomerPasswordPolicy::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SPECIAL' =>
-     *          CharacterSetCustomerPasswordPolicy::PASSWORD_POLICY_CHARACTER_SET_SPECIAL_PATTERN,
-     * ]
+     * Specification:
+     * - Provides regular expression for character set password validation.
      *
      * @api
      *
-     * @return string[]
+     * @return string
      */
-    public function getCharacterSetCustomerPasswordPolicy(): array
+    public function getCharacterSetCustomerPasswordPolicy(): string
     {
-        return [];
+        return '/^.*$/';
     }
 
     /**
@@ -159,32 +148,22 @@ class CustomerConfig extends AbstractBundleConfig
      *
      * @return string[]
      */
-    public function getCustomerPasswordWhiteList(): array
-    {
-        return [];
-    }
-
-    /**
-     * @api
-     *
-     * @return string[]
-     */
-    public function getCustomerPasswordBlackList(): array
+    public function getCustomerPasswordAllowList(): array
     {
         return [];
     }
 
     /**
      * Specification:
-     * - Provides a string of characters that are forbidden to be used as a part of a customer password.
+     * - A common list of insecure, invalid passwords.
      *
      * @api
      *
-     * @return string
+     * @return string[]
      */
-    public function getCustomerPasswordForbiddenCharacters(): string
+    public function getCustomerPasswordDenyList(): array
     {
-        return '';
+        return [];
     }
 
     /**
@@ -207,31 +186,18 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
-     * @api
-     *
-     * @deprecated
-     *
      * Specification:
-     * - Enables password check for Customer::restorePassword() in BC way.
-     *
-     * @return bool
-     */
-    public function isCustomerPasswordValidationOnRestorePasswordEnabled(): bool
-    {
-        return true;
-    }
-
-    /**
-     * Specification:
-     * - Enables extended customer password policy validation.
+     * - Enables password check for CustomerFacade::restorePassword() method.
      *
      * @api
      *
+     * @deprecated Method is introduced for BC reasons only and will be removed without replacement
+     *
      * @return bool
      */
-    public function isCustomerPasswordPolicyExtendedValidationEnabled(): bool
+    public function isRestorePasswordValidationEnabled(): bool
     {
-        return true;
+        return false;
     }
 
     /**

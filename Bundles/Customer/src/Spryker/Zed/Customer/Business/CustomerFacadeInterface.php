@@ -129,11 +129,11 @@ interface CustomerFacadeInterface
     /**
      * Specification:
      * - Identifies customer by either customer ID, customer email, or password restoration key.
+     * - Validates password if enabled in configuration.
      * - Encrypts provided plain text password.
      * - Stores new password for customer in persistent storage.
      * - Removes password restoration key from customer.
      * - Sends password restoration confirmation email.
-     * - Password validation can be enabled in this method through isCustomerPasswordCheckEnabledOnRestorePassword()
      *
      * @api
      *
@@ -414,6 +414,7 @@ interface CustomerFacadeInterface
     /**
      * Specification:
      * - Does nothing if customer is guest.
+     * - - Extended password validation
      * - Registers customer if it does not exist in persistent storage.
      * - Updates customer if it exists in persistent storage.
      * - Updates customer addresses.
@@ -438,6 +439,7 @@ interface CustomerFacadeInterface
     /**
      * Specification:
      * - Does nothing if customer is guest.
+     * - - Extended password validation
      * - Registers customer if it does not exist in persistent storage.
      * - Updates customer if it exists in persistent storage.
      * - Updates customer addresses.
@@ -477,6 +479,7 @@ interface CustomerFacadeInterface
      * Specification:
      * - Identifies customer by either customer ID, customer email, or password restoration key.
      * - Applies configured CustomerAnonymizerPluginInterface plugins on customer data.
+     * - - Extended password validation
      * - Anonymizes customer addresses.
      * - Anonymizes customer data.
      * - Updates persistent storage with anonymized data.
