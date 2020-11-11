@@ -43,7 +43,7 @@ class SequenceCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
         }
 
         $regularExpression = '(.)' . str_repeat('\1', $this->customerPasswordSequenceLimit);
-        if (!preg_match($regularExpression, $password)) {
+        if (!preg_match('/' . $regularExpression . '/', $password)) {
             return $customerResponseTransfer;
         }
 
