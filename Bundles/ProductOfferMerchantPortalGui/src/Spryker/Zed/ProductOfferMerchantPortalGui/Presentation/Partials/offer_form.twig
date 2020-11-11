@@ -41,6 +41,16 @@
     </web-spy-card>
 {% endmacro %}
 
+
+{% macro spyFormItemPriceProduct(priceProduct) %}
+    <web-spy-card spy-title="{{ 'Price' | trans }}">
+        <web-spy-card>
+            {# Add TABLE CONFIG #}
+            <web-mp-offer-prices-table table-id="web-mp-offer-prices-table" config=''></web-mp-offer-prices-table>
+        </web-spy-card>
+    </web-spy-card>
+{% endmacro %}
+
 {#{% macro spyFormItemPriceProduct(priceProduct) %}#}
 {#    <web-spy-card spy-title="{{ 'Price' | trans }}">#}
 {#        {% for storeName, pricesByStore in priceProduct.vars.pricesFormTable %}#}

@@ -16,6 +16,8 @@ import { TableColumnChipComponent, TableColumnChipModule } from '@spryker/table.
 import { TableColumnDateComponent, TableColumnDateModule } from '@spryker/table.column.date';
 import { TableColumnImageComponent, TableColumnImageModule } from '@spryker/table.column.image';
 import { TableColumnTextComponent, TableColumnTextModule } from '@spryker/table.column.text';
+import { TableColumnInputComponent, TableColumnInputModule } from '@spryker/table.column.input';
+import { TableColumnSelectComponent, TableColumnSelectModule } from '@spryker/table.column.select';
 import { TableDatasourceHttpService } from '@spryker/table.datasource.http';
 import { TableFiltersFeatureModule } from '@spryker/table.feature.filters';
 import { TableFilterDateRangeComponent, TableFilterDateRangeModule } from '@spryker/table.filter.date-range';
@@ -37,31 +39,31 @@ export class TableDefaultConfigData implements Partial<TableConfig> {
         TableModule.withFeatures({
             filters: () =>
                 import('@spryker/table.feature.filters').then(
-                    (m) => m.TableFiltersFeatureModule
+                    m => m.TableFiltersFeatureModule
                 ),
             pagination: () =>
                 import('@spryker/table.feature.pagination').then(
-                    (m) => m.TablePaginationFeatureModule
+                    m => m.TablePaginationFeatureModule
                 ),
             rowActions: () =>
                 import('@spryker/table.feature.row-actions').then(
-                    (m) => m.TableRowActionsFeatureModule
+                    m => m.TableRowActionsFeatureModule
                 ),
             search: () =>
                 import('@spryker/table.feature.search').then(
-                    (m) => m.TableSearchFeatureModule
+                    m => m.TableSearchFeatureModule
                 ),
             syncStateUrl: () =>
                 import('@spryker/table.feature.sync-state').then(
-                    (m) => m.TableSyncStateFeatureModule
+                    m => m.TableSyncStateFeatureModule
                 ),
             total: () =>
                 import('@spryker/table.feature.total').then(
-                    (m) => m.TableTotalFeatureModule
+                    m => m.TableTotalFeatureModule
                 ),
             itemSelection: () =>
                 import('@spryker/table.feature.selectable').then(
-                    (m) => m.TableSelectableFeatureModule
+                    m => m.TableSelectableFeatureModule
                 ),
             batchActions: () =>
                 import('@spryker/table.feature.batch-actions').then(
@@ -75,12 +77,18 @@ export class TableDefaultConfigData implements Partial<TableConfig> {
                 import('@spryker/table.feature.title').then(
                     m => m.TableTitleFeatureModule
                 ),
+            editable: () =>
+                import('@spryker/table.feature.editable').then(
+                    m => m.TableEditableFeatureModule
+                ),
         }),
         TableModule.withColumnComponents({
             text: TableColumnTextComponent,
             image: TableColumnImageComponent,
             date: TableColumnDateComponent,
             chip: TableColumnChipComponent,
+            input: TableColumnInputComponent,
+            select: TableColumnSelectComponent,
         } as any),
         TableFiltersFeatureModule.withFilterComponents({
             select: TableFilterSelectComponent,
@@ -101,6 +109,10 @@ export class TableDefaultConfigData implements Partial<TableConfig> {
         TableColumnTextModule,
         TableColumnImageModule,
         TableColumnDateModule,
+        TableColumnInputModule,
+        TableColumnSelectModule,
+
+        // Table Filter Modules
         TableFilterSelectModule,
         TableFilterDateRangeModule,
         TableFilterTreeSelectModule,
