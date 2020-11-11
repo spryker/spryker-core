@@ -41,18 +41,6 @@
         },
         {
             "severity": "info",
-            "line_from": 31,
-            "line_to": 31,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\Translation\\TranslatorInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Symfony/src/Spryker/Shared/Symfony/Form/Extension/DoubleSubmitProtection/DoubleSubmitProtectionExtension.php",
-            "snippet": "     * @var \\Symfony\\Component\\Translation\\TranslatorInterface|null",
-            "selected_text": "\\Symfony\\Component\\Translation\\TranslatorInterface|null",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
             "line_from": 41,
             "line_to": 41,
             "type": "DeprecatedClass",
@@ -72,18 +60,6 @@
             "file_name": "vendor/spryker/spryker/Bundles/Symfony/src/Spryker/Shared/Symfony/Form/Extension/DoubleSubmitProtection/DoubleSubmitProtectionExtension.php",
             "snippet": "     * @param \\Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\StorageInterface $tokenStorage",
             "selected_text": "\\Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\StorageInterface",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\Translation\\TranslatorInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Symfony/src/Spryker/Shared/Symfony/Form/Extension/DoubleSubmitProtection/DoubleSubmitProtectionExtension.php",
-            "snippet": "     * @param \\Symfony\\Component\\Translation\\TranslatorInterface|null $translator",
-            "selected_text": "\\Symfony\\Component\\Translation\\TranslatorInterface|null",
             "error_level": 2,
             "shortcode": 98
         },
@@ -125,18 +101,6 @@
         },
         {
             "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\Translation\\TranslatorInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Symfony/src/Spryker/Shared/Symfony/Form/Extension/DoubleSubmitProtection/FormEventSubscriber.php",
-            "snippet": "     * @var \\Symfony\\Component\\Translation\\TranslatorInterface|null",
-            "selected_text": "\\Symfony\\Component\\Translation\\TranslatorInterface|null",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
             "line_from": 71,
             "line_to": 71,
             "type": "DeprecatedClass",
@@ -156,18 +120,6 @@
             "file_name": "vendor/spryker/spryker/Bundles/Symfony/src/Spryker/Shared/Symfony/Form/Extension/DoubleSubmitProtection/FormEventSubscriber.php",
             "snippet": "     * @param \\Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\StorageInterface $storage",
             "selected_text": "\\Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\StorageInterface",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 73,
-            "line_to": 73,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\Translation\\TranslatorInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Symfony/src/Spryker/Shared/Symfony/Form/Extension/DoubleSubmitProtection/FormEventSubscriber.php",
-            "snippet": "     * @param \\Symfony\\Component\\Translation\\TranslatorInterface|null $translator",
-            "selected_text": "\\Symfony\\Component\\Translation\\TranslatorInterface|null",
             "error_level": 2,
             "shortcode": 98
         },
@@ -221,18 +173,6 @@
         },
         {
             "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\Translation\\TranslatorInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Symfony/src/Spryker/Shared/Symfony/Form/Extension/DoubleSubmitProtection/Type/DoubleSubmitFormType.php",
-            "snippet": "     * @var \\Symfony\\Component\\Translation\\TranslatorInterface|null",
-            "selected_text": "\\Symfony\\Component\\Translation\\TranslatorInterface|null",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
             "line_from": 59,
             "line_to": 59,
             "type": "DeprecatedClass",
@@ -257,20 +197,8 @@
         },
         {
             "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\Translation\\TranslatorInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Symfony/src/Spryker/Shared/Symfony/Form/Extension/DoubleSubmitProtection/Type/DoubleSubmitFormType.php",
-            "snippet": "     * @param \\Symfony\\Component\\Translation\\TranslatorInterface|null $translator",
-            "selected_text": "\\Symfony\\Component\\Translation\\TranslatorInterface|null",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 158,
-            "line_to": 158,
+            "line_from": 166,
+            "line_to": 166,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\FormEventSubscriber is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Symfony/src/Spryker/Shared/Symfony/Form/Extension/DoubleSubmitProtection/Type/DoubleSubmitFormType.php",
@@ -281,8 +209,8 @@
         },
         {
             "severity": "info",
-            "line_from": 162,
-            "line_to": 167,
+            "line_from": 170,
+            "line_to": 175,
             "type": "DeprecatedClass",
             "message": "Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\FormEventSubscriber is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Symfony/src/Spryker/Shared/Symfony/Form/Extension/DoubleSubmitProtection/Type/DoubleSubmitFormType.php",

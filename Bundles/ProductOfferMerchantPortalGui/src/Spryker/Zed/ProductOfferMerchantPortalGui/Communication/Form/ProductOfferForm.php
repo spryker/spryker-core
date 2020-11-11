@@ -89,7 +89,7 @@ class ProductOfferForm extends AbstractType
             ->addStoresField($builder, $options)
             ->addIsActiveField($builder)
             ->addProductOfferStockSubform($builder)
-            ->addPricesSubform($builder)
+//            ->addPricesSubform($builder)
             ->addProductOfferValiditySubform($builder);
     }
 
@@ -218,52 +218,35 @@ class ProductOfferForm extends AbstractType
 
         return $this;
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addPricesSubform(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_PRICES, CollectionType::class, [
-            'label' => false,
-            'entry_type' => PriceProductForm::class,
-            'allow_add' => true,
-            'allow_delete' => true,
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormView $formViewCollection
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
-     *
-     * @return void
-     */
-    public function finishView(FormView $formViewCollection, FormInterface $form, array $options): void
-    {
-        $pricesForm = $formViewCollection->children[static::FIELD_PRICES];
-        $pricesFormTable = [];
-
-        foreach ($pricesForm as $formView) {
-            $priceProductTransfer = $this->getPriceProductTransfer($formView);
-            $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
-
-            $formView->children[PriceProductForm::FIELD_NET_AMOUNT]->vars['label'] = $moneyValueTransfer->getCurrency()->getSymbol();
-            $formView->children[PriceProductForm::FIELD_GROSS_AMOUNT]->vars['label'] = $moneyValueTransfer->getCurrency()->getSymbol();
-
-            $storeName = $moneyValueTransfer->getStore()->getName();
-            $priceTypeName = $priceProductTransfer->getPriceType()->getName();
-
-            $pricesFormTable[$storeName]['GROSS'][$priceTypeName][] = $formView->children[PriceProductForm::FIELD_GROSS_AMOUNT];
-            $pricesFormTable[$storeName]['NET'][$priceTypeName][] = $formView->children[PriceProductForm::FIELD_NET_AMOUNT];
-        }
-
-        $formViewCollection->vars['pricesFormTable'] = $pricesFormTable;
-    }
+//
+//    /**
+//     * @param \Symfony\Component\Form\FormView $formViewCollection
+//     * @param \Symfony\Component\Form\FormInterface $form
+//     * @param array $options
+//     *
+//     * @return void
+//     */
+//    public function finishView(FormView $formViewCollection, FormInterface $form, array $options): void
+//    {
+//        $pricesForm = $formViewCollection->children[static::FIELD_PRICES];
+//        $pricesFormTable = [];
+//
+//        foreach ($pricesForm as $formView) {
+//            $priceProductTransfer = $this->getPriceProductTransfer($formView);
+//            $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+//
+//            $formView->children[PriceProductForm::FIELD_NET_AMOUNT]->vars['label'] = $moneyValueTransfer->getCurrency()->getSymbol();
+//            $formView->children[PriceProductForm::FIELD_GROSS_AMOUNT]->vars['label'] = $moneyValueTransfer->getCurrency()->getSymbol();
+//
+//            $storeName = $moneyValueTransfer->getStore()->getName();
+//            $priceTypeName = $priceProductTransfer->getPriceType()->getName();
+//
+////            $pricesFormTable[$storeName]['GROSS'][$priceTypeName][] = $formView->children[PriceProductForm::FIELD_GROSS_AMOUNT];
+////            $pricesFormTable[$storeName]['NET'][$priceTypeName][] = $formView->children[PriceProductForm::FIELD_NET_AMOUNT];
+//        }
+//
+//        $formViewCollection->vars['pricesFormTable'] = $pricesFormTable;
+//    }
 
     /**
      * @param \Symfony\Component\Form\FormView $formView

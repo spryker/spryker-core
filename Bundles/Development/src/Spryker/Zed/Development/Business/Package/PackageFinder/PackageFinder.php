@@ -8,11 +8,11 @@
 namespace Spryker\Zed\Development\Business\Package\PackageFinder;
 
 use Generated\Shared\Transfer\PackageTransfer;
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\Word\DashToCamelCase;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
-use Zend\Filter\FilterChain;
-use Zend\Filter\Word\DashToCamelCase;
 
 /**
  * @deprecated Use `spryker/module-finder` instead.

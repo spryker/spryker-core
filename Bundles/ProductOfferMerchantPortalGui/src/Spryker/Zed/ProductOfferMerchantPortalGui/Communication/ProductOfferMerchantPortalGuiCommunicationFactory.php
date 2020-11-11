@@ -17,10 +17,13 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameB
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\GuiTableConfigurationProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductGuiTableConfigurationProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferPriceGuiTableConfigurationProvider;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferPriceGuiTableConfigurationProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\OffersDashboardCardProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\OffersDashboardCardProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\ProductGuiTableDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\ProductOfferGuiTableDataProvider;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\ProductOfferPriceGuiTableDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Expander\MerchantOrderItemTableExpander;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Expander\MerchantOrderItemTableExpanderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\DataProvider\ProductOfferCreateFormDataProvider;
@@ -77,6 +80,19 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     }
 
     /**
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferPriceGuiTableConfigurationProviderInterface
+     */
+    public function createProductOfferPriceGuiTableConfigurationProvider(): ProductOfferPriceGuiTableConfigurationProviderInterface
+    {
+        return new ProductOfferPriceGuiTableConfigurationProvider(
+            $this->getGuiTableFactory(),
+            $this->getPriceProductFacade(),
+            $this->getStoreFacade(),
+            $this->getCurrencyFacade()
+        );
+    }
+
+    /**
      * @return \Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface
      */
     public function createProductTableDataProvider(): GuiTableDataProviderInterface
@@ -105,6 +121,19 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     }
 
     /**
+     * @param int $idProductOffer
+     *
+     * @return \Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface
+     */
+    public function createProductOfferPriceTableDataProvider(int $idProductOffer): GuiTableDataProviderInterface
+    {
+        return new ProductOfferPriceGuiTableDataProvider(
+            $idProductOffer,
+            $this->getRepository()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilderInterface
      */
     public function createProductNameBuilder(): ProductNameBuilderInterface
@@ -129,8 +158,6 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     public function createProductOfferCreateFormDataProvider(): ProductOfferCreateFormDataProviderInterface
     {
         return new ProductOfferCreateFormDataProvider(
-            $this->getCurrencyFacade(),
-            $this->getPriceProductFacade(),
             $this->getProductFacade(),
             $this->getMerchantUserFacade(),
             $this->getMerchantStockFacade()
@@ -143,8 +170,6 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     public function createProductOfferUpdateFormDataProvider(): ProductOfferUpdateFormDataProviderInterface
     {
         return new ProductOfferUpdateFormDataProvider(
-            $this->getCurrencyFacade(),
-            $this->getPriceProductFacade(),
             $this->getProductFacade(),
             $this->getProductOfferFacade(),
             $this->getMerchantStockFacade(),

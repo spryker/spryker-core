@@ -4,7 +4,7 @@
   "description": "MerchantStorage module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/event-behavior": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/merchant": "^3.0.0",
@@ -19,6 +19,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/merchant-category": "*",
     "spryker/propel": "*",
     "spryker/queue": "*",
     "spryker/testify": "*",
@@ -26,6 +27,7 @@
   },
   "suggest": {
     "spryker/event": "To use event behavior.",
+    "spryker/merchant-category": "To use MerchantCategoryStoragePublisherPlugin.",
     "spryker/url-storage": "To use shop route plugin."
   },
   "autoload": {

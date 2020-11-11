@@ -193,54 +193,6 @@
             "selected_text": "$priceProductVolumeItemTransfer->getQuantity()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 53,
-            "line_to": 53,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolumeGui/src/Spryker/Zed/PriceProductVolumeGui/PriceProductVolumeGuiDependencyProvider.php",
-            "snippet": "            return new PriceProductVolumeGuiToCurrencyFacadeBridge($container->getLocator()->currency()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 67,
-            "line_to": 67,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolumeGui/src/Spryker/Zed/PriceProductVolumeGui/PriceProductVolumeGuiDependencyProvider.php",
-            "snippet": "            return new PriceProductVolumeGuiToPriceProductFacadeBridge($container->getLocator()->priceProduct()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 81,
-            "line_to": 81,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolumeGui/src/Spryker/Zed/PriceProductVolumeGui/PriceProductVolumeGuiDependencyProvider.php",
-            "snippet": "            return new PriceProductVolumeGuiToStoreFacadeBridge($container->getLocator()->store()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 95,
-            "line_to": 95,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolumeGui/src/Spryker/Zed/PriceProductVolumeGui/PriceProductVolumeGuiDependencyProvider.php",
-            "snippet": "            return new PriceProductVolumeGuiToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

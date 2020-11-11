@@ -16,6 +16,7 @@ interface ProductQuantityFacadeInterface
     /**
      * Specification:
      * - Checks if the quantity is positive.
+     * - Uses SKU as fallback group key for cart change items when they are not provided.
      * - Validates product quantities if they fulfill all quantity restriction rules during item addition.
      *
      * @api
@@ -28,6 +29,7 @@ interface ProductQuantityFacadeInterface
 
     /**
      * Specification:
+     * - Uses SKU as fallback group key for cart change items when they are not provided.
      * - Validates product quantities if they fulfill all quantity restriction rules during item removal.
      *
      * @api

@@ -5,7 +5,7 @@
             "line_from": 21,
             "line_to": 21,
             "type": "DuplicateClass",
-            "message": "Class Spryker\\Shared\\Log\\Dependency\\Plugin\\LogHandlerPluginInterface has already been defined in /media/mark/f42d91bd-14bc-4e71-936f-96ed99135be4/www/suite-nonsplit/project/vendor/spryker/spryker/Bundles/Log/src/Spryker/Shared/Log/Dependency/Plugin/LogHandlerPluginInterface.php",
+            "message": "Class Spryker\\Shared\\Log\\Dependency\\Plugin\\LogHandlerPluginInterface has already been defined in /media/mark/f42d91bd-14bc-4e71-936f-96ed99135be4/www/devvm/project/vendor/spryker/spryker/Bundles/Log/src/Spryker/Shared/Log/Dependency/Plugin/LogHandlerPluginInterface.php",
             "file_name": "vendor/spryker/spryker/Bundles/Log/src/Spryker/Shared/Log/Dependency/Plugin/LogHandlerPluginInterface.php",
             "snippet": "    interface LogHandlerPluginInterface extends HandlerInterface, ProcessableHandlerInterface, FormattableHandlerInterface",
             "selected_text": "LogHandlerPluginInterface",
@@ -14,18 +14,6 @@
         }
     ],
     "warning": [
-        {
-            "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Log/src/Spryker/Glue/Log/LogDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->queue()->client();",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
         {
             "severity": "info",
             "line_from": 147,
@@ -172,18 +160,6 @@
         },
         {
             "severity": "info",
-            "line_from": 45,
-            "line_to": 45,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Log/src/Spryker/Yves/Log/LogDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->queue()->client();",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 147,
             "line_to": 147,
             "type": "RedundantCondition",
@@ -205,18 +181,6 @@
             "selected_text": "method_exists($handler, 'close')",
             "error_level": 4,
             "shortcode": 122
-        },
-        {
-            "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Log/src/Spryker/Zed/Log/LogDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->queue()->client();",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         },
         {
             "severity": "info",
@@ -342,8 +306,8 @@
         },
         {
             "severity": "info",
-            "line_from": 86,
-            "line_to": 86,
+            "line_from": 85,
+            "line_to": 85,
             "type": "DeprecatedConstant",
             "message": "Constant Spryker\\Shared\\Log\\LogConstants::LOG_FILE_PATH is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Log/src/Spryker/Zed/Log/LogConfig.php",
@@ -354,8 +318,8 @@
         },
         {
             "severity": "info",
-            "line_from": 110,
-            "line_to": 110,
+            "line_from": 109,
+            "line_to": 109,
             "type": "DeprecatedConstant",
             "message": "Constant Spryker\\Shared\\Log\\LogConstants::EXCEPTION_LOG_FILE_PATH is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Log/src/Spryker/Zed/Log/LogConfig.php",

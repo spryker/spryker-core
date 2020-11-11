@@ -107,6 +107,23 @@ class ProductsRestApiResource extends AbstractRestResource implements ProductsRe
      *
      * @api
      *
+     * @param int[] $productConcreteIds
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function getProductConcreteCollectionByIds(array $productConcreteIds, RestRequestInterface $restRequest): array
+    {
+        return $this->getFactory()
+            ->createConcreteProductsReader()
+            ->getProductConcreteCollectionByIds($productConcreteIds, $restRequest);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param int[] $productAbstractIds
      * @param string $localeName
      * @param string $storeName

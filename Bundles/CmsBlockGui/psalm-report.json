@@ -2,8 +2,8 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 77,
-            "line_to": 77,
+            "line_from": 78,
+            "line_to": 78,
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\CmsBlockGui\\Communication\\Controller\\ViewBlockController::getStoreNames is incorrect, got 'array<array-key, null|string>'",
             "file_name": "vendor/spryker/spryker/Bundles/CmsBlockGui/src/Spryker/Zed/CmsBlockGui/Communication/Controller/ViewBlockController.php",
@@ -14,8 +14,8 @@
         },
         {
             "severity": "error",
-            "line_from": 81,
-            "line_to": 83,
+            "line_from": 82,
+            "line_to": 84,
             "type": "InvalidReturnStatement",
             "message": "The inferred type 'array<array-key, null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\CmsBlockGui\\Communication\\Controller\\ViewBlockController::getStoreNames",
             "file_name": "vendor/spryker/spryker/Bundles/CmsBlockGui/src/Spryker/Zed/CmsBlockGui/Communication/Controller/ViewBlockController.php",
@@ -41,7 +41,7 @@
             "line_from": 50,
             "line_to": 50,
             "type": "UndefinedMethod",
-            "message": "Method Generated\\Shared\\Transfer\\CmsGlossaryTransfer::getglossaryplaceholders does not exist",
+            "message": "Method Generated\\Shared\\Transfer\\CmsGlossaryTransfer::getGlossaryPlaceholders does not exist",
             "file_name": "vendor/spryker/spryker/Bundles/CmsBlockGui/src/Spryker/Zed/CmsBlockGui/Communication/Tabs/CmsBlockGlossaryTabs.php",
             "snippet": "        foreach ($this->glossaryTransfer->getGlossaryPlaceholders() as $glossaryPlaceholderTransfer) {",
             "selected_text": "getGlossaryPlaceholders",
@@ -50,42 +50,6 @@
         }
     ],
     "warning": [
-        {
-            "severity": "info",
-            "line_from": 81,
-            "line_to": 81,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockGui/src/Spryker/Zed/CmsBlockGui/CmsBlockGuiDependencyProvider.php",
-            "snippet": "            return new CmsBlockGuiToCmsBlockQueryContainerBridge($container->getLocator()->cmsBlock()->queryContainer());",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 95,
-            "line_to": 95,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockGui/src/Spryker/Zed/CmsBlockGui/CmsBlockGuiDependencyProvider.php",
-            "snippet": "            return new CmsBlockGuiToCmsBlockBridge($container->getLocator()->cmsBlock()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 109,
-            "line_to": 109,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockGui/src/Spryker/Zed/CmsBlockGui/CmsBlockGuiDependencyProvider.php",
-            "snippet": "            return new CmsBlockGuiToLocaleBridge($container->getLocator()->locale()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
         {
             "severity": "info",
             "line_from": 60,
@@ -105,6 +69,18 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\CmsBlockGui\\Communication\\Controller\\EditBlockController::redirectResponse cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CmsBlockGui/src/Spryker/Zed/CmsBlockGui/Communication/Controller/EditBlockController.php",
+            "snippet": "            return $this->redirectResponse($redirectUrl);",
+            "selected_text": "$redirectUrl",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 103,
+            "line_to": 103,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CmsBlockGui\\Communication\\Controller\\EditBlockController::redirectResponse cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockGui/src/Spryker/Zed/CmsBlockGui/Communication/Controller/EditBlockController.php",
             "snippet": "        return $this->redirectResponse($redirectUrl);",
             "selected_text": "$redirectUrl",
             "error_level": 3,
@@ -112,8 +88,20 @@
         },
         {
             "severity": "info",
-            "line_from": 113,
-            "line_to": 113,
+            "line_from": 121,
+            "line_to": 121,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CmsBlockGui\\Communication\\Controller\\EditBlockController::redirectResponse cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockGui/src/Spryker/Zed/CmsBlockGui/Communication/Controller/EditBlockController.php",
+            "snippet": "            return $this->redirectResponse($redirectUrl);",
+            "selected_text": "$redirectUrl",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 130,
+            "line_to": 130,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\CmsBlockGui\\Communication\\Controller\\EditBlockController::redirectResponse cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CmsBlockGui/src/Spryker/Zed/CmsBlockGui/Communication/Controller/EditBlockController.php",
@@ -172,8 +160,8 @@
         },
         {
             "severity": "info",
-            "line_from": 68,
-            "line_to": 68,
+            "line_from": 69,
+            "line_to": 69,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\CmsBlockGui\\Communication\\Plugin\\CmsBlockViewPluginInterface::getRenderedList cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CmsBlockGui/src/Spryker/Zed/CmsBlockGui/Communication/Controller/ViewBlockController.php",
@@ -184,8 +172,8 @@
         },
         {
             "severity": "info",
-            "line_from": 75,
-            "line_to": 75,
+            "line_from": 76,
+            "line_to": 76,
             "type": "MismatchingDocblockParamType",
             "message": "Parameter $stores has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\StoreTransfer>', should be 'ArrayObject'",
             "file_name": "vendor/spryker/spryker/Bundles/CmsBlockGui/src/Spryker/Zed/CmsBlockGui/Communication/Controller/ViewBlockController.php",
@@ -196,8 +184,8 @@
         },
         {
             "severity": "info",
-            "line_from": 83,
-            "line_to": 83,
+            "line_from": 84,
+            "line_to": 84,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\StoreTransfer> variable $stores",
             "file_name": "vendor/spryker/spryker/Bundles/CmsBlockGui/src/Spryker/Zed/CmsBlockGui/Communication/Controller/ViewBlockController.php",
@@ -205,6 +193,18 @@
             "selected_text": "getArrayCopy",
             "error_level": 3,
             "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 141,
+            "line_to": 141,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CmsBlockGui\\Communication\\Form\\Block\\CmsBlockForm::hasTemplateFile cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockGui/src/Spryker/Zed/CmsBlockGui/Communication/Form/Block/CmsBlockForm.php",
+            "snippet": "                        if (!$this->hasTemplateFile($cmsBlockTransfer->getFkTemplate())) {",
+            "selected_text": "$cmsBlockTransfer->getFkTemplate()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -244,8 +244,8 @@
         },
         {
             "severity": "info",
-            "line_from": 204,
-            "line_to": 204,
+            "line_from": 211,
+            "line_to": 211,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of Spryker\\Zed\\CmsBlockGui\\Communication\\Table\\CmsBlockTable::formatStoreNames expects Propel\\Runtime\\Collection\\ObjectCollection, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\CmsBlock\\Persistence\\SpyCmsBlockStore> provided",
             "file_name": "vendor/spryker/spryker/Bundles/CmsBlockGui/src/Spryker/Zed/CmsBlockGui/Communication/Table/CmsBlockTable.php",
@@ -258,8 +258,20 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 166,
-            "line_to": 166,
+            "line_from": 171,
+            "line_to": 171,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Zed\\Kernel\\Communication\\Plugin\\Pimple is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockGui/src/Spryker/Zed/CmsBlockGui/CmsBlockGuiDependencyProvider.php",
+            "snippet": "        $pimplePlugin = new Pimple();",
+            "selected_text": "new Pimple()",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 173,
+            "line_to": 173,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/CmsBlockGui/src/Spryker/Zed/CmsBlockGui/CmsBlockGuiDependencyProvider.php",
@@ -270,8 +282,8 @@
         },
         {
             "severity": "info",
-            "line_from": 82,
-            "line_to": 82,
+            "line_from": 83,
+            "line_to": 83,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Gui\\Communication\\Table\\TableConfiguration::setDefaultSortDirection has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/CmsBlockGui/src/Spryker/Zed/CmsBlockGui/Communication/Table/CmsBlockTable.php",

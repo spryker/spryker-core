@@ -4,7 +4,7 @@
   "description": "ProductMeasurementUnitStorage module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/event-behavior": "^1.8.0",
     "spryker/kernel": "^3.37.0",
     "spryker/product-measurement-unit": "^1.1.0 || ^2.2.0 || ^4.0.0 || ^5.0.0",

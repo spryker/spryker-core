@@ -4,7 +4,7 @@
   "description": "CompanyBusinessUnitSalesConnector module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/company-business-unit": "^2.0.0",
     "spryker/kernel": "^3.33.0",
     "spryker/permission-extension": "^1.0.0",

@@ -4,7 +4,7 @@
   "description": "GlueApplication module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/application": "^3.13.0",
     "spryker/application-extension": "^1.0.0",
     "spryker/container": "^1.0.0",

@@ -4,7 +4,7 @@
   "description": "CollectorSearchConnector module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/collector": "^5.0.0 || ^6.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/search": "^6.0.0 || ^7.0.0 || ^8.0.0"

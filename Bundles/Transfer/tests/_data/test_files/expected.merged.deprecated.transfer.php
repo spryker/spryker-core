@@ -94,6 +94,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     protected $transferMetadata = [
         self::SCALAR_FIELD => [
             'type' => 'string',
+            'type_shim' => null,
             'name_underscore' => 'scalar_field',
             'is_collection' => false,
             'is_transfer' => false,
@@ -104,6 +105,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
         ],
         self::ARRAY_FIELD => [
             'type' => 'array',
+            'type_shim' => null,
             'name_underscore' => 'array_field',
             'is_collection' => false,
             'is_transfer' => false,
@@ -114,6 +116,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
         ],
         self::TRANSFER_FIELD => [
             'type' => 'Generated\Shared\Transfer\DeprecatedFooBarTransfer',
+            'type_shim' => null,
             'name_underscore' => 'transfer_field',
             'is_collection' => false,
             'is_transfer' => true,
@@ -124,6 +127,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
         ],
         self::TRANSFER_COLLECTION_FIELD => [
             'type' => 'Generated\Shared\Transfer\DeprecatedFooBarTransfer',
+            'type_shim' => null,
             'name_underscore' => 'transfer_collection_field',
             'is_collection' => true,
             'is_transfer' => true,
@@ -134,6 +138,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
         ],
         self::PROJECT_LEVEL_DEPRECATED_FIELD => [
             'type' => 'string',
+            'type_shim' => null,
             'name_underscore' => 'project_level_deprecated_field',
             'is_collection' => false,
             'is_transfer' => false,
@@ -170,6 +175,22 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
      */
     public function getScalarField()
     {
+        return $this->scalarField;
+    }
+
+    /**
+     * @module Deprecated
+     *
+     * @deprecated scalarField is deprecated.
+     *
+     * @return string
+     */
+    public function getScalarFieldOrFail()
+    {
+        if ($this->scalarField === null) {
+            $this->throwNullValueException(static::SCALAR_FIELD);
+        }
+
         return $this->scalarField;
     }
 
@@ -285,6 +306,22 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
      *
      * @deprecated transferField is deprecated.
      *
+     * @return \Generated\Shared\Transfer\DeprecatedFooBarTransfer
+     */
+    public function getTransferFieldOrFail()
+    {
+        if ($this->transferField === null) {
+            $this->throwNullValueException(static::TRANSFER_FIELD);
+        }
+
+        return $this->transferField;
+    }
+
+    /**
+     * @module Deprecated
+     *
+     * @deprecated transferField is deprecated.
+     *
      * @return $this
      */
     public function requireTransferField()
@@ -380,6 +417,22 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
      */
     public function getProjectLevelDeprecatedField()
     {
+        return $this->projectLevelDeprecatedField;
+    }
+
+    /**
+     * @module Deprecated
+     *
+     * @deprecated Deprecated on project level.
+     *
+     * @return string
+     */
+    public function getProjectLevelDeprecatedFieldOrFail()
+    {
+        if ($this->projectLevelDeprecatedField === null) {
+            $this->throwNullValueException(static::PROJECT_LEVEL_DEPRECATED_FIELD);
+        }
+
         return $this->projectLevelDeprecatedField;
     }
 

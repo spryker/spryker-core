@@ -25,6 +25,13 @@ interface GuiTableConfigurationBuilderInterface
     public const ACTION_TYPE_HTML_OVERLAY = 'html-overlay';
     public const ACTION_TYPE_URL = 'url';
 
+    public const KEY_EDITABLE_FORM_INPUT_NAME = 'formInputName';
+    public const KEY_EDITABLE_INITIAL_DATA = 'initialData';
+    public const KEY_EDITABLE_ADD_BUTTON = 'addButton';
+    public const KEY_EDITABLE_CANCEL_BUTTON = 'cancelButton';
+    public const KEY_EDITABLE_SAVE_BUTTON = 'saveButton';
+    public const KEY_EDITABLE_URL = 'url';
+
     /**
      * @api
      *
@@ -32,6 +39,7 @@ interface GuiTableConfigurationBuilderInterface
      * @param string $title
      * @param bool $isSortable
      * @param bool $isHideable
+     * @param bool|null $isEditable
      *
      * @return $this
      */
@@ -39,7 +47,8 @@ interface GuiTableConfigurationBuilderInterface
         string $id,
         string $title,
         bool $isSortable,
-        bool $isHideable
+        bool $isHideable,
+        ?bool $isEditable = false
     );
 
     /**
@@ -49,6 +58,7 @@ interface GuiTableConfigurationBuilderInterface
      * @param string $title
      * @param bool $isSortable
      * @param bool $isHideable
+     * @param bool|null $isEditable
      *
      * @return $this
      */
@@ -56,7 +66,8 @@ interface GuiTableConfigurationBuilderInterface
         string $id,
         string $title,
         bool $isSortable,
-        bool $isHideable
+        bool $isHideable,
+        ?bool $isEditable = false
     );
 
     /**
@@ -67,6 +78,7 @@ interface GuiTableConfigurationBuilderInterface
      * @param bool $isSortable
      * @param bool $isHideable
      * @param string|null $uiDateFormat
+     * @param bool|null $isEditable
      *
      * @return $this
      */
@@ -75,7 +87,8 @@ interface GuiTableConfigurationBuilderInterface
         string $title,
         bool $isSortable,
         bool $isHideable,
-        ?string $uiDateFormat = null
+        ?string $uiDateFormat = null,
+        ?bool $isEditable = false
     );
 
     /**
@@ -87,6 +100,7 @@ interface GuiTableConfigurationBuilderInterface
      * @param bool $isHideable
      * @param string|null $color
      * @param mixed[]|null $colorMapping
+     * @param bool|null $isEditable
      *
      * @return $this
      */
@@ -96,7 +110,8 @@ interface GuiTableConfigurationBuilderInterface
         bool $isSortable,
         bool $isHideable,
         ?string $color,
-        ?array $colorMapping = []
+        ?array $colorMapping = [],
+        ?bool $isEditable = false
     );
 
     /**
@@ -108,6 +123,7 @@ interface GuiTableConfigurationBuilderInterface
      * @param bool $isHideable
      * @param int|null $limit
      * @param string|null $color
+     * @param bool|null $isEditable
      *
      * @return $this
      */
@@ -117,7 +133,8 @@ interface GuiTableConfigurationBuilderInterface
         bool $isSortable,
         bool $isHideable,
         ?int $limit,
-        ?string $color
+        ?string $color,
+        ?bool $isEditable = false
     );
 
     /**
@@ -352,4 +369,65 @@ interface GuiTableConfigurationBuilderInterface
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
     public function createConfiguration(): GuiTableConfigurationTransfer;
+
+    /**
+     * @param bool $isTableEditable
+     *
+     * @return $this
+     */
+    public function setTableEditable(bool $isTableEditable = false);
+
+    /**
+     * @param string $formInputName
+     *
+     * @return $this
+     */
+    public function setEditableCreateActionFormInputName(string $formInputName);
+
+    /**
+     * @param array $initialData
+     *
+     * @return $this
+     */
+    public function setEditableCreateActionInitialData(array $initialData);
+
+    /**
+     * @param string|null $title
+     * @param string|null $icon
+     *
+     * @return $this
+     */
+    public function addEditableCreateActionAddButton(?string $title = '', ?string $icon = '');
+
+    /**
+     * @param string|null $title
+     * @param string|null $icon
+     *
+     * @return $this
+     */
+    public function addEditableCreateActionCancelButton(?string $title = '', ?string $icon = '');
+
+    /**
+     * @param string $method
+     * @param string $url
+     *
+     * @return $this
+     */
+    public function setEditableUpdateActionUrl(string $method, string $url);
+
+    /**
+     * @param string|null $title
+     * @param string|null $icon
+     *
+     * @return $this
+     */
+    public function addEditableUpdateActionAddButton(?string $title = '', ?string $icon = '');
+
+    /**
+     * @param string|null $title
+     * @param string|null $icon
+     *
+     * @return $this
+     */
+    public function addEditableUpdateActionCancelButton(?string $title = '', ?string $icon = '');
 }

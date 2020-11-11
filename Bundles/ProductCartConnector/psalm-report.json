@@ -241,54 +241,6 @@
             "selected_text": "$indexedProductAbstractTransfers",
             "error_level": 3,
             "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 52,
-            "line_to": 52,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductCartConnector/src/Spryker/Zed/ProductCartConnector/ProductCartConnectorDependencyProvider.php",
-            "snippet": "            return new ProductCartConnectorToLocaleBridge($container->getLocator()->locale()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 66,
-            "line_to": 66,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductCartConnector/src/Spryker/Zed/ProductCartConnector/ProductCartConnectorDependencyProvider.php",
-            "snippet": "            return new ProductCartConnectorToProductBridge($container->getLocator()->product()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 80,
-            "line_to": 80,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductCartConnector/src/Spryker/Zed/ProductCartConnector/ProductCartConnectorDependencyProvider.php",
-            "snippet": "            return new ProductCartConnectorToMessengerFacadeBridge($container->getLocator()->messenger()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 94,
-            "line_to": 94,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductCartConnector/src/Spryker/Zed/ProductCartConnector/ProductCartConnectorDependencyProvider.php",
-            "snippet": "            return new ProductCartConnectorToStoreFacadeBridge($container->getLocator()->store()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

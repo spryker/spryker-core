@@ -168,66 +168,6 @@
             "selected_text": "$refundTransfer->getFkSalesOrder()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 69,
-            "line_to": 69,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Refund/src/Spryker/Zed/Refund/RefundDependencyProvider.php",
-            "snippet": "            return new RefundToSalesBridge($container->getLocator()->sales()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 83,
-            "line_to": 83,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Refund/src/Spryker/Zed/Refund/RefundDependencyProvider.php",
-            "snippet": "            return new RefundToCalculationBridge($container->getLocator()->calculation()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 125,
-            "line_to": 125,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Refund/src/Spryker/Zed/Refund/RefundDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->sales()->queryContainer();",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 139,
-            "line_to": 139,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Refund/src/Spryker/Zed/Refund/RefundDependencyProvider.php",
-            "snippet": "            return new RefundToMoneyBridge($container->getLocator()->money()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 153,
-            "line_to": 153,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Refund/src/Spryker/Zed/Refund/RefundDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->utilDateTime()->service();",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

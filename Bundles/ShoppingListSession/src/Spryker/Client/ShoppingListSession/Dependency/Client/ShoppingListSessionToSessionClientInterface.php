@@ -24,4 +24,11 @@ interface ShoppingListSessionToSessionClientInterface
      * @return mixed
      */
     public function get($name, $default = null);
+
+    /**
+     * @param string $name
+     *
+     * @return mixed
+     */
+    public function remove(string $name);
 }

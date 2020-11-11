@@ -48,30 +48,6 @@
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ShipmentGroupTransfer[]",
             "error_level": 4,
             "shortcode": 142
-        },
-        {
-            "severity": "info",
-            "line_from": 40,
-            "line_to": 40,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteApprovalShipmentConnector/src/Spryker/Client/QuoteApprovalShipmentConnector/QuoteApprovalShipmentConnectorDependencyProvider.php",
-            "snippet": "                $container->getLocator()->shipment()->service()",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteApprovalShipmentConnector/src/Spryker/Zed/QuoteApprovalShipmentConnector/QuoteApprovalShipmentConnectorDependencyProvider.php",
-            "snippet": "                $container->getLocator()->quoteApproval()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

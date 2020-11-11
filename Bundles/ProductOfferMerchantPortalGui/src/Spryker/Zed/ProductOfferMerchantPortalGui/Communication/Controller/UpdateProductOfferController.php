@@ -7,12 +7,15 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller;
 
+use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOfferResponseTransfer;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferPriceGuiTableConfigurationProviderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -59,7 +62,17 @@ class UpdateProductOfferController extends AbstractProductOfferController
         $productOfferResponseTransfer = $productOfferResponseTransfer ?? new ProductOfferResponseTransfer();
         $productOfferResponseTransfer->setProductOffer($productOfferTransfer);
 
-        return $this->getResponse($productOfferForm, $productConcreteTransfer, $productAbstractTransfer, $productOfferResponseTransfer);
+        $priceProductOfferTableConfiguration = $this->getFactory()
+            ->createProductOfferPriceGuiTableConfigurationProvider()
+            ->getConfiguration($idProductOffer);
+
+        return $this->getResponse(
+            $productOfferForm,
+            $productConcreteTransfer,
+            $productAbstractTransfer,
+            $productOfferResponseTransfer,
+            $priceProductOfferTableConfiguration
+        );
     }
 
     /**
@@ -67,6 +80,7 @@ class UpdateProductOfferController extends AbstractProductOfferController
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\ProductOfferResponseTransfer $productOfferResponseTransfer
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $priceProductOfferTableConfiguration
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -74,7 +88,8 @@ class UpdateProductOfferController extends AbstractProductOfferController
         FormInterface $productOfferForm,
         ProductConcreteTransfer $productConcreteTransfer,
         ProductAbstractTransfer $productAbstractTransfer,
-        ProductOfferResponseTransfer $productOfferResponseTransfer
+        ProductOfferResponseTransfer $productOfferResponseTransfer,
+        GuiTableConfigurationTransfer $priceProductOfferTableConfiguration
     ): JsonResponse {
         $localeTransfer = $this->getFactory()
             ->getLocaleFacade()
@@ -87,6 +102,7 @@ class UpdateProductOfferController extends AbstractProductOfferController
                 'productName' => $this->getFactory()->createProductNameBuilder()->buildProductConcreteName($productConcreteTransfer, $localeTransfer),
                 'productAttributes' => $this->getProductAttributes($localeTransfer, $productConcreteTransfer, $productAbstractTransfer),
                 'productOfferReference' => $productOfferResponseTransfer->getProductOffer()->getProductOfferReference(),
+                'priceProductOfferTableConfiguration' => $priceProductOfferTableConfiguration
             ])->getContent(),
         ];
 
@@ -121,5 +137,21 @@ class UpdateProductOfferController extends AbstractProductOfferController
         }
 
         return new JsonResponse($responseData);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function priceTableDataAction(Request $request): Response
+    {
+        $idProductOffer = $this->castId($request->get(static::PARAM_ID_PRODUCT_OFFER));
+
+        return $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
+            $request,
+            $this->getFactory()->createProductOfferPriceTableDataProvider($idProductOffer),
+            $this->getFactory()->createProductOfferPriceGuiTableConfigurationProvider()->getConfiguration($idProductOffer)
+        );
     }
 }

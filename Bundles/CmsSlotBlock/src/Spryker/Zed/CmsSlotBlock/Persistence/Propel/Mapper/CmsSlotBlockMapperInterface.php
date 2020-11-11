@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsSlotBlock\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\CmsBlockCollectionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockTransfer;
 use Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlock;
@@ -42,4 +43,15 @@ interface CmsSlotBlockMapperInterface
      * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
      */
     public function mapCmsBlockEntitiesToTransfers(Collection $cmsBlockEntities): array;
+
+    /**
+     * @param \Propel\Runtime\Collection\Collection $cmsBlockEntities
+     * @param \Generated\Shared\Transfer\CmsBlockCollectionTransfer $cmsBlockCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockCollectionTransfer
+     */
+    public function mapCmsBlockEntitiesToCmsBlockCollectionTransfer(
+        Collection $cmsBlockEntities,
+        CmsBlockCollectionTransfer $cmsBlockCollectionTransfer
+    ): CmsBlockCollectionTransfer;
 }

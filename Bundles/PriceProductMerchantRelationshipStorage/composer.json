@@ -4,7 +4,7 @@
   "description": "PriceProductMerchantRelationshipStorage module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/currency": "^3.0.0",
     "spryker/customer": "^7.10.0",
     "spryker/event-behavior": "^1.1.0",

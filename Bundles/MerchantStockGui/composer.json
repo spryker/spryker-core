@@ -4,7 +4,7 @@
   "description": "MerchantStockGui module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.33.0",
     "spryker/merchant-gui-extension": "^1.0.0",
