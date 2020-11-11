@@ -26,21 +26,6 @@ class CustomerConfig extends AbstractBundleConfig
      */
     public const CUSTOMER_REGISTRATION_MAIL_TYPE = 'customer registration mail';
     public const CUSTOMER_REGISTRATION_WITH_CONFIRMATION_MAIL_TYPE = 'customer registration confirmation mail';
-
-    protected const IS_CUSTOMER_PASSWORD_POLICY_EXTENDED_VALIDATION_ENABLED = false;
-
-    protected const CUSTOMER_PASSWORD_POLICY_DIGIT_REQUIRED = false;
-
-    protected const CUSTOMER_PASSWORD_POLICY_UPPER_CASE_REQUIRED = false;
-
-    protected const CUSTOMER_PASSWORD_POLICY_LOWER_CASE_REQUIRED = false;
-
-    protected const CUSTOMER_PASSWORD_POLICY_SPECIAL_REQUIRED = false;
-
-    protected const CUSTOMER_PASSWORD_POLICY_SEQUENCE_LIMIT = 0;
-
-    protected const IS_CUSTOMER_PASSWORD_POLICY_VALIDATION_ON_RESTORE_PASSWORD_ENABLED = false;
-
     protected const MIN_LENGTH_CUSTOMER_PASSWORD = 1;
 
     /**
@@ -190,46 +175,6 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
-     * @api
-     *
-     * @return bool
-     */
-    public function getCustomerPasswordDigitRequired(): bool
-    {
-        return static::CUSTOMER_PASSWORD_POLICY_DIGIT_REQUIRED;
-    }
-
-    /**
-     * @api
-     *
-     * @return bool
-     */
-    public function getCustomerPasswordSpecialRequired(): bool
-    {
-        return static::CUSTOMER_PASSWORD_POLICY_SPECIAL_REQUIRED;
-    }
-
-    /**
-     * @api
-     *
-     * @return bool
-     */
-    public function getCustomerPasswordUpperCaseRequired(): bool
-    {
-        return static::CUSTOMER_PASSWORD_POLICY_UPPER_CASE_REQUIRED;
-    }
-
-    /**
-     * @api
-     *
-     * @return bool
-     */
-    public function getCustomerPasswordLowerCaseRequired(): bool
-    {
-        return static::CUSTOMER_PASSWORD_POLICY_LOWER_CASE_REQUIRED;
-    }
-
-    /**
      * Specification:
      * - Provides a string of characters that are forbidden to be used as a part of a customer password.
      *
@@ -258,7 +203,7 @@ class CustomerConfig extends AbstractBundleConfig
      */
     public function getCustomerPasswordSequenceLimit(): int
     {
-        return static::CUSTOMER_PASSWORD_POLICY_SEQUENCE_LIMIT;
+        return 0;
     }
 
     /**
@@ -271,7 +216,7 @@ class CustomerConfig extends AbstractBundleConfig
      */
     public function isCustomerPasswordValidationOnRestorePasswordEnabled(): bool
     {
-        return static::IS_CUSTOMER_PASSWORD_POLICY_VALIDATION_ON_RESTORE_PASSWORD_ENABLED;
+        return true;
     }
 
     /**
@@ -284,7 +229,7 @@ class CustomerConfig extends AbstractBundleConfig
      */
     public function isCustomerPasswordPolicyExtendedValidationEnabled(): bool
     {
-        return static::IS_CUSTOMER_PASSWORD_POLICY_EXTENDED_VALIDATION_ENABLED;
+        return true;
     }
 
     /**
