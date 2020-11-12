@@ -56,7 +56,7 @@ class ProductConfigurationStorageDependencyProvider extends AbstractDependencyPr
         $container = $this->addPriceProductService($container);
         $container = $this->addUtilEncodingService($container);
         $container = $this->addSynchronizationService($container);
-        $container = $this->addPriceProductService($container);
+        $container = $this->addProductConfigurationService($container);
         $container = $this->addPriceProductConfigurationStoragePriceExtractorPlugins($container);
 
         return $container;
@@ -206,7 +206,7 @@ class ProductConfigurationStorageDependencyProvider extends AbstractDependencyPr
     protected function addProductConfigurationService(Container $container): Container
     {
         $container->set(static::SERVICE_PRODUCT_CONFIGURATION, function (Container $container) {
-            new ProductConfigurationStorageToProductConfigurationServiceBridge(
+            return new ProductConfigurationStorageToProductConfigurationServiceBridge(
                 $container->getLocator()->productConfiguration()->service()
             );
         });
