@@ -212,7 +212,7 @@ class PriceProductFilter implements PriceProductFilterInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return int
+     * @return int|null
      */
     protected function executeCartItemQuantityCounterStrategyPlugins(
         ItemTransfer $itemTransfer,

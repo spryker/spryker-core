@@ -67,6 +67,9 @@ class ProductConfigurationBusinessFactory extends AbstractBusinessFactory
         return new ProductConfigurationItemQuantityCounter();
     }
 
+    /**
+     * @return \Spryker\Service\ProductConfiguration\ProductConfigurationServiceInterface
+     */
     public function getProductConfigurationService(): ProductConfigurationServiceInterface
     {
         return $this->getProvidedDependency(ProductConfigurationDependencyProvider::SERVICE_PRODUCT_CONFIGURATION);
