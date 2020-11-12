@@ -23,10 +23,10 @@ use Spryker\Zed\CustomersRestApi\Dependency\Facade\CustomersRestApiToCustomerFac
  * @group Zed
  * @group CustomersRestApi
  * @group Business
- * @group ProvideCustomerAddressTest
+ * @group GetCustomerAddressTest
  * Add your own group annotations below this line
  */
-class ProvideCustomerAddressTest extends Unit
+class GetCustomerAddressTest extends Unit
 {
     protected const FAKE_ADDRESS_UUID_1 = 'FAKE_ADDRESS_UUID_1';
     protected const FAKE_ADDRESS_UUID_2 = 'FAKE_ADDRESS_UUID_2';
@@ -41,7 +41,7 @@ class ProvideCustomerAddressTest extends Unit
     /**
      * @return void
      */
-    public function testProvideCustomerAddressInCaseWhenAddressWasFound(): void
+    public function testGetCustomerAddressInCaseWhenAddressWasFound(): void
     {
         // Arrange
         $addressesTransfer = $this->getFakeAddresses();
@@ -68,7 +68,7 @@ class ProvideCustomerAddressTest extends Unit
     /**
      * @return void
      */
-    public function testProvideCustomerAddressInCaseWhenAddressWasNotCompared(): void
+    public function testGetCustomerAddressInCaseWhenAddressWasNotCompared(): void
     {
         // Arrange
         $quoteTransfer = (new QuoteBuilder())->withCustomer()->build();
@@ -94,7 +94,7 @@ class ProvideCustomerAddressTest extends Unit
     /**
      * @return void
      */
-    public function testProvideCustomerAddressInCaseWhenCustomerAddressesWasNotFound(): void
+    public function testGetCustomerAddressInCaseWhenCustomerAddressesWasNotFound(): void
     {
         // Arrange
         $quoteTransfer = (new QuoteBuilder())->withCustomer()->build();
