@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\GuiTableDataSourceConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableEditableButtonTransfer;
 use Generated\Shared\Transfer\GuiTableEditableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableEditableCreateConfigurationTransfer;
+use Generated\Shared\Transfer\GuiTableEditableDataErrorTransfer;
 use Generated\Shared\Transfer\GuiTableEditableInitialDataTransfer;
 use Generated\Shared\Transfer\GuiTableEditableUpdateConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableEditableUrlTransfer;
@@ -43,6 +44,11 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @var \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer[]
      */
     protected $columns;
+
+    /**
+     * @var \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer[]
+     */
+    protected $editableColumns;
 
     /**
      * @var string
@@ -134,7 +140,6 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @param string $title
      * @param bool $isSortable
      * @param bool $isHideable
-     * @param bool|null $isEditable
      *
      * @return $this
      */
@@ -142,16 +147,14 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
         string $id,
         string $title,
         bool $isSortable,
-        bool $isHideable,
-        ?bool $isEditable = false
+        bool $isHideable
     ) {
         $guiTableColumnConfigurationTransfer = (new GuiTableColumnConfigurationTransfer())
             ->setId($id)
             ->setTitle($title)
             ->setType(static::COLUMN_TYPE_TEXT)
             ->setSortable($isSortable)
-            ->setHideable($isHideable)
-            ->setEditable($isEditable);
+            ->setHideable($isHideable);
 
         $this->addColumn($guiTableColumnConfigurationTransfer);
 
@@ -165,7 +168,6 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @param string $title
      * @param bool $isSortable
      * @param bool $isHideable
-     * @param bool|null $isEditable
      *
      * @return $this
      */
@@ -173,16 +175,14 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
         string $id,
         string $title,
         bool $isSortable,
-        bool $isHideable,
-        ?bool $isEditable = false
+        bool $isHideable
     ) {
         $guiTableColumnConfigurationTransfer = (new GuiTableColumnConfigurationTransfer())
             ->setId($id)
             ->setTitle($title)
             ->setType(static::COLUMN_TYPE_IMAGE)
             ->setSortable($isSortable)
-            ->setHideable($isHideable)
-            ->setEditable($isEditable);
+            ->setHideable($isHideable);
 
         $this->addColumn($guiTableColumnConfigurationTransfer);
 
@@ -197,7 +197,6 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @param bool $isSortable
      * @param bool $isHideable
      * @param string|null $uiDateFormat
-     * @param bool|null $isEditable
      *
      * @return $this
      */
@@ -206,8 +205,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
         string $title,
         bool $isSortable,
         bool $isHideable,
-        ?string $uiDateFormat = null,
-        ?bool $isEditable = false
+        ?string $uiDateFormat = null
     ) {
         $guiTableColumnConfigurationTransfer = (new GuiTableColumnConfigurationTransfer())
             ->setId($id)
@@ -215,7 +213,6 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             ->setType(static::COLUMN_TYPE_DATE)
             ->setSortable($isSortable)
             ->setHideable($isHideable)
-            ->setEditable($isEditable)
             ->addTypeOption('format', $uiDateFormat ?? static::DEFAULT_UI_DATE_FORMAT);
 
         $this->addColumn($guiTableColumnConfigurationTransfer);
@@ -232,7 +229,6 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @param bool $isHideable
      * @param string|null $color
      * @param mixed[]|null $colorMapping
-     * @param bool|null $isEditable
      *
      * @return $this
      */
@@ -242,8 +238,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
         bool $isSortable,
         bool $isHideable,
         ?string $color,
-        ?array $colorMapping = [],
-        ?bool $isEditable = false
+        ?array $colorMapping = []
     ) {
         $guiTableColumnConfigurationTransfer = (new GuiTableColumnConfigurationTransfer())
             ->setId($id)
@@ -251,7 +246,6 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             ->setType(static::COLUMN_TYPE_CHIP)
             ->setSortable($isSortable)
             ->setHideable($isHideable)
-            ->setEditable($isEditable)
             ->addTypeOption('color', $color)
             ->addTypeOptionMapping('color', $colorMapping);
 
@@ -269,7 +263,6 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @param bool $isHideable
      * @param int|null $limit
      * @param string|null $color
-     * @param bool|null $isEditable
      *
      * @return $this
      */
@@ -279,8 +272,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
         bool $isSortable,
         bool $isHideable,
         ?int $limit,
-        ?string $color,
-        ?bool $isEditable = false
+        ?string $color
     ) {
         $guiTableColumnConfigurationTransfer = (new GuiTableColumnConfigurationTransfer())
             ->setId($id)
@@ -288,7 +280,6 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             ->setType(static::COLUMN_TYPE_LIST)
             ->setSortable($isSortable)
             ->setHideable($isHideable)
-            ->setEditable($isEditable)
             ->addTypeOption('type', static::COLUMN_TYPE_CHIP)
             ->addTypeOption('limit', $limit);
 
@@ -299,6 +290,57 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
         }
 
         $this->addColumn($guiTableColumnConfigurationTransfer);
+
+        return $this;
+    }
+
+    /**
+     * @param string $id
+     * @param string $title
+     *
+     * @return $this
+     */
+    public function addEditableColumnInput(
+        string $id,
+        string $title
+    ) {
+        $guiTableColumnConfigurationTransfer = (new GuiTableColumnConfigurationTransfer())
+            ->setId($id)
+            ->setTitle($title)
+            ->setType(static::COLUMN_TYPE_INPUT);
+
+        $this->addEditableColumn($guiTableColumnConfigurationTransfer);
+
+        return $this;
+    }
+
+    /**
+     * @param string $id
+     * @param string $title
+     * @param array $options
+     * @param bool $isMultiselect
+     *
+     * @return $this
+     */
+    public function addEditableColumnSelect(
+        string $id,
+        string $title,
+        array $options
+    ) {
+        $guiTableColumnConfigurationTransfer = (new GuiTableColumnConfigurationTransfer())
+            ->setId($id)
+            ->setTitle($title)
+            ->setType(static::COLUMN_TYPE_SELECT);
+
+        $typeOptions = [];
+
+        foreach ($options as $value => $optionTitle) {
+            $typeOptions[] = ['value' => $value, 'title' => $optionTitle];
+        }
+
+        $guiTableColumnConfigurationTransfer->setTypeOptions(['values' => $typeOptions]);
+
+        $this->addEditableColumn($guiTableColumnConfigurationTransfer);
 
         return $this;
     }
@@ -319,6 +361,24 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
         }
 
         $this->columns[$columnId] = $guiTableColumnConfigurationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer $guiTableColumnConfigurationTransfer
+     *
+     * @throws \Spryker\Shared\GuiTable\Exception\InvalidConfigurationException
+     *
+     * @return void
+     */
+    protected function addEditableColumn(GuiTableColumnConfigurationTransfer $guiTableColumnConfigurationTransfer): void
+    {
+        $columnId = $guiTableColumnConfigurationTransfer->getId();
+
+        if (isset($this->editableColumns[$columnId])) {
+            throw new InvalidConfigurationException(sprintf('Editable column with id "%s" already exists', $columnId));
+        }
+
+        $this->editableColumns[$columnId] = $guiTableColumnConfigurationTransfer;
     }
 
     /**
@@ -776,8 +836,14 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     public function setEditableCreateActionInitialData(array $initialData)
     {
         $this->editableCreateAction[static::KEY_EDITABLE_INITIAL_DATA] = (new GuiTableEditableInitialDataTransfer())
-            ->setData($initialData['data'])
-            ->setErrors($initialData['errors']);
+            ->setData($initialData['data']);
+
+        $errors = [];
+        foreach ($initialData['errors'] as $error) {
+            $errors[] = (new GuiTableEditableDataErrorTransfer())->fromArray($error, true);
+        }
+
+        $this->editableCreateAction[static::KEY_EDITABLE_INITIAL_DATA]->setErrors(new ArrayObject($errors));
 
         return $this;
     }
@@ -803,7 +869,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      */
     public function addEditableCreateActionCancelButton(?string $title = '', ?string $icon = '')
     {
-        $this->editableCreateAction['cancelButton'] = $this->createTableEditableButton($title, $icon);
+        $this->editableCreateAction[static::KEY_EDITABLE_CANCEL_BUTTON] = $this->createTableEditableButton($title, $icon);
 
         return $this;
     }
@@ -844,7 +910,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      */
     public function addEditableUpdateActionCancelButton(?string $title = '', ?string $icon = '')
     {
-        $this->editableUpdateAction['cancelButton'] = $this->createTableEditableButton($title, $icon);
+        $this->editableUpdateAction[static::KEY_EDITABLE_CANCEL_BUTTON] = $this->createTableEditableButton($title, $icon);
 
         return $this;
     }
@@ -933,30 +999,29 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      */
     protected function createEditableConfiguration(): GuiTableEditableConfigurationTransfer
     {
-        $guiTableEditableConfiguration = new GuiTableEditableConfigurationTransfer();
+        $guiTableEditableConfiguration = (new GuiTableEditableConfigurationTransfer())->setEnabled(true);
 
         if ($this->editableCreateAction) {
             $guiTableEditableCreateConfiguration = (new GuiTableEditableCreateConfigurationTransfer())
-                ->setFormInputName($this->editableCreateAction[static::KEY_EDITABLE_FORM_INPUT_NAME])
-                ->setInitialData($this->editableCreateAction[static::KEY_EDITABLE_INITIAL_DATA]);
+                ->setFormInputName($this->editableCreateAction[static::KEY_EDITABLE_FORM_INPUT_NAME]);
+
+            if (isset($this->editableCreateAction[static::KEY_EDITABLE_INITIAL_DATA])) {
+                $guiTableEditableCreateConfiguration->setInitialData($this->editableCreateAction[static::KEY_EDITABLE_INITIAL_DATA]);
+            }
             $guiTableEditableCreateConfiguration = $this->addEditableCreateConfigurationButtons($guiTableEditableCreateConfiguration);
 
             $guiTableEditableConfiguration->setCreate($guiTableEditableCreateConfiguration);
         }
 
         if ($this->editableUpdateAction) {
-            $guiTableEditableCreateConfiguration = (new GuiTableEditableUpdateConfigurationTransfer())
+            $guiTableEditableUpdateConfiguration = (new GuiTableEditableUpdateConfigurationTransfer())
                 ->setUrl($this->editableUpdateAction[static::KEY_EDITABLE_URL]);
-            $guiTableEditableCreateConfiguration = $this->addEditableUpdateConfigurationButtons($guiTableEditableCreateConfiguration);
+            $guiTableEditableUpdateConfiguration = $this->addEditableUpdateConfigurationButtons($guiTableEditableUpdateConfiguration);
 
-            $guiTableEditableConfiguration->setCreate($guiTableEditableCreateConfiguration);
+            $guiTableEditableConfiguration->setUpdate($guiTableEditableUpdateConfiguration);
         }
 
-        foreach ($this->columns as $columnConfigurationTransfer) {
-            if ($columnConfigurationTransfer->getEditable()) {
-                $guiTableEditableConfiguration->addColumn($columnConfigurationTransfer);
-            }
-        }
+        $guiTableEditableConfiguration->setColumns(new ArrayObject($this->editableColumns));
 
         return $guiTableEditableConfiguration;
     }

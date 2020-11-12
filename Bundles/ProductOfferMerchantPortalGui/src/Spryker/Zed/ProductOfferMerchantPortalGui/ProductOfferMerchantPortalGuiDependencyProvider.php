@@ -20,6 +20,7 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerc
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantStockFacadeBridge;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeBridge;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeBridge;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferFacadeBridge;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToProductFacadeBridge;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToProductOfferFacadeBridge;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToRouterFacadeBridge;
@@ -42,6 +43,7 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
     public const FACADE_ROUTER = 'FACADE_ROUTER';
+    public const FACADE_PRICE_PRODUCT_OFFER = 'FACADE_PRICE_PRODUCT_OFFER';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
@@ -87,6 +89,7 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
         $container = $this->addTwigEnvironment($container);
         $container = $this->addGuiTableHttpDataRequestHandler($container);
         $container = $this->addGuiTableFactory($container);
+        $container = $this->addPriceProductOfferFacade($container);
 
         return $container;
     }
@@ -105,6 +108,7 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
         $container = $this->addProductOfferStorePropelQuery($container);
         $container = $this->addPriceProductStorePropelQuery($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addPriceProductFacade($container);
 
         return $container;
     }
@@ -407,6 +411,20 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
         $container->set(static::PROPEL_QUERY_PRICE_PRODUCT_STORE, $container->factory(function () {
             return SpyPriceProductStoreQuery::create();
         }));
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceProductOfferFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRICE_PRODUCT_OFFER, function (Container $container) {
+            return new ProductOfferMerchantPortalGuiToPriceProductOfferFacadeBridge(
+                $container->getLocator()->priceProductOffer()->facade()
+            );
+        });
 
         return $container;
     }

@@ -8,9 +8,12 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller;
 
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOfferResponseTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferPriceGuiTableConfigurationProviderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -25,6 +28,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class UpdateProductOfferController extends AbstractProductOfferController
 {
     protected const PARAM_ID_PRODUCT_OFFER = 'product-offer-id';
+    protected const PARAM_ID_PRICE_PRODUCT_OFFER = 'id-price-product-offer';
+    protected const PARAM_STORE = 'store';
+    protected const PARAM_CURRENCY = 'currency';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -153,5 +159,41 @@ class UpdateProductOfferController extends AbstractProductOfferController
             $this->getFactory()->createProductOfferPriceTableDataProvider($idProductOffer),
             $this->getFactory()->createProductOfferPriceGuiTableConfigurationProvider()->getConfiguration($idProductOffer)
         );
+    }
+
+    public function savePricesAction(Request $request)
+    {
+        $idProductOffer = $this->castId($request->get(static::PARAM_ID_PRODUCT_OFFER));
+        $idPriceProductOffer = $request->get(static::PARAM_ID_PRICE_PRODUCT_OFFER);
+        $store = $request->get(static::PARAM_STORE);
+        $currency = $request->get(static::PARAM_CURRENCY);
+
+        $storeTransfer = $this->getFactory()->getStoreFacade()->getStoreByName($store);
+        $currencyTransfer = $this->getFactory()->getCurrencyFacade()->findCurrencyByIsoCode($currency);
+
+        $priceDimensionTransfer = new PriceProductDimensionTransfer();
+
+        if ($idPriceProductOffer) {
+            $priceDimensionTransfer->setIdPriceProductOffer($idPriceProductOffer);
+        }
+
+        foreach ($this->getFactory()->getPriceProductFacade()->getPriceTypeValues() as $priceTypeTransfer) {
+            $netAmount = $request->get(mb_strtolower($priceTypeTransfer->getName()) . '_net');
+            $grossAmount = $request->get(mb_strtolower($priceTypeTransfer->getName()) . '_gross');
+            $prices[] = (new PriceProductTransfer())
+                ->setFkPriceType($priceTypeTransfer->getIdPriceType())
+                ->setMoneyValue(
+                    (new MoneyValueTransfer())
+                    ->setFkStore($storeTransfer->getIdStore())
+                    ->setNetAmount($netAmount)
+                    ->setGrossAmount($grossAmount)
+                    ->setFkCurrency($currencyTransfer->getIdCurrency())
+                );
+        }
+
+        $productOfferTransfer = (new ProductOfferTransfer())
+            ->setPrices(new \ArrayObject($prices));
+
+        $this->getFactory()->getPriceProductOfferFacade()->saveProductOfferPrices($productOfferTransfer);
     }
 }

@@ -66,6 +66,10 @@ class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
         foreach ($priceProductOfferCollectionTransfer->getPriceProductOffers() as $priceProductOfferTransfer) {
             $responseData = $priceProductOfferTransfer->toArray();
 
+            foreach ($priceProductOfferTransfer->getPrices() as $priceType => $priceValue) {
+                $responseData[$priceType] = $priceValue;
+            }
+
             $guiTableDataResponseTransfer->addRow((new GuiTableRowDataResponseTransfer())->setResponseData($responseData));
         }
 

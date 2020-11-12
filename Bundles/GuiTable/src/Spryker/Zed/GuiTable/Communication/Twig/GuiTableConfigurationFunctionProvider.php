@@ -10,6 +10,7 @@ namespace Spryker\Zed\GuiTable\Communication\Twig;
 use Generated\Shared\Transfer\GuiTableBatchActionsConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataSourceConfigurationTransfer;
+use Generated\Shared\Transfer\GuiTableEditableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableFiltersConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTablePaginationConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableRowActionsConfigurationTransfer;
@@ -82,6 +83,7 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
                 GuiTableConfigurationTransfer::SEARCH => $this->prepareSearchData($guiTableConfigurationTransfer),
                 GuiTableConfigurationTransfer::ITEM_SELECTION => $this->prepareItemSelectionData($guiTableConfigurationTransfer),
                 GuiTableConfigurationTransfer::SYNC_STATE_URL => $this->prepareSyncStateUrlData($guiTableConfigurationTransfer),
+                GuiTableConfigurationTransfer::EDITABLE => $this->prepareEditableData($guiTableConfigurationTransfer),
             ];
 
             if (count($overwrite)) {
@@ -267,5 +269,26 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
             static::CONFIG_ENABLED => true,
             GuiTableTitleConfigurationTransfer::TITLE => $guiTableTitleConfigurationTransfer->getTitle(),
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return array
+     */
+    protected function prepareEditableData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
+    {
+        $editable = $guiTableConfigurationTransfer->getEditable();
+
+        if (!$editable) {
+            return [
+                static::CONFIG_ENABLED => false
+            ];
+        }
+
+        $editable = $guiTableConfigurationTransfer->getEditable()->toArray(true, true);
+        $editable[GuiTableEditableConfigurationTransfer::COLUMNS] = array_values($editable[GuiTableEditableConfigurationTransfer::COLUMNS]);
+
+        return $editable;
     }
 }

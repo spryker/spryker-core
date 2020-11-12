@@ -16,6 +16,8 @@ interface GuiTableConfigurationBuilderInterface
     public const COLUMN_TYPE_DATE = 'date';
     public const COLUMN_TYPE_CHIP = 'chip';
     public const COLUMN_TYPE_LIST = 'list';
+    public const COLUMN_TYPE_SELECT = 'select';
+    public const COLUMN_TYPE_INPUT = 'input';
 
     public const FILTER_TYPE_SELECT = 'select';
     public const FILTER_TYPE_TREE_SELECT = 'tree-select';
@@ -39,7 +41,6 @@ interface GuiTableConfigurationBuilderInterface
      * @param string $title
      * @param bool $isSortable
      * @param bool $isHideable
-     * @param bool|null $isEditable
      *
      * @return $this
      */
@@ -47,8 +48,7 @@ interface GuiTableConfigurationBuilderInterface
         string $id,
         string $title,
         bool $isSortable,
-        bool $isHideable,
-        ?bool $isEditable = false
+        bool $isHideable
     );
 
     /**
@@ -58,7 +58,6 @@ interface GuiTableConfigurationBuilderInterface
      * @param string $title
      * @param bool $isSortable
      * @param bool $isHideable
-     * @param bool|null $isEditable
      *
      * @return $this
      */
@@ -66,8 +65,7 @@ interface GuiTableConfigurationBuilderInterface
         string $id,
         string $title,
         bool $isSortable,
-        bool $isHideable,
-        ?bool $isEditable = false
+        bool $isHideable
     );
 
     /**
@@ -78,7 +76,6 @@ interface GuiTableConfigurationBuilderInterface
      * @param bool $isSortable
      * @param bool $isHideable
      * @param string|null $uiDateFormat
-     * @param bool|null $isEditable
      *
      * @return $this
      */
@@ -87,8 +84,7 @@ interface GuiTableConfigurationBuilderInterface
         string $title,
         bool $isSortable,
         bool $isHideable,
-        ?string $uiDateFormat = null,
-        ?bool $isEditable = false
+        ?string $uiDateFormat = null
     );
 
     /**
@@ -100,7 +96,6 @@ interface GuiTableConfigurationBuilderInterface
      * @param bool $isHideable
      * @param string|null $color
      * @param mixed[]|null $colorMapping
-     * @param bool|null $isEditable
      *
      * @return $this
      */
@@ -110,8 +105,7 @@ interface GuiTableConfigurationBuilderInterface
         bool $isSortable,
         bool $isHideable,
         ?string $color,
-        ?array $colorMapping = [],
-        ?bool $isEditable = false
+        ?array $colorMapping = []
     );
 
     /**
@@ -123,7 +117,6 @@ interface GuiTableConfigurationBuilderInterface
      * @param bool $isHideable
      * @param int|null $limit
      * @param string|null $color
-     * @param bool|null $isEditable
      *
      * @return $this
      */
@@ -133,9 +126,34 @@ interface GuiTableConfigurationBuilderInterface
         bool $isSortable,
         bool $isHideable,
         ?int $limit,
-        ?string $color,
-        ?bool $isEditable = false
+        ?string $color
     );
+
+    /**
+     * @param string $id
+     * @param string $title
+     *
+     * @return $this
+     */
+    public function addEditableColumnInput(
+        string $id,
+        string $title
+    );
+
+    /**
+     * @param string $id
+     * @param string $title
+     * @param array $options
+     * @param bool $options
+     *
+     * @return $this
+     */
+    public function addEditableColumnSelect(
+        string $id,
+        string $title,
+        array $options
+    );
+
 
     /**
      * @api

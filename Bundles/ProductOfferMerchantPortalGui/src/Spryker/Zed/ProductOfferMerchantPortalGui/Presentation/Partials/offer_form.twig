@@ -42,14 +42,14 @@
 {% endmacro %}
 
 
-{% macro spyFormItemPriceProduct(priceProduct) %}
-    <web-spy-card spy-title="{{ 'Price' | trans }}">
-        <web-spy-card>
-            {# Add TABLE CONFIG #}
-            <web-mp-offer-prices-table table-id="web-mp-offer-prices-table" config=''></web-mp-offer-prices-table>
-        </web-spy-card>
-    </web-spy-card>
-{% endmacro %}
+{#{% macro spyFormItemPriceProduct(priceProduct) %}#}
+{#    <web-spy-card spy-title="{{ 'Price' | trans }}">#}
+{#        <web-spy-card>#}
+{#            #}{# Add TABLE CONFIG #}
+{#            <web-mp-offer-prices-table table-id="web-mp-offer-prices-table" config=''></web-mp-offer-prices-table>#}
+{#        </web-spy-card>#}
+{#    </web-spy-card>#}
+{#{% endmacro %}#}
 
 {#{% macro spyFormItemPriceProduct(priceProduct) %}#}
 {#    <web-spy-card spy-title="{{ 'Price' | trans }}">#}
@@ -169,12 +169,7 @@
                 cloak
                 table-id="web-mp-offers-list"
                 table-config='{{ guiTableConfiguration(priceProductOfferTableConfiguration) }}'>
-                <span title>{{ 'List of Prices' | trans }}</span>
-
-{#                <web-spy-button-link action url="/product-offer-merchant-portal-gui/product-list" size="lg">{{ 'Add Offer' | trans }}</web-spy-button-link>#}
             </web-mp-offers-list>
-
-{#            {{ _self.spyFormItemPriceProduct(form) }}#}
 
             {% set dates = {
                 from: form.children.productOfferValidity.children.validFrom.vars.value,
