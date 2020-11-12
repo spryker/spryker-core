@@ -11,7 +11,9 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CompanyUnitAddressBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\RestAddressBuilder;
+use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\CompanyBusinessUnitAddressesRestApiBusinessFactory;
 use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Dependency\Facade\CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressFacadeBridge;
 use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Dependency\Facade\CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressFacadeInterface;
@@ -30,6 +32,9 @@ class GetCompanyBusinessUnitAddressTest extends Unit
 {
     protected const FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_UUID = 'FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_UUID';
 
+    protected const ID_COMPANY = 5555;
+    protected const FAKE_ID_COMPANY = 6666;
+
     /**
      * @var \SprykerTest\Zed\CompanyBusinessUnitAddressesRestApi\CompanyBusinessUnitAddressesRestApiBusinessTester
      */
@@ -43,6 +48,10 @@ class GetCompanyBusinessUnitAddressTest extends Unit
         // Arrange
         $companyUnitAddressResponseTransfer = $this->getFakeCompanyUnitAddressResponseTransfer();
         $quoteTransfer = (new QuoteBuilder())->withCustomer()->build();
+
+        $quoteTransfer->getCustomer()->setCompanyUserTransfer(
+            (new CompanyUserTransfer())->setCompany($companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getCompany())
+        );
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\CompanyBusinessUnitAddressesRestApiBusinessFactory $companyBusinessUnitAddressesRestApiBusinessFactoryMock */
         $companyBusinessUnitAddressesRestApiBusinessFactoryMock = $this->getMockBuilder(CompanyBusinessUnitAddressesRestApiBusinessFactory::class)
@@ -70,6 +79,64 @@ class GetCompanyBusinessUnitAddressTest extends Unit
         $this->assertSame($quoteTransfer->getCustomer()->getFirstName(), $addressTransfer->getFirstName());
         $this->assertSame($quoteTransfer->getCustomer()->getLastName(), $addressTransfer->getLastName());
         $this->assertSame($companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getCompany()->getName(), $addressTransfer->getCompany());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCompanyBusinessUnitAddressInCaseCompanyBusinessUnitAddressFromAnotherCompany(): void
+    {
+        // Arrange
+        $restAddressTransfer = (new RestAddressBuilder())->build();
+        $quoteTransfer = (new QuoteBuilder())->withCustomer()->build();
+
+        $quoteTransfer->getCustomer()->setCompanyUserTransfer(
+            (new CompanyUserTransfer())->setCompany((new CompanyTransfer())->setIdCompany(static::FAKE_ID_COMPANY))
+        );
+
+        /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\CompanyBusinessUnitAddressesRestApiBusinessFactory $companyBusinessUnitAddressesRestApiBusinessFactoryMock */
+        $companyBusinessUnitAddressesRestApiBusinessFactoryMock = $this->getMockBuilder(CompanyBusinessUnitAddressesRestApiBusinessFactory::class)
+            ->onlyMethods(['getCompanyUnitAddressFacade'])
+            ->getMock();
+
+        $companyBusinessUnitAddressesRestApiBusinessFactoryMock
+            ->method('getCompanyUnitAddressFacade')
+            ->willReturn($this->getCompanyUnitAddressFacadeMock($this->getFakeCompanyUnitAddressResponseTransfer()));
+
+        // Act
+        $addressTransfer = $this->tester->getFacadeMock($companyBusinessUnitAddressesRestApiBusinessFactoryMock)
+            ->getCompanyBusinessUnitAddress($restAddressTransfer, $quoteTransfer);
+
+        // Assert
+        $this->assertSame($restAddressTransfer->getAddress1(), $addressTransfer->getAddress1());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCompanyBusinessUnitAddressInCaseRegularCustomerWithoutCompanyRelation(): void
+    {
+        // Arrange
+        $restAddressTransfer = (new RestAddressBuilder())->build();
+
+        /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\CompanyBusinessUnitAddressesRestApiBusinessFactory $companyBusinessUnitAddressesRestApiBusinessFactoryMock */
+        $companyBusinessUnitAddressesRestApiBusinessFactoryMock = $this->getMockBuilder(CompanyBusinessUnitAddressesRestApiBusinessFactory::class)
+            ->onlyMethods(['getCompanyUnitAddressFacade'])
+            ->getMock();
+
+        $companyBusinessUnitAddressesRestApiBusinessFactoryMock
+            ->method('getCompanyUnitAddressFacade')
+            ->willReturn($this->getCompanyUnitAddressFacadeMock($this->getFakeCompanyUnitAddressResponseTransfer()));
+
+        // Act
+        $addressTransfer = $this->tester->getFacadeMock($companyBusinessUnitAddressesRestApiBusinessFactoryMock)
+            ->getCompanyBusinessUnitAddress(
+                $restAddressTransfer,
+                (new QuoteBuilder())->withCustomer()->build()
+            );
+
+        // Assert
+        $this->assertSame($restAddressTransfer->getAddress1(), $addressTransfer->getAddress1());
     }
 
     /**
@@ -105,9 +172,12 @@ class GetCompanyBusinessUnitAddressTest extends Unit
      */
     protected function getFakeCompanyUnitAddressResponseTransfer(): CompanyUnitAddressResponseTransfer
     {
+        $companyUnitAddressBuilder = (new CompanyUnitAddressBuilder())->withCompany()->build();
+        $companyUnitAddressBuilder->getCompany()->setIdCompany(static::ID_COMPANY);
+
         return (new CompanyUnitAddressResponseTransfer())
             ->setIsSuccessful(true)
-            ->setCompanyUnitAddressTransfer((new CompanyUnitAddressBuilder())->withCompany()->build());
+            ->setCompanyUnitAddressTransfer($companyUnitAddressBuilder);
     }
 
     /**

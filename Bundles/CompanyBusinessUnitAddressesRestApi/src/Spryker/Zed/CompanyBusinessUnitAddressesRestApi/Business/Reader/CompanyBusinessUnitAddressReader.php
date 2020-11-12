@@ -45,6 +45,7 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
         if (
             !$companyUnitAddressResponseTransfer->getIsSuccessful()
             || !$companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()
+            || !$this->isCurrentCompanyUserInCompany($quoteTransfer, $companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer())
         ) {
             return (new AddressTransfer())->fromArray($restAddressTransfer->toArray(), true);
         }
@@ -58,5 +59,21 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
             ->setLastName($quoteTransfer->getCustomer()->getLastName())
             ->setSalutation($quoteTransfer->getCustomer()->getSalutation())
             ->setCompany($companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getCompany()->getName());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return bool
+     */
+    protected function isCurrentCompanyUserInCompany(
+        QuoteTransfer $quoteTransfer,
+        CompanyUnitAddressTransfer $companyUnitAddressTransfer
+    ): bool {
+        return $quoteTransfer->getCustomer()->getCompanyUserTransfer()
+            && $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getCompany()
+            && $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getCompany()->getIdCompany()
+            === $companyUnitAddressTransfer->getCompany()->getIdCompany();
     }
 }

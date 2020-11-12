@@ -38,14 +38,14 @@ class AddressSourceCheckoutRequestAttributesValidatorPluginTest extends Unit
     public function testAddressSourceCheckoutRequestAttributesValidatorPluginTestWillCallAddressSourceValidatorPlugins(): void
     {
         // Arrange
-        $addressSourceProvidePluginMock = $this->getMockBuilder(AddressSourceCheckerPluginInterface::class)->getMock();
-        $addressSourceProvidePluginMock->expects($this->once())->method('isAddressSourceProvided');
+        $addressSourceCheckerPluginMock = $this->getMockBuilder(AddressSourceCheckerPluginInterface::class)->getMock();
+        $addressSourceCheckerPluginMock->expects($this->once())->method('isAddressSourceProvided');
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiFactory $shipmentsRestApiFactoryMock */
         $shipmentsRestApiFactoryMock = $this->getMockBuilder(ShipmentsRestApiFactory::class)
             ->onlyMethods(['getAddressSourceProviderPlugins'])
             ->getMock();
-        $shipmentsRestApiFactoryMock->method('getAddressSourceProviderPlugins')->willReturn([$addressSourceProvidePluginMock]);
+        $shipmentsRestApiFactoryMock->method('getAddressSourceProviderPlugins')->willReturn([$addressSourceCheckerPluginMock]);
 
         $addressSourceCheckoutRequestAttributesValidatorPlugin = (new AddressSourceCheckoutRequestAttributesValidatorPlugin())
             ->setFactory($shipmentsRestApiFactoryMock);
