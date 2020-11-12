@@ -127,7 +127,6 @@
     </transfer>
 
     <transfer name="PriceProductDimension">
-        <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
     </transfer>
 
 </transfers>

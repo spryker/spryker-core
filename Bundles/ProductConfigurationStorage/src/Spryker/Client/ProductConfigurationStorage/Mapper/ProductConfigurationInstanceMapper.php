@@ -42,7 +42,7 @@ class ProductConfigurationInstanceMapper implements ProductConfigurationInstance
             $productConfigurationStorageTransfer->getDefaultConfiguration()
         );
         $productConfigurationInstanceTransfer->setDisplayData($productConfigurationStorageTransfer->getDefaultDisplayData());
-        $productConfigurationInstanceTransfer->setProductConfiguratorInstanceHash(
+        $productConfigurationInstanceTransfer->setProductConfigurationHash(
             $this->productConfigurationService->getProductConfigurationInstanceHash($productConfigurationInstanceTransfer)
         );
 

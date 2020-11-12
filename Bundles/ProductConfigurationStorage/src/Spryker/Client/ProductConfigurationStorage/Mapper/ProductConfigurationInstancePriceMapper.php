@@ -94,7 +94,7 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
         $priceProductTransfers = $this->executeProductConfigurationStoragePriceExtractorPlugins($priceProductTransfers);
 
         $productConfigurationInstanceTransfer->setPrices(new ArrayObject($priceProductTransfers));
-        $productConfigurationInstanceTransfer->setProductConfiguratorInstanceHash(
+        $productConfigurationInstanceTransfer->setProductConfigurationHash(
             $this->priceConfigurationService->getProductConfigurationInstanceHash($productConfigurationInstanceTransfer)
         );
         $this->fillUpPriceDimensionWithProductConfigurationInstance(

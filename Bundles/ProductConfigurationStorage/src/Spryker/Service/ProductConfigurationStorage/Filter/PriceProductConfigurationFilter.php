@@ -68,7 +68,7 @@ class PriceProductConfigurationFilter implements PriceProductConfigurationFilter
             }
 
             return $priceProductTransfer->getPriceDimension()->getProductConfigurationInstanceHash()
-                === $priceProductFilterTransfer->getProductConfigurationInstance()->getProductConfiguratorInstanceHash();
+                === $priceProductFilterTransfer->getProductConfigurationInstance()->getProductConfigurationHash();
         });
     }
 }
