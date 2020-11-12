@@ -53,4 +53,34 @@ class ProductConfigurationServiceTest extends Unit
         // Assert
         $this->assertEquals($productConfigurationInstanceTransfer1Hash, $productConfigurationInstanceTransfer2Hash);
     }
+
+    /**
+     * @return void
+     */
+    public function testGetProductConfigurationInstanceHashWillReturnDifferentHashForDifferentProductConfigurationInstanceTransfers(): void
+    {
+        // Arrange
+        $productConfigurationInstanceData1 = [
+            ProductConfigurationInstanceTransfer::AVAILABLE_QUANTITY => 100,
+            ProductConfigurationInstanceTransfer::CONFIGURATION => 'foo',
+            ProductConfigurationInstanceTransfer::DISPLAY_DATA => 'bar',
+        ];
+        $productConfigurationInstanceData2 = [
+            ProductConfigurationInstanceTransfer::AVAILABLE_QUANTITY => 200,
+            ProductConfigurationInstanceTransfer::CONFIGURATION => 'biz',
+            ProductConfigurationInstanceTransfer::DISPLAY_DATA => 'baz',
+        ];
+
+        $productConfigurationInstanceTransfer1 = (new ProductConfigurationInstanceTransfer())->fromArray($productConfigurationInstanceData1);
+        $productConfigurationInstanceTransfer2 = (new ProductConfigurationInstanceTransfer())->fromArray($productConfigurationInstanceData2);
+
+        $productConfigurationService = new ProductConfigurationService();
+
+        // Act
+        $productConfigurationInstanceTransfer1Hash = $productConfigurationService->getProductConfigurationInstanceHash($productConfigurationInstanceTransfer1);
+        $productConfigurationInstanceTransfer2Hash = $productConfigurationService->getProductConfigurationInstanceHash($productConfigurationInstanceTransfer2);
+
+        // Assert
+        $this->assertNotEquals($productConfigurationInstanceTransfer1Hash, $productConfigurationInstanceTransfer2Hash);
+    }
 }
