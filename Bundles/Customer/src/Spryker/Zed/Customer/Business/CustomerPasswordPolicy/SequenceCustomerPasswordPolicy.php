@@ -38,12 +38,12 @@ class SequenceCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
         string $password,
         CustomerResponseTransfer $customerResponseTransfer
     ): CustomerResponseTransfer {
-        if (!$this->customerPasswordSequenceLimit || $this->customerPasswordSequenceLimit < 0) {
+        if (!$this->customerPasswordSequenceLimit || $this->customerPasswordSequenceLimit <= 1) {
             return $customerResponseTransfer;
         }
 
-        $regularExpression = $this->getSequenceRegularExpression($this->customerPasswordSequenceLimit);
-        if (!preg_match($regularExpression, $password)) {
+        $regularExpression = '(.)' . str_repeat('\1', $this->customerPasswordSequenceLimit - 1);
+        if (!preg_match('/' . $regularExpression . '/', $password)) {
             return $customerResponseTransfer;
         }
 
@@ -53,15 +53,5 @@ class SequenceCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
             ->setMessage($messageTransfer);
 
         return $customerResponseTransfer;
-    }
-
-    /**
-     * @param int $sequenceLimit
-     *
-     * @return string
-     */
-    protected function getSequenceRegularExpression(int $sequenceLimit): string
-    {
-        return '/(.)' . str_repeat('\1', $sequenceLimit) . '/';
     }
 }
