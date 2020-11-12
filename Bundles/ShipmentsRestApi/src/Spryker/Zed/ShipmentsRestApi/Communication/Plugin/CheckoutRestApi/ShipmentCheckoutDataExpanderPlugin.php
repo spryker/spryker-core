@@ -21,7 +21,7 @@ class ShipmentCheckoutDataExpanderPlugin extends AbstractPlugin implements Check
     /**
      * {@inheritDoc}
      * - Expands `RestCheckoutDataTransfer` with available shipment methods.
-     * - Requires `RestCheckoutDataTransfer.Quote` to be provided.
+     * - Expects `RestCheckoutDataTransfer.Quote` to be provided.
      *
      * @api
      *

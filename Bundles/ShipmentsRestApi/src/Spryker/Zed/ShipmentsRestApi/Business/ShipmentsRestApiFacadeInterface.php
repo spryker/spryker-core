@@ -49,6 +49,7 @@ interface ShipmentsRestApiFacadeInterface
      * Specification:
      * - Maps `RestCheckoutRequestAttributesTransfer.shipments` to `QuoteTransfer.items[*].shipment`.
      * - Maps `RestCheckoutRequestAttributesTransfer.shipments` to `QuoteTransfer.bundleItems[*].shipment`.
+     * - Expands quote expenses with shipment expenses.
      *
      * @api
      *
@@ -65,7 +66,7 @@ interface ShipmentsRestApiFacadeInterface
     /**
      * Specification:
      * - Expands `RestCheckoutDataTransfer` with available shipment methods.
-     * - Requires `RestCheckoutDataTransfer.Quote` to be provided.
+     * - Expects `RestCheckoutDataTransfer.Quote` to be provided.
      *
      * @api
      *
