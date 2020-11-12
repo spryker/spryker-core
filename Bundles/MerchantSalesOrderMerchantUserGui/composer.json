@@ -14,7 +14,7 @@
     "spryker/merchant-user": "^0.5.3",
     "spryker/money": "^2.0.0",
     "spryker/sales": "^10.0.0 || ^11.0.0",
-    "spryker/shipment": "^8.2.0",
+    "spryker/shipment": "^7.2.0 || ^8.2.0",
     "spryker/state-machine": "^2.12.0",
     "spryker/symfony": "^3.0.0",
     "spryker/util-date-time": "^1.0.0",
