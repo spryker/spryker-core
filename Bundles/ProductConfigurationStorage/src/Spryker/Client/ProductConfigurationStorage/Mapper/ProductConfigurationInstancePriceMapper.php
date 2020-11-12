@@ -162,7 +162,7 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
     ): void {
         foreach ($priceProductTransfers as $priceProductTransfer) {
             $priceProductTransfer->getPriceDimension()->setProductConfigurationInstanceHash(
-                $productConfigurationInstanceTransfer->getProductConfiguratorInstanceHash()
+                $productConfigurationInstanceTransfer->getProductConfigurationHash()
             );
         }
     }

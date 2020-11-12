@@ -64,8 +64,8 @@ class ProductConfigurationItemQuantityCounter implements ProductConfigurationIte
         ItemTransfer $itemTransfer
     ): bool {
         return $itemInCartTransfer->getSku() === $itemTransfer->getSku()
-            && $itemInCartTransfer->getProductConfigurationInstance()->getProductConfiguratorInstanceHash()
-                === $itemTransfer->getProductConfigurationInstance()->getProductConfiguratorInstanceHash();
+            && $itemInCartTransfer->getProductConfigurationInstance()->getProductConfigurationHash()
+                === $itemTransfer->getProductConfigurationInstance()->getProductConfigurationHash();
     }
 
     /**
