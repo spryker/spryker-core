@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Customer\Business\CustomerPasswordPolicy;
 
-use Generated\Shared\Transfer\CustomerErrorTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\Customer\CustomerConfig;
 
 class CharacterSetCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
@@ -39,11 +39,10 @@ class CharacterSetCustomerPasswordPolicy implements CustomerPasswordPolicyInterf
         if (preg_match($this->regularExpression, $password)) {
             return $customerResponseTransfer;
         }
-
-        $customerErrorTransfer = (new CustomerErrorTransfer())
+        $messageTransfer = (new MessageTransfer())
             ->setMessage(static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_CHARACTER_SET);
         $customerResponseTransfer->setIsSuccess(false)
-            ->addError($customerErrorTransfer);
+            ->setMessage($messageTransfer);
 
         return $customerResponseTransfer;
     }

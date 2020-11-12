@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Customer\Business\CustomerPasswordPolicy;
 
-use Generated\Shared\Transfer\CustomerErrorTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\Customer\CustomerConfig;
 
 class SequenceCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
@@ -47,10 +47,10 @@ class SequenceCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
             return $customerResponseTransfer;
         }
 
-        $customerErrorTransfer = (new CustomerErrorTransfer())
+        $messageTransfer = (new MessageTransfer())
             ->setMessage(static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE);
         $customerResponseTransfer->setIsSuccess(false)
-            ->addError($customerErrorTransfer);
+            ->setMessage($messageTransfer);
 
         return $customerResponseTransfer;
     }

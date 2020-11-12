@@ -43,7 +43,6 @@ class Customer implements CustomerInterface
     protected const BCRYPT_FACTOR = 12;
     protected const BCRYPT_SALT = '';
 
-    protected const GLOSSARY_PARAM_VALIDATION_LENGTH = '{{ limit }}';
     protected const GLOSSARY_KEY_CONFIRM_EMAIL_LINK_INVALID_OR_USED = 'customer.error.confirm_email_link.invalid_or_used';
     protected const GLOSSARY_KEY_CUSTOMER_AUTHORIZATION_VALIDATE_EMAIL_ADDRESS = 'customer.authorization.validate_email_address';
     protected const GLOSSARY_KEY_CUSTOMER_REGISTRATION_SUCCESS = 'customer.registration.success';

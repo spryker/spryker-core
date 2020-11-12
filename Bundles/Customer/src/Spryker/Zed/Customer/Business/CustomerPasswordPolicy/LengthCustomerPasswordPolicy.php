@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Customer\Business\CustomerPasswordPolicy;
 
-use Generated\Shared\Transfer\CustomerErrorTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\Customer\CustomerConfig;
 
 class LengthCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
@@ -16,6 +16,8 @@ class LengthCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
     protected const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_MIN = 'customer.password.error.min_length';
 
     protected const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_MAX = 'customer.password.error.max_length';
+
+    protected const GLOSSARY_PARAM_VALIDATION_LENGTH = '{{ limit }}';
 
     /**
      * @var int
@@ -46,11 +48,11 @@ class LengthCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
     {
         $passwordLength = mb_strlen($password);
         if ($this->customerPasswordMinLength && $passwordLength < $this->customerPasswordMinLength) {
-            return $this->addError($customerResponseTransfer, static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_MIN);
+            return $this->addErrorMessage($customerResponseTransfer, static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_MIN, $this->customerPasswordMinLength);
         }
 
         if ($this->customerPasswordMaxLength && $passwordLength > $this->customerPasswordMaxLength) {
-            return $this->addError($customerResponseTransfer, static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_MAX);
+            return $this->addErrorMessage($customerResponseTransfer, static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_MAX, $this->customerPasswordMaxLength);
         }
 
         return $customerResponseTransfer;
@@ -59,15 +61,20 @@ class LengthCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
      * @param string $errorMessage
+     * @param int $messageParameter
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    protected function addError(CustomerResponseTransfer $customerResponseTransfer, string $errorMessage): CustomerResponseTransfer
-    {
-        $customerErrorTransfer = (new CustomerErrorTransfer())
-            ->setMessage($errorMessage);
+    protected function addErrorMessage(
+        CustomerResponseTransfer $customerResponseTransfer,
+        string $errorMessage,
+        int $messageParameter
+    ): CustomerResponseTransfer {
+        $messageTransfer = (new MessageTransfer())
+            ->setMessage($errorMessage)
+            ->setParameters([static::GLOSSARY_PARAM_VALIDATION_LENGTH => $messageParameter]);
         $customerResponseTransfer->setIsSuccess(false)
-            ->addError($customerErrorTransfer);
+            ->setMessage($messageTransfer);
 
         return $customerResponseTransfer;
     }
