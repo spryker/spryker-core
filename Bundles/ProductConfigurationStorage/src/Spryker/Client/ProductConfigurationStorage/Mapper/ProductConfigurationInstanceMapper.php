@@ -9,23 +9,9 @@ namespace Spryker\Client\ProductConfigurationStorage\Mapper;
 
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\ProductConfigurationStorageTransfer;
-use Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToProductConfigurationServiceInterface;
 
 class ProductConfigurationInstanceMapper implements ProductConfigurationInstanceMapperInterface
 {
-    /**
-     * @var \Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToProductConfigurationServiceInterface
-     */
-    protected $productConfigurationService;
-
-    /**
-     * @param \Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToProductConfigurationServiceInterface $productConfigurationService
-     */
-    public function __construct(ProductConfigurationStorageToProductConfigurationServiceInterface $productConfigurationService)
-    {
-        $this->productConfigurationService = $productConfigurationService;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\ProductConfigurationStorageTransfer $productConfigurationStorageTransfer
      * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
@@ -42,9 +28,6 @@ class ProductConfigurationInstanceMapper implements ProductConfigurationInstance
             $productConfigurationStorageTransfer->getDefaultConfiguration()
         );
         $productConfigurationInstanceTransfer->setDisplayData($productConfigurationStorageTransfer->getDefaultDisplayData());
-        $productConfigurationInstanceTransfer->setProductConfigurationHash(
-            $this->productConfigurationService->getProductConfigurationInstanceHash($productConfigurationInstanceTransfer)
-        );
 
         return $productConfigurationInstanceTransfer;
     }

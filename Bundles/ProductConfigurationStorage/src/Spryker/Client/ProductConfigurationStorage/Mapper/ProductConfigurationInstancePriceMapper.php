@@ -94,12 +94,11 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
         $priceProductTransfers = $this->executeProductConfigurationStoragePriceExtractorPlugins($priceProductTransfers);
 
         $productConfigurationInstanceTransfer->setPrices(new ArrayObject($priceProductTransfers));
-        $productConfigurationInstanceTransfer->setProductConfigurationHash(
-            $this->priceConfigurationService->getProductConfigurationInstanceHash($productConfigurationInstanceTransfer)
-        );
-        $this->fillUpPriceDimensionWithProductConfigurationInstance(
+
+        $this->fillUpPriceDimensionWithProductConfigurationInstanceHash(
             $productConfigurationInstanceTransfer->getPrices(),
-            (new ProductConfigurationInstanceTransfer())->fromArray($productConfigurationInstanceTransfer->toArray(), true)
+            $this->priceConfigurationService
+                ->getProductConfigurationInstanceHash($productConfigurationInstanceTransfer)
         );
 
         return $productConfigurationInstanceTransfer;
@@ -152,18 +151,16 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
+     * @param string $productConfigurationInstanceHash
      *
      * @return void
      */
-    protected function fillUpPriceDimensionWithProductConfigurationInstance(
+    protected function fillUpPriceDimensionWithProductConfigurationInstanceHash(
         ArrayObject $priceProductTransfers,
-        ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
+        string $productConfigurationInstanceHash
     ): void {
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            $priceProductTransfer->getPriceDimension()->setProductConfigurationInstanceHash(
-                $productConfigurationInstanceTransfer->getProductConfigurationHash()
-            );
+            $priceProductTransfer->getPriceDimension()->setProductConfigurationInstanceHash($productConfigurationInstanceHash);
         }
     }
 }

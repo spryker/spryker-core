@@ -75,7 +75,7 @@ class ProductConfigurationStorageFactory extends AbstractFactory
      */
     public function createProductConfigurationInstanceMapper(): ProductConfigurationInstanceMapperInterface
     {
-        return new ProductConfigurationInstanceMapper($this->getProductConfigurationService());
+        return new ProductConfigurationInstanceMapper();
     }
 
     /**

@@ -10,10 +10,24 @@ namespace Spryker\Zed\ProductConfiguration\Business\Counter;
 use ArrayObject;
 use Generated\Shared\Transfer\CartItemQuantityTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Spryker\Service\ProductConfiguration\ProductConfigurationServiceInterface;
 
 class ProductConfigurationCartItemQuantityCounter implements ProductConfigurationCartItemQuantityCounterInterface
 {
     protected const DEFAULT_ITEM_QUANTITY = 0;
+
+    /**
+     * @var \Spryker\Service\ProductConfiguration\ProductConfigurationServiceInterface
+     */
+    protected $productConfigurationService;
+
+    /**
+     * @param \Spryker\Service\ProductConfiguration\ProductConfigurationServiceInterface $productConfigurationService
+     */
+    public function __construct(ProductConfigurationServiceInterface $productConfigurationService)
+    {
+        $this->productConfigurationService = $productConfigurationService;
+    }
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
@@ -49,7 +63,7 @@ class ProductConfigurationCartItemQuantityCounter implements ProductConfiguratio
         ItemTransfer $itemTransfer
     ): bool {
         return $itemInCartTransfer->getSku() === $itemTransfer->getSku()
-            && $itemInCartTransfer->getProductConfigurationInstance()->getProductConfigurationHash()
-            === $itemTransfer->getProductConfigurationInstance()->getProductConfigurationHash();
+            && $this->productConfigurationService->getProductConfigurationInstanceHash($itemInCartTransfer->getProductConfigurationInstance())
+                === $this->productConfigurationService->getProductConfigurationInstanceHash($itemTransfer->getProductConfigurationInstance());
     }
 }

@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductConfiguration\Business\Counter;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartItemQuantityTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Spryker\Service\ProductConfiguration\ProductConfigurationServiceInterface;
 
 class ProductConfigurationItemQuantityCounter implements ProductConfigurationItemQuantityCounterInterface
 {
@@ -19,6 +20,20 @@ class ProductConfigurationItemQuantityCounter implements ProductConfigurationIte
      * @uses \Spryker\Zed\Cart\CartConfig::OPERATION_REMOVE
      */
     protected const OPERATION_REMOVE = 'remove';
+
+    /**
+     * @var \Spryker\Service\ProductConfiguration\ProductConfigurationServiceInterface
+     */
+    protected $productConfigurationService;
+
+    /**
+     * @param \Spryker\Service\ProductConfiguration\ProductConfigurationServiceInterface $productConfigurationService
+     */
+    public function __construct(ProductConfigurationServiceInterface $productConfigurationService)
+    {
+        $this->productConfigurationService = $productConfigurationService;
+    }
+
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
@@ -64,8 +79,8 @@ class ProductConfigurationItemQuantityCounter implements ProductConfigurationIte
         ItemTransfer $itemTransfer
     ): bool {
         return $itemInCartTransfer->getSku() === $itemTransfer->getSku()
-            && $itemInCartTransfer->getProductConfigurationInstance()->getProductConfigurationHash()
-                === $itemTransfer->getProductConfigurationInstance()->getProductConfigurationHash();
+            && $this->productConfigurationService->getProductConfigurationInstanceHash($itemInCartTransfer->getProductConfigurationInstance())
+               === $this->productConfigurationService->getProductConfigurationInstanceHash($itemTransfer->getProductConfigurationInstance());
     }
 
     /**

@@ -56,7 +56,7 @@ class ProductConfigurationBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductConfigurationCartItemQuantityCounter(): ProductConfigurationCartItemQuantityCounterInterface
     {
-        return new ProductConfigurationCartItemQuantityCounter();
+        return new ProductConfigurationCartItemQuantityCounter($this->getProductConfigurationService());
     }
 
     /**
@@ -64,7 +64,7 @@ class ProductConfigurationBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductConfigurationItemQuantityCounter(): ProductConfigurationItemQuantityCounterInterface
     {
-        return new ProductConfigurationItemQuantityCounter();
+        return new ProductConfigurationItemQuantityCounter($this->getProductConfigurationService());
     }
 
     /**
