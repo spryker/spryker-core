@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ShipmentsRestApi\Business\Quote;
+namespace Spryker\Zed\ShipmentsRestApi\Business\Mapper;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 
-interface ShipmentQuoteMapperInterface
+interface ShipmentQuoteItemMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
@@ -18,7 +18,7 @@ interface ShipmentQuoteMapperInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function mapShipmentToQuote(
+    public function mapShipmentsToQuote(
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer;

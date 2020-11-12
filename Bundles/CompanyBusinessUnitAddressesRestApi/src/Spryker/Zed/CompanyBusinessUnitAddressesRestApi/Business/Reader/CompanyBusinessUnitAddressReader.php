@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Reader;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestAddressTransfer;
@@ -42,11 +43,7 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
             (new CompanyUnitAddressTransfer())->setUuid($restAddressTransfer->getIdCompanyBusinessUnitAddress())
         );
 
-        if (
-            !$companyUnitAddressResponseTransfer->getIsSuccessful()
-            || !$companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()
-            || !$this->isCurrentCompanyUserInCompany($quoteTransfer, $companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer())
-        ) {
+        if (!$this->isCompanyBusinessUnitAddressApplicable($quoteTransfer, $companyUnitAddressResponseTransfer)) {
             return (new AddressTransfer())->fromArray($restAddressTransfer->toArray(), true);
         }
 
@@ -59,6 +56,29 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
             ->setLastName($quoteTransfer->getCustomer()->getLastName())
             ->setSalutation($quoteTransfer->getCustomer()->getSalutation())
             ->setCompany($companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getCompany()->getName());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer $companyUnitAddressResponseTransfer
+     *
+     * @return bool
+     */
+    protected function isCompanyBusinessUnitAddressApplicable(
+        QuoteTransfer $quoteTransfer,
+        CompanyUnitAddressResponseTransfer $companyUnitAddressResponseTransfer
+    ): bool {
+        if (
+            !$companyUnitAddressResponseTransfer->getIsSuccessful()
+            || !$companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()
+        ) {
+            return false;
+        }
+
+        return $this->isCurrentCompanyUserInCompany(
+            $quoteTransfer,
+            $companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()
+        );
     }
 
     /**
