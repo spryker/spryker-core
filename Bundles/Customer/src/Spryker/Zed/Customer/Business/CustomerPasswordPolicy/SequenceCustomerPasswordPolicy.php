@@ -42,16 +42,26 @@ class SequenceCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
             return $customerResponseTransfer;
         }
 
-        $regularExpression = '(.)' . str_repeat('\1', $this->customerPasswordSequenceLimit);
+        $regularExpression = $this->getSequenceRegularExpression($this->customerPasswordSequenceLimit);
         if (!preg_match($regularExpression, $password)) {
             return $customerResponseTransfer;
         }
 
         $customerErrorTransfer = (new CustomerErrorTransfer())
-          ->setMessage(static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE);
+            ->setMessage(static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE);
         $customerResponseTransfer->setIsSuccess(false)
-          ->addError($customerErrorTransfer);
+            ->addError($customerErrorTransfer);
 
         return $customerResponseTransfer;
+    }
+
+    /**
+     * @param int $sequenceLimit
+     *
+     * @return string
+     */
+    protected function getSequenceRegularExpression(int $sequenceLimit): string
+    {
+        return '/(.)' . str_repeat('\1', $sequenceLimit) . '/';
     }
 }
