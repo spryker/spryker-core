@@ -48,6 +48,7 @@ interface ShipmentsRestApiFacadeInterface
     /**
      * Specification:
      * - Maps `RestCheckoutRequestAttributesTransfer.shipments` to `QuoteTransfer.items[*].shipment`.
+     * - Maps `RestCheckoutRequestAttributesTransfer.shipments` to `QuoteTransfer.bundleItems[*].shipment`.
      *
      * @api
      *

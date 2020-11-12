@@ -175,13 +175,7 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
                 continue;
             }
 
-            if (!$itemTransfer->getShipment()) {
-                $itemTransfer->setShipment($shipmentTransfer);
-
-                continue;
-            }
-
-            $itemTransfer->getShipment()->fromArray($shipmentTransfer->modifiedToArray());
+            $this->updateItemShipment($itemTransfer, $shipmentTransfer);
         }
 
         return $quoteTransfer;
