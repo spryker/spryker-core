@@ -50,6 +50,7 @@
         <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
         <property name="items" type="Item[]" singular="item"/>
+        <property name="bundleItems" type="Item[]" singular="bundleItem"/>
     </transfer>
 
     <transfer name="Shipment">
@@ -77,6 +78,8 @@
     <transfer name="Item">
         <property name="shipment" type="Shipment"/>
         <property name="groupKey" type="string"/>
+        <property name="relatedBundleItemIdentifier" type="string"/>
+        <property name="bundleItemIdentifier" type="string"/>
     </transfer>
 
     <transfer name="CheckoutData">
@@ -184,6 +187,14 @@
         <property name="email" type="string"/>
         <property name="country" type="string"/>
         <property name="iso2Code" type="string"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="RestOrderDetailsAttributes">
+        <property name="items" type="RestOrderItemsAttributes[]" singular="item"/>
     </transfer>
 
 </transfers>

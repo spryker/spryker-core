@@ -9,6 +9,7 @@ namespace Spryker\Zed\ShipmentsRestApi\Business\Quote;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestAddressTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
@@ -112,6 +113,12 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
                 $restShipmentsTransfer->getItems(),
                 $shipmentTransfer
             );
+
+            $quoteTransfer = $this->assignShipmentTransferToBundleItems(
+                $quoteTransfer,
+                $restShipmentsTransfer->getItems(),
+                $shipmentTransfer
+            );
         }
 
         return $quoteTransfer;
@@ -168,16 +175,78 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
                 continue;
             }
 
-            if (!$itemTransfer->getShipment()) {
-                $itemTransfer->setShipment($shipmentTransfer);
-
-                continue;
-            }
-
-            $itemTransfer->getShipment()->fromArray($shipmentTransfer->modifiedToArray());
+            $this->updateItemShipment($itemTransfer, $shipmentTransfer);
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string[] $itemsGroupKeys
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function assignShipmentTransferToBundleItems(
+        QuoteTransfer $quoteTransfer,
+        array $itemsGroupKeys,
+        ShipmentTransfer $shipmentTransfer
+    ): QuoteTransfer {
+        $mappedBundledItems = $this->mapBundledItemsByBundleItemIdentifier($quoteTransfer);
+
+        foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
+            if (!in_array($itemTransfer->getGroupKey(), $itemsGroupKeys)) {
+                continue;
+            }
+
+            $bundledItems = $mappedBundledItems[$itemTransfer->getBundleItemIdentifier()] ?? [];
+
+            foreach ($bundledItems as $bundledItem) {
+                $this->updateItemShipment($bundledItem, $shipmentTransfer);
+            }
+
+            $this->updateItemShipment($itemTransfer, $shipmentTransfer);
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function updateItemShipment(ItemTransfer $itemTransfer, ShipmentTransfer $shipmentTransfer): ItemTransfer
+    {
+        if (!$itemTransfer->getShipment()) {
+            $itemTransfer->setShipment($shipmentTransfer);
+
+            return $itemTransfer;
+        }
+
+        $itemTransfer->getShipment()->fromArray($shipmentTransfer->modifiedToArray());
+
+        return $itemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[][]
+     */
+    protected function mapBundledItemsByBundleItemIdentifier(QuoteTransfer $quoteTransfer): array
+    {
+        $mappedBundledItems = [];
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getRelatedBundleItemIdentifier()) {
+                $mappedBundledItems[$itemTransfer->getRelatedBundleItemIdentifier()][] = $itemTransfer;
+            }
+        }
+
+        return $mappedBundledItems;
     }
 
     /**
