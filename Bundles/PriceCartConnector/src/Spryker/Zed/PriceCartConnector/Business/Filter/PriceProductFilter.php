@@ -230,12 +230,12 @@ class PriceProductFilter implements PriceProductFilterInterface
 
     /**
      * @param int $currentItemQuantity
-     * @param int $deltaQuantity
+     * @param int|null $deltaQuantity
      * @param string|null $operation
      *
      * @return int
      */
-    protected function changeItemQuantityAccordingToOperation(int $currentItemQuantity, int $deltaQuantity, ?string $operation): int
+    protected function changeItemQuantityAccordingToOperation(int $currentItemQuantity, ?int $deltaQuantity, ?string $operation): int
     {
         if ($operation === PriceCartConnectorConfig::OPERATION_REMOVE) {
             return $currentItemQuantity - $deltaQuantity;

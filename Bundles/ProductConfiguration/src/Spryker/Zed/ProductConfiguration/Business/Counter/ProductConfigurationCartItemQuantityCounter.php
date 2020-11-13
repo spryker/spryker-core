@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductConfiguration\Business\Counter;
 use ArrayObject;
 use Generated\Shared\Transfer\CartItemQuantityTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Spryker\Service\ProductConfiguration\ProductConfigurationServiceInterface;
 
 class ProductConfigurationCartItemQuantityCounter implements ProductConfigurationCartItemQuantityCounterInterface
@@ -42,7 +43,7 @@ class ProductConfigurationCartItemQuantityCounter implements ProductConfiguratio
         $currentItemQuantity = static::DEFAULT_ITEM_QUANTITY;
 
         foreach ($itemsInCart as $itemInCartTransfer) {
-            if (!$this->isSameProductConfigurationItem($itemInCartTransfer, $itemTransfer)) {
+            if (!$this->isSameItem($itemInCartTransfer, $itemTransfer)) {
                 continue;
             }
 
@@ -58,12 +59,47 @@ class ProductConfigurationCartItemQuantityCounter implements ProductConfiguratio
      *
      * @return bool
      */
-    protected function isSameProductConfigurationItem(
+    protected function isSameItem(
         ItemTransfer $itemInCartTransfer,
         ItemTransfer $itemTransfer
     ): bool {
         return $itemInCartTransfer->getSku() === $itemTransfer->getSku()
-            && $this->productConfigurationService->getProductConfigurationInstanceHash($itemInCartTransfer->getProductConfigurationInstance())
-                === $this->productConfigurationService->getProductConfigurationInstanceHash($itemTransfer->getProductConfigurationInstance());
+            && $this->isSameProductConfigurationItem($itemInCartTransfer, $itemTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemInCartTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function isSameProductConfigurationItem(ItemTransfer $itemInCartTransfer, ItemTransfer $itemTransfer): bool
+    {
+        $itemInCartProductConfigurationInstanceTransfer = $itemInCartTransfer->getProductConfigurationInstance();
+        $itemProductConfigurationInstanceTransfer = $itemTransfer->getProductConfigurationInstance();
+
+        return ($itemInCartProductConfigurationInstanceTransfer === null && $itemProductConfigurationInstanceTransfer === null)
+            || $this->isProductConfigurationInstanceHashEquals(
+                $itemInCartProductConfigurationInstanceTransfer,
+                $itemProductConfigurationInstanceTransfer
+            );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null $itemInCartProductConfigurationInstanceTransfer
+     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null $itemProductConfigurationInstanceTransfer
+     *
+     * @return bool
+     */
+    protected function isProductConfigurationInstanceHashEquals(
+        ?ProductConfigurationInstanceTransfer $itemInCartProductConfigurationInstanceTransfer,
+        ?ProductConfigurationInstanceTransfer $itemProductConfigurationInstanceTransfer
+    ): bool {
+        if ($itemInCartProductConfigurationInstanceTransfer === null || $itemProductConfigurationInstanceTransfer === null) {
+            return false;
+        }
+
+        return $this->productConfigurationService->getProductConfigurationInstanceHash($itemInCartProductConfigurationInstanceTransfer)
+            === $this->productConfigurationService->getProductConfigurationInstanceHash($itemProductConfigurationInstanceTransfer);
     }
 }
