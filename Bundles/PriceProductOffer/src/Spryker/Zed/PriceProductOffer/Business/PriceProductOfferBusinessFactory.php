@@ -10,6 +10,8 @@ namespace Spryker\Zed\PriceProductOffer\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\PriceProductOffer\Business\Expander\ProductOfferExpander;
 use Spryker\Zed\PriceProductOffer\Business\Expander\ProductOfferExpanderInterface;
+use Spryker\Zed\PriceProductOffer\Business\Validator\PriceProductOfferValidator;
+use Spryker\Zed\PriceProductOffer\Business\Validator\PriceProductOfferValidatorInterface;
 use Spryker\Zed\PriceProductOffer\Business\Writer\PriceProductOfferWriter;
 use Spryker\Zed\PriceProductOffer\Business\Writer\PriceProductOfferWriterInterface;
 use Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToPriceProductFacadeInterface;
@@ -40,6 +42,14 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
     public function createProductOfferExpander(): ProductOfferExpanderInterface
     {
         return new ProductOfferExpander($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductOffer\Business\Validator\PriceProductOfferValidatorInterface
+     */
+    public function createPriceProductOfferValidator(): PriceProductOfferValidatorInterface
+    {
+        return new PriceProductOfferValidator($this->getPriceProductFacade());
     }
 
     /**

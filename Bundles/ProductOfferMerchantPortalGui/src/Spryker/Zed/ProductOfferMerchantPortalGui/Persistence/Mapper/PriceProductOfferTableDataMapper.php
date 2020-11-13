@@ -15,6 +15,26 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerc
 class PriceProductOfferTableDataMapper
 {
     /**
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepository::COL_STORE
+     */
+    protected const COL_STORE = 'store';
+
+    /**
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepository::COL_CURRENCY
+     */
+    protected const COL_CURRENCY = 'currency';
+
+    /**
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepository::COL_PRICE_PRODUCT_OFFER_IDS
+     */
+    protected const COL_PRICE_PRODUCT_OFFER_IDS = 'price_product_offer_ids';
+
+    /**
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepository::COL_TYPE_PRICE_PRODUCT_OFFER_IDS
+     */
+    protected const COL_TYPE_PRICE_PRODUCT_OFFER_IDS = 'type_price_product_offer_ids';
+
+    /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface
      */
     protected $priceProductFacade;
@@ -50,15 +70,23 @@ class PriceProductOfferTableDataMapper
             $prices[$priceKey] = $this->preparePrices($prices[$priceKey], $priceProductOfferTableRowDataArray);
 
             if (isset($priceProductOfferTransfers[$priceKey])) {
-                $priceProductOfferTransfers[$priceKey]->setPrices($prices[$priceKey]);
+                $priceProductOfferTransfers[$priceKey]->setPrices($prices[$priceKey])
+                    ->addPriceProductOfferId(
+                        $priceProductOfferTableRowDataArray[static::COL_PRICE_PRODUCT_OFFER_IDS]
+                    )
+                    ->addTypePriceProductOfferId(
+                        $priceProductOfferTableRowDataArray[static::COL_TYPE_PRICE_PRODUCT_OFFER_IDS]
+                    );
 
                 continue;
             }
 
             $priceProductOfferTransfer = (new PriceProductOfferTransfer())
-                ->setStore($priceProductOfferTableRowDataArray['store'])
-                ->setCurrency($priceProductOfferTableRowDataArray['currency'])
-                ->setPrices($prices[$priceKey]);
+                ->setStore($priceProductOfferTableRowDataArray[static::COL_STORE])
+                ->setCurrency($priceProductOfferTableRowDataArray[static::COL_CURRENCY])
+                ->setPrices($prices[$priceKey])
+                ->addPriceProductOfferId($priceProductOfferTableRowDataArray[static::COL_PRICE_PRODUCT_OFFER_IDS])
+                ->addTypePriceProductOfferId($priceProductOfferTableRowDataArray[static::COL_TYPE_PRICE_PRODUCT_OFFER_IDS]);
 
             $priceProductOfferTransfers[$priceKey] = $priceProductOfferTransfer;
         }
@@ -69,7 +97,9 @@ class PriceProductOfferTableDataMapper
     }
 
     /**
+     * @param array $prices
      * @param array $priceProductOfferTableRowDataArray
+     *
      * @return array
      */
     protected function preparePrices(array $prices, array $priceProductOfferTableRowDataArray): array

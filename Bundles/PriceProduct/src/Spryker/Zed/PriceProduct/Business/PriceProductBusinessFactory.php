@@ -52,6 +52,8 @@ use Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductDefaultRemover;
 use Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductDefaultRemoverInterface;
 use Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductRemover;
 use Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductRemoverInterface;
+use Spryker\Zed\PriceProduct\Business\Validator\PriceProductValidator;
+use Spryker\Zed\PriceProduct\Business\Validator\PriceProductValidatorInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface;
@@ -349,6 +351,14 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Business\Validator\PriceProductValidatorInterface
+     */
+    public function createPriceProductValidator(): PriceProductValidatorInterface
+    {
+        return new PriceProductValidator();
     }
 
     /**

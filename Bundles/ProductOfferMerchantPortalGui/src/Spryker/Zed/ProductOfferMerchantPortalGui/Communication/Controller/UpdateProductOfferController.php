@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller;
 
+use ArrayObject;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
@@ -14,7 +15,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOfferResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferPriceGuiTableConfigurationProviderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,8 +28,16 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class UpdateProductOfferController extends AbstractProductOfferController
 {
     protected const PARAM_ID_PRODUCT_OFFER = 'product-offer-id';
-    protected const PARAM_ID_PRICE_PRODUCT_OFFER = 'id-price-product-offer';
+    protected const PARAM_TYPE_PRICE_PRODUCT_OFFER_IDS = 'type-price-product-offer-ids';
+
+    /**
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferPriceGuiTableConfigurationProvider::COL_STORE
+     */
     protected const PARAM_STORE = 'store';
+
+    /**
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferPriceGuiTableConfigurationProvider::COL_STORE
+     */
     protected const PARAM_CURRENCY = 'currency';
 
     /**
@@ -108,7 +116,7 @@ class UpdateProductOfferController extends AbstractProductOfferController
                 'productName' => $this->getFactory()->createProductNameBuilder()->buildProductConcreteName($productConcreteTransfer, $localeTransfer),
                 'productAttributes' => $this->getProductAttributes($localeTransfer, $productConcreteTransfer, $productAbstractTransfer),
                 'productOfferReference' => $productOfferResponseTransfer->getProductOffer()->getProductOfferReference(),
-                'priceProductOfferTableConfiguration' => $priceProductOfferTableConfiguration
+                'priceProductOfferTableConfiguration' => $priceProductOfferTableConfiguration,
             ])->getContent(),
         ];
 
@@ -161,12 +169,19 @@ class UpdateProductOfferController extends AbstractProductOfferController
         );
     }
 
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
     public function savePricesAction(Request $request)
     {
         $idProductOffer = $this->castId($request->get(static::PARAM_ID_PRODUCT_OFFER));
-        $idPriceProductOffer = $request->get(static::PARAM_ID_PRICE_PRODUCT_OFFER);
         $store = $request->get(static::PARAM_STORE);
         $currency = $request->get(static::PARAM_CURRENCY);
+        $typePriceProductOfferIds = $request->get(static::PARAM_TYPE_PRICE_PRODUCT_OFFER_IDS);
 
         $storeTransfer = $this->getFactory()->getStoreFacade()->getStoreByName($store);
         $currencyTransfer = $this->getFactory()->getCurrencyFacade()->findCurrencyByIsoCode($currency);
@@ -177,10 +192,12 @@ class UpdateProductOfferController extends AbstractProductOfferController
             $priceDimensionTransfer->setIdPriceProductOffer($idPriceProductOffer);
         }
 
+        $priceProductTransfers = [];
+
         foreach ($this->getFactory()->getPriceProductFacade()->getPriceTypeValues() as $priceTypeTransfer) {
             $netAmount = $request->get(mb_strtolower($priceTypeTransfer->getName()) . '_net');
             $grossAmount = $request->get(mb_strtolower($priceTypeTransfer->getName()) . '_gross');
-            $prices[] = (new PriceProductTransfer())
+            $priceProductTransfers[] = (new PriceProductTransfer())
                 ->setFkPriceType($priceTypeTransfer->getIdPriceType())
                 ->setMoneyValue(
                     (new MoneyValueTransfer())
@@ -192,8 +209,35 @@ class UpdateProductOfferController extends AbstractProductOfferController
         }
 
         $productOfferTransfer = (new ProductOfferTransfer())
-            ->setPrices(new \ArrayObject($prices));
+            ->setPrices(new ArrayObject($priceProductTransfers));
+
+        $productOfferResponseTransfer = $this->getFactory()
+            ->getPriceProductOfferFacade()
+            ->validateProductOfferPrices($productOfferTransfer);
+
+        if ($productOfferResponseTransfer->getErrors()->count()) {
+            foreach ($productOfferResponseTransfer->getErrors() as $productOfferErrorTransfer) {
+                $responseData['notifications'][] = [
+                    'type' => 'error',
+                    'message' => $productOfferErrorTransfer->getMessage(),
+                ];
+            }
+
+            return new JsonResponse($responseData);
+        }
 
         $this->getFactory()->getPriceProductOfferFacade()->saveProductOfferPrices($productOfferTransfer);
+
+        $responseData['postActions'] = [
+            [
+                'type' => 'refresh_table',
+            ],
+        ];
+        $responseData['notifications'] = [[
+            'type' => 'success',
+            'message' => 'Offer prices saved successfuly.',
+        ]];
+
+        return new JsonResponse($responseData);
     }
 }

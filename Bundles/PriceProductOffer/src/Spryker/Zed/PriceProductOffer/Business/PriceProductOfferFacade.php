@@ -59,4 +59,18 @@ class PriceProductOfferFacade extends AbstractFacade implements PriceProductOffe
     {
         return $this->getFactory()->createProductOfferExpander()->expandProductOfferWithPrices($productOfferTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
+     */
+    public function validateProductOfferPrices(ProductOfferTransfer $productOfferTransfer): ProductOfferResponseTransfer
+    {
+        return $this->getFactory()->createPriceProductOfferValidator()->validatePrices($productOfferTransfer);
+    }
 }

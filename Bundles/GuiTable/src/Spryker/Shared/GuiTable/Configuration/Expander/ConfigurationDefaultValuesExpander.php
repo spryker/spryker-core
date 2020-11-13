@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\GuiTableItemSelectionConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTablePaginationConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableRowActionsConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableSearchConfigurationTransfer;
+use Generated\Shared\Transfer\GuiTableSettingsConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableSyncStateUrlConfigurationTransfer;
 use Spryker\Shared\GuiTable\Configuration\GuiTableConfigInterface;
 
@@ -49,6 +50,7 @@ class ConfigurationDefaultValuesExpander implements ConfigurationDefaultValuesEx
         $guiTableConfigurationTransfer = $this->setDefaultFilters($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->setDefaultItemSelection($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->setDefaultSyncStateUrl($guiTableConfigurationTransfer);
+        $guiTableConfigurationTransfer = $this->setDefaultSettings($guiTableConfigurationTransfer);
 
         return $guiTableConfigurationTransfer;
     }
@@ -223,6 +225,27 @@ class ConfigurationDefaultValuesExpander implements ConfigurationDefaultValuesEx
         }
 
         $guiTableConfigurationTransfer->setSyncStateUrl($guiTableSyncStateUrlConfigurationTransfer);
+
+        return $guiTableConfigurationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     */
+    protected function setDefaultSettings(
+        GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+    ): GuiTableConfigurationTransfer {
+        $guiTableSettingsConfigurationTransfer = $guiTableConfigurationTransfer->getSettings() ?? new GuiTableSettingsConfigurationTransfer();
+
+        if ($guiTableSettingsConfigurationTransfer->getEnabled() === null) {
+            $guiTableSettingsConfigurationTransfer->setEnabled(
+                in_array('settings', $this->guiTableConfig->getDefaultEnabledFeatures())
+            );
+        }
+
+        $guiTableConfigurationTransfer->setSettings($guiTableSettingsConfigurationTransfer);
 
         return $guiTableConfigurationTransfer;
     }

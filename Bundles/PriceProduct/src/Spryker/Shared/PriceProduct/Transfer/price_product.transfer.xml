@@ -117,4 +117,13 @@
     <transfer name="Quote">
     </transfer>
 
+    <transfer name="PriceProductValidationResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="errors" type="PriceProductValidationError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="PriceProductValidationError">
+        <property name="message" type="string"/>
+    </transfer>
+
 </transfers>

@@ -17,4 +17,11 @@ interface PriceProductOfferToPriceProductFacadeInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function persistProductConcretePriceCollection(ProductConcreteTransfer $productConcreteTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductValidationResponseTransfer
+     */
+    public function validatePrices(array $priceProductTransfers): PriceProductValidationResponseTransfer;
 }

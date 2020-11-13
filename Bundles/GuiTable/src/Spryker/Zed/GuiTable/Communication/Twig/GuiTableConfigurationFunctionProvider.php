@@ -84,6 +84,7 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
                 GuiTableConfigurationTransfer::ITEM_SELECTION => $this->prepareItemSelectionData($guiTableConfigurationTransfer),
                 GuiTableConfigurationTransfer::SYNC_STATE_URL => $this->prepareSyncStateUrlData($guiTableConfigurationTransfer),
                 GuiTableConfigurationTransfer::EDITABLE => $this->prepareEditableData($guiTableConfigurationTransfer),
+                GuiTableConfigurationTransfer::SETTINGS => $guiTableConfigurationTransfer->getSettings()->toArray(),
             ];
 
             if (count($overwrite)) {
@@ -282,7 +283,7 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
 
         if (!$editable) {
             return [
-                static::CONFIG_ENABLED => false
+                static::CONFIG_ENABLED => false,
             ];
         }
 

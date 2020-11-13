@@ -47,4 +47,17 @@ interface PriceProductOfferFacadeInterface
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */
     public function expandProductOfferWithPrices(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer;
+
+    /**
+     * Specification:
+     * - Validate ProductOfferTransfer.prices.
+     * - Returns ProductOfferResponse transfer object.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
+     */
+    public function validateProductOfferPrices(ProductOfferTransfer $productOfferTransfer): ProductOfferResponseTransfer;
 }

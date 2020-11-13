@@ -33,4 +33,14 @@ class PriceProductOfferToPriceProductFacadeBridge implements PriceProductOfferTo
     {
         return $this->priceProductFacade->persistProductConcretePriceCollection($productConcreteTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductValidationResponseTransfer
+     */
+    public function validatePrices(array $priceProductTransfers): PriceProductValidationResponseTransfer
+    {
+        return $this->priceProductFacade->persistProductConcretePriceCollection($priceProductTransfers);
+    }
 }

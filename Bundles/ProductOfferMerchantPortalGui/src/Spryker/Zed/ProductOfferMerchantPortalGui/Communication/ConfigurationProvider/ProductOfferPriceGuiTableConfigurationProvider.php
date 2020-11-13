@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider;
 
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
+use Generated\Shared\Transfer\GuiTableSearchConfigurationTransfer;
+use Generated\Shared\Transfer\GuiTableSettingsConfigurationTransfer;
 use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
 use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToCurrencyFacadeInterface;
@@ -16,15 +18,29 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerc
 
 class ProductOfferPriceGuiTableConfigurationProvider implements ProductOfferPriceGuiTableConfigurationProviderInterface
 {
-    public const COL_STORE = 'store';
-    public const COL_CURRENCY = 'currency';
-
+    protected const COL_STORE = 'store';
+    protected const COL_CURRENCY = 'currency';
     protected const PARAM_ID_PRODUCT_OFFER = '$OFFER_ID';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\UpdateProductOfferController::priceTableDataAction()
      */
     protected const DATA_URL = '/product-offer-merchant-portal-gui/update-product-offer/price-table-data?product-offer-id=$OFFER_ID';
+
+    /**
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\UpdateProductOfferController::savePricesAction()
+     */
+    protected const URL_SAVE_PRICES = '/product-offer-merchant-portal-gui/update-product-offer/save-prices?product-offer-id=$OFFER_ID&type-price-product-offer-ids=${row.type_price_product_offer_ids}';
+
+    /**
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\UpdateProductOfferController::deletePricesAction()
+     */
+    protected const URL_DELETE_PRICE = '/product-offer-merchant-portal-gui/update-product-offer/delete-prices?product-offer-id=$OFFER_ID&price-product-offer-ids=${row.price_product_offer_ids}';
+
+    /**
+     * @var int
+     */
+    protected $idProductOffer;
 
     /**
      * @var \Spryker\Shared\GuiTable\GuiTableFactoryInterface
@@ -66,12 +82,13 @@ class ProductOfferPriceGuiTableConfigurationProvider implements ProductOfferPric
 
     /**
      * @param int $idProductOffer
-     * @param array $initialData
+     * @param array|null $initialData
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
     public function getConfiguration(int $idProductOffer, ?array $initialData = []): GuiTableConfigurationTransfer
     {
+        $this->idProductOffer = $idProductOffer;
         $guiTableConfigurationBuilder = $this->guiTableFactory->createConfigurationBuilder();
 
         $guiTableConfigurationBuilder = $this->addColumns($guiTableConfigurationBuilder);
@@ -82,12 +99,19 @@ class ProductOfferPriceGuiTableConfigurationProvider implements ProductOfferPric
             ->setTableTitle('List of Prices')
             ->setDataSourceUrl(str_replace(static::PARAM_ID_PRODUCT_OFFER, $idProductOffer, static::DATA_URL))
             ->setIsItemSelectionEnabled(false)
-            ->setDefaultPageSize(25)
-            ->setSearchPlaceholder('');
+            ->setDefaultPageSize(25);
 
-        $guiTableConfigurationBuilder = $this->setEditableConfiguration($guiTableConfigurationBuilder, $initialData);
+        $guiTableConfigurationBuilder = $this->setEditableConfiguration(
+            $guiTableConfigurationBuilder,
+            $initialData
+        );
 
-        return $guiTableConfigurationBuilder->createConfiguration();
+        $guiTableSearchConfigurationTransfer = (new GuiTableSearchConfigurationTransfer())->setIsEnabled(false);
+        $guiTableSettingsConfigurationTransfer = (new GuiTableSettingsConfigurationTransfer())->setEnabled(false);
+
+        return $guiTableConfigurationBuilder->createConfiguration()
+            ->setSearch($guiTableSearchConfigurationTransfer)
+            ->setSettings($guiTableSettingsConfigurationTransfer);
     }
 
     /**
@@ -139,7 +163,7 @@ class ProductOfferPriceGuiTableConfigurationProvider implements ProductOfferPric
 
         $storeOptions = [];
         foreach ($storeTransfers as $storeTransfer) {
-            $storeOptions[$storeTransfer->getIdStore()] = $storeTransfer->getName();
+            $storeOptions[(string)$storeTransfer->getIdStore()] = $storeTransfer->getName();
         }
 
         return $storeOptions;
@@ -155,7 +179,7 @@ class ProductOfferPriceGuiTableConfigurationProvider implements ProductOfferPric
         $currencyOptions = [];
         foreach ($storeWithCurrencyTransfers as $storeWithCurrencyTransfer) {
             foreach ($storeWithCurrencyTransfer->getCurrencies() as $currencyTransfer) {
-                $currencyOptions[$currencyTransfer->getIdCurrency()] = $currencyTransfer->getCode();
+                $currencyOptions[(string)$currencyTransfer->getIdCurrency()] = $currencyTransfer->getCode();
             }
         }
 
@@ -172,12 +196,18 @@ class ProductOfferPriceGuiTableConfigurationProvider implements ProductOfferPric
         $guiTableConfigurationBuilder->addRowActionOpenFormOverlay(
             'delete-price',
             'Delete price',
-            '/product-offer-merchant-portal-gui/update-product-offer/delete-prices?product-offer-id=$OFFER_ID&${row.price_product_offer_ids}'
+            str_replace(static::PARAM_ID_PRODUCT_OFFER, $this->idProductOffer, static::URL_DELETE_PRICE)
         )->setRowClickAction('delete-price');
 
         return $guiTableConfigurationBuilder;
     }
 
+    /**
+     * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
+     * @param array|null $initialData
+     *
+     * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
+     */
     protected function setEditableConfiguration(
         GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder,
         ?array $initialData = []
@@ -189,27 +219,36 @@ class ProductOfferPriceGuiTableConfigurationProvider implements ProductOfferPric
             $guiTableConfigurationBuilder->setEditableCreateActionInitialData($initialData);
         }
 
-        $guiTableConfigurationBuilder = $this->addEditableButtons($guiTableConfigurationBuilder);
+        $guiTableConfigurationBuilder = $this->addEditableButtons($guiTableConfigurationBuilder, $this->idProductOffer);
         $guiTableConfigurationBuilder = $this->addEditableColumns($guiTableConfigurationBuilder);
 
         return $guiTableConfigurationBuilder;
     }
 
-    protected function addEditableButtons(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
-    {
+    /**
+     * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
+     *
+     * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
+     */
+    protected function addEditableButtons(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface {
         $guiTableConfigurationBuilder->addEditableCreateActionAddButton('Create')
             ->addEditableCreateActionCancelButton('Cancel')
-            ->setEditableUpdateActionUrl('POST', 'test')
+            ->setEditableUpdateActionUrl('POST', str_replace(static::PARAM_ID_PRODUCT_OFFER, $this->idProductOffer, static::URL_SAVE_PRICES))
             ->addEditableUpdateActionAddButton('Save')
             ->addEditableUpdateActionCancelButton('Cancel');
 
         return $guiTableConfigurationBuilder;
     }
 
+    /**
+     * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
+     *
+     * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
+     */
     protected function addEditableColumns(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
     {
-        $guiTableConfigurationBuilder->addEditableColumnSelect(static::COL_STORE, 'Store', $this->getStoreOptions())
-            ->addEditableColumnSelect(static::COL_CURRENCY, 'Currency', $this->getCurrencyOptions());
+        $guiTableConfigurationBuilder->addEditableColumnSelect(static::COL_STORE, 'Store', false, $this->getStoreOptions())
+            ->addEditableColumnSelect(static::COL_CURRENCY, 'Currency', false, $this->getCurrencyOptions());
 
         foreach ($this->priceProductFacade->getPriceTypeValues() as $priceTypeTransfer) {
             $guiTableConfigurationBuilder->addEditableColumnInput(

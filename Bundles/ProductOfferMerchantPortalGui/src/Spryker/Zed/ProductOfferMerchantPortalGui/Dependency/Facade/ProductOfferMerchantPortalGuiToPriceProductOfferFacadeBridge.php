@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductOfferTransfer;
+
 class ProductOfferMerchantPortalGuiToPriceProductOfferFacadeBridge implements ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface
 {
     /**
@@ -30,5 +32,15 @@ class ProductOfferMerchantPortalGuiToPriceProductOfferFacadeBridge implements Pr
     public function saveProductOfferPrices(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
     {
         return $this->priceProductOfferFacade->saveProductOfferPrices($productOfferTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
+     */
+    public function validateProductOfferPrices(ProductOfferTransfer $productOfferTransfer): ProductOfferResponseTransfer
+    {
+        return $this->priceProductOfferFacade->validateProductOfferPrices($productOfferTransfer);
     }
 }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductOfferTransfer;
+
 interface ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface
 {
     /**
@@ -15,4 +17,11 @@ interface ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */
     public function saveProductOfferPrices(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
+     */
+    public function validateProductOfferPrices(ProductOfferTransfer $productOfferTransfer): ProductOfferResponseTransfer;
 }

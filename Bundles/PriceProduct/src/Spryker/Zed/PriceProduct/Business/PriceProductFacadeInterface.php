@@ -585,4 +585,19 @@ interface PriceProductFacadeInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function expandProductConcreteWithPrices(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+
+    /**
+     * Specification:
+     * - Validates PriceProductTransfer stack.
+     * - Сhecks if there are duplicated prices for store-currency-gross-net-price_data combinations (per price dimension).
+     * - Checks that currency assigned to a store per prices.
+     * - Returns PriceProductValidationResponse transfer object.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductValidationResponseTransfer
+     */
+    public function validatePrices(array $priceProductTransfers): PriceProductValidationResponseTransfer;
 }

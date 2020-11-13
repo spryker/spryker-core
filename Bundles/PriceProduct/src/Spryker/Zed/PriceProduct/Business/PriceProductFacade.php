@@ -614,4 +614,20 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
             ->createPriceProductConcreteReader()
             ->expandProductConcreteWithPrices($productConcreteTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductValidationResponseTransfer
+     */
+    public function validatePrices(array $priceProductTransfers): PriceProductValidationResponseTransfer
+    {
+        return $this->getFactory()
+            ->createPriceProductValidator()
+            ->validatePrices($priceProductTransfers);
+    }
 }

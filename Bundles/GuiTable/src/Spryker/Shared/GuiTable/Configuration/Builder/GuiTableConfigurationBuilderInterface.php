@@ -135,25 +135,22 @@ interface GuiTableConfigurationBuilderInterface
      *
      * @return $this
      */
-    public function addEditableColumnInput(
-        string $id,
-        string $title
-    );
+    public function addEditableColumnInput(string $id, string $title);
 
     /**
      * @param string $id
      * @param string $title
+     * @param bool $isMultiselect
      * @param array $options
-     * @param bool $options
      *
      * @return $this
      */
     public function addEditableColumnSelect(
         string $id,
         string $title,
+        bool $isMultiselect,
         array $options
     );
-
 
     /**
      * @api
