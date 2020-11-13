@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToPriceProductServiceInterface;
+use Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToProductConfigurationServiceInterface;
 use Spryker\Shared\ProductConfigurationStorage\ProductConfigurationStorageConfig;
 
 class ProductConfigurationInstancePriceMapper implements ProductConfigurationInstancePriceMapperInterface
@@ -42,19 +43,27 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
     protected $priceProductService;
 
     /**
+     * @var \Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToProductConfigurationServiceInterface
+     */
+    protected $priceConfigurationService;
+
+    /**
      * @var \Spryker\Client\ProductConfigurationStorageExtension\Dependency\Plugin\ProductConfigurationStoragePriceExtractorPluginInterface[]
      */
     protected $productConfigurationStoragePriceExtractorPlugins;
 
     /**
      * @param \Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToPriceProductServiceInterface $priceProductService
+     * @param \Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToProductConfigurationServiceInterface $priceConfigurationService
      * @param \Spryker\Client\ProductConfigurationStorageExtension\Dependency\Plugin\ProductConfigurationStoragePriceExtractorPluginInterface[] $productConfigurationStoragePriceExtractorPlugins
      */
     public function __construct(
         ProductConfigurationStorageToPriceProductServiceInterface $priceProductService,
+        ProductConfigurationStorageToProductConfigurationServiceInterface $priceConfigurationService,
         array $productConfigurationStoragePriceExtractorPlugins
     ) {
         $this->priceProductService = $priceProductService;
+        $this->priceConfigurationService = $priceConfigurationService;
         $this->productConfigurationStoragePriceExtractorPlugins = $productConfigurationStoragePriceExtractorPlugins;
     }
 
@@ -74,13 +83,11 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
 
         foreach ($configuratorResponsePrisesData as $currencyCode => $priceData) {
             $priceProductTransfer = $this->mapPriceDataToPriceProductTransfer(
-                $configuratorResponseData,
                 $currencyCode,
                 $priceData
             );
 
             $priceProductTransfer->setGroupKey($this->priceProductService->buildPriceProductGroupKey($priceProductTransfer));
-
             $priceProductTransfers[] = $priceProductTransfer;
         }
 
@@ -88,26 +95,27 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
 
         $productConfigurationInstanceTransfer->setPrices(new ArrayObject($priceProductTransfers));
 
+        $this->fillUpPriceDimensionWithProductConfigurationInstanceHash(
+            $productConfigurationInstanceTransfer->getPrices(),
+            $this->priceConfigurationService
+                ->getProductConfigurationInstanceHash($productConfigurationInstanceTransfer)
+        );
+
         return $productConfigurationInstanceTransfer;
     }
 
     /**
-     * @param array $configuratorResponseData
      * @param string $currencyCode
      * @param array $priceData
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
     protected function mapPriceDataToPriceProductTransfer(
-        array $configuratorResponseData,
         string $currencyCode,
         array $priceData
     ): PriceProductTransfer {
         $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
-            ->setType(ProductConfigurationStorageConfig::PRICE_DIMENSION_PRODUCT_CONFIGURATION)
-            ->setProductConfigurationConfiguratorKey(
-                $configuratorResponseData[static::PRODUCT_CONFIGURATION_INSTANCE_RESPONSE_KEY][static::CONFIGURATOR_KEY]
-            );
+            ->setType(ProductConfigurationStorageConfig::PRICE_DIMENSION_PRODUCT_CONFIGURATION);
 
         $moneyValue = (new MoneyValueTransfer())
             ->setNetAmount($priceData[static::PRICE_NET_MODE_KEY][static::DEFAULT_PRICE_TYPE_NAME] ?? null)
@@ -139,5 +147,20 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
         }
 
         return array_merge($priceProductTransfers, ...$extractedPriceProductTransfers);
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param string $productConfigurationInstanceHash
+     *
+     * @return void
+     */
+    protected function fillUpPriceDimensionWithProductConfigurationInstanceHash(
+        ArrayObject $priceProductTransfers,
+        string $productConfigurationInstanceHash
+    ): void {
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            $priceProductTransfer->getPriceDimension()->setProductConfigurationInstanceHash($productConfigurationInstanceHash);
+        }
     }
 }

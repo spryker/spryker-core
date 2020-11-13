@@ -7,17 +7,18 @@
 
 namespace Spryker\Zed\ProductConfiguration\Business;
 
+use Spryker\Service\ProductConfiguration\ProductConfigurationServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductConfiguration\Business\Checker\ProductConfigurationChecker;
 use Spryker\Zed\ProductConfiguration\Business\Checker\ProductConfigurationCheckerInterface;
 use Spryker\Zed\ProductConfiguration\Business\Counter\ProductConfigurationCartItemQuantityCounter;
 use Spryker\Zed\ProductConfiguration\Business\Counter\ProductConfigurationCartItemQuantityCounterInterface;
+use Spryker\Zed\ProductConfiguration\Business\Counter\ProductConfigurationItemQuantityCounter;
+use Spryker\Zed\ProductConfiguration\Business\Counter\ProductConfigurationItemQuantityCounterInterface;
 use Spryker\Zed\ProductConfiguration\Business\Expander\ProductConfigurationGroupKeyItemExpander;
 use Spryker\Zed\ProductConfiguration\Business\Expander\ProductConfigurationGroupKeyItemExpanderInterface;
 use Spryker\Zed\ProductConfiguration\Business\Expander\ProductConfigurationPriceProductExpander;
 use Spryker\Zed\ProductConfiguration\Business\Expander\ProductConfigurationPriceProductExpanderInterface;
-use Spryker\Zed\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingServiceInterface;
-use Spryker\Zed\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilTextServiceInterface;
 use Spryker\Zed\ProductConfiguration\ProductConfigurationDependencyProvider;
 
 /**
@@ -31,10 +32,7 @@ class ProductConfigurationBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductConfigurationGroupKeyItemExpander(): ProductConfigurationGroupKeyItemExpanderInterface
     {
-        return new ProductConfigurationGroupKeyItemExpander(
-            $this->getUtilEncodingService(),
-            $this->getUtilTextService()
-        );
+        return new ProductConfigurationGroupKeyItemExpander($this->getProductConfigurationService());
     }
 
     /**
@@ -58,22 +56,22 @@ class ProductConfigurationBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductConfigurationCartItemQuantityCounter(): ProductConfigurationCartItemQuantityCounterInterface
     {
-        return new ProductConfigurationCartItemQuantityCounter();
+        return new ProductConfigurationCartItemQuantityCounter($this->getProductConfigurationService());
     }
 
     /**
-     * @return \Spryker\Zed\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingServiceInterface
+     * @return \Spryker\Zed\ProductConfiguration\Business\Counter\ProductConfigurationItemQuantityCounterInterface
      */
-    public function getUtilEncodingService(): ProductConfigurationToUtilEncodingServiceInterface
+    public function createProductConfigurationItemQuantityCounter(): ProductConfigurationItemQuantityCounterInterface
     {
-        return $this->getProvidedDependency(ProductConfigurationDependencyProvider::SERVICE_UTIL_ENCODING);
+        return new ProductConfigurationItemQuantityCounter($this->getProductConfigurationService());
     }
 
     /**
-     * @return \Spryker\Zed\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilTextServiceInterface
+     * @return \Spryker\Service\ProductConfiguration\ProductConfigurationServiceInterface
      */
-    public function getUtilTextService(): ProductConfigurationToUtilTextServiceInterface
+    public function getProductConfigurationService(): ProductConfigurationServiceInterface
     {
-        return $this->getProvidedDependency(ProductConfigurationDependencyProvider::SERVICE_UTIL_TEXT);
+        return $this->getProvidedDependency(ProductConfigurationDependencyProvider::SERVICE_PRODUCT_CONFIGURATION);
     }
 }

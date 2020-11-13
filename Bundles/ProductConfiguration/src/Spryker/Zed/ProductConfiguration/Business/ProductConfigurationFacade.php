@@ -107,4 +107,21 @@ class ProductConfigurationFacade extends AbstractFacade implements ProductConfig
             ->createProductConfigurationCartItemQuantityCounter()
             ->countCartItemQuantity($itemsInCart, $itemTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartItemQuantityTransfer
+     */
+    public function countItemQuantity(CartChangeTransfer $cartChangeTransfer, ItemTransfer $itemTransfer): CartItemQuantityTransfer
+    {
+        return $this->getFactory()
+            ->createProductConfigurationItemQuantityCounter()
+            ->countItemQuantity($cartChangeTransfer, $itemTransfer);
+    }
 }

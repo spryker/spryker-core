@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductConfiguration\Communication\Plugin\AvailabilityCartConnector;
+namespace Spryker\Zed\ProductConfiguration\Communication\Plugin\PriceCartConnector;
 
-use ArrayObject;
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartItemQuantityTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Zed\AvailabilityCartConnectorExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\PriceCartConnectorExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface;
 
 /**
  * @method \Spryker\Zed\ProductConfiguration\ProductConfigurationConfig getConfig()
@@ -26,31 +26,31 @@ class ProductConfigurationCartItemQuantityCounterStrategyPlugin extends Abstract
      *
      * @api
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return bool
      */
-    public function isApplicable(ArrayObject $itemsInCart, ItemTransfer $itemTransfer): bool
+    public function isApplicable(CartChangeTransfer $cartChangeTransfer, ItemTransfer $itemTransfer): bool
     {
         return $itemTransfer->getProductConfigurationInstance() !== null;
     }
 
     /**
      * {@inheritDoc}
-     * - Finds given item in the cart.
-     * - Counts item quantity by item SKU and product configuration instance.
+     * - Finds given item in the cart change.
+     * - Counts item quantity by item SKU and product configuration instance in add and subtract directions.
      * - Returns quantity for the item.
      *
      * @api
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\CartItemQuantityTransfer
      */
-    public function countCartItemQuantity(ArrayObject $itemsInCart, ItemTransfer $itemTransfer): CartItemQuantityTransfer
+    public function countCartItemQuantity(CartChangeTransfer $cartChangeTransfer, ItemTransfer $itemTransfer): CartItemQuantityTransfer
     {
-        return $this->getFacade()->countCartItemQuantity($itemsInCart, $itemTransfer);
+        return $this->getFacade()->countItemQuantity($cartChangeTransfer, $itemTransfer);
     }
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Service\ProductConfigurationStorage\Filter;
 
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 
 class PriceProductConfigurationFilter implements PriceProductConfigurationFilterInterface
 {
@@ -22,15 +23,21 @@ class PriceProductConfigurationFilter implements PriceProductConfigurationFilter
         PriceProductFilterTransfer $priceProductFilterTransfer
     ): array {
         if (!$priceProductFilterTransfer->getProductConfigurationInstance()) {
+            $priceProductTransfers = $this->filterOutProductConfigurationPrices($priceProductTransfers);
+
             return $priceProductTransfers;
         }
 
-        $productConfigurationPriceProductTransfers = $this->filterOutProductConfigurationPrices($priceProductTransfers);
+        $productConfigurationPriceProductTransfers = $this->filterOutPricesExceptCurrentProductConfigurationInstancePrices(
+            $priceProductTransfers,
+            $priceProductFilterTransfer
+        );
+
         if ($productConfigurationPriceProductTransfers !== []) {
             return $productConfigurationPriceProductTransfers;
         }
 
-        return $priceProductTransfers;
+        return $this->filterOutProductConfigurationPrices($priceProductTransfers);
     }
 
     /**
@@ -40,9 +47,33 @@ class PriceProductConfigurationFilter implements PriceProductConfigurationFilter
      */
     protected function filterOutProductConfigurationPrices(array $priceProductTransfers): array
     {
-        return array_filter($priceProductTransfers, function ($priceProductTransfer) {
-            /** @var \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer */
-            return $priceProductTransfer->getPriceDimension()->getProductConfigurationConfiguratorKey() !== null;
+        return array_filter($priceProductTransfers, function (PriceProductTransfer $priceProductTransfer) {
+            return $priceProductTransfer->getPriceDimension()->getProductConfigurationInstanceHash() === null;
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function filterOutPricesExceptCurrentProductConfigurationInstancePrices(
+        array $priceProductTransfers,
+        PriceProductFilterTransfer $priceProductFilterTransfer
+    ): array {
+        return array_filter($priceProductTransfers, function ($priceProductTransfer) use ($priceProductFilterTransfer) {
+            if (!$priceProductTransfer->getPriceDimension()) {
+                return false;
+            }
+
+            foreach ($priceProductFilterTransfer->getProductConfigurationInstance()->getPrices() as $productConfigurationPriceProductTransfer) {
+                if ($productConfigurationPriceProductTransfer->getPriceDimension()->getProductConfigurationInstanceHash() === $priceProductTransfer->getPriceDimension()->getProductConfigurationInstanceHash()) {
+                    return true;
+                }
+            }
+
+            return false;
         });
     }
 }

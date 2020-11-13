@@ -13,10 +13,17 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToCartClientInterface;
 
 class QuoteItemReplacer implements QuoteItemReplacerInterface
 {
+    protected const GLOSSARY_KEY_PRODUCT_CONFIGURATION_ITEM_NOT_FOUND_IN_CART = 'product_configuration.error.configured_item_not_found_in_cart';
+
+    protected const MESSAGE_TYPE_ERROR = 'error';
+
+    protected const TRANSLATION_PARAMETER_SKU = '%sku%';
+
     /**
      * @var \Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToCartClientInterface
      */
@@ -25,10 +32,8 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
     /**
      * @param \Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToCartClientInterface $cartClient
      */
-    public function __construct(
-        ProductConfigurationStorageToCartClientInterface $cartClient
-    ) {
-
+    public function __construct(ProductConfigurationStorageToCartClientInterface $cartClient)
+    {
         $this->cartClient = $cartClient;
     }
 
@@ -42,7 +47,24 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
         ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer,
         ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
     ): ProductConfiguratorResponseProcessorResponseTransfer {
-        $itemReplaceTransfer = $this->createItemReplaceTransfer($productConfiguratorResponseTransfer);
+        $quoteTransfer = $this->cartClient->getQuote();
+        $itemToBeReplacedTransfer = $this->cartClient->findQuoteItem(
+            $quoteTransfer,
+            $productConfiguratorResponseTransfer->getSku(),
+            $productConfiguratorResponseTransfer->getItemGroupKey()
+        );
+
+        if (!$itemToBeReplacedTransfer) {
+            return $productConfiguratorResponseProcessorResponseTransfer
+                ->setIsSuccessful(false)
+                ->addMessage($this->createConfigurationItemNotFoundMessage($productConfiguratorResponseTransfer->getSku()));
+        }
+
+        $itemReplaceTransfer = $this->createItemReplaceTransfer(
+            $productConfiguratorResponseTransfer,
+            $itemToBeReplacedTransfer,
+            $quoteTransfer
+        );
 
         $quoteResponseTransfer = $this->cartClient->replaceItem($itemReplaceTransfer);
 
@@ -50,7 +72,7 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
             return $productConfiguratorResponseProcessorResponseTransfer->setIsSuccessful(true);
         }
 
-        return $productConfiguratorResponseProcessorResponseTransfer = $this->addQuoteErrors(
+        return $this->addQuoteErrors(
             $quoteResponseTransfer,
             $productConfiguratorResponseProcessorResponseTransfer
         );
@@ -58,30 +80,24 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemToBeReplacedTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ItemReplaceTransfer
      */
     protected function createItemReplaceTransfer(
-        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
+        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer,
+        ItemTransfer $itemToBeReplacedTransfer,
+        QuoteTransfer $quoteTransfer
     ): ItemReplaceTransfer {
-        $quoteTransfer = $this->cartClient->getQuote();
-
-        $itemToBeReplacedTransfer = $this->cartClient->findQuoteItem(
-            $quoteTransfer,
-            $productConfiguratorResponseTransfer->getSku(),
-            $productConfiguratorResponseTransfer->getItemGroupKey()
-        );
-
-        if ($itemToBeReplacedTransfer) {
-            $newItemTransfer = (new ItemTransfer())
-                ->fromArray($itemToBeReplacedTransfer->toArray())
-                ->setGroupKey(null)
-                ->setProductConfigurationInstance($productConfiguratorResponseTransfer->getProductConfigurationInstance());
-        }
+        $newItemTransfer = (new ItemTransfer())
+            ->fromArray($itemToBeReplacedTransfer->toArray())
+            ->setGroupKey(null)
+            ->setProductConfigurationInstance($productConfiguratorResponseTransfer->getProductConfigurationInstance());
 
         return (new ItemReplaceTransfer())
             ->setItemToBeReplaced($itemToBeReplacedTransfer)
-            ->setNewItem($newItemTransfer ?? null)
+            ->setNewItem($newItemTransfer)
             ->setQuote($quoteTransfer);
     }
 
@@ -102,5 +118,18 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
         }
 
         return $productConfiguratorResponseProcessorResponseTransfer->setIsSuccessful(false);
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer
+     */
+    protected function createConfigurationItemNotFoundMessage(string $sku): MessageTransfer
+    {
+        return (new MessageTransfer())
+            ->setType(static::MESSAGE_TYPE_ERROR)
+            ->setValue(static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_ITEM_NOT_FOUND_IN_CART)
+            ->setParameters([static::TRANSLATION_PARAMETER_SKU => $sku]);
     }
 }

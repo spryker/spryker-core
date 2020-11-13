@@ -28,6 +28,6 @@ class ProductConfigurationStorageServiceFactory extends AbstractServiceFactory
      */
     public function createVolumePriceProductConfigurationFilter(): PriceProductConfigurationVolumeFilterInterface
     {
-        return new PriceProductConfigurationVolumeFilter();
+        return new PriceProductConfigurationVolumeFilter($this->createPriceProductConfigurationFilter());
     }
 }

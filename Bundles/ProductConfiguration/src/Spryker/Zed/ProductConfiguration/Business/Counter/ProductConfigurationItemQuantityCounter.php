@@ -7,14 +7,19 @@
 
 namespace Spryker\Zed\ProductConfiguration\Business\Counter;
 
-use ArrayObject;
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartItemQuantityTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Service\ProductConfiguration\ProductConfigurationServiceInterface;
 
-class ProductConfigurationCartItemQuantityCounter implements ProductConfigurationCartItemQuantityCounterInterface
+class ProductConfigurationItemQuantityCounter implements ProductConfigurationItemQuantityCounterInterface
 {
     protected const DEFAULT_ITEM_QUANTITY = 0;
+
+    /**
+     * @uses \Spryker\Zed\Cart\CartConfig::OPERATION_REMOVE
+     */
+    protected const OPERATION_REMOVE = 'remove';
 
     /**
      * @var \Spryker\Service\ProductConfiguration\ProductConfigurationServiceInterface
@@ -30,23 +35,33 @@ class ProductConfigurationCartItemQuantityCounter implements ProductConfiguratio
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\CartItemQuantityTransfer
      */
-    public function countCartItemQuantity(
-        ArrayObject $itemsInCart,
+    public function countItemQuantity(
+        CartChangeTransfer $cartChangeTransfer,
         ItemTransfer $itemTransfer
     ): CartItemQuantityTransfer {
         $currentItemQuantity = static::DEFAULT_ITEM_QUANTITY;
+        $quoteItems = $cartChangeTransfer->getQuote()->getItems();
+        $cartChangeItemsTransfer = $cartChangeTransfer->getItems();
 
-        foreach ($itemsInCart as $itemInCartTransfer) {
-            if (!$this->isSameProductConfigurationItem($itemInCartTransfer, $itemTransfer)) {
-                continue;
+        foreach ($quoteItems as $quoteItemTransfer) {
+            if ($this->isSameProductConfigurationItem($quoteItemTransfer, $itemTransfer)) {
+                $currentItemQuantity += $quoteItemTransfer->getQuantity();
             }
+        }
 
-            $currentItemQuantity += $itemInCartTransfer->getQuantity() ?? static::DEFAULT_ITEM_QUANTITY;
+        foreach ($cartChangeItemsTransfer as $cartChangeItemTransfer) {
+            if ($this->isSameProductConfigurationItem($cartChangeItemTransfer, $itemTransfer)) {
+                $currentItemQuantity = $this->changeItemQuantityAccordingToOperation(
+                    $currentItemQuantity,
+                    $cartChangeItemTransfer->getQuantity(),
+                    $cartChangeTransfer->getOperation()
+                );
+            }
         }
 
         return (new CartItemQuantityTransfer())->setQuantity($currentItemQuantity);
@@ -64,6 +79,22 @@ class ProductConfigurationCartItemQuantityCounter implements ProductConfiguratio
     ): bool {
         return $itemInCartTransfer->getSku() === $itemTransfer->getSku()
             && $this->productConfigurationService->getProductConfigurationInstanceHash($itemInCartTransfer->getProductConfigurationInstance())
-                === $this->productConfigurationService->getProductConfigurationInstanceHash($itemTransfer->getProductConfigurationInstance());
+               === $this->productConfigurationService->getProductConfigurationInstanceHash($itemTransfer->getProductConfigurationInstance());
+    }
+
+    /**
+     * @param int $currentItemQuantity
+     * @param int $deltaQuantity
+     * @param string|null $operation
+     *
+     * @return int
+     */
+    protected function changeItemQuantityAccordingToOperation(int $currentItemQuantity, int $deltaQuantity, ?string $operation): int
+    {
+        if ($operation === static::OPERATION_REMOVE) {
+            return $currentItemQuantity - $deltaQuantity;
+        }
+
+        return $currentItemQuantity + $deltaQuantity;
     }
 }
