@@ -34,7 +34,6 @@ class ProductConfigurationItemQuantityCounter implements ProductConfigurationIte
         $this->productConfigurationService = $productConfigurationService;
     }
 
-
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
