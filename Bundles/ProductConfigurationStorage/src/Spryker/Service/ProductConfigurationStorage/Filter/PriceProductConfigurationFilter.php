@@ -37,7 +37,7 @@ class PriceProductConfigurationFilter implements PriceProductConfigurationFilter
             return $productConfigurationPriceProductTransfers;
         }
 
-        return $priceProductTransfers;
+        return $this->filterOutProductConfigurationPrices($priceProductTransfers);
     }
 
     /**
