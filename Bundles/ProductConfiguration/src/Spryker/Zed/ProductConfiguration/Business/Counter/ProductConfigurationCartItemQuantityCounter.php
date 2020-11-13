@@ -42,7 +42,7 @@ class ProductConfigurationCartItemQuantityCounter implements ProductConfiguratio
         $currentItemQuantity = static::DEFAULT_ITEM_QUANTITY;
 
         foreach ($itemsInCart as $itemInCartTransfer) {
-            if (!$this->isSameProductConfigurationItem($itemInCartTransfer, $itemTransfer)) {
+            if (!$this->isSameItem($itemInCartTransfer, $itemTransfer)) {
                 continue;
             }
 
@@ -58,12 +58,24 @@ class ProductConfigurationCartItemQuantityCounter implements ProductConfiguratio
      *
      * @return bool
      */
-    protected function isSameProductConfigurationItem(
+    protected function isSameItem(
         ItemTransfer $itemInCartTransfer,
         ItemTransfer $itemTransfer
     ): bool {
         return $itemInCartTransfer->getSku() === $itemTransfer->getSku()
-            && $this->productConfigurationService->getProductConfigurationInstanceHash($itemInCartTransfer->getProductConfigurationInstance())
-                === $this->productConfigurationService->getProductConfigurationInstanceHash($itemTransfer->getProductConfigurationInstance());
+            && $this->isSameProductConfigurationItem($itemInCartTransfer, $itemTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemInCartTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function isSameProductConfigurationItem(ItemTransfer $itemInCartTransfer, ItemTransfer $itemTransfer): bool
+    {
+        return ($itemInCartTransfer->getProductConfigurationInstance() === null && $itemTransfer->getProductConfigurationInstance() === null)
+            || ($this->productConfigurationService->getProductConfigurationInstanceHash($itemInCartTransfer->getProductConfigurationInstance())
+                === $this->productConfigurationService->getProductConfigurationInstanceHash($itemTransfer->getProductConfigurationInstance()));
     }
 }

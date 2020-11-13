@@ -55,10 +55,7 @@ class ProductConfigurationStorageServiceTest extends Unit
             PriceProductDimensionTransfer::PRODUCT_CONFIGURATION_INSTANCE_HASH => static::PRODUCT_CONFIGURATION_HASH,
         ]);
 
-        $productConfigurationInstanceTransfer = $this->createProductConfigurationInstanceTransfer(
-            static::PRODUCT_CONFIGURATION_HASH,
-            [$configurablePriceProductTransfer]
-        );
+        $productConfigurationInstanceTransfer = $this->createProductConfigurationInstanceTransfer([$configurablePriceProductTransfer]);
 
         $priceProductTransfers = [$priceProductTransfer, $configurablePriceProductTransfer];
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())->setProductConfigurationInstance($productConfigurationInstanceTransfer);
@@ -90,10 +87,7 @@ class ProductConfigurationStorageServiceTest extends Unit
             PriceProductDimensionTransfer::PRODUCT_CONFIGURATION_INSTANCE_HASH => 'some-random-hash',
         ]);
 
-        $productConfigurationInstanceTransfer = $this->createProductConfigurationInstanceTransfer(
-            static::PRODUCT_CONFIGURATION_HASH,
-            [$configurablePriceProductTransfer1]
-        );
+        $productConfigurationInstanceTransfer = $this->createProductConfigurationInstanceTransfer([$configurablePriceProductTransfer1]);
 
         $priceProductTransfers = [$priceProductTransfer, $configurablePriceProductTransfer1, $configurablePriceProductTransfer2];
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())->setProductConfigurationInstance($productConfigurationInstanceTransfer);
@@ -129,7 +123,6 @@ class ProductConfigurationStorageServiceTest extends Unit
         ]);
 
         $productConfigurationInstanceTransfer = $this->createProductConfigurationInstanceTransfer(
-            static::PRODUCT_CONFIGURATION_HASH,
             [$configurablePriceProductTransfer1, $configurablePriceProductTransfer2]
         );
 
@@ -163,10 +156,7 @@ class ProductConfigurationStorageServiceTest extends Unit
             PriceProductDimensionTransfer::PRODUCT_CONFIGURATION_INSTANCE_HASH => 'some-random-hash',
         ]);
 
-        $productConfigurationInstanceTransfer = $this->createProductConfigurationInstanceTransfer(
-            static::PRODUCT_CONFIGURATION_HASH,
-            []
-        );
+        $productConfigurationInstanceTransfer = $this->createProductConfigurationInstanceTransfer([]);
 
         $priceProductTransfers = [$priceProductTransfer, $configurablePriceProductTransfer];
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())->setProductConfigurationInstance($productConfigurationInstanceTransfer);
@@ -201,7 +191,6 @@ class ProductConfigurationStorageServiceTest extends Unit
         $configurablePriceProductTransfer2->setVolumeQuantity(5);
 
         $productConfigurationInstanceTransfer = $this->createProductConfigurationInstanceTransfer(
-            static::PRODUCT_CONFIGURATION_HASH,
             [$configurablePriceProductTransfer1, $configurablePriceProductTransfer2]
         );
 
@@ -240,7 +229,6 @@ class ProductConfigurationStorageServiceTest extends Unit
         $configurablePriceProductTransfer2->setVolumeQuantity(10);
 
         $productConfigurationInstanceTransfer = $this->createProductConfigurationInstanceTransfer(
-            static::PRODUCT_CONFIGURATION_HASH,
             [$configurablePriceProductTransfer1, $configurablePriceProductTransfer2]
         );
 
@@ -273,10 +261,7 @@ class ProductConfigurationStorageServiceTest extends Unit
             PriceProductDimensionTransfer::PRODUCT_CONFIGURATION_INSTANCE_HASH => static::PRODUCT_CONFIGURATION_HASH,
         ]);
 
-        $productConfigurationInstanceTransfer = $this->createProductConfigurationInstanceTransfer(
-            static::PRODUCT_CONFIGURATION_HASH,
-            []
-        );
+        $productConfigurationInstanceTransfer = $this->createProductConfigurationInstanceTransfer([]);
 
         $priceProductTransfers = [$priceProductTransfer, $configurablePriceProductTransfer];
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
@@ -309,17 +294,13 @@ class ProductConfigurationStorageServiceTest extends Unit
     }
 
     /**
-     * @param string $productConfigurationHash
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer
      */
-    protected function createProductConfigurationInstanceTransfer(
-        string $productConfigurationHash,
-        array $priceProductTransfers
-    ): ProductConfigurationInstanceTransfer {
+    protected function createProductConfigurationInstanceTransfer(array $priceProductTransfers): ProductConfigurationInstanceTransfer
+    {
         return (new ProductConfigurationInstanceTransfer())
-            ->setProductConfigurationHash($productConfigurationHash)
             ->setPrices(new ArrayObject($priceProductTransfers));
     }
 }

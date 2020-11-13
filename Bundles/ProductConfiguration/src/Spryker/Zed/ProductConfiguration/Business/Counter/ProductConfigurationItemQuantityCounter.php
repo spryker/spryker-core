@@ -49,7 +49,7 @@ class ProductConfigurationItemQuantityCounter implements ProductConfigurationIte
         $cartChangeItemsTransfer = $cartChangeTransfer->getItems();
 
         foreach ($quoteItems as $quoteItemTransfer) {
-            if ($this->isSameProductConfigurationItem($quoteItemTransfer, $itemTransfer)) {
+            if ($this->isSameItem($quoteItemTransfer, $itemTransfer)) {
                 $currentItemQuantity += $quoteItemTransfer->getQuantity();
             }
         }
@@ -73,23 +73,35 @@ class ProductConfigurationItemQuantityCounter implements ProductConfigurationIte
      *
      * @return bool
      */
-    protected function isSameProductConfigurationItem(
+    protected function isSameItem(
         ItemTransfer $itemInCartTransfer,
         ItemTransfer $itemTransfer
     ): bool {
         return $itemInCartTransfer->getSku() === $itemTransfer->getSku()
-            && $this->productConfigurationService->getProductConfigurationInstanceHash($itemInCartTransfer->getProductConfigurationInstance())
-               === $this->productConfigurationService->getProductConfigurationInstanceHash($itemTransfer->getProductConfigurationInstance());
+            && $this->isSameProductConfigurationItem($itemInCartTransfer, $itemTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemInCartTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function isSameProductConfigurationItem(ItemTransfer $itemInCartTransfer, ItemTransfer $itemTransfer): bool
+    {
+        return ($itemInCartTransfer->getProductConfigurationInstance() === null && $itemTransfer->getProductConfigurationInstance() === null)
+            || ($this->productConfigurationService->getProductConfigurationInstanceHash($itemInCartTransfer->getProductConfigurationInstance())
+                === $this->productConfigurationService->getProductConfigurationInstanceHash($itemTransfer->getProductConfigurationInstance()));
     }
 
     /**
      * @param int $currentItemQuantity
-     * @param int $deltaQuantity
+     * @param int|null $deltaQuantity
      * @param string|null $operation
      *
      * @return int
      */
-    protected function changeItemQuantityAccordingToOperation(int $currentItemQuantity, int $deltaQuantity, ?string $operation): int
+    protected function changeItemQuantityAccordingToOperation(int $currentItemQuantity, ?int $deltaQuantity, ?string $operation): int
     {
         if ($operation === static::OPERATION_REMOVE) {
             return $currentItemQuantity - $deltaQuantity;
