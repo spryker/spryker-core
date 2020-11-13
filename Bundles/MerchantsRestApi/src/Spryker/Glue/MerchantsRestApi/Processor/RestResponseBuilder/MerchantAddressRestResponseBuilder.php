@@ -50,12 +50,17 @@ class MerchantAddressRestResponseBuilder implements MerchantAddressRestResponseB
     public function createMerchantAddressesRestResources(array $merchantStorageTransfers): array
     {
         $merchantAddressRestResources = [];
+
         foreach ($merchantStorageTransfers as $merchantReference => $merchantStorageTransfer) {
             if (!$merchantStorageTransfer->getMerchantProfile()) {
                 continue;
             }
+            /**
+             * @var \Generated\Shared\Transfer\MerchantStorageProfileTransfer $merchantStorageProfileTransfer
+             */
+            $merchantStorageProfileTransfer = $merchantStorageTransfer->getMerchantProfile();
             $merchantAddressRestResources[$merchantReference] = $this->createMerchantAddressesRestResource(
-                $merchantStorageTransfer->getMerchantProfile()->getAddressCollection(),
+                $merchantStorageProfileTransfer->getAddressCollection(),
                 $merchantReference
             );
         }

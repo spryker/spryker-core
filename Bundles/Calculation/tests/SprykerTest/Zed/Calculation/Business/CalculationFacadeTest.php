@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
@@ -641,5 +642,23 @@ class CalculationFacadeTest extends Unit
 
         // Assert
         $this->assertSame($expectedCancelledAmount, $actualCancelledAmount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testRecalculateOrderSuccessfulMappingStoreNameFromCalculableObjectToOrder(): void
+    {
+        // Arrange
+        $calculationFacade = new CalculationFacade();
+        $orderTransfer = new OrderTransfer();
+        $orderTransfer->setStore(APPLICATION_STORE);
+        $orderTransfer->addItem(new ItemTransfer());
+
+        // Act
+        $calculatedOrderTransfer = $calculationFacade->recalculateOrder($orderTransfer);
+
+        // Assert
+        $this->assertSame(APPLICATION_STORE, $calculatedOrderTransfer->getStore());
     }
 }
