@@ -9,7 +9,6 @@ namespace Spryker\Glue\PriceProductVolumesRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\PriceProductVolumesRestApi\Dependency\Client\PriceProductVolumesRestApiToPriceProductVolumeClientInterface;
-use Spryker\Glue\PriceProductVolumesRestApi\Dependency\Service\PriceProductVolumesRestApiToUtilEncodingServiceInterface;
 use Spryker\Glue\PriceProductVolumesRestApi\Processor\Mapper\PriceProductVolumeMapper;
 use Spryker\Glue\PriceProductVolumesRestApi\Processor\Mapper\PriceProductVolumeMapperInterface;
 
@@ -20,10 +19,7 @@ class PriceProductVolumesRestApiFactory extends AbstractFactory
      */
     public function createPriceProductVolumeMapper(): PriceProductVolumeMapperInterface
     {
-        return new PriceProductVolumeMapper(
-            $this->getPriceProductVolumeClient(),
-            $this->getUtilEncodingService()
-        );
+        return new PriceProductVolumeMapper($this->getPriceProductVolumeClient());
     }
 
     /**
@@ -32,13 +28,5 @@ class PriceProductVolumesRestApiFactory extends AbstractFactory
     public function getPriceProductVolumeClient(): PriceProductVolumesRestApiToPriceProductVolumeClientInterface
     {
         return $this->getProvidedDependency(PriceProductVolumesRestApiDependencyProvider::CLIENT_PRICE_PRODUCT_VOLUME);
-    }
-
-    /**
-     * @return \Spryker\Glue\PriceProductVolumesRestApi\Dependency\Service\PriceProductVolumesRestApiToUtilEncodingServiceInterface
-     */
-    public function getUtilEncodingService(): PriceProductVolumesRestApiToUtilEncodingServiceInterface
-    {
-        return $this->getProvidedDependency(PriceProductVolumesRestApiDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

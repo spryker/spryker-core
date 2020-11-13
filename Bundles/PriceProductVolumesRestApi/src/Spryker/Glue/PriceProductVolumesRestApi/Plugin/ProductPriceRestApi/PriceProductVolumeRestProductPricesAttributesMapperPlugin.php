@@ -8,7 +8,7 @@
 namespace Spryker\Glue\PriceProductVolumesRestApi\Plugin\ProductPriceRestApi;
 
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
-use Generated\Shared\Transfer\RestProductPricesAttributesTransfer;
+use Generated\Shared\Transfer\RestProductPriceAttributesTransfer;
 use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\ProductPricesRestApiExtension\Dependency\Plugin\RestProductPricesAttributesMapperPluginInterface;
 
@@ -24,14 +24,14 @@ class PriceProductVolumeRestProductPricesAttributesMapperPlugin extends Abstract
      * @api
      *
      * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
-     * @param \Generated\Shared\Transfer\RestProductPricesAttributesTransfer $restProductPriceAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestProductPriceAttributesTransfer $restProductPriceAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\RestProductPricesAttributesTransfer
+     * @return \Generated\Shared\Transfer\RestProductPriceAttributesTransfer
      */
     public function map(
         CurrentProductPriceTransfer $currentProductPriceTransfer,
-        RestProductPricesAttributesTransfer $restProductPriceAttributesTransfer
-    ): RestProductPricesAttributesTransfer {
+        RestProductPriceAttributesTransfer $restProductPriceAttributesTransfer
+    ): RestProductPriceAttributesTransfer {
         return $this->getFactory()
             ->createPriceProductVolumeMapper()
             ->mapPriceProductVolumeDataToRestProductPricesAttributes(

@@ -79,13 +79,12 @@ class ProductPricesMapper implements ProductPricesMapperInterface
             ->setPrice($currentProductPriceTransfer->getPrice());
         foreach ($currentProductPriceTransfer->getPrices() as $priceType => $amount) {
             $restProductPriceAttributesTransfer = $this->getRestProductPriceAttributesTransfer($priceType, $amount);
+            $this->executeRestProductPriceAttributesMapperPlugins($currentProductPriceTransfer, $restProductPriceAttributesTransfer);
+
             $productPricesRestAttributesTransfer->addPrice($restProductPriceAttributesTransfer);
         }
 
-        return $this->executeRestProductPricesAttributesMapperPlugins(
-            $currentProductPriceTransfer,
-            $productPricesRestAttributesTransfer
-        );
+        return $productPricesRestAttributesTransfer;
     }
 
     /**
@@ -116,14 +115,14 @@ class ProductPricesMapper implements ProductPricesMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
-     * @param \Generated\Shared\Transfer\RestProductPricesAttributesTransfer $restProductPriceAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestProductPriceAttributesTransfer $restProductPriceAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\RestProductPricesAttributesTransfer
+     * @return \Generated\Shared\Transfer\RestProductPriceAttributesTransfer
      */
-    public function executeRestProductPricesAttributesMapperPlugins(
+    public function executeRestProductPriceAttributesMapperPlugins(
         CurrentProductPriceTransfer $currentProductPriceTransfer,
-        RestProductPricesAttributesTransfer $restProductPriceAttributesTransfer
-    ): RestProductPricesAttributesTransfer {
+        RestProductPriceAttributesTransfer $restProductPriceAttributesTransfer
+    ): RestProductPriceAttributesTransfer {
         foreach ($this->restProductPricesAttributesMapperPlugins as $restProductPricesAttributesMapperPlugin) {
             $restProductPriceAttributesTransfer = $restProductPricesAttributesMapperPlugin->map(
                 $currentProductPriceTransfer,

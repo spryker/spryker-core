@@ -8,18 +8,18 @@
 namespace Spryker\Glue\PriceProductVolumesRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
-use Generated\Shared\Transfer\RestProductPricesAttributesTransfer;
+use Generated\Shared\Transfer\RestProductPriceAttributesTransfer;
 
 interface PriceProductVolumeMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
-     * @param \Generated\Shared\Transfer\RestProductPricesAttributesTransfer $restProductPriceAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestProductPriceAttributesTransfer $restProductPriceAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\RestProductPricesAttributesTransfer
+     * @return \Generated\Shared\Transfer\RestProductPriceAttributesTransfer
      */
     public function mapPriceProductVolumeDataToRestProductPricesAttributes(
         CurrentProductPriceTransfer $currentProductPriceTransfer,
-        RestProductPricesAttributesTransfer $restProductPriceAttributesTransfer
-    ): RestProductPricesAttributesTransfer;
+        RestProductPriceAttributesTransfer $restProductPriceAttributesTransfer
+    ): RestProductPriceAttributesTransfer;
 }
