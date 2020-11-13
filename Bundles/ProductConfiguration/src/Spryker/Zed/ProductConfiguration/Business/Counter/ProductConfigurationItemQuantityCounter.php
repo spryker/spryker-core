@@ -90,8 +90,12 @@ class ProductConfigurationItemQuantityCounter implements ProductConfigurationIte
     protected function isSameProductConfigurationItem(ItemTransfer $itemInCartTransfer, ItemTransfer $itemTransfer): bool
     {
         return ($itemInCartTransfer->getProductConfigurationInstance() === null && $itemTransfer->getProductConfigurationInstance() === null)
-            || ($this->productConfigurationService->getProductConfigurationInstanceHash($itemInCartTransfer->getProductConfigurationInstance())
-                === $this->productConfigurationService->getProductConfigurationInstanceHash($itemTransfer->getProductConfigurationInstance()));
+            || (
+                $itemInCartTransfer->getProductConfigurationInstance() !== null
+                && $itemTransfer->getProductConfigurationInstance() !== null
+                && $this->productConfigurationService->getProductConfigurationInstanceHash($itemInCartTransfer->getProductConfigurationInstance())
+                    === $this->productConfigurationService->getProductConfigurationInstanceHash($itemTransfer->getProductConfigurationInstance())
+            );
     }
 
     /**
