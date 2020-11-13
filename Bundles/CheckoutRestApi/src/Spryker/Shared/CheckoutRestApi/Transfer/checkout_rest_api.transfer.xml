@@ -44,7 +44,7 @@
     </transfer>
 
     <transfer name="RestAddress">
-        <property name="id" type="string"/>
+        <property name="id" type="string" restRequestParameter="yes"/>
         <property name="salutation" type="string" restRequestParameter="required"/>
         <property name="firstName" type="string" restRequestParameter="required"/>
         <property name="lastName" type="string" restRequestParameter="required"/>

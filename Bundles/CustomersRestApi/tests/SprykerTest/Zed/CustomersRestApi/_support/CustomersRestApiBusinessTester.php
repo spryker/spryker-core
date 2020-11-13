@@ -14,6 +14,10 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestAddressTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
+use PHPUnit\Framework\MockObject\MockObject;
+use Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacadeInterface;
+use Spryker\Zed\CustomersRestApi\CustomersRestApiDependencyProvider;
+use Spryker\Zed\Kernel\Container;
 
 /**
  * @method void wantToTest($text)
@@ -26,6 +30,7 @@ use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -252,6 +257,25 @@ class CustomersRestApiBusinessTester extends Actor
             $actualShippingAddressTransfer = $itemTransfer->getShipment()->getShippingAddress();
             $this->assertAddress($expectedShippingAddress, $actualShippingAddressTransfer);
         }
+    }
+
+    /**
+     * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CustomersRestApi\Business\CustomersRestApiBusinessFactory $customersRestApiBusinessFactoryMock
+     *
+     * @return \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacadeInterface
+     */
+    public function getFacadeMock(MockObject $customersRestApiBusinessFactoryMock): CustomersRestApiFacadeInterface
+    {
+        $container = new Container();
+        $customersRestApiDependencyProvider = new CustomersRestApiDependencyProvider();
+        $customersRestApiDependencyProvider->provideBusinessLayerDependencies($container);
+
+        $customersRestApiBusinessFactoryMock->setContainer($container);
+
+        $customersRestApiFacadeMock = $this->getFacade();
+        $customersRestApiFacadeMock->setFactory($customersRestApiBusinessFactoryMock);
+
+        return $customersRestApiFacadeMock;
     }
 
     /**

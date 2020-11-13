@@ -24,10 +24,10 @@
     </transfer>
 
     <transfer name="CompanyUnitAddress">
-        <property name="uuid" type="string"/>
         <property name="fkCompany" type="int"/>
         <property name="idCompanyUnitAddress" type="int"/>
         <property name="company" type="Company"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="CompanyUnitAddressResponse">
@@ -83,6 +83,7 @@
     </transfer>
 
     <transfer name="Address">
+        <property name="uuid" type="string"/>
         <property name="isAddressSavingSkipped" type="bool"/>
         <property name="email" type="string"/>
         <property name="firstName" type="string"/>

@@ -5,10 +5,44 @@
 
     <transfer name="RestCheckoutRequestAttributes">
         <property name="shipment" type="RestShipment"/>
+        <property name="shipments" type="RestShipments[]" singular="shipment" restRequestParameter="yes"/>
+        <property name="shippingAddress" type="RestAddress"/>
+    </transfer>
+
+    <transfer name="RestShipmentsAttributes">
+        <property name="items" type="string[]" singular="item"/>
+        <property name="shippingAddress" type="RestAddress"/>
+        <property name="selectedShipmentMethod" type="RestShipmentMethod"/>
+        <property name="requestedDeliveryDate" type="string"/>
+    </transfer>
+
+    <transfer name="RestShipments">
+        <property name="items" type="string[]" singular="item" restRequestParameter="yes"/>
+        <property name="shippingAddress" type="RestAddress" restRequestParameter="yes"/>
+        <property name="idShipmentMethod" type="int" restRequestParameter="yes"/>
+        <property name="requestedDeliveryDate" type="string" restRequestParameter="yes"/>
     </transfer>
 
     <transfer name="RestShipment">
         <property name="idShipmentMethod" type="int" restRequestParameter="required"/>
+    </transfer>
+
+    <transfer name="RestAddress">
+        <property name="id" type="string" restRequestParameter="yes"/>
+        <property name="salutation" type="string" restRequestParameter="required"/>
+        <property name="firstName" type="string" restRequestParameter="required"/>
+        <property name="lastName" type="string" restRequestParameter="required"/>
+        <property name="address1" type="string" restRequestParameter="required"/>
+        <property name="address2" type="string" restRequestParameter="required"/>
+        <property name="address3" type="string" restRequestParameter="required"/>
+        <property name="zipCode" type="string" restRequestParameter="required"/>
+        <property name="city" type="string" restRequestParameter="required"/>
+        <property name="country" type="string" restRequestParameter="no"/>
+        <property name="iso2Code" type="string" restRequestParameter="required"/>
+        <property name="company" type="string" restRequestParameter="required"/>
+        <property name="phone" type="string" restRequestParameter="required"/>
+        <property name="isDefaultBilling" type="bool" restRequestParameter="yes"/>
+        <property name="isDefaultShipping" type="bool" restRequestParameter="yes"/>
     </transfer>
 
     <transfer name="Quote">
@@ -16,12 +50,14 @@
         <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
         <property name="items" type="Item[]" singular="item"/>
+        <property name="bundleItems" type="Item[]" singular="bundleItem"/>
     </transfer>
 
     <transfer name="Shipment">
         <property name="method" type="ShipmentMethod"/>
         <property name="shipmentSelection" type="string"/>
         <property name="shippingAddress" type="Address"/>
+        <property name="requestedDeliveryDate" type="string"/>
     </transfer>
 
     <transfer name="ShipmentMethod">
@@ -41,6 +77,9 @@
 
     <transfer name="Item">
         <property name="shipment" type="Shipment"/>
+        <property name="groupKey" type="string"/>
+        <property name="relatedBundleItemIdentifier" type="string"/>
+        <property name="bundleItemIdentifier" type="string"/>
     </transfer>
 
     <transfer name="CheckoutData">
@@ -79,10 +118,13 @@
 
     <transfer name="ShipmentMethods">
         <property name="methods" type="ShipmentMethod[]" singular="method"/>
+        <property name="shipmentHash" type="string"/>
     </transfer>
 
     <transfer name="RestCheckoutData">
         <property name="shipmentMethods" type="ShipmentMethods" singular="shipmentMethod"/>
+        <property name="quote" type="Quote"/>
+        <property name="availableShipmentMethods" type="ShipmentMethodsCollection"/>
     </transfer>
 
     <transfer name="RestCheckoutDataResponseAttributes">
@@ -95,6 +137,27 @@
     </transfer>
 
     <transfer name="Address">
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="RestErrorCollection">
+        <property name="restErrors" type="RestErrorMessage[]" singular="restError"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="status" type="int"/>
+        <property name="detail" type="string"/>
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="ShipmentGroup">
+        <property name="shipment" type="Shipment"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="hash" type="string"/>
+    </transfer>
+
+    <transfer name="ShipmentMethodsCollection">
+        <property name="shipmentMethods" type="ShipmentMethods[]" singular="shipmentMethods"/>
     </transfer>
 
     <transfer name="RestOrderShipmentsAttributes">
@@ -124,6 +187,14 @@
         <property name="email" type="string"/>
         <property name="country" type="string"/>
         <property name="iso2Code" type="string"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="RestOrderDetailsAttributes">
+        <property name="items" type="RestOrderItemsAttributes[]" singular="item"/>
     </transfer>
 
 </transfers>

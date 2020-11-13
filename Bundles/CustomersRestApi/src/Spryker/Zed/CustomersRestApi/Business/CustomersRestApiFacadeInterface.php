@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\CustomersRestApi\Business;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestAddressTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 
 interface CustomersRestApiFacadeInterface
@@ -57,4 +59,23 @@ interface CustomersRestApiFacadeInterface
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Finds customer address based on the UUID provided in `RestAddressTransfer.id`.
+     * - Returns customer address if it was found.
+     * - If customer address was found then address information provided in `RestAddressTransfer` will be skipped.
+     * - Returns `AddressTransfer` filled with attributes from `RestAddressTransfer` otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RestAddressTransfer $restAddressTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function getCustomerAddress(
+        RestAddressTransfer $restAddressTransfer,
+        QuoteTransfer $quoteTransfer
+    ): AddressTransfer;
 }

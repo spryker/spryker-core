@@ -8,13 +8,7 @@
 namespace SprykerTest\Zed\ShipmentsRestApi\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\DataBuilder\CheckoutDataBuilder;
-use Generated\Shared\DataBuilder\QuoteBuilder;
-use Generated\Shared\DataBuilder\RestCheckoutRequestAttributesBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
-use Generated\Shared\Transfer\CheckoutDataTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Spryker\Zed\Shipment\Business\ShipmentFacade;
 use Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiBusinessFactory;
 use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeBridge;
@@ -32,18 +26,6 @@ use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFac
  */
 class ShipmentsRestApiFacadeTest extends Unit
 {
-    protected const SHIPMENT_METHOD = [
-        'idShipmentMethod' => 745,
-        'storeCurrencyPrice' => 1800,
-        'currencyIsoCode' => 'EUR',
-        'name' => 'Test shipping',
-        'carrierName' => 'Test carrier',
-        'taxRate' => 19,
-        'isActive' => true,
-    ];
-
-    protected const SHIPMENT_METHOD_ID_INVALID = -1;
-
     /**
      * @var \SprykerTest\Zed\ShipmentsRestApi\ShipmentsRestApiBusinessTester
      */
@@ -54,25 +36,27 @@ class ShipmentsRestApiFacadeTest extends Unit
      */
     public function testShipmentsRestApiFacadeWillMapShipmentToQuoteOnShipmentProvided(): void
     {
-        /** @var \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacade $shipmentRestApiFacade */
+        // Arrange
         $shipmentRestApiFacade = $this->tester->getFacade();
         $shipmentRestApiFacade->setFactory($this->getMockShipmentsRestApiFactory());
 
-        $restCheckoutRequestAttributesTransfer = $this->prepareRestCheckoutRequestAttributesTransferWithShipment();
-        $quoteTransfer = $this->prepareQuoteTransfer();
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareRestCheckoutRequestAttributesTransferWithShipment();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
 
+        // Act
         $actualQuote = $shipmentRestApiFacade->mapShipmentToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
 
+        // Assert
         $this->assertNotNull($actualQuote->getShipment());
         $this->assertGreaterThan(0, $actualQuote->getExpenses()->count());
         $actualShipmentMethodTransfer = $actualQuote->getShipment()->getMethod();
-        $this->assertSame(static::SHIPMENT_METHOD['idShipmentMethod'], $actualShipmentMethodTransfer->getIdShipmentMethod());
-        $this->assertSame(static::SHIPMENT_METHOD['storeCurrencyPrice'], $actualShipmentMethodTransfer->getStoreCurrencyPrice());
-        $this->assertSame(static::SHIPMENT_METHOD['currencyIsoCode'], $actualShipmentMethodTransfer->getCurrencyIsoCode());
-        $this->assertSame(static::SHIPMENT_METHOD['name'], $actualShipmentMethodTransfer->getName());
-        $this->assertSame(static::SHIPMENT_METHOD['carrierName'], $actualShipmentMethodTransfer->getCarrierName());
-        $this->assertSame(static::SHIPMENT_METHOD['taxRate'], $actualShipmentMethodTransfer->getTaxRate());
-        $this->assertSame(static::SHIPMENT_METHOD['isActive'], $actualShipmentMethodTransfer->getIsActive());
+        $this->assertSame($this->tester::SHIPMENT_METHOD['idShipmentMethod'], $actualShipmentMethodTransfer->getIdShipmentMethod());
+        $this->assertSame($this->tester::SHIPMENT_METHOD['storeCurrencyPrice'], $actualShipmentMethodTransfer->getStoreCurrencyPrice());
+        $this->assertSame($this->tester::SHIPMENT_METHOD['currencyIsoCode'], $actualShipmentMethodTransfer->getCurrencyIsoCode());
+        $this->assertSame($this->tester::SHIPMENT_METHOD['name'], $actualShipmentMethodTransfer->getName());
+        $this->assertSame($this->tester::SHIPMENT_METHOD['carrierName'], $actualShipmentMethodTransfer->getCarrierName());
+        $this->assertSame($this->tester::SHIPMENT_METHOD['taxRate'], $actualShipmentMethodTransfer->getTaxRate());
+        $this->assertSame($this->tester::SHIPMENT_METHOD['isActive'], $actualShipmentMethodTransfer->getIsActive());
     }
 
     /**
@@ -80,26 +64,28 @@ class ShipmentsRestApiFacadeTest extends Unit
      */
     public function testShipmentsRestApiFacadeWillMapShipmentToQuoteOnShipmentProvidedWithItemLevelShippingAddresses(): void
     {
-        /** @var \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacade $shipmentRestApiFacade */
+        // Arrange
         $shipmentRestApiFacade = $this->tester->getFacade();
         $shipmentRestApiFacade->setFactory($this->getMockShipmentsRestApiFactory());
 
-        $restCheckoutRequestAttributesTransfer = $this->prepareRestCheckoutRequestAttributesTransferWithShipment();
-        $quoteTransfer = $this->prepareQuoteTransfer();
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareRestCheckoutRequestAttributesTransferWithShipment();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
 
+        // Act
         $actualQuote = $shipmentRestApiFacade->mapShipmentToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
-        $this->assertGreaterThan(0, $actualQuote->getExpenses()->count());
 
+        // Assert
+        $this->assertGreaterThan(0, $actualQuote->getExpenses()->count());
         foreach ($actualQuote->getItems() as $itemTransfer) {
             $this->assertNotNull($itemTransfer->getShipment());
             $actualShipmentMethodTransfer = $itemTransfer->getShipment()->getMethod();
-            $this->assertSame(static::SHIPMENT_METHOD['idShipmentMethod'], $actualShipmentMethodTransfer->getIdShipmentMethod());
-            $this->assertSame(static::SHIPMENT_METHOD['storeCurrencyPrice'], $actualShipmentMethodTransfer->getStoreCurrencyPrice());
-            $this->assertSame(static::SHIPMENT_METHOD['currencyIsoCode'], $actualShipmentMethodTransfer->getCurrencyIsoCode());
-            $this->assertSame(static::SHIPMENT_METHOD['name'], $actualShipmentMethodTransfer->getName());
-            $this->assertSame(static::SHIPMENT_METHOD['carrierName'], $actualShipmentMethodTransfer->getCarrierName());
-            $this->assertSame(static::SHIPMENT_METHOD['taxRate'], $actualShipmentMethodTransfer->getTaxRate());
-            $this->assertSame(static::SHIPMENT_METHOD['isActive'], $actualShipmentMethodTransfer->getIsActive());
+            $this->assertSame($this->tester::SHIPMENT_METHOD['idShipmentMethod'], $actualShipmentMethodTransfer->getIdShipmentMethod());
+            $this->assertSame($this->tester::SHIPMENT_METHOD['storeCurrencyPrice'], $actualShipmentMethodTransfer->getStoreCurrencyPrice());
+            $this->assertSame($this->tester::SHIPMENT_METHOD['currencyIsoCode'], $actualShipmentMethodTransfer->getCurrencyIsoCode());
+            $this->assertSame($this->tester::SHIPMENT_METHOD['name'], $actualShipmentMethodTransfer->getName());
+            $this->assertSame($this->tester::SHIPMENT_METHOD['carrierName'], $actualShipmentMethodTransfer->getCarrierName());
+            $this->assertSame($this->tester::SHIPMENT_METHOD['taxRate'], $actualShipmentMethodTransfer->getTaxRate());
+            $this->assertSame($this->tester::SHIPMENT_METHOD['isActive'], $actualShipmentMethodTransfer->getIsActive());
         }
     }
 
@@ -108,15 +94,17 @@ class ShipmentsRestApiFacadeTest extends Unit
      */
     public function testShipmentsRestApiFacadeWillMapShipmentToQuoteOnNoShipmentProvided(): void
     {
-        /** @var \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacade $shipmentRestApiFacade */
+        // Arrange
         $shipmentRestApiFacade = $this->tester->getFacade();
         $shipmentRestApiFacade->setFactory($this->getMockShipmentsRestApiFactory());
 
-        $restCheckoutRequestAttributesTransfer = $this->prepareRestCheckoutRequestAttributesTransferWithoutShipment();
-        $quoteTransfer = $this->prepareQuoteTransfer();
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareRestCheckoutRequestAttributesTransferWithoutShipment();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
 
+        // Act
         $actualQuote = $shipmentRestApiFacade->mapShipmentToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
 
+        // Assert
         $this->assertNull($actualQuote->getShipment());
         $this->assertCount(0, $actualQuote->getExpenses());
     }
@@ -126,15 +114,17 @@ class ShipmentsRestApiFacadeTest extends Unit
      */
     public function testShipmentsRestApiFacadeWillMapShipmentToQuoteOnNoShipmentProvidedWithItemLevelShippingAddresses(): void
     {
-        /** @var \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacade $shipmentRestApiFacade */
+        // Arrange
         $shipmentRestApiFacade = $this->tester->getFacade();
         $shipmentRestApiFacade->setFactory($this->getMockShipmentsRestApiFactory());
 
-        $restCheckoutRequestAttributesTransfer = $this->prepareRestCheckoutRequestAttributesTransferWithoutShipment();
-        $quoteTransfer = $this->prepareQuoteTransfer();
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareRestCheckoutRequestAttributesTransferWithoutShipment();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
 
+        // Act
         $actualQuote = $shipmentRestApiFacade->mapShipmentToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
 
+        // Assert
         foreach ($actualQuote->getItems() as $itemTransfer) {
             $this->assertNull($itemTransfer->getShipment());
         }
@@ -147,15 +137,17 @@ class ShipmentsRestApiFacadeTest extends Unit
      */
     public function testShipmentsRestApiFacadeWillMapShipmentToQuoteOnShipmentNotFound(): void
     {
-        /** @var \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacade $shipmentRestApiFacade */
+        // Arrange
         $shipmentRestApiFacade = $this->tester->getFacade();
         $shipmentRestApiFacade->setFactory($this->getMockShipmentsRestApiFactoryWithShipmentNotFound());
 
-        $restCheckoutRequestAttributesTransfer = $this->prepareRestCheckoutRequestAttributesTransferWithShipment();
-        $quoteTransfer = $this->prepareQuoteTransfer();
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareRestCheckoutRequestAttributesTransferWithShipment();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
 
+        // Act
         $actualQuote = $shipmentRestApiFacade->mapShipmentToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
 
+        // Assert
         $this->assertNull($actualQuote->getShipment());
         $this->assertCount(0, $actualQuote->getExpenses());
     }
@@ -165,15 +157,17 @@ class ShipmentsRestApiFacadeTest extends Unit
      */
     public function testShipmentsRestApiFacadeWillMapShipmentToQuoteOnShipmentNotFoundWithItemLevelShippingAddresses(): void
     {
-        /** @var \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacade $shipmentRestApiFacade */
+        // Arrange
         $shipmentRestApiFacade = $this->tester->getFacade();
         $shipmentRestApiFacade->setFactory($this->getMockShipmentsRestApiFactoryWithShipmentNotFound());
 
-        $restCheckoutRequestAttributesTransfer = $this->prepareRestCheckoutRequestAttributesTransferWithShipment();
-        $quoteTransfer = $this->prepareQuoteTransfer();
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareRestCheckoutRequestAttributesTransferWithShipment();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
 
+        // Act
         $actualQuote = $shipmentRestApiFacade->mapShipmentToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
 
+        // Assert
         foreach ($actualQuote->getItems() as $itemTransfer) {
             $this->assertNull($itemTransfer->getShipment());
         }
@@ -186,13 +180,16 @@ class ShipmentsRestApiFacadeTest extends Unit
      */
     public function testShipmentsRestApiFacadeWillValidateShipmentMethodCheckoutData(): void
     {
-        /** @var \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacade $shipmentRestApiFacade */
+        // Arrange
         $shipmentRestApiFacade = $this->tester->getFacade();
         $shipmentRestApiFacade->setFactory($this->getMockShipmentsRestApiFactory());
 
-        $checkoutDataTransfer = $this->prepareCheckoutDataTransferWithShipmentMethodId();
+        $checkoutDataTransfer = $this->tester->prepareCheckoutDataTransferWithShipmentMethodId();
+
+        // Act
         $checkoutResponseTransfer = $shipmentRestApiFacade->validateShipmentMethodCheckoutData($checkoutDataTransfer);
 
+        // Assert
         $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
         $this->assertSame(0, $checkoutResponseTransfer->getErrors()->count());
     }
@@ -202,15 +199,37 @@ class ShipmentsRestApiFacadeTest extends Unit
      */
     public function testShipmentsRestApiFacadeWillValidateShipmentMethodCheckoutDataWithInvalidShipmentMethodId(): void
     {
-        /** @var \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacade $shipmentRestApiFacade */
+        // Arrange
         $shipmentRestApiFacade = $this->tester->getFacade();
         $shipmentRestApiFacade->setFactory($this->getMockShipmentsRestApiFactoryWithShipmentNotFound());
 
-        $checkoutDataTransfer = $this->prepareCheckoutDataTransferWithInvalidShipmentMethodId();
+        $checkoutDataTransfer = $this->tester->prepareCheckoutDataTransferWithInvalidShipmentMethodId();
+
+        // Act
         $checkoutResponseTransfer = $shipmentRestApiFacade->validateShipmentMethodCheckoutData($checkoutDataTransfer);
 
+        // Assert
         $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
         $this->assertGreaterThan(0, $checkoutResponseTransfer->getErrors()->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testShipmentsRestApiFacadeWillValidateShipmentMethodCheckoutDataWithoutShipmentMethod(): void
+    {
+        // Arrange
+        $shipmentRestApiFacade = $this->tester->getFacade();
+        $shipmentRestApiFacade->setFactory($this->getMockShipmentsRestApiFactory());
+
+        $checkoutDataTransfer = $this->tester->prepareCheckoutDataTransferWithoutShipment();
+
+        // Act
+        $checkoutResponseTransfer = $shipmentRestApiFacade->validateShipmentMethodCheckoutData($checkoutDataTransfer);
+
+        // Assert
+        $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
+        $this->assertCount(0, $checkoutResponseTransfer->getErrors());
     }
 
     /**
@@ -244,12 +263,12 @@ class ShipmentsRestApiFacadeTest extends Unit
 
         $mockCustomerFacade->method('findAvailableMethodById')
             ->willReturn(
-                (new ShipmentMethodBuilder(static::SHIPMENT_METHOD))->withPrice()->build()
+                (new ShipmentMethodBuilder($this->tester::SHIPMENT_METHOD))->withPrice()->build()
             );
 
         $mockCustomerFacade->method('findMethodById')
             ->willReturn(
-                (new ShipmentMethodBuilder(static::SHIPMENT_METHOD))->build()
+                (new ShipmentMethodBuilder($this->tester::SHIPMENT_METHOD))->build()
             );
 
         return $mockCustomerFacade;
@@ -291,66 +310,5 @@ class ShipmentsRestApiFacadeTest extends Unit
             ->willReturn(null);
 
         return $mockCustomerFacade;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer
-     */
-    protected function prepareRestCheckoutRequestAttributesTransferWithoutShipment(): RestCheckoutRequestAttributesTransfer
-    {
-        /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
-        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())->build();
-
-        return $restCheckoutRequestAttributesTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer
-     */
-    protected function prepareRestCheckoutRequestAttributesTransferWithShipment(): RestCheckoutRequestAttributesTransfer
-    {
-        /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
-        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
-            ->withShipment(['idShipmentMethod' => static::SHIPMENT_METHOD['idShipmentMethod']])
-            ->build();
-
-        return $restCheckoutRequestAttributesTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CheckoutDataTransfer
-     */
-    protected function prepareCheckoutDataTransferWithShipmentMethodId(): CheckoutDataTransfer
-    {
-        /** @var \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer */
-        $checkoutDataTransfer = (new CheckoutDataBuilder())
-            ->withShipment(['idShipmentMethod' => static::SHIPMENT_METHOD['idShipmentMethod']])
-            ->build();
-
-        return $checkoutDataTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CheckoutDataTransfer
-     */
-    protected function prepareCheckoutDataTransferWithInvalidShipmentMethodId(): CheckoutDataTransfer
-    {
-        /** @var \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer */
-        $checkoutDataTransfer = (new CheckoutDataBuilder())
-            ->withShipment(['idShipmentMethod' => static::SHIPMENT_METHOD_ID_INVALID])
-            ->build();
-
-        return $checkoutDataTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function prepareQuoteTransfer(): QuoteTransfer
-    {
-        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
-        $quoteTransfer = (new QuoteBuilder())->build();
-
-        return $quoteTransfer;
     }
 }

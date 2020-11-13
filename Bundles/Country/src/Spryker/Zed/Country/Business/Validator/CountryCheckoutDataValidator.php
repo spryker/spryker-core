@@ -56,15 +56,17 @@ class CountryCheckoutDataValidator implements CountryCheckoutDataValidatorInterf
             );
         }
 
-        $shippingAddressCountryIso2Code = $checkoutDataTransfer->getShippingAddress()->getIso2Code();
-        if (!$this->countryManager->hasCountry($shippingAddressCountryIso2Code)) {
-            $this->addErrorToCheckoutResponseTransfer(
-                $checkoutResponseTransfer,
-                'shipping.address.country.validation.not_found',
-                [
-                    static::COUNTRY_CODE_PARAMETER => $shippingAddressCountryIso2Code,
-                ]
-            );
+        if ($checkoutDataTransfer->getShippingAddress()) {
+            $shippingAddressCountryIso2Code = $checkoutDataTransfer->getShippingAddress()->getIso2Code();
+            if (!$this->countryManager->hasCountry($shippingAddressCountryIso2Code)) {
+                $this->addErrorToCheckoutResponseTransfer(
+                    $checkoutResponseTransfer,
+                    'shipping.address.country.validation.not_found',
+                    [
+                        static::COUNTRY_CODE_PARAMETER => $shippingAddressCountryIso2Code,
+                    ]
+                );
+            }
         }
 
         return $checkoutResponseTransfer;
@@ -84,17 +86,13 @@ class CountryCheckoutDataValidator implements CountryCheckoutDataValidatorInterf
             $this->addErrorToCheckoutResponseTransfer($checkoutResponseTransfer, 'billing.address.validation.is_missing');
         }
 
-        if (!$checkoutDataTransfer->getShippingAddress()) {
-            $this->addErrorToCheckoutResponseTransfer($checkoutResponseTransfer, 'shipping.address.validation.is_missing');
-        }
-
         return $checkoutResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      * @param string $message
-     * @param array $parameters
+     * @param mixed[] $parameters
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */

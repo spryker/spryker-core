@@ -8,14 +8,21 @@
 namespace Spryker\Glue\ShipmentsRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
+use Spryker\Glue\ShipmentsRestApi\Dependency\Service\ShipmentsRestApiToShipmentServiceInterface;
+use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentByCheckoutDataExpander;
+use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentByCheckoutDataExpanderInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentMethodByCheckoutDataExpander;
 use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentMethodByCheckoutDataExpanderInterface;
+use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentMethodByShipmentExpander;
+use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentMethodByShipmentExpanderInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentsByOrderResourceRelationshipExpander;
 use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentsByOrderResourceRelationshipExpanderInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Factory\ShipmentServiceFactory;
 use Spryker\Glue\ShipmentsRestApi\Processor\Factory\ShipmentServiceFactoryInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderShipmentMapper;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\OrderShipmentMapperInterface;
+use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMapper;
+use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMapperInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodMapper;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodMapperInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\OrderShipmentRestResponseBuilder;
@@ -24,9 +31,25 @@ use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentMethodRe
 use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentMethodRestResponseBuilderInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Sorter\ShipmentMethodSorter;
 use Spryker\Glue\ShipmentsRestApi\Processor\Sorter\ShipmentMethodSorterInterface;
+use Spryker\Glue\ShipmentsRestApi\Processor\Validator\AddressSourceCheckoutDataValidator;
+use Spryker\Glue\ShipmentsRestApi\Processor\Validator\AddressSourceCheckoutDataValidatorInterface;
+use Spryker\Glue\ShipmentsRestApi\Processor\Validator\ShipmentCheckoutDataValidator;
+use Spryker\Glue\ShipmentsRestApi\Processor\Validator\ShipmentCheckoutDataValidatorInterface;
 
 class ShipmentsRestApiFactory extends AbstractFactory
 {
+    /**
+     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentByCheckoutDataExpanderInterface
+     */
+    public function createShipmentByCheckoutDataExpander(): ShipmentByCheckoutDataExpanderInterface
+    {
+        return new ShipmentByCheckoutDataExpander(
+            $this->getShipmentService(),
+            $this->createShipmentMapper(),
+            $this->getResourceBuilder()
+        );
+    }
+
     /**
      * @return \Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentMethodByCheckoutDataExpanderInterface
      */
@@ -37,6 +60,26 @@ class ShipmentsRestApiFactory extends AbstractFactory
             $this->createShipmentMethodMapper(),
             $this->createShipmentMethodSorter()
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentMethodByShipmentExpanderInterface
+     */
+    public function createShipmentMethodByShipmentExpander(): ShipmentMethodByShipmentExpanderInterface
+    {
+        return new ShipmentMethodByShipmentExpander(
+            $this->createShipmentMethodRestResponseBuilder(),
+            $this->createShipmentMethodMapper(),
+            $this->createShipmentMethodSorter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMapperInterface
+     */
+    public function createShipmentMapper(): ShipmentMapperInterface
+    {
+        return new ShipmentMapper();
     }
 
     /**
@@ -61,6 +104,22 @@ class ShipmentsRestApiFactory extends AbstractFactory
     public function createShipmentMethodSorter(): ShipmentMethodSorterInterface
     {
         return new ShipmentMethodSorter();
+    }
+
+    /**
+     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Validator\ShipmentCheckoutDataValidatorInterface
+     */
+    public function createShipmentCheckoutDataValidator(): ShipmentCheckoutDataValidatorInterface
+    {
+        return new ShipmentCheckoutDataValidator();
+    }
+
+    /**
+     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Validator\AddressSourceCheckoutDataValidatorInterface
+     */
+    public function createAddressSourceCheckoutDataValidator(): AddressSourceCheckoutDataValidatorInterface
+    {
+        return new AddressSourceCheckoutDataValidator($this->getAddressSourceCheckerPlugins());
     }
 
     /**
@@ -102,9 +161,17 @@ class ShipmentsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Factory\ShipmentServiceFactoryInterface
+     * @return \Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceCheckerPluginInterface[]
      */
-    public function getShipmentService(): ShipmentServiceFactoryInterface
+    public function getAddressSourceCheckerPlugins(): array
+    {
+        return $this->getProvidedDependency(ShipmentsRestApiDependencyProvider::PLUGINS_ADDRESS_SOURCE_CHECKER);
+    }
+
+    /**
+     * @return \Spryker\Glue\ShipmentsRestApi\Dependency\Service\ShipmentsRestApiToShipmentServiceInterface
+     */
+    public function getShipmentService(): ShipmentsRestApiToShipmentServiceInterface
     {
         return $this->getProvidedDependency(ShipmentsRestApiDependencyProvider::SERVICE_SHIPMENT);
     }
