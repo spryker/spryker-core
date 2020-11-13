@@ -27,6 +27,7 @@
         <property name="fkCompany" type="int"/>
         <property name="idCompanyUnitAddress" type="int"/>
         <property name="company" type="Company"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="CompanyUnitAddressResponse">

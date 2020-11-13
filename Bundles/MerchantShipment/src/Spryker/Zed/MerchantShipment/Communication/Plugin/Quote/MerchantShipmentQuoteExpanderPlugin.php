@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpanderPluginInterface;
 
 /**
- * @method \Spryker\Zed\MerchantShipment\Communication\MerchantShipmentCommunicationFactory getFactory()
+ * @method \Spryker\Zed\MerchantShipment\Business\MerchantShipmentFacadeInterface getFacade()
  */
 class MerchantShipmentQuoteExpanderPlugin extends AbstractPlugin implements QuoteExpanderPluginInterface
 {
@@ -30,8 +30,6 @@ class MerchantShipmentQuoteExpanderPlugin extends AbstractPlugin implements Quot
      */
     public function expand(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        return $this->getFactory()
-            ->createShipmentExpander()
-            ->expandQuoteShipmentWithMerchantReference($quoteTransfer);
+        return $this->getFacade()->expandQuoteShipmentWithMerchantReference($quoteTransfer);
     }
 }

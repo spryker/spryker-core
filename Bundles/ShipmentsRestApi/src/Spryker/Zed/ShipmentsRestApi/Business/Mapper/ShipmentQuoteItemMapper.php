@@ -132,10 +132,7 @@ class ShipmentQuoteItemMapper implements ShipmentQuoteItemMapperInterface
 
             $bundledItems = $mappedBundledItems[$itemTransfer->getBundleItemIdentifier()] ?? [];
 
-            foreach ($bundledItems as $bundledItem) {
-                $this->updateItemShipment($bundledItem, $shipmentTransfer);
-            }
-
+            $this->updateBundledItemsShipment($bundledItems, $shipmentTransfer);
             $this->updateItemShipment($itemTransfer, $shipmentTransfer);
         }
 
@@ -143,22 +140,33 @@ class ShipmentQuoteItemMapper implements ShipmentQuoteItemMapperInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $bundledItems
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return void
+     */
+    protected function updateBundledItemsShipment(array $bundledItems, ShipmentTransfer $shipmentTransfer): void
+    {
+        foreach ($bundledItems as $bundledItem) {
+            $this->updateItemShipment($bundledItem, $shipmentTransfer);
+        }
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer
+     * @return void
      */
-    protected function updateItemShipment(ItemTransfer $itemTransfer, ShipmentTransfer $shipmentTransfer): ItemTransfer
+    protected function updateItemShipment(ItemTransfer $itemTransfer, ShipmentTransfer $shipmentTransfer): void
     {
         if (!$itemTransfer->getShipment()) {
             $itemTransfer->setShipment($shipmentTransfer);
 
-            return $itemTransfer;
+            return;
         }
 
         $itemTransfer->getShipment()->fromArray($shipmentTransfer->modifiedToArray());
-
-        return $itemTransfer;
     }
 
     /**

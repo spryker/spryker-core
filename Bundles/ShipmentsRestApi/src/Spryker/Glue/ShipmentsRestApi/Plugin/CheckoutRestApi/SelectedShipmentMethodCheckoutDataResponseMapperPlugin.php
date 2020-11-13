@@ -14,7 +14,7 @@ use Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataResponse
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
- * @deprecated Use `shipments` relationship instead.
+ * @deprecated Use `\Spryker\Glue\ShipmentsRestApi\Plugin\GlueApplication\ShipmentsByCheckoutDataResourceRelationshipPlugin` instead.
  *
  * @method \Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiFactory getFactory()
  */

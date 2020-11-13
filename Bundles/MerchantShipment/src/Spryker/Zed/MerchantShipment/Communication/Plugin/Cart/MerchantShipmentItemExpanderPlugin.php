@@ -12,7 +12,7 @@ use Spryker\Zed\CartExtension\Dependency\Plugin\ItemExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\MerchantShipment\Communication\MerchantShipmentCommunicationFactory getFactory()
+ * @method \Spryker\Zed\MerchantShipment\Business\MerchantShipmentFacadeInterface getFacade()
  */
 class MerchantShipmentItemExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
@@ -30,8 +30,6 @@ class MerchantShipmentItemExpanderPlugin extends AbstractPlugin implements ItemE
      */
     public function expandItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
-        return $this->getFactory()
-            ->createShipmentExpander()
-            ->expandCartChangeShipmentWithMerchantReference($cartChangeTransfer);
+        return $this->getFacade()->expandCartChangeShipmentWithMerchantReference($cartChangeTransfer);
     }
 }
