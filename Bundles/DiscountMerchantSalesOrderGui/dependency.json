@@ -1,6 +1,0 @@
-{
-  "include": {
-    "spryker/discount": "Provides a controller action.",
-    "spryker/merchant-sales-order": "Provides a controller action."
-  }
-}
