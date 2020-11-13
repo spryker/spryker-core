@@ -1,0 +1,11 @@
+{
+    "mappings": {
+        "merchant": {
+            "properties": {
+                "category-keys": {
+                    "type": "keyword"
+                }
+            }
+        }
+    }
+}

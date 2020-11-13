@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Development\Business;
 
+use Laminas\Config\Reader\Xml;
+use Laminas\Filter\Word\CamelCaseToDash;
 use Nette\DI\Config\Loader;
 use Spryker\Zed\Development\Business\ArchitectureSniffer\AllBundleFinder;
 use Spryker\Zed\Development\Business\ArchitectureSniffer\AllModuleFinder;
@@ -200,8 +202,6 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
 use Symfony\Component\Yaml\Parser;
-use Zend\Config\Reader\Xml;
-use Zend\Filter\Word\CamelCaseToDash;
 
 /**
  * @method \Spryker\Zed\Development\DevelopmentConfig getConfig()
@@ -1959,7 +1959,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Zend\Config\Reader\ReaderInterface
+     * @return \Laminas\Config\Reader\ReaderInterface
      */
     protected function createXmlReader()
     {
@@ -1994,7 +1994,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Zend\Filter\FilterInterface
+     * @return \Laminas\Filter\FilterInterface
      */
     protected function createCamelCaseToDashFilter()
     {

@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Development\Business\Phpstan;
 
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\StringToLower;
+use Laminas\Filter\Word\CamelCaseToDash;
 use RuntimeException;
 use SplFileInfo;
 use Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileFinderInterface;
@@ -20,9 +23,6 @@ use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Process;
-use Zend\Filter\FilterChain;
-use Zend\Filter\StringToLower;
-use Zend\Filter\Word\CamelCaseToDash;
 
 class PhpstanRunner implements PhpstanRunnerInterface
 {

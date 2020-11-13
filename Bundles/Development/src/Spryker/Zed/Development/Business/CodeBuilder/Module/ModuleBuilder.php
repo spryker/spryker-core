@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Development\Business\CodeBuilder\Module;
 
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\Word\CamelCaseToDash;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Filesystem\Filesystem;
-use Zend\Filter\FilterChain;
-use Zend\Filter\Word\CamelCaseToDash;
 
 class ModuleBuilder
 {
@@ -80,7 +80,7 @@ class ModuleBuilder
     }
 
     /**
-     * @return \Zend\Filter\FilterChain
+     * @return \Laminas\Filter\FilterChain
      */
     protected function getUnderscoreToCamelCaseFilter()
     {

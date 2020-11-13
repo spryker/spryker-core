@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="Merchant">
+        <property name="idMerchant" type="int"/>
+        <property name="categories" type="Category[]" singular="category"/>
+    </transfer>
+
+    <transfer name="MerchantCategoryCriteria">
+        <property name="idMerchant" type="int"/>
+        <property name="isCategoryActive" type="bool"/>
+        <property name="merchantIds" type="int[]" singular="idMerchant"/>
+        <property name="categoryIds" type="int[]" singular="idCategory"/>
+    </transfer>
+
+    <transfer name="MerchantCategory">
+        <property name="idMerchantCategory" type="int"/>
+        <property name="fkCategory" type="int"/>
+        <property name="fkMerchant" type="int"/>
+        <property name="category" type="Category"/>
+    </transfer>
+
+    <transfer name="MerchantCategoryResponse">
+        <property name="merchantCategories" type="MerchantCategory[]" singular="merchantCategory"/>
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
+    <transfer name="Category">
+        <property name="localizedAttributes" type="CategoryLocalizedAttributes[]" singular="localizedAttributes"/>
+    </transfer>
+
+    <transfer name="CategoryLocalizedAttributes">
+        <property name="locale" type="Locale"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Locale">
+    </transfer>
+
+    <transfer name="EventEntity">
+    </transfer>
+</transfers>
