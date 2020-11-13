@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductConfiguration\Business\Counter;
 use ArrayObject;
 use Generated\Shared\Transfer\CartItemQuantityTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Spryker\Service\ProductConfiguration\ProductConfigurationServiceInterface;
 
 class ProductConfigurationCartItemQuantityCounter implements ProductConfigurationCartItemQuantityCounterInterface
@@ -74,12 +75,30 @@ class ProductConfigurationCartItemQuantityCounter implements ProductConfiguratio
      */
     protected function isSameProductConfigurationItem(ItemTransfer $itemInCartTransfer, ItemTransfer $itemTransfer): bool
     {
-        return ($itemInCartTransfer->getProductConfigurationInstance() === null && $itemTransfer->getProductConfigurationInstance() === null)
-            || (
-                $itemInCartTransfer->getProductConfigurationInstance() !== null
-                && $itemTransfer->getProductConfigurationInstance() !== null
-                && $this->productConfigurationService->getProductConfigurationInstanceHash($itemInCartTransfer->getProductConfigurationInstance())
-                    === $this->productConfigurationService->getProductConfigurationInstanceHash($itemTransfer->getProductConfigurationInstance())
+        $itemInCartProductConfigurationInstanceTransfer = $itemInCartTransfer->getProductConfigurationInstance();
+        $itemProductConfigurationInstanceTransfer = $itemTransfer->getProductConfigurationInstance();
+
+        return ($itemInCartProductConfigurationInstanceTransfer === null && $itemProductConfigurationInstanceTransfer === null)
+            || $this->isProductConfigurationInstanceHashEquals(
+                $itemInCartProductConfigurationInstanceTransfer,
+                $itemProductConfigurationInstanceTransfer
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null $itemInCartProductConfigurationInstanceTransfer
+     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null $itemProductConfigurationInstanceTransfer
+     *
+     * @return bool
+     */
+    protected function isProductConfigurationInstanceHashEquals(
+        ?ProductConfigurationInstanceTransfer $itemInCartProductConfigurationInstanceTransfer,
+        ?ProductConfigurationInstanceTransfer $itemProductConfigurationInstanceTransfer
+    ): bool {
+        if ($itemInCartProductConfigurationInstanceTransfer === null || $itemProductConfigurationInstanceTransfer === null) {
+            return false;
+        }
+
+        return $this->productConfigurationService->getProductConfigurationInstanceHash($itemInCartProductConfigurationInstanceTransfer);
     }
 }
