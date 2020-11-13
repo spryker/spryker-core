@@ -12,10 +12,12 @@ coverage:
   whitelist: { include: ['../../../../src/*'] }
 
 suites:
-  Communication:
-    path: Communication
-    class_name: MerchantShipmentCommunicationTester
+  Business:
+    path: Business
+    class_name: MerchantShipmentBusinessTester
     modules:
       enabled:
         - Asserts
         - \SprykerTest\Shared\Testify\Helper\Environment
+        - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+        - \SprykerTest\Shared\Testify\Helper\DependencyHelper

@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\MerchantShipment\Business\MerchantShipmentFacadeInterface getFacade()
+ * @method \Spryker\Zed\MerchantShipment\MerchantShipmentConfig getConfig()
  */
 class MerchantShipmentItemExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {

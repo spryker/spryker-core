@@ -13,6 +13,7 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpanderPluginInterface;
 
 /**
  * @method \Spryker\Zed\MerchantShipment\Business\MerchantShipmentFacadeInterface getFacade()
+ * @method \Spryker\Zed\MerchantShipment\MerchantShipmentConfig getConfig()
  */
 class MerchantShipmentQuoteExpanderPlugin extends AbstractPlugin implements QuoteExpanderPluginInterface
 {

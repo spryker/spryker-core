@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\MerchantShipment\Communication;
+namespace SprykerTest\Zed\MerchantShipment\Business\Facade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ItemBuilder;
@@ -17,14 +17,15 @@ use Generated\Shared\Transfer\QuoteTransfer;
  * @group SprykerTest
  * @group Zed
  * @group MerchantShipment
- * @group Communication
- * @group MerchantShipmentQuoteExpanderPluginTest
+ * @group Business
+ * @group Facade
+ * @group ExpandQuoteShipmentWithMerchantReferenceTest
  * Add your own group annotations below this line
  */
-class MerchantShipmentQuoteExpanderPluginTest extends Unit
+class ExpandQuoteShipmentWithMerchantReferenceTest extends Unit
 {
     /**
-     * @var \SprykerTest\Zed\MerchantShipment\MerchantShipmentCommunicationTester
+     * @var \SprykerTest\Zed\MerchantShipment\MerchantShipmentBusinessTester
      */
     protected $tester;
 
@@ -40,8 +41,8 @@ class MerchantShipmentQuoteExpanderPluginTest extends Unit
 
         // Act
         $expandedQuoteTransfer = $this->tester
-            ->createMerchantShipmentQuoteExpanderPlugin()
-            ->expand($quoteTransfer);
+            ->getFacade()
+            ->expandQuoteShipmentWithMerchantReference($quoteTransfer);
 
         // Assert
         $this->assertSame(
@@ -66,8 +67,8 @@ class MerchantShipmentQuoteExpanderPluginTest extends Unit
 
         // Act
         $expandedQuoteTransfer = $this->tester
-            ->createMerchantShipmentQuoteExpanderPlugin()
-            ->expand($quoteTransfer);
+            ->getFacade()
+            ->expandQuoteShipmentWithMerchantReference($quoteTransfer);
 
         // Assert
         $this->assertNull($expandedQuoteTransfer->getItems()->offsetGet(0)->getShipment());

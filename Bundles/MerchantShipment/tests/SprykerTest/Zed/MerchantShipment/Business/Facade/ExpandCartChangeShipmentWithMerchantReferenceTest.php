@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\MerchantShipment\Communication;
+namespace SprykerTest\Zed\MerchantShipment\Business\Facade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ItemBuilder;
@@ -17,14 +17,15 @@ use Generated\Shared\Transfer\CartChangeTransfer;
  * @group SprykerTest
  * @group Zed
  * @group MerchantShipment
- * @group Communication
- * @group MerchantShipmentItemExpanderPluginTest
+ * @group Business
+ * @group Facade
+ * @group ExpandCartChangeShipmentWithMerchantReferenceTest
  * Add your own group annotations below this line
  */
-class MerchantShipmentItemExpanderPluginTest extends Unit
+class ExpandCartChangeShipmentWithMerchantReferenceTest extends Unit
 {
     /**
-     * @var \SprykerTest\Zed\MerchantShipment\MerchantShipmentCommunicationTester
+     * @var \SprykerTest\Zed\MerchantShipment\MerchantShipmentBusinessTester
      */
     protected $tester;
 
@@ -40,8 +41,8 @@ class MerchantShipmentItemExpanderPluginTest extends Unit
 
         // Act
         $expandedCartChangeTransfer = $this->tester
-            ->createMerchantShipmentItemExpanderPlugin()
-            ->expandItems($cartChangeTransfer);
+            ->getFacade()
+            ->expandCartChangeShipmentWithMerchantReference($cartChangeTransfer);
 
         // Assert
         $this->assertSame(
@@ -66,8 +67,8 @@ class MerchantShipmentItemExpanderPluginTest extends Unit
 
         // Act
         $expandedCartChangeTransfer = $this->tester
-            ->createMerchantShipmentItemExpanderPlugin()
-            ->expandItems($cartChangeTransfer);
+            ->getFacade()
+            ->expandCartChangeShipmentWithMerchantReference($cartChangeTransfer);
 
         // Assert
         $this->assertNull($expandedCartChangeTransfer->getItems()->offsetGet(0)->getShipment());

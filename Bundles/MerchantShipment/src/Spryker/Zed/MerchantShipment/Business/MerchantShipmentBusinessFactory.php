@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MerchantShipment\Business\Expander\ShipmentExpander;
 use Spryker\Zed\MerchantShipment\Business\Expander\ShipmentExpanderInterface;
 
+/**
+ * @method \Spryker\Zed\MerchantShipment\MerchantShipmentConfig getConfig()
+ */
 class MerchantShipmentBusinessFactory extends AbstractBusinessFactory
 {
     /**
