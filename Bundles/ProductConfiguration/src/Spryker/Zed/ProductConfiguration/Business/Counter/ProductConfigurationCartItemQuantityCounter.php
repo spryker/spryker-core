@@ -99,6 +99,7 @@ class ProductConfigurationCartItemQuantityCounter implements ProductConfiguratio
             return false;
         }
 
-        return $this->productConfigurationService->getProductConfigurationInstanceHash($itemInCartProductConfigurationInstanceTransfer);
+        return $this->productConfigurationService->getProductConfigurationInstanceHash($itemInCartProductConfigurationInstanceTransfer)
+            === $this->productConfigurationService->getProductConfigurationInstanceHash($itemProductConfigurationInstanceTransfer);
     }
 }
