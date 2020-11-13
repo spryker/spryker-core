@@ -83,7 +83,10 @@ class DeletePricesAction implements ActionInterface
      */
     public function execute(Request $request): JsonResponse
     {
-        $priceProductOfferIds = array_map('intval', $request->get(static::PARAM_PRICE_PRODUCT_OFFER_IDS));
+        $priceProductOfferIds = array_map(
+            'intval',
+            (array)json_decode($request->get(static::PARAM_PRICE_PRODUCT_OFFER_IDS), true)
+        );
         $response = $this->validatePriceProductOfferIds($priceProductOfferIds);
 
         if ($response) {
