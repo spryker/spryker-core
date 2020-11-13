@@ -21,10 +21,8 @@ class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
 
     /**
      * @param \Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToPriceProductFacadeInterface $priceProductFacade
-     *
-     * @return void
      */
-    public function __construc(PriceProductOfferToPriceProductFacadeInterface $priceProductFacade): void
+    public function __construct(PriceProductOfferToPriceProductFacadeInterface $priceProductFacade)
     {
         $this->priceProductFacade = $priceProductFacade;
     }

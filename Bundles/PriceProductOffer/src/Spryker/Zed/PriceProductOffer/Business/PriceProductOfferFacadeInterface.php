@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\PriceProductOffer\Business;
 
+use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\ProductOfferResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 
 interface PriceProductOfferFacadeInterface
@@ -60,4 +62,28 @@ interface PriceProductOfferFacadeInterface
      * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
      */
     public function validateProductOfferPrices(ProductOfferTransfer $productOfferTransfer): ProductOfferResponseTransfer;
+
+    /**
+     * Specification:
+     * - Deletes entities from `spy_price_product_offer` using priceProductOfferIds from PriceProductOfferTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
+     *
+     * @return void
+     */
+    public function delete(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): void;
+
+    /**
+     * Specification:
+     * - Retrives and returns count of entities from `spy_price_product_offer` over PriceProductOfferTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
+     *
+     * @return int
+     */
+    public function count(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): int;
 }

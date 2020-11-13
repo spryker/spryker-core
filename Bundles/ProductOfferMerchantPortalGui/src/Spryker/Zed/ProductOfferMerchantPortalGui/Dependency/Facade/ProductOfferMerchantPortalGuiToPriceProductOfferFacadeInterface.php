@@ -2,11 +2,12 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 
 interface ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface
@@ -24,4 +25,18 @@ interface ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface
      * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
      */
     public function validateProductOfferPrices(ProductOfferTransfer $productOfferTransfer): ProductOfferResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
+     *
+     * @return void
+     */
+    public function delete(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
+     *
+     * @return int
+     */
+    public function count(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): int;
 }

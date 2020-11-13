@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\PriceProductOffer\Business;
 
+use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\ProductOfferResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -72,5 +74,33 @@ class PriceProductOfferFacade extends AbstractFacade implements PriceProductOffe
     public function validateProductOfferPrices(ProductOfferTransfer $productOfferTransfer): ProductOfferResponseTransfer
     {
         return $this->getFactory()->createPriceProductOfferValidator()->validatePrices($productOfferTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
+     *
+     * @return void
+     */
+    public function delete(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): void
+    {
+        $this->getEntityManager()->delete($priceProductOfferCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
+     *
+     * @return int
+     */
+    public function count(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): int
+    {
+        return $this->getRepository()->count($priceProductOfferCriteriaTransfer);
     }
 }

@@ -97,7 +97,7 @@ class ProductOfferPriceGuiTableConfigurationProvider implements ProductOfferPric
 
         $guiTableConfigurationBuilder
             ->setTableTitle('List of Prices')
-            ->setDataSourceUrl(str_replace(static::PARAM_ID_PRODUCT_OFFER, $idProductOffer, static::DATA_URL))
+            ->setDataSourceUrl(str_replace(static::PARAM_ID_PRODUCT_OFFER, (string)$idProductOffer, static::DATA_URL))
             ->setIsItemSelectionEnabled(false)
             ->setDefaultPageSize(25);
 
@@ -196,7 +196,7 @@ class ProductOfferPriceGuiTableConfigurationProvider implements ProductOfferPric
         $guiTableConfigurationBuilder->addRowActionOpenFormOverlay(
             'delete-price',
             'Delete price',
-            str_replace(static::PARAM_ID_PRODUCT_OFFER, $this->idProductOffer, static::URL_DELETE_PRICE)
+            str_replace(static::PARAM_ID_PRODUCT_OFFER, (string)$this->idProductOffer, static::URL_DELETE_PRICE)
         )->setRowClickAction('delete-price');
 
         return $guiTableConfigurationBuilder;
@@ -230,7 +230,8 @@ class ProductOfferPriceGuiTableConfigurationProvider implements ProductOfferPric
      *
      * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
      */
-    protected function addEditableButtons(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface {
+    protected function addEditableButtons(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
+    {
         $guiTableConfigurationBuilder->addEditableCreateActionAddButton('Create')
             ->addEditableCreateActionCancelButton('Cancel')
             ->setEditableUpdateActionUrl('POST', str_replace(static::PARAM_ID_PRODUCT_OFFER, $this->idProductOffer, static::URL_SAVE_PRICES))

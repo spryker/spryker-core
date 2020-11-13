@@ -90,6 +90,18 @@ class UpdateProductOfferController extends AbstractProductOfferController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function deletePricesAction(Request $request): JsonResponse
+    {
+        return $this->getFactory()
+            ->createDeletePricesAction()
+            ->execute($request);
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormInterface $productOfferForm
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
@@ -171,8 +183,6 @@ class UpdateProductOfferController extends AbstractProductOfferController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */

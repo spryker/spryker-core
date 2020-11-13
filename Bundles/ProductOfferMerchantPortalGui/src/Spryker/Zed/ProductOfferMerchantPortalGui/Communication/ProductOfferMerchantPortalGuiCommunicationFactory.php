@@ -12,6 +12,8 @@ use Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface;
 use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
 use Spryker\Shared\GuiTable\Http\GuiTableDataRequestExecutorInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Action\ActionInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Action\UpdateProductOffer\DeletePricesAction;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilder;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\GuiTableConfigurationProviderInterface;
@@ -26,6 +28,7 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\Product
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\ProductOfferPriceGuiTableDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Expander\MerchantOrderItemTableExpander;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Expander\MerchantOrderItemTableExpanderInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Constraint\ValidProductOfferPriceIdsOwnByMerchantConstraint;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\DataProvider\ProductOfferCreateFormDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\DataProvider\ProductOfferCreateFormDataProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\DataProvider\ProductOfferUpdateFormDataProvider;
@@ -34,6 +37,7 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\ProductOfferFor
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\ProductOfferStockTransformer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\QuantityTransformer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\StoresTransformer;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\External\ProductOfferMerchantPortalGuiToValidationAdapterInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToCurrencyFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantStockFacadeInterface;
@@ -49,6 +53,7 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMer
 use Spryker\Zed\ProductOfferMerchantPortalGui\ProductOfferMerchantPortalGuiDependencyProvider;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 use Twig\Environment;
 
 /**
@@ -337,10 +342,40 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     }
 
     /**
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\External\ProductOfferMerchantPortalGuiToValidationAdapterInterface
+     */
+    public function getValidationAdapter(): ProductOfferMerchantPortalGuiToValidationAdapterInterface
+    {
+        return $this->getProvidedDependency(ProductOfferMerchantPortalGuiDependencyProvider::EXTERNAL_ADAPTER_VALIDATION);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface
      */
     public function getPriceProductOfferFacade(): ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface
     {
         return $this->getProvidedDependency(ProductOfferMerchantPortalGuiDependencyProvider::FACADE_PRICE_PRODUCT_OFFER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Action\ActionInterface
+     */
+    public function createDeletePricesAction(): ActionInterface
+    {
+        return new DeletePricesAction(
+            $this->getValidationAdapter(),
+            $this->createValidProductOfferPriceIdsOwnByMerchantConstraint(),
+            $this->getPriceProductOfferFacade(),
+            $this->getMerchantUserFacade(),
+            $this->getTranslatorFacade()
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    public function createValidProductOfferPriceIdsOwnByMerchantConstraint(): SymfonyConstraint
+    {
+        return new ValidProductOfferPriceIdsOwnByMerchantConstraint($this->getPriceProductOfferFacade());
     }
 }
