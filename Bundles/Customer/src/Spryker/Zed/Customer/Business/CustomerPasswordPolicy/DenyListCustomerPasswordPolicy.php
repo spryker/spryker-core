@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Customer\Business\CustomerPasswordPolicy;
 
+use Generated\Shared\Transfer\CustomerErrorTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
-use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\Customer\CustomerConfig;
 
 class DenyListCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
@@ -50,11 +50,11 @@ class DenyListCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
      */
     protected function addPasswordInDenyListError(CustomerResponseTransfer $customerResponseTransfer): CustomerResponseTransfer
     {
-        $messageTransfer = (new MessageTransfer())
+        $customerErrorTransfer = (new CustomerErrorTransfer())
             ->setMessage(static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_DENY_LIST);
 
         return $customerResponseTransfer
             ->setIsSuccess(false)
-            ->setMessage($messageTransfer);
+            ->addError($customerErrorTransfer);
     }
 }
