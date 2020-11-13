@@ -33,6 +33,10 @@ class MerchantShipmentFacade extends AbstractFacade implements MerchantShipmentF
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
