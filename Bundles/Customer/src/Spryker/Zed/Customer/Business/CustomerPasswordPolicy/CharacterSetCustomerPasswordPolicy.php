@@ -39,6 +39,7 @@ class CharacterSetCustomerPasswordPolicy implements CustomerPasswordPolicyInterf
         if (preg_match($this->regularExpression, $password)) {
             return $customerResponseTransfer;
         }
+
         $messageTransfer = (new MessageTransfer())
             ->setMessage(static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_CHARACTER_SET);
         $customerResponseTransfer->setIsSuccess(false)

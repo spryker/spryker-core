@@ -38,7 +38,7 @@ class SequenceCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
         string $password,
         CustomerResponseTransfer $customerResponseTransfer
     ): CustomerResponseTransfer {
-        if (!$this->customerPasswordSequenceLimit || $this->customerPasswordSequenceLimit <= 1) {
+        if (!$this->customerPasswordSequenceLimit || $this->customerPasswordSequenceLimit < 0) {
             return $customerResponseTransfer;
         }
 
@@ -48,9 +48,9 @@ class SequenceCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
         }
 
         $messageTransfer = (new MessageTransfer())
-            ->setMessage(static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE);
+          ->setMessage(static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE);
         $customerResponseTransfer->setIsSuccess(false)
-            ->setMessage($messageTransfer);
+          ->setMessage($messageTransfer);
 
         return $customerResponseTransfer;
     }
