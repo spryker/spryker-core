@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\Security\Csrf\CsrfToken;
 
 /**
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
@@ -66,6 +67,17 @@ class VoucherController extends AbstractController
      */
     public function deleteVoucherCodeAction(Request $request)
     {
+        $deleteForm = $this->getFactory()
+            ->getDeleteVoucherCodeForm()
+            ->handleRequest($request);
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid.');
+
+            return new RedirectResponse(
+                $this->createVoucherCodeDeleteRedirectUrl($request)
+            );
+        }
+
         $idVoucher = $this->castId($request->query->get(self::URL_PARAM_ID_VOUCHER));
 
         $voucherEntity = $this->getQueryContainer()

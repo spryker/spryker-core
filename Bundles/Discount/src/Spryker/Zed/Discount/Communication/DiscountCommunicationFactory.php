@@ -23,6 +23,7 @@ use Spryker\Zed\Discount\Communication\Table\DiscountsTable;
 use Spryker\Zed\Discount\Communication\Table\DiscountVoucherCodesTable;
 use Spryker\Zed\Discount\Communication\Tabs\DiscountFormTabs;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
+use Spryker\Zed\Gui\Communication\Form\DeleteForm;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Money\Communication\Form\Type\MoneyCollectionType;
 use Spryker\Zed\Money\Communication\Form\Type\MoneyType;
@@ -67,6 +68,16 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
                 'data_class' => DiscountVoucherTransfer::class,
             ]
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getDeleteVoucherCodeForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeleteForm::class, null, [
+            'fields' => [],
+        ]);
     }
 
     /**

@@ -93,3 +93,4 @@ Generate,Generate
 "Voucher codes successfully generated.","Voucher codes successfully generated."
 "Voucher code successfully deleted.","Voucher code successfully deleted."
 "Apply to","Apply to"
+"CSRF token is not valid","CSRF token is not valid"
