@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\ProductConfiguration\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartItemQuantityTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConfigurationCollectionTransfer;
 use Generated\Shared\Transfer\ProductConfigurationFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -61,4 +64,50 @@ interface ProductConfigurationFacadeInterface
      * @return bool
      */
     public function isQuoteProductConfigurationValid(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
+
+    /**
+     * Specification:
+     * - Expands the list of price product transfers with product configuration prices.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function expandPriceProductTransfersWithProductConfigurationPrices(
+        array $priceProductTransfers,
+        CartChangeTransfer $cartChangeTransfer
+    ): array;
+
+    /**
+     * Specification:
+     * - Finds given item in the cart.
+     * - Counts item quantity by item SKU and product configuration instance.
+     * - Returns quantity for the item.
+     *
+     * @api
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartItemQuantityTransfer
+     */
+    public function countCartItemQuantity(ArrayObject $itemsInCart, ItemTransfer $itemTransfer): CartItemQuantityTransfer;
+
+    /**
+     * Specification:
+     * - Finds given item in the cart.
+     * - Counts item quantity by item SKU and product configuration instance in add and subtract directions.
+     * - Returns quantity for the item.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartItemQuantityTransfer
+     */
+    public function countItemQuantity(CartChangeTransfer $cartChangeTransfer, ItemTransfer $itemTransfer): CartItemQuantityTransfer;
 }

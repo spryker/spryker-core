@@ -325,6 +325,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             'Ramsey\\Uuid' => 'spryker/ramsey-uuid',
             'Silex\\' => 'spryker/silex',
             'Spryker\\DecimalObject\\' => 'spryker/decimal-object',
+            'Spryker\\ChecksumGenerator\\' => 'spryker/checksum-generator',
             'Symfony\\Bridge\\Twig\\' => 'spryker/symfony',
             'Symfony\\Bundle\\WebProfilerBundle\\' => 'spryker/symfony',
             'Symfony\\Component\\' => 'spryker/symfony',

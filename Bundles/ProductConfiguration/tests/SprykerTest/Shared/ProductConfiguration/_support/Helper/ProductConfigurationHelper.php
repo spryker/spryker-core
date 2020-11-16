@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\ProductConfiguration\Helper;
+namespace SprykerTest\Shared\ProductConfiguration\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ProductConfigurationBuilder;

@@ -30,7 +30,7 @@ class ProductAbstractGroupsCollectorQuery extends AbstractPropelCollectorQuery
 
         $this->touchQuery->withColumn(SpyProductAbstractGroupTableMap::COL_FK_PRODUCT_ABSTRACT, static::FIELD_ID_PRODUCT_ABSTRACT);
         $this->touchQuery->withColumn(sprintf(
-            'GROUP_CONCAT(%s ORDER BY %s)',
+            'GROUP_CONCAT(DISTINCT %s ORDER BY %s)',
             SpyProductAbstractGroupTableMap::COL_FK_PRODUCT_GROUP,
             SpyProductAbstractGroupTableMap::COL_FK_PRODUCT_GROUP
         ), static::FIELD_ID_PRODUCT_GROUPS);
