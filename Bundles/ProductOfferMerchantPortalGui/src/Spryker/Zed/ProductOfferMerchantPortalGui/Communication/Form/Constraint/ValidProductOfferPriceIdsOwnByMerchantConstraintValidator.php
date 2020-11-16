@@ -36,13 +36,13 @@ class ValidProductOfferPriceIdsOwnByMerchantConstraintValidator extends Abstract
             throw new UnexpectedTypeException($validProductOfferPriceIdsConstraint, ValidProductOfferPriceIdsOwnByMerchantConstraint::class);
         }
 
-        $normalizeDataCollection = [];
+        $normalizedDataCollection = [];
         /** @var \Generated\Shared\Transfer\PriceProductOfferTransfer $priceProductOfferTransfer */
         foreach ($value->getPriceProductOffers() as $priceProductOfferTransfer) {
-            $normalizeDataCollection[$priceProductOfferTransfer->getProductOffer()->getFkMerchantOrFail()][] = $priceProductOfferTransfer->getIdPriceProductOffer();
+            $normalizedDataCollection[$priceProductOfferTransfer->getProductOffer()->getFkMerchantOrFail()][] = $priceProductOfferTransfer->getIdPriceProductOffer();
         }
 
-        foreach ($normalizeDataCollection as $idMerchant => $priceProductOfferIds) {
+        foreach ($normalizedDataCollection as $idMerchant => $priceProductOfferIds) {
             $priceProductOfferCriteriaTransfer = new PriceProductOfferCriteriaTransfer();
             $priceProductOfferCriteriaTransfer->setPriceProductOfferIds($priceProductOfferIds)
                 ->setProductOfferCriteriaFilter((new ProductOfferCriteriaFilterTransfer())->setMerchantIds());

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\PriceProduct\Business;
 
+use Generated\Shared\Transfer\PriceProductCollectionTransfer;
+use Generated\Shared\Transfer\PriceProductCollectionValidationResponseTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
@@ -595,9 +597,9 @@ interface PriceProductFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductCollectionTransfer $priceProductCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\PriceProductCollectionValidationResponseTransfer
      */
-    public function validatePrices(array $priceProductTransfers): PriceProductValidationResponseTransfer;
+    public function validatePrices(PriceProductCollectionTransfer $priceProductCollectionTransfer): PriceProductCollectionValidationResponseTransfer;
 }

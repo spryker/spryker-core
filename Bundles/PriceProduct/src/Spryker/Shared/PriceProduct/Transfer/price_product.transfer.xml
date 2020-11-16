@@ -19,6 +19,10 @@
         <property name="isMergeable" type="bool"/>
     </transfer>
 
+    <transfer name="PriceProductCollection">
+        <property name="priceProducts" type="PriceProduct[]" singular="priceProduct"/>
+    </transfer>
+
     <transfer name="MoneyValue">
         <property name="idEntity" type="int"/>
         <property name="priceData" type="string"/>
@@ -117,13 +121,14 @@
     <transfer name="Quote">
     </transfer>
 
-    <transfer name="PriceProductValidationResponse">
+    <transfer name="PriceProductCollectionValidationResponse">
         <property name="isSuccessful" type="bool"/>
         <property name="errors" type="PriceProductValidationError[]" singular="error"/>
     </transfer>
 
     <transfer name="PriceProductValidationError">
-        <property name="message" type="string"/>
+        <property name="messages" type="string[]" singular="message"/>
+        <property name="priceProduct" type="PriceProduct"/>
     </transfer>
 
 </transfers>
