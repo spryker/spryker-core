@@ -82,6 +82,8 @@ class DataImportConfig extends AbstractBundleConfig
     }
 
     /**
+     * Get current database engine from configuration.
+     *
      * @api
      *
      * @return string|null
@@ -92,6 +94,8 @@ class DataImportConfig extends AbstractBundleConfig
     }
 
     /**
+     * Enables or disabled bulk import mode.
+     *
      * @api
      *
      * @return bool

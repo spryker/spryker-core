@@ -105,7 +105,8 @@ class DataSetWriterCollection implements DataSetWriterInterface
      */
     protected function checkIfDatasetWriterPluginMatchingBulkConditions($datasetWriterPlugin)
     {
-        return $this->dataImportConfig->isBulkEnabled()
+        return $this->dataImportConfig
+            && $this->dataImportConfig->isBulkEnabled()
             && $this->checkIsBulkDatasetWriterPlugin($datasetWriterPlugin);
     }
 
@@ -115,7 +116,8 @@ class DataSetWriterCollection implements DataSetWriterInterface
      */
     protected function checkIfDatasetWriterPluginMatchingNonBulkConditions($datasetWriterPlugin)
     {
-        return !$this->dataImportConfig->isBulkEnabled()
+        return $this->dataImportConfig
+            && !$this->dataImportConfig->isBulkEnabled()
             && !$this->checkIsBulkDatasetWriterPlugin($datasetWriterPlugin);
     }
 
