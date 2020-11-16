@@ -6,7 +6,6 @@
 >
 
     <transfer name="Quote">
-        <property name="name" dataBuilderRule="unique()->sentence(1)"/>
     </transfer>
 
     <transfer name="CompanyUnitAddress">

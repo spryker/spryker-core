@@ -687,6 +687,7 @@
     "spryker/shipment-gui": "*",
     "spryker/shipment-gui-extension": "*",
     "spryker/shipments-rest-api": "*",
+    "spryker/shipments-rest-api-extension": "*",
     "spryker/shop-context": "*",
     "spryker/shop-context-extension": "*",
     "spryker/shopping-list": "*",

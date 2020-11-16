@@ -66,6 +66,16 @@
         <property name="fkCustomer" type="int"/>
         <property name="idCustomerAddress" type="int"/>
         <property name="country" type="Country"/>
+        <property name="salutation" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="address1" type="string"/>
+        <property name="address2" type="string"/>
+        <property name="address3" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="city" type="string"/>
+        <property name="iso2Code" type="string"/>
+        <property name="company" type="string"/>
     </transfer>
 
     <transfer name="RestCustomerForgottenPasswordAttributes">
@@ -99,6 +109,16 @@
 
     <transfer name="RestAddress">
         <property name="id" type="string"/>
+        <property name="salutation" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="address1" type="string"/>
+        <property name="address2" type="string"/>
+        <property name="address3" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="city" type="string"/>
+        <property name="iso2Code" type="string"/>
+        <property name="company" type="string"/>
     </transfer>
 
     <transfer name="Item">

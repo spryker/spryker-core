@@ -58,6 +58,8 @@
         <property name="shipmentSelection" type="string"/>
         <property name="shippingAddress" type="Address"/>
         <property name="requestedDeliveryDate" type="string"/>
+        <property name="carrier" type="ShipmentCarrier"/>
+        <property name="idSalesShipment" type="int"/>
     </transfer>
 
     <transfer name="ShipmentMethod">
@@ -65,6 +67,7 @@
         <property name="idShipmentMethod" type="int"/>
         <property name="storeCurrencyPrice" type="int"/>
         <property name="prices" type="MoneyValue[]" singular="price"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="Expense">
@@ -73,6 +76,7 @@
         <property name="unitGrossPrice" type="int"/>
         <property name="quantity" type="int"/>
         <property name="shipment" type="Shipment"/>
+        <property name="idSalesExpense" type="int"/>
     </transfer>
 
     <transfer name="Item">
@@ -80,6 +84,7 @@
         <property name="groupKey" type="string"/>
         <property name="relatedBundleItemIdentifier" type="string"/>
         <property name="bundleItemIdentifier" type="string"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="CheckoutData">
@@ -138,6 +143,11 @@
 
     <transfer name="Address">
         <property name="uuid" type="string"/>
+        <property name="country" type="Country"/>
+    </transfer>
+
+    <transfer name="Country">
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="RestErrorCollection">
@@ -154,6 +164,7 @@
         <property name="shipment" type="Shipment"/>
         <property name="items" type="Item[]" singular="item"/>
         <property name="hash" type="string"/>
+        <property name="availableShipmentMethods" type="ShipmentMethods"/>
     </transfer>
 
     <transfer name="ShipmentMethodsCollection">
@@ -191,10 +202,28 @@
 
     <transfer name="Order">
         <property name="items" type="Item[]" singular="item"/>
+        <property name="idShipmentMethod" type="int" deprecated="Use item level shipment method (item.shipment.method.idShipmentMethod) instead."/>
+        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
+        <property name="expenses" type="Expense[]" singular="expense"/>
     </transfer>
 
     <transfer name="RestOrderDetailsAttributes">
         <property name="items" type="RestOrderItemsAttributes[]" singular="item"/>
+        <property name="expenses" type="RestOrderExpensesAttributes[]" singular="expense"/>
+    </transfer>
+
+    <transfer name="RestOrderItemsAttributes">
+        <property name="idShipment" type="int"/>
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="ShipmentCarrier">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="RestOrderExpensesAttributes">
+        <property name="idShipment" type="int"/>
+        <property name="idSalesExpense" type="int"/>
     </transfer>
 
 </transfers>
