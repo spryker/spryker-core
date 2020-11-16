@@ -9,7 +9,7 @@ namespace Spryker\Zed\SecuritySystemUser\Communication\Plugin\Security\Provider;
 
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SecuritySystemUser\Communication\Security\User;
+use Spryker\Zed\SecuritySystemUser\Communication\Security\SystemUser;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -17,6 +17,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 /**
  * @method \Spryker\Zed\SecuritySystemUser\Communication\SecuritySystemUserCommunicationFactory getFactory()
  * @method \Spryker\Zed\SecuritySystemUser\SecuritySystemUserConfig getConfig()
+ * @method \Spryker\Zed\SecuritySystemUser\Business\SecuritySystemUserFacadeInterface getFacade()
  */
 class SystemUserProvider extends AbstractPlugin implements UserProviderInterface
 {
@@ -37,7 +38,7 @@ class SystemUserProvider extends AbstractPlugin implements UserProviderInterface
      */
     public function refreshUser(UserInterface $user)
     {
-        if (!$user instanceof User || !$user->getUsername()) {
+        if (!$user instanceof SystemUser || !$user->getUsername()) {
             return $user;
         }
 
@@ -54,7 +55,7 @@ class SystemUserProvider extends AbstractPlugin implements UserProviderInterface
      */
     public function supportsClass($class)
     {
-        return is_a($class, User::class, true);
+        return is_a($class, SystemUser::class, true);
     }
 
     /**

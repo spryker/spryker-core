@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SecurityGui\Business\Authorizer;
+namespace Spryker\Zed\SecurityGui\Business\Authenticator;
 
 use DateTime;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToUserFacadeInterface;
 
-class UserAuthorizer implements UserAuthorizerInterface
+class UserAuthenticator implements UserAuthenticatorInterface
 {
     /**
      * @var \Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToUserFacadeInterface
@@ -31,7 +31,7 @@ class UserAuthorizer implements UserAuthorizerInterface
      *
      * @return void
      */
-    public function authorizeUser(UserTransfer $userTransfer): void
+    public function authenticateUser(UserTransfer $userTransfer): void
     {
         $this->userFacade->setCurrentUser($userTransfer);
         $this->updateUserLastLoginDate($userTransfer);

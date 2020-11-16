@@ -43,7 +43,7 @@ interface UserPasswordResetFacadeInterface
 
     /**
      * Specification:
-     * - Rests user password.
+     * - Sets a new user password.
      * - Updates reset password status as `used`.
      * - Returns false if reset password entity not exists.
      * - Returns true on success.
@@ -55,5 +55,5 @@ interface UserPasswordResetFacadeInterface
      *
      * @return bool
      */
-    public function resetPassword(string $token, string $password): bool;
+    public function setNewPassword(string $token, string $password): bool;
 }

@@ -50,7 +50,7 @@ class SecurityGuiFacadeTest extends Unit
         // Act
         $this->tester
             ->getSecurityGuiFacade()
-            ->authorizeUser($userTransfer);
+            ->authenticateUser($userTransfer);
     }
 
     /**

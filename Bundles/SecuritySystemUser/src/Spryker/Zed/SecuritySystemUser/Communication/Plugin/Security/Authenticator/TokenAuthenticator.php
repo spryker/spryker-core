@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SecuritySystemUser\Communication\Plugin\Security\Authenticator;
 
+use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SecuritySystemUser\SecuritySystemUserConfig;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -21,6 +22,7 @@ use Symfony\Component\Security\Guard\Token\PostAuthenticationGuardToken;
 /**
  * @method \Spryker\Zed\SecuritySystemUser\Communication\SecuritySystemUserCommunicationFactory getFactory()
  * @method \Spryker\Zed\SecuritySystemUser\SecuritySystemUserConfig getConfig()
+ * @method \Spryker\Zed\SecuritySystemUser\Business\SecuritySystemUserFacadeInterface getFacade()
  */
 class TokenAuthenticator extends AbstractPlugin implements AuthenticatorInterface
 {
@@ -101,6 +103,12 @@ class TokenAuthenticator extends AbstractPlugin implements AuthenticatorInterfac
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
+        /** @var \Spryker\Zed\SecuritySystemUser\Communication\Security\SystemUserInterface $user */
+        $user = $token->getUser();
+        $this->getFactory()->getUserFacade()->setCurrentUser(
+            (new UserTransfer())->setUsername($user->getUsername())
+        );
+
         return null;
     }
 

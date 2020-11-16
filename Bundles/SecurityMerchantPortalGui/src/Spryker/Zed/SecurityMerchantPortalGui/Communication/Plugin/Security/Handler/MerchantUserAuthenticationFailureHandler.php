@@ -20,8 +20,6 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerI
  */
 class MerchantUserAuthenticationFailureHandler extends AbstractPlugin implements AuthenticationFailureHandlerInterface
 {
-    protected const MERCHANT_USER_LOGIN_REDIRECT_URL = '/security-merchant-portal-gui/login';
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Security\Core\Exception\AuthenticationException $exception
@@ -37,6 +35,6 @@ class MerchantUserAuthenticationFailureHandler extends AbstractPlugin implements
                     ->setValue('Authentication failed!')
             );
 
-        return new RedirectResponse(static::MERCHANT_USER_LOGIN_REDIRECT_URL);
+        return new RedirectResponse($this->getConfig()->getUrlLogin());
     }
 }

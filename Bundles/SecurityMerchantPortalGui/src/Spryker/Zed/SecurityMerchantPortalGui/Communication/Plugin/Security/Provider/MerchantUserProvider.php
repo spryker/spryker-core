@@ -10,7 +10,7 @@ namespace Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\Security\Pr
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SecurityMerchantPortalGui\Communication\Security\User;
+use Spryker\Zed\SecurityMerchantPortalGui\Communication\Security\MerchantUser;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -49,7 +49,7 @@ class MerchantUserProvider extends AbstractPlugin implements UserProviderInterfa
      */
     public function refreshUser(UserInterface $user)
     {
-        if (!$user instanceof User) {
+        if (!$user instanceof MerchantUser) {
             return $user;
         }
 
@@ -69,7 +69,7 @@ class MerchantUserProvider extends AbstractPlugin implements UserProviderInterfa
      */
     public function supportsClass($class)
     {
-        return is_a($class, User::class, true);
+        return is_a($class, MerchantUser::class, true);
     }
 
     /**

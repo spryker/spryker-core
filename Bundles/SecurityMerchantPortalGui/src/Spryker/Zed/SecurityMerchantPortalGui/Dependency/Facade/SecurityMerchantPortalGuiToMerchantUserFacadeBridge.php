@@ -32,7 +32,7 @@ class SecurityMerchantPortalGuiToMerchantUserFacadeBridge implements SecurityMer
      */
     public function authorizeMerchantUser(MerchantUserTransfer $merchantUserTransfer): void
     {
-        $this->merchantUserFacade->authorizeMerchantUser($merchantUserTransfer);
+        $this->merchantUserFacade->authenticateMerchantUser($merchantUserTransfer);
     }
 
     /**

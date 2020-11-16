@@ -11,9 +11,9 @@ use DateInterval;
 use DateTime;
 use Generated\Shared\Transfer\ResetPasswordCriteriaTransfer;
 use Generated\Shared\Transfer\ResetPasswordTransfer;
+use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserPasswordResetRequestTransfer;
 use Generated\Shared\Transfer\UserTransfer;
-use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 use Spryker\Zed\UserPasswordReset\Dependency\Facade\UserPasswordResetToUserFacadeInterface;
 use Spryker\Zed\UserPasswordReset\Dependency\Service\UserPasswordResetToUtilTextServiceInterface;
 use Spryker\Zed\UserPasswordReset\Persistence\UserPasswordResetEntityManagerInterface;
@@ -94,25 +94,25 @@ class ResetPassword implements ResetPasswordInterface
      */
     public function requestPasswordReset(string $email): bool
     {
-        try {
-            $userTransfer = $this->userFacade->getUserByUsername($email);
+        $userTransfer = $this->userFacade->findUser((new UserCriteriaTransfer())->setEmail($email));
 
-            $token = $this->generateToken();
-            $resetPasswordTransfer = $this->userPasswordResetEntityManager->createResetPassword(
-                (new ResetPasswordTransfer())
-                    ->setFkUserId($userTransfer->getIdUser())
-                    ->setCode($token)
-                    ->setStatus(static::STATUS_ACTIVE)
-            );
-
-            $this->executeUserPasswordResetRequestHandlerPlugins(
-                $this->createUserPasswordResetRequestTransfer($userTransfer, $token)
-            );
-
-            return !empty($resetPasswordTransfer->getIdResetPassword());
-        } catch (UserNotFoundException $exception) {
+        if (!$userTransfer) {
             return false;
         }
+
+        $token = $this->generateToken();
+        $resetPasswordTransfer = $this->userPasswordResetEntityManager->createResetPassword(
+            (new ResetPasswordTransfer())
+                ->setFkUserId($userTransfer->getIdUser())
+                ->setCode($token)
+                ->setStatus(static::STATUS_ACTIVE)
+        );
+
+        $this->executeUserPasswordResetRequestHandlerPlugins(
+            $this->createUserPasswordResetRequestTransfer($userTransfer, $token)
+        );
+
+        return (bool)$resetPasswordTransfer->getIdResetPassword();
     }
 
     /**
@@ -139,11 +139,11 @@ class ResetPassword implements ResetPasswordInterface
 
     /**
      * @param string $token
-     * @param string $newPassword
+     * @param string $password
      *
      * @return bool
      */
-    public function resetPassword(string $token, string $newPassword): bool
+    public function setNewPassword(string $token, string $password): bool
     {
         $resetPasswordTransfer = $this->passwordResetRepository->findOne(
             (new ResetPasswordCriteriaTransfer())->setCode($token)
@@ -156,7 +156,7 @@ class ResetPassword implements ResetPasswordInterface
         /** @var int $idUser */
         $idUser = $resetPasswordTransfer->getFkUserId();
         $userTransfer = $this->userFacade->getUserById($idUser);
-        $userTransfer->setPassword($newPassword);
+        $userTransfer->setPassword($password);
         $this->userFacade->updateUser($userTransfer);
 
         $resetPasswordTransfer->setStatus(static::STATUS_USED);

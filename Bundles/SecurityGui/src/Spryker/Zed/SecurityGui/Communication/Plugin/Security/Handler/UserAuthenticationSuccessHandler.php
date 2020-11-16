@@ -38,7 +38,7 @@ class UserAuthenticationSuccessHandler extends AbstractPlugin implements Authent
     {
         /** @var \Spryker\Zed\SecurityGui\Communication\Security\User $user */
         $user = $token->getUser();
-        $this->getFacade()->authorizeUser($user->getUserTransfer());
+        $this->getFacade()->authenticateUser($user->getUserTransfer());
 
         return $this->createRedirectResponse($request);
     }

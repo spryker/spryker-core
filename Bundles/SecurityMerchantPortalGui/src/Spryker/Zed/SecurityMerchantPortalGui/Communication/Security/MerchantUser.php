@@ -8,9 +8,8 @@
 namespace Spryker\Zed\SecurityMerchantPortalGui\Communication\Security;
 
 use Generated\Shared\Transfer\MerchantUserTransfer;
-use Symfony\Component\Security\Core\User\UserInterface;
 
-class User implements UserInterface
+class MerchantUser implements MerchantUserInterface
 {
     /**
      * @var \Generated\Shared\Transfer\MerchantUserTransfer

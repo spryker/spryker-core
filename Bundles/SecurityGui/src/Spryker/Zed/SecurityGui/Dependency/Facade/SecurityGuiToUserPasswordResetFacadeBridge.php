@@ -48,8 +48,8 @@ class SecurityGuiToUserPasswordResetFacadeBridge implements SecurityGuiToUserPas
      *
      * @return bool
      */
-    public function resetPassword(string $token, string $password): bool
+    public function setNewPassword(string $token, string $password): bool
     {
-        return $this->userPasswordResetFacade->resetPassword($token, $password);
+        return $this->userPasswordResetFacade->setNewPassword($token, $password);
     }
 }

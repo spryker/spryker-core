@@ -112,7 +112,7 @@ interface MerchantUserFacadeInterface
 
     /**
      * Specification:
-     * - Authorizes a MerchantUser.
+     * - Authenticates a merchant user.
      * - Updates User's last login date.
      *
      * @api
@@ -121,5 +121,5 @@ interface MerchantUserFacadeInterface
      *
      * @return void
      */
-    public function authorizeMerchantUser(MerchantUserTransfer $merchantUserTransfer): void;
+    public function authenticateMerchantUser(MerchantUserTransfer $merchantUserTransfer): void;
 }

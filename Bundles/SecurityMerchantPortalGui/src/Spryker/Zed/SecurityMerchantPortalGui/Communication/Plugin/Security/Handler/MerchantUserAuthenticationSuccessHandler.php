@@ -35,7 +35,7 @@ class MerchantUserAuthenticationSuccessHandler extends AbstractPlugin implements
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token): RedirectResponse
     {
-        /** @var \Spryker\Zed\SecurityMerchantPortalGui\Communication\Security\User $user */
+        /** @var \Spryker\Zed\SecurityMerchantPortalGui\Communication\Security\MerchantUserInterface $user */
         $user = $token->getUser();
         $this->getFactory()->getMerchantUserFacade()->authorizeMerchantUser($user->getMerchantUserTransfer());
 

@@ -8,8 +8,8 @@
 namespace Spryker\Zed\SecurityGui\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\SecurityGui\Business\Authorizer\UserAuthorizer;
-use Spryker\Zed\SecurityGui\Business\Authorizer\UserAuthorizerInterface;
+use Spryker\Zed\SecurityGui\Business\Authenticator\UserAuthenticator;
+use Spryker\Zed\SecurityGui\Business\Authenticator\UserAuthenticatorInterface;
 use Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToUserFacadeInterface;
 use Spryker\Zed\SecurityGui\SecurityGuiDependencyProvider;
 
@@ -19,11 +19,11 @@ use Spryker\Zed\SecurityGui\SecurityGuiDependencyProvider;
 class SecurityGuiBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\SecurityGui\Business\Authorizer\UserAuthorizerInterface
+     * @return \Spryker\Zed\SecurityGui\Business\Authenticator\UserAuthenticatorInterface
      */
-    public function createUserAuthorizer(): UserAuthorizerInterface
+    public function createUserAuthenticator(): UserAuthenticatorInterface
     {
-        return new UserAuthorizer($this->getUserFacade());
+        return new UserAuthenticator($this->getUserFacade());
     }
 
     /**

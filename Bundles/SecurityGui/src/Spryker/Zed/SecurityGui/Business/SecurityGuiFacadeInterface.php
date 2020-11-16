@@ -13,7 +13,7 @@ interface SecurityGuiFacadeInterface
 {
     /**
      * Specification:
-     * - Authorizes a User.
+     * - Authenticates a user.
      * - Updates User's last login date.
      *
      * @api
@@ -22,5 +22,5 @@ interface SecurityGuiFacadeInterface
      *
      * @return void
      */
-    public function authorizeUser(UserTransfer $userTransfer): void;
+    public function authenticateUser(UserTransfer $userTransfer): void;
 }

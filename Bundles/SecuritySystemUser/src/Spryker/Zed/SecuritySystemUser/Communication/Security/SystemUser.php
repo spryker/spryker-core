@@ -8,9 +8,8 @@
 namespace Spryker\Zed\SecuritySystemUser\Communication\Security;
 
 use Generated\Shared\Transfer\UserTransfer;
-use Symfony\Component\Security\Core\User\UserInterface;
 
-class User implements UserInterface
+class SystemUser implements SystemUserInterface
 {
     /**
      * @var string

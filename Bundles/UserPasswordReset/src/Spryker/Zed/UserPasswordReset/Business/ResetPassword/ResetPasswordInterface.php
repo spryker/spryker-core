@@ -25,9 +25,9 @@ interface ResetPasswordInterface
 
     /**
      * @param string $token
-     * @param string $newPassword
+     * @param string $password
      *
      * @return bool
      */
-    public function resetPassword(string $token, string $newPassword): bool;
+    public function setNewPassword(string $token, string $password): bool;
 }

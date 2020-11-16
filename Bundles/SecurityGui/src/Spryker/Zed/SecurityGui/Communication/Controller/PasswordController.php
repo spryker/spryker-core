@@ -25,7 +25,7 @@ class PasswordController extends AbstractController
      *
      * @return array
      */
-    public function resetRequestAction(Request $request)
+    public function resetRequestAction(Request $request): array
     {
         $resetRequestForm = $this->getFactory()->createResetPasswordRequestForm();
         $resetRequestForm->handleRequest($request);
@@ -82,7 +82,7 @@ class PasswordController extends AbstractController
             $formData = $resetPasswordForm->getData();
             $isPasswordReset = $this->getFactory()
                 ->getUserPasswordResetFacade()
-                ->resetPassword(
+                ->setNewPassword(
                     $token,
                     $formData[ResetPasswordForm::FIELD_PASSWORD]
                 );

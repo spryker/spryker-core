@@ -24,10 +24,10 @@ class SecurityGuiFacade extends AbstractFacade implements SecurityGuiFacadeInter
      *
      * @return void
      */
-    public function authorizeUser(UserTransfer $userTransfer): void
+    public function authenticateUser(UserTransfer $userTransfer): void
     {
         $this->getFactory()
-            ->createUserAuthorizer()
-            ->authorizeUser($userTransfer);
+            ->createUserAuthenticator()
+            ->authenticateUser($userTransfer);
     }
 }

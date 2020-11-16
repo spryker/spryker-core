@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantUser\Business\Authorizer;
+namespace Spryker\Zed\MerchantUser\Business\Authenticator;
 
 use DateTime;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 
-class MerchantUserAuthorizer implements MerchantUserAuthorizerInterface
+class MerchantUserAuthenticator implements MerchantUserAuthenticatorInterface
 {
     /**
      * @var \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface
@@ -32,7 +32,7 @@ class MerchantUserAuthorizer implements MerchantUserAuthorizerInterface
      *
      * @return void
      */
-    public function authorizeMerchantUser(MerchantUserTransfer $merchantUserTransfer): void
+    public function authenticateMerchantUser(MerchantUserTransfer $merchantUserTransfer): void
     {
         $userTransfer = $merchantUserTransfer->requireUser()->getUser();
         $this->userFacade->setCurrentUser($userTransfer);

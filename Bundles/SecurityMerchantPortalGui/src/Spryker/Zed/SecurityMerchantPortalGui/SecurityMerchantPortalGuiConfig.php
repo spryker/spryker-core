@@ -12,7 +12,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class SecurityMerchantPortalGuiConfig extends AbstractBundleConfig
 {
     public const ROLE_MERCHANT_USER = 'ROLE_MERCHANT_USER';
-    protected const MERCHANT_USER_DEFAULT_URL_REDIRECT = '/dashboard-merchant-portal-gui/dashboard';
+
+    protected const MERCHANT_USER_DEFAULT_URL = '/dashboard-merchant-portal-gui/dashboard';
+    protected const LOGIN_URL = '/security-merchant-portal-gui/login';
 
     /**
      * @api
@@ -21,6 +23,16 @@ class SecurityMerchantPortalGuiConfig extends AbstractBundleConfig
      */
     public function getDefaultTargetPath(): string
     {
-        return static::MERCHANT_USER_DEFAULT_URL_REDIRECT;
+        return static::MERCHANT_USER_DEFAULT_URL;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getUrlLogin(): string
+    {
+        return static::LOGIN_URL;
     }
 }

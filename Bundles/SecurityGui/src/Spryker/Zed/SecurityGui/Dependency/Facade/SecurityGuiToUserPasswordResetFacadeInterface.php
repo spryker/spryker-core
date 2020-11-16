@@ -29,5 +29,5 @@ interface SecurityGuiToUserPasswordResetFacadeInterface
      *
      * @return bool
      */
-    public function resetPassword(string $token, string $password): bool;
+    public function setNewPassword(string $token, string $password): bool;
 }

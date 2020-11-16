@@ -16,13 +16,13 @@ use Spryker\Zed\SecurityGui\Communication\Plugin\Security\Handler\UserAuthentica
 use Spryker\Zed\SecurityGui\Communication\Plugin\Security\Handler\UserAuthenticationSuccessHandler;
 use Spryker\Zed\SecurityGui\Communication\Plugin\Security\Provider\UserProvider;
 use Spryker\Zed\SecurityGui\Communication\Security\User;
+use Spryker\Zed\SecurityGui\Communication\Security\UserInterface;
 use Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToMessengerFacadeInterface;
 use Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToSecurityFacadeInterface;
 use Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToUserFacadeInterface;
 use Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToUserPasswordResetFacadeInterface;
 use Spryker\Zed\SecurityGui\SecurityGuiConfig;
 use Spryker\Zed\SecurityGui\SecurityGuiDependencyProvider;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
 
@@ -67,7 +67,7 @@ class SecurityGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      *
-     * @return \Symfony\Component\Security\Core\User\UserInterface
+     * @return \Spryker\Zed\SecurityGui\Communication\Security\UserInterface
      */
     public function createSecurityUser(UserTransfer $userTransfer): UserInterface
     {

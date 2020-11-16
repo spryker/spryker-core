@@ -24,7 +24,7 @@ class UserSecurityPlugin extends AbstractPlugin implements SecurityPluginInterfa
     protected const SECURITY_FIREWALL_NAME = 'User';
 
     protected const ROUTE_LOGIN = 'security-gui:login';
-    protected const ROUTE_LOGOUT = '/auth/logout';
+    protected const PATH_LOGOUT = '/auth/logout';
 
     protected const IS_AUTHENTICATED_ANONYMOUSLY = 'IS_AUTHENTICATED_ANONYMOUSLY';
 
@@ -72,7 +72,7 @@ class UserSecurityPlugin extends AbstractPlugin implements SecurityPluginInterfa
                 'password_parameter' => LoginForm::FORM_NAME . '[' . LoginForm::FIELD_PASSWORD . ']',
             ],
             'logout' => [
-                'logout_path' => static::ROUTE_LOGOUT,
+                'logout_path' => static::PATH_LOGOUT,
                 'target_url' => static::ROUTE_LOGIN,
             ],
             'users' => function () {

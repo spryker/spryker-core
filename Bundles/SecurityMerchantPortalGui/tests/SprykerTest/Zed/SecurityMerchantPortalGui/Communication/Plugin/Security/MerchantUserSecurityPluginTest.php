@@ -93,7 +93,7 @@ class MerchantUserSecurityPluginTest extends Unit
         );
 
         // Assert
-        /** @var \Spryker\Zed\SecurityMerchantPortalGui\Communication\Security\User $user */
+        /** @var \Spryker\Zed\SecurityMerchantPortalGui\Communication\Security\MerchantUser $user */
         $user = $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE)->getToken()->getUser();
         $this->assertSame($userTransfer->getUsername(), $user->getUsername());
     }

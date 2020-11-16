@@ -140,10 +140,10 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
      *
      * @return void
      */
-    public function authorizeMerchantUser(MerchantUserTransfer $merchantUserTransfer): void
+    public function authenticateMerchantUser(MerchantUserTransfer $merchantUserTransfer): void
     {
         $this->getFactory()
-            ->createMerchantUserAuthorizer()
-            ->authorizeMerchantUser($merchantUserTransfer);
+            ->createMerchantUserAuthenticator()
+            ->authenticateMerchantUser($merchantUserTransfer);
     }
 }

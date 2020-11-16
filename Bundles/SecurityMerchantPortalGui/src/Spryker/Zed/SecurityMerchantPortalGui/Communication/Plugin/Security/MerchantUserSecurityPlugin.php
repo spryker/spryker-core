@@ -23,7 +23,7 @@ class MerchantUserSecurityPlugin extends AbstractPlugin implements SecurityPlugi
     protected const SECURITY_FIREWALL_NAME = 'MerchantUser';
 
     protected const ROUTE_LOGIN = 'security-merchant-portal-gui:login';
-    protected const ROUTE_LOGOUT = '/security-merchant-portal-gui/logout';
+    protected const PATH_LOGOUT = '/security-merchant-portal-gui/logout';
 
     protected const IS_AUTHENTICATED_ANONYMOUSLY = 'IS_AUTHENTICATED_ANONYMOUSLY';
 
@@ -66,7 +66,7 @@ class MerchantUserSecurityPlugin extends AbstractPlugin implements SecurityPlugi
                 'password_parameter' => MerchantLoginForm::FORM_NAME . '[' . MerchantLoginForm::FIELD_PASSWORD . ']',
             ],
             'logout' => [
-                'logout_path' => static::ROUTE_LOGOUT,
+                'logout_path' => static::PATH_LOGOUT,
                 'target_url' => static::ROUTE_LOGIN,
             ],
             'users' => function () {

@@ -10,8 +10,8 @@ namespace Spryker\Zed\MerchantUser\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MerchantUser\Business\AclGroup\AclGroupAdder;
 use Spryker\Zed\MerchantUser\Business\AclGroup\AclGroupAdderInterface;
-use Spryker\Zed\MerchantUser\Business\Authorizer\MerchantUserAuthorizer;
-use Spryker\Zed\MerchantUser\Business\Authorizer\MerchantUserAuthorizerInterface;
+use Spryker\Zed\MerchantUser\Business\Authenticator\MerchantUserAuthenticator;
+use Spryker\Zed\MerchantUser\Business\Authenticator\MerchantUserAuthenticatorInterface;
 use Spryker\Zed\MerchantUser\Business\Creator\MerchantUserCreator;
 use Spryker\Zed\MerchantUser\Business\Creator\MerchantUserCreatorInterface;
 use Spryker\Zed\MerchantUser\Business\Deleter\MerchantUserDeleter;
@@ -105,11 +105,11 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantUser\Business\Authorizer\MerchantUserAuthorizerInterface
+     * @return \Spryker\Zed\MerchantUser\Business\Authenticator\MerchantUserAuthenticatorInterface
      */
-    public function createMerchantUserAuthorizer(): MerchantUserAuthorizerInterface
+    public function createMerchantUserAuthenticator(): MerchantUserAuthenticatorInterface
     {
-        return new MerchantUserAuthorizer($this->getUserFacade());
+        return new MerchantUserAuthenticator($this->getUserFacade());
     }
 
     /**

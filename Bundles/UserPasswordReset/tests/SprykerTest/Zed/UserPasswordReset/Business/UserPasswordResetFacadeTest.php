@@ -86,7 +86,7 @@ class UserPasswordResetFacadeTest extends Unit
         $resetPasswordTransfer = $this->tester->findResetPasswordTransferByIdUser($userTransfer->getIdUser());
 
         // Act
-        $result = $this->tester->getUserPasswordReset()->resetPassword($resetPasswordTransfer->getCode(), 'new_password');
+        $result = $this->tester->getUserPasswordReset()->setNewPassword($resetPasswordTransfer->getCode(), 'new_password');
 
         // Assert
         $this->assertTrue($result);

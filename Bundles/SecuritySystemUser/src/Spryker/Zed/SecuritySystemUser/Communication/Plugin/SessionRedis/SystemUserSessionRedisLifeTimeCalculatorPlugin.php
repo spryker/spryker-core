@@ -15,6 +15,7 @@ use Spryker\Zed\SessionRedisExtension\Dependency\Plugin\SessionRedisLifeTimeCalc
 /**
  * @method \Spryker\Zed\SecuritySystemUser\Communication\SecuritySystemUserCommunicationFactory getFactory()
  * @method \Spryker\Zed\SecuritySystemUser\SecuritySystemUserConfig getConfig()
+ * @method \Spryker\Zed\SecuritySystemUser\Business\SecuritySystemUserFacadeInterface getFacade()
  */
 class SystemUserSessionRedisLifeTimeCalculatorPlugin extends AbstractPlugin implements SessionRedisLifeTimeCalculatorPluginInterface
 {

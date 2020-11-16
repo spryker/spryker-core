@@ -7,16 +7,17 @@
 
 namespace Spryker\Zed\UserPasswordReset\Dependency\Facade;
 
+use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
 interface UserPasswordResetToUserFacadeInterface
 {
     /**
-     * @param string $username
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer|null
      */
-    public function getUserByUsername($username);
+    public function findUser(UserCriteriaTransfer $userCriteriaTransfer): ?UserTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\UserTransfer $user
@@ -30,5 +31,5 @@ interface UserPasswordResetToUserFacadeInterface
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function getUserById($idUser);
+    public function getUserById(int $idUser);
 }

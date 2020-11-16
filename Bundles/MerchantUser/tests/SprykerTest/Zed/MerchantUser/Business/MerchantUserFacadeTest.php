@@ -385,7 +385,7 @@ class MerchantUserFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAuthorizeMerchantUserMerchantUserCallUserFacade(): void
+    public function testAuthenticateMerchantUserMerchantUserCallUserFacade(): void
     {
         // Arrange
         $this->initializeFacadeMocks();
@@ -400,7 +400,7 @@ class MerchantUserFacadeTest extends Unit
         $this->userFacadeMock->expects($this->once())->method('updateUser');
 
         // Act
-        $this->tester->getFacade()->authorizeMerchantUser($merchantUserTransfer->setUser($userTransfer));
+        $this->tester->getFacade()->authenticateMerchantUser($merchantUserTransfer->setUser($userTransfer));
     }
 
     /**

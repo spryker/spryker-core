@@ -8,7 +8,6 @@
 namespace Spryker\Zed\SecurityGui\Communication\Security;
 
 use Generated\Shared\Transfer\UserTransfer;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class User implements UserInterface
 {

@@ -13,14 +13,14 @@ use Spryker\Zed\SecurityMerchantPortalGui\Communication\Form\MerchantLoginForm;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\Security\Handler\MerchantUserAuthenticationFailureHandler;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\Security\Handler\MerchantUserAuthenticationSuccessHandler;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\Security\Provider\MerchantUserProvider;
-use Spryker\Zed\SecurityMerchantPortalGui\Communication\Security\User;
+use Spryker\Zed\SecurityMerchantPortalGui\Communication\Security\MerchantUser;
+use Spryker\Zed\SecurityMerchantPortalGui\Communication\Security\MerchantUserInterface;
 use Spryker\Zed\SecurityMerchantPortalGui\Dependency\Facade\SecurityMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\SecurityMerchantPortalGui\Dependency\Facade\SecurityMerchantPortalGuiToMessengerFacadeInterface;
 use Spryker\Zed\SecurityMerchantPortalGui\Dependency\Facade\SecurityMerchantPortalGuiToSecurityFacadeInterface;
 use Spryker\Zed\SecurityMerchantPortalGui\SecurityMerchantPortalGuiConfig;
 use Spryker\Zed\SecurityMerchantPortalGui\SecurityMerchantPortalGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
@@ -49,11 +49,11 @@ class SecurityMerchantPortalGuiCommunicationFactory extends AbstractCommunicatio
     /**
      * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
      *
-     * @return \Symfony\Component\Security\Core\User\UserInterface
+     * @return \Spryker\Zed\SecurityMerchantPortalGui\Communication\Security\MerchantUserInterface
      */
-    public function createSecurityUser(MerchantUserTransfer $merchantUserTransfer): UserInterface
+    public function createSecurityUser(MerchantUserTransfer $merchantUserTransfer): MerchantUserInterface
     {
-        return new User(
+        return new MerchantUser(
             $merchantUserTransfer,
             [SecurityMerchantPortalGuiConfig::ROLE_MERCHANT_USER]
         );
