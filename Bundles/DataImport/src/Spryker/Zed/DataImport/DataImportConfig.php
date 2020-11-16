@@ -13,16 +13,20 @@ use Generated\Shared\Transfer\DataImporterQueueReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\QueueDataImporterConfigurationTransfer;
 use Spryker\Shared\DataImport\DataImportConstants;
+use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class DataImportConfig extends AbstractBundleConfig
 {
+    public const BULK_MODE_ENABLED = 'BULK_ENABLED';
+
     public const IMPORT_GROUP_FULL = 'FULL';
     public const IMPORT_GROUP_QUEUE_READERS = 'QUEUE_READERS';
     public const IMPORT_GROUP_QUEUE_WRITERS = 'QUEUE_WRITERS';
 
     protected const DEFAULT_QUEUE_READER_CHUNK_SIZE = 100;
     protected const DEFAULT_QUEUE_WRITER_CHUNK_SIZE = 100;
+    protected const DEFAULT_BULK_MODE_ENABLED = false;
 
     /**
      * @api
@@ -75,6 +79,26 @@ class DataImportConfig extends AbstractBundleConfig
     public function getDefaultYamlConfigPath(): ?string
     {
         return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getCurrentDatabaseEngine()
+    {
+        return $this->get(PropelConstants::ZED_DB_ENGINE);
+    }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isBulkEnabled()
+    {
+        return $this->get(static::BULK_MODE_ENABLED, static::DEFAULT_BULK_MODE_ENABLED);
     }
 
     /**
