@@ -9,13 +9,4 @@ namespace Spryker\Zed\DataImportExtension\Dependency\Plugin;
 
 interface DataSetBulkWriterPluginInterface
 {
-    /**
-     * Specification:
-     * - Returns list of database engines that are compatible with current bulk writer plugin.
-     *
-     * @api
-     *
-     * @return string[]
-     */
-    public function getCompatibleDatabaseEngines();
 }
