@@ -12,54 +12,6 @@
             "selected_text": "$oauthAccessTokenDataTransfer->getOauthUserId()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/OauthPermission/src/Spryker/Client/OauthPermission/OauthPermissionDependencyProvider.php",
-            "snippet": "            return new OauthPermissionToOauthServiceBridge($container->getLocator()->oauth()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 60,
-            "line_to": 60,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/OauthPermission/src/Spryker/Client/OauthPermission/OauthPermissionDependencyProvider.php",
-            "snippet": "            return new OauthPermissionToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/OauthPermission/src/Spryker/Zed/OauthPermission/OauthPermissionDependencyProvider.php",
-            "snippet": "                $container->getLocator()->permission()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/OauthPermission/src/Spryker/Zed/OauthPermission/OauthPermissionDependencyProvider.php",
-            "snippet": "                $container->getLocator()->companyUser()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

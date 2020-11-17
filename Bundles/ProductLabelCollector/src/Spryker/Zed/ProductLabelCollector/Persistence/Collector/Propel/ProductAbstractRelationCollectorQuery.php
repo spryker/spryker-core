@@ -49,5 +49,6 @@ class ProductAbstractRelationCollectorQuery extends AbstractPropelCollectorQuery
             static::RESULT_FIELD_ID_PRODUCT_LABELS_CSV
         );
         $this->touchQuery->groupBy(SpyTouchTableMap::COL_ITEM_ID);
+        $this->touchQuery->groupBy(SpyTouchTableMap::COL_ITEM_TYPE);
     }
 }

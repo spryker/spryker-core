@@ -4,7 +4,7 @@
   "description": "RamseyUuid module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "ramsey/uuid": "^4.0.1"
   },
   "minimum-stability": "dev",

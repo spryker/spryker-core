@@ -1,5 +1,18 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 25,
+            "line_to": 25,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantUserGui\\Communication\\Form\\Constraint\\UniqueEmailConstraintValidator::validate has wrong name $email, expecting $value as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUserGui/src/Spryker/Zed/MerchantUserGui/Communication/Form/Constraint/UniqueEmailConstraintValidator.php",
+            "snippet": "    public function validate($email, Constraint $constraint): void",
+            "selected_text": "$email",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -87,6 +100,18 @@
         },
         {
             "severity": "info",
+            "line_from": 48,
+            "line_to": 48,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method setStatus on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUserGui/src/Spryker/Zed/MerchantUserGui/Communication/Controller/MerchantUserStatusController.php",
+            "snippet": "        $merchantUserTransfer->getUser()->setStatus($newMerchantUserStatus);",
+            "selected_text": "setStatus",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 50,
             "line_to": 50,
             "type": "PossiblyNullArgument",
@@ -96,30 +121,6 @@
             "selected_text": "$merchantUserTransfer->getIdMerchant()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 64,
-            "line_to": 64,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantUserGui/src/Spryker/Zed/MerchantUserGui/MerchantUserGuiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->merchantUser()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 80,
-            "line_to": 80,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantUserGui/src/Spryker/Zed/MerchantUserGui/MerchantUserGuiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->router()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

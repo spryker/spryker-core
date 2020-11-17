@@ -10,8 +10,7 @@
             "snippet": "        $this->entityManager->markOrderInvoicesAsEmailSent($orderInvoiceIds);",
             "selected_text": "$orderInvoiceIds",
             "error_level": 6,
-            "shortcode": 4,
-            "taint_trace": null
+            "shortcode": 4
         }
     ],
     "warning": [
@@ -25,8 +24,7 @@
             "snippet": "            $orderTransfer = $this->salesFacade->findOrderByIdSalesOrder($orderInvoiceTransfer->getIdSalesOrder());",
             "selected_text": "$orderInvoiceTransfer->getIdSalesOrder()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -38,8 +36,7 @@
             "snippet": "            $this->orderInvoiceReader->expandOrderInvoiceWithRenderedInvoice($orderInvoiceTransfer, $orderTransfer);",
             "selected_text": "$orderTransfer",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -51,8 +48,7 @@
             "snippet": "                $orderInvoiceCollectionTransfer->getOrderInvoices()->count()",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -64,8 +60,7 @@
             "snippet": "            $orderTransfer = $this->salesFacade->findOrderByIdSalesOrder($orderInvoiceTransfer->getIdSalesOrder());",
             "selected_text": "$orderInvoiceTransfer->getIdSalesOrder()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -77,8 +72,7 @@
             "snippet": "            $this->expandOrderInvoiceWithRenderedInvoice($orderInvoiceTransfer, $orderTransfer);",
             "selected_text": "$orderTransfer",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -90,8 +84,7 @@
             "snippet": "        $orderInvoiceTransfers = $orderInvoiceCollectionTransfer->getOrderInvoices()->getArrayCopy();",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -103,34 +96,31 @@
             "snippet": "        $orderInvoiceCollectionTransfer->getOrderInvoices()->exchangeArray($orderInvoiceTransfers);",
             "selected_text": "exchangeArray",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
+            "line_from": 39,
+            "line_to": 39,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\SalesInvoice\\Business\\Renderer\\OrderInvoiceRenderer::setLocaleTransfer cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/SalesInvoice/src/Spryker/Zed/SalesInvoice/Business/Renderer/OrderInvoiceRenderer.php",
             "snippet": "        $this->setLocaleTransfer($orderTransfer->getLocale());",
             "selected_text": "$orderTransfer->getLocale()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 40,
-            "line_to": 40,
+            "line_from": 41,
+            "line_to": 41,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Twig\\Environment::render cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/SalesInvoice/src/Spryker/Zed/SalesInvoice/Business/Renderer/OrderInvoiceRenderer.php",
             "snippet": "        return $this->twigEnvironment->render($orderInvoiceTransfer->getTemplatePath(), [",
             "selected_text": "$orderInvoiceTransfer->getTemplatePath()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -142,8 +132,7 @@
             "snippet": "        if ($this->repository->checkOrderInvoiceExistenceByOrderId($orderTransfer->getIdSalesOrder())) {",
             "selected_text": "$orderTransfer->getIdSalesOrder()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -155,8 +144,7 @@
             "snippet": "            $orderInvoiceSendRequestTransfer->setForce($force);",
             "selected_text": "$force",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -168,8 +156,7 @@
             "snippet": "        $invoiceReference = $mailBuilder->getMailTransfer()->getOrderInvoice()->getReference();",
             "selected_text": "getReference",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -181,8 +168,7 @@
             "snippet": "            $orderTransfer->getEmail(),",
             "selected_text": "$orderTransfer->getEmail()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -194,8 +180,7 @@
             "snippet": "            $orderTransfer->getFirstName() . ' ' . $orderTransfer->getLastName()",
             "selected_text": "$orderTransfer->getFirstName()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -207,8 +192,7 @@
             "snippet": "            $orderTransfer->getFirstName() . ' ' . $orderTransfer->getLastName()",
             "selected_text": "$orderTransfer->getLastName()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -220,8 +204,7 @@
             "snippet": "            $mailBuilder->addRecipientBcc($recipientTransfer->getEmail(), $recipientTransfer->getName());",
             "selected_text": "$recipientTransfer->getEmail()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -233,8 +216,7 @@
             "snippet": "     * @return \\Generated\\Shared\\Transfer\\OrderTransfer",
             "selected_text": "\\Generated\\Shared\\Transfer\\OrderTransfer",
             "error_level": 5,
-            "shortcode": 144,
-            "taint_trace": null
+            "shortcode": 144
         },
         {
             "severity": "info",
@@ -246,8 +228,7 @@
             "snippet": "        return $mailBuilder->getMailTransfer()\n            ->requireOrder()\n            ->getOrder();",
             "selected_text": "$mailBuilder->getMailTransfer()\n            ->requireOrder()\n            ->getOrder()",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -259,8 +240,7 @@
             "snippet": "            ->fromArray($orderEntity->toArray(), true);",
             "selected_text": "$orderEntity->toArray()",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -272,23 +252,33 @@
             "snippet": "        $orderInvoiceEntity->setFkSalesOrder($orderInvoiceTransfer->getIdSalesOrder());",
             "selected_text": "$orderInvoiceTransfer->getIdSalesOrder()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         }
     ],
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 94,
-            "line_to": 94,
+            "line_from": 100,
+            "line_to": 100,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Zed\\Kernel\\Communication\\Plugin\\Pimple is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesInvoice/src/Spryker/Zed/SalesInvoice/SalesInvoiceDependencyProvider.php",
+            "snippet": "        $pimplePlugin = new Pimple();",
+            "selected_text": "new Pimple()",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 102,
+            "line_to": 102,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/SalesInvoice/src/Spryker/Zed/SalesInvoice/SalesInvoiceDependencyProvider.php",
             "snippet": "        return $pimplePlugin->getApplication()['twig'];",
             "selected_text": "$pimplePlugin->getApplication()",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         }
     ]
 }

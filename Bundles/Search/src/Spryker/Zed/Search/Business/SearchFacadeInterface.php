@@ -362,7 +362,7 @@ interface SearchFacadeInterface
      * @return bool
      */
     public function isInLegacyMode(): bool;
-    
+
     /**
      * Specification:
      * - Removes previously generated map class.

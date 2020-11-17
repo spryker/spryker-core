@@ -28,7 +28,7 @@ class GiftCardBalanceDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container = parent::provideCommunicationLayerDependencies($container);
-        
+
         $container = $this->addMoneyFacade($container);
         $container = $this->addUtilDateTimeService($container);
 

@@ -23,18 +23,6 @@
             "selected_text": "$statement",
             "error_level": 6,
             "shortcode": 128
-        },
-        {
-            "severity": "error",
-            "line_from": 104,
-            "line_to": 104,
-            "type": "InvalidArgument",
-            "message": "Argument 1 of array_merge expects array<array-key, mixed>, string provided",
-            "file_name": "vendor/spryker/spryker/Bundles/StorageDatabase/src/Spryker/Client/StorageDatabase/Storage/Reader/MySqlStorageReader.php",
-            "snippet": "            foreach (array_merge(...$queryData) as $placeholder => $value) {",
-            "selected_text": "$queryData",
-            "error_level": 6,
-            "shortcode": 4
         }
     ],
     "warning": [
@@ -85,18 +73,6 @@
             "selected_text": "$keys",
             "error_level": 5,
             "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 45,
-            "line_to": 45,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/StorageDatabase/src/Spryker/Client/StorageDatabase/StorageDatabaseDependencyProvider.php",
-            "snippet": "            return new StorageDatabaseToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

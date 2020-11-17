@@ -165,7 +165,7 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
                 if (!$navigationTreeTransfer) {
                     continue;
                 }
-                
+
                 $navigationTrees[$navigationId][$localeTransfer->getLocaleName()] = $navigationTreeTransfer;
             }
         }

@@ -1,8 +1,8 @@
 # Graph Module
 [![Build Status](https://travis-ci.org/spryker/graph.svg)](https://travis-ci.org/spryker/graph)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
-Graph is a 3rd party connector module for the graphviz implementation. 
+Graph is a 3rd party connector module for the graphviz implementation.
 
 ## Installation
 

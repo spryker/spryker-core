@@ -11,4 +11,13 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class MerchantSearchConfig extends AbstractBundleConfig
 {
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getMerchantSearchSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
 }

@@ -84,18 +84,6 @@
             "selected_text": "new $className()",
             "error_level": 3,
             "shortcode": 129
-        },
-        {
-            "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::filterbyuuid does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Uuid/src/Spryker/Zed/Uuid/Persistence/UuidEntityManager.php",
-            "snippet": "                ->filterByUuid(null, Criteria::ISNULL)",
-            "selected_text": "filterByUuid",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

@@ -4,7 +4,7 @@
   "description": "Store module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/application-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/propel-orm": "^1.0.0",
@@ -31,9 +31,6 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Testify\\Module\\": "vendor/spryker/testify/tests/_support/Module",
-      "Transfer\\Module\\": "vendor/spryker/transfer/tests/_support/Module",
-      "Config\\Module\\": "vendor/spryker/config/tests/_support/Module",
       "SprykerTest\\": "tests/SprykerTest/"
     }
   },

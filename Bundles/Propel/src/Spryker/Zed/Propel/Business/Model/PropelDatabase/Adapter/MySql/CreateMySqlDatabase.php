@@ -50,6 +50,6 @@ class CreateMySqlDatabase implements CreateDatabaseInterface
      */
     protected function getQuery()
     {
-        return 'CREATE DATABASE IF NOT EXISTS ' . Config::get(PropelConstants::ZED_DB_DATABASE) . ' CHARACTER SET "utf8"';
+        return 'CREATE DATABASE IF NOT EXISTS `' . Config::get(PropelConstants::ZED_DB_DATABASE) . '` CHARACTER SET "utf8"';
     }
 }

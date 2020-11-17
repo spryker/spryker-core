@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
+use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer;
+use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
 use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -179,4 +181,35 @@ interface ProductConfigurationStorageClientInterface
         PersistentCartChangeTransfer $persistentCartChangeTransfer,
         array $params
     ): PersistentCartChangeTransfer;
+
+    /**
+     * Specification:
+     * - Validates response trough validators stack.
+     * - Saves product configuration instance to the session storage when source type is pdp.
+     * - Replaces quote item product configuration with new one when source type is cart page.
+     * - Returns `isSuccessful=true` on success or `isSuccessful=false` with error messages otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
+     * @param array $configuratorResponseData
+     *
+     * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
+     */
+    public function processProductConfiguratorCheckSumResponse(
+        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer,
+        array $configuratorResponseData
+    ): ProductConfiguratorResponseProcessorResponseTransfer;
+
+    /**
+     * Specification:
+     * - Extracts additional product configuration volume prices from price product data.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function extractProductConfigurationVolumePrices(array $priceProductTransfers): array;
 }

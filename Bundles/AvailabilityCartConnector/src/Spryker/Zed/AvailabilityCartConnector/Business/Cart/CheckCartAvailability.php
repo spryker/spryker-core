@@ -30,11 +30,20 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     protected $availabilityFacade;
 
     /**
-     * @param \Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConnectorToAvailabilityInterface $availabilityFacade
+     * @var \Spryker\Zed\AvailabilityCartConnectorExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface[]
      */
-    public function __construct(AvailabilityCartConnectorToAvailabilityInterface $availabilityFacade)
-    {
+    protected $cartItemQuantityCounterStrategyPlugins;
+
+    /**
+     * @param \Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConnectorToAvailabilityInterface $availabilityFacade
+     * @param \Spryker\Zed\AvailabilityCartConnectorExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface[] $cartItemQuantityCounterStrategyPlugins
+     */
+    public function __construct(
+        AvailabilityCartConnectorToAvailabilityInterface $availabilityFacade,
+        array $cartItemQuantityCounterStrategyPlugins
+    ) {
         $this->availabilityFacade = $availabilityFacade;
+        $this->cartItemQuantityCounterStrategyPlugins = $cartItemQuantityCounterStrategyPlugins;
     }
 
     /**
@@ -56,10 +65,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
                 continue;
             }
 
-            $currentItemQuantity = $this->calculateCurrentCartQuantityForGivenSku(
-                $itemsInCart,
-                $itemTransfer->getSku()
-            );
+            $currentItemQuantity = $this->calculateCurrentCartItemQuantity($itemsInCart, $itemTransfer);
 
             $currentItemQuantity += $itemTransfer->getQuantity();
 
@@ -85,6 +91,31 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
         $cartPreCheckResponseTransfer->setMessages($messages);
 
         return $cartPreCheckResponseTransfer;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return int
+     */
+    protected function calculateCurrentCartItemQuantity(ArrayObject $itemsInCart, ItemTransfer $itemTransfer): int
+    {
+        foreach ($this->cartItemQuantityCounterStrategyPlugins as $cartItemQuantityCounterStrategyPlugin) {
+            if ($cartItemQuantityCounterStrategyPlugin->isApplicable($itemsInCart, $itemTransfer)) {
+                $cartItemQuantityTransfer = $cartItemQuantityCounterStrategyPlugin->countCartItemQuantity(
+                    $itemsInCart,
+                    $itemTransfer
+                );
+
+                return $cartItemQuantityTransfer->getQuantity();
+            }
+        }
+
+        return $this->calculateCurrentCartQuantityForGivenSku(
+            $itemsInCart,
+            $itemTransfer->getSku()
+        );
     }
 
     /**

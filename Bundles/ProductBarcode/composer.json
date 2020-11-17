@@ -4,7 +4,7 @@
   "description": "ProductBarcode module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/barcode": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/product": "^6.0.0"

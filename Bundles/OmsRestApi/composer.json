@@ -4,7 +4,7 @@
   "description": "OmsRestApi module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/kernel": "^3.30.0",
     "spryker/oms": "^11.0.0",
     "spryker/orders-rest-api-extension": "^1.0.0"

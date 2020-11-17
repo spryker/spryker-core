@@ -4,7 +4,7 @@
   "description": "CmsPagesRestApi module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/cms-page-search": "^2.2.0",
     "spryker/cms-storage": "^2.4.0",
     "spryker/glue-application": "^1.0.0",

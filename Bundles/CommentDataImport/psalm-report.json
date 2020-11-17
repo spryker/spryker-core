@@ -10,8 +10,7 @@
             "snippet": "class CommentDataImportBusinessFactory extends DataImportBusinessFactory",
             "selected_text": "CommentDataImportBusinessFactory",
             "error_level": 7,
-            "shortcode": 42,
-            "taint_trace": null
+            "shortcode": 42
         }
     ],
     "warning": [],

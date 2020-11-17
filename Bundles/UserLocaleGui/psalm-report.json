@@ -12,18 +12,6 @@
             "selected_text": "$options",
             "error_level": 3,
             "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/UserLocaleGui/src/Spryker/Zed/UserLocaleGui/UserLocaleGuiDependencyProvider.php",
-            "snippet": "            return new UserLocaleGuiToLocaleFacadeBridge($container->getLocator()->locale()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []
