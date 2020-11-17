@@ -16,6 +16,7 @@ interface PriceCartConnectorFacadeInterface
      * Specification:
      *  - Adds product prices to item, based on currency, price mode and price type.
      *  - Executes PriceProductExpanderPluginInterface plugin stack.
+     *  - Executes CartItemQuantityCounterStrategyPluginInterface plugin stack.
      *
      * @api
      *
@@ -30,6 +31,7 @@ interface PriceCartConnectorFacadeInterface
      * Specification:
      *  - Validates product prices, checks if prices are valid for current currency, price mode, price type combination
      *  - Writes error message to response transfer if not valid.
+     *  - Executes CartItemQuantityCounterStrategyPluginInterface plugin stack.
      *
      * @api
      *

@@ -146,7 +146,11 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductsAvailablePreCondition(): ProductsAvailableCheckoutPreConditionInterface
     {
-        return new ProductsAvailableCheckoutPreCondition($this->createSellableModel(), $this->getConfig());
+        return new ProductsAvailableCheckoutPreCondition(
+            $this->createSellableModel(),
+            $this->getConfig(),
+            $this->getCartItemQuantityCounterStrategyPlugins()
+        );
     }
 
     /**
@@ -179,5 +183,13 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     public function getAvailabilityStrategyPlugins(): array
     {
         return $this->getProvidedDependency(AvailabilityDependencyProvider::PLUGINS_AVAILABILITY_STRATEGY);
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface[]
+     */
+    public function getCartItemQuantityCounterStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(AvailabilityDependencyProvider::PLUGINS_CART_ITEM_QUANTITY_COUNTER_STRATEGY);
     }
 }
