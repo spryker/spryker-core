@@ -81,7 +81,7 @@ class LengthCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
     }
 
     /**
-     * Added for BC.
+     * @deprecated Added for BC.
      *
      * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
      * @param string $errorMessage

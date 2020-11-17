@@ -1008,6 +1008,7 @@ class CustomerFacadeTest extends Unit
      */
     public function testRestorePasswordWithPasswordValidationEnabled(): void
     {
+        // Arrange
         $customerTransfer = $this->createTestCustomerTransfer();
         $this->tester->mockConfigMethod(
             'isRestorePasswordValidationEnabled',
@@ -1018,7 +1019,11 @@ class CustomerFacadeTest extends Unit
         $this->tester->getFacade()->sendPasswordRestoreMail($customerTransfer);
         $customerTransfer = $this->getTestCustomerTransfer($customerTransfer);
         $customerTransfer->setPassword(static::VALUE_SHORT_PASSWORD);
+
+        // Act
         $customerResponseTransfer = $this->tester->getFacade()->restorePassword($customerTransfer);
+
+        // Assert
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
         $this->assertTrue($this->hasMessageInCustomerResponseTransfer(
             static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
