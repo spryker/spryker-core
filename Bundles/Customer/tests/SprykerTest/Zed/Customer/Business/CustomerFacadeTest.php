@@ -229,6 +229,10 @@ class CustomerFacadeTest extends Unit
             static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
             $customerResponseTransfer
         ));
+        $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
+            static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
+            $customerResponseTransfer
+        ));
     }
 
     /**
@@ -248,6 +252,10 @@ class CustomerFacadeTest extends Unit
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
         $this->assertTrue($this->hasMessageInCustomerResponseTransfer(
             static::GLOSSARY_KEY_MAX_LENGTH_ERROR,
+            $customerResponseTransfer
+        ));
+        $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
+            static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
             $customerResponseTransfer
         ));
     }
@@ -289,6 +297,10 @@ class CustomerFacadeTest extends Unit
             static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
             $customerResponseTransfer
         ));
+        $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
+            static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
+            $customerResponseTransfer
+        ));
     }
 
     /**
@@ -308,6 +320,10 @@ class CustomerFacadeTest extends Unit
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
         $this->assertTrue($this->hasMessageInCustomerResponseTransfer(
             static::GLOSSARY_KEY_MAX_LENGTH_ERROR,
+            $customerResponseTransfer
+        ));
+        $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
+            static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
             $customerResponseTransfer
         ));
     }
@@ -351,6 +367,10 @@ class CustomerFacadeTest extends Unit
             static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
             $customerResponseTransfer
         ));
+        $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
+            static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
+            $customerResponseTransfer
+        ));
     }
 
     /**
@@ -372,6 +392,10 @@ class CustomerFacadeTest extends Unit
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
         $this->assertTrue($this->hasMessageInCustomerResponseTransfer(
             static::GLOSSARY_KEY_MAX_LENGTH_ERROR,
+            $customerResponseTransfer
+        ));
+        $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
+            static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
             $customerResponseTransfer
         ));
     }
@@ -417,6 +441,10 @@ class CustomerFacadeTest extends Unit
             static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
             $customerResponseTransfer
         ));
+        $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
+            static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
+            $customerResponseTransfer
+        ));
     }
 
     /**
@@ -438,6 +466,10 @@ class CustomerFacadeTest extends Unit
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
         $this->assertTrue($this->hasMessageInCustomerResponseTransfer(
             static::GLOSSARY_KEY_MAX_LENGTH_ERROR,
+            $customerResponseTransfer
+        ));
+        $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
+            static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
             $customerResponseTransfer
         ));
     }
@@ -1149,6 +1181,23 @@ class CustomerFacadeTest extends Unit
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
+     * @param string $errorMessage
+     *
+     * @return bool
+     */
+    protected function hasErrorInCustomerResponseTransfer(string $errorMessage, CustomerResponseTransfer $customerResponseTransfer): bool
+    {
+        $errorTransfers = $customerResponseTransfer->getErrors()->getIterator();
+
+        if (!$errorTransfers->count()) {
+            return false;
+        }
+
+        return $errorTransfers->current()->getMessage() === $errorMessage;
     }
 
     /**

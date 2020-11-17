@@ -9,6 +9,7 @@ namespace Spryker\Zed\Customer\Business\CustomerPasswordPolicy;
 
 use Generated\Shared\Transfer\CustomerErrorTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\Customer\CustomerConfig;
 
 class LengthCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
@@ -75,6 +76,30 @@ class LengthCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
             ->setParameters([static::GLOSSARY_PARAM_VALIDATION_LENGTH => $messageParameter]);
         $customerResponseTransfer->setIsSuccess(false)
             ->addError($customerErrorTransfer);
+
+        return $this->addMessage($customerResponseTransfer, $errorMessage, $messageParameter);
+    }
+
+    /**
+     * Added for BC.
+     *
+     * @param CustomerResponseTransfer $customerResponseTransfer
+     * @param string $errorMessage
+     * @param int $messageParameter
+     *
+     * @return CustomerResponseTransfer
+     */
+    protected function addMessage(
+        CustomerResponseTransfer $customerResponseTransfer,
+        string $errorMessage,
+        int $messageParameter
+    ) : CustomerResponseTransfer
+    {
+        $messageTransfer = (new MessageTransfer())
+            ->setValue($errorMessage)
+            ->setParameters([static::GLOSSARY_PARAM_VALIDATION_LENGTH => $messageParameter]);
+        $customerResponseTransfer->setIsSuccess(false)
+            ->setMessage($messageTransfer);
 
         return $customerResponseTransfer;
     }
