@@ -14,6 +14,7 @@ use Spryker\Zed\Discount\Communication\AmountFormatter\DiscountAmountFormatter;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\DiscountFormDataProvider;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\VoucherFormDataProvider;
+use Spryker\Zed\Discount\Communication\Form\DeleteVoucherCodeForm;
 use Spryker\Zed\Discount\Communication\Form\DiscountForm;
 use Spryker\Zed\Discount\Communication\Form\DiscountVisibilityForm;
 use Spryker\Zed\Discount\Communication\Form\Transformer\CalculatorAmountTransformer;
@@ -23,7 +24,6 @@ use Spryker\Zed\Discount\Communication\Table\DiscountsTable;
 use Spryker\Zed\Discount\Communication\Table\DiscountVoucherCodesTable;
 use Spryker\Zed\Discount\Communication\Tabs\DiscountFormTabs;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
-use Spryker\Zed\Gui\Communication\Form\DeleteForm;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Money\Communication\Form\Type\MoneyCollectionType;
 use Spryker\Zed\Money\Communication\Form\Type\MoneyType;
@@ -75,7 +75,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getDeleteVoucherCodeForm(): FormInterface
     {
-        return $this->getFormFactory()->create(DeleteForm::class, null, [
+        return $this->getFormFactory()->create(DeleteVoucherCodeForm::class, null, [
             'fields' => [],
         ]);
     }
