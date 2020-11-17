@@ -67,14 +67,36 @@ class CustomerFacadeTest extends Unit
      */
     protected const GLOSSARY_KEY_MAX_LENGTH_ERROR = 'customer.password.error.max_length';
 
+    /**
+     * @uses \Spryker\Zed\Customer\Business\CustomerPasswordPolicy::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE
+     */
+    protected const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE = 'customer.password.error.sequence';
+
+    /**
+     * @uses \Spryker\Zed\Customer\Business\DenyListCustomerPasswordPolicy::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE
+     */
+    protected const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_DENY_LIST = 'customer.password.error.deny_list';
+
+    /**
+     * @uses \Spryker\Zed\Customer\Business\CharacterSetCustomerPasswordPolicy::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_CHARACTER_SET
+     */
+    protected const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_CHARACTER_SET = 'customer.password.error.character_set';
+
     protected const MIN_LENGTH_CUSTOMER_PASSWORD = 6;
     protected const MAX_LENGTH_CUSTOMER_PASSWORD = 12;
+    protected const SEQUENCE_LIMIT_CUSTOMER_PASSWORD = 3;
+    protected const CHARACTER_SET_REGEXP = '/^[a-zA-Z0-9]*$/';
+    protected const PASSWORD_VALIDATION_ON_RESTORE_PASSWORD_ENABLED = true;
 
     protected const VALUE_SHORT_PASSWORD = 'p2c';
     protected const VALUE_LONG_PASSWORD = 'p2cfGyY4p2cfGyY4p';
 
     protected const VALUE_VALID_PASSWORD = 'p2cfGyY4';
     protected const VALUE_NEW_PASSWORD = 'pdcEphDN';
+    protected const VALUE_SEQUENCE_TOO_LONG_PASSWORD = '[3$0hhhh';
+    protected const VALUE_HAS_SEQUENCE_VALID_PASSWORD = '4sxjjvrt';
+    protected const VALUE_DENY_LIST_PASSWORD = 'qwerty';
+    protected const VALUE_CHARACTER_SET_WRONG_PASSWORD = 'cnhszer123~';
 
     /**
      * @var \SprykerTest\Zed\Customer\CustomerBusinessTester
@@ -229,6 +251,10 @@ class CustomerFacadeTest extends Unit
             static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
             $customerResponseTransfer
         ));
+        $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
+            static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
+            $customerResponseTransfer
+        ));
     }
 
     /**
@@ -247,6 +273,10 @@ class CustomerFacadeTest extends Unit
         // Assert
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
         $this->assertTrue($this->hasMessageInCustomerResponseTransfer(
+            static::GLOSSARY_KEY_MAX_LENGTH_ERROR,
+            $customerResponseTransfer
+        ));
+        $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
             static::GLOSSARY_KEY_MAX_LENGTH_ERROR,
             $customerResponseTransfer
         ));
@@ -273,6 +303,91 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testAddCustomerCustomerAddedWhenPasswordInAllowList(): void
+    {
+        // Arrange
+        $customerTransfer = (new CustomerBuilder([
+            CustomerTransfer::PASSWORD => static::VALUE_VALID_PASSWORD,
+        ]))->build();
+        $this->tester->mockConfigMethod('getCustomerPasswordAllowList', [static::VALUE_SHORT_PASSWORD]);
+
+        // Act
+        $customerResponseTransfer = $this->tester->getFacade()->addCustomer($customerTransfer);
+
+        // Assert
+        $this->assertTrue($customerResponseTransfer->getIsSuccess());
+        $this->assertNotNull($customerResponseTransfer->getCustomerTransfer());
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddCustomerCustomerNotAddedWhenPasswordHasTooLongSequence(): void
+    {
+        // Arrange
+        $customerTransfer = (new CustomerBuilder([
+            CustomerTransfer::PASSWORD => static::VALUE_SEQUENCE_TOO_LONG_PASSWORD,
+        ]))->build();
+        $this->tester->mockConfigMethod('getCustomerPasswordSequenceLimit', static::SEQUENCE_LIMIT_CUSTOMER_PASSWORD);
+
+        // Act
+        $customerResponseTransfer = $this->tester->getFacade()->addCustomer($customerTransfer);
+
+        // Assert
+        $this->assertFalse($customerResponseTransfer->getIsSuccess());
+        $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
+            static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE,
+            $customerResponseTransfer
+        ));
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddCustomerCustomerNotAddedWhenPasswordInDenyList(): void
+    {
+        // Arrange
+        $customerTransfer = (new CustomerBuilder([
+            CustomerTransfer::PASSWORD => static::VALUE_DENY_LIST_PASSWORD,
+        ]))->build();
+        $this->tester->mockConfigMethod('getCustomerPasswordDenyList', [static::VALUE_DENY_LIST_PASSWORD]);
+
+        // Act
+        $customerResponseTransfer = $this->tester->getFacade()->addCustomer($customerTransfer);
+
+        // Assert
+        $this->assertFalse($customerResponseTransfer->getIsSuccess());
+        $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
+            static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_DENY_LIST,
+            $customerResponseTransfer
+        ));
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddCustomerCustomerNotAddedWhenPasswordCharacterSetWrong(): void
+    {
+        // Arrange
+        $customerTransfer = (new CustomerBuilder([
+            CustomerTransfer::PASSWORD => static::VALUE_CHARACTER_SET_WRONG_PASSWORD,
+        ]))->build();
+        $this->tester->mockConfigMethod('getCharacterSetCustomerPasswordPolicy', static::CHARACTER_SET_REGEXP);
+
+        // Act
+        $customerResponseTransfer = $this->tester->getFacade()->addCustomer($customerTransfer);
+
+        // Assert
+        $this->assertFalse($customerResponseTransfer->getIsSuccess());
+        $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
+            static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_CHARACTER_SET,
+            $customerResponseTransfer
+        ));
+    }
+
+    /**
+     * @return void
+     */
     public function testRegisterCustomerShouldNotRegisterCustomerWhenPasswordLessThanMinLength(): void
     {
         // Arrange
@@ -286,6 +401,10 @@ class CustomerFacadeTest extends Unit
         // Assert
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
         $this->assertTrue($this->hasMessageInCustomerResponseTransfer(
+            static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
+            $customerResponseTransfer
+        ));
+        $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
             static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
             $customerResponseTransfer
         ));
@@ -310,6 +429,10 @@ class CustomerFacadeTest extends Unit
             static::GLOSSARY_KEY_MAX_LENGTH_ERROR,
             $customerResponseTransfer
         ));
+        $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
+            static::GLOSSARY_KEY_MAX_LENGTH_ERROR,
+            $customerResponseTransfer
+        ));
     }
 
     /**
@@ -321,6 +444,148 @@ class CustomerFacadeTest extends Unit
         $customerTransfer = (new CustomerBuilder([
             CustomerTransfer::PASSWORD => static::VALUE_VALID_PASSWORD,
         ]))->build();
+
+        // Act
+        $customerResponseTransfer = $this->tester->getFacade()->registerCustomer($customerTransfer);
+
+        // Assert
+        $this->assertTrue($customerResponseTransfer->getIsSuccess());
+        $this->assertNotNull($customerResponseTransfer->getCustomerTransfer());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRegisterCustomerCustomerRegistereredWhenPasswordInAllowList(): void
+    {
+        // Arrange
+        $customerTransfer = (new CustomerBuilder([
+            CustomerTransfer::PASSWORD => static::VALUE_SHORT_PASSWORD,
+        ]))->build();
+        $this->tester->mockConfigMethod('getCustomerPasswordAllowList', [static::VALUE_SHORT_PASSWORD]);
+
+        // Act
+        $customerResponseTransfer = $this->tester->getFacade()->registerCustomer($customerTransfer);
+
+        // Assert
+        $this->assertTrue($customerResponseTransfer->getIsSuccess());
+        $this->assertNotNull($customerResponseTransfer->getCustomerTransfer());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRegisterCustomerNotRegisteredWhenPasswordHasTooLongSequence(): void
+    {
+        // Arrange
+        $customerTransfer = (new CustomerBuilder([
+            CustomerTransfer::PASSWORD => static::VALUE_SEQUENCE_TOO_LONG_PASSWORD,
+        ]))->build();
+        $this->tester->mockConfigMethod('getCustomerPasswordSequenceLimit', static::SEQUENCE_LIMIT_CUSTOMER_PASSWORD);
+
+        // Act
+        $customerResponseTransfer = $this->tester->getFacade()->registerCustomer($customerTransfer);
+
+        // Assert
+        $this->assertFalse($customerResponseTransfer->getIsSuccess());
+        $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
+            static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE,
+            $customerResponseTransfer
+        ));
+    }
+
+    /**
+     * @return void
+     */
+    public function testRegisterCustomerNotRegisteredWhenPasswordInDenyList(): void
+    {
+        // Arrange
+        $customerTransfer = (new CustomerBuilder([
+            CustomerTransfer::PASSWORD => static::VALUE_DENY_LIST_PASSWORD,
+        ]))->build();
+        $this->tester->mockConfigMethod('getCustomerPasswordDenyList', [static::VALUE_DENY_LIST_PASSWORD]);
+
+        // Act
+        $customerResponseTransfer = $this->tester->getFacade()->registerCustomer($customerTransfer);
+
+        // Assert
+        $this->assertFalse($customerResponseTransfer->getIsSuccess());
+        $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
+            static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_DENY_LIST,
+            $customerResponseTransfer
+        ));
+    }
+
+    /**
+     * @return void
+     */
+    public function testRegisterCustomerCustomerNotRegisteredWhenPasswordCharacterSetWrong(): void
+    {
+        // Arrange
+        $customerTransfer = (new CustomerBuilder([
+            CustomerTransfer::PASSWORD => static::VALUE_CHARACTER_SET_WRONG_PASSWORD,
+        ]))->build();
+        $this->tester->mockConfigMethod('getCharacterSetCustomerPasswordPolicy', static::CHARACTER_SET_REGEXP);
+
+        // Act
+        $customerResponseTransfer = $this->tester->getFacade()->registerCustomer($customerTransfer);
+
+        // Assert
+        $this->assertFalse($customerResponseTransfer->getIsSuccess());
+        $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
+            static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_CHARACTER_SET,
+            $customerResponseTransfer
+        ));
+    }
+
+    /**
+     * @return void
+     */
+    public function testRegisterCustomerCustomerRegisteredWhenPasswordHasSequence(): void
+    {
+        // Arrange
+        $customerTransfer = (new CustomerBuilder([
+            CustomerTransfer::PASSWORD => static::VALUE_HAS_SEQUENCE_VALID_PASSWORD,
+        ]))->build();
+        $this->tester->mockConfigMethod('getCustomerPasswordSequenceLimit', static::SEQUENCE_LIMIT_CUSTOMER_PASSWORD);
+
+        // Act
+        $customerResponseTransfer = $this->tester->getFacade()->registerCustomer($customerTransfer);
+
+        // Assert
+        $this->assertTrue($customerResponseTransfer->getIsSuccess());
+        $this->assertNotNull($customerResponseTransfer->getCustomerTransfer());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRegisterCustomerCustomerRegisteredWhenPasswordNotInDenyList(): void
+    {
+        // Arrange
+        $customerTransfer = (new CustomerBuilder([
+            CustomerTransfer::PASSWORD => static::VALUE_VALID_PASSWORD,
+        ]))->build();
+        $this->tester->mockConfigMethod('getCustomerPasswordDenyList', [static::VALUE_DENY_LIST_PASSWORD]);
+
+        // Act
+        $customerResponseTransfer = $this->tester->getFacade()->registerCustomer($customerTransfer);
+
+        // Assert
+        $this->assertTrue($customerResponseTransfer->getIsSuccess());
+        $this->assertNotNull($customerResponseTransfer->getCustomerTransfer());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRegisterCustomerCustomerRegisteredWhenPasswordCharacterSetValid(): void
+    {
+        // Arrange
+        $customerTransfer = (new CustomerBuilder([
+            CustomerTransfer::PASSWORD => static::VALUE_VALID_PASSWORD,
+        ]))->build();
+        $this->tester->mockConfigMethod('getCharacterSetCustomerPasswordPolicy', static::CHARACTER_SET_REGEXP);
 
         // Act
         $customerResponseTransfer = $this->tester->getFacade()->registerCustomer($customerTransfer);
@@ -351,6 +616,10 @@ class CustomerFacadeTest extends Unit
             static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
             $customerResponseTransfer
         ));
+        $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
+            static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
+            $customerResponseTransfer
+        ));
     }
 
     /**
@@ -374,6 +643,82 @@ class CustomerFacadeTest extends Unit
             static::GLOSSARY_KEY_MAX_LENGTH_ERROR,
             $customerResponseTransfer
         ));
+        $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
+            static::GLOSSARY_KEY_MAX_LENGTH_ERROR,
+            $customerResponseTransfer
+        ));
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateCustomerNotUpdatededWhenPasswordHasTooLongSequence(): void
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer([
+            CustomerTransfer::PASSWORD => static::VALUE_VALID_PASSWORD,
+        ]);
+        $customerTransfer->setPassword(static::VALUE_VALID_PASSWORD)
+            ->setNewPassword(static::VALUE_SEQUENCE_TOO_LONG_PASSWORD);
+        $this->tester->mockConfigMethod('getCustomerPasswordSequenceLimit', static::SEQUENCE_LIMIT_CUSTOMER_PASSWORD);
+
+        // Act
+        $customerResponseTransfer = $this->tester->getFacade()->updateCustomer($customerTransfer);
+
+        // Assert
+        $this->assertFalse($customerResponseTransfer->getIsSuccess());
+        $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
+            static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE,
+            $customerResponseTransfer
+        ));
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateCustomerNotUpdatedWhenPasswordInDenyList(): void
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer([
+            CustomerTransfer::PASSWORD => static::VALUE_VALID_PASSWORD,
+        ]);
+        $customerTransfer->setPassword(static::VALUE_VALID_PASSWORD)
+            ->setNewPassword(static::VALUE_DENY_LIST_PASSWORD);
+        $this->tester->mockConfigMethod('getCustomerPasswordDenyList', [static::VALUE_DENY_LIST_PASSWORD]);
+
+        // Act
+        $customerResponseTransfer = $this->tester->getFacade()->updateCustomer($customerTransfer);
+
+        // Assert
+        $this->assertFalse($customerResponseTransfer->getIsSuccess());
+        $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
+            static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_DENY_LIST,
+            $customerResponseTransfer
+        ));
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateCustomerCustomerNotUpdatedWhenPasswordCharacterSetWrong(): void
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer([
+            CustomerTransfer::PASSWORD => static::VALUE_VALID_PASSWORD,
+        ]);
+        $customerTransfer->setPassword(static::VALUE_VALID_PASSWORD)
+            ->setNewPassword(static::VALUE_CHARACTER_SET_WRONG_PASSWORD);
+        $this->tester->mockConfigMethod('getCharacterSetCustomerPasswordPolicy', static::CHARACTER_SET_REGEXP);
+
+        // Act
+        $customerResponseTransfer = $this->tester->getFacade()->updateCustomer($customerTransfer);
+
+        // Assert
+        $this->assertFalse($customerResponseTransfer->getIsSuccess());
+        $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
+            static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_CHARACTER_SET,
+            $customerResponseTransfer
+        ));
     }
 
     /**
@@ -387,6 +732,27 @@ class CustomerFacadeTest extends Unit
         ]);
         $customerTransfer->setPassword(static::VALUE_VALID_PASSWORD)
             ->setNewPassword(static::VALUE_NEW_PASSWORD);
+
+        // Act
+        $customerResponseTransfer = $this->tester->getFacade()->updateCustomer($customerTransfer);
+
+        // Assert
+        $this->assertTrue($customerResponseTransfer->getIsSuccess());
+        $this->assertNotNull($customerResponseTransfer->getCustomerTransfer());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateCustomerCustomerUpdatedWhenPasswordInAllowList(): void
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer([
+            CustomerTransfer::PASSWORD => static::VALUE_VALID_PASSWORD,
+        ]);
+        $customerTransfer->setPassword(static::VALUE_VALID_PASSWORD)
+            ->setNewPassword(static::VALUE_SHORT_PASSWORD);
+        $this->tester->mockConfigMethod('getCustomerPasswordAllowList', [static::VALUE_SHORT_PASSWORD]);
 
         // Act
         $customerResponseTransfer = $this->tester->getFacade()->updateCustomer($customerTransfer);
@@ -417,6 +783,10 @@ class CustomerFacadeTest extends Unit
             static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
             $customerResponseTransfer
         ));
+        $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
+            static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
+            $customerResponseTransfer
+        ));
     }
 
     /**
@@ -440,6 +810,10 @@ class CustomerFacadeTest extends Unit
             static::GLOSSARY_KEY_MAX_LENGTH_ERROR,
             $customerResponseTransfer
         ));
+        $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
+            static::GLOSSARY_KEY_MAX_LENGTH_ERROR,
+            $customerResponseTransfer
+        ));
     }
 
     /**
@@ -460,6 +834,99 @@ class CustomerFacadeTest extends Unit
         // Assert
         $this->assertTrue($customerResponseTransfer->getIsSuccess());
         $this->assertNotNull($customerResponseTransfer->getCustomerTransfer());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateCustomerPasswordCustomerPasswordUpdatedWhenPasswordInAllowList(): void
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer([
+            CustomerTransfer::PASSWORD => static::VALUE_VALID_PASSWORD,
+        ]);
+        $customerTransfer->setPassword(static::VALUE_VALID_PASSWORD)
+            ->setNewPassword(static::VALUE_SHORT_PASSWORD);
+        $this->tester->mockConfigMethod('getCustomerPasswordAllowList', [static::VALUE_SHORT_PASSWORD]);
+
+        // Act
+        $customerResponseTransfer = $this->tester->getFacade()->updateCustomerPassword($customerTransfer);
+
+        // Assert
+        $this->assertTrue($customerResponseTransfer->getIsSuccess());
+        $this->assertNotNull($customerResponseTransfer->getCustomerTransfer());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateCustomerPasswordCustomerPasswordNotUpdatededWhenPasswordHasTooLongSequence(): void
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer([
+            CustomerTransfer::PASSWORD => static::VALUE_VALID_PASSWORD,
+        ]);
+        $customerTransfer->setPassword(static::VALUE_VALID_PASSWORD)
+            ->setNewPassword(static::VALUE_SEQUENCE_TOO_LONG_PASSWORD);
+        $this->tester->mockConfigMethod('getCustomerPasswordSequenceLimit', static::SEQUENCE_LIMIT_CUSTOMER_PASSWORD);
+
+        // Act
+        $customerResponseTransfer = $this->tester->getFacade()->updateCustomerPassword($customerTransfer);
+
+        // Assert
+        $this->assertFalse($customerResponseTransfer->getIsSuccess());
+        $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
+            static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE,
+            $customerResponseTransfer
+        ));
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateCustomerPasswordCustomerPasswordNotUpdatedWhenPasswordInDenyList(): void
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer([
+            CustomerTransfer::PASSWORD => static::VALUE_VALID_PASSWORD,
+        ]);
+        $customerTransfer->setPassword(static::VALUE_VALID_PASSWORD)
+            ->setNewPassword(static::VALUE_DENY_LIST_PASSWORD);
+        $this->tester->mockConfigMethod('getCustomerPasswordDenyList', [static::VALUE_DENY_LIST_PASSWORD]);
+
+        // Act
+        $customerResponseTransfer = $this->tester->getFacade()->updateCustomerPassword($customerTransfer);
+
+        // Assert
+        $this->assertFalse($customerResponseTransfer->getIsSuccess());
+        $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
+            static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_DENY_LIST,
+            $customerResponseTransfer
+        ));
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateCustomerPasswordustomerPasswordNotUpdatedWhenPasswordCharacterSetWrong(): void
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer([
+            CustomerTransfer::PASSWORD => static::VALUE_VALID_PASSWORD,
+        ]);
+        $customerTransfer->setPassword(static::VALUE_VALID_PASSWORD)
+            ->setNewPassword(static::VALUE_CHARACTER_SET_WRONG_PASSWORD);
+        $this->tester->mockConfigMethod('getCharacterSetCustomerPasswordPolicy', static::CHARACTER_SET_REGEXP);
+
+        // Act
+        $customerResponseTransfer = $this->tester->getFacade()->updateCustomer($customerTransfer);
+
+        // Assert
+        $this->assertFalse($customerResponseTransfer->getIsSuccess());
+        $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
+            static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_CHARACTER_SET,
+            $customerResponseTransfer
+        ));
     }
 
     /**
@@ -534,6 +1001,38 @@ class CustomerFacadeTest extends Unit
         $customerTransfer = $this->getTestCustomerTransfer($customerTransfer);
         $customerResponseTransfer = $this->tester->getFacade()->restorePassword($customerTransfer);
         $this->assertTrue($customerResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRestorePasswordWithPasswordValidationEnabled(): void
+    {
+        // Arrange
+        $customerTransfer = $this->createTestCustomerTransfer();
+        $this->tester->mockConfigMethod(
+            'isRestorePasswordValidationEnabled',
+            static::PASSWORD_VALIDATION_ON_RESTORE_PASSWORD_ENABLED
+        );
+        $customerResponseTransfer = $this->tester->getFacade()->registerCustomer($customerTransfer);
+        $customerTransfer = $this->tester->getFacade()->confirmRegistration($customerResponseTransfer->getCustomerTransfer());
+        $this->tester->getFacade()->sendPasswordRestoreMail($customerTransfer);
+        $customerTransfer = $this->getTestCustomerTransfer($customerTransfer);
+        $customerTransfer->setPassword(static::VALUE_SHORT_PASSWORD);
+
+        // Act
+        $customerResponseTransfer = $this->tester->getFacade()->restorePassword($customerTransfer);
+
+        // Assert
+        $this->assertFalse($customerResponseTransfer->getIsSuccess());
+        $this->assertTrue($this->hasMessageInCustomerResponseTransfer(
+            static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
+            $customerResponseTransfer
+        ));
+        $this->assertTrue($this->hasErrorInCustomerResponseTransfer(
+            static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
+            $customerResponseTransfer
+        ));
     }
 
     /**
@@ -1149,6 +1648,23 @@ class CustomerFacadeTest extends Unit
         }
 
         return false;
+    }
+
+    /**
+     * @param string $errorMessage
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
+     *
+     * @return bool
+     */
+    protected function hasErrorInCustomerResponseTransfer(string $errorMessage, CustomerResponseTransfer $customerResponseTransfer): bool
+    {
+        $errorTransfers = $customerResponseTransfer->getErrors()->getIterator();
+
+        if (!$errorTransfers->count()) {
+            return false;
+        }
+
+        return $errorTransfers->current()->getMessage() === $errorMessage;
     }
 
     /**
