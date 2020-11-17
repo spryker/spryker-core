@@ -83,18 +83,17 @@ class LengthCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
     /**
      * Added for BC.
      *
-     * @param CustomerResponseTransfer $customerResponseTransfer
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
      * @param string $errorMessage
      * @param int $messageParameter
      *
-     * @return CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     protected function addMessage(
         CustomerResponseTransfer $customerResponseTransfer,
         string $errorMessage,
         int $messageParameter
-    ) : CustomerResponseTransfer
-    {
+    ): CustomerResponseTransfer {
         $messageTransfer = (new MessageTransfer())
             ->setValue($errorMessage)
             ->setParameters([static::GLOSSARY_PARAM_VALIDATION_LENGTH => $messageParameter]);

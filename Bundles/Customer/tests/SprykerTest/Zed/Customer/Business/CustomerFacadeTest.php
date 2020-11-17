@@ -1184,8 +1184,8 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
      * @param string $errorMessage
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
      *
      * @return bool
      */
