@@ -15,17 +15,17 @@ class ValidProductOfferPriceIdsOwnByMerchantConstraint extends SymfonyConstraint
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface
      */
-    protected $facade;
+    protected $priceProductOfferFacade;
 
-    protected const MESSAGE = 'PriceProductOfferCollectionTransfer::clss is not in consistent state';
+    protected const MESSAGE = 'PriceProductOfferCollectionTransfer::class is not in consistent state';
 
     /**
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface $facade
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface $priceProductOfferFacade
      * @param array|null $options
      */
-    public function __construct(ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface $facade, $options = null)
+    public function __construct(ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface $priceProductOfferFacade, $options = null)
     {
-        $this->facade = $facade;
+        $this->priceProductOfferFacade = $priceProductOfferFacade;
 
         parent::__construct($options);
     }
@@ -35,7 +35,7 @@ class ValidProductOfferPriceIdsOwnByMerchantConstraint extends SymfonyConstraint
      */
     public function getFacade(): ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface
     {
-        return $this->facade;
+        return $this->priceProductOfferFacade;
     }
 
     /**
