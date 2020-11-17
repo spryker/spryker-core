@@ -63,7 +63,7 @@ class DataSetWriterCollection implements DataSetWriterInterface
      */
     public function flush()
     {
-        foreach ($this->dataSetWriters as $dataSetWriter) {
+        foreach ($this->getDatasetWriters() as $dataSetWriter) {
             $dataSetWriter->flush();
         }
     }
