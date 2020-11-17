@@ -201,7 +201,7 @@ class SwiftMailerTest extends Unit
     /**
      * @uses MailToMailerInterface::attach()
      *
-     * @dataProvider provideAttachments
+     * @dataProvider sendMailAddsAttachmentsDataProvider
      *
      * @param \Generated\Shared\Transfer\MailAttachmentTransfer[] $mailAttachmentTransfers
      *
@@ -228,7 +228,7 @@ class SwiftMailerTest extends Unit
     /**
      * @return array
      */
-    public function provideAttachments(): array
+    public function sendMailAddsAttachmentsDataProvider(): array
     {
         return [
             [ // 0 Attachments
