@@ -9,7 +9,7 @@ namespace Spryker\Zed\DataImport\Business\Model\DataSet;
 
 use Generated\Shared\Transfer\DataSetItemTransfer;
 use Spryker\Zed\DataImport\DataImportConfig;
-use Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetBulkWriterPluginInterface;
+use Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginApplicableAwareInterface;
 use Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface;
 
 class DataSetWriterCollection implements DataSetWriterInterface
@@ -81,52 +81,44 @@ class DataSetWriterCollection implements DataSetWriterInterface
     }
 
     /**
-     * Generates DatasetWritersPlugin[] that are matching conditions.
+     * Generates DatasetWritersPlugins that are matching conditions.
      *
      * @return \Generator
      */
     protected function getDatasetWriters()
     {
         foreach ($this->dataSetWriters as $dataSetWriter) {
-
             if (
-                $this->checkIfDatasetWriterPluginMatchingBulkConditions($dataSetWriter)
-                || $this->checkIfDatasetWriterPluginMatchingNonBulkConditions($dataSetWriter)
+                !$this->checkIfIsApplicableAwarePlugin($dataSetWriter)
+                || $this->checkIfApplicableAwarePluginIsApplicable($dataSetWriter)
             ) {
                 yield $dataSetWriter;
             }
-
         }
     }
 
     /**
      * @param \Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface|\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetItemWriterPluginInterface $dataSetWriterPlugin
+     *
      * @return bool
      */
-    protected function checkIfDatasetWriterPluginMatchingBulkConditions($datasetWriterPlugin)
+    protected function checkIfApplicableAwarePluginIsApplicable($dataSetWriterPlugin): bool
     {
+        /**
+         * @var \Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginApplicableAwareInterface $dataSetWriterPlugin
+         */
         return $this->dataImportConfig
-            && $this->dataImportConfig->isBulkEnabled()
-            && $this->checkIsBulkDatasetWriterPlugin($datasetWriterPlugin);
+            && $this->checkIfIsApplicableAwarePlugin($dataSetWriterPlugin)
+            && $dataSetWriterPlugin->isApplicable();
     }
 
     /**
      * @param \Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface|\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetItemWriterPluginInterface $dataSetWriterPlugin
+     *
      * @return bool
      */
-    protected function checkIfDatasetWriterPluginMatchingNonBulkConditions($datasetWriterPlugin)
+    protected function checkIfIsApplicableAwarePlugin($dataSetWriterPlugin): bool
     {
-        return $this->dataImportConfig
-            && !$this->dataImportConfig->isBulkEnabled()
-            && !$this->checkIsBulkDatasetWriterPlugin($datasetWriterPlugin);
-    }
-
-    /**
-     * @param \Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface|\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetItemWriterPluginInterface $dataSetWriterPlugin
-     * @return bool
-     */
-    protected function checkIsBulkDatasetWriterPlugin($dataSetWriterPlugin)
-    {
-        return ($dataSetWriterPlugin instanceof DataSetBulkWriterPluginInterface);
+        return $dataSetWriterPlugin instanceof DataSetWriterPluginApplicableAwareInterface;
     }
 }
