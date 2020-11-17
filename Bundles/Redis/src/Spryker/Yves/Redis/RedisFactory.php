@@ -5,39 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Redis;
+namespace Spryker\Yves\Redis;
 
-use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\Redis\Adapter\Factory\PredisAdapterFactory;
-use Spryker\Client\Redis\Adapter\Factory\RedisAdapterFactoryInterface;
-use Spryker\Client\Redis\Adapter\RedisAdapterProvider;
-use Spryker\Client\Redis\Adapter\RedisAdapterProviderInterface;
 use Spryker\Shared\Redis\Dependency\Service\RedisToUtilEncodingServiceInterface;
 use Spryker\Shared\Redis\Logger\RedisInMemoryLogger;
 use Spryker\Shared\Redis\Logger\RedisLoggerInterface;
+use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\Redis\WebProfiler\RedisDataCollector;
+use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 
-/**
- * @method \Spryker\Client\Redis\RedisConfig getConfig()
- */
 class RedisFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\Redis\Adapter\RedisAdapterProviderInterface
+     * @return \Symfony\Component\HttpKernel\DataCollector\DataCollector
      */
-    public function createRedisAdapterProvider(): RedisAdapterProviderInterface
+    public function createRedisDataCollector(): DataCollector
     {
-        return new RedisAdapterProvider(
-            $this->createRedisAdapterFactory()
-        );
-    }
-
-    /**
-     * @return \Spryker\Client\Redis\Adapter\Factory\RedisAdapterFactoryInterface
-     */
-    public function createRedisAdapterFactory(): RedisAdapterFactoryInterface
-    {
-        return new PredisAdapterFactory(
-            $this->getConfig(),
+        return new RedisDataCollector(
             $this->createRedisLogger()
         );
     }

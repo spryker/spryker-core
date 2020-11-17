@@ -1,0 +1,47 @@
+{% extends '@WebProfiler/Profiler/layout.html.twig' %}
+
+{% block toolbar %}
+    {% set icon %}
+        {{ include('@WebProfiler/Icon/memory.svg') }}
+        <span class="sf-toolbar-value">Redis</span>
+    {% endset %}
+
+    {% set text %}
+        <div class="sf-toolbar-info-piece">
+            <b>Calls</b>
+            <span>{{ collector.calls|length }}</span>
+        </div>
+    {% endset %}
+
+    {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { link: profiler_url, name: 'redis'}) }}
+{% endblock %}
+
+{% block menu %}
+    <span class="label">
+        <strong>Redis</strong>
+        <span class="count">
+            <span>{{ collector.calls|length }}</span>
+        </span>
+    </span>
+{% endblock %}
+
+{% block panel %}
+    <h2>Redis Calls</h2>
+    <table>
+        <tr>
+            <th>Destination</th>
+            <th>Command</th>
+            <th>Payload</th>
+            <th>Result</th>
+        </tr>
+
+        {% for callData in collector.calls %}
+            <tr>
+                <td>{{ callData['destination'] }}</td>
+                <td>{{ callData['command'] }}</td>
+                <td>{{ callData['payload'] }}</td>
+                <td>{{ callData['result'] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
