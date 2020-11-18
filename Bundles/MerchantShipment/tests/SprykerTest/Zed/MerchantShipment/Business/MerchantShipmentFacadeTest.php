@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\ShipmentTransfer;
  * @group Zed
  * @group MerchantShipment
  * @group Business
+ * @group Facade
  * @group MerchantShipmentFacadeTest
  * Add your own group annotations below this line
  */

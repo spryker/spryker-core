@@ -11,6 +11,17 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 
+/**
+ * Auto-generated group annotations
+ *
+ * @group SprykerTest
+ * @group Zed
+ * @group DiscountMerchantSalesOrder
+ * @group Business
+ * @group Facade
+ * @group DiscountMerchantSalesOrderFacadeTest
+ * Add your own group annotations below this line
+ */
 class DiscountMerchantSalesOrderFacadeTest extends Unit
 {
     /**

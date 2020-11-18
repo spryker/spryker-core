@@ -13,6 +13,7 @@ use Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderFilte
 
 /**
  * @method \Spryker\Zed\DiscountMerchantSalesOrder\Business\DiscountMerchantSalesOrderFacadeInterface getFacade()
+ * @method \Spryker\Zed\DiscountMerchantSalesOrder\DiscountMerchantSalesOrderConfig getConfig()
  */
 class DiscountMerchantOrderFilterPlugin extends AbstractPlugin implements MerchantOrderFilterPluginInterface
 {

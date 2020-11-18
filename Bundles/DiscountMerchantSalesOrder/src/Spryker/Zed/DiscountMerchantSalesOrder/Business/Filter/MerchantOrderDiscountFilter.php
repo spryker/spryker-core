@@ -50,7 +50,7 @@ class MerchantOrderDiscountFilter implements MerchantOrderDiscountFilterInterfac
      *
      * @return \Generated\Shared\Transfer\CalculatedDiscountTransfer[]
      */
-    protected function getGeneralDiscounts(OrderTransfer $orderTransfer, $merchantOrderItemsCount): array
+    protected function getGeneralDiscounts(OrderTransfer $orderTransfer, int $merchantOrderItemsCount): array
     {
         $calculatedDiscountTransfers = [];
 

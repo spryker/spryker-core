@@ -11,6 +11,9 @@ use Spryker\Zed\DiscountMerchantSalesOrder\Business\Filter\MerchantOrderDiscount
 use Spryker\Zed\DiscountMerchantSalesOrder\Business\Filter\MerchantOrderDiscountFilterInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
+/**
+ * @method \Spryker\Zed\DiscountMerchantSalesOrder\DiscountMerchantSalesOrderConfig getConfig()
+ */
 class DiscountMerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
 {
     /**
