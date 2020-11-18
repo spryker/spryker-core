@@ -333,16 +333,16 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             ->setTitle($title)
             ->setType(static::COLUMN_TYPE_SELECT);
 
-        $typeOptionTransfers = (new SelectGuiTableFilterTypeOptionsTransfer())->setMultiselect($isMultiselect);
+        $typeOptionValues = [];
 
         foreach ($options as $value => $optionTitle) {
-            $optionTransfer = (new OptionSelectGuiTableFilterTypeOptionsTransfer())
-                ->setValue((string)$value)
-                ->setTitle($optionTitle);
-            $typeOptionTransfers->addValue($optionTransfer);
+            $typeOptionValues['options'][] = [
+                    'title' => $optionTitle,
+                    'value' => $value,
+                ];
         }
 
-        $guiTableColumnConfigurationTransfer->setTypeOptions($typeOptionTransfers);
+        $guiTableColumnConfigurationTransfer->setTypeOptions($typeOptionValues);
 
         $this->addEditableColumn($guiTableColumnConfigurationTransfer);
 
