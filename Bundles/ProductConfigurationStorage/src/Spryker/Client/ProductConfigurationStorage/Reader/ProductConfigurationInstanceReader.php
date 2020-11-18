@@ -64,7 +64,8 @@ class ProductConfigurationInstanceReader implements ProductConfigurationInstance
         $productConfigurationInstanceTransfer = $this->sessionClient->get($productConfigurationSessionKey);
 
         if ($productConfigurationInstanceTransfer) {
-            return $productConfigurationInstanceTransfer;
+            return (new ProductConfigurationInstanceTransfer())
+                ->fromArray($productConfigurationInstanceTransfer->toArray());
         }
 
         return $this->findProductConfigurationInstanceInStorage($sku);

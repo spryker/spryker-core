@@ -79,6 +79,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     public const PLUGINS_PRODUCT_ABSTRACT_LIST_ACTION_VIEW_DATA_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_LIST_ACTION_VIEW_DATA_EXPANDER';
     public const PLUGINS_PRODUCT_ABSTRACT_VIEW_ACTION_VIEW_DATA_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_VIEW_ACTION_VIEW_DATA_EXPANDER';
     public const PLUGINS_PRODUCT_TABLE_QUERY_CRITERIA_EXPANDER = 'PLUGINS_PRODUCT_TABLE_QUERY_CRITERIA_EXPANDER';
+    public const PLUGINS_PRODUCT_TABLE_DATA_EXPANDER = 'PLUGINS_PRODUCT_TABLE_DATA_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -243,6 +244,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addProductConcreteEditViewExpanderPlugins($container);
         $container = $this->addProductAbstractListActionViewDataExpanderPlugins($container);
         $container = $this->addProductAbstractViewActionViewDataExpanderPlugins($container);
+        $container = $this->addProductTableDataExpanderPlugins($container);
 
         return $container;
     }
@@ -649,6 +651,28 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableQueryCriteriaExpanderPluginInterface[]
      */
     protected function getProductTableQueryCriteriaExpanderPluginInterfaces(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductTableDataExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_TABLE_DATA_EXPANDER, function () {
+            return $this->getProductTableDataExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableDataExpanderPluginInterface[]
+     */
+    protected function getProductTableDataExpanderPlugins(): array
     {
         return [];
     }

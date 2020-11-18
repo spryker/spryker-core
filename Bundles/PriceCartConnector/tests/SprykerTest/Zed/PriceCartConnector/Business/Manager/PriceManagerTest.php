@@ -168,7 +168,8 @@ class PriceManagerTest extends Unit
         return new PriceProductFilter(
             $priceProductCartToPriceBridge,
             $priceFacadeMock,
-            $this->createCurrencyFacadeBridgeMock()
+            $this->createCurrencyFacadeBridgeMock(),
+            []
         );
     }
 
