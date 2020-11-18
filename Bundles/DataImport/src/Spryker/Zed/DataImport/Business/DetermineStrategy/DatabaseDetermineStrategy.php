@@ -9,31 +9,33 @@ namespace Spryker\Zed\DataImport\Business\DetermineStrategy;
 
 use RuntimeException;
 use Spryker\Zed\DataImport\Business\Model\ApplicableDatabaseEngineAwareInterface;
-use Spryker\Zed\DataImport\DataImportConfig;
+use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface;
 
 class DatabaseDetermineStrategy implements DetermineStrategyInterface
 {
     /**
-     * @var \Spryker\Zed\DataImport\Business\Model\ApplicableDatabaseEngineAwareInterface[]
+     * @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface[]
      */
-    protected $databaseEngineAwares;
+    protected $dataSetWriters;
 
     /**
-     * @param \Spryker\Zed\DataImport\Business\Model\ApplicableDatabaseEngineAwareInterface[] $databaseEngineAwares
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface[] $dataSetWriters
      */
-    public function __construct(array $databaseEngineAwares)
+    public function __construct(array $dataSetWriters)
     {
-        $this->databaseEngineAwares = $databaseEngineAwares;
+        $this->dataSetWriters = $dataSetWriters;
     }
 
     /**
      * @inheritDoc
+     *
+     * @throws \RuntimeException
      */
-    public function getApplicable()
+    public function getApplicableDataSetWriter(): DataSetWriterInterface
     {
-        foreach ($this->databaseEngineAwares as $databaseEngineAware) {
-            if ($this->isApplicable($databaseEngineAware)) {
-                return $databaseEngineAware;
+        foreach ($this->dataSetWriters as $dataSetWriter) {
+            if ($this->isApplicable($dataSetWriter)) {
+                return $dataSetWriter;
             }
         }
 
@@ -41,18 +43,18 @@ class DatabaseDetermineStrategy implements DetermineStrategyInterface
     }
 
     /**
-     * @param \Spryker\Zed\DataImport\Business\Model\ApplicableDatabaseEngineAwareInterface $databaseEngineAware
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface $dataSetWriter
      *
      * @return bool
      */
-    protected function isApplicable($databaseEngineAware): bool
+    protected function isApplicable($dataSetWriter): bool
     {
         return (
             (
-                $databaseEngineAware instanceof ApplicableDatabaseEngineAwareInterface
-                && $databaseEngineAware->isApplicableDatabaseEngine()
+                $dataSetWriter instanceof ApplicableDatabaseEngineAwareInterface
+                && $dataSetWriter->isApplicable()
             )
-            || !$databaseEngineAware instanceof ApplicableDatabaseEngineAwareInterface
+            || !$dataSetWriter instanceof ApplicableDatabaseEngineAwareInterface
         );
     }
 }

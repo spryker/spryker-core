@@ -14,6 +14,14 @@ interface DataImportConstants
 {
     /**
      * Specification:
+     * - Switches bulk mode of data import process.
+     *
+     * @api
+     */
+    public const IMPORT_BULK_MODE = 'DATA_IMPORT:BULK_MODE';
+
+    /**
+     * Specification:
      * - Root path to the import files.
      * - Can be used to have a small set of import data for e.g. testing or development.
      */

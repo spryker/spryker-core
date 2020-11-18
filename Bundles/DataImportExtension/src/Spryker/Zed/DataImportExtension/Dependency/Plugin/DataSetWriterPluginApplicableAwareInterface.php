@@ -13,6 +13,8 @@ interface DataSetWriterPluginApplicableAwareInterface
      * Specification:
      * - Returns True if implemented plugin is applicable for current config, False otherwise.
      *
+     * @api
+     *
      * @return bool
      */
     public function isApplicable(): bool;

@@ -15,5 +15,5 @@ interface ApplicableDatabaseEngineAwareInterface
      *
      * @return bool
      */
-    public function isApplicableDatabaseEngine(): bool;
+    public function isApplicable(): bool;
 }

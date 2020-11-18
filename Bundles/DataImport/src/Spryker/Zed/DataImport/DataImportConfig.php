@@ -18,15 +18,13 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class DataImportConfig extends AbstractBundleConfig
 {
-    public const BULK_MODE_ENABLED = 'BULK_ENABLED';
-
     public const IMPORT_GROUP_FULL = 'FULL';
     public const IMPORT_GROUP_QUEUE_READERS = 'QUEUE_READERS';
     public const IMPORT_GROUP_QUEUE_WRITERS = 'QUEUE_WRITERS';
 
     protected const DEFAULT_QUEUE_READER_CHUNK_SIZE = 100;
     protected const DEFAULT_QUEUE_WRITER_CHUNK_SIZE = 100;
-    protected const DEFAULT_BULK_MODE_ENABLED = false;
+    protected const DEFAULT_BULK_MODE = false;
 
     /**
      * @api
@@ -82,27 +80,23 @@ class DataImportConfig extends AbstractBundleConfig
     }
 
     /**
-     * Get current database engine from configuration.
-     *
      * @api
      *
      * @return string|null
      */
-    public function getCurrentDatabaseEngine()
+    public function getCurrentDatabaseEngine(): ?string
     {
         return $this->get(PropelConstants::ZED_DB_ENGINE);
     }
 
     /**
-     * Enables or disabled bulk import mode.
-     *
      * @api
      *
      * @return bool
      */
-    public function isBulkEnabled()
+    public function isBulkEnabled(): bool
     {
-        return $this->get(static::BULK_MODE_ENABLED, static::DEFAULT_BULK_MODE_ENABLED);
+        return $this->get(DataImportConstants::IMPORT_BULK_MODE, static::DEFAULT_BULK_MODE);
     }
 
     /**

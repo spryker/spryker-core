@@ -7,13 +7,15 @@
 
 namespace Spryker\Zed\DataImport\Business\DetermineStrategy;
 
+use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface;
+
 interface DetermineStrategyInterface
 {
     /**
      * Specification:
      * - Returns DataSetWriter that is applicable for current config, null otherwise
      *
-     * @return mixed
+     * @return \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface
      */
-    public function getApplicable();
+    public function getApplicableDataSetWriter(): DataSetWriterInterface;
 }

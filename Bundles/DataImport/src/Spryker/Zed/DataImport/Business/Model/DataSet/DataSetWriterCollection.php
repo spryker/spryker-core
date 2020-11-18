@@ -8,7 +8,6 @@
 namespace Spryker\Zed\DataImport\Business\Model\DataSet;
 
 use Generated\Shared\Transfer\DataSetItemTransfer;
-use Spryker\Zed\DataImport\DataImportConfig;
 use Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginApplicableAwareInterface;
 use Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface;
 
@@ -20,20 +19,11 @@ class DataSetWriterCollection implements DataSetWriterInterface
     protected $dataSetWriters = [];
 
     /**
-     * @var \Spryker\Zed\DataImport\DataImportConfig|null
-     */
-    protected $dataImportConfig;
-
-    /**
      * @param \Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface[]|\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetItemWriterPluginInterface[] $dataSetWriter
-     * @param \Spryker\Zed\DataImport\DataImportConfig|null $dataImportConfig
      */
-    public function __construct(
-        array $dataSetWriter,
-        ?DataImportConfig $dataImportConfig = null
-    ) {
+    public function __construct(array $dataSetWriter)
+    {
         $this->dataSetWriters = $dataSetWriter;
-        $this->dataImportConfig = $dataImportConfig;
     }
 
     /**
@@ -107,8 +97,7 @@ class DataSetWriterCollection implements DataSetWriterInterface
         /**
          * @var \Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginApplicableAwareInterface $dataSetWriterPlugin
          */
-        return $this->dataImportConfig
-            && $this->checkIfIsApplicableAwarePlugin($dataSetWriterPlugin)
+        return $this->checkIfIsApplicableAwarePlugin($dataSetWriterPlugin)
             && $dataSetWriterPlugin->isApplicable();
     }
 
