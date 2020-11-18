@@ -91,7 +91,6 @@
 
     <transfer name="CheckoutData">
         <property name="shipment" type="RestShipment"/>
-        <property name="shipments" type="RestShipments[]" singular="shipment"/>
     </transfer>
 
     <transfer name="CheckoutResponse">
