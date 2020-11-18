@@ -12,7 +12,7 @@
  *
  * @return {void}
  */
-function save(serializedNodeList, csrfToken, progressBar)
+function save(serializedNodeList, progressBar, csrfToken = '')
 {
     progressBar.show();
 

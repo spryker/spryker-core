@@ -23,6 +23,6 @@ jQuery(document).ready(function() {
     });
 
     jQuery('#save-button').on('click', function() {
-        writer.save(window.serializedList, csrfToken, progressBar);
+        writer.save(window.serializedList, progressBar, csrfToken);
     });
 });
