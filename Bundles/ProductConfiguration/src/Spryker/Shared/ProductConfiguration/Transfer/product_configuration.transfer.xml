@@ -17,11 +17,16 @@
         <property name="configuration" type="string"/>
         <property name="configuratorKey" type="string"/>
         <property name="isComplete" type="bool"/>
+        <property name="prices" type="PriceProduct[]" singular="price"/>
     </transfer>
 
     <transfer name="Item">
         <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
         <property name="groupKey" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="unitGrossPrice" type="int"/>
+        <property name="sumGrossPrice" type="int"/>
+        <property name="quantity" type="int"/>
     </transfer>
 
     <transfer name="ProductConfigurationFilter">
@@ -40,7 +45,9 @@
     </transfer>
 
     <transfer name="CartChange">
+        <property name="operation" type="string"/>
         <property name="items" type="Item[]" singular="item"/>
+        <property name="quote" type="Quote"/>
     </transfer>
 
     <transfer name="Quote">
@@ -79,13 +86,46 @@
 
     <transfer name="ProductConfiguratorRequest">
         <property name="productConfiguratorRequestData" type="ProductConfiguratorRequestData"/>
+        <property name="accessTokenRequestUrl" type="string"/>
     </transfer>
 
     <transfer name="ProductConfiguratorRedirect">
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+        <property name="configuratorRedirectUrl" type="string"/>
     </transfer>
 
     <transfer name="ProductConfiguratorRequestData">
         <property name="configuratorKey" type="string"/>
+        <property name="customerReference" type="string"/>
+        <property name="storeName" type="string"/>
+        <property name="localeName" type="string"/>
+        <property name="priceMode" type="string"/>
+        <property name="currencyCode" type="string"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProduct">
+        <property name="skuProduct" type="string"/>
+        <property name="priceDimension" type="PriceProductDimension"/>
+    </transfer>
+
+    <transfer name="CartItemQuantity">
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="PriceProductDimension">
     </transfer>
 
 </transfers>
