@@ -123,8 +123,8 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
      */
     protected function executeSalesOrderFilterPlugins(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer
     {
-        foreach ($this->merchantOrderFilterPlugins as $merchantOrderFiilterPlugin) {
-            $merchantOrderTransfer = $merchantOrderFiilterPlugin->filter($merchantOrderTransfer);
+        foreach ($this->merchantOrderFilterPlugins as $merchantOrderFilterPlugin) {
+            $merchantOrderTransfer = $merchantOrderFilterPlugin->filter($merchantOrderTransfer);
         }
 
         return $merchantOrderTransfer;

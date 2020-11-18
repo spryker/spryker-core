@@ -24,6 +24,9 @@
   "require-dev": {
     "spryker/code-sniffer": "*"
   },
+  "suggest": {
+    "spryker/shipment-gui": "If you want to adjust form with shipment form types, use version more than 2.3.2."
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"

@@ -16,7 +16,7 @@ interface MerchantOrderFilterPluginInterface
 {
     /**
      * Specification:
-     * - Executed when order transfer adding to merchant order.
+     * - Allows to filter out non-merchant related data from MerchantOrderTransfer.order.
      *
      * @api
      *

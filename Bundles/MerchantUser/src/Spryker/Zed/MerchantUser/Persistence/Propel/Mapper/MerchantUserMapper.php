@@ -34,16 +34,16 @@ class MerchantUserMapper
     }
 
     /**
-     * @param \Orm\Zed\Merchant\Persistence\SpyMerchant $merchantUserEntity
+     * @param \Orm\Zed\Merchant\Persistence\SpyMerchant $merchantEntity
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
     protected function mapMerchantEntityToMerchantTransfer(
-        SpyMerchant $merchantUserEntity,
+        SpyMerchant $merchantEntity,
         MerchantTransfer $merchantTransfer
     ): MerchantTransfer {
-        return $merchantTransfer->fromArray($merchantUserEntity->toArray(), true);
+        return $merchantTransfer->fromArray($merchantEntity->toArray(), true);
     }
 
     /**
@@ -63,6 +63,8 @@ class MerchantUserMapper
     }
 
     /**
+     * @phpstan-param \Propel\Runtime\Collection\Collection<\Orm\Zed\MerchantUser\Persistence\SpyMerchantUser> $merchantUserEntities
+     *
      * @param \Propel\Runtime\Collection\Collection $merchantUserEntities
      *
      * @return \Generated\Shared\Transfer\MerchantUserTransfer[]
