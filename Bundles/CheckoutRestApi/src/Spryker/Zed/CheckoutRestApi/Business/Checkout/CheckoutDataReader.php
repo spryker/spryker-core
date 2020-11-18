@@ -18,7 +18,6 @@ use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\CheckoutRestApi\CheckoutRestApiConfig;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\Address\AddressReaderInterface;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote\QuoteReaderInterface;
-use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCalculationFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToPaymentFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToShipmentFacadeInterface;
 
@@ -50,11 +49,6 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     protected $quoteMapperPlugins;
 
     /**
-     * @var \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCalculationFacadeInterface
-     */
-    protected $calculationFacade;
-
-    /**
      * @var \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataExpanderPluginInterface[]
      */
     protected $checkoutDataExpanderPlugins;
@@ -65,7 +59,6 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToPaymentFacadeInterface $paymentFacade
      * @param \Spryker\Zed\CheckoutRestApi\Business\Checkout\Address\AddressReaderInterface $addressReader
      * @param \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface[] $quoteMapperPlugins
-     * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCalculationFacadeInterface $calculationFacade
      * @param \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataExpanderPluginInterface[] $checkoutDataExpanderPlugins
      */
     public function __construct(
@@ -74,7 +67,6 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         CheckoutRestApiToPaymentFacadeInterface $paymentFacade,
         AddressReaderInterface $addressReader,
         array $quoteMapperPlugins,
-        CheckoutRestApiToCalculationFacadeInterface $calculationFacade,
         array $checkoutDataExpanderPlugins
     ) {
         $this->quoteReader = $quoteReader;
@@ -82,7 +74,6 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         $this->paymentFacade = $paymentFacade;
         $this->addressReader = $addressReader;
         $this->quoteMapperPlugins = $quoteMapperPlugins;
-        $this->calculationFacade = $calculationFacade;
         $this->checkoutDataExpanderPlugins = $checkoutDataExpanderPlugins;
     }
 
@@ -99,16 +90,14 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
             return $this->createCartNotFoundErrorResponse();
         }
 
-        foreach ($this->quoteMapperPlugins as $quoteMappingPlugin) {
-            $quoteTransfer = $quoteMappingPlugin->map($restCheckoutRequestAttributesTransfer, $quoteTransfer);
-        }
+        $quoteTransfer = $this->executeQuoteMapperPlugins($restCheckoutRequestAttributesTransfer, $quoteTransfer);
 
         $storeTransfer = $quoteTransfer->requireStore()
             ->getStore()
                 ->requireName();
 
         $quoteTransfer = $this->addItemLevelShipmentTransfer($quoteTransfer);
-        $quoteTransfer = $this->calculationFacade->recalculateQuote($quoteTransfer);
+        $quoteTransfer = $this->shipmentFacade->expandQuoteWithShipmentGroups($quoteTransfer);
 
         $checkoutDataTransfer = (new RestCheckoutDataTransfer())
             ->setQuote($quoteTransfer)
@@ -125,6 +114,23 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         return (new RestCheckoutDataResponseTransfer())
             ->setIsSuccess(true)
             ->setCheckoutData($checkoutDataTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function executeQuoteMapperPlugins(
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
+        QuoteTransfer $quoteTransfer
+    ): QuoteTransfer {
+        foreach ($this->quoteMapperPlugins as $quoteMapperPlugin) {
+            $quoteTransfer = $quoteMapperPlugin->map($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+        }
+
+        return $quoteTransfer;
     }
 
     /**
@@ -170,6 +176,8 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     }
 
     /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer

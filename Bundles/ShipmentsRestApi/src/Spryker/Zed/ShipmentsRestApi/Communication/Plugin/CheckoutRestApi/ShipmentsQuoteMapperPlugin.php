@@ -22,7 +22,6 @@ class ShipmentsQuoteMapperPlugin extends AbstractPlugin implements QuoteMapperPl
      * {@inheritDoc}
      * - Maps `RestCheckoutRequestAttributesTransfer.shipments` to `QuoteTransfer.items[*].shipment`.
      * - Maps `RestCheckoutRequestAttributesTransfer.shipments` to `QuoteTransfer.bundleItems[*].shipment`.
-     * - Expands quote expenses with shipment expenses.
      *
      * @api
      *

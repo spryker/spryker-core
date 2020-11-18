@@ -77,8 +77,8 @@ class ShipmentDataCheckoutRequestAttributesValidatorPluginTest extends Unit
             ],
             [
                 (new RestCheckoutRequestAttributesTransfer()),
-                0,
-                'Passing no shipment method should be valid.',
+                1,
+                'Passing no shipment method should not be valid.',
             ],
             [
                 (new RestCheckoutRequestAttributesTransfer())

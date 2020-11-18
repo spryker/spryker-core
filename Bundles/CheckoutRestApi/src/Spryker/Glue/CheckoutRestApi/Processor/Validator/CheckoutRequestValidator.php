@@ -52,6 +52,8 @@ class CheckoutRequestValidator implements CheckoutRequestValidatorInterface
         $restErrorCollectionTransfer = $this->validateCustomer($restRequest, $restErrorCollectionTransfer);
         $restErrorCollectionTransfer = $this->validatePayments($restCheckoutRequestAttributesTransfer, $restErrorCollectionTransfer);
 
+        $restCheckoutRequestAttributesTransfer->setRestUser($restRequest->getRestUser());
+
         foreach ($this->checkoutRequestAttributesValidatorPlugins as $checkoutRequestAttributesValidatorPlugin) {
             $pluginErrorCollectionTransfer = $checkoutRequestAttributesValidatorPlugin->validateAttributes($restCheckoutRequestAttributesTransfer);
             foreach ($pluginErrorCollectionTransfer->getRestErrors() as $restError) {

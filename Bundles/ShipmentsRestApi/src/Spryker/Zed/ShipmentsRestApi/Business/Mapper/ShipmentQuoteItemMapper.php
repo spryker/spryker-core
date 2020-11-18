@@ -83,8 +83,6 @@ class ShipmentQuoteItemMapper implements ShipmentQuoteItemMapperInterface
             );
         }
 
-        $this->shipmentFacade->expandQuoteWithShipmentGroups($quoteTransfer);
-
         return $quoteTransfer;
     }
 

@@ -34,4 +34,14 @@ class CheckoutRestApiToShipmentFacadeBridge implements CheckoutRestApiToShipment
     {
         return $this->shipmentFacade->getAvailableMethodsByShipment($quoteTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function expandQuoteWithShipmentGroups(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->shipmentFacade->expandQuoteWithShipmentGroups($quoteTransfer);
+    }
 }

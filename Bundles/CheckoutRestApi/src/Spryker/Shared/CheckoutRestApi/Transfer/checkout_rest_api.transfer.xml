@@ -32,6 +32,7 @@
         <property name="shippingAddress" type="RestAddress" restRequestParameter="yes"/>
         <property name="payments" type="RestPayment[]" singular="payment" restRequestParameter="yes"/>
         <property name="shipment" type="RestShipment" restRequestParameter="yes"/>
+        <property name="restUser" type="RestUser" restRequestParameter="no"/>
     </transfer>
 
     <transfer name="RestCustomer">
@@ -249,5 +250,8 @@
 
     <transfer name="CheckoutData">
         <property name="shipment" type="RestShipment"/>
+        <property name="shipments" type="RestShipments[]" singular="shipment"/>
+        <property name="customer" type="Customer"/>
     </transfer>
+
 </transfers>

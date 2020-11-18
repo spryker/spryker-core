@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ShipmentsRestApi\Plugin\CheckoutRestApi;
+namespace Spryker\Glue\CustomersRestApi\Plugin\CheckoutRestApi;
 
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
@@ -13,16 +13,16 @@ use Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestAttri
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiFactory getFactory()
+ * @method \Spryker\Glue\CustomersRestApi\CustomersRestApiFactory getFactory()
  */
-class ShipmentDataCheckoutRequestAttributesValidatorPlugin extends AbstractPlugin implements CheckoutRequestAttributesValidatorPluginInterface
+class CustomerAddressCheckoutRequestAttributesValidatorPlugin extends AbstractPlugin implements CheckoutRequestAttributesValidatorPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Validates if `RestCheckoutRequestAttributesTransfer` provides shipment data per item or on the top level.
-     * - Mixing the multi-shipment and single-shipment is not valid.
-     * - Expects `RestCheckoutRequestAttributesTransfer.shipment` in case single-shipment to be provided.
-     * - Expects `RestCheckoutRequestAttributesTransfer.shipments` in case multi-shipment to be provided.
+     * - Requires `restCheckoutRequestAttributes.restUser.surrogateIdentifier` to be set.
+     * - Collects shipping address uuids from `restCheckoutRequestAttributes.shipments`.
+     * - Checks if customer addresses exists.
+     * - Returns CheckoutResponseTransfer with error if any check was failed.
      *
      * @api
      *
@@ -34,7 +34,7 @@ class ShipmentDataCheckoutRequestAttributesValidatorPlugin extends AbstractPlugi
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestErrorCollectionTransfer {
         return $this->getFactory()
-            ->createShipmentCheckoutDataValidator()
-            ->validateShipmentCheckoutData($restCheckoutRequestAttributesTransfer);
+            ->createCustomerAddressValidator()
+            ->validateCustomerAddresses($restCheckoutRequestAttributesTransfer);
     }
 }

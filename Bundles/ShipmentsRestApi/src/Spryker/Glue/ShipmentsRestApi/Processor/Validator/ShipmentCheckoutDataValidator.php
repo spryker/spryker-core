@@ -23,20 +23,103 @@ class ShipmentCheckoutDataValidator implements ShipmentCheckoutDataValidatorInte
     public function validateShipmentCheckoutData(
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestErrorCollectionTransfer {
-        $checkoutDataShippingAddress = $restCheckoutRequestAttributesTransfer->getShippingAddress();
-        $checkoutDataShipment = $restCheckoutRequestAttributesTransfer->getShipment();
-        $checkoutDataShipments = $restCheckoutRequestAttributesTransfer->getShipments();
-
-        $restErrorCollectionTransfer = new RestErrorCollectionTransfer();
-        if ($checkoutDataShipments->count() && ($checkoutDataShipment || $checkoutDataShippingAddress)) {
-            $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-                ->setDetail(ShipmentsRestApiConfig::ERROR_RESPONSE_DETAIL_SINGLE_MULTI_SHIPMENT_MIX)
-                ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                ->setCode(ShipmentsRestApiConfig::ERROR_RESPONSE_CODE_SINGLE_MULTI_SHIPMENT_MIX);
-
-            $restErrorCollectionTransfer->addRestError($restErrorMessageTransfer);
+        if ($this->isShipmentLevelMixed($restCheckoutRequestAttributesTransfer)) {
+            return $this->buildErrorMessage(
+                ShipmentsRestApiConfig::ERROR_RESPONSE_DETAIL_SINGLE_MULTI_SHIPMENT_MIX,
+                ShipmentsRestApiConfig::ERROR_RESPONSE_CODE_SINGLE_MULTI_SHIPMENT_MIX
+            );
         }
 
-        return $restErrorCollectionTransfer;
+        if (!$this->isMultiShipmentLevelValid($restCheckoutRequestAttributesTransfer)) {
+            return $this->buildErrorMessage(
+                ShipmentsRestApiConfig::ERROR_RESPONSE_DETAIL_SHIPMENTS_ATTRIBUTE_NOT_SPECIFIED,
+                ShipmentsRestApiConfig::ERROR_RESPONSE_CODE_SHIPMENTS_ATTRIBUTE_NOT_SPECIFIED
+            );
+        }
+
+        if (!$this->isSingleShipmentLevelValid($restCheckoutRequestAttributesTransfer)) {
+            return $this->buildErrorMessage(
+                ShipmentsRestApiConfig::ERROR_RESPONSE_DETAIL_SHIPMENT_ATTRIBUTE_NOT_SPECIFIED,
+                ShipmentsRestApiConfig::ERROR_RESPONSE_CODE_SHIPMENT_ATTRIBUTE_NOT_SPECIFIED
+            );
+        }
+
+        return new RestErrorCollectionTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     *
+     * @return bool
+     */
+    protected function isShipmentLevelMixed(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): bool
+    {
+        if (
+            $restCheckoutRequestAttributesTransfer->getShipments()->count()
+            && ($restCheckoutRequestAttributesTransfer->getShipment() || $restCheckoutRequestAttributesTransfer->getShippingAddress())
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     *
+     * @return bool
+     */
+    protected function isSingleShipmentLevelValid(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): bool
+    {
+        if ($restCheckoutRequestAttributesTransfer->getShipments()->count()) {
+            return true;
+        }
+
+        if (!$restCheckoutRequestAttributesTransfer->getShipment() && !$restCheckoutRequestAttributesTransfer->getShippingAddress()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     *
+     * @return bool
+     */
+    protected function isMultiShipmentLevelValid(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): bool
+    {
+        if ($restCheckoutRequestAttributesTransfer->getShipment() || $restCheckoutRequestAttributesTransfer->getShippingAddress()) {
+            return true;
+        }
+
+        if (!$restCheckoutRequestAttributesTransfer->getShipments()->count()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param string $detail
+     * @param string $code
+     * @param int|null $status
+     *
+     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer
+     */
+    protected function buildErrorMessage(
+        string $detail,
+        string $code,
+        ?int $status = Response::HTTP_UNPROCESSABLE_ENTITY
+    ): RestErrorCollectionTransfer {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setDetail($detail)
+            ->setCode($code)
+            ->setStatus($status);
+
+        return (new RestErrorCollectionTransfer())
+            ->addRestError($restErrorMessageTransfer);
     }
 }
