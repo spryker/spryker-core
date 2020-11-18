@@ -40,7 +40,7 @@ class CreateController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        if ($request->getMethod() === Request::METHOD_POST && !$this->isCsrfTokenValid($request->get(static::PARAM_TOKEN))) {
+        if ($request->isMethod(Request::METHOD_POST) && !$this->isCsrfTokenValid($request->get(static::PARAM_TOKEN))) {
             $this->addErrorMessage('CSRF token is not valid.');
 
             return $this->getCsrfValidationErrorRedirectUrl($request);
