@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\PriceProduct\Business;
 
-use Generated\Shared\Transfer\PriceProductCollectionTransfer;
-use Generated\Shared\Transfer\PriceProductCollectionValidationResponseTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
@@ -17,6 +15,7 @@ use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 /**
  * @method \Spryker\Zed\PriceProduct\Business\PriceProductBusinessFactory getFactory()
@@ -622,14 +621,10 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductCollectionTransfer $priceProductCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductCollectionValidationResponseTransfer
+     * @return \Symfony\Component\Validator\Constraint
      */
-    public function validatePrices(PriceProductCollectionTransfer $priceProductCollectionTransfer): PriceProductCollectionValidationResponseTransfer
+    public function getValidCurrencyAssignedToStoreConstraint(): SymfonyConstraint
     {
-        return $this->getFactory()
-            ->createPriceProductValidator()
-            ->validatePrices($priceProductCollectionTransfer);
+        return $this->getFactory()->createValidCurrencyAssignedToStoreConstraint();
     }
 }
