@@ -471,7 +471,7 @@ class RestApiError implements RestApiErrorInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function addPasswordInBlacklist(RestResponseInterface $restResponse): RestResponseInterface
+    protected function addPasswordInDenyList(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_PASSWORD_DENY_LIST)
