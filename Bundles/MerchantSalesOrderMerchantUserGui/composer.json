@@ -1,0 +1,49 @@
+{
+  "name": "spryker/merchant-sales-order-merchant-user-gui",
+  "type": "library",
+  "description": "MerchantSalesOrderMerchantUserGui module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.3",
+    "spryker/customer": "^7.0.0",
+    "spryker/gui": "^3.33.0",
+    "spryker/kernel": "^3.33.0",
+    "spryker/merchant-oms": "^0.3.4",
+    "spryker/merchant-sales-order": "^0.7.3",
+    "spryker/merchant-shipment": "^0.2.0",
+    "spryker/merchant-user": "^0.5.3",
+    "spryker/money": "^2.0.0",
+    "spryker/sales": "^10.0.0 || ^11.0.0",
+    "spryker/shipment": "^7.2.0 || ^8.2.0",
+    "spryker/state-machine": "^2.12.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/util-date-time": "^1.0.0",
+    "spryker/util-sanitize": "^2.0.0",
+    "spryker/util-text": "^1.1.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*"
+  },
+  "suggest": {
+    "spryker/shipment-gui": "If you want to adjust form with shipment form types, use version more than 2.3.2."
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
