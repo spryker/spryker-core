@@ -17,6 +17,7 @@ use Spryker\Zed\SalesReclamationGui\Dependency\Facade\SalesReclamationGuiToSales
 use Spryker\Zed\SalesReclamationGui\Dependency\Facade\SalesReclamationGuiToSalesReclamationFacadeInterface;
 use Spryker\Zed\SalesReclamationGui\Dependency\Service\SalesReclamationGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\SalesReclamationGui\SalesReclamationGuiDependencyProvider;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * @method \Spryker\Zed\SalesReclamationGui\SalesReclamationGuiConfig getConfig()
@@ -80,5 +81,13 @@ class SalesReclamationGuiCommunicationFactory extends AbstractCommunicationFacto
     public function createReclamationItemEventsFinder(): ReclamationItemEventsFinderInterface
     {
         return new ReclamationItemEventsFinder();
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface
+     */
+    public function getCsrfTokenManager(): CsrfTokenManagerInterface
+    {
+        return $this->getProvidedDependency(SalesReclamationGuiDependencyProvider::SERVICE_FORM_CSRF_PROVIDER);
     }
 }

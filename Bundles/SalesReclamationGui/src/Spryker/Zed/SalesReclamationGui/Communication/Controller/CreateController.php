@@ -13,7 +13,9 @@ use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Csrf\CsrfToken;
 
 /**
  * @method \Spryker\Zed\SalesReclamationGui\Communication\SalesReclamationGuiCommunicationFactory getFactory()
@@ -24,6 +26,12 @@ class CreateController extends AbstractController
 
     protected const PARAM_IDS_SALES_ORDER_ITEMS = 'id-order-item';
     protected const PARAM_ID_RECLAMATION = 'id-reclamation';
+    protected const PARAM_TOKEN = '_token';
+    protected const PARAM_CLAIM_FORM_TOKEN_ID = 'reclamation_form_token';
+
+    protected const REQUEST_HEADER_REFERER = 'referer';
+
+    protected const VALIDATION_FALLBACK_ERROR_REDIRECT_URL = '/sales-reclamation-gui';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -32,6 +40,12 @@ class CreateController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        if ($request->isMethod(Request::METHOD_POST) && !$this->isCsrfTokenValid($request->get(static::PARAM_TOKEN))) {
+            $this->addErrorMessage('CSRF token is not valid.');
+
+            return $this->getCsrfValidationErrorRedirectUrl($request);
+        }
+
         $idSalesOrder = $this->castId($request->get(static::PARAM_ID_SALES_ORDER));
 
         $orderTransfer = $this
@@ -126,5 +140,37 @@ class CreateController extends AbstractController
         }
 
         return null;
+    }
+
+    /**
+     * @param string|null $token
+     *
+     * @return bool
+     */
+    protected function isCsrfTokenValid(?string $token): bool
+    {
+        if (!$token) {
+            return false;
+        }
+
+        $csrfToken = new CsrfToken(static::PARAM_CLAIM_FORM_TOKEN_ID, $token);
+
+        return $this->getFactory()->getCsrfTokenManager()->isTokenValid($csrfToken);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function getCsrfValidationErrorRedirectUrl(Request $request): RedirectResponse
+    {
+        if ($request->headers->has(static::REQUEST_HEADER_REFERER)) {
+            $refererUrl = $request->headers->get(static::REQUEST_HEADER_REFERER);
+
+            return $this->redirectResponseExternal($refererUrl);
+        }
+
+        return $this->redirectResponse(static::VALIDATION_FALLBACK_ERROR_REDIRECT_URL);
     }
 }
