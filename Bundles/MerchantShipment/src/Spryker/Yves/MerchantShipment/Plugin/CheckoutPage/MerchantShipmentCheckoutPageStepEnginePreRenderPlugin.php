@@ -31,11 +31,14 @@ class MerchantShipmentCheckoutPageStepEnginePreRenderPlugin extends AbstractPlug
         }
 
         foreach ($dataTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getShipment()) {
+            $shipmentTransfer = $itemTransfer->getShipment();
+
+            if (!$shipmentTransfer) {
                 continue;
             }
 
-            $itemTransfer->getShipment()->setMerchantReference($itemTransfer->getMerchantReference());
+            $shipmentTransfer->setMerchantReference($itemTransfer->getMerchantReference());
+            $itemTransfer->setShipment($shipmentTransfer);
         }
 
         return $dataTransfer;

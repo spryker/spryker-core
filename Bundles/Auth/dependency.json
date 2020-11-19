@@ -1,6 +1,0 @@
-{
-  "include": {
-    "spryker/gui": "If you want to use GUI layout templates.",
-    "spryker/transfer": "Provides transfer objects definition with associative functionality."
-  }
-}

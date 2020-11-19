@@ -7,7 +7,9 @@
 
 namespace Spryker\Client\ZedRequest\Client;
 
-use RuntimeException;
+use Spryker\Client\ZedRequest\Plugin\AuthTokenHeaderExpanderPlugin;
+use Spryker\Client\ZedRequest\Plugin\RequestIdHeaderExpanderPlugin;
+use Spryker\Client\ZedRequest\ZedRequestConfig;
 use Spryker\Service\UtilNetwork\UtilNetworkServiceInterface;
 use Spryker\Service\UtilText\UtilTextServiceInterface;
 use Spryker\Shared\ZedRequest\Client\AbstractHttpClient;
@@ -15,49 +17,39 @@ use Spryker\Shared\ZedRequest\Client\AbstractHttpClient;
 class HttpClient extends AbstractHttpClient implements HttpClientInterface
 {
     /**
-     * @var string
+     * @var \Spryker\Client\ZedRequest\ZedRequestConfig
      */
-    protected $rawToken;
+    protected $config;
 
     /**
-     * @var array
+     * @var \Spryker\Client\ZedRequestExtension\Dependency\Plugin\HeaderExpanderPluginInterface[]
      */
-    protected $tokenGenerationOptions;
+    protected $headerExpanderPlugins;
 
     /**
+     * @deprecated Added for BC compatibility reasons, will be removed with next major.
+     *
      * @var \Spryker\Service\UtilText\UtilTextServiceInterface
      */
     protected $utilTextService;
 
     /**
-     * @param string $baseUrl
-     * @param string $rawToken
-     * @param bool $isAuthenticationEnabled Deprecated: Will be removed in the next major.
-     * @param \Spryker\Service\UtilText\UtilTextServiceInterface $utilTextService
+     * @param \Spryker\Client\ZedRequest\ZedRequestConfig $config
+     * @param array $headerExpanderPlugins
      * @param \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface $utilNetworkService
-     * @param array $tokenGenerationOptions
-     * @param array $clientConfiguration
-     *
-     * @throws \RuntimeException
+     * @param \Spryker\Service\UtilText\UtilTextServiceInterface $utilTextService
      */
     public function __construct(
-        $baseUrl,
-        $rawToken,
-        $isAuthenticationEnabled,
-        UtilTextServiceInterface $utilTextService,
+        ZedRequestConfig $config,
+        array $headerExpanderPlugins,
         UtilNetworkServiceInterface $utilNetworkService,
-        array $tokenGenerationOptions = [],
-        array $clientConfiguration = []
+        UtilTextServiceInterface $utilTextService
     ) {
-        parent::__construct($baseUrl, $utilNetworkService, $clientConfiguration);
+        parent::__construct($config->getZedRequestBaseUrl(), $utilNetworkService, $config->getClientConfiguration());
 
-        $this->rawToken = $rawToken;
+        $this->config = $config;
         $this->utilTextService = $utilTextService;
-        $this->tokenGenerationOptions = $tokenGenerationOptions;
-
-        if ($isAuthenticationEnabled === false) {
-            throw new RuntimeException('Setting $isAuthenticationEnabled to false is not allowed for security reasons.');
-        }
+        $this->headerExpanderPlugins = $headerExpanderPlugins;
     }
 
     /**
@@ -65,11 +57,44 @@ class HttpClient extends AbstractHttpClient implements HttpClientInterface
      */
     public function getHeaders()
     {
-        $headers = [
-            'Auth-Token' => $this->utilTextService->generateToken($this->rawToken, $this->tokenGenerationOptions),
-            'X-Request-ID' => $this->utilNetworkService->getRequestId(),
-        ];
+        $header = [];
 
-        return $headers;
+        foreach ($this->headerExpanderPlugins as $headerExpanderPlugin) {
+            $header = $headerExpanderPlugin->expandHeader($header);
+        }
+
+        $header = $this->ensureHeaderBackwardsCompatibility($header);
+
+        return $header;
+    }
+
+    /**
+     * @deprecated Method only exists for backward-compatibility reasons and will be removed with the next major.
+     *
+     * @param array $header
+     *
+     * @return array
+     */
+    protected function ensureHeaderBackwardsCompatibility(array $header): array
+    {
+        if (!isset($header['Auth-Token'])) {
+            trigger_error(
+                sprintf('Spryker: When you need the "Auth-Token" header use the "%s" to add it. With the next major it will not be added automatically anymore.', AuthTokenHeaderExpanderPlugin::class),
+                E_USER_DEPRECATED
+            );
+
+            $header['Auth-Token'] = $this->utilTextService->generateToken($this->config->getRawToken(), $this->config->getTokenOptions());
+        }
+
+        if (!isset($header['X-Request-ID'])) {
+            trigger_error(
+                sprintf('Spryker: When you need the "X-Request-ID" header use the "%s" to add it. With the next major it will not be added automatically anymore.', RequestIdHeaderExpanderPlugin::class),
+                E_USER_DEPRECATED
+            );
+
+            $header['X-Request-ID'] = $this->utilNetworkService->getRequestId();
+        }
+
+        return $header;
     }
 }
