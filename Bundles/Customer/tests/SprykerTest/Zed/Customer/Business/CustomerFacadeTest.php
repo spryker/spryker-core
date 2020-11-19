@@ -307,7 +307,7 @@ class CustomerFacadeTest extends Unit
     {
         // Arrange
         $customerTransfer = (new CustomerBuilder([
-            CustomerTransfer::PASSWORD => static::VALUE_VALID_PASSWORD,
+            CustomerTransfer::PASSWORD => static::VALUE_SHORT_PASSWORD,
         ]))->build();
         $this->tester->mockConfigMethod('getCustomerPasswordAllowList', [static::VALUE_SHORT_PASSWORD]);
 
