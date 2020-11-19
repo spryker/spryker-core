@@ -83,6 +83,8 @@ class ShipmentQuoteItemMapper implements ShipmentQuoteItemMapperInterface
             );
         }
 
+        $quoteTransfer = $this->shipmentFacade->expandQuoteWithShipmentGroups($quoteTransfer);
+
         return $quoteTransfer;
     }
 
@@ -99,7 +101,7 @@ class ShipmentQuoteItemMapper implements ShipmentQuoteItemMapperInterface
         ShipmentTransfer $shipmentTransfer
     ): QuoteTransfer {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!in_array($itemTransfer->getGroupKey(), $itemsGroupKeys)) {
+            if (!in_array($itemTransfer->getGroupKey(), $itemsGroupKeys, true)) {
                 continue;
             }
 
@@ -124,7 +126,7 @@ class ShipmentQuoteItemMapper implements ShipmentQuoteItemMapperInterface
         $mappedBundledItems = $this->mapBundledItemsByBundleItemIdentifier($quoteTransfer);
 
         foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
-            if (!in_array($itemTransfer->getGroupKey(), $itemsGroupKeys)) {
+            if (!in_array($itemTransfer->getGroupKey(), $itemsGroupKeys, true)) {
                 continue;
             }
 

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Plugin\CheckoutRestApi;
+namespace Spryker\Glue\CartsRestApi\Plugin\CheckoutRestApi;
 
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
@@ -13,16 +13,17 @@ use Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestAttri
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Glue\CompanyBusinessUnitAddressesRestApi\CompanyBusinessUnitAddressesRestApiFactory getFactory()
+ * @method \Spryker\Glue\CartsRestApi\CartsRestApiFactory getFactory()
  */
-class CompanyBusinessUnitAddressCheckoutRequestAttributesValidatorPlugin extends AbstractPlugin implements CheckoutRequestAttributesValidatorPluginInterface
+class CartItemsCheckoutRequestAttributesValidatorPlugin extends AbstractPlugin implements CheckoutRequestAttributesValidatorPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Expects `restCheckoutRequestAttributes.restUser.idCompany` to be provided.
-     * - Collects shipping address uuids from `restCheckoutRequestAttributes.shipments`.
-     * - Checks if company addresses exists.
-     * - Returns CheckoutResponseTransfer with error if any check was failed.
+     * - Expects `RestCheckoutRequestAttributesTransfer.shipments` to be provided.
+     * - Requires `restCheckoutRequestAttributes.idCart` to be set.
+     * - Requires `restCheckoutRequestAttributes.restUser.naturalIdentifier` to be set.
+     * - Validates if `RestCheckoutRequestAttributesTransfer` provides shipment data per item level.
+     * - Validates if `RestCheckoutRequestAttributesTransfer` provides shipment data per bundle item level.
      *
      * @api
      *
@@ -34,7 +35,7 @@ class CompanyBusinessUnitAddressCheckoutRequestAttributesValidatorPlugin extends
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestErrorCollectionTransfer {
         return $this->getFactory()
-            ->createCompanyBusinessUnitAddressValidator()
-            ->validateCompanyBusinessUnitAddresses($restCheckoutRequestAttributesTransfer);
+            ->createCartItemCheckoutDataValidator()
+            ->validateCartItemCheckoutData($restCheckoutRequestAttributesTransfer);
     }
 }

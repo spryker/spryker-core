@@ -5,17 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CheckoutRestApi\Dependency\Facade;
+namespace Spryker\Zed\GiftCardsRestApi\Business\Writer;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface CheckoutRestApiToCalculationFacadeInterface
+interface GiftCardShipmentWriterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param bool $executeQuotePlugins
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function recalculateQuote(QuoteTransfer $quoteTransfer, bool $executeQuotePlugins = true);
+    public function addDefaultShipmentForGiftCards(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

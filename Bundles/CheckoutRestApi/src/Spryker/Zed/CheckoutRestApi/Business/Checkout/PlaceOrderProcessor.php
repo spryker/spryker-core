@@ -16,10 +16,10 @@ use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutResponseTransfer;
 use Spryker\Shared\CheckoutRestApi\CheckoutRestApiConfig;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote\QuoteReaderInterface;
+use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCalculationFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCheckoutFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToQuoteFacadeInterface;
-use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToShipmentFacadeInterface;
 
 class PlaceOrderProcessor implements PlaceOrderProcessorInterface
 {
@@ -44,9 +44,9 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
     protected $quoteFacade;
 
     /**
-     * @var \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToShipmentFacadeInterface
+     * @var \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCalculationFacadeInterface
      */
-    protected $shipmentFacade;
+    protected $calculationFacade;
 
     /**
      * @var \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface[]
@@ -63,7 +63,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCheckoutFacadeInterface $checkoutFacade
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToQuoteFacadeInterface $quoteFacade
-     * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToShipmentFacadeInterface $shipmentFacade
+     * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCalculationFacadeInterface $calculationFacade
      * @param \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface[] $quoteMapperPlugins
      * @param \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataValidatorPluginInterface[] $checkoutDataValidatorPlugins
      */
@@ -72,7 +72,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
         CheckoutRestApiToCartFacadeInterface $cartFacade,
         CheckoutRestApiToCheckoutFacadeInterface $checkoutFacade,
         CheckoutRestApiToQuoteFacadeInterface $quoteFacade,
-        CheckoutRestApiToShipmentFacadeInterface $shipmentFacade,
+        CheckoutRestApiToCalculationFacadeInterface $calculationFacade,
         array $quoteMapperPlugins,
         array $checkoutDataValidatorPlugins
     ) {
@@ -80,7 +80,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
         $this->cartFacade = $cartFacade;
         $this->checkoutFacade = $checkoutFacade;
         $this->quoteFacade = $quoteFacade;
-        $this->shipmentFacade = $shipmentFacade;
+        $this->calculationFacade = $calculationFacade;
         $this->quoteMapperPlugins = $quoteMapperPlugins;
         $this->checkoutDataValidatorPlugins = $checkoutDataValidatorPlugins;
     }
@@ -105,7 +105,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
         }
 
         $quoteTransfer = $this->mapRestCheckoutRequestAttributesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
-        $quoteTransfer = $this->shipmentFacade->expandQuoteWithShipmentGroups($quoteTransfer);
+        $quoteTransfer = $this->recalculateQuote($quoteTransfer);
 
         $checkoutResponseTransfer = $this->executePlaceOrder($quoteTransfer);
 
@@ -207,6 +207,16 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function recalculateQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->calculationFacade->recalculateQuote($quoteTransfer);
     }
 
     /**

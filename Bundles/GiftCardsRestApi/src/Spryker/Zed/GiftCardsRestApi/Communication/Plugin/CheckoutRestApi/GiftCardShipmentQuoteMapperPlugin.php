@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ShipmentsRestApi\Communication\Plugin\CheckoutRestApi;
+namespace Spryker\Zed\GiftCardsRestApi\Communication\Plugin\CheckoutRestApi;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
@@ -13,16 +13,15 @@ use Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInte
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacadeInterface getFacade()
- * @method \Spryker\Zed\ShipmentsRestApi\ShipmentsRestApiConfig getConfig()
+ * @method \Spryker\Zed\GiftCardsRestApi\Business\GiftCardsRestApiFacadeInterface getFacade()
+ * @method \Spryker\Zed\GiftCardsRestApi\GiftCardsRestApiConfig getConfig()
  */
-class ShipmentsQuoteMapperPlugin extends AbstractPlugin implements QuoteMapperPluginInterface
+class GiftCardShipmentQuoteMapperPlugin extends AbstractPlugin implements QuoteMapperPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Maps `RestCheckoutRequestAttributesTransfer.shipments` to `QuoteTransfer.items[*].shipment`.
-     * - Maps `RestCheckoutRequestAttributesTransfer.shipments` to `QuoteTransfer.bundleItems[*].shipment`.
-     * - Expands quote expenses with shipment expenses.
+     * - Adds default shipment for gift cards.
+     * - Sets `NoShipment` selection for gift cards.
      *
      * @api
      *
@@ -35,6 +34,6 @@ class ShipmentsQuoteMapperPlugin extends AbstractPlugin implements QuoteMapperPl
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer {
-        return $this->getFacade()->mapShipmentsToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+        return $this->getFacade()->addDefaultShipmentForGiftCards($quoteTransfer);
     }
 }

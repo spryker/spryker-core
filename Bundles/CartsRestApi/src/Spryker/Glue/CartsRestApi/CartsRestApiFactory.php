@@ -52,6 +52,8 @@ use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestRespons
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\ItemResponseBuilder;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\ItemResponseBuilderInterface;
+use Spryker\Glue\CartsRestApi\Processor\Validator\CartItemCheckoutDataValidator;
+use Spryker\Glue\CartsRestApi\Processor\Validator\CartItemCheckoutDataValidatorInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 /**
@@ -313,6 +315,16 @@ class CartsRestApiFactory extends AbstractFactory
         return new ItemResponseBuilder(
             $this->getResourceBuilder(),
             $this->createCartItemMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CartsRestApi\Processor\Validator\CartItemCheckoutDataValidatorInterface
+     */
+    public function createCartItemCheckoutDataValidator(): CartItemCheckoutDataValidatorInterface
+    {
+        return new CartItemCheckoutDataValidator(
+            $this->getClient()
         );
     }
 
