@@ -47,7 +47,7 @@ class CustomerPasswordPolicyValidator implements CustomerPasswordPolicyValidator
         }
 
         foreach ($this->customerPasswordPolicies as $customerPasswordPolicy) {
-            $customerPasswordPolicy->validatePassword($password, $customerResponseTransfer);
+            $customerResponseTransfer = $customerPasswordPolicy->validatePassword($password, $customerResponseTransfer);
         }
 
         return $customerResponseTransfer;
