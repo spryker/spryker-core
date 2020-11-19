@@ -15,14 +15,12 @@ jQuery(document).ready(function() {
         depth: 1
     });
 
-    var csrfToken = jQuery('#category-nodes-re-sort-token')[0].value;
-
     categoryNestable.on('change', function(event) {
         var list = event.length ? event : jQuery(event.target);
         window.serializedList = window.JSON.stringify(list.nestable('serialize'));
     });
 
     jQuery('#save-button').on('click', function() {
-        writer.save(window.serializedList, progressBar, csrfToken);
+        writer.save(window.serializedList, progressBar);
     });
 });

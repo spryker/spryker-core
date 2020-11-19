@@ -165,12 +165,8 @@ class CreateController extends AbstractController
      */
     protected function getCsrfValidationErrorRedirectUrl(Request $request): RedirectResponse
     {
-        if ($request->headers->has(static::REQUEST_HEADER_REFERER)) {
-            $refererUrl = $request->headers->get(static::REQUEST_HEADER_REFERER);
+        $redirectUrl = $request->headers->get(static::REQUEST_HEADER_REFERER, static::VALIDATION_FALLBACK_ERROR_REDIRECT_URL);
 
-            return $this->redirectResponseExternal($refererUrl);
-        }
-
-        return $this->redirectResponse(static::VALIDATION_FALLBACK_ERROR_REDIRECT_URL);
+        return $this->redirectResponse($redirectUrl);
     }
 }

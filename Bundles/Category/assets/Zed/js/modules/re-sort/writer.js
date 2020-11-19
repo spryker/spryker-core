@@ -8,14 +8,14 @@
 /**
  *
  * @param {string} serializedNodeList
- * @param {string} csrfToken
  *
  * @return {void}
  */
-function save(serializedNodeList, progressBar, csrfToken = '')
+function save(serializedNodeList, progressBar)
 {
     progressBar.show();
 
+    var csrfToken = jQuery('#category-nodes-re-sort-token')[0].value;
     var promise = jQuery.post(
         '/category/re-sort/save',
         {
