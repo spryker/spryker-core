@@ -80,7 +80,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_CUSTOMER_PASSWORD_TOO_LONG = '419';
     public const RESPONSE_MESSAGE_CUSTOMER_PASSWORD_TOO_LONG = 'The password is too long.';
 
-    public const RESPONSE_CODE_CUSTOMER_PASSWORD_SPECIAL_REQUIRED = '420';
+    public const RESPONSE_CODE_CUSTOMER_PASSWORD_INVALID_CHARACTER_SET = '420';
     public const RESPONSE_MESSAGE_CUSTOMER_PASSWORD_INVALID_CHARACTER_SET = 'The password character set is invalid.';
 
     public const RESPONSE_CODE_CUSTOMER_PASSWORD_SEQUENCE_NOT_ALLOWED = '421';
