@@ -39,7 +39,7 @@ class RedisDataCollector extends DataCollector
      */
     public function collect(Request $request, Response $response, ?Throwable $exception = null)
     {
-        $this->data['calls'] = $this->redisLogger->getCalls();
+        $this->data['calls'] = $this->redisLogger->getLogs();
     }
 
     /**

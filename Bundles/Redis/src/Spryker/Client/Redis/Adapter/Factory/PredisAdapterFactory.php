@@ -15,6 +15,8 @@ use Spryker\Client\Redis\Adapter\PredisAdapter;
 use Spryker\Client\Redis\Adapter\RedisAdapterInterface;
 use Spryker\Client\Redis\Exception\ConnectionConfigurationException;
 use Spryker\Client\Redis\RedisConfig;
+use Spryker\Shared\Redis\Dependency\Service\RedisToUtilEncodingServiceInterface;
+use Spryker\Shared\Redis\Logger\RedisInMemoryLogger;
 use Spryker\Shared\Redis\Logger\RedisLoggerInterface;
 
 class PredisAdapterFactory implements RedisAdapterFactoryInterface
@@ -25,21 +27,21 @@ class PredisAdapterFactory implements RedisAdapterFactoryInterface
     /**
      * @var \Spryker\Client\Redis\RedisConfig
      */
-    protected $config;
+    protected $redisConfig;
 
     /**
-     * @var \Spryker\Shared\Redis\Logger\RedisLoggerInterface
+     * @var \Spryker\Shared\Redis\Dependency\Service\RedisToUtilEncodingServiceInterface
      */
-    protected $redisLogger;
+    protected $utilEncodingService;
 
     /**
-     * @param \Spryker\Client\Redis\RedisConfig $config
-     * @param \Spryker\Shared\Redis\Logger\RedisLoggerInterface $redisLogger
+     * @param \Spryker\Client\Redis\RedisConfig $redisConfig
+     * @param \Spryker\Shared\Redis\Dependency\Service\RedisToUtilEncodingServiceInterface $utilEncodingService
      */
-    public function __construct(RedisConfig $config, RedisLoggerInterface $redisLogger)
+    public function __construct(RedisConfig $redisConfig, RedisToUtilEncodingServiceInterface $utilEncodingService)
     {
-        $this->config = $config;
-        $this->redisLogger = $redisLogger;
+        $this->redisConfig = $redisConfig;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -49,28 +51,46 @@ class PredisAdapterFactory implements RedisAdapterFactoryInterface
      */
     public function create(RedisConfigurationTransfer $redisConfigurationTransfer): RedisAdapterInterface
     {
-        $predisAdapter = new PredisAdapter(
-            $this->createPredisClient($redisConfigurationTransfer)
-        );
-
-        if (!$this->config->isDevelopmentMode()) {
-            return $predisAdapter;
+        if (!$this->redisConfig->isDevelopmentMode()) {
+            return $this->createPredisAdapter($redisConfigurationTransfer);
         }
 
-        return $this->createLoggablePredisAdapter($predisAdapter, $redisConfigurationTransfer);
+        return $this->createLoggablePredisAdapter($redisConfigurationTransfer);
     }
 
     /**
-     * @param \Spryker\Client\Redis\Adapter\RedisAdapterInterface $redisAdapter
      * @param \Generated\Shared\Transfer\RedisConfigurationTransfer $redisConfigurationTransfer
      *
      * @return \Spryker\Client\Redis\Adapter\RedisAdapterInterface
      */
-    public function createLoggablePredisAdapter(
-        RedisAdapterInterface $redisAdapter,
-        RedisConfigurationTransfer $redisConfigurationTransfer
-    ): RedisAdapterInterface {
-        return new LoggableRedisAdapter($redisConfigurationTransfer, $redisAdapter, $this->redisLogger);
+    protected function createPredisAdapter(RedisConfigurationTransfer $redisConfigurationTransfer): RedisAdapterInterface
+    {
+        return new PredisAdapter(
+            $this->createPredisClient($redisConfigurationTransfer)
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RedisConfigurationTransfer $redisConfigurationTransfer
+     *
+     * @return \Spryker\Client\Redis\Adapter\RedisAdapterInterface
+     */
+    protected function createLoggablePredisAdapter(RedisConfigurationTransfer $redisConfigurationTransfer): RedisAdapterInterface
+    {
+        return new LoggableRedisAdapter(
+            $this->createPredisAdapter($redisConfigurationTransfer),
+            $this->createRedisLogger($redisConfigurationTransfer)
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RedisConfigurationTransfer $redisConfigurationTransfer
+     *
+     * @return \Spryker\Shared\Redis\Logger\RedisLoggerInterface
+     */
+    protected function createRedisLogger(RedisConfigurationTransfer $redisConfigurationTransfer): RedisLoggerInterface
+    {
+        return new RedisInMemoryLogger($this->utilEncodingService, $redisConfigurationTransfer);
     }
 
     /**

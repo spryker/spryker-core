@@ -8,8 +8,7 @@
 namespace SprykerTest\Shared\Redis\Logger;
 
 use Codeception\Test\Unit;
-use Spryker\Shared\Redis\Dependency\Service\RedisToUtilEncodingServiceBridge;
-use Spryker\Shared\Redis\Logger\RedisInMemoryLogger;
+use SprykerTest\Shared\Redis\RedisClientTester;
 
 /**
  * Auto-generated group annotations
@@ -25,23 +24,6 @@ use Spryker\Shared\Redis\Logger\RedisInMemoryLogger;
 class RedisInMemoryLoggerTest extends Unit
 {
     /**
-     * @var \Spryker\Shared\Redis\Dependency\Service\RedisToUtilEncodingServiceInterface
-     */
-    protected $redisToUtilEncodingServiceBridge;
-
-    /**
-     * @return void
-     */
-    protected function _setUp(): void
-    {
-        parent::_setUp();
-
-        $this->redisToUtilEncodingServiceBridge = new RedisToUtilEncodingServiceBridge(
-            $this->tester->getLocator()->utilEncoding()->service()
-        );
-    }
-
-    /**
      * @dataProvider canLogCallsDataProvider
      *
      * @param array $callData
@@ -51,20 +33,20 @@ class RedisInMemoryLoggerTest extends Unit
      */
     public function testCanLogCalls(array $callData, array $expectedResult): void
     {
-        $redisInMemoryLogger = new RedisInMemoryLogger(
-            $this->redisToUtilEncodingServiceBridge
-        );
+        // Arrange
+        $redisInMemoryLogger = $this->tester->createRedisInMemoryLogger();
 
+        // Act
         foreach ($callData as $singleCallData) {
-            $redisInMemoryLogger->logCall(
-                $singleCallData['destination'],
+            $redisInMemoryLogger->log(
                 $singleCallData['command'],
                 $singleCallData['payload'],
                 $singleCallData['result'],
             );
         }
 
-        $this->assertSame($expectedResult, $redisInMemoryLogger->getCalls());
+        // Assert
+        $this->assertSame($expectedResult, $redisInMemoryLogger->getLogs());
     }
 
     /**
@@ -76,7 +58,6 @@ class RedisInMemoryLoggerTest extends Unit
             'first call' => [
                 [
                     [
-                        'destination' => 'redis://localhost:4321',
                         'command' => 'GET',
                         'payload' => ['key' => 'some:redis:key'],
                         'result' => ['result'],
@@ -84,7 +65,7 @@ class RedisInMemoryLoggerTest extends Unit
                 ],
                 [
                     [
-                        'destination' => 'redis://localhost:4321',
+                        'destination' => $this->buildDsnString(),
                         'command' => 'GET',
                         'payload' => json_encode(['key' => 'some:redis:key'], JSON_PRETTY_PRINT),
                         'result' => json_encode(['result'], JSON_PRETTY_PRINT),
@@ -94,7 +75,6 @@ class RedisInMemoryLoggerTest extends Unit
             'another calls' => [
                 [
                     [
-                        'destination' => 'redis://localhost:4321',
                         'command' => 'SET',
                         'payload' => ['key' => 'some:redis:key', 'data' => ['dummy data']],
                         'result' => ['result'],
@@ -102,13 +82,13 @@ class RedisInMemoryLoggerTest extends Unit
                 ],
                 [
                     [
-                        'destination' => 'redis://localhost:4321',
+                        'destination' => $this->buildDsnString(),
                         'command' => 'GET',
                         'payload' => json_encode(['key' => 'some:redis:key'], JSON_PRETTY_PRINT),
                         'result' => json_encode(['result'], JSON_PRETTY_PRINT),
                     ],
                     [
-                        'destination' => 'redis://localhost:4321',
+                        'destination' => $this->buildDsnString(),
                         'command' => 'SET',
                         'payload' => json_encode(['key' => 'some:redis:key', 'data' => ['dummy data']], JSON_PRETTY_PRINT),
                         'result' => json_encode(['result'], JSON_PRETTY_PRINT),
@@ -116,5 +96,24 @@ class RedisInMemoryLoggerTest extends Unit
                 ],
             ],
         ];
+    }
+
+    /**
+     * @param string|null $protocol
+     * @param string|null $host
+     * @param int|null $port
+     * @param string|null $database
+     *
+     * @return string
+     */
+    public function buildDsnString(?string $protocol = null, ?string $host = null, ?int $port = null, ?string $database = null): string
+    {
+        return sprintf(
+            '%s://%s:%d/%s',
+            $protocol ?? RedisClientTester::DEFAULT_REDIS_PROTOCOL,
+            $host ?? RedisClientTester::DEFAULT_REDIS_HOST,
+            $port ?? RedisClientTester::DEFAULT_REDIS_PORT,
+            $database ?? RedisClientTester::DEFAULT_REDIS_DATABASE
+        );
     }
 }

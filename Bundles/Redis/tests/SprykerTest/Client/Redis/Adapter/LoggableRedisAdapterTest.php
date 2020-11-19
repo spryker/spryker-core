@@ -8,8 +8,6 @@
 namespace SprykerTest\Client\Redis\Adapter;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\RedisConfigurationTransfer;
-use Generated\Shared\Transfer\RedisCredentialsTransfer;
 use Spryker\Client\Redis\Adapter\LoggableRedisAdapter;
 use Spryker\Client\Redis\Adapter\RedisAdapterInterface;
 use Spryker\Shared\Redis\Logger\RedisLoggerInterface;
@@ -26,18 +24,13 @@ use Spryker\Shared\Redis\Logger\RedisLoggerInterface;
  */
 class LoggableRedisAdapterTest extends Unit
 {
-    protected const PROTOCOL = 'redis';
-    protected const HOST = 'localhost';
-    protected const PORT = 6379;
-    protected const DATABASE = 1;
-
     /**
-     * @var \Spryker\Client\Redis\Adapter\RedisAdapterInterface
+     * @var \Spryker\Client\Redis\Adapter\RedisAdapterInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $redisAdapterMock;
 
     /**
-     * @var \Spryker\Shared\Redis\Logger\RedisLoggerInterface
+     * @var \Spryker\Shared\Redis\Logger\RedisLoggerInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $redisLoggerMock;
 
@@ -68,8 +61,8 @@ class LoggableRedisAdapterTest extends Unit
 
         $this->redisAdapterMock->expects($this->once())->method('get')->willReturn($returnValue);
         $this->redisLoggerMock->expects($this->once())
-            ->method('logCall')
-            ->with('redis://localhost:6379/1', 'GET', ['key' => $key], $returnValue);
+            ->method('log')
+            ->with('GET', ['key' => $key], $returnValue);
 
         $this->loggableRedisAdapter->get($key);
     }
@@ -86,8 +79,8 @@ class LoggableRedisAdapterTest extends Unit
 
         $this->redisAdapterMock->expects($this->once())->method('setex')->willReturn($returnValue);
         $this->redisLoggerMock->expects($this->once())
-            ->method('logCall')
-            ->with('redis://localhost:6379/1', 'SETEX', ['key' => $key, 'seconds' => $seconds, 'value' => $value], $returnValue);
+            ->method('log')
+            ->with('SETEX', ['key' => $key, 'seconds' => $seconds, 'value' => $value], $returnValue);
 
         $this->loggableRedisAdapter->setex($key, $seconds, $value);
     }
@@ -105,9 +98,8 @@ class LoggableRedisAdapterTest extends Unit
 
         $this->redisAdapterMock->expects($this->once())->method('set')->willReturn(true);
         $this->redisLoggerMock->expects($this->once())
-            ->method('logCall')
+            ->method('log')
             ->with(
-                'redis://localhost:6379/1',
                 'SET',
                 [
                     'key' => $key,
@@ -138,9 +130,8 @@ class LoggableRedisAdapterTest extends Unit
 
         $this->redisAdapterMock->expects($this->once())->method('del')->willReturn($returnValue);
         $this->redisLoggerMock->expects($this->once())
-            ->method('logCall')
+            ->method('log')
             ->with(
-                'redis://localhost:6379/1',
                 'DEL',
                 [
                     'keys' => $keys,
@@ -163,9 +154,8 @@ class LoggableRedisAdapterTest extends Unit
 
         $this->redisAdapterMock->expects($this->once())->method('eval')->willReturn($returnValue);
         $this->redisLoggerMock->expects($this->once())
-            ->method('logCall')
+            ->method('log')
             ->with(
-                'redis://localhost:6379/1',
                 'EVAL',
                 [
                     'script' => $script,
@@ -188,9 +178,8 @@ class LoggableRedisAdapterTest extends Unit
 
         $this->redisAdapterMock->expects($this->once())->method('mget')->willReturn($returnValue);
         $this->redisLoggerMock->expects($this->once())
-            ->method('logCall')
+            ->method('log')
             ->with(
-                'redis://localhost:6379/1',
                 'MGET',
                 [
                     'keys' => $keys,
@@ -211,9 +200,8 @@ class LoggableRedisAdapterTest extends Unit
 
         $this->redisAdapterMock->expects($this->once())->method('mset')->willReturn($returnValue);
         $this->redisLoggerMock->expects($this->once())
-            ->method('logCall')
+            ->method('log')
             ->with(
-                'redis://localhost:6379/1',
                 'MSET',
                 [
                     'dictionary' => $dictionary,
@@ -234,9 +222,8 @@ class LoggableRedisAdapterTest extends Unit
 
         $this->redisAdapterMock->expects($this->once())->method('info')->willReturn($returnValue);
         $this->redisLoggerMock->expects($this->once())
-            ->method('logCall')
+            ->method('log')
             ->with(
-                'redis://localhost:6379/1',
                 'INFO',
                 [
                     'section' => $section,
@@ -257,9 +244,8 @@ class LoggableRedisAdapterTest extends Unit
 
         $this->redisAdapterMock->expects($this->once())->method('keys')->willReturn($returnValue);
         $this->redisLoggerMock->expects($this->once())
-            ->method('logCall')
+            ->method('log')
             ->with(
-                'redis://localhost:6379/1',
                 'KEYS',
                 [
                     'pattern' => $pattern,
@@ -281,9 +267,8 @@ class LoggableRedisAdapterTest extends Unit
 
         $this->redisAdapterMock->expects($this->once())->method('scan')->willReturn($returnValue);
         $this->redisLoggerMock->expects($this->once())
-            ->method('logCall')
+            ->method('log')
             ->with(
-                'redis://localhost:6379/1',
                 'SCAN',
                 [
                     'cursor' => $cursor,
@@ -304,8 +289,8 @@ class LoggableRedisAdapterTest extends Unit
 
         $this->redisAdapterMock->expects($this->once())->method('dbSize')->willReturn($returnValue);
         $this->redisLoggerMock->expects($this->once())
-            ->method('logCall')
-            ->with('redis://localhost:6379/1', 'DBSIZE', [], $returnValue);
+            ->method('log')
+            ->with('DBSIZE', [], $returnValue);
 
         $this->loggableRedisAdapter->dbSize();
     }
@@ -317,8 +302,8 @@ class LoggableRedisAdapterTest extends Unit
     {
         $this->redisAdapterMock->expects($this->once())->method('flushDb');
         $this->redisLoggerMock->expects($this->once())
-            ->method('logCall')
-            ->with('redis://localhost:6379/1', 'FLUSHDB', []);
+            ->method('log')
+            ->with('FLUSHDB', []);
 
         $this->loggableRedisAdapter->flushDb();
     }
@@ -328,16 +313,7 @@ class LoggableRedisAdapterTest extends Unit
      */
     protected function setupLoggableRedisAdapter(): void
     {
-        $connectionCredentials = (new RedisCredentialsTransfer())
-            ->setProtocol(static::PROTOCOL)
-            ->setHost(static::HOST)
-            ->setPort(static::PORT)
-            ->setDatabase(static::DATABASE);
-        $configurationTransfer = (new RedisConfigurationTransfer())
-            ->setConnectionCredentials($connectionCredentials);
-
         $this->loggableRedisAdapter = new LoggableRedisAdapter(
-            $configurationTransfer,
             $this->redisAdapterMock,
             $this->redisLoggerMock
         );

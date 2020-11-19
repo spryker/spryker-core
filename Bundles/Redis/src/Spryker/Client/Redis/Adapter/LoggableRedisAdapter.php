@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\Redis\Adapter;
 
-use Generated\Shared\Transfer\RedisConfigurationTransfer;
 use Spryker\Shared\Redis\Logger\RedisLoggerInterface;
 
 class LoggableRedisAdapter implements RedisAdapterInterface
@@ -23,18 +22,11 @@ class LoggableRedisAdapter implements RedisAdapterInterface
     protected $redisLogger;
 
     /**
-     * @var string
-     */
-    protected $dsn;
-
-    /**
-     * @param \Generated\Shared\Transfer\RedisConfigurationTransfer $redisConfigurationTransfer
      * @param \Spryker\Client\Redis\Adapter\RedisAdapterInterface $redisAdapter
      * @param \Spryker\Shared\Redis\Logger\RedisLoggerInterface $redisLogger
      */
-    public function __construct(RedisConfigurationTransfer $redisConfigurationTransfer, RedisAdapterInterface $redisAdapter, RedisLoggerInterface $redisLogger)
+    public function __construct(RedisAdapterInterface $redisAdapter, RedisLoggerInterface $redisLogger)
     {
-        $this->setupDsn($redisConfigurationTransfer);
         $this->redisAdapter = $redisAdapter;
         $this->redisLogger = $redisLogger;
     }
@@ -46,8 +38,8 @@ class LoggableRedisAdapter implements RedisAdapterInterface
      */
     public function get(string $key): ?string
     {
-        $result = call_user_func_array([$this->redisAdapter, 'get'], func_get_args());
-        $this->redisLogger->logCall($this->dsn, 'GET', ['key' => $key], $result);
+        $result = $this->redisAdapter->get($key);
+        $this->redisLogger->log('GET', ['key' => $key], $result);
 
         return $result;
     }
@@ -61,8 +53,8 @@ class LoggableRedisAdapter implements RedisAdapterInterface
      */
     public function setex(string $key, int $seconds, string $value): bool
     {
-        $result = call_user_func_array([$this->redisAdapter, 'setex'], func_get_args());
-        $this->redisLogger->logCall($this->dsn, 'SETEX', ['key' => $key, 'seconds' => $seconds, 'value' => $value], $result);
+        $result = $this->redisAdapter->setex($key, $seconds, $value);
+        $this->redisLogger->log('SETEX', ['key' => $key, 'seconds' => $seconds, 'value' => $value], $result);
 
         return $result;
     }
@@ -78,9 +70,8 @@ class LoggableRedisAdapter implements RedisAdapterInterface
      */
     public function set(string $key, string $value, ?string $expireResolution = null, ?int $expireTTL = null, ?string $flag = null): bool
     {
-        $result = call_user_func_array([$this->redisAdapter, 'set'], func_get_args());
-        $this->redisLogger->logCall(
-            $this->dsn,
+        $result = $this->redisAdapter->set($key, $value, $expireResolution, $expireTTL, $flag);
+        $this->redisLogger->log(
             'SET',
             [
                 'key' => $key,
@@ -102,8 +93,8 @@ class LoggableRedisAdapter implements RedisAdapterInterface
      */
     public function del(array $keys): int
     {
-        $result = call_user_func_array([$this->redisAdapter, 'del'], func_get_args());
-        $this->redisLogger->logCall($this->dsn, 'DEL', ['keys' => $keys], $result);
+        $result = $this->redisAdapter->del($keys);
+        $this->redisLogger->log('DEL', ['keys' => $keys], $result);
 
         return $result;
     }
@@ -117,9 +108,8 @@ class LoggableRedisAdapter implements RedisAdapterInterface
      */
     public function eval(string $script, int $numKeys, array $keysOrArgs): bool
     {
-        $result = call_user_func_array([$this->redisAdapter, 'eval'], func_get_args());
-        $this->redisLogger->logCall(
-            $this->dsn,
+        $result = $this->redisAdapter->eval($script, $numKeys, $keysOrArgs);
+        $this->redisLogger->log(
             'EVAL',
             ['script' => $script, 'numKeys' => $numKeys, 'keysOrArgs' => $keysOrArgs],
             $result
@@ -159,8 +149,8 @@ class LoggableRedisAdapter implements RedisAdapterInterface
      */
     public function mget(array $keys): array
     {
-        $result = call_user_func_array([$this->redisAdapter, 'mget'], func_get_args());
-        $this->redisLogger->logCall($this->dsn, 'MGET', ['keys' => $keys], $result);
+        $result = $this->redisAdapter->mget($keys);
+        $this->redisLogger->log('MGET', ['keys' => $keys], $result);
 
         return $result;
     }
@@ -172,8 +162,8 @@ class LoggableRedisAdapter implements RedisAdapterInterface
      */
     public function mset(array $dictionary): bool
     {
-        $result = call_user_func_array([$this->redisAdapter, 'mset'], func_get_args());
-        $this->redisLogger->logCall($this->dsn, 'MSET', ['dictionary' => $dictionary], $result);
+        $result = $this->redisAdapter->mset($dictionary);
+        $this->redisLogger->log('MSET', ['dictionary' => $dictionary], $result);
 
         return $result;
     }
@@ -185,8 +175,8 @@ class LoggableRedisAdapter implements RedisAdapterInterface
      */
     public function info(?string $section = null): array
     {
-        $result = call_user_func_array([$this->redisAdapter, 'info'], func_get_args());
-        $this->redisLogger->logCall($this->dsn, 'INFO', ['section' => $section], $result);
+        $result = $this->redisAdapter->info($section);
+        $this->redisLogger->log('INFO', ['section' => $section], $result);
 
         return $result;
     }
@@ -198,8 +188,8 @@ class LoggableRedisAdapter implements RedisAdapterInterface
      */
     public function keys(string $pattern): array
     {
-        $result = call_user_func_array([$this->redisAdapter, 'keys'], func_get_args());
-        $this->redisLogger->logCall($this->dsn, 'KEYS', ['pattern' => $pattern], $result);
+        $result = $this->redisAdapter->keys($pattern);
+        $this->redisLogger->log('KEYS', ['pattern' => $pattern], $result);
 
         return $result;
     }
@@ -212,8 +202,8 @@ class LoggableRedisAdapter implements RedisAdapterInterface
      */
     public function scan(int $cursor, array $options): array
     {
-        $result = call_user_func_array([$this->redisAdapter, 'scan'], func_get_args());
-        $this->redisLogger->logCall($this->dsn, 'SCAN', ['cursor' => $cursor, 'options' => $options], $result);
+        $result = $this->redisAdapter->scan($cursor, $options);
+        $this->redisLogger->log('SCAN', ['cursor' => $cursor, 'options' => $options], $result);
 
         return $result;
     }
@@ -224,7 +214,7 @@ class LoggableRedisAdapter implements RedisAdapterInterface
     public function dbSize(): int
     {
         $result = $this->redisAdapter->dbSize();
-        $this->redisLogger->logCall($this->dsn, 'DBSIZE', [], $result);
+        $this->redisLogger->log('DBSIZE', [], $result);
 
         return $result;
     }
@@ -234,39 +224,8 @@ class LoggableRedisAdapter implements RedisAdapterInterface
      */
     public function flushDb(): void
     {
-        $this->redisLogger->logCall($this->dsn, 'FLUSHDB', []);
+        $this->redisLogger->log('FLUSHDB', []);
 
         $this->redisAdapter->flushDb();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RedisConfigurationTransfer $redisConfigurationTransfer
-     *
-     * @return void
-     */
-    protected function setupDsn(RedisConfigurationTransfer $redisConfigurationTransfer)
-    {
-        $dataSourceNames = $redisConfigurationTransfer->getDataSourceNames();
-
-        if ($dataSourceNames) {
-            $this->dsn = implode(', ', $dataSourceNames);
-
-            return;
-        }
-
-        $connectionCredentialsTransfer = $redisConfigurationTransfer->getConnectionCredentials();
-        $dsn = '';
-
-        if ($connectionCredentialsTransfer) {
-            $dsn = sprintf(
-                '%s://%s:%d/%s',
-                $connectionCredentialsTransfer->getProtocol() ?? 'redis',
-                $connectionCredentialsTransfer->getHost(),
-                $connectionCredentialsTransfer->getPort(),
-                $connectionCredentialsTransfer->getDatabase()
-            );
-        }
-
-        $this->dsn = $dsn;
     }
 }

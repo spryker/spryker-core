@@ -13,8 +13,6 @@ use Spryker\Client\Redis\Adapter\Factory\RedisAdapterFactoryInterface;
 use Spryker\Client\Redis\Adapter\RedisAdapterProvider;
 use Spryker\Client\Redis\Adapter\RedisAdapterProviderInterface;
 use Spryker\Shared\Redis\Dependency\Service\RedisToUtilEncodingServiceInterface;
-use Spryker\Shared\Redis\Logger\RedisInMemoryLogger;
-use Spryker\Shared\Redis\Logger\RedisLoggerInterface;
 
 /**
  * @method \Spryker\Client\Redis\RedisConfig getConfig()
@@ -38,16 +36,6 @@ class RedisFactory extends AbstractFactory
     {
         return new PredisAdapterFactory(
             $this->getConfig(),
-            $this->createRedisLogger()
-        );
-    }
-
-    /**
-     * @return \Spryker\Shared\Redis\Logger\RedisLoggerInterface
-     */
-    public function createRedisLogger(): RedisLoggerInterface
-    {
-        return new RedisInMemoryLogger(
             $this->getUtilEncodingService()
         );
     }

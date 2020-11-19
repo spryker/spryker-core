@@ -10,17 +10,16 @@ namespace Spryker\Shared\Redis\Logger;
 interface RedisLoggerInterface
 {
     /**
-     * @param string $dsn
      * @param string $command
      * @param array $payload
      * @param mixed|null $result
      *
      * @return void
      */
-    public function logCall(string $dsn, string $command, array $payload, $result = null);
+    public function log(string $command, array $payload, $result = null);
 
     /**
      * @return string[][]
      */
-    public function getCalls(): array;
+    public function getLogs(): array;
 }
