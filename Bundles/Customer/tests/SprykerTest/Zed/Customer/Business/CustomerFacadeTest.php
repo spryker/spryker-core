@@ -303,7 +303,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddCustomerCustomerAddedWhenPasswordInAllowList(): void
+    public function testAddCustomerAddsCustomerWhenPasswordInAllowList(): void
     {
         // Arrange
         $customerTransfer = (new CustomerBuilder([
@@ -322,7 +322,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddCustomerCustomerNotAddedWhenPasswordHasTooLongSequence(): void
+    public function testAddCustomerNotAddsCustomerWhenPasswordHasTooLongSequence(): void
     {
         // Arrange
         $customerTransfer = (new CustomerBuilder([
@@ -344,7 +344,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddCustomerCustomerNotAddedWhenPasswordInDenyList(): void
+    public function testAddCustomerNotAddsCustomerWhenPasswordInDenyList(): void
     {
         // Arrange
         $customerTransfer = (new CustomerBuilder([
@@ -366,7 +366,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddCustomerCustomerNotAddedWhenPasswordCharacterSetWrong(): void
+    public function testAddCustomerNotAddsCustomerWhenPasswordCharacterSetWrong(): void
     {
         // Arrange
         $customerTransfer = (new CustomerBuilder([
@@ -388,7 +388,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRegisterCustomerShouldNotRegisterCustomerWhenPasswordLessThanMinLength(): void
+    public function testRegisterCustomerNotRegistersCustomerWhenPasswordLessThanMinLength(): void
     {
         // Arrange
         $customerTransfer = (new CustomerBuilder([
@@ -456,7 +456,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRegisterCustomerCustomerRegistereredWhenPasswordInAllowList(): void
+    public function testRegisterCustomerRegistersCustomerWhenPasswordInAllowList(): void
     {
         // Arrange
         $customerTransfer = (new CustomerBuilder([
@@ -475,7 +475,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRegisterCustomerNotRegisteredWhenPasswordHasTooLongSequence(): void
+    public function testRegisterCustomerNotRegistersCustomerWhenPasswordHasTooLongSequence(): void
     {
         // Arrange
         $customerTransfer = (new CustomerBuilder([
@@ -497,7 +497,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRegisterCustomerNotRegisteredWhenPasswordInDenyList(): void
+    public function testRegisterCustomerNotRegistersCustomerWhenPasswordInDenyList(): void
     {
         // Arrange
         $customerTransfer = (new CustomerBuilder([
@@ -519,7 +519,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRegisterCustomerCustomerNotRegisteredWhenPasswordCharacterSetWrong(): void
+    public function testRegisterCustomerNotRegistersCustomerWhenPasswordCharacterSetWrong(): void
     {
         // Arrange
         $customerTransfer = (new CustomerBuilder([
@@ -541,7 +541,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRegisterCustomerCustomerRegisteredWhenPasswordHasSequence(): void
+    public function testRegisterCustomerRegistersCustomerWhenPasswordHasValidLengthSequence(): void
     {
         // Arrange
         $customerTransfer = (new CustomerBuilder([
@@ -560,7 +560,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRegisterCustomerCustomerRegisteredWhenPasswordNotInDenyList(): void
+    public function testRegisterCustomerRegistersCustomerWhenPasswordNotInDenyList(): void
     {
         // Arrange
         $customerTransfer = (new CustomerBuilder([
@@ -579,7 +579,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRegisterCustomerCustomerRegisteredWhenPasswordCharacterSetValid(): void
+    public function testRegisterCustomerRegistersCustomerWhenPasswordCharacterSetValid(): void
     {
         // Arrange
         $customerTransfer = (new CustomerBuilder([
@@ -598,7 +598,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateCustomerShouldNotUpdateCustomerWhenPasswordLessThanMinLength(): void
+    public function testUpdateCustomerNotUpdatesCustomerWhenPasswordLessThanMinLength(): void
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer([
@@ -652,7 +652,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateCustomerNotUpdatededWhenPasswordHasTooLongSequence(): void
+    public function testUpdateCustomerNotUpdatesCustomerWhenPasswordHasTooLongSequence(): void
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer([
@@ -676,7 +676,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateCustomerNotUpdatedWhenPasswordInDenyList(): void
+    public function testUpdateCustomerNotUpdatesCustomerWhenPasswordInDenyList(): void
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer([
@@ -700,7 +700,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateCustomerCustomerNotUpdatedWhenPasswordCharacterSetWrong(): void
+    public function testUpdateCustomerNotUpdatesCustomerWhenPasswordCharacterSetWrong(): void
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer([
@@ -744,7 +744,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateCustomerCustomerUpdatedWhenPasswordInAllowList(): void
+    public function testUpdateCustomerUpdatesCustomerWhenPasswordInAllowList(): void
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer([
@@ -765,7 +765,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateCustomerPasswordShouldNotUpdateCustomerPasswordWhenItLessThanMinLength(): void
+    public function testUpdateCustomerPasswordNotUpdatesCustomerPasswordWhenItLessThanMinLength(): void
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer([
@@ -839,7 +839,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateCustomerPasswordCustomerPasswordUpdatedWhenPasswordInAllowList(): void
+    public function testUpdateCustomerPasswordUpdatesCustomerPasswordWhenPasswordInAllowList(): void
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer([
@@ -860,7 +860,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateCustomerPasswordCustomerPasswordNotUpdatededWhenPasswordHasTooLongSequence(): void
+    public function testUpdateCustomerPasswordNotUpdatesCustomerPasswordWhenPasswordHasTooLongSequence(): void
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer([
@@ -884,7 +884,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateCustomerPasswordCustomerPasswordNotUpdatedWhenPasswordInDenyList(): void
+    public function testUpdateCustomerPasswordNotUpdatesCustomerPasswordWhenPasswordInDenyList(): void
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer([
@@ -908,7 +908,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateCustomerPasswordustomerPasswordNotUpdatedWhenPasswordCharacterSetWrong(): void
+    public function testUpdateCustomerPasswordNotUpdatesCustomerPasswordWhenPasswordCharacterSetWrong(): void
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer([
@@ -1006,7 +1006,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRestorePasswordWithPasswordValidationEnabled(): void
+    public function testRestorePasswordValidatesPasswordWhenPasswordValidationEnabled(): void
     {
         // Arrange
         $customerTransfer = $this->createTestCustomerTransfer();
