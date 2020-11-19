@@ -69,6 +69,7 @@ class MerchantUserRepository extends AbstractRepository implements MerchantUserR
     public function getMerchantUsers(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): array
     {
         $merchantUserQuery = $this->getFactory()->createMerchantUserPropelQuery();
+        $merchantUserQuery->joinWithSpyMerchant();
         $merchantUserQuery = $this->applyCriteria($merchantUserQuery, $merchantUserCriteriaTransfer);
 
         $merchantUserEntities = $merchantUserQuery->joinWithSpyMerchant()->find();

@@ -49,9 +49,23 @@ class MerchantOrderExpander implements MerchantOrderExpanderInterface
         $manualEvents = $this->stateMachineFacade->getManualEventsForStateMachineItems($stateMachineItemTransfers);
         $merchantOrderTransfer->setManualEvents(array_unique(array_merge([], ...$manualEvents)));
 
-        return $merchantOrderTransfer->setItemStates(
-            $this->getUniqueItemStates($stateMachineItemTransfers)
-        );
+        return $merchantOrderTransfer
+            ->setItemStates($this->getUniqueItemStates($stateMachineItemTransfers))
+            ->setProcess($this->findProcess($stateMachineItemTransfers));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItemTransfers
+     *
+     * @return string|null
+     */
+    protected function findProcess(array $stateMachineItemTransfers): ?string
+    {
+        if (!isset($stateMachineItemTransfers[0])) {
+            return null;
+        }
+
+        return $stateMachineItemTransfers[0]->getProcessName();
     }
 
     /**
