@@ -95,7 +95,7 @@ class DeletePricesAction implements ActionInterface
 
         $priceProductOfferCriteriaTransfer = new PriceProductOfferCriteriaTransfer();
         $priceProductOfferCriteriaTransfer->setPriceProductOfferIds($priceProductOfferIds);
-        // $this->priceProductOfferFacade->delete($priceProductOfferCriteriaTransfer);
+        $this->priceProductOfferFacade->delete($priceProductOfferCriteriaTransfer);
 
         $responseData['postActions'] = [
             [
