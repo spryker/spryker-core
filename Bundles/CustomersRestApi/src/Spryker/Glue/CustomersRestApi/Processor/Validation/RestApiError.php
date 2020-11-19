@@ -336,7 +336,7 @@ class RestApiError implements RestApiErrorInterface
             }
 
             if ($customerErrorTransfer->getMessage() === static::ERROR_CUSTOMER_PASSWORD_DENY_LIST) {
-                $restResponse = $this->addPasswordInBlacklist($restResponse);
+                $restResponse = $this->addPasswordInDenyList($restResponse);
 
                 continue;
             }
