@@ -301,6 +301,8 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
+     * @uses \Spryker\Zed\Customer\CustomerConfig::getCustomerPasswordAllowList()
+     *
      * @return void
      */
     public function testAddCustomerAddsCustomerWhenPasswordInAllowList(): void
@@ -320,6 +322,8 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
+     * @uses \Spryker\Zed\Customer\CustomerConfig::getCustomerPasswordSequenceLimit()
+     *
      * @return void
      */
     public function testAddCustomerNotAddsCustomerWhenPasswordHasTooLongSequence(): void
@@ -342,6 +346,8 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
+     * @uses \Spryker\Zed\Customer\CustomerConfig::getCustomerPasswordDenyList()
+     *
      * @return void
      */
     public function testAddCustomerNotAddsCustomerWhenPasswordInDenyList(): void
@@ -364,6 +370,8 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
+     * @uses \Spryker\Zed\Customer\CustomerConfig::getCharacterSetCustomerPasswordPolicy()
+     *
      * @return void
      */
     public function testAddCustomerNotAddsCustomerWhenPasswordCharacterSetWrong(): void
@@ -454,6 +462,8 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
+     * @uses \Spryker\Zed\Customer\CustomerConfig::getCustomerPasswordAllowList()
+     *
      * @return void
      */
     public function testRegisterCustomerRegistersCustomerWhenPasswordInAllowList(): void
@@ -473,6 +483,8 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
+     * @uses \Spryker\Zed\Customer\CustomerConfig::getCustomerPasswordSequenceLimit()
+     *
      * @return void
      */
     public function testRegisterCustomerNotRegistersCustomerWhenPasswordHasTooLongSequence(): void
@@ -495,6 +507,8 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
+     * @uses \Spryker\Zed\Customer\CustomerConfig::getCustomerPasswordDenyList()
+     *
      * @return void
      */
     public function testRegisterCustomerNotRegistersCustomerWhenPasswordInDenyList(): void
@@ -517,6 +531,8 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
+     * @uses \Spryker\Zed\Customer\CustomerConfig::getCharacterSetCustomerPasswordPolicy()
+     *
      * @return void
      */
     public function testRegisterCustomerNotRegistersCustomerWhenPasswordCharacterSetWrong(): void
@@ -539,6 +555,8 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
+     * @uses \Spryker\Zed\Customer\CustomerConfig::getCustomerPasswordSequenceLimit()
+     *
      * @return void
      */
     public function testRegisterCustomerRegistersCustomerWhenPasswordHasValidLengthSequence(): void
@@ -558,6 +576,8 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
+     * @uses \Spryker\Zed\Customer\CustomerConfig::getCustomerPasswordDenyList()
+     *
      * @return void
      */
     public function testRegisterCustomerRegistersCustomerWhenPasswordNotInDenyList(): void
@@ -577,6 +597,8 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
+     * @uses \Spryker\Zed\Customer\CustomerConfig::getCharacterSetCustomerPasswordPolicy()
+     *
      * @return void
      */
     public function testRegisterCustomerRegistersCustomerWhenPasswordCharacterSetValid(): void
@@ -650,6 +672,8 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
+     * @uses \Spryker\Zed\Customer\CustomerConfig::getCustomerPasswordSequenceLimit()
+     *
      * @return void
      */
     public function testUpdateCustomerNotUpdatesCustomerWhenPasswordHasTooLongSequence(): void
@@ -674,6 +698,8 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
+     * @uses \Spryker\Zed\Customer\CustomerConfig::getCustomerPasswordDenyList()
+     *
      * @return void
      */
     public function testUpdateCustomerNotUpdatesCustomerWhenPasswordInDenyList(): void
@@ -698,6 +724,8 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
+     * @uses \Spryker\Zed\Customer\CustomerConfig::getCharacterSetCustomerPasswordPolicy()
+     *
      * @return void
      */
     public function testUpdateCustomerNotUpdatesCustomerWhenPasswordCharacterSetWrong(): void
@@ -742,6 +770,8 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
+     * @uses \Spryker\Zed\Customer\CustomerConfig::getCustomerPasswordAllowList()
+     *
      * @return void
      */
     public function testUpdateCustomerUpdatesCustomerWhenPasswordInAllowList(): void
@@ -837,6 +867,8 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
+     * @uses \Spryker\Zed\Customer\CustomerConfig::getCustomerPasswordAllowList()
+     *
      * @return void
      */
     public function testUpdateCustomerPasswordUpdatesCustomerPasswordWhenPasswordInAllowList(): void
@@ -858,6 +890,8 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
+     * @uses \Spryker\Zed\Customer\CustomerConfig::getCustomerPasswordSequenceLimit()
+     *
      * @return void
      */
     public function testUpdateCustomerPasswordNotUpdatesCustomerPasswordWhenPasswordHasTooLongSequence(): void
@@ -882,6 +916,8 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
+     * @uses \Spryker\Zed\Customer\CustomerConfig::getCustomerPasswordDenyList()
+     *
      * @return void
      */
     public function testUpdateCustomerPasswordNotUpdatesCustomerPasswordWhenPasswordInDenyList(): void
@@ -906,6 +942,8 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
+     * @uses \Spryker\Zed\Customer\CustomerConfig::getCharacterSetCustomerPasswordPolicy()
+     *
      * @return void
      */
     public function testUpdateCustomerPasswordNotUpdatesCustomerPasswordWhenPasswordCharacterSetWrong(): void
@@ -1004,6 +1042,8 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
+     * @uses \Spryker\Zed\Customer\CustomerConfig::isRestorePasswordValidationEnabled()
+     *
      * @return void
      */
     public function testRestorePasswordValidatesPasswordWhenPasswordValidationEnabled(): void
