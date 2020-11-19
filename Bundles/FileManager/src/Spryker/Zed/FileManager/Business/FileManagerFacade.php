@@ -288,11 +288,11 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     /**
      * {@inheritDoc}
      *
+     * @api
+     *
      * @param int $idFile
      *
      * @return int
-     *@api
-     *
      */
     public function getFileInfoVersionsCount(int $idFile): int
     {
