@@ -101,6 +101,12 @@ class MerchantUserRepository extends AbstractRepository implements MerchantUserR
             $merchantUserQuery->filterByIdMerchantUser($merchantUserCriteriaTransfer->getIdMerchantUser());
         }
 
+        if ($merchantUserCriteriaTransfer->getUsername()) {
+            $merchantUserQuery->useSpyUserQuery()
+                    ->filterByUsername($merchantUserCriteriaTransfer->getUsername())
+                ->endUse();
+        }
+
         $merchantUserQuery->orderByIdMerchantUser();
 
         return $merchantUserQuery;
