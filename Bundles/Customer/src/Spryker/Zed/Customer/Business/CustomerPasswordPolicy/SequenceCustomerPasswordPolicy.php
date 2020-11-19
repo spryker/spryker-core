@@ -38,7 +38,7 @@ class SequenceCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
         string $password,
         CustomerResponseTransfer $customerResponseTransfer
     ): CustomerResponseTransfer {
-        if (!$this->customerPasswordSequenceLimit || $this->customerPasswordSequenceLimit < 0) {
+        if (!$this->customerPasswordSequenceLimit || $this->customerPasswordSequenceLimit <= 1) {
             return $customerResponseTransfer;
         }
 
