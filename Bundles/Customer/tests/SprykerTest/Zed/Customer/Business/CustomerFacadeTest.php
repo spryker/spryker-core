@@ -285,7 +285,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddCustomerShouldAddCustomerWhenPasswordHasCorrectLength(): void
+    public function testAddCustomerAddsCustomerWhenPasswordIsValid(): void
     {
         // Arrange
         $customerTransfer = (new CustomerBuilder([
