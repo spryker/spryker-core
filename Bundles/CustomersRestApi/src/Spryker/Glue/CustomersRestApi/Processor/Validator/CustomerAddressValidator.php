@@ -45,6 +45,13 @@ class CustomerAddressValidator implements CustomerAddressValidatorInterface
             return $restErrorCollectionTransfer;
         }
 
+        if (!$this->isLoggedCustomer($restCheckoutRequestAttributesTransfer)) {
+            return $this->buildErrorMessage(
+                CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_ADDRESSES_APPLICABLE_FOR_CUSTOMERS_ONLY,
+                CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_ADDRESSES_APPLICABLE_FOR_CUSTOMERS_ONLY
+            );
+        }
+
         $customerShippingAddressUuids = $this->getCustomerShippingAddressUuids($restCheckoutRequestAttributesTransfer);
 
         foreach ($shippingAddressUuids as $shippingAddressUuid) {
@@ -57,6 +64,17 @@ class CustomerAddressValidator implements CustomerAddressValidatorInterface
         }
 
         return new RestErrorCollectionTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     *
+     * @return bool
+     */
+    protected function isLoggedCustomer(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): bool
+    {
+        return $restCheckoutRequestAttributesTransfer->getRestUser()
+            && $restCheckoutRequestAttributesTransfer->getRestUser()->getSurrogateIdentifier();
     }
 
     /**

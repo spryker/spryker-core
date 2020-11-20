@@ -19,8 +19,9 @@ class CustomerAddressCheckoutRequestValidatorPlugin extends AbstractPlugin imple
 {
     /**
      * {@inheritDoc}
-     * - Requires `restCheckoutRequestAttributes.restUser.surrogateIdentifier` to be set.
+     * - Expects `restCheckoutRequestAttributes.restUser.surrogateIdentifier` to be set.
      * - Collects shipping address uuids from `restCheckoutRequestAttributes.shipments`.
+     * - Returns CheckoutResponseTransfer with error when customer address uuid was provided for non-logged customer.
      * - Checks if customer addresses exists.
      * - Returns CheckoutResponseTransfer with error if any check was failed.
      *
