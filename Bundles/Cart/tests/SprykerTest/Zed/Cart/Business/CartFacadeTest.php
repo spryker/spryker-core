@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Cart\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CartChangeBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartItemReplaceTransfer;
 use Generated\Shared\Transfer\FlashMessagesTransfer;
@@ -437,7 +438,7 @@ class CartFacadeTest extends Unit
     public function testCleanUpItemsRemoveKeyGroupPrefixFromQuoteItem(): void
     {
         // Arrange
-        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer = (new QuoteBuilder())->build();
         $cartItem = (new ItemTransfer())->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
             ->setQuantity(3)
             ->setUnitGrossPrice(1)
@@ -458,7 +459,7 @@ class CartFacadeTest extends Unit
     public function testCleanUpItemsRemoveKeyGroupPrefixFromQuoteItemIfMoreThanOne(): void
     {
         // Arrange
-        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer = (new QuoteBuilder())->build();
         $cartItem = (new ItemTransfer())->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
             ->setQuantity(3)
             ->setUnitGrossPrice(1)

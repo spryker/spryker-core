@@ -1,5 +1,6 @@
 namespace: PriceProductVolumesRestApi
-actor: Tester
+include:
+    - tests/SprykerTest/Glue/PriceProductVolumesRestApi
 paths:
     tests: tests
     log: tests/_output
