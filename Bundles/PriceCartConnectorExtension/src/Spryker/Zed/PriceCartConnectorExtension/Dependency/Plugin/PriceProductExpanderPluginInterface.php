@@ -16,7 +16,7 @@ interface PriceProductExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands the list of product price transfers with additional ones based on the data from the cart.
+     * - Expands the list of price product transfers with additional ones based on the data from the cart.
      *
      * @api
      *

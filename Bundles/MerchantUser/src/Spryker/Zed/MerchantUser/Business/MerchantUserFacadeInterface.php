@@ -109,4 +109,17 @@ interface MerchantUserFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantUserTransfer
      */
     public function getCurrentMerchantUser(): MerchantUserTransfer;
+
+    /**
+     * Specification:
+     * - Authenticates a merchant user.
+     * - Updates User's last login date.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
+     *
+     * @return void
+     */
+    public function authenticateMerchantUser(MerchantUserTransfer $merchantUserTransfer): void;
 }

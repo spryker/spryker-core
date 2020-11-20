@@ -214,6 +214,8 @@ interface UserFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement. Handling of user password reset mail is implemented in UserPasswordReset module.
+     *
      * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
      * @return \Generated\Shared\Transfer\MailTransfer
