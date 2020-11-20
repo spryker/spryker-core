@@ -56,4 +56,14 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     {
         return $this->getSharedConfig()->getSupportedSourceIdentifiers();
     }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isDevelopmentMode(): bool
+    {
+        return APPLICATION_ENV === 'development';
+    }
 }

@@ -39,6 +39,7 @@ use Spryker\Client\SearchElasticsearch\Query\QueryFactoryInterface;
 use Spryker\Client\SearchElasticsearch\Reader\DocumentReaderFactory;
 use Spryker\Client\SearchElasticsearch\Reader\DocumentReaderFactoryInterface;
 use Spryker\Client\SearchElasticsearch\Reader\DocumentReaderInterface;
+use Spryker\Client\SearchElasticsearch\Search\LoggableSearch;
 use Spryker\Client\SearchElasticsearch\Search\Search;
 use Spryker\Client\SearchElasticsearch\Search\SearchInterface;
 use Spryker\Client\SearchElasticsearch\SearchContextExpander\SearchContextExpander;
@@ -55,6 +56,8 @@ use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactory;
 use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactoryInterface;
 use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolver;
 use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface;
+use Spryker\Shared\SearchElasticsearch\Logger\ElasticsearchInMemoryLogger;
+use Spryker\Shared\SearchElasticsearch\Logger\ElasticsearchLoggerInterface;
 use Spryker\Shared\SearchElasticsearch\MappingType\MappingTypeSupportDetector;
 use Spryker\Shared\SearchElasticsearch\MappingType\MappingTypeSupportDetectorInterface;
 use Spryker\Shared\SearchExtension\SourceInterface;
@@ -69,8 +72,41 @@ class SearchElasticsearchFactory extends AbstractFactory
      */
     public function createSearch(): SearchInterface
     {
+        if (!$this->getConfig()->isDevelopmentMode()) {
+            return $this->createSimpleSearch();
+        }
+
+        return $this->createLoggableSearch();
+    }
+
+    /**
+     * @return \Spryker\Client\SearchElasticsearch\Search\SearchInterface
+     */
+    public function createSimpleSearch(): SearchInterface
+    {
         return new Search(
             $this->getElasticaClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\SearchElasticsearch\Search\SearchInterface
+     */
+    public function createLoggableSearch(): SearchInterface
+    {
+        return new LoggableSearch(
+            $this->createSimpleSearch(),
+            $this->createElasticsearchLogger()
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\SearchElasticsearch\Logger\ElasticsearchLoggerInterface
+     */
+    public function createElasticsearchLogger(): ElasticsearchLoggerInterface
+    {
+        return new ElasticsearchInMemoryLogger(
+            $this->getConfig()->getClientConfig()
         );
     }
 
