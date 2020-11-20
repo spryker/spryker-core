@@ -89,7 +89,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         RestRequestInterface $restRequest,
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestResponseInterface {
-        $restErrorCollectionTransfer = $this->checkoutRequestValidator->validateCheckoutRequest(
+        $restErrorCollectionTransfer = $this->checkoutRequestValidator->validateCheckoutDataRequest(
             $restRequest,
             $restCheckoutRequestAttributesTransfer
         );

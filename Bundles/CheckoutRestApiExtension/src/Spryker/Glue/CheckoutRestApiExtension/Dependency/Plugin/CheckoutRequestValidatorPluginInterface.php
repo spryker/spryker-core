@@ -10,11 +10,11 @@ namespace Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 
-interface CheckoutRequestAttributesValidatorPluginInterface
+interface CheckoutRequestValidatorPluginInterface
 {
     /**
      * Specification:
-     * - Validates checkout-data Rest API request attributes.
+     * - Validates checkout Rest API request attributes.
      *
      * @api
      *

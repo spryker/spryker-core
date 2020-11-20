@@ -5,22 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ShipmentsRestApi\Plugin\CheckoutRestApi;
+namespace Spryker\Glue\CustomersRestApi\Plugin\CheckoutRestApi;
 
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
-use Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestAttributesValidatorPluginInterface;
+use Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestValidatorPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiFactory getFactory()
+ * @method \Spryker\Glue\CustomersRestApi\CustomersRestApiFactory getFactory()
  */
-class AddressSourceCheckoutRequestAttributesValidatorPlugin extends AbstractPlugin implements CheckoutRequestAttributesValidatorPluginInterface
+class CustomerAddressCheckoutRequestValidatorPlugin extends AbstractPlugin implements CheckoutRequestValidatorPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Executes `AddressSourceCheckerPluginInterface` plugin stack.
-     * - Validates the given shipments attributes and returns an array of errors if necessary.
+     * - Requires `restCheckoutRequestAttributes.restUser.surrogateIdentifier` to be set.
+     * - Collects shipping address uuids from `restCheckoutRequestAttributes.shipments`.
+     * - Checks if customer addresses exists.
+     * - Returns CheckoutResponseTransfer with error if any check was failed.
      *
      * @api
      *
@@ -32,7 +34,7 @@ class AddressSourceCheckoutRequestAttributesValidatorPlugin extends AbstractPlug
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestErrorCollectionTransfer {
         return $this->getFactory()
-            ->createAddressSourceCheckoutDataValidator()
-            ->validateAttributes($restCheckoutRequestAttributesTransfer);
+            ->createCustomerAddressValidator()
+            ->validateCustomerAddresses($restCheckoutRequestAttributesTransfer);
     }
 }

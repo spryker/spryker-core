@@ -5,23 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CustomersRestApi\Plugin\CheckoutRestApi;
+namespace Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Plugin\CheckoutRestApi;
 
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
-use Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestAttributesValidatorPluginInterface;
+use Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestValidatorPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Glue\CustomersRestApi\CustomersRestApiFactory getFactory()
+ * @method \Spryker\Glue\CompanyBusinessUnitAddressesRestApi\CompanyBusinessUnitAddressesRestApiFactory getFactory()
  */
-class CustomerAddressCheckoutRequestAttributesValidatorPlugin extends AbstractPlugin implements CheckoutRequestAttributesValidatorPluginInterface
+class CompanyBusinessUnitAddressCheckoutRequestValidatorPlugin extends AbstractPlugin implements CheckoutRequestValidatorPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Requires `restCheckoutRequestAttributes.restUser.surrogateIdentifier` to be set.
+     * - Expects `restCheckoutRequestAttributes.restUser.idCompany` to be provided.
      * - Collects shipping address uuids from `restCheckoutRequestAttributes.shipments`.
-     * - Checks if customer addresses exists.
+     * - Checks if company addresses exists.
      * - Returns CheckoutResponseTransfer with error if any check was failed.
      *
      * @api
@@ -34,7 +34,7 @@ class CustomerAddressCheckoutRequestAttributesValidatorPlugin extends AbstractPl
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestErrorCollectionTransfer {
         return $this->getFactory()
-            ->createCustomerAddressValidator()
-            ->validateCustomerAddresses($restCheckoutRequestAttributesTransfer);
+            ->createCompanyBusinessUnitAddressValidator()
+            ->validateCompanyBusinessUnitAddresses($restCheckoutRequestAttributesTransfer);
     }
 }

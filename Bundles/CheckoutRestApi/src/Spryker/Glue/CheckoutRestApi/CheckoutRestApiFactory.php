@@ -116,6 +116,7 @@ class CheckoutRestApiFactory extends AbstractFactory
     {
         return new CheckoutRequestValidator(
             $this->getCheckoutRequestAttributesValidatorPlugins(),
+            $this->getCheckoutRequestValidatorPlugins(),
             $this->getConfig()
         );
     }
@@ -153,6 +154,14 @@ class CheckoutRestApiFactory extends AbstractFactory
     public function getCheckoutRequestAttributesValidatorPlugins(): array
     {
         return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGINS_CHECKOUT_REQUEST_ATTRIBUTES_VALIDATOR);
+    }
+
+    /**
+     * @return \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestValidatorPluginInterface[]
+     */
+    public function getCheckoutRequestValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGINS_CHECKOUT_REQUEST_VALIDATOR);
     }
 
     /**

@@ -9,13 +9,13 @@ namespace Spryker\Glue\CartsRestApi\Plugin\CheckoutRestApi;
 
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
-use Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestAttributesValidatorPluginInterface;
+use Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestValidatorPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Glue\CartsRestApi\CartsRestApiFactory getFactory()
  */
-class CartItemsCheckoutRequestAttributesValidatorPlugin extends AbstractPlugin implements CheckoutRequestAttributesValidatorPluginInterface
+class CartItemsCheckoutRequestValidatorPlugin extends AbstractPlugin implements CheckoutRequestValidatorPluginInterface
 {
     /**
      * {@inheritDoc}
