@@ -34,7 +34,7 @@ class DeleteFileController extends AbstractController
 
         $fileInfoVersionsCount = $this->getFactory()->getFileManagerFacade()->getFileInfoVersionsCount($idFile);
         if ($fileInfoVersionsCount <= 1) {
-            $this->addErrorMessage('You cannot remove the only version of file.');
+            $this->addErrorMessage('You cannot remove the only version of the file.');
 
             return $this->redirectResponse($redirectUrl);
         }

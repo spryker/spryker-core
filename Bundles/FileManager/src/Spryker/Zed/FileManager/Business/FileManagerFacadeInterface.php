@@ -242,7 +242,7 @@ interface FileManagerFacadeInterface
 
     /**
      * Specification:
-     * - Returns number of available file info version.
+     * - Returns the number of available file info versions.
      *
      * @api
      *
