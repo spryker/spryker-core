@@ -8,13 +8,18 @@
 namespace Spryker\Zed\GiftCardsRestApi\Business\Writer;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 
 interface GiftCardShipmentWriterInterface
 {
     /**
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addDefaultShipmentForGiftCards(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function addDefaultShipmentForGiftCards(
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
+        QuoteTransfer $quoteTransfer
+    ): QuoteTransfer;
 }

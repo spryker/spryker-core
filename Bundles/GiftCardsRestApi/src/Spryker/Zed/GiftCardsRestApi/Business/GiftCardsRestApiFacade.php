@@ -8,6 +8,7 @@
 namespace Spryker\Zed\GiftCardsRestApi\Business;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -20,14 +21,17 @@ class GiftCardsRestApiFacade extends AbstractFacade implements GiftCardsRestApiF
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addDefaultShipmentForGiftCards(QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
+    public function addDefaultShipmentForGiftCards(
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
+        QuoteTransfer $quoteTransfer
+    ): QuoteTransfer {
         return $this->getFactory()
             ->createGiftCardShipmentWriter()
-            ->addDefaultShipmentForGiftCards($quoteTransfer);
+            ->addDefaultShipmentForGiftCards($restCheckoutRequestAttributesTransfer, $quoteTransfer);
     }
 }

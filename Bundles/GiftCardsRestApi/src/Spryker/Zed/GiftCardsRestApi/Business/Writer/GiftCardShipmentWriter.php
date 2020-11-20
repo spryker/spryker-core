@@ -9,18 +9,26 @@ namespace Spryker\Zed\GiftCardsRestApi\Business\Writer;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\GiftCardsRestApi\GiftCardsRestApiConfig;
 
 class GiftCardShipmentWriter implements GiftCardShipmentWriterInterface
 {
     /**
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addDefaultShipmentForGiftCards(QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
+    public function addDefaultShipmentForGiftCards(
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
+        QuoteTransfer $quoteTransfer
+    ): QuoteTransfer {
+        if (!$restCheckoutRequestAttributesTransfer->getShipments()->count()) {
+            return $quoteTransfer;
+        }
+
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if (!$this->isGiftCard($itemTransfer)) {
                 continue;

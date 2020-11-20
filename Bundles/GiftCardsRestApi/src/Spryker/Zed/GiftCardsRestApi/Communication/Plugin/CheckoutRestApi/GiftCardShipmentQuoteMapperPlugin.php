@@ -20,6 +20,7 @@ class GiftCardShipmentQuoteMapperPlugin extends AbstractPlugin implements QuoteM
 {
     /**
      * {@inheritDoc}
+     * - Applicable to items in case of multi-shipment to keep BC.
      * - Adds default shipment for gift cards.
      * - Sets `NoShipment` selection for gift cards.
      *
@@ -34,6 +35,9 @@ class GiftCardShipmentQuoteMapperPlugin extends AbstractPlugin implements QuoteM
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer {
-        return $this->getFacade()->addDefaultShipmentForGiftCards($quoteTransfer);
+        return $this->getFacade()->addDefaultShipmentForGiftCards(
+            $restCheckoutRequestAttributesTransfer,
+            $quoteTransfer
+        );
     }
 }
