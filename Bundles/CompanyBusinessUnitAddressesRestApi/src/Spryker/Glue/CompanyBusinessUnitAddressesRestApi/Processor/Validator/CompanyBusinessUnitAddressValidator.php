@@ -41,10 +41,7 @@ class CompanyBusinessUnitAddressValidator implements CompanyBusinessUnitAddressV
         $restErrorCollectionTransfer = new RestErrorCollectionTransfer();
         $shippingAddressUuids = $this->extractShippingAddressUuids($restCheckoutRequestAttributesTransfer);
 
-        if (
-            !$shippingAddressUuids || !$restCheckoutRequestAttributesTransfer->getRestUser()
-            || $restCheckoutRequestAttributesTransfer->getRestUser()->getIdCompany()
-        ) {
+        if (!$shippingAddressUuids || !$this->isCompanyUserAccount($restCheckoutRequestAttributesTransfer)) {
             return $restErrorCollectionTransfer;
         }
 
@@ -60,6 +57,16 @@ class CompanyBusinessUnitAddressValidator implements CompanyBusinessUnitAddressV
         }
 
         return new RestErrorCollectionTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     *
+     * @return bool
+     */
+    protected function isCompanyUserAccount(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): bool
+    {
+        return $restCheckoutRequestAttributesTransfer->getRestUser() && $restCheckoutRequestAttributesTransfer->getRestUser()->getIdCompany();
     }
 
     /**

@@ -102,6 +102,7 @@
         <property name="customer" type="Customer"/>
         <property name="currency" type="Currency"/>
         <property name="items" type="Item[]" singular="item"/>
+        <property name="bundleItems" type="Item[]" singular="bundleItem"/>
         <property name="totals" type="Totals"/>
         <property name="store" type="Store"/>
         <property name="idQuote" type="int"/>
@@ -183,6 +184,7 @@
         <property name="sku" type="string"/>
         <property name="quantity" type="int"/>
         <property name="relatedBundleItemIdentifier" type="string"/>
+        <property name="giftCardMetadata" type="GiftCardMetadata"/>
     </transfer>
 
     <transfer name="Store">
@@ -205,6 +207,24 @@
         <property name="idQuote" type="int"/>
         <property name="item" type="Item"/>
         <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="RestCheckoutRequestAttributes">
+        <property name="idCart" type="string" restRequestParameter="required"/>
+        <property name="shipments" type="RestShipments[]" singular="shipment" restRequestParameter="yes"/>
+        <property name="restUser" type="RestUser" restRequestParameter="no"/>
+    </transfer>
+
+    <transfer name="RestErrorCollection">
+        <property name="restErrors" type="RestErrorMessage[]" singular="restError"/>
+    </transfer>
+
+    <transfer name="GiftCardMetadata">
+        <property name="isGiftCard" type="bool"/>
+    </transfer>
+
+    <transfer name="RestShipments">
+        <property name="items" type="string[]" singular="item" restRequestParameter="yes"/>
     </transfer>
 
 </transfers>

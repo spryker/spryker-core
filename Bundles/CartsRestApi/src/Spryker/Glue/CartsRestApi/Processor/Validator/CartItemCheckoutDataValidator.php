@@ -62,7 +62,7 @@ class CartItemCheckoutDataValidator implements CartItemCheckoutDataValidatorInte
     /**
      * @param \Generated\Shared\Transfer\RestErrorCollectionTransfer $restErrorCollectionTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param array $itemGroupKeys
+     * @param string[] $itemGroupKeys
      *
      * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer
      */
@@ -101,7 +101,7 @@ class CartItemCheckoutDataValidator implements CartItemCheckoutDataValidatorInte
     /**
      * @param \Generated\Shared\Transfer\RestErrorCollectionTransfer $restErrorCollectionTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param array $itemGroupKeys
+     * @param string[] $itemGroupKeys
      *
      * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer
      */
@@ -133,10 +133,10 @@ class CartItemCheckoutDataValidator implements CartItemCheckoutDataValidatorInte
         $itemGroupKeys = [];
 
         foreach ($restCheckoutRequestAttributesTransfer->getShipments() as $restShipmentsTransfer) {
-            $itemGroupKeys = array_merge($itemGroupKeys, $restShipmentsTransfer->getItems());
+            $itemGroupKeys[] = $restShipmentsTransfer->getItems();
         }
 
-        return $itemGroupKeys;
+        return array_merge([], ...$itemGroupKeys);
     }
 
     /**
