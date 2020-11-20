@@ -41,8 +41,15 @@ class CompanyBusinessUnitAddressValidator implements CompanyBusinessUnitAddressV
         $restErrorCollectionTransfer = new RestErrorCollectionTransfer();
         $shippingAddressUuids = $this->extractShippingAddressUuids($restCheckoutRequestAttributesTransfer);
 
-        if (!$shippingAddressUuids || !$this->isCompanyUserAccount($restCheckoutRequestAttributesTransfer)) {
+        if (!$shippingAddressUuids) {
             return $restErrorCollectionTransfer;
+        }
+
+        if (!$this->isCompanyUserAccount($restCheckoutRequestAttributesTransfer)) {
+            return $this->buildErrorMessage(
+                CompanyBusinessUnitAddressesRestApiConfig::RESPONSE_DETAILS_COMPANY_ADDRESSES_APPLICABLE_FOR_COMPANY_USERS_ONLY,
+                CompanyBusinessUnitAddressesRestApiConfig::RESPONSE_CODE_COMPANY_ADDRESSES_APPLICABLE_FOR_COMPANY_USERS_ONLY
+            );
         }
 
         $companyShippingAddressUuids = $this->getCompanyShippingAddressUuids($restCheckoutRequestAttributesTransfer);

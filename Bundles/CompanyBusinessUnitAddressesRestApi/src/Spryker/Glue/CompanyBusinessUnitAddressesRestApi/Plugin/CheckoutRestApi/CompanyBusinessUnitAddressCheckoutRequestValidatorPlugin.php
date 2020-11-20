@@ -21,6 +21,7 @@ class CompanyBusinessUnitAddressCheckoutRequestValidatorPlugin extends AbstractP
      * {@inheritDoc}
      * - Expects `restCheckoutRequestAttributes.restUser.idCompany` to be provided.
      * - Collects shipping address uuids from `restCheckoutRequestAttributes.shipments`.
+     * - Returns CheckoutResponseTransfer with error when company address uuid was provided for non-company user.
      * - Checks if company addresses exists.
      * - Returns CheckoutResponseTransfer with error if any check was failed.
      *

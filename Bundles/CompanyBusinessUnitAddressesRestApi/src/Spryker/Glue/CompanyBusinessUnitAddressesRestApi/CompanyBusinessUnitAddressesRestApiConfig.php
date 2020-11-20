@@ -28,6 +28,9 @@ class CompanyBusinessUnitAddressesRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_COMPANY_ADDRESS_IN_CHECKOUT_DATA_NOT_FOUND = '2004';
     public const RESPONSE_DETAILS_COMPANY_ADDRESS_IN_CHECKOUT_DATA_NOT_FOUND = 'Company address with ID %s not found.';
 
+    public const RESPONSE_CODE_COMPANY_ADDRESSES_APPLICABLE_FOR_COMPANY_USERS_ONLY = '2005';
+    public const RESPONSE_DETAILS_COMPANY_ADDRESSES_APPLICABLE_FOR_COMPANY_USERS_ONLY = 'Company addresses are applicable only for company users.';
+
     public const RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED = 'Resource is not implemented.';
 
     /**
