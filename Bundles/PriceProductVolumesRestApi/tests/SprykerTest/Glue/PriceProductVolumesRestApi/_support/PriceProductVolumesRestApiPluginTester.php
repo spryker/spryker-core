@@ -1,10 +1,17 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerTest\Glue\PriceProductVolumesRestApi;
 
 use Codeception\Actor;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -17,7 +24,7 @@ use Codeception\Actor;
  * @method void pause()
  *
  * @SuppressWarnings(PHPMD)
-*/
+ */
 class PriceProductVolumesRestApiPluginTester extends Actor
 {
     use _generated\PriceProductVolumesRestApiPluginTesterActions;
