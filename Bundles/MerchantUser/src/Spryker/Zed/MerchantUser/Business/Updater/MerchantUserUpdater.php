@@ -12,8 +12,8 @@ use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
-use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
+use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserPasswordResetFacadeInterface;
 use Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface;
 
 class MerchantUserUpdater implements MerchantUserUpdaterInterface
@@ -34,9 +34,9 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
     protected $userFacade;
 
     /**
-     * @var \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface
+     * @var \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserPasswordResetFacadeInterface
      */
-    protected $authFacade;
+    protected $userPasswordResetFacade;
 
     /**
      * @var \Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface
@@ -45,16 +45,16 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
 
     /**
      * @param \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface $userFacade
-     * @param \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface $authFacade
+     * @param \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserPasswordResetFacadeInterface $userPasswordResetFacade
      * @param \Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface $merchantUserRepository
      */
     public function __construct(
         MerchantUserToUserFacadeInterface $userFacade,
-        MerchantUserToAuthFacadeInterface $authFacade,
+        MerchantUserToUserPasswordResetFacadeInterface $userPasswordResetFacade,
         MerchantUserRepositoryInterface $merchantUserRepository
     ) {
         $this->userFacade = $userFacade;
-        $this->authFacade = $authFacade;
+        $this->userPasswordResetFacade = $userPasswordResetFacade;
         $this->merchantUserRepository = $merchantUserRepository;
     }
 
@@ -110,7 +110,7 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
             $updatedUserTransfer->getStatus() === static::USER_STATUS_ACTIVE
             && $originalUserTransfer->getStatus() !== $updatedUserTransfer->getStatus()
         ) {
-            $this->authFacade->requestPasswordReset($updatedUserTransfer->getUsername());
+            $this->userPasswordResetFacade->requestPasswordReset($updatedUserTransfer->getUsername());
         }
     }
 }

@@ -19,6 +19,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/merchant-category": "*",
     "spryker/propel": "*",
     "spryker/queue": "*",
     "spryker/testify": "*",
@@ -26,6 +27,7 @@
   },
   "suggest": {
     "spryker/event": "To use event behavior.",
+    "spryker/merchant-category": "To use MerchantCategoryStoragePublisherPlugin.",
     "spryker/url-storage": "To use shop route plugin."
   },
   "autoload": {

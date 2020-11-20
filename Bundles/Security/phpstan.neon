@@ -12,6 +12,6 @@ parameters:
         - '#Parameter \#1 \$subscriber of method .+EventDispatcherInterface::addSubscriber\(\) expects .+EventSubscriberInterface, .+SessionLogoutListener given.#'
         - '#Method .+RouteCollection::add\(\) invoked with 3 parameters, 2 required.#'
         - '#Method .+SecurityFactory::createPasswordEncoder\(\) should return .+PasswordEncoderInterface but returns .+NativePasswordEncoder.#'
-        - '#Method .+SecurityFactory::createPasswordEncoder\(\) should return .+PasswordEncoderInterface but returns .+BCryptPasswordEncoder.#'
+        - '#Method .+Factory::createPasswordEncoder\(\) should return .+PasswordEncoderInterface but returns .+BCryptPasswordEncoder.#'
         - '#Instantiated class Symfony\\Component\\Security\\Http\\EventListener\\RememberMeLogoutListener not found.#'
         - '#Parameter \#1 \$subscriber of method Symfony\\Component\\EventDispatcher\\EventDispatcherInterface::addSubscriber\(\) expects Symfony\\Component\\EventDispatcher\\EventSubscriberInterface, Symfony\\Component\\Security\\Http\\EventListener\\RememberMeLogoutListener given.#'

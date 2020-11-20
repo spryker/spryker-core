@@ -51,4 +51,11 @@ interface MerchantUserToUserFacadeInterface
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getCurrentUser();
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $user
+     *
+     * @return mixed
+     */
+    public function setCurrentUser(UserTransfer $user);
 }
