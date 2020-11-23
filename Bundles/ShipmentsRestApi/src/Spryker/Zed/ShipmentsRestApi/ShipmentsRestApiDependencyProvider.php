@@ -9,7 +9,7 @@ namespace Spryker\Zed\ShipmentsRestApi;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeBridge;
+use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeAdapter;
 
 /**
  * @method \Spryker\Zed\ShipmentsRestApi\ShipmentsRestApiConfig getConfig()
@@ -41,7 +41,7 @@ class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     protected function addShipmentFacade(Container $container): Container
     {
         $container->set(static::FACADE_SHIPMENT, function (Container $container) {
-            return new ShipmentsRestApiToShipmentFacadeBridge($container->getLocator()->shipment()->facade());
+            return new ShipmentsRestApiToShipmentFacadeAdapter($container->getLocator()->shipment()->facade());
         });
 
         return $container;
