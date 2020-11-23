@@ -45,8 +45,6 @@ use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiError;
 use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidator;
 use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface;
-use Spryker\Glue\CustomersRestApi\Processor\Validator\CustomerAddressValidator;
-use Spryker\Glue\CustomersRestApi\Processor\Validator\CustomerAddressValidatorInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 class CustomersRestApiFactory extends AbstractFactory
@@ -166,16 +164,6 @@ class CustomersRestApiFactory extends AbstractFactory
         return new AddressByCheckoutDataResourceRelationshipExpander(
             $this->createAddressRestResponseBuilder(),
             $this->createAddressResourceMapper()
-        );
-    }
-
-    /**
-     * @return \Spryker\Glue\CustomersRestApi\Processor\Validator\CustomerAddressValidatorInterface
-     */
-    public function createCustomerAddressValidator(): CustomerAddressValidatorInterface
-    {
-        return new CustomerAddressValidator(
-            $this->getCustomerClient()
         );
     }
 

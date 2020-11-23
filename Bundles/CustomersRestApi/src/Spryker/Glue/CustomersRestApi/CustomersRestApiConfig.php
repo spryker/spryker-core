@@ -74,12 +74,6 @@ class CustomersRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_CUSTOMER_EMAIL_LENGTH_EXCEEDED = '417';
     public const RESPONSE_MESSAGE_CUSTOMER_EMAIL_LENGTH_EXCEEDED = 'Email is too long. It should have 100 characters or less.';
 
-    public const RESPONSE_CODE_CUSTOMER_ADDRESS_IN_CHECKOUT_DATA_NOT_FOUND = '418';
-    public const RESPONSE_DETAILS_CUSTOMER_ADDRESS_IN_CHECKOUT_DATA_NOT_FOUND = 'Customer address with ID %s not found.';
-
-    public const RESPONSE_CODE_CUSTOMER_ADDRESSES_APPLICABLE_FOR_CUSTOMERS_ONLY = '419';
-    public const RESPONSE_DETAILS_CUSTOMER_ADDRESSES_APPLICABLE_FOR_CUSTOMERS_ONLY = 'Customer addresses are applicable only for customers.';
-
     /**
      * @deprecated Will be removed without replacement.
      */

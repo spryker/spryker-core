@@ -8,6 +8,8 @@
 namespace Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CheckoutDataTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestAddressTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
@@ -77,5 +79,22 @@ class CompanyBusinessUnitAddressesRestApiFacade extends AbstractFacade implement
         return $this->getFactory()
             ->createCompanyBusinessUnitAddressReader()
             ->getCompanyBusinessUnitAddress($restAddressTransfer, $quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    public function validateCompanyBusinessUnitAddressesInCheckoutData(
+        CheckoutDataTransfer $checkoutDataTransfer
+    ): CheckoutResponseTransfer {
+        return $this->getFactory()
+            ->createCompanyBusinessUnitAddressValidator()
+            ->validateCompanyBusinessUnitAddressesInCheckoutData($checkoutDataTransfer);
     }
 }

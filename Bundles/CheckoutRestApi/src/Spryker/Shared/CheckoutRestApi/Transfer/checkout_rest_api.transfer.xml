@@ -250,6 +250,8 @@
 
     <transfer name="CheckoutData">
         <property name="shipment" type="RestShipment"/>
+        <property name="shipments" type="RestShipments[]" singular="shipment"/>
+        <property name="quote" type="Quote"/>
     </transfer>
 
 </transfers>

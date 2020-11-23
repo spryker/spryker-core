@@ -8,6 +8,8 @@
 namespace Spryker\Zed\CustomersRestApi\Business;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CheckoutDataTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestAddressTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
@@ -84,5 +86,21 @@ class CustomersRestApiFacade extends AbstractFacade implements CustomersRestApiF
         return $this->getFactory()
             ->createCustomerAddressReader()
             ->getCustomerAddress($restAddressTransfer, $quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    public function validateCustomerAddressesInCheckoutData(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCustomerAddressValidator()
+            ->validateCustomerAddressesInCheckoutData($checkoutDataTransfer);
     }
 }

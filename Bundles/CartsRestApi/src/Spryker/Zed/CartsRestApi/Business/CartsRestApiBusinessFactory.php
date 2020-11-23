@@ -39,6 +39,8 @@ use Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemReader;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemReaderInterface;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemUpdater;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemUpdaterInterface;
+use Spryker\Zed\CartsRestApi\Business\Validator\CartItemCheckoutDataValidator;
+use Spryker\Zed\CartsRestApi\Business\Validator\CartItemCheckoutDataValidatorInterface;
 use Spryker\Zed\CartsRestApi\CartsRestApiDependencyProvider;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
@@ -232,6 +234,14 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     public function createQuoteMapper(): QuoteMapperInterface
     {
         return new QuoteMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\CartsRestApi\Business\Validator\CartItemCheckoutDataValidatorInterface
+     */
+    public function createCartItemCheckoutDataValidator(): CartItemCheckoutDataValidatorInterface
+    {
+        return new CartItemCheckoutDataValidator();
     }
 
     /**

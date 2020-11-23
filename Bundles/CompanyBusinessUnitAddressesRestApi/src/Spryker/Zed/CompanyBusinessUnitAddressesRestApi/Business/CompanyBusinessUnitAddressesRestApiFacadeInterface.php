@@ -8,6 +8,8 @@
 namespace Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CheckoutDataTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestAddressTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
@@ -68,4 +70,22 @@ interface CompanyBusinessUnitAddressesRestApiFacadeInterface
         RestAddressTransfer $restAddressTransfer,
         QuoteTransfer $quoteTransfer
     ): AddressTransfer;
+
+    /**
+     * Specification:
+     * - Expects `checkoutDataTransfer.quote.customer.companyUserTransfer.fkCompany` to be provided.
+     * - Collects shipping address uuids from `checkoutDataTransfer.shipments`.
+     * - Returns CheckoutResponseTransfer with error when company address uuid was provided for non-company user.
+     * - Checks if company addresses exists.
+     * - Returns CheckoutResponseTransfer with error if any check was failed.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    public function validateCompanyBusinessUnitAddressesInCheckoutData(
+        CheckoutDataTransfer $checkoutDataTransfer
+    ): CheckoutResponseTransfer;
 }

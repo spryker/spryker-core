@@ -179,4 +179,8 @@
         <property name="quote" type="Quote"/>
     </transfer>
 
+    <transfer name="CheckoutError">
+        <property name="errorIdentifier" type="string"/>
+    </transfer>
+
 </transfers>

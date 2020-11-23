@@ -17,8 +17,6 @@ use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUn
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Relationship\CompanyBusinessUnitAddressCollectionResourceRelationshipExpanderInterface;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\RestResponseBuilder\CompanyBusinessUnitAddressRestResponseBuilder;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\RestResponseBuilder\CompanyBusinessUnitAddressRestResponseBuilderInterface;
-use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\Validator\CompanyBusinessUnitAddressValidator;
-use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\Validator\CompanyBusinessUnitAddressValidatorInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 class CompanyBusinessUnitAddressesRestApiFactory extends AbstractFactory
@@ -54,16 +52,6 @@ class CompanyBusinessUnitAddressesRestApiFactory extends AbstractFactory
             $this->getCompanyBusinessUnitAddressClient(),
             $this->createCompanyBusinessUnitAddressMapper(),
             $this->createCompanyBusinessUnitAddressRestResponseBuilder()
-        );
-    }
-
-    /**
-     * @return \Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\Validator\CompanyBusinessUnitAddressValidatorInterface
-     */
-    public function createCompanyBusinessUnitAddressValidator(): CompanyBusinessUnitAddressValidatorInterface
-    {
-        return new CompanyBusinessUnitAddressValidator(
-            $this->getCompanyBusinessUnitAddressClient()
         );
     }
 
