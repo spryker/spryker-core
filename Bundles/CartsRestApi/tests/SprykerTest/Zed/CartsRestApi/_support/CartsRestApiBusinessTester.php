@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\CartsRestApi;
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\AssignGuestQuoteRequestBuilder;
 use Generated\Shared\DataBuilder\CartItemRequestBuilder;
+use Generated\Shared\DataBuilder\CheckoutDataBuilder;
 use Generated\Shared\DataBuilder\OauthResponseBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\QuoteCollectionBuilder;
@@ -18,6 +19,7 @@ use Generated\Shared\DataBuilder\QuoteResponseBuilder;
 use Generated\Shared\DataBuilder\RestCartItemsAttributesBuilder;
 use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
 use Generated\Shared\Transfer\CartItemRequestTransfer;
+use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
@@ -25,6 +27,7 @@ use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
+use Generated\Shared\Transfer\RestShipmentsTransfer;
 
 /**
  * @method void wantToTest($text)
@@ -533,5 +536,19 @@ class CartsRestApiBusinessTester extends Actor
                 'customerReference' => $customerReference,
             ]
         ))->build();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CheckoutDataTransfer
+     */
+    public function buildCheckoutDataTransferWithoutShipmentItems(): CheckoutDataTransfer
+    {
+        $quoteTransfer = (new QuoteBuilder())->withItem()->build();
+
+        return (new CheckoutDataBuilder())
+            ->withQuote($quoteTransfer->toArray())
+            ->withShipment([
+                RestShipmentsTransfer::ITEMS => [],
+            ])->build();
     }
 }

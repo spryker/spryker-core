@@ -11,13 +11,18 @@ use Codeception\Actor;
 use Generated\Shared\DataBuilder\CompanyBuilder;
 use Generated\Shared\DataBuilder\CompanyUnitAddressCollectionBuilder;
 use Generated\Shared\DataBuilder\CompanyUnitAddressResponseBuilder;
+use Generated\Shared\DataBuilder\CompanyUserBuilder;
+use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\RestCheckoutDataBuilder;
 use Generated\Shared\DataBuilder\RestCheckoutRequestAttributesBuilder;
 use Generated\Shared\DataBuilder\ShipmentBuilder;
+use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestAddressTransfer;
@@ -52,8 +57,11 @@ class CompanyBusinessUnitAddressesRestApiBusinessTester extends Actor
 
     public const FAKE_COMPANY_BUSINESS_UNIT_ADDRESS1 = 'Address1';
     public const FAKE_COMPANY_BUSINESS_UNIT_ADDRESS2 = 'Address2';
+    public const FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_UUID1 = 'fake-company-business-unit-address-uuid1';
+    public const FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_UUID2 = 'fake-company-business-unit-address-uuid2';
+
+    protected const FAKE_ID_COMPANY = 555;
     protected const FAKE_ID_COMPANY_BUSINESS_UNIT = 777;
-    protected const FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_UUID = 'fake-company-business-unit-address-uuid';
     protected const FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_ID = 12345;
 
     /**
@@ -81,8 +89,8 @@ class CompanyBusinessUnitAddressesRestApiBusinessTester extends Actor
     public function createCompanyUnitAddressCollectionTransfer(): CompanyUnitAddressCollectionTransfer
     {
         return (new CompanyUnitAddressCollectionBuilder())
-            ->withCompanyUnitAddress()
-            ->withAnotherCompanyUnitAddress()
+            ->withCompanyUnitAddress([CompanyUnitAddressTransfer::UUID => static::FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_UUID1])
+            ->withAnotherCompanyUnitAddress([CompanyUnitAddressTransfer::UUID => static::FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_UUID2])
             ->build();
     }
 
@@ -94,10 +102,10 @@ class CompanyBusinessUnitAddressesRestApiBusinessTester extends Actor
         return (new CompanyUnitAddressResponseBuilder([CompanyUnitAddressResponseTransfer::IS_SUCCESSFUL => true]))
             ->withCompanyUnitAddressTransfer([
                 CompanyUnitAddressTransfer::ID_COMPANY_UNIT_ADDRESS => static::FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_ID,
-                CompanyUnitAddressTransfer::UUID => static::FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_UUID,
+                CompanyUnitAddressTransfer::UUID => static::FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_UUID1,
                 CompanyUnitAddressTransfer::ADDRESS1 => static::FAKE_COMPANY_BUSINESS_UNIT_ADDRESS1,
                 CompanyUnitAddressTransfer::ADDRESS2 => static::FAKE_COMPANY_BUSINESS_UNIT_ADDRESS2,
-                CompanyUnitAddressTransfer::COMPANY => (new CompanyBuilder())->build(),
+                CompanyUnitAddressTransfer::COMPANY => (new CompanyBuilder([CompanyTransfer::ID_COMPANY => static::FAKE_ID_COMPANY]))->build(),
             ])
             ->build();
     }
@@ -117,8 +125,8 @@ class CompanyBusinessUnitAddressesRestApiBusinessTester extends Actor
     {
         return (new RestCheckoutRequestAttributesBuilder())
             ->withCustomer([RestCustomerTransfer::ID_COMPANY_BUSINESS_UNIT => static::FAKE_ID_COMPANY_BUSINESS_UNIT])
-            ->withBillingAddress([RestAddressTransfer::COMPANY_BUSINESS_UNIT_ADDRESS_ID => static::FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_UUID])
-            ->withShippingAddress([RestAddressTransfer::COMPANY_BUSINESS_UNIT_ADDRESS_ID => static::FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_UUID])
+            ->withBillingAddress([RestAddressTransfer::ID_COMPANY_BUSINESS_UNIT_ADDRESS => static::FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_UUID1])
+            ->withShippingAddress([RestAddressTransfer::ID_COMPANY_BUSINESS_UNIT_ADDRESS => static::FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_UUID1])
             ->build();
     }
 
@@ -127,8 +135,16 @@ class CompanyBusinessUnitAddressesRestApiBusinessTester extends Actor
      */
     public function createQuoteTransfer(): QuoteTransfer
     {
+        $customerTransfer = (new CustomerBuilder([
+            CustomerTransfer::COMPANY_USER_TRANSFER => (new CompanyUserBuilder([
+                CompanyUserTransfer::COMPANY => (new CompanyBuilder([
+                    CompanyTransfer::ID_COMPANY => static::FAKE_ID_COMPANY,
+                ]))->build(),
+            ]))->build(),
+        ]))->build();
+
         return (new QuoteBuilder())
-            ->withCustomer()
+            ->withCustomer($customerTransfer->toArray())
             ->withItem([
                 ItemTransfer::SHIPMENT => (new ShipmentBuilder())->build(),
             ])

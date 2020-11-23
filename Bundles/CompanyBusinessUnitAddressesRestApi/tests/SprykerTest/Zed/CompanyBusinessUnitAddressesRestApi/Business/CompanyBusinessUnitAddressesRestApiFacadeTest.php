@@ -8,9 +8,19 @@
 namespace SprykerTest\Zed\CompanyBusinessUnitAddressesRestApi\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\CheckoutDataBuilder;
+use Generated\Shared\DataBuilder\CustomerBuilder;
+use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\DataBuilder\RestAddressBuilder;
+use Generated\Shared\DataBuilder\RestShipmentsBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestAddressTransfer;
+use Generated\Shared\Transfer\RestShipmentsTransfer;
 use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\CompanyBusinessUnitAddressesRestApiBusinessFactory;
 use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Dependency\Facade\CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressFacadeBridge;
 use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Dependency\Facade\CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressFacadeInterface;
@@ -29,6 +39,16 @@ use SprykerTest\Zed\CompanyBusinessUnitAddressesRestApi\CompanyBusinessUnitAddre
  */
 class CompanyBusinessUnitAddressesRestApiFacadeTest extends Unit
 {
+    /**
+     * @uses \Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Validator\CompanyBusinessUnitAddressValidator::GLOSSARY_KEY_COMPANY_ADDRESS_IN_CHECKOUT_DATA_NOT_FOUND
+     */
+    protected const GLOSSARY_KEY_COMPANY_ADDRESS_IN_CHECKOUT_DATA_NOT_FOUND = 'checkout.validation.company_address.not_found';
+
+    /**
+     * @uses \Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Validator\CompanyBusinessUnitAddressValidator::GLOSSARY_KEY_COMPANY_ADDRESSES_APPLICABLE_FOR_COMPANY_USERS_ONLY
+     */
+    protected const GLOSSARY_KEY_COMPANY_ADDRESSES_APPLICABLE_FOR_COMPANY_USERS_ONLY = 'checkout.validation.company_address.not_applicable';
+
     /**
      * @var \SprykerTest\Zed\CompanyBusinessUnitAddressesRestApi\CompanyBusinessUnitAddressesRestApiBusinessTester
      */
@@ -66,6 +86,8 @@ class CompanyBusinessUnitAddressesRestApiFacadeTest extends Unit
     }
 
     /**
+     * @group test
+     *
      * @return void
      */
     public function testMapCompanyBusinessUnitAddressesToQuoteWillMapExistingBusinessUnitAddress(): void
@@ -91,6 +113,125 @@ class CompanyBusinessUnitAddressesRestApiFacadeTest extends Unit
                 $quoteTransfer
             );
         }
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateCompanyBusinessUnitAddressesInCheckoutDataWillNotReturnErrorIfNoShippingAddressProvided(): void
+    {
+        // Arrange
+        $checkoutDataTransfer = (new CheckoutDataBuilder([CheckoutDataTransfer::SHIPMENTS => []]))->build();
+
+        // Act
+        $checkoutResponseTransfer = $this->tester->getFacade()
+            ->validateCompanyBusinessUnitAddressesInCheckoutData($checkoutDataTransfer);
+
+        // Assert
+        $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateCompanyBusinessUnitAddressesInCheckoutDataWillNotReturnErrorIfCorrectShippingAddressProvided(): void
+    {
+        // Arrange
+        $customerTransfer = (new CustomerBuilder())
+            ->withCompanyUserTransfer([
+                CompanyUserTransfer::FK_COMPANY => 1,
+            ])->build();
+        $quoteTransfer = (new QuoteBuilder([QuoteTransfer::CUSTOMER => $customerTransfer]))->build();
+        $restAddressTransfer = (new RestAddressBuilder([
+            RestAddressTransfer::ID_COMPANY_BUSINESS_UNIT_ADDRESS => CompanyBusinessUnitAddressesRestApiBusinessTester::FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_UUID1,
+        ]))->build();
+        $restShipmentsTransfer = (new RestShipmentsBuilder([
+            RestShipmentsTransfer::SHIPPING_ADDRESS => $restAddressTransfer,
+        ]))->build();
+        $checkoutDataTransfer = (new CheckoutDataBuilder())
+            ->withQuote($quoteTransfer->toArray())
+            ->withShipment($restShipmentsTransfer->toArray())
+            ->build();
+
+        $companyBusinessUnitAddressesRestApiFacade = $this->tester->getFacade();
+        $companyBusinessUnitAddressesRestApiFacade->setFactory(
+            $this->getCompanyBusinessUnitAddressesRestApiBusinessFactoryMock()
+        );
+
+        // Act
+        $checkoutResponseTransfer = $companyBusinessUnitAddressesRestApiFacade->validateCompanyBusinessUnitAddressesInCheckoutData($checkoutDataTransfer);
+
+        // Assert
+        $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateCompanyBusinessUnitAddressesInCheckoutDataWillReturnErrorIfNoCompanyUserProvided(): void
+    {
+        // Arrange
+        $customerTransfer = (new CustomerBuilder([CustomerTransfer::COMPANY_USER_TRANSFER => null]))->build();
+        $quoteTransfer = (new QuoteBuilder([QuoteTransfer::CUSTOMER => $customerTransfer]))->build();
+        $restAddressTransfer = (new RestAddressBuilder([
+            RestAddressTransfer::ID_COMPANY_BUSINESS_UNIT_ADDRESS => 'some-random-uuid',
+        ]))->build();
+        $restShipmentsTransfer = (new RestShipmentsBuilder([
+            RestShipmentsTransfer::SHIPPING_ADDRESS => $restAddressTransfer,
+        ]))->build();
+        $checkoutDataTransfer = (new CheckoutDataBuilder())
+            ->withQuote($quoteTransfer->toArray())
+            ->withShipment($restShipmentsTransfer->toArray())
+            ->build();
+
+        // Act
+        $checkoutResponseTransfer = $this->tester->getFacade()->validateCompanyBusinessUnitAddressesInCheckoutData($checkoutDataTransfer);
+
+        // Assert
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $checkoutResponseTransfer->getErrors());
+        $this->assertEquals(
+            static::GLOSSARY_KEY_COMPANY_ADDRESSES_APPLICABLE_FOR_COMPANY_USERS_ONLY,
+            $checkoutResponseTransfer->getErrors()->offsetGet(0)->getMessage()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateCompanyBusinessUnitAddressesInCheckoutDataWillReturnErrorIfNoCorrectShippingAddressProvided(): void
+    {
+        // Arrange
+        $customerTransfer = (new CustomerBuilder())->withCompanyUserTransfer([
+                CompanyUserTransfer::FK_COMPANY => 1,
+            ])->build();
+        $quoteTransfer = (new QuoteBuilder([QuoteTransfer::CUSTOMER => $customerTransfer]))->build();
+        $restAddressTransfer = (new RestAddressBuilder([
+            RestAddressTransfer::ID_COMPANY_BUSINESS_UNIT_ADDRESS => 'some-random-uuid',
+        ]))->build();
+        $restShipmentsTransfer = (new RestShipmentsBuilder([
+            RestShipmentsTransfer::SHIPPING_ADDRESS => $restAddressTransfer,
+        ]))->build();
+        $checkoutDataTransfer = (new CheckoutDataBuilder())
+            ->withQuote($quoteTransfer->toArray())
+            ->withShipment($restShipmentsTransfer->toArray())
+            ->build();
+
+        $companyBusinessUnitAddressesRestApiFacade = $this->tester->getFacade();
+        $companyBusinessUnitAddressesRestApiFacade->setFactory(
+            $this->getCompanyBusinessUnitAddressesRestApiBusinessFactoryMock()
+        );
+
+        // Act
+        $checkoutResponseTransfer = $companyBusinessUnitAddressesRestApiFacade->validateCompanyBusinessUnitAddressesInCheckoutData($checkoutDataTransfer);
+
+        // Assert
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $checkoutResponseTransfer->getErrors());
+        $this->assertEquals(
+            static::GLOSSARY_KEY_COMPANY_ADDRESS_IN_CHECKOUT_DATA_NOT_FOUND,
+            $checkoutResponseTransfer->getErrors()->offsetGet(0)->getMessage()
+        );
     }
 
     /**

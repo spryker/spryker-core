@@ -9,9 +9,19 @@ namespace SprykerTest\Zed\CustomersRestApi\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\AddressBuilder;
+use Generated\Shared\DataBuilder\CheckoutDataBuilder;
 use Generated\Shared\DataBuilder\CustomerBuilder;
+use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\DataBuilder\RestAddressBuilder;
+use Generated\Shared\DataBuilder\RestShipmentsBuilder;
 use Generated\Shared\Transfer\AddressesTransfer;
+use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestAddressTransfer;
+use Generated\Shared\Transfer\RestShipmentsTransfer;
 use Spryker\Zed\Customer\Business\CustomerFacade;
 use Spryker\Zed\CustomersRestApi\Business\CustomersRestApiBusinessFactory;
 use Spryker\Zed\CustomersRestApi\Dependency\Facade\CustomersRestApiToCustomerFacadeBridge;
@@ -29,6 +39,16 @@ use Spryker\Zed\CustomersRestApi\Dependency\Facade\CustomersRestApiToCustomerFac
  */
 class CustomersRestApiFacadeTest extends Unit
 {
+    /**
+     * @uses \Spryker\Zed\CustomersRestApi\Business\Validator\CustomerAddressValidator::GLOSSARY_KEY_CUSTOMER_ADDRESS_IN_CHECKOUT_DATA_NOT_FOUND
+     */
+    protected const GLOSSARY_KEY_CUSTOMER_ADDRESS_IN_CHECKOUT_DATA_NOT_FOUND = 'checkout.validation.customer_address.not_found';
+
+    /**
+     * @uses \Spryker\Zed\CustomersRestApi\Business\Validator\CustomerAddressValidator::GLOSSARY_KEY_CUSTOMER_ADDRESSES_APPLICABLE_FOR_CUSTOMERS_ONLY
+     */
+    protected const GLOSSARY_KEY_CUSTOMER_ADDRESSES_APPLICABLE_FOR_CUSTOMERS_ONLY = 'Customer addresses are applicable only for customers.';
+
     /**
      * @var \SprykerTest\Zed\CustomersRestApi\CustomersRestApiBusinessTester
      */
@@ -406,6 +426,115 @@ class CustomersRestApiFacadeTest extends Unit
 
         $this->assertNull($actualQuote->getCustomer());
         $this->assertNull($actualQuote->getCustomerReference());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateCustomerAddressesInCheckoutDataWillNotReturnErrorIfNoShippingAddressProvided(): void
+    {
+        // Arrange
+        $checkoutDataTransfer = (new CheckoutDataBuilder([CheckoutDataTransfer::SHIPMENTS => []]))->build();
+
+        // Act
+        $checkoutResponseTransfer = $this->tester->getFacade()
+            ->validateCustomerAddressesInCheckoutData($checkoutDataTransfer);
+
+        // Assert
+        $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @group test
+     *
+     * @return void
+     */
+    public function testValidateCustomerAddressesInCheckoutDataWillNotReturnErrorIfCorrectShippingAddressProvided(): void
+    {
+        $shippingAddressUuid = $this->tester::ADDRESS_1['uuid'];
+        $customerTransfer = (new CustomerBuilder([CustomerTransfer::ID_CUSTOMER => 777]))
+            ->withShippingAddress([AddressTransfer::UUID => $shippingAddressUuid])
+            ->build();
+        $quoteTransfer = (new QuoteBuilder([QuoteTransfer::CUSTOMER => $customerTransfer]))->build();
+        $restAddressTransfer = (new RestAddressBuilder([RestAddressTransfer::ID => $shippingAddressUuid]))->build();
+        $restShipmentsTransfer = (new RestShipmentsBuilder([
+            RestShipmentsTransfer::SHIPPING_ADDRESS => $restAddressTransfer,
+        ]))->build();
+        $checkoutDataTransfer = (new CheckoutDataBuilder())
+            ->withQuote($quoteTransfer->toArray())
+            ->withShipment($restShipmentsTransfer->toArray())
+            ->build();
+
+        $customersRestApiFacade = $this->tester->getFacade();
+        $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactory());
+
+        // Act
+        $checkoutResponseTransfer = $customersRestApiFacade->validateCustomerAddressesInCheckoutData($checkoutDataTransfer);
+
+        // Assert
+        $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateCustomerAddressesInCheckoutDataWillReturnErrorIfNoCustomerIsProvided(): void
+    {
+        $quoteTransfer = (new QuoteBuilder([QuoteTransfer::CUSTOMER => null]))->build();
+        $restAddressTransfer = (new RestAddressBuilder([RestAddressTransfer::ID => 'some-random-uuid']))->build();
+        $restShipmentsTransfer = (new RestShipmentsBuilder([
+            RestShipmentsTransfer::SHIPPING_ADDRESS => $restAddressTransfer,
+        ]))->build();
+        $checkoutDataTransfer = (new CheckoutDataBuilder())
+            ->withQuote($quoteTransfer->toArray())
+            ->withShipment($restShipmentsTransfer->toArray())
+            ->build();
+
+        // Act
+        $checkoutResponseTransfer = $this->tester->getFacade()->validateCustomerAddressesInCheckoutData($checkoutDataTransfer);
+
+        // Assert
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $checkoutResponseTransfer->getErrors());
+        $this->assertEquals(
+            static::GLOSSARY_KEY_CUSTOMER_ADDRESSES_APPLICABLE_FOR_CUSTOMERS_ONLY,
+            $checkoutResponseTransfer->getErrors()->offsetGet(0)->getMessage()
+        );
+    }
+
+    /**
+     * @group test
+     *
+     * @return void
+     */
+    public function testValidateCustomerAddressesInCheckoutDataWillReturnErrorIfNoValidCustomerAddressIsProvided(): void
+    {
+        $customerTransfer = (new CustomerBuilder([CustomerTransfer::ID_CUSTOMER => 777]))
+            ->withShippingAddress([AddressTransfer::UUID => $this->tester::ADDRESS_1['uuid']])
+            ->build();
+        $quoteTransfer = (new QuoteBuilder([QuoteTransfer::CUSTOMER => $customerTransfer]))->build();
+        $restAddressTransfer = (new RestAddressBuilder([RestAddressTransfer::ID => 'some-random-uuid']))->build();
+        $restShipmentsTransfer = (new RestShipmentsBuilder([
+            RestShipmentsTransfer::SHIPPING_ADDRESS => $restAddressTransfer,
+        ]))->build();
+        $checkoutDataTransfer = (new CheckoutDataBuilder())
+            ->withQuote($quoteTransfer->toArray())
+            ->withShipment($restShipmentsTransfer->toArray())
+            ->build();
+
+        $customersRestApiFacade = $this->tester->getFacade();
+        $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactory());
+
+        // Act
+        $checkoutResponseTransfer = $customersRestApiFacade->validateCustomerAddressesInCheckoutData($checkoutDataTransfer);
+
+        // Assert
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $checkoutResponseTransfer->getErrors());
+        $this->assertEquals(
+            static::GLOSSARY_KEY_CUSTOMER_ADDRESS_IN_CHECKOUT_DATA_NOT_FOUND,
+            $checkoutResponseTransfer->getErrors()->offsetGet(0)->getMessage()
+        );
     }
 
     /**
