@@ -96,9 +96,19 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
             return $this->createPlaceOrderErrorResponse($checkoutResponseTransfer);
         }
 
-        $quoteTransfer = $this->mapRestCheckoutRequestAttributesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+        $quoteTransfer = $this->executeQuoteMapperPlugins($restCheckoutRequestAttributesTransfer, $quoteTransfer);
         $quoteTransfer = $this->calculationFacade->recalculateQuote($quoteTransfer);
 
+        return $this->placeOrderWithCartRemoval($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestCheckoutResponseTransfer
+     */
+    protected function placeOrderWithCartRemoval(QuoteTransfer $quoteTransfer): RestCheckoutResponseTransfer
+    {
         $checkoutResponseTransfer = $this->checkoutFacade->placeOrder($quoteTransfer);
 
         if (!$checkoutResponseTransfer->getIsSuccess()) {
@@ -123,7 +133,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function mapRestCheckoutRequestAttributesToQuote(
+    protected function executeQuoteMapperPlugins(
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer {

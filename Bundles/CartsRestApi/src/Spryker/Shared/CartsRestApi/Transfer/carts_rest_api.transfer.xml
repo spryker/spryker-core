@@ -184,7 +184,6 @@
         <property name="sku" type="string"/>
         <property name="quantity" type="int"/>
         <property name="relatedBundleItemIdentifier" type="string"/>
-        <property name="giftCardMetadata" type="GiftCardMetadata"/>
     </transfer>
 
     <transfer name="Store">
@@ -209,21 +208,23 @@
         <property name="customer" type="Customer"/>
     </transfer>
 
-    <transfer name="RestCheckoutRequestAttributes">
-        <property name="idCart" type="string" restRequestParameter="required"/>
-        <property name="shipments" type="RestShipments[]" singular="shipment" restRequestParameter="yes"/>
+    <transfer name="CheckoutResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="CheckoutError[]" singular="error"/>
     </transfer>
 
-    <transfer name="RestErrorCollection">
-        <property name="restErrors" type="RestErrorMessage[]" singular="restError"/>
+    <transfer name="CheckoutData">
+        <property name="shipments" type="RestShipments[]" singular="shipment"/>
+        <property name="quote" type="Quote"/>
     </transfer>
 
-    <transfer name="GiftCardMetadata">
-        <property name="isGiftCard" type="bool"/>
+    <transfer name="CheckoutError">
+        <property name="message" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
     <transfer name="RestShipments">
-        <property name="items" type="string[]" singular="item" restRequestParameter="yes"/>
+        <property name="items" type="string[]" singular="item"/>
     </transfer>
 
 </transfers>

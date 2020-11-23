@@ -15,6 +15,8 @@ use Spryker\Zed\CheckoutRestApi\Business\Checkout\PlaceOrderProcessor;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\PlaceOrderProcessorInterface;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote\QuoteReader;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote\QuoteReaderInterface;
+use Spryker\Zed\CheckoutRestApi\Business\Expander\CheckoutExpander;
+use Spryker\Zed\CheckoutRestApi\Business\Expander\CheckoutExpanderInterface;
 use Spryker\Zed\CheckoutRestApi\Business\Validator\CheckoutValidator;
 use Spryker\Zed\CheckoutRestApi\Business\Validator\CheckoutValidatorInterface;
 use Spryker\Zed\CheckoutRestApi\CheckoutRestApiDependencyProvider;
@@ -40,13 +42,10 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
     {
         return new CheckoutDataReader(
             $this->createQuoteReader(),
-            $this->getShipmentFacade(),
-            $this->getPaymentFacade(),
-            $this->createAddressReader(),
             $this->getCalculationFacade(),
             $this->createCheckoutValidator(),
+            $this->createCheckoutExpander(),
             $this->getQuoteMapperPlugins(),
-            $this->getCheckoutDataExpanderPlugins()
         );
     }
 
@@ -91,6 +90,19 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
     public function createAddressReader(): AddressReaderInterface
     {
         return new AddressReader($this->getCustomerFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\CheckoutRestApi\Business\Expander\CheckoutExpanderInterface
+     */
+    public function createCheckoutExpander(): CheckoutExpanderInterface
+    {
+        return new CheckoutExpander(
+            $this->getShipmentFacade(),
+            $this->getPaymentFacade(),
+            $this->createAddressReader(),
+            $this->getCheckoutDataExpanderPlugins()
+        );
     }
 
     /**

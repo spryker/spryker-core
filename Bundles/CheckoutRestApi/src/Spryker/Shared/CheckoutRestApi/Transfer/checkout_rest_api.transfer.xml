@@ -253,4 +253,7 @@
         <property name="quote" type="Quote"/>
     </transfer>
 
+    <transfer name="RestShipments">
+    </transfer>
+
 </transfers>
