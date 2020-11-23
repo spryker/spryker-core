@@ -25,7 +25,7 @@ class CharacterSetCustomerPasswordPolicy implements CustomerPasswordPolicyInterf
      */
     public function __construct(CustomerConfig $customerConfig)
     {
-        $this->regularExpression = $customerConfig->getCharacterSetCustomerPasswordPolicy();
+        $this->regularExpression = $customerConfig->getCustomerPasswordCharacterSet();
     }
 
     /**

@@ -370,7 +370,7 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
-     * @uses \Spryker\Zed\Customer\CustomerConfig::getCharacterSetCustomerPasswordPolicy()
+     * @uses \Spryker\Zed\Customer\CustomerConfig::getCustomerPasswordCharacterSet()
      *
      * @return void
      */
@@ -380,7 +380,7 @@ class CustomerFacadeTest extends Unit
         $customerTransfer = (new CustomerBuilder([
             CustomerTransfer::PASSWORD => static::VALUE_CHARACTER_SET_WRONG_PASSWORD,
         ]))->build();
-        $this->tester->mockConfigMethod('getCharacterSetCustomerPasswordPolicy', static::CHARACTER_SET_REGEXP);
+        $this->tester->mockConfigMethod('getCustomerPasswordCharacterSet', static::CHARACTER_SET_REGEXP);
 
         // Act
         $customerResponseTransfer = $this->tester->getFacade()->addCustomer($customerTransfer);
@@ -531,7 +531,7 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
-     * @uses \Spryker\Zed\Customer\CustomerConfig::getCharacterSetCustomerPasswordPolicy()
+     * @uses \Spryker\Zed\Customer\CustomerConfig::getCustomerPasswordCharacterSet()
      *
      * @return void
      */
@@ -541,7 +541,7 @@ class CustomerFacadeTest extends Unit
         $customerTransfer = (new CustomerBuilder([
             CustomerTransfer::PASSWORD => static::VALUE_CHARACTER_SET_WRONG_PASSWORD,
         ]))->build();
-        $this->tester->mockConfigMethod('getCharacterSetCustomerPasswordPolicy', static::CHARACTER_SET_REGEXP);
+        $this->tester->mockConfigMethod('getCustomerPasswordCharacterSet', static::CHARACTER_SET_REGEXP);
 
         // Act
         $customerResponseTransfer = $this->tester->getFacade()->registerCustomer($customerTransfer);
@@ -597,7 +597,7 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
-     * @uses \Spryker\Zed\Customer\CustomerConfig::getCharacterSetCustomerPasswordPolicy()
+     * @uses \Spryker\Zed\Customer\CustomerConfig::getCustomerPasswordCharacterSet()
      *
      * @return void
      */
@@ -607,7 +607,7 @@ class CustomerFacadeTest extends Unit
         $customerTransfer = (new CustomerBuilder([
             CustomerTransfer::PASSWORD => static::VALUE_VALID_PASSWORD,
         ]))->build();
-        $this->tester->mockConfigMethod('getCharacterSetCustomerPasswordPolicy', static::CHARACTER_SET_REGEXP);
+        $this->tester->mockConfigMethod('getCustomerPasswordCharacterSet', static::CHARACTER_SET_REGEXP);
 
         // Act
         $customerResponseTransfer = $this->tester->getFacade()->registerCustomer($customerTransfer);
@@ -724,7 +724,7 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
-     * @uses \Spryker\Zed\Customer\CustomerConfig::getCharacterSetCustomerPasswordPolicy()
+     * @uses \Spryker\Zed\Customer\CustomerConfig::getCustomerPasswordCharacterSet()
      *
      * @return void
      */
@@ -736,7 +736,7 @@ class CustomerFacadeTest extends Unit
         ]);
         $customerTransfer->setPassword(static::VALUE_VALID_PASSWORD)
             ->setNewPassword(static::VALUE_CHARACTER_SET_WRONG_PASSWORD);
-        $this->tester->mockConfigMethod('getCharacterSetCustomerPasswordPolicy', static::CHARACTER_SET_REGEXP);
+        $this->tester->mockConfigMethod('getCustomerPasswordCharacterSet', static::CHARACTER_SET_REGEXP);
 
         // Act
         $customerResponseTransfer = $this->tester->getFacade()->updateCustomer($customerTransfer);
@@ -942,7 +942,7 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
-     * @uses \Spryker\Zed\Customer\CustomerConfig::getCharacterSetCustomerPasswordPolicy()
+     * @uses \Spryker\Zed\Customer\CustomerConfig::getCustomerPasswordCharacterSet()
      *
      * @return void
      */
@@ -954,7 +954,7 @@ class CustomerFacadeTest extends Unit
         ]);
         $customerTransfer->setPassword(static::VALUE_VALID_PASSWORD)
             ->setNewPassword(static::VALUE_CHARACTER_SET_WRONG_PASSWORD);
-        $this->tester->mockConfigMethod('getCharacterSetCustomerPasswordPolicy', static::CHARACTER_SET_REGEXP);
+        $this->tester->mockConfigMethod('getCustomerPasswordCharacterSet', static::CHARACTER_SET_REGEXP);
 
         // Act
         $customerResponseTransfer = $this->tester->getFacade()->updateCustomer($customerTransfer);

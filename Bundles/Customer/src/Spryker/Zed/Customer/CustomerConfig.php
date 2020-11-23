@@ -97,7 +97,7 @@ class CustomerConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getCharacterSetCustomerPasswordPolicy(): string
+    public function getCustomerPasswordCharacterSet(): string
     {
         return '/^.*$/';
     }
