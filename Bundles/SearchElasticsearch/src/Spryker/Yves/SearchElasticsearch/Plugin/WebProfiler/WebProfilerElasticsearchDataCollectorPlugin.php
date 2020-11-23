@@ -43,6 +43,7 @@ class WebProfilerElasticsearchDataCollectorPlugin extends AbstractPlugin impleme
 
     /**
      * {@inheritDoc}
+     * - Returns a data collector which collects Elasticsearch calls data for the profile page.
      *
      * @api
      *
