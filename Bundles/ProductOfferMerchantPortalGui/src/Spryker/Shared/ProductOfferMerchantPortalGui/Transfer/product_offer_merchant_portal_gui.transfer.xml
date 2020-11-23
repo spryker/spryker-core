@@ -227,6 +227,10 @@
         <property name="priceDimension" type="PriceProductDimension"/>
     </transfer>
 
+    <transfer name="PriceProductCollection">
+        <property name="priceProducts" type="PriceProduct[]" singular="priceProduct"/>
+    </transfer>
+
     <transfer name="ProductOfferResponse">
         <property name="errors" type="ProductOfferError[]" singular="error"/>
         <property name="productOffer" type="ProductOffer"/>
@@ -308,6 +312,7 @@
         <property name="prices" type="array" />
         <property name="idPriceProductOffer"  type="int"/>
         <property name="productOffer"  type="ProductOffer"/>
+        <property name="priceProduct"  type="PriceProduct"/>
         <property name="priceProductOfferIds" type="array" singular="priceProductOfferId"/>
         <property name="typePriceProductOfferIds" type="array" singular="typePriceProductOfferId"/>
     </transfer>

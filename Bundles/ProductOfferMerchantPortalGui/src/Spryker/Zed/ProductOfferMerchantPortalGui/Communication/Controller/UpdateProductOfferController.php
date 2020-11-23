@@ -7,14 +7,10 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller;
 
-use ArrayObject;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
-use Generated\Shared\Transfer\PriceProductDimensionTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOfferResponseTransfer;
-use Generated\Shared\Transfer\ProductOfferTransfer;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -188,66 +184,6 @@ class UpdateProductOfferController extends AbstractProductOfferController
      */
     public function savePricesAction(Request $request)
     {
-        $idProductOffer = $this->castId($request->get(static::PARAM_ID_PRODUCT_OFFER));
-        $store = $request->get(static::PARAM_STORE);
-        $currency = $request->get(static::PARAM_CURRENCY);
-        $typePriceProductOfferIds = $request->get(static::PARAM_TYPE_PRICE_PRODUCT_OFFER_IDS);
-
-        $storeTransfer = $this->getFactory()->getStoreFacade()->getStoreByName($store);
-        $currencyTransfer = $this->getFactory()->getCurrencyFacade()->findCurrencyByIsoCode($currency);
-
-        $priceDimensionTransfer = new PriceProductDimensionTransfer();
-
-        if ($idPriceProductOffer) {
-            $priceDimensionTransfer->setIdPriceProductOffer($idPriceProductOffer);
-        }
-
-        $priceProductTransfers = [];
-
-        foreach ($this->getFactory()->getPriceProductFacade()->getPriceTypeValues() as $priceTypeTransfer) {
-            $netAmount = $request->get(mb_strtolower($priceTypeTransfer->getName()) . '_net');
-            $grossAmount = $request->get(mb_strtolower($priceTypeTransfer->getName()) . '_gross');
-            $priceProductTransfers[] = (new PriceProductTransfer())
-                ->setFkPriceType($priceTypeTransfer->getIdPriceType())
-                ->setMoneyValue(
-                    (new MoneyValueTransfer())
-                    ->setFkStore($storeTransfer->getIdStore())
-                    ->setNetAmount($netAmount)
-                    ->setGrossAmount($grossAmount)
-                    ->setFkCurrency($currencyTransfer->getIdCurrency())
-                );
-        }
-
-        $productOfferTransfer = (new ProductOfferTransfer())
-            ->setPrices(new ArrayObject($priceProductTransfers));
-
-        $productOfferResponseTransfer = $this->getFactory()
-            ->getPriceProductOfferFacade()
-            ->validateProductOfferPrices($productOfferTransfer);
-
-        if ($productOfferResponseTransfer->getErrors()->count()) {
-            foreach ($productOfferResponseTransfer->getErrors() as $productOfferErrorTransfer) {
-                $responseData['notifications'][] = [
-                    'type' => 'error',
-                    'message' => $productOfferErrorTransfer->getMessage(),
-                ];
-            }
-
-            return new JsonResponse($responseData);
-        }
-
-        $this->getFactory()->getPriceProductOfferFacade()->saveProductOfferPrices($productOfferTransfer);
-
-        $responseData['postActions'] = [
-            [
-                'type' => 'refresh_table',
-            ],
-        ];
-        $responseData['notifications'] = [[
-            'type' => 'success',
-            'message' => 'Offer prices saved successfuly.',
-        ]];
-
-        return new JsonResponse($responseData);
+        return $this->getFactory()->createSavePricesAction()->execute($request);
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade;
 
+use ArrayObject;
+use Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer;
 use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 
 interface ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface
@@ -20,11 +23,11 @@ interface ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface
     public function saveProductOfferPrices(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOfferTransfer[] $productOfferTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
+     * @return \Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer
      */
-    public function validateProductOfferPrices(ProductOfferTransfer $productOfferTransfer): ProductOfferResponseTransfer;
+    public function validateProductOfferPrices(ArrayObject $productOfferTransfers): PriceProductOfferCollectionValidationResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
@@ -39,4 +42,18 @@ interface ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface
      * @return int
      */
     public function count(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): int;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function getProductOfferPrices(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): ArrayObject;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    public function savePriceProductOfferRelation(PriceProductTransfer $priceProductTransfer): PriceProductTransfer;
 }

@@ -7,15 +7,17 @@
 
 namespace Spryker\Zed\PriceProductOffer\Business\Validator;
 
-use Generated\Shared\Transfer\ProductOfferResponseTransfer;
-use Generated\Shared\Transfer\ProductOfferTransfer;
+use ArrayObject;
+use Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer;
 
 interface PriceProductOfferValidatorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
+     * @return \Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer
      */
-    public function validatePrices(ProductOfferTransfer $productOfferTransfer): ProductOfferResponseTransfer;
+    public function validateProductOfferPrices(
+        ArrayObject $priceProductTransfers
+    ): PriceProductOfferCollectionValidationResponseTransfer;
 }
