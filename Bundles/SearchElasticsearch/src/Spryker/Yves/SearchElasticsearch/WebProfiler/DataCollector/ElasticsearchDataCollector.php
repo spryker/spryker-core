@@ -15,6 +15,8 @@ use Throwable;
 
 class ElasticsearchDataCollector extends DataCollector
 {
+    protected const DATA_COLLECTOR_NAME = 'elasticsearch';
+
     /**
      * @var \Spryker\Shared\SearchElasticsearch\Logger\ElasticsearchLoggerInterface
      */
@@ -35,7 +37,7 @@ class ElasticsearchDataCollector extends DataCollector
      *
      * @return void
      */
-    public function collect(Request $request, Response $response, ?Throwable $exception = null)
+    public function collect(Request $request, Response $response, ?Throwable $exception = null): void
     {
         $this->data['logs'] = $this->elasticsearchLogger->getLogs();
     }
@@ -43,15 +45,15 @@ class ElasticsearchDataCollector extends DataCollector
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
-        return 'elasticsearch';
+        return static::DATA_COLLECTOR_NAME;
     }
 
     /**
      * @return void
      */
-    public function reset()
+    public function reset(): void
     {
         $this->data = [];
     }
