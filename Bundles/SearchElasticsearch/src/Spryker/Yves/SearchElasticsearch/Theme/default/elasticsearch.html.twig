@@ -8,7 +8,7 @@
     {% set text %}
         <div class="sf-toolbar-info-piece">
             <b>Calls</b>
-            <span>{{ collector.calls|length }}</span>
+            <span>{{ collector.logs|length }}</span>
         </div>
     {% endset %}
 
@@ -19,7 +19,7 @@
     <span class="label">
         <strong>Elasticsearch</strong>
         <span class="count">
-            <span>{{ collector.calls|length }}</span>
+            <span>{{ collector.logs|length }}</span>
         </span>
     </span>
 {% endblock %}
@@ -33,11 +33,11 @@
             <th>Result</th>
         </tr>
 
-        {% for callData in collector.calls %}
+        {% for logData in collector.logs %}
             <tr>
-                <td>{{ callData['destination'] }}</td>
-                <td>{{ callData['payload'] }}</td>
-                <td>{{ callData['result'] }}</td>
+                <td>{{ logData['destination'] }}</td>
+                <td>{{ logData['payload'] }}</td>
+                <td>{{ logData['result'] }}</td>
             </tr>
         {% endfor %}
     </table>

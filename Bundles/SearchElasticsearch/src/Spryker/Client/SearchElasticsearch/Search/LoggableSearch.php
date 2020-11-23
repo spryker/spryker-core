@@ -24,7 +24,7 @@ class LoggableSearch implements SearchInterface
 
     /**
      * @param \Spryker\Client\SearchElasticsearch\Search\SearchInterface $search
-     * @param \Spryker\Shared\SearchElasticsearch\Logger\ElasticsearchInMemoryLogger $elasticsearchLogger
+     * @param \Spryker\Shared\SearchElasticsearch\Logger\ElasticsearchLoggerInterface $elasticsearchLogger
      */
     public function __construct(SearchInterface $search, ElasticsearchLoggerInterface $elasticsearchLogger)
     {
@@ -47,7 +47,6 @@ class LoggableSearch implements SearchInterface
             [
                 'query' => $searchQuery->getSearchQuery()->toArray(),
                 'parameters' => $requestParameters,
-
             ],
             $result
         );

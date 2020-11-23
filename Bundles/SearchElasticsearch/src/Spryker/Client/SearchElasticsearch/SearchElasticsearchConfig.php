@@ -64,6 +64,6 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
      */
     public function isDevelopmentMode(): bool
     {
-        return APPLICATION_ENV === 'development';
+        return APPLICATION_ENV === 'development' || APPLICATION_ENV === 'dev.docker';
     }
 }

@@ -45,7 +45,7 @@ class ElasticsearchInMemoryLoggerTest extends Unit
         }
 
         // Assert
-        $this->assertSame($expectedResult, $elasticsearchInMemoryLogger->getLogs());
+        $this->assertEquals($expectedResult, $elasticsearchInMemoryLogger->getLogs());
     }
 
     /**

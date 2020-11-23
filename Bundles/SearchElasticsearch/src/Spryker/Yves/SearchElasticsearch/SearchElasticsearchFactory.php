@@ -7,16 +7,12 @@
 
 namespace Spryker\Yves\SearchElasticsearch;
 
+use Spryker\Shared\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceInterface;
 use Spryker\Shared\SearchElasticsearch\Logger\ElasticsearchInMemoryLogger;
 use Spryker\Shared\SearchElasticsearch\Logger\ElasticsearchLoggerInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\SearchElasticsearch\WebProfiler\DataCollector\ElasticsearchDataCollector;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
-
-/**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
- */
 
 /**
  * @method \Spryker\Yves\SearchElasticsearch\SearchElasticsearchConfig getConfig()
@@ -39,7 +35,16 @@ class SearchElasticsearchFactory extends AbstractFactory
     public function createElasticsearchLogger(): ElasticsearchLoggerInterface
     {
         return new ElasticsearchInMemoryLogger(
+            $this->getUtilEncodingService(),
             $this->getConfig()->getClientConfig()
         );
+    }
+
+    /**
+     * @return \Spryker\Shared\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): SearchElasticsearchToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(SearchElasticsearchDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

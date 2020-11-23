@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\SearchElasticsearch\Logger;
 
+use Spryker\Shared\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceInterface;
+
 class ElasticsearchInMemoryLogger implements ElasticsearchLoggerInterface
 {
     protected const URI_STRING_TEMPLATE_UNKNOWN = 'unknown';
@@ -17,15 +19,24 @@ class ElasticsearchInMemoryLogger implements ElasticsearchLoggerInterface
     protected static $logs = [];
 
     /**
+     * @var \Spryker\Shared\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
      * @var array
      */
     protected $elasticsearchClientConfig;
 
     /**
+     * @param \Spryker\Shared\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceInterface $utilEncodingService
      * @param array $elasticsearchClientConfig
      */
-    public function __construct(array $elasticsearchClientConfig = [])
-    {
+    public function __construct(
+        SearchElasticsearchToUtilEncodingServiceInterface $utilEncodingService,
+        array $elasticsearchClientConfig = []
+    ) {
+        $this->utilEncodingService = $utilEncodingService;
         $this->elasticsearchClientConfig = $elasticsearchClientConfig;
     }
 
@@ -39,8 +50,8 @@ class ElasticsearchInMemoryLogger implements ElasticsearchLoggerInterface
     {
         static::$logs[] = [
             'destination' => $this->buildElasticsearchUri(),
-            'payload' => json_encode($payload, JSON_PRETTY_PRINT),
-            'result' => json_encode($result, JSON_PRETTY_PRINT),
+            'payload' => $this->utilEncodingService->encodeJson($payload, JSON_PRETTY_PRINT),
+            'result' => $this->utilEncodingService->encodeJson($result, JSON_PRETTY_PRINT),
         ];
     }
 
@@ -58,7 +69,7 @@ class ElasticsearchInMemoryLogger implements ElasticsearchLoggerInterface
     protected function buildElasticsearchUri(): string
     {
         return sprintf(
-            '%s://%s:%d',
+            '%s://%s:%s',
             $this->elasticsearchClientConfig['transport'] ?? static::URI_STRING_TEMPLATE_UNKNOWN,
             $this->elasticsearchClientConfig['host'] ?? static::URI_STRING_TEMPLATE_UNKNOWN,
             $this->elasticsearchClientConfig['port'] ?? static::URI_STRING_TEMPLATE_UNKNOWN
