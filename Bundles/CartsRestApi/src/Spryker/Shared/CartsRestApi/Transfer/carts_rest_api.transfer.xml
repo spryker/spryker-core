@@ -212,7 +212,6 @@
     <transfer name="RestCheckoutRequestAttributes">
         <property name="idCart" type="string" restRequestParameter="required"/>
         <property name="shipments" type="RestShipments[]" singular="shipment" restRequestParameter="yes"/>
-        <property name="restUser" type="RestUser" restRequestParameter="no"/>
     </transfer>
 
     <transfer name="RestErrorCollection">

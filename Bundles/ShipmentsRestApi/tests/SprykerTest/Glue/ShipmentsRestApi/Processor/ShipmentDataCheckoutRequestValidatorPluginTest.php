@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\RestAddressTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestShipmentsTransfer;
 use Generated\Shared\Transfer\RestShipmentTransfer;
-use Spryker\Glue\ShipmentsRestApi\Plugin\CheckoutRestApi\ShipmentDataCheckoutRequestAttributesValidatorPlugin;
+use Spryker\Glue\ShipmentsRestApi\Plugin\CheckoutRestApi\ShipmentDataCheckoutRequestValidatorPlugin;
 
 /**
  * Auto-generated group annotations
@@ -21,10 +21,10 @@ use Spryker\Glue\ShipmentsRestApi\Plugin\CheckoutRestApi\ShipmentDataCheckoutReq
  * @group Glue
  * @group ShipmentsRestApi
  * @group Processor
- * @group ShipmentDataCheckoutRequestAttributesValidatorPluginTest
+ * @group ShipmentDataCheckoutRequestValidatorPluginTest
  * Add your own group annotations below this line
  */
-class ShipmentDataCheckoutRequestAttributesValidatorPluginTest extends Unit
+class ShipmentDataCheckoutRequestValidatorPluginTest extends Unit
 {
     /**
      * @var \SprykerTest\Glue\ShipmentsRestApi\ShipmentsRestApiProcessorTester
@@ -32,7 +32,7 @@ class ShipmentDataCheckoutRequestAttributesValidatorPluginTest extends Unit
     protected $tester;
 
     /**
-     * @dataProvider shipmentDataCheckoutRequestAttributesValidatorPluginDataProvider
+     * @dataProvider shipmentDataCheckoutRequestValidatorPluginDataProvider
      *
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      * @param int $expectedErrorsCount
@@ -40,13 +40,13 @@ class ShipmentDataCheckoutRequestAttributesValidatorPluginTest extends Unit
      *
      * @return void
      */
-    public function testShipmentDataCheckoutRequestAttributesValidatorPlugin(
+    public function testShipmentDataCheckoutRequestValidatorPlugin(
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         int $expectedErrorsCount,
         string $message
     ): void {
         // Act
-        $restErrorCollectionTransfer = (new ShipmentDataCheckoutRequestAttributesValidatorPlugin())
+        $restErrorCollectionTransfer = (new ShipmentDataCheckoutRequestValidatorPlugin())
             ->validateAttributes($restCheckoutRequestAttributesTransfer);
 
         // Assert
@@ -60,7 +60,7 @@ class ShipmentDataCheckoutRequestAttributesValidatorPluginTest extends Unit
     /**
      * @return mixed[]
      */
-    public function shipmentDataCheckoutRequestAttributesValidatorPluginDataProvider(): array
+    public function shipmentDataCheckoutRequestValidatorPluginDataProvider(): array
     {
         return [
             [

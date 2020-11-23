@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
+use Generated\Shared\Transfer\RestShipmentTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\Kernel\Container;
@@ -41,6 +42,11 @@ use Spryker\Zed\ShipmentsRestApi\ShipmentsRestApiDependencyProvider;
 class ShipmentsRestApiBusinessTester extends Actor
 {
     use _generated\ShipmentsRestApiBusinessTesterActions;
+
+    /**
+     * @uses \Spryker\Shared\Shipment\ShipmentConstants::PRICE_MODE_GROSS
+     */
+    protected const PRICE_MODE_GROSS = 'GROSS_MODE';
 
     public const SHIPMENT_METHOD = [
         'idShipmentMethod' => 745,
@@ -110,9 +116,8 @@ class ShipmentsRestApiBusinessTester extends Actor
     public function prepareCheckoutDataTransferWithInvalidShipmentMethodId(): CheckoutDataTransfer
     {
         /** @var \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer */
-        $checkoutDataTransfer = (new CheckoutDataBuilder())
-            ->withShipment(['idShipmentMethod' => static::SHIPMENT_METHOD_ID_INVALID])
-            ->build();
+        $checkoutDataTransfer = (new CheckoutDataBuilder())->build()
+            ->setShipment((new RestShipmentTransfer())->setIdShipmentMethod(static::SHIPMENT_METHOD_ID_INVALID));
 
         return $checkoutDataTransfer;
     }
@@ -146,6 +151,7 @@ class ShipmentsRestApiBusinessTester extends Actor
     public function buildQuote(): QuoteTransfer
     {
         return (new QuoteBuilder())->build()
+            ->setPriceMode(static::PRICE_MODE_GROSS)
             ->setCurrency((new CurrencyTransfer())->setCode('EUR'))
             ->setStore($this->haveStore([StoreTransfer::NAME => 'DE']))
             ->addItem((new ItemBuilder())->build())

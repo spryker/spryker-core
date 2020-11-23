@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 
 /**
  * Auto-generated group annotations
@@ -112,13 +113,11 @@ class MapShipmentsToQuoteTest extends Unit
             ->offsetGet(0)
             ->setIdShipmentMethod(static::FAKE_ID_SHIPMENT_METHOD);
 
-        // Act
-        $quoteTransfer = $this->tester->getFacade()
-            ->mapShipmentsToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
-
         // Assert
-        $this->assertNull($quoteTransfer->getItems()->offsetGet(0)->getShipment()->getMethod());
-        $this->assertNull($quoteTransfer->getItems()->offsetGet(0)->getShipment()->getShipmentSelection());
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->tester->getFacade()->mapShipmentsToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
     }
 
     /**
@@ -133,12 +132,11 @@ class MapShipmentsToQuoteTest extends Unit
             ->offsetGet(0)
             ->setGroupKey(static::FAKE_GROUP_KEY);
 
-        // Act
-        $quoteTransfer = $this->tester->getFacade()
-            ->mapShipmentsToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
-
         // Assert
-        $this->assertNull($quoteTransfer->getItems()->offsetGet(0)->getShipment());
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->tester->getFacade()->mapShipmentsToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
     }
 
     /**

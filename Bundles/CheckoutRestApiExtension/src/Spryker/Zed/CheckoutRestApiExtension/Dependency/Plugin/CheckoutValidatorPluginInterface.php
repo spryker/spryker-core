@@ -10,6 +10,11 @@ namespace Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 
+/**
+ * Plugin exists to allow validating of the `CheckoutDataTransfer`s.
+ *
+ * Validation of `checkout` REST api request.
+ */
 interface CheckoutValidatorPluginInterface
 {
     /**

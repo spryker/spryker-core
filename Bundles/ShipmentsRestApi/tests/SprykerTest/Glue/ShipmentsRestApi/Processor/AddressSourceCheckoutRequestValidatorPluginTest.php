@@ -11,7 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\RestAddressTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestShipmentsTransfer;
-use Spryker\Glue\ShipmentsRestApi\Plugin\CheckoutRestApi\AddressSourceCheckoutRequestAttributesValidatorPlugin;
+use Spryker\Glue\ShipmentsRestApi\Plugin\CheckoutRestApi\AddressSourceCheckoutRequestValidatorPlugin;
 use Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiFactory;
 use Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceCheckerPluginInterface;
 
@@ -22,10 +22,10 @@ use Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceChecke
  * @group Glue
  * @group ShipmentsRestApi
  * @group Processor
- * @group AddressSourceCheckoutRequestAttributesValidatorPluginTest
+ * @group AddressSourceCheckoutRequestValidatorPluginTest
  * Add your own group annotations below this line
  */
-class AddressSourceCheckoutRequestAttributesValidatorPluginTest extends Unit
+class AddressSourceCheckoutRequestValidatorPluginTest extends Unit
 {
     /**
      * @var \SprykerTest\Glue\ShipmentsRestApi\ShipmentsRestApiProcessorTester
@@ -43,11 +43,12 @@ class AddressSourceCheckoutRequestAttributesValidatorPluginTest extends Unit
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiFactory $shipmentsRestApiFactoryMock */
         $shipmentsRestApiFactoryMock = $this->getMockBuilder(ShipmentsRestApiFactory::class)
-            ->onlyMethods(['getAddressSourceProviderPlugins'])
+            ->onlyMethods(['getAddressSourceCheckerPlugins'])
             ->getMock();
-        $shipmentsRestApiFactoryMock->method('getAddressSourceProviderPlugins')->willReturn([$addressSourceCheckerPluginMock]);
 
-        $addressSourceCheckoutRequestAttributesValidatorPlugin = (new AddressSourceCheckoutRequestAttributesValidatorPlugin())
+        $shipmentsRestApiFactoryMock->method('getAddressSourceCheckerPlugins')->willReturn([$addressSourceCheckerPluginMock]);
+
+        $addressSourceCheckoutRequestValidatorPlugin = (new AddressSourceCheckoutRequestValidatorPlugin())
             ->setFactory($shipmentsRestApiFactoryMock);
 
         $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesTransfer())
@@ -56,6 +57,6 @@ class AddressSourceCheckoutRequestAttributesValidatorPluginTest extends Unit
             );
 
         // Act
-        $addressSourceCheckoutRequestAttributesValidatorPlugin->validateAttributes($restCheckoutRequestAttributesTransfer);
+        $addressSourceCheckoutRequestValidatorPlugin->validateAttributes($restCheckoutRequestAttributesTransfer);
     }
 }

@@ -32,7 +32,6 @@
         <property name="shippingAddress" type="RestAddress" restRequestParameter="yes"/>
         <property name="payments" type="RestPayment[]" singular="payment" restRequestParameter="yes"/>
         <property name="shipment" type="RestShipment" restRequestParameter="yes"/>
-        <property name="restUser" type="RestUser" restRequestParameter="no"/>
     </transfer>
 
     <transfer name="RestCustomer">
