@@ -86,8 +86,6 @@ class CompanyBusinessUnitAddressesRestApiFacadeTest extends Unit
     }
 
     /**
-     * @group test
-     *
      * @return void
      */
     public function testMapCompanyBusinessUnitAddressesToQuoteWillMapExistingBusinessUnitAddress(): void
