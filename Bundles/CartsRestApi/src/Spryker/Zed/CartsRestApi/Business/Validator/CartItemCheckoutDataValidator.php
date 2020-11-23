@@ -106,7 +106,7 @@ class CartItemCheckoutDataValidator implements CartItemCheckoutDataValidatorInte
             $itemGroupKeys[] = $restShipmentsTransfer->getItems();
         }
 
-        return array_merge([], ...$itemGroupKeys);
+        return array_merge(...$itemGroupKeys);
     }
 
     /**
