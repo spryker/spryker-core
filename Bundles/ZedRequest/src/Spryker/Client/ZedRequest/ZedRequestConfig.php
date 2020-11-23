@@ -95,4 +95,14 @@ class ZedRequestConfig extends AbstractBundleConfig
             static::HASH_COST => $this->getHashCost(),
         ];
     }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isDevelopmentMode(): bool
+    {
+        return APPLICATION_ENV === 'development' || APPLICATION_ENV === 'dev.docker';
+    }
 }

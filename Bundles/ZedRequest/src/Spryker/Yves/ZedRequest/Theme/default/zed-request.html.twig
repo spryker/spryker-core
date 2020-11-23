@@ -1,0 +1,44 @@
+{% extends '@WebProfiler/Profiler/layout.html.twig' %}
+
+{% block toolbar %}
+    {% set icon %}
+        <span class="sf-toolbar-value">Zed Requests</span>
+    {% endset %}
+
+    {% set text %}
+        <div class="sf-toolbar-info-piece">
+            <b>Calls</b>
+            <span>{{ collector.logs|length }}</span>
+        </div>
+    {% endset %}
+
+    {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { link: profiler_url, name: 'zed_request'}) }}
+{% endblock %}
+
+{% block menu %}
+    <span class="label">
+        <strong>Zed Requests</strong>
+        <span class="count">
+            <span>{{ collector.logs|length }}</span>
+        </span>
+    </span>
+{% endblock %}
+
+{% block panel %}
+    <h2>Zed Requests</h2>
+    <table>
+        <tr>
+            <th>Destination</th>
+            <th>Payload</th>
+            <th>Result</th>
+        </tr>
+
+        {% for logData in collector.logs %}
+            <tr>
+                <td>{{ logData['destination'] }}</td>
+                <td>{{ logData['payload'] }}</td>
+                <td>{{ logData['result'] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
