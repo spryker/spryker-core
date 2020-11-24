@@ -165,11 +165,15 @@
                 </div>
             </web-spy-card>
 
-            <web-mp-offer-prices-table
-                cloak
-                table-id="web-mp-offers-list"
-                config='{{ guiTableConfiguration(priceProductOfferTableConfiguration) }}'>
-            </web-mp-offer-prices-table>
+            <web-spy-card spy-title="{{ 'Price' | trans }}">
+                <web-spy-card>
+                    <web-mp-offer-prices-table
+                        cloak
+                        table-id="web-mp-offers-list"
+                        config='{{ guiTableConfiguration(priceProductOfferTableConfiguration) }}'>
+                    </web-mp-offer-prices-table>
+                </web-spy-card>
+            </web-spy-card>
 
             {% set dates = {
                 from: form.children.productOfferValidity.children.validFrom.vars.value,

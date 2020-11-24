@@ -28,7 +28,7 @@ export class TableDefaultConfigData implements Partial<TableConfig> {
     total = {
         enabled: true,
     };
-    settings = {
+    columnConfigurator = {
         enabled: true,
     };
 }
@@ -69,7 +69,7 @@ export class TableDefaultConfigData implements Partial<TableConfig> {
                 import('@spryker/table.feature.batch-actions').then(
                     m => m.TableBatchActionsFeatureModule
                 ),
-            settings: () =>
+            columnConfigurator: () =>
                 import('@spryker/table.feature.settings').then(
                     m => m.TableSettingsFeatureModule,
                 ),
