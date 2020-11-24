@@ -89,10 +89,8 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         RestRequestInterface $restRequest,
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestResponseInterface {
-        $restErrorCollectionTransfer = $this->checkoutRequestValidator->validateCheckoutRequest(
-            $restRequest,
-            $restCheckoutRequestAttributesTransfer
-        );
+        $restErrorCollectionTransfer = $this->checkoutRequestValidator
+            ->validateCheckoutDataRequest($restRequest, $restCheckoutRequestAttributesTransfer);
 
         if ($restErrorCollectionTransfer->getRestErrors()->count()) {
             return $this->createValidationErrorResponse($restErrorCollectionTransfer);
@@ -101,9 +99,9 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         $restCheckoutRequestAttributesTransfer = $this->checkoutRequestAttributesExpander
             ->expandCheckoutRequestAttributes($restRequest, $restCheckoutRequestAttributesTransfer);
 
-        $restCheckoutDataResponseTransfer = $this
-            ->checkoutRestApiClient
-            ->getCheckoutData($restCheckoutRequestAttributesTransfer);
+        $restCheckoutDataResponseTransfer = $this->checkoutRestApiClient->getCheckoutData(
+            $restCheckoutRequestAttributesTransfer
+        );
 
         if (!$restCheckoutDataResponseTransfer->getIsSuccess()) {
             return $this->createCheckoutDataErrorResponse($restCheckoutDataResponseTransfer);
@@ -136,12 +134,10 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
 
         $checkoutDataResource->setPayload($restCheckoutDataTransfer);
 
-        $restResponse = $this->restResourceBuilder
+        return $this->restResourceBuilder
             ->createRestResponse()
             ->addResource($checkoutDataResource)
             ->setStatus(Response::HTTP_OK);
-
-        return $restResponse;
     }
 
     /**

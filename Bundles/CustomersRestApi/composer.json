@@ -5,7 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.3",
-    "spryker/checkout-rest-api-extension": "^1.0.0",
+    "spryker/checkout-rest-api-extension": "^1.5.0",
     "spryker/customer": "^7.21.0",
     "spryker/customers-rest-api-extension": "^1.1.0",
     "spryker/glue-application": "^1.15.0",

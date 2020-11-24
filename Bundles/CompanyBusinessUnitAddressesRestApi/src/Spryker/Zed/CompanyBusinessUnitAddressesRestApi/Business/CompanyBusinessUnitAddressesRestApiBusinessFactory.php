@@ -13,6 +13,8 @@ use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Mapper\CompanyBusin
 use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Mapper\CompanyBusinessUnitAddressQuoteMapperInterface;
 use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Reader\CompanyBusinessUnitAddressReader;
 use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Reader\CompanyBusinessUnitAddressReaderInterface;
+use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Validator\CompanyBusinessUnitAddressValidator;
+use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Validator\CompanyBusinessUnitAddressValidatorInterface;
 use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\CompanyBusinessUnitAddressesRestApiDependencyProvider;
 use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Dependency\Facade\CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -44,6 +46,16 @@ class CompanyBusinessUnitAddressesRestApiBusinessFactory extends AbstractBusines
     public function createCompanyBusinessUnitAddressReader(): CompanyBusinessUnitAddressReaderInterface
     {
         return new CompanyBusinessUnitAddressReader($this->getCompanyUnitAddressFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Validator\CompanyBusinessUnitAddressValidatorInterface
+     */
+    public function createCompanyBusinessUnitAddressValidator(): CompanyBusinessUnitAddressValidatorInterface
+    {
+        return new CompanyBusinessUnitAddressValidator(
+            $this->getCompanyUnitAddressFacade()
+        );
     }
 
     /**

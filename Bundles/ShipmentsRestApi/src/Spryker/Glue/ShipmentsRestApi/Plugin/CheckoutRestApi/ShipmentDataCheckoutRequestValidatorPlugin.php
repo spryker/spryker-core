@@ -9,18 +9,20 @@ namespace Spryker\Glue\ShipmentsRestApi\Plugin\CheckoutRestApi;
 
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
-use Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestAttributesValidatorPluginInterface;
+use Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestValidatorPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiFactory getFactory()
  */
-class AddressSourceCheckoutRequestAttributesValidatorPlugin extends AbstractPlugin implements CheckoutRequestAttributesValidatorPluginInterface
+class ShipmentDataCheckoutRequestValidatorPlugin extends AbstractPlugin implements CheckoutRequestValidatorPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Executes `AddressSourceCheckerPluginInterface` plugin stack.
-     * - Validates the given shipments attributes and returns an array of errors if necessary.
+     * - Validates if `RestCheckoutRequestAttributesTransfer` provides shipment data per item or on the top level.
+     * - Mixing the multi-shipment and single-shipment is not valid.
+     * - Expects `RestCheckoutRequestAttributesTransfer.shipment` in case single-shipment to be provided.
+     * - Expects `RestCheckoutRequestAttributesTransfer.shipments` in case multi-shipment to be provided.
      *
      * @api
      *
@@ -32,7 +34,7 @@ class AddressSourceCheckoutRequestAttributesValidatorPlugin extends AbstractPlug
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestErrorCollectionTransfer {
         return $this->getFactory()
-            ->createAddressSourceCheckoutDataValidator()
-            ->validateAttributes($restCheckoutRequestAttributesTransfer);
+            ->createShipmentCheckoutDataValidator()
+            ->validateShipmentCheckoutData($restCheckoutRequestAttributesTransfer);
     }
 }

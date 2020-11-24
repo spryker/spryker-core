@@ -60,6 +60,7 @@
 
     <transfer name="CompanyUnitAddressCriteriaFilter">
         <property name="idCompanyBusinessUnit" type="int"/>
+        <property name="idCompany" type="int"/>
     </transfer>
 
     <transfer name="RestCheckoutData">

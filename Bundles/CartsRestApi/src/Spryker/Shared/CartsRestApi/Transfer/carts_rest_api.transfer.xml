@@ -102,6 +102,7 @@
         <property name="customer" type="Customer"/>
         <property name="currency" type="Currency"/>
         <property name="items" type="Item[]" singular="item"/>
+        <property name="bundleItems" type="Item[]" singular="bundleItem"/>
         <property name="totals" type="Totals"/>
         <property name="store" type="Store"/>
         <property name="idQuote" type="int"/>
@@ -205,6 +206,25 @@
         <property name="idQuote" type="int"/>
         <property name="item" type="Item"/>
         <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="CheckoutError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="CheckoutData">
+        <property name="shipments" type="RestShipments[]" singular="shipment"/>
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="message" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="RestShipments">
+        <property name="items" type="string[]" singular="item"/>
     </transfer>
 
 </transfers>

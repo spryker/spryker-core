@@ -40,9 +40,13 @@ class CustomerAddressReader implements CustomerAddressReaderInterface
         $addressesTransfer = $this->customerFacade->getAddresses($quoteTransfer->getCustomer());
 
         foreach ($addressesTransfer->getAddresses() as $addressTransfer) {
-            if ($addressTransfer->getUuid() === $restAddressTransfer->getId()) {
-                return $addressTransfer;
+            if ($addressTransfer->getUuid() !== $restAddressTransfer->getId()) {
+                continue;
             }
+
+            $addressTransfer->setCountry(null);
+
+            return $addressTransfer;
         }
 
         return (new AddressTransfer())->fromArray($restAddressTransfer->toArray(), true);

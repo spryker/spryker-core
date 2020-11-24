@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ShipmentsRestApi\Plugin\GlueApplication;
 
+use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
@@ -38,6 +39,10 @@ class ShipmentsByCheckoutDataResourceRelationshipPlugin extends AbstractPlugin i
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
+        if ($this->isSingleShipmentRequest($restRequest)) {
+            return;
+        }
+
         $this->getFactory()
             ->createShipmentByCheckoutDataExpander()
             ->addResourceRelationships($resources, $restRequest);
@@ -53,5 +58,21 @@ class ShipmentsByCheckoutDataResourceRelationshipPlugin extends AbstractPlugin i
     public function getRelationshipResourceType(): string
     {
         return ShipmentsRestApiConfig::RESOURCE_SHIPMENTS;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return bool
+     */
+    protected function isSingleShipmentRequest(RestRequestInterface $restRequest): bool
+    {
+        $restCheckoutRequestAttributesTransfer = $restRequest->getResource()->getAttributes();
+
+        if (!$restCheckoutRequestAttributesTransfer instanceof RestCheckoutRequestAttributesTransfer) {
+            return false;
+        }
+
+        return $restCheckoutRequestAttributesTransfer->getShippingAddress() || $restCheckoutRequestAttributesTransfer->getShipment();
     }
 }

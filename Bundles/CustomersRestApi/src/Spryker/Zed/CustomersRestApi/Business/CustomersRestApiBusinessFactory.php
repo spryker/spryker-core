@@ -15,6 +15,8 @@ use Spryker\Zed\CustomersRestApi\Business\Mapper\CustomerQuoteMapper;
 use Spryker\Zed\CustomersRestApi\Business\Mapper\CustomerQuoteMapperInterface;
 use Spryker\Zed\CustomersRestApi\Business\Reader\CustomerAddressReader;
 use Spryker\Zed\CustomersRestApi\Business\Reader\CustomerAddressReaderInterface;
+use Spryker\Zed\CustomersRestApi\Business\Validator\CustomerAddressValidator;
+use Spryker\Zed\CustomersRestApi\Business\Validator\CustomerAddressValidatorInterface;
 use Spryker\Zed\CustomersRestApi\CustomersRestApiDependencyProvider;
 use Spryker\Zed\CustomersRestApi\Dependency\Facade\CustomersRestApiToCustomerFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -55,6 +57,16 @@ class CustomersRestApiBusinessFactory extends AbstractBusinessFactory
     public function createCustomerAddressReader(): CustomerAddressReaderInterface
     {
         return new CustomerAddressReader($this->getCustomerFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\CustomersRestApi\Business\Validator\CustomerAddressValidatorInterface
+     */
+    public function createCustomerAddressValidator(): CustomerAddressValidatorInterface
+    {
+        return new CustomerAddressValidator(
+            $this->getCustomerFacade()
+        );
     }
 
     /**

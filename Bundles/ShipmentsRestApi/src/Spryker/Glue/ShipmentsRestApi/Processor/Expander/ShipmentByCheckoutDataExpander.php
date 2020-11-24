@@ -9,7 +9,6 @@ namespace Spryker\Glue\ShipmentsRestApi\Processor\Expander;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
-use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestShipmentsAttributesTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
@@ -61,10 +60,6 @@ class ShipmentByCheckoutDataExpander implements ShipmentByCheckoutDataExpanderIn
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
-        if ($this->isSingleShipmentRequest($restRequest)) {
-            return;
-        }
-
         foreach ($resources as $resource) {
             $quoteTransfer = $this->findQuoteTransferInPayload($resource);
             $shipmentMethodsCollectionTransfer = $this->findShipmentMethodsCollectionTransferInPayload($resource);
@@ -160,21 +155,5 @@ class ShipmentByCheckoutDataExpander implements ShipmentByCheckoutDataExpanderIn
         }
 
         return $restCheckoutDataTransfer->getAvailableShipmentMethods();
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return bool
-     */
-    protected function isSingleShipmentRequest(RestRequestInterface $restRequest): bool
-    {
-        $restCheckoutRequestAttributesTransfer = $restRequest->getResource()->getAttributes();
-
-        if (!$restCheckoutRequestAttributesTransfer instanceof RestCheckoutRequestAttributesTransfer) {
-            return false;
-        }
-
-        return $restCheckoutRequestAttributesTransfer->getShippingAddress() || $restCheckoutRequestAttributesTransfer->getShipment();
     }
 }

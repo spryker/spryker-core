@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestShipmentsTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeInterface;
+use Spryker\Zed\ShipmentsRestApi\ShipmentsRestApiConfig;
 
 class ShipmentQuoteItemMapper implements ShipmentQuoteItemMapperInterface
 {
@@ -83,7 +84,8 @@ class ShipmentQuoteItemMapper implements ShipmentQuoteItemMapperInterface
             );
         }
 
-        $this->shipmentFacade->expandQuoteWithShipmentGroups($quoteTransfer);
+        $quoteTransfer = $this->setNoShipmentForGiftCards($quoteTransfer);
+        $quoteTransfer = $this->shipmentFacade->expandQuoteWithShipmentGroups($quoteTransfer);
 
         return $quoteTransfer;
     }
@@ -101,7 +103,7 @@ class ShipmentQuoteItemMapper implements ShipmentQuoteItemMapperInterface
         ShipmentTransfer $shipmentTransfer
     ): QuoteTransfer {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!in_array($itemTransfer->getGroupKey(), $itemsGroupKeys)) {
+            if (!in_array($itemTransfer->getGroupKey(), $itemsGroupKeys, true)) {
                 continue;
             }
 
@@ -126,7 +128,7 @@ class ShipmentQuoteItemMapper implements ShipmentQuoteItemMapperInterface
         $mappedBundledItems = $this->mapBundledItemsByBundleItemIdentifier($quoteTransfer);
 
         foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
-            if (!in_array($itemTransfer->getGroupKey(), $itemsGroupKeys)) {
+            if (!in_array($itemTransfer->getGroupKey(), $itemsGroupKeys, true)) {
                 continue;
             }
 
@@ -161,7 +163,7 @@ class ShipmentQuoteItemMapper implements ShipmentQuoteItemMapperInterface
     protected function updateItemShipment(ItemTransfer $itemTransfer, ShipmentTransfer $shipmentTransfer): void
     {
         if (!$itemTransfer->getShipment()) {
-            $itemTransfer->setShipment($shipmentTransfer);
+            $itemTransfer->setShipment(clone $shipmentTransfer);
 
             return;
         }
@@ -257,5 +259,23 @@ class ShipmentQuoteItemMapper implements ShipmentQuoteItemMapperInterface
         }
 
         return (new AddressTransfer())->fromArray($restAddressTransfer->toArray(), true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function setNoShipmentForGiftCards(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getGiftCardMetadata() && $itemTransfer->getGiftCardMetadata()->getIsGiftCard()) {
+                $itemTransfer->getShipment()
+                    ->setShipmentSelection(ShipmentsRestApiConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT)
+                    ->setMethod(null);
+            }
+        }
+
+        return $quoteTransfer;
     }
 }
