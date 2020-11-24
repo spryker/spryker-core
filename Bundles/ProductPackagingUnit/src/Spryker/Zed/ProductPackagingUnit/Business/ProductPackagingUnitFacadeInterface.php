@@ -32,7 +32,7 @@ interface ProductPackagingUnitFacadeInterface
     public function installProductPackagingUnitTypes(): void;
 
     /**
-     * @deprecated Packaging UI will be removed in next major.
+     * @deprecated Will be removed without replacement.
      *
      * Specification:
      * - Retrieves the list of infrastructural packaging unit type names.
@@ -44,7 +44,7 @@ interface ProductPackagingUnitFacadeInterface
     public function getInfrastructuralProductPackagingUnitTypeNames(): array;
 
     /**
-     * @deprecated Packaging UI will be removed in next major.
+     * @deprecated Will be removed without replacement.
      *
      * Specification:
      * - Returns the default packaging unit type name.
@@ -56,7 +56,7 @@ interface ProductPackagingUnitFacadeInterface
     public function getDefaultProductPackagingUnitTypeName(): string;
 
     /**
-     * @deprecated Packaging UI will be removed in next major.
+     * @deprecated Will be removed without replacement.
      *
      * Specification:
      * - Retrieves a product packaging unit type using the name within the provided transfer.
@@ -74,7 +74,7 @@ interface ProductPackagingUnitFacadeInterface
     ): ?ProductPackagingUnitTypeTransfer;
 
     /**
-     * @deprecated Packaging UI will be removed in next major.
+     * @deprecated Will be removed without replacement.
      *
      * Specification:
      * - Retrieves a product packaging unit type using the product packaging type ID within the provided transfer.
@@ -92,7 +92,7 @@ interface ProductPackagingUnitFacadeInterface
     ): ProductPackagingUnitTypeTransfer;
 
     /**
-     * @deprecated Packaging UI will be removed in next major.
+     * @deprecated Will be removed without replacement.
      *
      * Specification:
      * - Retrieves the count of existing packaging units for a given product packaging unit type.
@@ -120,7 +120,7 @@ interface ProductPackagingUnitFacadeInterface
     public function findProductIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array;
 
     /**
-     * @deprecated Packaging UI will be removed in next major.
+     * @deprecated Will be removed without replacement.
      *
      * Specification:
      * - Creates product packaging unit type.
@@ -139,7 +139,7 @@ interface ProductPackagingUnitFacadeInterface
     ): ProductPackagingUnitTypeTransfer;
 
     /**
-     * @deprecated Packaging UI will be removed in next major.
+     * @deprecated Will be removed without replacement.
      *
      * Specification:
      * - Updates product packaging unit type.
@@ -158,7 +158,7 @@ interface ProductPackagingUnitFacadeInterface
     ): ProductPackagingUnitTypeTransfer;
 
     /**
-     * @deprecated Packaging UI will be removed in next major.
+     * @deprecated Will be removed without replacement.
      *
      * Specification:
      * - Deletes a product packaging unit type by its ID.
