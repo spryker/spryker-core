@@ -14,7 +14,7 @@ class GreaterThanOrEmptyConstraint extends AbstractComparison
     /**
      * @var string
      */
-    public $message = 'This value should be greater than or empty to {{ compared_value }}.';
+    public $message = 'This value should be greater than {{ compared_value }} or empty.';
 
     /**
      * @return string

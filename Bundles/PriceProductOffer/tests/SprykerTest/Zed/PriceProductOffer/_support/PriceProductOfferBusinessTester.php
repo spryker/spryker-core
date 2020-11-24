@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\PriceProductOffer;
 
 use Codeception\Actor;
 use Generated\Shared\Transfer\PriceProductOfferTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOfferQuery;
 
 /**
@@ -55,6 +56,24 @@ class PriceProductOfferBusinessTester extends Actor
         $priceProductOfferTransfer = (new PriceProductOfferTransfer())->fromArray($priceProductOfferEntity->toArray(), true);
 
         return $priceProductOfferTransfer;
+    }
+
+    /**
+     * @param mixed[]|null $priceProductOverride
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    public function haveProductOfferSaved($priceProductOverride = null): PriceProductTransfer
+    {
+        $productOfferTransfer = $this->haveProductOffer();
+        $priceProductTransfer = $this->havePriceProduct($priceProductOverride);
+        $priceProductDimensionTransfer = $priceProductTransfer->getPriceDimension();
+        $priceProductDimensionTransfer->setIdProductOffer($productOfferTransfer->getIdProductOffer());
+        $priceProductTransfer->setPriceDimension($priceProductDimensionTransfer);
+
+        $this->getFacade()->savePriceProductOfferRelation($priceProductTransfer);
+
+        return $priceProductTransfer;
     }
 
     /**
