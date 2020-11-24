@@ -77,37 +77,16 @@ class DataSetWriterCollection implements DataSetWriterInterface
      */
     protected function getDatasetWriters()
     {
+        /**
+         * @var \Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginApplicableAwareInterface $dataSetWriter
+         */
         foreach ($this->dataSetWriters as $dataSetWriter) {
             if (
-                !$this->checkIfIsApplicableAwarePlugin($dataSetWriter)
-                || $this->checkIfApplicableAwarePluginIsApplicable($dataSetWriter)
+                !$dataSetWriter instanceof DataSetWriterPluginApplicableAwareInterface
+                || $dataSetWriter->isApplicable()
             ) {
                 yield $dataSetWriter;
             }
         }
-    }
-
-    /**
-     * @param \Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface|\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetItemWriterPluginInterface $dataSetWriterPlugin
-     *
-     * @return bool
-     */
-    protected function checkIfApplicableAwarePluginIsApplicable($dataSetWriterPlugin): bool
-    {
-        /**
-         * @var \Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginApplicableAwareInterface $dataSetWriterPlugin
-         */
-        return $this->checkIfIsApplicableAwarePlugin($dataSetWriterPlugin)
-            && $dataSetWriterPlugin->isApplicable();
-    }
-
-    /**
-     * @param \Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface|\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetItemWriterPluginInterface $dataSetWriterPlugin
-     *
-     * @return bool
-     */
-    protected function checkIfIsApplicableAwarePlugin($dataSetWriterPlugin): bool
-    {
-        return $dataSetWriterPlugin instanceof DataSetWriterPluginApplicableAwareInterface;
     }
 }
