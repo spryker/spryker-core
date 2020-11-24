@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\PriceProductOffer\Business;
 
+use ArrayObject;
+use Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer;
 use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Generated\Shared\Transfer\ProductOfferResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -67,13 +68,15 @@ class PriceProductOfferFacade extends AbstractFacade implements PriceProductOffe
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
+     * @return \Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer
      */
-    public function validateProductOfferPrices(ProductOfferTransfer $productOfferTransfer): ProductOfferResponseTransfer
+    public function validateProductOfferPrices(ArrayObject $priceProductTransfers): PriceProductOfferCollectionValidationResponseTransfer
     {
-        return $this->getFactory()->createPriceProductOfferValidator()->validatePrices($productOfferTransfer);
+        return $this->getFactory()
+            ->createPriceProductOfferValidator()
+            ->validateProductOfferPrices($priceProductTransfers);
     }
 
     /**
@@ -102,5 +105,19 @@ class PriceProductOfferFacade extends AbstractFacade implements PriceProductOffe
     public function count(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): int
     {
         return $this->getRepository()->count($priceProductOfferCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function getProductOfferPrices(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): ArrayObject
+    {
+        return $this->getRepository()->getProductOfferPrices($priceProductOfferCriteriaTransfer);
     }
 }

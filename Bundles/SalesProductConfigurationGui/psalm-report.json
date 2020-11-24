@@ -1,0 +1,18 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\SalesProductConfigurationGui\\Communication\\Resolver\\ProductConfigurationTemplateResolverInterface::resolveProductConfigurationTemplate cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesProductConfigurationGui/src/Spryker/Zed/SalesProductConfigurationGui/Communication/Controller/SalesController.php",
+            "snippet": "            ->resolveProductConfigurationTemplate($itemTransfer);",
+            "selected_text": "$itemTransfer",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

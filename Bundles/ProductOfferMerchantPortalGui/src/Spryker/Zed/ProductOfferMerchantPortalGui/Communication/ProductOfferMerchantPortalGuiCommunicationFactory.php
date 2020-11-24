@@ -14,6 +14,7 @@ use Spryker\Shared\GuiTable\Http\GuiTableDataRequestExecutorInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Action\ActionInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Action\UpdateProductOffer\DeletePricesAction;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Action\UpdateProductOffer\SavePricesAction;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilder;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\GuiTableConfigurationProviderInterface;
@@ -368,6 +369,17 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
             $this->getPriceProductOfferFacade(),
             $this->getMerchantUserFacade(),
             $this->getTranslatorFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Action\ActionInterface
+     */
+    public function createSavePricesAction(): ActionInterface
+    {
+        return new SavePricesAction(
+            $this->getPriceProductOfferFacade(),
+            $this->getPriceProductFacade()
         );
     }
 

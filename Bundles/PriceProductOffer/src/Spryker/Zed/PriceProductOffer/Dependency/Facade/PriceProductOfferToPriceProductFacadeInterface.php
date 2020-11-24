@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProductOffer\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 interface PriceProductOfferToPriceProductFacadeInterface
 {
@@ -19,9 +20,7 @@ interface PriceProductOfferToPriceProductFacadeInterface
     public function persistProductConcretePriceCollection(ProductConcreteTransfer $productConcreteTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     *
-     * @return \Generated\Shared\Transfer\PriceProductValidationResponseTransfer
+     * @return \Symfony\Component\Validator\Constraint
      */
-    public function validatePrices(array $priceProductTransfers): PriceProductValidationResponseTransfer;
+    public function getValidCurrencyAssignedToStoreConstraint(): SymfonyConstraint;
 }

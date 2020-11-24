@@ -2,6 +2,7 @@ namespace: SprykerTest
 include:
     - tests/SprykerTest/Yves/Security
     - tests/SprykerTest/Shared/Security
+    - tests/SprykerTest/Zed/Security
 paths:
     tests: tests
     log: tests/_output

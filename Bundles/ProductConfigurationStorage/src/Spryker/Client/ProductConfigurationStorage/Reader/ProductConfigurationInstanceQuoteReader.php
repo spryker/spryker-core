@@ -48,6 +48,7 @@ class ProductConfigurationInstanceQuoteReader implements ProductConfigurationIns
             return null;
         }
 
-        return $itemTransfer->getProductConfigurationInstance();
+        return (new ProductConfigurationInstanceTransfer())
+            ->fromArray($itemTransfer->getProductConfigurationInstance()->toArray());
     }
 }

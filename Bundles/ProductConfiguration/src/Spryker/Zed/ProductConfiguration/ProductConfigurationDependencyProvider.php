@@ -9,26 +9,23 @@ namespace Spryker\Zed\ProductConfiguration;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingServiceBridge;
-use Spryker\Zed\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilTextServiceBridge;
 
 /**
  * @method \Spryker\Zed\ProductConfiguration\ProductConfigurationConfig getConfig()
  */
 class ProductConfigurationDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
-    public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
+    public const SERVICE_PRODUCT_CONFIGURATION = 'SERVICE_PRODUCT_CONFIGURATION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
-        $container = $this->addUtilEncodingService($container);
-        $container = $this->addUtilTextService($container);
+        $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addProductConfigurationService($container);
 
         return $container;
     }
@@ -38,28 +35,10 @@ class ProductConfigurationDependencyProvider extends AbstractBundleDependencyPro
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addUtilEncodingService(Container $container): Container
+    protected function addProductConfigurationService(Container $container): Container
     {
-        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
-            return new ProductConfigurationToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
-            );
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addUtilTextService(Container $container): Container
-    {
-        $container->set(static::SERVICE_UTIL_TEXT, function (Container $container) {
-            return new ProductConfigurationToUtilTextServiceBridge(
-                $container->getLocator()->utilText()->service()
-            );
+        $container->set(static::SERVICE_PRODUCT_CONFIGURATION, function (Container $container) {
+            return $container->getLocator()->productConfiguration()->service();
         });
 
         return $container;

@@ -27,4 +27,20 @@ interface SecurityConstants
      * @api
      */
     public const YVES_HTTPS_PORT = 'SECURITY:YVES_HTTPS_PORT';
+
+    /**
+     * Specification:
+     *  - HTTP port for Zed.
+     *
+     * @api
+     */
+    public const ZED_HTTP_PORT = 'SECURITY:ZED_HTTP_PORT';
+
+    /**
+     * Specification:
+     * - HTTPS port for Zed.
+     *
+     * @api
+     */
+    public const ZED_HTTPS_PORT = 'SECURITY:ZED_HTTPS_PORT';
 }

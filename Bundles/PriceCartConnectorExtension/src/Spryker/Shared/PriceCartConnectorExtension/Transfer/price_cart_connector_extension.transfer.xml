@@ -6,4 +6,10 @@
     <transfer name="CartChange">
     </transfer>
 
+    <transfer name="CartItemQuantity">
+    </transfer>
+
+    <transfer name="Item">
+    </transfer>
+
 </transfers>

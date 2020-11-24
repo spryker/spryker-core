@@ -12,6 +12,8 @@ use Spryker\Zed\AuthMailConnectorExtension\Dependency\Plugin\AuthMailExpanderPlu
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Will be removed without replacement. Handling of user password reset mail is implemented in UserPasswordReset module.
+ *
  * @method \Spryker\Zed\User\Persistence\UserQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\User\Business\UserFacadeInterface getFacade()
  * @method \Spryker\Zed\User\Communication\UserCommunicationFactory getFactory()

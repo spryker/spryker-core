@@ -29,9 +29,8 @@ class ProductTable extends AbstractProductTable
     public const COL_VARIANT_COUNT = 'variants';
     public const COL_STATUS = 'status';
     public const COL_ACTIONS = 'actions';
-    public const COL_IS_BUNDLE = 'is_bundle';
     public const COL_STORE_RELATION = 'store_relation';
-    public const COL_PRODUCT_TYPE = 'product_type';
+    public const COL_PRODUCT_TYPES = 'product_types';
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
@@ -54,21 +53,29 @@ class ProductTable extends AbstractProductTable
     protected $productManagementRepository;
 
     /**
+     * @var \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableDataExpanderPluginInterface[]
+     */
+    protected $productTableDataExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Spryker\Zed\ProductManagement\Communication\Helper\ProductTypeHelperInterface $productTypeHelper
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementRepositoryInterface $productManagementRepository
+     * @param \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableDataExpanderPluginInterface[] $productTableDataExpanderPlugins
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
         LocaleTransfer $localeTransfer,
         ProductTypeHelperInterface $productTypeHelper,
-        ProductManagementRepositoryInterface $productManagementRepository
+        ProductManagementRepositoryInterface $productManagementRepository,
+        array $productTableDataExpanderPlugins
     ) {
         $this->productQueryQueryContainer = $productQueryContainer;
         $this->localeTransfer = $localeTransfer;
         $this->productTypeHelper = $productTypeHelper;
         $this->productManagementRepository = $productManagementRepository;
+        $this->productTableDataExpanderPlugins = $productTableDataExpanderPlugins;
     }
 
     /**
@@ -92,19 +99,16 @@ class ProductTable extends AbstractProductTable
             static::COL_TAX_SET => 'Tax Set',
             static::COL_VARIANT_COUNT => 'Variants',
             static::COL_STATUS => 'Status',
-            static::COL_IS_BUNDLE => 'Contains bundles',
-            static::COL_PRODUCT_TYPE => 'Product type',
+            static::COL_PRODUCT_TYPES => 'Types',
             static::COL_STORE_RELATION => 'Stores',
             static::COL_ACTIONS => 'Actions',
         ]);
 
         $config->setRawColumns([
             static::COL_STATUS,
-            static::COL_IS_BUNDLE,
-            static::COL_PRODUCT_TYPE,
+            static::COL_PRODUCT_TYPES,
             static::COL_STORE_RELATION,
             static::COL_ACTIONS,
-            static::COL_IS_BUNDLE,
         ]);
 
         $config->setSearchable([
@@ -161,18 +165,33 @@ class ProductTable extends AbstractProductTable
      */
     protected function generateItem(SpyProductAbstract $productAbstractEntity)
     {
-        return [
+        $item = [
             static::COL_ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract(),
             static::COL_SKU => $productAbstractEntity->getSku(),
             static::COL_NAME => $productAbstractEntity->getVirtualColumn(static::COL_NAME),
             static::COL_TAX_SET => $productAbstractEntity->getVirtualColumn(static::COL_TAX_SET),
             static::COL_VARIANT_COUNT => $productAbstractEntity->getSpyProducts()->count(),
             static::COL_STATUS => $this->getAbstractProductStatusLabel($productAbstractEntity),
-            static::COL_IS_BUNDLE => $this->getIsBundleProductLable($productAbstractEntity),
-            static::COL_PRODUCT_TYPE => $this->getTypeName($productAbstractEntity),
+            static::COL_PRODUCT_TYPES => $this->getTypeName($productAbstractEntity),
             static::COL_STORE_RELATION => $this->getStoreNames($productAbstractEntity->getIdProductAbstract()),
             static::COL_ACTIONS => implode(' ', $this->createActionColumn($productAbstractEntity)),
         ];
+
+        return $this->executeItemDataExpanderPlugins($item);
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return array
+     */
+    protected function executeItemDataExpanderPlugins(array $item): array
+    {
+        foreach ($this->productTableDataExpanderPlugins as $productTableDataExpanderPlugin) {
+            $item = $productTableDataExpanderPlugin->expand($item);
+        }
+
+        return $item;
     }
 
     /**

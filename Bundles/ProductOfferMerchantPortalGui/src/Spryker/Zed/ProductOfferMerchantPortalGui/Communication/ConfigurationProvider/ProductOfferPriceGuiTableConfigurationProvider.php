@@ -193,7 +193,7 @@ class ProductOfferPriceGuiTableConfigurationProvider implements ProductOfferPric
      */
     protected function addRowActions(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
     {
-        $guiTableConfigurationBuilder->addRowActionOpenFormOverlay(
+        $guiTableConfigurationBuilder->addRowActionUrl(
             'delete-price',
             'Delete price',
             str_replace(static::PARAM_ID_PRODUCT_OFFER, (string)$this->idProductOffer, static::URL_DELETE_PRICE)
