@@ -65,15 +65,22 @@ class ShipmentDataCheckoutRequestValidatorPluginTest extends Unit
         return [
             [
                 (new RestCheckoutRequestAttributesTransfer())
-                    ->setShipment((new RestShipmentTransfer())),
+                    ->setShipment((new RestShipmentTransfer()))
+                    ->setShippingAddress((new RestAddressTransfer())),
                 0,
                 'Passing single shipment method should be valid.',
             ],
             [
                 (new RestCheckoutRequestAttributesTransfer())
                     ->setShippingAddress((new RestAddressTransfer())),
-                0,
-                'Passing single shipping address should be valid.',
+                1,
+                'Passing no single shipment method should not be valid.',
+            ],
+            [
+                (new RestCheckoutRequestAttributesTransfer())
+                    ->setShipment((new RestShipmentTransfer())),
+                1,
+                'Passing no shipping address should not be valid.',
             ],
             [
                 (new RestCheckoutRequestAttributesTransfer()),

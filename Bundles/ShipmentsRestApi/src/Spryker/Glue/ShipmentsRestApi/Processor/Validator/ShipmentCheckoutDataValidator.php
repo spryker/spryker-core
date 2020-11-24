@@ -77,7 +77,7 @@ class ShipmentCheckoutDataValidator implements ShipmentCheckoutDataValidatorInte
             return true;
         }
 
-        if (!$restCheckoutRequestAttributesTransfer->getShipment() && !$restCheckoutRequestAttributesTransfer->getShippingAddress()) {
+        if (!$restCheckoutRequestAttributesTransfer->getShipment() || !$restCheckoutRequestAttributesTransfer->getShippingAddress()) {
             return false;
         }
 
