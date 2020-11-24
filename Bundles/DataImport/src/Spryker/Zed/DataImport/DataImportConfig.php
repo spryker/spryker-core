@@ -83,9 +83,9 @@ class DataImportConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string|null
-     *
      * @see \Spryker\Shared\Propel\PropelConstants::ZED_DB_ENGINE
+     *
+     * @return string|null
      */
     public function getCurrentDatabaseEngine(): ?string
     {
