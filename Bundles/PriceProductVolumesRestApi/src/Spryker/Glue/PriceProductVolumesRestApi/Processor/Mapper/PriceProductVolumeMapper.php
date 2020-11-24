@@ -30,9 +30,8 @@ class PriceProductVolumeMapper implements PriceProductVolumeMapperInterface
     /**
      * @param \Spryker\Glue\PriceProductVolumesRestApi\Dependency\Client\PriceProductVolumesRestApiToPriceProductVolumeClientInterface $priceProductVolumeClient
      */
-    public function __construct(
-        PriceProductVolumesRestApiToPriceProductVolumeClientInterface $priceProductVolumeClient
-    ) {
+    public function __construct(PriceProductVolumesRestApiToPriceProductVolumeClientInterface $priceProductVolumeClient)
+    {
         $this->priceProductVolumeClient = $priceProductVolumeClient;
     }
 
@@ -77,14 +76,14 @@ class PriceProductVolumeMapper implements PriceProductVolumeMapperInterface
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer[] $restProductPriceVolumesAttributesTransfers
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer[]
      */
     protected function mapProductPriceTransfersToRestProductPriceVolumesAttributesTransfers(
         array $priceProductTransfers,
         array $restProductPriceVolumesAttributesTransfers
     ): array {
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            $restProductPriceVolumesAttributesTransfers[] = $this->mapMoneyValueTransferToRestProductPriceVolumesAttributesTransfer(
+            $restProductPriceVolumesAttributesTransfers[] = $this->mapPriceProductTransferToRestProductPriceVolumesAttributesTransfer(
                 $priceProductTransfer,
                 new RestProductPriceVolumesAttributesTransfer()
             );
@@ -99,7 +98,7 @@ class PriceProductVolumeMapper implements PriceProductVolumeMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer
      */
-    protected function mapMoneyValueTransferToRestProductPriceVolumesAttributesTransfer(
+    protected function mapPriceProductTransferToRestProductPriceVolumesAttributesTransfer(
         PriceProductTransfer $priceProductTransfer,
         RestProductPriceVolumesAttributesTransfer $restProductPriceVolumesAttributesTransfer
     ): RestProductPriceVolumesAttributesTransfer {
