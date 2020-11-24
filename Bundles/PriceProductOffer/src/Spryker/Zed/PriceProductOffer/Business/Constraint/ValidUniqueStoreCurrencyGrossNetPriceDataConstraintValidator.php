@@ -50,7 +50,7 @@ class ValidUniqueStoreCurrencyGrossNetPriceDataConstraintValidator extends Abstr
         if (
             $priceProductTransfers->count() > 1
             || $priceProductTransfers->count() === 1
-            && $priceProductTransfers->offsetGet(0)->getPriceDimension()->getIdProductOffer() !== $value->getPriceDimension()->getIdProductOffer()
+            && $priceProductTransfers->offsetGet(0)->getMoneyValue()->getIdPriceProductStore() !== $value->getMoneyValue()->getIdPriceProductStore()
         ) {
             $this->context->addViolation($constraint->getMessage());
         }
