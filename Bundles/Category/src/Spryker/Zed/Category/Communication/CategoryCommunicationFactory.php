@@ -21,6 +21,7 @@ use Spryker\Zed\Category\Communication\Tabs\CategoryFormTabs;
 use Spryker\Zed\Gui\Communication\Tabs\TabsInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface getQueryContainer()
@@ -224,5 +225,13 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     protected function getCategoryFormTabPlugins(): array
     {
         return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_CATEGORY_FORM_TAB_EXPANDER);
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface
+     */
+    public function getCsrfTokenManager(): CsrfTokenManagerInterface
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::SERVICE_FORM_CSRF_PROVIDER);
     }
 }

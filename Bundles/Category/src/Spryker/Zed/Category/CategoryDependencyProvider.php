@@ -26,8 +26,8 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_LOCALE = 'locale facade';
     public const FACADE_URL = 'url facade';
     public const FACADE_EVENT = 'facade event';
-
     public const PLUGIN_GRAPH = 'graph plugin';
+
     public const PLUGIN_STACK_RELATION_DELETE = 'delete relation plugin stack';
     public const PLUGIN_STACK_RELATION_READ = 'read relation plugin stack';
     public const PLUGIN_STACK_RELATION_UPDATE = 'update relation plugin stack';
@@ -38,6 +38,11 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_CATEGORY_POST_UPDATE = 'PLUGIN_CATEGORY_POST_UPDATE';
     public const PLUGIN_CATEGORY_POST_READ = 'PLUGIN_CATEGORY_POST_READ';
     public const PLUGIN_CATEGORY_FORM_TAB_EXPANDER = 'PLUGIN_CATEGORY_FORM_TAB_EXPANDER';
+
+    /**
+     * @uses \Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_CSRF_PROVIDER
+     */
+    public const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -96,6 +101,7 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addRelationReadPluginStack($container);
         $container = $this->addCategoryFormPlugins($container);
         $container = $this->addCategoryFormTabExpanderPlugins($container);
+        $container = $this->addCsrfProviderService($container);
 
         return $container;
     }
@@ -291,6 +297,20 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::PLUGIN_CATEGORY_FORM_TAB_EXPANDER, function () {
             return $this->getCategoryFormTabExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCsrfProviderService(Container $container): Container
+    {
+        $container->set(static::SERVICE_FORM_CSRF_PROVIDER, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_FORM_CSRF_PROVIDER);
         });
 
         return $container;
