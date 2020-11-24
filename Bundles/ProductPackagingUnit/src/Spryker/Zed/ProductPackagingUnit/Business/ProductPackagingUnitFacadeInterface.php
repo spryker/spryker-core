@@ -32,36 +32,36 @@ interface ProductPackagingUnitFacadeInterface
     public function installProductPackagingUnitTypes(): void;
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
      * Specification:
      * - Retrieves the list of infrastructural packaging unit type names.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return string[]
      */
     public function getInfrastructuralProductPackagingUnitTypeNames(): array;
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
      * Specification:
      * - Returns the default packaging unit type name.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return string
      */
     public function getDefaultProductPackagingUnitTypeName(): string;
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
      * Specification:
      * - Retrieves a product packaging unit type using the name within the provided transfer.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
@@ -74,12 +74,12 @@ interface ProductPackagingUnitFacadeInterface
     ): ?ProductPackagingUnitTypeTransfer;
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
      * Specification:
      * - Retrieves a product packaging unit type using the product packaging type ID within the provided transfer.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
@@ -92,12 +92,12 @@ interface ProductPackagingUnitFacadeInterface
     ): ProductPackagingUnitTypeTransfer;
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
      * Specification:
      * - Retrieves the count of existing packaging units for a given product packaging unit type.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
@@ -120,13 +120,13 @@ interface ProductPackagingUnitFacadeInterface
     public function findProductIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array;
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
      * Specification:
      * - Creates product packaging unit type.
      * - Validates if the packaging unit type name is unique.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
@@ -139,13 +139,13 @@ interface ProductPackagingUnitFacadeInterface
     ): ProductPackagingUnitTypeTransfer;
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
      * Specification:
      * - Updates product packaging unit type.
      * - Validate if the name is still unique.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
@@ -158,14 +158,14 @@ interface ProductPackagingUnitFacadeInterface
     ): ProductPackagingUnitTypeTransfer;
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
      * Specification:
      * - Deletes a product packaging unit type by its ID.
      * - Deletes related translations.
      * - Deletes only if no product packaging unit is associated with this unit type.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
