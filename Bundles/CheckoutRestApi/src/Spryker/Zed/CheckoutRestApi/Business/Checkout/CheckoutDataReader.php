@@ -85,10 +85,11 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         $checkoutResponseTransfer = $this->checkoutValidator->validateCheckoutData($restCheckoutRequestAttributesTransfer, $quoteTransfer);
 
         if (!$checkoutResponseTransfer->getIsSuccess()) {
-            return $this->createPlaceOrderErrorResponse($checkoutResponseTransfer);
+            return $this->createCheckoutDataErrorResponse($checkoutResponseTransfer);
         }
 
-        $quoteTransfer = $this->recalculateQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+        $quoteTransfer = $this->executeQuoteMapperPlugins($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+        $quoteTransfer = $this->recalculateQuote($quoteTransfer);
 
         $restCheckoutDataTransfer = (new RestCheckoutDataTransfer())->setQuote($quoteTransfer);
         $restCheckoutDataTransfer = $this->checkoutExpander->expandCheckoutData(
@@ -102,17 +103,12 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function recalculateQuote(
-        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
-        QuoteTransfer $quoteTransfer
-    ): QuoteTransfer {
-        $quoteTransfer = $this->executeQuoteMapperPlugins($restCheckoutRequestAttributesTransfer, $quoteTransfer);
-
+    protected function recalculateQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
         $quoteTransfer->requireStore()
             ->getStore()
                 ->requireName();
@@ -164,7 +160,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
      *
      * @return \Generated\Shared\Transfer\RestCheckoutDataResponseTransfer
      */
-    protected function createPlaceOrderErrorResponse(CheckoutResponseTransfer $checkoutResponseTransfer): RestCheckoutDataResponseTransfer
+    protected function createCheckoutDataErrorResponse(CheckoutResponseTransfer $checkoutResponseTransfer): RestCheckoutDataResponseTransfer
     {
         $restCheckoutDataResponseTransfer = (new RestCheckoutDataResponseTransfer())
             ->setIsSuccess(false);
@@ -173,14 +169,14 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
             return $restCheckoutDataResponseTransfer
                 ->addError(
                     (new RestCheckoutErrorTransfer())
-                        ->setErrorIdentifier(CheckoutRestApiConfig::ERROR_IDENTIFIER_ORDER_NOT_PLACED)
+                        ->setErrorIdentifier(CheckoutRestApiConfig::ERROR_IDENTIFIER_CHECKOUT_DATA_INVALID)
                 );
         }
 
         foreach ($checkoutResponseTransfer->getErrors() as $errorTransfer) {
             $restCheckoutDataResponseTransfer->addError(
                 (new RestCheckoutErrorTransfer())
-                    ->setErrorIdentifier(CheckoutRestApiConfig::ERROR_IDENTIFIER_ORDER_NOT_PLACED)
+                    ->setErrorIdentifier(CheckoutRestApiConfig::ERROR_IDENTIFIER_CHECKOUT_DATA_INVALID)
                     ->setDetail($errorTransfer->getMessage())
                     ->setParameters($errorTransfer->getParameters())
             );

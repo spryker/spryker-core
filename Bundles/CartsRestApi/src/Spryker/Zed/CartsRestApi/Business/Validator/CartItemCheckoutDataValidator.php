@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 class CartItemCheckoutDataValidator implements CartItemCheckoutDataValidatorInterface
 {
     protected const GLOSSARY_PARAMETER_ID = '%id%';
-    protected const GLOSSARY_KEY_CART_ITEM_WAS_NOT_SPECIFIED_IN_CHECKOUT_DATA = 'checkout.validation.item.not_specified';
+    protected const GLOSSARY_KEY_ITEM_NO_SHIPMENT_SELECTED = 'checkout.validation.item.no_shipment_selected';
 
     /**
      * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
@@ -58,7 +58,7 @@ class CartItemCheckoutDataValidator implements CartItemCheckoutDataValidatorInte
 
             $checkoutResponseTransfer = $this->getErrorResponse(
                 $checkoutResponseTransfer,
-                static::GLOSSARY_KEY_CART_ITEM_WAS_NOT_SPECIFIED_IN_CHECKOUT_DATA,
+                static::GLOSSARY_KEY_ITEM_NO_SHIPMENT_SELECTED,
                 [static::GLOSSARY_PARAMETER_ID => $itemTransfer->getGroupKey()]
             );
         }
@@ -85,7 +85,7 @@ class CartItemCheckoutDataValidator implements CartItemCheckoutDataValidatorInte
 
             $checkoutResponseTransfer = $this->getErrorResponse(
                 $checkoutResponseTransfer,
-                static::GLOSSARY_KEY_CART_ITEM_WAS_NOT_SPECIFIED_IN_CHECKOUT_DATA,
+                static::GLOSSARY_KEY_ITEM_NO_SHIPMENT_SELECTED,
                 [static::GLOSSARY_PARAMETER_ID => $itemTransfer->getGroupKey()]
             );
         }

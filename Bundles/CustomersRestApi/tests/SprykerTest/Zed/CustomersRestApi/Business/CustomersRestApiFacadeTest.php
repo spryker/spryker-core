@@ -445,8 +445,6 @@ class CustomersRestApiFacadeTest extends Unit
     }
 
     /**
-     * @group test
-     *
      * @return void
      */
     public function testValidateCustomerAddressesInCheckoutDataWillNotReturnErrorIfCorrectShippingAddressProvided(): void
@@ -503,8 +501,6 @@ class CustomersRestApiFacadeTest extends Unit
     }
 
     /**
-     * @group test
-     *
      * @return void
      */
     public function testValidateCustomerAddressesInCheckoutDataWillReturnErrorIfNoValidCustomerAddressIsProvided(): void

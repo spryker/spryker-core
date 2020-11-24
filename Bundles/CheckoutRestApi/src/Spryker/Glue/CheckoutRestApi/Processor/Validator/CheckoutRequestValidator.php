@@ -84,6 +84,12 @@ class CheckoutRequestValidator implements CheckoutRequestValidatorInterface
             $restErrorCollectionTransfer
         );
 
+        // For BC reasons
+        $restErrorCollectionTransfer = $this->executeCheckoutRequestAttributesValidatorPlugins(
+            $restCheckoutRequestAttributesTransfer,
+            $restErrorCollectionTransfer
+        );
+
         return $this->executeCheckoutRequestValidatorPlugins(
             $restCheckoutRequestAttributesTransfer,
             $restErrorCollectionTransfer

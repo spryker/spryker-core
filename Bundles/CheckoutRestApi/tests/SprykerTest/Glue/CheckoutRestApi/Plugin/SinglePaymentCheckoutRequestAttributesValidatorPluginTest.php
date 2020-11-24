@@ -10,7 +10,7 @@ namespace SprykerTest\Glue\CheckoutRestApi\Plugin;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\RestCheckoutRequestAttributesBuilder;
 use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
-use Spryker\Glue\CheckoutRestApi\Plugin\CheckoutRestApi\SinglePaymentCheckoutRequestValidatorPlugin;
+use Spryker\Glue\CheckoutRestApi\Plugin\SinglePaymentCheckoutRequestAttributesValidatorPlugin;
 
 /**
  * Auto-generated group annotations
@@ -19,10 +19,10 @@ use Spryker\Glue\CheckoutRestApi\Plugin\CheckoutRestApi\SinglePaymentCheckoutReq
  * @group Glue
  * @group CheckoutRestApi
  * @group Plugin
- * @group SinglePaymentCheckoutRequestValidatorPluginTest
+ * @group SinglePaymentCheckoutRequestAttributesValidatorPluginTest
  * Add your own group annotations below this line
  */
-class SinglePaymentCheckoutRequestValidatorPluginTest extends Unit
+class SinglePaymentCheckoutRequestAttributesValidatorPluginTest extends Unit
 {
     /**
      * @var \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestValidatorPluginInterface
@@ -36,7 +36,7 @@ class SinglePaymentCheckoutRequestValidatorPluginTest extends Unit
     {
         parent::setUp();
 
-        $this->singlePaymentCheckoutRequestValidatorPlugin = new SinglePaymentCheckoutRequestValidatorPlugin();
+        $this->singlePaymentCheckoutRequestValidatorPlugin = new SinglePaymentCheckoutRequestAttributesValidatorPlugin();
     }
 
     /**
