@@ -157,6 +157,9 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Enables/disables mapping of `RestCheckoutDataResponseAttributesTransfer.addresses` field in the response.
+     *
      * @api
      *
      * @return bool
