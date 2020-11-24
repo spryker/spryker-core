@@ -74,16 +74,16 @@ class SearchElasticsearchFactory extends AbstractFactory
     public function createSearch(): SearchInterface
     {
         if (!$this->getConfig()->isDevelopmentMode()) {
-            return $this->createSimpleSearch();
+            return $this->createSearchClient();
         }
 
-        return $this->createLoggableSearch();
+        return $this->createLoggableSearchClient();
     }
 
     /**
      * @return \Spryker\Client\SearchElasticsearch\Search\SearchInterface
      */
-    public function createSimpleSearch(): SearchInterface
+    public function createSearchClient(): SearchInterface
     {
         return new Search(
             $this->getElasticaClient()
@@ -93,10 +93,10 @@ class SearchElasticsearchFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\SearchElasticsearch\Search\SearchInterface
      */
-    public function createLoggableSearch(): SearchInterface
+    public function createLoggableSearchClient(): SearchInterface
     {
         return new LoggableSearch(
-            $this->createSimpleSearch(),
+            $this->createSearchClient(),
             $this->createElasticsearchLogger()
         );
     }
