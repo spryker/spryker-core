@@ -135,6 +135,10 @@ class IndexController extends AbstractController
             return $this->addVoucherCreateMessage($voucherCreateInfoTransfer);
         }
 
+        foreach ($voucherForm->getErrors(true) as $formError) {
+            $this->addErrorMessage($formError->getMessage());
+        }
+
         return false;
     }
 

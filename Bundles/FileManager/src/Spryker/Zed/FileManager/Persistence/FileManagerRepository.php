@@ -293,4 +293,17 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
 
         return $fileTransfers;
     }
+
+    /**
+     * @param int $idFile
+     *
+     * @return int
+     */
+    public function getFileInfoVersionsCount(int $idFile): int
+    {
+        return $this->getFactory()
+            ->createFileInfoQuery()
+            ->filterByFkFile($idFile)
+            ->count();
+    }
 }

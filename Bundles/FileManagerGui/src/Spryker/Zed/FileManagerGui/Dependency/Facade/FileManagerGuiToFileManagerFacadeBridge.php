@@ -197,4 +197,14 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
     {
         return $this->fileManagerFacade->findAllowedMimeTypes();
     }
+
+    /**
+     * @param int $idFile
+     *
+     * @return int
+     */
+    public function getFileInfoVersionsCount(int $idFile): int
+    {
+        return $this->fileManagerFacade->getFileInfoVersionsCount($idFile);
+    }
 }

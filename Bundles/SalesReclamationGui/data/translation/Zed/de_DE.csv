@@ -4,3 +4,4 @@ Reclamations,Reklamationen
 Open,Offen
 Closed,Geschlossen
 "Reclamation with id %id% closed","Reklamation %id% geschlossen."
+"CSRF token is not valid.","CSRF-Token ist ungültig."
