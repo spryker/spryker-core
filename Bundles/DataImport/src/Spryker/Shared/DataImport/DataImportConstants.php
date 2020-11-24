@@ -18,7 +18,7 @@ interface DataImportConstants
      *
      * @api
      */
-    public const IMPORT_BULK_MODE = 'DATA_IMPORT:BULK_MODE';
+    public const IS_BULK_MODE_ENABLED = 'DATA_IMPORT:IS_BULK_MODE_ENABLED';
 
     /**
      * Specification:
