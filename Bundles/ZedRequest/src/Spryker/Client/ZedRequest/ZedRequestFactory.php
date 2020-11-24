@@ -16,6 +16,11 @@ use Spryker\Client\ZedRequest\Header\RequestId\RequestId;
 use Spryker\Client\ZedRequest\Header\RequestId\RequestIdInterface;
 use Spryker\Client\ZedRequest\Messenger\Messenger;
 use Spryker\Client\ZedRequest\Messenger\MessengerInterface;
+use Spryker\Shared\ZedRequest\Client\AbstractZedClientInterface;
+use Spryker\Shared\ZedRequest\Client\LoggableZedClient;
+use Spryker\Shared\ZedRequest\Dependency\Service\ZedRequestToUtilEncodingServiceInterface;
+use Spryker\Shared\ZedRequest\Logger\ZedRequestInMemoryLogger;
+use Spryker\Shared\ZedRequest\Logger\ZedRequestLoggerInterface;
 
 /**
  * @method \Spryker\Client\ZedRequest\ZedRequestConfig getConfig()
@@ -55,8 +60,41 @@ class ZedRequestFactory extends AbstractFactory
      */
     public function createClient()
     {
+        if (!$this->getConfig()->isDevelopmentMode()) {
+            return $this->createZedClient();
+        }
+
+        return $this->createLoggableZedClient();
+    }
+
+    /**
+     * @return \Spryker\Shared\ZedRequest\Client\AbstractZedClientInterface
+     */
+    public function createZedClient(): AbstractZedClientInterface
+    {
         return new ZedClient(
             $this->createHttpClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\ZedRequest\Client\AbstractZedClientInterface
+     */
+    public function createLoggableZedClient(): AbstractZedClientInterface
+    {
+        return new LoggableZedClient(
+            $this->createZedClient(),
+            $this->createZedRequestLogger()
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\ZedRequest\Logger\ZedRequestLoggerInterface
+     */
+    public function createZedRequestLogger(): ZedRequestLoggerInterface
+    {
+        return new ZedRequestInMemoryLogger(
+            $this->getUtilEncodingService()
         );
     }
 
@@ -137,5 +175,13 @@ class ZedRequestFactory extends AbstractFactory
     public function getMessengerClient()
     {
         return $this->getProvidedDependency(ZedRequestDependencyProvider::CLIENT_MESSENGER);
+    }
+
+    /**
+     * @return \Spryker\Shared\ZedRequest\Dependency\Service\ZedRequestToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): ZedRequestToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(ZedRequestDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }
