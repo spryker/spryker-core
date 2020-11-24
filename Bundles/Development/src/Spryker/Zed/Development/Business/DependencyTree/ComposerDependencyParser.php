@@ -14,12 +14,12 @@ use Generated\Shared\Transfer\DependencyCollectionTransfer;
 use Generated\Shared\Transfer\DependencyModuleTransfer;
 use Generated\Shared\Transfer\DependencyTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\Word\DashToCamelCase;
+use Laminas\Filter\Word\SeparatorToCamelCase;
 use Spryker\Zed\Development\Business\Composer\ComposerNameFinderInterface;
 use Spryker\Zed\Development\Business\Exception\DependencyTree\InvalidComposerJsonException;
 use Symfony\Component\Finder\SplFileInfo;
-use Zend\Filter\FilterChain;
-use Zend\Filter\Word\DashToCamelCase;
-use Zend\Filter\Word\SeparatorToCamelCase;
 
 class ComposerDependencyParser implements ComposerDependencyParserInterface
 {

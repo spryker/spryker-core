@@ -4,7 +4,7 @@
   "description": "Silex module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/silexphp": "^0.3.0"
   },
   "minimum-stability": "dev",

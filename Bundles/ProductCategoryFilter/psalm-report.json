@@ -51,18 +51,6 @@
         },
         {
             "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilter/src/Spryker/Client/ProductCategoryFilter/ProductCategoryFilterDependencyProvider.php",
-            "snippet": "            return new ProductCategoryFilterToStorageClientBridge($container->getLocator()->storage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 73,
             "line_to": 73,
             "type": "PossiblyNullReference",
@@ -144,30 +132,6 @@
             "selected_text": "$this->utilEncodingService->decodeJson($jsonString, $assoc, $depth, $options)",
             "error_level": 5,
             "shortcode": 139
-        },
-        {
-            "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilter/src/Spryker/Zed/ProductCategoryFilter/ProductCategoryFilterDependencyProvider.php",
-            "snippet": "            return new ProductCategoryFilterToTouchFacadeBridge($container->getLocator()->touch()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 56,
-            "line_to": 56,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilter/src/Spryker/Zed/ProductCategoryFilter/ProductCategoryFilterDependencyProvider.php",
-            "snippet": "            return new ProductCategoryFilterToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

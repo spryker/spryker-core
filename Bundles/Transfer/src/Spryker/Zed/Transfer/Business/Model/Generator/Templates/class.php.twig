@@ -19,6 +19,7 @@ use Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer;
 {% set abstractClass = 'AbstractEntityTransfer' %}
 {% set isEntityTransfer = true %}
 {% endif %}
+{% set isTypeAssertionEnabled = isDebugMode and not isEntityTransfer %}
 
 /**
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
@@ -30,6 +31,10 @@ use Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer;
  */
 class {{ className }} extends {{ abstractClass }}
 {
+{% if isTypeAssertionEnabled %}
+    use TransferTypeValidatorTrait;
+
+{% endif %}
 {% for constant in constants %}
 {{ macro.addConstant(constant) -}}
 {% endfor %}
@@ -49,10 +54,11 @@ class {{ className }} extends {{ abstractClass }}
 {{ macro.addSet(method) -}}
 {% endif %}
 {% if methodName starts with 'get' and not method.is_associative|default %}
+{% if methodName ends with 'OrFail' %}
+{{ macro.addGetOrFail(method) -}}
+{% else %}
 {{ macro.addGet(method) -}}
 {% endif %}
-{% if methodName starts with 'has' and not method.is_associative|default %}
-{{ macro.addHas(method) -}}
 {% endif %}
 {% if methodName starts with 'add' %}
 {% if not method.is_associative %}
@@ -81,6 +87,12 @@ class {{ className }} extends {{ abstractClass }}
     {
         foreach ($data as $property => $value) {
             $normalizedPropertyName = $this->transferPropertyNameMap[$property] ?? null;
+{% if isTypeAssertionEnabled %}
+
+            if ($normalizedPropertyName !== null) {
+                $this->validateFromArrayValueType($normalizedPropertyName, $value);
+            }
+{% endif %}
 
             switch ($normalizedPropertyName) {
 {% if primitives is not empty %}

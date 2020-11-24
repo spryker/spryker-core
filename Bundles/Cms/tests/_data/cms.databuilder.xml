@@ -20,4 +20,9 @@
         <property name="url" dataBuilderRule="unique()->sentence(2)"/>
     </transfer>
 
+    <transfer name="CmsTemplate">
+        <property name="templateName" dataBuilderRule="unique()->sentence(2)"/>
+        <property name="templatePath" dataBuilderRule="unique()->sentence(2)"/>
+    </transfer>
+
 </transfers>

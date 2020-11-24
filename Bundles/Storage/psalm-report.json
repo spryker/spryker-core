@@ -40,15 +40,15 @@
         },
         {
             "severity": "info",
-            "line_from": 30,
-            "line_to": 30,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Storage/src/Spryker/Client/Storage/ServiceProvider/StorageClientServiceProvider.php",
-            "snippet": "            return $container->getLocator()->storage()->client();",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
+            "line_from": 201,
+            "line_to": 201,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of json_decode cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Storage/src/Spryker/Client/Storage/Redis/Service.php",
+            "snippet": "        $result = json_decode($value, true);",
+            "selected_text": "$value",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -160,63 +160,15 @@
         },
         {
             "severity": "info",
-            "line_from": 36,
-            "line_to": 36,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Storage/src/Spryker/Client/Storage/StorageDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->storage()->client();",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 40,
-            "line_to": 40,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Storage/src/Spryker/Client/Storage/StorageDependencyProvider.php",
-            "snippet": "            return new StorageToStoreClientBridge($container->getLocator()->store()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Storage/src/Spryker/Client/Storage/StorageDependencyProvider.php",
-            "snippet": "            return new StorageToLocaleClientBridge($container->getLocator()->locale()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 40,
-            "line_to": 40,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Storage/src/Spryker/Glue/Storage/StorageDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->storage()->client();",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 40,
-            "line_to": 40,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Storage/src/Spryker/Yves/Storage/StorageDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->storage()->client();",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
+            "line_from": 518,
+            "line_to": 518,
+            "type": "UnsafeInstantiation",
+            "message": "Cannot safely instantiate class Spryker\\Client\\Storage\\StorageClient with \"new static\" as its constructor might change in child classes",
+            "file_name": "vendor/spryker/spryker/Bundles/Storage/src/Spryker/Client/Storage/StorageClient.php",
+            "snippet": "        return (new static())->getFactory()->createCacheKeyGenerator()->generateCacheKey($request);",
+            "selected_text": "new static()",
+            "error_level": 2,
+            "shortcode": 229
         },
         {
             "severity": "info",
@@ -265,30 +217,6 @@
             "selected_text": "$source",
             "error_level": 3,
             "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 60,
-            "line_to": 60,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Storage/src/Spryker/Zed/Storage/StorageDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->storage()->client();",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 74,
-            "line_to": 74,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Storage/src/Spryker/Zed/Storage/StorageDependencyProvider.php",
-            "snippet": "            return new StorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [
@@ -618,18 +546,6 @@
         },
         {
             "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\HttpKernel\\Event\\PostResponseEvent is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Storage/src/Spryker/Glue/Storage/Plugin/EventDispatcher/StorageKeyCacheEventDispatcherPlugin.php",
-            "snippet": "        $eventDispatcher->addListener(KernelEvents::TERMINATE, function (PostResponseEvent $postResponseEvent) {",
-            "selected_text": "PostResponseEvent",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
             "line_from": 84,
             "line_to": 84,
             "type": "DeprecatedConstant",
@@ -745,18 +661,6 @@
             "file_name": "vendor/spryker/spryker/Bundles/Storage/src/Spryker/Shared/Storage/Provider/AbstractReadWriteClientProvider.php",
             "snippet": "abstract class AbstractReadWriteClientProvider extends AbstractKvProvider",
             "selected_text": "AbstractKvProvider",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\HttpKernel\\Event\\PostResponseEvent is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Storage/src/Spryker/Yves/Storage/Plugin/EventDispatcher/StorageCacheEventDispatcherPlugin.php",
-            "snippet": "        $eventDispatcher->addListener(KernelEvents::TERMINATE, function (PostResponseEvent $postResponseEvent) use ($container) {",
-            "selected_text": "PostResponseEvent",
             "error_level": 2,
             "shortcode": 98
         },

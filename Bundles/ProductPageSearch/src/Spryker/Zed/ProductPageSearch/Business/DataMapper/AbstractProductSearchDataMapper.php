@@ -12,7 +12,7 @@ use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\CategoryMapTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
-use Zend\Filter\Word\UnderscoreToDash;
+use Laminas\Filter\Word\UnderscoreToDash;
 
 abstract class AbstractProductSearchDataMapper
 {
@@ -22,7 +22,7 @@ abstract class AbstractProductSearchDataMapper
     protected const DIRECT_PARENTS = 'direct-parents';
 
     /**
-     * @var \Zend\Filter\Word\UnderscoreToDash
+     * @var \Laminas\Filter\Word\UnderscoreToDash
      */
     protected $underscoreToDashFilter;
 

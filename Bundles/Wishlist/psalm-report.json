@@ -1,30 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 511,
-            "line_to": 511,
-            "type": "InvalidReturnType",
-            "message": "The declared return type 'bool' for Spryker\\Zed\\Wishlist\\Business\\Model\\Writer::isWishListNameValid is incorrect, got 'false|int'",
-            "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Business/Model/Writer.php",
-            "snippet": "     * @return bool",
-            "selected_text": "bool",
-            "error_level": 6,
-            "shortcode": 11
-        },
-        {
-            "severity": "error",
-            "line_from": 517,
-            "line_to": 517,
-            "type": "InvalidReturnStatement",
-            "message": "The inferred type 'false|int' does not match the declared return type 'bool' for Spryker\\Zed\\Wishlist\\Business\\Model\\Writer::isWishListNameValid",
-            "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Business/Model/Writer.php",
-            "snippet": "        return preg_match(static::WISH_LIST_NAME_VALIDATION_REGEX, $wishlistTransfer->getName());",
-            "selected_text": "preg_match(static::WISH_LIST_NAME_VALIDATION_REGEX, $wishlistTransfer->getName())",
-            "error_level": 6,
-            "shortcode": 128
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
@@ -133,66 +108,6 @@
             "selected_text": "$result",
             "error_level": 3,
             "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 50,
-            "line_to": 50,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Client/Wishlist/WishlistDependencyProvider.php",
-            "snippet": "            return new WishlistToPriceProductClientClientBridge($container->getLocator()->priceProduct()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 64,
-            "line_to": 64,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Client/Wishlist/WishlistDependencyProvider.php",
-            "snippet": "            return new WishlistToCustomerBridge($container->getLocator()->customer()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 78,
-            "line_to": 78,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Client/Wishlist/WishlistDependencyProvider.php",
-            "snippet": "            return new WishlistToCartBridge($container->getLocator()->cart()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 92,
-            "line_to": 92,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Client/Wishlist/WishlistDependencyProvider.php",
-            "snippet": "            return new WishlistToProductBridge($container->getLocator()->product()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 106,
-            "line_to": 106,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Client/Wishlist/WishlistDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->zedRequest()->client();",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         },
         {
             "severity": "info",
@@ -412,6 +327,18 @@
         },
         {
             "severity": "info",
+            "line_from": 406,
+            "line_to": 406,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Wishlist\\Business\\Model\\Reader::getCollectionByCustomerReference cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Business/Model/Reader.php",
+            "snippet": "            return $this->getCollectionByCustomerReference($customerTransfer->getCustomerReference());",
+            "selected_text": "$customerTransfer->getCustomerReference()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
             "line_from": 413,
             "line_to": 413,
             "type": "PossiblyNullArgument",
@@ -585,7 +512,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of preg_match cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Business/Model/Writer.php",
-            "snippet": "        return preg_match(static::WISH_LIST_NAME_VALIDATION_REGEX, $wishlistTransfer->getName());",
+            "snippet": "        return (bool)preg_match(static::WISH_LIST_NAME_VALIDATION_REGEX, $wishlistTransfer->getName());",
             "selected_text": "$wishlistTransfer->getName()",
             "error_level": 3,
             "shortcode": 78
@@ -712,18 +639,6 @@
         },
         {
             "severity": "info",
-            "line_from": 34,
-            "line_to": 34,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Orm\\Zed\\Customer\\Persistence\\SpyCustomerAddressQuery::leftjoinwithspywishlistitem does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Persistence/WishlistRepository.php",
-            "snippet": "            ->leftJoinWithSpyWishlistItem()",
-            "selected_text": "leftJoinWithSpyWishlistItem",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 38,
             "line_to": 38,
             "type": "PossiblyInvalidMethodCall",
@@ -733,18 +648,6 @@
             "selected_text": "count",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::groupbyidwishlist does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Persistence/WishlistRepository.php",
-            "snippet": "            ->groupByIdWishlist();",
-            "selected_text": "groupByIdWishlist",
-            "error_level": 4,
-            "shortcode": 219
         },
         {
             "severity": "info",
@@ -769,30 +672,6 @@
             "selected_text": "getFirst",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 33,
-            "line_to": 33,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/WishlistDependencyProvider.php",
-            "snippet": "            return new FacadeWishlistToProductBridge($container->getLocator()->product()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 37,
-            "line_to": 37,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/WishlistDependencyProvider.php",
-            "snippet": "            return new QueryContainerWishlistToProductBridge($container->getLocator()->product()->queryContainer());",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

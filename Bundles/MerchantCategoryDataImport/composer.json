@@ -4,12 +4,12 @@
   "description": "MerchantCategoryDataImport module",
   "license": "MIT",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/category": "^4.0.0",
     "spryker/data-import": "^1.11.0",
     "spryker/kernel": "^3.33.0",
     "spryker/merchant": "^3.0.0",
-    "spryker/merchant-category": "^0.1.0"
+    "spryker/merchant-category": "^0.2.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

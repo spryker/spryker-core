@@ -1,30 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 333,
-            "line_to": 333,
-            "type": "InvalidReturnType",
-            "message": "The declared return type 'bool' for Spryker\\Zed\\Transfer\\Business\\Model\\Generator\\ClassDefinition::isTransferOrTransferArray is incorrect, got 'false|int'",
-            "file_name": "vendor/spryker/spryker/Bundles/Transfer/src/Spryker/Zed/Transfer/Business/Model/Generator/ClassDefinition.php",
-            "snippet": "     * @return bool",
-            "selected_text": "bool",
-            "error_level": 6,
-            "shortcode": 11
-        },
-        {
-            "severity": "error",
-            "line_from": 337,
-            "line_to": 337,
-            "type": "InvalidReturnStatement",
-            "message": "The inferred type 'false|int' does not match the declared return type 'bool' for Spryker\\Zed\\Transfer\\Business\\Model\\Generator\\ClassDefinition::isTransferOrTransferArray",
-            "file_name": "vendor/spryker/spryker/Bundles/Transfer/src/Spryker/Zed/Transfer/Business/Model/Generator/ClassDefinition.php",
-            "snippet": "        return preg_match('/^[A-Z].*/', $type);",
-            "selected_text": "preg_match('/^[A-Z].*/', $type)",
-            "error_level": 6,
-            "shortcode": 128
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
@@ -112,8 +87,8 @@
         },
         {
             "severity": "info",
-            "line_from": 558,
-            "line_to": 558,
+            "line_from": 560,
+            "line_to": 560,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of mb_strtoupper expects string, possibly different type array<array-key, mixed>|string provided",
             "file_name": "vendor/spryker/spryker/Bundles/Transfer/src/Spryker/Zed/Transfer/Business/Model/Generator/ClassDefinition.php",
@@ -124,8 +99,8 @@
         },
         {
             "severity": "info",
-            "line_from": 570,
-            "line_to": 570,
+            "line_from": 572,
+            "line_to": 572,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of lcfirst expects string, possibly different type array<array-key, mixed>|string provided",
             "file_name": "vendor/spryker/spryker/Bundles/Transfer/src/Spryker/Zed/Transfer/Business/Model/Generator/ClassDefinition.php",
@@ -136,8 +111,8 @@
         },
         {
             "severity": "info",
-            "line_from": 977,
-            "line_to": 977,
+            "line_from": 979,
+            "line_to": 979,
             "type": "PossiblyFalseArgument",
             "message": "Argument 1 of substr cannot be false, possibly false value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Transfer/src/Spryker/Zed/Transfer/Business/Model/Generator/ClassDefinition.php",
@@ -361,30 +336,6 @@
             "selected_text": "glob",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 58,
-            "line_to": 58,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Transfer/src/Spryker/Zed/Transfer/TransferDependencyProvider.php",
-            "snippet": "                $container->getLocator()->propel()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 74,
-            "line_to": 74,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Transfer/src/Spryker/Zed/Transfer/TransferDependencyProvider.php",
-            "snippet": "                $container->getLocator()->utilGlob()->service()",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [
@@ -407,7 +358,7 @@
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Transfer\\Business\\Model\\Generator\\ClassDefinition::setNameWithoutValidation has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Transfer/src/Spryker/Zed/Transfer/Business/Model/Generator/ClassDefinition.php",
-            "snippet": "            return $this->setNameWithoutValidation($name);",
+            "snippet": "            $this->setNameWithoutValidation($name);",
             "selected_text": "setNameWithoutValidation",
             "error_level": 2,
             "shortcode": 1

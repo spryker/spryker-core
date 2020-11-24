@@ -4,7 +4,7 @@
   "description": "ShipmentExtension module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2"
+    "php": ">=7.3"
   },
   "require-dev": {
     "spryker/code-sniffer": "*"
@@ -12,13 +12,6 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Config\\Module\\": "vendor/spryker/config/tests/_support/Module",
-      "Propel\\Module\\": "vendor/spryker/propel/tests/_support/Module",
-      "Transfer\\Module\\": "vendor/spryker/transfer/tests/_support/Module"
     }
   },
   "minimum-stability": "dev",

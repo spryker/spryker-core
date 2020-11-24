@@ -25,5 +25,12 @@ interface MerchantReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getMerchantById(RestRequestInterface $restRequest): RestResponseInterface;
+    public function getMerchant(RestRequestInterface $restRequest): RestResponseInterface;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function getMerchants(RestRequestInterface $restRequest): RestResponseInterface;
 }

@@ -43,21 +43,21 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
 
     /**
      * @param array $attributes
-     * @param string $bundle
+     * @param string $module
      *
      * @return array
      */
-    protected function normalizeAttributes(array $attributes, $bundle)
+    protected function normalizeAttributes(array $attributes, $module)
     {
         if ($attributes === []) {
             return [];
         }
 
         if (isset($attributes[0])) {
-            return $this->addBundleToAttributes($attributes, $bundle);
+            return $this->addBundleToAttributes($attributes, $module);
         }
 
-        return $this->addBundleToAttributes([$attributes], $bundle);
+        return $this->addBundleToAttributes([$attributes], $module);
     }
 
     /**

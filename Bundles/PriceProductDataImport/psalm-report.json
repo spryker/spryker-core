@@ -27,54 +27,6 @@
         },
         {
             "severity": "info",
-            "line_from": 42,
-            "line_to": 42,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::findonebysku does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductDataImport/src/Spryker/Zed/PriceProductDataImport/Business/Model/Step/AbstractSkuToIdProductAbstractStep.php",
-            "snippet": "                ->findOneBySku($productAbstractSku);",
-            "selected_text": "findOneBySku",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 42,
-            "line_to": 42,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::findonebysku does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductDataImport/src/Spryker/Zed/PriceProductDataImport/Business/Model/Step/ConcreteSkuToIdProductStep.php",
-            "snippet": "                ->findOneBySku($productConcreteSku);",
-            "selected_text": "findOneBySku",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::findonebycode does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductDataImport/src/Spryker/Zed/PriceProductDataImport/Business/Model/Step/CurrencyToIdCurrencyStep.php",
-            "snippet": "                ->findOneByCode($currencyCode);",
-            "selected_text": "findOneByCode",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::findonebyname does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductDataImport/src/Spryker/Zed/PriceProductDataImport/Business/Model/Step/StoreToIdStoreStep.php",
-            "snippet": "                ->findOneByName($storeName);",
-            "selected_text": "findOneByName",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 35,
             "line_to": 35,
             "type": "PossiblyUndefinedMethod",
@@ -180,30 +132,6 @@
             "selected_text": "import",
             "error_level": 3,
             "shortcode": 108
-        },
-        {
-            "severity": "info",
-            "line_from": 45,
-            "line_to": 45,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductDataImport/src/Spryker/Zed/PriceProductDataImport/PriceProductDataImportDependencyProvider.php",
-            "snippet": "            return new PriceProductDataImportToPriceProductFacadeBridge($container->getLocator()->priceProduct()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 59,
-            "line_to": 59,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductDataImport/src/Spryker/Zed/PriceProductDataImport/PriceProductDataImportDependencyProvider.php",
-            "snippet": "            return new PriceProductDataImportToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

@@ -8,14 +8,15 @@
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
 use ArrayObject;
+use Laminas\Filter\Word\CamelCaseToUnderscore;
+use Laminas\Filter\Word\UnderscoreToCamelCase;
 use Spryker\DecimalObject\Decimal;
+use Spryker\Shared\Transfer\TypeValidation\TransferTypeValidatorTrait;
 use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeTypeException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeValueException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidNameException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidSingularPropertyNameException;
 use Spryker\Zed\Transfer\TransferConfig;
-use Zend\Filter\Word\CamelCaseToUnderscore;
-use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class ClassDefinition implements ClassDefinitionInterface
 {
@@ -29,6 +30,8 @@ class ClassDefinition implements ClassDefinitionInterface
             self::EXTRA_TYPE_HINTS => 'string|int|float',
         ],
     ];
+
+    protected const SHIM_NOTICE_TEMPLATE = 'Forward compatibility warning: %s is the actual type (please use that, %s is kept for BC).';
 
     /**
      * @var string
@@ -107,8 +110,10 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         $this->addEntityNamespace($definition);
+        $this->addExtraUseStatements();
 
         if (isset($definition['property'])) {
+            $definition = $this->shimTransferDefinitionPropertyTypes($definition);
             $properties = $this->normalizePropertyTypes($definition['property']);
             $this->addConstants($properties);
             $this->addProperties($properties);
@@ -228,6 +233,7 @@ class ClassDefinition implements ClassDefinitionInterface
         $propertyInfo = [
             'name' => $property['name'],
             'type' => $this->getPropertyType($property),
+            'is_typed_array' => $property['is_typed_array'],
             'bundles' => $property['bundles'],
             'is_associative' => $property['is_associative'],
             'is_array_collection' => $this->isArrayCollection($property),
@@ -332,7 +338,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function isTransferOrTransferArray($type): bool
     {
-        return preg_match('/^[A-Z].*/', $type);
+        return (bool)preg_match('/^[A-Z].*/', $type);
     }
 
     /**
@@ -574,6 +580,30 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         $this->buildSetMethod($property);
         $this->buildGetMethod($property);
+
+        if (!$this->isArray($property) && !$this->isCollection($property)) {
+            $this->buildGetOrFailMethod($property);
+        }
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return void
+     */
+    protected function buildGetOrFailMethod(array $property): void
+    {
+        $propertyName = $this->getPropertyName($property);
+        $methodName = sprintf('get%sOrFail', ucfirst($propertyName));
+        $method = [
+            'name' => $methodName,
+            'property' => $propertyName,
+            'propertyConst' => $this->getPropertyConstantName($property),
+            'return' => preg_replace('/\|null$/', '', $this->getReturnType($property)),
+            'bundles' => $property['bundles'],
+            'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
+        ];
+        $this->methods[$methodName] = $method;
     }
 
     /**
@@ -823,10 +853,18 @@ class ClassDefinition implements ClassDefinitionInterface
             'name' => $methodName,
             'property' => $propertyName,
             'propertyConst' => $this->getPropertyConstantName($property),
-            'return' => $this->getReturnType($property),
+            'return' => $this->buildGetReturnTypeData($property),
             'bundles' => $property['bundles'],
             'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
         ];
+
+        if ($this->propertyHasTypeShim($property)) {
+            $method['typeShimNotice'] = $this->buildTypeShimNotice(
+                $property['type'],
+                $this->getPropertyTypeShim($property)
+            );
+        }
+
 
         if ($this->isStrictProperty($property) && !$this->isCollection($property)) {
             $method['isValueCheckRequired'] = true;
@@ -850,7 +888,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'name' => $methodName,
             'property' => $propertyName,
             'propertyConst' => $this->getPropertyConstantName($property),
-            'var' => $this->getSetVar($property),
+            'var' => $this->buildSetArgumentType($property),
             'valueObject' => false,
             'bundles' => $property['bundles'],
             'typeHint' => null,
@@ -859,6 +897,14 @@ class ClassDefinition implements ClassDefinitionInterface
         ];
         $method = $this->addSetTypeHint($method, $property);
         $method = $this->addDefaultNull($method, $property);
+        $method = $this->setTypeAssertionMode($method);
+
+        if ($this->propertyHasTypeShim($property)) {
+            $method['typeShimNotice'] = $this->buildTypeShimNotice(
+                $property['type'],
+                $this->getPropertyTypeShim($property)
+            );
+        }
 
         if ($this->isValueObject($property)) {
             $method['valueObject'] = $this->getShortClassName(
@@ -889,11 +935,18 @@ class ClassDefinition implements ClassDefinitionInterface
             'property' => $propertyName,
             'propertyConst' => $propertyConstant,
             'parent' => $parent,
-            'var' => $this->getAddVar($property),
+            'var' => $this->buildAddArgumentType($property),
             'bundles' => $property['bundles'],
             'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
             'is_associative' => $this->isAssociativeArray($property),
         ];
+
+        if ($this->propertyHasTypeShim($property)) {
+            $method['typeShimNotice'] = $this->buildAddTypeShimNotice(
+                $property['type'],
+                $this->getPropertyTypeShim($property)
+            );
+        }
 
         $typeHint = $this->getAddTypeHint($property);
         if ($typeHint) {
@@ -903,10 +956,11 @@ class ClassDefinition implements ClassDefinitionInterface
         if ($method['is_associative']) {
             $method['var'] = static::DEFAULT_ASSOCIATIVE_ARRAY_TYPE;
             $method['typeHint'] = null;
-            $method['varValue'] = $this->getAddVar($property);
+            $method['varValue'] = $this->buildAddArgumentType($property);
             $method['typeHintValue'] = $this->getAddTypeHint($property);
         }
 
+        $method = $this->setTypeAssertionMode($method);
         $this->methods[$methodName] = $method;
     }
 
@@ -1126,6 +1180,14 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
+     * @return bool
+     */
+    public function isDebugMode(): bool
+    {
+        return $this->transferConfig->isDebugEnabled();
+    }
+
+    /**
      * @param string $fullyQualifiedClassName
      *
      * @return string
@@ -1148,6 +1210,197 @@ class ClassDefinition implements ClassDefinitionInterface
 
         $this->useStatements[$fullyQualifiedClassName] = $fullyQualifiedClassName;
         ksort($this->useStatements, SORT_STRING);
+    }
+
+    /**
+     * @param array $transferDefinition
+     *
+     * @return array
+     */
+    protected function shimTransferDefinitionPropertyTypes(array $transferDefinition): array
+    {
+        $transferName = $transferDefinition['name'];
+        $shim = $this->transferConfig->getTypeShims()[$transferName] ?? null;
+
+        if (!isset($transferDefinition['property']) || !$shim) {
+            return $transferDefinition;
+        }
+
+        foreach ($shim as $propertyName => $shimChange) {
+            foreach ($transferDefinition['property'] as $propertyKey => $propertyDefinition) {
+                if ($propertyDefinition['name'] !== $propertyName) {
+                    continue;
+                }
+
+                $propertyDefinition = $this->shimPropertyType($propertyDefinition, $shimChange);
+                $transferDefinition['property'][$propertyKey] = $propertyDefinition;
+            }
+        }
+
+        return $transferDefinition;
+    }
+
+    /**
+     * @param array $propertyDefinition
+     * @param string[] $shimChange
+     *
+     * @return array
+     */
+    protected function shimPropertyType(array $propertyDefinition, array $shimChange): array
+    {
+        $toType = $shimChange[$propertyDefinition['type']] ?? null;
+
+        if ($toType !== null) {
+            $propertyDefinition['typeShim'] = $toType;
+        }
+
+        return $propertyDefinition;
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string|null
+     */
+    protected function getPropertyTypeShim(array $property): ?string
+    {
+        return $property['typeShim'] ?? null;
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return bool
+     */
+    protected function propertyHasTypeShim(array $property): bool
+    {
+        return (bool)$this->getPropertyTypeShim($property);
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string
+     */
+    protected function buildPropertyType(array $property): string
+    {
+        return $this->buildType(
+            $this->getPropertyType($property),
+            $this->getPropertyTypeShim($property)
+        );
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string
+     */
+    protected function buildSetArgumentType(array $property): string
+    {
+        return $this->buildType(
+            $this->getSetVar($property),
+            $this->getPropertyTypeShim($property)
+        );
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string
+     */
+    protected function buildGetReturnTypeData(array $property): string
+    {
+        return $this->buildType(
+            $this->getReturnType($property),
+            $this->getPropertyTypeShim($property)
+        );
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string
+     */
+    protected function buildAddArgumentType(array $property): string
+    {
+        $type = $this->getAddVar($property);
+        $typeShim = $this->getPropertyTypeShim($property);
+
+        if ($typeShim !== null) {
+            $typeShim = str_replace('[]', '', $typeShim);
+        }
+
+        return $this->buildType($type, $typeShim);
+    }
+
+    /**
+     * @param string $type
+     * @param string|null $typeShim
+     *
+     * @return string
+     */
+    protected function buildType(string $type, ?string $typeShim = null): string
+    {
+        if ($typeShim === null) {
+            return $type;
+        }
+
+        return sprintf('%s|%s', $typeShim, $type);
+    }
+
+    /**
+     * @param string $type
+     * @param string $typeShim
+     *
+     * @return string
+     */
+    protected function buildAddTypeShimNotice(string $type, string $typeShim): string
+    {
+        $type = str_replace('[]', '', $type);
+        $typeShim = str_replace('[]', '', $typeShim);
+
+        return $this->buildTypeShimNotice($type, $typeShim);
+    }
+
+    /**
+     * @param string $type
+     * @param string|null $typeShim
+     *
+     * @return string
+     */
+    protected function buildTypeShimNotice(string $type, ?string $typeShim): string
+    {
+        return sprintf(static::SHIM_NOTICE_TEMPLATE, $typeShim, $type);
+    }
+
+    /**
+     * @param array $method
+     *
+     * @return array
+     */
+    protected function setTypeAssertionMode(array $method): array
+    {
+        $method['isTypeAssertionEnabled'] = false;
+        $methodArgumentType = $method['varValue'] ?? $method['var'];
+
+        if (!$this->isDebugMode() || $this->getEntityNamespace() || $methodArgumentType === 'mixed') {
+            return $method;
+        }
+
+        $methodArgumentTypeHint = $method['typeHintValue'] ?? $method['typeHint'] ?? null;
+        $method['isTypeAssertionEnabled'] = empty($methodArgumentTypeHint) || $methodArgumentTypeHint === 'array';
+
+        return $method;
+    }
+
+    /**
+     * @return void
+     */
+    protected function addExtraUseStatements(): void
+    {
+        if ($this->isDebugMode() && !$this->getEntityNamespace()) {
+            $this->addUseStatement(TransferTypeValidatorTrait::class);
+        }
     }
 
     /**

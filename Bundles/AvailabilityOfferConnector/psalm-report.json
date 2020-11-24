@@ -3,30 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 42,
-            "line_to": 42,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityOfferConnector/src/Spryker/Zed/AvailabilityOfferConnector/AvailabilityOfferConnectorDependencyProvider.php",
-            "snippet": "            return new AvailabilityOfferConnectorToStoreFacadeBridge($container->getLocator()->store()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 56,
-            "line_to": 56,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityOfferConnector/src/Spryker/Zed/AvailabilityOfferConnector/AvailabilityOfferConnectorDependencyProvider.php",
-            "snippet": "            return new AvailabilityOfferConnectorToAvailabilityFacadeBridge($container->getLocator()->availability()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 48,
             "line_to": 48,
             "type": "PossiblyNullReference",

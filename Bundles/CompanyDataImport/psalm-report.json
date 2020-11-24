@@ -10,8 +10,7 @@
             "snippet": "     * @return \\Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface",
             "selected_text": "\\Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface",
             "error_level": 6,
-            "shortcode": 11,
-            "taint_trace": null
+            "shortcode": 11
         },
         {
             "severity": "error",
@@ -23,8 +22,7 @@
             "snippet": "        return $dataImporter;",
             "selected_text": "$dataImporter",
             "error_level": 6,
-            "shortcode": 128,
-            "taint_trace": null
+            "shortcode": 128
         }
     ],
     "warning": [
@@ -38,8 +36,7 @@
             "snippet": "        $dataSetStepBroker->addStep(new CompanyWriterStep());",
             "selected_text": "addStep",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
@@ -51,8 +48,7 @@
             "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
             "selected_text": "addDataSetStepBroker",
             "error_level": 3,
-            "shortcode": 108,
-            "taint_trace": null
+            "shortcode": 108
         },
         {
             "severity": "info",
@@ -64,8 +60,7 @@
             "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
             "selected_text": "$dataSetStepBroker",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         }
     ],
     "deprecation": []

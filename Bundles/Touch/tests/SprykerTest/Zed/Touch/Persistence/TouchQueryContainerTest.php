@@ -40,14 +40,14 @@ class TouchQueryContainerTest extends Unit
     {
         parent::setUp();
 
-        $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, self::ITEM_ID_1);
-        $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, self::ITEM_ID_2);
+        $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, static::ITEM_ID_1);
+        $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, static::ITEM_ID_2);
 
-        $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE, self::ITEM_ID_3);
-        $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE, self::ITEM_ID_4);
+        $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE, static::ITEM_ID_3);
+        $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE, static::ITEM_ID_4);
 
-        $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_DELETED, self::ITEM_ID_5);
-        $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_DELETED, self::ITEM_ID_6);
+        $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_DELETED, static::ITEM_ID_5);
+        $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_DELETED, static::ITEM_ID_6);
     }
 
     /**
@@ -61,7 +61,7 @@ class TouchQueryContainerTest extends Unit
     public function testQueryTouchEntriesByItemTypeAndItemIds(array $itemsIds, int $expectedCount): void
     {
         $touchQueryContainer = new TouchQueryContainer();
-        $touchQuery = $touchQueryContainer->queryTouchEntriesByItemTypeAndItemIds(self::ITEM_TYPE, $itemsIds);
+        $touchQuery = $touchQueryContainer->queryTouchEntriesByItemTypeAndItemIds(static::ITEM_TYPE, $itemsIds);
 
         $this->assertCount($expectedCount, $touchQuery);
     }
@@ -72,13 +72,88 @@ class TouchQueryContainerTest extends Unit
     public function queryTouchEntriesByItemTypeAndItemIdsDataProvider(): array
     {
         return [
-            [[self::ITEM_ID_1], 1],
-            [[self::ITEM_ID_1, self::ITEM_ID_2], 2],
-            [[self::ITEM_ID_3], 1],
-            [[self::ITEM_ID_3, self::ITEM_ID_4], 2],
-            [[self::ITEM_ID_5], 1],
-            [[self::ITEM_ID_5, self::ITEM_ID_6], 2],
+            [[static::ITEM_ID_1], 1],
+            [[static::ITEM_ID_1, static::ITEM_ID_2], 2],
+            [[static::ITEM_ID_3], 1],
+            [[static::ITEM_ID_3, static::ITEM_ID_4], 2],
+            [[static::ITEM_ID_5], 1],
+            [[static::ITEM_ID_5, static::ITEM_ID_6], 2],
         ];
+    }
+
+    /**
+     * @return void
+     */
+    public function testQueryTouchEntriesByItemTypeAndItemIdsAllowableToUpdateWithItemEventShouldReturnItemsWithSameEvent(): void
+    {
+        // Arrange
+        $touchQueryContainer = new TouchQueryContainer();
+        $itemsIds = [
+            static::ITEM_ID_1,
+            static::ITEM_ID_2,
+        ];
+        $expectedCount = 2;
+
+        // Act
+        $touchQuery = $touchQueryContainer->queryTouchEntriesByItemTypeAndItemIdsAllowableToUpdateWithItemEvent(
+            static::ITEM_TYPE,
+            SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE,
+            $itemsIds
+        );
+
+        // Assert
+        $this->assertCount($expectedCount, $touchQuery);
+    }
+
+    /**
+     * @return void
+     */
+    public function testQueryTouchEntriesByItemTypeAndItemIdsAllowableToUpdateWithItemEventShouldReturnItemsWithSameEventAndItemsWithOneProvidedTypeAndId(): void
+    {
+        // Arrange
+        $touchQueryContainer = new TouchQueryContainer();
+        $itemsIds = [
+            static::ITEM_ID_1,
+            static::ITEM_ID_2,
+            static::ITEM_ID_3,
+        ];
+        $expectedCount = 3;
+
+        // Act
+        $touchQuery = $touchQueryContainer->queryTouchEntriesByItemTypeAndItemIdsAllowableToUpdateWithItemEvent(
+            static::ITEM_TYPE,
+            SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE,
+            $itemsIds
+        );
+
+        // Assert
+        $this->assertCount($expectedCount, $touchQuery);
+    }
+
+    /**
+     * @return void
+     */
+    public function testQueryTouchEntriesByItemTypeAndItemIdsAllowableToUpdateWithItemEventShouldSkipItemsWithMoreThatOneProvidedTypeAndId(): void
+    {
+        // Arrange
+        $touchQueryContainer = new TouchQueryContainer();
+        $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE, static::ITEM_ID_6);
+        $itemsIds = [
+            static::ITEM_ID_1,
+            static::ITEM_ID_2,
+            static::ITEM_ID_6,
+        ];
+        $expectedCount = 2;
+
+        // Act
+        $touchQuery = $touchQueryContainer->queryTouchEntriesByItemTypeAndItemIdsAllowableToUpdateWithItemEvent(
+            static::ITEM_TYPE,
+            SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE,
+            $itemsIds
+        );
+
+        // Assert
+        $this->assertCount($expectedCount, $touchQuery);
     }
 
     /**
@@ -92,7 +167,7 @@ class TouchQueryContainerTest extends Unit
         $touchEntity = new SpyTouch();
         $touchEntity->setItemEvent($itemEvent)
             ->setItemId($itemId)
-            ->setItemType(self::ITEM_TYPE)
+            ->setItemType(static::ITEM_TYPE)
             ->setTouched(new DateTime());
 
         $touchEntity->save();

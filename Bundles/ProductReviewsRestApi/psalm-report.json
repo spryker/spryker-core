@@ -181,42 +181,6 @@
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ProductReviewErrorTransfer[]",
             "error_level": 4,
             "shortcode": 141
-        },
-        {
-            "severity": "info",
-            "line_from": 50,
-            "line_to": 50,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewsRestApi/src/Spryker/Glue/ProductReviewsRestApi/ProductReviewsRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productReviewStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 66,
-            "line_to": 66,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewsRestApi/src/Spryker/Glue/ProductReviewsRestApi/ProductReviewsRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 82,
-            "line_to": 82,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewsRestApi/src/Spryker/Glue/ProductReviewsRestApi/ProductReviewsRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productReview()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

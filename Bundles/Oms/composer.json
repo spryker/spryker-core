@@ -4,7 +4,7 @@
   "description": "Oms module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/decimal-object": "^1.0.0",
     "spryker/error-handler": "^2.1.0",
     "spryker/graph": "^3.0.0",
@@ -27,7 +27,6 @@
     "spryker/application": "*",
     "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
-    "spryker/config": "*",
     "spryker/customer": "*",
     "spryker/testify": "*"
   },

@@ -8,12 +8,12 @@
 namespace Spryker\Zed\Development\Business\Dependency\DependencyFinder;
 
 use Exception;
+use Laminas\Filter\Word\SeparatorToCamelCase;
 use Spryker\Zed\Development\Business\Dependency\ComposerParser\ExternalDependencyParserInterface;
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContextInterface;
 use Spryker\Zed\Development\Business\Dependency\ModuleParser\UseStatementParserInterface;
 use Spryker\Zed\Development\DevelopmentConfig;
-use Zend\Filter\Word\SeparatorToCamelCase;
 
 class ExternalDependencyFinder extends AbstractFileDependencyFinder
 {

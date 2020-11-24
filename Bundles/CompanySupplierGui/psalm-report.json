@@ -10,8 +10,7 @@
             "snippet": "     * @return \\Orm\\Zed\\Product\\Persistence\\SpyProductQuery",
             "selected_text": "\\Orm\\Zed\\Product\\Persistence\\SpyProductQuery",
             "error_level": 6,
-            "shortcode": 11,
-            "taint_trace": null
+            "shortcode": 11
         },
         {
             "severity": "error",
@@ -23,8 +22,7 @@
             "snippet": "        return $query;",
             "selected_text": "$query",
             "error_level": 6,
-            "shortcode": 128,
-            "taint_trace": null
+            "shortcode": 128
         }
     ],
     "warning": [
@@ -38,8 +36,7 @@
             "snippet": "            $result[$supplier->getName()] = $supplier->getIdCompany();",
             "selected_text": "$result",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -51,8 +48,7 @@
             "snippet": "            $result[$companyType->getName()] = $companyType->getIdCompanyType();",
             "selected_text": "$result",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -64,8 +60,7 @@
             "snippet": "     * @return string",
             "selected_text": "string",
             "error_level": 5,
-            "shortcode": 144,
-            "taint_trace": null
+            "shortcode": 144
         },
         {
             "severity": "info",
@@ -77,8 +72,7 @@
             "snippet": "        return $companyTypeTransfer->getName();",
             "selected_text": "$companyTypeTransfer->getName()",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -90,8 +84,7 @@
             "snippet": "     * @return string",
             "selected_text": "string",
             "error_level": 5,
-            "shortcode": 144,
-            "taint_trace": null
+            "shortcode": 144
         },
         {
             "severity": "info",
@@ -103,8 +96,7 @@
             "snippet": "        return $companyTypeTransfer->getName();",
             "selected_text": "$companyTypeTransfer->getName()",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -116,8 +108,7 @@
             "snippet": "            $this->getFactory()->getCompanySupplierFacade()->getSuppliersByIdProduct($productConcrete->getIdProductConcrete())->getSuppliers();",
             "selected_text": "$productConcrete->getIdProductConcrete()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -129,8 +120,7 @@
             "snippet": "        if ($productSupplierCollection->count() < 1) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -142,8 +132,7 @@
             "snippet": "     * @param \\Orm\\Zed\\Product\\Persistence\\SpyProduct[]|\\Propel\\Runtime\\Collection\\ObjectCollection $spyProductCollection",
             "selected_text": "\\Orm\\Zed\\Product\\Persistence\\SpyProduct[]|\\Propel\\Runtime\\Collection\\ObjectCollection",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -155,8 +144,7 @@
             "snippet": "        if ($prices->count() < 1) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -168,8 +156,7 @@
             "snippet": "        if ($prices->count() > 0) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -181,8 +168,7 @@
             "snippet": "        if ($abstractPrices->count() > 0) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -194,8 +180,7 @@
             "snippet": "     * @param \\Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProductStore[]|\\Propel\\Runtime\\Collection\\ObjectCollection $priceProductCollection",
             "selected_text": "\\Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProductStore[]|\\Propel\\Runtime\\Collection\\ObjectCollection",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -207,8 +192,7 @@
             "snippet": "        if ($priceProductCollection->count() > 0) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -220,8 +204,7 @@
             "snippet": "                    $this->storeFacade->getStoreById($priceProductEntity->getFkStore())->getName(),",
             "selected_text": "$this->storeFacade->getStoreById($priceProductEntity->getFkStore())->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -233,8 +216,7 @@
             "snippet": "                    $this->storeFacade->getStoreById($priceProductEntity->getFkStore())->getName(),",
             "selected_text": "$priceProductEntity->getFkStore()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -246,8 +228,7 @@
             "snippet": "                    $this->currencyFacade->getByIdCurrency($priceProductEntity->getFkCurrency())->getSymbol(),",
             "selected_text": "$this->currencyFacade->getByIdCurrency($priceProductEntity->getFkCurrency())->getSymbol()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -259,8 +240,7 @@
             "snippet": "                    $this->moneyFacade->convertIntegerToDecimal($priceProductEntity->getGrossPrice())",
             "selected_text": "$priceProductEntity->getGrossPrice()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         }
     ],
     "deprecation": []
