@@ -1,23 +1,26 @@
 namespace: SprykerTest\Zed\MerchantShipment
-
 paths:
-  tests: .
-  data: ../../../_data
-  support: _support
-  log: ../../../_output
-
+    tests: .
+    data: ../../../_data
+    support: _support
+    log: ../../../_output
 coverage:
-  enabled: true
-  remote: false
-  whitelist: { include: ['../../../../src/*'] }
-
+    enabled: true
+    remote: false
+    whitelist:
+        include:
+            - '../../../../src/*'
 suites:
-  Business:
-    path: Business
-    class_name: MerchantShipmentBusinessTester
-    modules:
-      enabled:
-        - Asserts
-        - \SprykerTest\Shared\Testify\Helper\Environment
-        - \SprykerTest\Shared\Testify\Helper\LocatorHelper
-        - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+    Business:
+        path: Business
+        class_name: MerchantShipmentBusinessTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Shipment\Helper\ShipmentDataHelper
+                - \SprykerTest\Zed\Sales\Helper\BusinessHelper

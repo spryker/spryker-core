@@ -2,11 +2,11 @@ namespace: SprykerTest
 include:
     - tests/SprykerTest/Zed/MerchantShipment
 paths:
-    tests: tests
-    log: tests/_output
-    data: tests/_data
-    support: tests/_support
-    envs: tests/_envs
+    tests: tests/
+    log: tests/_output/
+    data: tests/_data/
+    support: tests/_support/
+    envs: tests/_envs/
 settings:
     suite_class: \PHPUnit\Framework\TestSuite
     colors: true

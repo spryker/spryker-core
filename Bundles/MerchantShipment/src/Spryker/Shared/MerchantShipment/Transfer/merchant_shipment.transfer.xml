@@ -14,6 +14,31 @@
 
     <transfer name="Shipment">
         <property name="merchantReference" type="string"/>
+        <property name="method" type="ShipmentMethod"/>
+        <property name="shippingAddress" type="Address"/>
+        <property name="carrier" type="ShipmentCarrier"/>
+    </transfer>
+
+    <transfer name="MerchantShipmentCriteria">
+        <property name="merchantReference" type="string"/>
+        <property name="idShipment" type="int"/>
+    </transfer>
+
+    <transfer name="ShipmentMethod">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Address">
+        <property name="iso2Code" type="string"/>
+        <property name="country" type="Country"/>
+    </transfer>
+
+    <transfer name="Country">
+        <property name="iso2Code" type="string"/>
+    </transfer>
+
+    <transfer name="ShipmentCarrier">
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="CartChange">

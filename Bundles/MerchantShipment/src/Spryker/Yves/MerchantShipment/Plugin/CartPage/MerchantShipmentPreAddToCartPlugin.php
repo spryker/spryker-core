@@ -29,12 +29,14 @@ class MerchantShipmentPreAddToCartPlugin extends AbstractPlugin implements PreAd
      */
     public function preAddToCart(ItemTransfer $itemTransfer, array $params): ItemTransfer
     {
-        if (!$itemTransfer->getShipment()) {
+        $shipmentTransfer = $itemTransfer->getShipment();
+
+        if (!$shipmentTransfer) {
             return $itemTransfer;
         }
 
-        $itemTransfer->getShipment()->setMerchantReference($itemTransfer->getMerchantReference());
+        $shipmentTransfer->setMerchantReference($itemTransfer->getMerchantReference());
 
-        return $itemTransfer;
+        return $itemTransfer->setShipment($shipmentTransfer);
     }
 }
