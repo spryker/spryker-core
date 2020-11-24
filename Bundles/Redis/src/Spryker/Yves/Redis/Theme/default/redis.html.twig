@@ -2,7 +2,7 @@
 
 {% block toolbar %}
     {% set icon %}
-        {{ include('@WebProfiler/Icon/memory.svg') }}
+        {{ include('@WebProfiler/Icon/cache.svg') }}
         <span class="sf-toolbar-value">Redis</span>
     {% endset %}
 
@@ -26,8 +26,23 @@
 {% endblock %}
 
 {% block panel %}
+    <style>
+        table {
+            table-layout:fixed;
+        }
+        td {
+            overflow-x: auto;
+        }
+    </style>
+
     <h2>Redis Calls</h2>
     <table>
+        <colgroup>
+            <col style="width: 20%">
+            <col style="width: 10%">
+            <col style="width: 35%">
+            <col style="width: 35%">
+        </colgroup>
         <tr>
             <th>Destination</th>
             <th>Command</th>
@@ -39,8 +54,8 @@
             <tr>
                 <td>{{ callData['destination'] }}</td>
                 <td>{{ callData['command'] }}</td>
-                <td>{{ callData['payload'] }}</td>
-                <td>{{ callData['result'] }}</td>
+                <td><pre>{{ callData['payload'] }}</pre></td>
+                <td><pre>{{ callData['result'] }}</pre></td>
             </tr>
         {% endfor %}
     </table>

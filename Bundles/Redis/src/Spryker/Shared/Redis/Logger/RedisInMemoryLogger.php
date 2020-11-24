@@ -51,8 +51,8 @@ class RedisInMemoryLogger implements RedisLoggerInterface
         static::$logs[] = [
             'destination' => $this->dsnString,
             'command' => $command,
-            'payload' => $this->utilEncodingService->encodeJson($payload, JSON_PRETTY_PRINT) ?? '',
-            'result' => $this->utilEncodingService->encodeJson($result, JSON_PRETTY_PRINT) ?? '',
+            'payload' => stripslashes($this->utilEncodingService->encodeJson($payload, JSON_PRETTY_PRINT) ?? ''),
+            'result' => stripslashes($this->utilEncodingService->encodeJson($result, JSON_PRETTY_PRINT) ?? ''),
         ];
     }
 
