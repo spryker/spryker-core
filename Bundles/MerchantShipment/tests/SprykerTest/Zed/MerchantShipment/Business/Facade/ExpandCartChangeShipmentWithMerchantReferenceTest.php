@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\MerchantShipment\Business\Facade;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 
 /**
  * Auto-generated group annotations
@@ -24,6 +25,9 @@ use Generated\Shared\Transfer\CartChangeTransfer;
  */
 class ExpandCartChangeShipmentWithMerchantReferenceTest extends Unit
 {
+    protected const TEST_MERCHANT_REFERENCE1 = 'merchant-reference-1';
+    protected const TEST_MERCHANT_REFERENCE2 = 'merchant-reference-2';
+
     /**
      * @var \SprykerTest\Zed\MerchantShipment\MerchantShipmentBusinessTester
      */
@@ -36,8 +40,8 @@ class ExpandCartChangeShipmentWithMerchantReferenceTest extends Unit
     {
         // Arrange
         $cartChangeTransfer = (new CartChangeTransfer())
-            ->addItem((new ItemBuilder())->withShipment()->build())
-            ->addItem((new ItemBuilder())->withShipment()->build());
+            ->addItem((new ItemBuilder([ItemTransfer::MERCHANT_REFERENCE => static::TEST_MERCHANT_REFERENCE1]))->withShipment()->build())
+            ->addItem((new ItemBuilder([ItemTransfer::MERCHANT_REFERENCE => static::TEST_MERCHANT_REFERENCE2]))->withShipment()->build());
 
         // Act
         $expandedCartChangeTransfer = $this->tester
@@ -62,8 +66,8 @@ class ExpandCartChangeShipmentWithMerchantReferenceTest extends Unit
     {
         // Arrange
         $cartChangeTransfer = (new CartChangeTransfer())
-            ->addItem((new ItemBuilder())->build())
-            ->addItem((new ItemBuilder())->withShipment()->build());
+            ->addItem((new ItemBuilder([ItemTransfer::MERCHANT_REFERENCE => static::TEST_MERCHANT_REFERENCE1]))->build())
+            ->addItem((new ItemBuilder([ItemTransfer::MERCHANT_REFERENCE => static::TEST_MERCHANT_REFERENCE2]))->withShipment()->build());
 
         // Act
         $expandedCartChangeTransfer = $this->tester
