@@ -309,7 +309,7 @@
     <transfer name="PriceProductOffer">
         <property name="store" type="string"/>
         <property name="currency" type="string"/>
-        <property name="prices" type="array" />
+        <property name="prices" type="array"/>
         <property name="idPriceProductOffer"  type="int"/>
         <property name="productOffer"  type="ProductOffer"/>
         <property name="priceProduct"  type="PriceProduct"/>
