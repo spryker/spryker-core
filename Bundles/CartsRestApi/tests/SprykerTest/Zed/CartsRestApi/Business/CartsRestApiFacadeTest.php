@@ -8,13 +8,8 @@
 namespace SprykerTest\Zed\CartsRestApi\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\DataBuilder\CheckoutDataBuilder;
-use Generated\Shared\DataBuilder\QuoteBuilder;
-use Generated\Shared\Transfer\CheckoutDataTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\RestShipmentsTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Cart\Business\CartFacade;
@@ -41,11 +36,6 @@ use Spryker\Zed\Store\Business\StoreFacade;
  */
 class CartsRestApiFacadeTest extends Unit
 {
-    /**
-     * @uses \Spryker\Zed\CartsRestApi\Business\Validator\CartItemCheckoutDataValidator::GLOSSARY_KEY_CART_ITEM_WAS_NOT_SPECIFIED_IN_CHECKOUT_DATA
-     */
-    protected const GLOSSARY_KEY_CART_ITEM_WAS_NOT_SPECIFIED_IN_CHECKOUT_DATA = 'checkout.validation.item.not_specified';
-
     /**
      * @var \SprykerTest\Zed\CartsRestApi\CartsRestApiBusinessTester
      */
@@ -613,131 +603,6 @@ class CartsRestApiFacadeTest extends Unit
         $cartItemRequestTransfer = $this->tester->prepareCartItemRequestTransferWithoutCustomer();
         $this->expectException(RequiredTransferPropertyException::class);
         $this->cartsRestApiFacade->addToGuestCart($cartItemRequestTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testValidateItemsInCheckoutDataWillNotReturnErrorIfNoShipmentDataIsProvided(): void
-    {
-        // Arrange
-        $checkoutDataTransfer = (new CheckoutDataBuilder([CheckoutDataTransfer::SHIPMENTS => []]))->build();
-
-        // Act
-        $checkoutResponseTransfer = $this->cartsRestApiFacade->validateItemsInCheckoutData($checkoutDataTransfer);
-
-        // Assert
-        $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
-    }
-
-    /**
-     * @return void
-     */
-    public function testValidateItemsInCheckoutDataWillNotReturnErrorIfValidShipmentDataPerItemIsProvided(): void
-    {
-        // Arrange
-        $quoteTransfer = (new QuoteBuilder())->withItem()->build();
-        $checkoutDataTransfer = (new CheckoutDataBuilder())
-            ->withQuote($quoteTransfer->toArray())
-            ->withShipment([
-                RestShipmentsTransfer::ITEMS => [$quoteTransfer->getItems()->offsetGet(0)->getGroupKey()],
-            ])->build();
-
-        // Act
-        $checkoutResponseTransfer = $this->cartsRestApiFacade->validateItemsInCheckoutData($checkoutDataTransfer);
-
-        // Assert
-        $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
-    }
-
-    /**
-     * @return void
-     */
-    public function testValidateItemsInCheckoutDataWillNotReturnErrorIfValidShipmentDataPerBundleItemIsProvided(): void
-    {
-        // Arrange
-        $quoteTransfer = (new QuoteBuilder())->withBundleItem()->build();
-        $checkoutDataTransfer = (new CheckoutDataBuilder())
-            ->withQuote($quoteTransfer->toArray())
-            ->withShipment([
-                RestShipmentsTransfer::ITEMS => [$quoteTransfer->getBundleItems()->offsetGet(0)->getGroupKey()],
-            ])->build();
-
-        // Act
-        $checkoutResponseTransfer = $this->cartsRestApiFacade->validateItemsInCheckoutData($checkoutDataTransfer);
-
-        // Assert
-        $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
-    }
-
-    /**
-     * @return void
-     */
-    public function testValidateItemsInCheckoutDataWillReturnErrorIfInvalidShipmentDataPerItemIsProvided(): void
-    {
-        // Arrange
-        $quoteTransfer = (new QuoteBuilder())
-            ->withItem([ItemTransfer::GROUP_KEY => 'group-key-1'])
-            ->withBundleItem([ItemTransfer::GROUP_KEY => 'group-key-2'])
-            ->build();
-        $checkoutDataTransfer = (new CheckoutDataBuilder())
-            ->withQuote($quoteTransfer->toArray())
-            ->withShipment([
-                RestShipmentsTransfer::ITEMS => ['group-key-2'],
-            ])->build();
-
-        // Act
-        $checkoutResponseTransfer = $this->cartsRestApiFacade->validateItemsInCheckoutData($checkoutDataTransfer);
-
-        // Assert
-        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
-        $this->assertCount(1, $checkoutResponseTransfer->getErrors());
-        $this->assertEquals(
-            static::GLOSSARY_KEY_CART_ITEM_WAS_NOT_SPECIFIED_IN_CHECKOUT_DATA,
-            $checkoutResponseTransfer->getErrors()->offsetGet(0)->getMessage()
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testValidateItemsInCheckoutDataWillReturnErrorIfInvalidShipmentDataPerItemBundleIsProvided(): void
-    {
-        // Arrange
-        $quoteTransfer = (new QuoteBuilder())
-            ->withItem([ItemTransfer::GROUP_KEY => 'group-key-1'])
-            ->withBundleItem([ItemTransfer::GROUP_KEY => 'group-key-2'])
-            ->build();
-        $checkoutDataTransfer = (new CheckoutDataBuilder())
-            ->withQuote($quoteTransfer->toArray())
-            ->withShipment([
-                RestShipmentsTransfer::ITEMS => ['group-key-1'],
-            ])->build();
-
-        // Act
-        $checkoutResponseTransfer = $this->cartsRestApiFacade->validateItemsInCheckoutData($checkoutDataTransfer);
-
-        // Assert
-        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
-        $this->assertCount(1, $checkoutResponseTransfer->getErrors());
-        $this->assertEquals(
-            static::GLOSSARY_KEY_CART_ITEM_WAS_NOT_SPECIFIED_IN_CHECKOUT_DATA,
-            $checkoutResponseTransfer->getErrors()->offsetGet(0)->getMessage()
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testValidateItemsInCheckoutDataWillThrowExceptionIfQuoteIsNotProvided(): void
-    {
-        // Arrange
-        $this->expectException(RequiredTransferPropertyException::class);
-        $checkoutDataTransfer = (new CheckoutDataBuilder())->withShipment()->build();
-        $checkoutDataTransfer->setQuote(null);
-
-        // Act
-        $this->cartsRestApiFacade->validateItemsInCheckoutData($checkoutDataTransfer);
     }
 
     /**

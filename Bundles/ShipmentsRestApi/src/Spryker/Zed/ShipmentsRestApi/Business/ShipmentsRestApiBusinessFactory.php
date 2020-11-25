@@ -14,6 +14,8 @@ use Spryker\Zed\ShipmentsRestApi\Business\Mapper\ShipmentQuoteItemMapper;
 use Spryker\Zed\ShipmentsRestApi\Business\Mapper\ShipmentQuoteItemMapperInterface;
 use Spryker\Zed\ShipmentsRestApi\Business\Quote\ShipmentQuoteMapper;
 use Spryker\Zed\ShipmentsRestApi\Business\Quote\ShipmentQuoteMapperInterface;
+use Spryker\Zed\ShipmentsRestApi\Business\Validator\CartItemCheckoutDataValidator;
+use Spryker\Zed\ShipmentsRestApi\Business\Validator\CartItemCheckoutDataValidatorInterface;
 use Spryker\Zed\ShipmentsRestApi\Business\Validator\ShipmentMethodCheckoutDataValidator;
 use Spryker\Zed\ShipmentsRestApi\Business\Validator\ShipmentMethodCheckoutDataValidatorInterface;
 use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeInterface;
@@ -49,6 +51,14 @@ class ShipmentsRestApiBusinessFactory extends AbstractBusinessFactory
             $this->getShipmentFacade(),
             $this->getAddressProviderStrategyPlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentsRestApi\Business\Validator\CartItemCheckoutDataValidatorInterface
+     */
+    public function createCartItemCheckoutDataValidator(): CartItemCheckoutDataValidatorInterface
+    {
+        return new CartItemCheckoutDataValidator();
     }
 
     /**

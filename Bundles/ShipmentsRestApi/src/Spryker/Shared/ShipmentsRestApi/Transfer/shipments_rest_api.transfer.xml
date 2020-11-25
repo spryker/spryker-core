@@ -87,10 +87,13 @@
         <property name="uuid" type="string"/>
         <property name="sku" type="string"/>
         <property name="quantity" type="int"/>
+        <property name="giftCardMetadata" type="GiftCardMetadata"/>
     </transfer>
 
     <transfer name="CheckoutData">
         <property name="shipment" type="RestShipment"/>
+        <property name="shipments" type="RestShipments[]" singular="shipment"/>
+        <property name="quote" type="Quote"/>
     </transfer>
 
     <transfer name="CheckoutResponse">
@@ -100,6 +103,7 @@
 
     <transfer name="CheckoutError">
         <property name="message" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
     <transfer name="RestShipmentMethodsAttributes">
@@ -226,6 +230,10 @@
     <transfer name="RestOrderExpensesAttributes">
         <property name="idShipment" type="int"/>
         <property name="idSalesExpense" type="int"/>
+    </transfer>
+
+    <transfer name="GiftCardMetadata">
+        <property name="isGiftCard" type="bool"/>
     </transfer>
 
 </transfers>

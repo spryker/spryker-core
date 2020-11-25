@@ -5,18 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CartsRestApi\Communication\Plugin\CheckoutRestApi;
+namespace Spryker\Zed\ShipmentsRestApi\Communication\Plugin\CheckoutRestApi;
 
 use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataValidatorPluginInterface;
+use Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutValidatorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacadeInterface getFacade()
- * @method \Spryker\Zed\CartsRestApi\CartsRestApiConfig getConfig()
+ * @method \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacadeInterface getFacade()
+ * @method \Spryker\Zed\ShipmentsRestApi\ShipmentsRestApiConfig getConfig()
  */
-class ItemsCheckoutDataValidatorPlugin extends AbstractPlugin implements CheckoutDataValidatorPluginInterface
+class ItemsCheckoutValidatorPlugin extends AbstractPlugin implements CheckoutValidatorPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -31,7 +31,7 @@ class ItemsCheckoutDataValidatorPlugin extends AbstractPlugin implements Checkou
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function validateCheckoutData(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer
+    public function validateCheckout(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer
     {
         return $this->getFacade()->validateItemsInCheckoutData($checkoutDataTransfer);
     }
