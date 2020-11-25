@@ -6,7 +6,7 @@
     <transfer name="CurrentProductPrice">
     </transfer>
 
-    <transfer name="RestProductPricesAttributes">
+    <transfer name="RestProductPriceAttributes">
     </transfer>
 
 </transfers>

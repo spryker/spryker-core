@@ -11,13 +11,13 @@ use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\RestProductPriceAttributesTransfer;
 
 /**
- * Use this plugin to map additional data from `CurrentProductPriceTransfer` to `RestProductPricesAttributesTransfer`.
+ * Use this plugin to map additional data from `CurrentProductPriceTransfer` to `RestProductPriceAttributesTransfer`.
  */
 interface RestProductPricesAttributesMapperPluginInterface
 {
     /**
      * Specification:
-     * - Maps the `CurrentProductPriceTransfer` to `RestProductPricesAttributesTransfer`.
+     * - Maps the `CurrentProductPriceTransfer` to `RestProductPriceAttributesTransfer`.
      *
      * @api
      *

@@ -19,6 +19,7 @@
 
     <transfer name="PriceProduct">
         <property name="moneyValue" type="MoneyValue"/>
+        <property name="volumeQuantity" type="int"/>
     </transfer>
 
     <transfer name="MoneyValue">
