@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { TableModule, TableConfig, TableDefaultConfig } from '@spryker/table';
+import { TableModule, TableConfig, TableDefaultConfig, TableDataRow } from '@spryker/table';
 import {
     TableFormOverlayActionHandlerModule,
     TableFormOverlayActionHandlerService,
@@ -8,10 +8,7 @@ import {
     TableHtmlOverlayActionHandlerService,
     TableHtmlOverlayActionHandlerModule,
 } from '@spryker/table.action-handler.html-overlay';
-import {
-    TableUrlActionHandlerModule,
-    TableUrlActionHandlerService,
-} from '@spryker/table.action-handler.url';
+import { TableUrlActionHandlerModule, TableUrlActionHandlerService } from '@spryker/table.action-handler.url';
 import { TableColumnChipComponent, TableColumnChipModule } from '@spryker/table.column.chip';
 import { TableColumnDateComponent, TableColumnDateModule } from '@spryker/table.column.date';
 import { TableColumnImageComponent, TableColumnImageModule } from '@spryker/table.column.image';
@@ -25,7 +22,6 @@ import { TableFilterSelectComponent, TableFilterSelectModule } from '@spryker/ta
 import { TableFilterTreeSelectComponent, TableFilterTreeSelectModule } from '@spryker/table.filter.tree-select';
 import { TableEditableEditRequestToken } from '@spryker/table.feature.editable';
 
-
 class TableDefaultConfigData implements Partial<TableConfig> {
     total = {
         enabled: true,
@@ -36,7 +32,7 @@ class TableDefaultConfigData implements Partial<TableConfig> {
 }
 
 class TableEditableDataSerializer {
-    serialize(data: any): unknown {
+    serialize(data: TableDataRow): unknown {
         console.log(data);
         return JSON.stringify(data);
     }
