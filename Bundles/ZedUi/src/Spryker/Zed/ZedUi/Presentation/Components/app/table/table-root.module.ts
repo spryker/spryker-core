@@ -23,14 +23,23 @@ import { TableFiltersFeatureModule } from '@spryker/table.feature.filters';
 import { TableFilterDateRangeComponent, TableFilterDateRangeModule } from '@spryker/table.filter.date-range';
 import { TableFilterSelectComponent, TableFilterSelectModule } from '@spryker/table.filter.select';
 import { TableFilterTreeSelectComponent, TableFilterTreeSelectModule } from '@spryker/table.filter.tree-select';
+import { TableEditableEditRequestToken } from '@spryker/table.feature.editable';
 
-export class TableDefaultConfigData implements Partial<TableConfig> {
+
+class TableDefaultConfigData implements Partial<TableConfig> {
     total = {
         enabled: true,
     };
     settings = {
         enabled: true,
     };
+}
+
+class TableEditableDataSerializer {
+    serialize(data: any): unknown {
+        console.log(data);
+        return JSON.stringify(data);
+    }
 }
 
 @NgModule({
@@ -126,6 +135,10 @@ export class TableDefaultConfigData implements Partial<TableConfig> {
         {
             provide: TableDefaultConfig,
             useClass: TableDefaultConfigData,
+        },
+        {
+            provide: TableEditableEditRequestToken,
+            useClass: TableEditableDataSerializer,
         },
     ],
 })
