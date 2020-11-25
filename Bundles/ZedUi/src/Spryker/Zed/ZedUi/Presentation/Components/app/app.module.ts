@@ -7,6 +7,7 @@ import { AjaxPostActionCloseService } from '@spryker/ajax-action.post-action.clo
 import { AjaxPostActionRedirectService } from '@spryker/ajax-action.post-action.redirect';
 import { AjaxPostActionRefreshTableService } from '@spryker/ajax-action.post-action.refresh-table';
 import { AjaxPostActionRefreshDrawerService } from '@spryker/ajax-action.post-action.refresh-drawer';
+import { AjaxPostActionRefreshParentTableService } from '@spryker/ajax-action.post-action.refresh-parent-table';
 import { LocaleModule } from '@spryker/locale';
 import { DeLocaleModule } from '@spryker/locale/locales/de';
 import { EN_LOCALE, EnLocaleModule } from '@spryker/locale/locales/en';
@@ -17,6 +18,7 @@ import { ModalModule } from '@spryker/modal';
 import { UnsavedChangesModule } from '@spryker/unsaved-changes';
 import { UnsavedChangesBrowserGuard } from '@spryker/unsaved-changes.guard.browser';
 import { UnsavedChangesDrawerGuardModule } from '@spryker/unsaved-changes.guard.drawer';
+import { UnsavedChangesGuardNavigationModule } from '@spryker/unsaved-changes.guard.navigation';
 
 import { _getNgModules, ComponentsNgModule } from './registry';
 import { TableRootModule } from './table/table-root.module';
@@ -37,10 +39,12 @@ import { TableRootModule } from './table/table-root.module';
             redirect: AjaxPostActionRedirectService,
             refresh_table: AjaxPostActionRefreshTableService,
             refresh_drawer: AjaxPostActionRefreshDrawerService,
+            refresh_parent_table: AjaxPostActionRefreshParentTableService,
         }),
         DefaultContextSerializationModule,
         UnsavedChangesModule.forRoot(),
         UnsavedChangesDrawerGuardModule.forRoot(),
+        UnsavedChangesGuardNavigationModule.forRoot(),
         UnsavedChangesModule.withGuard(UnsavedChangesBrowserGuard),
         ModalModule.forRoot(),
     ],
