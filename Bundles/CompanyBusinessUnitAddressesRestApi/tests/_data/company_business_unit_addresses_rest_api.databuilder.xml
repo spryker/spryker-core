@@ -9,7 +9,7 @@
     </transfer>
 
     <transfer name="CompanyUnitAddress">
-        <property name="uuid" dataBuilderRule="slug"/>
+        <property name="uuid" dataBuilderRule="unique()->uuid"/>
         <property name="address1" dataBuilderRule="unique()->sentence(2)"/>
         <property name="address2" dataBuilderRule="unique()->sentence(2)"/>
         <property name="address3" dataBuilderRule="unique()->sentence(2)"/>
@@ -22,7 +22,7 @@
     </transfer>
 
     <transfer name="RestAddress">
-        <property name="idCompanyBusinessUnitAddress" dataBuilderRule="slug"/>
+        <property name="idCompanyBusinessUnitAddress" dataBuilderRule="unique()->uuid"/>
         <property name="salutation" dataBuilderRule="randomElement(['Mr', 'Mrs'])"/>
         <property name="firstName" dataBuilderRule="firstName"/>
         <property name="lastName" dataBuilderRule="lastName"/>

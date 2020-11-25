@@ -103,9 +103,11 @@ class ShipmentsRestApiBusinessTester extends Actor
     public function prepareCheckoutDataTransferWithShipmentMethodId(): CheckoutDataTransfer
     {
         /** @var \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer */
-        $checkoutDataTransfer = (new CheckoutDataBuilder())
-            ->build()
-            ->setShipment((new RestShipmentTransfer())->setIdShipmentMethod(static::SHIPMENT_METHOD['idShipmentMethod']));
+        $checkoutDataTransfer = (new CheckoutDataBuilder([
+            CheckoutDataTransfer::SHIPMENTS => [
+                ['idShipmentMethod' => static::SHIPMENT_METHOD['idShipmentMethod']],
+            ],
+        ]))->build();
 
         return $checkoutDataTransfer;
     }

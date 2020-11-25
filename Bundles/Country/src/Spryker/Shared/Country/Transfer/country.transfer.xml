@@ -27,6 +27,7 @@
     <transfer name="CheckoutData">
         <property name="billingAddress" type="Address"/>
         <property name="shippingAddress" type="Address"/>
+        <property name="shipments" type="RestShipments[]" singular="shipment"/>
     </transfer>
 
     <transfer name="Address">
@@ -43,5 +44,12 @@
         <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
-</transfers>
+    <transfer name="RestShipments">
+        <property name="shippingAddress" type="RestAddress" restRequestParameter="yes"/>
+    </transfer>
 
+    <transfer name="RestAddress">
+        <property name="iso2Code" type="string"/>
+    </transfer>
+
+</transfers>
