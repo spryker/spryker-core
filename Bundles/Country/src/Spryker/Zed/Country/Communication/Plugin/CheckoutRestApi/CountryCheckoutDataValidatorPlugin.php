@@ -9,7 +9,7 @@ namespace Spryker\Zed\Country\Communication\Plugin\CheckoutRestApi;
 
 use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutValidatorPluginInterface;
+use Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataValidatorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Country\Communication\CountryCommunicationFactory getFactory()
  */
-class CountryCheckoutValidatorPlugin extends AbstractPlugin implements CheckoutValidatorPluginInterface
+class CountryCheckoutDataValidatorPlugin extends AbstractPlugin implements CheckoutDataValidatorPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -33,7 +33,7 @@ class CountryCheckoutValidatorPlugin extends AbstractPlugin implements CheckoutV
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function validateCheckout(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer
+    public function validateCheckoutData(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer
     {
         return $this->getFacade()->validateCountryCheckoutData($checkoutDataTransfer);
     }

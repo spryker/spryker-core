@@ -13,13 +13,13 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 /**
  * Plugin exists to allow validating of the `CheckoutDataTransfer`s.
  *
- * Validation of `checkout-data` REST api request.
+ * Validation of `checkout` REST api request.
  */
 interface CheckoutDataValidatorPluginInterface
 {
     /**
      * Specification:
-     * - Validates checkout data.
+     * - Validates checkout.
      * - Returns CheckoutResponseTransfer if there is invalid data in RestCheckoutRequestAttributesTransfer.
      *
      * @api

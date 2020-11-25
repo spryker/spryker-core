@@ -38,26 +38,26 @@ class CheckoutValidator implements CheckoutValidatorInterface
     protected $checkoutDataValidatorPlugins;
 
     /**
-     * @var \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutValidatorPluginInterface[]
+     * @var \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\ReadCheckoutDataValidatorPluginInterface[]
      */
-    protected $checkoutValidatorPlugins;
+    protected $readCheckoutDataValidatorPlugins;
 
     /**
      * @param \Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataValidatorPluginInterface[] $checkoutDataValidatorPlugins
-     * @param \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutValidatorPluginInterface[] $checkoutValidatorPlugins
+     * @param \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\ReadCheckoutDataValidatorPluginInterface[] $readCheckoutDataValidatorPlugins
      */
     public function __construct(
         QuoteReaderInterface $quoteReader,
         CheckoutRestApiToCartFacadeInterface $cartFacade,
         array $checkoutDataValidatorPlugins,
-        array $checkoutValidatorPlugins
+        array $readCheckoutDataValidatorPlugins
     ) {
         $this->quoteReader = $quoteReader;
         $this->cartFacade = $cartFacade;
         $this->checkoutDataValidatorPlugins = $checkoutDataValidatorPlugins;
-        $this->checkoutValidatorPlugins = $checkoutValidatorPlugins;
+        $this->readCheckoutDataValidatorPlugins = $readCheckoutDataValidatorPlugins;
     }
 
     /**
@@ -79,7 +79,7 @@ class CheckoutValidator implements CheckoutValidatorInterface
             ->fromArray($restCheckoutRequestAttributesTransfer->toArray(), true)
             ->setQuote($quoteTransfer);
 
-        $restCheckoutDataResponseTransfer = $this->executeCheckoutDataValidatorPlugins(
+        $restCheckoutDataResponseTransfer = $this->executeReadCheckoutDataValidatorPlugins(
             $checkoutDataTransfer,
             $restCheckoutDataResponseTransfer
         );
@@ -88,17 +88,44 @@ class CheckoutValidator implements CheckoutValidatorInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestCheckoutResponseTransfer
+     */
+    public function validateCheckout(
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+    ): RestCheckoutResponseTransfer {
+        $quoteTransfer = $this->quoteReader->findCustomerQuoteByUuid($restCheckoutRequestAttributesTransfer);
+        $restCheckoutResponseTransfer = $this->validateQuoteInCheckout($quoteTransfer);
+
+        if (!$restCheckoutResponseTransfer->getIsSuccess()) {
+            return $restCheckoutResponseTransfer;
+        }
+
+        $checkoutDataTransfer = (new CheckoutDataTransfer())
+            ->fromArray($restCheckoutRequestAttributesTransfer->toArray(), true)
+            ->setQuote($quoteTransfer);
+
+        $restCheckoutDataResponseTransfer = $this->executeCheckoutDataValidatorPlugins(
+            $checkoutDataTransfer,
+            $restCheckoutResponseTransfer
+        );
+
+        return $this->getRestCheckoutResponse($checkoutDataTransfer, $restCheckoutDataResponseTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
      * @param \Generated\Shared\Transfer\RestCheckoutDataResponseTransfer $restCheckoutDataResponseTransfer
      *
      * @return \Generated\Shared\Transfer\RestCheckoutDataResponseTransfer
      */
-    protected function executeCheckoutDataValidatorPlugins(
+    protected function executeReadCheckoutDataValidatorPlugins(
         CheckoutDataTransfer $checkoutDataTransfer,
         RestCheckoutDataResponseTransfer $restCheckoutDataResponseTransfer
     ): RestCheckoutDataResponseTransfer {
-        foreach ($this->checkoutDataValidatorPlugins as $checkoutDataValidatorPlugin) {
-            $checkoutResponseTransfer = $checkoutDataValidatorPlugin->validateCheckoutData($checkoutDataTransfer);
+        foreach ($this->readCheckoutDataValidatorPlugins as $readCheckoutDataValidatorPlugin) {
+            $checkoutResponseTransfer = $readCheckoutDataValidatorPlugin->validateCheckoutData($checkoutDataTransfer);
 
             if (!$checkoutResponseTransfer->getIsSuccess()) {
                 $restCheckoutDataResponseTransfer = $this->copyCheckoutDataResponseErrors(
@@ -109,21 +136,6 @@ class CheckoutValidator implements CheckoutValidatorInterface
         }
 
         return $restCheckoutDataResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestCheckoutDataResponseTransfer
-     */
-    protected function validateQuoteInCheckoutData(?QuoteTransfer $quoteTransfer): RestCheckoutDataResponseTransfer
-    {
-        if (!$quoteTransfer) {
-            return $this->createCheckoutDataCartNotFoundErrorResponse();
-        }
-
-        return (new RestCheckoutDataResponseTransfer())
-            ->setIsSuccess(true);
     }
 
     /**
@@ -174,30 +186,18 @@ class CheckoutValidator implements CheckoutValidatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\RestCheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\RestCheckoutDataResponseTransfer
      */
-    public function validateCheckout(
-        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-    ): RestCheckoutResponseTransfer {
-        $quoteTransfer = $this->quoteReader->findCustomerQuoteByUuid($restCheckoutRequestAttributesTransfer);
-        $restCheckoutResponseTransfer = $this->validateQuoteInCheckout($quoteTransfer);
-
-        if (!$restCheckoutResponseTransfer->getIsSuccess()) {
-            return $restCheckoutResponseTransfer;
+    protected function validateQuoteInCheckoutData(?QuoteTransfer $quoteTransfer): RestCheckoutDataResponseTransfer
+    {
+        if (!$quoteTransfer) {
+            return $this->createCheckoutDataCartNotFoundErrorResponse();
         }
 
-        $checkoutDataTransfer = (new CheckoutDataTransfer())
-            ->fromArray($restCheckoutRequestAttributesTransfer->toArray(), true)
-            ->setQuote($quoteTransfer);
-
-        $restCheckoutResponseTransfer = $this->executeCheckoutValidatorPlugins(
-            $checkoutDataTransfer,
-            $restCheckoutResponseTransfer
-        );
-
-        return $this->getRestCheckoutResponse($checkoutDataTransfer, $restCheckoutResponseTransfer);
+        return (new RestCheckoutDataResponseTransfer())
+            ->setIsSuccess(true);
     }
 
     /**
@@ -206,12 +206,12 @@ class CheckoutValidator implements CheckoutValidatorInterface
      *
      * @return \Generated\Shared\Transfer\RestCheckoutResponseTransfer
      */
-    protected function executeCheckoutValidatorPlugins(
+    protected function executeCheckoutDataValidatorPlugins(
         CheckoutDataTransfer $checkoutDataTransfer,
         RestCheckoutResponseTransfer $restCheckoutResponseTransfer
     ): RestCheckoutResponseTransfer {
-        foreach ($this->checkoutValidatorPlugins as $checkoutValidatorPlugin) {
-            $checkoutResponseTransfer = $checkoutValidatorPlugin->validateCheckout($checkoutDataTransfer);
+        foreach ($this->checkoutDataValidatorPlugins as $checkoutDataValidatorPlugin) {
+            $checkoutResponseTransfer = $checkoutDataValidatorPlugin->validateCheckoutData($checkoutDataTransfer);
 
             if (!$checkoutResponseTransfer->getIsSuccess()) {
                 $restCheckoutResponseTransfer = $this->copyCheckoutResponseErrors(

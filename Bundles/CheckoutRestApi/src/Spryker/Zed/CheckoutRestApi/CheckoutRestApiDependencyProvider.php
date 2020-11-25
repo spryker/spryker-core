@@ -33,7 +33,7 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_CALCULATION = 'FACADE_CALCULATION';
     public const PLUGINS_QUOTE_MAPPER = 'PLUGINS_QUOTE_MAPPER';
     public const PLUGINS_CHECKOUT_DATA_VALIDATOR = 'PLUGINS_CHECKOUT_DATA_VALIDATOR';
-    public const PLUGINS_CHECKOUT_VALIDATOR = 'PLUGINS_CHECKOUT_VALIDATOR';
+    public const PLUGINS_READ_CHECKOUT_DATA_VALIDATOR = 'PLUGINS_READ_CHECKOUT_DATA_VALIDATOR';
     public const PLUGINS_CHECKOUT_DATA_EXPANDER = 'PLUGINS_CHECKOUT_DATA_EXPANDER';
 
     /**
@@ -54,7 +54,7 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCalculationFacade($container);
         $container = $this->addQuoteMapperPlugins($container);
         $container = $this->addCheckoutDataValidatorPlugins($container);
-        $container = $this->addCheckoutValidatorPlugins($container);
+        $container = $this->addReadCheckoutDataValidatorPlugins($container);
         $container = $this->addCheckoutDataExpanderPlugins($container);
 
         return $container;
@@ -205,10 +205,10 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCheckoutValidatorPlugins(Container $container): Container
+    protected function addReadCheckoutDataValidatorPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_CHECKOUT_VALIDATOR, function () {
-            return $this->getCheckoutValidatorPlugins();
+        $container->set(static::PLUGINS_READ_CHECKOUT_DATA_VALIDATOR, function () {
+            return $this->getReadCheckoutDataValidatorPlugins();
         });
 
         return $container;
@@ -245,9 +245,9 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutValidatorPluginInterface[]
+     * @return \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\ReadCheckoutDataValidatorPluginInterface[]
      */
-    protected function getCheckoutValidatorPlugins(): array
+    protected function getReadCheckoutDataValidatorPlugins(): array
     {
         return [];
     }

@@ -71,7 +71,7 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteReader(),
             $this->getCartFacade(),
             $this->getCheckoutDataValidatorPlugins(),
-            $this->getCheckoutValidatorPlugins()
+            $this->getReadCheckoutDataValidatorPlugins()
         );
     }
 
@@ -185,11 +185,11 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutValidatorPluginInterface[]
+     * @return \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\ReadCheckoutDataValidatorPluginInterface[]
      */
-    public function getCheckoutValidatorPlugins(): array
+    public function getReadCheckoutDataValidatorPlugins(): array
     {
-        return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGINS_CHECKOUT_VALIDATOR);
+        return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGINS_READ_CHECKOUT_DATA_VALIDATOR);
     }
 
     /**
