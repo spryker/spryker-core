@@ -172,6 +172,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
     /**
      * @module Country
      * @module CompanyBusinessUnit
+     * @module Company
      *
      * @param int $idCompanyUnitAddress
      *
@@ -183,6 +184,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
             ->createCompanyUnitAddressQuery()
             ->filterByIdCompanyUnitAddress($idCompanyUnitAddress)
             ->leftJoinWithCountry()
+            ->leftJoinWithCompany()
             ->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
                 ->leftJoinWithCompanyBusinessUnit()
             ->endUse();
@@ -204,6 +206,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
     /**
      * @module CompanyBusinessUnit
      * @module Country
+     * @module Company
      *
      * @param string $companyBusinessUnitAddressUuid
      *
