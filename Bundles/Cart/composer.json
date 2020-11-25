@@ -16,7 +16,9 @@
     "spryker/application": "*",
     "spryker/code-sniffer": "*",
     "spryker/customer": "*",
+    "spryker/price-cart-connector": "*",
     "spryker/price-product": "*",
+    "spryker/price-product-volume": "*",
     "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
