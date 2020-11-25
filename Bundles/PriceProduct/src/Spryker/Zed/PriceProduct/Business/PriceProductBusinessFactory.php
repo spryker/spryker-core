@@ -10,7 +10,6 @@ namespace Spryker\Zed\PriceProduct\Business;
 use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\PriceProduct\Business\Constraint\ValidCurrencyAssignedToStoreConstraint;
-use Spryker\Zed\PriceProduct\Business\Constraint\ValidUniqueStoreCurrencyGrossNetPriceDataConstraint;
 use Spryker\Zed\PriceProduct\Business\Internal\Install;
 use Spryker\Zed\PriceProduct\Business\Internal\InstallInterface;
 use Spryker\Zed\PriceProduct\Business\Model\BulkWriter;
@@ -54,9 +53,6 @@ use Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductDefaultRemover;
 use Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductDefaultRemoverInterface;
 use Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductRemover;
 use Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductRemoverInterface;
-use Spryker\Zed\PriceProduct\Business\Validator\PriceProductValidator;
-use Spryker\Zed\PriceProduct\Business\Validator\PriceProductValidatorInterface;
-use Spryker\Zed\PriceProduct\Dependency\External\PriceProductToValidationAdapterInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface;
@@ -473,40 +469,10 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProduct\Dependency\External\PriceProductToValidationAdapterInterface
-     */
-    public function getValidationAdapter(): PriceProductToValidationAdapterInterface
-    {
-        return $this->getProvidedDependency(PriceProductDependencyProvider::EXTERNAL_ADAPTER_VALIDATION);
-    }
-
-    /**
      * @return \Symfony\Component\Validator\Constraint
      */
     public function createValidCurrencyAssignedToStoreConstraint(): SymfonyConstraint
     {
         return new ValidCurrencyAssignedToStoreConstraint($this->getStoreFacade());
-    }
-
-    /**
-     * @return \Symfony\Component\Validator\Constraint
-     */
-    public function createValidUniqueStoreCurrencyGrossNetPriceDataConstraint(): SymfonyConstraint
-    {
-        return new ValidUniqueStoreCurrencyGrossNetPriceDataConstraint($this->createReaderModel());
-    }
-
-    /**
-     * @return \Spryker\Zed\PriceProduct\Business\Validator\PriceProductValidatorInterface
-     */
-    public function createPriceProductValidator(): PriceProductValidatorInterface
-    {
-        return new PriceProductValidator(
-            [
-                $this->createValidCurrencyAssignedToStoreConstraint(),
-                $this->createValidUniqueStoreCurrencyGrossNetPriceDataConstraint(),
-            ],
-            $this->getValidationAdapter()
-        );
     }
 }

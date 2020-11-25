@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller;
 
+use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Symfony\Component\Form\FormInterface;
@@ -47,25 +48,56 @@ class CreateProductOfferController extends AbstractProductOfferController
             $productOfferCreateFormDataProvider->getOptions($productAbstractTransfer)
         );
         $productOfferForm->handleRequest($request);
+        $initialData = [];
+        $isPriceProductOffersValid = true;
 
         if ($productOfferForm->isSubmitted() && $productOfferForm->isValid()) {
-            $this->getFactory()->getProductOfferFacade()->create($productOfferForm->getData());
+            $priceProductOfferCollectionValidationResponseTransfer = $this->getFactory()
+                ->getPriceProductOfferFacade()
+                ->validateProductOfferPrices($productOfferForm->getData()->getPrices());
+
+            $isPriceProductOffersValid = $priceProductOfferCollectionValidationResponseTransfer->getIsSuccessful();
+
+            if (!$isPriceProductOffersValid) {
+                $initialData = $this->prepareInitialDataForGuiTableConfiguration(
+                    $priceProductOfferCollectionValidationResponseTransfer,
+                    $request
+                );
+            } else {
+                $this->getFactory()->getProductOfferFacade()->create($productOfferForm->getData());
+            }
         }
 
-        return $this->getResponse($productOfferForm, $productConcreteTransfer, $productAbstractTransfer);
+        $priceProductOfferTableConfiguration = $this->getFactory()
+            ->createPriceProductOfferCreateGuiTableConfigurationProvider()
+            ->getConfiguration($initialData);
+
+        return $this->getResponse(
+            $productOfferForm,
+            $productConcreteTransfer,
+            $productAbstractTransfer,
+            $priceProductOfferTableConfiguration,
+            $isPriceProductOffersValid
+        );
     }
 
     /**
+     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $productOfferForm
+     *
      * @param \Symfony\Component\Form\FormInterface $productOfferForm
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $priceProductOfferTableConfiguration
+     * @param bool $isPriceProductOffersValid
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     protected function getResponse(
         FormInterface $productOfferForm,
         ProductConcreteTransfer $productConcreteTransfer,
-        ProductAbstractTransfer $productAbstractTransfer
+        ProductAbstractTransfer $productAbstractTransfer,
+        GuiTableConfigurationTransfer $priceProductOfferTableConfiguration,
+        bool $isPriceProductOffersValid
     ): JsonResponse {
         $localeTransfer = $this->getFactory()
             ->getLocaleFacade()
@@ -77,10 +109,11 @@ class CreateProductOfferController extends AbstractProductOfferController
                 'product' => $productConcreteTransfer,
                 'productName' => $this->getFactory()->createProductNameBuilder()->buildProductConcreteName($productConcreteTransfer, $localeTransfer),
                 'productAttributes' => $this->getProductAttributes($localeTransfer, $productConcreteTransfer, $productAbstractTransfer),
+                'priceProductOfferTableConfiguration' => $priceProductOfferTableConfiguration,
             ])->getContent(),
         ];
 
-        if (!$productOfferForm->isSubmitted()) {
+        if (!$productOfferForm->isSubmitted() || !$isPriceProductOffersValid) {
             return new JsonResponse($responseData);
         }
 

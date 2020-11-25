@@ -28,12 +28,12 @@ class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
     protected $productOfferMerchantPortalGuiRepository;
 
     /**
-     * @param int $idProductOffer
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface $productOfferMerchantPortalGuiRepository
+     * @param int|null $idProductOffer
      */
     public function __construct(
-        int $idProductOffer,
-        ProductOfferMerchantPortalGuiRepositoryInterface $productOfferMerchantPortalGuiRepository
+        ProductOfferMerchantPortalGuiRepositoryInterface $productOfferMerchantPortalGuiRepository,
+        ?int $idProductOffer = null
     ) {
         $this->idProductOffer = $idProductOffer;
         $this->productOfferMerchantPortalGuiRepository = $productOfferMerchantPortalGuiRepository;
@@ -57,6 +57,10 @@ class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
      */
     protected function fetchData(AbstractTransfer $criteriaTransfer): GuiTableDataResponseTransfer
     {
+        if (!$criteriaTransfer->getIdProductOffer()) {
+            return new GuiTableDataResponseTransfer();
+        }
+
         $priceProductOfferCollectionTransfer = $this->productOfferMerchantPortalGuiRepository->getProductOfferPriceTableData($criteriaTransfer);
 
         $guiTableDataResponseTransfer = new GuiTableDataResponseTransfer();

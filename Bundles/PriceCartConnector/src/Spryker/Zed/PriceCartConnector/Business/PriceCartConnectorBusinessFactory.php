@@ -60,7 +60,8 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
         return new PriceProductFilter(
             $this->getPriceProductFacade(),
             $this->getPriceFacade(),
-            $this->getCurrencyFacade()
+            $this->getCurrencyFacade(),
+            $this->getCartItemQuantityCounterStrategyPlugins()
         );
     }
 
@@ -131,5 +132,13 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
     public function getPriceProductExpanderPlugins(): array
     {
         return $this->getProvidedDependency(PriceCartConnectorDependencyProvider::PLUGINS_PRICE_PRODUCT_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceCartConnectorExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface[]
+     */
+    public function getCartItemQuantityCounterStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(PriceCartConnectorDependencyProvider::PLUGINS_CART_ITEM_QUANTITY_COUNTER_STRATEGY);
     }
 }

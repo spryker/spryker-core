@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="MerchantUser">
+        <property name="idMerchant" type="int"/>
+        <property name="merchant" type="Merchant"/>
+    </transfer>
+
+    <transfer name="Money">
+    </transfer>
+
+    <transfer name="MerchantOrderCriteria">
+        <property name="idMerchantOrder" type="int"/>
+        <property name="idMerchant" type="int"/>
+        <property name="merchantReference" type="string"/>
+        <property name="withItems" type="bool"/>
+        <property name="withOrder" type="bool"/>
+    </transfer>
+
+    <transfer name="MerchantOrder">
+        <property name="merchantReference" type="string"/>
+        <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
+        <property name="order" type="Order"/>
+        <property name="idMerchantOrder" type="int"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="fkCustomer" type="int"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="idCustomer" type="int"/>
+    </transfer>
+
+    <transfer name="Merchant">
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantOrderItemCollection">
+        <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
+    </transfer>
+
+    <transfer name="ShipmentGroup">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="shipment" type="Shipment"/>
+    </transfer>
+
+    <transfer name="MerchantOrderItem">
+        <property name="manualEvents" type="string[]" singular="manualEvent"/>
+        <property name="orderItem" type="Item"/>
+        <property name="stateHistory" type="StateMachineItem[]" singular="stateHistory"/>
+        <property name="idMerchantOrderItem" type="int"/>
+    </transfer>
+
+    <transfer name="ShipmentGroupResponse">
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
+    <transfer name="MerchantOmsTriggerRequest">
+        <property name="merchantOmsEventName" type="string"/>
+        <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
+        <property name="merchantOrderItemReference" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantOmsTriggerResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="idSalesShipment" type="int"/>
+        <property name="shippingAddress" type="Address"/>
+    </transfer>
+
+    <transfer name="Addresses">
+        <property name="addresses" type="Address[]" singular="address"/>
+    </transfer>
+
+    <transfer name="Address">
+        <property name="fkCustomer" type="int"/>
+        <property name="salutation" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="address1" type="string"/>
+        <property name="address2" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="city" type="string"/>
+        <property name="idCustomerAddress" type="int"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="idSalesOrderItem" type="int"/>
+        <property name="shipment" type="Shipment"/>
+    </transfer>
+
+    <transfer name="ShipmentMethod">
+        <property name="idShipmentMethod" type="int"/>
+        <property name="name" type="string"/>
+        <property name="carrierName" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantShipmentCriteria">
+        <property name="merchantReference" type="string"/>
+        <property name="idShipment" type="int"/>
+    </transfer>
+
+    <transfer name="StateMachineItem">
+        <property name="idMerchantOrderItem" type="int"/>
+    </transfer>
+</transfers>

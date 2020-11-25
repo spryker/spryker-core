@@ -58,7 +58,6 @@ class ProductOfferUpdateFormDataProvider extends AbstractProductOfferFormDataPro
         );
         $productOfferTransfer->setIdProductConcrete($productConcreteTransfer->getIdProductConcrete());
 
-//        $productOfferTransfer = $this->addPrices($productOfferTransfer);
         $productOfferTransfer = $this->setDefaultMerchantStock($productOfferTransfer);
 
         return $productOfferTransfer;

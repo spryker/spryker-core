@@ -68,6 +68,7 @@ class OrderCalculatorExecutor implements OrderCalculatorExecutorInterface
     protected function mapOrderTransfer(OrderTransfer $orderTransfer, CalculableObjectTransfer $calculableObjectTransfer)
     {
         $orderTransfer->fromArray($calculableObjectTransfer->toArray(), true);
+        $orderTransfer->setStore($calculableObjectTransfer->getStore()->getName());
 
         return $orderTransfer;
     }

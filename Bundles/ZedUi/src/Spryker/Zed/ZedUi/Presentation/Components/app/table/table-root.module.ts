@@ -30,7 +30,7 @@ class TableDefaultConfigData implements Partial<TableConfig> {
     total = {
         enabled: true,
     };
-    settings = {
+    columnConfigurator = {
         enabled: true,
     };
 }
@@ -78,7 +78,7 @@ class TableEditableDataSerializer {
                 import('@spryker/table.feature.batch-actions').then(
                     m => m.TableBatchActionsFeatureModule
                 ),
-            settings: () =>
+            columnConfigurator: () =>
                 import('@spryker/table.feature.settings').then(
                     m => m.TableSettingsFeatureModule,
                 ),

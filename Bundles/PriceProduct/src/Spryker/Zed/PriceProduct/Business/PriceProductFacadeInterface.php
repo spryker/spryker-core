@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\PriceProduct\Business;
 
-use Generated\Shared\Transfer\PriceProductCollectionTransfer;
-use Generated\Shared\Transfer\PriceProductCollectionValidationResponseTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
@@ -16,6 +14,7 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 interface PriceProductFacadeInterface
 {
@@ -590,16 +589,11 @@ interface PriceProductFacadeInterface
 
     /**
      * Specification:
-     * - Validates PriceProductTransfer stack.
-     * - Сhecks if there are duplicated prices for store-currency-gross-net-price_data combinations (per price dimension).
-     * - Checks that currency assigned to a store per prices.
-     * - Returns PriceProductValidationResponse transfer object.
+     * - Returns validCurrencyAssignedToStoreConstraint for futher usage in Symfony validator.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductCollectionTransfer $priceProductCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductCollectionValidationResponseTransfer
+     * @return \Symfony\Component\Validator\Constraint
      */
-    public function validatePrices(PriceProductCollectionTransfer $priceProductCollectionTransfer): PriceProductCollectionValidationResponseTransfer;
+    public function getValidCurrencyAssignedToStoreConstraint(): SymfonyConstraint;
 }

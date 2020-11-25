@@ -7,7 +7,9 @@
 
 namespace SprykerTest\Zed\PriceProductOffer\Business;
 
+use ArrayObject;
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -159,6 +161,174 @@ class PriceProductOfferFacadeTest extends Unit
             $priceProductTransfer->getIdPriceProduct(),
             $priceProductTransfers[0]->getIdPriceProduct()
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateProductOfferPricesSuccess()
+    {
+        // Arrange
+        $priceProductTransfer = $this->tester->haveProductOfferSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $priceProductTransfer->getMoneyValue()->setNetAmount(10);
+        $priceProductTransfer->getMoneyValue()->setGrossAmount(100);
+
+        // Act
+        $collectionValidationResponseTransfer = $this->tester
+            ->getFacade()
+            ->validateProductOfferPrices(new ArrayObject([$priceProductTransfer]));
+
+        // Assert
+        $this->assertTrue($collectionValidationResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateProductOfferPricesFailValidUniqueStoreCurrencyGrossNetPriceDataConstraint()
+    {
+        // Arrange
+        $priceProductTransferSrc = $this->tester->haveProductOfferSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $priceProductTransferDst = $this->tester->haveProductOfferSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+
+        $priceProductTransferDst->getMoneyValue()->setStore($priceProductTransferSrc->getMoneyValue()->getStore());
+        $priceProductTransferDst->getMoneyValue()->setFkStore($priceProductTransferSrc->getMoneyValue()->getFkStore());
+        $priceProductTransferDst->getMoneyValue()->setCurrency($priceProductTransferSrc->getMoneyValue()->getCurrency());
+        $priceProductTransferDst->getPriceDimension()->setIdProductOffer($priceProductTransferSrc->getPriceDimension()->getIdProductOffer());
+        $priceProductTransferDst->setPriceType($priceProductTransferSrc->getPriceType());
+
+        // Act
+        $collectionValidationResponseTransfer = $this->tester
+            ->getFacade()
+            ->validateProductOfferPrices(new ArrayObject([$priceProductTransferDst]));
+
+        // Assert
+        $this->assertFalse($collectionValidationResponseTransfer->getIsSuccessful());
+        $this->assertCount(1, $collectionValidationResponseTransfer->getErrors());
+        $this->assertSame($priceProductTransferDst, $collectionValidationResponseTransfer->getErrors()->offsetGet(0)->getPriceProduct());
+        $this->assertCount(1, $collectionValidationResponseTransfer->getErrors()->offsetGet(0)->getValidationErrors());
+        $this->assertSame(
+            'Data is duplicated',
+            $collectionValidationResponseTransfer->getErrors()
+                ->offsetGet(0)
+                ->getValidationErrors()
+                ->offsetGet(0)
+                ->getMessage()
+        );
+    }
+
+    /**
+     * @dataProvider validateProductOfferPricesFailValidNetAmountValueDataProvider
+     *
+     * @param mixed $invalidValue
+     *
+     * @return void
+     */
+    public function testValidateProductOfferPricesFailValidNetAmountValue($invalidValue)
+    {
+        // Arrange
+        $priceProductTransfer = $this->tester->havePriceProduct([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $priceProductTransfer->getMoneyValue()->setNetAmount($invalidValue);
+
+        // Act
+        $collectionValidationResponseTransfer = $this->tester
+            ->getFacade()
+            ->validateProductOfferPrices(new ArrayObject([$priceProductTransfer]));
+
+        // Assert
+        $this->assertFalse($collectionValidationResponseTransfer->getIsSuccessful());
+        $this->assertSame(
+            'This value should be greater than 0 or empty.',
+            $collectionValidationResponseTransfer->getErrors()
+                ->offsetGet(0)
+                ->getValidationErrors()
+                ->offsetGet(0)
+                ->getMessage()
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function validateProductOfferPricesFailValidNetAmountValueDataProvider(): array
+    {
+        return [
+            [-1],
+            [0],
+            ['some string'],
+        ];
+    }
+
+    /**
+     * @return void
+     */
+    public function testCountPriceProductOfferEntities()
+    {
+        // Arrange
+        $priceProductOffer1 = $this->tester->haveProductOfferSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $priceProductOffer2 = $this->tester->haveProductOfferSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $priceProductOfferCriteriaTransfer = new PriceProductOfferCriteriaTransfer();
+        $priceProductOfferCriteriaTransfer->setPriceProductOfferIds([
+            $priceProductOffer1->getPriceDimension()->getIdPriceProductOffer(),
+            $priceProductOffer2->getPriceDimension()->getIdPriceProductOffer(),
+        ]);
+
+        // Act
+        $count = $this->tester
+            ->getFacade()
+            ->count($priceProductOfferCriteriaTransfer);
+
+        // Assert
+        $this->assertSame(2, $count);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeletePriceProductOfferEntities()
+    {
+        // Arrange
+        $priceProductOffer1 = $this->tester->haveProductOfferSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $priceProductOffer2 = $this->tester->haveProductOfferSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $priceProductOfferCriteriaTransfer = new PriceProductOfferCriteriaTransfer();
+        $priceProductOfferCriteriaTransfer->setPriceProductOfferIds([
+            $priceProductOffer1->getPriceDimension()->getIdPriceProductOffer(),
+            $priceProductOffer2->getPriceDimension()->getIdPriceProductOffer(),
+        ]);
+
+        // Act
+        $this->tester
+            ->getFacade()
+            ->delete($priceProductOfferCriteriaTransfer);
+        $count = $this->tester
+            ->getFacade()
+            ->count($priceProductOfferCriteriaTransfer);
+
+        // Assert
+        $this->assertSame(0, $count);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductOfferPricesSuccess()
+    {
+        // Arrange
+        $priceProductOffer1 = $this->tester->haveProductOfferSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $priceProductOffer2 = $this->tester->haveProductOfferSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $priceProductOfferCriteriaTransfer = new PriceProductOfferCriteriaTransfer();
+        $priceProductOfferCriteriaTransfer->setPriceProductOfferIds([
+            $priceProductOffer1->getPriceDimension()->getIdPriceProductOffer(),
+            $priceProductOffer2->getPriceDimension()->getIdPriceProductOffer(),
+        ]);
+
+        // Act
+        $productOfferPrices = $this->tester
+            ->getFacade()
+            ->getProductOfferPrices($priceProductOfferCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(2, $productOfferPrices);
     }
 
     /**

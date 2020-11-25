@@ -13,10 +13,17 @@
         <property name="idProductOffer" type="int"/>
         <property name="priceProductOfferIds" type="int[]" singular="idPriceProductOffer"/>
         <property name="productOfferCriteriaFilter" type="ProductOfferCriteriaFilter"/>
+        <property name="priceProductStoreCriteria" type="PriceProductStoreCriteria"/>
+        <property name="priceTypeIds" type="int[]" singular="idPriceType"/>
     </transfer>
 
     <transfer name="ProductOfferCriteriaFilter">
         <property name="merchantIds" type="int[]" singular="idMerchant"/>
+    </transfer>
+
+   <transfer name="PriceProductStoreCriteria">
+        <property name="currencyIds" type="int[]" singular="idCurrency"/>
+        <property name="storeIds" type="int[]" singular="idStore"/>
     </transfer>
 
     <transfer name="PriceProductCriteria">
@@ -61,6 +68,7 @@
     </transfer>
 
     <transfer name="MoneyValue">
+        <property name="idPriceProductStore" type="int"/>
         <property name="fkStore" type="int"/>
         <property name="currency" type="Currency"/>
         <property name="netAmount" type="int"/>
@@ -97,4 +105,21 @@
     <transfer name="PriceProductValidationError">
         <property name="message" type="string"/>
     </transfer>
+
+    <transfer name="PriceProductOfferCollectionValidationResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="errors" type="PriceProductOfferValidationError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="PriceProductOfferValidationError">
+        <property name="validationErrors" type="ValidationError[]" singular="validationError"/>
+        <property name="priceProduct" type="PriceProduct"/>
+    </transfer>
+
+    <transfer name="ValidationError">
+        <property name="message" type="string"/>
+        <property name="propertyPath" type="string"/>
+        <property name="invalidValue" type="string"/>
+    </transfer>
+
 </transfers>

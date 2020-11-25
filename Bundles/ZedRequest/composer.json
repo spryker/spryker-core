@@ -15,7 +15,8 @@
     "spryker/messenger": "^3.0.0",
     "spryker/symfony": "^3.5.0",
     "spryker/util-network": "^1.1.0",
-    "spryker/util-text": "^1.1.0"
+    "spryker/util-text": "^1.1.0",
+    "spryker/zed-request-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/application": "^3.2.0",

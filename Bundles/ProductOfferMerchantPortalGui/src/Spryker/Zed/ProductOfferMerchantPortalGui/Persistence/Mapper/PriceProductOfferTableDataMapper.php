@@ -25,6 +25,26 @@ class PriceProductOfferTableDataMapper
     protected const COL_CURRENCY = 'currency';
 
     /**
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepository::SUFFIX_PRICE_TYPE_NET
+     */
+    protected const SUFFIX_PRICE_TYPE_NET = '_net';
+
+    /**
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepository::SUFFIX_PRICE_TYPE_GROSS
+     */
+    protected const SUFFIX_PRICE_TYPE_GROSS = '_gross';
+
+    /**
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\AbstractPriceProductOfferGuiTableConfigurationProvider::ID_COLUMN_SUFFIX_PRICE_TYPE_NET
+     */
+    protected const SUFFIX_PRICE_TYPE_NET_AMOUNT = '[moneyValue][netAmount]';
+
+    /**
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\AbstractPriceProductOfferGuiTableConfigurationProvider::ID_COLUMN_SUFFIX_PRICE_TYPE_GROSS
+     */
+    protected const SUFFIX_PRICE_TYPE_GROSS_AMOUNT = '[moneyValue][grossAmount]';
+
+    /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepository::COL_PRICE_PRODUCT_OFFER_IDS
      */
     protected const COL_PRICE_PRODUCT_OFFER_IDS = 'price_product_offer_ids';
@@ -48,6 +68,8 @@ class PriceProductOfferTableDataMapper
     }
 
     /**
+     * @phpstan-param array<mixed> $priceProductOfferTableDataArray
+     *
      * @param array $priceProductOfferTableDataArray
      * @param \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer $priceProductConcreteCollectionTransfer
      *
@@ -97,6 +119,11 @@ class PriceProductOfferTableDataMapper
     }
 
     /**
+     * @phpstan-param array<mixed> $prices
+     * @phpstan-param array<mixed> $priceProductOfferTableRowDataArray
+     *
+     * @phpstan-return array<mixed>
+     *
      * @param array $prices
      * @param array $priceProductOfferTableRowDataArray
      *
@@ -105,15 +132,16 @@ class PriceProductOfferTableDataMapper
     protected function preparePrices(array $prices, array $priceProductOfferTableRowDataArray): array
     {
         foreach ($this->priceProductFacade->getPriceTypeValues() as $priceTypeTransfer) {
-            $keyNetPrice = mb_strtolower($priceTypeTransfer->getName()) . '_net';
-            $keyGrossPrice = mb_strtolower($priceTypeTransfer->getName()) . '_gross';
+            $priceTypeName = mb_strtolower($priceTypeTransfer->getName());
+            $keyNetPrice = $priceTypeName . static::SUFFIX_PRICE_TYPE_NET;
+            $keyGrossPrice = $priceTypeName . static::SUFFIX_PRICE_TYPE_GROSS;
 
             if ($priceProductOfferTableRowDataArray[$keyGrossPrice]) {
-                $prices[$keyGrossPrice] = $priceProductOfferTableRowDataArray[$keyGrossPrice];
+                $prices[$priceTypeName . static::SUFFIX_PRICE_TYPE_GROSS_AMOUNT] = $priceProductOfferTableRowDataArray[$keyGrossPrice];
             }
 
             if ($priceProductOfferTableRowDataArray[$keyNetPrice]) {
-                $prices[$keyNetPrice] = $priceProductOfferTableRowDataArray[$keyNetPrice];
+                $prices[$priceTypeName . static::SUFFIX_PRICE_TYPE_NET_AMOUNT] = $priceProductOfferTableRowDataArray[$keyNetPrice];
             }
         }
 

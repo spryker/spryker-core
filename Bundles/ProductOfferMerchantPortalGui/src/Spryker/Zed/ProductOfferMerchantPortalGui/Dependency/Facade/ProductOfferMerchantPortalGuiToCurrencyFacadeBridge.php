@@ -41,4 +41,14 @@ class ProductOfferMerchantPortalGuiToCurrencyFacadeBridge implements ProductOffe
     {
         return $this->currencyFacade->findCurrencyByIsoCode($isoCode);
     }
+
+    /**
+     * @param int $idCurrency
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    public function getByIdCurrency($idCurrency)
+    {
+        return $this->currencyFacade->getByIdCurrency($idCurrency);
+    }
 }

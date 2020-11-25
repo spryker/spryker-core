@@ -42,5 +42,9 @@
     <transfer name="ProductAvailabilityCriteria">
     </transfer>
 
+    <transfer name="CartItemQuantity">
+        <property name="quantity" type="int"/>
+    </transfer>
+
 </transfers>
 
