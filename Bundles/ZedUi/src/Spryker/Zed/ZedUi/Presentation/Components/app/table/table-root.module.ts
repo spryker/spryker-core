@@ -33,7 +33,6 @@ class TableDefaultConfigData implements Partial<TableConfig> {
 
 class TableEditableDataSerializer {
     serialize(data: TableDataRow): unknown {
-        console.log(data);
         return JSON.stringify(data);
     }
 }
