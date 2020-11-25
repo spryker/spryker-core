@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiBusinessFactory;
-use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeBridge;
+use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeAdapter;
 use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeInterface;
 
 /**
@@ -134,7 +134,7 @@ class ExpandCheckoutDataWithAvailableShipmentMethodsTest extends Unit
      */
     protected function getShipmentFacadeMock(): ShipmentsRestApiToShipmentFacadeInterface
     {
-        $shipmentFacadeMock = $this->getMockBuilder(ShipmentsRestApiToShipmentFacadeBridge::class)
+        $shipmentFacadeMock = $this->getMockBuilder(ShipmentsRestApiToShipmentFacadeAdapter::class)
             ->onlyMethods(['getAvailableMethodsByShipment'])
             ->disableOriginalConstructor()
             ->getMock();

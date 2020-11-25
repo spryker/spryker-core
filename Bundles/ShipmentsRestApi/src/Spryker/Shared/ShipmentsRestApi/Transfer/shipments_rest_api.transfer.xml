@@ -87,6 +87,7 @@
         <property name="uuid" type="string"/>
         <property name="sku" type="string"/>
         <property name="quantity" type="int"/>
+        <property name="giftCardMetadata" type="GiftCardMetadata"/>
     </transfer>
 
     <transfer name="CheckoutData">
@@ -226,6 +227,10 @@
     <transfer name="RestOrderExpensesAttributes">
         <property name="idShipment" type="int"/>
         <property name="idSalesExpense" type="int"/>
+    </transfer>
+
+    <transfer name="GiftCardMetadata">
+        <property name="isGiftCard" type="bool"/>
     </transfer>
 
 </transfers>

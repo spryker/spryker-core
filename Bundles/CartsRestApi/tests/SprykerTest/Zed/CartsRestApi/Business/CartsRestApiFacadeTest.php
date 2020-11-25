@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\CartsRestApi\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CheckoutDataBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\DataBuilder\RestShipmentsBuilder;
 use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
@@ -42,9 +43,11 @@ use Spryker\Zed\Store\Business\StoreFacade;
 class CartsRestApiFacadeTest extends Unit
 {
     /**
-     * @uses \Spryker\Zed\CartsRestApi\Business\Validator\CartItemCheckoutDataValidator::GLOSSARY_KEY_CART_ITEM_WAS_NOT_SPECIFIED_IN_CHECKOUT_DATA
+     * @uses \Spryker\Zed\CartsRestApi\Business\Validator\CartItemCheckoutDataValidator::GLOSSARY_KEY_ITEM_NO_SHIPMENT_SELECTED
      */
-    protected const GLOSSARY_KEY_CART_ITEM_WAS_NOT_SPECIFIED_IN_CHECKOUT_DATA = 'checkout.validation.item.not_specified';
+    protected const GLOSSARY_KEY_ITEM_NO_SHIPMENT_SELECTED = 'checkout.validation.item.no_shipment_selected';
+    protected const TEST_GROUP_KEY_1 = 'group-key-1';
+    protected const TEST_GROUP_KEY_2 = 'group-key-2';
 
     /**
      * @var \SprykerTest\Zed\CartsRestApi\CartsRestApiBusinessTester
@@ -637,11 +640,12 @@ class CartsRestApiFacadeTest extends Unit
     {
         // Arrange
         $quoteTransfer = (new QuoteBuilder())->withItem()->build();
-        $checkoutDataTransfer = (new CheckoutDataBuilder())
-            ->withQuote($quoteTransfer->toArray())
-            ->withShipment([
-                RestShipmentsTransfer::ITEMS => [$quoteTransfer->getItems()->offsetGet(0)->getGroupKey()],
-            ])->build();
+        $checkoutDataTransfer = (new CheckoutDataBuilder([
+            CheckoutDataTransfer::QUOTE => $quoteTransfer->toArray(),
+            CheckoutDataTransfer::SHIPMENTS => [
+                [RestShipmentsTransfer::ITEMS => [$quoteTransfer->getItems()->offsetGet(0)->getGroupKey()]],
+            ],
+        ]))->build();
 
         // Act
         $checkoutResponseTransfer = $this->cartsRestApiFacade->validateItemsInCheckoutData($checkoutDataTransfer);
@@ -657,11 +661,12 @@ class CartsRestApiFacadeTest extends Unit
     {
         // Arrange
         $quoteTransfer = (new QuoteBuilder())->withBundleItem()->build();
-        $checkoutDataTransfer = (new CheckoutDataBuilder())
-            ->withQuote($quoteTransfer->toArray())
-            ->withShipment([
-                RestShipmentsTransfer::ITEMS => [$quoteTransfer->getBundleItems()->offsetGet(0)->getGroupKey()],
-            ])->build();
+        $checkoutDataTransfer = (new CheckoutDataBuilder([
+            CheckoutDataTransfer::QUOTE => $quoteTransfer->toArray(),
+            CheckoutDataTransfer::SHIPMENTS => [
+                [RestShipmentsTransfer::ITEMS => [$quoteTransfer->getBundleItems()->offsetGet(0)->getGroupKey()]],
+            ],
+        ]))->build();
 
         // Act
         $checkoutResponseTransfer = $this->cartsRestApiFacade->validateItemsInCheckoutData($checkoutDataTransfer);
@@ -677,14 +682,15 @@ class CartsRestApiFacadeTest extends Unit
     {
         // Arrange
         $quoteTransfer = (new QuoteBuilder())
-            ->withItem([ItemTransfer::GROUP_KEY => 'group-key-1'])
-            ->withBundleItem([ItemTransfer::GROUP_KEY => 'group-key-2'])
+            ->withItem([ItemTransfer::GROUP_KEY => static::TEST_GROUP_KEY_1])
+            ->withBundleItem([ItemTransfer::GROUP_KEY => static::TEST_GROUP_KEY_2])
             ->build();
-        $checkoutDataTransfer = (new CheckoutDataBuilder())
-            ->withQuote($quoteTransfer->toArray())
-            ->withShipment([
-                RestShipmentsTransfer::ITEMS => ['group-key-2'],
-            ])->build();
+        $checkoutDataTransfer = (new CheckoutDataBuilder([
+            CheckoutDataTransfer::QUOTE => $quoteTransfer->toArray(),
+            CheckoutDataTransfer::SHIPMENTS => [
+                [RestShipmentsTransfer::ITEMS => [static::TEST_GROUP_KEY_2]],
+            ],
+        ]))->build();
 
         // Act
         $checkoutResponseTransfer = $this->cartsRestApiFacade->validateItemsInCheckoutData($checkoutDataTransfer);
@@ -693,7 +699,7 @@ class CartsRestApiFacadeTest extends Unit
         $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
         $this->assertCount(1, $checkoutResponseTransfer->getErrors());
         $this->assertEquals(
-            static::GLOSSARY_KEY_CART_ITEM_WAS_NOT_SPECIFIED_IN_CHECKOUT_DATA,
+            static::GLOSSARY_KEY_ITEM_NO_SHIPMENT_SELECTED,
             $checkoutResponseTransfer->getErrors()->offsetGet(0)->getMessage()
         );
     }
@@ -705,14 +711,15 @@ class CartsRestApiFacadeTest extends Unit
     {
         // Arrange
         $quoteTransfer = (new QuoteBuilder())
-            ->withItem([ItemTransfer::GROUP_KEY => 'group-key-1'])
-            ->withBundleItem([ItemTransfer::GROUP_KEY => 'group-key-2'])
+            ->withItem([ItemTransfer::GROUP_KEY => static::TEST_GROUP_KEY_1])
+            ->withBundleItem([ItemTransfer::GROUP_KEY => static::TEST_GROUP_KEY_2])
             ->build();
-        $checkoutDataTransfer = (new CheckoutDataBuilder())
-            ->withQuote($quoteTransfer->toArray())
-            ->withShipment([
-                RestShipmentsTransfer::ITEMS => ['group-key-1'],
-            ])->build();
+        $checkoutDataTransfer = (new CheckoutDataBuilder([
+            CheckoutDataTransfer::QUOTE => $quoteTransfer->toArray(),
+            CheckoutDataTransfer::SHIPMENTS => [
+                [RestShipmentsTransfer::ITEMS => [static::TEST_GROUP_KEY_1]],
+            ],
+        ]))->build();
 
         // Act
         $checkoutResponseTransfer = $this->cartsRestApiFacade->validateItemsInCheckoutData($checkoutDataTransfer);
@@ -721,7 +728,7 @@ class CartsRestApiFacadeTest extends Unit
         $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
         $this->assertCount(1, $checkoutResponseTransfer->getErrors());
         $this->assertEquals(
-            static::GLOSSARY_KEY_CART_ITEM_WAS_NOT_SPECIFIED_IN_CHECKOUT_DATA,
+            static::GLOSSARY_KEY_ITEM_NO_SHIPMENT_SELECTED,
             $checkoutResponseTransfer->getErrors()->offsetGet(0)->getMessage()
         );
     }
@@ -733,8 +740,10 @@ class CartsRestApiFacadeTest extends Unit
     {
         // Arrange
         $this->expectException(RequiredTransferPropertyException::class);
-        $checkoutDataTransfer = (new CheckoutDataBuilder())->withShipment()->build();
-        $checkoutDataTransfer->setQuote(null);
+        $checkoutDataTransfer = (new CheckoutDataBuilder([
+            CheckoutDataTransfer::QUOTE => null,
+            CheckoutDataTransfer::SHIPMENTS => (new RestShipmentsBuilder())->build(),
+        ]))->build();
 
         // Act
         $this->cartsRestApiFacade->validateItemsInCheckoutData($checkoutDataTransfer);

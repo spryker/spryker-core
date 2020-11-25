@@ -11,7 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
 use Spryker\Zed\Shipment\Business\ShipmentFacade;
 use Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiBusinessFactory;
-use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeBridge;
+use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeAdapter;
 
 /**
  * Auto-generated group annotations
@@ -243,7 +243,7 @@ class ShipmentsRestApiFacadeTest extends Unit
         );
 
         $mockFactory->method('getShipmentFacade')
-            ->willReturn(new ShipmentsRestApiToShipmentFacadeBridge($this->getMockShipmentFacade()));
+            ->willReturn(new ShipmentsRestApiToShipmentFacadeAdapter($this->getMockShipmentFacade()));
 
         return $mockFactory;
     }
@@ -285,7 +285,7 @@ class ShipmentsRestApiFacadeTest extends Unit
         );
 
         $mockFactory->method('getShipmentFacade')
-            ->willReturn(new ShipmentsRestApiToShipmentFacadeBridge($this->getMockShipmentFacadeWithShipmentNotFound()));
+            ->willReturn(new ShipmentsRestApiToShipmentFacadeAdapter($this->getMockShipmentFacadeWithShipmentNotFound()));
 
         return $mockFactory;
     }

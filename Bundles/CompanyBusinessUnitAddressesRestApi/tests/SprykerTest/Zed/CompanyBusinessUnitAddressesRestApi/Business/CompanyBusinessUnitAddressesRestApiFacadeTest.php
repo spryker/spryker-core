@@ -11,7 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CheckoutDataBuilder;
 use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
-use Generated\Shared\DataBuilder\RestAddressBuilder;
 use Generated\Shared\DataBuilder\RestShipmentsBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutDataTransfer;
@@ -136,20 +135,18 @@ class CompanyBusinessUnitAddressesRestApiFacadeTest extends Unit
     {
         // Arrange
         $customerTransfer = (new CustomerBuilder())
-            ->withCompanyUserTransfer([
-                CompanyUserTransfer::FK_COMPANY => 1,
-            ])->build();
-        $quoteTransfer = (new QuoteBuilder([QuoteTransfer::CUSTOMER => $customerTransfer]))->build();
-        $restAddressTransfer = (new RestAddressBuilder([
-            RestAddressTransfer::ID_COMPANY_BUSINESS_UNIT_ADDRESS => CompanyBusinessUnitAddressesRestApiBusinessTester::FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_UUID1,
-        ]))->build();
-        $restShipmentsTransfer = (new RestShipmentsBuilder([
-            RestShipmentsTransfer::SHIPPING_ADDRESS => $restAddressTransfer,
-        ]))->build();
-        $checkoutDataTransfer = (new CheckoutDataBuilder())
-            ->withQuote($quoteTransfer->toArray())
-            ->withShipment($restShipmentsTransfer->toArray())
+            ->withCompanyUserTransfer([CompanyUserTransfer::FK_COMPANY => 1])
             ->build();
+        $quoteTransfer = (new QuoteBuilder([QuoteTransfer::CUSTOMER => $customerTransfer->toArray()]))->build();
+        $restShipmentsTransfer = (new RestShipmentsBuilder([
+            RestShipmentsTransfer::SHIPPING_ADDRESS => [
+                RestAddressTransfer::ID_COMPANY_BUSINESS_UNIT_ADDRESS => CompanyBusinessUnitAddressesRestApiBusinessTester::FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_UUID1,
+            ],
+        ]))->build();
+        $checkoutDataTransfer = (new CheckoutDataBuilder([
+            CheckoutDataTransfer::QUOTE => $quoteTransfer->toArray(),
+            CheckoutDataTransfer::SHIPMENTS => [$restShipmentsTransfer->toArray()],
+        ]))->build();
 
         $companyBusinessUnitAddressesRestApiFacade = $this->tester->getFacade();
         $companyBusinessUnitAddressesRestApiFacade->setFactory(
@@ -171,16 +168,15 @@ class CompanyBusinessUnitAddressesRestApiFacadeTest extends Unit
         // Arrange
         $customerTransfer = (new CustomerBuilder([CustomerTransfer::COMPANY_USER_TRANSFER => null]))->build();
         $quoteTransfer = (new QuoteBuilder([QuoteTransfer::CUSTOMER => $customerTransfer]))->build();
-        $restAddressTransfer = (new RestAddressBuilder([
-            RestAddressTransfer::ID_COMPANY_BUSINESS_UNIT_ADDRESS => 'some-random-uuid',
-        ]))->build();
         $restShipmentsTransfer = (new RestShipmentsBuilder([
-            RestShipmentsTransfer::SHIPPING_ADDRESS => $restAddressTransfer,
+            RestShipmentsTransfer::SHIPPING_ADDRESS => [
+                RestAddressTransfer::ID_COMPANY_BUSINESS_UNIT_ADDRESS => CompanyBusinessUnitAddressesRestApiBusinessTester::FAKE_COMPANY_BUSINESS_UNIT_ADDRESS_UUID1,
+            ],
         ]))->build();
-        $checkoutDataTransfer = (new CheckoutDataBuilder())
-            ->withQuote($quoteTransfer->toArray())
-            ->withShipment($restShipmentsTransfer->toArray())
-            ->build();
+        $checkoutDataTransfer = (new CheckoutDataBuilder([
+            CheckoutDataTransfer::QUOTE => $quoteTransfer->toArray(),
+            CheckoutDataTransfer::SHIPMENTS => [$restShipmentsTransfer->toArray()],
+        ]))->build();
 
         // Act
         $checkoutResponseTransfer = $this->tester->getFacade()->validateCompanyBusinessUnitAddressesInCheckoutData($checkoutDataTransfer);
@@ -204,16 +200,15 @@ class CompanyBusinessUnitAddressesRestApiFacadeTest extends Unit
                 CompanyUserTransfer::FK_COMPANY => 1,
             ])->build();
         $quoteTransfer = (new QuoteBuilder([QuoteTransfer::CUSTOMER => $customerTransfer]))->build();
-        $restAddressTransfer = (new RestAddressBuilder([
-            RestAddressTransfer::ID_COMPANY_BUSINESS_UNIT_ADDRESS => 'some-random-uuid',
-        ]))->build();
         $restShipmentsTransfer = (new RestShipmentsBuilder([
-            RestShipmentsTransfer::SHIPPING_ADDRESS => $restAddressTransfer,
+            RestShipmentsTransfer::SHIPPING_ADDRESS => [
+                RestAddressTransfer::ID_COMPANY_BUSINESS_UNIT_ADDRESS => 'random-uuid',
+            ],
         ]))->build();
-        $checkoutDataTransfer = (new CheckoutDataBuilder())
-            ->withQuote($quoteTransfer->toArray())
-            ->withShipment($restShipmentsTransfer->toArray())
-            ->build();
+        $checkoutDataTransfer = (new CheckoutDataBuilder([
+            CheckoutDataTransfer::QUOTE => $quoteTransfer->toArray(),
+            CheckoutDataTransfer::SHIPMENTS => [$restShipmentsTransfer->toArray()],
+        ]))->build();
 
         $companyBusinessUnitAddressesRestApiFacade = $this->tester->getFacade();
         $companyBusinessUnitAddressesRestApiFacade->setFactory(

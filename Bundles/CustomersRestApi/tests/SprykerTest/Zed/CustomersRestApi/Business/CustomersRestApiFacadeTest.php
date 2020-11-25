@@ -12,7 +12,6 @@ use Generated\Shared\DataBuilder\AddressBuilder;
 use Generated\Shared\DataBuilder\CheckoutDataBuilder;
 use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
-use Generated\Shared\DataBuilder\RestAddressBuilder;
 use Generated\Shared\DataBuilder\RestShipmentsBuilder;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
@@ -453,15 +452,14 @@ class CustomersRestApiFacadeTest extends Unit
         $customerTransfer = (new CustomerBuilder([CustomerTransfer::ID_CUSTOMER => 777]))
             ->withShippingAddress([AddressTransfer::UUID => $shippingAddressUuid])
             ->build();
-        $quoteTransfer = (new QuoteBuilder([QuoteTransfer::CUSTOMER => $customerTransfer]))->build();
-        $restAddressTransfer = (new RestAddressBuilder([RestAddressTransfer::ID => $shippingAddressUuid]))->build();
+        $quoteTransfer = (new QuoteBuilder([QuoteTransfer::CUSTOMER => $customerTransfer->toArray()]))->build();
         $restShipmentsTransfer = (new RestShipmentsBuilder([
-            RestShipmentsTransfer::SHIPPING_ADDRESS => $restAddressTransfer,
+            RestShipmentsTransfer::SHIPPING_ADDRESS => [RestAddressTransfer::ID => $shippingAddressUuid],
         ]))->build();
-        $checkoutDataTransfer = (new CheckoutDataBuilder())
-            ->withQuote($quoteTransfer->toArray())
-            ->withShipment($restShipmentsTransfer->toArray())
-            ->build();
+        $checkoutDataTransfer = (new CheckoutDataBuilder([
+            CheckoutDataTransfer::QUOTE => $quoteTransfer->toArray(),
+            CheckoutDataTransfer::SHIPMENTS => [$restShipmentsTransfer->toArray()],
+        ]))->build();
 
         $customersRestApiFacade = $this->tester->getFacade();
         $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactory());
@@ -479,14 +477,13 @@ class CustomersRestApiFacadeTest extends Unit
     public function testValidateCustomerAddressesInCheckoutDataWillReturnErrorIfNoCustomerIsProvided(): void
     {
         $quoteTransfer = (new QuoteBuilder([QuoteTransfer::CUSTOMER => null]))->build();
-        $restAddressTransfer = (new RestAddressBuilder([RestAddressTransfer::ID => 'some-random-uuid']))->build();
         $restShipmentsTransfer = (new RestShipmentsBuilder([
-            RestShipmentsTransfer::SHIPPING_ADDRESS => $restAddressTransfer,
+            RestShipmentsTransfer::SHIPPING_ADDRESS => [RestAddressTransfer::ID => $this->tester::ADDRESS_1['uuid']],
         ]))->build();
-        $checkoutDataTransfer = (new CheckoutDataBuilder())
-            ->withQuote($quoteTransfer->toArray())
-            ->withShipment($restShipmentsTransfer->toArray())
-            ->build();
+        $checkoutDataTransfer = (new CheckoutDataBuilder([
+            CheckoutDataTransfer::QUOTE => $quoteTransfer->toArray(),
+            CheckoutDataTransfer::SHIPMENTS => [$restShipmentsTransfer->toArray()],
+        ]))->build();
 
         // Act
         $checkoutResponseTransfer = $this->tester->getFacade()->validateCustomerAddressesInCheckoutData($checkoutDataTransfer);
@@ -509,14 +506,13 @@ class CustomersRestApiFacadeTest extends Unit
             ->withShippingAddress([AddressTransfer::UUID => $this->tester::ADDRESS_1['uuid']])
             ->build();
         $quoteTransfer = (new QuoteBuilder([QuoteTransfer::CUSTOMER => $customerTransfer]))->build();
-        $restAddressTransfer = (new RestAddressBuilder([RestAddressTransfer::ID => 'some-random-uuid']))->build();
         $restShipmentsTransfer = (new RestShipmentsBuilder([
-            RestShipmentsTransfer::SHIPPING_ADDRESS => $restAddressTransfer,
+            RestShipmentsTransfer::SHIPPING_ADDRESS => [RestAddressTransfer::ID => 'some-random-uuid'],
         ]))->build();
-        $checkoutDataTransfer = (new CheckoutDataBuilder())
-            ->withQuote($quoteTransfer->toArray())
-            ->withShipment($restShipmentsTransfer->toArray())
-            ->build();
+        $checkoutDataTransfer = (new CheckoutDataBuilder([
+            CheckoutDataTransfer::QUOTE => $quoteTransfer->toArray(),
+            CheckoutDataTransfer::SHIPMENTS => [$restShipmentsTransfer->toArray()],
+        ]))->build();
 
         $customersRestApiFacade = $this->tester->getFacade();
         $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactory());
