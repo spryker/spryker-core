@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Action\ActionInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -22,8 +23,8 @@ class SavePricesAction implements ActionInterface
 {
     protected const PARAM_ID_PRODUCT_OFFER = 'product-offer-id';
     protected const PARAM_TYPE_PRICE_PRODUCT_OFFER_IDS = 'type-price-product-offer-ids';
-    protected const PARAM_NET = 'net';
-    protected const PARAM_GROSS = 'gross';
+    protected const PARAM_NET = 'netAmount';
+    protected const PARAM_GROSS = 'grossAmount';
     protected const PARAM_STORE = 'store';
     protected const PARAM_CURRENCY = 'currency';
 
@@ -44,15 +45,23 @@ class SavePricesAction implements ActionInterface
     protected $priceProductFacade;
 
     /**
+     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface $priceProductOfferFacade
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService
      */
     public function __construct(
         ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface $priceProductOfferFacade,
-        ProductOfferMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade
+        ProductOfferMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade,
+        ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService
     ) {
         $this->priceProductOfferFacade = $priceProductOfferFacade;
         $this->priceProductFacade = $priceProductFacade;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -62,10 +71,19 @@ class SavePricesAction implements ActionInterface
      */
     public function execute(Request $request): JsonResponse
     {
-        $typePriceProductOdderIds = $request->get(static::PARAM_TYPE_PRICE_PRODUCT_OFFER_IDS);
-        $data = json_decode($request->getContent(), true)['data'];
+        $requestedTypePriceProductOfferIds = $request->get(static::PARAM_TYPE_PRICE_PRODUCT_OFFER_IDS);
+        $requestedTypePriceProductOfferIds = str_replace(['[', ']'], '', $requestedTypePriceProductOfferIds);
+        $requestedTypePriceProductOfferIds = explode(',', $requestedTypePriceProductOfferIds);
+        $typePriceProductOfferIds = [];
 
-        $priceProductTransfers = $this->getPriceProductTransfers($typePriceProductOdderIds, $data);
+        foreach ($requestedTypePriceProductOfferIds as $key => $requestedTypePriceProductOfferId) {
+            $typePriceProductOdderId = explode(':', $requestedTypePriceProductOfferId);
+            $typePriceProductOfferIds[$typePriceProductOdderId[0]] = (int)$typePriceProductOdderId[1];
+        }
+
+        $data = $this->utilEncodingService->decodeJson((string)$request->getContent(), true)['data'];
+
+        $priceProductTransfers = $this->getPriceProductTransfers($typePriceProductOfferIds, $data);
         $priceProductTransfers = $this->mapDataToProductOfferTransfers($data, $priceProductTransfers);
         $collectionValidationResponseTransfer = $this->priceProductOfferFacade->validateProductOfferPrices($priceProductTransfers);
         if (!$collectionValidationResponseTransfer->getIsSuccessful()) {
@@ -80,16 +98,18 @@ class SavePricesAction implements ActionInterface
     }
 
     /**
+     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
+     *
      * @param int[] $typePriceProductOfferIds
      * @param string[] $data
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
      */
     protected function getPriceProductTransfers(array $typePriceProductOfferIds, array $data): ArrayObject
     {
         $priceProductOfferIds = [];
-        if (strpos(key($data), '_') !== false) {
-            $priceProductOfferIds[] = $typePriceProductOfferIds[mb_strtoupper(explode('_', key($data))[0])];
+        if (stristr((string)key($data), '[', true) !== false) {
+            $priceProductOfferIds[] = $typePriceProductOfferIds[mb_strtoupper(stristr((string)key($data), '[', true))];
         } else {
             $priceProductOfferIds = $typePriceProductOfferIds;
         }
@@ -101,26 +121,30 @@ class SavePricesAction implements ActionInterface
     }
 
     /**
-     * @param array $data
-     * @param \ArrayObject $productOfferTransfers
+     * @phpstan-param array<mixed> $data
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \ArrayObject
+     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
+     *
+     * @param array $data
+     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function mapDataToProductOfferTransfers(array $data, ArrayObject $productOfferTransfers): ArrayObject
+    protected function mapDataToProductOfferTransfers(array $data, ArrayObject $priceProductTransfers): ArrayObject
     {
-        $key = key($data);
+        $key = (string)key($data);
         $value = $data[$key] === '' ? null : (int)$data[$key];
-        $keyUnderscorePosition = strpos(key($data), '_');
-        if ($keyUnderscorePosition !== false) {
-            $key = substr($key, strpos($key, '_') + 1);
+        $key = str_replace(']', '', $key);
+        $key = explode('[', $key);
+        $key = $key[count($key) - 1];
+
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer */
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            $this->mapDataToProductOfferTransfer($key, $value, $priceProductTransfer->getMoneyValueOrFail());
         }
 
-        /** @var \Generated\Shared\Transfer\PriceProductTransfer $productOfferTransfer */
-        foreach ($productOfferTransfers as $productOfferTransfer) {
-            $this->mapDataToProductOfferTransfer($key, $value, $productOfferTransfer->getMoneyValueOrFail());
-        }
-
-        return $productOfferTransfers;
+        return $priceProductTransfers;
     }
 
     /**

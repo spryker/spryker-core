@@ -94,6 +94,7 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
         $container = $this->addGuiTableFactory($container);
         $container = $this->addPriceProductOfferFacade($container);
         $container = $this->addValidationAdapter($container);
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }

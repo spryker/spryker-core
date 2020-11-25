@@ -39,13 +39,15 @@ class ProductOfferMerchantPortalGuiToPriceProductOfferFacadeBridge implements Pr
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOfferTransfer[] $productOfferTransfers
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer
      */
-    public function validateProductOfferPrices(ArrayObject $productOfferTransfers): PriceProductOfferCollectionValidationResponseTransfer
+    public function validateProductOfferPrices(ArrayObject $priceProductTransfers): PriceProductOfferCollectionValidationResponseTransfer
     {
-        return $this->priceProductOfferFacade->validateProductOfferPrices($productOfferTransfers);
+        return $this->priceProductOfferFacade->validateProductOfferPrices($priceProductTransfers);
     }
 
     /**
@@ -69,6 +71,8 @@ class ProductOfferMerchantPortalGuiToPriceProductOfferFacadeBridge implements Pr
     }
 
     /**
+     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
+     *
      * @param \Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]

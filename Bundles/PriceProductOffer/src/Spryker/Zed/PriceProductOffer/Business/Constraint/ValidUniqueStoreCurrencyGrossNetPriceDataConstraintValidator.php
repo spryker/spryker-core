@@ -35,6 +35,11 @@ class ValidUniqueStoreCurrencyGrossNetPriceDataConstraintValidator extends Abstr
         if (!$constraint instanceof ValidUniqueStoreCurrencyGrossNetPriceDataConstraint) {
             throw new UnexpectedTypeException($constraint, ValidUniqueStoreCurrencyGrossNetPriceDataConstraint::class);
         }
+
+        if (!$value->getPriceDimension()->getIdProductOffer()) {
+            return;
+        }
+
         $moneyValueTransfer = $value->getMoneyValueOrFail();
 
         $storeCriteriaTransfer = new PriceProductStoreCriteriaTransfer();

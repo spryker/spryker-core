@@ -35,22 +35,18 @@ class ProductOfferCreateFormDataProvider extends AbstractProductOfferFormDataPro
      */
     public function getData(ProductConcreteTransfer $productConcreteTransfer): ProductOfferTransfer
     {
-//        $productOfferTransfer = $this->addPrices((new ProductOfferTransfer()));
-        $productOfferTransfer = $this->addDefaultValues($productOfferTransfer, $productConcreteTransfer);
-
-        return $productOfferTransfer;
+        return $this->addDefaultValues($productConcreteTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */
     protected function addDefaultValues(
-        ProductOfferTransfer $productOfferTransfer,
         ProductConcreteTransfer $productConcreteTransfer
     ): ProductOfferTransfer {
+        $productOfferTransfer = new ProductOfferTransfer();
         $productOfferTransfer->setConcreteSku($productConcreteTransfer->getSku());
         $productOfferTransfer->setIdProductConcrete($productConcreteTransfer->getIdProductConcrete());
         $productOfferTransfer->setFkMerchant($this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant());

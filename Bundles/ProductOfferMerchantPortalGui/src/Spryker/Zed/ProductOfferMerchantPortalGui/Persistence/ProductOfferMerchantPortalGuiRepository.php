@@ -66,14 +66,17 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
     protected const COL_KEY_PRODUCT_SKU = 'sku';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferPriceGuiTableConfigurationProvider::COL_STORE
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\AbstractPriceProductOfferGuiTableConfigurationProvider::COL_STORE
      */
     protected const COL_STORE = 'store';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferPriceGuiTableConfigurationProvider::COL_CURRENCY
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\AbstractPriceProductOfferGuiTableConfigurationProvider::COL_CURRENCY
      */
     protected const COL_CURRENCY = 'currency';
+
+    protected const SUFFIX_PRICE_TYPE_NET = '_net';
+    protected const SUFFIX_PRICE_TYPE_GROSS = '_gross';
 
     protected const COL_PRICE_PRODUCT_OFFER_IDS = 'price_product_offer_ids';
     protected const COL_TYPE_PRICE_PRODUCT_OFFER_IDS = 'type_price_product_offer_ids';
@@ -945,11 +948,13 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
                 continue;
             }
 
+            $priceTypeName = mb_strtolower($priceTypeTransfer->getName());
+
             $priceProductStoreQuery->addAsColumn(
-                mb_strtolower($priceTypeTransfer->getName()) . '_gross',
+                $priceTypeName . static::SUFFIX_PRICE_TYPE_GROSS,
                 'MAX(CASE WHEN ' . SpyPriceProductTableMap::COL_FK_PRICE_TYPE . ' = ' . $priceTypeTransfer->getIdPriceType() . ' THEN ' . SpyPriceProductStoreTableMap::COL_GROSS_PRICE . ' END)'
             )->addAsColumn(
-                mb_strtolower($priceTypeTransfer->getName()) . '_net',
+                $priceTypeName . static::SUFFIX_PRICE_TYPE_NET,
                 'MAX(CASE WHEN ' . SpyPriceProductTableMap::COL_FK_PRICE_TYPE . ' = ' . $priceTypeTransfer->getIdPriceType() . ' THEN ' . SpyPriceProductStoreTableMap::COL_NET_PRICE . ' END)'
             );
         }

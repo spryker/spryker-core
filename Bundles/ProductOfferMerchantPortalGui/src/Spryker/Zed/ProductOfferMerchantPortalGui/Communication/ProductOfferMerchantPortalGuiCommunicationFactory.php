@@ -18,10 +18,12 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Action\UpdateProduct
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilder;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\GuiTableConfigurationProviderInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\PriceProductOfferCreateGuiTableConfigurationProvider;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\PriceProductOfferCreateGuiTableConfigurationProviderInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\PriceProductOfferUpdateGuiTableConfigurationProvider;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\PriceProductOfferUpdateGuiTableConfigurationProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductGuiTableConfigurationProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferPriceGuiTableConfigurationProvider;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferPriceGuiTableConfigurationProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\OffersDashboardCardProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\OffersDashboardCardProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\ProductGuiTableDataProvider;
@@ -35,6 +37,7 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\DataProvider\Pr
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\DataProvider\ProductOfferUpdateFormDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\DataProvider\ProductOfferUpdateFormDataProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\ProductOfferForm;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\PriceProductOfferTransformer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\ProductOfferStockTransformer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\QuantityTransformer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\StoresTransformer;
@@ -87,11 +90,24 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferPriceGuiTableConfigurationProviderInterface
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\PriceProductOfferUpdateGuiTableConfigurationProviderInterface
      */
-    public function createProductOfferPriceGuiTableConfigurationProvider(): ProductOfferPriceGuiTableConfigurationProviderInterface
+    public function createPriceProductOfferUpdateGuiTableConfigurationProvider(): PriceProductOfferUpdateGuiTableConfigurationProviderInterface
     {
-        return new ProductOfferPriceGuiTableConfigurationProvider(
+        return new PriceProductOfferUpdateGuiTableConfigurationProvider(
+            $this->getGuiTableFactory(),
+            $this->getPriceProductFacade(),
+            $this->getStoreFacade(),
+            $this->getCurrencyFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\PriceProductOfferCreateGuiTableConfigurationProviderInterface
+     */
+    public function createPriceProductOfferCreateGuiTableConfigurationProvider(): PriceProductOfferCreateGuiTableConfigurationProviderInterface
+    {
+        return new PriceProductOfferCreateGuiTableConfigurationProvider(
             $this->getGuiTableFactory(),
             $this->getPriceProductFacade(),
             $this->getStoreFacade(),
@@ -128,15 +144,15 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     }
 
     /**
-     * @param int $idProductOffer
+     * @param int|null $idProductOffer
      *
      * @return \Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface
      */
-    public function createProductOfferPriceTableDataProvider(int $idProductOffer): GuiTableDataProviderInterface
+    public function createProductOfferPriceTableDataProvider(?int $idProductOffer = null): GuiTableDataProviderInterface
     {
         return new ProductOfferPriceGuiTableDataProvider(
-            $idProductOffer,
-            $this->getRepository()
+            $this->getRepository(),
+            $idProductOffer
         );
     }
 
@@ -149,6 +165,10 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     }
 
     /**
+     * @phpstan-param array<mixed> $options
+     *
+     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
+     *
      * @param \Generated\Shared\Transfer\ProductOfferTransfer|null $data
      * @param array $options
      *
@@ -206,6 +226,21 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     public function createProductOfferStockTransformer(): DataTransformerInterface
     {
         return new ProductOfferStockTransformer();
+    }
+
+    /**
+     * @param int|null $idProductOffer
+     *
+     * @return \Symfony\Component\Form\DataTransformerInterface
+     */
+    public function createPriceProductOfferTransformer(?int $idProductOffer = null): DataTransformerInterface
+    {
+        return new PriceProductOfferTransformer(
+            $this->getUtilEncodingService(),
+            $this->getPriceProductFacade(),
+            $this->getCurrencyFacade(),
+            $idProductOffer
+        );
     }
 
     /**
@@ -379,7 +414,8 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     {
         return new SavePricesAction(
             $this->getPriceProductOfferFacade(),
-            $this->getPriceProductFacade()
+            $this->getPriceProductFacade(),
+            $this->getUtilEncodingService()
         );
     }
 

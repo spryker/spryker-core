@@ -126,11 +126,15 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     protected $isTableEditable;
 
     /**
+     * @phpstan-var array<mixed>
+     *
      * @var array
      */
     protected $editableCreateAction = [];
 
     /**
+     * @phpstan-var array<mixed>
+     *
      * @var array
      */
     protected $editableUpdateAction = [];
@@ -300,10 +304,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      *
      * @return $this
      */
-    public function addEditableColumnInput(
-        string $id,
-        string $title
-    ) {
+    public function addEditableColumnInput(string $id, string $title)
+    {
         $guiTableColumnConfigurationTransfer = (new GuiTableColumnConfigurationTransfer())
             ->setId($id)
             ->setTitle($title)
@@ -315,6 +317,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @phpstan-param array<mixed> $options
+     *
      * @param string $id
      * @param string $title
      * @param bool $isMultiselect
@@ -833,21 +837,27 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @phpstan-param array<mixed> $initialData
+     *
      * @param array $initialData
      *
      * @return $this
      */
     public function setEditableCreateActionInitialData(array $initialData)
     {
-        $this->editableCreateAction[static::KEY_EDITABLE_INITIAL_DATA] = (new GuiTableEditableInitialDataTransfer())
-            ->setData($initialData['data']);
+        $this->editableCreateAction[static::KEY_EDITABLE_INITIAL_DATA] = new GuiTableEditableInitialDataTransfer();
 
-        $errors = [];
-        foreach ($initialData['errors'] as $error) {
-            $errors[] = (new GuiTableEditableDataErrorTransfer())->fromArray($error, true);
+        if (isset($initialData['data'])) {
+            $this->editableCreateAction[static::KEY_EDITABLE_INITIAL_DATA]->setData($initialData['data']);
         }
 
-        $this->editableCreateAction[static::KEY_EDITABLE_INITIAL_DATA]->setErrors(new ArrayObject($errors));
+        if (isset($initialData['errors'])) {
+            $errors = [];
+            foreach ($initialData['errors'] as $error) {
+                $errors[] = (new GuiTableEditableDataErrorTransfer())->fromArray($error, true);
+            }
+            $this->editableCreateAction[static::KEY_EDITABLE_INITIAL_DATA]->setErrors(new ArrayObject($errors));
+        }
 
         return $this;
     }

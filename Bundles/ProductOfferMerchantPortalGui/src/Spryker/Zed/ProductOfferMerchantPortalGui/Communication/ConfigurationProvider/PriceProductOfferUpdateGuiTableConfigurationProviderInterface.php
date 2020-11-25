@@ -9,12 +9,15 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationP
 
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 
-interface ProductOfferPriceGuiTableConfigurationProviderInterface
+interface PriceProductOfferUpdateGuiTableConfigurationProviderInterface
 {
     /**
+     * @phpstan-param array<mixed>|null $initialData
+     *
      * @param int $idProductOffer
+     * @param array|null $initialData
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
-    public function getConfiguration(int $idProductOffer): GuiTableConfigurationTransfer;
+    public function getConfiguration(int $idProductOffer, ?array $initialData = []): GuiTableConfigurationTransfer;
 }
