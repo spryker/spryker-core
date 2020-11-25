@@ -103,6 +103,6 @@ class ZedRequestConfig extends AbstractBundleConfig
      */
     public function isDevelopmentMode(): bool
     {
-        return APPLICATION_ENV === 'development' || APPLICATION_ENV === 'dev.docker';
+        return APPLICATION_ENV === 'development' || APPLICATION_ENV === 'docker.dev';
     }
 }

@@ -2,4 +2,8 @@ parameters:
     checkMissingIterableValueType: false
     ignoreErrors:
         - '#PHPDoc tag @param for parameter \$keysOrArgs with type array is not subtype of native type array<int, mixed>#'
+        - '#Result of \|\| is always false.#'
         - "#Strict comparison using === between '' and 'development' will always evaluate to false.#"
+        - "#Strict comparison using === between '' and 'docker.dev' will always evaluate to false.#"
+        - '#Call to an undefined method Generated\\Client\\Ide\\AutoCompletion\|Spryker\\Shared\\Kernel\\LocatorLocatorInterface::[a-zA-Z]*\(\)#'
+        - '#Call to an undefined method Generated\\Yves\\Ide\\AutoCompletion\|Spryker\\Shared\\Kernel\\LocatorLocatorInterface::[a-zA-Z]*\(\)#'
