@@ -352,6 +352,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
             $securityConfiguration = $this->getSecurityConfiguration($container);
 
             return [
+                new BlockIpVoter($container->get(static::SERVICE_REQUEST_STACK)->getCurrentRequest()),
                 new RoleHierarchyVoter(new RoleHierarchy($securityConfiguration->getRoleHierarchies())),
                 new AuthenticatedVoter($container->get(static::SERVICE_SECURITY_TRUST_RESOLVER)),
             ];

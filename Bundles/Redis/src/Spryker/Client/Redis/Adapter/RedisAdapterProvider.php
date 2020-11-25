@@ -8,8 +8,10 @@
 namespace Spryker\Client\Redis\Adapter;
 
 use Generated\Shared\Transfer\RedisConfigurationTransfer;
+use Generated\Shared\Transfer\RedisCredentialsTransfer;
 use Spryker\Client\Redis\Adapter\Factory\RedisAdapterFactoryInterface;
 use Spryker\Client\Redis\Exception\RedisAdapterNotInitializedException;
+use Spryker\Shared\StorageRedis\StorageRedisConstants;
 
 class RedisAdapterProvider implements RedisAdapterProviderInterface
 {
@@ -55,6 +57,25 @@ class RedisAdapterProvider implements RedisAdapterProviderInterface
      */
     public function getAdapter(string $connectionKey): RedisAdapterInterface
     {
+        global $config;
+
+        if (!isset(static::$clientPool['user_blocking'])) {
+            static::$clientPool['user_blocking'] = $this->createClient(
+                (new  RedisConfigurationTransfer())
+                    ->setClientOptions([])
+                    ->setConnectionCredentials(
+                        (new RedisCredentialsTransfer())
+                            ->setProtocol($config[StorageRedisConstants::STORAGE_REDIS_PROTOCOL])
+                            ->setHost($config[StorageRedisConstants::STORAGE_REDIS_HOST])
+                            ->setPort($config[StorageRedisConstants::STORAGE_REDIS_PORT])
+                            ->setDatabase(5)
+                            ->setPassword($config[StorageRedisConstants::STORAGE_REDIS_PASSWORD])
+                            ->setIsPersistent($config[StorageRedisConstants::STORAGE_REDIS_PERSISTENT_CONNECTION])
+                    )
+                    ->setDataSourceNames([])
+            );
+        }
+
         if (!isset(static::$clientPool[$connectionKey])) {
             throw new RedisAdapterNotInitializedException(
                 sprintf('Redis client adapter for key %s is not initialized. Call `Spryker\Client\Redis\RedisClient::setupConnection()` first.', $connectionKey)
