@@ -10,6 +10,7 @@ namespace Spryker\Client\AuthRestApi;
 use Spryker\Client\AuthRestApi\Dependency\Client\AuthRestApiToZedRequestClientInterface;
 use Spryker\Client\AuthRestApi\Zed\AuthRestApiZedStub;
 use Spryker\Client\AuthRestApi\Zed\AuthRestApiZedStubInterface;
+use Spryker\Client\AuthRestApiExtension\Dependency\Plugin\CreateAccessTokenPreCheckPluginInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class AuthRestApiFactory extends AbstractFactory
@@ -28,5 +29,15 @@ class AuthRestApiFactory extends AbstractFactory
     public function getZedRequestClient(): AuthRestApiToZedRequestClientInterface
     {
         return $this->getProvidedDependency(AuthRestApiDependencyProvider::CLIENT_ZED_REQUEST);
+    }
+
+    /**
+     * @return CreateAccessTokenPreCheckPluginInterface[]
+     */
+    public function getCreateAccessTokenPreCheckPlugins(): array
+    {
+        return [
+
+        ];
     }
 }
