@@ -25,7 +25,7 @@
         "@spryker/date-picker": "^0.2.0-next.2",
         "@spryker/drawer": "^0.2.0-next.5",
         "@spryker/dropdown": "^0.2.0-next.1",
-        "@spryker/grid": "^0.1.0-next.0",
+        "@spryker/grid": "^0.1.0-next.1",
         "@spryker/header": "^0.2.0-next.1",
         "@spryker/html-renderer": "^0.1.0-next.4",
         "@spryker/icon": "^0.2.0-next.2",
