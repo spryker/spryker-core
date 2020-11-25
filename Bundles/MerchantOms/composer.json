@@ -4,21 +4,23 @@
   "description": "MerchantOms module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/kernel": "^3.30.0",
     "spryker/merchant": "^3.0.0",
     "spryker/merchant-sales-order": "^0.7.0",
     "spryker/merchant-sales-order-extension": "^0.1.1",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/state-machine": "^2.11.0",
+    "spryker/state-machine": "^2.13.0",
     "spryker/symfony": "^3.0.0",
     "spryker/util-data-reader": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/customer": "*",
     "spryker/oms": "*",
     "spryker/propel": "*",
     "spryker/sales": "*",
+    "spryker/store": "*",
     "spryker/testify": "*"
   },
   "autoload": {

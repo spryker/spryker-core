@@ -4,7 +4,7 @@
   "description": "Sales module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/calculation": "^4.0.0",
     "spryker/country": "^3.0.0",
     "spryker/customer": "^6.0.0 || ^7.0.0",
@@ -39,7 +39,8 @@
     "spryker/zed-navigation": "*"
   },
   "suggest": {
-    "spryker/checkout": "If you want to use Checkout plugins. ^4.0.0"
+    "spryker/checkout": "If you want to use Checkout plugins. ^4.0.0",
+    "spryker/sales-product-configuratio-gui": "Add the module if you want to display order item configuration."
   },
   "autoload": {
     "psr-4": {

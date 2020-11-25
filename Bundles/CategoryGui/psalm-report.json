@@ -1,31 +1,6 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 115,
-            "line_to": 131,
-            "type": "UndefinedDocblockClass",
-            "message": "Docblock-defined class or interface Orm\\Zed\\ProductMerchantConnector\\Persistence\\SpyProductAbstractMerchantQuery does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryGui/src/Spryker/Zed/CategoryGui/Communication/Table/CategoryTable.php",
-            "snippet": "        $query = SpyCategoryQuery::create('sc')\n            ->useAttributeQuery('attr', Criteria::LEFT_JOIN)\n                ->filterByFkLocale($fkLocale)\n            ->endUse()\n            ->leftJoinCategoryTemplate('tpl')\n            ->leftJoinNode('node')\n            ->useNodeQuery('node', Criteria::LEFT_JOIN)\n                ->groupByFkCategory()\n                ->groupByIsMain()\n                ->useParentCategoryNodeQuery('parent_node')\n                    ->useCategoryQuery('sc_parent', Criteria::LEFT_JOIN)\n                        ->useAttributeQuery('parent_attr', Criteria::LEFT_JOIN)\n                            ->filterByFkLocale($fkLocale)\n                        ->endUse()\n                    ->endUse()\n                ->endUse()\n            ->endUse()",
-            "selected_text": "SpyCategoryQuery::create('sc')\n            ->useAttributeQuery('attr', Criteria::LEFT_JOIN)\n                ->filterByFkLocale($fkLocale)\n            ->endUse()\n            ->leftJoinCategoryTemplate('tpl')\n            ->leftJoinNode('node')\n            ->useNodeQuery('node', Criteria::LEFT_JOIN)\n                ->groupByFkCategory()\n                ->groupByIsMain()\n                ->useParentCategoryNodeQuery('parent_node')\n                    ->useCategoryQuery('sc_parent', Criteria::LEFT_JOIN)\n                        ->useAttributeQuery('parent_attr', Criteria::LEFT_JOIN)\n                            ->filterByFkLocale($fkLocale)\n                        ->endUse()\n                    ->endUse()\n                ->endUse()\n            ->endUse()",
-            "error_level": -1,
-            "shortcode": 200
-        }
-    ],
+    "error": [],
     "warning": [
-        {
-            "severity": "info",
-            "line_from": 39,
-            "line_to": 39,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryGui/src/Spryker/Zed/CategoryGui/CategoryGuiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->locale()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
         {
             "severity": "info",
             "line_from": 96,
@@ -37,30 +12,6 @@
             "selected_text": "$fkLocale",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 119,
-            "line_to": 119,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Orm\\Zed\\Locale\\Persistence\\SpyLocaleQuery::leftjoincategorytemplate does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryGui/src/Spryker/Zed/CategoryGui/Communication/Table/CategoryTable.php",
-            "snippet": "            ->leftJoinCategoryTemplate('tpl')",
-            "selected_text": "leftJoinCategoryTemplate",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 134,
-            "line_to": 134,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::having does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryGui/src/Spryker/Zed/CategoryGui/Communication/Table/CategoryTable.php",
-            "snippet": "        $query = $query->having('node.is_main = ?', true)",
-            "selected_text": "having",
-            "error_level": 3,
-            "shortcode": 108
         },
         {
             "severity": "info",

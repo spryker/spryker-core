@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Development\Business\ArchitectureSniffer;
 
 use InvalidArgumentException;
+use Laminas\Filter\FilterInterface;
 use Symfony\Component\Finder\Finder;
-use Zend\Filter\FilterInterface;
 
 /**
  * @deprecated Use {@link AllModuleFinder} instead.
@@ -22,7 +22,7 @@ class AllBundleFinder implements AllBundleFinderInterface
     protected $finder;
 
     /**
-     * @var \Zend\Filter\FilterInterface
+     * @var \Laminas\Filter\FilterInterface
      */
     protected $filter;
 
@@ -38,7 +38,7 @@ class AllBundleFinder implements AllBundleFinderInterface
 
     /**
      * @param \Symfony\Component\Finder\Finder $finder
-     * @param \Zend\Filter\FilterInterface $filter
+     * @param \Laminas\Filter\FilterInterface $filter
      * @param array $projectNamespaces
      * @param array $coreNamespaces
      */

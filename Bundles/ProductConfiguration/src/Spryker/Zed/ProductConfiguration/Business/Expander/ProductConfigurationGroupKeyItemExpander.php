@@ -9,32 +9,21 @@ namespace Spryker\Zed\ProductConfiguration\Business\Expander;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
-use Spryker\Zed\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingServiceInterface;
-use Spryker\Zed\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilTextServiceInterface;
+use Spryker\Service\ProductConfiguration\ProductConfigurationServiceInterface;
 
 class ProductConfigurationGroupKeyItemExpander implements ProductConfigurationGroupKeyItemExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingServiceInterface
+     * @var \Spryker\Service\ProductConfiguration\ProductConfigurationServiceInterface
      */
-    protected $utilEncodingService;
+    protected $productConfigurationService;
 
     /**
-     * @var \Spryker\Zed\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilTextServiceInterface
+     * @param \Spryker\Service\ProductConfiguration\ProductConfigurationServiceInterface $productConfigurationService
      */
-    protected $utilTextService;
-
-    /**
-     * @param \Spryker\Zed\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingServiceInterface $utilEncodingService
-     * @param \Spryker\Zed\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilTextServiceInterface $utilTextService
-     */
-    public function __construct(
-        ProductConfigurationToUtilEncodingServiceInterface $utilEncodingService,
-        ProductConfigurationToUtilTextServiceInterface $utilTextService
-    ) {
-        $this->utilEncodingService = $utilEncodingService;
-        $this->utilTextService = $utilTextService;
+    public function __construct(ProductConfigurationServiceInterface $productConfigurationService)
+    {
+        $this->productConfigurationService = $productConfigurationService;
     }
 
     /**
@@ -77,7 +66,7 @@ class ProductConfigurationGroupKeyItemExpander implements ProductConfigurationGr
         $itemTransfer
             ->requireGroupKey();
 
-        $productConfigurationInstanceHashKey = $this->getProductConfigurationHashKey(
+        $productConfigurationInstanceHashKey = $this->productConfigurationService->getProductConfigurationInstanceHash(
             $itemTransfer->getProductConfigurationInstance()
         );
 
@@ -86,20 +75,5 @@ class ProductConfigurationGroupKeyItemExpander implements ProductConfigurationGr
             $itemTransfer->getGroupKey(),
             $productConfigurationInstanceHashKey
         );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
-     *
-     * @return string
-     */
-    protected function getProductConfigurationHashKey(
-        ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
-    ): string {
-        $encodedProductConfigurationInstanceData = $this->utilEncodingService->encodeJson(
-            $productConfigurationInstanceTransfer->toArray()
-        );
-
-        return $this->utilTextService->hashValue($encodedProductConfigurationInstanceData, 'md5');
     }
 }

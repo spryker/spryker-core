@@ -4,7 +4,7 @@
   "description": "SessionFile module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/kernel": "^3.33.0",
     "spryker/monitoring": "^1.0.0 || ^2.0.0",
     "spryker/session-extension": "^1.0.0"

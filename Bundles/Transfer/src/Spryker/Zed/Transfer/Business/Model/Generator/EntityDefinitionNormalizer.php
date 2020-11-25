@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
+use Laminas\Filter\Word\UnderscoreToCamelCase;
 use Spryker\Zed\Transfer\Business\Model\Generator\Helper\PluralizerInterface;
-use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class EntityDefinitionNormalizer extends DefinitionNormalizer
 {

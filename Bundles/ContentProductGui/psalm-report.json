@@ -1,5 +1,18 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 27,
+            "line_to": 27,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\ContentProductGui\\Communication\\Form\\Constraints\\ContentProductAbstractListConstraintValidator::validate has wrong name $abstractProductIds, expecting $value as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentProductGui/src/Spryker/Zed/ContentProductGui/Communication/Form/Constraints/ContentProductAbstractListConstraintValidator.php",
+            "snippet": "    public function validate($abstractProductIds, Constraint $constraint): void",
+            "selected_text": "$abstractProductIds",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -11,8 +24,7 @@
             "snippet": "            $this->getFactory()->createProductAbstractSelectedTable($idProductAbstracts)->fetchData()",
             "selected_text": "$idProductAbstracts",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -24,8 +36,7 @@
             "snippet": "                ->buildViolation($messageTransfer->getValue())",
             "selected_text": "$messageTransfer->getValue()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -37,8 +48,7 @@
             "snippet": "                $localizedContentTransfer = $form->getParent()->getData();",
             "selected_text": "getData",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -50,8 +60,7 @@
             "snippet": "            $view->parent->vars['name']",
             "selected_text": "$view->parent->vars",
             "error_level": 3,
-            "shortcode": 82,
-            "taint_trace": null
+            "shortcode": 82
         },
         {
             "severity": "info",
@@ -63,8 +72,7 @@
             "snippet": "            $view->parent->vars['name']",
             "selected_text": "$view->parent->vars['name']",
             "error_level": 3,
-            "shortcode": 79,
-            "taint_trace": null
+            "shortcode": 79
         },
         {
             "severity": "info",
@@ -76,8 +84,7 @@
             "snippet": "            $view->parent->vars['name']",
             "selected_text": "$view->parent->vars['name']",
             "error_level": 3,
-            "shortcode": 79,
-            "taint_trace": null
+            "shortcode": 79
         },
         {
             "severity": "info",
@@ -89,8 +96,7 @@
             "snippet": "                return $accumulator . ' ' . $this->generateLabel($productAbstractStoreEntity->getSpyStore()->getName(), 'label-info');",
             "selected_text": "$productAbstractStoreEntity->getSpyStore()->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -102,8 +108,7 @@
             "snippet": "            static::COL_NAME => $productAbstractEntity->getSpyProductAbstractLocalizedAttributess()->getFirst()->getName(),",
             "selected_text": "getFirst",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -115,8 +120,7 @@
             "snippet": "            static::COL_STORES => $this->getStoreNames($productAbstractEntity->getSpyProductAbstractStores()->getArrayCopy()),",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -128,8 +132,7 @@
             "snippet": "            static::COL_NAME => $productAbstractEntity->getSpyProductAbstractLocalizedAttributess()->getFirst()->getName(),",
             "selected_text": "getFirst",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -141,8 +144,7 @@
             "snippet": "            static::COL_STORES => $this->getStoreNames($productAbstractEntity->getSpyProductAbstractStores()->getArrayCopy()),",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         }
     ],
     "deprecation": []

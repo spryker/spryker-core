@@ -12,8 +12,7 @@
             "snippet": "     * @param \\Spryker\\Zed\\Search\\Business\\Model\\Elasticsearch\\DataMapper\\PageMapBuilderInterface $pageMapBuilder",
             "selected_text": "\\Spryker\\Zed\\Search\\Business\\Model\\Elasticsearch\\DataMapper\\PageMapBuilderInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         }
     ]
 }

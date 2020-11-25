@@ -4,7 +4,7 @@
   "description": "Category module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/category-extension": "^1.0.0",
     "spryker/event": "^1.0.0 || ^2.0.0",
     "spryker/graph": "^3.0.0",
@@ -43,7 +43,6 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Testify\\Module\\": "vendor/spryker/Testify/tests/_support/Module/",
       "SprykerTest\\": "tests/SprykerTest/"
     }
   },

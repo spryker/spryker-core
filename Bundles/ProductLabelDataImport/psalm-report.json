@@ -1,18 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 30,
-            "line_to": 30,
-            "type": "MissingDependency",
-            "message": "Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelStoreQuery depends on class or interface orm\\zed\\productlabel\\persistence\\base\\spyproductlabelstorequery that does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelDataImport/src/Spryker/Zed/ProductLabelDataImport/Business/Writer/ProductLabelStore/ProductLabelStoreWriteStep.php",
-            "snippet": "        $productLabelStoreEntity = SpyProductLabelStoreQuery::create()",
-            "selected_text": "SpyProductLabelStoreQuery",
-            "error_level": -1,
-            "shortcode": 157
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",

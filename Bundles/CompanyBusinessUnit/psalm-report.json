@@ -1,5 +1,18 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 205,
+            "line_to": 205,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'Propel\\Runtime\\Collection\\Collection|Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Generated\\Shared\\Transfer\\SpyCompanyBusinessUnitEntityTransfer>' for Spryker\\Zed\\CompanyBusinessUnit\\Persistence\\CompanyBusinessUnitRepository::getPaginatedCollection",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyBusinessUnit/src/Spryker/Zed/CompanyBusinessUnit/Persistence/CompanyBusinessUnitRepository.php",
+            "snippet": "            return $query->find();",
+            "selected_text": "$query->find()",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -11,8 +24,7 @@
             "snippet": "            $companyUserResponseTransfer->getCompanyUser()->getIdCompanyUser() === null",
             "selected_text": "getIdCompanyUser",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -24,8 +36,7 @@
             "snippet": "            && $companyUserResponseTransfer->getCompanyUser()->getFkCompanyBusinessUnit() === null",
             "selected_text": "getFkCompanyBusinessUnit",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -37,8 +48,7 @@
             "snippet": "                ->findDefaultBusinessUnitByCompanyId($companyUserResponseTransfer->getCompanyUser()->getFkCompany());",
             "selected_text": "$companyUserResponseTransfer->getCompanyUser()->getFkCompany()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -50,8 +60,7 @@
             "snippet": "                ->findDefaultBusinessUnitByCompanyId($companyUserResponseTransfer->getCompanyUser()->getFkCompany());",
             "selected_text": "getFkCompany",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -63,8 +72,7 @@
             "snippet": "                $companyUserResponseTransfer->getCompanyUser()->setFkCompanyBusinessUnit(",
             "selected_text": "setFkCompanyBusinessUnit",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -76,8 +84,7 @@
             "snippet": "                ->setFkCompany($companyTransfer->getIdCompany())",
             "selected_text": "getIdCompany",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -89,8 +96,7 @@
             "snippet": "        $companyBusinessUnitTransfer = $this->companyBusinessUnitEntityManager->saveCompanyBusinessUnit($companyBusinessUnitTransfer);",
             "selected_text": "$companyBusinessUnitTransfer",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -102,8 +108,7 @@
             "snippet": "                $companyBusinessUnitTransfer->getIdCompanyBusinessUnit()",
             "selected_text": "$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -115,8 +120,7 @@
             "snippet": "            $companyBusinessUnitCollectionTransfer->getCompanyBusinessUnits()->offsetSet(",
             "selected_text": "offsetSet",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -128,8 +132,7 @@
             "snippet": "            $companyBusinessUnitTransfer->getUuid()",
             "selected_text": "$companyBusinessUnitTransfer->getUuid()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -141,8 +144,7 @@
             "snippet": "        $idCompany = $customerTransfer->getCompanyUserTransfer()->getFkCompany();",
             "selected_text": "getFkCompany",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -154,8 +156,7 @@
             "snippet": "        $companyBusinessUnits = $this->getCompanyBusinessUnitCollection($idCompany);",
             "selected_text": "$idCompany",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -167,8 +168,7 @@
             "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\CompanyBusinessUnitTransfer[] $companyBusinessUnits",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\CompanyBusinessUnitTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -180,8 +180,7 @@
             "snippet": "     * @return \\Generated\\Shared\\Transfer\\CompanyBusinessUnitTreeNodeTransfer[]|\\ArrayObject",
             "selected_text": "\\Generated\\Shared\\Transfer\\CompanyBusinessUnitTreeNodeTransfer[]|\\ArrayObject",
             "error_level": 4,
-            "shortcode": 142,
-            "taint_trace": null
+            "shortcode": 142
         },
         {
             "severity": "info",
@@ -193,8 +192,7 @@
             "snippet": "            ->getCompanyBusinessUnitById($companyBusinessUnitTransfer->getIdCompanyBusinessUnit());",
             "selected_text": "$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -206,8 +204,7 @@
             "snippet": "            ->requireIdCompanyBusinessUnit();",
             "selected_text": "requireIdCompanyBusinessUnit",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -219,8 +216,7 @@
             "snippet": "        $this->companyBusinessUnitPluginExecutor->executePreDeletePlugins($companyBusinessUnitTransfer);",
             "selected_text": "$companyBusinessUnitTransfer",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -232,8 +228,7 @@
             "snippet": "        $this->entityManager->clearParentBusinessUnit($idCompanyBusinessUnit);",
             "selected_text": "$idCompanyBusinessUnit",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -245,8 +240,7 @@
             "snippet": "            $companyBusinessUnitResponseTransfer\n                ->getCompanyBusinessUnitTransfer()\n                ->getIdCompanyBusinessUnit()",
             "selected_text": "$companyBusinessUnitResponseTransfer\n                ->getCompanyBusinessUnitTransfer()\n                ->getIdCompanyBusinessUnit()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -258,8 +252,7 @@
             "snippet": "                ->getIdCompanyBusinessUnit()",
             "selected_text": "getIdCompanyBusinessUnit",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -271,8 +264,7 @@
             "snippet": "        if ($this->isCompanyBusinessUnitHierarchyCycleExists($companyBusinessUnitTransfer)) {",
             "selected_text": "$companyBusinessUnitTransfer",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -284,8 +276,7 @@
             "snippet": "            $companyBusinessUnits[$companyBusinessUnit->getIdCompanyBusinessUnit()] = $companyBusinessUnit;",
             "selected_text": "$companyBusinessUnits",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -297,8 +288,7 @@
             "snippet": "                $companyBusinessUnitTransfer->getName()",
             "selected_text": "$companyBusinessUnitTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -310,8 +300,7 @@
             "snippet": "/**\n * @method \\Spryker\\Zed\\CompanyBusinessUnit\\Persistence\\CompanyBusinessUnitPersistenceFactory getFactory()\n * @method \\Generated\\Shared\\Transfer\\SpyCompanyBusinessUnitEntityTransfer save(\\Generated\\Shared\\Transfer\\SpyCompanyBusinessUnitEntityTransfer $spyCompanyBusinessUnitEntityTransfer)\n */\nclass CompanyBusinessUnitEntityManager extends AbstractEntityManager implements CompanyBusinessUnitEntityManagerInterface",
             "selected_text": "/**\n * @method \\Spryker\\Zed\\CompanyBusinessUnit\\Persistence\\CompanyBusinessUnitPersistenceFactory getFactory()\n * @method \\Generated\\Shared\\Transfer\\SpyCompanyBusinessUnitEntityTransfer save(\\Generated\\Shared\\Transfer\\SpyCompanyBusinessUnitEntityTransfer $spyCompanyBusinessUnitEntityTransfer)\n */\nc",
             "error_level": 5,
-            "shortcode": 140,
-            "taint_trace": null
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -323,21 +312,19 @@
             "snippet": "            $this->clearParentBusinessUnitByCompanyBusinessUnitId($entityTransfer->getIdCompanyBusinessUnit());",
             "selected_text": "$entityTransfer->getIdCompanyBusinessUnit()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
             "line_from": 149,
             "line_to": 149,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CompanyBusinessUnit\\Persistence\\SpyCompanyBusinessUnit|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CompanyBusinessUnit\\Persistence\\SpyCompanyBusinessUnit> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyBusinessUnit/src/Spryker/Zed/CompanyBusinessUnit/Persistence/CompanyBusinessUnitRepository.php",
             "snippet": "            ->toArray();",
             "selected_text": "toArray",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -349,8 +336,7 @@
             "snippet": "        $paginationModel = $query->paginate($page, $maxPerPage);",
             "selected_text": "$page",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -362,8 +348,7 @@
             "snippet": "        $paginationModel = $query->paginate($page, $maxPerPage);",
             "selected_text": "$maxPerPage",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         }
     ],
     "deprecation": []

@@ -8,12 +8,12 @@
 namespace Spryker\Zed\Development\Business\Propel;
 
 use Exception;
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\Word\UnderscoreToCamelCase;
 use SimpleXMLElement;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
-use Zend\Filter\FilterChain;
-use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class PropelAbstractClassValidator implements PropelAbstractClassValidatorInterface
 {

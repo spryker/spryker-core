@@ -93,4 +93,18 @@ class AgentClient extends AbstractClient implements AgentClientInterface
             ->createZedStub()
             ->findCustomersByQuery($customerQueryTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function finishImpersonationSession(): void
+    {
+        $this->getFactory()
+            ->createImpersonationSessionFinisher()
+            ->finishImpersonationSession();
+    }
 }

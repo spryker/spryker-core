@@ -1,32 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "InvalidPropertyAssignmentValue",
-            "message": "Spryker\\Zed\\ConfigurableBundleDataImport\\Business\\ConfigurableBundleDataImportStep\\ConfigurableBundleTemplateKeyToIdConfigurableBundleTemplate::$idConfigurableBundleTemplateBuffer with declared type 'array<array-key, int>' cannot be assigned type 'non-empty-array<array-key, Orm\\Zed\\ConfigurableBundle\\Persistence\\SpyConfigurableBundleTemplate|int>'",
-            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleDataImport/src/Spryker/Zed/ConfigurableBundleDataImport/Business/ConfigurableBundleDataImportStep/ConfigurableBundleTemplateKeyToIdConfigurableBundleTemplate.php",
-            "snippet": "            static::$idConfigurableBundleTemplateBuffer[$configurableBundleTemplateKey] = $idConfigurableBundleTemplate;",
-            "selected_text": "static::$idConfigurableBundleTemplateBuffer",
-            "error_level": 6,
-            "shortcode": 145,
-            "taint_trace": null
-        },
-        {
-            "severity": "error",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "InvalidPropertyAssignmentValue",
-            "message": "Spryker\\Zed\\ConfigurableBundleDataImport\\Business\\ConfigurableBundleDataImportStep\\ProductListKeyToIdProductList::$idProductListBuffer with declared type 'array<array-key, int>' cannot be assigned type 'non-empty-array<array-key, Orm\\Zed\\ProductList\\Persistence\\SpyProductList|int>'",
-            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleDataImport/src/Spryker/Zed/ConfigurableBundleDataImport/Business/ConfigurableBundleDataImportStep/ProductListKeyToIdProductList.php",
-            "snippet": "            static::$idProductListBuffer[$productListKey] = $idProductList;",
-            "selected_text": "static::$idProductListBuffer",
-            "error_level": 6,
-            "shortcode": 145,
-            "taint_trace": null
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
@@ -38,8 +11,7 @@
             "snippet": "            $productImageSetEntity->getFkResourceConfigurableBundleTemplate()",
             "selected_text": "$productImageSetEntity->getFkResourceConfigurableBundleTemplate()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         }
     ],
     "deprecation": []

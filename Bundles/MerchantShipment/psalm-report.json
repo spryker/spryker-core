@@ -3,6 +3,18 @@
     "warning": [
         {
             "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method setMerchantReference on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantShipment/src/Spryker/Yves/MerchantShipment/Plugin/CartPage/MerchantShipmentPreAddToCartPlugin.php",
+            "snippet": "        $itemTransfer->getShipment()->setMerchantReference($itemTransfer->getMerchantReference());",
+            "selected_text": "setMerchantReference",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 38,
             "line_to": 38,
             "type": "PossiblyNullReference",

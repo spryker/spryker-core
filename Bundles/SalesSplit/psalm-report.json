@@ -24,18 +24,6 @@
             "selected_text": "$copyOfSalesOrderItem->getGroupKey()",
             "error_level": 1,
             "shortcode": 80
-        },
-        {
-            "severity": "info",
-            "line_from": 28,
-            "line_to": 28,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesSplit/src/Spryker/Zed/SalesSplit/SalesSplitDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->sales()->queryContainer();",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

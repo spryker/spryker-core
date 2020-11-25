@@ -4,15 +4,15 @@
   "description": "Transfer module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/decimal-object": "^1.0.0",
-    "spryker/kernel": "^3.55.0",
+    "spryker/kernel": "^3.56.0",
+    "spryker/laminas": "^1.0.0",
     "spryker/log": "^3.0.0",
     "spryker/propel": "^3.21.0",
     "spryker/symfony": "^3.0.0",
     "spryker/twig": "^3.0.0",
-    "spryker/util-glob": "^1.0.0",
-    "spryker/zend": "^2.0.0"
+    "spryker/util-glob": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

@@ -11,8 +11,7 @@
             "snippet": "                ->requireTemplate()",
             "selected_text": "requireTemplate",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -24,8 +23,7 @@
             "snippet": "                    ->requireUuid();",
             "selected_text": "requireUuid",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -37,8 +35,7 @@
             "snippet": "        $configuredBundleTransfer = $this->getSlimConfiguredBundleTransfer($createConfiguredBundleRequestTransfer->getConfiguredBundle());",
             "selected_text": "$createConfiguredBundleRequestTransfer->getConfiguredBundle()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -50,8 +47,7 @@
             "snippet": "                ->requireUuid();",
             "selected_text": "requireUuid",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -63,8 +59,7 @@
             "snippet": "                    ->setUuid($configuredBundleTransfer->getTemplate()->getUuid())",
             "selected_text": "getUuid",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -76,8 +71,7 @@
             "snippet": "                    ->setName($configuredBundleTransfer->getTemplate()->getName())",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -89,8 +83,7 @@
             "snippet": "                ->requireSlot()",
             "selected_text": "requireSlot",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -102,8 +95,7 @@
             "snippet": "                    ->requireUuid();",
             "selected_text": "requireUuid",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -115,8 +107,7 @@
             "snippet": "            ->setQuantityPerSlot($itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot())",
             "selected_text": "getQuantityPerSlot",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -128,8 +119,7 @@
             "snippet": "                    ->setUuid($itemTransfer->getConfiguredBundleItem()->getSlot()->getUuid())",
             "selected_text": "getSlot",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -141,47 +131,7 @@
             "snippet": "                    ->setUuid($itemTransfer->getConfiguredBundleItem()->getSlot()->getUuid())",
             "selected_text": "getUuid",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 24,
-            "line_to": 24,
-            "type": "PossiblyNullReference",
-            "message": "Cannot call method requireUuid on possibly null value",
-            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleCart/src/Spryker/Client/ConfigurableBundleCart/Generator/ConfiguredBundleGroupKeyGenerator.php",
-            "snippet": "                ->requireUuid();",
-            "selected_text": "requireUuid",
-            "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 26,
-            "line_to": 26,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleCart/src/Spryker/Client/ConfigurableBundleCart/Generator/ConfiguredBundleGroupKeyGenerator.php",
-            "snippet": "        return sprintf('%s-%s', $configuredBundleTransfer->getTemplate()->getUuid(), uniqid('', true));",
-            "selected_text": "$configuredBundleTransfer->getTemplate()->getUuid()",
-            "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 26,
-            "line_to": 26,
-            "type": "PossiblyNullReference",
-            "message": "Cannot call method getUuid on possibly null value",
-            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleCart/src/Spryker/Client/ConfigurableBundleCart/Generator/ConfiguredBundleGroupKeyGenerator.php",
-            "snippet": "        return sprintf('%s-%s', $configuredBundleTransfer->getTemplate()->getUuid(), uniqid('', true));",
-            "selected_text": "getUuid",
-            "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -193,8 +143,19 @@
             "snippet": "        foreach ($updateConfiguredBundleRequestTransfer->getQuote()->getItems() as $itemTransfer) {",
             "selected_text": "getItems",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getGroupKey on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleCart/src/Spryker/Client/ConfigurableBundleCart/Reader/QuoteItemReader.php",
+            "snippet": "            if ($itemTransfer->getConfiguredBundle() && $itemTransfer->getConfiguredBundle()->getGroupKey() === $configuredBundleGroupKey) {",
+            "selected_text": "getGroupKey",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -206,8 +167,7 @@
             "snippet": "                    ->requireQuantityPerSlot();",
             "selected_text": "requireQuantityPerSlot",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -219,8 +179,7 @@
             "snippet": "                ->setQuantity($itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot() * $updateConfiguredBundleRequestTransfer->getQuantity());",
             "selected_text": "$itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -232,8 +191,7 @@
             "snippet": "                ->setQuantity($itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot() * $updateConfiguredBundleRequestTransfer->getQuantity());",
             "selected_text": "getQuantityPerSlot",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -245,8 +203,7 @@
             "snippet": "                ->setQuantity($itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot() * $updateConfiguredBundleRequestTransfer->getQuantity());",
             "selected_text": "$updateConfiguredBundleRequestTransfer->getQuantity()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -258,8 +215,7 @@
             "snippet": "            $updatedCartChangeTransfer->getItems()->append($itemTransferToUpdate);",
             "selected_text": "append",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -271,8 +227,7 @@
             "snippet": "        if (!$cartChangeTransfer->getItems()->count()) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -284,8 +239,43 @@
             "snippet": "        if (!$cartChangeTransfer->getItems()->count()) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 24,
+            "line_to": 24,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method requireUuid on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleCart/src/Spryker/Service/ConfigurableBundleCart/Expander/ConfiguredBundleGroupKeyExpander.php",
+            "snippet": "                ->requireUuid();",
+            "selected_text": "requireUuid",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 27,
+            "line_to": 27,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleCart/src/Spryker/Service/ConfigurableBundleCart/Expander/ConfiguredBundleGroupKeyExpander.php",
+            "snippet": "            sprintf('%s-%s', $configuredBundleTransfer->getTemplate()->getUuid(), uniqid('', true))",
+            "selected_text": "$configuredBundleTransfer->getTemplate()->getUuid()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 27,
+            "line_to": 27,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getUuid on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleCart/src/Spryker/Service/ConfigurableBundleCart/Expander/ConfiguredBundleGroupKeyExpander.php",
+            "snippet": "            sprintf('%s-%s', $configuredBundleTransfer->getTemplate()->getUuid(), uniqid('', true))",
+            "selected_text": "getUuid",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -297,8 +287,7 @@
             "snippet": "            ->requireQuantityPerSlot();",
             "selected_text": "requireQuantityPerSlot",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -310,8 +299,7 @@
             "snippet": "            ->requireGroupKey()",
             "selected_text": "requireGroupKey",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -323,8 +311,7 @@
             "snippet": "            $configuredBundleTransfers[$configuredBundleTransfer->getGroupKey()] = (new ConfiguredBundleTransfer())",
             "selected_text": "$configuredBundleTransfers",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -336,8 +323,7 @@
             "snippet": "        $configuredBundleTransfers[$configuredBundleTransfer->getGroupKey()]->addItem($itemTransfer);",
             "selected_text": "$configuredBundleTransfers",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -349,34 +335,7 @@
             "snippet": "            if ($bundleQuantity !== $itemTransfer->getConfiguredBundle()->getQuantity()) {",
             "selected_text": "getQuantity",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 98,
-            "line_to": 98,
-            "type": "PossiblyNullReference",
-            "message": "Cannot call method getQuantity on possibly null value",
-            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleCart/src/Spryker/Zed/ConfigurableBundleCart/Business/Checker/ConfiguredBundleQuantityChecker.php",
-            "snippet": "            $itemQuantity = (int)$itemTransfer->getConfiguredBundle()->getQuantity() * $itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot();",
-            "selected_text": "getQuantity",
-            "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 98,
-            "line_to": 98,
-            "type": "PossiblyNullOperand",
-            "message": "Right operand cannot be nullable, got int|mixed|null",
-            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleCart/src/Spryker/Zed/ConfigurableBundleCart/Business/Checker/ConfiguredBundleQuantityChecker.php",
-            "snippet": "            $itemQuantity = (int)$itemTransfer->getConfiguredBundle()->getQuantity() * $itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot();",
-            "selected_text": "$itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot()",
-            "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -385,11 +344,58 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method getQuantityPerSlot on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleCart/src/Spryker/Zed/ConfigurableBundleCart/Business/Checker/ConfiguredBundleQuantityChecker.php",
-            "snippet": "            $itemQuantity = (int)$itemTransfer->getConfiguredBundle()->getQuantity() * $itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot();",
+            "snippet": "            if (!$itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot()) {",
             "selected_text": "getQuantityPerSlot",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 102,
+            "line_to": 102,
+            "type": "PossiblyNullOperand",
+            "message": "Left operand cannot be nullable, got int|mixed|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleCart/src/Spryker/Zed/ConfigurableBundleCart/Business/Checker/ConfiguredBundleQuantityChecker.php",
+            "snippet": "            $itemQuantity = (int)($itemTransfer->getConfiguredBundle()->getQuantity() * $itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot());",
+            "selected_text": "$itemTransfer->getConfiguredBundle()->getQuantity()",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 102,
+            "line_to": 102,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getQuantity on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleCart/src/Spryker/Zed/ConfigurableBundleCart/Business/Checker/ConfiguredBundleQuantityChecker.php",
+            "snippet": "            $itemQuantity = (int)($itemTransfer->getConfiguredBundle()->getQuantity() * $itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot());",
+            "selected_text": "getQuantity",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 102,
+            "line_to": 102,
+            "type": "PossiblyNullOperand",
+            "message": "Right operand cannot be nullable, got int|mixed|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleCart/src/Spryker/Zed/ConfigurableBundleCart/Business/Checker/ConfiguredBundleQuantityChecker.php",
+            "snippet": "            $itemQuantity = (int)($itemTransfer->getConfiguredBundle()->getQuantity() * $itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot());",
+            "selected_text": "$itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot()",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 102,
+            "line_to": 102,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getQuantityPerSlot on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleCart/src/Spryker/Zed/ConfigurableBundleCart/Business/Checker/ConfiguredBundleQuantityChecker.php",
+            "snippet": "            $itemQuantity = (int)($itemTransfer->getConfiguredBundle()->getQuantity() * $itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot());",
+            "selected_text": "getQuantityPerSlot",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -401,8 +407,7 @@
             "snippet": "            $configuredBundleGroupKey = $configuredBundleTransfer->getGroupKey();",
             "selected_text": "getGroupKey",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -414,8 +419,7 @@
             "snippet": "                $configuredBundlesData[$configuredBundleGroupKey] = [",
             "selected_text": "$configuredBundlesData",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -427,8 +431,7 @@
             "snippet": "                    static::KEY_CONFIGURABLE_BUNDLE_TEMPLATE_UUID => $configuredBundleTransfer->getTemplate()->getUuid(),",
             "selected_text": "getUuid",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -440,8 +443,7 @@
             "snippet": "            $configuredBundlesData[$configuredBundleGroupKey][static::KEY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_UUIDS][] = $itemTransfer->getConfiguredBundleItem()->getSlot()->getUuid();",
             "selected_text": "$configuredBundlesData",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -453,8 +455,7 @@
             "snippet": "            $configuredBundlesData[$configuredBundleGroupKey][static::KEY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_UUIDS][] = $itemTransfer->getConfiguredBundleItem()->getSlot()->getUuid();",
             "selected_text": "getSlot",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -466,8 +467,7 @@
             "snippet": "            $configuredBundlesData[$configuredBundleGroupKey][static::KEY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_UUIDS][] = $itemTransfer->getConfiguredBundleItem()->getSlot()->getUuid();",
             "selected_text": "getUuid",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -479,8 +479,7 @@
             "snippet": "                ->requireGroupKey();",
             "selected_text": "requireGroupKey",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -492,8 +491,7 @@
             "snippet": "            $itemTransfer->getConfiguredBundle()->getGroupKey(),",
             "selected_text": "$itemTransfer->getConfiguredBundle()->getGroupKey()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -505,8 +503,7 @@
             "snippet": "            $itemTransfer->getConfiguredBundle()->getGroupKey(),",
             "selected_text": "getGroupKey",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -518,8 +515,7 @@
             "snippet": "            $itemTransfer->getGroupKey()",
             "selected_text": "$itemTransfer->getGroupKey()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -531,8 +527,19 @@
             "snippet": "            $itemTransfer->getConfiguredBundleItem()->setQuantityPerSlot(",
             "selected_text": "setQuantityPerSlot",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getQuantityPerSlot on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleCart/src/Spryker/Zed/ConfigurableBundleCart/Business/Expander/ConfiguredBundleQuantityExpander.php",
+            "snippet": "            && !$itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot();",
+            "selected_text": "getQuantityPerSlot",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -544,8 +551,7 @@
             "snippet": "                ->requireQuantity();",
             "selected_text": "requireQuantity",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -557,8 +563,7 @@
             "snippet": "        return (int)($itemTransfer->getQuantity() / $itemTransfer->getConfiguredBundle()->getQuantity());",
             "selected_text": "$itemTransfer->getQuantity()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -570,8 +575,7 @@
             "snippet": "        return (int)($itemTransfer->getQuantity() / $itemTransfer->getConfiguredBundle()->getQuantity());",
             "selected_text": "$itemTransfer->getConfiguredBundle()->getQuantity()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -583,8 +587,7 @@
             "snippet": "        return (int)($itemTransfer->getQuantity() / $itemTransfer->getConfiguredBundle()->getQuantity());",
             "selected_text": "getQuantity",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -596,125 +599,127 @@
             "snippet": "                ->requireQuantityPerSlot();",
             "selected_text": "requireQuantityPerSlot",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 30,
-            "line_to": 30,
-            "type": "PossiblyNullOperand",
-            "message": "Left operand cannot be nullable, got int|null",
-            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleCart/src/Spryker/Zed/ConfigurableBundleCart/Business/Updater/ConfiguredBundleQuantityUpdater.php",
-            "snippet": "            $quantity = (int)($itemTransfer->getQuantity() / $itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot());",
-            "selected_text": "$itemTransfer->getQuantity()",
-            "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 30,
-            "line_to": 30,
-            "type": "PossiblyNullOperand",
-            "message": "Right operand cannot be nullable, got int|null",
-            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleCart/src/Spryker/Zed/ConfigurableBundleCart/Business/Updater/ConfiguredBundleQuantityUpdater.php",
-            "snippet": "            $quantity = (int)($itemTransfer->getQuantity() / $itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot());",
-            "selected_text": "$itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot()",
-            "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 30,
-            "line_to": 30,
-            "type": "PossiblyNullReference",
-            "message": "Cannot call method getQuantityPerSlot on possibly null value",
-            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleCart/src/Spryker/Zed/ConfigurableBundleCart/Business/Updater/ConfiguredBundleQuantityUpdater.php",
-            "snippet": "            $quantity = (int)($itemTransfer->getQuantity() / $itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot());",
-            "selected_text": "getQuantityPerSlot",
-            "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
             "line_from": 31,
             "line_to": 31,
             "type": "PossiblyNullReference",
+            "message": "Cannot call method getQuantityPerSlot on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleCart/src/Spryker/Zed/ConfigurableBundleCart/Business/Updater/ConfiguredBundleQuantityUpdater.php",
+            "snippet": "            if (!$itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot()) {",
+            "selected_text": "getQuantityPerSlot",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "PossiblyNullOperand",
+            "message": "Left operand cannot be nullable, got int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleCart/src/Spryker/Zed/ConfigurableBundleCart/Business/Updater/ConfiguredBundleQuantityUpdater.php",
+            "snippet": "            $quantity = (int)($itemTransfer->getQuantity() / $itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot());",
+            "selected_text": "$itemTransfer->getQuantity()",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "PossiblyNullOperand",
+            "message": "Right operand cannot be nullable, got int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleCart/src/Spryker/Zed/ConfigurableBundleCart/Business/Updater/ConfiguredBundleQuantityUpdater.php",
+            "snippet": "            $quantity = (int)($itemTransfer->getQuantity() / $itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot());",
+            "selected_text": "$itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot()",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getQuantityPerSlot on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleCart/src/Spryker/Zed/ConfigurableBundleCart/Business/Updater/ConfiguredBundleQuantityUpdater.php",
+            "snippet": "            $quantity = (int)($itemTransfer->getQuantity() / $itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot());",
+            "selected_text": "getQuantityPerSlot",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "PossiblyNullReference",
             "message": "Cannot call method setQuantity on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleCart/src/Spryker/Zed/ConfigurableBundleCart/Business/Updater/ConfiguredBundleQuantityUpdater.php",
             "snippet": "            $itemTransfer->getConfiguredBundle()->setQuantity($quantity);",
             "selected_text": "setQuantity",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 50,
-            "line_to": 50,
+            "line_from": 55,
+            "line_to": 55,
             "type": "PossiblyNullReference",
             "message": "Cannot call method requireQuantity on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleCart/src/Spryker/Zed/ConfigurableBundleCart/Business/Updater/ConfiguredBundleQuantityUpdater.php",
             "snippet": "                ->requireQuantity();",
             "selected_text": "requireQuantity",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 52,
-            "line_to": 52,
+            "line_from": 57,
+            "line_to": 57,
             "type": "PossiblyNullOperand",
             "message": "Left operand cannot be nullable, got int|null",
             "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleCart/src/Spryker/Zed/ConfigurableBundleCart/Business/Updater/ConfiguredBundleQuantityUpdater.php",
             "snippet": "            $quantityPerSlot = (int)($itemTransfer->getQuantity() / $itemTransfer->getConfiguredBundle()->getQuantity());",
             "selected_text": "$itemTransfer->getQuantity()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
-            "line_from": 52,
-            "line_to": 52,
+            "line_from": 57,
+            "line_to": 57,
             "type": "PossiblyNullOperand",
             "message": "Right operand cannot be nullable, got int|null",
             "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleCart/src/Spryker/Zed/ConfigurableBundleCart/Business/Updater/ConfiguredBundleQuantityUpdater.php",
             "snippet": "            $quantityPerSlot = (int)($itemTransfer->getQuantity() / $itemTransfer->getConfiguredBundle()->getQuantity());",
             "selected_text": "$itemTransfer->getConfiguredBundle()->getQuantity()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
-            "line_from": 52,
-            "line_to": 52,
+            "line_from": 57,
+            "line_to": 57,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getQuantity on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleCart/src/Spryker/Zed/ConfigurableBundleCart/Business/Updater/ConfiguredBundleQuantityUpdater.php",
             "snippet": "            $quantityPerSlot = (int)($itemTransfer->getQuantity() / $itemTransfer->getConfiguredBundle()->getQuantity());",
             "selected_text": "getQuantity",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 53,
-            "line_to": 53,
+            "line_from": 58,
+            "line_to": 58,
             "type": "PossiblyNullReference",
             "message": "Cannot call method setQuantityPerSlot on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleCart/src/Spryker/Zed/ConfigurableBundleCart/Business/Updater/ConfiguredBundleQuantityUpdater.php",
             "snippet": "            $itemTransfer->getConfiguredBundleItem()->setQuantityPerSlot($quantityPerSlot);",
             "selected_text": "setQuantityPerSlot",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         }
     ],
     "deprecation": []

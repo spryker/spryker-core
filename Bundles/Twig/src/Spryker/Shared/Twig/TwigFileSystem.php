@@ -7,9 +7,9 @@
 
 namespace Spryker\Shared\Twig;
 
+use Laminas\Filter\Word\CamelCaseToDash;
 use Twig\Error\LoaderError;
 use Twig\Loader\FilesystemLoader;
-use Zend\Filter\Word\CamelCaseToDash;
 
 /**
  * @deprecated Use TwigFilesystemLoader instead.

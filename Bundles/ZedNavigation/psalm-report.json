@@ -51,30 +51,6 @@
         },
         {
             "severity": "info",
-            "line_from": 128,
-            "line_to": 128,
-            "type": "InvalidNullableReturnType",
-            "message": "The declared return type 'Symfony\\Component\\HttpFoundation\\Request' for Spryker\\Zed\\ZedNavigation\\Communication\\Plugin\\Twig\\ZedNavigationTwigPlugin::getRequest is not nullable, but 'Symfony\\Component\\HttpFoundation\\Request|null' contains null",
-            "file_name": "vendor/spryker/spryker/Bundles/ZedNavigation/src/Spryker/Zed/ZedNavigation/Communication/Plugin/Twig/ZedNavigationTwigPlugin.php",
-            "snippet": "     * @return \\Symfony\\Component\\HttpFoundation\\Request",
-            "selected_text": "\\Symfony\\Component\\HttpFoundation\\Request",
-            "error_level": 5,
-            "shortcode": 144
-        },
-        {
-            "severity": "info",
-            "line_from": 132,
-            "line_to": 132,
-            "type": "NullableReturnStatement",
-            "message": "The declared return type 'Symfony\\Component\\HttpFoundation\\Request' for Spryker\\Zed\\ZedNavigation\\Communication\\Plugin\\Twig\\ZedNavigationTwigPlugin::getRequest is not nullable, but the function returns 'Symfony\\Component\\HttpFoundation\\Request|null'",
-            "file_name": "vendor/spryker/spryker/Bundles/ZedNavigation/src/Spryker/Zed/ZedNavigation/Communication/Plugin/Twig/ZedNavigationTwigPlugin.php",
-            "snippet": "        return $this->getRequestStack($container)->getCurrentRequest();",
-            "selected_text": "$this->getRequestStack($container)->getCurrentRequest()",
-            "error_level": 5,
-            "shortcode": 139
-        },
-        {
-            "severity": "info",
             "line_from": 30,
             "line_to": 30,
             "type": "InvalidNullableReturnType",
@@ -111,15 +87,15 @@
         },
         {
             "severity": "info",
-            "line_from": 67,
-            "line_to": 67,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ZedNavigation/src/Spryker/Zed/ZedNavigation/ZedNavigationDependencyProvider.php",
-            "snippet": "                $container->getLocator()->utilEncoding()->service()",
-            "selected_text": "service",
+            "line_from": 81,
+            "line_to": 81,
+            "type": "RedundantCondition",
+            "message": "The call to strtolower is unnecessary",
+            "file_name": "vendor/spryker/spryker/Bundles/ZedNavigation/src/Spryker/Zed/ZedNavigation/ZedNavigationConfig.php",
+            "snippet": "        return APPLICATION_ROOT_DIR . '/src/Generated/' . ucfirst(strtolower(APPLICATION)) . '/Navigation/codeBucket/navigation.cache';",
+            "selected_text": "strtolower",
             "error_level": 4,
-            "shortcode": 219
+            "shortcode": 122
         }
     ],
     "deprecation": [
@@ -161,8 +137,8 @@
         },
         {
             "severity": "info",
-            "line_from": 50,
-            "line_to": 50,
+            "line_from": 55,
+            "line_to": 55,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\ZedNavigation\\Business\\ZedNavigationBusinessFactory::getNavigationItemFilterPlugins has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ZedNavigation/src/Spryker/Zed/ZedNavigation/Business/ZedNavigationBusinessFactory.php",
@@ -173,8 +149,8 @@
         },
         {
             "severity": "info",
-            "line_from": 155,
-            "line_to": 155,
+            "line_from": 191,
+            "line_to": 191,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\ZedNavigationExtension\\Dependency\\Plugin\\NavigationItemFilterPluginInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ZedNavigation/src/Spryker/Zed/ZedNavigation/Business/ZedNavigationBusinessFactory.php",
@@ -185,8 +161,8 @@
         },
         {
             "severity": "info",
-            "line_from": 159,
-            "line_to": 159,
+            "line_from": 195,
+            "line_to": 195,
             "type": "DeprecatedConstant",
             "message": "Constant Spryker\\Zed\\ZedNavigation\\ZedNavigationDependencyProvider::PLUGINS_NAVIGATION_ITEM_FILTER is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ZedNavigation/src/Spryker/Zed/ZedNavigation/Business/ZedNavigationBusinessFactory.php",
@@ -293,12 +269,12 @@
         },
         {
             "severity": "info",
-            "line_from": 54,
-            "line_to": 54,
+            "line_from": 61,
+            "line_to": 61,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\ZedNavigation\\Communication\\Plugin\\Twig\\ZedNavigationTwigPlugin::addTwigGlobalVariables has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ZedNavigation/src/Spryker/Zed/ZedNavigation/Communication/Plugin/Twig/ZedNavigationTwigPlugin.php",
-            "snippet": "        $twig = $this->addTwigGlobalVariables($twig);",
+            "snippet": "        $twig = $this->addTwigGlobalVariables($twig, $container);",
             "selected_text": "addTwigGlobalVariables",
             "error_level": 2,
             "shortcode": 1

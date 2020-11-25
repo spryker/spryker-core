@@ -26,7 +26,7 @@ class PaymentDataImportBusinessFactory extends DataImportBusinessFactory
     public function getPaymentMethodDataImporter()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getPaymentMethodDataImporterConfiguration());
-        
+
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker
             ->addStep($this->createPaymentProviderWriterStep())
