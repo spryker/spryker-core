@@ -78,7 +78,7 @@ class OrderShipmentMapper implements OrderShipmentMapperInterface
     ): RestOrderDetailsAttributesTransfer {
         foreach ($restOrderDetailsAttributesTransfer->getItems() as $key => $restOrderItemsAttributesTransfer) {
             foreach ($orderTransfer->getItems() as $itemTransfer) {
-                if ($restOrderItemsAttributesTransfer->getUuid() !== $itemTransfer->getUuid()) {
+                if (!$itemTransfer->getShipment() || $restOrderItemsAttributesTransfer->getUuid() !== $itemTransfer->getUuid()) {
                     continue;
                 }
 
@@ -104,7 +104,7 @@ class OrderShipmentMapper implements OrderShipmentMapperInterface
     ): RestOrderDetailsAttributesTransfer {
         foreach ($restOrderDetailsAttributesTransfer->getExpenses() as $key => $restOrderExpensesAttributesTransfer) {
             foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
-                if ($restOrderExpensesAttributesTransfer->getIdSalesExpense() !== $expenseTransfer->getIdSalesExpense()) {
+                if (!$expenseTransfer->getShipment() || $restOrderExpensesAttributesTransfer->getIdSalesExpense() !== $expenseTransfer->getIdSalesExpense()) {
                     continue;
                 }
 
