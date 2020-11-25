@@ -22,7 +22,7 @@ class ShipmentsRestApiConfig extends AbstractBundleConfig
     public const ERROR_RESPONSE_DETAIL_ADDRESS_NOT_VALID = 'Provided address is not valid. You can either provide address ID or address fields.';
 
     public const ERROR_RESPONSE_CODE_SHIPMENT_ATTRIBUTE_NOT_SPECIFIED = '4303';
-    public const ERROR_RESPONSE_DETAIL_SHIPMENT_ATTRIBUTE_NOT_SPECIFIED = 'Shipment attributes are not specified.';
+    public const ERROR_RESPONSE_DETAIL_SHIPMENT_ATTRIBUTE_NOT_SPECIFIED = 'Shipment attribute is not specified.';
 
     public const ERROR_RESPONSE_CODE_SHIPMENTS_ATTRIBUTE_NOT_SPECIFIED = '4304';
     public const ERROR_RESPONSE_DETAIL_SHIPMENTS_ATTRIBUTE_NOT_SPECIFIED = 'Shipments attributes are not specified.';

@@ -24,6 +24,7 @@ class CountryCheckoutValidatorPlugin extends AbstractPlugin implements CheckoutV
      * {@inheritDoc}
      * - Verifies if countries can be found by countryIso2Codes given in billingAddress and shippingAddress.
      * - Verifies if billingAddress and shippingAddress are set.
+     * - Verifies if countries can be found by countryIso2Codes given in CheckoutDataTransfer.shipments.shippingAddress.
      * - Returns CheckoutResponseTransfer with error if any check was failed.
      *
      * @api

@@ -113,6 +113,7 @@
         <property name="redirectUrl" type="string"/>
         <property name="isExternalRedirect" type="bool"/>
         <property name="checkoutResponse" type="CheckoutResponse"/>
+        <property name="checkoutData" type="CheckoutData"/>
     </transfer>
 
     <transfer name="CheckoutResponse">

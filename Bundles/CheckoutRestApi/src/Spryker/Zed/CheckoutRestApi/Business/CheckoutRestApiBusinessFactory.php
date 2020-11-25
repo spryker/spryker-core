@@ -41,7 +41,6 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
     public function createCheckoutDataReader(): CheckoutDataReaderInterface
     {
         return new CheckoutDataReader(
-            $this->createQuoteReader(),
             $this->getCalculationFacade(),
             $this->createCheckoutValidator(),
             $this->createCheckoutExpander(),
@@ -55,7 +54,6 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
     public function createPlaceOrderProcessor(): PlaceOrderProcessorInterface
     {
         return new PlaceOrderProcessor(
-            $this->createQuoteReader(),
             $this->getCheckoutFacade(),
             $this->getQuoteFacade(),
             $this->getCalculationFacade(),
@@ -70,6 +68,7 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
     public function createCheckoutValidator(): CheckoutValidatorInterface
     {
         return new CheckoutValidator(
+            $this->createQuoteReader(),
             $this->getCartFacade(),
             $this->getCheckoutDataValidatorPlugins(),
             $this->getCheckoutValidatorPlugins()

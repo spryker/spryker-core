@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 /**
  * Plugin exists to allow validating of the `RestCheckoutRequestAttributesTransfer`s.
  *
- * Validation of `checkout-data` REST api request.
+ * Validation of `checkout-data`, `checkout` REST api requests.
  */
 interface CheckoutRequestAttributesValidatorPluginInterface
 {

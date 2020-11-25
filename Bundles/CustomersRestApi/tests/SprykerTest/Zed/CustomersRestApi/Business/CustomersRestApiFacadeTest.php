@@ -47,7 +47,7 @@ class CustomersRestApiFacadeTest extends Unit
     /**
      * @uses \Spryker\Zed\CustomersRestApi\Business\Validator\CustomerAddressValidator::GLOSSARY_KEY_CUSTOMER_ADDRESSES_APPLICABLE_FOR_CUSTOMERS_ONLY
      */
-    protected const GLOSSARY_KEY_CUSTOMER_ADDRESSES_APPLICABLE_FOR_CUSTOMERS_ONLY = 'Customer addresses are applicable only for customers.';
+    protected const GLOSSARY_KEY_CUSTOMER_ADDRESSES_APPLICABLE_FOR_CUSTOMERS_ONLY = 'checkout.validation.customer_address.not_applicable';
 
     /**
      * @var \SprykerTest\Zed\CustomersRestApi\CustomersRestApiBusinessTester
