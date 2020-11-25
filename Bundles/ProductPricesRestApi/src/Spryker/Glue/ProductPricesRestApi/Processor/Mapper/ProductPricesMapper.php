@@ -79,7 +79,10 @@ class ProductPricesMapper implements ProductPricesMapperInterface
             ->setPrice($currentProductPriceTransfer->getPrice());
         foreach ($currentProductPriceTransfer->getPrices() as $priceType => $amount) {
             $restProductPriceAttributesTransfer = $this->getRestProductPriceAttributesTransfer($priceType, $amount);
-            $this->executeRestProductPriceAttributesMapperPlugins($currentProductPriceTransfer, $restProductPriceAttributesTransfer);
+            $restProductPriceAttributesTransfer = $this->executeRestProductPriceAttributesMapperPlugins(
+                $currentProductPriceTransfer,
+                $restProductPriceAttributesTransfer
+            );
 
             $productPricesRestAttributesTransfer->addPrice($restProductPriceAttributesTransfer);
         }
