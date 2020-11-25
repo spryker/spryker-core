@@ -54,7 +54,7 @@ class CompanyBusinessUnitAddressValidator implements CompanyBusinessUnitAddressV
             );
         }
 
-        $companyShippingAddressUuids = $this->getCompanyShippingAddressUuids($checkoutDataTransfer);
+        $companyShippingAddressUuids = $this->getCompanyUnitAddressUuids($checkoutDataTransfer);
 
         foreach ($shippingAddressUuids as $shippingAddressUuid) {
             if (!in_array($shippingAddressUuid, $companyShippingAddressUuids, true)) {
@@ -87,21 +87,21 @@ class CompanyBusinessUnitAddressValidator implements CompanyBusinessUnitAddressV
      *
      * @return string[]
      */
-    protected function getCompanyShippingAddressUuids(CheckoutDataTransfer $checkoutDataTransfer): array
+    protected function getCompanyUnitAddressUuids(CheckoutDataTransfer $checkoutDataTransfer): array
     {
         $companyUnitAddressCriteriaFilterTransfer = (new CompanyUnitAddressCriteriaFilterTransfer())
             ->setIdCompany($checkoutDataTransfer->getQuote()->getCustomer()->getCompanyUserTransfer()->getFkCompany());
 
-        $companyShippingAddressUuids = [];
+        $companyUnitAddressUuids = [];
         $companyUnitAddressTransfers = $this->companyUnitAddressFacade
             ->getCompanyUnitAddressCollection($companyUnitAddressCriteriaFilterTransfer)
             ->getCompanyUnitAddresses();
 
         foreach ($companyUnitAddressTransfers as $companyUnitAddressTransfer) {
-            $companyShippingAddressUuids[] = $companyUnitAddressTransfer->getUuid();
+            $companyUnitAddressUuids[] = $companyUnitAddressTransfer->getUuid();
         }
 
-        return $companyShippingAddressUuids;
+        return $companyUnitAddressUuids;
     }
 
     /**

@@ -104,7 +104,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         );
 
         if (!$restCheckoutDataResponseTransfer->getIsSuccess()) {
-            return $this->createCheckoutDataErrorResponse($restCheckoutDataResponseTransfer);
+            return $this->createCheckoutDataErrorResponse($restCheckoutDataResponseTransfer, $restRequest->getMetadata()->getLocale());
         }
 
         $restCheckoutResponseAttributesTransfer = $this->checkoutDataMapper
@@ -142,17 +142,22 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\RestCheckoutDataResponseTransfer $restCheckoutDataResponseTransfer
+     * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createCheckoutDataErrorResponse(RestCheckoutDataResponseTransfer $restCheckoutDataResponseTransfer): RestResponseInterface
-    {
+    protected function createCheckoutDataErrorResponse(
+        RestCheckoutDataResponseTransfer $restCheckoutDataResponseTransfer,
+        string $localeName
+    ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse();
+
         foreach ($restCheckoutDataResponseTransfer->getErrors() as $restCheckoutErrorTransfer) {
             $restResponse->addError(
-                $this->restCheckoutErrorMapper->mapRestCheckoutErrorTransferToRestErrorTransfer(
+                $this->restCheckoutErrorMapper->mapLocalizedRestCheckoutErrorTransferToRestErrorTransfer(
                     $restCheckoutErrorTransfer,
-                    new RestErrorMessageTransfer()
+                    new RestErrorMessageTransfer(),
+                    $localeName
                 )
             );
         }

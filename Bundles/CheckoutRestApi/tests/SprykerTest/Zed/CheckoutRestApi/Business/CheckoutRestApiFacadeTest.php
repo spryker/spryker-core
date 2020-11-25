@@ -29,6 +29,7 @@ use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToQuoteFacadeBr
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToShipmentFacadeBridge;
 use Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface;
 use Spryker\Zed\Customer\Business\CustomerFacade;
+use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Payment\Business\PaymentFacade;
 use Spryker\Zed\Quote\Business\QuoteFacade;
 use Spryker\Zed\Shipment\Business\ShipmentFacade;
@@ -69,7 +70,7 @@ class CheckoutRestApiFacadeTest extends Unit
         /**
          * @var \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiFacade $checkoutRestApiFacade
          */
-        $checkoutRestApiFacade = $this->tester->getFacade();
+        $checkoutRestApiFacade = $this->tester->getLocator()->checkoutRestApi()->facade();
         $checkoutRestApiFacade->setFactory($this->getMockCheckoutRestApiFactory());
         $restCheckoutRequestAttributesTransfer = $this->tester->prepareFullRestCheckoutRequestAttributesTransfer();
 
@@ -184,7 +185,7 @@ class CheckoutRestApiFacadeTest extends Unit
                 'getCartsRestApiFacade',
                 'getQuoteMapperPlugins',
                 'getCheckoutDataValidatorPlugins',
-                'getCheckoutValidatorPlugins',
+                'getReadCheckoutDataValidatorPlugins',
                 'getCalculationFacade',
                 'getCheckoutDataExpanderPlugins',
             ]
@@ -206,6 +207,8 @@ class CheckoutRestApiFacadeTest extends Unit
     protected function getMockCheckoutRestApiFactory(): CheckoutRestApiBusinessFactory
     {
         $mockCheckoutRestApiFactory = $this->initMockCheckoutRestApiFactory();
+        $mockCheckoutRestApiFactory->setContainer(new Container());
+
         $mockCheckoutRestApiFactory = $this->addMockCustomerFacade($mockCheckoutRestApiFactory);
         $mockCheckoutRestApiFactory = $this->addMockCartFacade($mockCheckoutRestApiFactory);
         $mockCheckoutRestApiFactory = $this->addMockCartsRestApiFacade($mockCheckoutRestApiFactory);

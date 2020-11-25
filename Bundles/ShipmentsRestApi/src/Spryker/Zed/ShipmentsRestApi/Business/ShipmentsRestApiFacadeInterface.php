@@ -79,4 +79,19 @@ interface ShipmentsRestApiFacadeInterface
         RestCheckoutDataTransfer $restCheckoutDataTransfer,
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestCheckoutDataTransfer;
+
+    /**
+     * Specification:
+     * - Expects `checkoutDataTransfer.shipments` to be provided.
+     * - Requires `checkoutDataTransfer.quote` to be set.
+     * - Validates if `CheckoutDataTransfer` provides shipment data per item level.
+     * - Validates if `CheckoutDataTransfer` provides shipment data per bundle item level.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    public function validateItemsInCheckoutData(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer;
 }

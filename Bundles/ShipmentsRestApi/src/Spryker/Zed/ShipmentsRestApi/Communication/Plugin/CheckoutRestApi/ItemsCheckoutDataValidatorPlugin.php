@@ -9,21 +9,21 @@ namespace Spryker\Zed\ShipmentsRestApi\Communication\Plugin\CheckoutRestApi;
 
 use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutValidatorPluginInterface;
+use Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataValidatorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Will be removed with next major release. Use item level shipment instead.
- *
  * @method \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacadeInterface getFacade()
  * @method \Spryker\Zed\ShipmentsRestApi\ShipmentsRestApiConfig getConfig()
  */
-class ShipmentMethodCheckoutValidatorPlugin extends AbstractPlugin implements CheckoutValidatorPluginInterface
+class ItemsCheckoutDataValidatorPlugin extends AbstractPlugin implements CheckoutDataValidatorPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Verifies if shipment method is valid.
-     * - Returns CheckoutResponseTransfer with error if any check was failed.
+     * - Expects `checkoutDataTransfer.shipments` to be provided.
+     * - Requires `checkoutDataTransfer.quote` to be set.
+     * - Validates if `CheckoutDataTransfer` provides shipment data per item level.
+     * - Validates if `CheckoutDataTransfer` provides shipment data per bundle item level.
      *
      * @api
      *
@@ -31,8 +31,8 @@ class ShipmentMethodCheckoutValidatorPlugin extends AbstractPlugin implements Ch
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function validateCheckout(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer
+    public function validateCheckoutData(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer
     {
-        return $this->getFacade()->validateShipmentMethodCheckoutData($checkoutDataTransfer);
+        return $this->getFacade()->validateItemsInCheckoutData($checkoutDataTransfer);
     }
 }

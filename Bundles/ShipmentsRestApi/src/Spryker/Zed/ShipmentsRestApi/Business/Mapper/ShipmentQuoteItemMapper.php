@@ -163,7 +163,7 @@ class ShipmentQuoteItemMapper implements ShipmentQuoteItemMapperInterface
     protected function updateItemShipment(ItemTransfer $itemTransfer, ShipmentTransfer $shipmentTransfer): void
     {
         if (!$itemTransfer->getShipment()) {
-            $itemTransfer->setShipment(clone $shipmentTransfer);
+            $itemTransfer->setShipment((new ShipmentTransfer())->fromArray($shipmentTransfer->toArray(), true));
 
             return;
         }

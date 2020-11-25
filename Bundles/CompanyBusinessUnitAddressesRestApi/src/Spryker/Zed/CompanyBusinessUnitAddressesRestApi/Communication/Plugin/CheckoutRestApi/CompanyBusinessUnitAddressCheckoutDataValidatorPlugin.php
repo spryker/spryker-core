@@ -9,14 +9,14 @@ namespace Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Communication\Plugin\C
 
 use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutValidatorPluginInterface;
+use Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataValidatorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\CompanyBusinessUnitAddressesRestApiFacadeInterface getFacade()
  * @method \Spryker\Zed\CompanyBusinessUnitAddressesRestApi\CompanyBusinessUnitAddressesRestApiConfig getConfig()
  */
-class CompanyBusinessUnitAddressCheckoutValidatorPlugin extends AbstractPlugin implements CheckoutValidatorPluginInterface
+class CompanyBusinessUnitAddressCheckoutDataValidatorPlugin extends AbstractPlugin implements CheckoutDataValidatorPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -32,7 +32,7 @@ class CompanyBusinessUnitAddressCheckoutValidatorPlugin extends AbstractPlugin i
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function validateCheckout(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer
+    public function validateCheckoutData(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer
     {
         return $this->getFacade()->validateCompanyBusinessUnitAddressesInCheckoutData($checkoutDataTransfer);
     }

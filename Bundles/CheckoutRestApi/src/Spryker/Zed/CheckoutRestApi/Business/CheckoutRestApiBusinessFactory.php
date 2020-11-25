@@ -41,7 +41,6 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
     public function createCheckoutDataReader(): CheckoutDataReaderInterface
     {
         return new CheckoutDataReader(
-            $this->createQuoteReader(),
             $this->getCalculationFacade(),
             $this->createCheckoutValidator(),
             $this->createCheckoutExpander(),
@@ -55,7 +54,6 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
     public function createPlaceOrderProcessor(): PlaceOrderProcessorInterface
     {
         return new PlaceOrderProcessor(
-            $this->createQuoteReader(),
             $this->getCheckoutFacade(),
             $this->getQuoteFacade(),
             $this->getCalculationFacade(),
@@ -70,9 +68,10 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
     public function createCheckoutValidator(): CheckoutValidatorInterface
     {
         return new CheckoutValidator(
+            $this->createQuoteReader(),
             $this->getCartFacade(),
             $this->getCheckoutDataValidatorPlugins(),
-            $this->getCheckoutValidatorPlugins()
+            $this->getReadCheckoutDataValidatorPlugins()
         );
     }
 
@@ -186,11 +185,11 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutValidatorPluginInterface[]
+     * @return \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\ReadCheckoutDataValidatorPluginInterface[]
      */
-    public function getCheckoutValidatorPlugins(): array
+    public function getReadCheckoutDataValidatorPlugins(): array
     {
-        return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGINS_CHECKOUT_VALIDATOR);
+        return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGINS_READ_CHECKOUT_DATA_VALIDATOR);
     }
 
     /**
