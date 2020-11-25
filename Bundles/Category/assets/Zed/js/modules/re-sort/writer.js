@@ -15,10 +15,12 @@ function save(serializedNodeList, progressBar)
 {
     progressBar.show();
 
+    var csrfToken = document.getElementById('category-nodes-re-sort-token').value;
     var promise = jQuery.post(
         '/category/re-sort/save',
         {
-            nodes: serializedNodeList
+            nodes: serializedNodeList,
+            token: csrfToken
         }
     );
 

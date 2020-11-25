@@ -30,12 +30,18 @@ class DeleteFileController extends AbstractController
     {
         $idFile = $this->castId($request->get(static::URL_PARAM_ID_FILE));
         $idFileInfo = $this->castId($request->get(static::URL_PARAM_ID_FILE_INFO));
+        $redirectUrl = Url::generate(sprintf(static::URL_REDIRECT_BASE . '/edit-file?id-file=%s', $idFile))->build();
+
+        $fileInfoVersionsCount = $this->getFactory()->getFileManagerFacade()->getFileInfoVersionsCount($idFile);
+        if ($fileInfoVersionsCount <= 1) {
+            $this->addErrorMessage('You cannot remove the only version of the file.');
+
+            return $this->redirectResponse($redirectUrl);
+        }
 
         $this->getFactory()
             ->getFileManagerFacade()
             ->deleteFileInfo($idFileInfo);
-
-        $redirectUrl = Url::generate(sprintf(static::URL_REDIRECT_BASE . '/edit-file?id-file=%s', $idFile))->build();
 
         return $this->redirectResponse($redirectUrl);
     }
