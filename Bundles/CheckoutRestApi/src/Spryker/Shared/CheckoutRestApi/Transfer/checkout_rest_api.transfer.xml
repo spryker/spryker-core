@@ -62,7 +62,7 @@
     </transfer>
 
     <transfer name="RestShipment">
-        <property name="idShipmentMethod" type="int" restRequestParameter="required"/>
+        <property name="idShipmentMethod" type="int" restRequestParameter="yes"/>
     </transfer>
 
     <transfer name="RestPayment">
