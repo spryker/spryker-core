@@ -239,4 +239,16 @@ interface FileManagerFacadeInterface
      * @return \Generated\Shared\Transfer\FileManagerDataTransfer[]
      */
     public function getFilesByIds(array $idFiles): array;
+
+    /**
+     * Specification:
+     * - Returns the number of available file info versions.
+     *
+     * @api
+     *
+     * @param int $idFile
+     *
+     * @return int
+     */
+    public function getFileInfoVersionsCount(int $idFile): int;
 }

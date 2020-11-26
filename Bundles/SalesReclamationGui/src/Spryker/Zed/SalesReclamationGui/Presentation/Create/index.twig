@@ -19,6 +19,7 @@
         </div>
 
         <input type="submit" value="{{ 'Create Reclamation' | trans }}" class="btn btn-primary"/>
+        <input type="hidden" name="_token" value="{{ csrf_token('reclamation_form_token') }}"/>
     </form>
 {% endblock %}
 
