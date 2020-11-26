@@ -128,7 +128,7 @@ class TableDefaultConfigData implements Partial<TableConfig> {
         },
         {
             provide: TableEditableEditRequestToken,
-            useClass: TableEditableDataSerializer,
+            useExisting: TableEditableDataSerializer,
         },
     ],
 })

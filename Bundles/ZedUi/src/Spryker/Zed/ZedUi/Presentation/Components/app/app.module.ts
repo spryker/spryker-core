@@ -49,6 +49,7 @@ import { TableRootModule } from './table/table-root.module';
         ModalModule.forRoot(),
     ],
     // FIXME: UnsavedChangesNavigationGuard should work without explicit providing
+    // See https://spryker.atlassian.net/browse/BO-2055
     providers: [UnsavedChangesNavigationGuard],
 })
 export class AppModule {
