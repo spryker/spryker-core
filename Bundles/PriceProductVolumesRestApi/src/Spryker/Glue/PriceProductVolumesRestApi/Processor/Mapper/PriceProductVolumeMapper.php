@@ -18,11 +18,6 @@ use Spryker\Glue\PriceProductVolumesRestApi\Dependency\Client\PriceProductVolume
 class PriceProductVolumeMapper implements PriceProductVolumeMapperInterface
 {
     /**
-     * @uses \Spryker\Shared\PriceProductVolume\PriceProductVolumeConfig::VOLUME_PRICE_QUANTITY
-     */
-    protected const VOLUME_PRICE_QUANTITY = 'quantity';
-
-    /**
      * @var \Spryker\Glue\PriceProductVolumesRestApi\Dependency\Client\PriceProductVolumesRestApiToPriceProductVolumeClientInterface
      */
     protected $priceProductVolumeClient;
