@@ -94,7 +94,8 @@ class ZedRequestFactory extends AbstractFactory
     public function createZedRequestLogger(): ZedRequestLoggerInterface
     {
         return new ZedRequestInMemoryLogger(
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
+            $this->getConfig()->getZedRequestBaseUrl()
         );
     }
 

@@ -22,11 +22,18 @@ class ZedRequestInMemoryLogger implements ZedRequestLoggerInterface
     protected $utilEncodingService;
 
     /**
-     * @param \Spryker\Shared\ZedRequest\Dependency\Service\ZedRequestToUtilEncodingServiceInterface $utilEncodingService
+     * @var string
      */
-    public function __construct(ZedRequestToUtilEncodingServiceInterface $utilEncodingService)
+    protected $host;
+
+    /**
+     * @param \Spryker\Shared\ZedRequest\Dependency\Service\ZedRequestToUtilEncodingServiceInterface $utilEncodingService
+     * @param string $host
+     */
+    public function __construct(ZedRequestToUtilEncodingServiceInterface $utilEncodingService, string $host = '')
     {
         $this->utilEncodingService = $utilEncodingService;
+        $this->host = $host;
     }
 
     /**
@@ -39,7 +46,7 @@ class ZedRequestInMemoryLogger implements ZedRequestLoggerInterface
     public function log(string $url, array $payload, array $result): void
     {
         static::$logs[] = [
-            'destination' => $url,
+            'destination' => !empty($this->host) ? $this->host . $url : $url,
             'payload' => $this->utilEncodingService->encodeJson($payload, JSON_PRETTY_PRINT) ?? '',
             'result' => $this->utilEncodingService->encodeJson($result, JSON_PRETTY_PRINT) ?? '',
         ];
