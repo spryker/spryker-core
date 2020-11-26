@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 
 /**
- * Plugin exists to allow validating of the `CheckoutDataTransfer`s.
+ * Plugin allows validating CheckoutDataTransfer's.
  *
  * Validation of `checkout-data` REST api request.
  */

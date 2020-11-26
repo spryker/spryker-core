@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 
 /**
- * Plugin exists to allow validating of the `RestCheckoutRequestAttributesTransfer`s.
+ * Plugin allows validating RestCheckoutRequestAttributesTransfer's.
  *
  * Validation of `checkout` REST api request.
  */
