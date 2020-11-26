@@ -20,8 +20,6 @@ import { TableFiltersFeatureModule } from '@spryker/table.feature.filters';
 import { TableFilterDateRangeComponent, TableFilterDateRangeModule } from '@spryker/table.filter.date-range';
 import { TableFilterSelectComponent, TableFilterSelectModule } from '@spryker/table.filter.select';
 import { TableFilterTreeSelectComponent, TableFilterTreeSelectModule } from '@spryker/table.filter.tree-select';
-import { TableEditableEditRequestToken } from '@spryker/table.feature.editable';
-import { TableEditableDataSerializer } from './table-editable-data-serializer';
 
 class TableDefaultConfigData implements Partial<TableConfig> {
     total = {
@@ -125,10 +123,6 @@ class TableDefaultConfigData implements Partial<TableConfig> {
         {
             provide: TableDefaultConfig,
             useClass: TableDefaultConfigData,
-        },
-        {
-            provide: TableEditableEditRequestToken,
-            useExisting: TableEditableDataSerializer,
         },
     ],
 })
