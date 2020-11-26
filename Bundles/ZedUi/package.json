@@ -15,7 +15,7 @@
         "@angular/router": "^9.1.12",
         "@spryker/ajax-action": "^0.2.0-next.2",
         "@spryker/ajax-action.post-action.close-overlay": "^0.1.0-next.2",
-        "@spryker/ajax-action.post-action.redirect": "^0.1.0-next.2",
+        "@spryker/ajax-action.post-action.redirect": "^0.1.0-next.3",
         "@spryker/ajax-action.post-action.refresh-drawer": "^0.1.0-next.0",
         "@spryker/ajax-action.post-action.refresh-parent-table": "0.0.2-next.0",
         "@spryker/ajax-action.post-action.refresh-table": "^0.1.0-next.1",
