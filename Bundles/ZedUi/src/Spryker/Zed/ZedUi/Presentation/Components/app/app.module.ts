@@ -16,7 +16,7 @@ import { DefaultContextSerializationModule } from '@spryker/utils';
 import { WebComponentsModule } from '@spryker/web-components';
 import { ModalModule } from '@spryker/modal';
 import { UnsavedChangesModule } from '@spryker/unsaved-changes';
-import { UnsavedChangesBrowserGuard } from '@spryker/unsaved-changes.guard.browser';
+import { UnsavedChangesBrowserGuardModule } from '@spryker/unsaved-changes.guard.browser';
 import { UnsavedChangesDrawerGuardModule } from '@spryker/unsaved-changes.guard.drawer';
 import { UnsavedChangesGuardNavigationModule, UnsavedChangesNavigationGuard } from '@spryker/unsaved-changes.guard.navigation';
 
@@ -45,9 +45,10 @@ import { TableRootModule } from './table/table-root.module';
         UnsavedChangesModule.forRoot(),
         UnsavedChangesDrawerGuardModule.forRoot(),
         UnsavedChangesGuardNavigationModule.forRoot(),
-        UnsavedChangesModule.withGuard(UnsavedChangesBrowserGuard),
+        UnsavedChangesBrowserGuardModule.forRoot(),
         ModalModule.forRoot(),
     ],
+    // FIXME: UnsavedChangesNavigationGuard should work without explicit providing
     providers: [UnsavedChangesNavigationGuard],
 })
 export class AppModule {

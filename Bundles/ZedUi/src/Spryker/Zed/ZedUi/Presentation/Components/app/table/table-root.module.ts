@@ -21,6 +21,7 @@ import { TableFilterDateRangeComponent, TableFilterDateRangeModule } from '@spry
 import { TableFilterSelectComponent, TableFilterSelectModule } from '@spryker/table.filter.select';
 import { TableFilterTreeSelectComponent, TableFilterTreeSelectModule } from '@spryker/table.filter.tree-select';
 import { TableEditableEditRequestToken } from '@spryker/table.feature.editable';
+import { TableEditableDataSerializer } from './table-editable-data-serializer';
 
 class TableDefaultConfigData implements Partial<TableConfig> {
     total = {
@@ -29,12 +30,6 @@ class TableDefaultConfigData implements Partial<TableConfig> {
     columnConfigurator = {
         enabled: true,
     };
-}
-
-class TableEditableDataSerializer {
-    serialize(data: TableDataRow): unknown {
-        return JSON.stringify(data);
-    }
 }
 
 @NgModule({

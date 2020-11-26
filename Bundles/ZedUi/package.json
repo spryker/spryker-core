@@ -36,7 +36,7 @@
         "@spryker/locale": "^0.2.0-next.8",
         "@spryker/logo": "^0.2.0-next.1",
         "@spryker/modal": "^0.0.2-next.1",
-        "@spryker/navigation": "^0.2.0-next.4",
+        "@spryker/navigation": "^0.2.0-next.5",
         "@spryker/notification": "^0.2.0-next.2",
         "@spryker/pagination": "^0.2.0-next.1",
         "@spryker/popover": "^0.1.0-next.2",
