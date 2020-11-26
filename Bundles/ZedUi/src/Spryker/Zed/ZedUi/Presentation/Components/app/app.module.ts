@@ -18,7 +18,7 @@ import { ModalModule } from '@spryker/modal';
 import { UnsavedChangesModule } from '@spryker/unsaved-changes';
 import { UnsavedChangesBrowserGuard } from '@spryker/unsaved-changes.guard.browser';
 import { UnsavedChangesDrawerGuardModule } from '@spryker/unsaved-changes.guard.drawer';
-import { UnsavedChangesGuardNavigationModule } from '@spryker/unsaved-changes.guard.navigation';
+import { UnsavedChangesGuardNavigationModule, UnsavedChangesNavigationGuard } from '@spryker/unsaved-changes.guard.navigation';
 
 import { _getNgModules, ComponentsNgModule } from './registry';
 import { TableRootModule } from './table/table-root.module';
@@ -48,7 +48,7 @@ import { TableRootModule } from './table/table-root.module';
         UnsavedChangesModule.withGuard(UnsavedChangesBrowserGuard),
         ModalModule.forRoot(),
     ],
-    providers: [],
+    providers: [UnsavedChangesNavigationGuard],
 })
 export class AppModule {
     constructor(private injector: Injector, private compiler: Compiler) {}
