@@ -48,11 +48,13 @@ class ShipmentExpander implements ShipmentExpanderInterface
      */
     protected function expandItemShipmentWithMerchantReference(ItemTransfer $itemTransfer): ItemTransfer
     {
-        if (!$itemTransfer->getShipment()) {
+        $shipmentTransfer = $itemTransfer->getShipment();
+
+        if (!$shipmentTransfer) {
             return $itemTransfer;
         }
 
-        $itemTransfer->getShipment()->setMerchantReference($itemTransfer->getMerchantReference());
+        $shipmentTransfer->setMerchantReference($itemTransfer->getMerchantReference());
 
         return $itemTransfer;
     }

@@ -104,7 +104,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
         $quoteResponseTransfer = $this->quoteFacade->deleteQuote($quoteTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->createQuoteResponseError(
+            return $this->createRestCheckoutResponseError(
                 $quoteResponseTransfer,
                 CheckoutRestApiConfig::ERROR_IDENTIFIER_UNABLE_TO_DELETE_CART
             );
@@ -136,7 +136,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
      *
      * @return \Generated\Shared\Transfer\RestCheckoutResponseTransfer
      */
-    protected function createQuoteResponseError(
+    protected function createRestCheckoutResponseError(
         QuoteResponseTransfer $quoteResponseTransfer,
         string $errorIdentifier
     ): RestCheckoutResponseTransfer {

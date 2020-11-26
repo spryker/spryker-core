@@ -22,10 +22,10 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
  * @group Zed
  * @group ShipmentsRestApi
  * @group Business
- * @group ValidateItemsInCheckoutDataTest
+ * @group ValidateItemsShipmentTest
  * Add your own group annotations below this line
  */
-class ValidateItemsInCheckoutDataTest extends Unit
+class ValidateItemsShipmentTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\ShipmentsRestApi\Business\Validator\CartItemCheckoutDataValidator::GLOSSARY_KEY_ITEM_NO_SHIPMENT_SELECTED
@@ -40,13 +40,13 @@ class ValidateItemsInCheckoutDataTest extends Unit
     /**
      * @return void
      */
-    public function testValidateItemsInCheckoutDataWillNotReturnErrorIfNoShipmentDataIsProvided(): void
+    public function testValidateItemsShipmentWillNotReturnErrorIfNoShipmentDataIsProvided(): void
     {
         // Arrange
         $checkoutDataTransfer = (new CheckoutDataBuilder([CheckoutDataTransfer::SHIPMENTS => []]))->build();
 
         // Act
-        $checkoutResponseTransfer = $this->tester->getFacade()->validateItemsInCheckoutData($checkoutDataTransfer);
+        $checkoutResponseTransfer = $this->tester->getFacade()->validateItemsShipment($checkoutDataTransfer);
 
         // Assert
         $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
@@ -55,7 +55,7 @@ class ValidateItemsInCheckoutDataTest extends Unit
     /**
      * @return void
      */
-    public function testValidateItemsInCheckoutDataWillNotReturnErrorIfValidShipmentDataPerItemIsProvided(): void
+    public function testValidateItemsShipmentWillNotReturnErrorIfValidShipmentDataPerItemIsProvided(): void
     {
         // Arrange
         $quoteTransfer = (new QuoteBuilder())->withItem()->build();
@@ -67,7 +67,7 @@ class ValidateItemsInCheckoutDataTest extends Unit
             );
 
         // Act
-        $checkoutResponseTransfer = $this->tester->getFacade()->validateItemsInCheckoutData($checkoutDataTransfer);
+        $checkoutResponseTransfer = $this->tester->getFacade()->validateItemsShipment($checkoutDataTransfer);
 
         // Assert
         $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
@@ -76,7 +76,7 @@ class ValidateItemsInCheckoutDataTest extends Unit
     /**
      * @return void
      */
-    public function testValidateItemsInCheckoutDataWillNotReturnErrorIfValidShipmentDataPerBundleItemIsProvided(): void
+    public function testValidateItemsShipmentWillNotReturnErrorIfValidShipmentDataPerBundleItemIsProvided(): void
     {
         // Arrange
         $quoteTransfer = (new QuoteBuilder())->withBundleItem()->build();
@@ -88,7 +88,7 @@ class ValidateItemsInCheckoutDataTest extends Unit
             );
 
         // Act
-        $checkoutResponseTransfer = $this->tester->getFacade()->validateItemsInCheckoutData($checkoutDataTransfer);
+        $checkoutResponseTransfer = $this->tester->getFacade()->validateItemsShipment($checkoutDataTransfer);
 
         // Assert
         $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
@@ -97,7 +97,7 @@ class ValidateItemsInCheckoutDataTest extends Unit
     /**
      * @return void
      */
-    public function testValidateItemsInCheckoutDataWillReturnErrorIfInvalidShipmentDataPerItemIsProvided(): void
+    public function testValidateItemsShipmentWillReturnErrorIfInvalidShipmentDataPerItemIsProvided(): void
     {
         // Arrange
         $quoteTransfer = (new QuoteBuilder())
@@ -112,7 +112,7 @@ class ValidateItemsInCheckoutDataTest extends Unit
             );
 
         // Act
-        $checkoutResponseTransfer = $this->tester->getFacade()->validateItemsInCheckoutData($checkoutDataTransfer);
+        $checkoutResponseTransfer = $this->tester->getFacade()->validateItemsShipment($checkoutDataTransfer);
 
         // Assert
         $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
@@ -126,7 +126,7 @@ class ValidateItemsInCheckoutDataTest extends Unit
     /**
      * @return void
      */
-    public function testValidateItemsInCheckoutDataWillReturnErrorIfInvalidShipmentDataPerItemBundleIsProvided(): void
+    public function testValidateItemsShipmentWillReturnErrorIfInvalidShipmentDataPerItemBundleIsProvided(): void
     {
         // Arrange
         $quoteTransfer = (new QuoteBuilder())
@@ -141,7 +141,7 @@ class ValidateItemsInCheckoutDataTest extends Unit
             );
 
         // Act
-        $checkoutResponseTransfer = $this->tester->getFacade()->validateItemsInCheckoutData($checkoutDataTransfer);
+        $checkoutResponseTransfer = $this->tester->getFacade()->validateItemsShipment($checkoutDataTransfer);
 
         // Assert
         $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
@@ -155,7 +155,7 @@ class ValidateItemsInCheckoutDataTest extends Unit
     /**
      * @return void
      */
-    public function testValidateItemsInCheckoutDataWillThrowExceptionIfQuoteIsNotProvided(): void
+    public function testValidateItemsShipmentWillThrowExceptionIfQuoteIsNotProvided(): void
     {
         // Arrange
         $this->expectException(RequiredTransferPropertyException::class);
@@ -166,6 +166,6 @@ class ValidateItemsInCheckoutDataTest extends Unit
         $checkoutDataTransfer->setQuote(null);
 
         // Act
-        $this->tester->getFacade()->validateItemsInCheckoutData($checkoutDataTransfer);
+        $this->tester->getFacade()->validateItemsShipment($checkoutDataTransfer);
     }
 }

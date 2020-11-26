@@ -11,9 +11,11 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CompanyUnitAddressBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\RestAddressBuilder;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\CompanyBusinessUnitAddressesRestApiBusinessFactory;
 use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Dependency\Facade\CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressFacadeBridge;
 use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Dependency\Facade\CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressFacadeInterface;
@@ -70,15 +72,7 @@ class GetCompanyBusinessUnitAddressTest extends Unit
             );
 
         // Assert
-        $this->assertNull($addressTransfer->getUuid());
-        $this->assertTrue($addressTransfer->getIsAddressSavingSkipped());
-        $this->assertSame($companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getAddress1(), $addressTransfer->getAddress1());
-        $this->assertSame($companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getAddress2(), $addressTransfer->getAddress2());
-        $this->assertSame($companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getPhone(), $addressTransfer->getPhone());
-        $this->assertSame($quoteTransfer->getCustomer()->getEmail(), $addressTransfer->getEmail());
-        $this->assertSame($quoteTransfer->getCustomer()->getFirstName(), $addressTransfer->getFirstName());
-        $this->assertSame($quoteTransfer->getCustomer()->getLastName(), $addressTransfer->getLastName());
-        $this->assertSame($companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getCompany()->getName(), $addressTransfer->getCompany());
+        $this->assertCompanyBusinessUnitAddress($companyUnitAddressResponseTransfer, $quoteTransfer, $addressTransfer);
     }
 
     /**
@@ -165,6 +159,29 @@ class GetCompanyBusinessUnitAddressTest extends Unit
 
         // Assert
         $this->assertSame($restAddressTransfer->getAddress1(), $addressTransfer->getAddress1());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer $companyUnitAddressResponseTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return void
+     */
+    protected function assertCompanyBusinessUnitAddress(
+        CompanyUnitAddressResponseTransfer $companyUnitAddressResponseTransfer,
+        QuoteTransfer $quoteTransfer,
+        AddressTransfer $addressTransfer
+    ): void {
+        $this->assertNull($addressTransfer->getUuid());
+        $this->assertTrue($addressTransfer->getIsAddressSavingSkipped());
+        $this->assertSame($companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getAddress1(), $addressTransfer->getAddress1());
+        $this->assertSame($companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getAddress2(), $addressTransfer->getAddress2());
+        $this->assertSame($companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getPhone(), $addressTransfer->getPhone());
+        $this->assertSame($quoteTransfer->getCustomer()->getEmail(), $addressTransfer->getEmail());
+        $this->assertSame($quoteTransfer->getCustomer()->getFirstName(), $addressTransfer->getFirstName());
+        $this->assertSame($quoteTransfer->getCustomer()->getLastName(), $addressTransfer->getLastName());
+        $this->assertSame($companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getCompany()->getName(), $addressTransfer->getCompany());
     }
 
     /**

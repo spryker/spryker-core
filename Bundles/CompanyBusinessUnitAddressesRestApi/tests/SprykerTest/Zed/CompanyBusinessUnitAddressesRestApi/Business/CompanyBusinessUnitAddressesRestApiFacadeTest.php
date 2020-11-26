@@ -237,7 +237,7 @@ class CompanyBusinessUnitAddressesRestApiFacadeTest extends Unit
     {
         $this->assertIsInt(
             $addressTransfer->getIdCompanyUnitAddress(),
-            'Expected billing address has idCompanyUnitAddress set.'
+            'Expected company unit address has idCompanyUnitAddress set.'
         );
         $this->assertTrue(
             $addressTransfer->getIsAddressSavingSkipped(),

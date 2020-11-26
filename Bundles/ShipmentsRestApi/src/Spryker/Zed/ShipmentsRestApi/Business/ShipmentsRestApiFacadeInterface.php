@@ -93,5 +93,5 @@ interface ShipmentsRestApiFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function validateItemsInCheckoutData(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer;
+    public function validateItemsShipment(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer;
 }

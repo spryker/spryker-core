@@ -33,6 +33,6 @@ class ItemsReadCheckoutDataValidatorPlugin extends AbstractPlugin implements Rea
      */
     public function validateCheckoutData(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer
     {
-        return $this->getFacade()->validateItemsInCheckoutData($checkoutDataTransfer);
+        return $this->getFacade()->validateItemsShipment($checkoutDataTransfer);
     }
 }

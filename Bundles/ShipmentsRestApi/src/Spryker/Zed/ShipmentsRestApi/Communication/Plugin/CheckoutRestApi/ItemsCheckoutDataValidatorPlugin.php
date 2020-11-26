@@ -33,6 +33,6 @@ class ItemsCheckoutDataValidatorPlugin extends AbstractPlugin implements Checkou
      */
     public function validateCheckoutData(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer
     {
-        return $this->getFacade()->validateItemsInCheckoutData($checkoutDataTransfer);
+        return $this->getFacade()->validateItemsShipment($checkoutDataTransfer);
     }
 }

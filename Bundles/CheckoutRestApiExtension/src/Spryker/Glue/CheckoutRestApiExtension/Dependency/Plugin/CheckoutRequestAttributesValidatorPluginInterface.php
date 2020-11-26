@@ -19,7 +19,7 @@ interface CheckoutRequestAttributesValidatorPluginInterface
 {
     /**
      * Specification:
-     * - Validates checkout-data Rest API request attributes.
+     * - Validates checkout-data, checkout Rest API requests attributes.
      *
      * @api
      *

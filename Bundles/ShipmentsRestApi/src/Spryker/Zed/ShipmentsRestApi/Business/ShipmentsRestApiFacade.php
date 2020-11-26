@@ -104,10 +104,10 @@ class ShipmentsRestApiFacade extends AbstractFacade implements ShipmentsRestApiF
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function validateItemsInCheckoutData(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer
+    public function validateItemsShipment(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer
     {
         return $this->getFactory()
             ->createCartItemCheckoutDataValidator()
-            ->validateItemsInCheckoutData($checkoutDataTransfer);
+            ->validateItemsShipment($checkoutDataTransfer);
     }
 }
