@@ -3,7 +3,7 @@
 {% block toolbar %}
     {% set icon %}
         {{ include('@WebProfiler/Icon/cache.svg') }}
-        <span class="sf-toolbar-value">Redis</span>
+        <span class="sf-toolbar-value">Redis {{ collector.calls|length }}</span>
     {% endset %}
 
     {% set text %}

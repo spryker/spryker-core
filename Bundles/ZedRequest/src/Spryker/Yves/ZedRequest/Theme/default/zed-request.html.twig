@@ -3,7 +3,7 @@
 {% block toolbar %}
     {% set icon %}
         {{ include('@WebProfiler/Icon/http-client.svg') }}
-        <span class="sf-toolbar-value">Zed Requests</span>
+        <span class="sf-toolbar-value">Zed Requests {{ collector.logs|length }}</span>
     {% endset %}
 
     {% set text %}

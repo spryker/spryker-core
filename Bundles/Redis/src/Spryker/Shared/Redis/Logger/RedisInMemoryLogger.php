@@ -48,6 +48,12 @@ class RedisInMemoryLogger implements RedisLoggerInterface
      */
     public function log(string $command, array $payload, $result = null)
     {
+        $payload = $this->normalizePayload($payload);
+
+        if (isset($payload['value'])) {
+            $payload['value'] = $this->isBinaryString($payload['value']) ? bin2hex($payload['value']) : $payload['value'];
+        }
+
         static::$logs[] = [
             'destination' => $this->dsnString,
             'command' => $command,
@@ -62,6 +68,38 @@ class RedisInMemoryLogger implements RedisLoggerInterface
     public function getLogs(): array
     {
         return static::$logs;
+    }
+
+    /**
+     * @param array $payload
+     *
+     * @return array
+     */
+    protected function normalizePayload(array $payload): array
+    {
+        $normalizedPayload = [];
+
+        foreach ($payload as $key => $value) {
+            if (!is_string($value) || !$this->isBinaryString($value)) {
+                $normalizedPayload[$key] = $value;
+
+                continue;
+            }
+
+            $normalizedPayload[$key] = sprintf('[binary]%s', bin2hex($value));
+        }
+
+        return $normalizedPayload;
+    }
+
+    /**
+     * @param string $data
+     *
+     * @return bool
+     */
+    protected function isBinaryString(string $data): bool
+    {
+        return preg_match('~[^\x20-\x7E\t\r\n]~', $data) > 0;
     }
 
     /**

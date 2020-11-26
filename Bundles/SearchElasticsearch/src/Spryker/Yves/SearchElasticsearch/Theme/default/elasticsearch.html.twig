@@ -3,7 +3,7 @@
 {% block toolbar %}
     {% set icon %}
         {{ include('@WebProfiler/Icon/search.svg') }}
-        <span class="sf-toolbar-value">Elasticsearch</span>
+        <span class="sf-toolbar-value">Elasticsearch {{ collector.logs|length }}</span>
     {% endset %}
 
     {% set text %}
