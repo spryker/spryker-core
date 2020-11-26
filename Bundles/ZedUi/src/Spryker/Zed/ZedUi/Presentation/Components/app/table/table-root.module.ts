@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { TableModule, TableConfig, TableDefaultConfig } from '@spryker/table';
+import { TableModule, TableConfig, TableDefaultConfig, TableDataRow } from '@spryker/table';
 import {
     TableFormOverlayActionHandlerModule,
     TableFormOverlayActionHandlerService,
@@ -8,10 +8,7 @@ import {
     TableHtmlOverlayActionHandlerService,
     TableHtmlOverlayActionHandlerModule,
 } from '@spryker/table.action-handler.html-overlay';
-import {
-    TableUrlActionHandlerModule,
-    TableUrlActionHandlerService,
-} from '@spryker/table.action-handler.url';
+import { TableUrlActionHandlerModule, TableUrlActionHandlerService } from '@spryker/table.action-handler.url';
 import { TableColumnChipComponent, TableColumnChipModule } from '@spryker/table.column.chip';
 import { TableColumnDateComponent, TableColumnDateModule } from '@spryker/table.column.date';
 import { TableColumnImageComponent, TableColumnImageModule } from '@spryker/table.column.image';
@@ -23,8 +20,10 @@ import { TableFiltersFeatureModule } from '@spryker/table.feature.filters';
 import { TableFilterDateRangeComponent, TableFilterDateRangeModule } from '@spryker/table.filter.date-range';
 import { TableFilterSelectComponent, TableFilterSelectModule } from '@spryker/table.filter.select';
 import { TableFilterTreeSelectComponent, TableFilterTreeSelectModule } from '@spryker/table.filter.tree-select';
+import { TableEditableEditRequestToken } from '@spryker/table.feature.editable';
+import { TableEditableDataSerializer } from './table-editable-data-serializer';
 
-export class TableDefaultConfigData implements Partial<TableConfig> {
+class TableDefaultConfigData implements Partial<TableConfig> {
     total = {
         enabled: true,
     };
@@ -126,6 +125,10 @@ export class TableDefaultConfigData implements Partial<TableConfig> {
         {
             provide: TableDefaultConfig,
             useClass: TableDefaultConfigData,
+        },
+        {
+            provide: TableEditableEditRequestToken,
+            useExisting: TableEditableDataSerializer,
         },
     ],
 })

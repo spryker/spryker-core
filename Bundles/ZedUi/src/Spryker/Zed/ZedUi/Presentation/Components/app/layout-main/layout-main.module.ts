@@ -27,7 +27,7 @@ import {
         ApplyContextsModule,
         CustomElementBoundaryModule,
         IconDashboardModule,
-	    IconProfileModule,
+	      IconProfileModule,
         IconOrdersModule,
         IconOffersModule,
     ],
