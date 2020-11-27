@@ -9,9 +9,9 @@ namespace Spryker\Zed\SearchElasticsearch;
 
 use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientBridge;
 use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
+use Spryker\Shared\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceBridge;
 use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilSanitizeServiceBridge;
 
 /**
@@ -62,7 +62,9 @@ class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProv
     protected function addUtilEncodingFacade(Container $container): Container
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
-            return new SearchElasticsearchToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
+            return new SearchElasticsearchToUtilEncodingServiceBridge(
+                $container->getLocator()->utilEncoding()->service()
+            );
         });
 
         return $container;
