@@ -136,11 +136,11 @@ class PriceProductOfferTableDataMapper
             $keyNetPrice = $priceTypeName . static::SUFFIX_PRICE_TYPE_NET;
             $keyGrossPrice = $priceTypeName . static::SUFFIX_PRICE_TYPE_GROSS;
 
-            if ($priceProductOfferTableRowDataArray[$keyGrossPrice]) {
+            if (isset($priceProductOfferTableRowDataArray[$keyGrossPrice])) {
                 $prices[$priceTypeName . static::SUFFIX_PRICE_TYPE_GROSS_AMOUNT] = $priceProductOfferTableRowDataArray[$keyGrossPrice];
             }
 
-            if ($priceProductOfferTableRowDataArray[$keyNetPrice]) {
+            if (isset($priceProductOfferTableRowDataArray[$keyNetPrice])) {
                 $prices[$priceTypeName . static::SUFFIX_PRICE_TYPE_NET_AMOUNT] = $priceProductOfferTableRowDataArray[$keyNetPrice];
             }
         }

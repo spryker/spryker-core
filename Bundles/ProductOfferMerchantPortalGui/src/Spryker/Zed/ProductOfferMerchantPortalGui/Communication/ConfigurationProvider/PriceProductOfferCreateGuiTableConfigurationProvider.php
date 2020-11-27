@@ -14,6 +14,11 @@ use Generated\Shared\Transfer\GuiTableSettingsConfigurationTransfer;
 class PriceProductOfferCreateGuiTableConfigurationProvider extends AbstractPriceProductOfferGuiTableConfigurationProvider implements PriceProductOfferCreateGuiTableConfigurationProviderInterface
 {
     /**
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\CreateProductOfferController::priceTableDataAction()
+     */
+    protected const DATA_URL = '/product-offer-merchant-portal-gui/create-product-offer/price-table-data';
+
+    /**
      * @phpstan-param array<mixed>|null $initialData
      *
      * @param array|null $initialData
@@ -25,9 +30,8 @@ class PriceProductOfferCreateGuiTableConfigurationProvider extends AbstractPrice
         $guiTableConfigurationBuilder = $this->guiTableFactory->createConfigurationBuilder();
         $guiTableConfigurationBuilder = $this->addColumns($guiTableConfigurationBuilder);
 
-        $dataSourceUrl = str_replace(static::PARAM_ID_PRODUCT_OFFER, '0', static::DATA_URL);
         $guiTableConfigurationBuilder
-            ->setDataSourceUrl($dataSourceUrl)
+            ->setDataSourceUrl(static::DATA_URL)
             ->setIsItemSelectionEnabled(false)
             ->setDefaultPageSize(25);
 

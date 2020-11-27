@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller;
 
+use ArrayObject;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
@@ -27,6 +29,16 @@ class AbstractProductOfferController extends AbstractController
     protected const KEY_ERRORS = 'errors';
     protected const KEY_ROW_ERROR = 'rowError';
     protected const KEY_COLUMN_ERRORS = 'columnErrors';
+
+    /**
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\AbstractPriceProductOfferGuiTableConfigurationProvider::COL_STORE
+     */
+    protected const KEY_COLUMN_STORE = 'store';
+
+    /**
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\AbstractPriceProductOfferGuiTableConfigurationProvider::COL_CURRENCY
+     */
+    protected const KEY_COLUMN_CURRENCY = 'currency';
 
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -98,21 +110,62 @@ class AbstractProductOfferController extends AbstractController
         foreach ($priceProductOfferValidationErrorTransfers as $priceProductOfferValidationErrorTransfer) {
             $validationErrorTransfers = $priceProductOfferValidationErrorTransfer->getValidationErrors();
             $priceProductTransfer = $priceProductOfferValidationErrorTransfer->getPriceProduct();
+
+            $initialData = $this->compareValidationErrorsWithRequestedData(
+                $validationErrorTransfers,
+                $priceProductTransfer,
+                $requestTableData,
+                $initialData
+            );
+        }
+
+        return $initialData;
+    }
+
+    /**
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\ValidationErrorTransfer> $validationErrorTransfers
+     * @phpstan-param array<string, mixed> $requestTableData
+     * @phpstan-param array<int|string, mixed> $initialData
+     *
+     * @phpstan-return array<int|string, mixed>
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\ValidationErrorTransfer[] $validationErrorTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param array $requestTableData
+     * @param array $initialData
+     *
+     * @return array
+     */
+    protected function compareValidationErrorsWithRequestedData(
+        ArrayObject $validationErrorTransfers,
+        PriceProductTransfer $priceProductTransfer,
+        $requestTableData,
+        $initialData
+    ): array {
+        foreach ($validationErrorTransfers as $validationErrorTransfer) {
             $priceTypeName = mb_strtolower($priceProductTransfer->getPriceType()->getName());
+            $errorMessage = $validationErrorTransfer->getMessage();
+            $invalidValue = $validationErrorTransfer->getInvalidValue();
+            $propertyPath = $validationErrorTransfer->getPropertyPath();
+            $columnId = $priceTypeName . $validationErrorTransfer->getPropertyPath();
+            $idStore = $priceProductTransfer->getMoneyValue()->getStore()->getIdStore();
+            $idCurrency = $priceProductTransfer->getMoneyValue()->getCurrency()->getIdCurrency();
 
-            foreach ($validationErrorTransfers as $validationErrorTransfer) {
-                $errorMessage = $validationErrorTransfer->getMessage();
-                $propertyPath = $validationErrorTransfer->getPropertyPath();
-                $columnId = $priceTypeName . $propertyPath;
+            foreach ($requestTableData as $key => $data) {
+                $isCorrectRow = $data[static::KEY_COLUMN_STORE] === $idStore && $data[static::KEY_COLUMN_CURRENCY] === $idCurrency;
 
-                foreach ($requestTableData as $key => $data) {
-                    if (!$propertyPath) {
+                if (!$propertyPath) {
+                    if ($isCorrectRow) {
                         $initialData[static::KEY_ERRORS][$key][static::KEY_ROW_ERROR] = $errorMessage;
-
-                        break;
                     }
 
+                    continue;
+                }
+
+                if ($isCorrectRow) {
                     $initialData[static::KEY_ERRORS][$key][static::KEY_COLUMN_ERRORS][$columnId] = $errorMessage;
+
+                    continue;
                 }
             }
         }

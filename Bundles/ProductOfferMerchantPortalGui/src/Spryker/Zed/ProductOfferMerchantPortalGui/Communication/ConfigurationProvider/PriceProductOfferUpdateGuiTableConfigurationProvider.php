@@ -14,6 +14,18 @@ use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderIn
 
 class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPriceProductOfferGuiTableConfigurationProvider implements PriceProductOfferUpdateGuiTableConfigurationProviderInterface
 {
+    protected const ID_FILTER_IN_STORES = 'inStores';
+    protected const ID_FILTER_IN_CURRENCIES = 'inCurrencies';
+    protected const ID_ROW_ACTION_DELETE = 'delete-price';
+
+    protected const TITLE_FILTER_STORES = 'Stores';
+    protected const TITLE_FILTER_CURRENCIES = 'Currencies';
+    protected const TITLE_ROW_ACTION_DELETE = 'Delete';
+    protected const TITLE_ADD_BUTTON = 'Save';
+    protected const TITLE_CANCEL_BUTTON = 'Cancel';
+
+    protected const METHOD_UPDATE_ACTION_URL = 'POST';
+
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\UpdateProductOfferController::savePricesAction()
      */
@@ -23,6 +35,11 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\UpdateProductOfferController::deletePricesAction()
      */
     protected const URL_DELETE_PRICE = '/product-offer-merchant-portal-gui/update-product-offer/delete-prices?product-offer-id=$OFFER_ID&price-product-offer-ids=${row.price_product_offer_ids}';
+
+    /**
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\UpdateProductOfferController::priceTableDataAction()
+     */
+    protected const DATA_URL = '/product-offer-merchant-portal-gui/update-product-offer/price-table-data?product-offer-id=$OFFER_ID';
 
     /**
      * @var int
@@ -71,8 +88,8 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
      */
     protected function addFilters(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
     {
-        $guiTableConfigurationBuilder->addFilterSelect('inStores', 'Stores', true, $this->getStoreOptions())
-            ->addFilterSelect('inCurrencies', 'Currencies', true, $this->getCurrencyOptions());
+        $guiTableConfigurationBuilder->addFilterSelect(static::ID_FILTER_IN_STORES, static::TITLE_FILTER_STORES, true, $this->getStoreOptions())
+            ->addFilterSelect(static::ID_FILTER_IN_CURRENCIES, static::TITLE_FILTER_CURRENCIES, true, $this->getCurrencyOptions());
 
         return $guiTableConfigurationBuilder;
     }
@@ -85,10 +102,10 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
     protected function addRowActions(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
     {
         $guiTableConfigurationBuilder->addRowActionUrl(
-            'delete-price',
-            'Delete',
+            static::ID_ROW_ACTION_DELETE,
+            static::TITLE_ROW_ACTION_DELETE,
             str_replace(static::PARAM_ID_PRODUCT_OFFER, (string)$this->idProductOffer, static::URL_DELETE_PRICE)
-        )->setRowClickAction('delete-price');
+        );
 
         return $guiTableConfigurationBuilder;
     }
@@ -103,9 +120,9 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
         $editableUrl = str_replace(static::PARAM_ID_PRODUCT_OFFER, (string)$this->idProductOffer, static::URL_SAVE_PRICES);
 
         $guiTableConfigurationBuilder = parent::addEditableButtons($guiTableConfigurationBuilder)
-            ->setEditableUpdateActionUrl('POST', $editableUrl)
-            ->addEditableUpdateActionAddButton('Save')
-            ->addEditableUpdateActionCancelButton('Cancel');
+            ->setEditableUpdateActionUrl(static::METHOD_UPDATE_ACTION_URL, $editableUrl)
+            ->addEditableUpdateActionAddButton(static::TITLE_ADD_BUTTON)
+            ->addEditableUpdateActionCancelButton(static::TITLE_CANCEL_BUTTON);
 
         return $guiTableConfigurationBuilder;
     }

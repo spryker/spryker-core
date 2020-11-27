@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -78,6 +79,20 @@ class CreateProductOfferController extends AbstractProductOfferController
             $productAbstractTransfer,
             $priceProductOfferTableConfiguration,
             $isPriceProductOffersValid
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function priceTableDataAction(Request $request): Response
+    {
+        return $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
+            $request,
+            $this->getFactory()->createProductOfferPriceTableDataProvider(),
+            $this->getFactory()->createPriceProductOfferCreateGuiTableConfigurationProvider()->getConfiguration()
         );
     }
 

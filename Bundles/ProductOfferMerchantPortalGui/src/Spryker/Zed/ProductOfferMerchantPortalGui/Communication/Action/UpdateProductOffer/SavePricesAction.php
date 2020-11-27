@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTrans
 use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Action\ActionInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMoneyFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface;
@@ -50,18 +51,26 @@ class SavePricesAction implements ActionInterface
     protected $utilEncodingService;
 
     /**
+     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMoneyFacadeInterface
+     */
+    protected $moneyFacade;
+
+    /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface $priceProductOfferFacade
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMoneyFacadeInterface $moneyFacade
      */
     public function __construct(
         ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface $priceProductOfferFacade,
         ProductOfferMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade,
-        ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService
+        ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService,
+        ProductOfferMerchantPortalGuiToMoneyFacadeInterface $moneyFacade
     ) {
         $this->priceProductOfferFacade = $priceProductOfferFacade;
         $this->priceProductFacade = $priceProductFacade;
         $this->utilEncodingService = $utilEncodingService;
+        $this->moneyFacade = $moneyFacade;
     }
 
     /**
@@ -134,7 +143,7 @@ class SavePricesAction implements ActionInterface
     protected function mapDataToProductOfferTransfers(array $data, ArrayObject $priceProductTransfers): ArrayObject
     {
         $key = (string)key($data);
-        $value = $data[$key] === '' ? null : (int)$data[$key];
+        $value = $data[$key] === '' ? null : $this->moneyFacade->convertDecimalToInteger((float)$data[$key]);
         $key = str_replace(']', '', $key);
         $key = explode('[', $key);
         $key = $key[count($key) - 1];

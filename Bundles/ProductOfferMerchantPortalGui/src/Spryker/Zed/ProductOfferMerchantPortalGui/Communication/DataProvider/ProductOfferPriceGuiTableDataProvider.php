@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\GuiTableRowDataResponseTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTableCriteriaTransfer;
 use Spryker\Shared\GuiTable\DataProvider\AbstractGuiTableDataProvider;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMoneyFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface;
 
 class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
@@ -28,15 +29,23 @@ class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
     protected $productOfferMerchantPortalGuiRepository;
 
     /**
+     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMoneyFacadeInterface
+     */
+    protected $moneyFacade;
+
+    /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface $productOfferMerchantPortalGuiRepository
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMoneyFacadeInterface $moneyFacade
      * @param int|null $idProductOffer
      */
     public function __construct(
         ProductOfferMerchantPortalGuiRepositoryInterface $productOfferMerchantPortalGuiRepository,
+        ProductOfferMerchantPortalGuiToMoneyFacadeInterface $moneyFacade,
         ?int $idProductOffer = null
     ) {
         $this->idProductOffer = $idProductOffer;
         $this->productOfferMerchantPortalGuiRepository = $productOfferMerchantPortalGuiRepository;
+        $this->moneyFacade = $moneyFacade;
     }
 
     /**
@@ -69,7 +78,7 @@ class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
             $responseData = $priceProductOfferTransfer->toArray();
 
             foreach ($priceProductOfferTransfer->getPrices() as $priceType => $priceValue) {
-                $responseData[$priceType] = $priceValue;
+                $responseData[$priceType] = $this->moneyFacade->convertIntegerToDecimal($priceValue);
             }
 
             $guiTableDataResponseTransfer->addRow((new GuiTableRowDataResponseTransfer())->setResponseData($responseData));

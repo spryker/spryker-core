@@ -91,7 +91,7 @@
 
     <transfer name="GuiTableEditableConfiguration">
         <property name="enabled" type="bool"/>
-        <property name="columns" type="GuiTableColumnConfiguration[]" singular="column" description="The configuration for columns in editable mode."/>
+        <property name="columns" type="GuiTableColumnConfiguration[]" singular="column" description="The configuration for columns are in editable mode."/>
         <property name="create" type="GuiTableEditableCreateConfiguration"/>
         <property name="update" type="GuiTableEditableUpdateConfiguration"/>
     </transfer>

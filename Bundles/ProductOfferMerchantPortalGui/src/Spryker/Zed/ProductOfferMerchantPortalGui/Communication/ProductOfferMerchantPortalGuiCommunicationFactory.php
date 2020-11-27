@@ -46,6 +46,7 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerc
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantStockFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMoneyFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToProductFacadeInterface;
@@ -152,6 +153,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     {
         return new ProductOfferPriceGuiTableDataProvider(
             $this->getRepository(),
+            $this->getMoneyFacade(),
             $idProductOffer
         );
     }
@@ -239,6 +241,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
             $this->getUtilEncodingService(),
             $this->getPriceProductFacade(),
             $this->getCurrencyFacade(),
+            $this->getMoneyFacade(),
             $idProductOffer
         );
     }
@@ -415,7 +418,8 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
         return new SavePricesAction(
             $this->getPriceProductOfferFacade(),
             $this->getPriceProductFacade(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
+            $this->getMoneyFacade()
         );
     }
 
@@ -425,5 +429,13 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     public function createValidProductOfferPriceIdsOwnByMerchantConstraint(): SymfonyConstraint
     {
         return new ValidProductOfferPriceIdsOwnByMerchantConstraint($this->getPriceProductOfferFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMoneyFacadeInterface
+     */
+    public function getMoneyFacade(): ProductOfferMerchantPortalGuiToMoneyFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductOfferMerchantPortalGuiDependencyProvider::FACADE_MONEY);
     }
 }

@@ -949,22 +949,36 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             }
 
             $priceTypeName = mb_strtolower($priceTypeTransfer->getName());
-
-            $priceProductStoreQuery->addAsColumn(
-                $priceTypeName . static::SUFFIX_PRICE_TYPE_GROSS,
-                'MAX(CASE WHEN ' . SpyPriceProductTableMap::COL_FK_PRICE_TYPE . ' = ' . $priceTypeTransfer->getIdPriceType() . ' THEN ' . SpyPriceProductStoreTableMap::COL_GROSS_PRICE . ' END)'
-            )->addAsColumn(
-                $priceTypeName . static::SUFFIX_PRICE_TYPE_NET,
-                'MAX(CASE WHEN ' . SpyPriceProductTableMap::COL_FK_PRICE_TYPE . ' = ' . $priceTypeTransfer->getIdPriceType() . ' THEN ' . SpyPriceProductStoreTableMap::COL_NET_PRICE . ' END)'
+            $grossColumnName = $priceTypeName . static::SUFFIX_PRICE_TYPE_GROSS;
+            $grossClause = sprintf(
+                'MAX(CASE WHEN %s = %s THEN %s END)',
+                SpyPriceProductTableMap::COL_FK_PRICE_TYPE,
+                $priceTypeTransfer->getIdPriceType(),
+                SpyPriceProductStoreTableMap::COL_GROSS_PRICE
             );
+
+            $netColumnName = $priceTypeName . static::SUFFIX_PRICE_TYPE_NET;
+            $netClause = sprintf(
+                'MAX(CASE WHEN %s = %s THEN %s END)',
+                SpyPriceProductTableMap::COL_FK_PRICE_TYPE,
+                $priceTypeTransfer->getIdPriceType(),
+                SpyPriceProductStoreTableMap::COL_NET_PRICE
+            );
+
+            $priceProductStoreQuery->addAsColumn($grossColumnName, $grossClause)
+                ->addAsColumn($netColumnName, $netClause);
         }
 
         $priceProductStoreQuery->addAsColumn(
             static::COL_PRICE_PRODUCT_OFFER_IDS,
-            'GROUP_CONCAT(' . SpyPriceProductOfferTableMap::COL_ID_PRICE_PRODUCT_OFFER . ')'
+            sprintf('GROUP_CONCAT(%s)', SpyPriceProductOfferTableMap::COL_ID_PRICE_PRODUCT_OFFER)
         )->addAsColumn(
             static::COL_TYPE_PRICE_PRODUCT_OFFER_IDS,
-            'GROUP_CONCAT(CONCAT(' . SpyPriceTypeTableMap::COL_NAME . ', \':\', ' . SpyPriceProductOfferTableMap::COL_ID_PRICE_PRODUCT_OFFER . '))'
+            sprintf(
+                'GROUP_CONCAT(CONCAT(%s,\':\',%s))',
+                SpyPriceTypeTableMap::COL_NAME,
+                SpyPriceProductOfferTableMap::COL_ID_PRICE_PRODUCT_OFFER
+            )
         );
 
         $priceProductStoreQuery = $this->applyPriceProductOfferFilters(

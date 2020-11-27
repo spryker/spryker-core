@@ -126,14 +126,14 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     protected $isTableEditable;
 
     /**
-     * @phpstan-var array<mixed>
+     * @phpstan-var array<string, mixed>
      *
      * @var array
      */
     protected $editableCreateAction = [];
 
     /**
-     * @phpstan-var array<mixed>
+     * @phpstan-var array<string, mixed>
      *
      * @var array
      */
@@ -1067,11 +1067,11 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     protected function addEditableUpdateConfigurationButtons(
         GuiTableEditableUpdateConfigurationTransfer $guiTableEditableUpdateConfiguration
     ): GuiTableEditableUpdateConfigurationTransfer {
-        if ($this->editableUpdateAction[static::KEY_EDITABLE_SAVE_BUTTON]) {
+        if (!empty($this->editableUpdateAction[static::KEY_EDITABLE_SAVE_BUTTON])) {
             $guiTableEditableUpdateConfiguration->setSaveButton($this->editableUpdateAction[static::KEY_EDITABLE_SAVE_BUTTON]);
         }
 
-        if ($this->editableUpdateAction[static::KEY_EDITABLE_CANCEL_BUTTON]) {
+        if (!empty($this->editableUpdateAction[static::KEY_EDITABLE_CANCEL_BUTTON])) {
             $guiTableEditableUpdateConfiguration->setCancelButton($this->editableUpdateAction[static::KEY_EDITABLE_CANCEL_BUTTON]);
         }
 

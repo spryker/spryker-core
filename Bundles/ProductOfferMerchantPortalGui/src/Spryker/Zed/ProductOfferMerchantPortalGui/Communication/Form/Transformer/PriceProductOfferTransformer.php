@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToCurrencyFacadeInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMoneyFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -61,21 +62,28 @@ class PriceProductOfferTransformer implements DataTransformerInterface
     protected $currencyFacade;
 
     /**
+     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMoneyFacadeInterface
+     */
+    protected $moneyFacade;
+
+    /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToCurrencyFacadeInterface $currencyFacade
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMoneyFacadeInterface $moneyFacade
      * @param int|null $idProductOffer
      */
     public function __construct(
         ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService,
         ProductOfferMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade,
         ProductOfferMerchantPortalGuiToCurrencyFacadeInterface $currencyFacade,
+        ProductOfferMerchantPortalGuiToMoneyFacadeInterface $moneyFacade,
         ?int $idProductOffer = null
     ) {
-        $this->idProductOffer = $idProductOffer;
         $this->utilEncodingService = $utilEncodingService;
         $this->priceProductFacade = $priceProductFacade;
         $this->currencyFacade = $currencyFacade;
+        $this->moneyFacade = $moneyFacade;
         $this->idProductOffer = $idProductOffer;
     }
 
@@ -111,8 +119,8 @@ class PriceProductOfferTransformer implements DataTransformerInterface
                 $netAmountKey = $pryceTypeName . static::SUFFIX_PRYCE_TYPE_NET;
                 $grossAmountKey = $pryceTypeName . static::SUFFIX_PRYCE_TYPE_GROSS;
 
-                $prices[$key][$netAmountKey] = $priceProductTransfer->getMoneyValue()->getNetAmount();
-                $prices[$key][$grossAmountKey] = $priceProductTransfer->getMoneyValue()->getGrossAmount();
+                $prices[$key][$netAmountKey] = $this->moneyFacade->convertIntegerToDecimal($priceProductTransfer->getMoneyValue()->getNetAmount());
+                $prices[$key][$grossAmountKey] = $this->moneyFacade->convertIntegerToDecimal($priceProductTransfer->getMoneyValue()->getGrossAmount());
             }
         }
 
@@ -180,8 +188,10 @@ class PriceProductOfferTransformer implements DataTransformerInterface
             $netAmountKey = $pryceTypeName . static::SUFFIX_PRYCE_TYPE_NET;
             $grossAmountKey = $pryceTypeName . static::SUFFIX_PRYCE_TYPE_GROSS;
 
-            $netAmount = $newPriceProductOffer[$netAmountKey] ?? null;
-            $grossAmount = $newPriceProductOffer[$grossAmountKey] ?? null;
+            $netAmount = $newPriceProductOffer[$netAmountKey] ?
+                $this->moneyFacade->convertDecimalToInteger((float)$newPriceProductOffer[$netAmountKey]) : null;
+            $grossAmount = $newPriceProductOffer[$grossAmountKey] ?
+                $this->moneyFacade->convertDecimalToInteger((float)$newPriceProductOffer[$grossAmountKey]) : null;
 
             $moneyValueTransfer->setNetAmount($netAmount)
                 ->setGrossAmount($grossAmount);

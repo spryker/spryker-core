@@ -31,11 +31,6 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
     protected const ID_COLUMN_SUFFIX_PRICE_TYPE_GROSS = '[moneyValue][grossAmount]';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\UpdateProductOfferController::priceTableDataAction()
-     */
-    protected const DATA_URL = '/product-offer-merchant-portal-gui/update-product-offer/price-table-data?product-offer-id=$OFFER_ID';
-
-    /**
      * @var \Spryker\Shared\GuiTable\GuiTableFactoryInterface
      */
     protected $guiTableFactory;
