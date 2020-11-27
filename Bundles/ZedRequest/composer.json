@@ -14,8 +14,10 @@
     "spryker/kernel": "^3.52.0",
     "spryker/messenger": "^3.0.0",
     "spryker/symfony": "^3.5.0",
+    "spryker/util-encoding": "^2.0.0",
     "spryker/util-network": "^1.1.0",
     "spryker/util-text": "^1.1.0",
+    "spryker/web-profiler-extension": "^1.0.0",
     "spryker/zed-request-extension": "^1.0.0"
   },
   "require-dev": {
