@@ -53,7 +53,7 @@ class {{ className }} extends {{ abstractClass }}
 {% if methodName starts with 'set' %}
 {{ macro.addSet(method) -}}
 {% endif %}
-{% if methodName starts with 'get' and not method.is_associative|default %}
+{% if methodName starts with 'get' and not method.isItemGetter|default %}
 {% if methodName ends with 'OrFail' %}
 {{ macro.addGetOrFail(method) -}}
 {% else %}
@@ -67,11 +67,8 @@ class {{ className }} extends {{ abstractClass }}
 {{ macro.addAssociative(method) -}}
 {% endif %}
 {% endif %}
-{% if methodName starts with 'get' and method.is_associative|default %}
+{% if methodName starts with 'get' and method.isItemGetter|default %}
 {{ macro.addGetCollectionElement(method) }}
-{% endif %}
-{% if methodName starts with 'has' and method.is_associative|default %}
-{{ macro.addHasCollectionElement(method) }}
 {% endif %}
 {% if methodName starts with 'require' %}
 {{ macro.addRequire(method) -}}

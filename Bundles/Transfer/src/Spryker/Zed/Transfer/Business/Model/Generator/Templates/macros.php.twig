@@ -118,7 +118,7 @@
      {% endif -%}
      * @return {{ method.return }}{% if method.typeShimNotice %} {{ method.typeShimNotice }}{% endif ~%}
      */
-    public function {{ method.name }}()
+    public function {{ method.name }}(){% if method.returnTypeHint is defined %}: {{ method.returnTypeHint }} {% endif ~%}
     {
         return $this->{{ method.property }};
     }
@@ -140,33 +140,10 @@
     public function {{ method.name }}(){% if method.returnTypeHint is defined %}: {{ method.returnTypeHint }} {% endif ~%}
     {
         if ($this->{{ method.property }} === null) {
-        $this->throwNullValueException(static::{{ method.propertyConst }});
+            $this->throwNullValueException(static::{{ method.propertyConst }});
         }
 
-        {% if method.isValueCheckRequired|default -%}
-        $this->assertPropertyIsSet('{{ method.property }}');
-
-        {% endif -%}
         return $this->{{ method.property }};
-    }
-{% endmacro -%}
-
-{# has method #}
-{%- macro addHas(method) %}
-    /**
-    {% if method.bundles is defined -%}
-    * @module {{ method.bundles|join('|') }}
-    *
-    {% endif -%}
-    {% if method.deprecationDescription is not null -%}
-    * @deprecated {{ method.deprecationDescription }}
-    *
-    {% endif -%}
-    * @return bool
-    */
-    public function {{ method.name }}(): bool
-    {
-        return $this->{{ method.property }} !== null;
     }
 {% endmacro -%}
 
@@ -247,27 +224,6 @@
     public function {{ method.name }}($key){% if method.returnTypeHint is defined -%}: {{ method.returnTypeHint }}{% endif ~%}
     {
         return $this->{{ method.property }}[$key];
-    }
-{% endmacro -%}
-
-{# has collection element method #}
-{%- macro addHasCollectionElement(method) %}
-    /**
-     {% if method.bundles is defined -%}
-     * @module {{ method.bundles|join('|') }}
-     *
-     {% endif -%}
-     {% if method.deprecationDescription is not null -%}
-     * @deprecated {{ method.deprecationDescription }}
-     *
-     {% endif -%}
-     * @param {{ method.var }} $key
-     *
-     * @return bool
-     */
-    public function {{ method.name }}($key): bool
-    {
-        return isset($this->{{ method.property }}[$key]);
     }
 {% endmacro -%}
 

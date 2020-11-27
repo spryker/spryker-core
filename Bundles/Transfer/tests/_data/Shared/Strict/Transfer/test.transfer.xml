@@ -27,6 +27,7 @@
         <property name="propScalar" type="int"/>
         <property name="propDecimal" type="decimal"/>
         <property name="propSimpleArray" type="array"/>
+        <property name="propArraySingular" type="array" singular="propArraySingularItem"/>
         <property name="propDummyItem" type="DummyItem"/>
         <property name="propDummyItemCollection" type="DummyItem[]"/>
         <property name="propTypedArray" type="string[]"/>

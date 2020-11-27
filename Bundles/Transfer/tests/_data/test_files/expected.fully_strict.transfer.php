@@ -22,6 +22,8 @@ class FullyStrictTransfer extends AbstractTransfer
 
     public const PROP_SIMPLE_ARRAY = 'propSimpleArray';
 
+    public const PROP_ARRAY_SINGULAR = 'propArraySingular';
+
     public const PROP_DUMMY_ITEM = 'propDummyItem';
 
     public const PROP_DUMMY_ITEM_COLLECTION = 'propDummyItemCollection';
@@ -43,9 +45,14 @@ class FullyStrictTransfer extends AbstractTransfer
     protected $propDecimal;
 
     /**
-     * @var array
+     * @var array|null
      */
     protected $propSimpleArray;
+
+    /**
+     * @var array
+     */
+    protected $propArraySingular = [];
 
     /**
      * @var \Generated\Shared\Transfer\DummyItemTransfer|null
@@ -85,6 +92,9 @@ class FullyStrictTransfer extends AbstractTransfer
         'prop_simple_array' => 'propSimpleArray',
         'propSimpleArray' => 'propSimpleArray',
         'PropSimpleArray' => 'propSimpleArray',
+        'prop_array_singular' => 'propArraySingular',
+        'propArraySingular' => 'propArraySingular',
+        'PropArraySingular' => 'propArraySingular',
         'prop_dummy_item' => 'propDummyItem',
         'propDummyItem' => 'propDummyItem',
         'PropDummyItem' => 'propDummyItem',
@@ -108,6 +118,7 @@ class FullyStrictTransfer extends AbstractTransfer
     protected $transferMetadata = [
         self::PROP_SCALAR => [
             'type' => 'int',
+            'type_shim' => null,
             'name_underscore' => 'prop_scalar',
             'is_collection' => false,
             'is_transfer' => false,
@@ -118,6 +129,7 @@ class FullyStrictTransfer extends AbstractTransfer
         ],
         self::PROP_DECIMAL => [
             'type' => 'Spryker\DecimalObject\Decimal',
+            'type_shim' => null,
             'name_underscore' => 'prop_decimal',
             'is_collection' => false,
             'is_transfer' => false,
@@ -128,7 +140,19 @@ class FullyStrictTransfer extends AbstractTransfer
         ],
         self::PROP_SIMPLE_ARRAY => [
             'type' => 'array',
+            'type_shim' => null,
             'name_underscore' => 'prop_simple_array',
+            'is_collection' => false,
+            'is_transfer' => false,
+            'is_value_object' => false,
+            'rest_request_parameter' => 'no',
+            'is_associative' => false,
+            'is_nullable' => false,
+        ],
+        self::PROP_ARRAY_SINGULAR => [
+            'type' => 'array',
+            'type_shim' => null,
+            'name_underscore' => 'prop_array_singular',
             'is_collection' => false,
             'is_transfer' => false,
             'is_value_object' => false,
@@ -138,6 +162,7 @@ class FullyStrictTransfer extends AbstractTransfer
         ],
         self::PROP_DUMMY_ITEM => [
             'type' => 'Generated\Shared\Transfer\DummyItemTransfer',
+            'type_shim' => null,
             'name_underscore' => 'prop_dummy_item',
             'is_collection' => false,
             'is_transfer' => true,
@@ -148,6 +173,7 @@ class FullyStrictTransfer extends AbstractTransfer
         ],
         self::PROP_DUMMY_ITEM_COLLECTION => [
             'type' => 'Generated\Shared\Transfer\DummyItemTransfer',
+            'type_shim' => null,
             'name_underscore' => 'prop_dummy_item_collection',
             'is_collection' => true,
             'is_transfer' => true,
@@ -158,6 +184,7 @@ class FullyStrictTransfer extends AbstractTransfer
         ],
         self::PROP_TYPED_ARRAY => [
             'type' => 'string[]',
+            'type_shim' => null,
             'name_underscore' => 'prop_typed_array',
             'is_collection' => false,
             'is_transfer' => false,
@@ -168,6 +195,7 @@ class FullyStrictTransfer extends AbstractTransfer
         ],
         self::PROP_TYPED_ARRAY_ASSOC => [
             'type' => 'string[]',
+            'type_shim' => null,
             'name_underscore' => 'prop_typed_array_assoc',
             'is_collection' => false,
             'is_transfer' => false,
@@ -178,6 +206,7 @@ class FullyStrictTransfer extends AbstractTransfer
         ],
         self::PROP_DUMMY_ITEM_COLLECTION_ASSOC => [
             'type' => 'Generated\Shared\Transfer\DummyItemTransfer',
+            'type_shim' => null,
             'name_underscore' => 'prop_dummy_item_collection_assoc',
             'is_collection' => true,
             'is_transfer' => true,
@@ -206,23 +235,37 @@ class FullyStrictTransfer extends AbstractTransfer
     /**
      * @module Test
      *
+     * @return int|null
+     */
+    public function getPropScalar(): ?int 
+    {
+        return $this->propScalar;
+    }
+
+    /**
+     * @module Test
+     *
      * @return int
      */
-    public function getPropScalar(): int 
+    public function getPropScalarOrFail(): int 
     {
-        $this->assertPropertyIsSet('propScalar');
+        if ($this->propScalar === null) {
+            $this->throwNullValueException(static::PROP_SCALAR);
+        }
 
         return $this->propScalar;
     }
 
     /**
-    * @module Test
-    *
-    * @return bool
-    */
-    public function hasPropScalar(): bool
+     * @module Test
+     *
+     * @return $this
+     */
+    public function requirePropScalar()
     {
-        return $this->propScalar !== null;
+        $this->assertPropertyIsSet(self::PROP_SCALAR);
+
+        return $this;
     }
 
     /**
@@ -247,23 +290,37 @@ class FullyStrictTransfer extends AbstractTransfer
     /**
      * @module Test
      *
+     * @return \Spryker\DecimalObject\Decimal|null
+     */
+    public function getPropDecimal(): ?Decimal 
+    {
+        return $this->propDecimal;
+    }
+
+    /**
+     * @module Test
+     *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function getPropDecimal(): Decimal 
+    public function getPropDecimalOrFail(): Decimal 
     {
-        $this->assertPropertyIsSet('propDecimal');
+        if ($this->propDecimal === null) {
+            $this->throwNullValueException(static::PROP_DECIMAL);
+        }
 
         return $this->propDecimal;
     }
 
     /**
-    * @module Test
-    *
-    * @return bool
-    */
-    public function hasPropDecimal(): bool
+     * @module Test
+     *
+     * @return $this
+     */
+    public function requirePropDecimal()
     {
-        return $this->propDecimal !== null;
+        $this->assertPropertyIsSet(self::PROP_DECIMAL);
+
+        return $this;
     }
 
     /**
@@ -284,23 +341,108 @@ class FullyStrictTransfer extends AbstractTransfer
     /**
      * @module Test
      *
+     * @return array|null
+     */
+    public function getPropSimpleArray(): ?array 
+    {
+        return $this->propSimpleArray;
+    }
+
+    /**
+     * @module Test
+     *
      * @return array
      */
-    public function getPropSimpleArray(): array 
+    public function getPropSimpleArrayOrFail(): array 
     {
-        $this->assertPropertyIsSet('propSimpleArray');
+        if ($this->propSimpleArray === null) {
+            $this->throwNullValueException(static::PROP_SIMPLE_ARRAY);
+        }
 
         return $this->propSimpleArray;
     }
 
     /**
-    * @module Test
-    *
-    * @return bool
-    */
-    public function hasPropSimpleArray(): bool
+     * @module Test
+     *
+     * @param mixed $propSimpleArray
+     *
+     * @return $this
+     */
+    public function addPropSimpleArray($propSimpleArray)
     {
-        return $this->propSimpleArray !== null;
+        $this->propSimpleArray[] = $propSimpleArray;
+        $this->modifiedProperties[self::PROP_SIMPLE_ARRAY] = true;
+
+        return $this;
+    }
+
+    /**
+     * @module Test
+     *
+     * @return $this
+     */
+    public function requirePropSimpleArray()
+    {
+        $this->assertPropertyIsSet(self::PROP_SIMPLE_ARRAY);
+
+        return $this;
+    }
+
+    /**
+     * @module Test
+     *
+     * @param array|null $propArraySingular
+     *
+     * @return $this
+     */
+    public function setPropArraySingular(array $propArraySingular = null)
+    {
+        if ($propArraySingular === null) {
+            $propArraySingular = [];
+        }
+
+        $this->propArraySingular = $propArraySingular;
+        $this->modifiedProperties[self::PROP_ARRAY_SINGULAR] = true;
+
+        return $this;
+    }
+
+    /**
+     * @module Test
+     *
+     * @return array
+     */
+    public function getPropArraySingular(): array 
+    {
+        return $this->propArraySingular;
+    }
+
+    /**
+     * @module Test
+     *
+     * @param mixed $propArraySingularItem
+     *
+     * @return $this
+     */
+    public function addPropArraySingularItem($propArraySingularItem)
+    {
+        $this->propArraySingular[] = $propArraySingularItem;
+        $this->modifiedProperties[self::PROP_ARRAY_SINGULAR] = true;
+
+        return $this;
+    }
+
+    /**
+     * @module Test
+     *
+     * @return $this
+     */
+    public function requirePropArraySingular()
+    {
+        $this->assertPropertyIsSet(self::PROP_ARRAY_SINGULAR);
+
+        return $this;
     }
 
     /**
@@ -321,23 +463,37 @@ class FullyStrictTransfer extends AbstractTransfer
     /**
      * @module Test
      *
+     * @return \Generated\Shared\Transfer\DummyItemTransfer|null
+     */
+    public function getPropDummyItem(): ?DummyItemTransfer 
+    {
+        return $this->propDummyItem;
+    }
+
+    /**
+     * @module Test
+     *
      * @return \Generated\Shared\Transfer\DummyItemTransfer
      */
-    public function getPropDummyItem(): DummyItemTransfer 
+    public function getPropDummyItemOrFail(): DummyItemTransfer 
     {
-        $this->assertPropertyIsSet('propDummyItem');
+        if ($this->propDummyItem === null) {
+            $this->throwNullValueException(static::PROP_DUMMY_ITEM);
+        }
 
         return $this->propDummyItem;
     }
 
     /**
-    * @module Test
-    *
-    * @return bool
-    */
-    public function hasPropDummyItem(): bool
+     * @module Test
+     *
+     * @return $this
+     */
+    public function requirePropDummyItem()
     {
-        return $this->propDummyItem !== null;
+        $this->assertPropertyIsSet(self::PROP_DUMMY_ITEM);
+
+        return $this;
     }
 
     /**
@@ -383,11 +539,23 @@ class FullyStrictTransfer extends AbstractTransfer
     /**
      * @module Test
      *
+     * @return $this
+     */
+    public function requirePropDummyItemCollection()
+    {
+        $this->assertCollectionPropertyIsSet(self::PROP_DUMMY_ITEM_COLLECTION);
+
+        return $this;
+    }
+
+    /**
+     * @module Test
+     *
      * @param string[]|null $propTypedArray
      *
      * @return $this
      */
-    public function setPropTypedArray(?array $propTypedArray = null)
+    public function setPropTypedArray(array $propTypedArray = null)
     {
         if ($propTypedArray === null) {
             $propTypedArray = [];
@@ -427,11 +595,23 @@ class FullyStrictTransfer extends AbstractTransfer
     /**
      * @module Test
      *
+     * @return $this
+     */
+    public function requirePropTypedArray()
+    {
+        $this->assertPropertyIsSet(self::PROP_TYPED_ARRAY);
+
+        return $this;
+    }
+
+    /**
+     * @module Test
+     *
      * @param string[]|null $propTypedArrayAssoc
      *
      * @return $this
      */
-    public function setPropTypedArrayAssoc(?array $propTypedArrayAssoc = null)
+    public function setPropTypedArrayAssoc(array $propTypedArrayAssoc = null)
     {
         if ($propTypedArrayAssoc === null) {
             $propTypedArrayAssoc = [];
@@ -456,32 +636,6 @@ class FullyStrictTransfer extends AbstractTransfer
     /**
      * @module Test
      *
-     * @param string|int $key
-     *
-     * @return string
-     */
-    public function getPropTypedArrayAssocSingular($key): string
-    {
-        return $this->propTypedArrayAssoc[$key];
-    }
-
-
-    /**
-     * @module Test
-     *
-     * @param string|int $key
-     *
-     * @return bool
-     */
-    public function hasPropTypedArrayAssocSingular($key): bool
-    {
-        return isset($this->propTypedArrayAssoc[$key]);
-    }
-
-
-    /**
-     * @module Test
-     *
      * @param string|int $propTypedArrayAssocSingularKey
      * @param string $propTypedArrayAssocSingularValue
      *
@@ -494,6 +648,31 @@ class FullyStrictTransfer extends AbstractTransfer
 
         return $this;
     }
+
+    /**
+     * @module Test
+     *
+     * @return $this
+     */
+    public function requirePropTypedArrayAssoc()
+    {
+        $this->assertPropertyIsSet(self::PROP_TYPED_ARRAY_ASSOC);
+
+        return $this;
+    }
+
+    /**
+     * @module Test
+     *
+     * @param string|int $key
+     *
+     * @return \Generated\Shared\Transfer\string
+     */
+    public function getPropTypedArrayAssocSingular($key): string
+    {
+        return $this->propTypedArrayAssoc[$key];
+    }
+
 
     /**
      * @module Test
@@ -523,32 +702,6 @@ class FullyStrictTransfer extends AbstractTransfer
     /**
      * @module Test
      *
-     * @param string|int $key
-     *
-     * @return \Generated\Shared\Transfer\DummyItemTransfer
-     */
-    public function getPropDummyItemCollectionAssocSingular($key): DummyItemTransfer
-    {
-        return $this->propDummyItemCollectionAssoc[$key];
-    }
-
-
-    /**
-     * @module Test
-     *
-     * @param string|int $key
-     *
-     * @return bool
-     */
-    public function hasPropDummyItemCollectionAssocSingular($key): bool
-    {
-        return isset($this->propDummyItemCollectionAssoc[$key]);
-    }
-
-
-    /**
-     * @module Test
-     *
      * @param string|int $propDummyItemCollectionAssocSingularKey
      * @param \Generated\Shared\Transfer\DummyItemTransfer $propDummyItemCollectionAssocSingularValue
      *
@@ -563,6 +716,31 @@ class FullyStrictTransfer extends AbstractTransfer
     }
 
     /**
+     * @module Test
+     *
+     * @return $this
+     */
+    public function requirePropDummyItemCollectionAssoc()
+    {
+        $this->assertCollectionPropertyIsSet(self::PROP_DUMMY_ITEM_COLLECTION_ASSOC);
+
+        return $this;
+    }
+
+    /**
+     * @module Test
+     *
+     * @param string|int $key
+     *
+     * @return \Generated\Shared\Transfer\DummyItemTransfer
+     */
+    public function getPropDummyItemCollectionAssocSingular($key): DummyItemTransfer
+    {
+        return $this->propDummyItemCollectionAssoc[$key];
+    }
+
+
+    /**
      * @param array $data
      * @param bool $ignoreMissingProperty
      * @return FullyStrictTransfer
@@ -575,6 +753,7 @@ class FullyStrictTransfer extends AbstractTransfer
             switch ($normalizedPropertyName) {
                 case 'propScalar':
                 case 'propSimpleArray':
+                case 'propArraySingular':
                 case 'propTypedArray':
                 case 'propTypedArrayAssoc':
                     $this->$normalizedPropertyName = $value;
@@ -709,6 +888,7 @@ class FullyStrictTransfer extends AbstractTransfer
             switch ($property) {
                 case 'propScalar':
                 case 'propSimpleArray':
+                case 'propArraySingular':
                 case 'propTypedArray':
                 case 'propTypedArrayAssoc':
                 case 'propDecimal':
@@ -745,6 +925,7 @@ class FullyStrictTransfer extends AbstractTransfer
             switch ($property) {
                 case 'propScalar':
                 case 'propSimpleArray':
+                case 'propArraySingular':
                 case 'propTypedArray':
                 case 'propTypedArrayAssoc':
                 case 'propDecimal':
@@ -814,6 +995,7 @@ class FullyStrictTransfer extends AbstractTransfer
         return [
             'propScalar' => $this->propScalar,
             'propSimpleArray' => $this->propSimpleArray,
+            'propArraySingular' => $this->propArraySingular,
             'propTypedArray' => $this->propTypedArray,
             'propTypedArrayAssoc' => $this->propTypedArrayAssoc,
             'propDummyItem' => $this->propDummyItem,
@@ -831,6 +1013,7 @@ class FullyStrictTransfer extends AbstractTransfer
         return [
             'prop_scalar' => $this->propScalar,
             'prop_simple_array' => $this->propSimpleArray,
+            'prop_array_singular' => $this->propArraySingular,
             'prop_typed_array' => $this->propTypedArray,
             'prop_typed_array_assoc' => $this->propTypedArrayAssoc,
             'prop_dummy_item' => $this->propDummyItem,
@@ -848,6 +1031,7 @@ class FullyStrictTransfer extends AbstractTransfer
         return [
             'prop_scalar' => $this->propScalar instanceof AbstractTransfer ? $this->propScalar->toArray(true, false) : $this->propScalar,
             'prop_simple_array' => $this->propSimpleArray instanceof AbstractTransfer ? $this->propSimpleArray->toArray(true, false) : $this->propSimpleArray,
+            'prop_array_singular' => $this->propArraySingular instanceof AbstractTransfer ? $this->propArraySingular->toArray(true, false) : $this->propArraySingular,
             'prop_typed_array' => $this->propTypedArray instanceof AbstractTransfer ? $this->propTypedArray->toArray(true, false) : $this->propTypedArray,
             'prop_typed_array_assoc' => $this->propTypedArrayAssoc instanceof AbstractTransfer ? $this->propTypedArrayAssoc->toArray(true, false) : $this->propTypedArrayAssoc,
             'prop_dummy_item' => $this->propDummyItem instanceof AbstractTransfer ? $this->propDummyItem->toArray(true, false) : $this->propDummyItem,
@@ -865,6 +1049,7 @@ class FullyStrictTransfer extends AbstractTransfer
         return [
             'propScalar' => $this->propScalar instanceof AbstractTransfer ? $this->propScalar->toArray(true, true) : $this->propScalar,
             'propSimpleArray' => $this->propSimpleArray instanceof AbstractTransfer ? $this->propSimpleArray->toArray(true, true) : $this->propSimpleArray,
+            'propArraySingular' => $this->propArraySingular instanceof AbstractTransfer ? $this->propArraySingular->toArray(true, true) : $this->propArraySingular,
             'propTypedArray' => $this->propTypedArray instanceof AbstractTransfer ? $this->propTypedArray->toArray(true, true) : $this->propTypedArray,
             'propTypedArrayAssoc' => $this->propTypedArrayAssoc instanceof AbstractTransfer ? $this->propTypedArrayAssoc->toArray(true, true) : $this->propTypedArrayAssoc,
             'propDummyItem' => $this->propDummyItem instanceof AbstractTransfer ? $this->propDummyItem->toArray(true, true) : $this->propDummyItem,
