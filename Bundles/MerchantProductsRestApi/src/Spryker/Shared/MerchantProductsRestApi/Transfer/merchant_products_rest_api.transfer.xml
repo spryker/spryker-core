@@ -6,4 +6,13 @@
     <transfer name="AbstractProductsRestAttributes">
         <property name="merchantReference" type="string"/>
     </transfer>
+
+    <transfer name="RestCartItemsAttributes">
+        <property name="sku" type="string" restRequestParameter="required"/>
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
+    <transfer name="CartItemRequest">
+        <property name="merchantReference" type="string"/>
+    </transfer>
 </transfers>
