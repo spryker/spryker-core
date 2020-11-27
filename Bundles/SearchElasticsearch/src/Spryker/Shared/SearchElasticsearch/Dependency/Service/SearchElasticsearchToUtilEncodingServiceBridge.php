@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SearchElasticsearch\Dependency\Service;
+namespace Spryker\Shared\SearchElasticsearch\Dependency\Service;
 
 class SearchElasticsearchToUtilEncodingServiceBridge implements SearchElasticsearchToUtilEncodingServiceInterface
 {
@@ -23,6 +23,18 @@ class SearchElasticsearchToUtilEncodingServiceBridge implements SearchElasticsea
     }
 
     /**
+     * @param mixed $value
+     * @param int|null $options
+     * @param int|null $depth
+     *
+     * @return string|null
+     */
+    public function encodeJson($value, $options = null, $depth = null)
+    {
+        return $this->utilEncodingService->encodeJson($value, $options, $depth);
+    }
+
+    /**
      * @param string $jsonValue
      * @param bool $assoc
      * @param int|null $depth
@@ -33,17 +45,5 @@ class SearchElasticsearchToUtilEncodingServiceBridge implements SearchElasticsea
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null)
     {
         return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
-    }
-
-    /**
-     * @param array $value
-     * @param int|null $options
-     * @param int|null $depth
-     *
-     * @return string|null
-     */
-    public function encodeJson($value, $options = null, $depth = null)
-    {
-        return $this->utilEncodingService->encodeJson($value, $options, $depth);
     }
 }
