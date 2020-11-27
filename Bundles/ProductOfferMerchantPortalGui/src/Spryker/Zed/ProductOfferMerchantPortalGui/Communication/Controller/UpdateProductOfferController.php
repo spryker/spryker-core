@@ -192,10 +192,6 @@ class UpdateProductOfferController extends AbstractProductOfferController
     {
         $idProductOffer = $request->get(static::PARAM_ID_PRODUCT_OFFER);
 
-        if (!$idProductOffer) {
-            $idProductOffer = null;
-        }
-
         return $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
             $request,
             $this->getFactory()->createProductOfferPriceTableDataProvider($idProductOffer),
