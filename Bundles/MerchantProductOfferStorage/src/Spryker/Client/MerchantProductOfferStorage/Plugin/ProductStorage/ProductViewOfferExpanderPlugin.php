@@ -20,8 +20,22 @@ use Spryker\Shared\MerchantProductOfferStorage\MerchantProductOfferStorageConfig
 class ProductViewOfferExpanderPlugin extends AbstractPlugin implements ProductViewExpanderByCriteriaPluginInterface
 {
     /**
+     * @uses \SprykerShop\Yves\MerchantProductWidget\Reader\MerchantProductReader::PARAM_SELECTED_MERCHANT_REFERENCE
+     */
+    protected const PARAM_SELECTED_MERCHANT_REFERENCE = 'selected_merchant_reference';
+
+    /**
+     * @uses \SprykerShop\Yves\MerchantProductWidget\Reader\MerchantProductReader::PARAM_SELECTED_MERCHANT_REFERENCE_TYPE
+     */
+    protected const PARAM_SELECTED_MERCHANT_REFERENCE_TYPE = 'selected_merchant_reference_type';
+
+    /**
      * {@inheritDoc}
      * - Expands the transfer object with the product offer reference according to provided criteria.
+     *
+     * @api
+     *
+     * @phpstan-param array<mixed> $productData
      *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param array $productData
@@ -51,9 +65,11 @@ class ProductViewOfferExpanderPlugin extends AbstractPlugin implements ProductVi
         $productOfferStorageCriteriaTransfer->fromArray($productViewTransfer->toArray(), true);
 
         $selectedAttributes = $productViewTransfer->getSelectedAttributes();
-        if (isset($selectedAttributes[MerchantProductOfferStorageConfig::PRODUCT_OFFER_REFERENCE_ATTRIBUTE])) {
-            $productOfferStorageCriteriaTransfer->setProductOfferReference($selectedAttributes[MerchantProductOfferStorageConfig::PRODUCT_OFFER_REFERENCE_ATTRIBUTE]);
-        }
+        $selectedProductOfferReference = isset($selectedAttributes[static::PARAM_SELECTED_MERCHANT_REFERENCE_TYPE])
+            && $selectedAttributes[static::PARAM_SELECTED_MERCHANT_REFERENCE_TYPE] === MerchantProductOfferStorageConfig::PRODUCT_OFFER_REFERENCE_ATTRIBUTE
+            && isset($selectedAttributes[static::PARAM_SELECTED_MERCHANT_REFERENCE]) ? $selectedAttributes[static::PARAM_SELECTED_MERCHANT_REFERENCE] : null;
+
+        $productOfferStorageCriteriaTransfer->setProductOfferReference($selectedProductOfferReference);
         $productOfferStorageCriteriaTransfer->addProductConcreteSku($productViewTransfer->getSku());
 
         return $productViewTransfer->setProductOfferReference(

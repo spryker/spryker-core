@@ -19,6 +19,16 @@ class ProductViewMerchantProductExpanderPlugin extends AbstractPlugin implements
     protected const SELECTED_ATTRIBUTE_MERCHANT_REFERENCE = 'merchant_reference';
 
     /**
+     * @uses \SprykerShop\Yves\MerchantProductOfferWidget\Reader\MerchantProductOfferReader::PARAM_SELECTED_MERCHANT_REFERENCE
+     */
+    protected const PARAM_SELECTED_MERCHANT_REFERENCE = 'selected_merchant_reference';
+
+    /**
+     * @uses \SprykerShop\Yves\MerchantProductOfferWidget\Reader\MerchantProductOfferReader
+     */
+    protected const PARAM_SELECTED_MERCHANT_REFERENCE_TYPE = 'selected_merchant_reference_type';
+
+    /**
      * {@inheritDoc}
      * - Expands ProductView transfer object with merchant reference.
      *
@@ -39,7 +49,11 @@ class ProductViewMerchantProductExpanderPlugin extends AbstractPlugin implements
     ): ProductViewTransfer {
         $productSelectedAttributes = $productViewTransfer->getSelectedAttributes();
 
-        if (!isset($productSelectedAttributes[static::SELECTED_ATTRIBUTE_MERCHANT_REFERENCE])) {
+        $selectedMerchantReference = isset($productSelectedAttributes[static::PARAM_SELECTED_MERCHANT_REFERENCE_TYPE])
+            && $productSelectedAttributes[static::PARAM_SELECTED_MERCHANT_REFERENCE_TYPE] === static::SELECTED_ATTRIBUTE_MERCHANT_REFERENCE
+            && isset($productSelectedAttributes[static::PARAM_SELECTED_MERCHANT_REFERENCE]) ? $productSelectedAttributes[static::PARAM_SELECTED_MERCHANT_REFERENCE] : null;
+
+        if (!$selectedMerchantReference) {
             return $productViewTransfer;
         }
 
@@ -51,7 +65,7 @@ class ProductViewMerchantProductExpanderPlugin extends AbstractPlugin implements
             return $productViewTransfer;
         }
 
-        if ($merchantProductStorageTransfer->getMerchantReference() !== $productSelectedAttributes[static::SELECTED_ATTRIBUTE_MERCHANT_REFERENCE]) {
+        if ($merchantProductStorageTransfer->getMerchantReference() !== $selectedMerchantReference) {
             return $productViewTransfer;
         }
 
