@@ -34,14 +34,4 @@ class ProductCategoryFilterGuiToCategoryFacadeBridge implements ProductCategoryF
     {
         return $this->categoryFacade->getTreeNodeChildrenByIdCategoryAndLocale($idCategory, $localeTransfer);
     }
-
-    /**
-     * @param int $idCategory
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
-    public function read($idCategory)
-    {
-        return $this->categoryFacade->read($idCategory);
-    }
 }

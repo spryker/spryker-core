@@ -48,7 +48,7 @@ class CategoryType extends AbstractType
     public const FIELD_LOCALIZED_ATTRIBUTES = 'localized_attributes';
 
     /**
-     * @var \Spryker\Zed\Category\Dependency\Plugin\CategoryFormPluginInterface[]
+     * @var \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryFormPluginInterface[]
      */
     protected $formPlugins = [];
 
@@ -281,15 +281,5 @@ class CategoryType extends AbstractType
     public function getBlockPrefix()
     {
         return 'category';
-    }
-
-    /**
-     * @deprecated Use {@link getBlockPrefix()} instead.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->getBlockPrefix();
     }
 }

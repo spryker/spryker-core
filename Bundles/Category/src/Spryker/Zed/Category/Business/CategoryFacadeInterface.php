@@ -10,57 +10,9 @@ namespace Spryker\Zed\Category\Business;
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\NodeTransfer;
 
 interface CategoryFacadeInterface
 {
-    /**
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param string $categoryName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return bool
-     */
-    public function hasCategoryNode($categoryName, LocaleTransfer $localeTransfer);
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param int $idNode
-     *
-     * @return \Generated\Shared\Transfer\NodeTransfer
-     */
-    public function getNodeById($idNode);
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param string $categoryName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return int
-     */
-    public function getCategoryNodeIdentifier($categoryName, LocaleTransfer $localeTransfer);
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param string $categoryName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return int
-     */
-    public function getCategoryIdentifier($categoryName, LocaleTransfer $localeTransfer);
-
     /**
      * Specification:
      *  - Finds all category-node entities for idCategory
@@ -74,54 +26,6 @@ interface CategoryFacadeInterface
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
     public function getAllNodesByIdCategory($idCategory);
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param int $idCategory
-     *
-     * @return \Generated\Shared\Transfer\NodeTransfer[]
-     */
-    public function getMainNodesByIdCategory($idCategory);
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param int $idCategory
-     *
-     * @return \Generated\Shared\Transfer\NodeTransfer[]
-     */
-    public function getNotMainNodesByIdCategory($idCategory);
-
-    /**
-     * Specification:
-     *  - Reads entity for idCategory from persistence
-     *  - Hydrates data from entities to CategoryTransfer
-     *  - Returns CategoryTransfer
-     *
-     * @api
-     *
-     * @param int $idCategory
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
-    public function read($idCategory);
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
-     *
-     * @return int
-     */
-    public function createCategory(CategoryTransfer $categoryTransfer, ?LocaleTransfer $localeTransfer = null);
 
     /**
      * Specification:
@@ -144,18 +48,6 @@ interface CategoryFacadeInterface
      * @return void
      */
     public function create(CategoryTransfer $categoryTransfer);
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
-     *
-     * @return void
-     */
-    public function updateCategory(CategoryTransfer $categoryTransfer, ?LocaleTransfer $localeTransfer = null);
 
     /**
      * Specification:
@@ -198,29 +90,6 @@ interface CategoryFacadeInterface
     public function update(CategoryTransfer $categoryTransfer);
 
     /**
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return void
-     */
-    public function addCategoryAttribute(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer);
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param int $idCategory
-     *
-     * @return void
-     */
-    public function deleteCategory($idCategory);
-
-    /**
      * Specification:
      *  - Finds category entity and removes them from persistence
      *  - Finds category-node entity (main path) and removes it from persistence
@@ -259,31 +128,6 @@ interface CategoryFacadeInterface
     public function deleteNodeById($idCategoryNode, $idChildrenDestinationNode);
 
     /**
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
-     * @param bool $createUrlPath
-     *
-     * @return int
-     */
-    public function createCategoryNode(NodeTransfer $nodeTransfer, ?LocaleTransfer $localeTransfer = null, $createUrlPath = true);
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
-     *
-     * @return void
-     */
-    public function updateCategoryNode(NodeTransfer $categoryNodeTransfer, ?LocaleTransfer $localeTransfer = null);
-
-    /**
      * Specification:
      *  - Finds category-node entity, updates node_order field, and persists it
      *  - Touches category-node entity active
@@ -297,74 +141,6 @@ interface CategoryFacadeInterface
      * @return void
      */
     public function updateCategoryNodeOrder($idCategoryNode, $position);
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param int $idNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param bool $deleteChildren
-     *
-     * @return int
-     */
-    public function deleteNode($idNode, LocaleTransfer $localeTransfer, $deleteChildren = false);
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @return bool
-     */
-    public function renderCategoryTreeVisual();
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @return \Generated\Shared\Transfer\NodeTransfer[]
-     */
-    public function getRootNodes();
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param int $idCategory
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return array
-     */
-    public function getTree($idCategory, LocaleTransfer $localeTransfer);
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param int $idNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
-     */
-    public function getChildren($idNode, LocaleTransfer $localeTransfer);
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param int $idNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param bool $excludeStartNode
-     *
-     * @return array
-     */
-    public function getParents($idNode, LocaleTransfer $localeTransfer, $excludeStartNode = true);
 
     /**
      * Specification:
@@ -388,33 +164,6 @@ interface CategoryFacadeInterface
      * @return void
      */
     public function rebuildClosureTable();
-
-    /**
-     * Specification:
-     *  - Removes circular relations from closure table
-     *  - Finds all category-node entities, removes them, and re-creates them in closure table
-     *
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param array $pathTokens
-     *
-     * @return string
-     */
-    public function generatePath(array $pathTokens);
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param string $categoryKey
-     * @param int $idLocale
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
-    public function getCategoryByKey($categoryKey, $idLocale);
 
     /**
      * Specification:

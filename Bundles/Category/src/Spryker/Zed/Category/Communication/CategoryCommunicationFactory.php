@@ -14,7 +14,6 @@ use Spryker\Zed\Category\Communication\Form\DataProvider\CategoryCreateDataProvi
 use Spryker\Zed\Category\Communication\Form\DataProvider\CategoryDeleteDataProvider;
 use Spryker\Zed\Category\Communication\Form\DataProvider\CategoryEditDataProvider;
 use Spryker\Zed\Category\Communication\Form\DeleteType;
-use Spryker\Zed\Category\Communication\Table\CategoryAttributeTable;
 use Spryker\Zed\Category\Communication\Table\RootNodeTable;
 use Spryker\Zed\Category\Communication\Table\UrlTable;
 use Spryker\Zed\Category\Communication\Tabs\CategoryFormTabs;
@@ -154,29 +153,6 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Will be removed with next major release
-     *
-     * @param int|null $idCategoryNode
-     *
-     * @return \Spryker\Zed\Category\Communication\Table\CategoryAttributeTable
-     */
-    public function createCategoryAttributeTable($idCategoryNode)
-    {
-        if ($idCategoryNode === null) {
-            //@TODO: table initialisation with ajax then this part can be deleted
-            $idCategoryNode = $this->getQueryContainer()->queryRootNode()->findOne()->getIdCategoryNode();
-        }
-        $categoryNode = $this->getQueryContainer()->queryCategoryNodeByNodeId($idCategoryNode)->findOne();
-        $categoryQueryContainer = $this->getQueryContainer();
-        $categoryAttributesQuery = $categoryQueryContainer->queryAttributeByCategoryIdAndLocale(
-            $categoryNode->getFkCategory(),
-            $this->getCurrentLocale()->getIdLocale()
-        );
-
-        return new CategoryAttributeTable($categoryAttributesQuery);
-    }
-
-    /**
      * @param int|null $idCategoryNode
      *
      * @return \Spryker\Zed\Category\Communication\Table\UrlTable
@@ -202,7 +178,7 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryFormPluginInterface[]
+     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryFormPluginInterface[]
      */
     public function getCategoryFormPlugins()
     {

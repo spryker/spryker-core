@@ -48,32 +48,6 @@ class Category implements CategoryInterface
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\Category\Business\Model\CategoryReaderInterface::findCategoryById()} instead.
-     *
-     * @param int $idCategory
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
-    public function read($idCategory, CategoryTransfer $categoryTransfer)
-    {
-        $categoryEntity = $this
-            ->queryContainer
-            ->queryCategoryById($idCategory)
-            ->findOne();
-
-        if (!$categoryEntity) {
-            throw new MissingCategoryException(sprintf('Could not find category for id "%s"', $idCategory));
-        }
-
-        $categoryTransfer->fromArray($categoryEntity->toArray(), true);
-
-        return $categoryTransfer;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return void

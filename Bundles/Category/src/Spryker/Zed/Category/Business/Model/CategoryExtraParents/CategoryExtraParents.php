@@ -10,10 +10,10 @@ namespace Spryker\Zed\Category\Business\Model\CategoryExtraParents;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
+use Spryker\Zed\Category\Business\Generator\TransferGeneratorInterface;
 use Spryker\Zed\Category\Business\Model\CategoryToucherInterface;
 use Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTreeInterface;
 use Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrlInterface;
-use Spryker\Zed\Category\Business\TransferGeneratorInterface;
 use Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
@@ -45,7 +45,7 @@ class CategoryExtraParents implements CategoryExtraParentsInterface
     protected $categoryUrl;
 
     /**
-     * @var \Spryker\Zed\Category\Business\TransferGeneratorInterface
+     * @var \Spryker\Zed\Category\Business\Generator\TransferGeneratorInterface
      */
     protected $transferGenerator;
 
@@ -55,7 +55,7 @@ class CategoryExtraParents implements CategoryExtraParentsInterface
      * @param \Spryker\Zed\Category\Business\Model\CategoryToucherInterface $categoryToucher
      * @param \Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTreeInterface $categoryTree
      * @param \Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrlInterface $categoryUrl
-     * @param \Spryker\Zed\Category\Business\TransferGeneratorInterface $transferGenerator
+     * @param \Spryker\Zed\Category\Business\Generator\TransferGeneratorInterface $transferGenerator
      */
     public function __construct(
         CategoryQueryContainerInterface $queryContainer,
@@ -71,33 +71,6 @@ class CategoryExtraParents implements CategoryExtraParentsInterface
         $this->categoryTree = $categoryTree;
         $this->categoryUrl = $categoryUrl;
         $this->transferGenerator = $transferGenerator;
-    }
-
-    /**
-     * @deprecated Use {@link \Spryker\Zed\Category\Business\Model\CategoryReaderInterface::findCategoryById()} instead.
-     *
-     * @param int $idCategory
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
-    public function read($idCategory, CategoryTransfer $categoryTransfer)
-    {
-        $categoryNodeCollection = $this
-            ->queryContainer
-            ->queryNotMainNodesByCategoryId($idCategory)
-            ->find();
-
-        foreach ($categoryNodeCollection as $categoryNodeEntity) {
-            $parentNodeEntity = $categoryNodeEntity->getParentCategoryNode();
-
-            $categoryNodeTransfer = new NodeTransfer();
-            $categoryNodeTransfer->fromArray($parentNodeEntity->toArray(), true);
-
-            $categoryTransfer->addExtraParent($categoryNodeTransfer);
-        }
-
-        return $categoryTransfer;
     }
 
     /**

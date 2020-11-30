@@ -9,7 +9,6 @@ namespace Spryker\Zed\Category\Business\Model\CategoryAttribute;
 
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryAttribute;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
@@ -26,56 +25,6 @@ class CategoryAttribute implements CategoryAttributeInterface
     public function __construct(CategoryQueryContainerInterface $queryContainer)
     {
         $this->queryContainer = $queryContainer;
-    }
-
-    /**
-     * @deprecated Use {@link \Spryker\Zed\Category\Business\Model\CategoryReaderInterface::findCategoryById()} instead.
-     *
-     * @param int $idCategory
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
-    public function read($idCategory, CategoryTransfer $categoryTransfer)
-    {
-        $attributeEntityCollection = $this
-            ->queryContainer
-            ->queryAttributeByCategoryId($idCategory)
-            ->find();
-
-        foreach ($attributeEntityCollection as $attributeEntity) {
-            $attributeTransfer = $this->createLocalizedAttributesTransferFromEntity($attributeEntity);
-            $attributeTransfer->setLocale($this->createLocaleTransferFromEntity($attributeEntity));
-            $categoryTransfer->addLocalizedAttributes($attributeTransfer);
-        }
-
-        return $categoryTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryAttribute $attributeEntity
-     *
-     * @return \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer
-     */
-    protected function createLocalizedAttributesTransferFromEntity(SpyCategoryAttribute $attributeEntity)
-    {
-        $attributeTransfer = new CategoryLocalizedAttributesTransfer();
-        $attributeTransfer->fromArray($attributeEntity->toArray(), true);
-
-        return $attributeTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryAttribute $attributeEntity
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    protected function createLocaleTransferFromEntity(SpyCategoryAttribute $attributeEntity)
-    {
-        $localeTransfer = new LocaleTransfer();
-        $localeTransfer->fromArray($attributeEntity->getLocale()->toArray());
-
-        return $localeTransfer;
     }
 
     /**

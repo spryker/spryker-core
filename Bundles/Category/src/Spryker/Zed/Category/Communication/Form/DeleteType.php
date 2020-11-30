@@ -67,14 +67,4 @@ class DeleteType extends AbstractType
     {
         return 'categoryDelete';
     }
-
-    /**
-     * @deprecated Use {@link getBlockPrefix()} instead.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->getBlockPrefix();
-    }
 }

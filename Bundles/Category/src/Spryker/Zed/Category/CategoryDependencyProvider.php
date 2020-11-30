@@ -75,7 +75,7 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationDeletePluginInterface[]|\Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationDeletePluginInterface[]
+     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationDeletePluginInterface[]
      */
     protected function getRelationDeletePluginStack()
     {
@@ -325,7 +325,7 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryFormPluginInterface[]|\Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryFormPluginInterface[]
+     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryFormPluginInterface[]
      */
     protected function getCategoryFormPlugins()
     {

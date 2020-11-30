@@ -12,18 +12,6 @@ use Generated\Shared\Transfer\CategoryTransfer;
 interface CategoryNodeInterface
 {
     /**
-     * @deprecated Use {@link \Spryker\Zed\Category\Business\Model\CategoryReaderInterface::findCategoryById()} instead.
-     *
-     * @param int $idCategory
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
-    public function read($idCategory, CategoryTransfer $categoryTransfer);
-
-    /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return void

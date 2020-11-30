@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Category\Business\Exception\MissingCategoryException;
 use Spryker\Zed\Category\Business\Model\Category\CategoryInterface;
 use Spryker\Zed\Category\Business\Model\CategoryAttribute\CategoryAttributeInterface;
 use Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParentsInterface;
@@ -20,7 +19,6 @@ use Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrlInterface;
 use Spryker\Zed\Category\Business\PluginExecutor\CategoryPluginExecutorInterface;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class Category
@@ -53,12 +51,7 @@ class Category
     protected $categoryUrl;
 
     /**
-     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
-     */
-    protected $queryContainer;
-
-    /**
-     * @var array|\Spryker\Zed\Category\Dependency\Plugin\CategoryRelationDeletePluginInterface
+     * @var \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationDeletePluginInterface[]
      */
     protected $deletePlugins;
 
@@ -88,8 +81,7 @@ class Category
      * @param \Spryker\Zed\Category\Business\Model\CategoryAttribute\CategoryAttributeInterface $categoryAttribute
      * @param \Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrlInterface $categoryUrl
      * @param \Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParentsInterface $categoryExtraParents
-     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationDeletePluginInterface[] $deletePlugins
+     * @param \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationDeletePluginInterface[] $deletePlugins
      * @param \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationUpdatePluginInterface[] $updatePlugins
      * @param \Spryker\Zed\Category\Business\PluginExecutor\CategoryPluginExecutorInterface $categoryPluginExecutor
      * @param \Spryker\Zed\Category\Business\Model\CategoryReaderInterface $categoryReader
@@ -101,7 +93,6 @@ class Category
         CategoryAttributeInterface $categoryAttribute,
         CategoryUrlInterface $categoryUrl,
         CategoryExtraParentsInterface $categoryExtraParents,
-        CategoryQueryContainerInterface $queryContainer,
         array $deletePlugins,
         array $updatePlugins,
         CategoryPluginExecutorInterface $categoryPluginExecutor,
@@ -113,31 +104,11 @@ class Category
         $this->categoryAttribute = $categoryAttribute;
         $this->categoryUrl = $categoryUrl;
         $this->categoryExtraParents = $categoryExtraParents;
-        $this->queryContainer = $queryContainer;
         $this->deletePlugins = $deletePlugins;
         $this->updatePlugins = $updatePlugins;
         $this->categoryPluginExecutor = $categoryPluginExecutor;
         $this->eventFacade = $eventFacade;
         $this->categoryReader = $categoryReader;
-    }
-
-    /**
-     * @deprecated Use {@link \Spryker\Zed\Category\Business\Model\CategoryReaderInterface::findCategoryById()} instead.
-     *
-     * @param int $idCategory
-     *
-     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
-    public function read($idCategory)
-    {
-        $categoryTransfer = $this->categoryReader->findCategoryById($idCategory);
-        if (!$categoryTransfer) {
-            throw new MissingCategoryException(sprintf('Could not find category for id "%s"', $idCategory));
-        }
-
-        return $categoryTransfer;
     }
 
     /**
