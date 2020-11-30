@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProductOffer\Business;
 
 use ArrayObject;
+use Generated\Shared\Transfer\PriceProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer;
 use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
@@ -56,7 +57,7 @@ interface PriceProductOfferFacadeInterface
      * - Validates PriceProductTransfer stack.
      * - Сhecks if there are duplicated prices for store-currency-gross-net-price_data combinations (per price dimension).
      * - Checks that currency assigned to a store per prices.
-     * - Returns PriceProductValidationResponse transfer object.
+     * - Returns PriceProductOfferCollectionValidationResponseTransfer transfer object.
      *
      * @api
      *
@@ -68,19 +69,19 @@ interface PriceProductOfferFacadeInterface
 
     /**
      * Specification:
-     * - Deletes entities from `spy_price_product_offer` using priceProductOfferIds from PriceProductOfferTransfer.
+     * - Deletes entities from `spy_price_product_offer` by PriceProductOfferCollectionTransfer.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
+     * @param \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer
      *
      * @return void
      */
-    public function delete(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): void;
+    public function deleteProductOfferPrices(PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer): void;
 
     /**
      * Specification:
-     * - Retrives and returns count of entities from `spy_price_product_offer` over PriceProductOfferTransfer.
+     * - Retrives and returns count of entities from `spy_price_product_offer` over PriceProductOfferCriteriaTransfer.
      *
      * @api
      *

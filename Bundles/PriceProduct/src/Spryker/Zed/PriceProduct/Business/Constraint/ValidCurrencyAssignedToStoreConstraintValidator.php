@@ -15,8 +15,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class ValidCurrencyAssignedToStoreConstraintValidator extends AbstractConstraintValidator
 {
     /**
-     * Checks if the Valid from value is earlier than Valid to.
-     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $value
      * @param \Symfony\Component\Validator\Constraint $constraint
      *

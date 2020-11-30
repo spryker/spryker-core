@@ -113,7 +113,7 @@ class PriceProductOfferRepository extends AbstractRepository implements PricePro
         ) {
             $priceProductOfferQuery->filterBy(
                 SpyProductOfferTableMap::COL_FK_MERCHANT,
-                $priceProductOfferCriteriaTransfer->getPriceProductOfferIds(),
+                $priceProductOfferCriteriaTransfer->getProductOfferCriteriaFilter()->getMerchantIds(),
                 Criteria::IN
             );
         }

@@ -68,7 +68,6 @@
     </transfer>
 
     <transfer name="MoneyValue">
-        <property name="idPriceProductStore" type="int"/>
         <property name="fkStore" type="int"/>
         <property name="currency" type="Currency"/>
         <property name="netAmount" type="int"/>

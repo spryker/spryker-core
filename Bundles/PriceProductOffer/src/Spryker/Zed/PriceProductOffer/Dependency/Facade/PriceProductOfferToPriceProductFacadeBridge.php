@@ -42,4 +42,12 @@ class PriceProductOfferToPriceProductFacadeBridge implements PriceProductOfferTo
     {
         return $this->priceProductFacade->getValidCurrencyAssignedToStoreConstraint();
     }
+
+    /**
+     * @return void
+     */
+    public function deleteOrphanPriceProductStoreEntities(): void
+    {
+        $this->priceProductFacade->deleteOrphanPriceProductStoreEntities();
+    }
 }

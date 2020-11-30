@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProductOffer\Business;
 
 use ArrayObject;
+use Generated\Shared\Transfer\PriceProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer;
 use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
@@ -84,13 +85,13 @@ class PriceProductOfferFacade extends AbstractFacade implements PriceProductOffe
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
+     * @param \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer
      *
      * @return void
      */
-    public function delete(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): void
+    public function deleteProductOfferPrices(PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer): void
     {
-        $this->getEntityManager()->delete($priceProductOfferCriteriaTransfer);
+        $this->getFactory()->createPriceProductOfferDeliter()->deleteProductOfferPrices($priceProductOfferCollectionTransfer);
     }
 
     /**

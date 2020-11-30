@@ -406,7 +406,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
             $this->createValidProductOfferPriceIdsOwnByMerchantConstraint(),
             $this->getPriceProductOfferFacade(),
             $this->getMerchantUserFacade(),
-            $this->getTranslatorFacade()
+            $this->getUtilEncodingService()
         );
     }
 
@@ -417,7 +417,6 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     {
         return new SavePricesAction(
             $this->getPriceProductOfferFacade(),
-            $this->getPriceProductFacade(),
             $this->getUtilEncodingService(),
             $this->getMoneyFacade()
         );

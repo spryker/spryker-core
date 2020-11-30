@@ -23,4 +23,9 @@ interface PriceProductOfferToPriceProductFacadeInterface
      * @return \Symfony\Component\Validator\Constraint
      */
     public function getValidCurrencyAssignedToStoreConstraint(): SymfonyConstraint;
+
+    /**
+     * @return void
+     */
+    public function deleteOrphanPriceProductStoreEntities(): void;
 }

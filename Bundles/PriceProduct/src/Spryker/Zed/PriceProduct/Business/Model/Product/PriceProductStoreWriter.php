@@ -144,7 +144,7 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
 
         $priceProductStoreEntity->save();
 
-        $moneyValueTransfer->setIdEntity($priceProductStoreEntity->getIdPriceProductStore());
+        $moneyValueTransfer->setIdEntity((int)$priceProductStoreEntity->getIdPriceProductStore());
 
         $priceProductTransfer = $this->persistPriceProductDimension($priceProductTransfer);
 
@@ -306,13 +306,6 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
         PriceProductTransfer $priceProductTransfer,
         MoneyValueTransfer $moneyValueTransfer
     ): SpyPriceProductStore {
-        if ($moneyValueTransfer->getIdPriceProductStore()) {
-            return $this->priceProductQueryContainer
-                ->queryPriceProductStoreByProduct($priceProductTransfer->getIdPriceProduct())
-                ->filterByIdPriceProductStore($moneyValueTransfer->getIdPriceProductStore())
-                ->findOne();
-        }
-
         return $this->priceProductQueryContainer
             ->queryPriceProductStoreByProductCurrencyStore(
                 $priceProductTransfer->getIdPriceProduct(),

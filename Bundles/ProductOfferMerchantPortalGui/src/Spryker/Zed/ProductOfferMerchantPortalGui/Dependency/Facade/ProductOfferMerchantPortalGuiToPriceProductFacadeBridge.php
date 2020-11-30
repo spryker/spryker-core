@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade;
 
-use Generated\Shared\Transfer\PriceProductTransfer;
-
 class ProductOfferMerchantPortalGuiToPriceProductFacadeBridge implements ProductOfferMerchantPortalGuiToPriceProductFacadeInterface
 {
     /**
@@ -30,15 +28,5 @@ class ProductOfferMerchantPortalGuiToPriceProductFacadeBridge implements Product
     public function getPriceTypeValues()
     {
         return $this->priceProductFacade->getPriceTypeValues();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
-     */
-    public function persistPriceProductStore(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
-    {
-        return $this->priceProductFacade->persistPriceProductStore($priceProductTransfer);
     }
 }

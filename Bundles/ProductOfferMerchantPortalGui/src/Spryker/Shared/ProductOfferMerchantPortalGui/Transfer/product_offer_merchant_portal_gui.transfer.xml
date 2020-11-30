@@ -227,10 +227,6 @@
         <property name="priceDimension" type="PriceProductDimension"/>
     </transfer>
 
-    <transfer name="PriceProductCollection">
-        <property name="priceProducts" type="PriceProduct[]" singular="priceProduct"/>
-    </transfer>
-
     <transfer name="ProductOfferResponse">
         <property name="errors" type="ProductOfferError[]" singular="error"/>
         <property name="productOffer" type="ProductOffer"/>

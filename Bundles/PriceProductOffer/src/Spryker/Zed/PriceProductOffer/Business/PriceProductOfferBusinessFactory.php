@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\PriceProductOffer\Business\Constraint\GreaterThanOrEmptyConstraint;
 use Spryker\Zed\PriceProductOffer\Business\Constraint\TransferConstraint;
 use Spryker\Zed\PriceProductOffer\Business\Constraint\ValidUniqueStoreCurrencyGrossNetPriceDataConstraint;
+use Spryker\Zed\PriceProductOffer\Business\Deliter\PriceProductOfferDeliter;
+use Spryker\Zed\PriceProductOffer\Business\Deliter\PriceProductOfferDeliterInterface;
 use Spryker\Zed\PriceProductOffer\Business\Expander\ProductOfferExpander;
 use Spryker\Zed\PriceProductOffer\Business\Expander\ProductOfferExpanderInterface;
 use Spryker\Zed\PriceProductOffer\Business\Validator\PriceProductOfferValidator;
@@ -40,6 +42,17 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
             $this->getPriceProductFacade(),
             $this->getEntityManager(),
             $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductOffer\Business\Deliter\PriceProductOfferDeliterInterface
+     */
+    public function createPriceProductOfferDeliter(): PriceProductOfferDeliterInterface
+    {
+        return new PriceProductOfferDeliter(
+            $this->getPriceProductFacade(),
+            $this->getEntityManager()
         );
     }
 

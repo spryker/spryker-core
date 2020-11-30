@@ -8,14 +8,13 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Action\UpdateProductOffer;
 
 use Generated\Shared\Transfer\PriceProductOfferCollectionTransfer;
-use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Action\ActionInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\External\ProductOfferMerchantPortalGuiToValidationAdapterInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraint as SymfonyConstraint;
@@ -51,29 +50,29 @@ class DeletePricesAction implements ActionInterface
     protected $merchantUserFacade;
 
     /**
-     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface
+     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface
      */
-    protected $translatorFacade;
+    protected $utilEncodingService;
 
     /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\External\ProductOfferMerchantPortalGuiToValidationAdapterInterface $validationAdapter
      * @param \Symfony\Component\Validator\Constraint $validationConstraint
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface $priceProductOfferFacade
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService
      */
     public function __construct(
         ProductOfferMerchantPortalGuiToValidationAdapterInterface $validationAdapter,
         SymfonyConstraint $validationConstraint,
         ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface $priceProductOfferFacade,
         ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade,
-        ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
+        ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService
     ) {
         $this->validationAdapter = $validationAdapter;
         $this->validationConstraint = $validationConstraint;
         $this->priceProductOfferFacade = $priceProductOfferFacade;
         $this->merchantUserFacade = $merchantUserFacade;
-        $this->translatorFacade = $translatorFacade;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -85,17 +84,15 @@ class DeletePricesAction implements ActionInterface
     {
         $priceProductOfferIds = array_map(
             'intval',
-            (array)json_decode($request->get(static::PARAM_PRICE_PRODUCT_OFFER_IDS), true)
+            $this->utilEncodingService->decodeJson($request->get(static::PARAM_PRICE_PRODUCT_OFFER_IDS), true)
         );
-        $response = $this->validatePriceProductOfferIds($priceProductOfferIds);
-
+        $priceProductOfferCollectionTransfer = $this->createPriceProductOfferCollectionTransferByPriceProductOfferIds($priceProductOfferIds);
+        $response = $this->validatePriceProductOfferIds($priceProductOfferCollectionTransfer);
         if ($response) {
             return $response;
         }
 
-        $priceProductOfferCriteriaTransfer = new PriceProductOfferCriteriaTransfer();
-        $priceProductOfferCriteriaTransfer->setPriceProductOfferIds($priceProductOfferIds);
-        $this->priceProductOfferFacade->delete($priceProductOfferCriteriaTransfer);
+        $this->priceProductOfferFacade->deleteProductOfferPrices($priceProductOfferCollectionTransfer);
 
         $responseData['postActions'] = [
             [
@@ -104,30 +101,30 @@ class DeletePricesAction implements ActionInterface
         ];
         $responseData['notifications'] = [[
             'type' => static::TYPE_SUCCESS,
-            'message' => $this->translatorFacade->trans(static::SUCCESS_MESSAGE),
+            'message' => static::SUCCESS_MESSAGE,
         ]];
 
         return new JsonResponse($responseData);
     }
 
     /**
-     * @param int[] $priceProductOfferIds
+     * @param \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|null
      */
-    protected function validatePriceProductOfferIds(array $priceProductOfferIds): ?JsonResponse
+    protected function validatePriceProductOfferIds(PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer): ?JsonResponse
     {
         $constraintViolationList = $this->validationAdapter
             ->createValidator()
             ->validate(
-                $this->createPriceProductOfferCollectionTransferByPriceProductOfferIds($priceProductOfferIds),
+                $priceProductOfferCollectionTransfer,
                 $this->validationConstraint
             );
 
         if ($constraintViolationList->count()) {
             $responseData['notifications'][] = [
                 'type' => static::TYPE_ERROR,
-                'message' => $this->translatorFacade->trans(static::ERROR_MESSAGE),
+                'message' => static::ERROR_MESSAGE,
             ];
 
             return new JsonResponse($responseData);

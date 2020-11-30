@@ -19,10 +19,6 @@
         <property name="isMergeable" type="bool"/>
     </transfer>
 
-    <transfer name="PriceProductCollection">
-        <property name="priceProducts" type="PriceProduct[]" singular="priceProduct"/>
-    </transfer>
-
     <transfer name="MoneyValue">
         <property name="idEntity" type="int"/>
         <property name="priceData" type="string"/>
