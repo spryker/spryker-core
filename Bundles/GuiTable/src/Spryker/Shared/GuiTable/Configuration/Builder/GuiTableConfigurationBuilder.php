@@ -299,17 +299,24 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
+     * @phpstan-param array<string, mixed> $options
+     *
      * @param string $id
      * @param string $title
+     * @param array|null $options
      *
      * @return $this
      */
-    public function addEditableColumnInput(string $id, string $title)
+    public function addEditableColumnInput(string $id, string $title, ?array $options = [])
     {
         $guiTableColumnConfigurationTransfer = (new GuiTableColumnConfigurationTransfer())
             ->setId($id)
             ->setTitle($title)
             ->setType(static::COLUMN_TYPE_INPUT);
+
+        $guiTableColumnConfigurationTransfer->setTypeOptions($options);
 
         $this->addEditableColumn($guiTableColumnConfigurationTransfer);
 
@@ -317,6 +324,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
      * @phpstan-param array<mixed> $options
      *
      * @param string $id
@@ -741,6 +750,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
      * @param string $title
      *
      * @return $this
@@ -813,6 +824,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
      * @param bool $isTableEditable
      *
      * @return $this
@@ -825,6 +838,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
      * @param string $formInputName
      *
      * @return $this
@@ -837,6 +852,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
      * @phpstan-param array<mixed> $initialData
      *
      * @param array $initialData
@@ -863,6 +880,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
      * @param string|null $title
      * @param string|null $icon
      *
@@ -876,6 +895,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
      * @param string|null $title
      * @param string|null $icon
      *
@@ -889,6 +910,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
      * @param string $method
      * @param string $url
      *
@@ -904,6 +927,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
      * @param string|null $title
      * @param string|null $icon
      *
@@ -917,6 +942,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
      * @param string|null $title
      * @param string|null $icon
      *

@@ -128,11 +128,11 @@ class CreateProductOfferController extends AbstractProductOfferController
             ])->getContent(),
         ];
 
-        if (!$productOfferForm->isSubmitted() || !$isPriceProductOffersValid) {
+        if (!$productOfferForm->isSubmitted()) {
             return new JsonResponse($responseData);
         }
 
-        if ($productOfferForm->isValid()) {
+        if ($productOfferForm->isValid() && $isPriceProductOffersValid) {
             $responseData['postActions'] = [[
                 'type' => 'redirect',
                 'url' => '/product-offer-merchant-portal-gui/product-offers',
@@ -140,6 +140,8 @@ class CreateProductOfferController extends AbstractProductOfferController
 
             $this->addSuccessMessage('The Offer is saved.');
         }
+
+        $responseData = $this->addValidationNotifications($responseData, $productOfferForm, $isPriceProductOffersValid);
 
         return new JsonResponse($responseData);
     }

@@ -115,13 +115,16 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
         foreach ($this->priceProductFacade->getPriceTypeValues() as $priceTypeTransfer) {
             $idPriceTypeName = mb_strtolower($priceTypeTransfer->getName());
             $titlePriceTypeName = ucfirst($idPriceTypeName);
+            $fieldOptions = ['type' => 'number'];
 
             $guiTableConfigurationBuilder->addEditableColumnInput(
                 $idPriceTypeName . static::ID_COLUMN_SUFFIX_PRICE_TYPE_NET,
-                static::TITLE_COLUMN_PREFIX_PRICE_TYPE_NET . ' ' . $titlePriceTypeName
+                static::TITLE_COLUMN_PREFIX_PRICE_TYPE_NET . ' ' . $titlePriceTypeName,
+                $fieldOptions
             )->addEditableColumnInput(
                 $idPriceTypeName . static::ID_COLUMN_SUFFIX_PRICE_TYPE_GROSS,
-                static::TITLE_COLUMN_PREFIX_PRICE_TYPE_GROSS . ' ' . $titlePriceTypeName
+                static::TITLE_COLUMN_PREFIX_PRICE_TYPE_GROSS . ' ' . $titlePriceTypeName,
+                $fieldOptions
             );
         }
 
@@ -140,7 +143,7 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
             static::TITLE_COLUMN_STORE,
             true,
             false,
-            '',
+            'grey',
             []
         )->addColumnChip(
             static::COL_CURRENCY,

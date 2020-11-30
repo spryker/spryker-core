@@ -130,14 +130,23 @@ interface GuiTableConfigurationBuilderInterface
     );
 
     /**
+     * @api
+     *
+     * @phpstan-param array<string, mixed> $options
+     *
      * @param string $id
      * @param string $title
+     * @param array|null $options
      *
      * @return $this
      */
-    public function addEditableColumnInput(string $id, string $title);
+    public function addEditableColumnInput(string $id, string $title, ?array $options = []);
 
     /**
+     * @api
+     *
+     * @phpstan-param array<mixed> $options
+     *
      * @param string $id
      * @param string $title
      * @param bool $isMultiselect
@@ -386,6 +395,8 @@ interface GuiTableConfigurationBuilderInterface
     public function createConfiguration(): GuiTableConfigurationTransfer;
 
     /**
+     * @api
+     *
      * @param bool $isTableEditable
      *
      * @return $this
@@ -393,6 +404,8 @@ interface GuiTableConfigurationBuilderInterface
     public function setTableEditable(bool $isTableEditable = false);
 
     /**
+     * @api
+     *
      * @param string $formInputName
      *
      * @return $this
@@ -400,6 +413,10 @@ interface GuiTableConfigurationBuilderInterface
     public function setEditableCreateActionFormInputName(string $formInputName);
 
     /**
+     * @api
+     *
+     * @phpstan-param array<mixed> $initialData
+     *
      * @param array $initialData
      *
      * @return $this
@@ -407,6 +424,8 @@ interface GuiTableConfigurationBuilderInterface
     public function setEditableCreateActionInitialData(array $initialData);
 
     /**
+     * @api
+     *
      * @param string|null $title
      * @param string|null $icon
      *
@@ -415,6 +434,8 @@ interface GuiTableConfigurationBuilderInterface
     public function addEditableCreateActionAddButton(?string $title = '', ?string $icon = '');
 
     /**
+     * @api
+     *
      * @param string|null $title
      * @param string|null $icon
      *
@@ -423,6 +444,8 @@ interface GuiTableConfigurationBuilderInterface
     public function addEditableCreateActionCancelButton(?string $title = '', ?string $icon = '');
 
     /**
+     * @api
+     *
      * @param string $method
      * @param string $url
      *
@@ -431,6 +454,8 @@ interface GuiTableConfigurationBuilderInterface
     public function setEditableUpdateActionUrl(string $method, string $url);
 
     /**
+     * @api
+     *
      * @param string|null $title
      * @param string|null $icon
      *
@@ -439,6 +464,8 @@ interface GuiTableConfigurationBuilderInterface
     public function addEditableUpdateActionAddButton(?string $title = '', ?string $icon = '');
 
     /**
+     * @api
+     *
      * @param string|null $title
      * @param string|null $icon
      *

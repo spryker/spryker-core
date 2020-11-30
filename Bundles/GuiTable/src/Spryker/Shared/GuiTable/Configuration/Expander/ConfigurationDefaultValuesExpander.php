@@ -8,6 +8,7 @@
 namespace Spryker\Shared\GuiTable\Configuration\Expander;
 
 use Generated\Shared\Transfer\GuiTableBatchActionsConfigurationTransfer;
+use Generated\Shared\Transfer\GuiTableColumnConfiguratorConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataSourceConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableFiltersConfigurationTransfer;
@@ -15,7 +16,6 @@ use Generated\Shared\Transfer\GuiTableItemSelectionConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTablePaginationConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableRowActionsConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableSearchConfigurationTransfer;
-use Generated\Shared\Transfer\GuiTableSettingsConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableSyncStateUrlConfigurationTransfer;
 use Spryker\Shared\GuiTable\Configuration\GuiTableConfigInterface;
 
@@ -237,15 +237,15 @@ class ConfigurationDefaultValuesExpander implements ConfigurationDefaultValuesEx
     protected function setDefaultSettings(
         GuiTableConfigurationTransfer $guiTableConfigurationTransfer
     ): GuiTableConfigurationTransfer {
-        $guiTableSettingsConfigurationTransfer = $guiTableConfigurationTransfer->getSettings() ?? new GuiTableSettingsConfigurationTransfer();
+        $guiTableColumnConfiguratorConfigurationTransfer = $guiTableConfigurationTransfer->getColumnConfigurator() ?? new GuiTableColumnConfiguratorConfigurationTransfer();
 
-        if ($guiTableSettingsConfigurationTransfer->getEnabled() === null) {
-            $guiTableSettingsConfigurationTransfer->setEnabled(
-                in_array('settings', $this->guiTableConfig->getDefaultEnabledFeatures())
+        if ($guiTableColumnConfiguratorConfigurationTransfer->getEnabled() === null) {
+            $guiTableColumnConfiguratorConfigurationTransfer->setEnabled(
+                in_array('columnConfigurator', $this->guiTableConfig->getDefaultEnabledFeatures())
             );
         }
 
-        $guiTableConfigurationTransfer->setSettings($guiTableSettingsConfigurationTransfer);
+        $guiTableConfigurationTransfer->setColumnConfigurator($guiTableColumnConfiguratorConfigurationTransfer);
 
         return $guiTableConfigurationTransfer;
     }

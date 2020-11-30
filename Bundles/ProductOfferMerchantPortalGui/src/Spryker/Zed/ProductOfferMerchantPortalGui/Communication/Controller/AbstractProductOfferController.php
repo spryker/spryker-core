@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -157,6 +158,8 @@ class AbstractProductOfferController extends AbstractController
                 if (!$propertyPath) {
                     if ($isCorrectRow) {
                         $initialData[static::KEY_ERRORS][$key][static::KEY_ROW_ERROR] = $errorMessage;
+                        $initialData[static::KEY_ERRORS][$key][static::KEY_COLUMN_ERRORS][static::KEY_COLUMN_STORE] = '';
+                        $initialData[static::KEY_ERRORS][$key][static::KEY_COLUMN_ERRORS][static::KEY_COLUMN_CURRENCY] = '';
                     }
 
                     continue;
@@ -171,5 +174,38 @@ class AbstractProductOfferController extends AbstractController
         }
 
         return $initialData;
+    }
+
+    /**
+     * @phpstan-param array<string, mixed> $responseData
+     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $productOfferForm
+     *
+     * @phpstan-return array<string, mixed>
+     *
+     * @param array $responseData
+     * @param \Symfony\Component\Form\FormInterface $productOfferForm
+     * @param bool|null $isPriceProductOffersValid
+     *
+     * @return array
+     */
+    protected function addValidationNotifications(
+        array $responseData,
+        FormInterface $productOfferForm,
+        ?bool $isPriceProductOffersValid = true
+    ): array {
+        if (!$productOfferForm->isValid() || !$isPriceProductOffersValid) {
+            $responseData['notifications'] = [
+                [
+                    'type' => 'error',
+                    'message' => 'The Offer is not saved.',
+                ],
+                [
+                    'type' => 'error',
+                    'message' => 'To create an Offer please resolve all errors',
+                ],
+            ];
+        }
+
+        return $responseData;
     }
 }

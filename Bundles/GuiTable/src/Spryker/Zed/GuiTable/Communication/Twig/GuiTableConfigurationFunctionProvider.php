@@ -84,7 +84,7 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
                 GuiTableConfigurationTransfer::ITEM_SELECTION => $this->prepareItemSelectionData($guiTableConfigurationTransfer),
                 GuiTableConfigurationTransfer::SYNC_STATE_URL => $this->prepareSyncStateUrlData($guiTableConfigurationTransfer),
                 GuiTableConfigurationTransfer::EDITABLE => $this->prepareEditableData($guiTableConfigurationTransfer),
-                GuiTableConfigurationTransfer::SETTINGS => $guiTableConfigurationTransfer->getSettings()->toArray(),
+                GuiTableConfigurationTransfer::COLUMN_CONFIGURATOR => $guiTableConfigurationTransfer->getColumnConfigurator()->toArray(),
             ];
 
             if (count($overwrite)) {
@@ -96,6 +96,8 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     }
 
     /**
+     * @phpstan-return array<int, mixed>
+     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
      * @return array
@@ -112,6 +114,8 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     }
 
     /**
+     * @phpstan-return array<string, mixed>
+     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
      * @return array
@@ -127,6 +131,8 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     }
 
     /**
+     * @phpstan-return array<int|string, array<int>|bool|null>
+     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
      * @return array
@@ -142,6 +148,8 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     }
 
     /**
+     * @phpstan-return array<int|string, mixed>
+     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
      * @return array
@@ -163,6 +171,8 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     }
 
     /**
+     * @phpstan-return array<int|string, array<int, array>|bool|string|null>
+     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
      * @return array
@@ -187,6 +197,8 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     }
 
     /**
+     * @phpstan-return array<int|string, array<int, array>|bool|string|null>
+     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
      * @return array
@@ -211,6 +223,8 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     }
 
     /**
+     * @phpstan-return array<int|string, bool|null>
+     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
      * @return array
@@ -223,6 +237,8 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     }
 
     /**
+     * @phpstan-return array<int|string, bool|null>
+     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
      * @return array
@@ -235,6 +251,8 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     }
 
     /**
+     * @phpstan-return array<string, mixed>
+     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
      * @return array
@@ -249,6 +267,8 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     }
 
     /**
+     * @phpstan-return array<int|string, string|bool|null>
+     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
      * @return array
@@ -273,6 +293,8 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     }
 
     /**
+     * @phpstan-return array<int|string, false>
+     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
      * @return array

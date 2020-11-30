@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider;
 
+use Generated\Shared\Transfer\GuiTableColumnConfiguratorConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableSearchConfigurationTransfer;
-use Generated\Shared\Transfer\GuiTableSettingsConfigurationTransfer;
 use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
 
 class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPriceProductOfferGuiTableConfigurationProvider implements PriceProductOfferUpdateGuiTableConfigurationProviderInterface
@@ -27,6 +27,11 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
     protected const METHOD_UPDATE_ACTION_URL = 'POST';
 
     /**
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\UpdateProductOfferController::PARAM_ID_PRODUCT_OFFER
+     */
+    protected const REQUEST_PARAM_ID_PRODUCT_OFFER = 'product-offer-id';
+
+    /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\UpdateProductOfferController::savePricesAction()
      */
     protected const URL_SAVE_PRICES = '/product-offer-merchant-portal-gui/update-product-offer/save-prices?product-offer-id=$OFFER_ID&type-price-product-offer-ids=${row.type_price_product_offer_ids}';
@@ -39,7 +44,7 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\UpdateProductOfferController::priceTableDataAction()
      */
-    protected const DATA_URL = '/product-offer-merchant-portal-gui/update-product-offer/price-table-data?product-offer-id=$OFFER_ID';
+    protected const DATA_URL = '/product-offer-merchant-portal-gui/update-product-offer/price-table-data';
 
     /**
      * @var int
@@ -63,8 +68,9 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
         $guiTableConfigurationBuilder = $this->addFilters($guiTableConfigurationBuilder);
         $guiTableConfigurationBuilder = $this->addRowActions($guiTableConfigurationBuilder);
 
+        $dataSourceUrl = static::DATA_URL . sprintf('?%s=%d', static::REQUEST_PARAM_ID_PRODUCT_OFFER, $idProductOffer);
         $guiTableConfigurationBuilder
-            ->setDataSourceUrl(str_replace(static::PARAM_ID_PRODUCT_OFFER, (string)$idProductOffer, static::DATA_URL))
+            ->setDataSourceUrl($dataSourceUrl)
             ->setIsItemSelectionEnabled(false)
             ->setDefaultPageSize(25);
 
@@ -74,11 +80,11 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
         );
 
         $guiTableSearchConfigurationTransfer = (new GuiTableSearchConfigurationTransfer())->setIsEnabled(false);
-        $guiTableSettingsConfigurationTransfer = (new GuiTableSettingsConfigurationTransfer())->setEnabled(false);
+        $guiTableColumnConfiguratorConfigurationTransfer = (new GuiTableColumnConfiguratorConfigurationTransfer())->setEnabled(false);
 
         return $guiTableConfigurationBuilder->createConfiguration()
             ->setSearch($guiTableSearchConfigurationTransfer)
-            ->setSettings($guiTableSettingsConfigurationTransfer);
+            ->setColumnConfigurator($guiTableColumnConfiguratorConfigurationTransfer);
     }
 
     /**

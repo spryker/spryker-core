@@ -36,7 +36,7 @@ class GuiTableConfig extends AbstractBundleConfig implements GuiTableConfigInter
             GuiTableConfigurationTransfer::SEARCH,
             GuiTableConfigurationTransfer::ROW_ACTIONS,
             GuiTableConfigurationTransfer::SYNC_STATE_URL,
-            GuiTableConfigurationTransfer::SETTINGS,
+            GuiTableConfigurationTransfer::COLUMN_CONFIGURATOR,
         ];
     }
 

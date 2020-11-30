@@ -24,7 +24,7 @@
         <property name="itemSelection" type="GuiTableItemSelectionConfiguration"/>
         <property name="syncStateUrl" type="GuiTableSyncStateUrlConfiguration"/>
         <property name="editable" type="GuiTableEditableConfiguration"/>
-        <property name="settings" type="GuiTableSettingsConfiguration"/>
+        <property name="columnConfigurator" type="GuiTableColumnConfiguratorConfiguration"/>
     </transfer>
 
     <transfer name="GuiTableColumnConfiguration">
@@ -182,7 +182,7 @@
         <property name="typeOptions" type="array" singular="typeOption" associative="true"/>
     </transfer>
 
-    <transfer name="GuiTableSettingsConfiguration">
+    <transfer name="GuiTableColumnConfiguratorConfiguration">
         <property name="enabled" type="bool"/>
     </transfer>
 

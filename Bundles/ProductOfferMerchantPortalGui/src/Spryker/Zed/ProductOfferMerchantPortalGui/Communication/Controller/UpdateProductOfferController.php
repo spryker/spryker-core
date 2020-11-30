@@ -150,11 +150,15 @@ class UpdateProductOfferController extends AbstractProductOfferController
             ])->getContent(),
         ];
 
-        if (!$productOfferForm->isSubmitted() || !$isPriceProductOffersValid) {
+        if (!$productOfferForm->isSubmitted()) {
             return new JsonResponse($responseData);
         }
 
-        if ($productOfferForm->isValid() && $productOfferResponseTransfer->getIsSuccessful()) {
+        if (
+            $productOfferForm->isValid()
+            && $productOfferResponseTransfer->getIsSuccessful()
+            && $isPriceProductOffersValid
+        ) {
             $responseData['postActions'] = [
                 [
                     'type' => 'close_overlay',
@@ -180,6 +184,8 @@ class UpdateProductOfferController extends AbstractProductOfferController
             }
         }
 
+        $responseData = $this->addValidationNotifications($responseData, $productOfferForm, $isPriceProductOffersValid);
+
         return new JsonResponse($responseData);
     }
 
@@ -190,7 +196,7 @@ class UpdateProductOfferController extends AbstractProductOfferController
      */
     public function priceTableDataAction(Request $request): Response
     {
-        $idProductOffer = $request->get(static::PARAM_ID_PRODUCT_OFFER);
+        $idProductOffer = (int)$request->get(static::PARAM_ID_PRODUCT_OFFER);
 
         return $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
             $request,
