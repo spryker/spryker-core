@@ -13,6 +13,8 @@ use Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInte
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\ShipmentsRestApi\Communication\Plugin\CheckoutRestApi\ShipmentsQuoteMapperPlugin} instead.
+ *
  * @method \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacadeInterface getFacade()
  * @method \Spryker\Zed\ShipmentsRestApi\ShipmentsRestApiConfig getConfig()
  */
