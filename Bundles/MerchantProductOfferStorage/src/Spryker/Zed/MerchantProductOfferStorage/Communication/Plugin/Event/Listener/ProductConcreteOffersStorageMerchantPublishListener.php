@@ -23,13 +23,13 @@ class ProductConcreteOffersStorageMerchantPublishListener extends AbstractPlugin
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $transfers, $eventName): void
+    public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        $this->getFacade()->writeProductConcreteProductOffersStorageCollectionByMerchantEvents($transfers);
+        $this->getFacade()->writeProductConcreteProductOffersStorageCollectionByMerchantEvents($eventEntityTransfers);
     }
 }

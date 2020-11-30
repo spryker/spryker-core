@@ -27,22 +27,22 @@ class CategoryNodeStorageParentPublishListener extends AbstractPlugin implements
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
 
         $parentCategoryNodeIds = $this->getFactory()
             ->getEventBehaviorFacade()
-            ->getEventTransferForeignKeys($eventTransfers, SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE);
+            ->getEventTransferForeignKeys($eventEntityTransfers, SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE);
 
         $originalParentCategoryNodeIds = $this->getFactory()
             ->getEventBehaviorFacade()
-            ->getEventTransfersOriginalValues($eventTransfers, SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE);
+            ->getEventTransfersOriginalValues($eventEntityTransfers, SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE);
 
         $parentCategoryNodeIds = array_unique(array_merge($parentCategoryNodeIds, $originalParentCategoryNodeIds));
 

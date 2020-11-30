@@ -24,17 +24,17 @@ class ProductDiscontinuedNoteStorageListener extends AbstractPlugin implements E
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
 
         $productDiscontinuedIds = $this->getFactory()->getEventBehaviorFacade()
-            ->getEventTransferForeignKeys($eventTransfers, SpyProductDiscontinuedNoteTableMap::COL_FK_PRODUCT_DISCONTINUED);
+            ->getEventTransferForeignKeys($eventEntityTransfers, SpyProductDiscontinuedNoteTableMap::COL_FK_PRODUCT_DISCONTINUED);
 
         if (empty($productDiscontinuedIds)) {
             return;
