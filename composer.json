@@ -574,7 +574,6 @@
     "spryker/product-options-rest-api": "*",
     "spryker/product-packaging-unit": "*",
     "spryker/product-packaging-unit-data-import": "*",
-    "spryker/product-packaging-unit-gui": "*",
     "spryker/product-packaging-unit-storage": "*",
     "spryker/product-page-search": "*",
     "spryker/product-page-search-extension": "*",
