@@ -36,7 +36,7 @@ class ValidUniqueStoreCurrencyCollectionConstraintValidator extends AbstractCons
         }
 
         $existingKeys = [];
-        foreach ($value as $priceProductTransfer) {
+        foreach ($value as $position => $priceProductTransfer) {
             if (!$priceProductTransfer instanceof PriceProductTransfer) {
                 throw new UnexpectedTypeException($priceProductTransfer, PriceProductTransfer::class);
             }
@@ -48,7 +48,9 @@ class ValidUniqueStoreCurrencyCollectionConstraintValidator extends AbstractCons
                 $priceProductTransfer->getPriceTypeOrFail()->getIdPriceTypeOrFail()
             );
             if (in_array($key, $existingKeys)) {
-                $this->context->addViolation($constraint->getMessage());
+                $this->context->buildViolation($constraint->getMessage())
+                    ->atPath("[$position]")
+                    ->addViolation();
             }
 
             $existingKeys[] = $key;
