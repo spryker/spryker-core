@@ -19,13 +19,13 @@ class PriceProductOfferCreateGuiTableConfigurationProvider extends AbstractPrice
     protected const DATA_URL = '/product-offer-merchant-portal-gui/create-product-offer/price-table-data';
 
     /**
-     * @phpstan-param array<mixed>|null $initialData
+     * @phpstan-param array<mixed> $initialData
      *
-     * @param array|null $initialData
+     * @param array $initialData
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
-    public function getConfiguration(?array $initialData = []): GuiTableConfigurationTransfer
+    public function getConfiguration(array $initialData = []): GuiTableConfigurationTransfer
     {
         $guiTableConfigurationBuilder = $this->guiTableFactory->createConfigurationBuilder();
         $guiTableConfigurationBuilder = $this->addColumns($guiTableConfigurationBuilder);

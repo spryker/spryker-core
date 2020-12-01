@@ -92,7 +92,7 @@ class CreateProductOfferController extends AbstractProductOfferController
         return $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
             $request,
             $this->getFactory()->createProductOfferPriceTableDataProvider(),
-            $this->getFactory()->createPriceProductOfferCreateGuiTableConfigurationProvider()->getConfiguration()
+            $this->getFactory()->createPriceProductOfferCreateGuiTableConfigurationProvider()->getConfiguration([])
         );
     }
 

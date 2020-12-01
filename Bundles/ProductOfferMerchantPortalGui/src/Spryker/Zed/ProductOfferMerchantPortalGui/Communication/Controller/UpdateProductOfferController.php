@@ -201,7 +201,7 @@ class UpdateProductOfferController extends AbstractProductOfferController
         return $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
             $request,
             $this->getFactory()->createProductOfferPriceTableDataProvider($idProductOffer),
-            $this->getFactory()->createPriceProductOfferUpdateGuiTableConfigurationProvider()->getConfiguration($idProductOffer)
+            $this->getFactory()->createPriceProductOfferUpdateGuiTableConfigurationProvider()->getConfiguration($idProductOffer, [])
         );
     }
 

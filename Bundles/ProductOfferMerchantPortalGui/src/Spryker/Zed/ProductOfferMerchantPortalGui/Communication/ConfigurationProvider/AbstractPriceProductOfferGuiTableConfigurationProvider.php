@@ -69,16 +69,16 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
     }
 
     /**
-     * @phpstan-param array<mixed>|null $initialData
+     * @phpstan-param array<mixed> $initialData
      *
      * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
-     * @param array|null $initialData
+     * @param array $initialData
      *
      * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
      */
     protected function setEditableConfiguration(
         GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder,
-        ?array $initialData = []
+        array $initialData = []
     ): GuiTableConfigurationBuilderInterface {
         $guiTableConfigurationBuilder->setTableEditable(true)
             ->setEditableCreateActionFormInputName(static::EDITABLE_CREATE_FORM_INPUT_NAME);

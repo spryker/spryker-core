@@ -97,8 +97,8 @@
     </transfer>
 
     <transfer name="GuiTableEditableCreateConfiguration">
-        <property name="addButton" type="GuiTableEditableButton" description="Optional. Only if you need to customize button look and wording or disable save button."/>
-        <property name="cancelButton" type="GuiTableEditableButton" description="Optional. Only if you need to customize button look and wording or disable cancel button."/>
+        <property name="addButton" type="GuiTableEditableButton" description="Optional. Only if you need to customize button view, wording or disable save button."/>
+        <property name="cancelButton" type="GuiTableEditableButton" description="Optional. Only if you need to customize button view, wording or disable cancel button."/>
         <property name="formInputName" type="string" description="Name of form input to put data from new rows."/>
         <property name="initialData" type="GuiTableEditableInitialData" description="Static data which could be used when dataSink type is form."/>
     </transfer>
