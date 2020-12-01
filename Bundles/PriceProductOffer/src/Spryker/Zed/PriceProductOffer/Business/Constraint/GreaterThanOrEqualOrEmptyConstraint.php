@@ -9,12 +9,12 @@ namespace Spryker\Zed\PriceProductOffer\Business\Constraint;
 
 use Symfony\Component\Validator\Constraints\AbstractComparison;
 
-class GreaterThanOrEmptyConstraint extends AbstractComparison
+class GreaterThanOrEqualOrEmptyConstraint extends AbstractComparison
 {
     /**
      * @var string
      */
-    public $message = 'This value should be greater than {{ compared_value }} or empty.';
+    public $message = 'This value should be equal or greater than {{ compared_value }} or empty.';
 
     /**
      * @return string

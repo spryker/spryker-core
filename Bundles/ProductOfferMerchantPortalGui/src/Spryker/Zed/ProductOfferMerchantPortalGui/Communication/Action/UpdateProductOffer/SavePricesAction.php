@@ -213,13 +213,12 @@ class SavePricesAction implements ActionInterface
     protected function errorJsonResponse(PriceProductOfferCollectionValidationResponseTransfer $validationResponseTransfer): JsonResponse
     {
         $notificaions = [];
-        foreach ($validationResponseTransfer->getErrors() as $validationErrorTransfers) {
-            $validationErrorTransfer = $validationErrorTransfers->getValidationErrors()->offsetGet(0);
-            $notificaions[] = [
-                'type' => static::NOTIFICATION_TYPE_ERROR,
-                'message' => $validationErrorTransfer->getMessage(),
-                ];
-        }
+        /** @var \Generated\Shared\Transfer\ValidationErrorTransfer $validationErrorTransfer */
+        $validationErrorTransfer = $validationResponseTransfer->getValidationErrors()->offsetGet(0);
+        $notificaions[] = [
+            'type' => static::NOTIFICATION_TYPE_ERROR,
+            'message' => $validationErrorTransfer->getMessage(),
+        ];
         $response = [
             'notifications' => $notificaions,
         ];

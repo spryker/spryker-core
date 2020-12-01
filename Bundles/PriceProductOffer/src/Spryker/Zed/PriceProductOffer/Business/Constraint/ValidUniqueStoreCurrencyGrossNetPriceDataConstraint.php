@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class ValidUniqueStoreCurrencyGrossNetPriceDataConstraint extends SymfonyConstraint
 {
-    protected const MESSAGE = 'Data is duplicated';
+    protected const MESSAGE = 'The set of inputs Store and Currency needs to be unique.';
 
     /**
      * @var \Spryker\Zed\PriceProductOffer\Persistence\PriceProductOfferRepositoryInterface
@@ -20,6 +20,8 @@ class ValidUniqueStoreCurrencyGrossNetPriceDataConstraint extends SymfonyConstra
     protected $priceProductOfferRepository;
 
     /**
+     * @phpstan-param array<mixed> $options
+     *
      * @param \Spryker\Zed\PriceProductOffer\Persistence\PriceProductOfferRepositoryInterface $priceProductOfferRepository
      * @param array|null $options
      */

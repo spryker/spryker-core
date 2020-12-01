@@ -107,16 +107,12 @@
 
     <transfer name="PriceProductOfferCollectionValidationResponse">
         <property name="isSuccessful" type="bool"/>
-        <property name="errors" type="PriceProductOfferValidationError[]" singular="error"/>
-    </transfer>
-
-    <transfer name="PriceProductOfferValidationError">
         <property name="validationErrors" type="ValidationError[]" singular="validationError"/>
-        <property name="priceProduct" type="PriceProduct"/>
     </transfer>
 
     <transfer name="ValidationError">
         <property name="message" type="string"/>
+        <property name="root" type="object"/>
         <property name="propertyPath" type="string"/>
         <property name="invalidValue" type="string"/>
     </transfer>

@@ -9,17 +9,16 @@ namespace Spryker\Zed\PriceProductOffer\Business\Validator;
 
 use ArrayObject;
 use Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer;
-use Generated\Shared\Transfer\PriceProductOfferValidationErrorTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ValidationErrorTransfer;
+use Spryker\Zed\PriceProductOffer\Business\ConstraintProvider\PriceProductOfferConstraintProviderInterface;
 use Spryker\Zed\PriceProductOffer\Dependency\External\PriceProductOfferToValidationAdapterInterface;
 
 class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
 {
     /**
-     * @var \Symfony\Component\Validator\Constraint[]
+     * @var \Spryker\Zed\PriceProductOffer\Business\ConstraintProvider\PriceProductOfferConstraintProviderInterface
      */
-    protected $constraints;
+    protected $priceProductOfferConstraintProvider;
 
     /**
      * @var \Symfony\Component\Validator\Validator\ValidatorInterface
@@ -27,16 +26,20 @@ class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
     protected $validator;
 
     /**
-     * @param \Symfony\Component\Validator\Constraint[] $constraints
+     * @param \Spryker\Zed\PriceProductOffer\Business\ConstraintProvider\PriceProductOfferConstraintProviderInterface $priceProductOfferConstraintProvider
      * @param \Spryker\Zed\PriceProductOffer\Dependency\External\PriceProductOfferToValidationAdapterInterface $validationAdapter
      */
-    public function __construct(array $constraints, PriceProductOfferToValidationAdapterInterface $validationAdapter)
-    {
-        $this->constraints = $constraints;
+    public function __construct(
+        PriceProductOfferConstraintProviderInterface $priceProductOfferConstraintProvider,
+        PriceProductOfferToValidationAdapterInterface $validationAdapter
+    ) {
+        $this->priceProductOfferConstraintProvider = $priceProductOfferConstraintProvider;
         $this->validator = $validationAdapter->createValidator();
     }
 
     /**
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     *
      * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer
@@ -45,31 +48,14 @@ class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
     {
         $validationResponseTransfer = new PriceProductOfferCollectionValidationResponseTransfer();
         $validationResponseTransfer->setIsSuccessful(true);
-        foreach ($priceProductTransfers as $priceProductTransfer) {
-            $validationError = $this->validatePrice($priceProductTransfer);
-            if ($validationError) {
-                $validationResponseTransfer->setIsSuccessful(false);
-                $validationResponseTransfer->addError($validationError);
-            }
-        }
 
-        return $validationResponseTransfer;
-    }
+        $constraintViolationList = $this->validator->validate($priceProductTransfers, $this->priceProductOfferConstraintProvider->getConstraintsMap());
 
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductOfferValidationErrorTransfer|null
-     */
-    protected function validatePrice(PriceProductTransfer $priceProductTransfer): ?PriceProductOfferValidationErrorTransfer
-    {
-        $constraintViolationList = $this->validator->validate($priceProductTransfer, $this->constraints);
         if (!$constraintViolationList->count()) {
-            return null;
+            return $validationResponseTransfer;
         }
 
-        $priceProductOfferValidationErrorTransfer = new PriceProductOfferValidationErrorTransfer();
-        $priceProductOfferValidationErrorTransfer->setPriceProduct($priceProductTransfer);
+        $validationResponseTransfer->setIsSuccessful(false);
 
         /** @var \Symfony\Component\Validator\ConstraintViolationInterface $constraintViolation */
         foreach ($constraintViolationList as $constraintViolation) {
@@ -77,9 +63,10 @@ class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
             $validationErrorTransfer->setMessage($constraintViolation->getMessage());
             $validationErrorTransfer->setPropertyPath($constraintViolation->getPropertyPath());
             $validationErrorTransfer->setInvalidValue($constraintViolation->getInvalidValue());
-            $priceProductOfferValidationErrorTransfer->addValidationError($validationErrorTransfer);
+            $validationErrorTransfer->setRoot($constraintViolation->getRoot());
+            $validationResponseTransfer->addValidationError($validationErrorTransfer);
         }
 
-        return $priceProductOfferValidationErrorTransfer;
+        return $validationResponseTransfer;
     }
 }

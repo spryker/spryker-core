@@ -12,14 +12,16 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class ValidProductOfferPriceIdsOwnByMerchantConstraint extends SymfonyConstraint
 {
+    protected const MESSAGE = 'the merchant doesn\'t own the product offer';
+
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface
      */
     protected $priceProductOfferFacade;
 
-    protected const MESSAGE = 'PriceProductOfferCollectionTransfer::class is not in consistent state';
-
     /**
+     * @phpstan-param array<mixed> $options
+     *
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface $priceProductOfferFacade
      * @param array|null $options
      */

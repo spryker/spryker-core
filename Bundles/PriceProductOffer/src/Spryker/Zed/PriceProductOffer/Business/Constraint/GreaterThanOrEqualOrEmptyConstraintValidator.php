@@ -9,7 +9,7 @@ namespace Spryker\Zed\PriceProductOffer\Business\Constraint;
 
 use Symfony\Component\Validator\Constraints\AbstractComparisonValidator;
 
-class GreaterThanOrEmptyConstraintValidator extends AbstractComparisonValidator
+class GreaterThanOrEqualOrEmptyConstraintValidator extends AbstractComparisonValidator
 {
     /**
      * @param mixed $value1
@@ -19,6 +19,6 @@ class GreaterThanOrEmptyConstraintValidator extends AbstractComparisonValidator
      */
     protected function compareValues($value1, $value2)
     {
-        return $value1 === null || $value1 > $value2;
+        return $value1 === null || $value1 >= $value2;
     }
 }

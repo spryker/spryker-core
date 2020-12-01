@@ -7,12 +7,10 @@
 
 namespace Spryker\Zed\PriceProductOffer\Business;
 
-use Generated\Shared\Transfer\MoneyValueTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\PriceProductOffer\Business\Constraint\GreaterThanOrEmptyConstraint;
-use Spryker\Zed\PriceProductOffer\Business\Constraint\TransferConstraint;
 use Spryker\Zed\PriceProductOffer\Business\Constraint\ValidUniqueStoreCurrencyGrossNetPriceDataConstraint;
+use Spryker\Zed\PriceProductOffer\Business\ConstraintProvider\PriceProductOfferConstraintProvider;
+use Spryker\Zed\PriceProductOffer\Business\ConstraintProvider\PriceProductOfferConstraintProviderInterface;
 use Spryker\Zed\PriceProductOffer\Business\Deliter\PriceProductOfferDeliter;
 use Spryker\Zed\PriceProductOffer\Business\Deliter\PriceProductOfferDeliterInterface;
 use Spryker\Zed\PriceProductOffer\Business\Expander\ProductOfferExpander;
@@ -70,7 +68,7 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
     public function createPriceProductOfferValidator(): PriceProductOfferValidatorInterface
     {
         return new PriceProductOfferValidator(
-            $this->getPriceProductOfferValidatorConstraints(),
+            $this->createPriceProductOfferConstraintProvider(),
             $this->getValidationAdapter()
         );
     }
@@ -78,13 +76,22 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Symfony\Component\Validator\Constraint[]
      */
-    public function getPriceProductOfferValidatorConstraints(): array
+    public function getPriceProductOfferValidatorConstraintsExtension(): array
     {
         return [
             $this->getPriceProductFacade()->getValidCurrencyAssignedToStoreConstraint(),
             $this->createValidUniqueStoreCurrencyGrossNetPriceDataConstraint(),
-            $this->createMoneyValueConstraint(),
         ];
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductOffer\Business\ConstraintProvider\PriceProductOfferConstraintProviderInterface
+     */
+    public function createPriceProductOfferConstraintProvider(): PriceProductOfferConstraintProviderInterface
+    {
+        return new PriceProductOfferConstraintProvider(
+            $this->getPriceProductOfferValidatorConstraintsExtension()
+        );
     }
 
     /**
@@ -101,19 +108,6 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
     public function createValidUniqueStoreCurrencyGrossNetPriceDataConstraint(): SymfonyConstraint
     {
         return new ValidUniqueStoreCurrencyGrossNetPriceDataConstraint($this->getRepository());
-    }
-
-    /**
-     * @return \Symfony\Component\Validator\Constraint
-     */
-    public function createMoneyValueConstraint(): SymfonyConstraint
-    {
-        return new TransferConstraint([
-            PriceProductTransfer::MONEY_VALUE => new TransferConstraint([
-                    MoneyValueTransfer::NET_AMOUNT => new GreaterThanOrEmptyConstraint(['value' => 0]),
-                    MoneyValueTransfer::GROSS_AMOUNT => new GreaterThanOrEmptyConstraint(['value' => 0]),
-                ]),
-            ]);
     }
 
     /**
