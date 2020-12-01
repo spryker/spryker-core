@@ -35,17 +35,29 @@ class UrlTwigPlugin extends AbstractPlugin implements TwigPluginInterface
      */
     public function extend(Environment $twig, ContainerInterface $container): Environment
     {
-        $twig->addFunction($this->getUrlFunction());
+        $twig->addFunction($this->getUrlFunction($container));
 
         return $twig;
     }
 
     /**
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
      * @return \Twig\TwigFunction
      */
-    protected function getUrlFunction(): TwigFunction
+    protected function getUrlFunction(ContainerInterface $container): TwigFunction
     {
-        return new TwigFunction(static::FUNCTION_NAME_URL, function (string $url, array $query = [], array $options = []) {
+        return new TwigFunction(static::FUNCTION_NAME_URL, function (string $url, array $query = [], array $options = []) use ($container) {
+            if ($url === '_wdt' || strpos($url, '_profile') !== false) {
+                /** @var \Symfony\Cmf\Component\Routing\ChainRouter $globalUrlGenerator */
+                $globalUrlGenerator = $container->get('url_generator');
+                $url = $globalUrlGenerator->generate($url, $query);
+
+                $charset = mb_internal_encoding() ?: 'UTF-8';
+
+                return htmlspecialchars($url, ENT_QUOTES | ENT_SUBSTITUTE, $charset);
+            }
+
             $url = Url::generate($url, $query, $options);
             $html = $url->buildEscaped();
 
