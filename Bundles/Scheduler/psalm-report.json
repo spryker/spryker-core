@@ -1,18 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 33,
-            "line_to": 33,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\Scheduler\\Communication\\Plugin\\Scheduler\\PhpScheduleReaderPlugin::readSchedule has wrong name $filterTransfer, expecting $schedulerFilterTransfer as defined by Spryker\\Zed\\SchedulerExtension\\Dependency\\Plugin\\ScheduleReaderPluginInterface::readSchedule",
-            "file_name": "vendor/spryker/spryker/Bundles/Scheduler/src/Spryker/Zed/Scheduler/Communication/Plugin/Scheduler/PhpScheduleReaderPlugin.php",
-            "snippet": "        SchedulerFilterTransfer $filterTransfer,",
-            "selected_text": "$filterTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",

@@ -103,20 +103,8 @@
             "type": "ParamNameMismatch",
             "message": "Argument 1 of Spryker\\Zed\\ProductOfferMerchantPortalGui\\Communication\\Form\\Constraint\\ValidFromRangeConstraintValidator::validate has wrong name $validFrom, expecting $value as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOfferMerchantPortalGui/src/Spryker/Zed/ProductOfferMerchantPortalGui/Communication/Form/Constraint/ValidFromRangeConstraintValidator.php",
-            "snippet": "    public function validate($validFrom, Constraint $validFromRangeConstraint): void",
+            "snippet": "    public function validate($validFrom, Constraint $constraint): void",
             "selected_text": "$validFrom",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 27,
-            "line_to": 27,
-            "type": "ParamNameMismatch",
-            "message": "Argument 2 of Spryker\\Zed\\ProductOfferMerchantPortalGui\\Communication\\Form\\Constraint\\ValidFromRangeConstraintValidator::validate has wrong name $validFromRangeConstraint, expecting $constraint as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferMerchantPortalGui/src/Spryker/Zed/ProductOfferMerchantPortalGui/Communication/Form/Constraint/ValidFromRangeConstraintValidator.php",
-            "snippet": "    public function validate($validFrom, Constraint $validFromRangeConstraint): void",
-            "selected_text": "$validFromRangeConstraint",
             "error_level": 7,
             "shortcode": 230
         },
@@ -127,20 +115,8 @@
             "type": "ParamNameMismatch",
             "message": "Argument 1 of Spryker\\Zed\\ProductOfferMerchantPortalGui\\Communication\\Form\\Constraint\\ValidToRangeConstraintValidator::validate has wrong name $validTo, expecting $value as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOfferMerchantPortalGui/src/Spryker/Zed/ProductOfferMerchantPortalGui/Communication/Form/Constraint/ValidToRangeConstraintValidator.php",
-            "snippet": "    public function validate($validTo, Constraint $validToRangeConstraint): void",
+            "snippet": "    public function validate($validTo, Constraint $constraint): void",
             "selected_text": "$validTo",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 27,
-            "line_to": 27,
-            "type": "ParamNameMismatch",
-            "message": "Argument 2 of Spryker\\Zed\\ProductOfferMerchantPortalGui\\Communication\\Form\\Constraint\\ValidToRangeConstraintValidator::validate has wrong name $validToRangeConstraint, expecting $constraint as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferMerchantPortalGui/src/Spryker/Zed/ProductOfferMerchantPortalGui/Communication/Form/Constraint/ValidToRangeConstraintValidator.php",
-            "snippet": "    public function validate($validTo, Constraint $validToRangeConstraint): void",
-            "selected_text": "$validToRangeConstraint",
             "error_level": 7,
             "shortcode": 230
         },
@@ -513,7 +489,7 @@
             "type": "MoreSpecificImplementedParamType",
             "message": "Argument 1 of Spryker\\Zed\\ProductOfferMerchantPortalGui\\Communication\\Form\\Constraint\\ValidFromRangeConstraintValidator::validate has the more specific type 'string', expecting 'mixed' as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOfferMerchantPortalGui/src/Spryker/Zed/ProductOfferMerchantPortalGui/Communication/Form/Constraint/ValidFromRangeConstraintValidator.php",
-            "snippet": "    public function validate($validFrom, Constraint $validFromRangeConstraint): void",
+            "snippet": "    public function validate($validFrom, Constraint $constraint): void",
             "selected_text": "$validFrom",
             "error_level": 5,
             "shortcode": 140
@@ -537,7 +513,7 @@
             "type": "MoreSpecificImplementedParamType",
             "message": "Argument 1 of Spryker\\Zed\\ProductOfferMerchantPortalGui\\Communication\\Form\\Constraint\\ValidToRangeConstraintValidator::validate has the more specific type 'string', expecting 'mixed' as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOfferMerchantPortalGui/src/Spryker/Zed/ProductOfferMerchantPortalGui/Communication/Form/Constraint/ValidToRangeConstraintValidator.php",
-            "snippet": "    public function validate($validTo, Constraint $validToRangeConstraint): void",
+            "snippet": "    public function validate($validTo, Constraint $constraint): void",
             "selected_text": "$validTo",
             "error_level": 5,
             "shortcode": 140

@@ -31,13 +31,13 @@ class TokenHashGenerator implements TokenGeneratorInterface
     }
 
     /**
-     * @param string $expectedToken
-     * @param string $actualToken
+     * @param string $expected
+     * @param string $actual
      *
      * @return bool
      */
-    public function checkTokenEquals(string $expectedToken, string $actualToken): bool
+    public function checkTokenEquals(string $expected, string $actual): bool
     {
-        return hash_equals($expectedToken, $actualToken);
+        return hash_equals($expected, $actual);
     }
 }

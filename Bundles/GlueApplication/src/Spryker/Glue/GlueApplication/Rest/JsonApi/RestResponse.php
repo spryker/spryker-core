@@ -78,13 +78,13 @@ class RestResponse implements RestResponseInterface
 
     /**
      * @param string $name
-     * @param string $href
+     * @param string $uri
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function addLink(string $name, string $href): RestResponseInterface
+    public function addLink(string $name, string $uri): RestResponseInterface
     {
-        $this->links[$name] = new RestLink($name, $href);
+        $this->links[$name] = new RestLink($name, $uri);
 
         return $this;
     }
