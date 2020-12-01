@@ -115,7 +115,12 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
         foreach ($this->priceProductFacade->getPriceTypeValues() as $priceTypeTransfer) {
             $idPriceTypeName = mb_strtolower($priceTypeTransfer->getName());
             $titlePriceTypeName = ucfirst($idPriceTypeName);
-            $fieldOptions = ['type' => 'number'];
+            $fieldOptions = [
+                'type' => 'number',
+                'attrs' => [
+                    'step' => '0.01',
+                ],
+            ];
 
             $guiTableConfigurationBuilder->addEditableColumnInput(
                 $idPriceTypeName . static::ID_COLUMN_SUFFIX_PRICE_TYPE_NET,

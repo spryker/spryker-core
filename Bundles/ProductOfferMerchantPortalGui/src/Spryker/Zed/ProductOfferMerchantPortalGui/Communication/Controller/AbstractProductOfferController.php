@@ -7,13 +7,12 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller;
 
-use ArrayObject;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
+use Generated\Shared\Transfer\ValidationErrorTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,6 +39,8 @@ class AbstractProductOfferController extends AbstractController
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\AbstractPriceProductOfferGuiTableConfigurationProvider::COL_CURRENCY
      */
     protected const KEY_COLUMN_CURRENCY = 'currency';
+
+    protected const VALUE_PROPERTY_PATH_MONEY_VALUE = 'moneyValue';
 
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -106,74 +107,100 @@ class AbstractProductOfferController extends AbstractController
         $requestTableData = $this->getFactory()->getUtilEncodingService()->decodeJson($productOfferCreateData[static::KEY_PRICES], true);
 
         $initialData[static::KEY_DATA] = $requestTableData;
-        $priceProductOfferValidationErrorTransfers = $priceProductOfferCollectionValidationResponseTransfer->getErrors();
+        $validationErrorTransfers = $priceProductOfferCollectionValidationResponseTransfer->getValidationErrors();
 
-        foreach ($priceProductOfferValidationErrorTransfers as $priceProductOfferValidationErrorTransfer) {
-            $validationErrorTransfers = $priceProductOfferValidationErrorTransfer->getValidationErrors();
-            $priceProductTransfer = $priceProductOfferValidationErrorTransfer->getPriceProduct();
+        foreach ($validationErrorTransfers as $validationErrorTransfer) {
+            if (!$validationErrorTransfer->getPropertyPath()) {
+                continue;
+            }
 
-            $initialData = $this->compareValidationErrorsWithRequestedData(
-                $validationErrorTransfers,
-                $priceProductTransfer,
-                $requestTableData,
-                $initialData
-            );
+            $initialData = $this->addInitialDataErrors($validationErrorTransfer, $initialData);
         }
 
         return $initialData;
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\ValidationErrorTransfer> $validationErrorTransfers
-     * @phpstan-param array<string, mixed> $requestTableData
-     * @phpstan-param array<int|string, mixed> $initialData
+     * @phpstan-param array<mixed> $initialData
      *
-     * @phpstan-return array<int|string, mixed>
+     * @phpstan-return array<mixed>
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ValidationErrorTransfer[] $validationErrorTransfers
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param array $requestTableData
+     * @param \Generated\Shared\Transfer\ValidationErrorTransfer $validationErrorTransfer
      * @param array $initialData
      *
      * @return array
      */
-    protected function compareValidationErrorsWithRequestedData(
-        ArrayObject $validationErrorTransfers,
-        PriceProductTransfer $priceProductTransfer,
-        $requestTableData,
-        $initialData
-    ): array {
-        foreach ($validationErrorTransfers as $validationErrorTransfer) {
-            $priceTypeName = mb_strtolower($priceProductTransfer->getPriceType()->getName());
-            $errorMessage = $validationErrorTransfer->getMessage();
-            $invalidValue = $validationErrorTransfer->getInvalidValue();
-            $propertyPath = $validationErrorTransfer->getPropertyPath();
-            $columnId = $priceTypeName . $validationErrorTransfer->getPropertyPath();
-            $idStore = $priceProductTransfer->getMoneyValue()->getStore()->getIdStore();
-            $idCurrency = $priceProductTransfer->getMoneyValue()->getCurrency()->getIdCurrency();
+    protected function addInitialDataErrors(ValidationErrorTransfer $validationErrorTransfer, array $initialData): array
+    {
+        $propertyPath = $this->extractPropertyPatchValues($validationErrorTransfer->getPropertyPath());
 
-            foreach ($requestTableData as $key => $data) {
-                $isCorrectRow = $data[static::KEY_COLUMN_STORE] === $idStore && $data[static::KEY_COLUMN_CURRENCY] === $idCurrency;
-
-                if (!$propertyPath) {
-                    if ($isCorrectRow) {
-                        $initialData[static::KEY_ERRORS][$key][static::KEY_ROW_ERROR] = $errorMessage;
-                        $initialData[static::KEY_ERRORS][$key][static::KEY_COLUMN_ERRORS][static::KEY_COLUMN_STORE] = '';
-                        $initialData[static::KEY_ERRORS][$key][static::KEY_COLUMN_ERRORS][static::KEY_COLUMN_CURRENCY] = '';
-                    }
-
-                    continue;
-                }
-
-                if ($isCorrectRow) {
-                    $initialData[static::KEY_ERRORS][$key][static::KEY_COLUMN_ERRORS][$columnId] = $errorMessage;
-
-                    continue;
-                }
-            }
+        if (!$propertyPath || !is_array($propertyPath)) {
+            return $initialData;
         }
 
+        $rowNumber = (int)$propertyPath[0] === 0 ? 0 : ((int)$propertyPath[0] - 1) % 2;
+        $isRowError = count($propertyPath) < 3;
+        $errorMessage = $validationErrorTransfer->getMessage();
+
+        if ($isRowError) {
+            $initialData[static::KEY_ERRORS][$rowNumber][static::KEY_ROW_ERROR] = $errorMessage;
+            $initialData[static::KEY_ERRORS][$rowNumber][static::KEY_COLUMN_ERRORS][static::KEY_COLUMN_STORE] = true;
+            $initialData[static::KEY_ERRORS][$rowNumber][static::KEY_COLUMN_ERRORS][static::KEY_COLUMN_CURRENCY] = true;
+
+            return $initialData;
+        }
+
+        $columnId = $this->transformPropertyPathToColumnId($propertyPath);
+
+        if (!$columnId) {
+            return $initialData;
+        }
+
+        $initialData[static::KEY_ERRORS][$rowNumber][static::KEY_COLUMN_ERRORS][$columnId] = $errorMessage;
+
         return $initialData;
+    }
+
+    /**
+     * @param string $propertyPath
+     *
+     * @return string[]
+     */
+    protected function extractPropertyPatchValues(string $propertyPath): array
+    {
+        $propertyPath = str_replace('[', '', $propertyPath);
+        $propertyPathValues = explode(']', $propertyPath);
+
+        if (!is_array($propertyPathValues)) {
+            return [];
+        }
+
+        return $propertyPathValues;
+    }
+
+    /**
+     * @param string[] $propertyPath
+     *
+     * @return string
+     */
+    protected function transformPropertyPathToColumnId(array $propertyPath): string
+    {
+        if (!isset($propertyPath[1])) {
+            return '';
+        }
+
+        if ($propertyPath[1] === static::VALUE_PROPERTY_PATH_MONEY_VALUE) {
+            $priceTypes = $this->getFactory()->getPriceProductFacade()->getPriceTypeValues();
+            $priceTypeName = mb_strtolower($priceTypes[$propertyPath[0]]->getName());
+
+            if (!isset($propertyPath[2])) {
+                return '';
+            }
+
+            return sprintf('%s[%s][%s]', $priceTypeName, (string)$propertyPath[1], (string)$propertyPath[2]);
+        }
+
+        return (string)$propertyPath[1];
     }
 
     /**
