@@ -673,6 +673,7 @@
     "spryker/security": "*",
     "spryker/security-extension": "*",
     "spryker/security-gui": "*",
+    "spryker/security-gui-extension": "*",
     "spryker/security-merchant-portal-gui": "*",
     "spryker/security-system-user": "*",
     "spryker/sequence-number": "*",
