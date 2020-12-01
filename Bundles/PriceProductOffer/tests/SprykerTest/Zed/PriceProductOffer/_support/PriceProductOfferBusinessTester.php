@@ -63,7 +63,7 @@ class PriceProductOfferBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    public function haveProductOfferSaved($priceProductOverride = null): PriceProductTransfer
+    public function havePriceProductSaved($priceProductOverride = null): PriceProductTransfer
     {
         $productOfferTransfer = $this->haveProductOffer();
         $priceProductTransfer = $this->havePriceProduct($priceProductOverride);

@@ -105,6 +105,10 @@
         <property name="message" type="string"/>
     </transfer>
 
+    <transfer name="PriceProductOfferCollection">
+        <property name="priceProductOffers" type="PriceProductOffer[]" singular="priceProductOffer"/>
+    </transfer>
+
     <transfer name="PriceProductOfferCollectionValidationResponse">
         <property name="isSuccessful" type="bool"/>
         <property name="validationErrors" type="ValidationError[]" singular="validationError"/>

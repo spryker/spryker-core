@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\PriceProductOffer\Business;
 
 use ArrayObject;
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\PriceProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
@@ -169,7 +170,7 @@ class PriceProductOfferFacadeTest extends Unit
     public function testValidateProductOfferPricesSuccess()
     {
         // Arrange
-        $priceProductTransfer = $this->tester->haveProductOfferSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $priceProductTransfer = $this->tester->havePriceProductSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
         $priceProductTransfer->getMoneyValue()->setNetAmount(10);
         $priceProductTransfer->getMoneyValue()->setGrossAmount(100);
 
@@ -188,8 +189,8 @@ class PriceProductOfferFacadeTest extends Unit
     public function testValidateProductOfferPricesFailValidUniqueStoreCurrencyGrossNetPriceDataConstraint()
     {
         // Arrange
-        $priceProductTransferSrc = $this->tester->haveProductOfferSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
-        $priceProductTransferDst = $this->tester->haveProductOfferSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $priceProductTransferSrc = $this->tester->havePriceProductSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $priceProductTransferDst = $this->tester->havePriceProductSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
 
         $priceProductTransferDst->getMoneyValue()->setStore($priceProductTransferSrc->getMoneyValue()->getStore());
         $priceProductTransferDst->getMoneyValue()->setFkStore($priceProductTransferSrc->getMoneyValue()->getFkStore());
@@ -204,14 +205,10 @@ class PriceProductOfferFacadeTest extends Unit
 
         // Assert
         $this->assertFalse($collectionValidationResponseTransfer->getIsSuccessful());
-        $this->assertCount(1, $collectionValidationResponseTransfer->getErrors());
-        $this->assertSame($priceProductTransferDst, $collectionValidationResponseTransfer->getErrors()->offsetGet(0)->getPriceProduct());
-        $this->assertCount(1, $collectionValidationResponseTransfer->getErrors()->offsetGet(0)->getValidationErrors());
+        $this->assertCount(1, $collectionValidationResponseTransfer->getValidationErrors());
         $this->assertSame(
-            'Data is duplicated',
-            $collectionValidationResponseTransfer->getErrors()
-                ->offsetGet(0)
-                ->getValidationErrors()
+            'The set of inputs Store and Currency needs to be unique.',
+            $collectionValidationResponseTransfer->getValidationErrors()
                 ->offsetGet(0)
                 ->getMessage()
         );
@@ -238,10 +235,8 @@ class PriceProductOfferFacadeTest extends Unit
         // Assert
         $this->assertFalse($collectionValidationResponseTransfer->getIsSuccessful());
         $this->assertSame(
-            'This value should be greater than 0 or empty.',
-            $collectionValidationResponseTransfer->getErrors()
-                ->offsetGet(0)
-                ->getValidationErrors()
+            'This value is not valid.',
+            $collectionValidationResponseTransfer->getValidationErrors()
                 ->offsetGet(0)
                 ->getMessage()
         );
@@ -254,8 +249,6 @@ class PriceProductOfferFacadeTest extends Unit
     {
         return [
             [-1],
-            [0],
-            ['some string'],
         ];
     }
 
@@ -265,8 +258,8 @@ class PriceProductOfferFacadeTest extends Unit
     public function testCountPriceProductOfferEntities()
     {
         // Arrange
-        $priceProductOffer1 = $this->tester->haveProductOfferSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
-        $priceProductOffer2 = $this->tester->haveProductOfferSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $priceProductOffer1 = $this->tester->havePriceProductSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $priceProductOffer2 = $this->tester->havePriceProductSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
         $priceProductOfferCriteriaTransfer = new PriceProductOfferCriteriaTransfer();
         $priceProductOfferCriteriaTransfer->setPriceProductOfferIds([
             $priceProductOffer1->getPriceDimension()->getIdPriceProductOffer(),
@@ -288,18 +281,28 @@ class PriceProductOfferFacadeTest extends Unit
     public function testDeletePriceProductOfferEntities()
     {
         // Arrange
-        $priceProductOffer1 = $this->tester->haveProductOfferSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
-        $priceProductOffer2 = $this->tester->haveProductOfferSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $priceProduct1 = $this->tester->havePriceProductSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $priceProduct2 = $this->tester->havePriceProductSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $idPriceProductOffer1 = $priceProduct1->getPriceDimension()->getIdPriceProductOffer();
+        $idPriceProductOffer2 = $priceProduct2->getPriceDimension()->getIdPriceProductOffer();
+
+        $priceProductOfferCollectionTransfer = new PriceProductOfferCollectionTransfer();
+        $priceProductOfferCollectionTransfer->addPriceProductOffer(
+            (new PriceProductOfferTransfer())->setIdPriceProductOffer($idPriceProductOffer1)
+        )->addPriceProductOffer(
+            (new PriceProductOfferTransfer())->setIdPriceProductOffer($idPriceProductOffer2)
+        );
+
         $priceProductOfferCriteriaTransfer = new PriceProductOfferCriteriaTransfer();
         $priceProductOfferCriteriaTransfer->setPriceProductOfferIds([
-            $priceProductOffer1->getPriceDimension()->getIdPriceProductOffer(),
-            $priceProductOffer2->getPriceDimension()->getIdPriceProductOffer(),
+            $idPriceProductOffer1,
+            $idPriceProductOffer2,
         ]);
 
         // Act
         $this->tester
             ->getFacade()
-            ->delete($priceProductOfferCriteriaTransfer);
+            ->deleteProductOfferPrices($priceProductOfferCollectionTransfer);
         $count = $this->tester
             ->getFacade()
             ->count($priceProductOfferCriteriaTransfer);
@@ -314,12 +317,12 @@ class PriceProductOfferFacadeTest extends Unit
     public function testGetProductOfferPricesSuccess()
     {
         // Arrange
-        $priceProductOffer1 = $this->tester->haveProductOfferSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
-        $priceProductOffer2 = $this->tester->haveProductOfferSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $priceProduct1 = $this->tester->havePriceProductSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $priceProduct2 = $this->tester->havePriceProductSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
         $priceProductOfferCriteriaTransfer = new PriceProductOfferCriteriaTransfer();
         $priceProductOfferCriteriaTransfer->setPriceProductOfferIds([
-            $priceProductOffer1->getPriceDimension()->getIdPriceProductOffer(),
-            $priceProductOffer2->getPriceDimension()->getIdPriceProductOffer(),
+            $priceProduct1->getPriceDimension()->getIdPriceProductOffer(),
+            $priceProduct2->getPriceDimension()->getIdPriceProductOffer(),
         ]);
 
         // Act

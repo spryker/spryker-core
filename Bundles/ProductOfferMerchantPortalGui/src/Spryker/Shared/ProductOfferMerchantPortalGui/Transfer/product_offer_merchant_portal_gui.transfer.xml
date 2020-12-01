@@ -313,4 +313,8 @@
         <property name="typePriceProductOfferIds" type="array" singular="typePriceProductOfferId"/>
     </transfer>
 
+    <transfer name="PriceProductOffer">
+        <property name="productOffer"  type="ProductOffer"/>
+    </transfer>
+
 </transfers>
