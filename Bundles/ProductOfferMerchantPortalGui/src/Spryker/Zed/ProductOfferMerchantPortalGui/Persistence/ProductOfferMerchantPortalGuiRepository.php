@@ -11,8 +11,8 @@ use DateTime;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\MerchantProductOfferCountsTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
-use Generated\Shared\Transfer\PriceProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTableCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductOfferTableViewCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
@@ -929,11 +929,11 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
     /**
      * @param \Generated\Shared\Transfer\PriceProductOfferTableCriteriaTransfer $productOfferPriceTableCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer
+     * @return \Generated\Shared\Transfer\PriceProductOfferTableViewCollectionTransfer
      */
     public function getProductOfferPriceTableData(
         PriceProductOfferTableCriteriaTransfer $productOfferPriceTableCriteriaTransfer
-    ): PriceProductOfferCollectionTransfer {
+    ): PriceProductOfferTableViewCollectionTransfer {
         $productOfferPriceTableCriteriaTransfer->requireIdProductOffer();
 
         $priceProductStoreQuery = $this->getFactory()
@@ -1003,16 +1003,16 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
 
         $paginationTransfer = $this->hydratePaginationTransfer($paginate);
 
-        $priceProductOfferCollectionTransfer = $this->getFactory()
+        $priceProductOfferTableViewCollectionTransfer = $this->getFactory()
             ->createPriceProductOfferTableDataMapper()
-            ->mapPriceProductOfferTableDataArrayToPriceProductOfferCollectionTransfer(
+            ->mapPriceProductOfferTableDataArrayToPriceProductOfferTableViewCollectionTransfer(
                 $paginate->getResults()->getData(),
-                new PriceProductOfferCollectionTransfer()
+                new PriceProductOfferTableViewCollectionTransfer()
             );
 
-        $priceProductOfferCollectionTransfer->setPagination($paginationTransfer);
+        $priceProductOfferTableViewCollectionTransfer->setPagination($paginationTransfer);
 
-        return $priceProductOfferCollectionTransfer;
+        return $priceProductOfferTableViewCollectionTransfer;
     }
 
     /**

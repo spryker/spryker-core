@@ -70,21 +70,21 @@ class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
             return new GuiTableDataResponseTransfer();
         }
 
-        $priceProductOfferCollectionTransfer = $this->productOfferMerchantPortalGuiRepository->getProductOfferPriceTableData($criteriaTransfer);
+        $priceProductOfferTableViewCollectionTransfer = $this->productOfferMerchantPortalGuiRepository->getProductOfferPriceTableData($criteriaTransfer);
 
         $guiTableDataResponseTransfer = new GuiTableDataResponseTransfer();
 
-        foreach ($priceProductOfferCollectionTransfer->getPriceProductOffers() as $priceProductOfferTransfer) {
-            $responseData = $priceProductOfferTransfer->toArray();
+        foreach ($priceProductOfferTableViewCollectionTransfer->getPriceProductOfferTableViews() as $priceProductOfferTableViewTransfer) {
+            $responseData = $priceProductOfferTableViewTransfer->toArray();
 
-            foreach ($priceProductOfferTransfer->getPrices() as $priceType => $priceValue) {
+            foreach ($priceProductOfferTableViewTransfer->getPrices() as $priceType => $priceValue) {
                 $responseData[$priceType] = $this->moneyFacade->convertIntegerToDecimal($priceValue);
             }
 
             $guiTableDataResponseTransfer->addRow((new GuiTableRowDataResponseTransfer())->setResponseData($responseData));
         }
 
-        $paginationTransfer = $priceProductOfferCollectionTransfer->getPagination();
+        $paginationTransfer = $priceProductOfferTableViewCollectionTransfer->getPagination();
 
         return $guiTableDataResponseTransfer
             ->setPage($paginationTransfer->getPage())

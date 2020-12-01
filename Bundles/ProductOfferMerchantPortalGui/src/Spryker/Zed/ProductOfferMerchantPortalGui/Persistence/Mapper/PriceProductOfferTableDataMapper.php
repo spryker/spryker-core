@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\Mapper;
 
 use ArrayObject;
-use Generated\Shared\Transfer\PriceProductOfferCollectionTransfer;
-use Generated\Shared\Transfer\PriceProductOfferTransfer;
+use Generated\Shared\Transfer\PriceProductOfferTableViewCollectionTransfer;
+use Generated\Shared\Transfer\PriceProductOfferTableViewTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface;
 
 class PriceProductOfferTableDataMapper
@@ -71,15 +71,15 @@ class PriceProductOfferTableDataMapper
      * @phpstan-param array<mixed> $priceProductOfferTableDataArray
      *
      * @param array $priceProductOfferTableDataArray
-     * @param \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer $priceProductConcreteCollectionTransfer
+     * @param \Generated\Shared\Transfer\PriceProductOfferTableViewCollectionTransfer $priceProductOfferTableViewCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer
+     * @return \Generated\Shared\Transfer\PriceProductOfferTableViewCollectionTransfer
      */
-    public function mapPriceProductOfferTableDataArrayToPriceProductOfferCollectionTransfer(
+    public function mapPriceProductOfferTableDataArrayToPriceProductOfferTableViewCollectionTransfer(
         array $priceProductOfferTableDataArray,
-        PriceProductOfferCollectionTransfer $priceProductConcreteCollectionTransfer
-    ): PriceProductOfferCollectionTransfer {
-        $priceProductOfferTransfers = [];
+        PriceProductOfferTableViewCollectionTransfer $priceProductOfferTableViewCollectionTransfer
+    ): PriceProductOfferTableViewCollectionTransfer {
+        $priceProductOfferTableViewTransfers = [];
 
         foreach ($priceProductOfferTableDataArray as $priceProductOfferTableRowDataArray) {
             $priceProductOfferTableRowDataArray = $priceProductOfferTableRowDataArray->toArray();
@@ -91,8 +91,8 @@ class PriceProductOfferTableDataMapper
 
             $prices[$priceKey] = $this->preparePrices($prices[$priceKey], $priceProductOfferTableRowDataArray);
 
-            if (isset($priceProductOfferTransfers[$priceKey])) {
-                $priceProductOfferTransfers[$priceKey]->setPrices($prices[$priceKey])
+            if (isset($priceProductOfferTableViewTransfers[$priceKey])) {
+                $priceProductOfferTableViewTransfers[$priceKey]->setPrices($prices[$priceKey])
                     ->addPriceProductOfferId(
                         $priceProductOfferTableRowDataArray[static::COL_PRICE_PRODUCT_OFFER_IDS]
                     )
@@ -103,18 +103,18 @@ class PriceProductOfferTableDataMapper
                 continue;
             }
 
-            $priceProductOfferTransfer = (new PriceProductOfferTransfer())
+            $priceProductOfferTableViewTransfer = (new PriceProductOfferTableViewTransfer())
                 ->setStore($priceProductOfferTableRowDataArray[static::COL_STORE])
                 ->setCurrency($priceProductOfferTableRowDataArray[static::COL_CURRENCY])
                 ->setPrices($prices[$priceKey])
                 ->addPriceProductOfferId($priceProductOfferTableRowDataArray[static::COL_PRICE_PRODUCT_OFFER_IDS])
                 ->addTypePriceProductOfferId($priceProductOfferTableRowDataArray[static::COL_TYPE_PRICE_PRODUCT_OFFER_IDS]);
 
-            $priceProductOfferTransfers[$priceKey] = $priceProductOfferTransfer;
+            $priceProductOfferTableViewTransfers[$priceKey] = $priceProductOfferTableViewTransfer;
         }
 
-        return $priceProductConcreteCollectionTransfer->setPriceProductOffers(
-            new ArrayObject($priceProductOfferTransfers)
+        return $priceProductOfferTableViewCollectionTransfer->setPriceProductOfferTableViews(
+            new ArrayObject($priceProductOfferTableViewTransfers)
         );
     }
 

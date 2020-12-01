@@ -297,12 +297,12 @@
         <property name="orderDirection" type="string"/>
     </transfer>
 
-    <transfer name="PriceProductOfferCollection">
-        <property name="priceProductOffers" type="PriceProductOffer[]" singular="priceProductOffer"/>
+    <transfer name="PriceProductOfferTableViewCollection">
+        <property name="priceProductOfferTableViews" type="PriceProductOfferTableView[]" singular="priceProductOfferTableView"/>
         <property name="pagination" type="Pagination"/>
     </transfer>
 
-    <transfer name="PriceProductOffer">
+    <transfer name="PriceProductOfferTableView">
         <property name="store" type="string"/>
         <property name="currency" type="string"/>
         <property name="prices" type="array" singular="price"/>
