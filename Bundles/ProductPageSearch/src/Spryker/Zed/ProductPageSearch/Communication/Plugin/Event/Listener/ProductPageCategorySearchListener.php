@@ -23,18 +23,18 @@ class ProductPageCategorySearchListener extends AbstractProductPageSearchListene
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
         if ($eventName === CategoryEvents::ENTITY_SPY_CATEGORY_DELETE) {
-            $categoryIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+            $categoryIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
         } else {
-            $categoryIds = $this->getValidCategoryIds($eventTransfers);
+            $categoryIds = $this->getValidCategoryIds($eventEntityTransfers);
         }
 
         if (empty($categoryIds)) {

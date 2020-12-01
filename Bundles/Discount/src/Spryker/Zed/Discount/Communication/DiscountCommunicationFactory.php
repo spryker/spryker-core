@@ -14,6 +14,7 @@ use Spryker\Zed\Discount\Communication\AmountFormatter\DiscountAmountFormatter;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\DiscountFormDataProvider;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\VoucherFormDataProvider;
+use Spryker\Zed\Discount\Communication\Form\DeleteVoucherCodeForm;
 use Spryker\Zed\Discount\Communication\Form\DiscountForm;
 use Spryker\Zed\Discount\Communication\Form\DiscountVisibilityForm;
 use Spryker\Zed\Discount\Communication\Form\Transformer\CalculatorAmountTransformer;
@@ -67,6 +68,16 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
                 'data_class' => DiscountVoucherTransfer::class,
             ]
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getDeleteVoucherCodeForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeleteVoucherCodeForm::class, null, [
+            'fields' => [],
+        ]);
     }
 
     /**

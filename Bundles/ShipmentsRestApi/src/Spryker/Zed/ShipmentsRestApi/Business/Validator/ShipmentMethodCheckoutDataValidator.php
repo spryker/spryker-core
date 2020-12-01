@@ -36,6 +36,10 @@ class ShipmentMethodCheckoutDataValidator implements ShipmentMethodCheckoutDataV
     {
         $checkoutResponseTransfer = (new CheckoutResponseTransfer())->setIsSuccess(true);
 
+        if (!$checkoutDataTransfer->getShipment()) {
+            return $checkoutResponseTransfer;
+        }
+
         $shipmentMethodTransfer = $this->shipmentFacade
             ->findMethodById($checkoutDataTransfer->getShipment()->getIdShipmentMethod());
 

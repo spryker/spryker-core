@@ -116,6 +116,7 @@ interface CompanyUnitAddressFacadeInterface
      * Specification:
      * - Retrieves a company unit address by uuid.
      * - Requires uuid field to be set in CompanyUnitAddressTransfer taken as parameter.
+     * - Executes `CompanyUnitAddressHydratePluginInterface` plugin stack.
      *
      * @api
      *

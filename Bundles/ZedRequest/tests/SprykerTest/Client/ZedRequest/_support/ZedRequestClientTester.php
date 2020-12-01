@@ -8,6 +8,9 @@
 namespace SprykerTest\Client\ZedRequest;
 
 use Codeception\Actor;
+use Codeception\Util\Stub;
+use Spryker\Shared\ZedRequest\Client\AbstractZedClient;
+use Spryker\Shared\ZedRequest\Client\AbstractZedClientInterface;
 
 /**
  * @method void wantToTest($text)
@@ -20,10 +23,47 @@ use Codeception\Actor;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Spryker\Client\ZedRequest\ZedRequestFactory getFactory($moduleName = null)
  *
  * @SuppressWarnings(PHPMD)
  */
 class ZedRequestClientTester extends Actor
 {
     use _generated\ZedRequestClientTesterActions;
+
+    /**
+     * @return \Spryker\Shared\ZedRequest\Client\AbstractZedClientInterface
+     */
+    public function createLoggableZedClient(): AbstractZedClientInterface
+    {
+        return $this->getFactory()->createLoggableZedClient();
+    }
+
+    /**
+     * @param array $params
+     *
+     * @return void
+     */
+    public function mockCreateZedClient(array $params = []): void
+    {
+        $zedRequestClientStub = Stub::makeEmpty(AbstractZedClient::class, $params);
+
+        $this->mockFactoryMethod('createZedClient', $zedRequestClientStub);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageTransfer[] $expectedMessages
+     * @param \Generated\Shared\Transfer\MessageTransfer[] $actualMessages
+     *
+     * @return void
+     */
+    public function assertMessageAreSame(array $expectedMessages, array $actualMessages): void
+    {
+        $actualMessagesSize = count($actualMessages);
+        $this->assertEquals(count($expectedMessages), $actualMessagesSize);
+
+        for ($i = 0; $i < $actualMessagesSize; ++$i) {
+            $this->assertSame($expectedMessages[$i], $actualMessages[$i]);
+        }
+    }
 }

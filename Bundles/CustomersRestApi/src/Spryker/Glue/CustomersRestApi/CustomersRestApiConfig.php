@@ -89,5 +89,8 @@ class CustomersRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_CUSTOMER_PASSWORD_DENY_LIST = '422';
     public const RESPONSE_MESSAGE_CUSTOMER_PASSWORD_DENY_LIST = 'The password is listed as common.';
 
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const FORMAT_SELF_LINK_ADDRESS_RESOURCE = '%s/%s/%s/%s';
 }

@@ -8,6 +8,7 @@
         <property name="shipmentMethods" type="ShipmentMethods" singular="shipmentMethod"/>
         <property name="paymentProviders" type="PaymentProviderCollection" singular="paymentProvider"/>
         <property name="availablePaymentMethods" type="PaymentMethods"/>
+        <property name="quote" type="Quote"/>
     </transfer>
 
     <transfer name="RestCheckoutError">
@@ -43,7 +44,7 @@
     </transfer>
 
     <transfer name="RestAddress">
-        <property name="id" type="string"/>
+        <property name="id" type="string" restRequestParameter="yes"/>
         <property name="salutation" type="string" restRequestParameter="required"/>
         <property name="firstName" type="string" restRequestParameter="required"/>
         <property name="lastName" type="string" restRequestParameter="required"/>
@@ -61,7 +62,7 @@
     </transfer>
 
     <transfer name="RestShipment">
-        <property name="idShipmentMethod" type="int" restRequestParameter="required"/>
+        <property name="idShipmentMethod" type="int" restRequestParameter="yes"/>
     </transfer>
 
     <transfer name="RestPayment">
@@ -71,7 +72,7 @@
     </transfer>
 
     <transfer name="RestCheckoutDataResponseAttributes">
-        <property name="addresses" type="RestAddress[]" singular="address"/>
+        <property name="addresses" type="RestAddress[]" singular="address" deprecated="Will be removed in next major release. Use relations instead."/>
         <property name="paymentProviders" type="RestPaymentProvider[]" singular="paymentProvider" deprecated="Will be removed in next major release. Use relations instead."/>
         <property name="shipmentMethods" type="RestShipmentMethod[]" singular="shipmentMethod" deprecated="Will be removed in next major release. Use relations instead."/>
         <property name="selectedShipmentMethods" type="RestShipmentMethod[]" singular="selectedShipmentMethod"/>
@@ -112,6 +113,7 @@
         <property name="redirectUrl" type="string"/>
         <property name="isExternalRedirect" type="bool"/>
         <property name="checkoutResponse" type="CheckoutResponse"/>
+        <property name="checkoutData" type="CheckoutData"/>
     </transfer>
 
     <transfer name="CheckoutResponse">
@@ -248,5 +250,7 @@
 
     <transfer name="CheckoutData">
         <property name="shipment" type="RestShipment"/>
+        <property name="quote" type="Quote"/>
     </transfer>
+
 </transfers>
