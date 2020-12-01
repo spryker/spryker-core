@@ -7,18 +7,16 @@
 
 namespace Spryker\Zed\CategoryImageGui\Communication\Plugin;
 
-use Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryFormPluginInterface;
+use Spryker\Zed\CategoryGuiExtension\Dependency\Plugin\CategoryFormPluginInterface;
 use Spryker\Zed\CategoryImageGui\Communication\Form\ImageSetCollectionForm;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\CategoryImageGui\Communication\Plugin\ImageSetSubformCategoryFormPlugin} instead.
- *
  * @method \Spryker\Zed\CategoryImageGui\Communication\CategoryImageGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\CategoryImageGui\CategoryImageGuiConfig getConfig()
  */
-class CategoryImageFormPlugin extends AbstractPlugin implements CategoryFormPluginInterface
+class ImageSetSubformCategoryFormPlugin extends AbstractPlugin implements CategoryFormPluginInterface
 {
     public const FIELD_IMAGE_SETS = 'imageSets';
 

@@ -86,6 +86,7 @@
     "spryker/category-exporter": "*",
     "spryker/category-extension": "*",
     "spryker/category-gui": "*",
+    "spryker/category-gui-extension": "*",
     "spryker/category-image": "*",
     "spryker/category-image-gui": "*",
     "spryker/category-image-storage": "*",

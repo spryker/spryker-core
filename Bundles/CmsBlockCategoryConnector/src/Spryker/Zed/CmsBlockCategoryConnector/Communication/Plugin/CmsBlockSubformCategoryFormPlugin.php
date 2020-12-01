@@ -7,26 +7,21 @@
 
 namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\Plugin;
 
-use Generated\Shared\Transfer\CategoryTransfer;
-use Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryFormPluginInterface;
-use Spryker\Zed\Category\Dependency\Plugin\CategoryRelationUpdatePluginInterface;
+use Spryker\Zed\CategoryGuiExtension\Dependency\Plugin\CategoryFormPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * @method \Spryker\Zed\CmsBlockCategoryConnector\Communication\CmsBlockCategoryConnectorCommunicationFactory getFactory()
- * @method \Spryker\Zed\CmsBlockCategoryConnector\Business\CmsBlockCategoryConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig getConfig()
  * @method \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface getQueryContainer()
  */
-class CategoryFormPlugin extends AbstractPlugin implements CategoryFormPluginInterface, CategoryRelationUpdatePluginInterface
+class CmsBlockSubformCategoryFormPlugin extends AbstractPlugin implements CategoryFormPluginInterface
 {
     /**
      * {@inheritDoc}
      *
      * @api
-     *
-     * @deprecated Use {@link \Spryker\Zed\CmsBlockCategoryConnector\Communication\Plugin\CmsBlockSubformCategoryFormPlugin::buildForm()} instead.
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -47,20 +42,5 @@ class CategoryFormPlugin extends AbstractPlugin implements CategoryFormPluginInt
             $builder,
             $dataProvider->getOptions()
         );
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
-    public function update(CategoryTransfer $categoryTransfer)
-    {
-        $this->getFacade()
-            ->updateCategoryCmsBlockRelations($categoryTransfer);
     }
 }

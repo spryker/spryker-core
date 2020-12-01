@@ -5,13 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryExtension\Dependency\Plugin;
+namespace Spryker\Zed\CategoryGuiExtension\Dependency\Plugin;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
-/**
- * @deprecated Use {@link \Spryker\Zed\CategoryGuiExtension\Dependency\Plugin\CategoryFormPluginInterface} instead.
- */
 interface CategoryFormPluginInterface
 {
     /**

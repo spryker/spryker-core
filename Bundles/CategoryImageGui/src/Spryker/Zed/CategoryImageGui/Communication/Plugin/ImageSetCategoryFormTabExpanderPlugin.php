@@ -9,16 +9,14 @@ namespace Spryker\Zed\CategoryImageGui\Communication\Plugin;
 
 use Generated\Shared\Transfer\TabItemTransfer;
 use Generated\Shared\Transfer\TabsViewTransfer;
-use Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryFormTabExpanderPluginInterface;
+use Spryker\Zed\CategoryGuiExtension\Dependency\Plugin\CategoryFormTabExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\CategoryImageGui\Communication\Plugin\ImageSetCategoryFormTabExpanderPlugin} instead.
- *
  * @method \Spryker\Zed\CategoryImageGui\CategoryImageGuiConfig getConfig()
  * @method \Spryker\Zed\CategoryImageGui\Communication\CategoryImageGuiCommunicationFactory getFactory()
  */
-class CategoryImageFormTabExpanderPlugin extends AbstractPlugin implements CategoryFormTabExpanderPluginInterface
+class ImageSetCategoryFormTabExpanderPlugin extends AbstractPlugin implements CategoryFormTabExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
