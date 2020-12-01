@@ -24,17 +24,17 @@ class MerchantRelationshipListener extends AbstractPlugin implements EventBulkHa
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName): void
+    public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
         $companyBusinessUnitIds = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys(
-                $eventTransfers,
+                $eventEntityTransfers,
                 PriceProductMerchantRelationshipStorageConfig::COL_FK_COMPANY_BUSINESS_UNIT
             );
 

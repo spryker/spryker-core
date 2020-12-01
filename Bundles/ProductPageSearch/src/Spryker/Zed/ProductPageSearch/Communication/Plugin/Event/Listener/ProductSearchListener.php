@@ -17,17 +17,17 @@ use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 class ProductSearchListener extends AbstractProductPageSearchListener implements EventBulkHandlerInterface
 {
     /**
-     * @param array $eventTransfers
+     * @param array $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName): void
+    public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
         $productIds = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys(
-                $eventTransfers,
+                $eventEntityTransfers,
                 SpyProductSearchTableMap::COL_FK_PRODUCT
             );
 
