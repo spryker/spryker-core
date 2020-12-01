@@ -199,22 +199,6 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
      *
      * @api
      *
-     * @param int $idPriceProduct
-     *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery
-     */
-    public function queryPriceProductStoreByProduct($idPriceProduct): SpyPriceProductStoreQuery
-    {
-        return $this->getFactory()
-            ->createPriceProductStoreQuery()
-            ->filterByFkPriceProduct($idPriceProduct);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param int $idPriceProductStore
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery
