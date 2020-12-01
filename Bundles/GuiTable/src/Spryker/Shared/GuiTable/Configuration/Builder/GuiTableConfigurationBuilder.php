@@ -887,7 +887,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      *
      * @return $this
      */
-    public function addEditableCreateActionAddButton(?string $title = '', ?string $icon = '')
+    public function addEditableCreateActionAddButton(?string $title = null, ?string $icon = null)
     {
         $this->editableCreateAction[static::KEY_EDITABLE_ADD_BUTTON] = $this->createTableEditableButton($title, $icon);
 

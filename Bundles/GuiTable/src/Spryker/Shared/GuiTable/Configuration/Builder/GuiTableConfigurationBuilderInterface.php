@@ -431,7 +431,7 @@ interface GuiTableConfigurationBuilderInterface
      *
      * @return $this
      */
-    public function addEditableCreateActionAddButton(?string $title = '', ?string $icon = '');
+    public function addEditableCreateActionAddButton(?string $title = null, ?string $icon = null);
 
     /**
      * @api
