@@ -8,10 +8,8 @@
 namespace Spryker\Zed\CategoryGui\Communication\Controller;
 
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\CategoryGui\Communication\Exception\CategoryUrlExistsException;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -19,6 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateController extends AbstractController
 {
+    protected const REQUEST_PARAM_ID_CATEGORY = 'id-category';
+    protected const REQUEST_PARAM_ID_PARENT_NODE = 'id-parent-node';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -35,7 +36,8 @@ class CreateController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $categoryTransfer = $this->getCategoryTransferFromForm($form);
+            $categoryTransfer = $form->getData();
+
             try {
                 $categoryFacade->create($categoryTransfer);
                 $this->addSuccessMessage('The category was added successfully.');
@@ -60,9 +62,9 @@ class CreateController extends AbstractController
      *
      * @return int|null
      */
-    protected function readParentNodeId(Request $request)
+    protected function readParentNodeId(Request $request): ?int
     {
-        $parentNodeId = $request->query->get(CategoryConstants::PARAM_ID_PARENT_NODE);
+        $parentNodeId = $request->query->get(static::REQUEST_PARAM_ID_PARENT_NODE);
 
         if (!$parentNodeId) {
             return null;
@@ -72,26 +74,16 @@ class CreateController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $form
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
-    protected function getCategoryTransferFromForm(FormInterface $form)
-    {
-        return $form->getData();
-    }
-
-    /**
      * @param int $idCategory
      *
      * @return string
      */
-    protected function createSuccessRedirectUrl($idCategory)
+    protected function createSuccessRedirectUrl(int $idCategory): string
     {
         $url = Url::generate(
             '/category/edit',
             [
-                CategoryConstants::PARAM_ID_CATEGORY => $idCategory,
+                static::REQUEST_PARAM_ID_CATEGORY => $idCategory,
             ]
         );
 

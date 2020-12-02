@@ -9,18 +9,16 @@ namespace Spryker\Zed\ProductCategory\Communication\Plugin;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Category\Dependency\Plugin\CategoryRelationReadPluginInterface;
+use Spryker\Zed\CategoryGuiExtension\Dependency\Plugin\CategoryRelationReadPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\ProductCategory\Communication\Plugin\ProductCategoryRelationReadPlugin} instead.
- *
  * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductCategory\Communication\ProductCategoryCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductCategory\ProductCategoryConfig getConfig()
  * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface getQueryContainer()
  */
-class ReadProductCategoryRelationPlugin extends AbstractPlugin implements CategoryRelationReadPluginInterface
+class ProductCategoryRelationReadPlugin extends AbstractPlugin implements CategoryRelationReadPluginInterface
 {
     /**
      * {@inheritDoc}

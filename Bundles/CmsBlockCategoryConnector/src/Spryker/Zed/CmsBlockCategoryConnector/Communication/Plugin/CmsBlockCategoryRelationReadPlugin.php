@@ -9,18 +9,16 @@ namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Category\Dependency\Plugin\CategoryRelationReadPluginInterface;
+use Spryker\Zed\CategoryGuiExtension\Dependency\Plugin\CategoryRelationReadPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\CmsBlockCategoryConnector\Communication\Plugin\CmsBlockCategoryRelationReadPlugin} instead.
- *
  * @method \Spryker\Zed\CmsBlockCategoryConnector\Business\CmsBlockCategoryConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\CmsBlockCategoryConnector\Communication\CmsBlockCategoryConnectorCommunicationFactory getFactory()
  * @method \Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig getConfig()
  * @method \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface getQueryContainer()
  */
-class ReadCmsBlockCategoryRelationsPlugin extends AbstractPlugin implements CategoryRelationReadPluginInterface
+class CmsBlockCategoryRelationReadPlugin extends AbstractPlugin implements CategoryRelationReadPluginInterface
 {
     /**
      * {@inheritDoc}

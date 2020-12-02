@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\CategoryGui\Communication\Controller;
 
-use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Csrf\CsrfToken;
@@ -21,14 +21,18 @@ class ReSortController extends AbstractController
     protected const PARAM_RE_SORT_FORM_TOKEN_ID = 'category_nodes_re_sort_token';
     protected const PARAM_REQUEST_RE_SORT_FORM_TOKEN = 'token';
 
+    protected const REQUEST_PARAM_ID_CATEGORY = 'id-category';
+    protected const REQUEST_PARAM_ID_NODE = 'id-node';
+    protected const REQUEST_PARAM_NODES = 'nodes';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): array
     {
-        $idCategoryNode = $request->get(CategoryConstants::PARAM_ID_NODE);
+        $idCategoryNode = $request->get(static::REQUEST_PARAM_ID_NODE);
         $localeTransfer = $this->getFactory()->getCurrentLocale();
 
         $categoryNodeCollection = $this
@@ -59,7 +63,7 @@ class ReSortController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function saveAction(Request $request)
+    public function saveAction(Request $request): JsonResponse
     {
         if (!$this->isCsrfTokenValid($request->get(static::PARAM_REQUEST_RE_SORT_FORM_TOKEN))) {
             return $this->jsonResponse([
@@ -68,7 +72,7 @@ class ReSortController extends AbstractController
             ]);
         }
 
-        $categoryNodesToReorder = (array)json_decode($request->request->get('nodes'), true);
+        $categoryNodesToReorder = (array)json_decode($request->request->get(static::REQUEST_PARAM_NODES), true);
         $positionCursor = count($categoryNodesToReorder);
 
         foreach ($categoryNodesToReorder as $index => $nodeData) {

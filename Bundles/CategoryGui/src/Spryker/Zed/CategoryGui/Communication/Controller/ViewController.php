@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CategoryGui\Communication\Controller;
 
+use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -15,7 +16,12 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewController extends AbstractController
 {
-    public const QUERY_PARAM_ID_CATEGORY = 'id-category';
+    protected const REQUEST_PARAM_ID_CATEGORY = 'id-category';
+
+    /**
+     * @uses \Spryker\Zed\CategoryGui\Communication\Controller\ListController::indexAction()
+     */
+    protected const ROUTE_CATEGORY_LIST = '/category-gui/list';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -24,31 +30,41 @@ class ViewController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idCategory = $request->query->getInt(static::QUERY_PARAM_ID_CATEGORY);
-
+        $idCategory = $request->query->getInt(static::REQUEST_PARAM_ID_CATEGORY);
         $categoryTransfer = $this->getFactory()->getCategoryFacade()->findCategoryById($idCategory);
 
         if ($categoryTransfer === null) {
             $this->addErrorMessage("Category with id %s doesn't exist", ['%s' => $idCategory]);
 
-            return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
-        }
-
-        $localeTransfer = $this->getFactory()->getCurrentLocale();
-        $readPlugins = $this->getFactory()
-            ->getRelationReadPluginStack();
-
-        $renderedRelations = [];
-        foreach ($readPlugins as $readPlugin) {
-            $renderedRelations[] = [
-                'name' => $readPlugin->getRelationName(),
-                'items' => $readPlugin->getRelations($categoryTransfer, $localeTransfer),
-            ];
+            return $this->redirectResponse(static::ROUTE_CATEGORY_LIST);
         }
 
         return $this->viewResponse([
             'category' => $categoryTransfer,
-            'renderedRelations' => $renderedRelations,
+            'renderedRelations' => $this->getRenderedRelations($categoryTransfer),
         ]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return array
+     */
+    protected function getRenderedRelations(CategoryTransfer $categoryTransfer): array
+    {
+        $renderedRelations = [];
+        $localeTransfer = $this->getFactory()->getCurrentLocale();
+
+        $categoryRelationReadPlugins = $this->getFactory()
+            ->getCategoryRelationReadPlugins();
+
+        foreach ($categoryRelationReadPlugins as $categoryRelationReadPlugin) {
+            $renderedRelations[] = [
+                'name' => $categoryRelationReadPlugin->getRelationName(),
+                'items' => $categoryRelationReadPlugin->getRelations($categoryTransfer, $localeTransfer),
+            ];
+        }
+
+        return $renderedRelations;
     }
 }

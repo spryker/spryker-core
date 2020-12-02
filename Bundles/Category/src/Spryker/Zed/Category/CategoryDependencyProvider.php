@@ -29,20 +29,12 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_GRAPH = 'graph plugin';
 
     public const PLUGIN_STACK_RELATION_DELETE = 'delete relation plugin stack';
-    public const PLUGIN_STACK_RELATION_READ = 'read relation plugin stack';
     public const PLUGIN_STACK_RELATION_UPDATE = 'update relation plugin stack';
     public const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
-    public const PLUGIN_CATEGORY_FORM_PLUGINS = 'PLUGIN_CATEGORY_FORM_PLUGINS';
     public const PLUGINS_CATEGORY_URL_PATH = 'PLUGINS_CATEGORY_URL_PATH';
     public const PLUGIN_CATEGORY_POST_CREATE = 'PLUGIN_CATEGORY_POST_CREATE';
     public const PLUGIN_CATEGORY_POST_UPDATE = 'PLUGIN_CATEGORY_POST_UPDATE';
     public const PLUGIN_CATEGORY_POST_READ = 'PLUGIN_CATEGORY_POST_READ';
-    public const PLUGIN_CATEGORY_FORM_TAB_EXPANDER = 'PLUGIN_CATEGORY_FORM_TAB_EXPANDER';
-
-    /**
-     * @uses \Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_CSRF_PROVIDER
-     */
-    public const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -88,36 +80,6 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
     protected function getRelationUpdatePluginStack()
     {
         return [];
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function provideCommunicationLayerDependencies(Container $container)
-    {
-        $container = $this->addLocaleFacade($container);
-        $container = $this->addRelationReadPluginStack($container);
-        $container = $this->addCategoryFormPlugins($container);
-        $container = $this->addCategoryFormTabExpanderPlugins($container);
-        $container = $this->addCsrfProviderService($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addCategoryFormPlugins(Container $container)
-    {
-        $container->set(static::PLUGIN_CATEGORY_FORM_PLUGINS, function (Container $container) {
-            return $this->getCategoryFormPlugins();
-        });
-
-        return $container;
     }
 
     /**
@@ -237,20 +199,6 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addRelationReadPluginStack(Container $container)
-    {
-        $container->set(static::PLUGIN_STACK_RELATION_READ, $container->share(function () {
-            return $this->getRelationReadPluginStack();
-        }));
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addCategoryPostCreatePlugins(Container $container): Container
     {
         $container->set(static::PLUGIN_CATEGORY_POST_CREATE, function () {
@@ -289,50 +237,6 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addCategoryFormTabExpanderPlugins(Container $container): Container
-    {
-        $container->set(static::PLUGIN_CATEGORY_FORM_TAB_EXPANDER, function () {
-            return $this->getCategoryFormTabExpanderPlugins();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addCsrfProviderService(Container $container): Container
-    {
-        $container->set(static::SERVICE_FORM_CSRF_PROVIDER, function (Container $container) {
-            return $container->getApplicationService(static::SERVICE_FORM_CSRF_PROVIDER);
-        });
-
-        return $container;
-    }
-
-    /**
-     * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationReadPluginInterface[]
-     */
-    protected function getRelationReadPluginStack()
-    {
-        return [];
-    }
-
-    /**
-     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryFormPluginInterface[]
-     */
-    protected function getCategoryFormPlugins()
-    {
-        return [];
-    }
-
-    /**
      * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryUrlPathPluginInterface[]
      */
     protected function getCategoryUrlPathPlugins()
@@ -360,14 +264,6 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryTransferExpanderPluginInterface[]
      */
     protected function getCategoryPostReadPlugins(): array
-    {
-        return [];
-    }
-
-    /**
-     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryFormTabExpanderPluginInterface[]
-     */
-    protected function getCategoryFormTabExpanderPlugins(): array
     {
         return [];
     }

@@ -10,7 +10,6 @@ namespace Spryker\Zed\CategoryGui\Communication\Controller;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategory;
-use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,6 +18,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeleteController extends AbstractController
 {
+    protected const REQUEST_PARAM_ID_CATEGORY = 'id-category';
+
+    /**
+     * @uses \Spryker\Zed\CategoryGui\Communication\Controller\ListController::indexAction()
+     */
+    protected const ROUTE_CATEGORY_LIST = '/category-gui/list';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -26,7 +32,7 @@ class DeleteController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idCategory = $this->castId($request->get(CategoryConstants::PARAM_ID_CATEGORY));
+        $idCategory = $this->castId($request->get(static::REQUEST_PARAM_ID_CATEGORY));
         $categoryEntity = $this->getCategoryEntity($idCategory);
 
         $form = $this->getFactory()->createCategoryDeleteForm($idCategory);
@@ -39,7 +45,7 @@ class DeleteController extends AbstractController
                 ->getCategoryFacade()
                 ->delete($data['fk_category']);
 
-            return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
+            return $this->redirectResponse(static::ROUTE_CATEGORY_LIST);
         }
 
         return $this->viewResponse([
@@ -56,17 +62,16 @@ class DeleteController extends AbstractController
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategory
      */
-    protected function getCategoryEntity($idCategory)
+    protected function getCategoryEntity(int $idCategory): SpyCategory
     {
         $localeTransfer = $this->getFactory()->getCurrentLocale();
-        $categoryEntity = $this
+
+        return $this
             ->getFactory()
             ->getCategoryQueryContainer()
             ->queryCategory($localeTransfer->getIdLocale())
             ->filterByIdCategory($idCategory)
             ->findOne();
-
-        return $categoryEntity;
     }
 
     /**
@@ -74,13 +79,13 @@ class DeleteController extends AbstractController
      *
      * @return array
      */
-    protected function getSubTrees(SpyCategory $categoryEntity)
+    protected function getSubTrees(SpyCategory $categoryEntity): array
     {
+        $subTrees = [];
         $categoryNodeCollection = $this
             ->getFactory()
             ->getCategoryFacade()
             ->getAllNodesByIdCategory($categoryEntity->getIdCategory());
-        $subTrees = [];
 
         foreach ($categoryNodeCollection as $categoryNodeTransfer) {
             $subTree = $this->getSubTree($categoryNodeTransfer->getIdCategoryNode());
@@ -106,15 +111,14 @@ class DeleteController extends AbstractController
      *
      * @return array
      */
-    protected function getSubTree($idCategoryNode)
+    protected function getSubTree(int $idCategoryNode): array
     {
         $localeTransfer = $this->getFactory()->getCurrentLocale();
-        $tree = $this
+
+        return $this
             ->getFactory()
             ->getCategoryFacade()
             ->getSubTreeByIdCategoryNodeAndLocale($idCategoryNode, $localeTransfer);
-
-        return $tree;
     }
 
     /**
@@ -122,11 +126,11 @@ class DeleteController extends AbstractController
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategory
      */
-    protected function getParentCategoryEntity(NodeTransfer $categoryNodeTransfer)
+    protected function getParentCategoryEntity(NodeTransfer $categoryNodeTransfer): SpyCategory
     {
         $localeTransfer = $this->getFactory()->getCurrentLocale();
-        /** @var \Orm\Zed\Category\Persistence\SpyCategory $parentCategoryEntity */
-        $parentCategoryEntity = $this
+
+        return $this
             ->getFactory()
             ->getCategoryQueryContainer()
             ->queryCategory($localeTransfer->getIdLocale())
@@ -134,8 +138,6 @@ class DeleteController extends AbstractController
                 ->filterByIdCategoryNode($categoryNodeTransfer->getFkParentCategoryNode())
             ->endUse()
             ->findOne();
-
-        return $parentCategoryEntity;
     }
 
     /**
@@ -143,14 +145,14 @@ class DeleteController extends AbstractController
      *
      * @return array
      */
-    protected function getUrls(SpyCategory $categoryEntity)
+    protected function getUrls(SpyCategory $categoryEntity): array
     {
+        $urls = [];
         $categoryNodeCollection = $this
             ->getFactory()
             ->getCategoryFacade()
             ->getAllNodesByIdCategory($categoryEntity->getIdCategory());
 
-        $urls = [];
         foreach ($categoryNodeCollection as $categoryNodeEntity) {
             $urlCollection = $this
                 ->getFactory()
@@ -171,17 +173,17 @@ class DeleteController extends AbstractController
      *
      * @return array
      */
-    protected function getRelations(SpyCategory $categoryEntity)
+    protected function getRelations(SpyCategory $categoryEntity): array
     {
+        $relations = [];
         $localeTransfer = $this->getFactory()->getCurrentLocale();
         $categoryTransfer = $this->getCategoryTransferFromEntity($categoryEntity);
-        $relationPlugins = $this->getFactory()->getRelationReadPluginStack();
-        $relations = [];
+        $categoryRelationReadPlugins = $this->getFactory()->getCategoryRelationReadPlugins();
 
-        foreach ($relationPlugins as $relationPlugin) {
+        foreach ($categoryRelationReadPlugins as $categoryRelationReadPlugin) {
             $relations[] = [
-                'name' => $relationPlugin->getRelationName(),
-                'list' => $relationPlugin->getRelations($categoryTransfer, $localeTransfer),
+                'name' => $categoryRelationReadPlugin->getRelationName(),
+                'list' => $categoryRelationReadPlugin->getRelations($categoryTransfer, $localeTransfer),
             ];
         }
 
@@ -193,10 +195,11 @@ class DeleteController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    protected function getCategoryTransferFromEntity(SpyCategory $categoryEntity)
+    protected function getCategoryTransferFromEntity(SpyCategory $categoryEntity): CategoryTransfer
     {
-        $categoryTransfer = (new CategoryTransfer())->fromArray($categoryEntity->toArray(), true);
         $categoryNodeCollection = $categoryEntity->getNodes();
+        $categoryTransfer = (new CategoryTransfer())
+            ->fromArray($categoryEntity->toArray(), true);
 
         foreach ($categoryNodeCollection as $categoryNodeEntity) {
             $categoryNodeTransfer = (new NodeTransfer())->fromArray($categoryNodeEntity->toArray());

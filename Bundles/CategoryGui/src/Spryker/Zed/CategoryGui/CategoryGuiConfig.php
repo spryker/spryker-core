@@ -11,15 +11,4 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CategoryGuiConfig extends AbstractBundleConfig
 {
-    protected const REDIRECT_URL_CATEGORY_GUI = '/category-gui/list';
-
-    /**
-     * @api
-     *
-     * @return string
-     */
-    public function getDefaultRedirectUrl(): string
-    {
-        return static::REDIRECT_URL_CATEGORY_GUI;
-    }
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\CategoryGui\Communication\Table;
 
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -23,6 +22,9 @@ class RootNodeTable extends AbstractTable
     public const COL_ACTIONS = 'actions';
     public const URL_CATEGORY_RE_SORT = '/category/re-sort';
     public const URL_PRODUCT_CATEGORY_ADD = '/category/create';
+
+    protected const REQUEST_PARAM_ID_NODE = 'id-node';
+    protected const REQUEST_PARAM_ID_PARENT_NODE = 'id-parent-node';
 
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
@@ -107,13 +109,13 @@ class RootNodeTable extends AbstractTable
      *
      * @return array
      */
-    protected function createActionButtons(array $rootNode)
+    protected function createActionButtons(array $rootNode): array
     {
         $urls = [];
 
         $urls[] = $this->generateViewButton(
             Url::generate(static::URL_CATEGORY_RE_SORT, [
-                CategoryConstants::PARAM_ID_NODE => $rootNode[static::ID_CATEGORY_NODE],
+                static::REQUEST_PARAM_ID_NODE => $rootNode[static::ID_CATEGORY_NODE],
             ]),
             '<i class="fa fa-fw fa-arrows-v"></i>',
             [
@@ -125,7 +127,7 @@ class RootNodeTable extends AbstractTable
 
         $urls[] = $this->generateCreateButton(
             Url::generate(static::URL_PRODUCT_CATEGORY_ADD, [
-                CategoryConstants::PARAM_ID_PARENT_NODE => $rootNode[static::ID_CATEGORY_NODE],
+                static::REQUEST_PARAM_ID_PARENT_NODE => $rootNode[static::ID_CATEGORY_NODE],
             ]),
             '<i class="fa fa-fw fa-plus"></i>',
             [

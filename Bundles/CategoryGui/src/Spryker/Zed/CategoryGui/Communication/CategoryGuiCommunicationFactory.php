@@ -171,14 +171,14 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCategoryFormTabs(): TabsInterface
     {
         return new CategoryFormTabs(
-            $this->getCategoryFormTabPlugins()
+            $this->getCategoryFormTabExpanderPlugins()
         );
     }
 
     /**
      * @return \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface
      */
-    protected function getLocaleFacade(): CategoryGuiToLocaleFacadeInterface
+    public function getLocaleFacade(): CategoryGuiToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(CategoryGuiDependencyProvider::FACADE_LOCALE);
     }
@@ -204,15 +204,23 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getCategoryFormPlugins(): array
     {
-        return $this->getProvidedDependency(CategoryGuiDependencyProvider::PLUGIN_CATEGORY_FORM_PLUGINS);
+        return $this->getProvidedDependency(CategoryGuiDependencyProvider::PLUGINS_CATEGORY_FORM);
     }
 
     /**
      * @return \Spryker\Zed\CategoryGuiExtension\Dependency\Plugin\CategoryFormTabExpanderPluginInterface[]
      */
-    protected function getCategoryFormTabPlugins(): array
+    public function getCategoryFormTabExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(CategoryGuiDependencyProvider::PLUGIN_CATEGORY_FORM_TAB_EXPANDER);
+        return $this->getProvidedDependency(CategoryGuiDependencyProvider::PLUGINS_CATEGORY_FORM_TAB_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryGuiExtension\Dependency\Plugin\CategoryRelationReadPluginInterface[]
+     */
+    public function getCategoryRelationReadPlugins()
+    {
+        return $this->getProvidedDependency(CategoryGuiDependencyProvider::PLUGINS_CATEGORY_RELATION_READ);
     }
 
     /**
