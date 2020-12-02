@@ -302,22 +302,39 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
                     continue;
                 }
 
-                if (!isset($productAbstractSkus[$productConcreteStorageData[static::KEY_ID_PRODUCT_ABSTRACT]])) {
-                    $expandedRestResources[$productConcreteStorageData[static::KEY_SKU]] = $concreteProductRestResource;
-
-                    continue;
-                }
-
-                $concreteProductRestResource->getAttributes()->offsetSet(
-                    ConcreteProductsRestAttributesTransfer::PRODUCT_ABSTRACT_SKU,
-                    $productAbstractSkus[$productConcreteStorageData[static::KEY_ID_PRODUCT_ABSTRACT]]
+                $expandedRestResources[$productConcreteStorageData[static::KEY_SKU]] = $this->expandSingleProductConcreteResource(
+                    $productConcreteStorageData,
+                    $concreteProductRestResource,
+                    $productAbstractSkus
                 );
-
-                $expandedRestResources[$productConcreteStorageData[static::KEY_SKU]] = $concreteProductRestResource;
             }
         }
 
         return $expandedRestResources;
+    }
+
+    /**
+     * @param array $productConcreteStorageData
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $concreteProductRestResource
+     * @param string[] $productAbstractSkus
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    protected function expandSingleProductConcreteResource(
+        array $productConcreteStorageData,
+        RestResourceInterface $concreteProductRestResource,
+        array $productAbstractSkus
+    ): RestResourceInterface {
+        if (!isset($productAbstractSkus[$productConcreteStorageData[static::KEY_ID_PRODUCT_ABSTRACT]])) {
+            return $concreteProductRestResource;
+        }
+
+        $concreteProductRestResource->getAttributes()->offsetSet(
+            ConcreteProductsRestAttributesTransfer::PRODUCT_ABSTRACT_SKU,
+            $productAbstractSkus[$productConcreteStorageData[static::KEY_ID_PRODUCT_ABSTRACT]]
+        );
+
+        return $concreteProductRestResource;
     }
 
     /**
