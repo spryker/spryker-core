@@ -29,7 +29,13 @@ class StoresTransformer implements DataTransformerInterface
         $storeIds = [];
 
         foreach ($storeTransfers as $storeTransfer) {
-            $storeIds[] = $storeTransfer->getIdStore();
+            $idStore = $storeTransfer->getIdStore();
+
+            if (!$idStore) {
+                continue;
+            }
+
+            $storeIds[] = $idStore;
         }
 
         return $storeIds;

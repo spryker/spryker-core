@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider;
 use Generated\Shared\Transfer\GuiTableDataRequestTransfer;
 use Generated\Shared\Transfer\GuiTableDataResponseTransfer;
 use Generated\Shared\Transfer\GuiTableRowDataResponseTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
 use Spryker\Shared\GuiTable\DataProvider\AbstractGuiTableDataProvider;
@@ -90,12 +91,13 @@ class ProductGuiTableDataProvider extends AbstractGuiTableDataProvider
     {
         $productConcreteCollectionTransfer = $this->productOfferMerchantPortalGuiRepository->getProductTableData($criteriaTransfer);
         $guiTableDataResponseTransfer = new GuiTableDataResponseTransfer();
+        $localeTransfer = $criteriaTransfer->getLocale() ?: new LocaleTransfer();
 
         foreach ($productConcreteCollectionTransfer->getProducts() as $productConcreteTransfer) {
             $responseData = [
                 ProductConcreteTransfer::ID_PRODUCT_CONCRETE => $productConcreteTransfer->getIdProductConcrete(),
                 ProductGuiTableConfigurationProvider::COL_KEY_SKU => $productConcreteTransfer->getSku(),
-                ProductGuiTableConfigurationProvider::COL_KEY_NAME => $this->productNameBuilder->buildProductConcreteName($productConcreteTransfer, $criteriaTransfer->getLocale()),
+                ProductGuiTableConfigurationProvider::COL_KEY_NAME => $this->productNameBuilder->buildProductConcreteName($productConcreteTransfer, $localeTransfer),
                 ProductGuiTableConfigurationProvider::COL_KEY_STORES => $this->getStoresColumnData($productConcreteTransfer),
                 ProductGuiTableConfigurationProvider::COL_KEY_IMAGE => $this->getImageUrl($productConcreteTransfer),
                 ProductGuiTableConfigurationProvider::COL_KEY_STATUS => $this->getStatusColumnData($productConcreteTransfer),
@@ -108,11 +110,20 @@ class ProductGuiTableDataProvider extends AbstractGuiTableDataProvider
         }
 
         $paginationTransfer = $productConcreteCollectionTransfer->getPagination();
+        $page = 1;
+        $maxPerPage = 10;
+        $total = $productConcreteCollectionTransfer->getProducts()->count();
+
+        if ($paginationTransfer) {
+            $page = $paginationTransfer->getPage() ?: $page;
+            $maxPerPage = $paginationTransfer->getMaxPerPage() ?: $maxPerPage;
+            $total = $paginationTransfer->getNbResults() ?: $total;
+        }
 
         return $guiTableDataResponseTransfer
-            ->setPage($paginationTransfer->getPage())
-            ->setPageSize($paginationTransfer->getMaxPerPage())
-            ->setTotal($paginationTransfer->getNbResults());
+            ->setPage($page)
+            ->setPageSize($maxPerPage)
+            ->setTotal($total);
     }
 
     /**
@@ -126,7 +137,12 @@ class ProductGuiTableDataProvider extends AbstractGuiTableDataProvider
         $storeNames = [];
 
         foreach ($storeTransfers as $storeTransfer) {
-            $storeNames[] = $storeTransfer->getName();
+            $storeName = $storeTransfer->getName();
+            if (!$storeName) {
+                continue;
+            }
+
+            $storeNames[] = $storeName;
         }
 
         return $storeNames;

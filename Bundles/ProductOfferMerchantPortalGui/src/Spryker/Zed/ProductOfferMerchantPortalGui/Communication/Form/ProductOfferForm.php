@@ -77,6 +77,9 @@ class ProductOfferForm extends AbstractType
     }
 
     /**
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     * @phpstan-param array<mixed> $options
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -94,6 +97,8 @@ class ProductOfferForm extends AbstractType
     }
 
     /**
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
@@ -108,6 +113,8 @@ class ProductOfferForm extends AbstractType
     }
 
     /**
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
@@ -135,6 +142,9 @@ class ProductOfferForm extends AbstractType
     }
 
     /**
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     * @phpstan-param array<mixed> $options
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -170,6 +180,8 @@ class ProductOfferForm extends AbstractType
     }
 
     /**
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
@@ -189,6 +201,8 @@ class ProductOfferForm extends AbstractType
     }
 
     /**
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
@@ -206,6 +220,8 @@ class ProductOfferForm extends AbstractType
     }
 
     /**
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
@@ -220,6 +236,8 @@ class ProductOfferForm extends AbstractType
     }
 
     /**
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
@@ -237,6 +255,9 @@ class ProductOfferForm extends AbstractType
     }
 
     /**
+     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $form
+     * @phpstan-param array<mixed> $options
+     *
      * @param \Symfony\Component\Form\FormView $formViewCollection
      * @param \Symfony\Component\Form\FormInterface $form
      * @param array $options
@@ -252,11 +273,23 @@ class ProductOfferForm extends AbstractType
             $priceProductTransfer = $this->getPriceProductTransfer($formView);
             $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
 
-            $formView->children[PriceProductForm::FIELD_NET_AMOUNT]->vars['label'] = $moneyValueTransfer->getCurrency()->getSymbol();
-            $formView->children[PriceProductForm::FIELD_GROSS_AMOUNT]->vars['label'] = $moneyValueTransfer->getCurrency()->getSymbol();
+            if (!$moneyValueTransfer) {
+                continue;
+            }
 
-            $storeName = $moneyValueTransfer->getStore()->getName();
-            $priceTypeName = $priceProductTransfer->getPriceType()->getName();
+            $currencyTransfer = $moneyValueTransfer->getCurrency();
+            $priceTypeTransfer = $priceProductTransfer->getPriceType();
+            $storeTransfer = $moneyValueTransfer->getStore();
+
+            if (!$currencyTransfer || !$priceTypeTransfer || !$storeTransfer) {
+                continue;
+            }
+
+            $formView->children[PriceProductForm::FIELD_NET_AMOUNT]->vars['label'] = $currencyTransfer->getSymbol();
+            $formView->children[PriceProductForm::FIELD_GROSS_AMOUNT]->vars['label'] = $currencyTransfer->getSymbol();
+
+            $storeName = $storeTransfer->getName();
+            $priceTypeName = $priceTypeTransfer->getName();
 
             $pricesFormTable[$storeName]['GROSS'][$priceTypeName][] = $formView->children[PriceProductForm::FIELD_GROSS_AMOUNT];
             $pricesFormTable[$storeName]['NET'][$priceTypeName][] = $formView->children[PriceProductForm::FIELD_NET_AMOUNT];

@@ -92,6 +92,7 @@ class ProductOfferGuiTableDataProvider extends AbstractGuiTableDataProvider
     {
         $productOfferCollectionTransfer = $this->productOfferMerchantPortalGuiRepository->getProductOfferTableData($criteriaTransfer);
         $guiTableDataResponseTransfer = new GuiTableDataResponseTransfer();
+        $localeTransfer = $criteriaTransfer->getLocale() ?: new LocaleTransfer();
 
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
             $responseData = [
@@ -100,7 +101,7 @@ class ProductOfferGuiTableDataProvider extends AbstractGuiTableDataProvider
                 ProductOfferGuiTableConfigurationProvider::COL_KEY_MERCHANT_SKU => $productOfferTransfer->getMerchantSku(),
                 ProductOfferGuiTableConfigurationProvider::COL_KEY_CONCRETE_SKU => $productOfferTransfer->getConcreteSku(),
                 ProductOfferGuiTableConfigurationProvider::COL_KEY_IMAGE => $this->getImageUrl($productOfferTransfer),
-                ProductOfferGuiTableConfigurationProvider::COL_KEY_PRODUCT_NAME => $this->getNameColumnData($productOfferTransfer, $criteriaTransfer->getLocale()),
+                ProductOfferGuiTableConfigurationProvider::COL_KEY_PRODUCT_NAME => $this->getNameColumnData($productOfferTransfer, $localeTransfer),
                 ProductOfferGuiTableConfigurationProvider::COL_KEY_STORES => $this->getStoresColumnData($productOfferTransfer),
                 ProductOfferGuiTableConfigurationProvider::COL_KEY_STOCK => $this->getStockColumnData($productOfferTransfer),
                 ProductOfferGuiTableConfigurationProvider::COL_KEY_VISIBILITY => $this->getVisibilityColumnData($productOfferTransfer),
@@ -114,11 +115,20 @@ class ProductOfferGuiTableDataProvider extends AbstractGuiTableDataProvider
         }
 
         $paginationTransfer = $productOfferCollectionTransfer->getPagination();
+        $page = 1;
+        $maxPerPage = 10;
+        $total = $productOfferCollectionTransfer->getProductOffers()->count();
+
+        if ($paginationTransfer) {
+            $page = $paginationTransfer->getPage() ?: $page;
+            $maxPerPage = $paginationTransfer->getMaxPerPage() ?: $maxPerPage;
+            $total = $paginationTransfer->getNbResults() ?: $total;
+        }
 
         return $guiTableDataResponseTransfer
-            ->setPage($paginationTransfer->getPage())
-            ->setPageSize($paginationTransfer->getMaxPerPage())
-            ->setTotal($paginationTransfer->getNbResults());
+            ->setPage($page)
+            ->setPageSize($maxPerPage)
+            ->setTotal($total);
     }
 
     /**
@@ -147,7 +157,13 @@ class ProductOfferGuiTableDataProvider extends AbstractGuiTableDataProvider
         $storeNames = [];
 
         foreach ($storeTransfers as $storeTransfer) {
-            $storeNames[] = $storeTransfer->getName();
+            $storeName = $storeTransfer->getName();
+
+            if (!$storeName) {
+                continue;
+            }
+
+            $storeNames[] = $storeName;
         }
 
         return $storeNames;

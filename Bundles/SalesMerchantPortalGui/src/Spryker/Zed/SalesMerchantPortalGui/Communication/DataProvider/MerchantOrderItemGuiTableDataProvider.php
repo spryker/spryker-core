@@ -110,8 +110,17 @@ class MerchantOrderItemGuiTableDataProvider extends AbstractGuiTableDataProvider
         foreach ($merchantOrderItemCollectionTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
             $itemTransfer = $merchantOrderItemTransfer->getOrderItem();
 
+            if (!$itemTransfer) {
+                continue;
+            }
+
+            $idSalesOrderItem = $itemTransfer->getIdSalesOrderItem();
+            if (!$idSalesOrderItem) {
+                continue;
+            }
+
             $responseData = [
-                ItemTransfer::ID_SALES_ORDER_ITEM => $itemTransfer->getIdSalesOrderItem(),
+                ItemTransfer::ID_SALES_ORDER_ITEM => $idSalesOrderItem,
                 MerchantOrderItemTransfer::ID_MERCHANT_ORDER_ITEM => $merchantOrderItemTransfer->getIdMerchantOrderItem(),
                 MerchantOrderItemTransfer::ID_MERCHANT_ORDER => $merchantOrderItemTransfer->getIdMerchantOrder(),
                 MerchantOrderItemGuiTableConfigurationProvider::COL_KEY_SKU => $itemTransfer->getSku(),
@@ -123,15 +132,24 @@ class MerchantOrderItemGuiTableDataProvider extends AbstractGuiTableDataProvider
             ];
 
             $guiTableDataResponseTransfer->addRow((new GuiTableRowDataResponseTransfer())->setResponseData($responseData));
-            $salesOrderItemIds[] = $itemTransfer->getIdSalesOrderItem();
+            $salesOrderItemIds[] = $idSalesOrderItem;
         }
 
+        $page = 1;
+        $maxPerPage = 10;
+        $total = $merchantOrderItemCollectionTransfer->getMerchantOrderItems()->count();
         $paginationTransfer = $merchantOrderItemCollectionTransfer->getPagination();
 
+        if ($paginationTransfer) {
+            $page = $paginationTransfer->getPage() ?: $page;
+            $maxPerPage = $paginationTransfer->getMaxPerPage() ?: $maxPerPage;
+            $total = $paginationTransfer->getNbResults() ?: $total;
+        }
+
         $guiTableDataResponseTransfer = $guiTableDataResponseTransfer
-            ->setPage($paginationTransfer->getPage())
-            ->setPageSize($paginationTransfer->getMaxPerPage())
-            ->setTotal($paginationTransfer->getNbResults());
+            ->setPage($page)
+            ->setPageSize($maxPerPage)
+            ->setTotal($total);
         $guiTableDataResponseTransfer = $this->expandDataResponse($guiTableDataResponseTransfer, $salesOrderItemIds);
 
         return $guiTableDataResponseTransfer;

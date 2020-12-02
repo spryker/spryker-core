@@ -38,9 +38,16 @@ class CreateProductOfferController extends AbstractProductOfferController
             throw new NotFoundHttpException(sprintf('Product not found for id %d.', $idProduct));
         }
 
-        $productAbstractTransfer = $this->getFactory()->getProductFacade()->findProductAbstractById(
-            $productConcreteTransfer->getFkProductAbstract()
-        );
+        $idProductAbstract = $productConcreteTransfer->getFkProductAbstract();
+        if (!$idProductAbstract) {
+            throw new NotFoundHttpException(sprintf('Product Abstract not found for product id %d.', $idProduct));
+        }
+
+        $productAbstractTransfer = $this->getFactory()->getProductFacade()->findProductAbstractById($idProductAbstract);
+        if (!$productAbstractTransfer) {
+            throw new NotFoundHttpException(sprintf('Product Abstract not found for abstract id %d.', $idProductAbstract));
+        }
+
         $productOfferCreateFormDataProvider = $this->getFactory()->createProductOfferCreateFormDataProvider();
         $productOfferForm = $this->getFactory()->createProductOfferForm(
             $productOfferCreateFormDataProvider->getData($productConcreteTransfer),
@@ -56,6 +63,8 @@ class CreateProductOfferController extends AbstractProductOfferController
     }
 
     /**
+     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $productOfferForm
+     *
      * @param \Symfony\Component\Form\FormInterface $productOfferForm
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer

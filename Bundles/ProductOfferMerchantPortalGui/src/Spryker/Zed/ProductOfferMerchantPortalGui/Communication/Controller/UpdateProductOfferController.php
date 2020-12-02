@@ -40,12 +40,26 @@ class UpdateProductOfferController extends AbstractProductOfferController
             throw new NotFoundHttpException(sprintf('Product offer not found for id %d.', $idProductOffer));
         }
 
-        $productConcreteTransfer = $this->getFactory()->getProductFacade()->findProductConcreteById(
-            $productOfferTransfer->getIdProductConcrete()
-        );
-        $productAbstractTransfer = $this->getFactory()->getProductFacade()->findProductAbstractById(
-            $productConcreteTransfer->getFkProductAbstract()
-        );
+        $idProductConcrete = $productOfferTransfer->getIdProductConcrete();
+        if (!$idProductConcrete) {
+            throw new NotFoundHttpException(sprintf('Product not found for product offer id %d.', $idProductOffer));
+        }
+
+        $productConcreteTransfer = $this->getFactory()->getProductFacade()->findProductConcreteById($idProductConcrete);
+        if (!$productConcreteTransfer) {
+            throw new NotFoundHttpException(sprintf('Product not found for id %d.', $idProductConcrete));
+        }
+
+        $idProductAbstract = $productConcreteTransfer->getFkProductAbstract();
+        if (!$idProductAbstract) {
+            throw new NotFoundHttpException(sprintf('Product Abstract not found for product id %d.', $idProductConcrete));
+        }
+
+        $productAbstractTransfer = $this->getFactory()->getProductFacade()->findProductAbstractById($idProductAbstract);
+        if (!$productAbstractTransfer) {
+            throw new NotFoundHttpException(sprintf('Product Abstract not found for abstract id %d.', $idProductAbstract));
+        }
+
         $productOfferForm = $this->getFactory()->createProductOfferForm(
             $productOfferTransfer,
             $productOfferUpdateFormDataProvider->getOptions($productAbstractTransfer)
@@ -63,6 +77,8 @@ class UpdateProductOfferController extends AbstractProductOfferController
     }
 
     /**
+     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $productOfferForm
+     *
      * @param \Symfony\Component\Form\FormInterface $productOfferForm
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
@@ -80,13 +96,16 @@ class UpdateProductOfferController extends AbstractProductOfferController
             ->getLocaleFacade()
             ->getCurrentLocale();
 
+        $productOfferTransfer = $productOfferResponseTransfer->getProductOffer();
+        $productOfferReference = $productOfferTransfer ? $productOfferTransfer->getProductOfferReference() : null;
+
         $responseData = [
             'form' => $this->renderView('@ProductOfferMerchantPortalGui/Partials/offer_form.twig', [
                 'form' => $productOfferForm->createView(),
                 'product' => $productConcreteTransfer,
                 'productName' => $this->getFactory()->createProductNameBuilder()->buildProductConcreteName($productConcreteTransfer, $localeTransfer),
                 'productAttributes' => $this->getProductAttributes($localeTransfer, $productConcreteTransfer, $productAbstractTransfer),
-                'productOfferReference' => $productOfferResponseTransfer->getProductOffer()->getProductOfferReference(),
+                'productOfferReference' => $productOfferReference,
             ])->getContent(),
         ];
 

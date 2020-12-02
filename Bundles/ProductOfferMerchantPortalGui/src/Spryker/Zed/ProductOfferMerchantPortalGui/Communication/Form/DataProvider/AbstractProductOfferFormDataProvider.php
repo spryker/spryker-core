@@ -99,16 +99,21 @@ abstract class AbstractProductOfferFormDataProvider
         $indexedPriceProductTransfers = $this->indexPriceProductTransfers($productOfferTransfer);
         $priceProductTransfers = new ArrayObject();
         foreach ($storeWithCurrencyTransfers as $storeWithCurrencyTransfer) {
+            $storeTransfer = $storeWithCurrencyTransfer->getStore();
+            if (!$storeTransfer) {
+                continue;
+            }
+
             foreach ($storeWithCurrencyTransfer->getCurrencies() as $currencyTransfer) {
                 foreach ($priceTypeTransfers as $priceTypeTransfer) {
-                    $idStore = $storeWithCurrencyTransfer->getStore()->getIdStore();
+                    $idStore = $storeTransfer->getIdStore();
                     $idCurrency = $currencyTransfer->getIdCurrency();
                     $idPriceType = $priceTypeTransfer->getIdPriceType();
 
                     $priceProductTransfer = $indexedPriceProductTransfers[$idStore][$idCurrency][$idPriceType]
                         ?? $this->createDefaultPriceProductTransfer(
                             $currencyTransfer,
-                            $storeWithCurrencyTransfer->getStore(),
+                            $storeTransfer,
                             $priceTypeTransfer
                         );
 
@@ -138,7 +143,14 @@ abstract class AbstractProductOfferFormDataProvider
         }
 
         foreach ($storeRelationTransfer->getStores() as $storeTransfer) {
-            $storeChoices[$storeTransfer->getName()] = $storeTransfer->getIdStore();
+            $idStore = $storeTransfer->getIdStore();
+            $storeName = $storeTransfer->getName();
+
+            if (!$idStore || !$storeName) {
+                continue;
+            }
+
+            $storeChoices[$storeName] = $idStore;
         }
 
         return $storeChoices;
@@ -179,9 +191,15 @@ abstract class AbstractProductOfferFormDataProvider
         $indexedPriceProductTransfers = [];
         foreach ($productOfferTransfer->getPrices() as $priceProductTransfer) {
             $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+            $priceTypeTransfer = $priceProductTransfer->getPriceType();
+
+            if (!$moneyValueTransfer || !$priceTypeTransfer) {
+                continue;
+            }
+
             $idStore = $moneyValueTransfer->getFkStore();
             $idCurrency = $moneyValueTransfer->getFkCurrency();
-            $idPriceType = $priceProductTransfer->getPriceType()->getIdPriceType();
+            $idPriceType = $priceTypeTransfer->getIdPriceType();
 
             $indexedPriceProductTransfers[$idStore][$idCurrency][$idPriceType] = $priceProductTransfer;
         }
@@ -218,7 +236,14 @@ abstract class AbstractProductOfferFormDataProvider
         }
 
         foreach ($productOfferTransfer->getProductOfferStocks() as $productOfferStockTransfer) {
-            if ($productOfferStockTransfer->getStock()->getIdStock() === $stockTransfers->offsetGet(0)->getIdStock()) {
+            $firstStockTransfer = $stockTransfers->offsetGet(0);
+            $stockTransfer = $productOfferStockTransfer->getStock();
+
+            if (!$firstStockTransfer || !$stockTransfer) {
+                continue;
+            }
+
+            if ($stockTransfer->getIdStock() === $firstStockTransfer->getIdStock()) {
                 $productOfferTransfer->setProductOfferStocks(new ArrayObject([$productOfferStockTransfer]));
 
                 break;

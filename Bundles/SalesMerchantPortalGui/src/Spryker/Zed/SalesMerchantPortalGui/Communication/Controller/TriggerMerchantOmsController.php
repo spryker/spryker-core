@@ -52,7 +52,8 @@ class TriggerMerchantOmsController extends AbstractController
                     ->setWithItems(true)
             );
 
-        if (!$this->isMerchantOrderExists($merchantOrderTransfer)) {
+        $merchantOrderTransfer = $this->validateMerchantOrder($merchantOrderTransfer);
+        if (!$merchantOrderTransfer) {
             return $this->getErrorResponse(sprintf('Merchant order not found for id %d.', $idMerchantOrder));
         }
 
@@ -114,7 +115,9 @@ class TriggerMerchantOmsController extends AbstractController
                     ->setIdMerchantOrder($idMerchantOrder)
             );
 
-        if (!$this->isMerchantOrderExists($merchantOrderTransfer)) {
+        $merchantOrderTransfer = $this->validateMerchantOrder($merchantOrderTransfer);
+
+        if (!$merchantOrderTransfer) {
             return $this->getErrorResponse(sprintf('Merchant order not found for id %d.', $idMerchantOrder));
         }
 
@@ -169,20 +172,25 @@ class TriggerMerchantOmsController extends AbstractController
     /**
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer|null $merchantOrderTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
      */
-    protected function isMerchantOrderExists(?MerchantOrderTransfer $merchantOrderTransfer): bool
+    protected function validateMerchantOrder(?MerchantOrderTransfer $merchantOrderTransfer): ?MerchantOrderTransfer
     {
         if (!$merchantOrderTransfer) {
-            return false;
+            return null;
         }
 
         $currentMerchantUserTransfer = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser();
-        if ($currentMerchantUserTransfer->getMerchant()->getMerchantReference() !== $merchantOrderTransfer->getMerchantReference()) {
-            return false;
+        $merchantTransfer = $currentMerchantUserTransfer->getMerchant();
+        if (!$merchantTransfer) {
+            return null;
         }
 
-        return true;
+        if ($merchantTransfer->getMerchantReference() !== $merchantOrderTransfer->getMerchantReference()) {
+            return null;
+        }
+
+        return $merchantOrderTransfer;
     }
 
     /**

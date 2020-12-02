@@ -119,6 +119,8 @@ class MerchantProfileFormDataProvider implements MerchantProfileFormDataProvider
     }
 
     /**
+     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\UrlTransfer> $merchantProfileUrlCollection
+     *
      * @param \ArrayObject|\Generated\Shared\Transfer\UrlTransfer[] $merchantProfileUrlCollection
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -151,7 +153,12 @@ class MerchantProfileFormDataProvider implements MerchantProfileFormDataProvider
      */
     protected function getLocalizedUrlPrefix(LocaleTransfer $localeTransfer): string
     {
-        $localeNameParts = explode('_', $localeTransfer->getLocaleName());
+        $localeName = $localeTransfer->getLocaleName();
+        if (!$localeName) {
+            return '';
+        }
+
+        $localeNameParts = explode('_', $localeName);
         $languageCode = $localeNameParts[0];
 
         return '/' . $languageCode . '/' . $this->merchantProfileMerchantPortalGuiConfig->getMerchantUrlPrefix() . '/';

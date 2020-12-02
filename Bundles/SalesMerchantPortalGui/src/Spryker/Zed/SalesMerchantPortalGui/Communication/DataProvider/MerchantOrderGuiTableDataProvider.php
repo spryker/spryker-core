@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesMerchantPortalGui\Communication\DataProvider;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\GuiTableDataRequestTransfer;
 use Generated\Shared\Transfer\GuiTableDataResponseTransfer;
 use Generated\Shared\Transfer\GuiTableRowDataResponseTransfer;
@@ -88,6 +89,10 @@ class MerchantOrderGuiTableDataProvider extends AbstractGuiTableDataProvider
         foreach ($merchantOrderCollectionTransfer->getMerchantOrders() as $merchantOrderTransfer) {
             $orderTransfer = $merchantOrderTransfer->getOrder();
 
+            if (!$orderTransfer) {
+                continue;
+            }
+
             $responseData = [
                 MerchantOrderTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
                 MerchantOrderGuiTableConfigurationProvider::COL_KEY_REFERENCE => $orderTransfer->getOrderReference(),
@@ -104,12 +109,21 @@ class MerchantOrderGuiTableDataProvider extends AbstractGuiTableDataProvider
             $guiTableDataResponseTransfer->addRow((new GuiTableRowDataResponseTransfer())->setResponseData($responseData));
         }
 
+        $page = 1;
+        $maxPerPage = 10;
+        $total = $merchantOrderCollectionTransfer->getMerchantOrders()->count();
         $paginationTransfer = $merchantOrderCollectionTransfer->getPagination();
 
+        if ($paginationTransfer) {
+            $page = $paginationTransfer->getPage() ?: $page;
+            $maxPerPage = $paginationTransfer->getMaxPerPage() ?: $maxPerPage;
+            $total = $paginationTransfer->getNbResults() ?: $total;
+        }
+
         return $guiTableDataResponseTransfer
-            ->setPage($paginationTransfer->getPage())
-            ->setPageSize($paginationTransfer->getMaxPerPage())
-            ->setTotal($paginationTransfer->getNbResults());
+            ->setPage($page)
+            ->setPageSize($maxPerPage)
+            ->setTotal($total);
     }
 
     /**
@@ -134,9 +148,26 @@ class MerchantOrderGuiTableDataProvider extends AbstractGuiTableDataProvider
      */
     protected function getGrandTotalData(MerchantOrderTransfer $merchantOrderTransfer): string
     {
+        $totalsTransfer = $merchantOrderTransfer->getTotals();
+        $orderTransfer = $merchantOrderTransfer->getOrder();
+        $amount = '0';
+        $currencyTransfer = new CurrencyTransfer();
+
+        if ($totalsTransfer) {
+            $amount = (string)$totalsTransfer->getGrandTotal();
+        }
+
+        if ($orderTransfer) {
+            $isoCode = $orderTransfer->getCurrencyIsoCode();
+
+            if ($isoCode) {
+                $currencyTransfer = $this->currencyFacade->fromIsoCode($isoCode);
+            }
+        }
+
         $moneyTransfer = (new MoneyTransfer())
-            ->setAmount((string)$merchantOrderTransfer->getTotals()->getGrandTotal())
-            ->setCurrency($this->currencyFacade->fromIsoCode($merchantOrderTransfer->getOrder()->getCurrencyIsoCode()));
+            ->setAmount($amount)
+            ->setCurrency($currencyTransfer);
 
         return $this->moneyFacade->formatWithSymbol($moneyTransfer);
     }

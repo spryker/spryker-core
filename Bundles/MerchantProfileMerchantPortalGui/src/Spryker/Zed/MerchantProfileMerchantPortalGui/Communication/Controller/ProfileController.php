@@ -17,8 +17,11 @@ use Symfony\Component\HttpFoundation\Request;
 class ProfileController extends AbstractController
 {
     protected const MESSAGE_MERCHANT_UPDATE_SUCCESS = 'The Profile has been changed successfully.';
+    protected const MESSAGE_MERCHANT_NOT_FOUND = 'The merchant user is not found.';
 
     /**
+     * @phpstan-return array<mixed>
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
@@ -29,6 +32,12 @@ class ProfileController extends AbstractController
             ->getMerchantUserFacade()
             ->getCurrentMerchantUser()
             ->getIdMerchant();
+
+        if (!$idMerchant) {
+            $this->addErrorMessage(static::MESSAGE_MERCHANT_NOT_FOUND);
+
+            return $this->viewResponse([]);
+        }
 
         $merchantProfileFormDataProvider = $this->getFactory()->createMerchantProfileFormDataProvider();
         $merchantTransfer = $merchantProfileFormDataProvider->findMerchantById($idMerchant);
@@ -46,6 +55,8 @@ class ProfileController extends AbstractController
     }
 
     /**
+     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $merchantForm
+     *
      * @param \Symfony\Component\Form\FormInterface $merchantForm
      *
      * @return void
@@ -65,7 +76,13 @@ class ProfileController extends AbstractController
         }
 
         foreach ($merchantResponseTransfer->getErrors() as $merchantErrorTransfer) {
-            $this->addErrorMessage($merchantErrorTransfer->getMessage());
+            $errorMessage = $merchantErrorTransfer->getMessage();
+
+            if (!$errorMessage) {
+                continue;
+            }
+
+            $this->addErrorMessage($errorMessage);
         }
     }
 }

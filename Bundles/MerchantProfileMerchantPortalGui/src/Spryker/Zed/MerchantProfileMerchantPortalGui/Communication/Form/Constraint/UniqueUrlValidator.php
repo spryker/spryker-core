@@ -40,11 +40,16 @@ class UniqueUrlValidator extends AbstractConstraintValidator
             throw new UnexpectedTypeException($constraint, UniqueUrl::class);
         }
 
+        $url = $value->getUrl();
+        if (!$url) {
+            return;
+        }
+
         if (!$this->isUrlChanged($value, $constraint)) {
             return;
         }
 
-        if ($this->hasUrlCaseInsensitive($value->getUrl())) {
+        if ($this->hasUrlCaseInsensitive($url)) {
             $this->context
                 ->buildViolation(sprintf('Provided URL "%s" is already taken.', $value->getUrl()))
                 ->atPath(MerchantProfileUrlCollectionFormType::FIELD_URL)
@@ -97,7 +102,12 @@ class UniqueUrlValidator extends AbstractConstraintValidator
      */
     protected function isUrlChanged(UrlTransfer $urlTransfer, UniqueUrl $constraint): bool
     {
-        $existingUrlTransfer = $this->findExistingUrl($urlTransfer->getUrl());
+        $url = $urlTransfer->getUrl();
+        if (!$url) {
+            return false;
+        }
+
+        $existingUrlTransfer = $this->findExistingUrl($url);
 
         if (!$existingUrlTransfer) {
             return true;
