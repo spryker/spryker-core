@@ -676,6 +676,7 @@
     "spryker/security-gui-extension": "*",
     "spryker/security-merchant-portal-gui": "*",
     "spryker/security-system-user": "*",
+    "spryker/security-oauth-user-extension": "*",
     "spryker/sequence-number": "*",
     "spryker/session": "*",
     "spryker/session-extension": "*",
