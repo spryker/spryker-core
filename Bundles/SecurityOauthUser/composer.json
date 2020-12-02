@@ -4,6 +4,7 @@
   "description": "SecurityOauthUser module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.3"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
