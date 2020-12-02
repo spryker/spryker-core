@@ -1,6 +1,7 @@
 namespace: CheckoutRestApi
 include:
     - tests/SprykerTest/Zed/CheckoutRestApi
+    - tests/SprykerTest/Glue/CheckoutRestApi
 paths:
     tests: tests
     log: tests/_output

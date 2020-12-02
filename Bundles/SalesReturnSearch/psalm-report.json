@@ -47,30 +47,6 @@
             "selected_text": "$glossaryKeys",
             "error_level": 6,
             "shortcode": 128
-        },
-        {
-            "severity": "error",
-            "line_from": 31,
-            "line_to": 31,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\SalesReturnSearch\\Communication\\Plugin\\Publisher\\ReturnReason\\ReturnReasonDeletePublisherPlugin::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesReturnSearch/src/Spryker/Zed/SalesReturnSearch/Communication/Plugin/Publisher/ReturnReason/ReturnReasonDeletePublisherPlugin.php",
-            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
-            "selected_text": "$eventTransfers",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 31,
-            "line_to": 31,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\SalesReturnSearch\\Communication\\Plugin\\Publisher\\ReturnReason\\ReturnReasonWritePublisherPlugin::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesReturnSearch/src/Spryker/Zed/SalesReturnSearch/Communication/Plugin/Publisher/ReturnReason/ReturnReasonWritePublisherPlugin.php",
-            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
-            "selected_text": "$eventTransfers",
-            "error_level": 7,
-            "shortcode": 230
         }
     ],
     "warning": [

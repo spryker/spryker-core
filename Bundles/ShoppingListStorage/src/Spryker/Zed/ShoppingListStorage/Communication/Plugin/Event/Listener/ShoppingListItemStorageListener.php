@@ -28,16 +28,16 @@ class ShoppingListItemStorageListener extends AbstractPlugin implements EventBul
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName): void
+    public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
         $this->preventTransaction();
 
-        $shoppingListIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyShoppingListItemTableMap::COL_FK_SHOPPING_LIST);
+        $shoppingListIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventEntityTransfers, SpyShoppingListItemTableMap::COL_FK_SHOPPING_LIST);
         $customerReferences = $this->getRepository()->getCustomerReferencesByShoppingListIds($shoppingListIds);
 
         $this->getFacade()->publish($customerReferences);

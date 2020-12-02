@@ -13,6 +13,8 @@ use Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataValidator
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Will be removed with next major release. Use item level shipment instead.
+ *
  * @method \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacadeInterface getFacade()
  * @method \Spryker\Zed\ShipmentsRestApi\ShipmentsRestApiConfig getConfig()
  */

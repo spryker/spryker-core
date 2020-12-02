@@ -1,18 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 33,
-            "line_to": 33,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ProductCategoryFilterStorage\\Communication\\Plugin\\Event\\Listener\\ProductCategoryFilterPublishStorageListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilterStorage/src/Spryker/Zed/ProductCategoryFilterStorage/Communication/Plugin/Event/Listener/ProductCategoryFilterPublishStorageListener.php",
-            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
-            "selected_text": "$eventTransfers",
-            "error_level": 7,
-            "shortcode": 230
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
