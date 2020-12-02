@@ -30,6 +30,8 @@ class GuiConfig extends AbstractBundleConfig
 
     protected const LIST_GROUP_MULTI_DEFAULT_TEMPLATE_PATH = '@Gui/ListGroup/list-group-multidimensional.twig';
 
+    protected const URLS_FOR_GLOBAL_URL_GENERATOR_PATTERN = '/^_wdt$|_profile/im';
+
     /**
      * @api
      *
@@ -130,5 +132,15 @@ class GuiConfig extends AbstractBundleConfig
     public function getDefaultMultiListGroupTemplatePath(): string
     {
         return static::LIST_GROUP_MULTI_DEFAULT_TEMPLATE_PATH;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getUrlsForGlobalGeneratorPattern(): string
+    {
+        return static::URLS_FOR_GLOBAL_URL_GENERATOR_PATTERN;
     }
 }

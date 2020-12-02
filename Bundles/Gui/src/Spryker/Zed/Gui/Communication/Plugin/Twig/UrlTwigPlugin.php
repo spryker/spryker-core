@@ -48,7 +48,7 @@ class UrlTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     protected function getUrlFunction(ContainerInterface $container): TwigFunction
     {
         return new TwigFunction(static::FUNCTION_NAME_URL, function (string $url, array $query = [], array $options = []) use ($container) {
-            if ($url === '_wdt' || strpos($url, '_profile') !== false) {
+            if ($this->isGlobalUrlGeneratorNeed($url)) {
                 /** @var \Symfony\Cmf\Component\Routing\ChainRouter $globalUrlGenerator */
                 $globalUrlGenerator = $container->get('url_generator');
                 $url = $globalUrlGenerator->generate($url, $query);
@@ -63,5 +63,17 @@ class UrlTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 
             return $html;
         }, ['is_safe' => ['html']]);
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return bool
+     */
+    protected function isGlobalUrlGeneratorNeed(string $url): bool
+    {
+        $regex = $this->getConfig()->getUrlsForGlobalGeneratorPattern();
+
+        return preg_match($regex, $url);
     }
 }
