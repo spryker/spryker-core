@@ -15,7 +15,15 @@ use Spryker\Glue\MerchantProductsRestApi\Dependency\Client\MerchantProductsRestA
 class MerchantProductCartItemExpander implements MerchantProductCartItemExpanderInterface
 {
     protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
+
+    /**
+     * @see \Generated\Shared\Transfer\ProductAbstractStorageTransfer::ID_PRODUCT_ABSTRACT
+     */
     protected const ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
+    /**
+     * @see \Generated\Shared\Transfer\ProductAbstractStorageTransfer::MERCHANT_REFERENCE
+     */
     protected const MERCHANT_REFERENCE = 'merchant_reference';
 
     /**
