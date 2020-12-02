@@ -10,6 +10,8 @@ namespace Spryker\Client\MerchantProductStorage;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\MerchantProductStorage\Dependency\Client\MerchantProductStorageToLocaleClientInterface;
 use Spryker\Client\MerchantProductStorage\Dependency\Client\MerchantProductStorageToProductStorageClientInterface;
+use Spryker\Client\MerchantProductStorage\Expander\MerchantProductStorageExpander;
+use Spryker\Client\MerchantProductStorage\Expander\MerchantProductStorageExpanderInterface;
 use Spryker\Client\MerchantProductStorage\Mapper\MerchantProductStorageMapper;
 use Spryker\Client\MerchantProductStorage\Mapper\MerchantProductStorageMapperInterface;
 use Spryker\Client\MerchantProductStorage\Reader\MerchantProductStorageReader;
@@ -27,6 +29,14 @@ class MerchantProductStorageFactory extends AbstractFactory
             $this->getLocaleClient(),
             $this->createMerchantProductStorageMapper()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\MerchantProductStorage\Expander\MerchantProductStorageExpanderInterface
+     */
+    public function createMerchantProductStorageExpander(): MerchantProductStorageExpanderInterface
+    {
+        return new MerchantProductStorageExpander($this->createMerchantProductStorageReader());
     }
 
     /**

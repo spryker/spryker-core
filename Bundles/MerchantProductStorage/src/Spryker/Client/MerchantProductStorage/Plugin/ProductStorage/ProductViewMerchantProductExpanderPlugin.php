@@ -16,18 +16,6 @@ use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpander
  */
 class ProductViewMerchantProductExpanderPlugin extends AbstractPlugin implements ProductViewExpanderPluginInterface
 {
-    protected const SELECTED_ATTRIBUTE_MERCHANT_REFERENCE = 'merchant_reference';
-
-    /**
-     * @uses \SprykerShop\Yves\MerchantProductOfferWidget\Reader\MerchantProductOfferReader::PARAM_SELECTED_MERCHANT_REFERENCE
-     */
-    protected const PARAM_SELECTED_MERCHANT_REFERENCE = 'selected_merchant_reference';
-
-    /**
-     * @uses \SprykerShop\Yves\MerchantProductOfferWidget\Reader\MerchantProductOfferReader
-     */
-    protected const PARAM_SELECTED_MERCHANT_REFERENCE_TYPE = 'selected_merchant_reference_type';
-
     /**
      * {@inheritDoc}
      * - Expands ProductView transfer object with merchant reference.
@@ -47,28 +35,6 @@ class ProductViewMerchantProductExpanderPlugin extends AbstractPlugin implements
         array $productData,
         $localeName
     ): ProductViewTransfer {
-        $productSelectedAttributes = $productViewTransfer->getSelectedAttributes();
-
-        $selectedMerchantReference = isset($productSelectedAttributes[static::PARAM_SELECTED_MERCHANT_REFERENCE_TYPE])
-            && $productSelectedAttributes[static::PARAM_SELECTED_MERCHANT_REFERENCE_TYPE] === static::SELECTED_ATTRIBUTE_MERCHANT_REFERENCE
-            && isset($productSelectedAttributes[static::PARAM_SELECTED_MERCHANT_REFERENCE]) ? $productSelectedAttributes[static::PARAM_SELECTED_MERCHANT_REFERENCE] : null;
-
-        if (!$selectedMerchantReference) {
-            return $productViewTransfer;
-        }
-
-        $merchantProductStorageTransfer = $this->getFactory()
-            ->createMerchantProductStorageReader()
-            ->findOne($productViewTransfer->getIdProductAbstract());
-
-        if (!$merchantProductStorageTransfer) {
-            return $productViewTransfer;
-        }
-
-        if ($merchantProductStorageTransfer->getMerchantReference() !== $selectedMerchantReference) {
-            return $productViewTransfer;
-        }
-
-        return $productViewTransfer->setMerchantReference($merchantProductStorageTransfer->getMerchantReference());
+        return $this->getFactory()->createMerchantProductStorageExpander()->expandProductViewTransfer($productViewTransfer);
     }
 }
