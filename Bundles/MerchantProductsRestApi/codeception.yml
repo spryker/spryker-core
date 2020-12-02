@@ -1,5 +1,6 @@
 namespace: MerchantProductsRestApi
-actor: Tester
+include:
+    - tests/SprykerTest/Glue/MerchantProductsRestApi
 paths:
     tests: tests
     log: tests/_output
