@@ -24,6 +24,8 @@ class SecurityGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
     public const FACADE_SECURITY = 'FACADE_SECURITY';
 
+    public const PLUGINS_AUTHENTICATION_LINK = 'PLUGINS_AUTHENTICATION_LINK';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -37,6 +39,7 @@ class SecurityGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUserPasswordResetFacade($container);
         $container = $this->addMessengerFacade($container);
         $container = $this->addSecurityFacade($container);
+        $container = $this->addAuthenticationLinkPlugins($container);
 
         return $container;
     }
@@ -117,5 +120,27 @@ class SecurityGuiDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addAuthenticationLinkPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_AUTHENTICATION_LINK, function () {
+            return $this->getAuthenticationLinkPluginsPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\SecurityGuiExtension\Dependency\Plugin\AuthenticationLinkPluginInterface[]
+     */
+    protected function getAuthenticationLinkPluginsPlugins(): array
+    {
+        return [];
     }
 }

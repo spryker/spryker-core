@@ -16,7 +16,7 @@ interface AuthenticationLinkPluginInterface
 {
     /**
      * Specification:
-     * - Provides data that is necessary to render an authorization link.
+     * - Provides template which is optional and data that is necessary to render an authorization link.
      * - Returned property "state" contributes to identify the current Oauth client during the response.
      *
      * @api
@@ -26,14 +26,4 @@ interface AuthenticationLinkPluginInterface
      * @return \Generated\Shared\Transfer\OauthAuthenticationLinkTransfer
      */
     public function getAuthenticationLink(): OauthAuthenticationLinkTransfer;
-
-    /**
-     * Specification:
-     * - Returns template for custom link rendering.
-     *
-     * @api
-     *
-     * @return string|null
-     */
-    public function getTemplate(): ?string;
 }
