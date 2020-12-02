@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Category\Business;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
@@ -375,6 +376,8 @@ interface CategoryFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Category\Business\CategoryFacadeInterface::findCategory()} instead.
+     *
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -436,6 +439,8 @@ interface CategoryFacadeInterface
      *  - Return array representation of ub-tree
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Category\Business\CategoryFacadeInterface::findCategory()} instead.
      *
      * @param int $idCategoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -503,10 +508,11 @@ interface CategoryFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param string|null $storeName the parammeter is going to be required in the next major
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
+    public function getAllCategoryCollection(LocaleTransfer $localeTransfer, ?string $storeName = null): CategoryCollectionTransfer;
 
     /**
      * Specification:
@@ -543,4 +549,20 @@ interface CategoryFacadeInterface
      * @return string
      */
     public function getCategoryListUrl(): string;
+
+    /**
+     * Specification:
+     *  - Finds first category-node for idCategory and finds all of its children.
+     *  - Formats all child category-nodes as a nested array structure.
+     *  - Category-node entities sorted by node order.
+     *  - If $request.withChildren, finds one level children.
+     *  - If $request.withChildrenRecursively, find all children recursively
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer|null
+     */
+    public function findCategory(CategoryCriteriaTransfer $categoryCriteriaTransfer): ?CategoryTransfer;
 }

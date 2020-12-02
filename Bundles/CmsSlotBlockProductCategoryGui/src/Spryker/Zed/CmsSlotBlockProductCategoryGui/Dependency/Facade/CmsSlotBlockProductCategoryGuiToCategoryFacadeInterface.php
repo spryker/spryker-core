@@ -14,8 +14,9 @@ interface CmsSlotBlockProductCategoryGuiToCategoryFacadeInterface
 {
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
+    public function getAllCategoryCollection(LocaleTransfer $localeTransfer, ?string $storeName = null): CategoryCollectionTransfer;
 }

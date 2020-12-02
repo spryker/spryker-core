@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\Category\Business\Tree;
 
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\NodeCollectionTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -16,6 +19,7 @@ use Spryker\Zed\Category\Business\Exception\MissingCategoryException;
 use Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException;
 use Spryker\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
+use Spryker\Zed\Category\Persistence\CategoryRepositoryInterface;
 
 class CategoryTreeReader implements CategoryTreeReaderInterface
 {
@@ -41,13 +45,23 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     protected $treeFormatter;
 
     /**
+     * @var \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface
+     */
+    protected $categoryRepository;
+
+    /**
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter $treeFormatter
+     * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
      */
-    public function __construct(CategoryQueryContainerInterface $queryContainer, CategoryTreeFormatter $treeFormatter)
-    {
+    public function __construct(
+        CategoryQueryContainerInterface $queryContainer,
+        CategoryTreeFormatter $treeFormatter,
+        CategoryRepositoryInterface $categoryRepository
+    ) {
         $this->queryContainer = $queryContainer;
         $this->treeFormatter = $treeFormatter;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -507,5 +521,78 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
         $this->treeFormatter->setupCategories($subTreeCategories);
 
         return $this->treeFormatter->getCategoryTree();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
+     */
+    public function getCategoryNodeCollectionTree(
+        CategoryTransfer $categoryTransfer,
+        CategoryCriteriaTransfer $categoryCriteriaTransfer
+    ): NodeCollectionTransfer {
+        $nodeCollectionTransfer = new NodeCollectionTransfer();
+        $categoryNodes = $this->categoryRepository->getCategoryNodeChildNodesCollectionIndexedByParentNodeId(
+            $categoryTransfer,
+            $categoryCriteriaTransfer
+        );
+
+        if ($categoryNodes === []) {
+            return $nodeCollectionTransfer;
+        }
+
+        $categoryNodeTransfer = $this->buildNodeTree($categoryNodes, $categoryTransfer->getCategoryNode());
+
+        return $nodeCollectionTransfer->addNode($categoryNodeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer[][] $categoryNodes
+     * @param \Generated\Shared\Transfer\NodeTransfer $parentNodeTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeTransfer
+     */
+    protected function buildNodeTree(array $categoryNodes, NodeTransfer $parentNodeTransfer): NodeTransfer
+    {
+        $nodeCollectionTransfer = new NodeCollectionTransfer();
+        $childrenNodes = $this->findChildrenNodes($categoryNodes, $parentNodeTransfer);
+        foreach ($childrenNodes as $childrenNode) {
+            $childNodeTransfer = $this->buildNodeTree($categoryNodes, $childrenNode);
+            $nodeCollectionTransfer->addNode($childNodeTransfer);
+        }
+
+        return $parentNodeTransfer->setChildrenNodes($nodeCollectionTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer[][] $categoryNodesCollection
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryNode
+     *
+     * @return \Generated\Shared\Transfer\NodeTransfer
+     */
+    protected function getCategoryParentNode(array $categoryNodesCollection, CategoryTransfer $categoryTransfer): NodeTransfer
+    {
+        foreach ($categoryNodesCollection as $nodeTransfers) {
+            foreach ($nodeTransfers as $nodeTransfer) {
+                if ($categoryTransfer->getIdCategory() === $nodeTransfer->getFkCategory()) {
+                    return $nodeTransfer;
+                }
+            }
+        }
+
+        return $categoryTransfer->getCategoryNode();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer[][] $categoryNodesCollection
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
+     *
+     * @return array
+     */
+    protected function findChildrenNodes(array $categoryNodesCollection, NodeTransfer $categoryNode): array
+    {
+        return $categoryNodesCollection[$categoryNode->getIdCategoryNode()] ?? [];
     }
 }

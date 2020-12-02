@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Category\Business;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
@@ -535,6 +536,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Category\Business\CategoryFacade::findCategory()} instead.
+     *
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -552,6 +555,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Category\Business\CategoryFacade::findCategory()} instead.
      *
      * @param int $idCategoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -707,14 +712,15 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param string|null $storeName the parammeter is going to be required in the next major
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer
+    public function getAllCategoryCollection(LocaleTransfer $localeTransfer, ?string $storeName = null): CategoryCollectionTransfer
     {
         return $this->getFactory()
             ->createCategory()
-            ->getAllCategoryCollection($localeTransfer);
+            ->getAllCategoryCollection($localeTransfer, $storeName);
     }
 
     /**
@@ -759,5 +765,21 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     public function getCategoryListUrl(): string
     {
         return $this->getFactory()->getConfig()->getDefaultRedirectUrl();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer|null
+     */
+    public function findCategory(CategoryCriteriaTransfer $categoryCriteriaTransfer): ?CategoryTransfer
+    {
+        return $this->getFactory()
+            ->createCategoryReader()
+            ->findCategoryByCriteria($categoryCriteriaTransfer);
     }
 }

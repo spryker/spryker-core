@@ -8,6 +8,9 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\OptionSelectGuiTableFilterTypeOptionsTransfer;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCategoryFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface;
@@ -50,38 +53,65 @@ class CategoryFilterOptionsProvider implements CategoryFilterOptionsProviderInte
      */
     public function getCategoryFilterOptionsTree(): array
     {
-        $categoryTree = $this->categoryFacade->getTreeNodeChildrenByIdCategoryAndLocale(
-            $this->productMerchantPortalGuiConfig->getMainCategoryIdForCategoryFilter(),
-            $this->localeFacade->getCurrentLocale()
-        );
+        $categoryTransfer = $this->findCategory();
+        if (!$categoryTransfer || !$categoryTransfer->getNodeCollection()) {
+            return [];
+        }
 
         $categoryOptionTree = [];
-
-        foreach ($categoryTree as $category) {
-            $categoryOptionTree[] = (new OptionSelectGuiTableFilterTypeOptionsTransfer())->setValue($category['id'])
-                ->setTitle($category['text'])
-                ->setChildren(new ArrayObject($this->getCategoryChildren($category['children'])));
+        foreach ($this->getCategoryChildNodeCollection($categoryTransfer)->getNodes() as $nodeTransfer) {
+            $categoryOptionTree[] = (new OptionSelectGuiTableFilterTypeOptionsTransfer())
+                ->setValue($nodeTransfer->getIdCategoryNode())
+                ->setTitle($nodeTransfer->getCategory()->getLocalizedAttributes()->offsetGet(0)->getName())
+                ->setChildren(new ArrayObject($this->getCategoryChildren($nodeTransfer->getChildrenNodes())));
         }
 
         return $categoryOptionTree;
     }
 
     /**
-     * @phpstan-return array<OptionSelectGuiTableFilterTypeOptionsTransfer>
-     *
-     * @param mixed[] $categoryChildren
+     * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\OptionSelectGuiTableFilterTypeOptionsTransfer[]
      */
-    protected function getCategoryChildren(array $categoryChildren): array
+    protected function getCategoryChildren(NodeCollectionTransfer $nodeCollectionTransfer): array
     {
         $categoryOptionTree = [];
-        foreach ($categoryChildren as $childCategory) {
-            $categoryOptionTree[] = (new OptionSelectGuiTableFilterTypeOptionsTransfer())->setValue($childCategory['id'])
-                ->setTitle($childCategory['text'])
-                ->setChildren(new ArrayObject($this->getCategoryChildren($childCategory['children'])));
+        foreach ($nodeCollectionTransfer->getNodes() as $nodeTransfer) {
+            $categoryOptionTree[] = (new OptionSelectGuiTableFilterTypeOptionsTransfer())
+                ->setValue($nodeTransfer->getIdCategoryNode())
+                ->setTitle($nodeTransfer->getCategory()->getLocalizedAttributes()->offsetGet(0)->getName())
+                ->setChildren(new ArrayObject($this->getCategoryChildren($nodeTransfer->getChildrenNodes())));
         }
 
         return $categoryOptionTree;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
+     */
+    protected function getCategoryChildNodeCollection(CategoryTransfer $categoryTransfer): NodeCollectionTransfer
+    {
+        $categoryNodeCollectionTransfer = $categoryTransfer->getNodeCollection();
+        if (!$categoryNodeCollectionTransfer || $categoryNodeCollectionTransfer->getNodes()->count() === 0) {
+            return new NodeCollectionTransfer();
+        }
+
+        return $categoryNodeCollectionTransfer->getNodes()->offsetGet(0)->getChildrenNodes() ?? new NodeCollectionTransfer();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CategoryTransfer|null
+     */
+    protected function findCategory(): CategoryTransfer
+    {
+        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
+            ->setIdCategory($this->productMerchantPortalGuiConfig->getMainCategoryIdForCategoryFilter())
+            ->setLocaleName($this->localeFacade->getCurrentLocale()->getLocaleName())
+            ->setWithChildrenRecursively(true);
+
+        return $this->categoryFacade->findCategory($categoryCriteriaTransfer);
     }
 }

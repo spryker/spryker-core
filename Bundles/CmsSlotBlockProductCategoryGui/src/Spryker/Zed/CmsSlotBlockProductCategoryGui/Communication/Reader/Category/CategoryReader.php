@@ -40,7 +40,7 @@ class CategoryReader implements CategoryReaderInterface
     public function getCategories(): array
     {
         $localeTransfer = $this->localeFacade->getCurrentLocale();
-        $categoryCollectionTransfer = $this->categoryFacade->getAllCategoryCollection($localeTransfer);
+        $categoryCollectionTransfer = $this->categoryFacade->getAllCategoryCollection($localeTransfer, APPLICATION_STORE);
 
         $categoryIds = [];
 

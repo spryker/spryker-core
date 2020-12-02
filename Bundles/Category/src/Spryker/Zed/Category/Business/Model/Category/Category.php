@@ -135,11 +135,16 @@ class Category implements CategoryInterface
 
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer
+    public function getAllCategoryCollection(LocaleTransfer $localeTransfer, ?string $storeName = null): CategoryCollectionTransfer
     {
+        if ($storeName === null) {
+            trigger_error('Pass the $storeName parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
+        }
+
         $categoryCollectionTransfer = $this->categoryRepository->getAllCategoryCollection($localeTransfer);
         $this->categoryHydrator->hydrateCategoryCollection($categoryCollectionTransfer, $localeTransfer);
 

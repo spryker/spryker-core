@@ -18,10 +18,11 @@ interface CategoryStorageClientInterface
      * @api
      *
      * @param string $locale
+     * @param string|null $storeName the parameter is going to be required in the next major
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]|\ArrayObject
      */
-    public function getCategories($locale);
+    public function getCategories($locale, ?string $storeName = null);
 
     /**
      * Specification:
@@ -58,8 +59,10 @@ interface CategoryStorageClientInterface
      * @api
      *
      * @param array $docCountAggregation
+     * @param string|null $localeName the parameter is going to be required in the next major
+     * @param string|null $storeName the parameter is going to be required in the next major
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]
      */
-    public function formatCategoryTreeFilter(array $docCountAggregation): ArrayObject;
+    public function formatCategoryTreeFilter(array $docCountAggregation, ?string $localeName = null, ?string $storeName = null): ArrayObject;
 }

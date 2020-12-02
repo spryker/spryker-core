@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\Category\Business\Model;
 
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\Category\Business\PluginExecutor\CategoryPluginExecutorInterface;
+use Spryker\Zed\Category\Business\Tree\CategoryTreeReaderInterface;
 use Spryker\Zed\Category\Persistence\CategoryRepositoryInterface;
 
 class CategoryReader implements CategoryReaderInterface
@@ -16,7 +18,7 @@ class CategoryReader implements CategoryReaderInterface
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface
      */
-    protected $repository;
+    protected $categoryRepository;
 
     /**
      * @var \Spryker\Zed\Category\Business\PluginExecutor\CategoryPluginExecutorInterface
@@ -24,15 +26,23 @@ class CategoryReader implements CategoryReaderInterface
     protected $categoryPluginExecutor;
 
     /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $repository
+     * @var \Spryker\Zed\Category\Business\Tree\CategoryTreeReaderInterface
+     */
+    protected $categoryTreeReader;
+
+    /**
+     * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
      * @param \Spryker\Zed\Category\Business\PluginExecutor\CategoryPluginExecutorInterface $categoryPluginExecutor
+     * @param \Spryker\Zed\Category\Business\Tree\CategoryTreeReaderInterface $categoryTreeReader
      */
     public function __construct(
-        CategoryRepositoryInterface $repository,
-        CategoryPluginExecutorInterface $categoryPluginExecutor
+        CategoryRepositoryInterface $categoryRepository,
+        CategoryPluginExecutorInterface $categoryPluginExecutor,
+        CategoryTreeReaderInterface $categoryTreeReader
     ) {
-        $this->repository = $repository;
+        $this->categoryRepository = $categoryRepository;
         $this->categoryPluginExecutor = $categoryPluginExecutor;
+        $this->categoryTreeReader = $categoryTreeReader;
     }
 
     /**
@@ -42,9 +52,34 @@ class CategoryReader implements CategoryReaderInterface
      */
     public function findCategoryById(int $idCategory): ?CategoryTransfer
     {
-        $categoryTransfer = $this->repository->findCategoryById($idCategory);
+        $categoryTransfer = $this->categoryRepository->findCategoryById($idCategory);
         if (!$categoryTransfer) {
             return null;
+        }
+
+        return $this->categoryPluginExecutor->executePostReadPlugins($categoryTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer|null
+     */
+    public function findCategoryByCriteria(CategoryCriteriaTransfer $categoryCriteriaTransfer): ?CategoryTransfer
+    {
+        $categoryTransfer = $this->categoryRepository->findCategoryByCriteria($categoryCriteriaTransfer);
+
+        if (!$categoryTransfer) {
+            return null;
+        }
+
+        if ($categoryCriteriaTransfer->getWithChildren() || $categoryCriteriaTransfer->getWithChildrenRecursively()) {
+            $categoryNodeCollectionTransfer = $this->categoryTreeReader->getCategoryNodeCollectionTree(
+                $categoryTransfer,
+                $categoryCriteriaTransfer
+            );
+
+            $categoryTransfer->setNodeCollection($categoryNodeCollectionTransfer);
         }
 
         return $this->categoryPluginExecutor->executePostReadPlugins($categoryTransfer);

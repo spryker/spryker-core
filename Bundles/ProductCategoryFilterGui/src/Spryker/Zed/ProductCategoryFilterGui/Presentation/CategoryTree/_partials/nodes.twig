@@ -1,11 +1,18 @@
 <ul>
-    {% for categoryNode in categoryTree %}
-        <li id="category-node-{{ categoryNode.id }}" data-id-category="{{ categoryNode.id_category }}"
-            class="jstree-open {% if not categoryNode.is_active %}node-inactive{% endif %}"
-            {% if categoryNode.id_category in categoriesWithSpecificFilters %}data-jstree='{"type":"edited-category"}'{% endif %}
-        >
-            {{ categoryNode.text }}
-            {% include '@ProductCategoryFilterGui/CategoryTree/_partials/nodes.twig' with {categoryTree: categoryNode.children, categoriesWithSpecificFilters: categoriesWithSpecificFilters} %}
-        </li>
-    {% endfor %}
+    {% if childNodes is defined %}
+        {% for node in childNodes.nodes %}
+            <li id="category-node-{{ node.idCategoryNode }}" data-id-category="{{ node.fkCategory }}"
+                class="jstree-open {% if not node.category.isActive %}node-inactive{% endif %}"
+                {% if node.fkCategory in categoriesWithSpecificFilters %}data-jstree='{"type":"edited-category"}'{% endif %}
+            >
+                {{ node.category.localizedAttributes[0].name }}
+                {% if node.childrenNodes is defined %}
+                    {% include '@ProductCategoryFilterGui/CategoryTree/_partials/nodes.twig' with {
+                        childNodes: node.childrenNodes,
+                        categoriesWithSpecificFilters: categoriesWithSpecificFilters
+                    } %}
+                {% endif %}
+            </li>
+        {% endfor %}
+    {% endif %}
 </ul>

@@ -57,7 +57,7 @@ class CategoryReader implements CategoryReaderInterface
      */
     public function getCategoryTree(string $locale): RestResponseInterface
     {
-        $categoryTree = $this->categoryStorageClient->getCategories($locale);
+        $categoryTree = $this->categoryStorageClient->getCategories($locale, APPLICATION_STORE);
         $restCategoryTreesTransfer = $this->categoryMapper
             ->mapCategoryTreeToRestCategoryTreesTransfer((array)$categoryTree);
 
