@@ -298,10 +298,11 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
         $expandedRestResources = [];
         foreach ($multipleProductConcreteStorageData as $productConcreteStorageData) {
             foreach ($concreteProductRestResources as $concreteProductRestResource) {
-                if (
-                    $productConcreteStorageData[static::KEY_SKU] !== $concreteProductRestResource->getId()
-                    || !isset($productAbstractSkus[$productConcreteStorageData[static::KEY_ID_PRODUCT_ABSTRACT]])
-                ) {
+                if ($productConcreteStorageData[static::KEY_SKU] !== $concreteProductRestResource->getId()) {
+                    continue;
+                }
+
+                if (!isset($productAbstractSkus[$productConcreteStorageData[static::KEY_ID_PRODUCT_ABSTRACT]])) {
                     $expandedRestResources[$productConcreteStorageData[static::KEY_SKU]] = $concreteProductRestResource;
 
                     continue;
