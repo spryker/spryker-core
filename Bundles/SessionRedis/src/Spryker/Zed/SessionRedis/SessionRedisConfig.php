@@ -151,8 +151,12 @@ class SessionRedisConfig extends AbstractBundleConfig
      */
     protected function getZedConnectionCredentials(): RedisCredentialsTransfer
     {
+        $scheme = $this->getConfig()::hasKey(SessionRedisConstants::ZED_SESSION_REDIS_SCHEME) ?
+            $this->get(SessionRedisConstants::ZED_SESSION_REDIS_SCHEME) :
+            $this->get(SessionRedisConstants::ZED_SESSION_REDIS_PROTOCOL);
+
         return (new RedisCredentialsTransfer())
-            ->setProtocol($this->get(SessionRedisConstants::ZED_SESSION_REDIS_PROTOCOL))
+            ->setScheme($scheme)
             ->setHost($this->get(SessionRedisConstants::ZED_SESSION_REDIS_HOST))
             ->setPort($this->get(SessionRedisConstants::ZED_SESSION_REDIS_PORT))
             ->setDatabase($this->get(SessionRedisConstants::ZED_SESSION_REDIS_DATABASE))
@@ -180,8 +184,12 @@ class SessionRedisConfig extends AbstractBundleConfig
      */
     protected function getYvesConnectionCredentials(): RedisCredentialsTransfer
     {
+        $scheme = $this->getConfig()::hasKey(SessionRedisConstants::YVES_SESSION_REDIS_SCHEME) ?
+            $this->get(SessionRedisConstants::YVES_SESSION_REDIS_SCHEME) :
+            $this->get(SessionRedisConstants::YVES_SESSION_REDIS_PROTOCOL);
+
         return (new RedisCredentialsTransfer())
-            ->setProtocol($this->get(SessionRedisConstants::YVES_SESSION_REDIS_PROTOCOL))
+            ->setScheme($scheme)
             ->setHost($this->get(SessionRedisConstants::YVES_SESSION_REDIS_HOST))
             ->setPort($this->get(SessionRedisConstants::YVES_SESSION_REDIS_PORT))
             ->setDatabase($this->get(SessionRedisConstants::YVES_SESSION_REDIS_DATABASE))
