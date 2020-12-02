@@ -11,4 +11,5 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 
 class SecurityBlockerDependencyProvider extends AbstractDependencyProvider
 {
+    public const SERVICE_REQUEST_STACK = 'SERVICE_REQUEST_STACK';
 }

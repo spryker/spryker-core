@@ -5,23 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\SecurityBlocker;
+namespace Spryker\Client\SecurityBlocker\Delegator;
 
 use Generated\Shared\Transfer\AuthContextTransfer;
 use Generated\Shared\Transfer\AuthResponseTransfer;
 
-interface SecurityBlockerClientInterface
+interface SecurityBlockerStorageDelegatorInterface
 {
     /**
-     * Specification:
-     * - Saves a failed login attempt based on the data provided in the `AuthContextTransfer`.
-     * - Returns `isSuccessful` to indicate the result.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\AuthContextTransfer $authContextTransfer
      *
      * @return \Generated\Shared\Transfer\AuthResponseTransfer
      */
-    public function incrementLoginAttempt(AuthContextTransfer $authContextTransfer): AuthResponseTransfer;
+    public function logLoginAttempt(AuthContextTransfer $authContextTransfer): AuthResponseTransfer;
 }

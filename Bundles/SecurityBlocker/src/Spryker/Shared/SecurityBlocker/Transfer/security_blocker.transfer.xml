@@ -4,13 +4,16 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="AuthContext">
+        <property name="ttl" type="int"/>
         <property name="ip" type="string"/>
         <property name="account" type="string"/>
     </transfer>
 
     <transfer name="AuthResponse">
         <property name="isSuccessful" type="string"/>
+        <property name="ip" type="string"/>
         <property name="account" type="string"/>
+        <property name="count" type="int"/>
     </transfer>
 
 </transfers>
