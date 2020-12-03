@@ -10,7 +10,6 @@ namespace Spryker\Zed\SalesMerchantPortalGui\Communication\Controller;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,7 +50,7 @@ class DetailController extends AbstractController
 
         $merchantOrderTransfer = $this->validateMerchantOrder($merchantOrderTransfer);
         if (!$merchantOrderTransfer) {
-            throw new NotFoundHttpException(sprintf('Merchant order not found for id %d.', $idMerchantOrder));
+            throw new NotFoundHttpException(sprintf('Merchant order is not found for id %d.', $idMerchantOrder));
         }
 
         $responseData = [
@@ -90,7 +89,7 @@ class DetailController extends AbstractController
 
         $merchantOrderTransfer = $this->validateMerchantOrder($merchantOrderTransfer);
         if (!$merchantOrderTransfer) {
-            throw new NotFoundHttpException(sprintf('Merchant order not found for id %d.', $idMerchantOrder));
+            throw new NotFoundHttpException(sprintf('Merchant order is not found for id %d.', $idMerchantOrder));
         }
 
         $salesOrderItemIds = $this->getSalesOrderItemIds($merchantOrderTransfer);
@@ -101,30 +100,6 @@ class DetailController extends AbstractController
         return $this->renderView('@SalesMerchantPortalGui/Partials/order_items_list.twig', [
             'orderItems' => $itemCollectionTransfer->getItems(),
         ]);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantOrderTransfer|null $merchantOrderTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
-     */
-    protected function validateMerchantOrder(?MerchantOrderTransfer $merchantOrderTransfer): ?MerchantOrderTransfer
-    {
-        if (!$merchantOrderTransfer) {
-            return null;
-        }
-
-        $currentMerchantUserTransfer = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser();
-        $merchantTransfer = $currentMerchantUserTransfer->getMerchant();
-        if (!$merchantTransfer) {
-            return null;
-        }
-
-        if ($merchantTransfer->getMerchantReference() !== $merchantOrderTransfer->getMerchantReference()) {
-            return null;
-        }
-
-        return $merchantOrderTransfer;
     }
 
     /**

@@ -25,6 +25,9 @@ use Spryker\Zed\SalesMerchantPortalGui\Persistence\SalesMerchantPortalGuiReposit
 
 class MerchantOrderItemGuiTableDataProvider extends AbstractGuiTableDataProvider
 {
+    protected const DEFAULT_PAGE_NUMBER = 1;
+    protected const DEFAULT_MAX_PER_PAGE = 10;
+
     /**
      * @var \Spryker\Zed\SalesMerchantPortalGui\Persistence\SalesMerchantPortalGuiRepositoryInterface
      */
@@ -135,8 +138,8 @@ class MerchantOrderItemGuiTableDataProvider extends AbstractGuiTableDataProvider
             $salesOrderItemIds[] = $idSalesOrderItem;
         }
 
-        $page = 1;
-        $maxPerPage = 10;
+        $page = static::DEFAULT_PAGE_NUMBER;
+        $maxPerPage = static::DEFAULT_MAX_PER_PAGE;
         $total = $merchantOrderItemCollectionTransfer->getMerchantOrderItems()->count();
         $paginationTransfer = $merchantOrderItemCollectionTransfer->getPagination();
 

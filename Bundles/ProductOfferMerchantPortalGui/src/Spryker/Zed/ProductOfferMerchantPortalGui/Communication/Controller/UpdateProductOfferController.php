@@ -37,27 +37,27 @@ class UpdateProductOfferController extends AbstractProductOfferController
         $productOfferTransfer = $productOfferUpdateFormDataProvider->getData($idProductOffer);
 
         if (!$productOfferTransfer) {
-            throw new NotFoundHttpException(sprintf('Product offer not found for id %d.', $idProductOffer));
+            throw new NotFoundHttpException(sprintf('Product offer is not found for id %d.', $idProductOffer));
         }
 
         $idProductConcrete = $productOfferTransfer->getIdProductConcrete();
         if (!$idProductConcrete) {
-            throw new NotFoundHttpException(sprintf('Product not found for product offer id %d.', $idProductOffer));
+            throw new NotFoundHttpException(sprintf('Product is not found for product offer id %d.', $idProductOffer));
         }
 
         $productConcreteTransfer = $this->getFactory()->getProductFacade()->findProductConcreteById($idProductConcrete);
         if (!$productConcreteTransfer) {
-            throw new NotFoundHttpException(sprintf('Product not found for id %d.', $idProductConcrete));
+            throw new NotFoundHttpException(sprintf('Product is not found for id %d.', $idProductConcrete));
         }
 
         $idProductAbstract = $productConcreteTransfer->getFkProductAbstract();
         if (!$idProductAbstract) {
-            throw new NotFoundHttpException(sprintf('Product Abstract not found for product id %d.', $idProductConcrete));
+            throw new NotFoundHttpException(sprintf('Product Abstract is not found for product id %d.', $idProductConcrete));
         }
 
         $productAbstractTransfer = $this->getFactory()->getProductFacade()->findProductAbstractById($idProductAbstract);
         if (!$productAbstractTransfer) {
-            throw new NotFoundHttpException(sprintf('Product Abstract not found for abstract id %d.', $idProductAbstract));
+            throw new NotFoundHttpException(sprintf('Product Abstract is not found for abstract id %d.', $idProductAbstract));
         }
 
         $productOfferForm = $this->getFactory()->createProductOfferForm(

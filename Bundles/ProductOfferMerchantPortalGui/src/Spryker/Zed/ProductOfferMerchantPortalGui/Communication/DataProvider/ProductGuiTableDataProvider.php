@@ -24,6 +24,9 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPo
 
 class ProductGuiTableDataProvider extends AbstractGuiTableDataProvider
 {
+    protected const DEFAULT_PAGE_NUMBER = 1;
+    protected const DEFAULT_MAX_PER_PAGE = 10;
+
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface
      */
@@ -110,8 +113,8 @@ class ProductGuiTableDataProvider extends AbstractGuiTableDataProvider
         }
 
         $paginationTransfer = $productConcreteCollectionTransfer->getPagination();
-        $page = 1;
-        $maxPerPage = 10;
+        $page = static::DEFAULT_PAGE_NUMBER;
+        $maxPerPage = static::DEFAULT_MAX_PER_PAGE;
         $total = $productConcreteCollectionTransfer->getProducts()->count();
 
         if ($paginationTransfer) {
