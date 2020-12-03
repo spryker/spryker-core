@@ -217,7 +217,7 @@ class CategoryTable extends AbstractTable
     protected function generateEditCategoryButton(SpyCategory $item): string
     {
         return $this->generateEditButton(
-            Url::generate('/category/edit', [
+            Url::generate('/category-gui/edit', [
                 static::REQUEST_PARAM_ID_CATEGORY => $item->getIdCategory(),
             ]),
             'Edit'
@@ -232,7 +232,7 @@ class CategoryTable extends AbstractTable
     protected function generateViewCategoryButton(SpyCategory $item): string
     {
         return $this->generateViewButton(
-            Url::generate('/category/view', [
+            Url::generate('/category-gui/view', [
                 static::REQUEST_PARAM_ID_CATEGORY => $item->getIdCategory(),
             ]),
             'View'
@@ -247,7 +247,7 @@ class CategoryTable extends AbstractTable
     protected function generateCategoryRemoveButton(SpyCategory $item): string
     {
         return $this->generateRemoveButton(
-            Url::generate('/category/delete', [
+            Url::generate('/category-gui/delete', [
                 static::REQUEST_PARAM_ID_CATEGORY => $item->getIdCategory(),
             ]),
             'Delete'
@@ -263,7 +263,7 @@ class CategoryTable extends AbstractTable
     {
         return $this->generateViewButton(
             Url::generate(
-                '/category/re-sort',
+                '/category-gui/re-sort',
                 [
                     static::REQUEST_PARAM_ID_NODE => $item->getVirtualColumn(static::COL_ID_CATEGORY_NODE),
                 ]
@@ -281,7 +281,7 @@ class CategoryTable extends AbstractTable
     {
         return $this->generateViewButton(
             Url::generate(
-                '/category/create',
+                '/category-gui/create',
                 [
                     static::REQUEST_PARAM_ID_PARENT_NODE => $item->getVirtualColumn(static::COL_ID_CATEGORY_NODE),
                 ]

@@ -22,7 +22,7 @@
 
         {% if node.children is defined and node.children|length > 0 %}
             <a
-                href="/category/re-sort?id-node={{ node.id }}"
+                href="/category-gui/re-sort?id-node={{ node.id }}"
                 id="node-{{ node.id }}"
                 class="btn btn-xs btn-outline btn-view"
                 title="{{ 'Re-sort Child Categories' | trans }}"
@@ -39,28 +39,28 @@
             <i class="fa fa-fw fa-chain"></i>
         </a>
         <a
-            href="/category/create?id-parent-node={{ node.id }}"
+            href="/category-gui/create?id-parent-node={{ node.id }}"
             class="btn btn-xs btn-outline btn-create"
             title="{{ 'Add Category to this Node' | trans }}"
         >
             <i class="fa fa-fw fa-plus"></i>
         </a>
         <a
-            href="/category/edit?id-category={{ node.id_category }}"
+            href="/category-gui/edit?id-category={{ node.id_category }}"
             class="btn btn-xs btn-outline btn-edit"
             title="{{ 'Edit Category' | trans }}"
         >
             <i class="fa fa-fw fa-pencil"></i>
         </a>
         <a
-                href="/category/view?id-category={{ node.id_category }}"
+                href="/category-gui/view?id-category={{ node.id_category }}"
                 class="btn btn-xs btn-outline btn-view"
                 title="{{ 'View Category' | trans }}"
         >
             <i class="fa fa-fw fa-eye"></i>
         </a>
         <a
-            href="/category/delete?id-category={{ node.id_category }}"
+            href="/category-gui/delete?id-category={{ node.id_category }}"
             class="btn btn-xs btn-outline btn-danger"
             title="{{ 'Delete Category' | trans }}"
         >

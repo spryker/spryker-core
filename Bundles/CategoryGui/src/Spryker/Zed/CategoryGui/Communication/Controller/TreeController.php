@@ -39,7 +39,7 @@ class TreeController extends AbstractController
     protected function getCategoryTree(Request $request): array
     {
         $idRootNode = $this->castId($request->query->get(static::REQUEST_PARAM_ID_ROOT_NODE));
-        $localeTransfer = $this->getFactory()->getCurrentLocale();
+        $localeTransfer = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
 
         return $this
             ->getFactory()

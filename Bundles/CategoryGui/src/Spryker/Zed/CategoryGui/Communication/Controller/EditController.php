@@ -41,7 +41,7 @@ class EditController extends AbstractController
 
         if ($categoryTransfer === null) {
             $this->addErrorMessage("Category with id %s doesn't exist", [
-                '%s' => $request->get(static::REQUEST_PARAM_ID_CATEGORY)
+                '%s' => $request->get(static::REQUEST_PARAM_ID_CATEGORY),
             ]);
 
             return $this->redirectResponse(static::ROUTE_CATEGORY_LIST);
@@ -68,7 +68,7 @@ class EditController extends AbstractController
 
         return $this->viewResponse([
             'categoryForm' => $form->createView(),
-            'currentLocale' => $this->getFactory()->getCurrentLocale()->getLocaleName(),
+            'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'idCategory' => $this->castId($request->query->get(static::REQUEST_PARAM_ID_CATEGORY)),
             'categoryFormTabs' => $this->getFactory()->createCategoryFormTabs()->createView(),
         ]);
@@ -79,10 +79,10 @@ class EditController extends AbstractController
      *
      * @return string
      */
-    protected function createSuccessRedirectUrl($idCategory): string
+    protected function createSuccessRedirectUrl(int $idCategory): string
     {
         $url = Url::generate(
-            '/category/edit',
+            '/category-gui/edit',
             [
                 static::REQUEST_PARAM_ID_CATEGORY => $idCategory,
             ]

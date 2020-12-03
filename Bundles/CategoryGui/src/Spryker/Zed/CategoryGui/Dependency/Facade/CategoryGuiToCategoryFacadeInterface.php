@@ -44,14 +44,14 @@ interface CategoryGuiToCategoryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
-    public function getAllNodesByIdCategory($idCategory);
+    public function getAllNodesByIdCategory(int $idCategory);
 
     /**
      * @param int $idCategory
      *
      * @return void
      */
-    public function delete($idCategory);
+    public function delete(int $idCategory);
 
     /**
      * @param int $idCategoryNode
@@ -59,7 +59,7 @@ interface CategoryGuiToCategoryFacadeInterface
      *
      * @return array
      */
-    public function getSubTreeByIdCategoryNodeAndLocale($idCategoryNode, LocaleTransfer $localeTransfer);
+    public function getSubTreeByIdCategoryNodeAndLocale(int $idCategoryNode, LocaleTransfer $localeTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
@@ -74,7 +74,7 @@ interface CategoryGuiToCategoryFacadeInterface
      *
      * @return void
      */
-    public function updateCategoryNodeOrder($idCategoryNode, $position);
+    public function updateCategoryNodeOrder(int $idCategoryNode, int $position);
 
     /**
      * @param int $idCategory
@@ -82,5 +82,5 @@ interface CategoryGuiToCategoryFacadeInterface
      *
      * @return array
      */
-    public function getTreeNodeChildrenByIdCategoryAndLocale($idCategory, LocaleTransfer $localeTransfer);
+    public function getTreeNodeChildrenByIdCategoryAndLocale(int $idCategory, LocaleTransfer $localeTransfer);
 }

@@ -13,6 +13,9 @@ use Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQuery
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CategoryGui\CategoryGuiConfig getConfig()
+ */
 class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';

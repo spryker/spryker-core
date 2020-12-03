@@ -32,7 +32,7 @@ class CategoryDeleteDataProvider
      *
      * @return array
      */
-    public function getData($idCategory)
+    public function getData(int $idCategory)
     {
         $categoryEntity = $this->findCategory($idCategory);
 
@@ -47,7 +47,7 @@ class CategoryDeleteDataProvider
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategory
      */
-    protected function findCategory($idCategory)
+    protected function findCategory(int $idCategory)
     {
         return $this->queryContainer
             ->queryCategoryById($idCategory)

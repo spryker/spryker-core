@@ -49,7 +49,7 @@ class CategoryFormTabs extends AbstractTabs
         $tabItemTransfer = new TabItemTransfer();
         $tabItemTransfer->setName('general')
             ->setTitle('General')
-            ->setTemplate('@Category/_partials/general-tab.twig');
+            ->setTemplate('@CategoryGui/_partials/general-tab.twig');
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 
@@ -64,7 +64,7 @@ class CategoryFormTabs extends AbstractTabs
     protected function setFooter(TabsViewTransfer $tabsViewTransfer)
     {
         $tabsViewTransfer
-            ->setFooterTemplate('@Category/_partials/tabs-footer.twig')
+            ->setFooterTemplate('@CategoryGui/_partials/tabs-footer.twig')
             ->setIsNavigable(true);
 
         return $this;

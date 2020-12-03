@@ -33,7 +33,7 @@ class ReSortController extends AbstractController
     public function indexAction(Request $request): array
     {
         $idCategoryNode = $request->get(static::REQUEST_PARAM_ID_NODE);
-        $localeTransfer = $this->getFactory()->getCurrentLocale();
+        $localeTransfer = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
 
         $categoryNodeCollection = $this
             ->getFactory()

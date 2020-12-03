@@ -69,7 +69,7 @@ class CategoryGuiToCategoryFacadeBridge implements CategoryGuiToCategoryFacadeIn
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
-    public function getAllNodesByIdCategory($idCategory)
+    public function getAllNodesByIdCategory(int $idCategory)
     {
         return $this->categoryFacade->getAllNodesByIdCategory($idCategory);
     }
@@ -79,7 +79,7 @@ class CategoryGuiToCategoryFacadeBridge implements CategoryGuiToCategoryFacadeIn
      *
      * @return void
      */
-    public function delete($idCategory)
+    public function delete(int $idCategory)
     {
         $this->categoryFacade->delete($idCategory);
     }
@@ -90,7 +90,7 @@ class CategoryGuiToCategoryFacadeBridge implements CategoryGuiToCategoryFacadeIn
      *
      * @return array
      */
-    public function getSubTreeByIdCategoryNodeAndLocale($idCategoryNode, LocaleTransfer $localeTransfer)
+    public function getSubTreeByIdCategoryNodeAndLocale(int $idCategoryNode, LocaleTransfer $localeTransfer)
     {
         return $this->categoryFacade->getSubTreeByIdCategoryNodeAndLocale($idCategoryNode, $localeTransfer);
     }
@@ -111,7 +111,7 @@ class CategoryGuiToCategoryFacadeBridge implements CategoryGuiToCategoryFacadeIn
      *
      * @return void
      */
-    public function updateCategoryNodeOrder($idCategoryNode, $position)
+    public function updateCategoryNodeOrder(int $idCategoryNode, int $position)
     {
         $this->categoryFacade->updateCategoryNodeOrder($idCategoryNode, $position);
     }
@@ -122,7 +122,7 @@ class CategoryGuiToCategoryFacadeBridge implements CategoryGuiToCategoryFacadeIn
      *
      * @return array
      */
-    public function getTreeNodeChildrenByIdCategoryAndLocale($idCategory, LocaleTransfer $localeTransfer)
+    public function getTreeNodeChildrenByIdCategoryAndLocale(int $idCategory, LocaleTransfer $localeTransfer)
     {
         return $this->categoryFacade->getTreeNodeChildrenByIdCategoryAndLocale($idCategory, $localeTransfer);
     }

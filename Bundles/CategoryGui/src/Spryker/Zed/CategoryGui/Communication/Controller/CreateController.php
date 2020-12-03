@@ -52,7 +52,7 @@ class CreateController extends AbstractController
 
         return $this->viewResponse([
             'categoryForm' => $form->createView(),
-            'currentLocale' => $this->getFactory()->getCurrentLocale()->getLocaleName(),
+            'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'categoryFormTabs' => $this->getFactory()->createCategoryFormTabs()->createView(),
         ]);
     }
@@ -81,7 +81,7 @@ class CreateController extends AbstractController
     protected function createSuccessRedirectUrl(int $idCategory): string
     {
         $url = Url::generate(
-            '/category/edit',
+            '/category-gui/edit',
             [
                 static::REQUEST_PARAM_ID_CATEGORY => $idCategory,
             ]

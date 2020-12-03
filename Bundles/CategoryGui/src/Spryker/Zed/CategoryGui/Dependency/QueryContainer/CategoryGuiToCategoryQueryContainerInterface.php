@@ -14,7 +14,7 @@ interface CategoryGuiToCategoryQueryContainerInterface
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */
-    public function queryCategory($idLocale);
+    public function queryCategory(int $idLocale);
 
     /**
      * @param int $idNode
@@ -26,7 +26,7 @@ interface CategoryGuiToCategoryQueryContainerInterface
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
-    public function queryPath($idNode, $idLocale, $excludeRootNode = true, $onlyParents = false);
+    public function queryPath(int $idNode, int $idLocale, bool $excludeRootNode = true, bool $onlyParents = false);
 
     /**
      * @return \Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery
@@ -38,14 +38,14 @@ interface CategoryGuiToCategoryQueryContainerInterface
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */
-    public function queryCategoryById($idCategory);
+    public function queryCategoryById(int $idCategory);
 
     /**
      * @param int $idCategoryNode
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
-    public function queryUrlByIdCategoryNode($idCategoryNode);
+    public function queryUrlByIdCategoryNode(int $idCategoryNode);
 
     /**
      * @param int $idParentNode
@@ -53,5 +53,22 @@ interface CategoryGuiToCategoryQueryContainerInterface
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
-    public function getCategoryNodesWithOrder($idParentNode, $idLocale);
+    public function getCategoryNodesWithOrder(int $idParentNode, int $idLocale);
+
+    /**
+     * @param string $categoryKey
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
+     */
+    public function queryCategoryByKey(string $categoryKey);
+
+    /**
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function queryRootNode();
+
+    /**
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
+     */
+    public function queryRootNodes();
 }

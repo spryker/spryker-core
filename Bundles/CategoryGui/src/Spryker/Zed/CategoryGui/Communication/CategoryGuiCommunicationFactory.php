@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CategoryGui\Communication;
 
 use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\CategoryGui\CategoryGuiDependencyProvider;
 use Spryker\Zed\CategoryGui\Communication\Form\CategoryType;
 use Spryker\Zed\CategoryGui\Communication\Form\DataProvider\CategoryCreateDataProvider;
@@ -27,13 +26,11 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
+/**
+ * @method \Spryker\Zed\CategoryGui\CategoryGuiConfig getConfig()
+ */
 class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
 {
-    /**
-     * @var \Generated\Shared\Transfer\LocaleTransfer
-     */
-    protected $currentLocale;
-
     /**
      * @return \Spryker\Zed\CategoryGui\Communication\Table\CategoryTable
      */
@@ -43,26 +40,13 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function getCurrentLocale(): LocaleTransfer
-    {
-        if ($this->currentLocale === null) {
-            $this->currentLocale = $this->getLocaleFacade()
-                ->getCurrentLocale();
-        }
-
-        return $this->currentLocale;
-    }
-
-    /**
      * @return \Spryker\Zed\CategoryGui\Communication\Table\RootNodeTable
      */
     public function createRootNodeTable(): RootNodeTable
     {
         return new RootNodeTable(
             $this->getCategoryQueryContainer(),
-            $this->getCurrentLocale()->getIdLocale()
+            $this->getLocaleFacade()
         );
     }
 
@@ -155,14 +139,10 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createUrlTable(?int $idCategoryNode): UrlTable
     {
-        if ($idCategoryNode === null) {
-            //@TODO: table initialisation with ajax then this part can be deleted
-            $idCategoryNode = $this->getQueryContainer()->queryRootNode()->findOne()->getIdCategoryNode();
-        }
-        $urlQuery = $this->getCategoryQueryContainer()
-            ->queryUrlByIdCategoryNode($idCategoryNode);
-
-        return new UrlTable($urlQuery);
+        return new UrlTable(
+            $this->getCategoryQueryContainer(),
+            $idCategoryNode
+        );
     }
 
     /**

@@ -9,6 +9,7 @@ namespace Spryker\Zed\CategoryGui\Communication\Table;
 
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
+use Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -17,16 +18,25 @@ class UrlTable extends AbstractTable
     public const TABLE_IDENTIFIER = 'url_table';
 
     /**
-     * @var \Orm\Zed\Url\Persistence\SpyUrlQuery
+     * @var \Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface
      */
-    protected $urlQuery;
+    protected $categoryQueryContainer;
 
     /**
-     * @param \Orm\Zed\Url\Persistence\SpyUrlQuery $urlQuery
+     * @var int|null
      */
-    public function __construct(SpyUrlQuery $urlQuery)
-    {
-        $this->urlQuery = $urlQuery;
+    protected $idCategoryNode;
+
+    /**
+     * @param \Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface $categoryQueryContainer
+     * @param int|null $idCategoryNode
+     */
+    public function __construct(
+        CategoryGuiToCategoryQueryContainerInterface $categoryQueryContainer,
+        ?int $idCategoryNode
+    ) {
+        $this->categoryQueryContainer = $categoryQueryContainer;
+        $this->idCategoryNode = $idCategoryNode;
         $this->defaultUrl = 'url-table';
         $this->setTableIdentifier(static::TABLE_IDENTIFIER);
     }
@@ -58,7 +68,7 @@ class UrlTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->urlQuery;
+        $query = $this->buildUrlQuery();
         $queryResults = $this->runQuery($query, $config);
         $results = [];
         foreach ($queryResults as $attribute) {
@@ -72,5 +82,17 @@ class UrlTable extends AbstractTable
         unset($queryResults);
 
         return $results;
+    }
+
+    /**
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    protected function buildUrlQuery(): SpyUrlQuery
+    {
+        if (!$this->idCategoryNode) {
+            $this->idCategoryNode = $this->categoryQueryContainer->queryRootNode()->findOne()->getIdCategoryNode();
+        }
+
+        return $this->categoryQueryContainer->queryUrlByIdCategoryNode($this->idCategoryNode);
     }
 }

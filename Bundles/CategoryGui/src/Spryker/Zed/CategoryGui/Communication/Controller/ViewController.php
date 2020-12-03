@@ -53,7 +53,7 @@ class ViewController extends AbstractController
     protected function getRenderedRelations(CategoryTransfer $categoryTransfer): array
     {
         $renderedRelations = [];
-        $localeTransfer = $this->getFactory()->getCurrentLocale();
+        $localeTransfer = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
 
         $categoryRelationReadPlugins = $this->getFactory()
             ->getCategoryRelationReadPlugins();

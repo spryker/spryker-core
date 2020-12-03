@@ -19,7 +19,7 @@ interface CategoryGuiToLocaleFacadeInterface
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocale($localeName);
+    public function getLocale(string $localeName);
 
     /**
      * @return string[]

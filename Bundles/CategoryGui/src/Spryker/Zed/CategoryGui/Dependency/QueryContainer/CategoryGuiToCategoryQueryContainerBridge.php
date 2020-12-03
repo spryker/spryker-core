@@ -27,7 +27,7 @@ class CategoryGuiToCategoryQueryContainerBridge implements CategoryGuiToCategory
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */
-    public function queryCategory($idLocale)
+    public function queryCategory(int $idLocale)
     {
         return $this->categoryQueryContainer->queryCategory($idLocale);
     }
@@ -40,7 +40,7 @@ class CategoryGuiToCategoryQueryContainerBridge implements CategoryGuiToCategory
      *
      * @return mixed
      */
-    public function queryPath($idNode, $idLocale, $excludeRootNode = true, $onlyParents = false)
+    public function queryPath(int $idNode, int $idLocale, bool $excludeRootNode = true, bool $onlyParents = false)
     {
         return $this->categoryQueryContainer->queryPath($idNode, $idLocale, $excludeRootNode, $onlyParents);
     }
@@ -58,7 +58,7 @@ class CategoryGuiToCategoryQueryContainerBridge implements CategoryGuiToCategory
      *
      * @return mixed
      */
-    public function queryCategoryById($idCategory)
+    public function queryCategoryById(int $idCategory)
     {
         return $this->categoryQueryContainer->queryCategoryById($idCategory);
     }
@@ -68,7 +68,7 @@ class CategoryGuiToCategoryQueryContainerBridge implements CategoryGuiToCategory
      *
      * @return mixed
      */
-    public function queryUrlByIdCategoryNode($idCategoryNode)
+    public function queryUrlByIdCategoryNode(int $idCategoryNode)
     {
         return $this->categoryQueryContainer->queryUrlByIdCategoryNode($idCategoryNode);
     }
@@ -79,8 +79,34 @@ class CategoryGuiToCategoryQueryContainerBridge implements CategoryGuiToCategory
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
-    public function getCategoryNodesWithOrder($idParentNode, $idLocale)
+    public function getCategoryNodesWithOrder(int $idParentNode, int $idLocale)
     {
         return $this->categoryQueryContainer->getCategoryNodesWithOrder($idParentNode, $idLocale);
+    }
+
+    /**
+     * @param string $categoryKey
+     *
+     * @return mixed
+     */
+    public function queryCategoryByKey(string $categoryKey)
+    {
+        return $this->categoryQueryContainer->queryCategoryByKey($categoryKey);
+    }
+
+    /**
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function queryRootNode()
+    {
+        return $this->categoryQueryContainer->queryRootNode();
+    }
+
+    /**
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
+     */
+    public function queryRootNodes()
+    {
+        return $this->categoryQueryContainer->queryRootNodes();
     }
 }

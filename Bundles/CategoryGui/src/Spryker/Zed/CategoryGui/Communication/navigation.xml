@@ -3,19 +3,14 @@
     <category>
         <label>Category</label>
         <title>Category</title>
-        <bundle>category</bundle>
-        <controller>root</controller>
+        <bundle>category-gui</bundle>
+        <controller>list</controller>
         <action>index</action>
-        <order>0</order>
-        <shortcut>c</shortcut>
-        <icon>fa-sitemap</icon>
-
         <pages>
-
             <sort-category>
                 <label>Re-sort Child Categories</label>
                 <title>Re-sort Child Categories</title>
-                <bundle>category</bundle>
+                <bundle>category-gui</bundle>
                 <controller>re-sort</controller>
                 <action>index</action>
                 <visible>0</visible>
@@ -24,7 +19,7 @@
             <view-category>
                 <label>View Category</label>
                 <title>View Category</title>
-                <bundle>category</bundle>
+                <bundle>category-gui</bundle>
                 <controller>view</controller>
                 <action>index</action>
                 <visible>0</visible>
@@ -33,7 +28,7 @@
             <edit-category>
                 <label>Edit Category</label>
                 <title>Edit Category</title>
-                <bundle>category</bundle>
+                <bundle>category-gui</bundle>
                 <controller>edit</controller>
                 <action>index</action>
                 <visible>0</visible>
@@ -42,7 +37,7 @@
             <create-category>
                 <label>Create Category</label>
                 <title>Create Category</title>
-                <bundle>category</bundle>
+                <bundle>category-gui</bundle>
                 <controller>create</controller>
                 <action>index</action>
                 <visible>0</visible>
@@ -60,7 +55,7 @@
             <delete-category>
                 <label>Delete Category</label>
                 <title>Delete Category</title>
-                <bundle>category</bundle>
+                <bundle>category-gui</bundle>
                 <controller>delete</controller>
                 <action>index</action>
                 <visible>0</visible>

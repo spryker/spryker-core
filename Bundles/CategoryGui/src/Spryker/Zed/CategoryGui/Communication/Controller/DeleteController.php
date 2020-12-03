@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CategoryGui\Communication\Controller;
 
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -24,6 +25,11 @@ class DeleteController extends AbstractController
      * @uses \Spryker\Zed\CategoryGui\Communication\Controller\ListController::indexAction()
      */
     protected const ROUTE_CATEGORY_LIST = '/category-gui/list';
+
+    /**
+     * @var \Generated\Shared\Transfer\LocaleTransfer|null
+     */
+    protected $currentLocale;
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -64,7 +70,7 @@ class DeleteController extends AbstractController
      */
     protected function getCategoryEntity(int $idCategory): SpyCategory
     {
-        $localeTransfer = $this->getFactory()->getCurrentLocale();
+        $localeTransfer = $this->getCurrentLocale();
 
         return $this
             ->getFactory()
@@ -113,7 +119,7 @@ class DeleteController extends AbstractController
      */
     protected function getSubTree(int $idCategoryNode): array
     {
-        $localeTransfer = $this->getFactory()->getCurrentLocale();
+        $localeTransfer = $this->getCurrentLocale();
 
         return $this
             ->getFactory()
@@ -128,7 +134,7 @@ class DeleteController extends AbstractController
      */
     protected function getParentCategoryEntity(NodeTransfer $categoryNodeTransfer): SpyCategory
     {
-        $localeTransfer = $this->getFactory()->getCurrentLocale();
+        $localeTransfer = $this->getCurrentLocale();
 
         return $this
             ->getFactory()
@@ -176,7 +182,7 @@ class DeleteController extends AbstractController
     protected function getRelations(SpyCategory $categoryEntity): array
     {
         $relations = [];
-        $localeTransfer = $this->getFactory()->getCurrentLocale();
+        $localeTransfer = $this->getCurrentLocale();
         $categoryTransfer = $this->getCategoryTransferFromEntity($categoryEntity);
         $categoryRelationReadPlugins = $this->getFactory()->getCategoryRelationReadPlugins();
 
@@ -212,5 +218,17 @@ class DeleteController extends AbstractController
         }
 
         return $categoryTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected function getCurrentLocale(): LocaleTransfer
+    {
+        if (!$this->currentLocale) {
+            $this->currentLocale = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
+        }
+
+        return $this->currentLocale;
     }
 }

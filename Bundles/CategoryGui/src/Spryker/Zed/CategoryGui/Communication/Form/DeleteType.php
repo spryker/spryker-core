@@ -13,6 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * @method \Spryker\Zed\CategoryGui\Communication\CategoryGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CategoryGui\CategoryGuiConfig getConfig()
  */
 class DeleteType extends AbstractType
 {

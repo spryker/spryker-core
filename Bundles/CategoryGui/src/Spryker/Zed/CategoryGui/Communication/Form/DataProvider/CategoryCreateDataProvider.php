@@ -46,7 +46,7 @@ class CategoryCreateDataProvider
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function getData($idParentNode)
+    public function getData(?int $idParentNode)
     {
         $categoryTransfer = (new CategoryTransfer())
             ->setIsActive(false)

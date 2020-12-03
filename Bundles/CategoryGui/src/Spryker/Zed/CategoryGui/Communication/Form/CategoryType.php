@@ -9,7 +9,7 @@ namespace Spryker\Zed\CategoryGui\Communication\Form;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CategoryTransfer;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
+use Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
@@ -25,6 +25,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\CategoryGui\Communication\CategoryGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CategoryGui\CategoryGuiConfig getConfig()
  */
 class CategoryType extends AbstractType
 {
@@ -95,11 +96,11 @@ class CategoryType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
+     * @param \Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface $categoryQueryContainer
      *
      * @return $this
      */
-    protected function addCategoryKeyField(FormBuilderInterface $builder, CategoryQueryContainerInterface $categoryQueryContainer)
+    protected function addCategoryKeyField(FormBuilderInterface $builder, CategoryGuiToCategoryQueryContainerInterface $categoryQueryContainer)
     {
         $builder->add(static::FIELD_CATEGORY_KEY, TextType::class, [
             'constraints' => [
