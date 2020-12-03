@@ -8,7 +8,6 @@
 namespace Spryker\Zed\StockGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\ProductMerchantPortalGuiCommunicationFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
@@ -21,9 +20,6 @@ class WarehouseController extends AbstractController
      */
     public function listAction(): array
     {
-        $f = new ProductMerchantPortalGuiCommunicationFactory();
-        $r = $f->createProductAbstractGuiTableConfigurationProvider()->getConfiguration();
-
         $stockTable = $this->getFactory()->createStockTable();
 
         return $this->viewResponse([

@@ -18,7 +18,7 @@ class CategoryReader implements CategoryReaderInterface
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface
      */
-    protected $categoryRepository;
+    protected $repository;
 
     /**
      * @var \Spryker\Zed\Category\Business\PluginExecutor\CategoryPluginExecutorInterface
@@ -31,16 +31,16 @@ class CategoryReader implements CategoryReaderInterface
     protected $categoryTreeReader;
 
     /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
+     * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $repository
      * @param \Spryker\Zed\Category\Business\PluginExecutor\CategoryPluginExecutorInterface $categoryPluginExecutor
      * @param \Spryker\Zed\Category\Business\Tree\CategoryTreeReaderInterface $categoryTreeReader
      */
     public function __construct(
-        CategoryRepositoryInterface $categoryRepository,
+        CategoryRepositoryInterface $repository,
         CategoryPluginExecutorInterface $categoryPluginExecutor,
         CategoryTreeReaderInterface $categoryTreeReader
     ) {
-        $this->categoryRepository = $categoryRepository;
+        $this->repository = $repository;
         $this->categoryPluginExecutor = $categoryPluginExecutor;
         $this->categoryTreeReader = $categoryTreeReader;
     }
@@ -52,7 +52,7 @@ class CategoryReader implements CategoryReaderInterface
      */
     public function findCategoryById(int $idCategory): ?CategoryTransfer
     {
-        $categoryTransfer = $this->categoryRepository->findCategoryById($idCategory);
+        $categoryTransfer = $this->repository->findCategoryById($idCategory);
         if (!$categoryTransfer) {
             return null;
         }
@@ -67,7 +67,7 @@ class CategoryReader implements CategoryReaderInterface
      */
     public function findCategoryByCriteria(CategoryCriteriaTransfer $categoryCriteriaTransfer): ?CategoryTransfer
     {
-        $categoryTransfer = $this->categoryRepository->findCategoryByCriteria($categoryCriteriaTransfer);
+        $categoryTransfer = $this->repository->findCategoryByCriteria($categoryCriteriaTransfer);
 
         if (!$categoryTransfer) {
             return null;
