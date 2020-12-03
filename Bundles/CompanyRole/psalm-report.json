@@ -1,18 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 259,
-            "line_to": 259,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\CompanyRole\\Persistence\\CompanyRoleRepository::buildQueryFromCriteria has wrong name $criteria, expecting $modelCriteria as defined by Spryker\\Zed\\Kernel\\Persistence\\AbstractRepository::buildQueryFromCriteria",
-            "file_name": "vendor/spryker/spryker/Bundles/CompanyRole/src/Spryker/Zed/CompanyRole/Persistence/CompanyRoleRepository.php",
-            "snippet": "    public function buildQueryFromCriteria(ModelCriteria $criteria, ?FilterTransfer $filterTransfer = null): ModelCriteria",
-            "selected_text": "$criteria",
-            "error_level": 7,
-            "shortcode": 230
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",

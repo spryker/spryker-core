@@ -2,18 +2,6 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 37,
-            "line_to": 37,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\CustomerAccessStorage\\Communication\\Plugin\\Event\\Listener\\CustomerAccessStorageListener::handle has wrong name $eventTransfer, expecting $transfer as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventHandlerInterface::handle",
-            "file_name": "vendor/spryker/spryker/Bundles/CustomerAccessStorage/src/Spryker/Zed/CustomerAccessStorage/Communication/Plugin/Event/Listener/CustomerAccessStorageListener.php",
-            "snippet": "    public function handle(TransferInterface $eventTransfer, $eventName): void",
-            "selected_text": "$eventTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
             "line_from": 62,
             "line_to": 62,
             "type": "InvalidReturnStatement",
