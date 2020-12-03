@@ -11,8 +11,6 @@ use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\SecurityBlocker\Delegator\SecurityBlockerStorageDelegator;
 use Spryker\Client\SecurityBlocker\Delegator\SecurityBlockerStorageDelegatorInterface;
 use Spryker\Client\SecurityBlockerExtension\SecurityBlockerStorageAdapterPluginInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 class SecurityBlockerFactory extends AbstractFactory
 {

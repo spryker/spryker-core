@@ -16,6 +16,11 @@ class SecurityBlockerDependencyProvider extends AbstractDependencyProvider
 {
     public const PLUGIN_SECURITY_BLOCKER_STORAGE_ADAPTER = 'PLUGIN_SECURITY_BLOCKER_STORAGE_ADAPTER';
 
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
     public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = parent::provideServiceLayerDependencies($container);

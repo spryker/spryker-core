@@ -26,6 +26,12 @@ interface SecurityBlockerClientInterface
     public function incrementLoginAttempt(AuthContextTransfer $authContextTransfer): AuthResponseTransfer;
 
     /**
+     * Specification:
+     * - Gets failed login attempt based on the data provided in the `AuthContextTransfer`.
+     * - Returns `isSuccessful` to indicate the result.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AuthContextTransfer $authContextTransfer
      *
      * @return \Generated\Shared\Transfer\AuthResponseTransfer

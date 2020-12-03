@@ -31,6 +31,7 @@ class SecurityBlockerClient extends AbstractClient implements SecurityBlockerCli
             ->createSecurityBlockerStorageDelegator()
             ->logLoginAttempt($authContextTransfer);
     }
+
     /**
      * {@inheritDoc}
      *

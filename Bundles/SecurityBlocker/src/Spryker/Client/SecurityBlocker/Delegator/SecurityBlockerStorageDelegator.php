@@ -18,6 +18,9 @@ class SecurityBlockerStorageDelegator implements SecurityBlockerStorageDelegator
      */
     protected $securityBlockerStorageAdapterPlugin;
 
+    /**
+     * @param \Spryker\Client\SecurityBlockerExtension\SecurityBlockerStorageAdapterPluginInterface $securityBlockerStorageAdapterPlugin
+     */
     public function __construct(SecurityBlockerStorageAdapterPluginInterface $securityBlockerStorageAdapterPlugin)
     {
         $this->securityBlockerStorageAdapterPlugin = $securityBlockerStorageAdapterPlugin;
