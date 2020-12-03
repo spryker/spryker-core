@@ -9,9 +9,9 @@ namespace Spryker\Zed\SecurityOauthUser\Communication\Reader;
 
 use Generated\Shared\Transfer\ResourceOwnerRequestTransfer;
 use Generated\Shared\Transfer\ResourceOwnerTransfer;
+use Spryker\Zed\SecurityOauthUser\Business\SecurityOauthUserFacadeInterface;
 use Spryker\Zed\SecurityOauthUser\SecurityOauthUserConfig;
 use Symfony\Component\HttpFoundation\Request;
-use Spryker\Zed\SecurityOauthUser\Business\SecurityOauthUserFacadeInterface;
 
 class ResourceOwnerReader implements ResourceOwnerReaderInterface
 {
@@ -20,6 +20,9 @@ class ResourceOwnerReader implements ResourceOwnerReaderInterface
      */
     protected $securityOauthUserFacade;
 
+    /**
+     * @param \Spryker\Zed\SecurityOauthUser\Business\SecurityOauthUserFacadeInterface $securityOauthUserFacade
+     */
     public function __construct(SecurityOauthUserFacadeInterface $securityOauthUserFacade)
     {
         $this->securityOauthUserFacade = $securityOauthUserFacade;
@@ -39,8 +42,9 @@ class ResourceOwnerReader implements ResourceOwnerReaderInterface
             return null;
         }
 
-        $resourceOwnerRequestTransfer = $this->createResourceOwnerRequestTransfer($request);
-        $resourceOwnerResponseTransfer = $this->securityOauthUserFacade->getResourceOwner($resourceOwnerRequestTransfer);
+        $resourceOwnerResponseTransfer = $this->securityOauthUserFacade->getResourceOwner(
+            $this->createResourceOwnerRequestTransfer($request)
+        );
 
         if (!$resourceOwnerResponseTransfer->getIsSuccessful()) {
             return null;

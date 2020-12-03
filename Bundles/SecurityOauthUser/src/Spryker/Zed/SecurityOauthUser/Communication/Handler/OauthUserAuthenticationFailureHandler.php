@@ -35,8 +35,8 @@ class OauthUserAuthenticationFailureHandler implements AuthenticationFailureHand
         SecurityOauthUserToMessengerFacadeInterface $messengerFacade,
         SecurityOauthUserConfig $securityOauthUserConfig
     ) {
-        $this->securityOauthUserConfig = $securityOauthUserConfig;
         $this->messengerFacade = $messengerFacade;
+        $this->securityOauthUserConfig = $securityOauthUserConfig;
     }
 
     /**

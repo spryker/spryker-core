@@ -18,12 +18,20 @@
 
     <transfer name="ResourceOwnerResponse">
         <property name="resourceOwner" type="ResourceOwner"/>
-        <property name="messages" type="Message[]" singular="message"/>
         <property name="isSuccessful" type="bool"/>
     </transfer>
 
     <transfer name="ResourceOwner">
         <property name="email" type="string"/>
+    </transfer>
+
+    <transfer name="OauthUserRestrictionRequest">
+        <property name="user" type="User"/>
+    </transfer>
+
+    <transfer name="OauthUserRestrictionResponse">
+        <property name="isRestricted" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
 </transfers>

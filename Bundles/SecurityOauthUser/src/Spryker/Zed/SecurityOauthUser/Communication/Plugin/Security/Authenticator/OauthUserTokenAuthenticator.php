@@ -20,6 +20,7 @@ use Symfony\Component\Security\Guard\AuthenticatorInterface;
 /**
  * @method \Spryker\Zed\SecurityOauthUser\Communication\SecurityOauthUserCommunicationFactory getFactory()
  * @method \Spryker\Zed\SecurityOauthUser\SecurityOauthUserConfig getConfig()
+ * @method \Spryker\Zed\SecurityOauthUser\Business\SecurityOauthUserFacadeInterface getFacade()
  */
 class OauthUserTokenAuthenticator extends AbstractPlugin implements AuthenticatorInterface
 {
@@ -29,7 +30,7 @@ class OauthUserTokenAuthenticator extends AbstractPlugin implements Authenticato
      *
      * @return \Symfony\Component\Security\Guard\Token\GuardTokenInterface
      */
-    public function createAuthenticatedToken(UserInterface $user, $providerKey)
+    public function createAuthenticatedToken(UserInterface $user, string $providerKey)
     {
         return $this->getFactory()->createPostAuthenticationGuardToken($user, $providerKey);
     }
@@ -58,7 +59,7 @@ class OauthUserTokenAuthenticator extends AbstractPlugin implements Authenticato
         }
 
         return [
-            'token' => $resourceOwnerTransfer->getEmail()
+            'token' => $resourceOwnerTransfer->getEmail(),
         ];
     }
 
@@ -95,7 +96,7 @@ class OauthUserTokenAuthenticator extends AbstractPlugin implements Authenticato
      *
      * @return \Symfony\Component\HttpFoundation\Response|null
      */
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)
     {
         return $this->getFactory()
             ->createOauthUserAuthenticationSuccessHandler()

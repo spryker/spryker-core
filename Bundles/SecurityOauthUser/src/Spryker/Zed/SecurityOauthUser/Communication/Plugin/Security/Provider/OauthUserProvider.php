@@ -18,17 +18,18 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 /**
  * @method \Spryker\Zed\SecurityOauthUser\Communication\SecurityOauthUserCommunicationFactory getFactory()
  * @method \Spryker\Zed\SecurityOauthUser\SecurityOauthUserConfig getConfig()
+ * @method \Spryker\Zed\SecurityOauthUser\Business\SecurityOauthUserFacadeInterface getFacade()
  */
 class OauthUserProvider extends AbstractPlugin implements UserProviderInterface
 {
     /**
      * @param string $username
      *
-     * @return \Symfony\Component\Security\Core\User\UserInterface
      * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
      *
+     * @return \Symfony\Component\Security\Core\User\UserInterface
      */
-    public function loadUserByUsername($username)
+    public function loadUserByUsername(string $username)
     {
         $userTransfer = $this->findUserByUsername($username);
 
@@ -42,9 +43,9 @@ class OauthUserProvider extends AbstractPlugin implements UserProviderInterface
     /**
      * @param \Symfony\Component\Security\Core\User\UserInterface $user
      *
-     * @return \Symfony\Component\Security\Core\User\UserInterface
      * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
      *
+     * @return \Symfony\Component\Security\Core\User\UserInterface
      */
     public function refreshUser(UserInterface $user)
     {
@@ -66,7 +67,7 @@ class OauthUserProvider extends AbstractPlugin implements UserProviderInterface
      *
      * @return bool
      */
-    public function supportsClass($class)
+    public function supportsClass(string $class)
     {
         return is_a($class, SecurityOauthUser::class, true);
     }

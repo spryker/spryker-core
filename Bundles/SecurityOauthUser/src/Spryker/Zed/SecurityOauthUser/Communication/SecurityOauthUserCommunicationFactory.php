@@ -10,7 +10,7 @@ namespace Spryker\Zed\SecurityOauthUser\Communication;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\SecurityOauthUser\Communication\Handler\OauthUserAuthenticationFailureHandler;
-use Spryker\Zed\SecurityOauthUser\Communication\Plugin\Security\Handler\OauthUserAuthenticationSuccessHandler;
+use Spryker\Zed\SecurityOauthUser\Communication\Handler\OauthUserAuthenticationSuccessHandler;
 use Spryker\Zed\SecurityOauthUser\Communication\Plugin\Security\Provider\OauthUserProvider;
 use Spryker\Zed\SecurityOauthUser\Communication\Reader\ResourceOwnerReader;
 use Spryker\Zed\SecurityOauthUser\Communication\Reader\ResourceOwnerReaderInterface;
@@ -56,7 +56,7 @@ class SecurityOauthUserCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Security\Guard\Token\GuardTokenInterface
      */
-    public function createPostAuthenticationGuardToken(UserInterface $user, $providerKey): GuardTokenInterface
+    public function createPostAuthenticationGuardToken(UserInterface $user, string $providerKey): GuardTokenInterface
     {
         return new PostAuthenticationGuardToken(
             $user,
@@ -103,6 +103,5 @@ class SecurityOauthUserCommunicationFactory extends AbstractCommunicationFactory
     public function getMessengerFacade(): SecurityOauthUserToMessengerFacadeInterface
     {
         return $this->getProvidedDependency(SecurityOauthUserDependencyProvider::FACADE_MESSENGER);
-
     }
 }

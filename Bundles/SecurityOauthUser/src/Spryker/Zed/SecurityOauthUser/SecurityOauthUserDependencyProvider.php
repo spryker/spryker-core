@@ -9,7 +9,6 @@ namespace Spryker\Zed\SecurityOauthUser;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToMessengerFacadeBridge;
 use Spryker\Zed\SecurityOauthUser\Dependency\Facade\SecurityOauthUserToMessengerFacadeBridge;
 use Spryker\Zed\SecurityOauthUser\Dependency\Facade\SecurityOauthUserToUserFacadeBridge;
 
@@ -20,6 +19,9 @@ class SecurityOauthUserDependencyProvider extends AbstractBundleDependencyProvid
 {
     public const FACADE_USER = 'FACADE_USER';
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+
+    public const PLUGINS_OAUTH_USER_CLIENT_STRATEGY = 'PLUGINS_OAUTH_USER_CLIENT_STRATEGY';
+    public const PLUGINS_OAUTH_USER_RESTRICTION = 'PLUGINS_OAUTH_USER_RESTRICTION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -32,6 +34,21 @@ class SecurityOauthUserDependencyProvider extends AbstractBundleDependencyProvid
 
         $container = $this->addUserFacade($container);
         $container = $this->addMessengerFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideBusinessLayerDependencies($container);
+
+        $container = $this->addOauthUserClientStrategyPlugins($container);
+        $container = $this->addOauthUserRestrictionPlugins($container);
 
         return $container;
     }
@@ -66,5 +83,49 @@ class SecurityOauthUserDependencyProvider extends AbstractBundleDependencyProvid
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOauthUserClientStrategyPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_OAUTH_USER_CLIENT_STRATEGY, function () {
+            return $this->getOauthUserClientStrategyPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\SecurityOauthUserExtension\Dependency\Plugin\OauthUserClientStrategyPluginInterface[]
+     */
+    protected function getOauthUserClientStrategyPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOauthUserRestrictionPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_OAUTH_USER_RESTRICTION, function () {
+            return $this->getOauthUserRestrictionPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\SecurityOauthUserExtension\Dependency\Plugin\OauthUserRestrictionPluginInterface[]
+     */
+    protected function getOauthUserRestrictionPlugins(): array
+    {
+        return [];
     }
 }

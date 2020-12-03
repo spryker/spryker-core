@@ -17,6 +17,7 @@ use Spryker\Zed\SecurityOauthUser\SecurityOauthUserConfig;
 /**
  * @method \Spryker\Zed\SecurityOauthUser\Communication\SecurityOauthUserCommunicationFactory getFactory()
  * @method \Spryker\Zed\SecurityOauthUser\SecurityOauthUserConfig getConfig()
+ * @method \Spryker\Zed\SecurityOauthUser\Business\SecurityOauthUserFacadeInterface getFacade()
  */
 class OauthUserSecurityPlugin extends AbstractPlugin implements SecurityPluginInterface
 {

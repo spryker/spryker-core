@@ -4,11 +4,21 @@
   "description": "SecurityOauthUser module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.3"
+    "php": ">=7.3",
+    "spryker/kernel": "^3.30.0",
+    "spryker/messenger": "^3.0.0",
+    "spryker/security-extension": "^1.0.0",
+    "spryker/security-oauth-user-extension": "^1.0.0",
+    "spryker/symfony": "^3.5.0",
+    "spryker/user": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/container": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/container": "Add this module to use the Container."
   },
   "autoload": {
     "psr-4": {
