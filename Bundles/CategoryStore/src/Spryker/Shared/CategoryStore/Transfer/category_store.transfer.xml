@@ -15,7 +15,7 @@
         <property name="withChildrenRecusivly" type="bool"/>
     </transfer>
 
-    <transfer name="node">
+    <transfer name="Node">
         <property name="idCategoryNode" type="int"/>
         <property name="fkCategory" type="int"/>
         <property name="fkParentCategoryNode" type="int"/>
@@ -29,7 +29,7 @@
     </transfer>
 
     <transfer name="NodeCollection">
-        <property name="nodes" type="node[]" singular="node"/>
+        <property name="nodes" type="Node[]" singular="node"/>
     </transfer>
 
 </transfers>
