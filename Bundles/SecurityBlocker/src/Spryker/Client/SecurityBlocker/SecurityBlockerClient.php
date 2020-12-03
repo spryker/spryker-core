@@ -31,4 +31,19 @@ class SecurityBlockerClient extends AbstractClient implements SecurityBlockerCli
             ->createSecurityBlockerStorageDelegator()
             ->logLoginAttempt($authContextTransfer);
     }
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AuthContextTransfer $authContextTransfer
+     *
+     * @return \Generated\Shared\Transfer\AuthResponseTransfer
+     */
+    public function getLoginAttempt(AuthContextTransfer $authContextTransfer): AuthResponseTransfer
+    {
+        return $this->getFactory()
+            ->createSecurityBlockerStorageDelegator()
+            ->getLoginAttempt($authContextTransfer);
+    }
 }

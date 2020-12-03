@@ -24,4 +24,11 @@ interface SecurityBlockerClientInterface
      * @return \Generated\Shared\Transfer\AuthResponseTransfer
      */
     public function incrementLoginAttempt(AuthContextTransfer $authContextTransfer): AuthResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\AuthContextTransfer $authContextTransfer
+     *
+     * @return \Generated\Shared\Transfer\AuthResponseTransfer
+     */
+    public function getLoginAttempt(AuthContextTransfer $authContextTransfer): AuthResponseTransfer;
 }

@@ -60,10 +60,12 @@ class SecurityBlockerRedisWrapper implements SecurityBlockerRedisWrapperInterfac
 
         $newValue = ++$existingValue;
 
+        // use `incr` for existing keys.
+        // ttl will reset each write now.
         if ($authContextTransfer->getTtl() === null) {
-            $result = $this->redisClient->set($redisConnectionKey, $key, $newValue);
+            $result = $this->redisClient->set($redisConnectionKey, $key, (string)$newValue);
         } else {
-            $result = $this->redisClient->setex($redisConnectionKey, $key, $authContextTransfer->getTtl(), $newValue);
+            $result = $this->redisClient->setex($redisConnectionKey, $key, $authContextTransfer->getTtl(), (string)$newValue);
         }
 
         if (!$result) {
@@ -73,8 +75,8 @@ class SecurityBlockerRedisWrapper implements SecurityBlockerRedisWrapperInterfac
         }
 
         return (new AuthResponseTransfer())->fromArray($authContextTransfer->toArray(), true)
-            ->setCount($newValue)
-            ->setIsSuccessful(true);
+            ->setCount((int)$newValue)
+            ->setIsSuccessful($newValue < 5);
     }
 
     /**
@@ -95,7 +97,7 @@ class SecurityBlockerRedisWrapper implements SecurityBlockerRedisWrapperInterfac
 
         return (new AuthResponseTransfer())->fromArray($authContextTransfer->toArray(), true)
             ->setCount($result)
-            ->setIsSuccessful(true);
+            ->setIsSuccessful($result < 5);
     }
 
     /**

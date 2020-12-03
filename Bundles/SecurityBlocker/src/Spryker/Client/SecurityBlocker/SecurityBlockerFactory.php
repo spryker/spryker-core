@@ -10,6 +10,7 @@ namespace Spryker\Client\SecurityBlocker;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\SecurityBlocker\Delegator\SecurityBlockerStorageDelegator;
 use Spryker\Client\SecurityBlocker\Delegator\SecurityBlockerStorageDelegatorInterface;
+use Spryker\Client\SecurityBlockerExtension\SecurityBlockerStorageAdapterPluginInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -20,14 +21,14 @@ class SecurityBlockerFactory extends AbstractFactory
      */
     public function createSecurityBlockerStorageDelegator(): SecurityBlockerStorageDelegatorInterface
     {
-        return new SecurityBlockerStorageDelegator();
+        return new SecurityBlockerStorageDelegator($this->getSecurityBlockerStorageAdapterPlugin());
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RequestStack
+     * @return \Spryker\Client\SecurityBlockerExtension\SecurityBlockerStorageAdapterPluginInterface
      */
-    public function getRequestStack(): RequestStack
+    public function getSecurityBlockerStorageAdapterPlugin(): SecurityBlockerStorageAdapterPluginInterface
     {
-        return $this->getProvidedDependency(SecurityBlockerDependencyProvider::SERVICE_REQUEST_STACK);
+        return $this->getProvidedDependency(SecurityBlockerDependencyProvider::PLUGIN_SECURITY_BLOCKER_STORAGE_ADAPTER);
     }
 }

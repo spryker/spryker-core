@@ -10,7 +10,7 @@ namespace Spryker\Client\SecurityBlockerRedis;
 use Generated\Shared\Transfer\RedisConfigurationTransfer;
 use Generated\Shared\Transfer\RedisCredentialsTransfer;
 use Spryker\Client\Kernel\AbstractBundleConfig;
-use Spryker\Shared\StorageRedis\StorageRedisConstants;
+use Spryker\Shared\SecurityBlockerRedis\SecurityBlockerRedisConstants;
 
 class SecurityBlockerRedisConfig extends AbstractBundleConfig
 {
@@ -54,7 +54,7 @@ class SecurityBlockerRedisConfig extends AbstractBundleConfig
      */
     protected function getDataSourceNames(): array
     {
-        return $this->get(StorageRedisConstants::STORAGE_REDIS_DATA_SOURCE_NAMES, []);
+        return $this->get(SecurityBlockerRedisConstants::SECURITY_BLOCKER_REDIS_DATA_SOURCE_NAMES, []);
     }
 
     /**
@@ -63,12 +63,12 @@ class SecurityBlockerRedisConfig extends AbstractBundleConfig
     protected function getConnectionCredentials(): RedisCredentialsTransfer
     {
         return (new RedisCredentialsTransfer())
-            ->setProtocol($this->get(StorageRedisConstants::STORAGE_REDIS_PROTOCOL))
-            ->setHost($this->get(StorageRedisConstants::STORAGE_REDIS_HOST))
-            ->setPort($this->get(StorageRedisConstants::STORAGE_REDIS_PORT))
-            ->setDatabase($this->get(StorageRedisConstants::STORAGE_REDIS_DATABASE, static::REDIS_DEFAULT_DATABASE))
-            ->setPassword($this->get(StorageRedisConstants::STORAGE_REDIS_PASSWORD, false))
-            ->setIsPersistent($this->get(StorageRedisConstants::STORAGE_REDIS_PERSISTENT_CONNECTION, false));
+            ->setProtocol($this->get(SecurityBlockerRedisConstants::SECURITY_BLOCKER_REDIS_PROTOCOL))
+            ->setHost($this->get(SecurityBlockerRedisConstants::SECURITY_BLOCKER_REDIS_HOST))
+            ->setPort($this->get(SecurityBlockerRedisConstants::SECURITY_BLOCKER_REDIS_PORT))
+            ->setDatabase($this->get(SecurityBlockerRedisConstants::SECURITY_BLOCKER_REDIS_DATABASE, static::REDIS_DEFAULT_DATABASE))
+            ->setPassword($this->get(SecurityBlockerRedisConstants::SECURITY_BLOCKER_REDIS_PASSWORD, false))
+            ->setIsPersistent($this->get(SecurityBlockerRedisConstants::SECURITY_BLOCKER_REDIS_PERSISTENT_CONNECTION, false));
     }
 
     /**
@@ -76,6 +76,6 @@ class SecurityBlockerRedisConfig extends AbstractBundleConfig
      */
     protected function getConnectionOptions(): array
     {
-        return $this->get(StorageRedisConstants::STORAGE_REDIS_CONNECTION_OPTIONS, []);
+        return $this->get(SecurityBlockerRedisConstants::SECURITY_BLOCKER_REDIS_CONNECTION_OPTIONS, []);
     }
 }

@@ -10,7 +10,7 @@
     </transfer>
 
     <transfer name="AuthResponse">
-        <property name="isSuccessful" type="string"/>
+        <property name="isSuccessful" type="bool"/>
         <property name="ip" type="string"/>
         <property name="account" type="string"/>
         <property name="count" type="int"/>

@@ -9,13 +9,19 @@ namespace Spryker\Client\SecurityBlocker\Delegator;
 
 use Generated\Shared\Transfer\AuthContextTransfer;
 use Generated\Shared\Transfer\AuthResponseTransfer;
+use Spryker\Client\SecurityBlockerExtension\SecurityBlockerStorageAdapterPluginInterface;
 
 class SecurityBlockerStorageDelegator implements SecurityBlockerStorageDelegatorInterface
 {
     /**
      * @var \Spryker\Client\SecurityBlockerExtension\SecurityBlockerStorageAdapterPluginInterface
      */
-    protected $securityBlockerAdapterPlugin;
+    protected $securityBlockerStorageAdapterPlugin;
+
+    public function __construct(SecurityBlockerStorageAdapterPluginInterface $securityBlockerStorageAdapterPlugin)
+    {
+        $this->securityBlockerStorageAdapterPlugin = $securityBlockerStorageAdapterPlugin;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\AuthContextTransfer $authContextTransfer
@@ -24,7 +30,7 @@ class SecurityBlockerStorageDelegator implements SecurityBlockerStorageDelegator
      */
     public function logLoginAttempt(AuthContextTransfer $authContextTransfer): AuthResponseTransfer
     {
-        return $this->securityBlockerAdapterPlugin->logLoginAttempt($authContextTransfer);
+        return $this->securityBlockerStorageAdapterPlugin->logLoginAttempt($authContextTransfer);
     }
 
     /**
@@ -34,6 +40,6 @@ class SecurityBlockerStorageDelegator implements SecurityBlockerStorageDelegator
      */
     public function getLoginAttempt(AuthContextTransfer $authContextTransfer): AuthResponseTransfer
     {
-        return $this->securityBlockerAdapterPlugin->getLoginAttempt($authContextTransfer);
+        return $this->securityBlockerStorageAdapterPlugin->getLoginAttempt($authContextTransfer);
     }
 }
