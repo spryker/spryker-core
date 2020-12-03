@@ -139,7 +139,7 @@ class GuiConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getUrlsForGlobalGeneratorPattern(): string
+    public function getRegexPatternForGlobalUrls(): string
     {
         return static::URLS_FOR_GLOBAL_URL_GENERATOR_PATTERN;
     }

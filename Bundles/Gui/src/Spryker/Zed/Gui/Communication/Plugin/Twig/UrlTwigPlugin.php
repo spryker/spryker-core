@@ -22,6 +22,10 @@ class UrlTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
     public const FUNCTION_NAME_URL = 'url';
 
+    protected const DEFAULT_ENCODING = 'UTF-8';
+
+    protected const URL_GENERATOR_SERVICE = 'url_generator';
+
     /**
      * {@inheritDoc}
      * - Extends twig with "url" function to parse and generate URLs based on URL parts.
@@ -48,12 +52,12 @@ class UrlTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     protected function getUrlFunction(ContainerInterface $container): TwigFunction
     {
         return new TwigFunction(static::FUNCTION_NAME_URL, function (string $url, array $query = [], array $options = []) use ($container) {
-            if ($this->isGlobalUrlGeneratorNeed($url)) {
+            if ($this->isUrlMatchingGlobalPattern($url)) {
                 /** @var \Symfony\Cmf\Component\Routing\ChainRouter $globalUrlGenerator */
-                $globalUrlGenerator = $container->get('url_generator');
+                $globalUrlGenerator = $container->get(static::URL_GENERATOR_SERVICE);
                 $url = $globalUrlGenerator->generate($url, $query);
 
-                $charset = mb_internal_encoding() ?: 'UTF-8';
+                $charset = mb_internal_encoding() ?: static::DEFAULT_ENCODING;
 
                 return htmlspecialchars($url, ENT_QUOTES | ENT_SUBSTITUTE, $charset);
             }
@@ -70,9 +74,9 @@ class UrlTwigPlugin extends AbstractPlugin implements TwigPluginInterface
      *
      * @return bool
      */
-    protected function isGlobalUrlGeneratorNeed(string $url): bool
+    protected function isUrlMatchingGlobalPattern(string $url): bool
     {
-        $regex = $this->getConfig()->getUrlsForGlobalGeneratorPattern();
+        $regex = $this->getConfig()->getRegexPatternForGlobalUrls();
 
         return preg_match($regex, $url);
     }
