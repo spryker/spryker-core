@@ -73,19 +73,11 @@ class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderIn
         foreach ($guiTableDataResponseTransfer->getRows() as $guiTableRowDataResponseTransfer) {
             $responseData = $guiTableRowDataResponseTransfer->getResponseData();
 
-            $guiTableDataResponsePayloadTransfer = $guiTableRowDataResponseTransfer->requirePayload()
-                ->getPayload();
+            /** @var \Generated\Shared\Transfer\GuiTableDataResponsePayloadTransfer $guiTableDataResponsePayloadTransfer */
+            $guiTableDataResponsePayloadTransfer = $guiTableRowDataResponseTransfer->requirePayload()->getPayload();
 
-            if (!$guiTableDataResponsePayloadTransfer) {
-                continue;
-            }
-
+            /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
             $itemTransfer = $guiTableDataResponsePayloadTransfer->requireItem()->getItem();
-
-            if (!$itemTransfer) {
-                continue;
-            }
-
             $productOfferReference = $itemTransfer->getProductOfferReference();
 
             if (!$productOfferReference) {

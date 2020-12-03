@@ -28,10 +28,8 @@ abstract class AbstractController extends SprykerAbstractController
         }
 
         $currentMerchantUserTransfer = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser();
-        $merchantTransfer = $currentMerchantUserTransfer->getMerchant();
-        if (!$merchantTransfer) {
-            return null;
-        }
+        /** @var \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer */
+        $merchantTransfer = $currentMerchantUserTransfer->requireMerchant()->getMerchant();
 
         if ($merchantTransfer->getMerchantReference() !== $merchantOrderTransfer->getMerchantReference()) {
             return null;

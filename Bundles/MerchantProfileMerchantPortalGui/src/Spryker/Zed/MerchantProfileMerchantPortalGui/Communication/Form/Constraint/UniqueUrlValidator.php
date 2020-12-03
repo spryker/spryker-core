@@ -32,17 +32,13 @@ class UniqueUrlValidator extends AbstractConstraintValidator
      */
     public function validate($value, Constraint $constraint): void
     {
-        if (!$value->getUrl()) {
+        $url = $value->getUrl();
+        if (!$url) {
             return;
         }
 
         if (!$constraint instanceof UniqueUrl) {
             throw new UnexpectedTypeException($constraint, UniqueUrl::class);
-        }
-
-        $url = $value->getUrl();
-        if (!$url) {
-            return;
         }
 
         if (!$this->isUrlChanged($value, $constraint)) {

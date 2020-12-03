@@ -40,21 +40,15 @@ class UpdateProductOfferController extends AbstractProductOfferController
             throw new NotFoundHttpException(sprintf('Product offer is not found for id %d.', $idProductOffer));
         }
 
-        $idProductConcrete = $productOfferTransfer->getIdProductConcrete();
-        if (!$idProductConcrete) {
-            throw new NotFoundHttpException(sprintf('Product is not found for product offer id %d.', $idProductOffer));
-        }
-
+        /** @var int $idProductConcrete */
+        $idProductConcrete = $productOfferTransfer->requireIdProductConcrete()->getIdProductConcrete();
         $productConcreteTransfer = $this->getFactory()->getProductFacade()->findProductConcreteById($idProductConcrete);
         if (!$productConcreteTransfer) {
             throw new NotFoundHttpException(sprintf('Product is not found for id %d.', $idProductConcrete));
         }
 
-        $idProductAbstract = $productConcreteTransfer->getFkProductAbstract();
-        if (!$idProductAbstract) {
-            throw new NotFoundHttpException(sprintf('Product Abstract is not found for product id %d.', $idProductConcrete));
-        }
-
+        /** @var int $idProductAbstract */
+        $idProductAbstract = $productConcreteTransfer->requireFkProductAbstract()->getFkProductAbstract();
         $productAbstractTransfer = $this->getFactory()->getProductFacade()->findProductAbstractById($idProductAbstract);
         if (!$productAbstractTransfer) {
             throw new NotFoundHttpException(sprintf('Product Abstract is not found for abstract id %d.', $idProductAbstract));

@@ -28,16 +28,12 @@ class ProfileController extends AbstractController
      */
     public function indexAction(Request $request): array
     {
+        /** @var int $idMerchant */
         $idMerchant = $this->getFactory()
             ->getMerchantUserFacade()
             ->getCurrentMerchantUser()
+            ->requireIdMerchant()
             ->getIdMerchant();
-
-        if (!$idMerchant) {
-            $this->addErrorMessage(static::MESSAGE_MERCHANT_NOT_FOUND);
-
-            return $this->viewResponse([]);
-        }
 
         $merchantProfileFormDataProvider = $this->getFactory()->createMerchantProfileFormDataProvider();
         $merchantTransfer = $merchantProfileFormDataProvider->findMerchantById($idMerchant);
@@ -77,7 +73,6 @@ class ProfileController extends AbstractController
 
         foreach ($merchantResponseTransfer->getErrors() as $merchantErrorTransfer) {
             $errorMessage = $merchantErrorTransfer->getMessage();
-
             if (!$errorMessage) {
                 continue;
             }

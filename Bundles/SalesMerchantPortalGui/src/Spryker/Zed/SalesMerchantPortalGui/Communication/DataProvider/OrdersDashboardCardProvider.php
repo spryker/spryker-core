@@ -69,12 +69,8 @@ class OrdersDashboardCardProvider implements OrdersDashboardCardProviderInterfac
      */
     public function getDashboardCard(): MerchantDashboardCardTransfer
     {
+        /** @var int $idMerchant */
         $idMerchant = $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant();
-
-        if (!$idMerchant) {
-            return new MerchantDashboardCardTransfer();
-        }
-
         $merchantOrderCountsTransfer = $this->salesMerchantPortalGuiRepository->getMerchantOrderCounts($idMerchant);
 
         $title = $this->twigEnvironment->render(

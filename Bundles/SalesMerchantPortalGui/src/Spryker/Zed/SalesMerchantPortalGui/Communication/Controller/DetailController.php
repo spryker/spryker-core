@@ -178,10 +178,8 @@ class DetailController extends AbstractController
     {
         $merchantOrderItemTransfers = [];
         foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
+            /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
             $itemTransfer = $merchantOrderItemTransfer->requireOrderItem()->getOrderItem();
-            if (!$itemTransfer) {
-                continue;
-            }
 
             $shipmentTransfer = $itemTransfer->getShipment();
             $idSalesShipment = $shipmentTransfer ? $shipmentTransfer->getIdSalesShipment() : null;

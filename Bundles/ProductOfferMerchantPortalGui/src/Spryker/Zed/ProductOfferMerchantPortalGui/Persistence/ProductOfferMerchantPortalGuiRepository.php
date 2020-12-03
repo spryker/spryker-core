@@ -99,24 +99,15 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
     protected function buildProductTableBaseQuery(ProductTableCriteriaTransfer $productTableCriteriaTransfer): SpyProductQuery
     {
         $productConcreteQuery = $this->getFactory()->getProductConcretePropelQuery();
+
+        /** @var \Generated\Shared\Transfer\LocaleTransfer $localeTransfer */
         $localeTransfer = $productTableCriteriaTransfer->requireLocale()->getLocale();
+        /** @var int $idLocale */
+        $idLocale = $localeTransfer->requireIdLocale()->getIdLocale();
+        /** @var int $idMerchant */
         $idMerchant = $productTableCriteriaTransfer->requireIdMerchant()->getIdMerchant();
-        $externalUrlSmall = '';
-        $numberOfOffers = '';
 
-        if ($localeTransfer) {
-            $idLocale = $localeTransfer->requireIdLocale()->getIdLocale();
-
-            if ($idLocale) {
-                $productConcreteQuery = $this->addLocalizedAttributesToProductTableQuery($productConcreteQuery, $idLocale);
-                $externalUrlSmall = sprintf('(%s)', $this->createProductImagesSubquery($idLocale));
-            }
-        }
-
-        if ($idMerchant) {
-            $numberOfOffers = sprintf('(%s)', $this->createProductOffersCountSubquery($idMerchant));
-        }
-
+        $productConcreteQuery = $this->addLocalizedAttributesToProductTableQuery($productConcreteQuery, $idLocale);
         $productConcreteQuery->leftJoinSpyProductValidity()
             ->addAsColumn(ProductConcreteTransfer::ID_PRODUCT_CONCRETE, SpyProductTableMap::COL_ID_PRODUCT)
             ->addAsColumn(ProductConcreteTransfer::SKU, SpyProductTableMap::COL_SKU)
@@ -125,8 +116,8 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             ->addAsColumn(ProductConcreteTransfer::IS_ACTIVE, SpyProductTableMap::COL_IS_ACTIVE)
             ->addAsColumn(LocalizedAttributesTransfer::NAME, SpyProductLocalizedAttributesTableMap::COL_NAME)
             ->addAsColumn(ProductConcreteTransfer::STORES, sprintf('(%s)', $this->createProductStoresSubquery()))
-            ->addAsColumn(ProductImageTransfer::EXTERNAL_URL_SMALL, $externalUrlSmall)
-            ->addAsColumn(ProductConcreteTransfer::NUMBER_OF_OFFERS, $numberOfOffers)
+            ->addAsColumn(ProductImageTransfer::EXTERNAL_URL_SMALL, sprintf('(%s)', $this->createProductImagesSubquery($idLocale)))
+            ->addAsColumn(ProductConcreteTransfer::NUMBER_OF_OFFERS, sprintf('(%s)', $this->createProductOffersCountSubquery($idMerchant)))
             ->addAsColumn(ProductConcreteTransfer::VALID_FROM, SpyProductValidityTableMap::COL_VALID_FROM)
             ->addAsColumn(ProductConcreteTransfer::VALID_TO, SpyProductValidityTableMap::COL_VALID_TO)
             ->where(sprintf('(%s) IS NOT NULL', $this->createProductStoresSubquery()))
@@ -374,10 +365,8 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             return $productConcreteQuery;
         }
 
+        /** @var int $merchantUserId */
         $merchantUserId = $productTableCriteriaTransfer->requireIdMerchant()->getIdMerchant();
-        if (!$merchantUserId) {
-            return $productConcreteQuery;
-        }
 
         $productConcreteQuery->where(
             sprintf(
@@ -436,24 +425,16 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
     ): SpyProductOfferQuery {
         $productOfferQuery = $this->getFactory()->getProductOfferPropelQuery();
+        /** @var int $idMerchant */
         $idMerchant = $productOfferTableCriteriaTransfer->requireIdMerchant()->getIdMerchant();
-        $locale = $productOfferTableCriteriaTransfer->requireLocale()->getLocale();
-        $externalSmallUrl = '';
+        /** @var \Generated\Shared\Transfer\LocaleTransfer $localeTransfer */
+        $localeTransfer = $productOfferTableCriteriaTransfer->requireLocale()->getLocale();
+        /** @var int $idLocale */
+        $idLocale = $localeTransfer->requireIdLocale()->getIdLocale();
 
-        if ($locale) {
-            $idLocale = $locale->requireIdLocale()->getIdLocale();
-
-            if ($idLocale) {
-                $productOfferQuery = $this->joinProductLocalizedAttributesToProductOfferQuery($productOfferQuery, $idLocale);
-                $externalSmallUrl = sprintf('(%s)', $this->createProductImagesSubquery($idLocale));
-            }
-        }
-
-        if ($idMerchant) {
-            $productOfferQuery->filterByFkMerchant($idMerchant);
-        }
-
-        $productOfferQuery->leftJoinSpyProductOfferValidity()
+        $productOfferQuery = $this->joinProductLocalizedAttributesToProductOfferQuery($productOfferQuery, $idLocale);
+        $productOfferQuery->filterByFkMerchant($idMerchant)
+            ->leftJoinSpyProductOfferValidity()
             ->leftJoinProductOfferStock()
             ->useProductOfferStockQuery(null, Criteria::LEFT_JOIN)
                 ->useStockQuery()
@@ -466,7 +447,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             ->addAsColumn(ProductOfferTransfer::PRODUCT_OFFER_REFERENCE, SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE)
             ->addAsColumn(ProductOfferTransfer::MERCHANT_SKU, SpyProductOfferTableMap::COL_MERCHANT_SKU)
             ->addAsColumn(ProductOfferTransfer::CONCRETE_SKU, SpyProductOfferTableMap::COL_CONCRETE_SKU)
-            ->addAsColumn(ProductImageTransfer::EXTERNAL_URL_SMALL, $externalSmallUrl)
+            ->addAsColumn(ProductImageTransfer::EXTERNAL_URL_SMALL, sprintf('(%s)', $this->createProductImagesSubquery($idLocale)))
             ->addAsColumn(ProductOfferTransfer::STORES, sprintf('(%s)', $this->createProductOfferStoresSubquery()))
             ->addAsColumn(ProductOfferStockTransfer::QUANTITY, SpyProductOfferStockTableMap::COL_QUANTITY)
             ->addAsColumn(ProductOfferTransfer::IS_ACTIVE, SpyProductOfferTableMap::COL_IS_ACTIVE)

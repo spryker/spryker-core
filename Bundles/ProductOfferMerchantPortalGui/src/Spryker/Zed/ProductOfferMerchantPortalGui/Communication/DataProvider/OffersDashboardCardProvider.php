@@ -69,10 +69,11 @@ class OffersDashboardCardProvider implements OffersDashboardCardProviderInterfac
      */
     public function getDashboardCard(): MerchantDashboardCardTransfer
     {
-        $idMerchant = $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant();
-        if (!$idMerchant) {
-            return new MerchantDashboardCardTransfer();
-        }
+        /** @var int $idMerchant */
+        $idMerchant = $this->merchantUserFacade
+            ->getCurrentMerchantUser()
+            ->requireIdMerchant()
+            ->getIdMerchant();
 
         $merchantProductOfferCountsTransfer = $this->productOfferMerchantPortalGuiRepository
             ->getOffersDashboardCardCounts($idMerchant);
