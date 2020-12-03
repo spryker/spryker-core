@@ -31,11 +31,11 @@ class ProductPageMapPlugin extends AbstractPlugin implements NamedPageMapInterfa
      *
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param array $data
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $data, LocaleTransfer $locale)
+    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $data, LocaleTransfer $localeTransfer)
     {
         $pageMapTransfer = (new PageMapTransfer())
             ->setStore($data['store'])
@@ -59,7 +59,7 @@ class ProductPageMapPlugin extends AbstractPlugin implements NamedPageMapInterfa
             ->addCompletionTerms($pageMapTransfer, $data['name'])
             ->addStringSort($pageMapTransfer, 'name', $data['name']);
 
-        $this->expandProductPageMap($pageMapTransfer, $pageMapBuilder, $data, $locale);
+        $this->expandProductPageMap($pageMapTransfer, $pageMapBuilder, $data, $localeTransfer);
 
         $pageMapTransfer = $this
             ->getFactory()->getProductSearchFacade()

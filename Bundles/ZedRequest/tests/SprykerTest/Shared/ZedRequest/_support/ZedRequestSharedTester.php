@@ -8,6 +8,10 @@
 namespace SprykerTest\Shared\ZedRequest;
 
 use Codeception\Actor;
+use Spryker\Shared\ZedRequest\Dependency\Service\ZedRequestToUtilEncodingServiceBridge;
+use Spryker\Shared\ZedRequest\Dependency\Service\ZedRequestToUtilEncodingServiceInterface;
+use Spryker\Shared\ZedRequest\Logger\ZedRequestInMemoryLogger;
+use Spryker\Shared\ZedRequest\Logger\ZedRequestLoggerInterface;
 
 /**
  * @method void wantToTest($text)
@@ -26,4 +30,24 @@ use Codeception\Actor;
 class ZedRequestSharedTester extends Actor
 {
     use _generated\ZedRequestSharedTesterActions;
+
+    /**
+     * @return \Spryker\Shared\ZedRequest\Logger\ZedRequestLoggerInterface
+     */
+    public function createZedRequestInMemoryLogger(): ZedRequestLoggerInterface
+    {
+        return new ZedRequestInMemoryLogger(
+            $this->getUtilEncodingService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\ZedRequest\Dependency\Service\ZedRequestToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): ZedRequestToUtilEncodingServiceInterface
+    {
+        return new ZedRequestToUtilEncodingServiceBridge(
+            $this->getLocator()->utilEncoding()->service()
+        );
+    }
 }
