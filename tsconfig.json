@@ -23,11 +23,6 @@
             ]
         }
     },
-    "include": [
-        "Bundles/ZedUi/src/Spryker/Zed/ZedUi/Presentation/Components/main.ts",
-        "Bundles/ZedUi/src/Spryker/Zed/ZedUi/Presentation/Components/polyfills.ts",
-        "Bundles/*/src/Spryker/Zed/*/Presentation/Components/index.ts"
-    ],
     "exclude": [
         "**/node_modules/**",
         "**/*.spec.ts",
