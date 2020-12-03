@@ -24,14 +24,14 @@ class CmsBlockGlossaryKeyMappingBlockStorageUnpublishListener extends AbstractPl
      *
      * @api
      *
-     * @param array $eventTransfers
+     * @param array $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName): void
+    public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        $cmsBlockIds = $this->findCmsBlockIds($eventTransfers);
+        $cmsBlockIds = $this->findCmsBlockIds($eventEntityTransfers);
 
         $this->getFacade()->unpublish($cmsBlockIds);
     }

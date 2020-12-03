@@ -17,17 +17,17 @@ class ProductConcretePageSearchProductListener extends AbstractProductConcretePa
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName): void
+    public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
         $this->preventTransaction();
         $productConcreteIds = $this->getFactory()
             ->getEventBehaviorFacade()
-            ->getEventTransferIds($eventTransfers);
+            ->getEventTransferIds($eventEntityTransfers);
 
         if ($eventName === ProductEvents::ENTITY_SPY_PRODUCT_DELETE || $eventName === ProductEvents::PRODUCT_CONCRETE_UNPUBLISH) {
             $this->unpublish($productConcreteIds);

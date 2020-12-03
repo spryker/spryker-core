@@ -69,6 +69,7 @@ class MerchantUserRepository extends AbstractRepository implements MerchantUserR
     public function getMerchantUsers(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): array
     {
         $merchantUserQuery = $this->getFactory()->createMerchantUserPropelQuery();
+        $merchantUserQuery->joinWithSpyMerchant();
         $merchantUserQuery = $this->applyCriteria($merchantUserQuery, $merchantUserCriteriaTransfer);
 
         $merchantUserEntities = $merchantUserQuery->joinWithSpyMerchant()->find();
@@ -98,6 +99,12 @@ class MerchantUserRepository extends AbstractRepository implements MerchantUserR
 
         if ($merchantUserCriteriaTransfer->getIdMerchantUser() !== null) {
             $merchantUserQuery->filterByIdMerchantUser($merchantUserCriteriaTransfer->getIdMerchantUser());
+        }
+
+        if ($merchantUserCriteriaTransfer->getUsername()) {
+            $merchantUserQuery->useSpyUserQuery()
+                    ->filterByUsername($merchantUserCriteriaTransfer->getUsername())
+                ->endUse();
         }
 
         $merchantUserQuery->orderByIdMerchantUser();

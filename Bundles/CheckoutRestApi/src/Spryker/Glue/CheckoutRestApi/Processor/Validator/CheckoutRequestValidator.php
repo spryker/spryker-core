@@ -22,20 +22,50 @@ class CheckoutRequestValidator implements CheckoutRequestValidatorInterface
     protected $checkoutRequestAttributesValidatorPlugins;
 
     /**
+     * @var \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestValidatorPluginInterface[]
+     */
+    protected $checkoutRequestValidatorPlugins;
+
+    /**
      * @var \Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig
      */
     protected $config;
 
     /**
      * @param \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestAttributesValidatorPluginInterface[] $checkoutRequestAttributesValidatorPlugins
+     * @param \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestValidatorPluginInterface[] $checkoutRequestValidatorPlugins
      * @param \Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig $config
      */
     public function __construct(
         array $checkoutRequestAttributesValidatorPlugins,
+        array $checkoutRequestValidatorPlugins,
         CheckoutRestApiConfig $config
     ) {
         $this->checkoutRequestAttributesValidatorPlugins = $checkoutRequestAttributesValidatorPlugins;
+        $this->checkoutRequestValidatorPlugins = $checkoutRequestValidatorPlugins;
         $this->config = $config;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer
+     */
+    public function validateCheckoutDataRequest(
+        RestRequestInterface $restRequest,
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+    ): RestErrorCollectionTransfer {
+        $restErrorCollectionTransfer = $this->validateCustomer($restRequest, new RestErrorCollectionTransfer());
+        $restErrorCollectionTransfer = $this->validatePayments(
+            $restCheckoutRequestAttributesTransfer,
+            $restErrorCollectionTransfer
+        );
+
+        return $this->executeCheckoutRequestAttributesValidatorPlugins(
+            $restCheckoutRequestAttributesTransfer,
+            $restErrorCollectionTransfer
+        );
     }
 
     /**
@@ -48,18 +78,22 @@ class CheckoutRequestValidator implements CheckoutRequestValidatorInterface
         RestRequestInterface $restRequest,
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestErrorCollectionTransfer {
-        $restErrorCollectionTransfer = new RestErrorCollectionTransfer();
-        $restErrorCollectionTransfer = $this->validateCustomer($restRequest, $restErrorCollectionTransfer);
-        $restErrorCollectionTransfer = $this->validatePayments($restCheckoutRequestAttributesTransfer, $restErrorCollectionTransfer);
+        $restErrorCollectionTransfer = $this->validateCustomer($restRequest, new RestErrorCollectionTransfer());
+        $restErrorCollectionTransfer = $this->validatePayments(
+            $restCheckoutRequestAttributesTransfer,
+            $restErrorCollectionTransfer
+        );
 
-        foreach ($this->checkoutRequestAttributesValidatorPlugins as $checkoutRequestAttributesValidatorPlugin) {
-            $pluginErrorCollectionTransfer = $checkoutRequestAttributesValidatorPlugin->validateAttributes($restCheckoutRequestAttributesTransfer);
-            foreach ($pluginErrorCollectionTransfer->getRestErrors() as $restError) {
-                $restErrorCollectionTransfer->addRestError($restError);
-            }
-        }
+        // For BC reasons
+        $restErrorCollectionTransfer = $this->executeCheckoutRequestAttributesValidatorPlugins(
+            $restCheckoutRequestAttributesTransfer,
+            $restErrorCollectionTransfer
+        );
 
-        return $restErrorCollectionTransfer;
+        return $this->executeCheckoutRequestValidatorPlugins(
+            $restCheckoutRequestAttributesTransfer,
+            $restErrorCollectionTransfer
+        );
     }
 
     /**
@@ -111,6 +145,71 @@ class CheckoutRequestValidator implements CheckoutRequestValidatorInterface
 
                 $restErrorCollectionTransfer->addRestError($resErrorMessageTransfer);
             }
+        }
+
+        return $restErrorCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestErrorCollectionTransfer $restErrorCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer
+     */
+    protected function executeCheckoutRequestAttributesValidatorPlugins(
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
+        RestErrorCollectionTransfer $restErrorCollectionTransfer
+    ): RestErrorCollectionTransfer {
+        foreach ($this->checkoutRequestAttributesValidatorPlugins as $checkoutRequestAttributesValidatorPlugin) {
+            $pluginErrorCollectionTransfer = $checkoutRequestAttributesValidatorPlugin->validateAttributes(
+                $restCheckoutRequestAttributesTransfer
+            );
+
+            $restErrorCollectionTransfer = $this->copyPluginErrorCollection(
+                $pluginErrorCollectionTransfer,
+                $restErrorCollectionTransfer
+            );
+        }
+
+        return $restErrorCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestErrorCollectionTransfer $restErrorCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer
+     */
+    protected function executeCheckoutRequestValidatorPlugins(
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
+        RestErrorCollectionTransfer $restErrorCollectionTransfer
+    ): RestErrorCollectionTransfer {
+        foreach ($this->checkoutRequestValidatorPlugins as $checkoutRequestValidatorPlugin) {
+            $pluginErrorCollectionTransfer = $checkoutRequestValidatorPlugin->validateAttributes(
+                $restCheckoutRequestAttributesTransfer
+            );
+
+            $restErrorCollectionTransfer = $this->copyPluginErrorCollection(
+                $pluginErrorCollectionTransfer,
+                $restErrorCollectionTransfer
+            );
+        }
+
+        return $restErrorCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestErrorCollectionTransfer $pluginErrorCollectionTransfer
+     * @param \Generated\Shared\Transfer\RestErrorCollectionTransfer $restErrorCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer
+     */
+    protected function copyPluginErrorCollection(
+        RestErrorCollectionTransfer $pluginErrorCollectionTransfer,
+        RestErrorCollectionTransfer $restErrorCollectionTransfer
+    ): RestErrorCollectionTransfer {
+        foreach ($pluginErrorCollectionTransfer->getRestErrors() as $restError) {
+            $restErrorCollectionTransfer->addRestError($restError);
         }
 
         return $restErrorCollectionTransfer;

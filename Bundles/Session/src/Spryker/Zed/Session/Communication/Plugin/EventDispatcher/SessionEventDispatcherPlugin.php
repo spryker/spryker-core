@@ -116,9 +116,8 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
                 return;
             }
 
-            $request = $event->getRequest();
-            $session = $request->hasPreviousSession() ? $request->getSession() : null;
-            if ($session && $session->isStarted()) {
+            $session = $event->getRequest()->getSession();
+            if ($session->isStarted()) {
                 $session->save();
 
                 $event->getResponse()->headers->setCookie($this->createSessionCookie($session->getName(), $session->getId(), session_get_cookie_params()));

@@ -14,16 +14,26 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartItemReplaceTransfer;
 use Generated\Shared\Transfer\FlashMessagesTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceTypeQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Spryker\Service\PriceProduct\PriceProductDependencyProvider as ServicePriceProductDependencyProvider;
+use Spryker\Service\PriceProductVolume\Plugin\PriceProductExtension\PriceProductVolumeFilterPlugin;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
+use Spryker\Shared\PriceProductVolume\PriceProductVolumeConfig;
+use Spryker\Zed\Calculation\CalculationDependencyProvider;
+use Spryker\Zed\Calculation\Communication\Plugin\Calculator\PriceCalculatorPlugin;
 use Spryker\Zed\Cart\CartDependencyProvider;
 use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface;
+use Spryker\Zed\PriceCartConnector\Communication\Plugin\CartItemPricePlugin;
+use Spryker\Zed\PriceProduct\PriceProductDependencyProvider;
+use Spryker\Zed\PriceProductVolume\Communication\Plugin\PriceProductExtension\PriceProductVolumeExtractorPlugin;
 
 /**
  * Auto-generated group annotations
@@ -241,6 +251,138 @@ class CartFacadeTest extends Unit
         // Assert
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
         $this->assertCount(1, $quoteResponseTransfer->getQuoteTransfer()->getItems());
+    }
+
+    /**
+     * @return void
+     */
+    public function testIncreaseItemWithVolumePricesQuantityInCartWillReturnCorrectData(): void
+    {
+        // Arrange
+        $this->tester->setDependency(CartDependencyProvider::CART_EXPANDER_PLUGINS, [
+            new CartItemPricePlugin(),
+        ]);
+        $this->tester->setDependency(PriceProductDependencyProvider::PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR, [
+            new PriceProductVolumeExtractorPlugin(),
+        ]);
+        $this->tester->setDependency(ServicePriceProductDependencyProvider::PLUGIN_PRICE_PRODUCT_DECISION, [
+            new PriceProductVolumeFilterPlugin(),
+        ]);
+        $this->tester->setDependency(CalculationDependencyProvider::QUOTE_CALCULATOR_PLUGIN_STACK, [
+            new PriceCalculatorPlugin(),
+        ]);
+
+        $productConcreteTransfer = $this->tester->haveFullProduct();
+        $this->tester->havePriceProduct([
+            PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
+            PriceProductTransfer::MONEY_VALUE => [
+                MoneyValueTransfer::NET_AMOUNT => 888,
+                MoneyValueTransfer::GROSS_AMOUNT => 999,
+                MoneyValueTransfer::PRICE_DATA => json_encode([
+                    PriceProductVolumeConfig::VOLUME_PRICE_TYPE => [
+                        [
+                            PriceProductVolumeConfig::VOLUME_PRICE_QUANTITY => 5,
+                            PriceProductVolumeConfig::VOLUME_PRICE_NET_PRICE => 666,
+                            PriceProductVolumeConfig::VOLUME_PRICE_GROSS_PRICE => 777,
+                        ],
+                    ],
+                ]),
+            ],
+        ]);
+
+        $quoteTransfer = new QuoteTransfer();
+        $cartItem = new ItemTransfer();
+        $cartItem->setSku($productConcreteTransfer->getSku());
+        $cartItem->setQuantity(1);
+        $cartChangeTransfer = new CartChangeTransfer();
+        $cartChangeTransfer->setQuote($quoteTransfer);
+        $cartChangeTransfer->addItem($cartItem);
+
+        $newCartItem = new ItemTransfer();
+        $newCartItem->setSku($productConcreteTransfer->getSku());
+        $newCartItem->setQuantity(4);
+        $newCartChangeTransfer = new CartChangeTransfer();
+        $newCartChangeTransfer->addItem($newCartItem);
+
+        //Act
+        $quoteTransfer = $this->getCartFacade()->add($cartChangeTransfer);
+        $initialGrossPrice = $quoteTransfer->getItems()->offsetGet(0)->getUnitGrossPrice();
+
+        $newCartChangeTransfer->setQuote($quoteTransfer);
+        $quoteResponseTransfer = $this->getCartFacade()->addToCart($newCartChangeTransfer);
+
+        //Arrange
+        $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
+        $this->assertEquals(999, $initialGrossPrice);
+        $itemTransfer = $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(0);
+        $this->assertEquals(5, $itemTransfer->getQuantity());
+        $this->assertEquals(777, $itemTransfer->getUnitGrossPrice());
+    }
+
+    /**
+     * @return void
+     */
+    public function testDecreaseItemWithVolumePricesQuantityInCartWillReturnCorrectData(): void
+    {
+        // Arrange
+        $this->tester->setDependency(CartDependencyProvider::CART_EXPANDER_PLUGINS, [
+            new CartItemPricePlugin(),
+        ]);
+        $this->tester->setDependency(PriceProductDependencyProvider::PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR, [
+            new PriceProductVolumeExtractorPlugin(),
+        ]);
+        $this->tester->setDependency(ServicePriceProductDependencyProvider::PLUGIN_PRICE_PRODUCT_DECISION, [
+            new PriceProductVolumeFilterPlugin(),
+        ]);
+        $this->tester->setDependency(CalculationDependencyProvider::QUOTE_CALCULATOR_PLUGIN_STACK, [
+            new PriceCalculatorPlugin(),
+        ]);
+
+        $productConcreteTransfer = $this->tester->haveFullProduct();
+        $this->tester->havePriceProduct([
+            PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
+            PriceProductTransfer::MONEY_VALUE => [
+                MoneyValueTransfer::NET_AMOUNT => 888,
+                MoneyValueTransfer::GROSS_AMOUNT => 999,
+                MoneyValueTransfer::PRICE_DATA => json_encode([
+                    PriceProductVolumeConfig::VOLUME_PRICE_TYPE => [
+                        [
+                            PriceProductVolumeConfig::VOLUME_PRICE_QUANTITY => 5,
+                            PriceProductVolumeConfig::VOLUME_PRICE_NET_PRICE => 666,
+                            PriceProductVolumeConfig::VOLUME_PRICE_GROSS_PRICE => 777,
+                        ],
+                    ],
+                ]),
+            ],
+        ]);
+
+        $quoteTransfer = new QuoteTransfer();
+        $cartItem = new ItemTransfer();
+        $cartItem->setSku($productConcreteTransfer->getSku());
+        $cartItem->setQuantity(5);
+        $cartChangeTransfer = new CartChangeTransfer();
+        $cartChangeTransfer->setQuote($quoteTransfer);
+        $cartChangeTransfer->addItem($cartItem);
+
+        $newCartItem = new ItemTransfer();
+        $newCartItem->setSku($productConcreteTransfer->getSku());
+        $newCartItem->setQuantity(4);
+        $newCartChangeTransfer = new CartChangeTransfer();
+        $newCartChangeTransfer->addItem($newCartItem);
+
+        //Act
+        $quoteTransfer = $this->getCartFacade()->add($cartChangeTransfer);
+        $initialGrossPrice = $quoteTransfer->getItems()->offsetGet(0)->getUnitGrossPrice();
+
+        $newCartChangeTransfer->setQuote($quoteTransfer);
+        $quoteResponseTransfer = $this->getCartFacade()->removeFromCart($newCartChangeTransfer);
+
+        //Arrange
+        $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
+        $this->assertEquals(777, $initialGrossPrice);
+        $itemTransfer = $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(0);
+        $this->assertEquals(1, $itemTransfer->getQuantity());
+        $this->assertEquals(999, $itemTransfer->getUnitGrossPrice());
     }
 
     /**

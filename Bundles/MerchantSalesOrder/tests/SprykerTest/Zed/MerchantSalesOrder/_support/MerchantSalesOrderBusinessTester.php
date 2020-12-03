@@ -38,7 +38,7 @@ class MerchantSalesOrderBusinessTester extends Actor
     /**
      * @param array $seedData
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractStorageTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     public function getItemTransfer(array $seedData = []): ItemTransfer
     {

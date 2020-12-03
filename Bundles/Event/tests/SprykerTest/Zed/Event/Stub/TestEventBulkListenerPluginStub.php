@@ -18,14 +18,14 @@ class TestEventBulkListenerPluginStub implements EventBulkHandlerInterface
     protected static $exceptionThrownCount = 0;
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @throws \Exception
      *
      * @return void
      */
-    public function handleBulk(array $transfers, $eventName): void
+    public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
         if (static::$exceptionThrownCount < 2) {
             static::$exceptionThrownCount++;

@@ -62,6 +62,8 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
             $restOrderDetailsAttributesTransfer
         );
 
+        $restResource->setPayload($orderTransfer);
+
         return $restResource;
     }
 

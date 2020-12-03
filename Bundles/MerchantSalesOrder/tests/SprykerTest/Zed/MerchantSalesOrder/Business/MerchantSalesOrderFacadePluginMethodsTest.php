@@ -65,7 +65,7 @@ class MerchantSalesOrderFacadePluginMethodsTest extends Unit
     public function testExpandOrderItemWithMerchantDoesNothingWithIncorrectData(): void
     {
         // Arrange
-        $itemTransfer = $this->tester->getItemTransfer();
+        $itemTransfer = $this->tester->getItemTransfer([ItemTransfer::MERCHANT_REFERENCE => null]);
         $salesOrderItemEntityTransfer = new SpySalesOrderItemEntityTransfer();
 
         // Act
