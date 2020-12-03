@@ -17,6 +17,7 @@ use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Silex\Application;
 use Spryker\Service\Container\Container;
 use Spryker\Zed\Category\Business\CategoryFacade;
+use Spryker\Zed\Category\CategoryConfig;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Propel\Communication\Plugin\Application\PropelApplicationPlugin;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
@@ -132,9 +133,16 @@ class CategoryHelper extends Module
      */
     public function createCategory(string $categoryKey): CategoryTransfer
     {
-        $categoryTransfer = new CategoryTransfer();
-        $categoryTransfer->setCategoryKey($categoryKey);
-        $categoryTransfer->setIsActive(false);
+        $categoryFacade = new CategoryFacade();
+
+        $categoryTemplateTransfer = $categoryFacade
+            ->findCategoryTemplateByName(CategoryConfig::CATEGORY_TEMPLATE_DEFAULT);
+
+        $categoryTransfer = (new CategoryTransfer())
+            ->setCategoryKey($categoryKey)
+            ->setFkCategoryTemplate($categoryTemplateTransfer->getIdCategoryTemplate())
+            ->setIsActive(false);
+
         $this->addLocalizedAttributesToCategoryTransfer($categoryTransfer);
 
         $categoryNodeTransfer = new NodeTransfer();
@@ -146,7 +154,6 @@ class CategoryHelper extends Module
         $parentCategoryNodeTransfer->setIdCategoryNode(1);
         $categoryTransfer->setParentCategoryNode($parentCategoryNodeTransfer);
 
-        $categoryFacade = new CategoryFacade();
         $categoryFacade->create($categoryTransfer);
 
         return $categoryTransfer;

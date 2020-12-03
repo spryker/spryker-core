@@ -16,7 +16,7 @@ function load(idCategoryNode, targetElement, progressBar)
 {
     progressBar.show();
 
-    var url = '/category/tree/?id-root-node=' + idCategoryNode;
+    var url = '/category-gui/tree/?id-root-node=' + idCategoryNode;
 
     jQuery
         .get(url, jQuery.proxy(function(targetElement, response) {

@@ -17,7 +17,7 @@ function save(serializedNodeList, progressBar)
 
     var csrfToken = document.getElementById('category-nodes-re-sort-token').value;
     var promise = jQuery.post(
-        '/category/re-sort/save',
+        '/category-gui/re-sort/save',
         {
             nodes: serializedNodeList,
             token: csrfToken
