@@ -103,7 +103,7 @@ class CategoryFilterOptionsProvider implements CategoryFilterOptionsProviderInte
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CategoryTransfer|null
+     * @return \Generated\Shared\Transfer\CategoryTransfer
      */
     protected function findCategory(): CategoryTransfer
     {

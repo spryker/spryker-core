@@ -568,7 +568,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\NodeTransfer[][] $categoryNodesCollection
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryNode
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return \Generated\Shared\Transfer\NodeTransfer
      */
