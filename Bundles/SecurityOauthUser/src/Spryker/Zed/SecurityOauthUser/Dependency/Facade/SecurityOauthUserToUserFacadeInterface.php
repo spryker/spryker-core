@@ -25,4 +25,11 @@ interface SecurityOauthUserToUserFacadeInterface
      * @return \Generated\Shared\Transfer\UserTransfer|null
      */
     public function findUser(UserCriteriaTransfer $userCriteriaTransfer): ?UserTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function createUser(UserTransfer $userTransfer): UserTransfer;
 }

@@ -28,6 +28,11 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
     public const ROLE_BACK_OFFICE_USER = 'ROLE_BACK_OFFICE_USER';
     public const ROLE_OAUTH_USER = 'ROLE_OAUTH_USER';
 
+    /**
+     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_ACTIVE
+     */
+    public const OAUTH_USER_STATUS_ACTIVE = 'active';
+
     protected const BACK_OFFICE_ROUTE_PATTERN = '^/';
     protected const IGNORABLE_ROUTE_PATTERN = '^/security-oauth-user';
     protected const HOME_PATH = '/';
@@ -96,6 +101,16 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
     public function getUrlLogout(): string
     {
         return static::LOGIN_PATH;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getOauthUserCreationStatus(): string
+    {
+        return static::OAUTH_USER_STATUS_ACTIVE;
     }
 
     /**

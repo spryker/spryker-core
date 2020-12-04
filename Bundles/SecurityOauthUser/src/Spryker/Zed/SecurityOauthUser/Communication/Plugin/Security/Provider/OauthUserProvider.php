@@ -25,13 +25,13 @@ class OauthUserProvider extends AbstractPlugin implements UserProviderInterface
     /**
      * @param string $username
      *
+     * @return \Symfony\Component\Security\Core\User\UserInterface
      * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
      *
-     * @return \Symfony\Component\Security\Core\User\UserInterface
      */
     public function loadUserByUsername(string $username)
     {
-        $userTransfer = $this->findUserByUsername($username);
+        $userTransfer = $this->resolveOauthUserByName($username);
 
         if ($userTransfer === null) {
             throw new UsernameNotFoundException();
@@ -43,9 +43,9 @@ class OauthUserProvider extends AbstractPlugin implements UserProviderInterface
     /**
      * @param \Symfony\Component\Security\Core\User\UserInterface $user
      *
+     * @return \Symfony\Component\Security\Core\User\UserInterface
      * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
      *
-     * @return \Symfony\Component\Security\Core\User\UserInterface
      */
     public function refreshUser(UserInterface $user)
     {
@@ -53,7 +53,7 @@ class OauthUserProvider extends AbstractPlugin implements UserProviderInterface
             return $user;
         }
 
-        $userTransfer = $this->findUserByUsername($user->getUsername());
+        $userTransfer = $this->resolveOauthUserByName($user->getUsername());
 
         if ($userTransfer === null) {
             throw new UsernameNotFoundException();
@@ -77,11 +77,10 @@ class OauthUserProvider extends AbstractPlugin implements UserProviderInterface
      *
      * @return \Generated\Shared\Transfer\UserTransfer|null
      */
-    protected function findUserByUsername(string $username): ?UserTransfer
+    protected function resolveOauthUserByName(string $username): ?UserTransfer
     {
-        return $this->getFactory()->getUserFacade()->findUser(
-            (new UserCriteriaTransfer())
-                ->setEmail($username)
+        return $this->getFacade()->resolveOauthUser(
+            (new UserCriteriaTransfer())->setEmail($username)
         );
     }
 }

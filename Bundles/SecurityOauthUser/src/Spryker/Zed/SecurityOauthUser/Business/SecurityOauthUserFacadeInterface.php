@@ -41,7 +41,7 @@ interface SecurityOauthUserFacadeInterface
      * - Requires user field to be set.
      * - Runs a stack of `OauthUserRestrictionPluginInterface` plugins to check user restrictions.
      * - Returns `OauthUserRestrictionResponseTransfer::isRestricted = true` and messages attached in case the user has been restricted.
-     * - Returns `OauthUserRestrictionResponseTransfer::isSuccessful = false` and empty messages in case the user has not been restricted.
+     * - Returns `OauthUserRestrictionResponseTransfer::isRestricted = false` and empty messages in case the user has not been restricted.
      *
      * @api
      *

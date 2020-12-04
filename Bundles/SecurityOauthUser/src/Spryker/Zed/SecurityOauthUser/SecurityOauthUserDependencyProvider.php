@@ -9,6 +9,7 @@ namespace Spryker\Zed\SecurityOauthUser;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceBridge;
 use Spryker\Zed\SecurityOauthUser\Dependency\Facade\SecurityOauthUserToMessengerFacadeBridge;
 use Spryker\Zed\SecurityOauthUser\Dependency\Facade\SecurityOauthUserToUserFacadeBridge;
 
@@ -19,6 +20,7 @@ class SecurityOauthUserDependencyProvider extends AbstractBundleDependencyProvid
 {
     public const FACADE_USER = 'FACADE_USER';
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+    public const SERVICE_UTIL_TEXT = 'UTIL_TEXT_SERVICE';
 
     public const PLUGINS_OAUTH_USER_CLIENT_STRATEGY = 'PLUGINS_OAUTH_USER_CLIENT_STRATEGY';
     public const PLUGINS_OAUTH_USER_RESTRICTION = 'PLUGINS_OAUTH_USER_RESTRICTION';
@@ -47,6 +49,8 @@ class SecurityOauthUserDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container = parent::provideBusinessLayerDependencies($container);
 
+        $container = $this->addUserFacade($container);
+        $container = $this->addUtilTextService($container);
         $container = $this->addOauthUserClientStrategyPlugins($container);
         $container = $this->addOauthUserRestrictionPlugins($container);
 
@@ -79,6 +83,22 @@ class SecurityOauthUserDependencyProvider extends AbstractBundleDependencyProvid
         $container->set(static::FACADE_MESSENGER, function (Container $container) {
             return new SecurityOauthUserToMessengerFacadeBridge(
                 $container->getLocator()->messenger()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilTextService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_TEXT, function (Container $container) {
+            return new MerchantUserToUtilTextServiceBridge(
+                $container->getLocator()->utilText()->service()
             );
         });
 
