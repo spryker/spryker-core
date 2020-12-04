@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\CategoryGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
 
 class CategoryGuiToCategoryFacadeBridge implements CategoryGuiToCategoryFacadeInterface
 {
@@ -85,17 +85,6 @@ class CategoryGuiToCategoryFacadeBridge implements CategoryGuiToCategoryFacadeIn
     }
 
     /**
-     * @param int $idCategoryNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return array
-     */
-    public function getSubTreeByIdCategoryNodeAndLocale(int $idCategoryNode, LocaleTransfer $localeTransfer)
-    {
-        return $this->categoryFacade->getSubTreeByIdCategoryNodeAndLocale($idCategoryNode, $localeTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return void
@@ -117,13 +106,12 @@ class CategoryGuiToCategoryFacadeBridge implements CategoryGuiToCategoryFacadeIn
     }
 
     /**
-     * @param int $idCategory
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\CategoryTransfer|null
      */
-    public function getTreeNodeChildrenByIdCategoryAndLocale(int $idCategory, LocaleTransfer $localeTransfer)
+    public function findCategory(CategoryCriteriaTransfer $categoryCriteriaTransfer): ?CategoryTransfer
     {
-        return $this->categoryFacade->getTreeNodeChildrenByIdCategoryAndLocale($idCategory, $localeTransfer);
+        return $this->categoryFacade->findCategory($categoryCriteriaTransfer);
     }
 }

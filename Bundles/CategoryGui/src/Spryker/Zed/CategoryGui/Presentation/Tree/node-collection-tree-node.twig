@@ -1,8 +1,9 @@
+{% set category = node.category %}
 <div class="dd-handle">
-    {{ node.text }}
+    {{ category.localizedAttributes[0].name }}
 
     <div class="pull-right">
-        {% if node.is_active %}
+        {% if category.isActive %}
             <span class="label label-info" title="{{ 'Category status' | trans }}">{{ 'Active' | trans }}</span>
         {% else %}
             <span class="label label-danger" title="{{ 'Inactive' | trans }}">
@@ -10,20 +11,20 @@
             </span>
         {% endif %}
 
-        {% if node.is_in_menu %}
+        {% if category.isInMenu %}
             <span class="label" title="{{ 'Visible in the category tree' | trans }}">{{ 'Visible' | trans }}</span>
         {% endif %}
 
-        {% if node.is_searchable %}
+        {% if category.isSearchable %}
             <span class="label" title="{{ 'Searchable' | trans }}">{{ 'Searchable' | trans }}</span>
         {% endif %}
 
-        <span class="label" title="{{ 'Category template' | trans }}">{{ node.category_template_name }}</span>
+        <span class="label" title="{{ 'Category template' | trans }}">{{ category.categoryTemplate.name }}</span>
 
-        {% if node.children is defined and node.children|length > 0 %}
+        {% if node.childrenCategory is defined and node.childrenCategory | length > 0 %}
             <a
-                href="/category-gui/re-sort?id-node={{ node.id }}"
-                id="node-{{ node.id }}"
+                href="/category-gui/re-sort?id-node={{ node.idCategoryNode }}"
+                id="node-{{ node.idCategoryNode }}"
                 class="btn btn-xs btn-outline btn-view"
                 title="{{ 'Re-sort Child Categories' | trans }}"
             >
@@ -32,35 +33,35 @@
         {% endif %}
 
         <a
-            href="/product-category/assign?id-category={{ node.id_category }}"
+            href="/product-category/assign?id-category={{ node.fkCategory }}"
             class="btn btn-xs btn-outline btn-view"
             title="{{ 'Assign Products to this Category' | trans }}"
         >
             <i class="fa fa-fw fa-chain"></i>
         </a>
         <a
-            href="/category-gui/create?id-parent-node={{ node.id }}"
+            href="/category-gui/create?id-parent-node={{ node.idCategoryNode }}"
             class="btn btn-xs btn-outline btn-create"
             title="{{ 'Add Category to this Node' | trans }}"
         >
             <i class="fa fa-fw fa-plus"></i>
         </a>
         <a
-            href="/category-gui/edit?id-category={{ node.id_category }}"
+            href="/category-gui/edit?id-category={{ node.fkCategory }}"
             class="btn btn-xs btn-outline btn-edit"
             title="{{ 'Edit Category' | trans }}"
         >
             <i class="fa fa-fw fa-pencil"></i>
         </a>
         <a
-                href="/category-gui/view?id-category={{ node.id_category }}"
-                class="btn btn-xs btn-outline btn-view"
-                title="{{ 'View Category' | trans }}"
+            href="/category-gui/view?id-category={{ node.fkCategory }}"
+            class="btn btn-xs btn-outline btn-view"
+            title="{{ 'View Category' | trans }}"
         >
             <i class="fa fa-fw fa-eye"></i>
         </a>
         <a
-            href="/category-gui/delete?id-category={{ node.id_category }}"
+            href="/category-gui/delete?id-category={{ node.fkCategory }}"
             class="btn btn-xs btn-outline btn-danger"
             title="{{ 'Delete Category' | trans }}"
         >

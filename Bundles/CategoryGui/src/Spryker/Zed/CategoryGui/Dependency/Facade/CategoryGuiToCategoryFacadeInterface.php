@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\CategoryGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
 
 interface CategoryGuiToCategoryFacadeInterface
 {
@@ -54,14 +54,6 @@ interface CategoryGuiToCategoryFacadeInterface
     public function delete(int $idCategory);
 
     /**
-     * @param int $idCategoryNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return array
-     */
-    public function getSubTreeByIdCategoryNodeAndLocale(int $idCategoryNode, LocaleTransfer $localeTransfer);
-
-    /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return void
@@ -77,10 +69,9 @@ interface CategoryGuiToCategoryFacadeInterface
     public function updateCategoryNodeOrder(int $idCategoryNode, int $position);
 
     /**
-     * @param int $idCategory
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\CategoryTransfer|null
      */
-    public function getTreeNodeChildrenByIdCategoryAndLocale(int $idCategory, LocaleTransfer $localeTransfer);
+    public function findCategory(CategoryCriteriaTransfer $categoryCriteriaTransfer): ?CategoryTransfer;
 }

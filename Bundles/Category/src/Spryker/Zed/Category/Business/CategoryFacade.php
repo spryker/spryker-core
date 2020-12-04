@@ -142,46 +142,6 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\Category\Business\CategoryFacade::findCategory()} instead.
-     *
-     * @param int $idCategory
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return array
-     */
-    public function getTreeNodeChildrenByIdCategoryAndLocale($idCategory, LocaleTransfer $localeTransfer)
-    {
-        return $this
-            ->getFactory()
-            ->createCategoryTreeReader()
-            ->getTreeNodeChildrenByIdCategoryAndLocale($idCategory, $localeTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @deprecated Use {@link \Spryker\Zed\Category\Business\CategoryFacade::findCategory()} instead.
-     *
-     * @param int $idCategoryNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return array
-     */
-    public function getSubTreeByIdCategoryNodeAndLocale($idCategoryNode, LocaleTransfer $localeTransfer)
-    {
-        return $this
-            ->getFactory()
-            ->createCategoryTreeReader()
-            ->getSubTree($idCategoryNode, $localeTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @return void
      */
     public function rebuildClosureTable()

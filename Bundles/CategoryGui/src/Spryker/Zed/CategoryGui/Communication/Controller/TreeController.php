@@ -20,7 +20,10 @@ class TreeController extends AbstractController
 {
     protected const REQUEST_PARAM_ID_ROOT_NODE = 'id-root-node';
 
-    protected const REDIRECT_URL = '';
+    /**
+     * @uses \Spryker\Zed\CategoryGui\Communication\Controller\ListController::indexAction()
+     */
+    protected const ROUTE_CATEGORY_LIST = '/category-gui/list';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -29,34 +32,16 @@ class TreeController extends AbstractController
      */
     public function indexAction(Request $request): array
     {
-        $idCategory = $this->castId($request->query->get(static::PARAM_ID_ROOT_NODE));
+        $idCategory = $this->castId($request->query->get(static::REQUEST_PARAM_ID_ROOT_NODE));
         $category = $this->findCategory($idCategory);
-        if (!$category) {
-            $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
-        }
 
-        $categoryTree = $this->getCategoryTree($request);
+        if (!$category) {
+            $this->redirectResponse(static::ROUTE_CATEGORY_LIST);
+        }
 
         return $this->viewResponse([
             'childNodes' => $this->getCategoryChildNodeCollection($category),
-            'categoryTree' => $categoryTree, // @deprecated Use property `childNodes` instead.
         ]);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
-    protected function getCategoryTree(Request $request): array
-    {
-        $idRootNode = $this->castId($request->query->get(static::REQUEST_PARAM_ID_ROOT_NODE));
-        $localeTransfer = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
-
-        return $this
-            ->getFactory()
-            ->getCategoryFacade()
-            ->getTreeNodeChildrenByIdCategoryAndLocale($idRootNode, $localeTransfer);
     }
 
     /**
@@ -66,12 +51,14 @@ class TreeController extends AbstractController
      */
     protected function findCategory(int $idCategory): ?CategoryTransfer
     {
+        $localeTransfer = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
+
         $criteriaTransfer = (new CategoryCriteriaTransfer())
             ->setIdCategory($idCategory)
-            ->setLocaleName($this->getFactory()->getCurrentLocale()->getLocaleName())
+            ->setLocaleName($localeTransfer->getLocaleName())
             ->setWithChildrenRecursively(true);
 
-        return $this->getFacade()->findCategory($criteriaTransfer);
+        return $this->getFactory()->getCategoryFacade()->findCategory($criteriaTransfer);
     }
 
     /**

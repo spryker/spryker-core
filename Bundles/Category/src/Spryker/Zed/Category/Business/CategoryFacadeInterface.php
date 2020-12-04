@@ -144,24 +144,6 @@ interface CategoryFacadeInterface
     public function updateCategoryNodeOrder($idCategoryNode, $position);
 
     /**
-     * Specification:
-     *  - Finds first category-node for idCategory and finds all of its children
-     *  - Formats all child category-nodes as a nested array structure
-     *  - Category-node entities sorted by node order
-     *  - Returns array representation of sub-tree
-     *
-     * @api
-     *
-     * @deprecated Use {@link \Spryker\Zed\Category\Business\CategoryFacadeInterface::findCategory()} instead.
-     *
-     * @param int $idCategory
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return array
-     */
-    public function getTreeNodeChildrenByIdCategoryAndLocale($idCategory, LocaleTransfer $localeTransfer);
-
-    /**
      * @api
      *
      * @return void
@@ -180,23 +162,6 @@ interface CategoryFacadeInterface
      * @return void
      */
     public function touchCategoryActive($idCategory);
-
-    /**
-     * Specification:
-     *  - Finds all category-nodes that are children of idCategoryNode
-     *  - Formats all child category-nodes as a nested array structure
-     *  - Return array representation of ub-tree
-     *
-     * @api
-     *
-     * @deprecated Use {@link \Spryker\Zed\Category\Business\CategoryFacadeInterface::findCategory()} instead.
-     *
-     * @param int $idCategoryNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return array
-     */
-    public function getSubTreeByIdCategoryNodeAndLocale($idCategoryNode, LocaleTransfer $localeTransfer);
 
     /**
      * Specification:
