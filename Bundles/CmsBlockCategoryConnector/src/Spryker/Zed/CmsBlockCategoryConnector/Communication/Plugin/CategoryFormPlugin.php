@@ -8,8 +8,8 @@
 namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\CategoryTransfer;
-use Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryFormPluginInterface;
 use Spryker\Zed\Category\Dependency\Plugin\CategoryRelationUpdatePluginInterface;
+use Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryFormPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Form\FormBuilderInterface;
 
