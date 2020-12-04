@@ -5,15 +5,15 @@
 
     <transfer name="AuthContext">
         <property name="ttl" type="int"/>
+        <property name="type" type="string"/>
         <property name="ip" type="string"/>
         <property name="account" type="string"/>
     </transfer>
 
     <transfer name="AuthResponse">
         <property name="isSuccessful" type="bool"/>
-        <property name="ip" type="string"/>
-        <property name="account" type="string"/>
         <property name="count" type="int"/>
+        <property name="authContext" type="AuthContext"/>
     </transfer>
 
 </transfers>
