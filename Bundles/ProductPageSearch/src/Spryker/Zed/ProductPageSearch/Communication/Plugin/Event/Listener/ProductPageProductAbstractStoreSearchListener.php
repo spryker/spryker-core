@@ -22,16 +22,16 @@ class ProductPageProductAbstractStoreSearchListener extends AbstractProductPageS
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
         $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys(
-            $eventTransfers,
+            $eventEntityTransfers,
             SpyProductAbstractStoreTableMap::COL_FK_PRODUCT_ABSTRACT
         );
 

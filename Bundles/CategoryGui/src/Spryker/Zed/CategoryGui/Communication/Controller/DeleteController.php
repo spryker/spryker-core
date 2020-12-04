@@ -141,7 +141,7 @@ class DeleteController extends AbstractController
             ->getCategoryQueryContainer()
             ->queryCategory($localeTransfer->getIdLocale())
             ->useNodeQuery()
-                ->filterByIdCategoryNode($categoryNodeTransfer->getFkParentCategoryNode())
+            ->filterByIdCategoryNode($categoryNodeTransfer->getFkParentCategoryNode())
             ->endUse()
             ->findOne();
     }

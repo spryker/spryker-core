@@ -25,15 +25,15 @@ class PriceProductStoreAbstractStorageListener extends AbstractPlugin implements
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
-        $priceProductIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyPriceProductStoreTableMap::COL_FK_PRICE_PRODUCT);
+        $priceProductIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventEntityTransfers, SpyPriceProductStoreTableMap::COL_FK_PRICE_PRODUCT);
         $productAbstractIds = $this->getQueryContainer()->queryAllProductAbstractIdsByPriceProductIds($priceProductIds)->find()->getData();
 
         $this->getFacade()->publishPriceProductAbstract($productAbstractIds);

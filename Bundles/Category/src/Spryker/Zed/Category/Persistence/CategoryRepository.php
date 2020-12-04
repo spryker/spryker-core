@@ -8,10 +8,13 @@
 namespace Spryker\Zed\Category\Persistence;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
+use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -222,5 +225,122 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->select(SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE)
             ->findByFkCategoryNodeDescendant($idCategoryNode)
             ->getData();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer|null
+     */
+    public function findCategoryByCriteria(CategoryCriteriaTransfer $categoryCriteriaTransfer): ?CategoryTransfer
+    {
+        $categoryQuery = $this->getFactory()->createCategoryQuery();
+        $categoryQuery = $this->applyCategoryFilters($categoryQuery, $categoryCriteriaTransfer);
+
+        $categoryEntity = $categoryQuery->leftJoinWithAttribute()->find()->getFirst();
+        if ($categoryEntity === null) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createCategoryMapper()
+            ->mapCategoryWithRelations($categoryEntity, new CategoryTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return array
+     */
+    public function getCategoryNodeChildNodesCollectionIndexedByParentNodeId(
+        CategoryTransfer $categoryTransfer,
+        CategoryCriteriaTransfer $categoryCriteriaTransfer
+    ): array {
+        $categoryClosureTableQuery = $this->getFactory()
+            ->createCategoryClosureTableQuery()
+            ->leftJoinWithDescendantNode()
+            ->useNodeQuery('node')
+                ->filterByFkCategory($categoryTransfer->getIdCategory())
+            ->endUse()
+            ->useDescendantNodeQuery()
+                ->leftJoinWithCategory()
+                ->orderByNodeOrder(Criteria::DESC)
+            ->endUse();
+
+        $this->applyCategoryClosureTableFilters($categoryClosureTableQuery, $categoryCriteriaTransfer);
+
+        $categoryClosureTableEntities = $categoryClosureTableQuery->find();
+
+        if (!$categoryClosureTableEntities->count()) {
+            return [];
+        }
+
+        $categoryMapper = $this->getFactory()->createCategoryMapper();
+        $categoryNodes = [];
+        foreach ($categoryClosureTableEntities as $categoryClosureTable) {
+            $nodeTransfer = $categoryMapper->mapNodeEntityToNodeTransferWithCategoryRelation(
+                $categoryClosureTable->getDescendantNode(),
+                new NodeTransfer()
+            );
+            $categoryNodes[$nodeTransfer->getFkParentCategoryNode()][] = $nodeTransfer;
+        }
+
+        return $categoryNodes;
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryQuery $categoryQuery
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
+     */
+    protected function applyCategoryFilters(SpyCategoryQuery $categoryQuery, CategoryCriteriaTransfer $categoryCriteriaTransfer): SpyCategoryQuery
+    {
+        if ($categoryCriteriaTransfer->getIdCategory()) {
+            $categoryQuery->filterByIdCategory($categoryCriteriaTransfer->getIdCategory());
+        }
+
+        if ($categoryCriteriaTransfer->getLocaleName()) {
+            $categoryQuery
+                ->useAttributeQuery(null, Criteria::LEFT_JOIN)
+                    ->useLocaleQuery()
+                        ->filterByLocaleName($categoryCriteriaTransfer->getLocaleName())
+                    ->endUse()
+                ->endUse();
+        }
+
+        return $categoryQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery $categoryClosureTableQuery
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
+     */
+    protected function applyCategoryClosureTableFilters(
+        SpyCategoryClosureTableQuery $categoryClosureTableQuery,
+        CategoryCriteriaTransfer $categoryCriteriaTransfer
+    ): SpyCategoryClosureTableQuery {
+        if ($categoryCriteriaTransfer->getLocaleName()) {
+            $categoryClosureTableQuery
+                ->useDescendantNodeQuery()
+                    ->useCategoryQuery()
+                        ->joinWithAttribute()
+                        ->useAttributeQuery()
+                            ->useLocaleQuery()
+                                ->filterByLocaleName($categoryCriteriaTransfer->getLocaleName())
+                            ->endUse()
+                        ->endUse()
+                    ->endUse()
+                ->endUse();
+        }
+
+        if ($categoryCriteriaTransfer->getWithChildren()) {
+            $categoryClosureTableQuery->filterByDepth(1);
+        }
+
+        return $categoryClosureTableQuery;
     }
 }

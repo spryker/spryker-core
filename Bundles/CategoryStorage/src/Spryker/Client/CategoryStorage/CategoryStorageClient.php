@@ -21,10 +21,11 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
      * @api
      *
      * @param string $locale
+     * @param string|null $storeName the parammeter is going to be required in the next major
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]|\ArrayObject
      */
-    public function getCategories($locale)
+    public function getCategories($locale, ?string $storeName = null)
     {
         return $this->getFactory()
             ->createCategoryTreeStorageReader()
@@ -71,10 +72,12 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
      * @api
      *
      * @param array $docCountAggregation
+     * @param string|null $localeName
+     * @param string|null $storeName
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]
      */
-    public function formatCategoryTreeFilter(array $docCountAggregation): ArrayObject
+    public function formatCategoryTreeFilter(array $docCountAggregation, ?string $localeName = null, ?string $storeName = null): ArrayObject
     {
         return $this->getFactory()
             ->createCategoryTreeFilterFormatter()

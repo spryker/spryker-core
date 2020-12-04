@@ -26,15 +26,15 @@ class CmsPageStoragePublishListener extends AbstractPlugin implements EventBulkH
      *
      * @api
      *
-     * @param array $eventTransfers
+     * @param array $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
-        $cmsPageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+        $cmsPageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
 
         $this->getFacade()->publish($cmsPageIds);
     }

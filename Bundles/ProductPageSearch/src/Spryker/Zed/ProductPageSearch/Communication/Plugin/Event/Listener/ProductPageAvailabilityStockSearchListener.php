@@ -24,16 +24,16 @@ class ProductPageAvailabilityStockSearchListener extends AbstractProductPageSear
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $productConcreteSkus = $this->getFactory()
             ->getEventBehaviorFacade()
-            ->getEventTransfersAdditionalValues($eventTransfers, static::COL_SKU);
+            ->getEventTransfersAdditionalValues($eventEntityTransfers, static::COL_SKU);
 
         $productAbstractIds = $this->getRepository()->getProductAbstractIdsByProductConcreteSkus($productConcreteSkus);
 

@@ -24,30 +24,30 @@ interface StepInterface
     /**
      * Require input, should we render view with form or just skip step after calling execute.
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function requireInput(AbstractTransfer $dataTransfer);
+    public function requireInput(AbstractTransfer $quoteTransfer);
 
     /**
      * Execute step logic, happens after form submit if provided, gets AbstractTransfer filled by form data.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function execute(Request $request, AbstractTransfer $dataTransfer);
+    public function execute(Request $request, AbstractTransfer $quoteTransfer);
 
     /**
      * Conditions that should be met for this step to be marked as completed. returns true when satisfied.
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function postCondition(AbstractTransfer $dataTransfer);
+    public function postCondition(AbstractTransfer $quoteTransfer);
 
     /**
      * Current step route.
@@ -64,9 +64,9 @@ interface StepInterface
     public function getEscapeRoute();
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
-    public function getTemplateVariables(AbstractTransfer $dataTransfer);
+    public function getTemplateVariables(AbstractTransfer $quoteTransfer);
 }

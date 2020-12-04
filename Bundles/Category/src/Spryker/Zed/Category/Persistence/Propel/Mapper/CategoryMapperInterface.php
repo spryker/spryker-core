@@ -59,4 +59,12 @@ interface CategoryMapperInterface
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
     public function mapNodeCollection(ObjectCollection $nodeEntities, NodeCollectionTransfer $nodeCollectionTransfer): NodeCollectionTransfer;
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $nodeEntity
+     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeTransfer
+     */
+    public function mapNodeEntityToNodeTransferWithCategoryRelation(SpyCategoryNode $nodeEntity, NodeTransfer $nodeTransfer): NodeTransfer;
 }

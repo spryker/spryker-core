@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 
 class ProductCategoryFilterGuiToCategoryFacadeBridge implements ProductCategoryFilterGuiToCategoryFacadeInterface
@@ -25,6 +27,8 @@ class ProductCategoryFilterGuiToCategoryFacadeBridge implements ProductCategoryF
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToCategoryFacadeBridge::findCategory()} instead.
+     *
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -33,5 +37,15 @@ class ProductCategoryFilterGuiToCategoryFacadeBridge implements ProductCategoryF
     public function getTreeNodeChildrenByIdCategoryAndLocale($idCategory, LocaleTransfer $localeTransfer)
     {
         return $this->categoryFacade->getTreeNodeChildrenByIdCategoryAndLocale($idCategory, $localeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer|null
+     */
+    public function findCategory(CategoryCriteriaTransfer $categoryCriteriaTransfer): ?CategoryTransfer
+    {
+        return $this->categoryFacade->findCategory($categoryCriteriaTransfer);
     }
 }

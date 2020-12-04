@@ -76,7 +76,10 @@ class ProductListCategoryRelationFormDataProvider
      */
     public function getOptions(): array
     {
-        $categoryCollectionTransfer = $this->categoryFacade->getAllCategoryCollection($this->localeFacade->getCurrentLocale());
+        $categoryCollectionTransfer = $this->categoryFacade->getAllCategoryCollection(
+            $this->localeFacade->getCurrentLocale(),
+            APPLICATION_STORE
+        );
         $categoryOptions = [];
 
         foreach ($categoryCollectionTransfer->getCategories() as $categoryTransfer) {

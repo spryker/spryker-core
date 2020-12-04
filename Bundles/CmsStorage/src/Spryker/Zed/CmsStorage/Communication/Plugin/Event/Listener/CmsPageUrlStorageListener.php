@@ -27,15 +27,15 @@ class CmsPageUrlStorageListener extends AbstractPlugin implements EventBulkHandl
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @param array $eventTransfers
+     * @param array $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
-        $cmsPageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyUrlTableMap::COL_FK_RESOURCE_PAGE);
+        $cmsPageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventEntityTransfers, SpyUrlTableMap::COL_FK_RESOURCE_PAGE);
 
         if (empty($cmsPageIds)) {
             return;

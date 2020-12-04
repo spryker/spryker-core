@@ -62,23 +62,37 @@
 
                 {% import _self as tree %}
 
+                {% macro nodeCollectionTree(nodeCollection) %}
+                    <ol class="dd-list">
+                        {% for node in nodeCollection.nodes %}
+                            <li class="dd-item">
+                            <span class="dd-handle">
+                                {{ node.category.localizedAttributes[0].name }}
+                            </span>
+
+                                {% if node.childrenNodes is defined and node.childrenNodes | length > 0 %}
+                                    {{ _self.nodeCollectionTree(node.childrenNodes) }}
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ol>
+                {% endmacro %}
+
                 <div class="col-md-4">
                     <b>{{ 'Sub-Trees to be moved' | trans }}</b>
                     <br />
-                    {% if subTrees | length > 0 %}
-                        {% for subTree in subTrees %}
-                            <br />
-                            <p>
-                                {% if subTree.isMain %} {{ 'Main' | trans }} {% else %} {{ 'Extra parent' | trans }} {% endif %}
-                                {{ 'category will be moved to' | trans }} <em>{{ subTree.parentCategory.name }}</em>
-                            </p>
-                            <ol class="dd-list">
-                                <li class="dd-item">
-                                    <span class="dd-handle">{{ subTree.text }}</span>
-                                    {{ tree.tree(subTree.tree) }}
-                                </li>
-                            </ol>
-                        {% endfor %}
+                    {% if childNodes is defined and childNodes.nodes | length > 0 %}
+                        <br />
+                        <p>
+                            {% if category.categoryNode.isMain %} {{ 'Main' | trans }} {% else %} {{ 'Extra parent' | trans }} {% endif %}
+                            {{ 'category will be moved to' | trans }} <em>{{ parentCategory.name }}</em>
+                        </p>
+                        <ol class="dd-list">
+                            <li class="dd-item">
+                                <span class="dd-handle">{{ category.localizedAttributes[0].name }}</span>
+                                {{ _self.nodeCollectionTree(childNodes) }}
+                            </li>
+                        </ol>
                     {% else %}
                         <p>{{ 'This category does not have any sub-trees' | trans }}</p>
                     {% endif %}

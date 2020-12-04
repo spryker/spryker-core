@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Category\Business\Model;
 
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 
 interface CategoryReaderInterface
@@ -17,4 +18,11 @@ interface CategoryReaderInterface
      * @return \Generated\Shared\Transfer\CategoryTransfer|null
      */
     public function findCategoryById(int $idCategory): ?CategoryTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer|null
+     */
+    public function findCategoryByCriteria(CategoryCriteriaTransfer $categoryCriteriaTransfer): ?CategoryTransfer;
 }

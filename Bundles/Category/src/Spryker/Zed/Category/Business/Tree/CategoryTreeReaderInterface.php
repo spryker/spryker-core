@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\Category\Business\Tree;
 
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\NodeCollectionTransfer;
 
 interface CategoryTreeReaderInterface
 {
@@ -69,4 +72,15 @@ interface CategoryTreeReaderInterface
      * @return array
      */
     public function getSubTree($idCategoryNode, LocaleTransfer $localeTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
+     */
+    public function getCategoryNodeCollectionTree(
+        CategoryTransfer $categoryTransfer,
+        CategoryCriteriaTransfer $categoryCriteriaTransfer
+    ): NodeCollectionTransfer;
 }
