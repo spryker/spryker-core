@@ -14,7 +14,7 @@ interface CategoryRelationReadPluginInterface
 {
     /**
      * Specification:
-     *  - Returns a descriptive name for the relations
+     *  - Returns a descriptive name for the relations.
      *
      * @api
      *

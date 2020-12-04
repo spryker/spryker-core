@@ -112,21 +112,29 @@ class CategoryLocalizedAttributeType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                     new Callback([
-                        'callback' => function ($nameKey, ExecutionContextInterface $context) {
-                            $categoryTransfer = $context->getRoot()->getData();
-
-                            if ($categoryTransfer instanceof CategoryTransfer && $nameKey) {
-                                if ($this->getFactory()->getCategoryFacade()->checkSameLevelCategoryByNameExists($nameKey, $categoryTransfer)) {
-                                    $context->addViolation(sprintf('Category with name "%s" already in use in this category level, please choose another one.', $nameKey));
-                                }
-                            }
-                        },
+                        'callback' => $this->nameValidateCallback(),
                     ]),
                 ],
                 'required' => false,
             ]);
 
         return $this;
+    }
+
+    /**
+     * @return \Closure
+     */
+    protected function nameValidateCallback(): callable
+    {
+        return function ($nameKey, ExecutionContextInterface $context) {
+            $categoryTransfer = $context->getRoot()->getData();
+
+            if ($categoryTransfer instanceof CategoryTransfer && $nameKey) {
+                if ($this->getFactory()->getCategoryFacade()->checkSameLevelCategoryByNameExists($nameKey, $categoryTransfer)) {
+                    $context->addViolation(sprintf('Category with name "%s" already in use in this category level, please choose another one.', $nameKey));
+                }
+            }
+        };
     }
 
     /**

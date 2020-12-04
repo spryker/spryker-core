@@ -13,7 +13,7 @@ interface CategoryFormPluginInterface
 {
     /**
      * Specification:
-     * - Add form parts to the main form builder.
+     * - Adds form parts to the main form builder.
      *
      * @api
      *

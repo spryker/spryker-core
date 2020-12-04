@@ -20,7 +20,9 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_CATEGORY = 'FACADE_CATEGORY';
+
     public const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
+
     public const PLUGINS_CATEGORY_FORM = 'PLUGINS_CATEGORY_FORM';
     public const PLUGINS_CATEGORY_FORM_TAB_EXPANDER = 'PLUGINS_CATEGORY_FORM_TAB_EXPANDER';
     public const PLUGINS_CATEGORY_RELATION_READ = 'PLUGINS_CATEGORY_RELATION_READ';
@@ -37,6 +39,8 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
+        $container = parent::provideCommunicationLayerDependencies($container);
+
         $container = $this->addLocaleFacade($container);
         $container = $this->addCategoryFacade($container);
         $container = $this->addCategoryQueryContainer($container);

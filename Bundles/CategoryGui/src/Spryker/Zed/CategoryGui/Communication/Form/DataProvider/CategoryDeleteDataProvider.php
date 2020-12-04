@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CategoryGui\Communication\Form\DataProvider;
 
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
+use Orm\Zed\Category\Persistence\SpyCategory;
 use Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface;
 
 class CategoryDeleteDataProvider
@@ -32,7 +33,7 @@ class CategoryDeleteDataProvider
      *
      * @return array
      */
-    public function getData(int $idCategory)
+    public function getData(int $idCategory): array
     {
         $categoryEntity = $this->findCategory($idCategory);
 
@@ -47,7 +48,7 @@ class CategoryDeleteDataProvider
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategory
      */
-    protected function findCategory(int $idCategory)
+    protected function findCategory(int $idCategory): SpyCategory
     {
         return $this->queryContainer
             ->queryCategoryById($idCategory)

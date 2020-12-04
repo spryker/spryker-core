@@ -25,7 +25,7 @@ class CategoryEditDataProvider
     /**
      * @var \Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface
      */
-    protected $queryContainer;
+    protected $categoryQueryContainer;
 
     /**
      * @var \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface
@@ -38,16 +38,16 @@ class CategoryEditDataProvider
     protected $localeFacade;
 
     /**
-     * @param \Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface $categoryQueryContainer
      * @param \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface $categoryFacade
      * @param \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
-        CategoryGuiToCategoryQueryContainerInterface $queryContainer,
+        CategoryGuiToCategoryQueryContainerInterface $categoryQueryContainer,
         CategoryGuiToCategoryFacadeInterface $categoryFacade,
         CategoryGuiToLocaleFacadeInterface $localeFacade
     ) {
-        $this->queryContainer = $queryContainer;
+        $this->categoryQueryContainer = $categoryQueryContainer;
         $this->categoryFacade = $categoryFacade;
         $this->localeFacade = $localeFacade;
     }
@@ -90,7 +90,7 @@ class CategoryEditDataProvider
         return [
             static::DATA_CLASS => CategoryTransfer::class,
             CategoryType::OPTION_PARENT_CATEGORY_NODE_CHOICES => $parentCategories,
-            CategoryType::OPTION_CATEGORY_QUERY_CONTAINER => $this->queryContainer,
+            CategoryType::OPTION_CATEGORY_QUERY_CONTAINER => $this->categoryQueryContainer,
             CategoryType::OPTION_CATEGORY_TEMPLATE_CHOICES => $this->getCategoryTemplateChoices(),
         ];
     }
@@ -105,7 +105,7 @@ class CategoryEditDataProvider
         $idLocale = $this->getIdLocale();
         /** @var \Orm\Zed\Category\Persistence\SpyCategory[] $categoryEntityList */
         $categoryEntityList = $this
-            ->queryContainer
+            ->categoryQueryContainer
             ->queryCategory($idLocale)
             ->useNodeQuery()
                 ->orderByNodeOrder(Criteria::DESC)
@@ -145,7 +145,7 @@ class CategoryEditDataProvider
         $idLocale = $this->getIdLocale();
         $idCategoryNode = $categoryNodeEntity->getIdCategoryNode();
         /** @var string[] $pathTokens */
-        $pathTokens = $this->queryContainer->queryPath($idCategoryNode, $idLocale, false, true)
+        $pathTokens = $this->categoryQueryContainer->queryPath($idCategoryNode, $idLocale, false, true)
             ->clearSelectColumns()->addSelectColumn('name')
             ->find();
 
@@ -165,7 +165,7 @@ class CategoryEditDataProvider
      */
     protected function getCategoryTemplateChoices()
     {
-        return $this->queryContainer
+        return $this->categoryQueryContainer
             ->queryCategoryTemplate()
             ->find()
             ->toKeyValue('idCategoryTemplate', 'name');

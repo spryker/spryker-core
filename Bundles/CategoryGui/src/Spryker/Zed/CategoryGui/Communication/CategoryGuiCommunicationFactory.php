@@ -198,7 +198,7 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\CategoryGuiExtension\Dependency\Plugin\CategoryRelationReadPluginInterface[]
      */
-    public function getCategoryRelationReadPlugins()
+    public function getCategoryRelationReadPlugins(): array
     {
         return $this->getProvidedDependency(CategoryGuiDependencyProvider::PLUGINS_CATEGORY_RELATION_READ);
     }
