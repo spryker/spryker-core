@@ -1,30 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 39,
-            "line_to": 39,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Shared\\Form\\DoubleSubmitProtection\\RequestTokenProvider\\TokenHashGenerator::checkTokenEquals has wrong name $expectedToken, expecting $expected as defined by Spryker\\Shared\\Form\\DoubleSubmitProtection\\RequestTokenProvider\\TokenGeneratorInterface::checkTokenEquals",
-            "file_name": "vendor/spryker/spryker/Bundles/Form/src/Spryker/Shared/Form/DoubleSubmitProtection/RequestTokenProvider/TokenHashGenerator.php",
-            "snippet": "    public function checkTokenEquals(string $expectedToken, string $actualToken): bool",
-            "selected_text": "$expectedToken",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 39,
-            "line_to": 39,
-            "type": "ParamNameMismatch",
-            "message": "Argument 2 of Spryker\\Shared\\Form\\DoubleSubmitProtection\\RequestTokenProvider\\TokenHashGenerator::checkTokenEquals has wrong name $actualToken, expecting $actual as defined by Spryker\\Shared\\Form\\DoubleSubmitProtection\\RequestTokenProvider\\TokenGeneratorInterface::checkTokenEquals",
-            "file_name": "vendor/spryker/spryker/Bundles/Form/src/Spryker/Shared/Form/DoubleSubmitProtection/RequestTokenProvider/TokenHashGenerator.php",
-            "snippet": "    public function checkTokenEquals(string $expectedToken, string $actualToken): bool",
-            "selected_text": "$actualToken",
-            "error_level": 7,
-            "shortcode": 230
-        }
-    ],
+    "error": [],
     "warning": [],
     "deprecation": []
 }

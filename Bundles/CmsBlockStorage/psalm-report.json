@@ -23,66 +23,6 @@
             "selected_text": "$blockKeys",
             "error_level": 6,
             "shortcode": 128
-        },
-        {
-            "severity": "error",
-            "line_from": 32,
-            "line_to": 32,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\CmsBlockStorage\\Communication\\Plugin\\Event\\Listener\\CmsBlockGlossaryKeyMappingBlockStoragePublishListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockStorage/src/Spryker/Zed/CmsBlockStorage/Communication/Plugin/Event/Listener/CmsBlockGlossaryKeyMappingBlockStoragePublishListener.php",
-            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
-            "selected_text": "$eventTransfers",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 32,
-            "line_to": 32,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\CmsBlockStorage\\Communication\\Plugin\\Event\\Listener\\CmsBlockGlossaryKeyMappingBlockStorageUnpublishListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockStorage/src/Spryker/Zed/CmsBlockStorage/Communication/Plugin/Event/Listener/CmsBlockGlossaryKeyMappingBlockStorageUnpublishListener.php",
-            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
-            "selected_text": "$eventTransfers",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 31,
-            "line_to": 31,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\CmsBlockStorage\\Communication\\Plugin\\Event\\Listener\\CmsBlockStoragePublishListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockStorage/src/Spryker/Zed/CmsBlockStorage/Communication/Plugin/Event/Listener/CmsBlockStoragePublishListener.php",
-            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
-            "selected_text": "$eventTransfers",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 31,
-            "line_to": 31,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\CmsBlockStorage\\Communication\\Plugin\\Event\\Listener\\CmsBlockStorageUnpublishListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockStorage/src/Spryker/Zed/CmsBlockStorage/Communication/Plugin/Event/Listener/CmsBlockStorageUnpublishListener.php",
-            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
-            "selected_text": "$eventTransfers",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 30,
-            "line_to": 30,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\CmsBlockStorage\\Communication\\Plugin\\Event\\Listener\\CmsBlockStoreStorageListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockStorage/src/Spryker/Zed/CmsBlockStorage/Communication/Plugin/Event/Listener/CmsBlockStoreStorageListener.php",
-            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
-            "selected_text": "$eventTransfers",
-            "error_level": 7,
-            "shortcode": 230
         }
     ],
     "warning": [

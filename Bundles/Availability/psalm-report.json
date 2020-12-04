@@ -2,18 +2,6 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 115,
-            "line_to": 115,
-            "type": "ParamNameMismatch",
-            "message": "Argument 3 of Spryker\\Zed\\Availability\\Business\\Model\\ProductAvailabilityReader::findOrCreateProductConcreteAvailabilityBySkuForStore has wrong name $productAvailabilityCriteriaTransfer, expecting $productConcreteAvailabilityTransfer as defined by Spryker\\Zed\\Availability\\Business\\Model\\ProductAvailabilityReaderInterface::findOrCreateProductConcreteAvailabilityBySkuForStore",
-            "file_name": "vendor/spryker/spryker/Bundles/Availability/src/Spryker/Zed/Availability/Business/Model/ProductAvailabilityReader.php",
-            "snippet": "        ?ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer = null",
-            "selected_text": "$productAvailabilityCriteriaTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
             "line_from": 90,
             "line_to": 90,
             "type": "InvalidReturnType",

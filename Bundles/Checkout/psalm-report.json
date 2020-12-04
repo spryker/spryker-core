@@ -26,18 +26,6 @@
         },
         {
             "severity": "error",
-            "line_from": 79,
-            "line_to": 79,
-            "type": "ParamNameMismatch",
-            "message": "Argument 2 of Spryker\\Yves\\Checkout\\Process\\Steps\\AbstractPlaceOrderStep::execute has wrong name $quoteTransfer, expecting $dataTransfer as defined by Spryker\\Yves\\StepEngine\\Dependency\\Step\\StepInterface::execute",
-            "file_name": "vendor/spryker/spryker/Bundles/Checkout/src/Spryker/Yves/Checkout/Process/Steps/AbstractPlaceOrderStep.php",
-            "snippet": "    public function execute(Request $request, AbstractTransfer $quoteTransfer)",
-            "selected_text": "$quoteTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
             "line_from": 162,
             "line_to": 162,
             "type": "InvalidArgument",
@@ -115,7 +103,7 @@
             "line_from": 145,
             "line_to": 145,
             "type": "PossiblyNullArrayOffset",
-            "message": "Cannot access value on variable $this->errorCodeToRouteMatching using possibly null offset int|mixed|null",
+            "message": "Cannot access value on variable $this->errorCodeToRouteMatching using possibly null offset int|mixed|null|string",
             "file_name": "vendor/spryker/spryker/Bundles/Checkout/src/Spryker/Yves/Checkout/Process/Steps/AbstractPlaceOrderStep.php",
             "snippet": "                $this->postConditionErrorRoute = $this->errorCodeToRouteMatching[$error->getErrorCode()];",
             "selected_text": "$this->errorCodeToRouteMatching",

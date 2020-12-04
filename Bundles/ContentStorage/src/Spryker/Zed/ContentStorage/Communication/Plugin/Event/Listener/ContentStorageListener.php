@@ -22,20 +22,20 @@ class ContentStorageListener extends AbstractPlugin implements EventBulkHandlerI
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
-    public function handleBulk(array $transfers, $eventName): void
+    public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
         if (Propel::getConnection()->inTransaction()) {
             throw new PropelException('This operation is not allowed inside of transaction');
         }
 
-        $contentIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($transfers);
+        $contentIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
 
         $this->getFacade()->publish($contentIds);
     }

@@ -17,11 +17,11 @@ interface StepHandlerPluginWithMessengerInterface extends StepHandlerPluginInter
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addToDataClass(Request $request, AbstractTransfer $dataTransfer);
+    public function addToDataClass(Request $request, AbstractTransfer $quoteTransfer);
 
     /**
      * @api
