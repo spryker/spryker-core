@@ -42,20 +42,20 @@ class ValidUniqueStoreCurrencyGrossNetPriceDataConstraintValidator extends Abstr
 
         $moneyValueTransfer = $value->getMoneyValueOrFail();
 
-        $storeCriteriaTransfer = new PriceProductStoreCriteriaTransfer();
-        $storeCriteriaTransfer->addIdStore($moneyValueTransfer->getFkStoreOrFail())
+        $priceProductStoreCriteria = new PriceProductStoreCriteriaTransfer();
+        $priceProductStoreCriteria->addIdStore($moneyValueTransfer->getFkStoreOrFail())
             ->addIdCurrency($moneyValueTransfer->getFkCurrencyOrFail());
 
-        $productOffercriteriaTransfer = new PriceProductOfferCriteriaTransfer();
-        $productOffercriteriaTransfer->setIdProductOffer($value->getPriceDimension()->getIdProductOffer())
-            ->setPriceProductStoreCriteria($storeCriteriaTransfer)
+        $priceProductOfferCriteriaTransfer = new PriceProductOfferCriteriaTransfer();
+        $priceProductOfferCriteriaTransfer->setIdProductOffer($value->getPriceDimension()->getIdProductOffer())
+            ->setPriceProductStoreCriteria($priceProductStoreCriteria)
             ->addIdPriceType($value->getPriceType()->getIdPriceTypeOrFail());
 
-        $priceProductTransfers = $constraint->getPriceProductOfferRepository()->getProductOfferPrices($productOffercriteriaTransfer);
+        $priceProductTransfers = $constraint->getPriceProductOfferRepository()->getProductOfferPrices($priceProductOfferCriteriaTransfer);
         if (
             $priceProductTransfers->count() > 1
-            || $priceProductTransfers->count() === 1
-            && $priceProductTransfers->offsetGet(0)->getMoneyValue()->getIdEntity() !== $value->getMoneyValue()->getIdEntity()
+            || ($priceProductTransfers->count() === 1
+                && $priceProductTransfers->offsetGet(0)->getMoneyValue()->getIdEntity() !== $value->getMoneyValue()->getIdEntity())
         ) {
             $this->context->addViolation($constraint->getMessage());
         }

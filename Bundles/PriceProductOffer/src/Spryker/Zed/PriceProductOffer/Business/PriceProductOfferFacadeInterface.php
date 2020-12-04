@@ -81,7 +81,7 @@ interface PriceProductOfferFacadeInterface
 
     /**
      * Specification:
-     * - Retrives and returns count of entities from `spy_price_product_offer` over PriceProductOfferCriteriaTransfer.
+     * - Retrieves and returns count of entities from `spy_price_product_offer` over PriceProductOfferCriteriaTransfer.
      *
      * @api
      *

@@ -589,7 +589,7 @@ interface PriceProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns validCurrencyAssignedToStoreConstraint for futher usage in Symfony validator.
+     * - Returns validCurrencyAssignedToStoreConstraint for further usage in Symfony validator.
      *
      * @api
      *
