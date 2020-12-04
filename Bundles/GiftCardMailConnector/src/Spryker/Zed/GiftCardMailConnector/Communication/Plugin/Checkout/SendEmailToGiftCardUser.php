@@ -25,12 +25,12 @@ class SendEmailToGiftCardUser extends AbstractPlugin implements CheckoutPostSave
      * - Sends an email to a Gift Card user
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */
-    public function executeHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
+    public function executeHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $this->getFacade()->sendUsageNotification($quoteTransfer, $checkoutResponse);
+        $this->getFacade()->sendUsageNotification($quoteTransfer, $checkoutResponseTransfer);
     }
 }

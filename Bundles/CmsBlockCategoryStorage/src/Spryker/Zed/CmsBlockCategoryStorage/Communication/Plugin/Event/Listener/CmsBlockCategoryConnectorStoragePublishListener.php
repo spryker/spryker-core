@@ -26,15 +26,15 @@ class CmsBlockCategoryConnectorStoragePublishListener extends AbstractPlugin imp
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
-        $idCategories = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+        $idCategories = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
 
         $this->getFacade()->publish($idCategories);
     }

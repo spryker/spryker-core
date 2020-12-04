@@ -26,15 +26,15 @@ class TaxSetTaxStoragePublishListener extends AbstractPlugin implements EventBul
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
-        $taxSetIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyTaxSetTaxTableMap::COL_FK_TAX_SET);
+        $taxSetIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventEntityTransfers, SpyTaxSetTaxTableMap::COL_FK_TAX_SET);
 
         $this->getFacade()->publishByTaxSetIds($taxSetIds);
     }

@@ -171,18 +171,18 @@ class CompanyUserInvitationRepository extends AbstractRepository implements Comp
     }
 
     /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $criteria
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $modelCriteria
      * @param \Generated\Shared\Transfer\FilterTransfer|null $filterTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function buildQueryFromCriteria(ModelCriteria $criteria, ?FilterTransfer $filterTransfer = null): ModelCriteria
+    public function buildQueryFromCriteria(ModelCriteria $modelCriteria, ?FilterTransfer $filterTransfer = null): ModelCriteria
     {
-        $criteria = parent::buildQueryFromCriteria($criteria, $filterTransfer);
+        $modelCriteria = parent::buildQueryFromCriteria($modelCriteria, $filterTransfer);
 
-        $criteria->setFormatter(ModelCriteria::FORMAT_OBJECT);
+        $modelCriteria->setFormatter(ModelCriteria::FORMAT_OBJECT);
 
-        return $criteria;
+        return $modelCriteria;
     }
 
     /**

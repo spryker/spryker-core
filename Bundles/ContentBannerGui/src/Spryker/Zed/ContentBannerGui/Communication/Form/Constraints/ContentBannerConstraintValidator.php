@@ -16,14 +16,14 @@ use Symfony\Component\Validator\ConstraintValidator;
 class ContentBannerConstraintValidator extends ConstraintValidator
 {
     /**
-     * @param string $bannerData The value that should be validated
+     * @param string|null $value The value that should be validated
      * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\ContentBannerGui\Communication\Form\Constraints\ContentBannerConstraint $constraint The constraint for the validation
      *
      * @throws \InvalidArgumentException
      *
      * @return void
      */
-    public function validate($bannerData, Constraint $constraint): void
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof ContentBannerConstraint) {
             throw new InvalidArgumentException(sprintf(
@@ -33,7 +33,7 @@ class ContentBannerConstraintValidator extends ConstraintValidator
             ));
         }
 
-        $contentBannerTermTransfer = $this->mapBannerDataToTransfer($bannerData, $constraint);
+        $contentBannerTermTransfer = $this->mapBannerDataToTransfer($value, $constraint);
 
         $contentValidationResponseTransfer = $constraint
             ->getContentBannerFacade()
@@ -54,7 +54,7 @@ class ContentBannerConstraintValidator extends ConstraintValidator
     protected function addViolations(ContentParameterMessageTransfer $parameterMessageTransfer): void
     {
         foreach ($parameterMessageTransfer->getMessages() as $messageTransfer) {
-            $text = strtr($messageTransfer->getValue(), $messageTransfer->getParameters());
+            $text = strtr((string)$messageTransfer->getValue(), $messageTransfer->getParameters());
             $this->context
                 ->buildViolation($text)
                 ->atPath(sprintf('[%s]', $parameterMessageTransfer->getParameter()))
@@ -63,7 +63,7 @@ class ContentBannerConstraintValidator extends ConstraintValidator
     }
 
     /**
-     * @param string $bannerData
+     * @param string|null $bannerData
      * @param \Spryker\Zed\ContentBannerGui\Communication\Form\Constraints\ContentBannerConstraint $constraint
      *
      * @return \Generated\Shared\Transfer\ContentBannerTermTransfer
@@ -74,7 +74,9 @@ class ContentBannerConstraintValidator extends ConstraintValidator
 
         if ($bannerData !== null) {
             $bannerData = $constraint->getUtilEncoding()->decodeJson($bannerData, true);
-            $contentBannerTermTransfer->fromArray($bannerData);
+            if ($bannerData !== null) {
+                $contentBannerTermTransfer->fromArray($bannerData);
+            }
         }
 
         return $contentBannerTermTransfer;

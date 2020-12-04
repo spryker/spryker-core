@@ -36,13 +36,13 @@ class ShipmentToSalesFacadeBridge implements ShipmentToSalesFacadeInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressesTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    public function createOrderAddress(AddressTransfer $addressesTransfer): AddressTransfer
+    public function createOrderAddress(AddressTransfer $addressTransfer): AddressTransfer
     {
-        return $this->salesFacade->createOrderAddress($addressesTransfer);
+        return $this->salesFacade->createOrderAddress($addressTransfer);
     }
 
     /**

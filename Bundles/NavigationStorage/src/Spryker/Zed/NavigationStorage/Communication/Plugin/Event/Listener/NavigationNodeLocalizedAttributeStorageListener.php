@@ -25,15 +25,15 @@ class NavigationNodeLocalizedAttributeStorageListener extends AbstractPlugin imp
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
-        $navigationNodeIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyNavigationNodeLocalizedAttributesTableMap::COL_FK_NAVIGATION_NODE);
+        $navigationNodeIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventEntityTransfers, SpyNavigationNodeLocalizedAttributesTableMap::COL_FK_NAVIGATION_NODE);
         $navigationIds = $this->getQueryContainer()->queryNavigationIdsByNavigationNodeIds($navigationNodeIds)->find()->getData();
 
         $this->getFacade()->publish($navigationIds);
