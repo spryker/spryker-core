@@ -19,7 +19,7 @@
     },
     "devDependencies": {
         "@spryker/frontend-config.prettier": "~0.0.2",
-        "@spryker/frontend-config.tslint": "~0.0.2",
+        "@spryker/frontend-config.tslint": "~0.0.3",
         "prettier": "~2.0.5",
         "tslint": "~6.1.3"
     }
