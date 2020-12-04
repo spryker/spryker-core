@@ -202,7 +202,7 @@ class CategoryType extends AbstractType
      */
     protected function addExtraParentsField(FormBuilderInterface $builder, array $choices)
     {
-        $builder->add(self::FIELD_EXTRA_PARENTS, Select2ComboBoxType::class, [
+        $builder->add(static::FIELD_EXTRA_PARENTS, Select2ComboBoxType::class, [
             'label' => 'Additional Parents',
             'choices' => $choices,
             'choice_label' => 'name',

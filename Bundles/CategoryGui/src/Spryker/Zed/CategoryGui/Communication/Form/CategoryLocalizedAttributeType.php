@@ -72,7 +72,7 @@ class CategoryLocalizedAttributeType extends AbstractType
     protected function addFkLocaleField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_FK_LOCALE, HiddenType::class, [
+            ->add(static::FIELD_FK_LOCALE, HiddenType::class, [
                 'constraints' => [
                     new NotBlank(),
                 ],
@@ -90,7 +90,7 @@ class CategoryLocalizedAttributeType extends AbstractType
     protected function addLocaleNameField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_LOCALE_NAME, HiddenType::class, [
+            ->add(static::FIELD_LOCALE_NAME, HiddenType::class, [
                 'constraints' => [
                     new NotBlank(),
                 ],
@@ -108,7 +108,7 @@ class CategoryLocalizedAttributeType extends AbstractType
     protected function addNameField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_NAME, TextType::class, [
+            ->add(static::FIELD_NAME, TextType::class, [
                 'constraints' => [
                     new NotBlank(),
                     new Callback([
@@ -137,7 +137,7 @@ class CategoryLocalizedAttributeType extends AbstractType
     protected function addMetaTitleField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_META_TITLE, TextType::class, [
+            ->add(static::FIELD_META_TITLE, TextType::class, [
                 'label' => 'Meta Title',
                 'required' => false,
             ]);
@@ -153,7 +153,7 @@ class CategoryLocalizedAttributeType extends AbstractType
     protected function addMetaDescriptionField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_META_DESCRIPTION, TextareaType::class, [
+            ->add(static::FIELD_META_DESCRIPTION, TextareaType::class, [
                 'label' => 'Meta Description',
                 'required' => false,
                 'attr' => [
@@ -172,7 +172,7 @@ class CategoryLocalizedAttributeType extends AbstractType
     protected function addMetaKeywordsField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_META_KEYWORDS, TextareaType::class, [
+            ->add(static::FIELD_META_KEYWORDS, TextareaType::class, [
                 'label' => 'Meta Keywords',
                 'required' => false,
             ]);
