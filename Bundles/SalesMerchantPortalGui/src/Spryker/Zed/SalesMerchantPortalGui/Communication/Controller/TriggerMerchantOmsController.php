@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\SalesMerchantPortalGui\Communication\SalesMerchantPortalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\SalesMerchantPortalGui\Persistence\SalesMerchantPortalGuiRepositoryInterface getRepository()
  */
-class TriggerMerchantOmsController extends AbstractController
+class TriggerMerchantOmsController extends AbstractSalesMerchantPortalGuiController
 {
     protected const PARAM_ID_MERCHANT_ORDER = 'merchant-order-id';
     protected const PARAM_MERCHANT_ORDER_IDS = 'merchant-order-ids';
@@ -50,8 +50,7 @@ class TriggerMerchantOmsController extends AbstractController
                     ->setWithItems(true)
             );
 
-        $merchantOrderTransfer = $this->validateMerchantOrder($merchantOrderTransfer);
-        if (!$merchantOrderTransfer) {
+        if (!$merchantOrderTransfer || !$this->isMerchantOrderBelongsCurrentMerchant($merchantOrderTransfer)) {
             return $this->getErrorResponse(sprintf('Merchant order is not found for id %d.', $idMerchantOrder));
         }
 
@@ -113,10 +112,8 @@ class TriggerMerchantOmsController extends AbstractController
                     ->setIdMerchantOrder($idMerchantOrder)
             );
 
-        $merchantOrderTransfer = $this->validateMerchantOrder($merchantOrderTransfer);
-
-        if (!$merchantOrderTransfer) {
-            return $this->getErrorResponse(sprintf('Merchant order not found for id %d.', $idMerchantOrder));
+        if (!$merchantOrderTransfer || !$this->isMerchantOrderBelongsCurrentMerchant($merchantOrderTransfer)) {
+            return $this->getErrorResponse(sprintf('Merchant order is not found for id %d.', $idMerchantOrder));
         }
 
         $merchantOrderItemCollectionTransfer = $this->getFactory()

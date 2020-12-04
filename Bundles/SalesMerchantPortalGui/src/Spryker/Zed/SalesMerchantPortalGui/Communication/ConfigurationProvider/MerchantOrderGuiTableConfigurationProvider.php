@@ -153,12 +153,8 @@ class MerchantOrderGuiTableConfigurationProvider implements MerchantOrderGuiTabl
 
         $storeOptions = [];
         foreach ($storeTransfers as $storeTransfer) {
-            $storeName = $storeTransfer->getName();
-
-            if (!$storeName) {
-                continue;
-            }
-
+            /** @var string $storeName */
+            $storeName = $storeTransfer->requireName()->getName();
             $storeOptions[$storeName] = $storeName;
         }
 

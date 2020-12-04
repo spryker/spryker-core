@@ -98,11 +98,8 @@ class UniqueUrlValidator extends AbstractConstraintValidator
      */
     protected function isUrlChanged(UrlTransfer $urlTransfer, UniqueUrl $constraint): bool
     {
-        $url = $urlTransfer->getUrl();
-        if (!$url) {
-            return false;
-        }
-
+        /** @var string $url */
+        $url = $urlTransfer->requireUrl()->getUrl();
         $existingUrlTransfer = $this->findExistingUrl($url);
 
         if (!$existingUrlTransfer) {

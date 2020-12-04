@@ -153,11 +153,8 @@ class MerchantProfileFormDataProvider implements MerchantProfileFormDataProvider
      */
     protected function getLocalizedUrlPrefix(LocaleTransfer $localeTransfer): string
     {
-        $localeName = $localeTransfer->getLocaleName();
-        if (!$localeName) {
-            return '';
-        }
-
+        /** @var string $localeName */
+        $localeName = $localeTransfer->requireLocaleName()->getLocaleName();
         $localeNameParts = explode('_', $localeName);
         $languageCode = $localeNameParts[0];
 

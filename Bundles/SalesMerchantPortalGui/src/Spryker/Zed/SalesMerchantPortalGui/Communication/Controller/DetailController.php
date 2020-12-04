@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * @method \Spryker\Zed\SalesMerchantPortalGui\Communication\SalesMerchantPortalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\SalesMerchantPortalGui\Persistence\SalesMerchantPortalGuiRepositoryInterface getRepository()
  */
-class DetailController extends AbstractController
+class DetailController extends AbstractSalesMerchantPortalGuiController
 {
     protected const PARAM_ID_MERCHANT_ORDER = 'merchant-order-id';
 
@@ -48,8 +48,7 @@ class DetailController extends AbstractController
                     ->setWithUniqueProductsCount(true)
             );
 
-        $merchantOrderTransfer = $this->validateMerchantOrder($merchantOrderTransfer);
-        if (!$merchantOrderTransfer) {
+        if (!$merchantOrderTransfer || !$this->isMerchantOrderBelongsCurrentMerchant($merchantOrderTransfer)) {
             throw new NotFoundHttpException(sprintf('Merchant order is not found for id %d.', $idMerchantOrder));
         }
 
@@ -87,8 +86,7 @@ class DetailController extends AbstractController
                     ->setWithItems(true)
             );
 
-        $merchantOrderTransfer = $this->validateMerchantOrder($merchantOrderTransfer);
-        if (!$merchantOrderTransfer) {
+        if (!$merchantOrderTransfer || !$this->isMerchantOrderBelongsCurrentMerchant($merchantOrderTransfer)) {
             throw new NotFoundHttpException(sprintf('Merchant order is not found for id %d.', $idMerchantOrder));
         }
 
@@ -109,13 +107,12 @@ class DetailController extends AbstractController
      */
     protected function getCustomerMerchantOrderNumber(MerchantOrderTransfer $merchantOrderTransfer): int
     {
-        $merchantOrderTransfer->requireOrder();
-
         $customerMerchantOrderNumber = 0;
 
-        $orderTransfer = $merchantOrderTransfer->getOrder();
+        /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
+        $orderTransfer = $merchantOrderTransfer->requireOrder()->getOrder();
 
-        if (!$orderTransfer || !$orderTransfer->getCustomerReference()) {
+        if (!$orderTransfer->getCustomerReference()) {
             return $customerMerchantOrderNumber;
         }
 
@@ -157,12 +154,8 @@ class DetailController extends AbstractController
     {
         $salesOrderItemIds = [];
         foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItem) {
-            $idOrderItem = $merchantOrderItem->getIdOrderItem();
-
-            if (!$idOrderItem) {
-                continue;
-            }
-
+            /** @var int $idOrderItem */
+            $idOrderItem = $merchantOrderItem->requireIdOrderItem()->getIdOrderItem();
             $salesOrderItemIds[] = $idOrderItem;
         }
 
@@ -180,9 +173,11 @@ class DetailController extends AbstractController
         foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
             /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
             $itemTransfer = $merchantOrderItemTransfer->requireOrderItem()->getOrderItem();
-
+            /** @var \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer */
             $shipmentTransfer = $itemTransfer->getShipment();
-            $idSalesShipment = $shipmentTransfer ? $shipmentTransfer->getIdSalesShipment() : null;
+            /** @var int $idSalesShipment */
+            $idSalesShipment = $shipmentTransfer->requireIdSalesShipment()->getIdSalesShipment();
+
             $merchantOrderItemTransfers[$idSalesShipment][] = $merchantOrderItemTransfer;
         }
 

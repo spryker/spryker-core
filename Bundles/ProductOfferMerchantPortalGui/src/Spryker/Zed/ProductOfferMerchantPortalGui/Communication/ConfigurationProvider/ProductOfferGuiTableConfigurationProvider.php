@@ -142,12 +142,10 @@ class ProductOfferGuiTableConfigurationProvider implements GuiTableConfiguration
 
         $storeOptions = [];
         foreach ($storeTransfers as $storeTransfer) {
-            $idStore = $storeTransfer->getIdStore();
-            $storeName = $storeTransfer->getName();
-
-            if (!$idStore || !$storeName) {
-                continue;
-            }
+            /** @var int $idStore */
+            $idStore = $storeTransfer->requireIdStore()->getIdStore();
+            /** @var string $storeName */
+            $storeName = $storeTransfer->requireName()->getName();
 
             $storeOptions[$idStore] = $storeName;
         }

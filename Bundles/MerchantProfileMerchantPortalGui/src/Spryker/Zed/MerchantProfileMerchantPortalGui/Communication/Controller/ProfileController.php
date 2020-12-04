@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
 class ProfileController extends AbstractController
 {
     protected const MESSAGE_MERCHANT_UPDATE_SUCCESS = 'The Profile has been changed successfully.';
-    protected const MESSAGE_MERCHANT_NOT_FOUND = 'The merchant user is not found.';
 
     /**
      * @phpstan-return array<mixed>
@@ -72,12 +71,9 @@ class ProfileController extends AbstractController
         }
 
         foreach ($merchantResponseTransfer->getErrors() as $merchantErrorTransfer) {
-            $errorMessage = $merchantErrorTransfer->getMessage();
-            if (!$errorMessage) {
-                continue;
-            }
-
-            $this->addErrorMessage($errorMessage);
+            /** @var string $message */
+            $message = $merchantErrorTransfer->requireMessage()->getMessage();
+            $this->addErrorMessage($message);
         }
     }
 }

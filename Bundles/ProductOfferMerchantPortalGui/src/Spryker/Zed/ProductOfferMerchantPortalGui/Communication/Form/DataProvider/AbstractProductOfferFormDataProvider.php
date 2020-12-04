@@ -99,10 +99,8 @@ abstract class AbstractProductOfferFormDataProvider
         $indexedPriceProductTransfers = $this->indexPriceProductTransfers($productOfferTransfer);
         $priceProductTransfers = new ArrayObject();
         foreach ($storeWithCurrencyTransfers as $storeWithCurrencyTransfer) {
-            $storeTransfer = $storeWithCurrencyTransfer->getStore();
-            if (!$storeTransfer) {
-                continue;
-            }
+            /** @var \Generated\Shared\Transfer\StoreTransfer $storeTransfer */
+            $storeTransfer = $storeWithCurrencyTransfer->requireStore()->getStore();
 
             foreach ($storeWithCurrencyTransfer->getCurrencies() as $currencyTransfer) {
                 foreach ($priceTypeTransfers as $priceTypeTransfer) {
@@ -143,13 +141,10 @@ abstract class AbstractProductOfferFormDataProvider
         }
 
         foreach ($storeRelationTransfer->getStores() as $storeTransfer) {
-            $idStore = $storeTransfer->getIdStore();
-            $storeName = $storeTransfer->getName();
-
-            if (!$idStore || !$storeName) {
-                continue;
-            }
-
+            /** @var int $idStore */
+            $idStore = $storeTransfer->requireIdStore()->getIdStore();
+            /** @var string $storeName */
+            $storeName = $storeTransfer->requireName()->getName();
             $storeChoices[$storeName] = $idStore;
         }
 
@@ -190,12 +185,10 @@ abstract class AbstractProductOfferFormDataProvider
     {
         $indexedPriceProductTransfers = [];
         foreach ($productOfferTransfer->getPrices() as $priceProductTransfer) {
-            $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
-            $priceTypeTransfer = $priceProductTransfer->getPriceType();
-
-            if (!$moneyValueTransfer || !$priceTypeTransfer) {
-                continue;
-            }
+            /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+            $moneyValueTransfer = $priceProductTransfer->requireMoneyValue()->getMoneyValue();
+            /** @var \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer */
+            $priceTypeTransfer = $priceProductTransfer->requirePriceType()->getPriceType();
 
             $idStore = $moneyValueTransfer->getFkStore();
             $idCurrency = $moneyValueTransfer->getFkCurrency();
@@ -237,11 +230,8 @@ abstract class AbstractProductOfferFormDataProvider
 
         foreach ($productOfferTransfer->getProductOfferStocks() as $productOfferStockTransfer) {
             $firstStockTransfer = $stockTransfers->offsetGet(0);
-            $stockTransfer = $productOfferStockTransfer->getStock();
-
-            if (!$firstStockTransfer || !$stockTransfer) {
-                continue;
-            }
+            /** @var \Generated\Shared\Transfer\StockTransfer $stockTransfer */
+            $stockTransfer = $productOfferStockTransfer->requireStock()->getStock();
 
             if ($stockTransfer->getIdStock() === $firstStockTransfer->getIdStock()) {
                 $productOfferTransfer->setProductOfferStocks(new ArrayObject([$productOfferStockTransfer]));

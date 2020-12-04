@@ -32,12 +32,10 @@ class MerchantProfileAddressFormDataProvider implements MerchantProfileAddressFo
         $countryChoices = [];
 
         foreach ($this->countryFacade->getAvailableCountries()->getCountries() as $country) {
-            $idCountry = $country->getIdCountry();
-            $countryName = $country->getName();
-
-            if (!$idCountry || !$countryName) {
-                continue;
-            }
+            /** @var int $idCountry */
+            $idCountry = $country->requireIdCountry()->getIdCountry();
+            /** @var string $countryName */
+            $countryName = $country->requireName()->getName();
 
             $countryChoices[$idCountry] = $countryName;
         }

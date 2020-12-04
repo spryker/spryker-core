@@ -24,9 +24,6 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPo
 
 class ProductGuiTableDataProvider extends AbstractGuiTableDataProvider
 {
-    protected const DEFAULT_PAGE_NUMBER = 1;
-    protected const DEFAULT_MAX_PER_PAGE = 10;
-
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface
      */
@@ -112,21 +109,13 @@ class ProductGuiTableDataProvider extends AbstractGuiTableDataProvider
             $guiTableDataResponseTransfer->addRow((new GuiTableRowDataResponseTransfer())->setResponseData($responseData));
         }
 
-        $paginationTransfer = $productConcreteCollectionTransfer->getPagination();
-        $page = static::DEFAULT_PAGE_NUMBER;
-        $maxPerPage = static::DEFAULT_MAX_PER_PAGE;
-        $total = $productConcreteCollectionTransfer->getProducts()->count();
-
-        if ($paginationTransfer) {
-            $page = $paginationTransfer->getPage() ?: $page;
-            $maxPerPage = $paginationTransfer->getMaxPerPage() ?: $maxPerPage;
-            $total = $paginationTransfer->getNbResults() ?: $total;
-        }
+        /** @var \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer */
+        $paginationTransfer = $productConcreteCollectionTransfer->requirePagination()->getPagination();
 
         return $guiTableDataResponseTransfer
-            ->setPage($page)
-            ->setPageSize($maxPerPage)
-            ->setTotal($total);
+            ->setPage($paginationTransfer->requirePage()->getPage())
+            ->setPageSize($paginationTransfer->requireMaxPerPage()->getMaxPerPage())
+            ->setTotal($paginationTransfer->requireNbResults()->getNbResults());
     }
 
     /**
@@ -140,11 +129,8 @@ class ProductGuiTableDataProvider extends AbstractGuiTableDataProvider
         $storeNames = [];
 
         foreach ($storeTransfers as $storeTransfer) {
-            $storeName = $storeTransfer->getName();
-            if (!$storeName) {
-                continue;
-            }
-
+            /** @var string $storeName */
+            $storeName = $storeTransfer->requireName()->getName();
             $storeNames[] = $storeName;
         }
 

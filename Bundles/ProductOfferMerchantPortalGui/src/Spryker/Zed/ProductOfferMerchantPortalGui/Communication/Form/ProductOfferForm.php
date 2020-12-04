@@ -277,13 +277,12 @@ class ProductOfferForm extends AbstractType
                 continue;
             }
 
-            $currencyTransfer = $moneyValueTransfer->getCurrency();
-            $priceTypeTransfer = $priceProductTransfer->getPriceType();
-            $storeTransfer = $moneyValueTransfer->getStore();
-
-            if (!$currencyTransfer || !$priceTypeTransfer || !$storeTransfer) {
-                continue;
-            }
+            /** @var \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer */
+            $currencyTransfer = $moneyValueTransfer->requireCurrency()->getCurrency();
+            /** @var \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer */
+            $priceTypeTransfer = $priceProductTransfer->requirePriceType()->getPriceType();
+            /** @var \Generated\Shared\Transfer\StoreTransfer $storeTransfer */
+            $storeTransfer = $moneyValueTransfer->requireStore()->getStore();
 
             $formView->children[PriceProductForm::FIELD_NET_AMOUNT]->vars['label'] = $currencyTransfer->getSymbol();
             $formView->children[PriceProductForm::FIELD_GROSS_AMOUNT]->vars['label'] = $currencyTransfer->getSymbol();

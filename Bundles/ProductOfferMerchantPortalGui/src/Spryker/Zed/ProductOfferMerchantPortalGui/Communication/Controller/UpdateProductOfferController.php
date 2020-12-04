@@ -49,10 +49,8 @@ class UpdateProductOfferController extends AbstractProductOfferController
 
         /** @var int $idProductAbstract */
         $idProductAbstract = $productConcreteTransfer->requireFkProductAbstract()->getFkProductAbstract();
+        /** @var \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer */
         $productAbstractTransfer = $this->getFactory()->getProductFacade()->findProductAbstractById($idProductAbstract);
-        if (!$productAbstractTransfer) {
-            throw new NotFoundHttpException(sprintf('Product Abstract is not found for abstract id %d.', $idProductAbstract));
-        }
 
         $productOfferForm = $this->getFactory()->createProductOfferForm(
             $productOfferTransfer,

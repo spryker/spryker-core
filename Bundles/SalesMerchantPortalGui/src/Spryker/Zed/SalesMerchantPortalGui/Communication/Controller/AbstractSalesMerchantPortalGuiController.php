@@ -8,33 +8,29 @@
 namespace Spryker\Zed\SalesMerchantPortalGui\Communication\Controller;
 
 use Generated\Shared\Transfer\MerchantOrderTransfer;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController as SprykerAbstractController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
  * @method \Spryker\Zed\SalesMerchantPortalGui\Communication\SalesMerchantPortalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\SalesMerchantPortalGui\Persistence\SalesMerchantPortalGuiRepositoryInterface getRepository()
  */
-abstract class AbstractController extends SprykerAbstractController
+abstract class AbstractSalesMerchantPortalGuiController extends AbstractController
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantOrderTransfer|null $merchantOrderTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
+     * @return bool
      */
-    protected function validateMerchantOrder(?MerchantOrderTransfer $merchantOrderTransfer): ?MerchantOrderTransfer
+    protected function isMerchantOrderBelongsCurrentMerchant(MerchantOrderTransfer $merchantOrderTransfer): bool
     {
-        if (!$merchantOrderTransfer) {
-            return null;
-        }
-
         $currentMerchantUserTransfer = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser();
         /** @var \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer */
         $merchantTransfer = $currentMerchantUserTransfer->requireMerchant()->getMerchant();
 
         if ($merchantTransfer->getMerchantReference() !== $merchantOrderTransfer->getMerchantReference()) {
-            return null;
+            return false;
         }
 
-        return $merchantOrderTransfer;
+        return true;
     }
 }
