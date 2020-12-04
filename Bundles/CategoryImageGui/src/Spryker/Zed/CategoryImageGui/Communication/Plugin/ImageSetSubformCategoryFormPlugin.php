@@ -29,7 +29,7 @@ class ImageSetSubformCategoryFormPlugin extends AbstractPlugin implements Catego
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder)
+    public function buildForm(FormBuilderInterface $builder): void
     {
         $localeFacade = $this->getFactory()->getLocaleFacade();
         $builder->add(static::FIELD_IMAGE_SETS, ImageSetCollectionForm::class, [

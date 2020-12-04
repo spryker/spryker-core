@@ -21,5 +21,5 @@ interface CategoryFormPluginInterface
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder);
+    public function buildForm(FormBuilderInterface $builder): void;
 }

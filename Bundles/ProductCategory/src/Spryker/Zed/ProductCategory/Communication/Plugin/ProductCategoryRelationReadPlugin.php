@@ -27,7 +27,7 @@ class ProductCategoryRelationReadPlugin extends AbstractPlugin implements Catego
      *
      * @return string
      */
-    public function getRelationName()
+    public function getRelationName(): string
     {
         return 'Products';
     }
@@ -42,7 +42,7 @@ class ProductCategoryRelationReadPlugin extends AbstractPlugin implements Catego
      *
      * @return string[]
      */
-    public function getRelations(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer)
+    public function getRelations(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer): array
     {
         $productNames = [];
         $productTransferCollection = $this

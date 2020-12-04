@@ -27,7 +27,7 @@ class CmsBlockCategoryRelationReadPlugin extends AbstractPlugin implements Categ
      *
      * @return string
      */
-    public function getRelationName()
+    public function getRelationName(): string
     {
         return 'CMS Blocks';
     }
@@ -42,7 +42,7 @@ class CmsBlockCategoryRelationReadPlugin extends AbstractPlugin implements Categ
      *
      * @return string[]
      */
-    public function getRelations(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer)
+    public function getRelations(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer): array
     {
         $cmsBlocks = [];
         $cmsBlockTransfers = $this
