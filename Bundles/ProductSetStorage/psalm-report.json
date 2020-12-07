@@ -1,18 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 56,
-            "line_to": 56,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Client\\ProductSetStorage\\Storage\\ProductSetStorageReader::getProductSetByIdProductSet has wrong name $idProductAbstract, expecting $idProductSet as defined by Spryker\\Client\\ProductSetStorage\\Storage\\ProductSetStorageReaderInterface::getProductSetByIdProductSet",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSetStorage/src/Spryker/Client/ProductSetStorage/Storage/ProductSetStorageReader.php",
-            "snippet": "    public function getProductSetByIdProductSet($idProductAbstract, $localeName)",
-            "selected_text": "$idProductAbstract",
-            "error_level": 7,
-            "shortcode": 230
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
