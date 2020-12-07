@@ -264,4 +264,24 @@ class TransferConfig extends AbstractBundleConfig
     {
         return $this->get(TransferConstants::IS_DEBUG_ENABLED, false);
     }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getXsdSchemaFilePath(): string
+    {
+        return realpath(__DIR__ . '/../../../../data/definition/transfer-01.xsd');
+    }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isTransferXmlValidationEnabled(): bool
+    {
+        return false;
+    }
 }

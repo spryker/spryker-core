@@ -11,7 +11,9 @@ use Laminas\Config\Factory;
 use Laminas\Filter\Word\UnderscoreToCamelCase;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface;
+use Spryker\Zed\Transfer\Business\XmlValidator\XmlValidatorInterface;
 use Spryker\Zed\Transfer\TransferConfig;
+use Symfony\Component\Finder\SplFileInfo;
 
 class TransferValidator implements TransferValidatorInterface
 {
@@ -67,12 +69,22 @@ class TransferValidator implements TransferValidatorInterface
     protected $transferConfig;
 
     /**
+     * @var \Spryker\Zed\Transfer\Business\XmlValidator\XmlValidatorInterface
+     */
+    protected $xmlValidator;
+
+    /**
      * @param \Psr\Log\LoggerInterface $messenger
      * @param \Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface $finder
      * @param \Spryker\Zed\Transfer\TransferConfig $transferConfig
+     * @param \Spryker\Zed\Transfer\Business\XmlValidator\XmlValidatorInterface $xmlValidator
      */
-    public function __construct(LoggerInterface $messenger, FinderInterface $finder, TransferConfig $transferConfig)
-    {
+    public function __construct(
+        LoggerInterface $messenger,
+        FinderInterface $finder,
+        TransferConfig $transferConfig,
+        XmlValidatorInterface $xmlValidator
+    ) {
         $this->messenger = $messenger;
         $this->finder = $finder;
         $this->transferConfig = $transferConfig;
@@ -81,6 +93,7 @@ class TransferValidator implements TransferValidatorInterface
         foreach ($this->simpleTypeWhitelist as $type) {
             $this->typeMap[$type] = $type;
         }
+        $this->xmlValidator = $xmlValidator;
     }
 
     /**
@@ -94,6 +107,10 @@ class TransferValidator implements TransferValidatorInterface
 
         $result = true;
         foreach ($files as $key => $file) {
+            if ($this->transferConfig->isTransferXmlValidationEnabled()) {
+                $result &= $this->validateXml($file);
+            }
+
             if ($options['bundle'] && strpos($file, '/Shared/' . $options['bundle'] . '/Transfer/') === false) {
                 continue;
             }
@@ -405,5 +422,28 @@ class TransferValidator implements TransferValidatorInterface
     protected function hasDuplicate(array $singulars): bool
     {
         return count(array_unique($singulars)) < count($singulars);
+    }
+
+    /**
+     * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
+     *
+     * @return bool
+     */
+    protected function validateXml(SplFileInfo $fileInfo): bool
+    {
+        $this->xmlValidator->validate(
+            $fileInfo->getRealPath(),
+            $this->transferConfig->getXsdSchemaFilePath()
+        );
+
+        if ($this->xmlValidator->isValid()) {
+            return true;
+        }
+
+        foreach ($this->xmlValidator->getErrors() as $error) {
+            $this->messenger->warning($error);
+        }
+
+        return false;
     }
 }
