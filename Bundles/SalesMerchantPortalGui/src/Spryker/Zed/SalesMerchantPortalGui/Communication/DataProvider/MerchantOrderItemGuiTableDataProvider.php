@@ -25,9 +25,6 @@ use Spryker\Zed\SalesMerchantPortalGui\Persistence\SalesMerchantPortalGuiReposit
 
 class MerchantOrderItemGuiTableDataProvider extends AbstractGuiTableDataProvider
 {
-    protected const DEFAULT_PAGE_NUMBER = 1;
-    protected const DEFAULT_MAX_PER_PAGE = 10;
-
     /**
      * @var \Spryker\Zed\SalesMerchantPortalGui\Persistence\SalesMerchantPortalGuiRepositoryInterface
      */
@@ -111,16 +108,10 @@ class MerchantOrderItemGuiTableDataProvider extends AbstractGuiTableDataProvider
         $salesOrderItemIds = [];
 
         foreach ($merchantOrderItemCollectionTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
-            $itemTransfer = $merchantOrderItemTransfer->getOrderItem();
-
-            if (!$itemTransfer) {
-                continue;
-            }
-
-            $idSalesOrderItem = $itemTransfer->getIdSalesOrderItem();
-            if (!$idSalesOrderItem) {
-                continue;
-            }
+            /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+            $itemTransfer = $merchantOrderItemTransfer->requireOrderItem()->getOrderItem();
+            /** @var int $idSalesOrderItem */
+            $idSalesOrderItem = $itemTransfer->requireIdSalesOrderItem()->getIdSalesOrderItem();
 
             $responseData = [
                 ItemTransfer::ID_SALES_ORDER_ITEM => $idSalesOrderItem,
@@ -138,16 +129,14 @@ class MerchantOrderItemGuiTableDataProvider extends AbstractGuiTableDataProvider
             $salesOrderItemIds[] = $idSalesOrderItem;
         }
 
-        $page = static::DEFAULT_PAGE_NUMBER;
-        $maxPerPage = static::DEFAULT_MAX_PER_PAGE;
-        $total = $merchantOrderItemCollectionTransfer->getMerchantOrderItems()->count();
-        $paginationTransfer = $merchantOrderItemCollectionTransfer->getPagination();
-
-        if ($paginationTransfer) {
-            $page = $paginationTransfer->getPage() ?: $page;
-            $maxPerPage = $paginationTransfer->getMaxPerPage() ?: $maxPerPage;
-            $total = $paginationTransfer->getNbResults() ?: $total;
-        }
+        /** @var \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer */
+        $paginationTransfer = $merchantOrderItemCollectionTransfer->requirePagination()->getPagination();
+        /** @var int $page */
+        $page = $paginationTransfer->requirePage()->getPage();
+        /** @var int $maxPerPage */
+        $maxPerPage = $paginationTransfer->requireMaxPerPage()->getMaxPerPage();
+        /** @var int $total */
+        $total = $paginationTransfer->requireNbResults()->getNbResults();
 
         $guiTableDataResponseTransfer = $guiTableDataResponseTransfer
             ->setPage($page)

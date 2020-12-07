@@ -271,12 +271,8 @@ class ProductOfferForm extends AbstractType
 
         foreach ($pricesForm as $formView) {
             $priceProductTransfer = $this->getPriceProductTransfer($formView);
-            $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
-
-            if (!$moneyValueTransfer) {
-                continue;
-            }
-
+            /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+            $moneyValueTransfer = $priceProductTransfer->requireMoneyValue()->getMoneyValue();
             /** @var \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer */
             $currencyTransfer = $moneyValueTransfer->requireCurrency()->getCurrency();
             /** @var \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer */

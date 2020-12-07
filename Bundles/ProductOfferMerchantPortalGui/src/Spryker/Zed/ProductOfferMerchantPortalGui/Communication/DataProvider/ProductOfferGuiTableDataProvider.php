@@ -92,7 +92,8 @@ class ProductOfferGuiTableDataProvider extends AbstractGuiTableDataProvider
     {
         $productOfferCollectionTransfer = $this->productOfferMerchantPortalGuiRepository->getProductOfferTableData($criteriaTransfer);
         $guiTableDataResponseTransfer = new GuiTableDataResponseTransfer();
-        $localeTransfer = $criteriaTransfer->getLocale() ?: new LocaleTransfer();
+        /** @var \Generated\Shared\Transfer\LocaleTransfer $localeTransfer */
+        $localeTransfer = $criteriaTransfer->requireLocale()->getLocale();
 
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
             $responseData = [

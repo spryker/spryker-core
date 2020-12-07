@@ -179,10 +179,6 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
         $idMerchant = $merchantOrderTableCriteriaTransfer->requireIdMerchant()->getIdMerchant();
         $merchantSalesOrderQuery = $this->getFactory()->getMerchantSalesOrderPropelQuery();
 
-        if (!$idMerchant) {
-            return $merchantSalesOrderQuery;
-        }
-
         $merchantSalesOrderQuery = $this->filterMerchantSalesOrderQueryByIdMerchant($merchantSalesOrderQuery, $idMerchant);
         $merchantSalesOrderQuery->joinMerchantSalesOrderItem()
             ->joinMerchantSalesOrderTotal()
