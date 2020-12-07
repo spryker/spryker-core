@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SecurityOauthUser\Communication\Handler;
 
-use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\SecurityOauthUser\Dependency\Facade\SecurityOauthUserToUserFacadeInterface;
 use Spryker\Zed\SecurityOauthUser\SecurityOauthUserConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -58,9 +57,7 @@ class OauthUserAuthenticationSuccessHandler implements AuthenticationSuccessHand
         /** @var \Spryker\Zed\SecurityOauthUser\Communication\Security\SecurityOauthUserInterface $user */
         $user = $token->getUser();
 
-        $this->userFacade->setCurrentUser(
-            (new UserTransfer())->setUsername($user->getUsername())
-        );
+        $this->userFacade->setCurrentUser($user->getUserTransfer());
 
         return $this->createRedirectResponse($request);
     }

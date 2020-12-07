@@ -50,21 +50,23 @@ class AuthenticationStrategyResolver implements AuthenticationStrategyResolverIn
     }
 
     /**
+     * @throws \Spryker\Zed\SecurityOauthUser\Business\Exception\AuthenticationStrategyNotFoundException
+     *
      * @return \Spryker\Zed\SecurityOauthUser\Business\Strategy\AuthenticationStrategyInterface
      */
     protected function resolveOauthUserAuthenticationStrategy(): AuthenticationStrategyInterface
     {
-        $authenticationStrategy = $this->securityOauthUserConfig->getAuthenticationStrategy();
+        $authenticationStrategyName = $this->securityOauthUserConfig->getAuthenticationStrategy();
 
         foreach ($this->authenticationStrategies as $authenticationStrategy) {
-            if ($authenticationStrategy->getAuthenticationStrategy() === $authenticationStrategy) {
+            if ($authenticationStrategy->getAuthenticationStrategy() === $authenticationStrategyName) {
                 return $authenticationStrategy;
             }
         }
 
         throw new AuthenticationStrategyNotFoundException(sprintf(
             'Authentication strategy with name "%s" not found',
-            $authenticationStrategy
+            $authenticationStrategyName
         ));
     }
 }

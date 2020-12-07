@@ -65,8 +65,8 @@ class SecurityOauthUserFacade extends AbstractFacade implements SecurityOauthUse
      */
     public function resolveOauthUser(UserCriteriaTransfer $userCriteriaTransfer): ?UserTransfer
     {
-       return $this->getFactory()
-           ->createAuthenticationStrategyResolver()
-           ->resolveOauthUser($userCriteriaTransfer);
+        return $this->getFactory()
+            ->createAuthenticationStrategyResolver()
+            ->resolveOauthUser($userCriteriaTransfer);
     }
 }

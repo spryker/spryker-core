@@ -5,47 +5,36 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SecurityOauthUser\Business\Resolver;
+namespace Spryker\Zed\SecurityOauthUser\Business\Strategy;
 
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
-use Spryker\Zed\SecurityOauthUser\Business\Strategy\AuthenticationStrategyInterface;
+use Spryker\Zed\SecurityOauthUser\Business\Creator\OauthUserCreatorInterface;
 use Spryker\Zed\SecurityOauthUser\Dependency\Facade\SecurityOauthUserToUserFacadeInterface;
-use Spryker\Zed\SecurityOauthUser\Dependency\Service\SecurityOauthUserToUtilTextServiceInterface;
 use Spryker\Zed\SecurityOauthUser\SecurityOauthUserConfig;
 
 class CreateUserAuthenticationStrategy implements AuthenticationStrategyInterface
 {
-    protected const OAUTH_USER_CREATION_DEFAULT_PASSWORD_LENGTH = 64;
-
-    /**
-     * @var \Spryker\Zed\SecurityOauthUser\SecurityOauthUserConfig
-     */
-    protected $securityOauthUserConfig;
-
     /**
      * @var \Spryker\Zed\SecurityOauthUser\Dependency\Facade\SecurityOauthUserToUserFacadeInterface
      */
     protected $userFacade;
 
     /**
-     * @var \Spryker\Zed\SecurityOauthUser\Dependency\Service\SecurityOauthUserToUtilTextServiceInterface
+     * @var \Spryker\Zed\SecurityOauthUser\Business\Creator\OauthUserCreatorInterface
      */
-    protected $utilTextService;
+    protected $oauthUserCreator;
 
     /**
-     * @param \Spryker\Zed\SecurityOauthUser\SecurityOauthUserConfig $securityOauthUserConfig
      * @param \Spryker\Zed\SecurityOauthUser\Dependency\Facade\SecurityOauthUserToUserFacadeInterface $userFacade
-     * @param \Spryker\Zed\SecurityOauthUser\Dependency\Service\SecurityOauthUserToUtilTextServiceInterface $utilTextService
+     * @param \Spryker\Zed\SecurityOauthUser\Business\Creator\OauthUserCreatorInterface $oauthUserCreator
      */
     public function __construct(
-        SecurityOauthUserConfig $securityOauthUserConfig,
         SecurityOauthUserToUserFacadeInterface $userFacade,
-        SecurityOauthUserToUtilTextServiceInterface $utilTextService
+        OauthUserCreatorInterface $oauthUserCreator
     ) {
-        $this->securityOauthUserConfig = $securityOauthUserConfig;
         $this->userFacade = $userFacade;
-        $this->utilTextService = $utilTextService;
+        $this->oauthUserCreator = $oauthUserCreator;
     }
 
     /**
@@ -66,9 +55,7 @@ class CreateUserAuthenticationStrategy implements AuthenticationStrategyInterfac
         $userTransfer = $this->userFacade->findUser($userCriteriaTransfer);
 
         if ($userTransfer === null) {
-            return $this->userFacade->createUser(
-                $this->createUserTransfer($userCriteriaTransfer)
-            );
+            return $this->oauthUserCreator->createOauthUser($userCriteriaTransfer);
         }
 
         if ($userTransfer->getStatus() !== SecurityOauthUserConfig::OAUTH_USER_STATUS_ACTIVE) {
@@ -76,24 +63,5 @@ class CreateUserAuthenticationStrategy implements AuthenticationStrategyInterfac
         }
 
         return $userTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer
-     */
-    protected function createUserTransfer(UserCriteriaTransfer $userCriteriaTransfer): UserTransfer
-    {
-        $email = $userCriteriaTransfer->getEmailOrFail();
-
-        return (new UserTransfer())
-            ->setUsername($email)
-            ->setFirstName($email)
-            ->setLastName($email)
-            ->setPassword($this->utilTextService->generateRandomByteString(
-                static::OAUTH_USER_CREATION_DEFAULT_PASSWORD_LENGTH
-            ))
-            ->setStatus($this->securityOauthUserConfig->getOauthUserCreationStatus());
     }
 }

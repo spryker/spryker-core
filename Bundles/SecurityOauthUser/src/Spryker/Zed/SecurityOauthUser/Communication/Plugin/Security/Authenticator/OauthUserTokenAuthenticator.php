@@ -42,7 +42,8 @@ class OauthUserTokenAuthenticator extends AbstractPlugin implements Authenticato
      */
     public function supports(Request $request)
     {
-        return $request->query->get(SecurityOauthUserConfig::REQUEST_PARAMETER_AUTHENTICATION_CODE)
+        return $request->attributes->get('_route') === SecurityOauthUserConfig::ROUTE_NAME_OAUTH_USER_LOGIN
+            && $request->query->get(SecurityOauthUserConfig::REQUEST_PARAMETER_AUTHENTICATION_CODE)
             && $request->query->get(SecurityOauthUserConfig::REQUEST_PARAMETER_AUTHENTICATION_STATE);
     }
 
@@ -54,12 +55,9 @@ class OauthUserTokenAuthenticator extends AbstractPlugin implements Authenticato
     public function getCredentials(Request $request)
     {
         $resourceOwnerTransfer = $this->getFactory()->createResourceOwnerReader()->getResourceOwner($request);
-        if (!$resourceOwnerTransfer) {
-            return null;
-        }
 
         return [
-            'token' => $resourceOwnerTransfer->getEmail(),
+            'token' => $resourceOwnerTransfer ? $resourceOwnerTransfer->getEmail() : null,
         ];
     }
 

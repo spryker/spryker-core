@@ -5,11 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SecurityOauthUser\Business\Resolver;
+namespace Spryker\Zed\SecurityOauthUser\Business\Strategy;
 
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
-use Spryker\Zed\SecurityOauthUser\Business\Strategy\AuthenticationStrategyInterface;
 use Spryker\Zed\SecurityOauthUser\Dependency\Facade\SecurityOauthUserToUserFacadeInterface;
 use Spryker\Zed\SecurityOauthUser\SecurityOauthUserConfig;
 
@@ -43,6 +42,8 @@ class ExistingUserAuthenticationStrategy implements AuthenticationStrategyInterf
      */
     public function resolveOauthUser(UserCriteriaTransfer $userCriteriaTransfer): ?UserTransfer
     {
+        $userCriteriaTransfer->getEmailOrFail();
+
         $userTransfer = $this->userFacade->findUser($userCriteriaTransfer);
         if ($userTransfer === null) {
             return null;

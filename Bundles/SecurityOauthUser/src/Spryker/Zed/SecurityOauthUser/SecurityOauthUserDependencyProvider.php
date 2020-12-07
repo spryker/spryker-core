@@ -9,9 +9,10 @@ namespace Spryker\Zed\SecurityOauthUser;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceBridge;
+use Spryker\Zed\SecurityOauthUser\Dependency\Facade\SecurityOauthUserToAclFacadeBridge;
 use Spryker\Zed\SecurityOauthUser\Dependency\Facade\SecurityOauthUserToMessengerFacadeBridge;
 use Spryker\Zed\SecurityOauthUser\Dependency\Facade\SecurityOauthUserToUserFacadeBridge;
+use Spryker\Zed\SecurityOauthUser\Dependency\Service\SecurityOauthUserToUtilTextServiceBridge;
 
 /**
  * @method \Spryker\Zed\SecurityOauthUser\SecurityOauthUserConfig getConfig()
@@ -19,6 +20,7 @@ use Spryker\Zed\SecurityOauthUser\Dependency\Facade\SecurityOauthUserToUserFacad
 class SecurityOauthUserDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_USER = 'FACADE_USER';
+    public const FACADE_ACL = 'FACADE_ACL';
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
     public const SERVICE_UTIL_TEXT = 'UTIL_TEXT_SERVICE';
 
@@ -50,6 +52,7 @@ class SecurityOauthUserDependencyProvider extends AbstractBundleDependencyProvid
         $container = parent::provideBusinessLayerDependencies($container);
 
         $container = $this->addUserFacade($container);
+        $container = $this->addAclFacade($container);
         $container = $this->addUtilTextService($container);
         $container = $this->addOauthUserClientStrategyPlugins($container);
         $container = $this->addOauthUserRestrictionPlugins($container);
@@ -67,6 +70,22 @@ class SecurityOauthUserDependencyProvider extends AbstractBundleDependencyProvid
         $container->set(static::FACADE_USER, function (Container $container) {
             return new SecurityOauthUserToUserFacadeBridge(
                 $container->getLocator()->user()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addAclFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_ACL, function (Container $container) {
+            return new SecurityOauthUserToAclFacadeBridge(
+                $container->getLocator()->acl()->facade()
             );
         });
 
@@ -97,7 +116,7 @@ class SecurityOauthUserDependencyProvider extends AbstractBundleDependencyProvid
     protected function addUtilTextService(Container $container): Container
     {
         $container->set(static::SERVICE_UTIL_TEXT, function (Container $container) {
-            return new MerchantUserToUtilTextServiceBridge(
+            return new SecurityOauthUserToUtilTextServiceBridge(
                 $container->getLocator()->utilText()->service()
             );
         });

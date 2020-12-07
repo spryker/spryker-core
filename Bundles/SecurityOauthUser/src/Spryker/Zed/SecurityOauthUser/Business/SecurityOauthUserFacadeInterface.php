@@ -55,7 +55,10 @@ interface SecurityOauthUserFacadeInterface
 
     /**
      * Specification:
-     * -
+     * - Resolves an Oauth user.
+     * - Requires email field to be set.
+     * - Uses a strategy to resolve Oauth user.
+     * - Returns resolved Oauth user or null otherwise.
      *
      * @api
      *

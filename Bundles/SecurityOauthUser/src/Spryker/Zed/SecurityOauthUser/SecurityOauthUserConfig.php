@@ -27,6 +27,7 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
     public const REQUEST_PARAMETER_AUTHENTICATION_STATE = 'state';
     public const ROLE_BACK_OFFICE_USER = 'ROLE_BACK_OFFICE_USER';
     public const ROLE_OAUTH_USER = 'ROLE_OAUTH_USER';
+    public const ROUTE_NAME_OAUTH_USER_LOGIN = 'security-oauth-user:login';
 
     /**
      * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_ACTIVE
@@ -35,6 +36,7 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
 
     protected const BACK_OFFICE_ROUTE_PATTERN = '^/';
     protected const IGNORABLE_ROUTE_PATTERN = '^/security-oauth-user';
+
     protected const HOME_PATH = '/';
 
     /**
@@ -42,6 +44,11 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
      */
     protected const LOGIN_PATH = '/security-gui/login';
     protected const LOGOUT_PATH = '/auth/logout';
+
+    /**
+     * @uses \Spryker\Shared\Acl\AclConstants::ROOT_GROUP
+     */
+    protected const OAUTH_USER_GROUP_REFERENCE = 'root_group';
 
     /**
      * @api
@@ -100,7 +107,7 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
      */
     public function getUrlLogout(): string
     {
-        return static::LOGIN_PATH;
+        return static::LOGOUT_PATH;
     }
 
     /**
@@ -111,6 +118,16 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
     public function getOauthUserCreationStatus(): string
     {
         return static::OAUTH_USER_STATUS_ACTIVE;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getOauthUserGroupReference(): string
+    {
+        return static::OAUTH_USER_GROUP_REFERENCE;
     }
 
     /**
