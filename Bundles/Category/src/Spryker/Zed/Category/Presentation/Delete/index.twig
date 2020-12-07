@@ -63,6 +63,28 @@
             {% import _self as tree %}
 
             <div class="col-md-4">
+                <b>{{ 'Sub-Trees to be moved' | trans }}</b>
+                <br />
+                {% if subTrees | length > 0 %}
+                    {% for subTree in subTrees %}
+                        <br />
+                        <p>
+                            {% if subTree.isMain %} {{ 'Main' | trans }} {% else %} {{ 'Extra parent' | trans }} {% endif %}
+                            {{ 'category will be moved to' | trans }} <em>{{ subTree.parentCategory.name }}</em>
+                        </p>
+                        <ol class="dd-list">
+                            <li class="dd-item">
+                                <span class="dd-handle">{{ subTree.text }}</span>
+                                {{ tree.tree(subTree.tree) }}
+                            </li>
+                        </ol>
+                    {% endfor %}
+                {% else %}
+                    <p>{{ 'This category does not have any sub-trees' | trans }}</p>
+                {% endif %}
+            </div>
+
+            <div class="col-md-4">
                 <b>{{ 'Urls to be deleted' | trans }}</b>
                 <br />
                 <ul class="nodes">

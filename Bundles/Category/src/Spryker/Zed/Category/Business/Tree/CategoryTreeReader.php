@@ -534,7 +534,10 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
         CategoryCriteriaTransfer $categoryCriteriaTransfer
     ): NodeCollectionTransfer {
         $nodeCollectionTransfer = new NodeCollectionTransfer();
-        $categoryNodes = $this->categoryRepository->getCategoryNodeChildNodesCollectionIndexedByParentNodeId($categoryCriteriaTransfer);
+        $categoryNodes = $this->categoryRepository->getCategoryNodeChildNodesCollectionIndexedByParentNodeId(
+            $categoryTransfer,
+            $categoryCriteriaTransfer
+        );
 
         if ($categoryNodes === []) {
             return $nodeCollectionTransfer;
