@@ -27,16 +27,6 @@ class UpdateProductOfferController extends AbstractProductOfferController
     protected const PARAM_TYPE_PRICE_PRODUCT_OFFER_IDS = 'type-price-product-offer-ids';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\PriceProductOfferUpdateGuiTableConfigurationProvider::COL_STORE
-     */
-    protected const PARAM_STORE = 'store';
-
-    /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\PriceProductOfferUpdateGuiTableConfigurationProvider::COL_STORE
-     */
-    protected const PARAM_CURRENCY = 'currency';
-
-    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
@@ -65,8 +55,7 @@ class UpdateProductOfferController extends AbstractProductOfferController
         );
         $productOfferForm->handleRequest($request);
 
-        $initialData = [];
-        $priceProductOfferCollectionValidationResponseTransfer = null;
+        $initialData = $this->setDefaultInitialData($request, $productOfferForm->getName());
         $productOfferResponseTransfer = new ProductOfferResponseTransfer();
         $isPriceProductOffersValid = true;
 
@@ -78,10 +67,12 @@ class UpdateProductOfferController extends AbstractProductOfferController
             $isPriceProductOffersValid = $priceProductOfferCollectionValidationResponseTransfer->getIsSuccessful();
 
             if (!$isPriceProductOffersValid) {
-                $initialData = $this->prepareInitialDataForGuiTableConfiguration(
-                    $priceProductOfferCollectionValidationResponseTransfer,
-                    $request
-                );
+                $initialData = $this->getFactory()
+                    ->createPriceProductOfferMapper()
+                    ->mapPriceProductOfferCollectionValidationResponseTransferToInitialDataErrors(
+                        $priceProductOfferCollectionValidationResponseTransfer,
+                        $initialData
+                    );
             } else {
                 $productOfferResponseTransfer = $this->getFactory()->getProductOfferFacade()->update($productOfferForm->getData());
             }

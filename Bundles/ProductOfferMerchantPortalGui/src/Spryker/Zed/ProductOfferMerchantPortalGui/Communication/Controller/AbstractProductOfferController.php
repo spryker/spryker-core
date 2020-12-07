@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller;
 
+use Generated\Shared\Transfer\GuiTableEditableInitialDataTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer;
+use Generated\Shared\Transfer\PriceProductOfferTableViewTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
-use Generated\Shared\Transfer\ValidationErrorTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,25 +23,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AbstractProductOfferController extends AbstractController
 {
-    protected const PARAM_PRODUCT_OFFER_FORM_NAME = 'productOfferCreate';
-    protected const KEY_PRICES = 'prices';
-    protected const KEY_DATA = 'data';
-    protected const KEY_ERRORS = 'errors';
-    protected const KEY_ROW_ERROR = 'rowError';
-    protected const KEY_COLUMN_ERRORS = 'columnErrors';
-
-    /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\AbstractPriceProductOfferGuiTableConfigurationProvider::COL_STORE
-     */
-    protected const KEY_COLUMN_STORE = 'store';
-
-    /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\AbstractPriceProductOfferGuiTableConfigurationProvider::COL_CURRENCY
-     */
-    protected const KEY_COLUMN_CURRENCY = 'currency';
-
-    protected const VALUE_PROPERTY_PATH_MONEY_VALUE = 'moneyValue';
-
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
@@ -93,114 +74,23 @@ class AbstractProductOfferController extends AbstractController
     /**
      * @phpstan-return array<mixed>
      *
-     * @param \Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer $priceProductOfferCollectionValidationResponseTransfer
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $formName
      *
      * @return array
      */
-    protected function prepareInitialDataForGuiTableConfiguration(
-        PriceProductOfferCollectionValidationResponseTransfer $priceProductOfferCollectionValidationResponseTransfer,
-        Request $request
-    ): array {
-        $productOfferCreateData = $request->get(static::PARAM_PRODUCT_OFFER_FORM_NAME);
-        $initialData[static::KEY_ERRORS] = [];
-        $requestTableData = $this->getFactory()->getUtilEncodingService()->decodeJson($productOfferCreateData[static::KEY_PRICES], true);
-
-        $initialData[static::KEY_DATA] = $requestTableData;
-        $validationErrorTransfers = $priceProductOfferCollectionValidationResponseTransfer->getValidationErrors();
-
-        foreach ($validationErrorTransfers as $validationErrorTransfer) {
-            if (!$validationErrorTransfer->getPropertyPath()) {
-                continue;
-            }
-
-            $initialData = $this->addInitialDataErrors($validationErrorTransfer, $initialData);
-        }
-
-        return $initialData;
-    }
-
-    /**
-     * @phpstan-param array<mixed> $initialData
-     *
-     * @phpstan-return array<mixed>
-     *
-     * @param \Generated\Shared\Transfer\ValidationErrorTransfer $validationErrorTransfer
-     * @param array $initialData
-     *
-     * @return array
-     */
-    protected function addInitialDataErrors(ValidationErrorTransfer $validationErrorTransfer, array $initialData): array
+    protected function setDefaultInitialData(Request $request, string $formName): array
     {
-        $propertyPath = $this->extractPropertyPatchValues($validationErrorTransfer->getPropertyPath());
+        $requestTableData = $request->get($formName);
+        $requestTableData = $this->getFactory()->getUtilEncodingService()->decodeJson(
+            $requestTableData[PriceProductOfferTableViewTransfer::PRICES],
+            true
+        );
 
-        if (!$propertyPath || !is_array($propertyPath)) {
-            return $initialData;
-        }
-
-        $rowNumber = (int)$propertyPath[0] === 0 ? 0 : ((int)$propertyPath[0] - 1) % 2;
-        $isRowError = count($propertyPath) < 3;
-        $errorMessage = $validationErrorTransfer->getMessage();
-
-        if ($isRowError) {
-            $initialData[static::KEY_ERRORS][$rowNumber][static::KEY_ROW_ERROR] = $errorMessage;
-            $initialData[static::KEY_ERRORS][$rowNumber][static::KEY_COLUMN_ERRORS][static::KEY_COLUMN_STORE] = true;
-            $initialData[static::KEY_ERRORS][$rowNumber][static::KEY_COLUMN_ERRORS][static::KEY_COLUMN_CURRENCY] = true;
-
-            return $initialData;
-        }
-
-        $columnId = $this->transformPropertyPathToColumnId($propertyPath);
-
-        if (!$columnId) {
-            return $initialData;
-        }
-
-        $initialData[static::KEY_ERRORS][$rowNumber][static::KEY_COLUMN_ERRORS][$columnId] = $errorMessage;
-
-        return $initialData;
-    }
-
-    /**
-     * @param string $propertyPath
-     *
-     * @return string[]
-     */
-    protected function extractPropertyPatchValues(string $propertyPath): array
-    {
-        $propertyPath = str_replace('[', '', $propertyPath);
-        $propertyPathValues = explode(']', $propertyPath);
-
-        if (!is_array($propertyPathValues)) {
-            return [];
-        }
-
-        return $propertyPathValues;
-    }
-
-    /**
-     * @param string[] $propertyPath
-     *
-     * @return string
-     */
-    protected function transformPropertyPathToColumnId(array $propertyPath): string
-    {
-        if (!isset($propertyPath[1])) {
-            return '';
-        }
-
-        if ($propertyPath[1] === static::VALUE_PROPERTY_PATH_MONEY_VALUE) {
-            $priceTypes = $this->getFactory()->getPriceProductFacade()->getPriceTypeValues();
-            $priceTypeName = mb_strtolower($priceTypes[$propertyPath[0]]->getName());
-
-            if (!isset($propertyPath[2])) {
-                return '';
-            }
-
-            return sprintf('%s[%s][%s]', $priceTypeName, (string)$propertyPath[1], (string)$propertyPath[2]);
-        }
-
-        return (string)$propertyPath[1];
+        return $initialData = [
+            GuiTableEditableInitialDataTransfer::DATA => $requestTableData,
+            GuiTableEditableInitialDataTransfer::ERRORS => [],
+        ];
     }
 
     /**

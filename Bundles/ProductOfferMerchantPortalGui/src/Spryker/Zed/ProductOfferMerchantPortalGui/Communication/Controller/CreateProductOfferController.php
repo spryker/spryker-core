@@ -49,7 +49,8 @@ class CreateProductOfferController extends AbstractProductOfferController
             $productOfferCreateFormDataProvider->getOptions($productAbstractTransfer)
         );
         $productOfferForm->handleRequest($request);
-        $initialData = [];
+
+        $initialData = $this->setDefaultInitialData($request, $productOfferForm->getName());
         $isPriceProductOffersValid = true;
 
         if ($productOfferForm->isSubmitted() && $productOfferForm->isValid()) {
@@ -60,10 +61,12 @@ class CreateProductOfferController extends AbstractProductOfferController
             $isPriceProductOffersValid = $priceProductOfferCollectionValidationResponseTransfer->getIsSuccessful();
 
             if (!$isPriceProductOffersValid) {
-                $initialData = $this->prepareInitialDataForGuiTableConfiguration(
-                    $priceProductOfferCollectionValidationResponseTransfer,
-                    $request
-                );
+                $initialData = $this->getFactory()
+                    ->createPriceProductOfferMapper()
+                    ->mapPriceProductOfferCollectionValidationResponseTransferToInitialDataErrors(
+                        $priceProductOfferCollectionValidationResponseTransfer,
+                        $initialData
+                    );
             } else {
                 $this->getFactory()->getProductOfferFacade()->create($productOfferForm->getData());
             }

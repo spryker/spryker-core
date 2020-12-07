@@ -50,12 +50,14 @@ class ProductOfferForm extends AbstractType
     protected const FIELD_MERCHANT_SKU_MAX_LENGTH = 255;
     protected const FIELD_STORES_MIN_COUNT = 1;
 
+    protected const BLOCK_PREFIX = 'productOffer';
+
     /**
      * @return string
      */
     public function getBlockPrefix(): string
     {
-        return 'productOfferCreate';
+        return static::BLOCK_PREFIX;
     }
 
     /**

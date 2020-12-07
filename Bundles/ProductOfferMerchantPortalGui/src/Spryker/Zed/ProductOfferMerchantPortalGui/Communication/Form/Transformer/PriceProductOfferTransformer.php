@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
+use Generated\Shared\Transfer\PriceProductOfferTableViewTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToCurrencyFacadeInterface;
@@ -21,26 +22,6 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class PriceProductOfferTransformer implements DataTransformerInterface
 {
-    /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\AbstractPriceProductOfferGuiTableConfigurationProvider::COL_STORE
-     */
-    protected const KEY_STORE = 'store';
-
-    /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\AbstractPriceProductOfferGuiTableConfigurationProvider::COL_CURRENCY
-     */
-    protected const KEY_CURRENCY = 'currency';
-
-    /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\AbstractPriceProductOfferGuiTableConfigurationProvider::ID_COLUMN_SUFFIX_PRICE_TYPE_NET
-     */
-    protected const SUFFIX_PRYCE_TYPE_NET = '[moneyValue][netAmount]';
-
-    /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\AbstractPriceProductOfferGuiTableConfigurationProvider::ID_COLUMN_SUFFIX_PRICE_TYPE_GROSS
-     */
-    protected const SUFFIX_PRYCE_TYPE_GROSS = '[moneyValue][grossAmount]';
-
     /**
      * @var int
      */
@@ -107,17 +88,17 @@ class PriceProductOfferTransformer implements DataTransformerInterface
                 $priceProductTransfer->getMoneyValue()->getFkCurrency()
             );
 
-            $prices[$key][static::KEY_STORE] = $priceProductTransfer->getMoneyValue()->getFkStore();
-            $prices[$key][static::KEY_CURRENCY] = $priceProductTransfer->getMoneyValue()->getFkCurrency();
+            $prices[$key][PriceProductOfferTableViewTransfer::STORE] = $priceProductTransfer->getMoneyValue()->getFkStore();
+            $prices[$key][PriceProductOfferTableViewTransfer::CURRENCY] = $priceProductTransfer->getMoneyValue()->getFkCurrency();
 
             foreach ($this->priceProductFacade->getPriceTypeValues() as $priceTypeTransfer) {
                 if ($priceProductTransfer->getPryceType()->getName() !== $priceTypeTransfer->getName()) {
                     continue;
                 }
 
-                $pryceTypeName = mb_strtolower($priceTypeTransfer->getName());
-                $netAmountKey = $pryceTypeName . static::SUFFIX_PRYCE_TYPE_NET;
-                $grossAmountKey = $pryceTypeName . static::SUFFIX_PRYCE_TYPE_GROSS;
+                $priceTypeName = mb_strtolower($priceTypeTransfer->getName());
+                $netAmountKey = $this->createNetKey($priceTypeName);
+                $grossAmountKey = $this->createGrossKey($priceTypeName);
 
                 $prices[$key][$netAmountKey] = $this->moneyFacade->convertIntegerToDecimal($priceProductTransfer->getMoneyValue()->getNetAmount());
                 $prices[$key][$grossAmountKey] = $this->moneyFacade->convertIntegerToDecimal($priceProductTransfer->getMoneyValue()->getGrossAmount());
@@ -141,7 +122,7 @@ class PriceProductOfferTransformer implements DataTransformerInterface
 
         if ($newPriceProductOffers) {
             foreach ($newPriceProductOffers as $newPriceProductOffer) {
-                $currencyTransfer = $this->currencyFacade->getByIdCurrency($newPriceProductOffer[static::KEY_CURRENCY]);
+                $currencyTransfer = $this->currencyFacade->getByIdCurrency($newPriceProductOffer[PriceProductOfferTableViewTransfer::CURRENCY]);
 
                 $priceProductTransfers = $this->addPriceProductTransfers(
                     $newPriceProductOffer,
@@ -176,17 +157,17 @@ class PriceProductOfferTransformer implements DataTransformerInterface
     ): ArrayObject {
         foreach ($this->priceProductFacade->getPriceTypeValues() as $priceTypeTransfer) {
             $storeTransfer = (new StoreTransfer())
-                ->setIdStore($newPriceProductOffer[static::KEY_STORE]);
+                ->setIdStore($newPriceProductOffer[PriceProductOfferTableViewTransfer::STORE]);
 
             $moneyValueTransfer = (new MoneyValueTransfer())
                 ->setCurrency($currencyTransfer)
                 ->setStore($storeTransfer)
-                ->setFkStore($newPriceProductOffer[static::KEY_STORE])
-                ->setFkCurrency($newPriceProductOffer[static::KEY_CURRENCY]);
+                ->setFkStore($newPriceProductOffer[PriceProductOfferTableViewTransfer::STORE])
+                ->setFkCurrency($newPriceProductOffer[PriceProductOfferTableViewTransfer::CURRENCY]);
 
-            $pryceTypeName = mb_strtolower($priceTypeTransfer->getName());
-            $netAmountKey = $pryceTypeName . static::SUFFIX_PRYCE_TYPE_NET;
-            $grossAmountKey = $pryceTypeName . static::SUFFIX_PRYCE_TYPE_GROSS;
+            $priceTypeName = mb_strtolower($priceTypeTransfer->getName());
+            $netAmountKey = $this->createNetKey($priceTypeName);
+            $grossAmountKey = $this->createGrossKey($priceTypeName);
 
             $netAmount = $newPriceProductOffer[$netAmountKey] ?
                 $this->moneyFacade->convertDecimalToInteger((float)$newPriceProductOffer[$netAmountKey]) : null;
@@ -206,5 +187,35 @@ class PriceProductOfferTransformer implements DataTransformerInterface
         }
 
         return $priceProductTransfers;
+    }
+
+    /**
+     * @param string $pryceTypeName
+     *
+     * @return string
+     */
+    protected function createGrossKey(string $pryceTypeName): string
+    {
+        return sprintf(
+            '%s[%s][%s]',
+            $pryceTypeName,
+            PriceProductTransfer::MONEY_VALUE,
+            MoneyValueTransfer::GROSS_AMOUNT
+        );
+    }
+
+    /**
+     * @param string $pryceTypeName
+     *
+     * @return string
+     */
+    protected function createNetKey(string $pryceTypeName): string
+    {
+        return sprintf(
+            '%s[%s][%s]',
+            $pryceTypeName,
+            PriceProductTransfer::MONEY_VALUE,
+            MoneyValueTransfer::GROSS_AMOUNT
+        );
     }
 }

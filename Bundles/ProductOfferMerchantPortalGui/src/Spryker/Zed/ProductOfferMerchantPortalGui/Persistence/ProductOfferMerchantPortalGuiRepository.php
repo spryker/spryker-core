@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\MerchantProductOfferCountsTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTableCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTableViewCollectionTransfer;
+use Generated\Shared\Transfer\PriceProductOfferTableViewTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
@@ -64,16 +65,6 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_SKU
      */
     protected const COL_KEY_PRODUCT_SKU = 'sku';
-
-    /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\AbstractPriceProductOfferGuiTableConfigurationProvider::COL_STORE
-     */
-    protected const COL_STORE = 'store';
-
-    /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\AbstractPriceProductOfferGuiTableConfigurationProvider::COL_CURRENCY
-     */
-    protected const COL_CURRENCY = 'currency';
 
     protected const SUFFIX_PRICE_TYPE_NET = '_net';
     protected const SUFFIX_PRICE_TYPE_GROSS = '_gross';
@@ -938,8 +929,8 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
 
         $priceProductStoreQuery = $this->getFactory()
             ->getPriceProductStorePropelQuery()
-            ->addAsColumn(static::COL_STORE, SpyStoreTableMap::COL_NAME)
-            ->addAsColumn(static::COL_CURRENCY, SpyCurrencyTableMap::COL_CODE);
+            ->addAsColumn(PriceProductOfferTableViewTransfer::STORE, SpyStoreTableMap::COL_NAME)
+            ->addAsColumn(PriceProductOfferTableViewTransfer::CURRENCY, SpyCurrencyTableMap::COL_CODE);
 
         $priceTypeValues = $this->getFactory()->getPriceProductFacade()->getPriceTypeValues();
 

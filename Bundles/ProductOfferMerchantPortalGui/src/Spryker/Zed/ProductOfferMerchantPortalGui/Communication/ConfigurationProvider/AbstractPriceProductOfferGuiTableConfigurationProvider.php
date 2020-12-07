@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider;
 
+use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\PriceProductOfferTableViewTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
 use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToCurrencyFacadeInterface;
@@ -15,20 +18,22 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerc
 
 abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
 {
-    protected const COL_STORE = 'store';
-    protected const COL_CURRENCY = 'currency';
-
     protected const PARAM_ID_PRODUCT_OFFER = '$OFFER_ID';
 
-    protected const EDITABLE_CREATE_FORM_INPUT_NAME = 'productOfferCreate[prices]';
+    /**
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\ProductOfferForm::FIELD_PRODUCT_OFFER_PRICES
+     */
+    protected const FIELD_PRODUCT_OFFER_PRICES = 'prices';
+
+    /**
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\ProductOfferForm::BLOCK_PREFIX
+     */
+    protected const BLOCK_PREFIX = 'productOffer';
 
     protected const TITLE_COLUMN_STORE = 'Store';
     protected const TITLE_COLUMN_CURRENCY = 'Currency';
     protected const TITLE_COLUMN_PREFIX_PRICE_TYPE_NET = 'Net';
     protected const TITLE_COLUMN_PREFIX_PRICE_TYPE_GROSS = 'Gross';
-
-    protected const ID_COLUMN_SUFFIX_PRICE_TYPE_NET = '[moneyValue][netAmount]';
-    protected const ID_COLUMN_SUFFIX_PRICE_TYPE_GROSS = '[moneyValue][grossAmount]';
 
     /**
      * @var \Spryker\Shared\GuiTable\GuiTableFactoryInterface
@@ -80,14 +85,9 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
         GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder,
         array $initialData = []
     ): GuiTableConfigurationBuilderInterface {
-        $guiTableConfigurationBuilder->setTableEditable(true)
-            ->setEditableCreateActionFormInputName(static::EDITABLE_CREATE_FORM_INPUT_NAME);
+        $formInputName = sprintf('%s[%s]', static::BLOCK_PREFIX, static::FIELD_PRODUCT_OFFER_PRICES);
 
-        if ($initialData) {
-            $guiTableConfigurationBuilder->setEditableCreateActionInitialData($initialData);
-        }
-
-        $guiTableConfigurationBuilder = $this->addEditableButtons($guiTableConfigurationBuilder);
+        $guiTableConfigurationBuilder->enableAddingNewRows($formInputName, $initialData);
         $guiTableConfigurationBuilder = $this->addEditableColumns($guiTableConfigurationBuilder);
 
         return $guiTableConfigurationBuilder;
@@ -101,12 +101,12 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
     protected function addEditableColumns(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
     {
         $guiTableConfigurationBuilder->addEditableColumnSelect(
-            static::COL_STORE,
+            PriceProductOfferTableViewTransfer::STORE,
             static::TITLE_COLUMN_STORE,
             false,
             $this->getStoreOptions()
         )->addEditableColumnSelect(
-            static::COL_CURRENCY,
+            PriceProductOfferTableViewTransfer::CURRENCY,
             static::TITLE_COLUMN_CURRENCY,
             false,
             $this->getCurrencyOptions()
@@ -115,6 +115,18 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
         foreach ($this->priceProductFacade->getPriceTypeValues() as $priceTypeTransfer) {
             $idPriceTypeName = mb_strtolower($priceTypeTransfer->getName());
             $titlePriceTypeName = ucfirst($idPriceTypeName);
+            $idNetColumn = sprintf(
+                '%s[%s][%s]',
+                $idPriceTypeName,
+                PriceProductTransfer::MONEY_VALUE,
+                MoneyValueTransfer::NET_AMOUNT
+            );
+            $idGrossColumn = sprintf(
+                '%s[%s][%s]',
+                $idPriceTypeName,
+                PriceProductTransfer::MONEY_VALUE,
+                MoneyValueTransfer::GROSS_AMOUNT
+            );
             $fieldOptions = [
                 'type' => 'number',
                 'attrs' => [
@@ -123,11 +135,11 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
             ];
 
             $guiTableConfigurationBuilder->addEditableColumnInput(
-                $idPriceTypeName . static::ID_COLUMN_SUFFIX_PRICE_TYPE_NET,
+                $idNetColumn,
                 static::TITLE_COLUMN_PREFIX_PRICE_TYPE_NET . ' ' . $titlePriceTypeName,
                 $fieldOptions
             )->addEditableColumnInput(
-                $idPriceTypeName . static::ID_COLUMN_SUFFIX_PRICE_TYPE_GROSS,
+                $idGrossColumn,
                 static::TITLE_COLUMN_PREFIX_PRICE_TYPE_GROSS . ' ' . $titlePriceTypeName,
                 $fieldOptions
             );
@@ -144,14 +156,14 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
     protected function addColumns(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
     {
         $guiTableConfigurationBuilder->addColumnChip(
-            static::COL_STORE,
+            PriceProductOfferTableViewTransfer::STORE,
             static::TITLE_COLUMN_STORE,
             true,
             false,
             'grey',
             []
         )->addColumnChip(
-            static::COL_CURRENCY,
+            PriceProductOfferTableViewTransfer::CURRENCY,
             static::TITLE_COLUMN_CURRENCY,
             true,
             false,
@@ -162,32 +174,32 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
         foreach ($this->priceProductFacade->getPriceTypeValues() as $priceTypeTransfer) {
             $idPriceTypeName = mb_strtolower($priceTypeTransfer->getName());
             $titlePriceTypeName = ucfirst($idPriceTypeName);
+            $idNetColumn = sprintf(
+                '%s[%s][%s]',
+                $idPriceTypeName,
+                PriceProductTransfer::MONEY_VALUE,
+                MoneyValueTransfer::NET_AMOUNT
+            );
+
+            $idGrossColumn = sprintf(
+                '%s[%s][%s]',
+                $idPriceTypeName,
+                PriceProductTransfer::MONEY_VALUE,
+                MoneyValueTransfer::GROSS_AMOUNT
+            );
 
             $guiTableConfigurationBuilder->addColumnText(
-                $idPriceTypeName . static::ID_COLUMN_SUFFIX_PRICE_TYPE_NET,
+                $idNetColumn,
                 static::TITLE_COLUMN_PREFIX_PRICE_TYPE_NET . ' ' . $titlePriceTypeName,
                 true,
                 false
             )->addColumnText(
-                $idPriceTypeName . static::ID_COLUMN_SUFFIX_PRICE_TYPE_GROSS,
+                $idGrossColumn,
                 static::TITLE_COLUMN_PREFIX_PRICE_TYPE_GROSS . ' ' . $titlePriceTypeName,
                 true,
                 false
             );
         }
-
-        return $guiTableConfigurationBuilder;
-    }
-
-    /**
-     * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
-     *
-     * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
-     */
-    protected function addEditableButtons(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
-    {
-        $guiTableConfigurationBuilder->addEditableCreateActionAddButton('Create')
-            ->addEditableCreateActionCancelButton('Cancel');
 
         return $guiTableConfigurationBuilder;
     }

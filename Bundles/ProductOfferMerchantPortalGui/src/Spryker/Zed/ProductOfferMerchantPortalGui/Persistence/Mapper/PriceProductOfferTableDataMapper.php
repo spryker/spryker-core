@@ -8,22 +8,14 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\Mapper;
 
 use ArrayObject;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTableViewCollectionTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTableViewTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface;
 
 class PriceProductOfferTableDataMapper
 {
-    /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepository::COL_STORE
-     */
-    protected const COL_STORE = 'store';
-
-    /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepository::COL_CURRENCY
-     */
-    protected const COL_CURRENCY = 'currency';
-
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepository::SUFFIX_PRICE_TYPE_NET
      */
@@ -33,16 +25,6 @@ class PriceProductOfferTableDataMapper
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepository::SUFFIX_PRICE_TYPE_GROSS
      */
     protected const SUFFIX_PRICE_TYPE_GROSS = '_gross';
-
-    /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\AbstractPriceProductOfferGuiTableConfigurationProvider::ID_COLUMN_SUFFIX_PRICE_TYPE_NET
-     */
-    protected const SUFFIX_PRICE_TYPE_NET_AMOUNT = '[moneyValue][netAmount]';
-
-    /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\AbstractPriceProductOfferGuiTableConfigurationProvider::ID_COLUMN_SUFFIX_PRICE_TYPE_GROSS
-     */
-    protected const SUFFIX_PRICE_TYPE_GROSS_AMOUNT = '[moneyValue][grossAmount]';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepository::COL_PRICE_PRODUCT_OFFER_IDS
@@ -83,7 +65,12 @@ class PriceProductOfferTableDataMapper
 
         foreach ($priceProductOfferTableDataArray as $priceProductOfferTableRowDataArray) {
             $priceProductOfferTableRowDataArray = $priceProductOfferTableRowDataArray->toArray();
-            $priceKey = $priceProductOfferTableRowDataArray['store'] . '_' . $priceProductOfferTableRowDataArray['currency'];
+
+            $priceKey = sprintf(
+                '%s_%s',
+                $priceProductOfferTableRowDataArray[PriceProductOfferTableViewTransfer::STORE],
+                $priceProductOfferTableRowDataArray[PriceProductOfferTableViewTransfer::CURRENCY]
+            );
 
             if (!isset($prices[$priceKey])) {
                 $prices[$priceKey] = [];
@@ -104,8 +91,8 @@ class PriceProductOfferTableDataMapper
             }
 
             $priceProductOfferTableViewTransfer = (new PriceProductOfferTableViewTransfer())
-                ->setStore($priceProductOfferTableRowDataArray[static::COL_STORE])
-                ->setCurrency($priceProductOfferTableRowDataArray[static::COL_CURRENCY])
+                ->setStore($priceProductOfferTableRowDataArray[PriceProductOfferTableViewTransfer::STORE])
+                ->setCurrency($priceProductOfferTableRowDataArray[PriceProductOfferTableViewTransfer::CURRENCY])
                 ->setPrices($prices[$priceKey])
                 ->addPriceProductOfferId($priceProductOfferTableRowDataArray[static::COL_PRICE_PRODUCT_OFFER_IDS])
                 ->addTypePriceProductOfferId($priceProductOfferTableRowDataArray[static::COL_TYPE_PRICE_PRODUCT_OFFER_IDS]);
@@ -137,14 +124,44 @@ class PriceProductOfferTableDataMapper
             $keyGrossPrice = $priceTypeName . static::SUFFIX_PRICE_TYPE_GROSS;
 
             if (isset($priceProductOfferTableRowDataArray[$keyGrossPrice])) {
-                $prices[$priceTypeName . static::SUFFIX_PRICE_TYPE_GROSS_AMOUNT] = $priceProductOfferTableRowDataArray[$keyGrossPrice];
+                $prices[$this->createGrossKey($priceTypeName)] = $priceProductOfferTableRowDataArray[$keyGrossPrice];
             }
 
             if (isset($priceProductOfferTableRowDataArray[$keyNetPrice])) {
-                $prices[$priceTypeName . static::SUFFIX_PRICE_TYPE_NET_AMOUNT] = $priceProductOfferTableRowDataArray[$keyNetPrice];
+                $prices[$this->createNetKey($priceTypeName)] = $priceProductOfferTableRowDataArray[$keyNetPrice];
             }
         }
 
         return $prices;
+    }
+
+    /**
+     * @param string $pryceTypeName
+     *
+     * @return string
+     */
+    protected function createGrossKey(string $pryceTypeName): string
+    {
+        return sprintf(
+            '%s[%s][%s]',
+            $pryceTypeName,
+            PriceProductTransfer::MONEY_VALUE,
+            MoneyValueTransfer::GROSS_AMOUNT
+        );
+    }
+
+    /**
+     * @param string $pryceTypeName
+     *
+     * @return string
+     */
+    protected function createNetKey(string $pryceTypeName): string
+    {
+        return sprintf(
+            '%s[%s][%s]',
+            $pryceTypeName,
+            PriceProductTransfer::MONEY_VALUE,
+            MoneyValueTransfer::NET_AMOUNT
+        );
     }
 }

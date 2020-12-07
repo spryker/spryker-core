@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider;
 
-use Generated\Shared\Transfer\GuiTableColumnConfiguratorConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
-use Generated\Shared\Transfer\GuiTableSearchConfigurationTransfer;
 
 class PriceProductOfferCreateGuiTableConfigurationProvider extends AbstractPriceProductOfferGuiTableConfigurationProvider implements PriceProductOfferCreateGuiTableConfigurationProviderInterface
 {
@@ -33,18 +31,15 @@ class PriceProductOfferCreateGuiTableConfigurationProvider extends AbstractPrice
         $guiTableConfigurationBuilder
             ->setDataSourceUrl(static::DATA_URL)
             ->setIsItemSelectionEnabled(false)
-            ->setDefaultPageSize(25);
+            ->setDefaultPageSize(25)
+            ->disableSearch()
+            ->disableColumnConfigurator();
 
         $guiTableConfigurationBuilder = $this->setEditableConfiguration(
             $guiTableConfigurationBuilder,
             $initialData
         );
 
-        $guiTableSearchConfigurationTransfer = (new GuiTableSearchConfigurationTransfer())->setIsEnabled(false);
-        $guiTableColumnConfiguratorConfigurationTransfer = (new GuiTableColumnConfiguratorConfigurationTransfer())->setEnabled(false);
-
-        return $guiTableConfigurationBuilder->createConfiguration()
-            ->setSearch($guiTableSearchConfigurationTransfer)
-            ->setColumnConfigurator($guiTableColumnConfiguratorConfigurationTransfer);
+        return $guiTableConfigurationBuilder->createConfiguration();
     }
 }

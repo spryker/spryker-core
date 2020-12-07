@@ -27,13 +27,6 @@ interface GuiTableConfigurationBuilderInterface
     public const ACTION_TYPE_HTML_OVERLAY = 'html-overlay';
     public const ACTION_TYPE_URL = 'url';
 
-    public const KEY_EDITABLE_FORM_INPUT_NAME = 'formInputName';
-    public const KEY_EDITABLE_INITIAL_DATA = 'initialData';
-    public const KEY_EDITABLE_ADD_BUTTON = 'addButton';
-    public const KEY_EDITABLE_CANCEL_BUTTON = 'cancelButton';
-    public const KEY_EDITABLE_SAVE_BUTTON = 'saveButton';
-    public const KEY_EDITABLE_URL = 'url';
-
     /**
      * @api
      *
@@ -127,38 +120,6 @@ interface GuiTableConfigurationBuilderInterface
         bool $isHideable,
         ?int $limit,
         ?string $color
-    );
-
-    /**
-     * @api
-     *
-     * @phpstan-param array<string, mixed> $options
-     *
-     * @param string $id
-     * @param string $title
-     * @param array|null $options
-     *
-     * @return $this
-     */
-    public function addEditableColumnInput(string $id, string $title, ?array $options = []);
-
-    /**
-     * @api
-     *
-     * @phpstan-param array<mixed> $options
-     *
-     * @param string $id
-     * @param string $title
-     * @param bool $isMultiselect
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function addEditableColumnSelect(
-        string $id,
-        string $title,
-        bool $isMultiselect,
-        array $options
     );
 
     /**
@@ -359,6 +320,20 @@ interface GuiTableConfigurationBuilderInterface
     public function setDefaultPageSize(int $defaultPageSize);
 
     /**
+     * @api
+     *
+     * @return $this
+     */
+    public function disableSearch();
+
+    /**
+     * @api
+     *
+     * @return $this
+     */
+    public function disableColumnConfigurator();
+
+    /**
      * Sets a placeholders for a search field.
      *
      * @api
@@ -397,79 +372,73 @@ interface GuiTableConfigurationBuilderInterface
     /**
      * @api
      *
-     * @param bool $isTableEditable
-     *
-     * @return $this
-     */
-    public function setTableEditable(bool $isTableEditable = false);
-
-    /**
-     * @api
+     * @phpstan-param array<mixed> $initialData
+     * @phpstan-param array<mixed> $addButton
+     * @phpstan-param array<mixed> $cancelButton
      *
      * @param string $formInputName
+     * @param array|null $initialData
+     * @param array|null $addButton
+     * @param array|null $cancelButton
      *
      * @return $this
      */
-    public function setEditableCreateActionFormInputName(string $formInputName);
+    public function enableAddingNewRows(
+        string $formInputName,
+        array $initialData = [],
+        ?array $addButton = null,
+        ?array $cancelButton = null
+    );
 
     /**
      * @api
      *
-     * @phpstan-param array<mixed> $initialData
+     * @phpstan-param array<mixed> $saveButton
+     * @phpstan-param array<mixed> $cancelButton
      *
-     * @param array $initialData
-     *
-     * @return $this
-     */
-    public function setEditableCreateActionInitialData(array $initialData);
-
-    /**
-     * @api
-     *
-     * @param string|null $title
-     * @param string|null $icon
-     *
-     * @return $this
-     */
-    public function addEditableCreateActionAddButton(?string $title = null, ?string $icon = null);
-
-    /**
-     * @api
-     *
-     * @param string|null $title
-     * @param string|null $icon
-     *
-     * @return $this
-     */
-    public function addEditableCreateActionCancelButton(?string $title = '', ?string $icon = '');
-
-    /**
-     * @api
-     *
-     * @param string $method
      * @param string $url
+     * @param string|null $method
+     * @param array|null $saveButton
+     * @param array|null $cancelButton
      *
      * @return $this
      */
-    public function setEditableUpdateActionUrl(string $method, string $url);
+    public function enableInlineDataEditing(
+        string $url,
+        ?string $method = 'POST',
+        ?array $saveButton = null,
+        ?array $cancelButton = null
+    );
 
     /**
      * @api
      *
-     * @param string|null $title
-     * @param string|null $icon
+     * @phpstan-param array<string, mixed> $options
+     *
+     * @param string $id
+     * @param string $title
+     * @param array|null $options
      *
      * @return $this
      */
-    public function addEditableUpdateActionAddButton(?string $title = '', ?string $icon = '');
+    public function addEditableColumnInput(string $id, string $title, ?array $options = []);
 
     /**
      * @api
      *
-     * @param string|null $title
-     * @param string|null $icon
+     * @phpstan-param array<mixed> $options
+     *
+     * @param string $id
+     * @param string $title
+     * @param bool $isMultiselect
+     * @param array $options
      *
      * @return $this
      */
-    public function addEditableUpdateActionCancelButton(?string $title = '', ?string $icon = '');
+    public function addEditableColumnSelect(
+        string $id,
+        string $title,
+        bool $isMultiselect,
+        array $options
+    );
 }

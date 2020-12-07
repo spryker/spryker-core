@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider;
 
-use Generated\Shared\Transfer\GuiTableColumnConfiguratorConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
-use Generated\Shared\Transfer\GuiTableSearchConfigurationTransfer;
 use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
 
 class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPriceProductOfferGuiTableConfigurationProvider implements PriceProductOfferUpdateGuiTableConfigurationProviderInterface
@@ -72,19 +70,16 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
         $guiTableConfigurationBuilder
             ->setDataSourceUrl($dataSourceUrl)
             ->setIsItemSelectionEnabled(false)
-            ->setDefaultPageSize(25);
+            ->setDefaultPageSize(25)
+            ->disableSearch()
+            ->disableColumnConfigurator();
 
         $guiTableConfigurationBuilder = $this->setEditableConfiguration(
             $guiTableConfigurationBuilder,
             $initialData
         );
 
-        $guiTableSearchConfigurationTransfer = (new GuiTableSearchConfigurationTransfer())->setIsEnabled(false);
-        $guiTableColumnConfiguratorConfigurationTransfer = (new GuiTableColumnConfiguratorConfigurationTransfer())->setEnabled(false);
-
-        return $guiTableConfigurationBuilder->createConfiguration()
-            ->setSearch($guiTableSearchConfigurationTransfer)
-            ->setColumnConfigurator($guiTableColumnConfiguratorConfigurationTransfer);
+        return $guiTableConfigurationBuilder->createConfiguration();
     }
 
     /**
@@ -117,18 +112,20 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
     }
 
     /**
+     * @phpstan-param array<mixed> $initialData
+     *
      * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
+     * @param array $initialData
      *
      * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
      */
-    protected function addEditableButtons(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
-    {
+    protected function setEditableConfiguration(
+        GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder,
+        array $initialData = []
+    ): GuiTableConfigurationBuilderInterface {
+        $guiTableConfigurationBuilder = parent::setEditableConfiguration($guiTableConfigurationBuilder, $initialData);
         $editableUrl = str_replace(static::PARAM_ID_PRODUCT_OFFER, (string)$this->idProductOffer, static::URL_SAVE_PRICES);
-
-        $guiTableConfigurationBuilder = parent::addEditableButtons($guiTableConfigurationBuilder)
-            ->setEditableUpdateActionUrl(static::METHOD_UPDATE_ACTION_URL, $editableUrl)
-            ->addEditableUpdateActionAddButton(static::TITLE_ADD_BUTTON)
-            ->addEditableUpdateActionCancelButton(static::TITLE_CANCEL_BUTTON);
+        $guiTableConfigurationBuilder->enableInlineDataEditing($editableUrl, static::METHOD_UPDATE_ACTION_URL);
 
         return $guiTableConfigurationBuilder;
     }
