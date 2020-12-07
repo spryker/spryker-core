@@ -66,9 +66,9 @@ class TransitionLog implements TransitionLogInterface
     public function init(array $stateMachineItemTransfers)
     {
         $this->logEntities = [];
-        foreach ($stateMachineItemTransfers as $stateMachineItem) {
-            $logEntity = $this->initEntity($stateMachineItem);
-            $this->logEntities[$stateMachineItem->getIdentifier()] = $logEntity;
+        foreach ($stateMachineItemTransfers as $stateMachineItemTransfer) {
+            $logEntity = $this->initEntity($stateMachineItemTransfer);
+            $this->logEntities[$stateMachineItemTransfer->getIdentifier()] = $logEntity;
         }
     }
 
