@@ -86,11 +86,8 @@ class MerchantOrderGuiTableDataProvider extends AbstractGuiTableDataProvider
         $guiTableDataResponseTransfer = new GuiTableDataResponseTransfer();
 
         foreach ($merchantOrderCollectionTransfer->getMerchantOrders() as $merchantOrderTransfer) {
-            $orderTransfer = $merchantOrderTransfer->getOrder();
-
-            if (!$orderTransfer) {
-                continue;
-            }
+            /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
+            $orderTransfer = $merchantOrderTransfer->requireOrder()->getOrder();
 
             $responseData = [
                 MerchantOrderTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
