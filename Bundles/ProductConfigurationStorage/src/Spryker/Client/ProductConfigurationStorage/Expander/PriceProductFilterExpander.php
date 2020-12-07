@@ -23,7 +23,7 @@ class PriceProductFilterExpander implements PriceProductFilterExpanderInterface
         PriceProductFilterTransfer $priceProductFilterTransfer
     ): PriceProductFilterTransfer {
         $productConfigurationInstance = $productViewTransfer->getProductConfigurationInstance();
-        if (!$productConfigurationInstance) {
+        if (!$productConfigurationInstance || !$productConfigurationInstance->getPrices()->count()) {
             return $priceProductFilterTransfer;
         }
 

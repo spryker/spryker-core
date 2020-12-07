@@ -31,8 +31,12 @@ use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResourceMapper;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResourceMapperInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerRestorePasswordResourceMapper;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerRestorePasswordResourceMapperInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Relationship\AddressByCheckoutDataResourceRelationshipExpander;
+use Spryker\Glue\CustomersRestApi\Processor\Relationship\AddressResourceRelationshipExpanderInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Relationship\CustomerByCompanyUserResourceRelationshipExpander;
 use Spryker\Glue\CustomersRestApi\Processor\Relationship\CustomerResourceRelationshipExpanderInterface;
+use Spryker\Glue\CustomersRestApi\Processor\RestResponseBuilder\AddressRestResponseBuilder;
+use Spryker\Glue\CustomersRestApi\Processor\RestResponseBuilder\AddressRestResponseBuilderInterface;
 use Spryker\Glue\CustomersRestApi\Processor\RestResponseBuilder\CustomerRestResponseBuilder;
 use Spryker\Glue\CustomersRestApi\Processor\RestResponseBuilder\CustomerRestResponseBuilderInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Session\SessionCreator;
@@ -81,11 +85,11 @@ class CustomersRestApiFactory extends AbstractFactory
     public function createAddressReader(): AddressReaderInterface
     {
         return new AddressReader(
-            $this->getResourceBuilder(),
             $this->getCustomerClient(),
             $this->createAddressResourceMapper(),
             $this->createRestApiError(),
-            $this->createRestApiValidator()
+            $this->createRestApiValidator(),
+            $this->createAddressRestResponseBuilder()
         );
     }
 
@@ -122,7 +126,7 @@ class CustomersRestApiFactory extends AbstractFactory
         return new CustomerAddressReader(
             $this->getCustomerClient(),
             $this->createAddressResourceMapper(),
-            $this->getResourceBuilder()
+            $this->createAddressRestResponseBuilder()
         );
     }
 
@@ -132,12 +136,12 @@ class CustomersRestApiFactory extends AbstractFactory
     public function createAddressWriter(): AddressWriterInterface
     {
         return new AddressWriter(
-            $this->getResourceBuilder(),
             $this->getCustomerClient(),
             $this->createAddressReader(),
             $this->createAddressResourceMapper(),
             $this->createRestApiError(),
-            $this->createRestApiValidator()
+            $this->createRestApiValidator(),
+            $this->createAddressRestResponseBuilder()
         );
     }
 
@@ -149,6 +153,17 @@ class CustomersRestApiFactory extends AbstractFactory
         return new CustomerByCompanyUserResourceRelationshipExpander(
             $this->createCustomerRestResponseBuilder(),
             $this->createCustomerResourceMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CustomersRestApi\Processor\Relationship\AddressResourceRelationshipExpanderInterface
+     */
+    public function createAddressByCheckoutDataResourceRelationshipExpander(): AddressResourceRelationshipExpanderInterface
+    {
+        return new AddressByCheckoutDataResourceRelationshipExpander(
+            $this->createAddressRestResponseBuilder(),
+            $this->createAddressResourceMapper()
         );
     }
 
@@ -216,9 +231,15 @@ class CustomersRestApiFactory extends AbstractFactory
      */
     public function createCustomerRestResponseBuilder(): CustomerRestResponseBuilderInterface
     {
-        return new CustomerRestResponseBuilder(
-            $this->getResourceBuilder()
-        );
+        return new CustomerRestResponseBuilder($this->getResourceBuilder());
+    }
+
+    /**
+     * @return \Spryker\Glue\CustomersRestApi\Processor\RestResponseBuilder\AddressRestResponseBuilderInterface
+     */
+    public function createAddressRestResponseBuilder(): AddressRestResponseBuilderInterface
+    {
+        return new AddressRestResponseBuilder($this->getResourceBuilder());
     }
 
     /**

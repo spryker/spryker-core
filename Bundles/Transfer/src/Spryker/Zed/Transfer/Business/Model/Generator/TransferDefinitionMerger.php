@@ -12,7 +12,7 @@ use Exception;
 class TransferDefinitionMerger implements MergerInterface
 {
     public const ERROR_MESSAGE_ATTRIBUTES_NOT_IDENTICAL =
-        'Value mismatch for "%1$s.%2$s" tranfer property. Value1: "%3$s"; Value2: "%4$s". ' .
+        'Value mismatch for "%1$s.%2$s" transfer property. Value1: "%3$s"; Value2: "%4$s". ' .
         'To fix this, search for \'property name="%2$s"\' in the code base and fix the wrong one.';
 
     /**

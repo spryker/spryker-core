@@ -45,22 +45,31 @@ class MerchantAddressReader implements MerchantAddressReaderInterface
     public function getMerchantAddresses(RestRequestInterface $restRequest): RestResponseInterface
     {
         $merchantResource = $restRequest->findParentResourceByType(MerchantsRestApiConfig::RESOURCE_MERCHANTS);
+
         if (!$merchantResource || !$merchantResource->getId()) {
             return $this->merchantsAddressRestResponseBuilder->createMerchantIdentifierMissingErrorResponse();
         }
 
-        $merchantStorageTransfer = $this->merchantStorageClient->findOneByMerchantReference($merchantResource->getId());
+        /**
+         * @var string $merchantReference
+         */
+        $merchantReference = $merchantResource->getId();
+
+        $merchantStorageTransfer = $this->merchantStorageClient->findOneByMerchantReference($merchantReference);
+
         if (!$merchantStorageTransfer) {
             return $this->merchantsAddressRestResponseBuilder->createMerchantNotFoundErrorResponse();
         }
 
-        $merchantStorageProfileAddressTransfers = $merchantStorageTransfer
-            ->getMerchantProfile()
-            ->getAddressCollection();
+        /**
+         * @var \Generated\Shared\Transfer\MerchantStorageProfileTransfer $merchantStorageProfileTransfer
+         */
+        $merchantStorageProfileTransfer = $merchantStorageTransfer->getMerchantProfile();
+        $merchantStorageProfileAddressTransfers = $merchantStorageProfileTransfer->getAddressCollection();
 
         return $this->merchantsAddressRestResponseBuilder->createMerchantAddressesRestResponse(
             $merchantStorageProfileAddressTransfers,
-            $merchantResource->getId()
+            $merchantReference
         );
     }
 

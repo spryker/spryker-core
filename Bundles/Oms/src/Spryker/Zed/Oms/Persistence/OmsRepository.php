@@ -126,6 +126,7 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
             ->leftJoinWithState()
             ->leftJoinOrderItem()
             ->groupByFkSalesOrderItem()
+            ->groupByIdOmsOrderItemStateHistory()
             ->orderByIdOmsOrderItemStateHistory(Criteria::DESC);
 
         return $this->getFactory()
@@ -143,7 +144,8 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
     public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): array
     {
         $salesOrderItemQuery = $this->getFactory()
-            ->getSalesQueryContainer()->querySalesOrderItem()
+            ->getSalesQueryContainer()
+            ->querySalesOrderItem()
             ->joinWithState()
             ->joinWithProcess();
 

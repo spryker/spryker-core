@@ -29,6 +29,11 @@ class SalesReclamationGuiDependencyProvider extends AbstractBundleDependencyProv
     public const SERVICE_DATETIME = 'SERVICE_DATETIME';
 
     /**
+     * @uses \Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_CSRF_PROVIDER
+     */
+    public const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -42,6 +47,7 @@ class SalesReclamationGuiDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addOmsFacade($container);
         $container = $this->addSalesReclamationPropelQuery($container);
         $container = $this->addDateTimeService($container);
+        $container = $this->addCsrfProviderService($container);
 
         return $container;
     }
@@ -113,6 +119,20 @@ class SalesReclamationGuiDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::FACADE_OMS, function (Container $container) {
             return new SalesReclamationGuiToOmsFacadeBridge($container->getLocator()->oms()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCsrfProviderService(Container $container): Container
+    {
+        $container->set(static::SERVICE_FORM_CSRF_PROVIDER, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_FORM_CSRF_PROVIDER);
         });
 
         return $container;

@@ -55,9 +55,9 @@ abstract class AbstractCompanyBusinessUnitAddressCollectionResourceRelationshipE
             }
 
             foreach ($addressCollectionTransfer->getCompanyUnitAddresses() as $companyUnitAddress) {
-                $resource->addRelationship($this->createCompanyBusinessUnitAddressResource(
-                    $companyUnitAddress
-                ));
+                $resource->addRelationship(
+                    $this->createCompanyBusinessUnitAddressResource($companyUnitAddress)
+                );
             }
         }
 

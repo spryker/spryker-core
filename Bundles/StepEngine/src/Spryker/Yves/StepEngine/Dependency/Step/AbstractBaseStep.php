@@ -48,11 +48,11 @@ abstract class AbstractBaseStep implements StepInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
-    public function getTemplateVariables(AbstractTransfer $dataTransfer)
+    public function getTemplateVariables(AbstractTransfer $quoteTransfer)
     {
         return [];
     }

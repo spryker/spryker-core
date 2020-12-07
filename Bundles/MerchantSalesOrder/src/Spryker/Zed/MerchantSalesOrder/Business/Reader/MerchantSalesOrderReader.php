@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantSalesOrder\Business\Reader;
 use ArrayObject;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToSalesFacadeInterface;
 use Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderRepositoryInterface;
 
@@ -31,17 +32,25 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
     protected $merchantOrderExpanderPlugins;
 
     /**
+     * @var \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderFilterPluginInterface[]
+     */
+    protected $merchantOrderFilterPlugins;
+
+    /**
      * @param \Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToSalesFacadeInterface $salesFacade
      * @param \Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderRepositoryInterface $merchantSalesOrderRepository
+     * @param \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderFilterPluginInterface[] $merchantOrderFilterPlugins
      * @param \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderExpanderPluginInterface[] $merchantOrderExpanderPlugins
      */
     public function __construct(
         MerchantSalesOrderToSalesFacadeInterface $salesFacade,
         MerchantSalesOrderRepositoryInterface $merchantSalesOrderRepository,
+        array $merchantOrderFilterPlugins,
         array $merchantOrderExpanderPlugins
     ) {
         $this->salesFacade = $salesFacade;
         $this->merchantSalesOrderRepository = $merchantSalesOrderRepository;
+        $this->merchantOrderFilterPlugins = $merchantOrderFilterPlugins;
         $this->merchantOrderExpanderPlugins = $merchantOrderExpanderPlugins;
     }
 
@@ -60,6 +69,7 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
 
         if ($merchantOrderCriteriaTransfer->getWithOrder()) {
             $merchantOrderTransfer = $this->addSalesOrder($merchantOrderTransfer, $merchantOrderCriteriaTransfer);
+            $merchantOrderTransfer = $this->executeSalesOrderFilterPlugins($merchantOrderTransfer);
         }
 
         if ($merchantOrderCriteriaTransfer->getWithUniqueProductsCount()) {
@@ -72,17 +82,16 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
     }
 
     /**
-     * @phpstan-return \ArrayObject<int,\Generated\Shared\Transfer\ExpenseTransfer>
-     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
-     * @return \Generated\Shared\Transfer\ExpenseTransfer[]|\ArrayObject
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    protected function getMerchantOrderExpenses(MerchantOrderTransfer $merchantOrderTransfer): ArrayObject
+    protected function filterMerchantOrderExpenses(OrderTransfer $orderTransfer, MerchantOrderTransfer $merchantOrderTransfer): OrderTransfer
     {
         $expenseTransfers = new ArrayObject();
 
-        foreach ($merchantOrderTransfer->getOrder()->getExpenses() as $expenseTransfer) {
+        foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
             if ($expenseTransfer->getMerchantReference() !== $merchantOrderTransfer->getMerchantReference()) {
                 continue;
             }
@@ -90,7 +99,7 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
             $expenseTransfers->append($expenseTransfer);
         }
 
-        return $expenseTransfers;
+        return $orderTransfer->setExpenses($expenseTransfers);
     }
 
     /**
@@ -102,6 +111,20 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
     {
         foreach ($this->merchantOrderExpanderPlugins as $merchantOrderExpanderPlugin) {
             $merchantOrderTransfer = $merchantOrderExpanderPlugin->expand($merchantOrderTransfer);
+        }
+
+        return $merchantOrderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer
+     */
+    protected function executeSalesOrderFilterPlugins(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer
+    {
+        foreach ($this->merchantOrderFilterPlugins as $merchantOrderFilterPlugin) {
+            $merchantOrderTransfer = $merchantOrderFilterPlugin->filter($merchantOrderTransfer);
         }
 
         return $merchantOrderTransfer;
@@ -134,11 +157,31 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
             unset($itemTransfers);
         }
 
-        $orderTransfer->setItems(new ArrayObject());
+        $orderTransfer = $this->filterMerchantOrderItems($orderTransfer, $merchantOrderTransfer);
+        $orderTransfer = $this->filterMerchantOrderExpenses($orderTransfer, $merchantOrderTransfer);
 
         $merchantOrderTransfer->setOrder($orderTransfer);
-        $merchantOrderTransfer->setExpenses($this->getMerchantOrderExpenses($merchantOrderTransfer));
+        $merchantOrderTransfer->setExpenses($orderTransfer->getExpenses());
 
         return $merchantOrderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function filterMerchantOrderItems(OrderTransfer $orderTransfer, MerchantOrderTransfer $merchantOrderTransfer): OrderTransfer
+    {
+        $orderItemTransfers = new ArrayObject();
+
+        foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItem) {
+            $orderItemTransfers->append($merchantOrderItem->getOrderItem());
+        }
+
+        $orderTransfer->setItems($orderItemTransfers);
+
+        return $orderTransfer;
     }
 }

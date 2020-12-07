@@ -80,7 +80,10 @@ class CountryBusinessFactory extends AbstractBusinessFactory
      */
     public function createCountryCheckoutDataValidator(): CountryCheckoutDataValidatorInterface
     {
-        return new CountryCheckoutDataValidator($this->createCountryManager());
+        return new CountryCheckoutDataValidator(
+            $this->createCountryManager(),
+            $this->getRepository()
+        );
     }
 
     /**

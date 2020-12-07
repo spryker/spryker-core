@@ -7,12 +7,26 @@
 
 namespace Spryker\Glue\MerchantsRestApi\Processor\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\RestLegalInformationTransfer;
 use Generated\Shared\Transfer\RestMerchantsAttributesTransfer;
 
 class MerchantMapper implements MerchantMapperInterface
 {
+    /**
+     * @var \Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\MerchantRestAttributesMapperPluginInterface[]
+     */
+    protected $merchantRestAttributesMapperPlugins;
+
+    /**
+     * @param \Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\MerchantRestAttributesMapperPluginInterface[] $merchantRestAttributesMapperPlugins
+     */
+    public function __construct(array $merchantRestAttributesMapperPlugins)
+    {
+        $this->merchantRestAttributesMapperPlugins = $merchantRestAttributesMapperPlugins;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\MerchantStorageTransfer $merchantStorageTransfer
      * @param \Generated\Shared\Transfer\RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer
@@ -25,7 +39,11 @@ class MerchantMapper implements MerchantMapperInterface
         RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer,
         string $localeName
     ): RestMerchantsAttributesTransfer {
-        $merchantStorageProfileTransfer = $merchantStorageTransfer->getMerchantProfile();
+        /**
+         * @var \Generated\Shared\Transfer\MerchantStorageProfileTransfer $merchantStorageProfileTransfer
+         */
+        $merchantStorageProfileTransfer = $merchantStorageTransfer->requireMerchantProfile()
+            ->getMerchantProfile();
 
         $restLegalInformationTransfer = (new RestLegalInformationTransfer())
             ->setCancellationPolicy($merchantStorageProfileTransfer->getCancellationPolicy())
@@ -33,30 +51,61 @@ class MerchantMapper implements MerchantMapperInterface
             ->setImprint($merchantStorageProfileTransfer->getImprint())
             ->setTerms($merchantStorageProfileTransfer->getTermsConditions());
 
-        return $restMerchantsAttributesTransfer->fromArray($merchantStorageTransfer->toArray(), true)
+        $restMerchantsAttributesTransfer->fromArray($merchantStorageTransfer->toArray(), true)
             ->fromArray($merchantStorageProfileTransfer->toArray(), true)
             ->setMerchantName($merchantStorageTransfer->getName())
             ->setLegalInformation($restLegalInformationTransfer)
             ->setBannerUrl($merchantStorageProfileTransfer->getBannerUrl())
             ->setDescription($merchantStorageProfileTransfer->getDescription())
             ->setDeliveryTime($merchantStorageProfileTransfer->getDeliveryTime())
-            ->setMerchantUrl($this->findMerchantUrlByLocaleName($merchantStorageTransfer, $localeName));
+            ->setMerchantUrl($this->findMerchantUrlByLocaleName($merchantStorageTransfer->getUrlCollection(), $localeName));
+
+        $restMerchantsAttributesTransfer = $this->executeMerchantRestAttributesMapperPlugins(
+            $merchantStorageTransfer,
+            $restMerchantsAttributesTransfer,
+            $localeName
+        );
+
+        return $restMerchantsAttributesTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantStorageTransfer $merchantStorageTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\UrlTransfer[] $urlCollection
      * @param string $localeName
      *
      * @return string|null
      */
-    protected function findMerchantUrlByLocaleName(MerchantStorageTransfer $merchantStorageTransfer, string $localeName): ?string
+    protected function findMerchantUrlByLocaleName(ArrayObject $urlCollection, string $localeName): ?string
     {
-        foreach ($merchantStorageTransfer->getUrlCollection() as $urlTransfer) {
+        foreach ($urlCollection as $urlTransfer) {
             if ($urlTransfer->getLocaleName() === $localeName) {
                 return $urlTransfer->getUrl();
             }
         }
 
         return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantStorageTransfer $merchantStorageTransfer
+     * @param \Generated\Shared\Transfer\RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\RestMerchantsAttributesTransfer
+     */
+    protected function executeMerchantRestAttributesMapperPlugins(
+        MerchantStorageTransfer $merchantStorageTransfer,
+        RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer,
+        string $localeName
+    ): RestMerchantsAttributesTransfer {
+        foreach ($this->merchantRestAttributesMapperPlugins as $restMerchantAttributesMapperPlugin) {
+            $restMerchantsAttributesTransfer = $restMerchantAttributesMapperPlugin->mapMerchantStorageTransferToRestMerchantsAttributesTransfer(
+                $merchantStorageTransfer,
+                $restMerchantsAttributesTransfer,
+                $localeName
+            );
+        }
+
+        return $restMerchantsAttributesTransfer;
     }
 }

@@ -1,6 +1,7 @@
 namespace: ShipmentsRestApi
 include:
     - tests/SprykerTest/Zed/ShipmentsRestApi
+    - tests/SprykerTest/Glue/ShipmentsRestApi
 paths:
     tests: tests
     log: tests/_output

@@ -29,7 +29,15 @@ class MerchantsResourceController extends AbstractController
      *              "400": "Merchant identifier is not specified.",
      *              "404": "Merchant not found."
      *          }
-     *     }
+     *     },
+     *     "getCollection": {
+     *          "summary": [
+     *              "Retrieves list of merchants."
+     *          ],
+     *          "parameters": [{
+     *              "ref": "acceptLanguage"
+     *          }]
+     *      }
      * })
      *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
@@ -38,8 +46,12 @@ class MerchantsResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        return $this->getFactory()
-            ->createMerchantReader()
-            ->getMerchantById($restRequest);
+        $merchantReader = $this->getFactory()->createMerchantReader();
+
+        if ($restRequest->getResource()->getId()) {
+            return $merchantReader->getMerchant($restRequest);
+        }
+
+        return $merchantReader->getMerchants($restRequest);
     }
 }

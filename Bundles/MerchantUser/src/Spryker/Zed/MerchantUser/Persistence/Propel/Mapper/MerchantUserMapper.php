@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantUser\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
+use Orm\Zed\Merchant\Persistence\SpyMerchant;
 use Orm\Zed\MerchantUser\Persistence\SpyMerchantUser;
 use Propel\Runtime\Collection\Collection;
 
@@ -28,8 +29,21 @@ class MerchantUserMapper
             ->setIdMerchant($merchantUserEntity->getFkMerchant())
             ->setIdUser($merchantUserEntity->getFkUser())
             ->setMerchant(
-                (new MerchantTransfer())->fromArray($merchantUserEntity->getSpyMerchant()->toArray(), true)
+                $this->mapMerchantEntityToMerchantTransfer($merchantUserEntity->getSpyMerchant(), new MerchantTransfer())
             );
+    }
+
+    /**
+     * @param \Orm\Zed\Merchant\Persistence\SpyMerchant $merchantEntity
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer
+     */
+    protected function mapMerchantEntityToMerchantTransfer(
+        SpyMerchant $merchantEntity,
+        MerchantTransfer $merchantTransfer
+    ): MerchantTransfer {
+        return $merchantTransfer->fromArray($merchantEntity->toArray(), true);
     }
 
     /**
@@ -49,6 +63,8 @@ class MerchantUserMapper
     }
 
     /**
+     * @phpstan-param \Propel\Runtime\Collection\Collection<\Orm\Zed\MerchantUser\Persistence\SpyMerchantUser> $merchantUserEntities
+     *
      * @param \Propel\Runtime\Collection\Collection $merchantUserEntities
      *
      * @return \Generated\Shared\Transfer\MerchantUserTransfer[]

@@ -25,10 +25,10 @@ interface ValidateRestRequestPluginInterface
      *
      * @api
      *
-     * @param \Symfony\Component\HttpFoundation\Request $httpRequest
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null
      */
-    public function validate(Request $httpRequest, RestRequestInterface $restRequest): ?RestErrorMessageTransfer;
+    public function validate(Request $request, RestRequestInterface $restRequest): ?RestErrorMessageTransfer;
 }

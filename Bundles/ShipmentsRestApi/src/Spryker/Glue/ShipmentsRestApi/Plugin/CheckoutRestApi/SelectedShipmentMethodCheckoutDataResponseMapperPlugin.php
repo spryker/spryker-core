@@ -14,6 +14,8 @@ use Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataResponse
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
+ * @deprecated Use `\Spryker\Glue\ShipmentsRestApi\Plugin\GlueApplication\ShipmentsByCheckoutDataResourceRelationshipPlugin` instead.
+ *
  * @method \Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiFactory getFactory()
  */
 class SelectedShipmentMethodCheckoutDataResponseMapperPlugin extends AbstractPlugin implements CheckoutDataResponseMapperPluginInterface
@@ -36,7 +38,8 @@ class SelectedShipmentMethodCheckoutDataResponseMapperPlugin extends AbstractPlu
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         RestCheckoutDataResponseAttributesTransfer $restCheckoutResponseAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer {
-        return $this->getFactory()->createShipmentMethodMapper()
+        return $this->getFactory()
+            ->createShipmentMethodMapper()
             ->mapRestCheckoutDataResponseTransferToRestCheckoutDataResponseAttributesTransfer(
                 $restCheckoutDataTransfer,
                 $restCheckoutRequestAttributesTransfer,

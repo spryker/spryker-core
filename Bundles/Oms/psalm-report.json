@@ -122,30 +122,6 @@
         },
         {
             "severity": "error",
-            "line_from": 21,
-            "line_to": 21,
-            "type": "ParamNameMismatch",
-            "message": "Argument 3 of Spryker\\Zed\\Oms\\Communication\\Form\\DataProvider\\OrderOmsTriggerFormDataProvider::getOptions has wrong name $idSalesOrder, expecting $idSalesOrderItem as defined by Spryker\\Zed\\Oms\\Communication\\Form\\DataProvider\\AbstractOmsTriggerFormDataProvider::getOptions",
-            "file_name": "vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Communication/Form/DataProvider/OrderOmsTriggerFormDataProvider.php",
-            "snippet": "    public function getOptions(string $redirectUrl, string $event, int $idSalesOrder): array",
-            "selected_text": "$idSalesOrder",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 35,
-            "line_to": 35,
-            "type": "ParamNameMismatch",
-            "message": "Argument 2 of Spryker\\Zed\\Oms\\Communication\\Plugin\\Checkout\\OmsPostSaveHookPlugin::executeHook has wrong name $checkoutResponseTransfer, expecting $checkoutResponse as defined by Spryker\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutPostSaveHookInterface::executeHook",
-            "file_name": "vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Communication/Plugin/Checkout/OmsPostSaveHookPlugin.php",
-            "snippet": "    public function executeHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)",
-            "selected_text": "$checkoutResponseTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
             "line_from": 82,
             "line_to": 82,
             "type": "InvalidReturnType",
@@ -1756,8 +1732,8 @@
         },
         {
             "severity": "info",
-            "line_from": 198,
-            "line_to": 198,
+            "line_from": 200,
+            "line_to": 200,
             "type": "PossiblyNullReference",
             "message": "Cannot call method requireIdStore on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Persistence/OmsRepository.php",
@@ -1768,8 +1744,8 @@
         },
         {
             "severity": "info",
-            "line_from": 203,
-            "line_to": 203,
+            "line_from": 205,
+            "line_to": 205,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdStore on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Persistence/OmsRepository.php",

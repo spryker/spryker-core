@@ -12,6 +12,13 @@ use Generated\Shared\Transfer\MerchantStorageTransfer;
 interface MerchantsRestApiToMerchantStorageClientInterface
 {
     /**
+     * @param int[] $merchantIds
+     *
+     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
+     */
+    public function get(array $merchantIds): array;
+
+    /**
      * @param string[] $merchantReferences
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]

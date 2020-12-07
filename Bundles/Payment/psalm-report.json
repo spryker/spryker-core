@@ -71,18 +71,6 @@
             "selected_text": "$paymentSelections",
             "error_level": 6,
             "shortcode": 128
-        },
-        {
-            "severity": "error",
-            "line_from": 26,
-            "line_to": 26,
-            "type": "ParamNameMismatch",
-            "message": "Argument 3 of Spryker\\Zed\\Payment\\Dependency\\Plugin\\Checkout\\CheckoutPluginCollection::add has wrong name $pluginType, expecting $type as defined by Spryker\\Zed\\Payment\\Dependency\\Plugin\\Checkout\\CheckoutPluginCollectionInterface::add",
-            "file_name": "vendor/spryker/spryker/Bundles/Payment/src/Spryker/Zed/Payment/Dependency/Plugin/Checkout/CheckoutPluginCollection.php",
-            "snippet": "    public function add(CheckoutPluginInterface $plugin, $provider, $pluginType)",
-            "selected_text": "$pluginType",
-            "error_level": 7,
-            "shortcode": 230
         }
     ],
     "warning": [

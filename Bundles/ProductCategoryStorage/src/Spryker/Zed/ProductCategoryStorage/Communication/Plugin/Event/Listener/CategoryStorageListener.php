@@ -26,16 +26,16 @@ class CategoryStorageListener extends AbstractPlugin implements EventBulkHandler
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
 
-        $categoryIds = $this->getCategoryIds($eventTransfers, $eventName);
+        $categoryIds = $this->getCategoryIds($eventEntityTransfers, $eventName);
         if (empty($categoryIds)) {
             return;
         }
