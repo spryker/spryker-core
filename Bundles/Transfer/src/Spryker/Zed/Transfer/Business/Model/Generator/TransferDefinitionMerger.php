@@ -63,8 +63,8 @@ class TransferDefinitionMerger implements MergerInterface
             'property' => $this->mergeProperty($existingDefinition['property'], $definitionToMerge['property'], $transferName),
         ];
 
-        if (isset($existingDefinition['strict'])) {
-            $mergedDefinition['strict'] = $existingDefinition['strict'];
+        if (isset($existingDefinition[DefinitionNormalizer::KEY_STRICT_MODE])) {
+            $mergedDefinition[DefinitionNormalizer::KEY_STRICT_MODE] = $existingDefinition[DefinitionNormalizer::KEY_STRICT_MODE];
         }
 
         return $mergedDefinition;
@@ -209,7 +209,7 @@ class TransferDefinitionMerger implements MergerInterface
      */
     protected function assertTransferStrictModeIsConsistent(array $existingTransferDefinition, array $transferDefinitionToMerge): void
     {
-        if ($this->validateNonMergeableAttribute('strict', $existingTransferDefinition, $transferDefinitionToMerge)) {
+        if ($this->validateNonMergeableAttribute(DefinitionNormalizer::KEY_STRICT_MODE, $existingTransferDefinition, $transferDefinitionToMerge)) {
             return;
         }
 
@@ -232,7 +232,7 @@ class TransferDefinitionMerger implements MergerInterface
      */
     protected function assertTransferPropertyStrictModeIsConsistent(array $existingTransferProperty, array $transferPropertyToMerge, string $transferName): void
     {
-        if ($this->validateNonMergeableAttribute('strict', $existingTransferProperty, $transferPropertyToMerge)) {
+        if ($this->validateNonMergeableAttribute(DefinitionNormalizer::KEY_STRICT_MODE, $existingTransferProperty, $transferPropertyToMerge)) {
             return;
         }
 

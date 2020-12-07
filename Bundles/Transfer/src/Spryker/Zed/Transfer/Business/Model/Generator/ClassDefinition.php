@@ -983,7 +983,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function isStrictProperty(array $property): bool
     {
-        return $property['strict'] ?? false;
+        return $property[DefinitionNormalizer::KEY_STRICT_MODE] ?? false;
     }
 
     /**
