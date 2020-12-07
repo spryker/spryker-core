@@ -24,22 +24,22 @@ class CompanyUserCustomerTableActionExpanderPlugin extends AbstractPlugin implem
      * @api
      *
      * @param int $idCustomer
-     * @param \Generated\Shared\Transfer\ButtonTransfer[] $buttons
+     * @param \Generated\Shared\Transfer\ButtonTransfer[] $buttonTransfers
      *
      * @return \Generated\Shared\Transfer\ButtonTransfer[]
      */
-    public function execute(int $idCustomer, array $buttons): array
+    public function execute(int $idCustomer, array $buttonTransfers): array
     {
         $countActiveCompanyUsersByIdCustomer = $this->getFactory()
             ->getCompanyUserFacade()
             ->countActiveCompanyUsersByIdCustomer((new CustomerTransfer())->setIdCustomer($idCustomer));
 
         if ($countActiveCompanyUsersByIdCustomer !== 0) {
-            return $buttons;
+            return $buttonTransfers;
         }
 
         return $this->getFactory()
             ->createCompanyUserGuiButtonCreator()
-            ->addAttachCustomerButton($idCustomer, $buttons);
+            ->addAttachCustomerButton($idCustomer, $buttonTransfers);
     }
 }

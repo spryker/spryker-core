@@ -26,14 +26,14 @@ class MerchantCategoryWritePublisherPlugin extends AbstractPlugin implements Pub
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $transfers, $eventName): void
+    public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        $this->getFacade()->writeCollectionByMerchantCategoryEvents($transfers);
+        $this->getFacade()->writeCollectionByMerchantCategoryEvents($eventEntityTransfers);
     }
 
     /**

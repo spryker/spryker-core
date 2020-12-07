@@ -13,32 +13,32 @@ use Symfony\Component\HttpFoundation\Request;
 interface FormCollectionHandlerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Symfony\Component\Form\FormInterface[]
      */
-    public function getForms(AbstractTransfer $dataTransfer);
+    public function getForms(AbstractTransfer $quoteTransfer);
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function hasSubmittedForm(Request $request, AbstractTransfer $dataTransfer);
+    public function hasSubmittedForm(Request $request, AbstractTransfer $quoteTransfer);
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Symfony\Component\Form\FormInterface|null
      */
-    public function handleRequest(Request $request, AbstractTransfer $dataTransfer);
+    public function handleRequest(Request $request, AbstractTransfer $quoteTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    public function provideDefaultFormData(AbstractTransfer $dataTransfer);
+    public function provideDefaultFormData(AbstractTransfer $quoteTransfer);
 }

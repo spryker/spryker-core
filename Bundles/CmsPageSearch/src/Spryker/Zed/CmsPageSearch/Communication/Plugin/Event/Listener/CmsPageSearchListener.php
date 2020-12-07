@@ -23,15 +23,15 @@ class CmsPageSearchListener extends AbstractPlugin implements EventBulkHandlerIn
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @param array $eventTransfers
+     * @param array $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
-        $cmsPageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+        $cmsPageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
 
         if (
             $eventName === CmsEvents::ENTITY_SPY_CMS_PAGE_UPDATE ||

@@ -27,7 +27,7 @@ class ProductRelationCollectorPlugin extends AbstractCollectorPlugin
      * @api
      *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
      * @param \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface $dataReader
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
@@ -38,7 +38,7 @@ class ProductRelationCollectorPlugin extends AbstractCollectorPlugin
      */
     public function run(
         SpyTouchQuery $baseQuery,
-        LocaleTransfer $locale,
+        LocaleTransfer $localeTransfer,
         BatchResultInterface $result,
         ReaderInterface $dataReader,
         WriterInterface $dataWriter,
@@ -48,7 +48,7 @@ class ProductRelationCollectorPlugin extends AbstractCollectorPlugin
 
         $this->getFacade()->runStorageProductRelationCollector(
             $baseQuery,
-            $locale,
+            $localeTransfer,
             $result,
             $dataReader,
             $dataWriter,

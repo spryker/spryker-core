@@ -24,19 +24,19 @@ interface CheckoutPluginCollectionInterface
      * @api
      *
      * @param string $provider
-     * @param string $pluginType
+     * @param string $type
      *
      * @return \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginInterface
      */
-    public function get($provider, $pluginType);
+    public function get($provider, $type);
 
     /**
      * @api
      *
      * @param string $provider
-     * @param string $pluginType
+     * @param string $type
      *
      * @return bool
      */
-    public function has($provider, $pluginType);
+    public function has($provider, $type);
 }
