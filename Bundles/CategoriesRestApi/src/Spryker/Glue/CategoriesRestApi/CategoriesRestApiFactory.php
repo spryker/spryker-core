@@ -44,6 +44,14 @@ class CategoriesRestApiFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToStoreClientInterface
+     */
+    public function getStoreClient(): CategoriesRestApiToStoreClientInterface
+    {
+        return $this->getProvidedDependency(CategoriesRestApiDependencyProvider::CLIENT_STORE);
+    }
+
+    /**
      * @return \Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoryMapperInterface
      */
     public function createCategoryMapper(): CategoryMapperInterface

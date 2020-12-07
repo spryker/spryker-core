@@ -511,7 +511,7 @@ interface CategoryFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param string|null $storeName
+     * @param string|null $storeName the parameter is going to be required in the next major.
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */

@@ -152,7 +152,7 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStoreFacade(Container $container): Container
     {
-        $container->set(static::FACADE_STORE, function (Container $container) {
+        $container->set(static::FACADE_STORE, function ($container) {
             return new ProductListGuiToStoreFacadeBridge($container->getLocator()->store()->facade());
         });
 

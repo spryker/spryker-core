@@ -20,13 +20,11 @@ use Spryker\Zed\Kernel\Container;
 class CmsSlotBlockProductCategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
-
     public const FACADE_CATEGORY = 'FACADE_CATEGORY';
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
     public const FACADE_STORE = 'FACADE_STORE';
-
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**

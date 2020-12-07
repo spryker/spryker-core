@@ -1,3 +1,5 @@
+{# @deprecated property "categoryTree" is deprecated: use "nodeCollection" instead. #}
+
 <div id="category-tree">
     <ul>
         <li id="category-node-0"
@@ -10,7 +12,7 @@
             {% include '@ProductCategoryFilterGui/CategoryTree/_partials/nodes.twig' with {
                 categoryTree: categoryTree,
                 categoriesWithSpecificFilters: categoriesWithSpecificFilters,
-                childNodes: childNodes,
+                nodeCollection: nodeCollection ?? null,
             } %}
         </li>
     </ul>

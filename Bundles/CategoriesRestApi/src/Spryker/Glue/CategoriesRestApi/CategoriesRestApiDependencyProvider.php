@@ -27,6 +27,8 @@ class CategoriesRestApiDependencyProvider extends AbstractBundleDependencyProvid
      */
     public function provideDependencies(Container $container): Container
     {
+        $container = parent::provideDependencies($container);
+
         $container = $this->addCategoryStorageClient($container);
         $container = $this->addStoreClient($container);
 

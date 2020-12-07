@@ -21,7 +21,7 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
      * @api
      *
      * @param string $locale
-     * @param string|null $storeName the parammeter is going to be required in the next major
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]|\ArrayObject
      */

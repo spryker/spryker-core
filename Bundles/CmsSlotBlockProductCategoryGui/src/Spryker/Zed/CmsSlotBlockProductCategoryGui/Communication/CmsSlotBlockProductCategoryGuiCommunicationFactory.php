@@ -78,7 +78,8 @@ class CmsSlotBlockProductCategoryGuiCommunicationFactory extends AbstractCommuni
     {
         return new CategoryReader(
             $this->getCategoryFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
+            $this->getStoreFacade()
         );
     }
 
