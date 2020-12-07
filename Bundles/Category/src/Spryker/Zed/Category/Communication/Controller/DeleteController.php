@@ -7,10 +7,9 @@
 
 namespace Spryker\Zed\Category\Communication\Controller;
 
-use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Orm\Zed\Category\Persistence\SpyCategory;
 use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,10 +30,7 @@ class DeleteController extends AbstractController
     public function indexAction(Request $request)
     {
         $idCategory = $this->castId($request->get(CategoryConstants::PARAM_ID_CATEGORY));
-        $categoryTransfer = $this->findCategory($idCategory);
-        if (!$categoryTransfer) {
-            return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
-        }
+        $categoryEntity = $this->getCategoryEntity($idCategory);
 
         $form = $this->getFactory()->createCategoryDeleteForm($idCategory);
         $form->handleRequest($request);
@@ -51,61 +47,52 @@ class DeleteController extends AbstractController
 
         return $this->viewResponse([
             'form' => $form->createView(),
-            'category' => $categoryTransfer,
-            'subTrees' => $this->getSubTrees($categoryTransfer), //@deprecated Use property `childNodes` instead.
-            'urls' => $this->getUrls($categoryTransfer),
-            'relations' => $this->getRelations($categoryTransfer),
-            'parentCategory' => $this->getParentCategoryEntity($categoryTransfer->getCategoryNode())->toArray(),
-            'childNodes' => $this->getCategoryChildNodeCollection($categoryTransfer),
+            'category' => $categoryEntity->toArray(),
+            'subTrees' => $this->getSubTrees($categoryEntity),
+            'urls' => $this->getUrls($categoryEntity),
+            'relations' => $this->getRelations($categoryEntity),
         ]);
     }
 
     /**
      * @param int $idCategory
      *
-     * @return \Generated\Shared\Transfer\CategoryTransfer|null
+     * @return \Orm\Zed\Category\Persistence\SpyCategory
      */
-    protected function findCategory(int $idCategory): ?CategoryTransfer
+    protected function getCategoryEntity($idCategory)
     {
         $localeTransfer = $this->getFactory()->getCurrentLocale();
-        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
-            ->setIdCategory($idCategory)
-            ->setLocaleName($localeTransfer->getLocaleName())
-            ->setWithChildrenRecursively(true);
+        $categoryEntity = $this
+            ->getQueryContainer()
+            ->queryCategory($localeTransfer->getIdLocale())
+            ->filterByIdCategory($idCategory)
+            ->findOne();
 
-        $categoryTransfer = $this
-            ->getFacade()
-            ->findCategory($categoryCriteriaTransfer);
-
-        if (!$categoryTransfer) {
-            return null;
-        }
-
-        return $categoryTransfer;
+        return $categoryEntity;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
      *
      * @return array
      */
-    protected function getSubTrees(CategoryTransfer $categoryTransfer)
+    protected function getSubTrees(SpyCategory $categoryEntity)
     {
         $categoryNodeCollection = $this
             ->getFacade()
-            ->getAllNodesByIdCategory($categoryTransfer->getIdCategory());
+            ->getAllNodesByIdCategory($categoryEntity->getIdCategory());
         $subTrees = [];
 
         foreach ($categoryNodeCollection as $categoryNodeTransfer) {
             $subTree = $this->getSubTree($categoryNodeTransfer->getIdCategoryNode());
 
-            if ($subTree === [] || $categoryNodeTransfer->getFkParentCategoryNode() === null) {
+            if (count($subTree) === 0) {
                 continue;
             }
 
             $parentCategoryEntity = $this->getParentCategoryEntity($categoryNodeTransfer);
             $subTrees[] = [
-                'text' => $categoryTransfer->getLocalizedAttributes()->offsetGet(0)->getName(),
+                'text' => $categoryEntity->getAttributes()->getFirst()->getName(),
                 'isMain' => $categoryNodeTransfer->getIsMain(),
                 'parentCategory' => $parentCategoryEntity->toArray(),
                 'tree' => $subTree,
@@ -151,15 +138,15 @@ class DeleteController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
      *
      * @return array
      */
-    protected function getUrls(CategoryTransfer $categoryTransfer)
+    protected function getUrls(SpyCategory $categoryEntity)
     {
         $categoryNodeCollection = $this
             ->getFacade()
-            ->getAllNodesByIdCategory($categoryTransfer->getIdCategory());
+            ->getAllNodesByIdCategory($categoryEntity->getIdCategory());
 
         $urls = [];
         foreach ($categoryNodeCollection as $categoryNodeEntity) {
@@ -177,13 +164,14 @@ class DeleteController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
      *
      * @return array
      */
-    protected function getRelations(CategoryTransfer $categoryTransfer)
+    protected function getRelations(SpyCategory $categoryEntity)
     {
         $localeTransfer = $this->getFactory()->getCurrentLocale();
+        $categoryTransfer = $this->getCategoryTransferFromEntity($categoryEntity);
         $relationPlugins = $this->getFactory()->getRelationReadPluginStack();
         $relations = [];
 
@@ -198,17 +186,25 @@ class DeleteController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
      *
-     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
+     * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    protected function getCategoryChildNodeCollection(CategoryTransfer $categoryTransfer): NodeCollectionTransfer
+    protected function getCategoryTransferFromEntity(SpyCategory $categoryEntity)
     {
-        $categoryNodeCollectionTransfer = $categoryTransfer->getNodeCollection();
-        if (!$categoryNodeCollectionTransfer || $categoryNodeCollectionTransfer->getNodes()->count() === 0) {
-            return new NodeCollectionTransfer();
+        $categoryTransfer = (new CategoryTransfer())->fromArray($categoryEntity->toArray(), true);
+        $categoryNodeCollection = $categoryEntity->getNodes();
+
+        foreach ($categoryNodeCollection as $categoryNodeEntity) {
+            $categoryNodeTransfer = (new NodeTransfer())->fromArray($categoryNodeEntity->toArray());
+
+            if ($categoryNodeEntity->getIsMain()) {
+                $categoryTransfer->setCategoryNode($categoryNodeTransfer);
+            } else {
+                $categoryTransfer->addExtraParent($categoryNodeTransfer);
+            }
         }
 
-        return $categoryNodeCollectionTransfer->getNodes()->offsetGet(0)->getChildrenNodes() ?? new NodeCollectionTransfer();
+        return $categoryTransfer;
     }
 }

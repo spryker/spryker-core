@@ -21,6 +21,7 @@ use Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Reader\Product\Prod
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToCategoryFacadeInterface;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToLocaleFacadeInterface;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToProductFacadeInterface;
+use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToStoreFacadeInterface;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToTranslatorFacadeInterface;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Service\CmsSlotBlockProductCategoryGuiToUtilEncodingInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -119,6 +120,14 @@ class CmsSlotBlockProductCategoryGuiCommunicationFactory extends AbstractCommuni
     public function getTranslatorFacade(): CmsSlotBlockProductCategoryGuiToTranslatorFacadeInterface
     {
         return $this->getProvidedDependency(CmsSlotBlockProductCategoryGuiDependencyProvider::FACADE_TRANSLATOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToStoreFacadeInterface
+     */
+    public function getStoreFacade(): CmsSlotBlockProductCategoryGuiToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(CmsSlotBlockProductCategoryGuiDependencyProvider::FACADE_STORE);
     }
 
     /**

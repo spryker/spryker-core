@@ -8,8 +8,9 @@
                 {{ node.category.localizedAttributes[0].name }}
                 {% if node.childrenNodes is defined %}
                     {% include '@ProductCategoryFilterGui/CategoryTree/_partials/nodes.twig' with {
+                        categoryTree: categoryTree,
+                        categoriesWithSpecificFilters: categoriesWithSpecificFilters,
                         childNodes: node.childrenNodes,
-                        categoriesWithSpecificFilters: categoriesWithSpecificFilters
                     } %}
                 {% endif %}
             </li>

@@ -14,6 +14,7 @@ interface CategoryStorageClientInterface
     /**
      * Specification:
      *  - Return category node storage data by locale name.
+     *  - Forward compatibility (from next major): only categories assigned with passed $storeName will be returned.
      *
      * @api
      *
@@ -55,12 +56,13 @@ interface CategoryStorageClientInterface
      * - Returns category nodes with the `docCount` relevant for the result set.
      * - Retrieves category tree from storage by locale name.
      * - Recursively merges each category node in the category tree with `docCount` taken from the `ResultSet` aggregations.
+     * - Forward compatibility (from next major): only category nodes assigned with passed $localeName and $storeName will be returned.
      *
      * @api
      *
      * @param array $docCountAggregation
-     * @param string|null $localeName the parameter is going to be required in the next major
-     * @param string|null $storeName the parameter is going to be required in the next major
+     * @param string|null $localeName
+     * @param string|null $storeName
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]
      */

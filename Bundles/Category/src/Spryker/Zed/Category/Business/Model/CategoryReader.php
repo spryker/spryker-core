@@ -65,7 +65,7 @@ class CategoryReader implements CategoryReaderInterface
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer|null
      */
-    public function findCategoryByCriteria(CategoryCriteriaTransfer $categoryCriteriaTransfer): ?CategoryTransfer
+    public function findCategory(CategoryCriteriaTransfer $categoryCriteriaTransfer): ?CategoryTransfer
     {
         $categoryTransfer = $this->repository->findCategoryByCriteria($categoryCriteriaTransfer);
 

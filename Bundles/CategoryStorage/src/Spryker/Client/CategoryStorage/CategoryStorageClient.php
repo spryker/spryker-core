@@ -27,6 +27,10 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
      */
     public function getCategories($locale, ?string $storeName = null)
     {
+        if ($storeName === null) {
+            trigger_error('Pass the $storeName parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
+        }
+
         return $this->getFactory()
             ->createCategoryTreeStorageReader()
             ->getCategories($locale);
@@ -79,6 +83,14 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
      */
     public function formatCategoryTreeFilter(array $docCountAggregation, ?string $localeName = null, ?string $storeName = null): ArrayObject
     {
+        if ($localeName === null) {
+            trigger_error('Pass the $localeName parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
+        }
+
+        if ($storeName === null) {
+            trigger_error('Pass the $storeName parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
+        }
+
         return $this->getFactory()
             ->createCategoryTreeFilterFormatter()
             ->formatCategoryTreeFilter($docCountAggregation);

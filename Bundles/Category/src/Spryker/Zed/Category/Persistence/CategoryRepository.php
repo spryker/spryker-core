@@ -33,6 +33,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     public const NODE_PATH_ZERO_DEPTH = 0;
     public const IS_NOT_ROOT_NODE = 0;
     protected const COL_CATEGORY_NAME = 'name';
+    protected const CATEGORY_NODE_CHILDREN_FIRST_LEVEL_DEPTH = 1;
 
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -248,20 +249,17 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\NodeTransfer[][]
      */
-    public function getCategoryNodeChildNodesCollectionIndexedByParentNodeId(
-        CategoryTransfer $categoryTransfer,
-        CategoryCriteriaTransfer $categoryCriteriaTransfer
-    ): array {
+    public function getCategoryNodeChildNodesCollectionIndexedByParentNodeId(CategoryCriteriaTransfer $categoryCriteriaTransfer): array
+    {
         $categoryClosureTableQuery = $this->getFactory()
             ->createCategoryClosureTableQuery()
             ->leftJoinWithDescendantNode()
             ->useNodeQuery('node')
-                ->filterByFkCategory($categoryTransfer->getIdCategory())
+                ->filterByFkCategory($categoryCriteriaTransfer->getIdCategory())
             ->endUse()
             ->useDescendantNodeQuery()
                 ->leftJoinWithCategory()
@@ -279,7 +277,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         $categoryMapper = $this->getFactory()->createCategoryMapper();
         $categoryNodes = [];
         foreach ($categoryClosureTableEntities as $categoryClosureTable) {
-            $nodeTransfer = $categoryMapper->mapNodeEntityToNodeTransferWithCategoryRelation(
+            $nodeTransfer = $categoryMapper->mapCategoryNodeEntityToNodeTransferWithCategoryRelation(
                 $categoryClosureTable->getDescendantNode(),
                 new NodeTransfer()
             );
@@ -338,7 +336,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         }
 
         if ($categoryCriteriaTransfer->getWithChildren()) {
-            $categoryClosureTableQuery->filterByDepth(1);
+            $categoryClosureTableQuery->filterByDepth(static::CATEGORY_NODE_CHILDREN_FIRST_LEVEL_DEPTH);
         }
 
         return $categoryClosureTableQuery;

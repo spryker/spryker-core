@@ -72,4 +72,11 @@ interface CategoryRepositoryInterface
      * @return \Generated\Shared\Transfer\CategoryTransfer|null
      */
     public function findCategoryByCriteria(CategoryCriteriaTransfer $categoryCriteriaTransfer): ?CategoryTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeTransfer[][]
+     */
+    public function getCategoryNodeChildNodesCollectionIndexedByParentNodeId(CategoryCriteriaTransfer $categoryCriteriaTransfer): array;
 }

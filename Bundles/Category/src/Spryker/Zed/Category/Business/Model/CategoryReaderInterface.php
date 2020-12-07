@@ -24,5 +24,5 @@ interface CategoryReaderInterface
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer|null
      */
-    public function findCategoryByCriteria(CategoryCriteriaTransfer $categoryCriteriaTransfer): ?CategoryTransfer;
+    public function findCategory(CategoryCriteriaTransfer $categoryCriteriaTransfer): ?CategoryTransfer;
 }

@@ -106,6 +106,8 @@ interface CategoryFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Category\Business\CategoryFacadeInterface::findCategory()} instead.
+     *
      * @param int $idCategory
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
@@ -504,11 +506,12 @@ interface CategoryFacadeInterface
     /**
      * Specification:
      * - Retrieves collection with all categories from DB.
+     * - Forward compatibility (from next major): only categories assigned with passed $storeName will be returned.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param string|null $storeName the parammeter is going to be required in the next major
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
@@ -555,8 +558,8 @@ interface CategoryFacadeInterface
      *  - Finds first category-node for idCategory and finds all of its children.
      *  - Formats all child category-nodes as a nested array structure.
      *  - Category-node entities sorted by node order.
-     *  - If $request.withChildren, finds one level children.
-     *  - If $request.withChildrenRecursively, find all children recursively
+     *  - If `CategoryCriteriaTransfer.withChildren`, finds one level children.
+     *  - If `CategoryCriteriaTransfer.withChildrenRecursively`, find all children recursively.
      *
      * @api
      *

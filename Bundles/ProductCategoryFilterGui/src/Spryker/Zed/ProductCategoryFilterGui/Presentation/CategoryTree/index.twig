@@ -8,8 +8,9 @@
         >
             {{ mainCategory.name }}
             {% include '@ProductCategoryFilterGui/CategoryTree/_partials/nodes.twig' with {
+                categoryTree: categoryTree,
+                categoriesWithSpecificFilters: categoriesWithSpecificFilters,
                 childNodes: childNodes,
-                categoriesWithSpecificFilters: categoriesWithSpecificFilters
             } %}
         </li>
     </ul>
