@@ -8,25 +8,28 @@
 namespace Spryker\Client\SecurityBlocker;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\SecurityBlocker\Delegator\SecurityBlockerStorageDelegator;
-use Spryker\Client\SecurityBlocker\Delegator\SecurityBlockerStorageDelegatorInterface;
-use Spryker\Client\SecurityBlockerExtension\SecurityBlockerStorageAdapterPluginInterface;
+use Spryker\Client\SecurityBlocker\Dependency\Client\SecurityBlockerToRedisClientInterface;
+use Spryker\Client\SecurityBlocker\Redis\SecurityBlockerRedisWrapper;
+use Spryker\Client\SecurityBlocker\Redis\SecurityBlockerRedisWrapperInterface;
 
+/**
+ * @method \Spryker\Client\SecurityBlocker\SecurityBlockerConfig getConfig()
+ */
 class SecurityBlockerFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\SecurityBlocker\Delegator\SecurityBlockerStorageDelegatorInterface
+     * @return \Spryker\Client\SecurityBlocker\Redis\SecurityBlockerRedisWrapperInterface
      */
-    public function createSecurityBlockerStorageDelegator(): SecurityBlockerStorageDelegatorInterface
+    public function createSecurityBlockerRedisWrapper(): SecurityBlockerRedisWrapperInterface
     {
-        return new SecurityBlockerStorageDelegator($this->getSecurityBlockerStorageAdapterPlugin());
+        return new SecurityBlockerRedisWrapper($this->getRedisClient(), $this->getConfig());
     }
 
     /**
-     * @return \Spryker\Client\SecurityBlockerExtension\SecurityBlockerStorageAdapterPluginInterface
+     * @return \Spryker\Client\SecurityBlocker\Dependency\Client\SecurityBlockerToRedisClientInterface
      */
-    public function getSecurityBlockerStorageAdapterPlugin(): SecurityBlockerStorageAdapterPluginInterface
+    public function getRedisClient(): SecurityBlockerToRedisClientInterface
     {
-        return $this->getProvidedDependency(SecurityBlockerDependencyProvider::PLUGIN_SECURITY_BLOCKER_STORAGE_ADAPTER);
+        return $this->getProvidedDependency(SecurityBlockerDependencyProvider::CLIENT_REDIS);
     }
 }

@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\SecurityBlockerRedis\Redis;
+namespace Spryker\Client\SecurityBlocker\Redis;
 
 use Generated\Shared\Transfer\AuthContextTransfer;
 use Generated\Shared\Transfer\AuthResponseTransfer;
 use Generated\Shared\Transfer\RedisConfigurationTransfer;
-use Spryker\Client\SecurityBlockerRedis\Dependency\Client\SecurityBlockerRedisToRedisClientInterface;
-use Spryker\Client\SecurityBlockerRedis\Exception\SecurityBlockerRedisException;
-use Spryker\Client\SecurityBlockerRedis\SecurityBlockerRedisConfig;
+use Spryker\Client\SecurityBlocker\Dependency\Client\SecurityBlockerToRedisClientInterface;
+use Spryker\Client\SecurityBlocker\Exception\SecurityBlockerException;
+use Spryker\Client\SecurityBlocker\SecurityBlockerConfig;
 
 class SecurityBlockerRedisWrapper implements SecurityBlockerRedisWrapperInterface
 {
@@ -20,39 +20,39 @@ class SecurityBlockerRedisWrapper implements SecurityBlockerRedisWrapperInterfac
     protected const KEY_PART_SEPARATOR = ':';
 
     /**
-     * @var \Spryker\Client\SecurityBlockerRedis\Dependency\Client\SecurityBlockerRedisToRedisClientInterface
+     * @var \Spryker\Client\SecurityBlocker\Dependency\Client\SecurityBlockerToRedisClientInterface
      */
     protected $redisClient;
 
     /**
-     * @var \Spryker\Client\SecurityBlockerRedis\SecurityBlockerRedisConfig
+     * @var \Spryker\Client\SecurityBlocker\SecurityBlockerConfig
      */
-    protected $securityBlockerRedisConfig;
+    protected $securityBlockerConfig;
 
     /**
-     * @param \Spryker\Client\SecurityBlockerRedis\Dependency\Client\SecurityBlockerRedisToRedisClientInterface $redisClient
-     * @param \Spryker\Client\SecurityBlockerRedis\SecurityBlockerRedisConfig $securityBlockerRedisConfig
+     * @param \Spryker\Client\SecurityBlocker\Dependency\Client\SecurityBlockerToRedisClientInterface $redisClient
+     * @param \Spryker\Client\SecurityBlocker\SecurityBlockerConfig $securityBlockerConfig
      */
     public function __construct(
-        SecurityBlockerRedisToRedisClientInterface $redisClient,
-        SecurityBlockerRedisConfig $securityBlockerRedisConfig
+        SecurityBlockerToRedisClientInterface $redisClient,
+        SecurityBlockerConfig $securityBlockerConfig
     ) {
         $this->redisClient = $redisClient;
-        $this->securityBlockerRedisConfig = $securityBlockerRedisConfig;
+        $this->securityBlockerConfig = $securityBlockerConfig;
 
-        $this->setupConnection($this->securityBlockerRedisConfig->getRedisConnectionConfiguration());
+        $this->setupConnection($this->securityBlockerConfig->getRedisConnectionConfiguration());
     }
 
     /**
      * @param \Generated\Shared\Transfer\AuthContextTransfer $authContextTransfer
      *
-     * @throws \Spryker\Client\SecurityBlockerRedis\Exception\SecurityBlockerRedisException
+     * @throws \Spryker\Client\SecurityBlocker\Exception\SecurityBlockerException
      *
      * @return \Generated\Shared\Transfer\AuthResponseTransfer
      */
     public function logLoginAttempt(AuthContextTransfer $authContextTransfer): AuthResponseTransfer
     {
-        $redisConnectionKey = $this->securityBlockerRedisConfig->getRedisConnectionKey();
+        $redisConnectionKey = $this->securityBlockerConfig->getRedisConnectionKey();
         $key = $this->getKeyName($authContextTransfer);
 
         $existingValue = $this->redisClient->get($redisConnectionKey, $key);
@@ -69,7 +69,7 @@ class SecurityBlockerRedisWrapper implements SecurityBlockerRedisWrapperInterfac
         }
 
         if (!$result) {
-            throw new SecurityBlockerRedisException(
+            throw new SecurityBlockerException(
                 sprintf('Could not set redisKey: "%s" with existingValue: "%s"', $key, json_encode($existingValue))
             );
         }
@@ -87,7 +87,7 @@ class SecurityBlockerRedisWrapper implements SecurityBlockerRedisWrapperInterfac
     public function getLoginAttempt(AuthContextTransfer $authContextTransfer): AuthResponseTransfer
     {
         $key = $this->getKeyName($authContextTransfer);
-        $value = $this->redisClient->get($this->securityBlockerRedisConfig->getRedisConnectionKey(), $key);
+        $value = $this->redisClient->get($this->securityBlockerConfig->getRedisConnectionKey(), $key);
 
         $result = json_decode($value, true);
 
@@ -108,7 +108,7 @@ class SecurityBlockerRedisWrapper implements SecurityBlockerRedisWrapperInterfac
     protected function setupConnection(RedisConfigurationTransfer $redisConfigurationTransfer): void
     {
         $this->redisClient->setupConnection(
-            $this->securityBlockerRedisConfig->getRedisConnectionKey(),
+            $this->securityBlockerConfig->getRedisConnectionKey(),
             $redisConfigurationTransfer
         );
     }

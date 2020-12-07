@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\SecurityBlockerRedis\Dependency\Client;
+namespace Spryker\Client\SecurityBlocker\Dependency\Client;
 
 use Generated\Shared\Transfer\RedisConfigurationTransfer;
 
-class SecurityBlockerRedisToRedisClientBridge implements SecurityBlockerRedisToRedisClientInterface
+class SecurityBlockerToRedisClientBridge implements SecurityBlockerToRedisClientInterface
 {
     /**
      * @var \Spryker\Client\Redis\RedisClientInterface

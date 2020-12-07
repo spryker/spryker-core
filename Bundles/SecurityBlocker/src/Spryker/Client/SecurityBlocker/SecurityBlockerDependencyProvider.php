@@ -9,12 +9,14 @@ namespace Spryker\Client\SecurityBlocker;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\SecurityBlockerExtension\SecurityBlockerStorageAdapterPluginInterface;
-use Spryker\Client\SecurityBlockerRedis\Plugin\SecurityBlocker\RedisSecurityBlockerStorageAdapterPlugin;
+use Spryker\Client\SecurityBlocker\Dependency\Client\SecurityBlockerToRedisClientBridge;
 
+/**
+ * @method \Spryker\Client\SecurityBlocker\SecurityBlockerConfig getConfig()
+ */
 class SecurityBlockerDependencyProvider extends AbstractDependencyProvider
 {
-    public const PLUGIN_SECURITY_BLOCKER_STORAGE_ADAPTER = 'PLUGIN_SECURITY_BLOCKER_STORAGE_ADAPTER';
+    public const CLIENT_REDIS = 'CLIENT_REDIS';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -24,7 +26,7 @@ class SecurityBlockerDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = parent::provideServiceLayerDependencies($container);
-        $container = $this->addSecurityBlockerStorageAdapterPlugin($container);
+        $container = $this->addRedisClient($container);
 
         return $container;
     }
@@ -34,20 +36,14 @@ class SecurityBlockerDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addSecurityBlockerStorageAdapterPlugin(Container $container): Container
+    protected function addRedisClient(Container $container): Container
     {
-        $container->set(static::PLUGIN_SECURITY_BLOCKER_STORAGE_ADAPTER, function () {
-            return $this->getSecurityBlockerStorageAdapterPlugin();
+        $container->set(static::CLIENT_REDIS, function (Container $container) {
+            return new SecurityBlockerToRedisClientBridge(
+                $container->getLocator()->redis()->client()
+            );
         });
 
         return $container;
-    }
-
-    /**
-     * @return \Spryker\Client\SecurityBlockerExtension\SecurityBlockerStorageAdapterPluginInterface
-     */
-    protected function getSecurityBlockerStorageAdapterPlugin(): SecurityBlockerStorageAdapterPluginInterface
-    {
-        return new RedisSecurityBlockerStorageAdapterPlugin();
     }
 }

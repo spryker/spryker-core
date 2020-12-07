@@ -5,8 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\SecurityBlockerRedis;
+namespace Spryker\Client\SecurityBlocker\Exception;
 
-interface SecurityBlockerRedisClientInterface
+use Exception;
+
+class SecurityBlockerException extends Exception
 {
 }

@@ -1,4 +1,0 @@
-parameters:
-    checkMissingIterableValueType: false
-    ignoreErrors:
-        - '#Call to an undefined method Generated\\Client\\Ide\\AutoCompletion\|Spryker\\Shared\\Kernel\\LocatorLocatorInterface::[a-zA-Z]*\(\)#'

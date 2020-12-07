@@ -5,9 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\SecurityBlockerRedis;
+namespace Spryker\Shared\SecurityBlocker;
 
-interface SecurityBlockerRedisConstants
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
+interface SecurityBlockerConstants
 {
     /**
      * Specification:
@@ -89,4 +92,20 @@ interface SecurityBlockerRedisConstants
      * @api
      */
     public const RDB_DUMP_PATH = 'SECURITY_BLOCKER_REDIS:RDB_DUMP_PATH';
+
+    /**
+     * Specification:
+     * - Specifies the TTL configuration, the period when number of unsuccessful tries will be counted.
+     *
+     * @api
+     */
+    public const SECURITY_BLOCKER_BLOCKING_TTL = 'SECURITY_BLOCKER:BLOCKING_TTL';
+
+    /**
+     * Specification:
+     * - Specifies the TTL configuration, the period when number of unsuccessful tries will be counted.
+     *
+     * @api
+     */
+    public const SECURITY_BLOCKER_BLOCKING_NUMBER_OF_TRIES = 'SECURITY_BLOCKER:BLOCKING_NUMBER_OF_TRIES';
 }

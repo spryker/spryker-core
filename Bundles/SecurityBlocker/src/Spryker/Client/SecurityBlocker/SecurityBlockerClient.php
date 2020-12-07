@@ -28,7 +28,7 @@ class SecurityBlockerClient extends AbstractClient implements SecurityBlockerCli
     public function incrementLoginAttempt(AuthContextTransfer $authContextTransfer): AuthResponseTransfer
     {
         return $this->getFactory()
-            ->createSecurityBlockerStorageDelegator()
+            ->createSecurityBlockerRedisWrapper()
             ->logLoginAttempt($authContextTransfer);
     }
 
@@ -44,7 +44,7 @@ class SecurityBlockerClient extends AbstractClient implements SecurityBlockerCli
     public function getLoginAttempt(AuthContextTransfer $authContextTransfer): AuthResponseTransfer
     {
         return $this->getFactory()
-            ->createSecurityBlockerStorageDelegator()
+            ->createSecurityBlockerRedisWrapper()
             ->getLoginAttempt($authContextTransfer);
     }
 }
