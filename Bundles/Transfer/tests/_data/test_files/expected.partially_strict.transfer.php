@@ -819,7 +819,10 @@ class PartiallyStrictTransfer extends AbstractTransfer
      */
     public function setPropDummyItemCollectionStrict(ArrayObject $propDummyItemCollectionStrict)
     {
-        $this->propDummyItemCollectionStrict = $propDummyItemCollectionStrict;
+        foreach ($propDummyItemCollectionStrict as $collectionItem) {
+            $this->addPropDummyItemCollectionStrict($collectionItem);
+        }
+
         $this->modifiedProperties[self::PROP_DUMMY_ITEM_COLLECTION_STRICT] = true;
 
         return $this;
@@ -931,7 +934,10 @@ class PartiallyStrictTransfer extends AbstractTransfer
             $propTypedArrayStrict = [];
         }
 
-        $this->propTypedArrayStrict = $propTypedArrayStrict;
+        foreach ($propTypedArrayStrict as $collectionItem) {
+            $this->addPropTypedArrayStrict($collectionItem);
+        }
+
         $this->modifiedProperties[self::PROP_TYPED_ARRAY_STRICT] = true;
 
         return $this;

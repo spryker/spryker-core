@@ -505,7 +505,10 @@ class FullyStrictTransfer extends AbstractTransfer
      */
     public function setPropDummyItemCollection(ArrayObject $propDummyItemCollection)
     {
-        $this->propDummyItemCollection = $propDummyItemCollection;
+        foreach ($propDummyItemCollection as $collectionItem) {
+            $this->addPropDummyItemCollection($collectionItem);
+        }
+
         $this->modifiedProperties[self::PROP_DUMMY_ITEM_COLLECTION] = true;
 
         return $this;
@@ -561,7 +564,10 @@ class FullyStrictTransfer extends AbstractTransfer
             $propTypedArray = [];
         }
 
-        $this->propTypedArray = $propTypedArray;
+        foreach ($propTypedArray as $collectionItem) {
+            $this->addPropTypedArray($collectionItem);
+        }
+
         $this->modifiedProperties[self::PROP_TYPED_ARRAY] = true;
 
         return $this;

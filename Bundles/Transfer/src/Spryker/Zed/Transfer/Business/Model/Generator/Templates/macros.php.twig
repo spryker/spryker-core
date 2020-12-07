@@ -98,7 +98,14 @@
         }
 
         {% endif -%}
+        {% if method.isCollectionPropertyTypeCheckNeeded -%}
+        foreach (${{ method.property }} as $collectionItem) {
+            $this->{{ method.addMethodName }}($collectionItem);
+        }
+
+        {% else -%}
         $this->{{ method.property }} = ${{ method.property }};
+        {% endif -%}
         $this->modifiedProperties[self::{{ method.propertyConst }}] = true;
 
         return $this;

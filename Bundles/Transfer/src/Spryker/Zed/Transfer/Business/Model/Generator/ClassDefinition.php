@@ -855,6 +855,11 @@ class ClassDefinition implements ClassDefinitionInterface
             $method['setsArrayCollection'] = true;
         }
 
+        if ($this->isCollectionPropertyTypeCheckNeeded($property)) {
+            $method['isCollectionPropertyTypeCheckNeeded'] = true;
+            $method['addMethodName'] = 'add' . ucfirst($this->getPropertySingularName($property));
+        }
+
         if ($this->propertyHasTypeShim($property)) {
             $method['typeShimNotice'] = $this->buildTypeShimNotice(
                 $property['type'],
@@ -880,10 +885,7 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         $parent = $this->getPropertyName($property);
         $propertyConstant = $this->getPropertyConstantName($property);
-        if (isset($property['singular'])) {
-            $property['name'] = $property['singular'];
-        }
-        $propertyName = $this->getPropertyName($property);
+        $propertyName = $this->getPropertySingularName($property);
         $methodName = 'add' . ucfirst($propertyName);
 
         $method = [
@@ -1510,5 +1512,27 @@ class ClassDefinition implements ClassDefinitionInterface
                 )
             );
         }
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string
+     */
+    protected function getPropertySingularName(array $property): string
+    {
+        $property['name'] = isset($property['singular']) ? $property['singular'] : $property['name'];
+
+        return $this->getPropertyName($property);
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return bool
+     */
+    protected function isCollectionPropertyTypeCheckNeeded(array $property): bool
+    {
+        return $this->isStrictProperty($property) && $this->isCollection($property) && !$this->isAssociativeArray($property);
     }
 }
