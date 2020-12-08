@@ -35,6 +35,6 @@ class ProductViewMerchantProductExpanderPlugin extends AbstractPlugin implements
         array $productData,
         $localeName
     ): ProductViewTransfer {
-        return $this->getFactory()->createMerchantProductStorageExpander()->expandProductViewTransfer($productViewTransfer);
+        return $this->getFactory()->createProductViewOfferExpander()->expandProductViewTransfer($productViewTransfer);
     }
 }

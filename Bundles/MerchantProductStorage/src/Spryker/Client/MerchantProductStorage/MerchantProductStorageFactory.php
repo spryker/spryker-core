@@ -10,8 +10,8 @@ namespace Spryker\Client\MerchantProductStorage;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\MerchantProductStorage\Dependency\Client\MerchantProductStorageToLocaleClientInterface;
 use Spryker\Client\MerchantProductStorage\Dependency\Client\MerchantProductStorageToProductStorageClientInterface;
-use Spryker\Client\MerchantProductStorage\Expander\MerchantProductStorageExpander;
-use Spryker\Client\MerchantProductStorage\Expander\MerchantProductStorageExpanderInterface;
+use Spryker\Client\MerchantProductStorage\Expander\ProductViewOfferExpander;
+use Spryker\Client\MerchantProductStorage\Expander\ProductViewOfferExpanderInterface;
 use Spryker\Client\MerchantProductStorage\Mapper\MerchantProductStorageMapper;
 use Spryker\Client\MerchantProductStorage\Mapper\MerchantProductStorageMapperInterface;
 use Spryker\Client\MerchantProductStorage\Reader\MerchantProductStorageReader;
@@ -32,11 +32,11 @@ class MerchantProductStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\MerchantProductStorage\Expander\MerchantProductStorageExpanderInterface
+     * @return \Spryker\Client\MerchantProductStorage\Expander\ProductViewOfferExpanderInterface
      */
-    public function createMerchantProductStorageExpander(): MerchantProductStorageExpanderInterface
+    public function createProductViewOfferExpander(): ProductViewOfferExpanderInterface
     {
-        return new MerchantProductStorageExpander($this->createMerchantProductStorageReader());
+        return new ProductViewOfferExpander($this->createMerchantProductStorageReader());
     }
 
     /**
