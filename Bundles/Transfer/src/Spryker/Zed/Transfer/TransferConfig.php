@@ -266,6 +266,9 @@ class TransferConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Returns the path to XSD schema used to validated transfer XML files.
+     *
      * @api
      *
      * @return string
@@ -276,6 +279,9 @@ class TransferConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - When enabled, all the available transfer XML files will be checked for validity during transfer validation.
+     *
      * @api
      *
      * @return bool

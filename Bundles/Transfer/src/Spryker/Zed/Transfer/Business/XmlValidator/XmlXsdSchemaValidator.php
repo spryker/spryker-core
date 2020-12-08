@@ -13,6 +13,9 @@ use Throwable;
 
 class XmlXsdSchemaValidator implements XmlValidatorInterface
 {
+    protected const XML_SCHEMA_INSTANCE_NAMESPACE_ATTRIBUTE = 'xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"';
+    protected const XML_SCHEMA_INSTANCE_NAMESPACE_ATTRIBUTE_SHIM = 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"';
+
     /**
      * @var string[]
      */
@@ -62,9 +65,39 @@ class XmlXsdSchemaValidator implements XmlValidatorInterface
     protected function createDomDocument(string $filePath): DOMDocument
     {
         $xmlDocument = new DOMDocument();
-        $xmlDocument->load($filePath);
+        $xmlDocument->loadXML(
+            $this->readXmlFileContent($filePath)
+        );
 
         return $xmlDocument;
+    }
+
+    /**
+     * @param string $filePath
+     *
+     * @return string
+     */
+    protected function readXmlFileContent(string $filePath): string
+    {
+        $fileContent = file_get_contents($filePath);
+
+        return $this->shimXmlSchemaInstanceNamespace($fileContent);
+    }
+
+    /**
+     * Shims the incorrectly spelled XML schema instance namespace.
+     *
+     * @param string $fileContent
+     *
+     * @return string
+     */
+    protected function shimXmlSchemaInstanceNamespace(string $fileContent): string
+    {
+        return str_replace(
+            static::XML_SCHEMA_INSTANCE_NAMESPACE_ATTRIBUTE,
+            static::XML_SCHEMA_INSTANCE_NAMESPACE_ATTRIBUTE_SHIM,
+            $fileContent
+        );
     }
 
     /**

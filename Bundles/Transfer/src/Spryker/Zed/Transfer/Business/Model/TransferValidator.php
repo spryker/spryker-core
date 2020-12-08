@@ -88,12 +88,12 @@ class TransferValidator implements TransferValidatorInterface
         $this->messenger = $messenger;
         $this->finder = $finder;
         $this->transferConfig = $transferConfig;
+        $this->xmlValidator = $xmlValidator;
 
         $this->typeMap = $this->simpleTypeMap;
         foreach ($this->simpleTypeWhitelist as $type) {
             $this->typeMap[$type] = $type;
         }
-        $this->xmlValidator = $xmlValidator;
     }
 
     /**
