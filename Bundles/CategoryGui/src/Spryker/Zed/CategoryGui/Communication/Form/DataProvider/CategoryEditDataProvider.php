@@ -9,23 +9,15 @@ namespace Spryker\Zed\CategoryGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
-use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Spryker\Zed\CategoryGui\Communication\Form\CategoryType;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface;
-use Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface;
-use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
+use Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface;
 
 class CategoryEditDataProvider
 {
     protected const DATA_CLASS = 'data_class';
-
-    /**
-     * @var \Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface
-     */
-    protected $categoryQueryContainer;
 
     /**
      * @var \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface
@@ -38,38 +30,33 @@ class CategoryEditDataProvider
     protected $localeFacade;
 
     /**
-     * @param \Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface $categoryQueryContainer
+     * @var \Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface
+     */
+    protected $categoryGuiRepository;
+
+    /**
      * @param \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface $categoryFacade
      * @param \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface $categoryGuiRepository
      */
     public function __construct(
-        CategoryGuiToCategoryQueryContainerInterface $categoryQueryContainer,
         CategoryGuiToCategoryFacadeInterface $categoryFacade,
-        CategoryGuiToLocaleFacadeInterface $localeFacade
+        CategoryGuiToLocaleFacadeInterface $localeFacade,
+        CategoryGuiRepositoryInterface $categoryGuiRepository
     ) {
-        $this->categoryQueryContainer = $categoryQueryContainer;
         $this->categoryFacade = $categoryFacade;
         $this->localeFacade = $localeFacade;
+        $this->categoryGuiRepository = $categoryGuiRepository;
     }
 
     /**
-     * @param int $categoryId
+     * @param int $idCategory
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer|null
      */
-    public function getData(int $categoryId): ?CategoryTransfer
+    public function getData(int $idCategory): ?CategoryTransfer
     {
-        return $this->buildCategoryTransfer($categoryId);
-    }
-
-    /**
-     * @param int $categoryId
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer|null
-     */
-    protected function buildCategoryTransfer(int $categoryId): ?CategoryTransfer
-    {
-        $categoryTransfer = $this->categoryFacade->findCategoryById($categoryId);
+        $categoryTransfer = $this->categoryFacade->findCategoryById($idCategory);
 
         if ($categoryTransfer !== null) {
             $categoryTransfer = $this->addLocalizedAttributeTransfers($categoryTransfer);
@@ -79,96 +66,46 @@ class CategoryEditDataProvider
     }
 
     /**
-     * @param int $categoryId
+     * @param int $idCategory
      *
      * @return array
      */
-    public function getOptions(int $categoryId): array
+    public function getOptions(int $idCategory): array
     {
-        $parentCategories = $this->getCategoriesWithPaths($categoryId);
-
         return [
             static::DATA_CLASS => CategoryTransfer::class,
-            CategoryType::OPTION_PARENT_CATEGORY_NODE_CHOICES => $parentCategories,
-            CategoryType::OPTION_CATEGORY_QUERY_CONTAINER => $this->categoryQueryContainer,
-            CategoryType::OPTION_CATEGORY_TEMPLATE_CHOICES => $this->getCategoryTemplateChoices(),
+            CategoryType::OPTION_PARENT_CATEGORY_NODE_CHOICES => $this->getCategoryNodes($idCategory),
+            CategoryType::OPTION_CATEGORY_TEMPLATE_CHOICES => $this->categoryGuiRepository->getIndexedCategoryTemplateNames(),
         ];
     }
 
     /**
-     * @param int $categoryId
+     * @param int $idCategory
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
-    protected function getCategoriesWithPaths(int $categoryId)
+    protected function getCategoryNodes(int $idCategory): array
     {
-        $idLocale = $this->getIdLocale();
-        /** @var \Orm\Zed\Category\Persistence\SpyCategory[] $categoryEntityList */
-        $categoryEntityList = $this
-            ->categoryQueryContainer
-            ->queryCategory($idLocale)
-            ->useNodeQuery()
-                ->orderByNodeOrder(Criteria::DESC)
-            ->endUse()
-            ->find();
-
         $categoryNodes = [];
 
-        foreach ($categoryEntityList as $categoryEntity) {
-            if ($categoryEntity->getIdCategory() === $categoryId) {
+        $localeTransfer = $this->localeFacade->getCurrentLocale();
+        $categoryCollectionTransfer = $this->categoryFacade->getAllCategoryCollection($localeTransfer);
+
+        foreach ($categoryCollectionTransfer->getCategories() as $categoryTransfer) {
+
+            if ($categoryTransfer->getIdCategory() === $idCategory) {
                 continue;
             }
 
-            foreach ($categoryEntity->getNodes() as $nodeEntity) {
-                $path = $this->buildPath($nodeEntity);
-                $categoryName = $categoryEntity->getLocalisedAttributes($idLocale)->getFirst()->getName();
-
-                $categoryNodeTransfer = new NodeTransfer();
-                $categoryNodeTransfer->setPath($path);
-                $categoryNodeTransfer->setIdCategoryNode($nodeEntity->getIdCategoryNode());
-                $categoryNodeTransfer->setName($categoryName);
-
-                $categoryNodes[] = $categoryNodeTransfer;
+            foreach ($categoryTransfer->getNodeCollection()->getNodes() as $nodeTransfer) {
+                $categoryNodes[] = (new NodeTransfer())
+                    ->setPath('/' . $nodeTransfer->getPath())
+                    ->setIdCategoryNode($nodeTransfer->getIdCategoryNode())
+                    ->setName($categoryTransfer->getName());
             }
         }
 
         return $categoryNodes;
-    }
-
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $categoryNodeEntity
-     *
-     * @return string
-     */
-    protected function buildPath(SpyCategoryNode $categoryNodeEntity)
-    {
-        $idLocale = $this->getIdLocale();
-        $idCategoryNode = $categoryNodeEntity->getIdCategoryNode();
-        /** @var string[] $pathTokens */
-        $pathTokens = $this->categoryQueryContainer->queryPath($idCategoryNode, $idLocale, false, true)
-            ->clearSelectColumns()->addSelectColumn('name')
-            ->find();
-
-        return '/' . implode('/', $pathTokens);
-    }
-
-    /**
-     * @return int
-     */
-    protected function getIdLocale()
-    {
-        return $this->localeFacade->getCurrentLocale()->getIdLocale();
-    }
-
-    /**
-     * @return array
-     */
-    protected function getCategoryTemplateChoices()
-    {
-        return $this->categoryQueryContainer
-            ->queryCategoryTemplate()
-            ->find()
-            ->toKeyValue('idCategoryTemplate', 'name');
     }
 
     /**
@@ -181,25 +118,16 @@ class CategoryEditDataProvider
         $categoryLocaleIds = $this->getCategoryLocaleIds($categoryTransfer);
 
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
-            if (in_array($localeTransfer->getIdLocale(), $categoryLocaleIds)) {
+            if (in_array($localeTransfer->getIdLocale(), $categoryLocaleIds, true)) {
                 continue;
             }
 
-            $categoryLocalizedAttributesTransfer = $this->createEmptyCategoryLocalizedAttributesTransfer($localeTransfer);
-            $categoryTransfer->addLocalizedAttributes($categoryLocalizedAttributesTransfer);
+            $categoryTransfer->addLocalizedAttributes(
+                (new CategoryLocalizedAttributesTransfer())->setLocale($localeTransfer)
+            );
         }
 
         return $categoryTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer
-     */
-    protected function createEmptyCategoryLocalizedAttributesTransfer(LocaleTransfer $localeTransfer): CategoryLocalizedAttributesTransfer
-    {
-        return (new CategoryLocalizedAttributesTransfer())->setLocale($localeTransfer);
     }
 
     /**

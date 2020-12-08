@@ -34,7 +34,7 @@ class CategoryUrl implements CategoryUrlInterface
     protected $urlPathGenerator;
 
     /**
-     * @var \Spryker\Zed\Category\Dependency\Plugin\CategoryUrlPathPluginInterface[]
+     * @var \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUrlPathPluginInterface[]
      */
     protected $categoryUrlPathPlugins;
 

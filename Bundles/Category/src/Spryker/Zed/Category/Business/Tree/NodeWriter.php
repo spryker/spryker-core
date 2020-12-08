@@ -40,7 +40,7 @@ class NodeWriter implements NodeWriterInterface
      *
      * @return void
      */
-    public function updateOrder($idCategoryNode, $position)
+    public function updateOrder($idCategoryNode, $position): void
     {
         $categoryNodeEntity = $this
             ->queryContainer

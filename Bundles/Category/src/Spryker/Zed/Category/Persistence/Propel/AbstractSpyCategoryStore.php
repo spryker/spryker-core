@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryStore\Persistence\Propel;
+namespace Spryker\Zed\Category\Persistence\Propel;
 
-use Orm\Zed\CategoryStore\Persistence\Base\SpyCategoryStore as BaseSpyCategoryStore;
+use Orm\Zed\Category\Persistence\Base\SpyCategoryStore as BaseSpyCategoryStore;
 
 abstract class AbstractSpyCategoryStore extends BaseSpyCategoryStore
 {

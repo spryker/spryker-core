@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\CategoryGui;
 
+use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
+use Orm\Zed\Category\Persistence\SpyCategoryQuery;
+use Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeBridge;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeBridge;
 use Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerBridge;
@@ -21,11 +24,14 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_CATEGORY = 'FACADE_CATEGORY';
 
-    public const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
-
     public const PLUGINS_CATEGORY_FORM = 'PLUGINS_CATEGORY_FORM';
     public const PLUGINS_CATEGORY_FORM_TAB_EXPANDER = 'PLUGINS_CATEGORY_FORM_TAB_EXPANDER';
     public const PLUGINS_CATEGORY_RELATION_READ = 'PLUGINS_CATEGORY_RELATION_READ';
+
+    public const PROPEL_QUERY_CATEGORY = 'PROPEL_QUERY_CATEGORY';
+    public const PROPEL_QUERY_CATEGORY_TEMPLATE = 'PROPEL_QUERY_CATEGORY_TEMPLATE';
+
+    public const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
 
     /**
      * @uses \Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_CSRF_PROVIDER
@@ -48,6 +54,19 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCategoryFormTabExpanderPlugins($container);
         $container = $this->addCategoryRelationReadPlugins($container);
         $container = $this->addCsrfProviderService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container)
+    {
+        $container = $this->addCategoryPropelQuery($container);
+        $container = $this->addCategoryTemplatePropelQuery($container);
 
         return $container;
     }
@@ -92,8 +111,42 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
     protected function addCategoryQueryContainer(Container $container): Container
     {
         $container->set(static::QUERY_CONTAINER_CATEGORY, function (Container $container) {
-            return new CategoryGuiToCategoryQueryContainerBridge($container->getLocator()->category()->queryContainer());
+            return new CategoryGuiToCategoryQueryContainerBridge(
+                $container->getLocator()->category()->queryContainer()
+            );
         });
+
+        return $container;
+    }
+
+    /**
+     * @module Category
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCategoryPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_CATEGORY, $container->factory(function () {
+            return SpyCategoryQuery::create();
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @module Category
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCategoryTemplatePropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_CATEGORY_TEMPLATE, $container->factory(function () {
+            return SpyCategoryTemplateQuery::create();
+        }));
 
         return $container;
     }

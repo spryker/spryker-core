@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\CategoryGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 
 interface CategoryGuiToCategoryFacadeInterface
 {
@@ -30,14 +32,14 @@ interface CategoryGuiToCategoryFacadeInterface
     /**
      * @return void
      */
-    public function syncCategoryTemplate();
+    public function syncCategoryTemplate(): void;
 
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return void
      */
-    public function create(CategoryTransfer $categoryTransfer);
+    public function create(CategoryTransfer $categoryTransfer): void;
 
     /**
      * @param int $idCategory
@@ -47,18 +49,26 @@ interface CategoryGuiToCategoryFacadeInterface
     public function getAllNodesByIdCategory(int $idCategory);
 
     /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param string|null $storeName
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
+     */
+    public function getAllCategoryCollection(LocaleTransfer $localeTransfer, ?string $storeName = null): CategoryCollectionTransfer;
+
+    /**
      * @param int $idCategory
      *
      * @return void
      */
-    public function delete(int $idCategory);
+    public function delete(int $idCategory): void;
 
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return void
      */
-    public function update(CategoryTransfer $categoryTransfer);
+    public function update(CategoryTransfer $categoryTransfer): void;
 
     /**
      * @param int $idCategoryNode
@@ -66,7 +76,7 @@ interface CategoryGuiToCategoryFacadeInterface
      *
      * @return void
      */
-    public function updateCategoryNodeOrder(int $idCategoryNode, int $position);
+    public function updateCategoryNodeOrder(int $idCategoryNode, int $position): void;
 
     /**
      * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
@@ -74,4 +84,12 @@ interface CategoryGuiToCategoryFacadeInterface
      * @return \Generated\Shared\Transfer\CategoryTransfer|null
      */
     public function findCategory(CategoryCriteriaTransfer $categoryCriteriaTransfer): ?CategoryTransfer;
+
+    /**
+     * @param int $idNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string
+     */
+    public function getNodePath(int $idNode, LocaleTransfer $localeTransfer): string;
 }

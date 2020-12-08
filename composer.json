@@ -93,7 +93,6 @@
     "spryker/category-navigation-connector": "*",
     "spryker/category-page-search": "*",
     "spryker/category-storage": "*",
-    "spryker/category-store": "*",
     "spryker/chart": "*",
     "spryker/chart-gui": "*",
     "spryker/checkout": "*",

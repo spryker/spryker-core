@@ -53,7 +53,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return void
      */
-    public function create(CategoryTransfer $categoryTransfer)
+    public function create(CategoryTransfer $categoryTransfer): void
     {
         $this
             ->getFactory()
@@ -75,7 +75,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return void
      */
-    public function update(CategoryTransfer $categoryTransfer)
+    public function update(CategoryTransfer $categoryTransfer): void
     {
         $this
             ->getFactory()
@@ -94,7 +94,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return void
      */
-    public function delete($idCategory)
+    public function delete($idCategory): void
     {
         $this
             ->getFactory()
@@ -129,7 +129,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return void
      */
-    public function updateCategoryNodeOrder($idCategoryNode, $position)
+    public function updateCategoryNodeOrder($idCategoryNode, $position): void
     {
         $this
             ->getFactory()
@@ -176,7 +176,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return void
      */
-    public function syncCategoryTemplate()
+    public function syncCategoryTemplate(): void
     {
         $this->getFactory()
             ->createCategoryTemplateSync()

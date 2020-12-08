@@ -56,7 +56,7 @@ class Category
     protected $deletePlugins;
 
     /**
-     * @var \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationUpdatePluginInterface[]
+     * @var \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationUpdatePluginInterface[]
      */
     protected $updatePlugins;
 
@@ -71,20 +71,14 @@ class Category
     protected $categoryPluginExecutor;
 
     /**
-     * @var \Spryker\Zed\Category\Business\Model\CategoryReaderInterface
-     */
-    protected $categoryReader;
-
-    /**
      * @param \Spryker\Zed\Category\Business\Model\Category\CategoryInterface $category
      * @param \Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNodeInterface $categoryNode
      * @param \Spryker\Zed\Category\Business\Model\CategoryAttribute\CategoryAttributeInterface $categoryAttribute
      * @param \Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrlInterface $categoryUrl
      * @param \Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParentsInterface $categoryExtraParents
      * @param \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationDeletePluginInterface[] $deletePlugins
-     * @param \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationUpdatePluginInterface[] $updatePlugins
+     * @param \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationUpdatePluginInterface[] $updatePlugins
      * @param \Spryker\Zed\Category\Business\PluginExecutor\CategoryPluginExecutorInterface $categoryPluginExecutor
-     * @param \Spryker\Zed\Category\Business\Model\CategoryReaderInterface $categoryReader
      * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface|null $eventFacade
      */
     public function __construct(
@@ -96,7 +90,6 @@ class Category
         array $deletePlugins,
         array $updatePlugins,
         CategoryPluginExecutorInterface $categoryPluginExecutor,
-        CategoryReaderInterface $categoryReader,
         ?CategoryToEventFacadeInterface $eventFacade = null
     ) {
         $this->category = $category;
@@ -108,7 +101,6 @@ class Category
         $this->updatePlugins = $updatePlugins;
         $this->categoryPluginExecutor = $categoryPluginExecutor;
         $this->eventFacade = $eventFacade;
-        $this->categoryReader = $categoryReader;
     }
 
     /**
@@ -116,7 +108,7 @@ class Category
      *
      * @return void
      */
-    public function create(CategoryTransfer $categoryTransfer)
+    public function create(CategoryTransfer $categoryTransfer): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($categoryTransfer): void {
             $this->executeCreateTransaction($categoryTransfer);
@@ -128,7 +120,7 @@ class Category
      *
      * @return void
      */
-    public function update(CategoryTransfer $categoryTransfer)
+    public function update(CategoryTransfer $categoryTransfer): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($categoryTransfer): void {
             $this->executeUpdateTransaction($categoryTransfer);
@@ -140,7 +132,7 @@ class Category
      *
      * @return void
      */
-    public function delete($idCategory)
+    public function delete($idCategory): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($idCategory) {
             $this->executeDeleteTransaction($idCategory);

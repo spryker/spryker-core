@@ -28,6 +28,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * @method \Spryker\Zed\CategoryGui\CategoryGuiConfig getConfig()
+ * @method \Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface getRepository()
  */
 class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -58,9 +59,8 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCategoryCreateForm(?int $idParentNode): FormInterface
     {
         $categoryCreateDataFormProvider = $this->createCategoryCreateFormDataProvider();
-        $formFactory = $this->getFormFactory();
 
-        return $formFactory->create(
+        return $this->getFormFactory()->create(
             CategoryType::class,
             $categoryCreateDataFormProvider->getData($idParentNode),
             $categoryCreateDataFormProvider->getOptions()
@@ -73,8 +73,9 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCategoryCreateFormDataProvider(): CategoryCreateDataProvider
     {
         return new CategoryCreateDataProvider(
-            $this->getCategoryQueryContainer(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
+            $this->getCategoryFacade(),
+            $this->getRepository()
         );
     }
 
@@ -86,9 +87,8 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCategoryEditForm(CategoryTransfer $categoryTransfer): FormInterface
     {
         $categoryCreateDataFormProvider = $this->createCategoryEditFormDataProvider();
-        $formFactory = $this->getFormFactory();
 
-        return $formFactory->create(
+        return $this->getFormFactory()->create(
             CategoryType::class,
             $categoryTransfer,
             $categoryCreateDataFormProvider->getOptions($categoryTransfer->getIdCategory())
@@ -101,9 +101,9 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCategoryEditFormDataProvider(): CategoryEditDataProvider
     {
         return new CategoryEditDataProvider(
-            $this->getCategoryQueryContainer(),
             $this->getCategoryFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
+            $this->getRepository()
         );
     }
 
@@ -115,12 +115,10 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCategoryDeleteForm(int $idCategory): FormInterface
     {
         $categoryDeleteFormDataProvider = $this->createCategoryDeleteFormDataProvider();
-        $formFactory = $this->getFormFactory();
 
-        return $formFactory->create(
+        return $this->getFormFactory()->create(
             DeleteType::class,
-            $categoryDeleteFormDataProvider->getData($idCategory),
-            $categoryDeleteFormDataProvider->getOptions()
+            $categoryDeleteFormDataProvider->getData($idCategory)
         );
     }
 
@@ -129,7 +127,7 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCategoryDeleteFormDataProvider(): CategoryDeleteDataProvider
     {
-        return new CategoryDeleteDataProvider($this->getCategoryQueryContainer());
+        return new CategoryDeleteDataProvider($this->getCategoryFacade());
     }
 
     /**

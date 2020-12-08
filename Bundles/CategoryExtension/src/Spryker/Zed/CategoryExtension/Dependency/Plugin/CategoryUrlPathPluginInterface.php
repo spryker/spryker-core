@@ -5,15 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Category\Dependency\Plugin;
+namespace Spryker\Zed\CategoryExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUrlPathPluginInterface as ExtensionCategoryUrlPathPluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUrlPathPluginInterface} instead.
+ * Implement this plugin interface to update category url paths during creating/updating category url.
  */
-interface CategoryUrlPathPluginInterface extends ExtensionCategoryUrlPathPluginInterface
+interface CategoryUrlPathPluginInterface
 {
     /**
      * Specification:

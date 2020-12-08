@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\CategoryGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 
 class CategoryGuiToCategoryFacadeBridge implements CategoryGuiToCategoryFacadeInterface
 {
@@ -49,7 +51,7 @@ class CategoryGuiToCategoryFacadeBridge implements CategoryGuiToCategoryFacadeIn
     /**
      * @return void
      */
-    public function syncCategoryTemplate()
+    public function syncCategoryTemplate(): void
     {
         $this->categoryFacade->syncCategoryTemplate();
     }
@@ -59,7 +61,7 @@ class CategoryGuiToCategoryFacadeBridge implements CategoryGuiToCategoryFacadeIn
      *
      * @return void
      */
-    public function create(CategoryTransfer $categoryTransfer)
+    public function create(CategoryTransfer $categoryTransfer): void
     {
         $this->categoryFacade->create($categoryTransfer);
     }
@@ -75,11 +77,22 @@ class CategoryGuiToCategoryFacadeBridge implements CategoryGuiToCategoryFacadeIn
     }
 
     /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param string|null $storeName
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
+     */
+    public function getAllCategoryCollection(LocaleTransfer $localeTransfer, ?string $storeName = null): CategoryCollectionTransfer
+    {
+        return $this->categoryFacade->getAllCategoryCollection($localeTransfer, $storeName);
+    }
+
+    /**
      * @param int $idCategory
      *
      * @return void
      */
-    public function delete(int $idCategory)
+    public function delete(int $idCategory): void
     {
         $this->categoryFacade->delete($idCategory);
     }
@@ -89,7 +102,7 @@ class CategoryGuiToCategoryFacadeBridge implements CategoryGuiToCategoryFacadeIn
      *
      * @return void
      */
-    public function update(CategoryTransfer $categoryTransfer)
+    public function update(CategoryTransfer $categoryTransfer): void
     {
         $this->categoryFacade->update($categoryTransfer);
     }
@@ -100,7 +113,7 @@ class CategoryGuiToCategoryFacadeBridge implements CategoryGuiToCategoryFacadeIn
      *
      * @return void
      */
-    public function updateCategoryNodeOrder(int $idCategoryNode, int $position)
+    public function updateCategoryNodeOrder(int $idCategoryNode, int $position): void
     {
         $this->categoryFacade->updateCategoryNodeOrder($idCategoryNode, $position);
     }
@@ -113,5 +126,16 @@ class CategoryGuiToCategoryFacadeBridge implements CategoryGuiToCategoryFacadeIn
     public function findCategory(CategoryCriteriaTransfer $categoryCriteriaTransfer): ?CategoryTransfer
     {
         return $this->categoryFacade->findCategory($categoryCriteriaTransfer);
+    }
+
+    /**
+     * @param int $idNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string
+     */
+    public function getNodePath(int $idNode, LocaleTransfer $localeTransfer): string
+    {
+        return $this->categoryFacade->getNodePath($idNode, $localeTransfer);
     }
 }

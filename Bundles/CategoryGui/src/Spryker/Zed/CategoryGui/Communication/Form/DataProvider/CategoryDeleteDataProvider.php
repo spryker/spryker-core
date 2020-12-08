@@ -7,25 +7,22 @@
 
 namespace Spryker\Zed\CategoryGui\Communication\Form\DataProvider;
 
-use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
-use Orm\Zed\Category\Persistence\SpyCategory;
-use Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface;
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface;
 
 class CategoryDeleteDataProvider
 {
-    protected const DATA_CLASS = 'data_class';
+    /**
+     * @var \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface
+     */
+    protected $categoryFacade;
 
     /**
-     * @var \Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface
+     * @param \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface $categoryFacade
      */
-    protected $queryContainer;
-
-    /**
-     * @param \Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface $queryContainer
-     */
-    public function __construct(CategoryGuiToCategoryQueryContainerInterface $queryContainer)
+    public function __construct(CategoryGuiToCategoryFacadeInterface $categoryFacade)
     {
-        $this->queryContainer = $queryContainer;
+        $this->categoryFacade = $categoryFacade;
     }
 
     /**
@@ -35,40 +32,15 @@ class CategoryDeleteDataProvider
      */
     public function getData(int $idCategory): array
     {
-        $categoryEntity = $this->findCategory($idCategory);
+        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
+            ->setIdCategory($idCategory)
+            ->setIsMain(true);
+
+        $categoryTransfer = $this->categoryFacade->findCategory($categoryCriteriaTransfer);
 
         return [
-            'id_category_node' => $categoryEntity->getVirtualColumn('id_category_node'),
-            'fk_category' => $categoryEntity->getIdCategory(),
+            'id_category_node' => $categoryTransfer->getCategoryNode()->getIdCategoryNode(),
+            'fk_category' => $categoryTransfer->getIdCategory(),
         ];
-    }
-
-    /**
-     * @param int $idCategory
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategory
-     */
-    protected function findCategory(int $idCategory): SpyCategory
-    {
-        return $this->queryContainer
-            ->queryCategoryById($idCategory)
-            ->innerJoinNode()
-            ->useNodeQuery()
-                ->filterByIsMain(true)
-            ->endUse()
-            ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, 'id_category_node')
-            ->withColumn(SpyCategoryNodeTableMap::COL_FK_CATEGORY, 'fk_category')
-            ->withColumn(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE, 'fk_parent_category_node')
-            ->withColumn(SpyCategoryNodeTableMap::COL_IS_MAIN, 'is_main')
-            ->withColumn(SpyCategoryNodeTableMap::COL_IS_ROOT, 'is_root')
-            ->findOne();
-    }
-
-    /**
-     * @return array
-     */
-    public function getOptions()
-    {
-        return [];
     }
 }

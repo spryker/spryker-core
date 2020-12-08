@@ -48,7 +48,7 @@ interface CategoryFacadeInterface
      *
      * @return void
      */
-    public function create(CategoryTransfer $categoryTransfer);
+    public function create(CategoryTransfer $categoryTransfer): void;
 
     /**
      * Specification:
@@ -88,7 +88,7 @@ interface CategoryFacadeInterface
      *
      * @return void
      */
-    public function update(CategoryTransfer $categoryTransfer);
+    public function update(CategoryTransfer $categoryTransfer): void;
 
     /**
      * Specification:
@@ -111,7 +111,7 @@ interface CategoryFacadeInterface
      *
      * @return void
      */
-    public function delete($idCategory);
+    public function delete($idCategory): void;
 
     /**
      * Specification:
@@ -141,7 +141,7 @@ interface CategoryFacadeInterface
      *
      * @return void
      */
-    public function updateCategoryNodeOrder($idCategoryNode, $position);
+    public function updateCategoryNodeOrder($idCategoryNode, $position): void;
 
     /**
      * @api
@@ -173,7 +173,7 @@ interface CategoryFacadeInterface
      *
      * @return void
      */
-    public function syncCategoryTemplate();
+    public function syncCategoryTemplate(): void;
 
     /**
      * Specification:

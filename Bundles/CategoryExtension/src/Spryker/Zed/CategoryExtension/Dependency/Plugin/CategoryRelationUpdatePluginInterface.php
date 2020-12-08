@@ -5,15 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Category\Dependency\Plugin;
+namespace Spryker\Zed\CategoryExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\CategoryTransfer;
-use Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationUpdatePluginInterface as ExtensionCategoryRelationUpdatePluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationUpdatePluginInterface} instead.
+ * Implement this plugin interface to update relations during creating/updating category.
  */
-interface CategoryRelationUpdatePluginInterface extends ExtensionCategoryRelationUpdatePluginInterface
+interface CategoryRelationUpdatePluginInterface
 {
     /**
      * Specification:

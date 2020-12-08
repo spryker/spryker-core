@@ -9,10 +9,8 @@ namespace Spryker\Zed\CategoryGui\Communication\Form;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CategoryTransfer;
-use Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -30,7 +28,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 class CategoryType extends AbstractType
 {
     public const OPTION_PARENT_CATEGORY_NODE_CHOICES = 'parent_category_node_choices';
-    public const OPTION_CATEGORY_QUERY_CONTAINER = 'category query container';
     public const OPTION_CATEGORY_TEMPLATE_CHOICES = 'category_template_choices';
 
     public const FIELD_CATEGORY_KEY = 'category_key';
@@ -50,17 +47,24 @@ class CategoryType extends AbstractType
     protected $formPlugins = [];
 
     /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'category';
+    }
+
+    /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 
         $resolver
             ->setRequired(static::OPTION_PARENT_CATEGORY_NODE_CHOICES)
-            ->setRequired(static::OPTION_CATEGORY_QUERY_CONTAINER)
             ->setRequired(static::OPTION_CATEGORY_TEMPLATE_CHOICES);
     }
 
@@ -73,7 +77,7 @@ class CategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
-            ->addCategoryKeyField($builder, $options[static::OPTION_CATEGORY_QUERY_CONTAINER])
+            ->addCategoryKeyField($builder)
             ->addIsActiveField($builder)
             ->addIsInMenuField($builder)
             ->addIsSearchableField($builder)
@@ -96,31 +100,16 @@ class CategoryType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface $categoryQueryContainer
      *
      * @return $this
      */
-    protected function addCategoryKeyField(FormBuilderInterface $builder, CategoryGuiToCategoryQueryContainerInterface $categoryQueryContainer)
+    protected function addCategoryKeyField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_CATEGORY_KEY, TextType::class, [
             'constraints' => [
                 new NotBlank(),
                 new Callback([
-                    'callback' => function ($key, ExecutionContextInterface $context) use ($categoryQueryContainer) {
-                        $data = $context->getRoot()->getData();
-
-                        $exists = false;
-                        if ($data instanceof CategoryTransfer) {
-                            $exists = $categoryQueryContainer
-                                    ->queryCategoryByKey($key)
-                                    ->filterByIdCategory($data->getIdCategory(), Criteria::NOT_EQUAL)
-                                    ->count() > 0;
-                        }
-
-                        if ($exists) {
-                            $context->addViolation(sprintf('Category with key "%s" already in use, please choose another one.', $key));
-                        }
-                    },
+                    'callback' => $this->uniqueKeyValidateCallback(),
                 ]),
             ],
         ]);
@@ -273,10 +262,20 @@ class CategoryType extends AbstractType
     }
 
     /**
-     * @return string
+     * @return \Closure
      */
-    public function getBlockPrefix()
+    protected function uniqueKeyValidateCallback(): callable
     {
-        return 'category';
+        return function ($key, ExecutionContextInterface $context) {
+            $data = $context->getRoot()->getData();
+
+            if (!($data instanceof CategoryTransfer)) {
+                return;
+            }
+
+            if ($this->getFactory()->getRepository()->isCategoryKeyUsed($key, $data->getIdCategory())) {
+                $context->addViolation(sprintf('Category with key "%s" already in use, please choose another one.', $key));
+            }
+        };
     }
 }
