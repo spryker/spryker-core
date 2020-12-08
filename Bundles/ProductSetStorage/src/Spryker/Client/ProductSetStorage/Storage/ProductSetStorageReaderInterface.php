@@ -10,10 +10,10 @@ namespace Spryker\Client\ProductSetStorage\Storage;
 interface ProductSetStorageReaderInterface
 {
     /**
-     * @param int $idProductAbstract
+     * @param int $idProductSet
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductSetDataStorageTransfer|null
      */
-    public function getProductSetByIdProductSet($idProductAbstract, $localeName);
+    public function getProductSetByIdProductSet($idProductSet, $localeName);
 }
