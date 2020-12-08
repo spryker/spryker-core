@@ -34,6 +34,8 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     public const IS_NOT_ROOT_NODE = 0;
     protected const COL_CATEGORY_NAME = 'name';
 
+    protected const DEPTH_WITH_CHILDREN_RELATIONS = 1;
+
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -251,7 +253,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\NodeTransfer[][]
      */
     public function getCategoryNodeChildNodesCollectionIndexedByParentNodeId(
         CategoryTransfer $categoryTransfer,
@@ -279,7 +281,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         $categoryMapper = $this->getFactory()->createCategoryMapper();
         $categoryNodes = [];
         foreach ($categoryClosureTableEntities as $categoryClosureTable) {
-            $nodeTransfer = $categoryMapper->mapNodeEntityToNodeTransferWithCategoryRelation(
+            $nodeTransfer = $categoryMapper->mapCategoryNodeEntityToNodeTransferWithCategoryRelation(
                 $categoryClosureTable->getDescendantNode(),
                 new NodeTransfer()
             );
@@ -338,7 +340,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         }
 
         if ($categoryCriteriaTransfer->getWithChildren()) {
-            $categoryClosureTableQuery->filterByDepth(1);
+            $categoryClosureTableQuery->filterByDepth(static::DEPTH_WITH_CHILDREN_RELATIONS);
         }
 
         return $categoryClosureTableQuery;

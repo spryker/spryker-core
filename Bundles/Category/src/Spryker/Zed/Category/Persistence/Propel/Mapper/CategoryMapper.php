@@ -69,7 +69,7 @@ class CategoryMapper implements CategoryMapperInterface
      *
      * @return \Generated\Shared\Transfer\NodeTransfer
      */
-    public function mapNodeEntityToNodeTransferWithCategoryRelation(SpyCategoryNode $nodeEntity, NodeTransfer $nodeTransfer): NodeTransfer
+    public function mapCategoryNodeEntityToNodeTransferWithCategoryRelation(SpyCategoryNode $nodeEntity, NodeTransfer $nodeTransfer): NodeTransfer
     {
         $nodeTransfer = $this->mapCategoryNode($nodeEntity, $nodeTransfer);
         $categoryEntity = $nodeEntity->getCategory();

@@ -1,17 +1,17 @@
-{% macro nodecCollectionTree(nodeCollection) %}
+{% macro nodeCollectionTree(nodeCollection) %}
     <ol class="dd-list">
         {% for node in nodeCollection.nodes %}
             <li class="dd-item" data-id="{{ node.idCategoryNode }}">
                 {% include '@CategoryGui/Tree/node-collection-tree-node.twig' with { node: node } %}
 
                 {% if node.childrenNodes is defined and node.childrenNodes | length > 0 %}
-                    {{ _self.nodecCollectionTree(node.childrenNodes) }}
+                    {{ _self.nodeCollectionTree(node.childrenNodes) }}
                 {% endif %}
             </li>
         {% endfor %}
     </ol>
 {% endmacro %}
 
-{% import _self as nodecCollectionTree %}
+{% import _self as nodeCollectionTree %}
 
-{{ nodecCollectionTree.nodecCollectionTree(childNodes) }}
+{{ nodeCollectionTree.nodeCollectionTree(childNodes) }}

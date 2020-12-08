@@ -9,6 +9,7 @@ namespace Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Reader\Catego
 
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToCategoryFacadeInterface;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToLocaleFacadeInterface;
+use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToStoreFacadeInterface;
 
 class CategoryReader implements CategoryReaderInterface
 {
@@ -23,15 +24,23 @@ class CategoryReader implements CategoryReaderInterface
     protected $localeFacade;
 
     /**
+     * @var \Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToCategoryFacadeInterface $categoryFacade
      * @param \Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToLocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         CmsSlotBlockProductCategoryGuiToCategoryFacadeInterface $categoryFacade,
-        CmsSlotBlockProductCategoryGuiToLocaleFacadeInterface $localeFacade
+        CmsSlotBlockProductCategoryGuiToLocaleFacadeInterface $localeFacade,
+        CmsSlotBlockProductCategoryGuiToStoreFacadeInterface $storeFacade
     ) {
         $this->categoryFacade = $categoryFacade;
         $this->localeFacade = $localeFacade;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -40,7 +49,10 @@ class CategoryReader implements CategoryReaderInterface
     public function getCategories(): array
     {
         $localeTransfer = $this->localeFacade->getCurrentLocale();
-        $categoryCollectionTransfer = $this->categoryFacade->getAllCategoryCollection($localeTransfer, APPLICATION_STORE);
+        $categoryCollectionTransfer = $this->categoryFacade->getAllCategoryCollection(
+            $localeTransfer,
+            $this->storeFacade->getCurrentStore()->getName()
+        );
 
         $categoryIds = [];
 

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CategoriesRestApi\CategoriesRestApiConfig;
 use Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToCategoryStorageClientInterface;
+use Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToStoreClientInterface;
 use Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoryMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
@@ -36,18 +37,26 @@ class CategoryReader implements CategoryReaderInterface
     protected $categoryMapper;
 
     /**
+     * @var \Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToStoreClientInterface
+     */
+    protected $storeClient;
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToCategoryStorageClientInterface $categoryStorageClient
      * @param \Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoryMapperInterface $categoryMapper
+     * @param \Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToStoreClientInterface $storeClient
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         CategoriesRestApiToCategoryStorageClientInterface $categoryStorageClient,
-        CategoryMapperInterface $categoryMapper
+        CategoryMapperInterface $categoryMapper,
+        CategoriesRestApiToStoreClientInterface $storeClient
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->categoryStorageClient = $categoryStorageClient;
         $this->categoryMapper = $categoryMapper;
+        $this->storeClient = $storeClient;
     }
 
     /**
@@ -57,7 +66,10 @@ class CategoryReader implements CategoryReaderInterface
      */
     public function getCategoryTree(string $locale): RestResponseInterface
     {
-        $categoryTree = $this->categoryStorageClient->getCategories($locale, APPLICATION_STORE);
+        $categoryTree = $this->categoryStorageClient->getCategories(
+            $locale,
+            $this->storeClient->getCurrentStore()->getName()
+        );
         $restCategoryTreesTransfer = $this->categoryMapper
             ->mapCategoryTreeToRestCategoryTreesTransfer((array)$categoryTree);
 

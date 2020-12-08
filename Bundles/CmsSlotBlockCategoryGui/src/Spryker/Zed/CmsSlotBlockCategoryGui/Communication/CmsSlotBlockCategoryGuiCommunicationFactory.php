@@ -14,6 +14,7 @@ use Spryker\Zed\CmsSlotBlockCategoryGui\Communication\Form\CategorySlotBlockCond
 use Spryker\Zed\CmsSlotBlockCategoryGui\Communication\Form\Validator\Constraints\CategoryConditionConstraint;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToCategoryFacadeInterface;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToLocaleFacadeInterface;
+use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToStoreFacadeInterface;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToTranslatorFacadeInterface;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Service\CmsSlotBlockCategoryGuiToUtilEncodingInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -36,7 +37,8 @@ class CmsSlotBlockCategoryGuiCommunicationFactory extends AbstractCommunicationF
         return new CategorySlotBlockDataProvider(
             $this->getCategoryFacade(),
             $this->getLocaleFacade(),
-            $this->getTranslatorFacade()
+            $this->getTranslatorFacade(),
+            $this->getStoreFacade()
         );
     }
 
@@ -70,6 +72,14 @@ class CmsSlotBlockCategoryGuiCommunicationFactory extends AbstractCommunicationF
     public function getTranslatorFacade(): CmsSlotBlockCategoryGuiToTranslatorFacadeInterface
     {
         return $this->getProvidedDependency(CmsSlotBlockCategoryGuiDependencyProvider::FACADE_TRANSLATOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToStoreFacadeInterface
+     */
+    public function getStoreFacade(): CmsSlotBlockCategoryGuiToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(CmsSlotBlockCategoryGuiDependencyProvider::FACADE_STORE);
     }
 
     /**

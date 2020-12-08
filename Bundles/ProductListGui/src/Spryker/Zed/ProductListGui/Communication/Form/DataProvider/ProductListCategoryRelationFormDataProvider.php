@@ -13,6 +13,7 @@ use Spryker\Zed\ProductListGui\Communication\Form\ProductListAggregateFormType;
 use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToCategoryFacadeInterface;
 use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToProductListFacadeInterface;
+use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToStoreFacadeInterface;
 
 class ProductListCategoryRelationFormDataProvider
 {
@@ -32,20 +33,28 @@ class ProductListCategoryRelationFormDataProvider
     protected $localeFacade;
 
     /**
+     * @var \Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @module ProductCategory
      *
      * @param \Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToProductListFacadeInterface $productListFacade
      * @param \Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToCategoryFacadeInterface $categoryFacade
      * @param \Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToLocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         ProductListGuiToProductListFacadeInterface $productListFacade,
         ProductListGuiToCategoryFacadeInterface $categoryFacade,
-        ProductListGuiToLocaleFacadeInterface $localeFacade
+        ProductListGuiToLocaleFacadeInterface $localeFacade,
+        ProductListGuiToStoreFacadeInterface $storeFacade
     ) {
         $this->productListFacade = $productListFacade;
         $this->categoryFacade = $categoryFacade;
         $this->localeFacade = $localeFacade;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -78,7 +87,7 @@ class ProductListCategoryRelationFormDataProvider
     {
         $categoryCollectionTransfer = $this->categoryFacade->getAllCategoryCollection(
             $this->localeFacade->getCurrentLocale(),
-            APPLICATION_STORE
+            $this->storeFacade->getCurrentStore()->getName()
         );
         $categoryOptions = [];
 

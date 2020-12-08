@@ -97,28 +97,9 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\NodeTransfer[][] $categoryNodesCollection
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeTransfer
-     */
-    protected function getCategoryParentNode(array $categoryNodesCollection, CategoryTransfer $categoryTransfer): NodeTransfer
-    {
-        foreach ($categoryNodesCollection as $nodeTransfers) {
-            foreach ($nodeTransfers as $nodeTransfer) {
-                if ($categoryTransfer->getIdCategory() === $nodeTransfer->getFkCategory()) {
-                    return $nodeTransfer;
-                }
-            }
-        }
-
-        return $categoryTransfer->getCategoryNode();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer[][] $categoryNodesCollection
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
     protected function findChildrenNodes(array $categoryNodesCollection, NodeTransfer $categoryNode): array
     {

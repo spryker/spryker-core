@@ -49,7 +49,7 @@ class CategoryTreeController extends AbstractController
             'mainCategory' => $mainCategory,
             'categoryTree' => $categoryTree, //@deprecated Use parameter `childNodes` instead.
             'categoriesWithSpecificFilters' => $categoriesWithSpecificFilters,
-            'childNodes' => $this->findCategoryNodeTree($idRootNode),
+            'nodeCollection' => $this->findCategoryNodeTree($idRootNode),
         ]);
     }
 
