@@ -24,7 +24,10 @@ class UrlTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 
     protected const DEFAULT_ENCODING = 'UTF-8';
 
-    protected const URL_GENERATOR_SERVICE = 'url_generator';
+    /**
+     * @uses \Spryker\Zed\Router\Communication\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     */
+    protected const URL_GENERATOR_SERVICE = 'routers';
 
     /**
      * {@inheritDoc}
