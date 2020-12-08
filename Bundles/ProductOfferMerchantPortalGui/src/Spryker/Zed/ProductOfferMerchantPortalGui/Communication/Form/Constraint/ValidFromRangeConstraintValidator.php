@@ -18,20 +18,20 @@ class ValidFromRangeConstraintValidator extends AbstractConstraintValidator
      * Checks if the Valid from value is earlier than Valid to.
      *
      * @param string $validFrom
-     * @param \Symfony\Component\Validator\Constraint $validFromRangeConstraint
+     * @param \Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      *
      * @return void
      */
-    public function validate($validFrom, Constraint $validFromRangeConstraint): void
+    public function validate($validFrom, Constraint $constraint): void
     {
         if (!$validFrom) {
             return;
         }
 
-        if (!$validFromRangeConstraint instanceof ValidFromRangeConstraint) {
-            throw new UnexpectedTypeException($validFromRangeConstraint, ValidFromRangeConstraint::class);
+        if (!$constraint instanceof ValidFromRangeConstraint) {
+            throw new UnexpectedTypeException($constraint, ValidFromRangeConstraint::class);
         }
 
         /** @var \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer */

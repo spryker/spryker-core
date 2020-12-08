@@ -26,7 +26,6 @@ class CustomerConfig extends AbstractBundleConfig
      */
     public const CUSTOMER_REGISTRATION_MAIL_TYPE = 'customer registration mail';
     public const CUSTOMER_REGISTRATION_WITH_CONFIRMATION_MAIL_TYPE = 'customer registration confirmation mail';
-
     protected const MIN_LENGTH_CUSTOMER_PASSWORD = 1;
 
     /**
@@ -91,6 +90,19 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Provides regular expression for character set password validation.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getCustomerPasswordCharacterSet(): string
+    {
+        return '/^.*$/';
+    }
+
+    /**
      * This method provides list of URLs to render blocks inside customer detail page.
      * URL defines path to external bundle controller. For example: /sales/customer/customer-orders would call sales bundle, customer controller, customerOrders action.
      *
@@ -126,6 +138,63 @@ class CustomerConfig extends AbstractBundleConfig
     public function getCustomerPasswordMaxLength(): int
     {
         return static::MAX_LENGTH_CUSTOMER_PASSWORD;
+    }
+
+    /**
+     * Specification:
+     * - Provides a list of strings that will be accepted as a password for customer bypassing any policy validations.
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getCustomerPasswordAllowList(): array
+    {
+        return [];
+    }
+
+    /**
+     * Specification:
+     * - A common list of insecure, invalid passwords.
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getCustomerPasswordDenyList(): array
+    {
+        return [];
+    }
+
+    /**
+     * Specification:
+     * - Provides a limit for character repeating if defined.
+     *
+     * Example
+     * - Limit=4, forbids to use "aaaa" in password, but allows "aaa"
+     *
+     * @api
+     *
+     * @return int|null
+     */
+    public function getCustomerPasswordSequenceLimit(): ?int
+    {
+        return null;
+    }
+
+    /**
+     * Specification:
+     * - Enables password check for CustomerFacade::restorePassword() method.
+     *
+     * @api
+     *
+     * @deprecated Method is introduced for BC reasons only and will be removed without replacement
+     *
+     * @return bool
+     */
+    public function isRestorePasswordValidationEnabled(): bool
+    {
+        return false;
     }
 
     /**

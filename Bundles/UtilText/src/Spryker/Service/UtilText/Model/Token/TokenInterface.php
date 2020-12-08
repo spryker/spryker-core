@@ -19,9 +19,9 @@ interface TokenInterface
 
     /**
      * @param string $rawToken
-     * @param string $token
+     * @param string $hashedToken
      *
      * @return bool
      */
-    public function check($rawToken, $token);
+    public function check($rawToken, $hashedToken);
 }
