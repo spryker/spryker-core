@@ -121,8 +121,7 @@ class SessionRedisConfig extends AbstractBundleConfig
      */
     protected function getConnectionCredentials(): RedisCredentialsTransfer
     {
-        $scheme = $this->getConfig()::hasKey(SessionRedisConstants::YVES_SESSION_REDIS_SCHEME) ?
-            $this->get(SessionRedisConstants::YVES_SESSION_REDIS_SCHEME) :
+        $scheme = $this->get(SessionRedisConstants::YVES_SESSION_REDIS_SCHEME, false) ?:
             $this->get(SessionRedisConstants::YVES_SESSION_REDIS_PROTOCOL);
 
         return (new RedisCredentialsTransfer())

@@ -80,8 +80,7 @@ class StorageRedisConfig extends AbstractBundleConfig
      */
     protected function getConnectionCredentials(): RedisCredentialsTransfer
     {
-        $scheme = $this->getConfig()::hasKey(StorageRedisConstants::STORAGE_REDIS_SCHEME) ?
-            $this->get(StorageRedisConstants::STORAGE_REDIS_SCHEME) :
+        $scheme = $this->get(StorageRedisConstants::STORAGE_REDIS_SCHEME, false) ?:
             $this->get(StorageRedisConstants::STORAGE_REDIS_PROTOCOL);
 
         return (new RedisCredentialsTransfer())
