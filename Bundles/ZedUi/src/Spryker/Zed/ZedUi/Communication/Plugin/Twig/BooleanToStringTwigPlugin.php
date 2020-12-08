@@ -51,8 +51,6 @@ class BooleanToStringTwigPlugin extends AbstractPlugin implements TwigPluginInte
     }
 
     /**
-     * @throws \Twig\Error\RuntimeError
-     *
      * @return \Twig\TwigFilter
      */
     protected function getBoolToStrFilter(): TwigFilter
