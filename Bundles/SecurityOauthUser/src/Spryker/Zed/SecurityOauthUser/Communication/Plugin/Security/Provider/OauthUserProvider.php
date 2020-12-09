@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SecurityOauthUser\Communication\Plugin\Security\Provider;
 
+use Generated\Shared\Transfer\OauthUserRestrictionRequestTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -25,9 +26,9 @@ class OauthUserProvider extends AbstractPlugin implements UserProviderInterface
     /**
      * @param string $username
      *
+     * @return \Symfony\Component\Security\Core\User\UserInterface
      * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
      *
-     * @return \Symfony\Component\Security\Core\User\UserInterface
      */
     public function loadUserByUsername(string $username)
     {
@@ -43,9 +44,9 @@ class OauthUserProvider extends AbstractPlugin implements UserProviderInterface
     /**
      * @param \Symfony\Component\Security\Core\User\UserInterface $user
      *
+     * @return \Symfony\Component\Security\Core\User\UserInterface
      * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
      *
-     * @return \Symfony\Component\Security\Core\User\UserInterface
      */
     public function refreshUser(UserInterface $user)
     {
@@ -79,8 +80,35 @@ class OauthUserProvider extends AbstractPlugin implements UserProviderInterface
      */
     protected function resolveOauthUserByName(string $username): ?UserTransfer
     {
-        return $this->getFacade()->resolveOauthUser(
+        $userTransfer = $this->getFacade()->resolveOauthUser(
             (new UserCriteriaTransfer())->setEmail($username)
         );
+
+        if (!$userTransfer) {
+            return null;
+        }
+
+        $oauthUserRestrictionResponseTransfer = $this->getFacade()->isOauthUserRestricted(
+            (new OauthUserRestrictionRequestTransfer())->setUser($userTransfer)
+        );
+
+        if ($oauthUserRestrictionResponseTransfer->getIsRestricted()) {
+            $this->addErrorMessages($oauthUserRestrictionResponseTransfer);
+
+            return null;
+        }
+
+        return $userTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthUserRestrictionResponseTransfer $oauthUserRestrictionResponseTransfer
+     */
+    protected function addErrorMessages(
+        OauthUserRestrictionResponseTransfer $oauthUserRestrictionResponseTransfer
+    ): void {
+        foreach ($oauthUserRestrictionResponseTransfer->getMessages() as $messageTransfer) {
+            $this->getFactory()->getMessengerFacade()->addErrorMessage($messageTransfer);
+        }
     }
 }
