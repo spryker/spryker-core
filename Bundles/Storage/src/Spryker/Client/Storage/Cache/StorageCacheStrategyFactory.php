@@ -32,7 +32,6 @@ class StorageCacheStrategyFactory
         StorageClientInterface $storageClient,
         StorageConfig $storageConfig
     ) {
-
         $this->storageClient = $storageClient;
         $this->storageClientConfig = $storageConfig;
     }
