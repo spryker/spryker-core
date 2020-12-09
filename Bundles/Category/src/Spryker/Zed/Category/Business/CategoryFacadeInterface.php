@@ -559,7 +559,7 @@ interface CategoryFacadeInterface
      *  - Formats all child category-nodes as a nested array structure.
      *  - Category-node entities sorted by node order.
      *  - If `CategoryCriteriaTransfer.withChildren`, finds one level children.
-     *  - If `CategoryCriteriaTransfer.withChildrenRecursively`, find all children recursively.
+     *  - If `CategoryCriteriaTransfer.withChildrenRecursively`, finds all children recursively.
      *
      * @api
      *

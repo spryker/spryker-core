@@ -66,12 +66,4 @@ class CategoriesRestApiFactory extends AbstractFactory
     {
         return new RestUrlResolverAttributesMapper();
     }
-
-    /**
-     * @return \Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToStoreClientInterface
-     */
-    public function getStoreClient(): CategoriesRestApiToStoreClientInterface
-    {
-        return $this->getProvidedDependency(CategoriesRestApiDependencyProvider::CLIENT_STORE);
-    }
 }
