@@ -189,48 +189,13 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      * @api
      *
      * @param string $name
-     *
-     * @return \Generated\Shared\Transfer\CategoryTemplateTransfer|null
-     */
-    public function findCategoryTemplateByName($name)
-    {
-        return $this->getFactory()
-            ->createCategoryTemplateReader()
-            ->findCategoryTemplateByName($name);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param string $name
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return bool
-     */
-    public function hasFirstLevelChildrenByName(string $name, CategoryTransfer $categoryTransfer): bool
-    {
-        return $this->getFactory()
-            ->createCategoryNodeChecker()
-            ->hasFirstLevelChildrenByName($name, $categoryTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param string $name
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return bool
      */
     public function checkSameLevelCategoryByNameExists(string $name, CategoryTransfer $categoryTransfer): bool
     {
-        return $this->getFactory()
-            ->createCategoryNodeChecker()
-            ->checkSameLevelCategoryByNameExists($name, $categoryTransfer);
+        return $this->getRepository()->checkSameLevelCategoryByNameExists($name, $categoryTransfer);
     }
 
     /**

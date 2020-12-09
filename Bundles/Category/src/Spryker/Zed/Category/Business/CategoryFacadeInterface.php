@@ -177,33 +177,6 @@ interface CategoryFacadeInterface
 
     /**
      * Specification:
-     * - Finds a template by the specified name
-     * - Hydrates a CategoryTemplateTransfer
-     * - Returns NULL if a template does not exist
-     *
-     * @api
-     *
-     * @param string $name
-     *
-     * @return \Generated\Shared\Transfer\CategoryTemplateTransfer|null
-     */
-    public function findCategoryTemplateByName($name);
-
-    /**
-     * Specification:
-     * - Check exist a first level children by the category name
-     *
-     * @api
-     *
-     * @param string $name
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return bool
-     */
-    public function hasFirstLevelChildrenByName(string $name, CategoryTransfer $categoryTransfer): bool;
-
-    /**
-     * Specification:
      * - Checks if there is a category node on the same level with provided category by name
      *
      * @api

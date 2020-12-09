@@ -114,40 +114,6 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      * @api
      *
      * @param int $idNode
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryFirstLevelChildrenByIdLocale($idNode, $idLocale)
-    {
-        $nodeQuery = $this->getFactory()->createCategoryNodeQuery()
-            ->joinParentCategoryNode('parentNode')
-            ->addJoin(
-                SpyCategoryNodeTableMap::COL_FK_CATEGORY,
-                SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
-                Criteria::INNER_JOIN
-            )
-            ->addAnd(
-                SpyCategoryAttributeTableMap::COL_FK_LOCALE,
-                $idLocale,
-                Criteria::EQUAL
-            )
-            ->addAnd(
-                SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE,
-                $idNode,
-                Criteria::EQUAL
-            )
-            ->orderBy(SpyCategoryNodeTableMap::COL_NODE_ORDER, Criteria::DESC);
-
-        return $nodeQuery;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param int $idNode
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
      */
@@ -453,38 +419,6 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      *
      * @api
      *
-     * @param string $categoryKey
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
-     */
-    public function queryCategoryByKey($categoryKey)
-    {
-        return $this->getFactory()->createCategoryQuery()->filterByCategoryKey($categoryKey);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param string $categoryKey
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryMainCategoryNodeByCategoryKey($categoryKey)
-    {
-        return $this->getFactory()->createCategoryNodeQuery()
-            ->filterByIsMain(true)
-            ->useCategoryQuery()
-                ->filterByCategoryKey($categoryKey)
-            ->endUse();
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param int $idNode
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
@@ -548,25 +482,6 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      *
      * @api
      *
-     * @param string $categoryKey
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryNodeByCategoryKey($categoryKey)
-    {
-        $nodeQuery = $this->getFactory()->createCategoryNodeQuery();
-        $nodeQuery->useCategoryQuery()
-            ->filterByCategoryKey($categoryKey)
-            ->endUse();
-
-        return $nodeQuery;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param int $idCategoryNode
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
@@ -577,32 +492,6 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             ->joinSpyLocale()
             ->filterByFkResourceCategorynode($idCategoryNode)
             ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param int $idParentNode
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function getCategoryNodesWithOrder($idParentNode, $idLocale)
-    {
-        return $this->getFactory()->createCategoryNodeQuery()
-            ->filterByFkParentCategoryNode($idParentNode)
-            ->useCategoryQuery()
-                ->innerJoinAttribute()
-                ->addAnd(
-                    SpyCategoryAttributeTableMap::COL_FK_LOCALE,
-                    $idLocale,
-                    Criteria::EQUAL
-                )
-            ->endUse()
-            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME)
-            ->orderBy(SpyCategoryNodeTableMap::COL_NODE_ORDER, Criteria::DESC);
     }
 
     /**
@@ -659,21 +548,6 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      *
      * @api
      *
-     * @param int $idCategoryTemplate
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery
-     */
-    public function queryCategoryTemplateById($idCategoryTemplate)
-    {
-        return $this->queryCategoryTemplate()
-            ->filterByIdCategoryTemplate($idCategoryTemplate);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param string $nameCategoryTemplate
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery
@@ -682,27 +556,5 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     {
         return $this->queryCategoryTemplate()
             ->filterByName($nameCategoryTemplate);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param int $idNode
-     * @param string $nodeName
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryFirstLevelChildrenByName(int $idNode, string $nodeName)
-    {
-        return $this->getFactory()->createCategoryNodeQuery()
-            ->filterByFkParentCategoryNode($idNode)
-            ->orderBy(SpyCategoryNodeTableMap::COL_NODE_ORDER, Criteria::DESC)
-            ->useCategoryQuery()
-                ->useAttributeQuery()
-                    ->filterByName($nodeName)
-                ->endUse()
-            ->endUse();
     }
 }

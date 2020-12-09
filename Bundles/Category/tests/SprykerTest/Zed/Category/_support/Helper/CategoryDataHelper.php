@@ -80,12 +80,31 @@ class CategoryDataHelper extends Module
     public function haveCategoryTemplate(array $seedData = []): ?CategoryTemplateTransfer
     {
         $this->getCategoryFacade()->syncCategoryTemplate();
-        $categoryTemplateTransfer = $this->getCategoryFacade()
-            ->findCategoryTemplateByName(CategoryConfig::CATEGORY_TEMPLATE_DEFAULT);
+        $categoryTemplateTransfer = $this->findCategoryTemplateByName(CategoryConfig::CATEGORY_TEMPLATE_DEFAULT);
 
         $categoryTemplateTransfer->fromArray($seedData, true);
 
         return $categoryTemplateTransfer;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return \Generated\Shared\Transfer\CategoryTemplateTransfer|null
+     */
+    protected function findCategoryTemplateByName(string $name): ?CategoryTemplateTransfer
+    {
+        $spyCategoryTemplate = $this->getLocator()
+            ->category()
+            ->queryContainer()
+            ->queryCategoryTemplateByName($name)
+            ->findOne();
+
+        if (!$spyCategoryTemplate) {
+            return null;
+        }
+
+        return (new CategoryTemplateTransfer())->fromArray($spyCategoryTemplate->toArray(), true);
     }
 
     /**

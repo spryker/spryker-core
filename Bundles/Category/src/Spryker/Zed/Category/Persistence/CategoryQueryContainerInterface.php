@@ -57,16 +57,6 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
      * @api
      *
      * @param int $idNode
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryFirstLevelChildrenByIdLocale($idNode, $idLocale);
-
-    /**
-     * @api
-     *
-     * @param int $idNode
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
      */
@@ -182,24 +172,6 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param string $categoryKey
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
-     */
-    public function queryCategoryByKey($categoryKey);
-
-    /**
-     * @api
-     *
-     * @param string $categoryKey
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryMainCategoryNodeByCategoryKey($categoryKey);
-
-    /**
-     * @api
-     *
      * @param int $idNode
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
@@ -229,30 +201,11 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param string $categoryKey
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryNodeByCategoryKey($categoryKey);
-
-    /**
-     * @api
-     *
      * @param int $idCategoryNode
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryUrlByIdCategoryNode($idCategoryNode);
-
-    /**
-     * @api
-     *
-     * @param int $idParentNode
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function getCategoryNodesWithOrder($idParentNode, $idLocale);
 
     /**
      * @api
@@ -283,28 +236,9 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param int $idCategoryTemplate
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery
-     */
-    public function queryCategoryTemplateById($idCategoryTemplate);
-
-    /**
-     * @api
-     *
      * @param string $nameCategoryTemplate
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery
      */
     public function queryCategoryTemplateByName($nameCategoryTemplate);
-
-    /**
-     * @api
-     *
-     * @param int $idNode
-     * @param string $nodeName
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryFirstLevelChildrenByName(int $idNode, string $nodeName);
 }

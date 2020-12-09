@@ -16,10 +16,8 @@ use Spryker\Zed\Category\Business\Model\Category\CategoryHydratorInterface;
 use Spryker\Zed\Category\Business\Model\CategoryAttribute\CategoryAttribute;
 use Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParents;
 use Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNode;
-use Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNodeChecker;
 use Spryker\Zed\Category\Business\Model\CategoryReader;
 use Spryker\Zed\Category\Business\Model\CategoryReaderInterface;
-use Spryker\Zed\Category\Business\Model\CategoryTemplate\CategoryTemplateReader;
 use Spryker\Zed\Category\Business\Model\CategoryTemplate\CategoryTemplateSync;
 use Spryker\Zed\Category\Business\Model\CategoryToucher;
 use Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTree;
@@ -294,27 +292,6 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
         return new CategoryTemplateSync(
             $this->getQueryContainer(),
             $this->getConfig()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Category\Business\Model\CategoryTemplate\CategoryTemplateReaderInterface
-     */
-    public function createCategoryTemplateReader()
-    {
-        return new CategoryTemplateReader(
-            $this->getQueryContainer()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNodeCheckerInterface
-     */
-    public function createCategoryNodeChecker()
-    {
-        return new CategoryNodeChecker(
-            $this->getQueryContainer(),
-            $this->getRepository()
         );
     }
 
