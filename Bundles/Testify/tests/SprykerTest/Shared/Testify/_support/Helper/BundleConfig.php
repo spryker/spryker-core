@@ -17,7 +17,7 @@ class BundleConfig extends Module
     /**
      * @var \Spryker\Shared\Kernel\BundleConfigMock\BundleConfigMock
      */
-    private $bundleConfigMock;
+    protected $bundleConfigMock;
 
     /**
      * @param \Codeception\Lib\ModuleContainer $moduleContainer
