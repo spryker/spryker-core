@@ -9,7 +9,7 @@ namespace Spryker\Client\MerchantProductStorage\Expander;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 
-interface ProductViewOfferExpanderInterface
+interface ProductViewMerchantProductExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer

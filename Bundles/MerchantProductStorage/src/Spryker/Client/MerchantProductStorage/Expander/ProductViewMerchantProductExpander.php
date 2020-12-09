@@ -10,7 +10,7 @@ namespace Spryker\Client\MerchantProductStorage\Expander;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\MerchantProductStorage\Reader\MerchantProductStorageReaderInterface;
 
-class ProductViewOfferExpander implements ProductViewOfferExpanderInterface
+class ProductViewMerchantProductExpander implements ProductViewMerchantProductExpanderInterface
 {
     protected const SELECTED_ATTRIBUTE_MERCHANT_REFERENCE = 'merchant_reference';
     protected const PARAM_SELECTED_MERCHANT_REFERENCE = 'selected_merchant_reference';
