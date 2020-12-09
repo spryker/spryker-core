@@ -271,9 +271,9 @@ class TransferConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string
+     * @return string|bool
      */
-    public function getXsdSchemaFilePath(): string
+    public function getXsdSchemaFilePath()
     {
         return realpath(__DIR__ . '/../../../../data/definition/transfer-01.xsd');
     }

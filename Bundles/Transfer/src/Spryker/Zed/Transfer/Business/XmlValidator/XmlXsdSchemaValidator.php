@@ -9,6 +9,7 @@ namespace Spryker\Zed\Transfer\Business\XmlValidator;
 
 use DOMDocument;
 use LibXMLError;
+use RuntimeException;
 use Throwable;
 
 class XmlXsdSchemaValidator implements XmlValidatorInterface
@@ -75,13 +76,21 @@ class XmlXsdSchemaValidator implements XmlValidatorInterface
     /**
      * @param string $filePath
      *
+     * @throws \RuntimeException
+     *
      * @return string
      */
     protected function readXmlFileContent(string $filePath): string
     {
         $fileContent = file_get_contents($filePath);
 
-        return $this->shimXmlSchemaInstanceNamespace($fileContent);
+        if ($fileContent !== false) {
+            return $this->shimXmlSchemaInstanceNamespace($fileContent);
+        }
+
+        throw new RuntimeException(
+            sprintf('File "%s" could not be read.', $filePath)
+        );
     }
 
     /**
