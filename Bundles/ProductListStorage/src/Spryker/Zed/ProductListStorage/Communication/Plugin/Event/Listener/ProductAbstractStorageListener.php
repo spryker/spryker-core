@@ -27,16 +27,16 @@ class ProductAbstractStorageListener extends AbstractPlugin implements EventBulk
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName): void
+    public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
         $this->preventTransaction();
 
-        $this->getFacade()->publishProductAbstract($this->getProductAbstractIds($eventTransfers, $eventName));
+        $this->getFacade()->publishProductAbstract($this->getProductAbstractIds($eventEntityTransfers, $eventName));
     }
 
     /**

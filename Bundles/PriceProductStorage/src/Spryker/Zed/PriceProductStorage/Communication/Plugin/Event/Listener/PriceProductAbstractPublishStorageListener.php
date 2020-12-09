@@ -28,15 +28,15 @@ class PriceProductAbstractPublishStorageListener extends AbstractPlugin implemen
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
-        $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+        $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
         if (
             $eventName === PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DELETE ||
             $eventName === PriceProductEvents::ENTITY_SPY_PRICE_TYPE_DELETE ||

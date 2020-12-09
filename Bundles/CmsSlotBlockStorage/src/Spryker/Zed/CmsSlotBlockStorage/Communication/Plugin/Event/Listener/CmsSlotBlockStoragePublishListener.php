@@ -23,14 +23,14 @@ class CmsSlotBlockStoragePublishListener extends AbstractPlugin implements Event
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $cmsSlotBlockTransfers = $this->mapEventEntityTransfersToCmsSlotBlockTransfers($eventTransfers);
+        $cmsSlotBlockTransfers = $this->mapEventEntityTransfersToCmsSlotBlockTransfers($eventEntityTransfers);
         $this->getFacade()->publishByCmsSlotBlocks($cmsSlotBlockTransfers);
     }
 

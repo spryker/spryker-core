@@ -18,14 +18,14 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class PriceProductOfferStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $transfers, $eventName): void
+    public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        $priceProductOfferIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($transfers);
+        $priceProductOfferIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
 
         $this->getFacade()->publish($priceProductOfferIds);
     }

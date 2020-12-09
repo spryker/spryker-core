@@ -20,17 +20,17 @@ class MerchantShipmentCheckoutPageStepEnginePreRenderPlugin extends AbstractPlug
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function execute(AbstractTransfer $dataTransfer): AbstractTransfer
+    public function execute(AbstractTransfer $quoteTransfer): AbstractTransfer
     {
-        if (!$dataTransfer instanceof QuoteTransfer) {
-            return $dataTransfer;
+        if (!$quoteTransfer instanceof QuoteTransfer) {
+            return $quoteTransfer;
         }
 
-        foreach ($dataTransfer->getItems() as $itemTransfer) {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $shipmentTransfer = $itemTransfer->getShipment();
 
             if (!$shipmentTransfer) {
@@ -41,6 +41,6 @@ class MerchantShipmentCheckoutPageStepEnginePreRenderPlugin extends AbstractPlug
             $itemTransfer->setShipment($shipmentTransfer);
         }
 
-        return $dataTransfer;
+        return $quoteTransfer;
     }
 }

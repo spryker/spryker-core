@@ -81,6 +81,10 @@ class OrderMapper implements OrderMapperInterface
 
         $restOrderDetailsAttributesTransfer = $this->mapOrderShippingAddressTransferToRestOrderDetailsAttributesTransfer($orderTransfer, $restOrderDetailsAttributesTransfer);
 
+        $restOrderDetailsAttributesTransfer->setShipments(
+            $this->orderShipmentMapper->mapOrderTransferToRestOrderShipmentTransfers($orderTransfer, new ArrayObject())
+        );
+
         $restOrderItemsAttributesTransfers = [];
         foreach ($orderTransfer->getItems() as $itemTransfer) {
             $restOrderItemsAttributesTransfers[] = $this->mapItemTransferToRestOrderItemsAttributesTransfer(
@@ -126,16 +130,16 @@ class OrderMapper implements OrderMapperInterface
         OrderTransfer $orderTransfer,
         RestOrderDetailsAttributesTransfer $restOrderDetailsAttributesTransfer
     ): RestOrderDetailsAttributesTransfer {
+        if (!$orderTransfer->getShippingAddress()) {
+            return $restOrderDetailsAttributesTransfer;
+        }
         $countryTransfer = $this->findItemLevelShippingAddressCountry($orderTransfer);
         $countryName = $countryTransfer ? $countryTransfer->getName() : null;
         $countryIso2Code = $countryTransfer ? $countryTransfer->getIso2Code() : null;
 
-        $restOrderDetailsAttributesTransfer->getShippingAddress()->setCountry($countryName);
-        $restOrderDetailsAttributesTransfer->getShippingAddress()->setIso2Code($countryIso2Code);
-
-        $restOrderDetailsAttributesTransfer->setShipments(
-            $this->orderShipmentMapper->mapOrderTransferToRestOrderShipmentTransfers($orderTransfer, new ArrayObject())
-        );
+        $restOrderDetailsAttributesTransfer->getShippingAddress()
+            ->setCountry($countryName)
+            ->setIso2Code($countryIso2Code);
 
         return $restOrderDetailsAttributesTransfer;
     }

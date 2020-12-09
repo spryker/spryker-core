@@ -25,15 +25,15 @@ class AvailabilityStockStorageListener extends AbstractPlugin implements EventBu
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
-        $availabilityIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyAvailabilityTableMap::COL_FK_AVAILABILITY_ABSTRACT);
+        $availabilityIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventEntityTransfers, SpyAvailabilityTableMap::COL_FK_AVAILABILITY_ABSTRACT);
 
         $this->getFacade()->publish($availabilityIds);
     }

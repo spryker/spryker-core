@@ -37,15 +37,15 @@ class ProductSetPageMapPlugin extends AbstractPlugin implements NamedPageMapInte
      *
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param array $data
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $data, LocaleTransfer $locale)
+    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $data, LocaleTransfer $localeTransfer)
     {
         $pageMapTransfer = (new PageMapTransfer())
         ->setStore($data['store'])
-        ->setLocale($locale->getLocaleName())
+        ->setLocale($localeTransfer->getLocaleName())
         ->setType('product_set');
 
         $pageMapBuilder->addIntegerSort($pageMapTransfer, 'weight', $data['weight']);

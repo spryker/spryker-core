@@ -14,13 +14,13 @@ use Generated\Shared\Transfer\RestAddressAttributesTransfer;
 interface AddressResourceMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressesTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\RestAddressAttributesTransfer
      */
     public function mapAddressTransferToRestAddressAttributesTransfer(
-        AddressTransfer $addressesTransfer,
+        AddressTransfer $addressTransfer,
         CustomerTransfer $customerTransfer
     ): RestAddressAttributesTransfer;
 

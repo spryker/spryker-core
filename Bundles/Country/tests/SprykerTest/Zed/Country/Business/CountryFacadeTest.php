@@ -13,6 +13,8 @@ use Generated\Shared\DataBuilder\CountryCollectionBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
+use Generated\Shared\Transfer\RestAddressTransfer;
+use Generated\Shared\Transfer\RestShipmentsTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Country\Persistence\SpyRegion;
 use Psr\Log\LoggerInterface;
@@ -167,6 +169,28 @@ class CountryFacadeTest extends Unit
     public function testCountryFacadeWillValidateCountryCheckoutWithoutErrors(): void
     {
         $checkoutDataTransfer = $this->prepareCheckoutDataTransferWithIso2Codes();
+        $checkoutResponseTransfer = $this->countryFacade->validateCountryCheckoutData($checkoutDataTransfer);
+
+        $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
+        $this->assertSame(0, $checkoutResponseTransfer->getErrors()->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateCountryCheckoutDataValidatesMultiShipmentParameters(): void
+    {
+        $checkoutDataTransfer = $this->prepareCheckoutDataTransferWithIso2Codes()
+            ->setShippingAddress(null)
+            ->addShipment(
+                (new RestShipmentsTransfer())
+                    ->setShippingAddress((new RestAddressTransfer())->setIso2Code(static::ISO2_COUNTRY_DE))
+            )
+            ->addShipment(
+                (new RestShipmentsTransfer())
+                    ->setShippingAddress(new RestAddressTransfer())
+            );
+
         $checkoutResponseTransfer = $this->countryFacade->validateCountryCheckoutData($checkoutDataTransfer);
 
         $this->assertTrue($checkoutResponseTransfer->getIsSuccess());

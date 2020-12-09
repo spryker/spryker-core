@@ -22,12 +22,12 @@ class Token implements TokenInterface
 
     /**
      * @param string $rawToken
-     * @param string $hash
+     * @param string $hashedToken
      *
      * @return bool
      */
-    public function check($rawToken, $hash)
+    public function check($rawToken, $hashedToken)
     {
-        return password_verify($rawToken, base64_decode($hash));
+        return password_verify($rawToken, base64_decode($hashedToken));
     }
 }

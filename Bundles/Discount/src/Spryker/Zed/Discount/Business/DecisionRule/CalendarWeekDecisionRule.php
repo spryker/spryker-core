@@ -32,14 +32,14 @@ class CalendarWeekDecisionRule implements DecisionRuleInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer $currentItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
      */
     public function isSatisfiedBy(
         QuoteTransfer $quoteTransfer,
-        ItemTransfer $currentItemTransfer,
+        ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
 

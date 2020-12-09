@@ -2,54 +2,6 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 33,
-            "line_to": 33,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\TaxStorage\\Communication\\Plugin\\Event\\Listener\\TaxRateStoragePublishListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
-            "file_name": "vendor/spryker/spryker/Bundles/TaxStorage/src/Spryker/Zed/TaxStorage/Communication/Plugin/Event/Listener/TaxRateStoragePublishListener.php",
-            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
-            "selected_text": "$eventTransfers",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 33,
-            "line_to": 33,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\TaxStorage\\Communication\\Plugin\\Event\\Listener\\TaxSetStoragePublishListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
-            "file_name": "vendor/spryker/spryker/Bundles/TaxStorage/src/Spryker/Zed/TaxStorage/Communication/Plugin/Event/Listener/TaxSetStoragePublishListener.php",
-            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
-            "selected_text": "$eventTransfers",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 33,
-            "line_to": 33,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\TaxStorage\\Communication\\Plugin\\Event\\Listener\\TaxSetStorageUnpublishListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
-            "file_name": "vendor/spryker/spryker/Bundles/TaxStorage/src/Spryker/Zed/TaxStorage/Communication/Plugin/Event/Listener/TaxSetStorageUnpublishListener.php",
-            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
-            "selected_text": "$eventTransfers",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 34,
-            "line_to": 34,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\TaxStorage\\Communication\\Plugin\\Event\\Listener\\TaxSetTaxStoragePublishListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
-            "file_name": "vendor/spryker/spryker/Bundles/TaxStorage/src/Spryker/Zed/TaxStorage/Communication/Plugin/Event/Listener/TaxSetTaxStoragePublishListener.php",
-            "snippet": "    public function handleBulk(array $eventTransfers, $eventName)",
-            "selected_text": "$eventTransfers",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
             "line_from": 76,
             "line_to": 76,
             "type": "InvalidReturnType",

@@ -21,8 +21,11 @@ class DataImportConfig extends AbstractBundleConfig
     public const IMPORT_GROUP_QUEUE_READERS = 'QUEUE_READERS';
     public const IMPORT_GROUP_QUEUE_WRITERS = 'QUEUE_WRITERS';
 
+    public const ZED_DB_ENGINE = 'ZED_DB_ENGINE';
+
     protected const DEFAULT_QUEUE_READER_CHUNK_SIZE = 100;
     protected const DEFAULT_QUEUE_WRITER_CHUNK_SIZE = 100;
+    protected const DEFAULT_BULK_MODE = false;
 
     /**
      * @api
@@ -75,6 +78,28 @@ class DataImportConfig extends AbstractBundleConfig
     public function getDefaultYamlConfigPath(): ?string
     {
         return null;
+    }
+
+    /**
+     * @api
+     *
+     * @see \Spryker\Shared\Propel\PropelConstants::ZED_DB_ENGINE
+     *
+     * @return string|null
+     */
+    public function getCurrentDatabaseEngine(): ?string
+    {
+        return $this->get(static::ZED_DB_ENGINE);
+    }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isBulkEnabled(): bool
+    {
+        return $this->get(DataImportConstants::IS_BULK_MODE_ENABLED, static::DEFAULT_BULK_MODE);
     }
 
     /**
