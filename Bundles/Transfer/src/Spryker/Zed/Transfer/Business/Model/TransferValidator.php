@@ -10,7 +10,6 @@ namespace Spryker\Zed\Transfer\Business\Model;
 use Laminas\Config\Factory;
 use Laminas\Filter\Word\UnderscoreToCamelCase;
 use Psr\Log\LoggerInterface;
-use RuntimeException;
 use Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface;
 use Spryker\Zed\Transfer\Business\XmlValidator\XmlValidatorInterface;
 use Spryker\Zed\Transfer\TransferConfig;
@@ -434,7 +433,7 @@ class TransferValidator implements TransferValidatorInterface
     {
         $this->xmlValidator->validate(
             $fileInfo->getPathname(),
-            $this->getXsdSchemaFilePath()
+            $this->transferConfig->getXsdSchemaFilePath()
         );
 
         if ($this->xmlValidator->isValid()) {
@@ -446,21 +445,5 @@ class TransferValidator implements TransferValidatorInterface
         }
 
         return false;
-    }
-
-    /**
-     * @throws \RuntimeException
-     *
-     * @return string
-     */
-    protected function getXsdSchemaFilePath(): string
-    {
-        $schemaFilePath = $this->transferConfig->getXsdSchemaFilePath();
-
-        if ($schemaFilePath !== false) {
-            return $schemaFilePath;
-        }
-
-        throw new RuntimeException('Error reading XSD schema.');
     }
 }

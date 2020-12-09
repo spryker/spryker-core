@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Transfer;
 
+use RuntimeException;
 use Spryker\Shared\Transfer\TransferConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
@@ -271,11 +272,19 @@ class TransferConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string|bool
+     * @throws \RuntimeException
+     *
+     * @return string
      */
-    public function getXsdSchemaFilePath()
+    public function getXsdSchemaFilePath(): string
     {
-        return realpath(__DIR__ . '/../../../../data/definition/transfer-01.xsd');
+        $xsdSchemaFilePath = realpath(__DIR__ . '/../../../../data/definition/transfer-01.xsd');
+
+        if ($xsdSchemaFilePath === false) {
+            throw new RuntimeException('Cannot find path to XSD schema.');
+        }
+
+        return $xsdSchemaFilePath;
     }
 
     /**

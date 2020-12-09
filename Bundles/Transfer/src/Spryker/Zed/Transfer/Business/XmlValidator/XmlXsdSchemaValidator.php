@@ -84,13 +84,13 @@ class XmlXsdSchemaValidator implements XmlValidatorInterface
     {
         $fileContent = file_get_contents($filePath);
 
-        if ($fileContent !== false) {
-            return $this->shimXmlSchemaInstanceNamespace($fileContent);
+        if ($fileContent === false) {
+            throw new RuntimeException(
+                sprintf('File "%s" could not be read.', $filePath)
+            );
         }
 
-        throw new RuntimeException(
-            sprintf('File "%s" could not be read.', $filePath)
-        );
+        return $this->shimXmlSchemaInstanceNamespace($fileContent);
     }
 
     /**
