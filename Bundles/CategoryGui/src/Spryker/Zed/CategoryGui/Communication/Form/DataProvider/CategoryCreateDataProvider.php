@@ -104,7 +104,6 @@ class CategoryCreateDataProvider
         $categoryCollectionTransfer = $this->categoryFacade->getAllCategoryCollection($localeTransfer);
 
         foreach ($categoryCollectionTransfer->getCategories() as $categoryTransfer) {
-
             foreach ($categoryTransfer->getNodeCollection()->getNodes() as $nodeTransfer) {
                 $categoryNodes[] = (new NodeTransfer())
                     ->setPath('/' . $nodeTransfer->getPath())

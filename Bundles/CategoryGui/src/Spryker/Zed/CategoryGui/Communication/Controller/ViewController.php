@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\CategoryGui\Communication\CategoryGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface getRepository()
  */
 class ViewController extends AbstractController
 {
@@ -46,9 +47,11 @@ class ViewController extends AbstractController
     }
 
     /**
+     * @phpstan-return array<int, array<string, array<string>|string>>
+     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return array
+     * @return string[][]
      */
     protected function getRenderedRelations(CategoryTransfer $categoryTransfer): array
     {

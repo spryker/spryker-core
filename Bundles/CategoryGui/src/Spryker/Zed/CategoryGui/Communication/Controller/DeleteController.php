@@ -11,12 +11,11 @@ use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
-use Generated\Shared\Transfer\NodeTransfer;
-use Orm\Zed\Category\Persistence\SpyCategory;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @method \Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface getRepository()
  * @method \Spryker\Zed\CategoryGui\Communication\CategoryGuiCommunicationFactory getFactory()
  */
 class DeleteController extends AbstractController
@@ -65,9 +64,23 @@ class DeleteController extends AbstractController
             'category' => $categoryTransfer,
             'urls' => $this->getUrls($categoryTransfer),
             'relations' => $this->getRelations($categoryTransfer),
-            'parentCategory' => $this->getParentCategoryEntity($categoryTransfer->getCategoryNode())->toArray(),
+            'parentCategory' => $this->findParentCategory($categoryTransfer),
             'childNodes' => $this->getCategoryChildNodeCollection($categoryTransfer),
         ]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer|null
+     */
+    protected function findParentCategory(CategoryTransfer $categoryTransfer): ?CategoryTransfer
+    {
+        if (!$categoryTransfer->getParentCategoryNode()) {
+            return null;
+        }
+
+        return $this->findCategory($categoryTransfer->getParentCategoryNode()->getFkCategory());
     }
 
     /**
@@ -97,50 +110,19 @@ class DeleteController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategory
-     */
-    protected function getParentCategoryEntity(NodeTransfer $categoryNodeTransfer): SpyCategory
-    {
-        $localeTransfer = $this->getCurrentLocale();
-
-        return $this
-            ->getFactory()
-            ->getCategoryQueryContainer()
-            ->queryCategory($localeTransfer->getIdLocale())
-            ->useNodeQuery()
-            ->filterByIdCategoryNode($categoryNodeTransfer->getFkParentCategoryNode())
-            ->endUse()
-            ->findOne();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\UrlTransfer[]
      */
     protected function getUrls(CategoryTransfer $categoryTransfer): array
     {
-        $urls = [];
-        $categoryNodeCollection = $this
-            ->getFactory()
-            ->getCategoryFacade()
-            ->getAllNodesByIdCategory($categoryTransfer->getIdCategory());
+        $categoryNodeIds = [];
 
-        foreach ($categoryNodeCollection as $categoryNodeEntity) {
-            $urlCollection = $this
-                ->getFactory()
-                ->getCategoryQueryContainer()
-                ->queryUrlByIdCategoryNode($categoryNodeEntity->getIdCategoryNode())
-                ->find();
-
-            foreach ($urlCollection as $urlEntity) {
-                $urls[] = $urlEntity->toArray();
-            }
+        foreach ($categoryTransfer->getNodeCollection()->getNodes() as $nodeTransfer) {
+            $categoryNodeIds[] = $nodeTransfer->getIdCategoryNode();
         }
 
-        return $urls;
+        return $this->getRepository()->getCategoryNodeUrls($categoryNodeIds);
     }
 
     /**

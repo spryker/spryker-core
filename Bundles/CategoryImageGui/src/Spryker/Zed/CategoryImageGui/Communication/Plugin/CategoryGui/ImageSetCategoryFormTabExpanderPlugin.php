@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryImageGui\Communication\Plugin;
+namespace Spryker\Zed\CategoryImageGui\Communication\Plugin\CategoryGui;
 
 use Generated\Shared\Transfer\TabItemTransfer;
 use Generated\Shared\Transfer\TabsViewTransfer;
@@ -20,6 +20,7 @@ class ImageSetCategoryFormTabExpanderPlugin extends AbstractPlugin implements Ca
 {
     /**
      * {@inheritDoc}
+     * - Adds image tab to CategoryFormTabs.
      *
      * @api
      *

@@ -92,7 +92,6 @@ class CategoryEditDataProvider
         $categoryCollectionTransfer = $this->categoryFacade->getAllCategoryCollection($localeTransfer);
 
         foreach ($categoryCollectionTransfer->getCategories() as $categoryTransfer) {
-
             if ($categoryTransfer->getIdCategory() === $idCategory) {
                 continue;
             }

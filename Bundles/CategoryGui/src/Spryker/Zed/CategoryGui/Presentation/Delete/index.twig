@@ -2,7 +2,7 @@
 
 {% if submit_title is not defined %}
     {% set widget_title = 'Delete category' | trans %}
-    {% set widget_title = widget_title ~ ': ' ~ category.name %}
+    {% set widget_title = widget_title ~ ': ' ~ category.localizedAttributes[0].name %}
 {% endif %}
 
 {% if idCategory is not defined %}
@@ -81,11 +81,11 @@
             <div class="col-md-4">
                 <b>{{ 'Sub-Trees to be moved' | trans }}</b>
                 <br />
-                {% if childNodes is defined and childNodes.nodes | length > 0 %}
+                {% if parentCategory is not empty and childNodes is defined and childNodes.nodes | length > 0 %}
                     <br />
                     <p>
                         {% if category.categoryNode.isMain %} {{ 'Main' | trans }} {% else %} {{ 'Extra parent' | trans }} {% endif %}
-                        {{ 'category will be moved to' | trans }} <em>{{ parentCategory.name }}</em>
+                        {{ 'category will be moved to' | trans }} <em>{{ parentCategory.localizedAttributes[0].name }}</em>
                     </p>
                     <ol class="dd-list">
                         <li class="dd-item">

@@ -15,12 +15,10 @@ use Spryker\Zed\CategoryGui\Communication\Form\DataProvider\CategoryDeleteDataPr
 use Spryker\Zed\CategoryGui\Communication\Form\DataProvider\CategoryEditDataProvider;
 use Spryker\Zed\CategoryGui\Communication\Form\DeleteType;
 use Spryker\Zed\CategoryGui\Communication\Table\CategoryTable;
-use Spryker\Zed\CategoryGui\Communication\Table\RootNodeTable;
-use Spryker\Zed\CategoryGui\Communication\Table\UrlTable;
 use Spryker\Zed\CategoryGui\Communication\Tabs\CategoryFormTabs;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface;
-use Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface;
+use Spryker\Zed\CategoryGui\Dependency\Service\CategoryGuiToUtilEncodingServiceInterface;
 use Spryker\Zed\Gui\Communication\Tabs\TabsInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
@@ -38,17 +36,6 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCategoryTable(): CategoryTable
     {
         return new CategoryTable($this->getLocaleFacade());
-    }
-
-    /**
-     * @return \Spryker\Zed\CategoryGui\Communication\Table\RootNodeTable
-     */
-    public function createRootNodeTable(): RootNodeTable
-    {
-        return new RootNodeTable(
-            $this->getCategoryQueryContainer(),
-            $this->getLocaleFacade()
-        );
     }
 
     /**
@@ -131,19 +118,6 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param int|null $idCategoryNode
-     *
-     * @return \Spryker\Zed\CategoryGui\Communication\Table\UrlTable
-     */
-    public function createUrlTable(?int $idCategoryNode): UrlTable
-    {
-        return new UrlTable(
-            $this->getCategoryQueryContainer(),
-            $idCategoryNode
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface
      */
     public function createCategoryFormTabs(): TabsInterface
@@ -167,14 +141,6 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getCategoryFacade(): CategoryGuiToCategoryFacadeInterface
     {
         return $this->getProvidedDependency(CategoryGuiDependencyProvider::FACADE_CATEGORY);
-    }
-
-    /**
-     * @return \Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface
-     */
-    public function getCategoryQueryContainer(): CategoryGuiToCategoryQueryContainerInterface
-    {
-        return $this->getProvidedDependency(CategoryGuiDependencyProvider::QUERY_CONTAINER_CATEGORY);
     }
 
     /**
@@ -207,5 +173,13 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getCsrfTokenManager(): CsrfTokenManagerInterface
     {
         return $this->getProvidedDependency(CategoryGuiDependencyProvider::SERVICE_FORM_CSRF_PROVIDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryGui\Dependency\Service\CategoryGuiToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): CategoryGuiToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(CategoryGuiDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

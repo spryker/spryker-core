@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryImageGui\Communication\Plugin;
+namespace Spryker\Zed\CategoryImageGui\Communication\Plugin\CategoryGui;
 
 use Spryker\Zed\CategoryGuiExtension\Dependency\Plugin\CategoryFormPluginInterface;
 use Spryker\Zed\CategoryImageGui\Communication\Form\ImageSetCollectionForm;
@@ -22,6 +22,7 @@ class ImageSetSubformCategoryFormPlugin extends AbstractPlugin implements Catego
 
     /**
      * {@inheritDoc}
+     * - Adds subform with image sets to CategoryType.
      *
      * @api
      *

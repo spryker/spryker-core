@@ -22,6 +22,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 /**
  * @method \Spryker\Zed\CategoryGui\Communication\CategoryGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\CategoryGui\CategoryGuiConfig getConfig()
+ * @method \Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface getRepository()
  */
 class CategoryLocalizedAttributeType extends AbstractType
 {

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\Plugin;
+namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\Plugin\CategoryGui;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;

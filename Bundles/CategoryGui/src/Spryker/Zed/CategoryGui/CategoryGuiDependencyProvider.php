@@ -10,9 +10,10 @@ namespace Spryker\Zed\CategoryGui;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery;
+use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeBridge;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeBridge;
-use Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerBridge;
+use Spryker\Zed\CategoryGui\Dependency\Service\CategoryGuiToUtilEncodingServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -30,8 +31,10 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
 
     public const PROPEL_QUERY_CATEGORY = 'PROPEL_QUERY_CATEGORY';
     public const PROPEL_QUERY_CATEGORY_TEMPLATE = 'PROPEL_QUERY_CATEGORY_TEMPLATE';
+    public const PROPEL_QUERY_CATEGORY_NODE = 'PROPEL_QUERY_CATEGORY_NODE';
+    public const PROPEL_QUERY_URL = 'PROPEL_QUERY_URL';
 
-    public const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @uses \Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_CSRF_PROVIDER
@@ -49,11 +52,11 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addLocaleFacade($container);
         $container = $this->addCategoryFacade($container);
-        $container = $this->addCategoryQueryContainer($container);
         $container = $this->addCategoryFormPlugins($container);
         $container = $this->addCategoryFormTabExpanderPlugins($container);
         $container = $this->addCategoryRelationReadPlugins($container);
         $container = $this->addCsrfProviderService($container);
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -67,6 +70,8 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addCategoryPropelQuery($container);
         $container = $this->addCategoryTemplatePropelQuery($container);
+        $container = $this->addCategoryNodePropelQuery($container);
+        $container = $this->addUrlPropelQuery($container);
 
         return $container;
     }
@@ -108,11 +113,11 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCategoryQueryContainer(Container $container): Container
+    protected function addUtilEncodingService(Container $container): Container
     {
-        $container->set(static::QUERY_CONTAINER_CATEGORY, function (Container $container) {
-            return new CategoryGuiToCategoryQueryContainerBridge(
-                $container->getLocator()->category()->queryContainer()
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
+            return new CategoryGuiToUtilEncodingServiceBridge(
+                $container->getLocator()->utilEncoding()->service()
             );
         });
 
@@ -146,6 +151,38 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::PROPEL_QUERY_CATEGORY_TEMPLATE, $container->factory(function () {
             return SpyCategoryTemplateQuery::create();
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @module Category
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCategoryNodePropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_CATEGORY_NODE, $container->factory(function () {
+            return SpyCategoryNodeQuery::create();
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @module Url
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUrlPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_URL, $container->factory(function () {
+            return SpyUrlQuery::create();
         }));
 
         return $container;

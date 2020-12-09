@@ -21,4 +21,19 @@ interface CategoryGuiRepositoryInterface
      * @return string[]
      */
     public function getIndexedCategoryTemplateNames(): array;
+
+    /**
+     * @param int $idParentNode
+     * @param int $idLocale
+     *
+     * @return array
+     */
+    public function getChildrenCategoryNodeNames(int $idParentNode, int $idLocale): array;
+
+    /**
+     * @param int[] $categoryNodeIds
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     */
+    public function getCategoryNodeUrls(array $categoryNodeIds): array;
 }
