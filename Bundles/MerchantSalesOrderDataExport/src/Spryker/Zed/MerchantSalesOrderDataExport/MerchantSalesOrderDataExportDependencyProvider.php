@@ -7,13 +7,25 @@
 
 namespace Spryker\Zed\MerchantSalesOrderDataExport;
 
+use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
+use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery;
+use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery;
+use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantSalesOrderDataExport\Dependency\Service\MerchantSalesOrderDataExportToDataExportServiceBridge;
+use Spryker\Zed\SalesDataExport\Dependency\Service\SalesDataExportToUtilEncodingServiceBridge;
+use Spryker\Zed\SalesDataExport\Dependency\Service\SalesDataExportToUtilEncodingServiceInterface;
 
 class MerchantSalesOrderDataExportDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_DATA_EXPORT = 'SERVICE_DATA_EXPORT';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
+    public const PROPEL_QUERY_MERCHANT = 'PROPEL_QUERY_MERCHANT';
+    public const PROPEL_QUERY_MERCHANT_SALES_ORDER = 'PROPEL_QUERY_MERCHANT_SALES_ORDER';
+    public const PROPEL_QUERY_MERCHANT_SALES_ORDER_ITEM = 'PROPEL_QUERY_MERCHANT_SALES_ORDER_ITEM';
+    public const PROPEL_QUERY_SALES_EXPENSE = 'PROPEL_QUERY_SALES_EXPENSE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -24,6 +36,94 @@ class MerchantSalesOrderDataExportDependencyProvider extends AbstractBundleDepen
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addDataExportService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container): Container
+    {
+        $container = parent::providePersistenceLayerDependencies($container);
+        $container = $this->addMerchantSalesOrderPropelQuery($container);
+        $container = $this->addMerchantSalesOrderItemPropelQuery($container);
+        $container = $this->addSalesExpensePropelQuery($container);
+        $container = $this->addUtilEncodingService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_MERCHANT, $container->factory(function (): SpyMerchantQuery {
+            return SpyMerchantQuery::create();
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantSalesOrderPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_MERCHANT_SALES_ORDER, $container->factory(function (): SpyMerchantSalesOrderQuery {
+            return SpyMerchantSalesOrderQuery::create();
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantSalesOrderItemPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_MERCHANT_SALES_ORDER_ITEM, $container->factory(function (): SpyMerchantSalesOrderItemQuery {
+            return SpyMerchantSalesOrderItemQuery::create();
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesExpensePropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_SALES_EXPENSE, $container->factory(function (): SpySalesExpenseQuery {
+            return SpySalesExpenseQuery::create();
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container): SalesDataExportToUtilEncodingServiceInterface {
+            return new SalesDataExportToUtilEncodingServiceBridge(
+                $container->getLocator()->utilEncoding()->service()
+            );
+        });
 
         return $container;
     }
