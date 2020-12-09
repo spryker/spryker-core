@@ -505,6 +505,8 @@ class FullyStrictTransfer extends AbstractTransfer
      */
     public function setPropDummyItemCollection(ArrayObject $propDummyItemCollection)
     {
+        $this->propDummyItemCollection = new ArrayObject();
+
         foreach ($propDummyItemCollection as $collectionItem) {
             $this->addPropDummyItemCollection($collectionItem);
         }
@@ -563,6 +565,8 @@ class FullyStrictTransfer extends AbstractTransfer
         if ($propTypedArray === null) {
             $propTypedArray = [];
         }
+
+        $this->propTypedArray = [];
 
         foreach ($propTypedArray as $collectionItem) {
             $this->addPropTypedArray($collectionItem);
@@ -623,7 +627,12 @@ class FullyStrictTransfer extends AbstractTransfer
             $propTypedArrayAssoc = [];
         }
 
-        $this->propTypedArrayAssoc = $propTypedArrayAssoc;
+        $this->propTypedArrayAssoc = [];
+
+        foreach ($propTypedArrayAssoc as $key => $collectionItem) {
+            $this->addPropTypedArrayAssocSingular($key, $collectionItem);
+        }
+
         $this->modifiedProperties[self::PROP_TYPED_ARRAY_ASSOC] = true;
 
         return $this;
@@ -689,7 +698,12 @@ class FullyStrictTransfer extends AbstractTransfer
      */
     public function setPropDummyItemCollectionAssoc(ArrayObject $propDummyItemCollectionAssoc)
     {
-        $this->propDummyItemCollectionAssoc = $propDummyItemCollectionAssoc;
+        $this->propDummyItemCollectionAssoc = new ArrayObject();
+
+        foreach ($propDummyItemCollectionAssoc as $key => $collectionItem) {
+            $this->addPropDummyItemCollectionAssocSingular($key, $collectionItem);
+        }
+
         $this->modifiedProperties[self::PROP_DUMMY_ITEM_COLLECTION_ASSOC] = true;
 
         return $this;

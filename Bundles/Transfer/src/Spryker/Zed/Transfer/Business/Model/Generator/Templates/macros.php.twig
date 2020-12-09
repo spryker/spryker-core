@@ -99,10 +99,19 @@
 
         {% endif -%}
         {% if method.isCollectionPropertyTypeCheckNeeded -%}
+        $this->{{ method.property }} = {{ method.typeHint == 'ArrayObject' ? 'new ArrayObject()' : '[]' }};
+
+        {% if method.isAssociative -%}
+        foreach (${{ method.property }} as $key => $collectionItem) {
+            $this->{{ method.addMethodName }}($key, $collectionItem);
+        }
+
+        {% else -%}
         foreach (${{ method.property }} as $collectionItem) {
             $this->{{ method.addMethodName }}($collectionItem);
         }
 
+        {% endif -%}
         {% else -%}
         $this->{{ method.property }} = ${{ method.property }};
         {% endif -%}

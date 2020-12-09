@@ -873,6 +873,10 @@ class ClassDefinition implements ClassDefinitionInterface
             );
         }
 
+        if ($this->isAssociativeArray($property)) {
+            $method['isAssociative'] = true;
+        }
+
         $this->methods[$methodName] = $method;
     }
 
@@ -1533,6 +1537,6 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function isCollectionPropertyTypeCheckNeeded(array $property): bool
     {
-        return $this->isStrictProperty($property) && $this->isCollection($property) && !$this->isAssociativeArray($property);
+        return $this->isStrictProperty($property) && $this->isCollection($property);
     }
 }
