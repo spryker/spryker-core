@@ -38,11 +38,17 @@ class ValidFromRangeConstraintValidator extends AbstractConstraintValidator
         $productOfferTransfer = $this->context->getRoot()->getData();
         $productOfferValidityTransfer = $productOfferTransfer->getProductOfferValidity();
 
-        if (!$productOfferValidityTransfer || !$productOfferValidityTransfer->getValidTo()) {
+        if (!$productOfferValidityTransfer) {
             return;
         }
 
-        $validTo = new DateTime($productOfferValidityTransfer->getValidTo());
+        $validTo = $productOfferValidityTransfer->getValidTo();
+
+        if (!$validTo) {
+            return;
+        }
+
+        $validTo = new DateTime($validTo);
         $validFrom = new DateTime($validFrom);
 
         if ($validFrom > $validTo) {

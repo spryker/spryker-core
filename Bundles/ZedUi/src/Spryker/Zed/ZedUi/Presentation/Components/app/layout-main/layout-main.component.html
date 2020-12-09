@@ -2,10 +2,7 @@
     <div class="mp-layout-main-cnt">
         <div class="mp-layout-main-cnt__sidebar">
             <spy-sidebar (collapsedChange)="updateCollapseHandler($event)">
-                <div
-                    class="mp-layout-main-cnt__logo"
-                    [class.mp-layout-main-cnt__logo--collapsed]="isCollapsed"
-                >
+                <div class="mp-layout-main-cnt__logo">
                     <div class="mp-layout-main-cnt__logo-inner">
                         <spy-logo></spy-logo>
                     </div>

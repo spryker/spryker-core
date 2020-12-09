@@ -61,11 +61,12 @@ class ProductNameBuilder implements ProductNameBuilderInterface
         $localizedAttributeTransfers = $productConcreteTransfer->getLocalizedAttributes();
 
         foreach ($localizedAttributeTransfers as $localizedAttributesTransfer) {
-            if (!$localizedAttributesTransfer->getLocale()) {
+            $localeFromLocalizedAttributes = $localizedAttributesTransfer->getLocale();
+            if (!$localeFromLocalizedAttributes) {
                 continue;
             }
 
-            if ($localizedAttributesTransfer->getLocale()->getIdLocale() === $localeTransfer->getIdLocale()) {
+            if ($localeFromLocalizedAttributes->getIdLocale() === $localeTransfer->getIdLocale()) {
                 return $localizedAttributesTransfer;
             }
         }
