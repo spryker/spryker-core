@@ -101,17 +101,16 @@
         {% if method.isCollectionPropertyTypeCheckNeeded -%}
         $this->{{ method.property }} = {{ method.typeHint == 'ArrayObject' ? 'new ArrayObject()' : '[]' }};
 
-        {% if method.isAssociative -%}
-        foreach (${{ method.property }} as $key => $collectionItem) {
-            $this->{{ method.addMethodName }}($key, $collectionItem);
+        foreach (${{ method.property }} as $key => $value) {
+            $args = [$value];
+
+            if ($this->transferMetadata[static::{{ method.propertyConst }}]['is_associative']) {
+                $args = [$key, $value];
+            }
+
+            $this->{{ method.addMethodName }}(...$args);
         }
 
-        {% else -%}
-        foreach (${{ method.property }} as $collectionItem) {
-            $this->{{ method.addMethodName }}($collectionItem);
-        }
-
-        {% endif -%}
         {% else -%}
         $this->{{ method.property }} = ${{ method.property }};
         {% endif -%}

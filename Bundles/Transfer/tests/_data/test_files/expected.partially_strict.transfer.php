@@ -821,8 +821,14 @@ class PartiallyStrictTransfer extends AbstractTransfer
     {
         $this->propDummyItemCollectionStrict = new ArrayObject();
 
-        foreach ($propDummyItemCollectionStrict as $collectionItem) {
-            $this->addPropDummyItemCollectionStrict($collectionItem);
+        foreach ($propDummyItemCollectionStrict as $key => $value) {
+            $args = [$value];
+
+            if ($this->transferMetadata[static::PROP_DUMMY_ITEM_COLLECTION_STRICT]['is_associative']) {
+                $args = [$key, $value];
+            }
+
+            $this->addPropDummyItemCollectionStrict(...$args);
         }
 
         $this->modifiedProperties[self::PROP_DUMMY_ITEM_COLLECTION_STRICT] = true;
@@ -938,8 +944,14 @@ class PartiallyStrictTransfer extends AbstractTransfer
 
         $this->propTypedArrayStrict = [];
 
-        foreach ($propTypedArrayStrict as $collectionItem) {
-            $this->addPropTypedArrayStrict($collectionItem);
+        foreach ($propTypedArrayStrict as $key => $value) {
+            $args = [$value];
+
+            if ($this->transferMetadata[static::PROP_TYPED_ARRAY_STRICT]['is_associative']) {
+                $args = [$key, $value];
+            }
+
+            $this->addPropTypedArrayStrict(...$args);
         }
 
         $this->modifiedProperties[self::PROP_TYPED_ARRAY_STRICT] = true;
@@ -1056,8 +1068,14 @@ class PartiallyStrictTransfer extends AbstractTransfer
 
         $this->propTypedArrayAssocStrict = [];
 
-        foreach ($propTypedArrayAssocStrict as $key => $collectionItem) {
-            $this->addPropTypedArrayAssocStrictSingular($key, $collectionItem);
+        foreach ($propTypedArrayAssocStrict as $key => $value) {
+            $args = [$value];
+
+            if ($this->transferMetadata[static::PROP_TYPED_ARRAY_ASSOC_STRICT]['is_associative']) {
+                $args = [$key, $value];
+            }
+
+            $this->addPropTypedArrayAssocStrictSingular(...$args);
         }
 
         $this->modifiedProperties[self::PROP_TYPED_ARRAY_ASSOC_STRICT] = true;

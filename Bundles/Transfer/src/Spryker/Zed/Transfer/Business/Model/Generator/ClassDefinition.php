@@ -873,10 +873,6 @@ class ClassDefinition implements ClassDefinitionInterface
             );
         }
 
-        if ($this->isAssociativeArray($property)) {
-            $method['isAssociative'] = true;
-        }
-
         $this->methods[$methodName] = $method;
     }
 

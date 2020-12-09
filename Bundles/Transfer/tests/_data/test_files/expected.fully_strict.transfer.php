@@ -507,8 +507,14 @@ class FullyStrictTransfer extends AbstractTransfer
     {
         $this->propDummyItemCollection = new ArrayObject();
 
-        foreach ($propDummyItemCollection as $collectionItem) {
-            $this->addPropDummyItemCollection($collectionItem);
+        foreach ($propDummyItemCollection as $key => $value) {
+            $args = [$value];
+
+            if ($this->transferMetadata[static::PROP_DUMMY_ITEM_COLLECTION]['is_associative']) {
+                $args = [$key, $value];
+            }
+
+            $this->addPropDummyItemCollection(...$args);
         }
 
         $this->modifiedProperties[self::PROP_DUMMY_ITEM_COLLECTION] = true;
@@ -568,8 +574,14 @@ class FullyStrictTransfer extends AbstractTransfer
 
         $this->propTypedArray = [];
 
-        foreach ($propTypedArray as $collectionItem) {
-            $this->addPropTypedArray($collectionItem);
+        foreach ($propTypedArray as $key => $value) {
+            $args = [$value];
+
+            if ($this->transferMetadata[static::PROP_TYPED_ARRAY]['is_associative']) {
+                $args = [$key, $value];
+            }
+
+            $this->addPropTypedArray(...$args);
         }
 
         $this->modifiedProperties[self::PROP_TYPED_ARRAY] = true;
@@ -629,8 +641,14 @@ class FullyStrictTransfer extends AbstractTransfer
 
         $this->propTypedArrayAssoc = [];
 
-        foreach ($propTypedArrayAssoc as $key => $collectionItem) {
-            $this->addPropTypedArrayAssocSingular($key, $collectionItem);
+        foreach ($propTypedArrayAssoc as $key => $value) {
+            $args = [$value];
+
+            if ($this->transferMetadata[static::PROP_TYPED_ARRAY_ASSOC]['is_associative']) {
+                $args = [$key, $value];
+            }
+
+            $this->addPropTypedArrayAssocSingular(...$args);
         }
 
         $this->modifiedProperties[self::PROP_TYPED_ARRAY_ASSOC] = true;
@@ -700,8 +718,14 @@ class FullyStrictTransfer extends AbstractTransfer
     {
         $this->propDummyItemCollectionAssoc = new ArrayObject();
 
-        foreach ($propDummyItemCollectionAssoc as $key => $collectionItem) {
-            $this->addPropDummyItemCollectionAssocSingular($key, $collectionItem);
+        foreach ($propDummyItemCollectionAssoc as $key => $value) {
+            $args = [$value];
+
+            if ($this->transferMetadata[static::PROP_DUMMY_ITEM_COLLECTION_ASSOC]['is_associative']) {
+                $args = [$key, $value];
+            }
+
+            $this->addPropDummyItemCollectionAssocSingular(...$args);
         }
 
         $this->modifiedProperties[self::PROP_DUMMY_ITEM_COLLECTION_ASSOC] = true;
