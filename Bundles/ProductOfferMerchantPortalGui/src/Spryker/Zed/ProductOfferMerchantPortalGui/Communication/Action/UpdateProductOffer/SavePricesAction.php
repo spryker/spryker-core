@@ -195,11 +195,15 @@ class SavePricesAction implements ActionInterface
     protected function successJsonResponse(): JsonResponse
     {
         $response = [
-            'notifications' => [[
-                'type' => static::NOTIFICATION_TYPE_SUCCESS,
-                'message' => static::NOTIFICATION_SUCCESS_MESSAGE,
-            ]],
-            'postActions' => [['type' => static::POST_ACTION_REFRESH_TABLE]],
+            'notifications' => [
+                [
+                    'type' => static::NOTIFICATION_TYPE_SUCCESS,
+                    'message' => static::NOTIFICATION_SUCCESS_MESSAGE,
+                ]
+            ],
+            'postActions' => [
+                ['type' => static::POST_ACTION_REFRESH_TABLE]
+            ],
         ];
 
         return new JsonResponse($response);
@@ -212,15 +216,15 @@ class SavePricesAction implements ActionInterface
      */
     protected function errorJsonResponse(PriceProductOfferCollectionValidationResponseTransfer $validationResponseTransfer): JsonResponse
     {
-        $notificaions = [];
+        $notifications = [];
         /** @var \Generated\Shared\Transfer\ValidationErrorTransfer $validationErrorTransfer */
         $validationErrorTransfer = $validationResponseTransfer->getValidationErrors()->offsetGet(0);
-        $notificaions[] = [
+        $notifications[] = [
             'type' => static::NOTIFICATION_TYPE_ERROR,
             'message' => $validationErrorTransfer->getMessage(),
         ];
         $response = [
-            'notifications' => $notificaions,
+            'notifications' => $notifications,
         ];
 
         return new JsonResponse($response);

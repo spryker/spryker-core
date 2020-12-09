@@ -141,12 +141,12 @@ class DeletePricesAction implements ActionInterface
     protected function createPriceProductOfferCollectionTransferByPriceProductOfferIds(array $priceProductOfferIds): PriceProductOfferCollectionTransfer
     {
         $priceProductOfferCollectionTransfer = new PriceProductOfferCollectionTransfer();
-        $currentMerchanUser = $this->merchantUserFacade->getCurrentMerchantUser();
+        $currentMerchantUser = $this->merchantUserFacade->getCurrentMerchantUser();
 
         foreach ($priceProductOfferIds as $idPriceProductOffer) {
             $priceProductOfferTransfer = (new PriceProductOfferTransfer())->setIdPriceProductOffer($idPriceProductOffer)
                 ->setProductOffer(
-                    (new ProductOfferTransfer())->setFkMerchant($currentMerchanUser->getIdMerchant())
+                    (new ProductOfferTransfer())->setFkMerchant($currentMerchantUser->getIdMerchant())
                 );
             $priceProductOfferCollectionTransfer->addPriceProductOffer($priceProductOfferTransfer);
         }
