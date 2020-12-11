@@ -4,11 +4,16 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/kernel": "^3.30.0"
+    "spryker/kernel": "^3.30.0",
+    "spryker/product-configuration-storage": "^0.1.2",
+    "spryker/products-rest-api-extension": "^1.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/glue-application": "*"
+  },
+  "suggest": {
+    "spryker/glue-application": "If you want to use RestRequestInterface.",
+    "spryker/products-rest-api": "If you want to use plugins with ProductsRestApi module."
   },
   "autoload": {
     "psr-4": {

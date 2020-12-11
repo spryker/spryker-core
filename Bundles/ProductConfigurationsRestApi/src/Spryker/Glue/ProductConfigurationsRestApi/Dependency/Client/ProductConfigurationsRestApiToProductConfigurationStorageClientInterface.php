@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 interface ProductConfigurationsRestApiToProductConfigurationStorageClientInterface
 {
     /**
-     * @param string $concreteSku
+     * @param string $sku
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null
      */
-    public function findProductConfigurationInstanceBySku(string $concreteSku): ?ProductConfigurationInstanceTransfer;
+    public function findProductConfigurationInstanceBySku(string $sku): ?ProductConfigurationInstanceTransfer;
 }

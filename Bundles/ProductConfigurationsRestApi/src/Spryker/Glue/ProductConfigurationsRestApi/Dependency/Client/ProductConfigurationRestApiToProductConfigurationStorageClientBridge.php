@@ -25,12 +25,12 @@ class ProductConfigurationRestApiToProductConfigurationStorageClientBridge imple
     }
 
     /**
-     * @param string $concreteSku
+     * @param string $sku
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null
      */
-    public function findProductConfigurationInstanceBySku(string $concreteSku): ?ProductConfigurationInstanceTransfer
+    public function findProductConfigurationInstanceBySku(string $sku): ?ProductConfigurationInstanceTransfer
     {
-        return $this->productConfigurationStorageClient->findProductConfigurationInstanceBySku($concreteSku);
+        return $this->productConfigurationStorageClient->findProductConfigurationInstanceBySku($sku);
     }
 }
