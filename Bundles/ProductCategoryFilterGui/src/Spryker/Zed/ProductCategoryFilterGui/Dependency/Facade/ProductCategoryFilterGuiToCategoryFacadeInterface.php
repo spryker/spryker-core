@@ -7,11 +7,15 @@
 
 namespace Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 
 interface ProductCategoryFilterGuiToCategoryFacadeInterface
 {
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToCategoryFacadeInterface::findCategory()} instead.
+     *
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -28,4 +32,11 @@ interface ProductCategoryFilterGuiToCategoryFacadeInterface
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
     public function read($idCategory);
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer|null
+     */
+    public function findCategory(CategoryCriteriaTransfer $categoryCriteriaTransfer): ?CategoryTransfer;
 }

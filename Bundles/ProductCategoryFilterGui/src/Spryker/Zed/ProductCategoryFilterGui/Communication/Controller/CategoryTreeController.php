@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductCategoryFilterGui\Communication\Controller;
 
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -44,8 +47,9 @@ class CategoryTreeController extends AbstractController
 
         return $this->viewResponse([
             'mainCategory' => $mainCategory,
-            'categoryTree' => $categoryTree,
+            'categoryTree' => $categoryTree, //@deprecated Use parameter `childNodes` instead.
             'categoriesWithSpecificFilters' => $categoriesWithSpecificFilters,
+            'nodeCollection' => $this->findCategoryNodeTree($idRootNode),
         ]);
     }
 
@@ -57,5 +61,41 @@ class CategoryTreeController extends AbstractController
         return $this->getFactory()
             ->getLocaleFacade()
             ->getCurrentLocale();
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer|null
+     */
+    protected function findCategoryNodeTree(int $idCategory): ?NodeCollectionTransfer
+    {
+        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
+            ->setIdCategory($idCategory)
+            ->setLocaleName($this->getCurrentLocale()->getLocaleName())
+            ->setWithChildrenRecursively(true);
+
+        $categoryTransfer = $this->getFactory()->getCategoryFacade()->findCategory($categoryCriteriaTransfer);
+
+        if (!$categoryTransfer) {
+            return null;
+        }
+
+        return $this->getCategoryChildNodeCollection($categoryTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
+     */
+    protected function getCategoryChildNodeCollection(CategoryTransfer $categoryTransfer): NodeCollectionTransfer
+    {
+        $categoryNodeCollectionTransfer = $categoryTransfer->getNodeCollection();
+        if (!$categoryNodeCollectionTransfer || $categoryNodeCollectionTransfer->getNodes()->count() === 0) {
+            return new NodeCollectionTransfer();
+        }
+
+        return $categoryNodeCollectionTransfer->getNodes()->offsetGet(0)->getChildrenNodes() ?? new NodeCollectionTransfer();
     }
 }

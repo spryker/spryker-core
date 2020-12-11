@@ -26,4 +26,11 @@
         <property name="label" type="string"/>
     </transfer>
 
+    <transfer name="CategoryCriteria">
+        <property name="idCategory" type="int"/>
+    </transfer>
+
+    <transfer name="NodeCollection">
+    </transfer>
+
 </transfers>

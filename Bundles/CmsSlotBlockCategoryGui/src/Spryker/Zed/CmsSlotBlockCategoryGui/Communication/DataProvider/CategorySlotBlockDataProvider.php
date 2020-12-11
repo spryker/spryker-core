@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Communication\Form\CategorySlotBlockConditionForm;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToCategoryFacadeInterface;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToLocaleFacadeInterface;
+use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToStoreFacadeInterface;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToTranslatorFacadeInterface;
 
 class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInterface
@@ -34,18 +35,26 @@ class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInte
     protected $translatorFacade;
 
     /**
+     * @var \Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToCategoryFacadeInterface $categoryFacade
      * @param \Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToTranslatorFacadeInterface $translatorFacade
+     * @param \Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         CmsSlotBlockCategoryGuiToCategoryFacadeInterface $categoryFacade,
         CmsSlotBlockCategoryGuiToLocaleFacadeInterface $localeFacade,
-        CmsSlotBlockCategoryGuiToTranslatorFacadeInterface $translatorFacade
+        CmsSlotBlockCategoryGuiToTranslatorFacadeInterface $translatorFacade,
+        CmsSlotBlockCategoryGuiToStoreFacadeInterface $storeFacade
     ) {
         $this->categoryFacade = $categoryFacade;
         $this->localeFacade = $localeFacade;
         $this->translatorFacade = $translatorFacade;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -76,7 +85,10 @@ class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInte
     protected function getCategories(): array
     {
         $categoryCollectionTransfer = $this->categoryFacade
-            ->getAllCategoryCollection($this->localeFacade->getCurrentLocale());
+            ->getAllCategoryCollection(
+                $this->localeFacade->getCurrentLocale(),
+                $this->storeFacade->getCurrentStore()->getName()
+            );
 
         return $this->getCategoryIdsFromCollection($categoryCollectionTransfer);
     }
