@@ -25,15 +25,15 @@ class NavigationNodeStorageListener extends AbstractPlugin implements EventBulkH
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
-        $navigationIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyNavigationNodeTableMap::COL_FK_NAVIGATION);
+        $navigationIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventEntityTransfers, SpyNavigationNodeTableMap::COL_FK_NAVIGATION);
 
         $this->getFacade()->publish($navigationIds);
     }

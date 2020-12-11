@@ -16,11 +16,11 @@ class OrderItemOmsTriggerFormDataProvider extends AbstractOmsTriggerFormDataProv
     /**
      * @param string $redirectUrl
      * @param string $event
-     * @param int $idSalesOrderItem
+     * @param int $id OrderItem ID
      *
      * @return array
      */
-    public function getOptions(string $redirectUrl, string $event, int $idSalesOrderItem): array
+    public function getOptions(string $redirectUrl, string $event, int $id): array
     {
         return [
             OmsTriggerForm::OPTION_OMS_ACTION => static::OMS_ACTION_ITEM_TRIGGER,
@@ -28,7 +28,7 @@ class OrderItemOmsTriggerFormDataProvider extends AbstractOmsTriggerFormDataProv
             OmsTriggerForm::OPTION_SUBMIT_BUTTON_CLASS => static::SUBMIT_BUTTON_CLASS,
             OmsTriggerForm::OPTION_QUERY_PARAMS => [
                 static::QUERY_PARAM_EVENT => $event,
-                static::QUERY_PARAM_ID_SALES_ORDER_ITEM => $idSalesOrderItem,
+                static::QUERY_PARAM_ID_SALES_ORDER_ITEM => $id,
                 static::QUERY_PARAM_REDIRECT => $redirectUrl,
             ],
         ];

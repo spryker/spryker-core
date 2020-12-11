@@ -1,18 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 69,
-            "line_to": 69,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Yves\\StepEngine\\Process\\StepCollection::canAccessStep has wrong name $currentStep, expecting $step as defined by Spryker\\Yves\\StepEngine\\Process\\StepCollectionInterface::canAccessStep",
-            "file_name": "vendor/spryker/spryker/Bundles/StepEngine/src/Spryker/Yves/StepEngine/Process/StepCollection.php",
-            "snippet": "    public function canAccessStep(StepInterface $currentStep, Request $request, AbstractTransfer $dataTransfer)",
-            "selected_text": "$currentStep",
-            "error_level": 7,
-            "shortcode": 230
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",

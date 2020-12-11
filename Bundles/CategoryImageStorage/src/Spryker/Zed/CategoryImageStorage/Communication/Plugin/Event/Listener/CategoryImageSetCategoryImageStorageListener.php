@@ -23,19 +23,19 @@ class CategoryImageSetCategoryImageStorageListener extends AbstractPlugin implem
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $transfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
 
         $categoryImageSetIds = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys(
-                $transfers,
+                $eventEntityTransfers,
                 SpyCategoryImageSetToCategoryImageTableMap::COL_FK_CATEGORY_IMAGE_SET
             );
         $categoryIds = $this->getRepository()

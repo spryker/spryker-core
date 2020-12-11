@@ -105,8 +105,6 @@ class ErrorHandlerEnvironment
     }
 
     /**
-     * @throws \ErrorException
-     *
      * @return void
      */
     protected function setAssertOptions()

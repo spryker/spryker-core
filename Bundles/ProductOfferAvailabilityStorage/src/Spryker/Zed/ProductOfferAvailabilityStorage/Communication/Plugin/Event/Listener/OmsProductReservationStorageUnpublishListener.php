@@ -23,14 +23,14 @@ class OmsProductReservationStorageUnpublishListener extends AbstractPlugin imple
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName): void
+    public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
         $this->getFacade()
-            ->writeCollectionByOmsProductOfferReservationIdEvents($eventTransfers);
+            ->writeCollectionByOmsProductOfferReservationIdEvents($eventEntityTransfers);
     }
 }

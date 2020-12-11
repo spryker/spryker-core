@@ -372,7 +372,6 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         ProductConcreteTransfer $productConcreteTransfer,
         LocaleTransfer $currentLocaleTransfer
     ) {
-
         $localeMapKey = $currentLocaleTransfer->getLocaleName() . $productConcreteTransfer->getIdProductConcrete();
 
         if (!isset(static::$localizedProductNameCache[$localeMapKey])) {

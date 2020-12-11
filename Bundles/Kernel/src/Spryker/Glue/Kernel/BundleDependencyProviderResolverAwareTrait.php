@@ -19,7 +19,7 @@ trait BundleDependencyProviderResolverAwareTrait
     /**
      * @var \Spryker\Glue\Kernel\Container|\Spryker\Shared\Kernel\ContainerInterface $container
      */
-    private $container;
+    protected $container;
 
     /**
      * @param \Spryker\Glue\Kernel\Container|\Spryker\Shared\Kernel\ContainerInterface $container

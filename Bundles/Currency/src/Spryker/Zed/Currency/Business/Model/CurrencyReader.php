@@ -46,7 +46,6 @@ class CurrencyReader implements CurrencyReaderInterface
         CurrencyMapperInterface $currencyMapper,
         CurrencyToStoreFacadeInterface $storeFacade
     ) {
-
         $this->currencyQueryContainer = $currencyQueryContainer;
         $this->currencyMapper = $currencyMapper;
         $this->storeFacade = $storeFacade;
