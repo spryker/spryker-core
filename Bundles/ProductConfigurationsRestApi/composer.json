@@ -3,7 +3,7 @@
   "description": "ProductConfigurationsRestApi module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/kernel": "^3.30.0",
     "spryker/product-configuration-storage": "^0.1.2",
     "spryker/products-rest-api-extension": "^1.0.0"
