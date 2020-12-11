@@ -23,18 +23,6 @@
             "selected_text": "$apiCollectionTransfer",
             "error_level": 6,
             "shortcode": 128
-        },
-        {
-            "severity": "error",
-            "line_from": 62,
-            "line_to": 62,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\CustomerApi\\Communication\\Plugin\\Api\\CustomerApiResourcePlugin::update has wrong name $idCustomer, expecting $id as defined by Spryker\\Zed\\Api\\Dependency\\Plugin\\ApiResourcePluginInterface::update",
-            "file_name": "vendor/spryker/spryker/Bundles/CustomerApi/src/Spryker/Zed/CustomerApi/Communication/Plugin/Api/CustomerApiResourcePlugin.php",
-            "snippet": "    public function update($idCustomer, ApiDataTransfer $apiDataTransfer)",
-            "selected_text": "$idCustomer",
-            "error_level": 7,
-            "shortcode": 230
         }
     ],
     "warning": [

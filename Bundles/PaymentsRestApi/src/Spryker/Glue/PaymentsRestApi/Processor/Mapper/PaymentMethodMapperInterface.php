@@ -25,13 +25,13 @@ interface PaymentMethodMapperInterface
     /**
      * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     * @param \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer $restCheckoutResponseAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer
      */
     public function mapRestCheckoutDataResponseTransferToRestCheckoutDataResponseAttributesTransfer(
         RestCheckoutDataTransfer $restCheckoutDataTransfer,
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
-        RestCheckoutDataResponseAttributesTransfer $restCheckoutResponseAttributesTransfer
+        RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer;
 }

@@ -1,18 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 67,
-            "line_to": 67,
-            "type": "ParamNameMismatch",
-            "message": "Argument 2 of Spryker\\Glue\\CartsRestApi\\Processor\\CartItem\\CartItemAdder::addItem has wrong name $restCartItemsAttributesTransfer, expecting $restCartItemsAttributesResponseTransfer as defined by Spryker\\Glue\\CartsRestApi\\Processor\\CartItem\\CartItemAdderInterface::addItem",
-            "file_name": "vendor/spryker/spryker/Bundles/CartsRestApi/src/Spryker/Glue/CartsRestApi/Processor/CartItem/CartItemAdder.php",
-            "snippet": "        RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer",
-            "selected_text": "$restCartItemsAttributesTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",

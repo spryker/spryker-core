@@ -18,12 +18,12 @@ class ContentTable extends AbstractTable
     /**
      * @var \Orm\Zed\Content\Persistence\SpyContentQuery
      */
-    private $contentQuery;
+    protected $contentQuery;
 
     /**
      * @var string[]
      */
-    private $contentTypeKeyCache = [];
+    protected $contentTypeKeyCache = [];
 
     /**
      * @param \Orm\Zed\Content\Persistence\SpyContentQuery $contentQuery

@@ -35,30 +35,6 @@
             "selected_text": "$translation",
             "error_level": 6,
             "shortcode": 128
-        },
-        {
-            "severity": "error",
-            "line_from": 73,
-            "line_to": 73,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\Glossary\\Communication\\Plugin\\TwigTranslatorPlugin::trans has wrong name $identifier, expecting $id as defined by Symfony\\Contracts\\Translation\\TranslatorInterface::trans",
-            "file_name": "vendor/spryker/spryker/Bundles/Glossary/src/Spryker/Zed/Glossary/Communication/Plugin/TwigTranslatorPlugin.php",
-            "snippet": "    public function trans($identifier, array $parameters = [], ?string $domain = null, ?string $locale = null)",
-            "selected_text": "$identifier",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 26,
-            "line_to": 26,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\Glossary\\Persistence\\GlossaryRepository::getTranslationsByGlossaryKeyAndLocaleIsoCodes has wrong name $glossaryKey, expecting $keyName as defined by Spryker\\Zed\\Glossary\\Persistence\\GlossaryRepositoryInterface::getTranslationsByGlossaryKeyAndLocaleIsoCodes",
-            "file_name": "vendor/spryker/spryker/Bundles/Glossary/src/Spryker/Zed/Glossary/Persistence/GlossaryRepository.php",
-            "snippet": "    public function getTranslationsByGlossaryKeyAndLocaleIsoCodes(string $glossaryKey, array $localeIsoCodes): array",
-            "selected_text": "$glossaryKey",
-            "error_level": 7,
-            "shortcode": 230
         }
     ],
     "warning": [
@@ -631,7 +607,7 @@
             "line_from": 111,
             "line_to": 111,
             "type": "InvalidScalarArgument",
-            "message": "Argument 1 of Spryker\\Zed\\Glossary\\Business\\Translation\\TranslationManager::getPluralizationRule expects int, float provided",
+            "message": "Argument 1 of Spryker\\Client\\Glossary\\Storage\\GlossaryStorage::getPluralizationRule expects int, float provided",
             "file_name": "vendor/symfony/translation-contracts/TranslatorTrait.php",
             "snippet": "        $position = $this->getPluralizationRule($number, $locale);",
             "selected_text": "$number",

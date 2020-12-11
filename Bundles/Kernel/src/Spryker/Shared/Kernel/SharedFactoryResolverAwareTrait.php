@@ -14,7 +14,7 @@ trait SharedFactoryResolverAwareTrait
     /**
      * @var \Spryker\Shared\Kernel\AbstractSharedFactory
      */
-    private $sharedFactory;
+    protected $sharedFactory;
 
     /**
      * @param \Spryker\Shared\Kernel\AbstractSharedFactory $sharedFactory

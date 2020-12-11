@@ -24,6 +24,7 @@ use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Shared\Customer\Code\Messages;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface;
+use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyValidatorInterface;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface;
 use Spryker\Zed\Customer\Communication\Plugin\Mail\CustomerRestoredPasswordConfirmationMailTypePlugin;
@@ -42,9 +43,6 @@ class Customer implements CustomerInterface
     protected const BCRYPT_FACTOR = 12;
     protected const BCRYPT_SALT = '';
 
-    protected const GLOSSARY_PARAM_VALIDATION_LENGTH = '{{ limit }}';
-    protected const GLOSSARY_KEY_MIN_LENGTH_ERROR = 'customer.password.error.min_length';
-    protected const GLOSSARY_KEY_MAX_LENGTH_ERROR = 'customer.password.error.max_length';
     protected const GLOSSARY_KEY_CONFIRM_EMAIL_LINK_INVALID_OR_USED = 'customer.error.confirm_email_link.invalid_or_used';
     protected const GLOSSARY_KEY_CUSTOMER_AUTHORIZATION_VALIDATE_EMAIL_ADDRESS = 'customer.authorization.validate_email_address';
     protected const GLOSSARY_KEY_CUSTOMER_REGISTRATION_SUCCESS = 'customer.registration.success';
@@ -95,6 +93,11 @@ class Customer implements CustomerInterface
     protected $postCustomerRegistrationPlugins;
 
     /**
+     * @var \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyValidatorInterface;
+     */
+    protected $customerPasswordPolicyValidator;
+
+    /**
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface $customerReferenceGenerator
      * @param \Spryker\Zed\Customer\CustomerConfig $customerConfig
@@ -103,7 +106,8 @@ class Customer implements CustomerInterface
      * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface $customerExpander
-     * @param array $postCustomerRegistrationPlugins
+     * @param \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyValidatorInterface $customerPasswordPolicyValidator
+     * @param \Spryker\Zed\CustomerExtension\Dependency\Plugin\PostCustomerRegistrationPluginInterface[] $postCustomerRegistrationPlugins
      */
     public function __construct(
         CustomerQueryContainerInterface $queryContainer,
@@ -114,6 +118,7 @@ class Customer implements CustomerInterface
         LocaleQueryContainerInterface $localeQueryContainer,
         Store $store,
         CustomerExpanderInterface $customerExpander,
+        CustomerPasswordPolicyValidatorInterface $customerPasswordPolicyValidator,
         array $postCustomerRegistrationPlugins = []
     ) {
         $this->queryContainer = $queryContainer;
@@ -124,6 +129,7 @@ class Customer implements CustomerInterface
         $this->localeQueryContainer = $localeQueryContainer;
         $this->store = $store;
         $this->customerExpander = $customerExpander;
+        $this->customerPasswordPolicyValidator = $customerPasswordPolicyValidator;
         $this->postCustomerRegistrationPlugins = $postCustomerRegistrationPlugins;
     }
 
@@ -183,7 +189,7 @@ class Customer implements CustomerInterface
     public function add($customerTransfer)
     {
         if ($customerTransfer->getPassword()) {
-            $customerResponseTransfer = $this->validateCustomerPasswordLength($customerTransfer->getPassword());
+            $customerResponseTransfer = $this->customerPasswordPolicyValidator->validatePassword($customerTransfer->getPassword());
             if (!$customerResponseTransfer->getIsSuccess()) {
                 return $customerResponseTransfer;
             }
@@ -448,6 +454,13 @@ class Customer implements CustomerInterface
      */
     public function restorePassword(CustomerTransfer $customerTransfer)
     {
+        if ($this->customerConfig->isRestorePasswordValidationEnabled()) {
+            $customerResponseTransfer = $this->customerPasswordPolicyValidator->validatePassword($customerTransfer->getPassword());
+            if (!$customerResponseTransfer->getIsSuccess()) {
+                return $customerResponseTransfer;
+            }
+        }
+
         $customerTransfer = $this->encryptPassword($customerTransfer);
 
         $customerResponseTransfer = $this->createCustomerResponseTransfer();
@@ -611,7 +624,7 @@ class Customer implements CustomerInterface
             return $customerResponseTransfer;
         }
 
-        $customerResponseTransfer = $this->validateCustomerPasswordLength($customerTransfer->getNewPassword());
+        $customerResponseTransfer = $this->customerPasswordPolicyValidator->validatePassword($customerTransfer->getNewPassword());
         if (!$customerResponseTransfer->getIsSuccess()) {
             return $customerResponseTransfer;
         }
@@ -969,43 +982,6 @@ class Customer implements CustomerInterface
         );
 
         return $customerResponseTransfer;
-    }
-
-    /**
-     * @param string $password
-     *
-     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
-     */
-    protected function validateCustomerPasswordLength(string $password): CustomerResponseTransfer
-    {
-        $customerResponseTransfer = (new CustomerResponseTransfer())
-            ->setIsSuccess(false);
-
-        $customerPasswordLength = mb_strlen($password);
-        $minLength = $this->customerConfig->getCustomerPasswordMinLength();
-        $maxLength = $this->customerConfig->getCustomerPasswordMaxLength();
-
-        if ($customerPasswordLength < $minLength) {
-            $messageTransfer = (new MessageTransfer())
-                ->setValue(static::GLOSSARY_KEY_MIN_LENGTH_ERROR)
-                ->setParameters([
-                    static::GLOSSARY_PARAM_VALIDATION_LENGTH => $minLength,
-                ]);
-
-            return $customerResponseTransfer->setMessage($messageTransfer);
-        }
-
-        if ($customerPasswordLength > $maxLength) {
-            $messageTransfer = (new MessageTransfer())
-                ->setValue(static::GLOSSARY_KEY_MAX_LENGTH_ERROR)
-                ->setParameters([
-                    static::GLOSSARY_PARAM_VALIDATION_LENGTH => $maxLength,
-                ]);
-
-            return $customerResponseTransfer->setMessage($messageTransfer);
-        }
-
-        return $customerResponseTransfer->setIsSuccess(true);
     }
 
     /**

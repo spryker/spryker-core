@@ -27,12 +27,12 @@ class ZedBootstrap extends Framework implements DependsOnModule
     /**
      * @var \Spryker\Zed\Testify\Bootstrap\ZedBootstrap
      */
-    private $application;
+    protected $application;
 
     /**
      * @var \SprykerTest\Shared\Testify\Helper\BundleConfig
      */
-    private $bundleConfig;
+    protected $bundleConfig;
 
     /**
      * @var array

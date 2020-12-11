@@ -12,7 +12,7 @@ class Graph implements GraphInterface
     /**
      * @var \Spryker\Shared\Graph\GraphAdapterInterface
      */
-    private $adapter;
+    protected $adapter;
 
     /**
      * @param \Spryker\Shared\Graph\GraphAdapterInterface $adapter

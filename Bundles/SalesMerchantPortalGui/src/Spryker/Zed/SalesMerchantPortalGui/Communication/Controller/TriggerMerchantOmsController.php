@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
-use Generated\Shared\Transfer\MerchantOrderTransfer;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Kernel\Exception\Controller\InvalidIdException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\SalesMerchantPortalGui\Communication\SalesMerchantPortalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\SalesMerchantPortalGui\Persistence\SalesMerchantPortalGuiRepositoryInterface getRepository()
  */
-class TriggerMerchantOmsController extends AbstractController
+class TriggerMerchantOmsController extends AbstractSalesMerchantPortalGuiController
 {
     protected const PARAM_ID_MERCHANT_ORDER = 'merchant-order-id';
     protected const PARAM_MERCHANT_ORDER_IDS = 'merchant-order-ids';
@@ -52,8 +50,8 @@ class TriggerMerchantOmsController extends AbstractController
                     ->setWithItems(true)
             );
 
-        if (!$this->isMerchantOrderExists($merchantOrderTransfer)) {
-            return $this->getErrorResponse(sprintf('Merchant order not found for id %d.', $idMerchantOrder));
+        if (!$merchantOrderTransfer || !$this->isMerchantOrderBelongsCurrentMerchant($merchantOrderTransfer)) {
+            return $this->getErrorResponse(sprintf('Merchant order is not found for id %d.', $idMerchantOrder));
         }
 
         $this->triggerEventFormMerchantOrderItems($eventName, $merchantOrderTransfer->getMerchantOrderItems());
@@ -114,8 +112,8 @@ class TriggerMerchantOmsController extends AbstractController
                     ->setIdMerchantOrder($idMerchantOrder)
             );
 
-        if (!$this->isMerchantOrderExists($merchantOrderTransfer)) {
-            return $this->getErrorResponse(sprintf('Merchant order not found for id %d.', $idMerchantOrder));
+        if (!$merchantOrderTransfer || !$this->isMerchantOrderBelongsCurrentMerchant($merchantOrderTransfer)) {
+            return $this->getErrorResponse(sprintf('Merchant order is not found for id %d.', $idMerchantOrder));
         }
 
         $merchantOrderItemCollectionTransfer = $this->getFactory()
@@ -164,25 +162,6 @@ class TriggerMerchantOmsController extends AbstractController
         return $this->getFactory()
             ->getMerchantOmsFacade()
             ->triggerEventForMerchantOrderItems($merchantOmsTriggerRequestTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantOrderTransfer|null $merchantOrderTransfer
-     *
-     * @return bool
-     */
-    protected function isMerchantOrderExists(?MerchantOrderTransfer $merchantOrderTransfer): bool
-    {
-        if (!$merchantOrderTransfer) {
-            return false;
-        }
-
-        $currentMerchantUserTransfer = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser();
-        if ($currentMerchantUserTransfer->getMerchant()->getMerchantReference() !== $merchantOrderTransfer->getMerchantReference()) {
-            return false;
-        }
-
-        return true;
     }
 
     /**

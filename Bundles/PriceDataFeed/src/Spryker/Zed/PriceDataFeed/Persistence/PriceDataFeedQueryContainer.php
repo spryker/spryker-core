@@ -46,7 +46,6 @@ class PriceDataFeedQueryContainer extends AbstractQueryContainer implements Pric
         SpyPriceProductQuery $productPriceQuery,
         ?PriceDataFeedTransfer $priceDataFeedTransfer = null
     ) {
-
         if ($priceDataFeedTransfer !== null) {
             $productPriceQuery = $this->joinPriceTypes($productPriceQuery, $priceDataFeedTransfer);
         }
@@ -64,7 +63,6 @@ class PriceDataFeedQueryContainer extends AbstractQueryContainer implements Pric
         SpyPriceProductQuery $productPriceQuery,
         PriceDataFeedTransfer $priceDataFeedTransfer
     ) {
-
         if ($priceDataFeedTransfer->getJoinPriceType()) {
             $productPriceQuery->joinPriceType();
         }

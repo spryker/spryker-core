@@ -70,32 +70,32 @@ class StepMock implements StepInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function requireInput(AbstractTransfer $dataTransfer): bool
+    public function requireInput(AbstractTransfer $quoteTransfer): bool
     {
         return $this->requireInput;
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function execute(Request $request, AbstractTransfer $dataTransfer): AbstractTransfer
+    public function execute(Request $request, AbstractTransfer $quoteTransfer): AbstractTransfer
     {
-        return $dataTransfer;
+        return $quoteTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function postCondition(AbstractTransfer $dataTransfer): bool
+    public function postCondition(AbstractTransfer $quoteTransfer): bool
     {
         return $this->postCondition;
     }

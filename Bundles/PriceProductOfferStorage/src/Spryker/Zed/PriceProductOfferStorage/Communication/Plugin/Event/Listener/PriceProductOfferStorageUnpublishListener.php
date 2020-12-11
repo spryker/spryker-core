@@ -19,15 +19,15 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class PriceProductOfferStorageUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $transfers, $eventName): void
+    public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        $priceProductOfferIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($transfers);
-        $productOfferIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($transfers, SpyPriceProductOfferTableMap::COL_FK_PRODUCT_OFFER);
+        $priceProductOfferIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
+        $productOfferIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventEntityTransfers, SpyPriceProductOfferTableMap::COL_FK_PRODUCT_OFFER);
 
         $this->getFacade()->unpublish(array_combine($priceProductOfferIds, $productOfferIds));
     }

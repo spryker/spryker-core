@@ -40,7 +40,6 @@ class MoneyBuilder implements MoneyBuilderInterface
         DecimalToIntegerConverterInterface $decimalToIntegerConverter,
         $defaultIsoCode
     ) {
-
         $this->dataMapper = $moneyToTransferConverter;
         $this->decimalToIntegerConverter = $decimalToIntegerConverter;
         $this->defaultIsoCode = $defaultIsoCode;

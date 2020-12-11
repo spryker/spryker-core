@@ -44,7 +44,6 @@ class ReservationWriter implements ReservationWriterInterface
     public function saveReservationRequest(
         OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequestTransfer
     ) {
-
         $sku = $omsAvailabilityReservationRequestTransfer->getSku();
         $originStoreName = $omsAvailabilityReservationRequestTransfer->getOriginStore()->getName();
 

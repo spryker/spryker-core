@@ -50,17 +50,17 @@ abstract class AbstractController
     /**
      * @var \Spryker\Yves\Kernel\Application|\Spryker\Service\Container\ContainerInterface
      */
-    private $application;
+    protected $application;
 
     /**
      * @var \Spryker\Yves\Kernel\AbstractFactory
      */
-    private $factory;
+    protected $factory;
 
     /**
      * @var \Spryker\Client\Kernel\AbstractClient
      */
-    private $client;
+    protected $client;
 
     /**
      * @return void

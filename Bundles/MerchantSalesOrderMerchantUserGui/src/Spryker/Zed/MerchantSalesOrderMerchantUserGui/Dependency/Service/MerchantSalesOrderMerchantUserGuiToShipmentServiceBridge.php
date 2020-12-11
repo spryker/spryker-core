@@ -14,7 +14,7 @@ class MerchantSalesOrderMerchantUserGuiToShipmentServiceBridge implements Mercha
     /**
      * @var \Spryker\Service\Shipment\ShipmentServiceInterface
      */
-    private $shipmentService;
+    protected $shipmentService;
 
     /**
      * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService

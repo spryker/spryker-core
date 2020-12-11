@@ -135,7 +135,7 @@ class GraphController extends AbstractController
     /**
      * @param string $format
      *
-     * @return array
+     * @return string[]
      */
     protected function getStreamedResponseHeaders($format)
     {

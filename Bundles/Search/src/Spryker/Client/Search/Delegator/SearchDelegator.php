@@ -39,20 +39,20 @@ class SearchDelegator implements SearchDelegatorInterface
     }
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $query
      * @param array $resultFormatters
      * @param array $requestParameters
      *
      * @return mixed
      */
-    public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = [])
+    public function search(QueryInterface $query, array $resultFormatters = [], array $requestParameters = [])
     {
-        $searchContextTransfer = $this->getSearchContext($searchQuery);
+        $searchContextTransfer = $this->getSearchContext($query);
         $searchContextTransfer = $this->expandSearchContext($searchContextTransfer);
-        $searchQuery = $this->setSearchContext($searchQuery, $searchContextTransfer);
+        $query = $this->setSearchContext($query, $searchContextTransfer);
 
         return $this->getSearchAdapter($searchContextTransfer)
-            ->search($searchQuery, $resultFormatters, $requestParameters);
+            ->search($query, $resultFormatters, $requestParameters);
     }
 
     /**

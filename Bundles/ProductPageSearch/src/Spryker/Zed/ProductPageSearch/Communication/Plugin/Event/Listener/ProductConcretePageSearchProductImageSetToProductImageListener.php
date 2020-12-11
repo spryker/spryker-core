@@ -20,16 +20,16 @@ class ProductConcretePageSearchProductImageSetToProductImageListener extends Abs
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName): void
+    public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
         $productImageSetIds = $this->getFactory()
             ->getEventBehaviorFacade()
-            ->getEventTransferForeignKeys($eventTransfers, SpyProductImageSetToProductImageTableMap::COL_FK_PRODUCT_IMAGE_SET);
+            ->getEventTransferForeignKeys($eventEntityTransfers, SpyProductImageSetToProductImageTableMap::COL_FK_PRODUCT_IMAGE_SET);
 
         $productConcreteIds = $this->getFactory()
             ->getProductImageFacade()
