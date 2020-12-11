@@ -51,6 +51,8 @@ class UserDataHelper extends Module
 
     /**
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return void
      */
     protected function cleanupUser(UserTransfer $userTransfer): void
     {
