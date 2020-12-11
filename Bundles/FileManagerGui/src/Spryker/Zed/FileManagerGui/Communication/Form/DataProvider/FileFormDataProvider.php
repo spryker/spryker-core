@@ -50,6 +50,10 @@ class FileFormDataProvider
         }
 
         $fileTransfer = $this->fileManagerFacade->findFileByIdFile($idFile)->getFile();
+        if ($fileTransfer === null) {
+            return $this->createEmptyFileTransfer();
+        }
+
         $this->setLocalizedAttributesLocales($fileTransfer);
 
         return $fileTransfer;

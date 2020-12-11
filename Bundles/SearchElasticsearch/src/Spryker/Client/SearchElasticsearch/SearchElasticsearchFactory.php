@@ -39,6 +39,7 @@ use Spryker\Client\SearchElasticsearch\Query\QueryFactoryInterface;
 use Spryker\Client\SearchElasticsearch\Reader\DocumentReaderFactory;
 use Spryker\Client\SearchElasticsearch\Reader\DocumentReaderFactoryInterface;
 use Spryker\Client\SearchElasticsearch\Reader\DocumentReaderInterface;
+use Spryker\Client\SearchElasticsearch\Search\LoggableSearch;
 use Spryker\Client\SearchElasticsearch\Search\Search;
 use Spryker\Client\SearchElasticsearch\Search\SearchInterface;
 use Spryker\Client\SearchElasticsearch\SearchContextExpander\SearchContextExpander;
@@ -51,10 +52,13 @@ use Spryker\Client\SearchElasticsearch\Writer\DocumentWriterInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToLocaleClientInterface;
 use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
+use Spryker\Shared\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceInterface;
 use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactory;
 use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactoryInterface;
 use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolver;
 use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface;
+use Spryker\Shared\SearchElasticsearch\Logger\ElasticsearchInMemoryLogger;
+use Spryker\Shared\SearchElasticsearch\Logger\ElasticsearchLoggerInterface;
 use Spryker\Shared\SearchElasticsearch\MappingType\MappingTypeSupportDetector;
 use Spryker\Shared\SearchElasticsearch\MappingType\MappingTypeSupportDetectorInterface;
 use Spryker\Shared\SearchExtension\SourceInterface;
@@ -69,8 +73,42 @@ class SearchElasticsearchFactory extends AbstractFactory
      */
     public function createSearch(): SearchInterface
     {
+        if (!$this->getConfig()->isDevelopmentMode()) {
+            return $this->createSearchClient();
+        }
+
+        return $this->createLoggableSearchClient();
+    }
+
+    /**
+     * @return \Spryker\Client\SearchElasticsearch\Search\SearchInterface
+     */
+    public function createSearchClient(): SearchInterface
+    {
         return new Search(
             $this->getElasticaClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\SearchElasticsearch\Search\SearchInterface
+     */
+    public function createLoggableSearchClient(): SearchInterface
+    {
+        return new LoggableSearch(
+            $this->createSearchClient(),
+            $this->createElasticsearchLogger()
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\SearchElasticsearch\Logger\ElasticsearchLoggerInterface
+     */
+    public function createElasticsearchLogger(): ElasticsearchLoggerInterface
+    {
+        return new ElasticsearchInMemoryLogger(
+            $this->getUtilEncodingService(),
+            $this->getConfig()->getClientConfig()
         );
     }
 
@@ -349,5 +387,13 @@ class SearchElasticsearchFactory extends AbstractFactory
     public function createMappingTypeSupportDetector(): MappingTypeSupportDetectorInterface
     {
         return new MappingTypeSupportDetector();
+    }
+
+    /**
+     * @return \Spryker\Shared\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): SearchElasticsearchToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(SearchElasticsearchDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

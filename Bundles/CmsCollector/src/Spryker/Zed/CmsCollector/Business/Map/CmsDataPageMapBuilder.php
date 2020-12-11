@@ -42,17 +42,17 @@ class CmsDataPageMapBuilder implements PageMapInterface
 
     /**
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
-     * @param array $cmsPageData
+     * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $cmsPageData, LocaleTransfer $localeTransfer)
+    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $data, LocaleTransfer $localeTransfer)
     {
-        $cmsVersionDataTransfer = $this->cmsFacade->extractCmsVersionDataTransfer($cmsPageData[CmsVersionPageCollectorQuery::COL_DATA]);
+        $cmsVersionDataTransfer = $this->cmsFacade->extractCmsVersionDataTransfer($data[CmsVersionPageCollectorQuery::COL_DATA]);
         $localeCmsPageDataTransfer = $this->cmsFacade->extractLocaleCmsPageDataTransfer($cmsVersionDataTransfer, $localeTransfer);
 
-        $isActive = $cmsPageData[AbstractCmsVersionPageCollector::COL_IS_ACTIVE] && $cmsPageData[AbstractCmsVersionPageCollector::COL_IS_SEARCHABLE];
+        $isActive = $data[AbstractCmsVersionPageCollector::COL_IS_ACTIVE] && $data[AbstractCmsVersionPageCollector::COL_IS_SEARCHABLE];
 
         $pageMapTransfer = (new PageMapTransfer())
             ->setStore(Store::getInstance()->getStoreName())
@@ -60,13 +60,13 @@ class CmsDataPageMapBuilder implements PageMapInterface
             ->setType(static::TYPE_CMS_PAGE)
             ->setIsActive($isActive);
 
-        $this->setActiveInDateRange($cmsPageData, $pageMapTransfer);
+        $this->setActiveInDateRange($data, $pageMapTransfer);
 
         $pageMapBuilder
             ->addSearchResultData($pageMapTransfer, static::ID_CMS_PAGE, $localeCmsPageDataTransfer->getIdCmsPage())
             ->addSearchResultData($pageMapTransfer, static::NAME, $localeCmsPageDataTransfer->getName())
             ->addSearchResultData($pageMapTransfer, static::TYPE, static::TYPE_CMS_PAGE)
-            ->addSearchResultData($pageMapTransfer, CmsVersionPageCollectorQuery::COL_URL, $cmsPageData[CmsVersionPageCollectorQuery::COL_URL])
+            ->addSearchResultData($pageMapTransfer, CmsVersionPageCollectorQuery::COL_URL, $data[CmsVersionPageCollectorQuery::COL_URL])
             ->addFullTextBoosted($pageMapTransfer, $localeCmsPageDataTransfer->getName())
             ->addFullText($pageMapTransfer, $localeCmsPageDataTransfer->getMetaTitle())
             ->addFullText($pageMapTransfer, $localeCmsPageDataTransfer->getMetaKeywords())

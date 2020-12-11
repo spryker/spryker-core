@@ -14,7 +14,7 @@ trait SharedConfigResolverAwareTrait
     /**
      * @var \Spryker\Shared\Kernel\AbstractSharedConfig
      */
-    private $sharedConfig;
+    protected $sharedConfig;
 
     /**
      * @param \Spryker\Shared\Kernel\AbstractSharedConfig $sharedConfig

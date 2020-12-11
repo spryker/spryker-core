@@ -1,0 +1,57 @@
+"Overview of Orders","Overview of Orders"
+"List of Orders","List of Orders"
+"Order Reference","Order Reference"
+"Marketplace Order Reference","Marketplace Order Reference"
+Created,Created
+Customer,Customer
+Email,Email
+"Order State","Order State"
+"Grand Total","Grand Total"
+"Number of items","Number of items"
+Actions,Actions
+View,View
+"Merchant Order Overview","Merchant Order Overview"
+Reference,Reference
+Name,Name
+"Previous orders count","Previous orders count"
+"Billing address","Billing address"
+"Merchant Order Reference","Merchant Order Reference"
+"Order date","Order date"
+Totals,Totals
+Option,Option
+Subtotal,Subtotal
+Discount,Discount
+"Cancelled amount","Cancelled amount"
+"GRAND TOTAL","GRAND TOTAL"
+"Total taxes","Total taxes"
+"Remuneration total","Remuneration total"
+"Merchant order doesn't exist.","Merchant order doesn't exist."
+Shipment,Shipment
+of,of
+"Delivery Address","Delivery Address"
+"Delivery Method","Delivery Method"
+"Shipping Method","Shipping Method"
+"Shipping Costs","Shipping Costs"
+"Request delivery date","Request delivery date"
+"Trigger all matching states of order inside this shipment","Trigger all matching states of order inside this shipment"
+"Merchant Order Items","Merchant Order Items"
+Product,Product
+Quantity,Quantity
+"Unit Price","Unit Price"
+"Item total","Item total"
+State,State
+"Trigger event","Trigger event"
+"Variant Details","Variant Details"
+"Show less","Show less"
+"Show more","Show more"
+"incl. %tax_amount% % tax","incl. %tax_amount% % tax"
+"Show history","Show history"
+"Hide history","Hide history"
+Sku,SKU
+"Shipment has been successfully created.","Shipment has been successfully created."
+"Shipment has not been created.","Shipment has not been created."
+"Merchant sales order #%d not found.","Merchant sales order #%d not found."
+"Shipment has been successfully updated.","Shipment has been successfully updated."
+"Shipment has not been updated.","Shipment has not been updated."
+"Shipment #%d not found.","Shipment #%d not found."
+"New Shipment for Order: %idMerchantSalesOrder%","New Shipment for Order: %idMerchantSalesOrder%"

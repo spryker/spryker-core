@@ -25,6 +25,16 @@ class MerchantsRestApiToMerchantStorageClientBridge implements MerchantsRestApiT
     }
 
     /**
+     * @param int[] $merchantIds
+     *
+     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
+     */
+    public function get(array $merchantIds): array
+    {
+        return $this->merchantStorageClient->get($merchantIds);
+    }
+
+    /**
      * @param string[] $merchantReferences
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]

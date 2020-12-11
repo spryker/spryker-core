@@ -8,6 +8,7 @@
         <property name="merchantReference" type="string"/>
         <property name="itemStates" type="string[]" singular="itemState"/>
         <property name="manualEvents" type="string[]" singular="manualEvent"/>
+        <property name="process" type="string"/>
     </transfer>
 
     <transfer name="Merchant">
@@ -19,6 +20,7 @@
         <property name="fkStateMachineItemState" type="int"/>
         <property name="idMerchantOrderItem" type="int"/>
         <property name="manualEvents" type="string[]" singular="manualEvent"/>
+        <property name="stateHistory" type="StateMachineItem[]" singular="stateHistory"/>
     </transfer>
 
     <transfer name="StateMachineProcess">
@@ -84,5 +86,8 @@
 
     <transfer name="MerchantOrderCriteria">
         <property name="idMerchantOrder" type="int"/>
+        <property name="idMerchant" type="int"/>
+        <property name="withItems" type="bool"/>
+        <property name="withOrder" type="bool"/>
     </transfer>
 </transfers>

@@ -2,56 +2,8 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 81,
-            "line_to": 81,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\StateMachine\\Business\\Logger\\TransitionLog::addCommand has wrong name $stateMachineItemTransfer, expecting $stateMachineItem as defined by Spryker\\Zed\\StateMachine\\Business\\Logger\\TransitionLogInterface::addCommand",
-            "file_name": "vendor/spryker/spryker/Bundles/StateMachine/src/Spryker/Zed/StateMachine/Business/Logger/TransitionLog.php",
-            "snippet": "    public function addCommand(StateMachineItemTransfer $stateMachineItemTransfer, CommandPluginInterface $command)",
-            "selected_text": "$stateMachineItemTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 92,
-            "line_to": 92,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\StateMachine\\Business\\Logger\\TransitionLog::addCondition has wrong name $stateMachineItemTransfer, expecting $stateMachineItem as defined by Spryker\\Zed\\StateMachine\\Business\\Logger\\TransitionLogInterface::addCondition",
-            "file_name": "vendor/spryker/spryker/Bundles/StateMachine/src/Spryker/Zed/StateMachine/Business/Logger/TransitionLog.php",
-            "snippet": "    public function addCondition(StateMachineItemTransfer $stateMachineItemTransfer, ConditionPluginInterface $condition)",
-            "selected_text": "$stateMachineItemTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 103,
-            "line_to": 103,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\StateMachine\\Business\\Logger\\TransitionLog::addSourceState has wrong name $stateMachineItemTransfer, expecting $stateMachineItem as defined by Spryker\\Zed\\StateMachine\\Business\\Logger\\TransitionLogInterface::addSourceState",
-            "file_name": "vendor/spryker/spryker/Bundles/StateMachine/src/Spryker/Zed/StateMachine/Business/Logger/TransitionLog.php",
-            "snippet": "    public function addSourceState(StateMachineItemTransfer $stateMachineItemTransfer, $stateName)",
-            "selected_text": "$stateMachineItemTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 114,
-            "line_to": 114,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\StateMachine\\Business\\Logger\\TransitionLog::addTargetState has wrong name $stateMachineItemTransfer, expecting $stateMachineItem as defined by Spryker\\Zed\\StateMachine\\Business\\Logger\\TransitionLogInterface::addTargetState",
-            "file_name": "vendor/spryker/spryker/Bundles/StateMachine/src/Spryker/Zed/StateMachine/Business/Logger/TransitionLog.php",
-            "snippet": "    public function addTargetState(StateMachineItemTransfer $stateMachineItemTransfer, $stateName)",
-            "selected_text": "$stateMachineItemTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 336,
-            "line_to": 336,
+            "line_from": 335,
+            "line_to": 335,
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\StateMachine\\Business\\StateMachine\\Condition::createStateMap is incorrect, got 'array<int, null|string>'",
             "file_name": "vendor/spryker/spryker/Bundles/StateMachine/src/Spryker/Zed/StateMachine/Business/StateMachine/Condition.php",
@@ -62,8 +14,8 @@
         },
         {
             "severity": "error",
-            "line_from": 345,
-            "line_to": 345,
+            "line_from": 344,
+            "line_to": 344,
             "type": "InvalidReturnStatement",
             "message": "The inferred type 'array<int, null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\StateMachine\\Business\\StateMachine\\Condition::createStateMap",
             "file_name": "vendor/spryker/spryker/Bundles/StateMachine/src/Spryker/Zed/StateMachine/Business/StateMachine/Condition.php",
@@ -74,27 +26,27 @@
         },
         {
             "severity": "error",
-            "line_from": 68,
-            "line_to": 68,
-            "type": "ParamNameMismatch",
-            "message": "Argument 2 of Spryker\\Zed\\StateMachine\\Business\\StateMachine\\LockedTrigger::triggerEvent has wrong name $stateMachineItems, expecting $items as defined by Spryker\\Zed\\StateMachine\\Business\\StateMachine\\TriggerInterface::triggerEvent",
-            "file_name": "vendor/spryker/spryker/Bundles/StateMachine/src/Spryker/Zed/StateMachine/Business/StateMachine/LockedTrigger.php",
-            "snippet": "    public function triggerEvent($eventName, array $stateMachineItems)",
-            "selected_text": "$stateMachineItems",
-            "error_level": 7,
-            "shortcode": 230
+            "line_from": 284,
+            "line_to": 284,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\StateMachine\\Business\\StateMachine\\Trigger::updateStateByEvent is incorrect, got 'array<int, null|string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/StateMachine/src/Spryker/Zed/StateMachine/Business/StateMachine/Trigger.php",
+            "snippet": "     * @return string[]",
+            "selected_text": "string[]",
+            "error_level": 6,
+            "shortcode": 11
         },
         {
             "severity": "error",
-            "line_from": 116,
-            "line_to": 116,
-            "type": "ParamNameMismatch",
-            "message": "Argument 2 of Spryker\\Zed\\StateMachine\\Business\\StateMachine\\Trigger::triggerEvent has wrong name $stateMachineItems, expecting $items as defined by Spryker\\Zed\\StateMachine\\Business\\StateMachine\\TriggerInterface::triggerEvent",
+            "line_from": 325,
+            "line_to": 325,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'array<int, null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\StateMachine\\Business\\StateMachine\\Trigger::updateStateByEvent",
             "file_name": "vendor/spryker/spryker/Bundles/StateMachine/src/Spryker/Zed/StateMachine/Business/StateMachine/Trigger.php",
-            "snippet": "    public function triggerEvent($eventName, array $stateMachineItems)",
-            "selected_text": "$stateMachineItems",
-            "error_level": 7,
-            "shortcode": 230
+            "snippet": "        return $sourceStateBuffer;",
+            "selected_text": "$sourceStateBuffer",
+            "error_level": 6,
+            "shortcode": 128
         }
     ],
     "warning": [
@@ -472,8 +424,8 @@
         },
         {
             "severity": "info",
-            "line_from": 249,
-            "line_to": 249,
+            "line_from": 248,
+            "line_to": 248,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\StateMachine\\Business\\StateMachine\\FinderInterface::findProcessByStateMachineAndProcessName cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/StateMachine/src/Spryker/Zed/StateMachine/Business/StateMachine/Condition.php",
@@ -484,8 +436,8 @@
         },
         {
             "severity": "info",
-            "line_from": 252,
-            "line_to": 252,
+            "line_from": 251,
+            "line_to": 251,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\StateMachine\\Business\\Process\\ProcessInterface::getStateFromAllProcesses cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/StateMachine/src/Spryker/Zed/StateMachine/Business/StateMachine/Condition.php",
@@ -496,20 +448,20 @@
         },
         {
             "severity": "info",
-            "line_from": 256,
-            "line_to": 256,
+            "line_from": 255,
+            "line_to": 255,
             "type": "PossiblyNullArrayOffset",
-            "message": "Cannot access value on variable $states using possibly null offset null|string",
+            "message": "Cannot access value on variable $stateToTransitionsMap using possibly null offset null|string",
             "file_name": "vendor/spryker/spryker/Bundles/StateMachine/src/Spryker/Zed/StateMachine/Business/StateMachine/Condition.php",
-            "snippet": "            $transitions = $states[$stateMachineItemTransfer->getStateName()];",
-            "selected_text": "$states",
+            "snippet": "            $transitions = $stateToTransitionsMap[$stateMachineItemTransfer->getStateName()];",
+            "selected_text": "$stateToTransitionsMap",
             "error_level": 3,
             "shortcode": 125
         },
         {
             "severity": "info",
-            "line_from": 342,
-            "line_to": 342,
+            "line_from": 341,
+            "line_to": 341,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $sourceStates[int|null] using possibly null offset int|null",
             "file_name": "vendor/spryker/spryker/Bundles/StateMachine/src/Spryker/Zed/StateMachine/Business/StateMachine/Condition.php",
@@ -745,18 +697,6 @@
             "selected_text": "$stateMachineProcessTransfer->getProcessName()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 68,
-            "line_to": 68,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\StateMachine\\Business\\StateMachine\\LockedTrigger::triggerEvent has the more specific type 'array<array-key, Generated\\Shared\\Transfer\\StateMachineItemTransfer>', expecting 'array<array-key, mixed>' as defined by Spryker\\Zed\\StateMachine\\Business\\StateMachine\\TriggerInterface::triggerEvent",
-            "file_name": "vendor/spryker/spryker/Bundles/StateMachine/src/Spryker/Zed/StateMachine/Business/StateMachine/LockedTrigger.php",
-            "snippet": "    public function triggerEvent($eventName, array $stateMachineItems)",
-            "selected_text": "$stateMachineItems",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",
@@ -1105,18 +1045,6 @@
             "selected_text": "$stateMachineItemTransfer->getStateName()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 116,
-            "line_to": 116,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\StateMachine\\Business\\StateMachine\\Trigger::triggerEvent has the more specific type 'array<array-key, Generated\\Shared\\Transfer\\StateMachineItemTransfer>', expecting 'array<array-key, mixed>' as defined by Spryker\\Zed\\StateMachine\\Business\\StateMachine\\TriggerInterface::triggerEvent",
-            "file_name": "vendor/spryker/spryker/Bundles/StateMachine/src/Spryker/Zed/StateMachine/Business/StateMachine/Trigger.php",
-            "snippet": "    public function triggerEvent($eventName, array $stateMachineItems)",
-            "selected_text": "$stateMachineItems",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",

@@ -17,12 +17,12 @@ class SharedCartReader implements SharedCartReaderInterface
     /**
      * @var \Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToQuoteFacadeInterface
      */
-    private $quoteFacade;
+    protected $quoteFacade;
 
     /**
      * @var \Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToSharedCartFacadeInterface
      */
-    private $sharedCartFacade;
+    protected $sharedCartFacade;
 
     /**
      * @param \Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToQuoteFacadeInterface $quoteFacade

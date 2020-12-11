@@ -22,16 +22,16 @@ class CmsSlotStoragePublishListener extends AbstractPlugin implements EventBulkH
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName): void
+    public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
         $cmsSlotIds = $this->getFactory()
             ->getEventBehaviorFacade()
-            ->getEventTransferIds($eventTransfers);
+            ->getEventTransferIds($eventEntityTransfers);
 
         $this->getFacade()->publishCmsSlots($cmsSlotIds);
     }

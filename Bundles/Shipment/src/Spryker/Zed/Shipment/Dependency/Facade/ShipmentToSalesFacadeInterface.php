@@ -20,11 +20,11 @@ interface ShipmentToSalesFacadeInterface
     public function getOrderByIdSalesOrder($idSalesOrder);
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressesTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    public function createOrderAddress(AddressTransfer $addressesTransfer): AddressTransfer;
+    public function createOrderAddress(AddressTransfer $addressTransfer): AddressTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer

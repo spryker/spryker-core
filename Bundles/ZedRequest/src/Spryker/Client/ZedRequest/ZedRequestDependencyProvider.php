@@ -10,6 +10,7 @@ namespace Spryker\Client\ZedRequest;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ZedRequest\Dependency\Client\ZedRequestToMessengerClientBridge;
+use Spryker\Shared\ZedRequest\Dependency\Service\ZedRequestToUtilEncodingServiceBridge;
 
 /**
  * @method \Spryker\Client\ZedRequest\ZedRequestConfig getConfig()
@@ -20,6 +21,8 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
     public const SERVICE_TEXT = 'util text service';
     public const META_DATA_PROVIDER_PLUGINS = 'META_DATA_PROVIDER_PLUGINS';
     public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
+    public const PLUGINS_HEADER_EXPANDER = 'PLUGINS_HEADER_EXPANDER';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -32,6 +35,8 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
         $container = $this->addUtilTextService($container);
         $container = $this->addMetaDataProviderPlugins($container);
         $container = $this->addMessengerClient($container);
+        $container = $this->addHeaderExpanderPlugins($container);
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -103,5 +108,43 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
     protected function getMetaDataProviderPlugins()
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addHeaderExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_HEADER_EXPANDER, function () {
+            return $this->getHeaderExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Client\ZedRequestExtension\Dependency\Plugin\HeaderExpanderPluginInterface[]
+     */
+    protected function getHeaderExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
+            return new ZedRequestToUtilEncodingServiceBridge(
+                $container->getLocator()->utilEncoding()->service()
+            );
+        });
+
+        return $container;
     }
 }

@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantOms\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState;
+use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateHistory;
 
 class StateMachineItemMapper
 {
@@ -25,5 +26,19 @@ class StateMachineItemMapper
         return $stateMachineItemTransfer
             ->fromArray($stateMachineItemState->toArray(), true)
             ->setStateName($stateMachineItemState->getName());
+    }
+
+    /**
+     * @param \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateHistory $stateMachineItemStateHistory
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer
+     */
+    public function mapStateMachineItemStateHistoryEntityToStateMachineItemTransfer(
+        SpyStateMachineItemStateHistory $stateMachineItemStateHistory,
+        StateMachineItemTransfer $stateMachineItemTransfer
+    ): StateMachineItemTransfer {
+        return $this->mapStateMachineItemEntityToStateMachineItemTransfer($stateMachineItemStateHistory->getState(), $stateMachineItemTransfer)
+            ->fromArray($stateMachineItemStateHistory->toArray(), true);
     }
 }

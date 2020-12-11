@@ -17,17 +17,17 @@ class AvailabilityStorage implements AvailabilityStorageInterface
     /**
      * @var \Spryker\Client\Availability\Dependency\Client\AvailabilityToStorageInterface
      */
-    private $storageClient;
+    protected $storageClient;
 
     /**
      * @var \Spryker\Shared\KeyBuilder\KeyBuilderInterface
      */
-    private $keyBuilder;
+    protected $keyBuilder;
 
     /**
      * @var string
      */
-    private $locale;
+    protected $locale;
 
     /**
      * @param \Spryker\Client\Availability\Dependency\Client\AvailabilityToStorageInterface $storage

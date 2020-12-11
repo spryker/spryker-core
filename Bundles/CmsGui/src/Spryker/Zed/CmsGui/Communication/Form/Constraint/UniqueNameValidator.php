@@ -56,7 +56,6 @@ class UniqueNameValidator extends ConstraintValidator
         CmsPageAttributesTransfer $submittedPageAttributesTransfer,
         UniqueName $constraint
     ) {
-
         if (!$submittedPageAttributesTransfer->getIdCmsPage()) {
             return true;
         }

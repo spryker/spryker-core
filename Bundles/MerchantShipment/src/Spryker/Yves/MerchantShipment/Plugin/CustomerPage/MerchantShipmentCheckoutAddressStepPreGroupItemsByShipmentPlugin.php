@@ -26,7 +26,14 @@ class MerchantShipmentCheckoutAddressStepPreGroupItemsByShipmentPlugin extends A
     public function preGroupItemsByShipment(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $itemTransfer->getShipment()->setMerchantReference(null);
+            $shipmentTransfer = $itemTransfer->getShipment();
+
+            if (!$shipmentTransfer) {
+                continue;
+            }
+
+            $shipmentTransfer->setMerchantReference(null);
+            $itemTransfer->setShipment($shipmentTransfer);
         }
 
         return $quoteTransfer;

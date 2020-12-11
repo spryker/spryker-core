@@ -420,6 +420,21 @@ class FileManagerFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetFileInfoVersionsCountReturnsCorrectNumberOfFileVersions(): void
+    {
+        // Arrange
+        $this->tester->insertDbRecords();
+
+        // Act
+        $count = $this->facade->getFileInfoVersionsCount($this->tester->getIdFile());
+
+        // Assert
+        $this->assertSame(2, $count);
+    }
+
+    /**
      * @param int $idMimeType
      *
      * @return \Generated\Shared\Transfer\MimeTypeTransfer

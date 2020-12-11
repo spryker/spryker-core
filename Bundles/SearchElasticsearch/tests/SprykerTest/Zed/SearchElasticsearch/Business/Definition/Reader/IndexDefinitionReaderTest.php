@@ -9,8 +9,8 @@ namespace SprykerTest\Zed\SearchElasticsearch\Business\Definition\Reader;
 
 use Codeception\Test\Unit;
 use Spryker\Service\UtilEncoding\UtilEncodingService;
+use Spryker\Shared\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceBridge;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Reader\IndexDefinitionReader;
-use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceBridge;
 use Symfony\Component\Finder\SplFileInfo;
 
 /**

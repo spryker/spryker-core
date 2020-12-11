@@ -89,10 +89,8 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         RestRequestInterface $restRequest,
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestResponseInterface {
-        $restErrorCollectionTransfer = $this->checkoutRequestValidator->validateCheckoutRequest(
-            $restRequest,
-            $restCheckoutRequestAttributesTransfer
-        );
+        $restErrorCollectionTransfer = $this->checkoutRequestValidator
+            ->validateCheckoutDataRequest($restRequest, $restCheckoutRequestAttributesTransfer);
 
         if ($restErrorCollectionTransfer->getRestErrors()->count()) {
             return $this->createValidationErrorResponse($restErrorCollectionTransfer);
@@ -101,12 +99,12 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         $restCheckoutRequestAttributesTransfer = $this->checkoutRequestAttributesExpander
             ->expandCheckoutRequestAttributes($restRequest, $restCheckoutRequestAttributesTransfer);
 
-        $restCheckoutDataResponseTransfer = $this
-            ->checkoutRestApiClient
-            ->getCheckoutData($restCheckoutRequestAttributesTransfer);
+        $restCheckoutDataResponseTransfer = $this->checkoutRestApiClient->getCheckoutData(
+            $restCheckoutRequestAttributesTransfer
+        );
 
         if (!$restCheckoutDataResponseTransfer->getIsSuccess()) {
-            return $this->createCheckoutDataErrorResponse($restCheckoutDataResponseTransfer);
+            return $this->createCheckoutDataErrorResponse($restCheckoutDataResponseTransfer, $restRequest->getMetadata()->getLocale());
         }
 
         $restCheckoutResponseAttributesTransfer = $this->checkoutDataMapper
@@ -136,27 +134,30 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
 
         $checkoutDataResource->setPayload($restCheckoutDataTransfer);
 
-        $restResponse = $this->restResourceBuilder
+        return $this->restResourceBuilder
             ->createRestResponse()
             ->addResource($checkoutDataResource)
             ->setStatus(Response::HTTP_OK);
-
-        return $restResponse;
     }
 
     /**
      * @param \Generated\Shared\Transfer\RestCheckoutDataResponseTransfer $restCheckoutDataResponseTransfer
+     * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createCheckoutDataErrorResponse(RestCheckoutDataResponseTransfer $restCheckoutDataResponseTransfer): RestResponseInterface
-    {
+    protected function createCheckoutDataErrorResponse(
+        RestCheckoutDataResponseTransfer $restCheckoutDataResponseTransfer,
+        string $localeName
+    ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse();
+
         foreach ($restCheckoutDataResponseTransfer->getErrors() as $restCheckoutErrorTransfer) {
             $restResponse->addError(
-                $this->restCheckoutErrorMapper->mapRestCheckoutErrorTransferToRestErrorTransfer(
+                $this->restCheckoutErrorMapper->mapLocalizedRestCheckoutErrorTransferToRestErrorTransfer(
                     $restCheckoutErrorTransfer,
-                    new RestErrorMessageTransfer()
+                    new RestErrorMessageTransfer(),
+                    $localeName
                 )
             );
         }

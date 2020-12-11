@@ -25,17 +25,17 @@ class ProductOptionValueStorageListener extends AbstractPlugin implements EventB
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
         $productOptionGroupsIds = $this->getFactory()
             ->getEventBehaviorFacade()
-            ->getEventTransferForeignKeys($eventTransfers, SpyProductOptionValueTableMap::COL_FK_PRODUCT_OPTION_GROUP);
+            ->getEventTransferForeignKeys($eventEntityTransfers, SpyProductOptionValueTableMap::COL_FK_PRODUCT_OPTION_GROUP);
 
         $productAbstractIds = $this->getQueryContainer()
             ->queryProductAbstractIdsByProductGroupOptionByIds($productOptionGroupsIds)

@@ -166,4 +166,11 @@ interface FileManagerGuiToFileManagerFacadeInterface
      * @return \Generated\Shared\Transfer\MimeTypeCollectionTransfer
      */
     public function findAllowedMimeTypes();
+
+    /**
+     * @param int $idFile
+     *
+     * @return int
+     */
+    public function getFileInfoVersionsCount(int $idFile): int;
 }
