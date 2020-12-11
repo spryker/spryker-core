@@ -663,6 +663,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed with next major release.
+     *
      * @param string $name
      *
      * @return \Generated\Shared\Transfer\CategoryTemplateTransfer|null
@@ -678,6 +680,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed with next major release.
      *
      * @param string $name
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer

@@ -192,6 +192,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      *
      * @api
      *
+     * @deprecated Will be removed with next major release.
+     *
      * @param int $idNode
      * @param int $idLocale
      *
@@ -610,6 +612,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      *
      * @api
      *
+     * @deprecated Will be removed with next major release.
+     *
      * @param string $categoryKey
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
@@ -623,6 +627,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed with next major release.
      *
      * @param string $categoryKey
      *
@@ -1061,6 +1067,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      *
      * @api
      *
+     * @deprecated Will be removed with next major release.
+     *
      * @param string $categoryKey
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
@@ -1122,6 +1130,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed with next major release.
      *
      * @param int $idParentNode
      * @param int $idLocale
@@ -1198,6 +1208,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      *
      * @api
      *
+     * @deprecated Will be removed with next major release.
+     *
      * @param int $idCategoryTemplate
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery
@@ -1227,6 +1239,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed with next major release.
      *
      * @param int $idNode
      * @param string $nodeName

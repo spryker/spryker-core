@@ -82,6 +82,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release.
+     *
      * @param int $idNode
      * @param int $idLocale
      *
@@ -244,6 +246,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release.
+     *
      * @param string $categoryKey
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
@@ -252,6 +256,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release.
      *
      * @param string $categoryKey
      *
@@ -361,6 +367,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release.
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
      * @param string $leftAlias
      *
@@ -436,6 +444,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release.
+     *
      * @param string $categoryKey
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
@@ -465,6 +475,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release.
      *
      * @param int $idParentNode
      * @param int $idLocale
@@ -502,6 +514,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release.
+     *
      * @param int $idCategoryTemplate
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery
@@ -519,6 +533,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release.
      *
      * @param int $idNode
      * @param string $nodeName

@@ -471,6 +471,8 @@ interface CategoryFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed with next major release.
+     *
      * @param string $name
      *
      * @return \Generated\Shared\Transfer\CategoryTemplateTransfer|null
@@ -482,6 +484,8 @@ interface CategoryFacadeInterface
      * - Check exist a first level children by the category name
      *
      * @api
+     *
+     * @deprecated Will be removed with next major release.
      *
      * @param string $name
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
