@@ -7,6 +7,9 @@
 
 namespace Spryker\Client\AuthRestApi;
 
+use Generated\Shared\Transfer\AuthContextTransfer;
+use Generated\Shared\Transfer\CreateAccessTokenPreCheckResultTransfer;
+use Generated\Shared\Transfer\OauthErrorTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
@@ -27,6 +30,29 @@ class AuthRestApiClient extends AbstractClient implements AuthRestApiClientInter
      */
     public function createAccessToken(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer
     {
+        $oauthRequestTransfer->setAuthContext(
+            (new AuthContextTransfer())
+                ->setIp("192.168.0.1")
+                ->setAccount($oauthRequestTransfer->getUsername())
+        );
+
+        $oauthRequestTransfer->requireAuthContext();
+
+        $result = (new CreateAccessTokenPreCheckResultTransfer())
+            ->setIsSuccess(true);
+
+        foreach($this->getFactory()->getCreateAccessTokenPreCheckPlugins() as $plugin) {
+            $result = $plugin->preCheck($oauthRequestTransfer, $result);
+        }
+
+        if ($result->getIsSuccess() === false) {
+            return (new OauthResponseTransfer())
+                ->setIsValid(false)
+                ->setError(
+                    (new OauthErrorTransfer())->setMessage('User is blocked')
+                );
+        }
+
         return $this->getFactory()->createAuthRestApiZedStub()->createAccessToken($oauthRequestTransfer);
     }
 }
