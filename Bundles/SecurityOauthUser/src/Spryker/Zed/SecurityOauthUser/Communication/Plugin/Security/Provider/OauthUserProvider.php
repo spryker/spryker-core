@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SecurityOauthUser\Communication\Plugin\Security\Provider;
 
 use Generated\Shared\Transfer\OauthUserRestrictionRequestTransfer;
+use Generated\Shared\Transfer\OauthUserRestrictionResponseTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -26,9 +27,9 @@ class OauthUserProvider extends AbstractPlugin implements UserProviderInterface
     /**
      * @param string $username
      *
-     * @return \Symfony\Component\Security\Core\User\UserInterface
      * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
      *
+     * @return \Symfony\Component\Security\Core\User\UserInterface
      */
     public function loadUserByUsername(string $username)
     {
@@ -44,9 +45,9 @@ class OauthUserProvider extends AbstractPlugin implements UserProviderInterface
     /**
      * @param \Symfony\Component\Security\Core\User\UserInterface $user
      *
-     * @return \Symfony\Component\Security\Core\User\UserInterface
      * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
      *
+     * @return \Symfony\Component\Security\Core\User\UserInterface
      */
     public function refreshUser(UserInterface $user)
     {
@@ -103,6 +104,8 @@ class OauthUserProvider extends AbstractPlugin implements UserProviderInterface
 
     /**
      * @param \Generated\Shared\Transfer\OauthUserRestrictionResponseTransfer $oauthUserRestrictionResponseTransfer
+     *
+     * @return void
      */
     protected function addErrorMessages(
         OauthUserRestrictionResponseTransfer $oauthUserRestrictionResponseTransfer

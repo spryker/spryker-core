@@ -52,6 +52,8 @@ class CreateUserAuthenticationStrategy implements AuthenticationStrategyInterfac
      */
     public function resolveOauthUser(UserCriteriaTransfer $userCriteriaTransfer): ?UserTransfer
     {
+        $userCriteriaTransfer->getEmailOrFail();
+
         $userTransfer = $this->userFacade->findUser($userCriteriaTransfer);
 
         if ($userTransfer === null) {

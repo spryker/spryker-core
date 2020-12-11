@@ -23,6 +23,6 @@ class LoginController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        //action will never be executed used as an entry point for Oauth login.
+        //action will never be executed used as an entry point for the Oauth login.
     }
 }

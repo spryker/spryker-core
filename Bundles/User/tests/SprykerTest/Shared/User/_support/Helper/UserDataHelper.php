@@ -11,11 +11,13 @@ use Codeception\Module;
 use Generated\Shared\DataBuilder\UserBuilder;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\User\Business\UserFacadeInterface;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class UserDataHelper extends Module
 {
     use LocatorHelperTrait;
+    use DataCleanupHelperTrait;
 
     /**
      * @param array $override
@@ -32,6 +34,10 @@ class UserDataHelper extends Module
             $userTransfer->getPassword()
         );
 
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($userTransfer): void {
+            $this->cleanupUser($userTransfer);
+        });
+
         return $userTransfer;
     }
 
@@ -41,5 +47,13 @@ class UserDataHelper extends Module
     private function getUserFacade(): UserFacadeInterface
     {
         return $this->getLocatorHelper()->getLocator()->user()->facade();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     */
+    protected function cleanupUser(UserTransfer $userTransfer): void
+    {
+        $this->getUserFacade()->removeUser($userTransfer->getIdUser());
     }
 }

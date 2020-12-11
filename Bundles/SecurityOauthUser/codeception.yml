@@ -1,5 +1,6 @@
 namespace: SecurityOauthUser
-actor: Tester
+include:
+    - tests/SprykerTest/Zed/SecurityOauthUser
 paths:
     tests: tests
     log: tests/_output
