@@ -18,7 +18,12 @@
     </transfer>
 
     <transfer name="User">
+        <property name="idUser" type="int"/>
         <property name="username" type="string"/>
+        <property name="password" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="status" type="string"/>
     </transfer>
 
     <transfer name="Message">
@@ -32,6 +37,18 @@
     <transfer name="OauthUserRestrictionResponse">
         <property name="isRestricted" type="bool"/>
         <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="GroupCriteria">
+        <property name="reference" type="string"/>
+    </transfer>
+
+    <transfer name="Group">
+        <property name="idAclGroup" type="int"/>
+    </transfer>
+
+    <transfer name="UserCriteria">
+        <property name="email" type="string"/>
     </transfer>
 
 </transfers>
