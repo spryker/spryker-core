@@ -17,7 +17,7 @@ class TransferConstraint extends Composite
     protected const MISSING_FIELD_MESSAGE = 'This field is missing.';
 
     /**
-     * @var array
+     * @var mixed[]
      */
     public $fields = [];
 

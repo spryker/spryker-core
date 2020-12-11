@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class ValidProductOfferPriceIdsOwnByMerchantConstraint extends SymfonyConstraint
 {
-    protected const MESSAGE = 'the merchant doesn\'t own the product offer';
+    protected const MESSAGE = 'The merchant doesn\'t own the product offer.';
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface

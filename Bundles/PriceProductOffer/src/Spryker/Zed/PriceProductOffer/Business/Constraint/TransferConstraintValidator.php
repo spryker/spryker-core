@@ -40,19 +40,20 @@ class TransferConstraintValidator extends ConstraintValidator
         foreach ($constraint->fields as $field => $fieldConstraint) {
             $existsInArray = is_array($value) && array_key_exists($field, $value);
 
-            if ($existsInArray) {
-                if (!empty($fieldConstraint)) {
-                    $context->getValidator()
-                        ->inContext($context)
-                        ->atPath('[' . $field . ']')
-                        ->validate($value[$field], $fieldConstraint);
-                }
-            } else {
+            if (!$existsInArray) {
                 $context->buildViolation($constraint->getMissingFieldsMessage())
                     ->atPath('[' . $field . ']')
                     ->setParameter('{{ field }}', $this->formatValue($field))
                     ->setInvalidValue(null)
                     ->addViolation();
+
+                continue;
+            }
+            if (!empty($fieldConstraint)) {
+                    $context->getValidator()
+                        ->inContext($context)
+                        ->atPath('[' . $field . ']')
+                        ->validate($value[$field], $fieldConstraint);
             }
         }
     }
