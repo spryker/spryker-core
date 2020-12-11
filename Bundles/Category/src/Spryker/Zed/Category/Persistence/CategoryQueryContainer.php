@@ -233,12 +233,12 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
         $nodeQuery = $this->getFactory()->createCategoryNodeQuery();
         $nodeQuery
             ->useCategoryQuery()
-                ->useAttributeQuery()
-                    ->filterByFkLocale($idLocale)
-                ->endUse()
+            ->useAttributeQuery()
+            ->filterByFkLocale($idLocale)
+            ->endUse()
             ->endUse()
             ->useDescendantQuery()
-                ->filterByFkCategoryNode($idNode)
+            ->filterByFkCategoryNode($idNode)
             ->endUse()
             ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE)
             ->withColumn(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE)
@@ -288,15 +288,15 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
 
         $nodeQuery
             ->useClosureTableQuery()
-                ->orderByFkCategoryNodeDescendant(Criteria::DESC)
-                ->orderByDepth(Criteria::DESC)
-                ->filterByFkCategoryNodeDescendant($idNode)
-                ->filterByDepth($depth, Criteria::NOT_EQUAL)
+            ->orderByFkCategoryNodeDescendant(Criteria::DESC)
+            ->orderByDepth(Criteria::DESC)
+            ->filterByFkCategoryNodeDescendant($idNode)
+            ->filterByDepth($depth, Criteria::NOT_EQUAL)
             ->endUse()
             ->useCategoryQuery()
-                ->useAttributeQuery()
-                    ->filterByFkLocale($idLocale)
-                ->endUse()
+            ->useAttributeQuery()
+            ->filterByFkLocale($idLocale)
+            ->endUse()
             ->endUse();
 
         $nodeQuery

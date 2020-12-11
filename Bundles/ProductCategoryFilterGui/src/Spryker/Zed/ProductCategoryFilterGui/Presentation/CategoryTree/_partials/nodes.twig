@@ -1,4 +1,10 @@
 {# @deprecated property "categoryTree" is deprecated: use "nodeCollection" instead. #}
+{#
+@var nodeCollection \Generated\Shared\Transfer\NodeCollectionTransfer
+@var node \Generated\Shared\Transfer\NodeTransfer
+@var node.category \Generated\Shared\Transfer\CategoryTransfer
+@var node.category.localizedAttributes \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer
+#}
 
 <ul>
     {% if nodeCollection is not empty %}
