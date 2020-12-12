@@ -35,7 +35,6 @@ class PromotionProductMapper implements PromotionProductMapperInterface
         DiscountPromotionToProductInterface $productClient,
         StorageProductMapperPluginInterface $storageProductMapperPlugin
     ) {
-
         $this->productClient = $productClient;
         $this->storageProductMapperPlugin = $storageProductMapperPlugin;
     }

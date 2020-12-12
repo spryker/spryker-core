@@ -217,7 +217,6 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
         SpySalesOrderItem $salesOrderItemEntity,
         array $bundledProducts
     ) {
-
         foreach ($orderTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getIdSalesOrderItem() !== $salesOrderItemEntity->getIdSalesOrderItem()) {
                 continue;

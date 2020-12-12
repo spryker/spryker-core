@@ -93,7 +93,6 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
         SpySalesDiscount $salesOrderDiscountEntity,
         CalculatedDiscountTransfer $calculatedDiscountTransfer
     ) {
-
         if ($salesOrderDiscountEntity->getFkSalesExpense()) {
             $this->addCalculatedDiscountToExpense($orderTransfer, $calculatedDiscountTransfer, $salesOrderDiscountEntity->getFkSalesExpense());
 

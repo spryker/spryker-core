@@ -54,7 +54,6 @@ class TransitionLog implements TransitionLogInterface
         array $logContext,
         OmsToUtilNetworkInterface $utilNetworkService
     ) {
-
         $this->queryContainer = $queryContainer;
         $this->logContext = $logContext;
         $this->utilNetworkService = $utilNetworkService;

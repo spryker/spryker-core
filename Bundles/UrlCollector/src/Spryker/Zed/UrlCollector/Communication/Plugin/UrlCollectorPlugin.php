@@ -45,7 +45,6 @@ class UrlCollectorPlugin extends AbstractCollectorPlugin
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     ) {
-
         $this->getFacade()->runStorageUrlCollector(
             $baseQuery,
             $localeTransfer,

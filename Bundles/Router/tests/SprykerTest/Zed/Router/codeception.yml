@@ -12,8 +12,16 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
+    Base:
+        path: ./Root
+        class_name: RouterRootTester
+        modules:
+            enabled:
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+
     Communication:
-        path: .
+        path: ./Communication
         class_name: RouterCommunicationTester
         modules:
             enabled:

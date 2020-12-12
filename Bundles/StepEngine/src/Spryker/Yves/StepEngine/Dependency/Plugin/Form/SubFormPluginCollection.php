@@ -16,12 +16,12 @@ class SubFormPluginCollection implements Iterator, Countable, ArrayAccess
     /**
      * @var \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface[]
      */
-    private $subForms = [];
+    protected $subForms = [];
 
     /**
      * @var int
      */
-    private $position = 0;
+    protected $position = 0;
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface $subForm
