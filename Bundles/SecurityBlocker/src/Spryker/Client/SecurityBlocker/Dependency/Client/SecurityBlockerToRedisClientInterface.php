@@ -41,12 +41,10 @@ interface SecurityBlockerToRedisClientInterface
     /**
      * @param string $connectionKey
      * @param string $key
-     * @param int $seconds
-     * @param string $value
      *
      * @return bool
      */
-    public function setex(string $connectionKey, string $key, int $seconds, string $value): bool;
+    public function incr(string $connectionKey, string $key): bool;
 
     /**
      * @param string $connectionKey

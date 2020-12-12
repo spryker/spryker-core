@@ -7,17 +7,13 @@
 
 namespace Spryker\Client\SecurityBlocker\Redis;
 
-use Generated\Shared\Transfer\AuthContextTransfer;
-use Generated\Shared\Transfer\AuthResponseTransfer;
 use Generated\Shared\Transfer\RedisConfigurationTransfer;
 use Spryker\Client\SecurityBlocker\Dependency\Client\SecurityBlockerToRedisClientInterface;
-use Spryker\Client\SecurityBlocker\Exception\SecurityBlockerException;
 use Spryker\Client\SecurityBlocker\SecurityBlockerConfig;
 
 class SecurityBlockerRedisWrapper implements SecurityBlockerRedisWrapperInterface
 {
     protected const KV_PREFIX = 'kv:';
-    protected const KEY_PART_SEPARATOR = ':';
 
     /**
      * @var \Spryker\Client\SecurityBlocker\Dependency\Client\SecurityBlockerToRedisClientInterface
@@ -44,60 +40,55 @@ class SecurityBlockerRedisWrapper implements SecurityBlockerRedisWrapperInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AuthContextTransfer $authContextTransfer
+     * @param string $key
      *
-     * @throws \Spryker\Client\SecurityBlocker\Exception\SecurityBlockerException
-     *
-     * @return \Generated\Shared\Transfer\AuthResponseTransfer
+     * @return string|null
      */
-    public function logLoginAttempt(AuthContextTransfer $authContextTransfer): AuthResponseTransfer
+    public function get(string $key): ?string
     {
-        $redisConnectionKey = $this->securityBlockerConfig->getRedisConnectionKey();
-        $key = $this->getKeyName($authContextTransfer);
-
-        $existingValue = $this->redisClient->get($redisConnectionKey, $key);
-        $existingValue = json_decode($existingValue, true);
-
-        $newValue = ++$existingValue;
-
-        // use `incr` for existing keys.
-        // ttl will reset each write now.
-        if ($authContextTransfer->getTtl() === null) {
-            $result = $this->redisClient->set($redisConnectionKey, $key, (string)$newValue);
-        } else {
-            $result = $this->redisClient->setex($redisConnectionKey, $key, $authContextTransfer->getTtl(), (string)$newValue);
-        }
-
-        if (!$result) {
-            throw new SecurityBlockerException(
-                sprintf('Could not set redisKey: "%s" with existingValue: "%s"', $key, json_encode($existingValue))
-            );
-        }
-
-        return (new AuthResponseTransfer())->fromArray($authContextTransfer->toArray(), true)
-            ->setCount((int)$newValue)
-            ->setIsSuccessful($newValue < 5);
+        return $this->redisClient->get(
+            $this->securityBlockerConfig->getRedisConnectionKey(),
+            $this->getStorageKey($key)
+        );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AuthContextTransfer $authContextTransfer
+     * @param string $key
+     * @param string $value
+     * @param string|null $expireResolution
+     * @param int|null $expireTTL
+     * @param string|null $flag
      *
-     * @return \Generated\Shared\Transfer\AuthResponseTransfer
+     * @return bool
      */
-    public function getLoginAttempt(AuthContextTransfer $authContextTransfer): AuthResponseTransfer
+    public function set(
+        string $key,
+        string $value,
+        ?string $expireResolution = null,
+        ?int $expireTTL = null,
+        ?string $flag = null
+    ): bool {
+        return $this->redisClient->set(
+            $this->securityBlockerConfig->getRedisConnectionKey(),
+            $this->getStorageKey($key),
+            $value,
+            $expireResolution,
+            $expireTTL,
+            $flag
+        );
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return bool
+     */
+    public function incr(string $key): bool
     {
-        $key = $this->getKeyName($authContextTransfer);
-        $value = $this->redisClient->get($this->securityBlockerConfig->getRedisConnectionKey(), $key);
-
-        $result = json_decode($value, true);
-
-        if (json_last_error() === JSON_ERROR_SYNTAX) {
-            return (new AuthResponseTransfer())->setIsSuccessful(false);
-        }
-
-        return (new AuthResponseTransfer())->fromArray($authContextTransfer->toArray(), true)
-            ->setCount($result)
-            ->setIsSuccessful($result < 5);
+        return $this->redisClient->incr(
+            $this->securityBlockerConfig->getRedisConnectionKey(),
+            $this->getStorageKey($key)
+        );
     }
 
     /**
@@ -114,25 +105,12 @@ class SecurityBlockerRedisWrapper implements SecurityBlockerRedisWrapperInterfac
     }
 
     /**
-     * @param string $pattern
+     * @param string $key
      *
      * @return string
      */
-    protected function getSearchPattern(string $pattern = '*'): string
+    protected function getStorageKey(string $key = '*'): string
     {
-        return static::KV_PREFIX . $pattern;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AuthContextTransfer $authContextTransfer
-     *
-     * @return string
-     */
-    protected function getKeyName(AuthContextTransfer $authContextTransfer): string
-    {
-        return static::KV_PREFIX
-            . $authContextTransfer->getIp()
-            . static::KEY_PART_SEPARATOR
-            . $authContextTransfer->getAccount();
+        return static::KV_PREFIX . $key;
     }
 }
