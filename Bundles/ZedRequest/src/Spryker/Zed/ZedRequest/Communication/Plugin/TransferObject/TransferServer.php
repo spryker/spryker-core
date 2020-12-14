@@ -30,12 +30,12 @@ class TransferServer
     /**
      * @var \Spryker\Zed\ZedRequest\Business\Client\Request|null
      */
-    private $request;
+    protected $request;
 
     /**
      * @var \Symfony\Component\HttpFoundation\Request
      */
-    private $httpRequest;
+    protected $httpRequest;
 
     /**
      * @var \Spryker\Shared\ZedRequest\Client\ResponseInterface
@@ -45,7 +45,7 @@ class TransferServer
     /**
      * @var \Spryker\Zed\ZedRequest\Business\Model\Repeater
      */
-    private $repeater;
+    protected $repeater;
 
     /**
      * @param \Spryker\Zed\ZedRequest\Business\Model\Repeater $repeater

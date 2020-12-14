@@ -15,7 +15,7 @@ trait QueryContainerResolverAwareTrait
     /**
      * @var \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
-    private $queryContainer;
+    protected $queryContainer;
 
     /**
      * @param \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer $queryContainer

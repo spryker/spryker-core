@@ -279,8 +279,6 @@ class SynchronizationFacadeTest extends Unit
     }
 
     /**
-     * @throws \Elastica\Exception\NotFoundException
-     *
      * @return void
      */
     public function testSynchronizationWritesDataToSearch(): void
@@ -319,8 +317,6 @@ class SynchronizationFacadeTest extends Unit
     }
 
     /**
-     * @throws \Elastica\Exception\NotFoundException
-     *
      * @return void
      */
     public function testSynchronizationDeleteDataToSearch(): void

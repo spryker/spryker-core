@@ -32,7 +32,6 @@ class DiscountPromotionReader implements DiscountPromotionReaderInterface
         DiscountPromotionQueryContainerInterface $discountPromotionQueryContainer,
         DiscountPromotionMapperInterface $discountPromotionMapper
     ) {
-
         $this->discountPromotionQueryContainer = $discountPromotionQueryContainer;
         $this->discountPromotionMapper = $discountPromotionMapper;
     }

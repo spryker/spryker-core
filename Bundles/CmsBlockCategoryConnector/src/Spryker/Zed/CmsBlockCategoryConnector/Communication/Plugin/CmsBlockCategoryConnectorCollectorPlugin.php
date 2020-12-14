@@ -45,7 +45,6 @@ class CmsBlockCategoryConnectorCollectorPlugin extends AbstractCollectorPlugin
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     ) {
-
         $this->getFacade()
             ->runStorageCmsBlockCategoryCollector(
                 $baseQuery,

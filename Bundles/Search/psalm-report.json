@@ -2,18 +2,6 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 48,
-            "line_to": 48,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Client\\Search\\Delegator\\SearchDelegator::search has wrong name $searchQuery, expecting $queryCriteria as defined by Spryker\\Client\\Search\\Delegator\\SearchDelegatorInterface::search",
-            "file_name": "vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Delegator/SearchDelegator.php",
-            "snippet": "    public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = [])",
-            "selected_text": "$searchQuery",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
             "line_from": 23,
             "line_to": 31,
             "type": "UnrecognizedStatement",
@@ -393,8 +381,8 @@
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\SearchAdapterPluginInterface::search expects Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface, possibly different type Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface|Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\SearchContextAwareQueryInterface provided",
             "file_name": "vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Delegator/SearchDelegator.php",
-            "snippet": "            ->search($searchQuery, $resultFormatters, $requestParameters);",
-            "selected_text": "$searchQuery",
+            "snippet": "            ->search($query, $resultFormatters, $requestParameters);",
+            "selected_text": "$query",
             "error_level": 3,
             "shortcode": 92
         },
@@ -2255,7 +2243,7 @@
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Client\\Search\\Delegator\\SearchDelegator::getSearchContext has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Delegator/SearchDelegator.php",
-            "snippet": "        $searchContextTransfer = $this->getSearchContext($searchQuery);",
+            "snippet": "        $searchContextTransfer = $this->getSearchContext($query);",
             "selected_text": "getSearchContext",
             "error_level": 2,
             "shortcode": 1
@@ -2267,7 +2255,7 @@
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Client\\Search\\Delegator\\SearchDelegator::setSearchContext has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Delegator/SearchDelegator.php",
-            "snippet": "        $searchQuery = $this->setSearchContext($searchQuery, $searchContextTransfer);",
+            "snippet": "        $query = $this->setSearchContext($query, $searchContextTransfer);",
             "selected_text": "setSearchContext",
             "error_level": 2,
             "shortcode": 1

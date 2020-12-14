@@ -24,7 +24,7 @@ abstract class AbstractFactory implements FactoryInterface
     /**
      * @var \Spryker\Client\Kernel\AbstractClient
      */
-    private $client;
+    protected $client;
 
     /**
      * @var \Spryker\Yves\Kernel\Container[]

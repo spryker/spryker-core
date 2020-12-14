@@ -24,7 +24,7 @@ class DependencyHelper extends Module
     /**
      * @var \Spryker\Shared\Kernel\ContainerMocker\ContainerGlobals
      */
-    private $containerGlobals;
+    protected $containerGlobals;
 
     /**
      * @return void
