@@ -120,7 +120,6 @@ class ProductMoneyCollectionDataProvider
         array $storeCurrencyCollection,
         array $existingCurrencyMap
     ) {
-
         $priceTypes = $this->priceFacade->getPriceTypeValues();
 
         foreach ($storeCurrencyCollection as $storeWithCurrencyTransfer) {
@@ -161,7 +160,6 @@ class ProductMoneyCollectionDataProvider
         StoreTransfer $storeTransfer,
         PriceTypeTransfer $priceTypeTransfer
     ) {
-
         $moneyValueTransfer = (new MoneyValueTransfer())
             ->setCurrency($currencyTransfer)
             ->setFkCurrency($currencyTransfer->getIdCurrency())

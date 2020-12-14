@@ -30,7 +30,6 @@ class StorageCacheIncrementalStrategy implements StorageCacheStrategyInterface
         StorageCacheStrategyHelperInterface $storageCacheStrategyHelper,
         StorageConfig $storageClientConfig
     ) {
-
         $this->storageCacheStrategyHelper = $storageCacheStrategyHelper;
         $this->storageClientConfig = $storageClientConfig;
     }

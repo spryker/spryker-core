@@ -203,7 +203,6 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
         array $groupedBundleQuantity,
         $bundleGroupKey
     ) {
-
         if (isset($bundleItems[$bundleGroupKey])) {
             return $bundleItems;
         }
