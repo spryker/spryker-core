@@ -11,6 +11,7 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Twig\Environment;
 use Twig\TwigFunction;
 
@@ -27,7 +28,7 @@ class UrlTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     /**
      * @uses \Spryker\Zed\Router\Communication\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
      */
-    protected const URL_GENERATOR_SERVICE = 'routers';
+    protected const SERVICE_ROUTER = 'routers';
 
     /**
      * {@inheritDoc}
@@ -55,32 +56,22 @@ class UrlTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     protected function getUrlFunction(ContainerInterface $container): TwigFunction
     {
         return new TwigFunction(static::FUNCTION_NAME_URL, function (string $url, array $query = [], array $options = []) use ($container) {
-            if ($this->isUrlMatchingGlobalPattern($url)) {
-                /** @var \Symfony\Cmf\Component\Routing\ChainRouter $globalUrlGenerator */
-                $globalUrlGenerator = $container->get(static::URL_GENERATOR_SERVICE);
-                $url = $globalUrlGenerator->generate($url, $query);
+            try {
+                if ($container->has(static::SERVICE_ROUTER)) {
+                    /** @var \Symfony\Cmf\Component\Routing\ChainRouter $router */
+                    $router = $container->get(static::SERVICE_ROUTER);
+                    $url = $router->generate($url, $query);
 
-                $charset = mb_internal_encoding() ?: static::DEFAULT_ENCODING;
+                    $charset = mb_internal_encoding() ?: static::DEFAULT_ENCODING;
 
-                return htmlspecialchars($url, ENT_QUOTES | ENT_SUBSTITUTE, $charset);
+                    return htmlspecialchars($url, ENT_QUOTES | ENT_SUBSTITUTE, $charset);
+                }
+            } catch (RouteNotFoundException $exception) {
             }
 
             $url = Url::generate($url, $query, $options);
-            $html = $url->buildEscaped();
 
-            return $html;
+            return $url->buildEscaped();
         }, ['is_safe' => ['html']]);
-    }
-
-    /**
-     * @param string $url
-     *
-     * @return bool
-     */
-    protected function isUrlMatchingGlobalPattern(string $url): bool
-    {
-        $regex = $this->getConfig()->getRegexPatternForGlobalUrls();
-
-        return preg_match($regex, $url);
     }
 }
