@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CategoryGui\Persistence;
 
-use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -25,22 +24,15 @@ class CategoryGuiRepository extends AbstractRepository implements CategoryGuiRep
     protected const CHILDREN_CATEGORY_ATTRIBUTE_NAME = 'text';
 
     /**
-     * @uses \Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap::COL_LOCALE_NAME
-     */
-    protected const COL_LOCALE_NAME = 'spy_locale.locale_name';
-
-    /**
      * @param string $categoryKey
-     * @param int $idCategory
      *
      * @return bool
      */
-    public function isCategoryKeyUsed(string $categoryKey, int $idCategory): bool
+    public function isCategoryKeyUsed(string $categoryKey): bool
     {
         return $this->getFactory()
             ->getCategoryPropelQuery()
             ->filterByCategoryKey($categoryKey)
-            ->filterByIdCategory($idCategory, Criteria::NOT_EQUAL)
             ->count() > 0;
     }
 
@@ -59,7 +51,7 @@ class CategoryGuiRepository extends AbstractRepository implements CategoryGuiRep
      * @param int $idParentNode
      * @param int $idLocale
      *
-     * @return array
+     * @return string[]
      */
     public function getChildrenCategoryNodeNames(int $idParentNode, int $idLocale): array
     {
@@ -76,28 +68,5 @@ class CategoryGuiRepository extends AbstractRepository implements CategoryGuiRep
             ->select([static::CHILDREN_ID_CATEGORY_NODE, static::CHILDREN_CATEGORY_ATTRIBUTE_NAME])
             ->find()
             ->toArray();
-    }
-
-    /**
-     * @param int[] $categoryNodeIds
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer[]
-     */
-    public function getCategoryNodeUrls(array $categoryNodeIds): array
-    {
-        $urlEntities = $this->getFactory()
-            ->getUrlPropelQuery()
-            ->joinSpyLocale()
-            ->filterByFkResourceCategorynode_In(array_unique($categoryNodeIds))
-            ->withColumn(static::COL_LOCALE_NAME)
-            ->find();
-
-        $urlTransfers = [];
-
-        foreach ($urlEntities as $urlEntity) {
-            $urlTransfers[] = (new UrlTransfer())->fromArray($urlEntity->toArray(), true);
-        }
-
-        return $urlTransfers;
     }
 }

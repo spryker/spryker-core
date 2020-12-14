@@ -10,7 +10,7 @@ namespace Spryker\Zed\CategoryGuiExtension\Dependency\Plugin;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * Implement this plugin interface to expand form data, to customize form building process and to customize form handling process.
+ * Implement this plugin interface to expand form data, customize the form building and handling processes.
  */
 interface CategoryFormPluginInterface
 {

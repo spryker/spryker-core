@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CategoryGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Spryker\Zed\CategoryGui\Communication\Form\DeleteType;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface;
 
 class CategoryDeleteDataProvider
@@ -39,8 +40,7 @@ class CategoryDeleteDataProvider
         $categoryTransfer = $this->categoryFacade->findCategory($categoryCriteriaTransfer);
 
         return [
-            'id_category_node' => $categoryTransfer->getCategoryNode()->getIdCategoryNode(),
-            'fk_category' => $categoryTransfer->getIdCategory(),
+            DeleteType::FIELD_FK_NODE_CATEGORY => $categoryTransfer ? $categoryTransfer->getIdCategory() : null,
         ];
     }
 }

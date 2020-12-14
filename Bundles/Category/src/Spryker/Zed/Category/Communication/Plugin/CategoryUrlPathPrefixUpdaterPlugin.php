@@ -21,7 +21,7 @@ class CategoryUrlPathPrefixUpdaterPlugin extends AbstractPlugin implements Categ
 {
     /**
      * {@inheritDoc}
-     * - Adds language identifier to category url paths.
+     * - Adds language identifier to category URL paths.
      *
      * @api
      *

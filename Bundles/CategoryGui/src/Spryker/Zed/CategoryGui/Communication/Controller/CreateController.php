@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\CategoryGui\Communication\Controller;
 
+use ArrayObject;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\CategoryGui\Communication\Exception\CategoryUrlExistsException;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -28,27 +28,26 @@ class CreateController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $categoryFacade = $this->getFactory()->getCategoryFacade();
-
-        $categoryFacade->syncCategoryTemplate();
+        $this->getFactory()->getCategoryFacade()->syncCategoryTemplate();
 
         $idParentNode = $this->readParentNodeId($request);
         $form = $this->getFactory()->createCategoryCreateForm($idParentNode);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $categoryTransfer = $form->getData();
+            $categoryResponseTransfer = $this->getFactory()
+                ->createCategoryFormHandler()
+                ->createCategory($form->getData());
 
-            try {
-                $categoryFacade->create($categoryTransfer);
-                $this->addSuccessMessage('The category was added successfully.');
+            if ($categoryResponseTransfer->getIsSuccessful()) {
+                $this->addSuccessMessages($categoryResponseTransfer->getMessages());
 
                 return $this->redirectResponse(
-                    $this->createSuccessRedirectUrl($categoryTransfer->getIdCategory())
+                    $this->createSuccessRedirectUrl($categoryResponseTransfer->getCategory()->getIdCategory())
                 );
-            } catch (CategoryUrlExistsException $e) {
-                $this->addErrorMessage($e->getMessage());
             }
+
+            $this->addErrorMessages($categoryResponseTransfer->getMessages());
         }
 
         return $this->viewResponse([
@@ -89,5 +88,29 @@ class CreateController extends AbstractController
         );
 
         return $url->build();
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
+     *
+     * @return void
+     */
+    protected function addSuccessMessages(ArrayObject $messageTransfers): void
+    {
+        foreach ($messageTransfers as $messageTransfer) {
+            $this->addSuccessMessage($messageTransfer->getValue());
+        }
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
+     *
+     * @return void
+     */
+    protected function addErrorMessages(ArrayObject $messageTransfers): void
+    {
+        foreach ($messageTransfers as $messageTransfer) {
+            $this->addErrorMessage($messageTransfer->getValue());
+        }
     }
 }

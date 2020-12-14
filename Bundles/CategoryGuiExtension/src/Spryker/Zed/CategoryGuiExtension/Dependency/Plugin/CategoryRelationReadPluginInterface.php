@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 
 /**
- * Implement this plugin interface to expand rendered relations in view page.
+ * Implement this plugin interface to expand rendered relations at the category view page.
  */
 interface CategoryRelationReadPluginInterface
 {

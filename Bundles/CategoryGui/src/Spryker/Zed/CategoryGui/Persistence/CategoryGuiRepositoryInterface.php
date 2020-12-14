@@ -11,11 +11,10 @@ interface CategoryGuiRepositoryInterface
 {
     /**
      * @param string $categoryKey
-     * @param int $idCategory
      *
      * @return bool
      */
-    public function isCategoryKeyUsed(string $categoryKey, int $idCategory): bool;
+    public function isCategoryKeyUsed(string $categoryKey): bool;
 
     /**
      * @return string[]
@@ -26,14 +25,7 @@ interface CategoryGuiRepositoryInterface
      * @param int $idParentNode
      * @param int $idLocale
      *
-     * @return array
+     * @return string[]
      */
     public function getChildrenCategoryNodeNames(int $idParentNode, int $idLocale): array;
-
-    /**
-     * @param int[] $categoryNodeIds
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer[]
-     */
-    public function getCategoryNodeUrls(array $categoryNodeIds): array;
 }

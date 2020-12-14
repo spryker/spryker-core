@@ -119,4 +119,8 @@
     <transfer name="LocalizedAttributes">
     </transfer>
 
+    <transfer name="CategoryNodeUrlFilter">
+        <property name="categoryNodeIds" type="int[]" singular="idCategoryNode"/>
+    </transfer>
+
 </transfers>

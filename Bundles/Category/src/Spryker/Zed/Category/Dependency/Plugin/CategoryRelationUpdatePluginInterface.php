@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Category\Dependency\Plugin;
 
-use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationUpdatePluginInterface as ExtensionCategoryRelationUpdatePluginInterface;
 
 /**
@@ -15,15 +14,4 @@ use Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationUpdatePlugin
  */
 interface CategoryRelationUpdatePluginInterface extends ExtensionCategoryRelationUpdatePluginInterface
 {
-    /**
-     * Specification:
-     * - Update relations on category update.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
-    public function update(CategoryTransfer $categoryTransfer);
 }

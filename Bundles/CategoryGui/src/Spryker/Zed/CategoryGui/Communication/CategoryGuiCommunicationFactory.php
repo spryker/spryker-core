@@ -14,6 +14,8 @@ use Spryker\Zed\CategoryGui\Communication\Form\DataProvider\CategoryCreateDataPr
 use Spryker\Zed\CategoryGui\Communication\Form\DataProvider\CategoryDeleteDataProvider;
 use Spryker\Zed\CategoryGui\Communication\Form\DataProvider\CategoryEditDataProvider;
 use Spryker\Zed\CategoryGui\Communication\Form\DeleteType;
+use Spryker\Zed\CategoryGui\Communication\Handler\CategoryFormHandler;
+use Spryker\Zed\CategoryGui\Communication\Handler\CategoryFormHandlerInterface;
 use Spryker\Zed\CategoryGui\Communication\Table\CategoryTable;
 use Spryker\Zed\CategoryGui\Communication\Tabs\CategoryFormTabs;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface;
@@ -115,6 +117,16 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCategoryDeleteFormDataProvider(): CategoryDeleteDataProvider
     {
         return new CategoryDeleteDataProvider($this->getCategoryFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryGui\Communication\Handler\CategoryFormHandlerInterface
+     */
+    public function createCategoryFormHandler(): CategoryFormHandlerInterface
+    {
+        return new CategoryFormHandler(
+            $this->getCategoryFacade()
+        );
     }
 
     /**

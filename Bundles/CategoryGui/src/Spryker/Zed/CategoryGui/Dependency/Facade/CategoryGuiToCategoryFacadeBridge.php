@@ -9,6 +9,7 @@ namespace Spryker\Zed\CategoryGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 
@@ -137,5 +138,15 @@ class CategoryGuiToCategoryFacadeBridge implements CategoryGuiToCategoryFacadeIn
     public function getNodePath(int $idNode, LocaleTransfer $localeTransfer): string
     {
         return $this->categoryFacade->getNodePath($idNode, $localeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer $categoryNodeFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     */
+    public function getCategoryNodeUrls(CategoryNodeUrlFilterTransfer $categoryNodeFilterTransfer): array
+    {
+        return $this->categoryFacade->getCategoryNodeUrls($categoryNodeFilterTransfer);
     }
 }

@@ -274,7 +274,7 @@ class CategoryType extends AbstractType
                 return;
             }
 
-            if ($this->getFactory()->getRepository()->isCategoryKeyUsed($key, $data->getIdCategory())) {
+            if ($this->getRepository()->isCategoryKeyUsed($key)) {
                 $context->addViolation(sprintf('Category with key "%s" already in use, please choose another one.', $key));
             }
         };

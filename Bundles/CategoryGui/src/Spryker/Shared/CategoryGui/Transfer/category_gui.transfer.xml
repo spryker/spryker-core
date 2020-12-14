@@ -44,4 +44,10 @@
         <property name="isNavigable" type="bool"/>
     </transfer>
 
+    <transfer name="CategoryResponse">
+        <property name="category" type="Category"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]"  singular="message"/>
+    </transfer>
+
 </transfers>

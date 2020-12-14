@@ -7,10 +7,13 @@
 
 namespace Spryker\Zed\CategoryGui\Communication\Controller;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
+use Spryker\Zed\CategoryGui\Communication\Form\DeleteType;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -50,13 +53,17 @@ class DeleteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
+            $categoryResponseTransfer = $this->getFactory()
+                ->createCategoryFormHandler()
+                ->deleteCategory($form->getData()[DeleteType::FIELD_FK_NODE_CATEGORY]);
 
-            $this->getFactory()
-                ->getCategoryFacade()
-                ->delete($data['fk_category']);
+            if ($categoryResponseTransfer->getIsSuccessful()) {
+                $this->addSuccessMessages($categoryResponseTransfer->getMessages());
 
-            return $this->redirectResponse(static::ROUTE_CATEGORY_LIST);
+                return $this->redirectResponse(static::ROUTE_CATEGORY_LIST);
+            }
+
+            $this->addErrorMessages($categoryResponseTransfer->getMessages());
         }
 
         return $this->viewResponse([
@@ -122,7 +129,10 @@ class DeleteController extends AbstractController
             $categoryNodeIds[] = $nodeTransfer->getIdCategoryNode();
         }
 
-        return $this->getRepository()->getCategoryNodeUrls($categoryNodeIds);
+        $categoryNodeUrlFilterTransfer = (new CategoryNodeUrlFilterTransfer())
+            ->setCategoryNodeIds($categoryNodeIds);
+
+        return $this->getFactory()->getCategoryFacade()->getCategoryNodeUrls($categoryNodeUrlFilterTransfer);
     }
 
     /**
@@ -171,5 +181,29 @@ class DeleteController extends AbstractController
         }
 
         return $this->currentLocale;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
+     *
+     * @return void
+     */
+    protected function addSuccessMessages(ArrayObject $messageTransfers): void
+    {
+        foreach ($messageTransfers as $messageTransfer) {
+            $this->addSuccessMessage($messageTransfer->getValue());
+        }
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
+     *
+     * @return void
+     */
+    protected function addErrorMessages(ArrayObject $messageTransfers): void
+    {
+        foreach ($messageTransfers as $messageTransfer) {
+            $this->addErrorMessage($messageTransfer->getValue());
+        }
     }
 }

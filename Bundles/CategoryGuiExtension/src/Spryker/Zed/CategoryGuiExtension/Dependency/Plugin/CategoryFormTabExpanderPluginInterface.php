@@ -10,7 +10,7 @@ namespace Spryker\Zed\CategoryGuiExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\TabsViewTransfer;
 
 /**
- * Implement this plugin interface to expand table data.
+ * Implement this plugin interface for category form tab expansion.
  */
 interface CategoryFormTabExpanderPluginInterface
 {

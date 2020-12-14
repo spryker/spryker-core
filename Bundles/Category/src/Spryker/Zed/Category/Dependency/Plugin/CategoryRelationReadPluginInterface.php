@@ -7,35 +7,11 @@
 
 namespace Spryker\Zed\Category\Dependency\Plugin;
 
-use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\CategoryGuiExtension\Dependency\Plugin\CategoryRelationReadPluginInterface as ExtensionCategoryRelationReadPluginInterface;
 
 /**
  * @deprecated Use {@link \Spryker\Zed\CategoryGuiExtension\Dependency\Plugin\CategoryRelationReadPluginInterface} instead.
  */
-interface CategoryRelationReadPluginInterface
+interface CategoryRelationReadPluginInterface extends ExtensionCategoryRelationReadPluginInterface
 {
-    /**
-     * Specification:
-     *  - Returns a descriptive name for the relations
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function getRelationName();
-
-    /**
-     * Specification:
-     *  - Finds related entities
-     *  - Returns a list of string representations for the entities in the given language
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return string[]
-     */
-    public function getRelations(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer);
 }

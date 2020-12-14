@@ -86,7 +86,7 @@ class CategoryEditDataProvider
      */
     protected function getCategoryNodes(int $idCategory): array
     {
-        $categoryNodes = [];
+        $nodeTransfers = [];
 
         $localeTransfer = $this->localeFacade->getCurrentLocale();
         $categoryCollectionTransfer = $this->categoryFacade->getAllCategoryCollection($localeTransfer);
@@ -96,15 +96,28 @@ class CategoryEditDataProvider
                 continue;
             }
 
-            foreach ($categoryTransfer->getNodeCollection()->getNodes() as $nodeTransfer) {
-                $categoryNodes[] = (new NodeTransfer())
-                    ->setPath('/' . $nodeTransfer->getPath())
-                    ->setIdCategoryNode($nodeTransfer->getIdCategoryNode())
-                    ->setName($categoryTransfer->getName());
-            }
+            $nodeTransfers = $this->extractNodesFromCategory($nodeTransfers, $categoryTransfer);
         }
 
-        return $categoryNodes;
+        return $nodeTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer[] $nodeTransfers
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeTransfer[]
+     */
+    protected function extractNodesFromCategory(array $nodeTransfers, CategoryTransfer $categoryTransfer): array
+    {
+        foreach ($categoryTransfer->getNodeCollection()->getNodes() as $nodeTransfer) {
+            $nodeTransfers[] = (new NodeTransfer())
+                ->setPath('/' . $nodeTransfer->getPath())
+                ->setIdCategoryNode($nodeTransfer->getIdCategoryNode())
+                ->setName($categoryTransfer->getName());
+        }
+
+        return $nodeTransfers;
     }
 
     /**
