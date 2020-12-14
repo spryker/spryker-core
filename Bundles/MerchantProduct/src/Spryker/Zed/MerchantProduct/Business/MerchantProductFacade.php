@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantProduct\Business;
 use Generated\Shared\Transfer\MerchantProductCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -44,5 +45,20 @@ class MerchantProductFacade extends AbstractFacade implements MerchantProductFac
     public function get(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): MerchantProductCollectionTransfer
     {
         return $this->getRepository()->get($merchantProductCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     */
+    public function findProductAbstract(
+        MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+    ): ?ProductAbstractTransfer {
+        return $this->getFactory()->createProductAbstractReader()->findProductAbstract($merchantProductCriteriaTransfer);
     }
 }

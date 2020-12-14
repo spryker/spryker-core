@@ -8,6 +8,10 @@
 namespace Spryker\Zed\MerchantProduct\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantProduct\Business\Reader\ProductAbstractReader;
+use Spryker\Zed\MerchantProduct\Business\Reader\ProductAbstractReaderInterface;
+use Spryker\Zed\MerchantProduct\Dependency\Facade\MerchantProductToProductFacadeInterface;
+use Spryker\Zed\MerchantProduct\MerchantProductDependencyProvider;
 
 /**
  * @method \Spryker\Zed\MerchantProduct\Persistence\MerchantProductRepositoryInterface getRepository()
@@ -15,4 +19,22 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class MerchantProductBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\MerchantProduct\Business\Reader\ProductAbstractReaderInterface
+     */
+    public function createProductAbstractReader(): ProductAbstractReaderInterface
+    {
+        return new ProductAbstractReader(
+            $this->getRepository(),
+            $this->getProductFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProduct\Dependency\Facade\MerchantProductToProductFacadeInterface
+     */
+    public function getProductFacade(): MerchantProductToProductFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantProductDependencyProvider::FACADE_PRODUCT);
+    }
 }

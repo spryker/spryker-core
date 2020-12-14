@@ -21,4 +21,7 @@
     <transfer name="MerchantProductCollection">
         <property name="merchantProducts" type="MerchantProduct[]" singular="merchantProduct"/>
     </transfer>
+
+    <transfer name="ProductAbstract">
+    </transfer>
 </transfers>

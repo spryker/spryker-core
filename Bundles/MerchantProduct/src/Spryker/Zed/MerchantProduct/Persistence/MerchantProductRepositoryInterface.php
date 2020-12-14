@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantProduct\Persistence;
 
 use Generated\Shared\Transfer\MerchantProductCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 
 interface MerchantProductRepositoryInterface
@@ -26,4 +27,13 @@ interface MerchantProductRepositoryInterface
      * @return \Generated\Shared\Transfer\MerchantProductCollectionTransfer
      */
     public function get(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): MerchantProductCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProductTransfer|null
+     */
+    public function findMerchantProductAbstract(
+        MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+    ): ?MerchantProductTransfer;
 }

@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantProduct\Business;
 use Generated\Shared\Transfer\MerchantProductCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 
 interface MerchantProductFacadeInterface
 {
@@ -38,4 +39,20 @@ interface MerchantProductFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantProductCollectionTransfer
      */
     public function get(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): MerchantProductCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Finds merchant product by provided MerchantProductCriteria and returns corresponding abstract product.
+     * - Returns null if merchant product not found.
+     * - Returns null if abstract product not found.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     */
+    public function findProductAbstract(
+        MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+    ): ?ProductAbstractTransfer;
 }

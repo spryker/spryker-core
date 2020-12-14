@@ -89,4 +89,9 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="MerchantProductCriteria">
+        <property name="idProductAbstract" type="int"/>
+        <property name="idMerchant" type="int"/>
+    </transfer>
+
 </transfers>

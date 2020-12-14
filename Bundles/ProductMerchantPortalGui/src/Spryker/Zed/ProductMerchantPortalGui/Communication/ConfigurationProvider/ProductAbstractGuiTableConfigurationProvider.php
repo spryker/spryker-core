@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider;
 
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
 use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToStoreFacadeInterface;
@@ -81,6 +82,7 @@ class ProductAbstractGuiTableConfigurationProvider implements ProductAbstractGui
 
         $guiTableConfigurationBuilder = $this->addColumns($guiTableConfigurationBuilder);
         $guiTableConfigurationBuilder = $this->addFilters($guiTableConfigurationBuilder);
+        $guiTableConfigurationBuilder = $this->addRowActions($guiTableConfigurationBuilder);
 
         $guiTableConfigurationBuilder
             ->setDataSourceUrl(static::DATA_URL)
@@ -151,5 +153,24 @@ class ProductAbstractGuiTableConfigurationProvider implements ProductAbstractGui
         }
 
         return $storeOptions;
+    }
+
+    /**
+     * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
+     *
+     * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
+     */
+    protected function addRowActions(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
+    {
+        $guiTableConfigurationBuilder->addRowActionOpenFormOverlay(
+            'update-product',
+            'Manage Product',
+            sprintf(
+                '/product-merchant-portal-gui/update-product-abstract?product-abstract-id=${row.%s}',
+                ProductAbstractTransfer::ID_PRODUCT_ABSTRACT
+            )
+        )->setRowClickAction('update-product');
+
+        return $guiTableConfigurationBuilder;
     }
 }

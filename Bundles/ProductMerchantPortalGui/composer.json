@@ -9,7 +9,7 @@
     "spryker/gui-table": "^0.4.0",
     "spryker/kernel": "^3.51.0",
     "spryker/locale": "^3.0.0",
-    "spryker/merchant-product": "^0.2.0",
+    "spryker/merchant-product": "^0.3.0",
     "spryker/merchant-user": "^0.5.0",
     "spryker/product": "^6.0.0",
     "spryker/product-category": "^4.0.0",
