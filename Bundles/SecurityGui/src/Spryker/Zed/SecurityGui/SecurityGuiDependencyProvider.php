@@ -130,7 +130,7 @@ class SecurityGuiDependencyProvider extends AbstractBundleDependencyProvider
     protected function addAuthenticationLinkPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_AUTHENTICATION_LINK, function () {
-            return $this->getAuthenticationLinkPluginsPlugins();
+            return $this->getAuthenticationLinkPlugins();
         });
 
         return $container;
@@ -139,7 +139,7 @@ class SecurityGuiDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\SecurityGuiExtension\Dependency\Plugin\AuthenticationLinkPluginInterface[]
      */
-    protected function getAuthenticationLinkPluginsPlugins(): array
+    protected function getAuthenticationLinkPlugins(): array
     {
         return [];
     }

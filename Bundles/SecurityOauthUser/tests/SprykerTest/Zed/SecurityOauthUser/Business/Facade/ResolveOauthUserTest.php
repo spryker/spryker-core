@@ -10,7 +10,7 @@ namespace SprykerTest\Zed\SecurityOauthUser\Business\Facade;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\GroupTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
-use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
+use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\SecurityOauthUser\SecurityOauthUserConfig;
 
 /**
@@ -124,7 +124,7 @@ class ResolveOauthUserTest extends Unit
     }
 
     /**
-     * @dataProvider testResolveOauthUserShouldNotResolveOauthUserWithInactiveStatusDataProvider
+     * @dataProvider resolveOauthUserShouldNotResolveOauthUserWithInactiveStatusDataProvider
      *
      * @param string $authenticationStrategy
      *
@@ -152,9 +152,9 @@ class ResolveOauthUserTest extends Unit
     }
 
     /**
-     * @return array[]
+     * @return string[][]
      */
-    public function testResolveOauthUserShouldNotResolveOauthUserWithInactiveStatusDataProvider(): array
+    public function resolveOauthUserShouldNotResolveOauthUserWithInactiveStatusDataProvider(): array
     {
         return [
             [SecurityOauthUserConfig::AUTHENTICATION_STRATEGY_ACCEPT_ONLY_EXISTING_USERS],
@@ -171,7 +171,7 @@ class ResolveOauthUserTest extends Unit
         $userCriteriaTransfer = new UserCriteriaTransfer();
 
         // Assert
-        $this->expectException(NullValueException::class);
+        $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
         $this->tester->getSecurityOauthUserFacade()->resolveOauthUser($userCriteriaTransfer);

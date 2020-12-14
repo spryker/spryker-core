@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SecurityOauthUser\Business\AclGroup;
+namespace Spryker\Zed\SecurityOauthUser\Business\Adder;
 
 use Generated\Shared\Transfer\UserTransfer;
 

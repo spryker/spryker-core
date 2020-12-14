@@ -6,7 +6,7 @@
      {% for authenticationLink in authenticationLinkCollection %}
 
          {% if authenticationLink.template is not empty %}
-             {% include authenticationLink.template with {'authenticationLink': authenticationLink} only %}
+             {% include authenticationLink.template ignore missing with {'authenticationLink': authenticationLink} only %}
          {% else %}
              <div class="form-group">
                  <a href="{{ authenticationLink.href }}" target="{{ authenticationLink.target | escape('html_attr') }}">

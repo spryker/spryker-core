@@ -16,6 +16,11 @@ use Spryker\Zed\SecurityOauthUser\SecurityOauthUserConfig;
 class CreateUserAuthenticationStrategy implements AuthenticationStrategyInterface
 {
     /**
+     * @var \Spryker\Zed\SecurityOauthUser\SecurityOauthUserConfig
+     */
+    protected $securityOauthUserConfig;
+
+    /**
      * @var \Spryker\Zed\SecurityOauthUser\Dependency\Facade\SecurityOauthUserToUserFacadeInterface
      */
     protected $userFacade;
@@ -26,13 +31,16 @@ class CreateUserAuthenticationStrategy implements AuthenticationStrategyInterfac
     protected $oauthUserCreator;
 
     /**
+     * @param \Spryker\Zed\SecurityOauthUser\SecurityOauthUserConfig $securityOauthUserConfig
      * @param \Spryker\Zed\SecurityOauthUser\Dependency\Facade\SecurityOauthUserToUserFacadeInterface $userFacade
      * @param \Spryker\Zed\SecurityOauthUser\Business\Creator\OauthUserCreatorInterface $oauthUserCreator
      */
     public function __construct(
+        SecurityOauthUserConfig $securityOauthUserConfig,
         SecurityOauthUserToUserFacadeInterface $userFacade,
         OauthUserCreatorInterface $oauthUserCreator
     ) {
+        $this->securityOauthUserConfig = $securityOauthUserConfig;
         $this->userFacade = $userFacade;
         $this->oauthUserCreator = $oauthUserCreator;
     }
@@ -52,15 +60,14 @@ class CreateUserAuthenticationStrategy implements AuthenticationStrategyInterfac
      */
     public function resolveOauthUser(UserCriteriaTransfer $userCriteriaTransfer): ?UserTransfer
     {
-        $userCriteriaTransfer->getEmailOrFail();
+        $userCriteriaTransfer->requireEmail();
 
         $userTransfer = $this->userFacade->findUser($userCriteriaTransfer);
-
         if ($userTransfer === null) {
             return $this->oauthUserCreator->createOauthUser($userCriteriaTransfer);
         }
 
-        if ($userTransfer->getStatus() !== SecurityOauthUserConfig::OAUTH_USER_STATUS_ACTIVE) {
+        if ($userTransfer->getStatus() !== $this->securityOauthUserConfig->getOauthUserActiveStatus()) {
             return null;
         }
 

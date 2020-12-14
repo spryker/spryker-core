@@ -32,7 +32,7 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
     /**
      * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_ACTIVE
      */
-    public const OAUTH_USER_STATUS_ACTIVE = 'active';
+    protected const OAUTH_USER_STATUS_ACTIVE = 'active';
 
     protected const BACK_OFFICE_ROUTE_PATTERN = '^/';
     protected const IGNORABLE_ROUTE_PATTERN = '^/security-oauth-user';
@@ -116,6 +116,16 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
      * @return string
      */
     public function getOauthUserCreationStatus(): string
+    {
+        return static::OAUTH_USER_STATUS_ACTIVE;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getOauthUserActiveStatus(): string
     {
         return static::OAUTH_USER_STATUS_ACTIVE;
     }

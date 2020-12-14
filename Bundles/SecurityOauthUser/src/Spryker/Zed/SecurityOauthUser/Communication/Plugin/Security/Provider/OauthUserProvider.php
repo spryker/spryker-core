@@ -110,8 +110,9 @@ class OauthUserProvider extends AbstractPlugin implements UserProviderInterface
     protected function addErrorMessages(
         OauthUserRestrictionResponseTransfer $oauthUserRestrictionResponseTransfer
     ): void {
+        $messengerFacade = $this->getFactory()->getMessengerFacade();
         foreach ($oauthUserRestrictionResponseTransfer->getMessages() as $messageTransfer) {
-            $this->getFactory()->getMessengerFacade()->addErrorMessage($messageTransfer);
+            $messengerFacade->addErrorMessage($messageTransfer);
         }
     }
 }

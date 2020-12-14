@@ -8,8 +8,8 @@
 namespace Spryker\Zed\SecurityOauthUser\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\SecurityOauthUser\Business\AclGroup\AclGroupAdder;
-use Spryker\Zed\SecurityOauthUser\Business\AclGroup\AclGroupAdderInterface;
+use Spryker\Zed\SecurityOauthUser\Business\Adder\AclGroupAdder;
+use Spryker\Zed\SecurityOauthUser\Business\Adder\AclGroupAdderInterface;
 use Spryker\Zed\SecurityOauthUser\Business\Checker\OauthUserRestrictionChecker;
 use Spryker\Zed\SecurityOauthUser\Business\Checker\OauthUserRestrictionCheckerInterface;
 use Spryker\Zed\SecurityOauthUser\Business\Creator\OauthUserCreator;
@@ -48,7 +48,7 @@ class SecurityOauthUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SecurityOauthUser\Business\AclGroup\AclGroupAdderInterface
+     * @return \Spryker\Zed\SecurityOauthUser\Business\Adder\AclGroupAdderInterface
      */
     public function createAclGroupAdder(): AclGroupAdderInterface
     {
@@ -87,7 +87,7 @@ class SecurityOauthUserBusinessFactory extends AbstractBusinessFactory
      */
     public function createExistingUserAuthenticationStrategy(): AuthenticationStrategyInterface
     {
-        return new ExistingUserAuthenticationStrategy($this->getUserFacade());
+        return new ExistingUserAuthenticationStrategy($this->getConfig(), $this->getUserFacade());
     }
 
     /**
@@ -95,7 +95,11 @@ class SecurityOauthUserBusinessFactory extends AbstractBusinessFactory
      */
     public function createCreateUserAuthenticationStrategy(): AuthenticationStrategyInterface
     {
-        return new CreateUserAuthenticationStrategy($this->getUserFacade(), $this->createOauthUserCreator());
+        return new CreateUserAuthenticationStrategy(
+            $this->getConfig(),
+            $this->getUserFacade(),
+            $this->createOauthUserCreator()
+        );
     }
 
     /**

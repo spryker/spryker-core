@@ -89,7 +89,7 @@ class GetResourceOwnerTest extends Unit
     }
 
     /**
-     * @dataProvider testGetResourceOwnerThrowExceptionWhenRequiredDataIsNotProvidedDataProvider
+     * @dataProvider getResourceOwnerThrowExceptionWhenRequiredDataIsNotProvidedDataProvider
      *
      * @param \Generated\Shared\Transfer\ResourceOwnerRequestTransfer $resourceOwnerRequestTransfer
      *
@@ -106,9 +106,9 @@ class GetResourceOwnerTest extends Unit
     }
 
     /**
-     * @return array
+     * @return \Generated\Shared\Transfer\ResourceOwnerRequestTransfer[][]
      */
-    public function testGetResourceOwnerThrowExceptionWhenRequiredDataIsNotProvidedDataProvider(): array
+    public function getResourceOwnerThrowExceptionWhenRequiredDataIsNotProvidedDataProvider(): array
     {
         return [
             [(new ResourceOwnerRequestTransfer())->setCode(static::SOME_CODE)],

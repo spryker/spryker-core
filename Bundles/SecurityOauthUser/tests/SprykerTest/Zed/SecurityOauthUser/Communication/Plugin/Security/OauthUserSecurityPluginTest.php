@@ -109,7 +109,7 @@ class OauthUserSecurityPluginTest extends Unit
         // Assert
         /** @var \Spryker\Zed\SecurityGui\Communication\Security\User $user */
         $user = $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE)->getToken()->getUser();
-        $this->assertSame($userTransfer->getUsername(), $user->getUsername());
+        $this->assertSame($userTransfer->getUsername(), $user->getUsername(), 'Expected that usernames match.');
     }
 
     /**
@@ -143,7 +143,7 @@ class OauthUserSecurityPluginTest extends Unit
 
         // Assert
         $token = $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE)->getToken();
-        $this->assertNull($token);
+        $this->assertNull($token, 'Expected that user with invalid credentials can not login.');
     }
 
     /**
@@ -168,7 +168,11 @@ class OauthUserSecurityPluginTest extends Unit
         $httpKernelBrowser->request('get', '/ignorable');
 
         // Assert
-        $this->assertSame('test-text', $httpKernelBrowser->getResponse()->getContent());
+        $this->assertSame(
+            'test-text',
+            $httpKernelBrowser->getResponse()->getContent(),
+            'Expected that ignorable paths are accessible.'
+        );
     }
 
     /**

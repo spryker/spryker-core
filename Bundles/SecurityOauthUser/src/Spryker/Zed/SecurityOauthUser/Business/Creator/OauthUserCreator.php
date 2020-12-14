@@ -9,7 +9,7 @@ namespace Spryker\Zed\SecurityOauthUser\Business\Creator;
 
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
-use Spryker\Zed\SecurityOauthUser\Business\AclGroup\AclGroupAdderInterface;
+use Spryker\Zed\SecurityOauthUser\Business\Adder\AclGroupAdderInterface;
 use Spryker\Zed\SecurityOauthUser\Dependency\Facade\SecurityOauthUserToUserFacadeInterface;
 use Spryker\Zed\SecurityOauthUser\Dependency\Service\SecurityOauthUserToUtilTextServiceInterface;
 use Spryker\Zed\SecurityOauthUser\SecurityOauthUserConfig;
@@ -34,7 +34,7 @@ class OauthUserCreator implements OauthUserCreatorInterface
     protected $utilTextService;
 
     /**
-     * @var \Spryker\Zed\SecurityOauthUser\Business\AclGroup\AclGroupAdderInterface
+     * @var \Spryker\Zed\SecurityOauthUser\Business\Adder\AclGroupAdderInterface
      */
     protected $aclGroupAdder;
 
@@ -42,7 +42,7 @@ class OauthUserCreator implements OauthUserCreatorInterface
      * @param \Spryker\Zed\SecurityOauthUser\SecurityOauthUserConfig $securityOauthUserConfig
      * @param \Spryker\Zed\SecurityOauthUser\Dependency\Facade\SecurityOauthUserToUserFacadeInterface $userFacade
      * @param \Spryker\Zed\SecurityOauthUser\Dependency\Service\SecurityOauthUserToUtilTextServiceInterface $utilTextService
-     * @param \Spryker\Zed\SecurityOauthUser\Business\AclGroup\AclGroupAdderInterface $aclGroupAdder
+     * @param \Spryker\Zed\SecurityOauthUser\Business\Adder\AclGroupAdderInterface $aclGroupAdder
      */
     public function __construct(
         SecurityOauthUserConfig $securityOauthUserConfig,

@@ -15,15 +15,24 @@ use Spryker\Zed\SecurityOauthUser\SecurityOauthUserConfig;
 class ExistingUserAuthenticationStrategy implements AuthenticationStrategyInterface
 {
     /**
+     * @var \Spryker\Zed\SecurityOauthUser\SecurityOauthUserConfig
+     */
+    protected $securityOauthUserConfig;
+
+    /**
      * @var \Spryker\Zed\SecurityOauthUser\Dependency\Facade\SecurityOauthUserToUserFacadeInterface
      */
     protected $userFacade;
 
     /**
+     * @param \Spryker\Zed\SecurityOauthUser\SecurityOauthUserConfig $securityOauthUserConfig
      * @param \Spryker\Zed\SecurityOauthUser\Dependency\Facade\SecurityOauthUserToUserFacadeInterface $userFacade
      */
-    public function __construct(SecurityOauthUserToUserFacadeInterface $userFacade)
-    {
+    public function __construct(
+        SecurityOauthUserConfig $securityOauthUserConfig,
+        SecurityOauthUserToUserFacadeInterface $userFacade
+    ) {
+        $this->securityOauthUserConfig = $securityOauthUserConfig;
         $this->userFacade = $userFacade;
     }
 
@@ -42,14 +51,14 @@ class ExistingUserAuthenticationStrategy implements AuthenticationStrategyInterf
      */
     public function resolveOauthUser(UserCriteriaTransfer $userCriteriaTransfer): ?UserTransfer
     {
-        $userCriteriaTransfer->getEmailOrFail();
+        $userCriteriaTransfer->requireEmail();
 
         $userTransfer = $this->userFacade->findUser($userCriteriaTransfer);
         if ($userTransfer === null) {
             return null;
         }
 
-        if ($userTransfer->getStatus() !== SecurityOauthUserConfig::OAUTH_USER_STATUS_ACTIVE) {
+        if ($userTransfer->getStatus() !== $this->securityOauthUserConfig->getOauthUserActiveStatus()) {
             return null;
         }
 

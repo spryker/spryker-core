@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SecurityOauthUser\Business\AclGroup;
+namespace Spryker\Zed\SecurityOauthUser\Business\Adder;
 
 use Generated\Shared\Transfer\GroupCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
@@ -37,8 +37,9 @@ class AclGroupAdder implements AclGroupAdderInterface
      */
     public function addOauthUserToGroup(UserTransfer $userTransfer, string $reference): void
     {
-        $groupTransfer = $this->aclFacade->findGroup((new GroupCriteriaTransfer())->setReference($reference));
+        $groupCriteriaTransfer = (new GroupCriteriaTransfer())->setReference($reference);
 
+        $groupTransfer = $this->aclFacade->findGroup($groupCriteriaTransfer);
         if (!$groupTransfer) {
             throw new AclGroupNotFoundException(sprintf(
                 'The group with %s reference was not found.',
