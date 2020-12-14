@@ -20,6 +20,9 @@ class SecurityBlockerConfig extends AbstractBundleConfig
     protected const STORAGE_REDIS_CONNECTION_KEY = 'SECURITY_BLOCKER_REDIS';
 
     /**
+     * Specification:
+     * - Returns redis connection key used by the module.
+     *
      * @api
      *
      * @return string
@@ -40,15 +43,9 @@ class SecurityBlockerConfig extends AbstractBundleConfig
     public function getRedisConnectionConfiguration(): RedisConfigurationTransfer
     {
         return (new RedisConfigurationTransfer())
-            ->setDataSourceNames(
-                $this->getDataSourceNames()
-            )
-            ->setConnectionCredentials(
-                $this->getConnectionCredentials()
-            )
-            ->setClientOptions(
-                $this->getConnectionOptions()
-            );
+            ->setDataSourceNames($this->getDataSourceNames())
+            ->setConnectionCredentials($this->getConnectionCredentials())
+            ->setClientOptions($this->getConnectionOptions());
     }
 
     /**
@@ -79,5 +76,23 @@ class SecurityBlockerConfig extends AbstractBundleConfig
     protected function getConnectionOptions(): array
     {
         return $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_CONNECTION_OPTIONS, []);
+    }
+
+    /**
+     * Specification:
+     * - Returns the security configuration per type.
+     *
+     * @api
+     *
+     * @return mixed[]
+     */
+    public function getSecurityConfigurationSettings(): array
+    {
+        return [
+            'default' => [
+                'ttl' => $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_TTL, 600),
+                'count' => $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_NUMBER_OF_TRIES, 10),
+            ],
+        ];
     }
 }

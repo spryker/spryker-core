@@ -311,6 +311,20 @@ class LoggableRedisAdapterTest extends Unit
     /**
      * @return void
      */
+    public function testCanHandleIncr(): void
+    {
+        $this->redisAdapterMock->expects($this->once())->method('incr');
+        $key = uniqid('kv:');
+        $this->redisLoggerMock->expects($this->once())
+            ->method('log')
+            ->with('INCR', ['key' => $key]);
+
+        $this->loggableRedisAdapter->incr($key);
+    }
+
+    /**
+     * @return void
+     */
     protected function setupLoggableRedisAdapter(): void
     {
         $this->loggableRedisAdapter = new LoggableRedisAdapter(

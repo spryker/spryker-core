@@ -174,4 +174,14 @@ class PredisAdapter implements RedisAdapterInterface
     {
         $this->client->flushdb();
     }
+
+    /**
+     * @param string $key
+     *
+     * @return bool
+     */
+    public function incr(string $key): bool
+    {
+        return $this->client->incr($key);
+    }
 }

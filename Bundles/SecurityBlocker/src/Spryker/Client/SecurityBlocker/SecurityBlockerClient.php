@@ -23,13 +23,15 @@ class SecurityBlockerClient extends AbstractClient implements SecurityBlockerCli
      *
      * @param \Generated\Shared\Transfer\AuthContextTransfer $authContextTransfer
      *
+     * @throws \Spryker\Client\SecurityBlocker\Exception\SecurityBlockerException
+     *
      * @return \Generated\Shared\Transfer\AuthResponseTransfer
      */
     public function incrementLoginAttempt(AuthContextTransfer $authContextTransfer): AuthResponseTransfer
     {
         return $this->getFactory()
-            ->createSecurityBlockerRedisWrapper()
-            ->logLoginAttempt($authContextTransfer);
+            ->createSecurityBlockerStorage()
+            ->incrementLoginAttempt($authContextTransfer);
     }
 
     /**
@@ -44,7 +46,7 @@ class SecurityBlockerClient extends AbstractClient implements SecurityBlockerCli
     public function getLoginAttempt(AuthContextTransfer $authContextTransfer): AuthResponseTransfer
     {
         return $this->getFactory()
-            ->createSecurityBlockerRedisWrapper()
+            ->createSecurityBlockerStorage()
             ->getLoginAttempt($authContextTransfer);
     }
 }

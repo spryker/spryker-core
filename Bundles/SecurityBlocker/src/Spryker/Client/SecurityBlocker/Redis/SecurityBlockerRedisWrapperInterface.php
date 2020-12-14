@@ -7,24 +7,30 @@
 
 namespace Spryker\Client\SecurityBlocker\Redis;
 
-use Generated\Shared\Transfer\AuthContextTransfer;
-use Generated\Shared\Transfer\AuthResponseTransfer;
-
 interface SecurityBlockerRedisWrapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\AuthContextTransfer $authContextTransfer
+     * @param string $key
      *
-     * @throws \Spryker\Client\SecurityBlocker\Exception\SecurityBlockerException
-     *
-     * @return \Generated\Shared\Transfer\AuthResponseTransfer
+     * @return bool
      */
-    public function logLoginAttempt(AuthContextTransfer $authContextTransfer): AuthResponseTransfer;
+    public function incr(string $key): bool;
 
     /**
-     * @param \Generated\Shared\Transfer\AuthContextTransfer $authContextTransfer
+     * @param string $key
      *
-     * @return \Generated\Shared\Transfer\AuthResponseTransfer
+     * @return string|null
      */
-    public function getLoginAttempt(AuthContextTransfer $authContextTransfer): AuthResponseTransfer;
+    public function get(string $key): ?string;
+
+    /**
+     * @param string $key
+     * @param string $value
+     * @param string|null $expireResolution
+     * @param int|null $expireTTL
+     * @param string|null $flag
+     *
+     * @return bool
+     */
+    public function set(string $key, string $value, ?string $expireResolution = null, ?int $expireTTL = null, ?string $flag = null): bool;
 }
