@@ -35,32 +35,10 @@ class PriceProductOfferConstraintProvider implements PriceProductOfferConstraint
     /**
      * @return \Symfony\Component\Validator\Constraint[]
      */
-    public function getConstraintsMap(): array
-    {
-        return array_merge(
-            $this->getPriceProductCollectionTransferConstraints(),
-            $this->getPriceProductTransferConstraints()
-        );
-    }
-
-    /**
-     * @phpstan-return array<int, \Symfony\Component\Validator\Constraint>
-     *
-     * @return \Symfony\Component\Validator\Constraint[]
-     */
-    protected function getPriceProductCollectionTransferConstraints(): array
+    public function getConstraints(): array
     {
         return [
             new ValidUniqueStoreCurrencyCollectionConstraint(),
-        ];
-    }
-
-    /**
-     * @return \Symfony\Component\Validator\Constraint[]
-     */
-    protected function getPriceProductTransferConstraints(): array
-    {
-        return [
             new AllConstraint(
                 array_merge(
                     [new TransferConstraint([PriceProductTransfer::MONEY_VALUE => $this->getMoneyValueConstraint()])],

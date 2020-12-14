@@ -167,7 +167,7 @@ class PriceProductOfferFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateProductOfferPricesSuccess()
+    public function testValidateProductOfferPricesIsSuccessful()
     {
         // Arrange
         $priceProductTransfer = $this->tester->havePriceProductSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
@@ -186,7 +186,7 @@ class PriceProductOfferFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateProductOfferPricesFailValidUniqueStoreCurrencyGrossNetPriceDataConstraint()
+    public function testValidateProductOfferPricesFailValidUniqueStoreCurrencyGrossNetConstraint()
     {
         // Arrange
         $priceProductTransferSrc = $this->tester->havePriceProductSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);

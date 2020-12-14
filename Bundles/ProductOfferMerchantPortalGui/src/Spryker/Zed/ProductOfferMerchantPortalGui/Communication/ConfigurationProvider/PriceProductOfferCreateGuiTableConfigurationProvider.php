@@ -32,8 +32,8 @@ class PriceProductOfferCreateGuiTableConfigurationProvider extends AbstractPrice
             ->setDataSourceUrl(static::DATA_URL)
             ->setIsItemSelectionEnabled(false)
             ->setDefaultPageSize(25)
-            ->disableSearch()
-            ->disableColumnConfigurator();
+            ->isSearchEnabled(false)
+            ->isColumnConfiguratorEnabled(false);
 
         $guiTableConfigurationBuilder = $this->setEditableConfiguration(
             $guiTableConfigurationBuilder,

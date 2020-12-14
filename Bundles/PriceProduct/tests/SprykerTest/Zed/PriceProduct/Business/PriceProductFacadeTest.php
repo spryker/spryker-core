@@ -1155,7 +1155,7 @@ class PriceProductFacadeTest extends Unit
         $symfonyConstraint = $this->getPriceProductFacade()->getValidCurrencyAssignedToStoreConstraint();
 
         //Assert
-        $this->assertSame('Currency %s is not assigned to a store %s', $symfonyConstraint->getMessage());
+        $this->assertSame('Currency "%s" is not assigned to the store %s', $symfonyConstraint->getMessage());
         $this->assertSame('class', $symfonyConstraint->getTargets());
     }
 

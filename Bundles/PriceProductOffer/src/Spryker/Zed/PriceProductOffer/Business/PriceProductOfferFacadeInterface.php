@@ -55,11 +55,13 @@ interface PriceProductOfferFacadeInterface
     /**
      * Specification:
      * - Validates PriceProductTransfer stack.
-     * - Сhecks if there are duplicated prices for store-currency-gross-net-price_data combinations (per price dimension).
+     * - Сhecks if there are duplicated prices for store-currency-gross-net combinations.
      * - Checks that currency assigned to a store per prices.
      * - Returns PriceProductOfferCollectionValidationResponseTransfer transfer object.
      *
      * @api
+     *
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
@@ -96,6 +98,8 @@ interface PriceProductOfferFacadeInterface
      * - Retrives collection of PriceProductTransfer over PriceProductOfferCriteriaTransfer.
      *
      * @api
+     *
+     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      *
      * @param \Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
      *

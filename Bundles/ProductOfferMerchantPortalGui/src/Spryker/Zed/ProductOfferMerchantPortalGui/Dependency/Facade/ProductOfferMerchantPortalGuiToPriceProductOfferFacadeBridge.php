@@ -11,7 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\PriceProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer;
 use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 
 class ProductOfferMerchantPortalGuiToPriceProductOfferFacadeBridge implements ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface
@@ -81,15 +80,5 @@ class ProductOfferMerchantPortalGuiToPriceProductOfferFacadeBridge implements Pr
     public function getProductOfferPrices(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): ArrayObject
     {
         return $this->priceProductOfferFacade->getProductOfferPrices($priceProductOfferCriteriaTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
-     */
-    public function savePriceProductOfferRelation(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
-    {
-        return $this->priceProductOfferFacade->savePriceProductOfferRelation($priceProductTransfer);
     }
 }

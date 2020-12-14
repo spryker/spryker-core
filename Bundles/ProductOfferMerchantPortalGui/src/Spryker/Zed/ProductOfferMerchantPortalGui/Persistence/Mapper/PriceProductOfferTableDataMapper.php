@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\Mapper;
 
-use ArrayObject;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTableViewCollectionTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTableViewTransfer;
@@ -64,60 +63,34 @@ class PriceProductOfferTableDataMapper
         $priceProductOfferTableViewTransfers = [];
 
         foreach ($priceProductOfferTableDataArray as $priceProductOfferTableRowDataArray) {
-            $priceProductOfferTableRowDataArray = $priceProductOfferTableRowDataArray->toArray();
-
-            $priceKey = sprintf(
-                '%s_%s',
-                $priceProductOfferTableRowDataArray[PriceProductOfferTableViewTransfer::STORE],
-                $priceProductOfferTableRowDataArray[PriceProductOfferTableViewTransfer::CURRENCY]
-            );
-
-            if (!isset($prices[$priceKey])) {
-                $prices[$priceKey] = [];
-            }
-
-            $prices[$priceKey] = $this->preparePrices($prices[$priceKey], $priceProductOfferTableRowDataArray);
-
-            if (isset($priceProductOfferTableViewTransfers[$priceKey])) {
-                $priceProductOfferTableViewTransfers[$priceKey]->setPrices($prices[$priceKey])
-                    ->addPriceProductOfferId(
-                        $priceProductOfferTableRowDataArray[static::COL_PRICE_PRODUCT_OFFER_IDS]
-                    )
-                    ->addTypePriceProductOfferId(
-                        $priceProductOfferTableRowDataArray[static::COL_TYPE_PRICE_PRODUCT_OFFER_IDS]
-                    );
-
-                continue;
-            }
+            $prices = $this->preparePrices($priceProductOfferTableRowDataArray);
 
             $priceProductOfferTableViewTransfer = (new PriceProductOfferTableViewTransfer())
                 ->setStore($priceProductOfferTableRowDataArray[PriceProductOfferTableViewTransfer::STORE])
                 ->setCurrency($priceProductOfferTableRowDataArray[PriceProductOfferTableViewTransfer::CURRENCY])
-                ->setPrices($prices[$priceKey])
+                ->setPrices($prices)
                 ->addPriceProductOfferId($priceProductOfferTableRowDataArray[static::COL_PRICE_PRODUCT_OFFER_IDS])
                 ->addTypePriceProductOfferId($priceProductOfferTableRowDataArray[static::COL_TYPE_PRICE_PRODUCT_OFFER_IDS]);
 
-            $priceProductOfferTableViewTransfers[$priceKey] = $priceProductOfferTableViewTransfer;
+            $priceProductOfferTableViewCollectionTransfer->addPriceProductOfferTableView($priceProductOfferTableViewTransfer);
         }
 
-        return $priceProductOfferTableViewCollectionTransfer->setPriceProductOfferTableViews(
-            new ArrayObject($priceProductOfferTableViewTransfers)
-        );
+        return $priceProductOfferTableViewCollectionTransfer;
     }
 
     /**
-     * @phpstan-param array<mixed> $prices
      * @phpstan-param array<mixed> $priceProductOfferTableRowDataArray
      *
      * @phpstan-return array<mixed>
      *
-     * @param array $prices
      * @param array $priceProductOfferTableRowDataArray
      *
      * @return array
      */
-    protected function preparePrices(array $prices, array $priceProductOfferTableRowDataArray): array
+    protected function preparePrices(array $priceProductOfferTableRowDataArray): array
     {
+        $prices = [];
+
         foreach ($this->priceProductFacade->getPriceTypeValues() as $priceTypeTransfer) {
             $priceTypeName = mb_strtolower($priceTypeTransfer->getName());
             $keyNetPrice = $priceTypeName . static::SUFFIX_PRICE_TYPE_NET;

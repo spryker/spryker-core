@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class ValidProductOfferPriceIdsOwnByMerchantConstraintValidator extends AbstractConstraintValidator
 {
     /**
-     * Checks if the Valid from value is earlier than Valid to.
+     * Checks if the merchant owns product offer prices.
      *
      * @param \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer $value
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Constraint\ValidProductOfferPriceIdsOwnByMerchantConstraint $validProductOfferPriceIdsConstraint
@@ -47,7 +47,7 @@ class ValidProductOfferPriceIdsOwnByMerchantConstraintValidator extends Abstract
             $priceProductOfferCriteriaTransfer->setPriceProductOfferIds($priceProductOfferIds)
                 ->setProductOfferCriteriaFilter((new ProductOfferCriteriaFilterTransfer())->setMerchantIds());
 
-            $validProductOfferPriceIdsConstraint->getFacade()->count($priceProductOfferCriteriaTransfer) === count($priceProductOfferIds)
+            $validProductOfferPriceIdsConstraint->getPriceProductOfferFacade()->count($priceProductOfferCriteriaTransfer) === count($priceProductOfferIds)
                 ?: $this->context->addViolation($validProductOfferPriceIdsConstraint->getMessage());
         }
     }

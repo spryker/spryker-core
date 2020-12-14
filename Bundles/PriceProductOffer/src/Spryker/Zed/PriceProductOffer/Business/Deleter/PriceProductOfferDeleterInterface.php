@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductOffer\Business\Deliter;
+namespace Spryker\Zed\PriceProductOffer\Business\Deleter;
 
 use Generated\Shared\Transfer\PriceProductOfferCollectionTransfer;
 
-interface PriceProductOfferDeliterInterface
+interface PriceProductOfferDeleterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer

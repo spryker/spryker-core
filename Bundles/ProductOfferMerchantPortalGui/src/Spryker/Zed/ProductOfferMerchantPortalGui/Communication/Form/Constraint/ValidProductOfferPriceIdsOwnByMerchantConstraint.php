@@ -35,7 +35,7 @@ class ValidProductOfferPriceIdsOwnByMerchantConstraint extends SymfonyConstraint
     /**
      * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface
      */
-    public function getFacade(): ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface
+    public function getPriceProductOfferFacade(): ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface
     {
         return $this->priceProductOfferFacade;
     }

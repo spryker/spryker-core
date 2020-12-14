@@ -28,16 +28,18 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\UpdateProductOfferController::PARAM_ID_PRODUCT_OFFER
      */
     protected const REQUEST_PARAM_ID_PRODUCT_OFFER = 'product-offer-id';
+    protected const REQUEST_PARAM_PRICE_PRODUCT_OFFER_IDS = 'price-product-offer-ids';
+    protected const REQUEST_VALUE_PRICE_PRODUCT_OFFER_IDS = '${row.price_product_offer_ids}';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\UpdateProductOfferController::savePricesAction()
      */
-    protected const URL_SAVE_PRICES = '/product-offer-merchant-portal-gui/update-product-offer/save-prices?product-offer-id=$OFFER_ID&type-price-product-offer-ids=${row.type_price_product_offer_ids}';
+    protected const URL_SAVE_PRICES = '/product-offer-merchant-portal-gui/update-product-offer/save-prices?type-price-product-offer-ids=${row.type_price_product_offer_ids}';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\UpdateProductOfferController::deletePricesAction()
      */
-    protected const URL_DELETE_PRICE = '/product-offer-merchant-portal-gui/update-product-offer/delete-prices?product-offer-id=$OFFER_ID&price-product-offer-ids=${row.price_product_offer_ids}';
+    protected const URL_DELETE_PRICE = '/product-offer-merchant-portal-gui/update-product-offer/delete-prices';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\UpdateProductOfferController::priceTableDataAction()
@@ -71,8 +73,8 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
             ->setDataSourceUrl($dataSourceUrl)
             ->setIsItemSelectionEnabled(false)
             ->setDefaultPageSize(25)
-            ->disableSearch()
-            ->disableColumnConfigurator();
+            ->isSearchEnabled(false)
+            ->isColumnConfiguratorEnabled(false);
 
         $guiTableConfigurationBuilder = $this->setEditableConfiguration(
             $guiTableConfigurationBuilder,
@@ -102,10 +104,14 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
      */
     protected function addRowActions(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
     {
+        $deleteUrlParams = http_build_query([
+            static::REQUEST_PARAM_ID_PRODUCT_OFFER => (string)$this->idProductOffer,
+            static::REQUEST_PARAM_PRICE_PRODUCT_OFFER_IDS => static::REQUEST_VALUE_PRICE_PRODUCT_OFFER_IDS,
+        ]);
         $guiTableConfigurationBuilder->addRowActionUrl(
             static::ID_ROW_ACTION_DELETE,
             static::TITLE_ROW_ACTION_DELETE,
-            str_replace(static::PARAM_ID_PRODUCT_OFFER, (string)$this->idProductOffer, static::URL_DELETE_PRICE)
+            static::URL_DELETE_PRICE . '?' . $deleteUrlParams
         );
 
         return $guiTableConfigurationBuilder;
@@ -124,8 +130,7 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
         array $initialData = []
     ): GuiTableConfigurationBuilderInterface {
         $guiTableConfigurationBuilder = parent::setEditableConfiguration($guiTableConfigurationBuilder, $initialData);
-        $editableUrl = str_replace(static::PARAM_ID_PRODUCT_OFFER, (string)$this->idProductOffer, static::URL_SAVE_PRICES);
-        $guiTableConfigurationBuilder->enableInlineDataEditing($editableUrl, static::METHOD_UPDATE_ACTION_URL);
+        $guiTableConfigurationBuilder->enableInlineDataEditing(static::URL_SAVE_PRICES, static::METHOD_UPDATE_ACTION_URL);
 
         return $guiTableConfigurationBuilder;
     }

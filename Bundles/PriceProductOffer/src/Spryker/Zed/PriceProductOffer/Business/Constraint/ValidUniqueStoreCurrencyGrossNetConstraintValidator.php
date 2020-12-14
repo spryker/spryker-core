@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\Communication\Validator\AbstractConstraintValidator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class ValidUniqueStoreCurrencyGrossNetPriceDataConstraintValidator extends AbstractConstraintValidator
+class ValidUniqueStoreCurrencyGrossNetConstraintValidator extends AbstractConstraintValidator
 {
     /**
      * Checks if the Valid from value is earlier than Valid to.
@@ -32,8 +32,8 @@ class ValidUniqueStoreCurrencyGrossNetPriceDataConstraintValidator extends Abstr
             throw new UnexpectedTypeException($value, PriceProductTransfer::class);
         }
 
-        if (!$constraint instanceof ValidUniqueStoreCurrencyGrossNetPriceDataConstraint) {
-            throw new UnexpectedTypeException($constraint, ValidUniqueStoreCurrencyGrossNetPriceDataConstraint::class);
+        if (!$constraint instanceof ValidUniqueStoreCurrencyGrossNetConstraint) {
+            throw new UnexpectedTypeException($constraint, ValidUniqueStoreCurrencyGrossNetConstraint::class);
         }
 
         if (!$value->getPriceDimension()->getIdProductOffer()) {

@@ -49,7 +49,7 @@ class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
         $validationResponseTransfer = new PriceProductOfferCollectionValidationResponseTransfer();
         $validationResponseTransfer->setIsSuccessful(true);
 
-        $constraintViolationList = $this->validator->validate($priceProductTransfers, $this->priceProductOfferConstraintProvider->getConstraintsMap());
+        $constraintViolationList = $this->validator->validate($priceProductTransfers, $this->priceProductOfferConstraintProvider->getConstraints());
 
         if (!$constraintViolationList->count()) {
             return $validationResponseTransfer;

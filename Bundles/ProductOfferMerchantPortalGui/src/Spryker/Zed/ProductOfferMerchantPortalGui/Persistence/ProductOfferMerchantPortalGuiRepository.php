@@ -929,6 +929,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
 
         $priceProductStoreQuery = $this->getFactory()
             ->getPriceProductStorePropelQuery()
+            ->select([SpyStoreTableMap::COL_NAME, SpyCurrencyTableMap::COL_CODE])
             ->addAsColumn(PriceProductOfferTableViewTransfer::STORE, SpyStoreTableMap::COL_NAME)
             ->addAsColumn(PriceProductOfferTableViewTransfer::CURRENCY, SpyCurrencyTableMap::COL_CODE);
 

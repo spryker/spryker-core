@@ -76,3 +76,4 @@ select.default.placeholder,Auswählen
 "Success! The Price is deleted.","Der Preis wurde gelöscht."
 "Something went wrong, please try again.","Etwas ist schief gelaufen, bitte versuchen Sie es noch einmal."
 "Offer prices saved successfully.","Angebotspreise wurden gespeichert."
+Cancel,Stornieren

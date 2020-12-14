@@ -18,8 +18,6 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerc
 
 abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
 {
-    protected const PARAM_ID_PRODUCT_OFFER = '$OFFER_ID';
-
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\ProductOfferForm::FIELD_PRODUCT_OFFER_PRICES
      */
@@ -128,7 +126,6 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
                 MoneyValueTransfer::GROSS_AMOUNT
             );
             $fieldOptions = [
-                'type' => 'number',
                 'attrs' => [
                     'step' => '0.01',
                 ],
@@ -137,10 +134,12 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
             $guiTableConfigurationBuilder->addEditableColumnInput(
                 $idNetColumn,
                 static::TITLE_COLUMN_PREFIX_PRICE_TYPE_NET . ' ' . $titlePriceTypeName,
+                'number',
                 $fieldOptions
             )->addEditableColumnInput(
                 $idGrossColumn,
                 static::TITLE_COLUMN_PREFIX_PRICE_TYPE_GROSS . ' ' . $titlePriceTypeName,
+                'number',
                 $fieldOptions
             );
         }

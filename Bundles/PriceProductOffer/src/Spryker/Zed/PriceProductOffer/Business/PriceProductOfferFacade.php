@@ -69,6 +69,8 @@ class PriceProductOfferFacade extends AbstractFacade implements PriceProductOffe
      *
      * @api
      *
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     *
      * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer
@@ -91,7 +93,7 @@ class PriceProductOfferFacade extends AbstractFacade implements PriceProductOffe
      */
     public function deleteProductOfferPrices(PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer): void
     {
-        $this->getFactory()->createPriceProductOfferDeliter()->deleteProductOfferPrices($priceProductOfferCollectionTransfer);
+        $this->getFactory()->createPriceProductOfferDeleter()->deleteProductOfferPrices($priceProductOfferCollectionTransfer);
     }
 
     /**
@@ -112,6 +114,8 @@ class PriceProductOfferFacade extends AbstractFacade implements PriceProductOffe
      * {@inheritDoc}
      *
      * @api
+     *
+     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      *
      * @param \Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
      *

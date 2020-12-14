@@ -12,5 +12,5 @@ interface PriceProductOfferConstraintProviderInterface
     /**
      * @return \Symfony\Component\Validator\Constraint[]
      */
-    public function getConstraintsMap(): array;
+    public function getConstraints(): array;
 }

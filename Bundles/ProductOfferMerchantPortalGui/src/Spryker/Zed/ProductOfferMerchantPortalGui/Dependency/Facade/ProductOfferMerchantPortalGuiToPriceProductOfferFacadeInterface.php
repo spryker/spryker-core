@@ -11,7 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\PriceProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer;
 use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 
 interface ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface
@@ -54,11 +53,4 @@ interface ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface
      * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function getProductOfferPrices(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): ArrayObject;
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
-     */
-    public function savePriceProductOfferRelation(PriceProductTransfer $priceProductTransfer): PriceProductTransfer;
 }

@@ -641,9 +641,11 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     /**
      * @api
      *
+     * @param bool $isEnabled
+     *
      * @return $this
      */
-    public function disableSearch()
+    public function isSearchEnabled(bool $isEnabled = true)
     {
         $this->isSearchEnabled = false;
 
@@ -653,9 +655,11 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     /**
      * @api
      *
+     * @param bool $isEnabled
+     *
      * @return $this
      */
-    public function disableColumnConfigurator()
+    public function isColumnConfiguratorEnabled(bool $isEnabled = true)
     {
         $this->isColumnConfiguratorEnabled = false;
 
@@ -846,16 +850,21 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      *
      * @param string $id
      * @param string $title
+     * @param string $inputType
      * @param array|null $options
      *
      * @return $this
      */
-    public function addEditableColumnInput(string $id, string $title, ?array $options = [])
+    public function addEditableColumnInput(string $id, string $title, string $inputType = 'text', ?array $options = [])
     {
         $guiTableColumnConfigurationTransfer = (new GuiTableColumnConfigurationTransfer())
             ->setId($id)
             ->setTitle($title)
             ->setType(static::COLUMN_TYPE_INPUT);
+
+        $options = array_merge([
+            'type' => $inputType,
+        ], $options);
 
         $guiTableColumnConfigurationTransfer->setTypeOptions($options);
 

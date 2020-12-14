@@ -322,16 +322,20 @@ interface GuiTableConfigurationBuilderInterface
     /**
      * @api
      *
+     * @param bool $isEnabled
+     *
      * @return $this
      */
-    public function disableSearch();
+    public function isSearchEnabled(bool $isEnabled = true);
 
     /**
      * @api
      *
+     * @param bool $isEnabled
+     *
      * @return $this
      */
-    public function disableColumnConfigurator();
+    public function isColumnConfiguratorEnabled(bool $isEnabled = true);
 
     /**
      * Sets a placeholders for a search field.
@@ -417,11 +421,12 @@ interface GuiTableConfigurationBuilderInterface
      *
      * @param string $id
      * @param string $title
+     * @param string $inputType
      * @param array|null $options
      *
      * @return $this
      */
-    public function addEditableColumnInput(string $id, string $title, ?array $options = []);
+    public function addEditableColumnInput(string $id, string $title, string $inputType = 'text', ?array $options = []);
 
     /**
      * @api

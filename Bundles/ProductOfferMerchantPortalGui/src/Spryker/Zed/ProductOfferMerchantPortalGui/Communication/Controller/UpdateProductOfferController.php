@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller;
 
-use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOfferResponseTransfer;
@@ -60,37 +59,22 @@ class UpdateProductOfferController extends AbstractProductOfferController
         $isPriceProductOffersValid = true;
 
         if ($productOfferForm->isSubmitted() && $productOfferForm->isValid()) {
-            $priceProductOfferCollectionValidationResponseTransfer = $this->getFactory()
-                ->getPriceProductOfferFacade()
-                ->validateProductOfferPrices($productOfferForm->getData()->getPrices());
+            $initialData = $this->validateProductOfferPrices($productOfferForm->getData()->getPrices(), $initialData);
 
-            $isPriceProductOffersValid = $priceProductOfferCollectionValidationResponseTransfer->getIsSuccessful();
-
-            if (!$isPriceProductOffersValid) {
-                $initialData = $this->getFactory()
-                    ->createPriceProductOfferMapper()
-                    ->mapPriceProductOfferCollectionValidationResponseTransferToInitialDataErrors(
-                        $priceProductOfferCollectionValidationResponseTransfer,
-                        $initialData
-                    );
-            } else {
+            if (empty($initialData['errors'])) {
                 $productOfferResponseTransfer = $this->getFactory()->getProductOfferFacade()->update($productOfferForm->getData());
             }
         }
 
         $productOfferResponseTransfer->setProductOffer($productOfferTransfer);
 
-        $priceProductOfferTableConfiguration = $this->getFactory()
-            ->createPriceProductOfferUpdateGuiTableConfigurationProvider()
-            ->getConfiguration($idProductOffer, $initialData);
-
         return $this->getResponse(
             $productOfferForm,
             $productConcreteTransfer,
             $productAbstractTransfer,
             $productOfferResponseTransfer,
-            $priceProductOfferTableConfiguration,
-            $isPriceProductOffersValid
+            $idProductOffer,
+            $initialData
         );
     }
 
@@ -108,13 +92,14 @@ class UpdateProductOfferController extends AbstractProductOfferController
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $productOfferForm
+     * @phpstan-param array<mixed> $initialData
      *
      * @param \Symfony\Component\Form\FormInterface $productOfferForm
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\ProductOfferResponseTransfer $productOfferResponseTransfer
-     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $priceProductOfferTableConfiguration
-     * @param bool $isPriceProductOffersValid
+     * @param int $idProductOffer
+     * @param array $initialData
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -123,12 +108,16 @@ class UpdateProductOfferController extends AbstractProductOfferController
         ProductConcreteTransfer $productConcreteTransfer,
         ProductAbstractTransfer $productAbstractTransfer,
         ProductOfferResponseTransfer $productOfferResponseTransfer,
-        GuiTableConfigurationTransfer $priceProductOfferTableConfiguration,
-        bool $isPriceProductOffersValid
+        int $idProductOffer,
+        array $initialData
     ): JsonResponse {
         $localeTransfer = $this->getFactory()
             ->getLocaleFacade()
             ->getCurrentLocale();
+
+        $priceProductOfferTableConfiguration = $this->getFactory()
+            ->createPriceProductOfferUpdateGuiTableConfigurationProvider()
+            ->getConfiguration($idProductOffer, $initialData);
 
         $responseData = [
             'form' => $this->renderView('@ProductOfferMerchantPortalGui/Partials/offer_form.twig', [
@@ -148,20 +137,20 @@ class UpdateProductOfferController extends AbstractProductOfferController
         if (
             $productOfferForm->isValid()
             && $productOfferResponseTransfer->getIsSuccessful()
-            && $isPriceProductOffersValid
+            && empty($initialData['errors'])
         ) {
-            $responseData['postActions'] = [
-                [
-                    'type' => 'close_overlay',
+            $responseData = [
+                'postActions' => [
+                    ['type' => 'close_overlay'],
+                    ['type' => 'refresh_table'],
                 ],
-                [
-                    'type' => 'refresh_table',
+                'notifications' => [
+                    [
+                        'type' => 'success',
+                        'message' => 'The Offer is saved.',
+                    ],
                 ],
             ];
-            $responseData['notifications'] = [[
-                'type' => 'success',
-                'message' => 'The Offer is saved.',
-            ]];
 
             return new JsonResponse($responseData);
         }
@@ -175,7 +164,7 @@ class UpdateProductOfferController extends AbstractProductOfferController
             }
         }
 
-        $responseData = $this->addValidationNotifications($responseData, $productOfferForm, $isPriceProductOffersValid);
+        $responseData = $this->addValidationNotifications($responseData, $productOfferForm, $initialData);
 
         return new JsonResponse($responseData);
     }

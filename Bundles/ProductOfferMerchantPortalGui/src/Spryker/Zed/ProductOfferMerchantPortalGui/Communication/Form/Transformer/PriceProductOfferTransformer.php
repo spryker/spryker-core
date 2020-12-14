@@ -91,18 +91,7 @@ class PriceProductOfferTransformer implements DataTransformerInterface
             $prices[$key][PriceProductOfferTableViewTransfer::STORE] = $priceProductTransfer->getMoneyValue()->getFkStore();
             $prices[$key][PriceProductOfferTableViewTransfer::CURRENCY] = $priceProductTransfer->getMoneyValue()->getFkCurrency();
 
-            foreach ($this->priceProductFacade->getPriceTypeValues() as $priceTypeTransfer) {
-                if ($priceProductTransfer->getPryceType()->getName() !== $priceTypeTransfer->getName()) {
-                    continue;
-                }
-
-                $priceTypeName = mb_strtolower($priceTypeTransfer->getName());
-                $netAmountKey = $this->createNetKey($priceTypeName);
-                $grossAmountKey = $this->createGrossKey($priceTypeName);
-
-                $prices[$key][$netAmountKey] = $this->moneyFacade->convertIntegerToDecimal($priceProductTransfer->getMoneyValue()->getNetAmount());
-                $prices[$key][$grossAmountKey] = $this->moneyFacade->convertIntegerToDecimal($priceProductTransfer->getMoneyValue()->getGrossAmount());
-            }
+            $prices = $this->addPrices($priceProductTransfer, $prices[$key]);
         }
 
         return $this->utilEncodingService->encodeJson($prices);
@@ -120,17 +109,19 @@ class PriceProductOfferTransformer implements DataTransformerInterface
         $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
             ->setIdProductOffer($this->idProductOffer ?? 0);
 
-        if ($newPriceProductOffers) {
-            foreach ($newPriceProductOffers as $newPriceProductOffer) {
-                $currencyTransfer = $this->currencyFacade->getByIdCurrency($newPriceProductOffer[PriceProductOfferTableViewTransfer::CURRENCY]);
+        if (!$newPriceProductOffers) {
+            return $priceProductTransfers;
+        }
 
-                $priceProductTransfers = $this->addPriceProductTransfers(
-                    $newPriceProductOffer,
-                    $currencyTransfer,
-                    $priceProductDimensionTransfer,
-                    $priceProductTransfers
-                );
-            }
+        foreach ($newPriceProductOffers as $newPriceProductOffer) {
+            $currencyTransfer = $this->currencyFacade->getByIdCurrency($newPriceProductOffer[PriceProductOfferTableViewTransfer::CURRENCY]);
+
+            $priceProductTransfers = $this->addPriceProductTransfers(
+                $newPriceProductOffer,
+                $currencyTransfer,
+                $priceProductDimensionTransfer,
+                $priceProductTransfers
+            );
         }
 
         return $priceProductTransfers;
@@ -190,6 +181,34 @@ class PriceProductOfferTransformer implements DataTransformerInterface
     }
 
     /**
+     * @phpstan-param array<mixed> $prices
+     *
+     * @phpstan-return array<mixed>
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param array $prices
+     *
+     * @return array
+     */
+    protected function addPrices(PriceProductTransfer $priceProductTransfer, array $prices): array
+    {
+        foreach ($this->priceProductFacade->getPriceTypeValues() as $priceTypeTransfer) {
+            if ($priceProductTransfer->getPriceType()->getName() !== $priceTypeTransfer->getName()) {
+                continue;
+            }
+
+            $priceTypeName = mb_strtolower($priceTypeTransfer->getName());
+            $netAmountKey = $this->createNetKey($priceTypeName);
+            $grossAmountKey = $this->createGrossKey($priceTypeName);
+
+            $prices[$netAmountKey] = $this->moneyFacade->convertIntegerToDecimal($priceProductTransfer->getMoneyValue()->getNetAmount());
+            $prices[$grossAmountKey] = $this->moneyFacade->convertIntegerToDecimal($priceProductTransfer->getMoneyValue()->getGrossAmount());
+        }
+
+        return $prices;
+    }
+
+    /**
      * @param string $pryceTypeName
      *
      * @return string
@@ -215,7 +234,7 @@ class PriceProductOfferTransformer implements DataTransformerInterface
             '%s[%s][%s]',
             $pryceTypeName,
             PriceProductTransfer::MONEY_VALUE,
-            MoneyValueTransfer::GROSS_AMOUNT
+            MoneyValueTransfer::NET_AMOUNT
         );
     }
 }

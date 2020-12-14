@@ -21,9 +21,9 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class DeletePricesAction implements ActionInterface
 {
-    protected const TYPE_REFRESH_TABLE = 'refresh_table';
-    protected const TYPE_SUCCESS = 'success';
-    protected const TYPE_ERROR = 'error';
+    protected const POST_ACTION_TYPE_REFRESH_TABLE = 'refresh_table';
+    protected const NOTIFICATION_TYPE_SUCCESS = 'success';
+    protected const NOTIFICATION_TYPE_ERROR = 'error';
     protected const SUCCESS_MESSAGE = 'Success! The Price is deleted.';
     protected const ERROR_MESSAGE = 'Something went wrong, please try again.';
 
@@ -94,15 +94,17 @@ class DeletePricesAction implements ActionInterface
 
         $this->priceProductOfferFacade->deleteProductOfferPrices($priceProductOfferCollectionTransfer);
 
-        $responseData['postActions'] = [
-            [
-                'type' => static::TYPE_REFRESH_TABLE,
+        $responseData = [
+            'postActions' => [
+                'type' => static::POST_ACTION_TYPE_REFRESH_TABLE,
+            ],
+            'notifications' => [
+                [
+                    'type' => static::NOTIFICATION_TYPE_SUCCESS,
+                    'message' => static::SUCCESS_MESSAGE,
+                ],
             ],
         ];
-        $responseData['notifications'] = [[
-            'type' => static::TYPE_SUCCESS,
-            'message' => static::SUCCESS_MESSAGE,
-        ]];
 
         return new JsonResponse($responseData);
     }
@@ -123,7 +125,7 @@ class DeletePricesAction implements ActionInterface
 
         if ($constraintViolationList->count()) {
             $responseData['notifications'][] = [
-                'type' => static::TYPE_ERROR,
+                'type' => static::NOTIFICATION_TYPE_ERROR,
                 'message' => static::ERROR_MESSAGE,
             ];
 

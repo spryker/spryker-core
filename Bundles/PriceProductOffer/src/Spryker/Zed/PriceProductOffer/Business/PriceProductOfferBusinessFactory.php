@@ -8,11 +8,11 @@
 namespace Spryker\Zed\PriceProductOffer\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\PriceProductOffer\Business\Constraint\ValidUniqueStoreCurrencyGrossNetPriceDataConstraint;
+use Spryker\Zed\PriceProductOffer\Business\Constraint\ValidUniqueStoreCurrencyGrossNetConstraint;
 use Spryker\Zed\PriceProductOffer\Business\ConstraintProvider\PriceProductOfferConstraintProvider;
 use Spryker\Zed\PriceProductOffer\Business\ConstraintProvider\PriceProductOfferConstraintProviderInterface;
-use Spryker\Zed\PriceProductOffer\Business\Deliter\PriceProductOfferDeliter;
-use Spryker\Zed\PriceProductOffer\Business\Deliter\PriceProductOfferDeliterInterface;
+use Spryker\Zed\PriceProductOffer\Business\Deleter\PriceProductOfferDeleter;
+use Spryker\Zed\PriceProductOffer\Business\Deleter\PriceProductOfferDeleterInterface;
 use Spryker\Zed\PriceProductOffer\Business\Expander\ProductOfferExpander;
 use Spryker\Zed\PriceProductOffer\Business\Expander\ProductOfferExpanderInterface;
 use Spryker\Zed\PriceProductOffer\Business\Validator\PriceProductOfferValidator;
@@ -44,11 +44,11 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductOffer\Business\Deliter\PriceProductOfferDeliterInterface
+     * @return \Spryker\Zed\PriceProductOffer\Business\Deleter\PriceProductOfferDeleterInterface
      */
-    public function createPriceProductOfferDeliter(): PriceProductOfferDeliterInterface
+    public function createPriceProductOfferDeleter(): PriceProductOfferDeleterInterface
     {
-        return new PriceProductOfferDeliter(
+        return new PriceProductOfferDeleter(
             $this->getPriceProductFacade(),
             $this->getEntityManager()
         );
@@ -107,7 +107,7 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
      */
     public function createValidUniqueStoreCurrencyGrossNetPriceDataConstraint(): SymfonyConstraint
     {
-        return new ValidUniqueStoreCurrencyGrossNetPriceDataConstraint($this->getRepository());
+        return new ValidUniqueStoreCurrencyGrossNetConstraint($this->getRepository());
     }
 
     /**

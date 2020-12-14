@@ -69,13 +69,14 @@ class PriceProductOfferMapper
      */
     protected function addInitialDataErrors(ValidationErrorTransfer $validationErrorTransfer, array $initialData): array
     {
-        $propertyPath = $this->extractPropertyPatchValues($validationErrorTransfer->getPropertyPath());
+        $propertyPath = $this->extractPropertyPathValues($validationErrorTransfer->getPropertyPath());
 
         if (!$propertyPath || !is_array($propertyPath)) {
             return $initialData;
         }
 
-        $rowNumber = (int)$propertyPath[0] === 0 ? 0 : ((int)$propertyPath[0] - 1) % 2;
+        [$entityNumber, $entityName, $fieldName] = $propertyPath;
+        $rowNumber = (int)$entityNumber === 0 ? 0 : ((int)$entityNumber - 1) % 2;
         $isRowError = count($propertyPath) < 3;
         $errorMessage = $validationErrorTransfer->getMessage();
 
@@ -103,7 +104,7 @@ class PriceProductOfferMapper
      *
      * @return string[]
      */
-    protected function extractPropertyPatchValues(string $propertyPath): array
+    protected function extractPropertyPathValues(string $propertyPath): array
     {
         $propertyPath = str_replace('[', '', $propertyPath);
         $propertyPathValues = explode(']', $propertyPath);
@@ -122,19 +123,21 @@ class PriceProductOfferMapper
      */
     protected function transformPropertyPathToColumnId(array $propertyPath): string
     {
-        if (!isset($propertyPath[1])) {
+        [$entityNumber, $entityName, $fieldName] = $propertyPath;
+
+        if (!$entityName) {
             return '';
         }
 
         if ($propertyPath[1] === PriceProductTransfer::MONEY_VALUE) {
             $priceTypes = $this->priceProductFacade->getPriceTypeValues();
-            $priceTypeName = mb_strtolower($priceTypes[$propertyPath[0]]->getName());
+            $priceTypeName = mb_strtolower($priceTypes[$entityNumber]->getName());
 
-            if (!isset($propertyPath[2])) {
+            if (!$fieldName) {
                 return '';
             }
 
-            return sprintf('%s[%s][%s]', $priceTypeName, (string)$propertyPath[1], (string)$propertyPath[2]);
+            return sprintf('%s[%s][%s]', $priceTypeName, (string)$entityName, (string)$fieldName);
         }
 
         return (string)$propertyPath[1];

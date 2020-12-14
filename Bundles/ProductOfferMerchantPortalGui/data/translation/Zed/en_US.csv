@@ -76,3 +76,4 @@ select.default.placeholder,Select
 "Success! The Price is deleted.","Success! The Price is deleted."
 "Something went wrong, please try again.","Something went wrong, please try again."
 "Offer prices saved successfully.","Offer prices saved successfully."
+Cancel,Cancel

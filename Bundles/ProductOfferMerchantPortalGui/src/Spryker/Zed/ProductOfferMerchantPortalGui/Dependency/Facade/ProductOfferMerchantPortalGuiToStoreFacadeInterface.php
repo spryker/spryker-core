@@ -13,11 +13,4 @@ interface ProductOfferMerchantPortalGuiToStoreFacadeInterface
      * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
     public function getAllStores();
-
-    /**
-     * @param string $storeName
-     *
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    public function getStoreByName($storeName);
 }

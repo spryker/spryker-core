@@ -82,9 +82,10 @@ class PriceProductOfferEntityManager extends AbstractEntityManager implements Pr
     public function delete(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): void
     {
         $priceProductOfferIds = $priceProductOfferCriteriaTransfer->getPriceProductOfferIds();
-        $priceProductOfferEntity = $this->getFactory()
+        $this->getFactory()
             ->getPriceProductOfferPropelQuery()
             ->filterByIdPriceProductOffer_In($priceProductOfferIds)
+            ->find()
             ->delete();
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller;
 
+use ArrayObject;
 use Generated\Shared\Transfer\GuiTableEditableInitialDataTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTableViewTransfer;
@@ -94,23 +95,53 @@ class AbstractProductOfferController extends AbstractController
     }
 
     /**
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @phpstan-param array<mixed> $initialData
+     *
+     * @phpstan-return array<mixed>
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array $initialData
+     *
+     * @return array
+     */
+    protected function validateProductOfferPrices(ArrayObject $priceProductTransfers, array $initialData): array
+    {
+        $priceProductOfferCollectionValidationResponseTransfer = $this->getFactory()
+            ->getPriceProductOfferFacade()
+            ->validateProductOfferPrices($priceProductTransfers);
+
+        if (!$priceProductOfferCollectionValidationResponseTransfer->getIsSuccessful()) {
+            return $this->getFactory()
+                ->createPriceProductOfferMapper()
+                ->mapPriceProductOfferCollectionValidationResponseTransferToInitialDataErrors(
+                    $priceProductOfferCollectionValidationResponseTransfer,
+                    $initialData
+                );
+        }
+
+        return $initialData;
+    }
+
+    /**
      * @phpstan-param array<string, mixed> $responseData
      * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $productOfferForm
+     * @phpstan-param array<mixed> $initialData
      *
      * @phpstan-return array<string, mixed>
      *
      * @param array $responseData
      * @param \Symfony\Component\Form\FormInterface $productOfferForm
-     * @param bool|null $isPriceProductOffersValid
+     * @param array $initialData
      *
      * @return array
      */
     protected function addValidationNotifications(
         array $responseData,
         FormInterface $productOfferForm,
-        ?bool $isPriceProductOffersValid = true
+        array $initialData
     ): array {
-        if (!$productOfferForm->isValid() || !$isPriceProductOffersValid) {
+        if (!$productOfferForm->isValid() || !empty($initialData['errors'])) {
             $responseData['notifications'] = [
                 [
                     'type' => 'error',
