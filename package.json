@@ -8,19 +8,24 @@
         "url": "https://spryker.com/"
     },
     "scripts": {
-        "formatter:write": "npx prettier --config node_modules/@spryker/frontend-config.prettier/.prettierrc.json --write '**/*.(scss|css|less|js|ts|json|html)'",
-        "formatter:check": "npx prettier --config node_modules/@spryker/frontend-config.prettier/.prettierrc.json --check '**/*.(scss|css|less|js|ts|json|html)'",
-        "mp:tslint:write": "tslint -p tsconfig.json -c tslint.json --fix",
-        "mp:tslint:check": "tslint -p tsconfig.json -c tslint.json"
+        "formatter": "npx prettier --config node_modules/@spryker/frontend-config.prettier/.prettierrc.json --check '**/*.(scss|css|less|js|ts|json|html)'",
+        "formatter:fix": "npx prettier --config node_modules/@spryker/frontend-config.prettier/.prettierrc.json --write '**/*.(scss|css|less|js|ts|json|html)'",
+        "mp:tslint": "tslint -p tsconfig.json -c tslint.json",
+        "mp:tslint:fix": "tslint -p tsconfig.json -c tslint.json --fix"
     },
     "engines": {
         "node": ">=12.0.0",
         "npm": ">=6.9.0"
     },
     "devDependencies": {
+        "@angular/compiler": "~9.1.12",
+        "@angular/core": "~9.1.12",
         "@spryker/frontend-config.prettier": "~0.0.2",
         "@spryker/frontend-config.tslint": "~0.0.4",
+        "codelyzer": "~5.1.2",
         "prettier": "~2.0.5",
-        "tslint": "~6.1.3"
+        "rxjs": "~6.6.0",
+        "tslint": "~6.1.3",
+        "typescript": "~3.8.3"
     }
 }
