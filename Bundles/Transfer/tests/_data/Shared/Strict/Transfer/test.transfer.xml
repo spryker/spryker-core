@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="DummyItem">
+    </transfer>
+
+    <transfer name="PartiallyStrict">
+        <property name="propScalar" type="int"/>
+        <property name="propScalarStrict" type="int" strict="true"/>
+        <property name="propDecimal" type="decimal"/>
+        <property name="propDecimalStrict" type="decimal" strict="true"/>
+        <property name="propSimpleArray" type="array"/>
+        <property name="propSimpleArrayStrict" type="array" strict="true"/>
+        <property name="propDummyItem" type="DummyItem"/>
+        <property name="propDummyItemStrict" type="DummyItem" strict="true"/>
+        <property name="propDummyItemCollection" type="DummyItem[]"/>
+        <property name="propDummyItemCollectionStrict" type="DummyItem[]" strict="true"/>
+        <property name="propTypedArray" type="string[]"/>
+        <property name="propTypedArrayStrict" type="string[]" strict="true"/>
+        <property name="propTypedArrayAssoc" type="string[]" associative="true"/>
+        <property name="propTypedArrayAssocStrict" type="string[]" singular="propTypedArrayAssocStrictSingular" associative="true" strict="true"/>
+    </transfer>
+
+    <transfer name="FullyStrict" strict="true">
+        <property name="propScalar" type="int"/>
+        <property name="propDecimal" type="decimal"/>
+        <property name="propSimpleArray" type="array"/>
+        <property name="propArraySingular" type="array" singular="propArraySingularItem"/>
+        <property name="propDummyItem" type="DummyItem"/>
+        <property name="propDummyItemCollection" type="DummyItem[]"/>
+        <property name="propTypedArray" type="string[]"/>
+        <property name="propTypedArrayAssoc" type="string[]" singular="propTypedArrayAssocSingular" associative="true"/>
+        <property name="propDummyItemCollectionAssoc" type="DummyItem[]" singular="propDummyItemCollectionAssocSingular" associative="true"/>
+    </transfer>
+
+</transfers>
