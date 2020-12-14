@@ -10,7 +10,6 @@ namespace Spryker\Zed\PriceProductOffer\Persistence;
 use ArrayObject;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
-use Generated\Shared\Transfer\PriceProductStoreCriteriaTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Generated\Shared\Transfer\QueryJoinTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
@@ -122,42 +121,26 @@ class PriceProductOfferRepository extends AbstractRepository implements PricePro
             $priceProductOfferQuery->filterByFkProductOffer($priceProductOfferCriteriaTransfer->getIdProductOffer());
         }
 
-        $storeCriteriaTransfer = $priceProductOfferCriteriaTransfer->getPriceProductStoreCriteria();
-        if ($storeCriteriaTransfer) {
-            $this->applyPriceProductStoreCriteria($priceProductOfferQuery, $storeCriteriaTransfer);
+        if ($priceProductOfferCriteriaTransfer->getCurrencyIds()) {
+            $priceProductOfferQuery->useSpyPriceProductStoreQuery()
+                ->useCurrencyQuery()
+                ->filterByIdCurrency_In($priceProductOfferCriteriaTransfer->getCurrencyIds())
+                ->endUse()
+                ->endUse();
         }
 
-        if ($priceProductOfferCriteriaTransfer->getPriceTypeIds()) {
+        if ($priceProductOfferCriteriaTransfer->getStoreIds()) {
+            $priceProductOfferQuery->useSpyPriceProductStoreQuery()
+                ->useStoreQuery()
+                ->filterByIdStore_In($priceProductOfferCriteriaTransfer->getStoreIds())
+                ->endUse()
+                ->endUse();
+        }
+
+        if ($priceProductOfferCriteriaTransfer->getStoreIds()) {
             $priceProductOfferQuery->useSpyPriceProductStoreQuery()
                 ->usePriceProductQuery()
                 ->filterByFkPriceType_In($priceProductOfferCriteriaTransfer->getPriceTypeIds())
-                ->endUse()
-                ->endUse();
-        }
-    }
-
-    /**
-     * @param \Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOfferQuery $priceProductOfferQuery
-     * @param \Generated\Shared\Transfer\PriceProductStoreCriteriaTransfer $storeCriteriaTransfer
-     *
-     * @return void
-     */
-    public function applyPriceProductStoreCriteria(
-        SpyPriceProductOfferQuery $priceProductOfferQuery,
-        PriceProductStoreCriteriaTransfer $storeCriteriaTransfer
-    ): void {
-        if (!empty($storeCriteriaTransfer->getCurrencyIds())) {
-            $priceProductOfferQuery->useSpyPriceProductStoreQuery()
-                ->useCurrencyQuery()
-                ->filterByIdCurrency_In($storeCriteriaTransfer->getCurrencyIds())
-                ->endUse()
-                ->endUse();
-        }
-
-        if (!empty($storeCriteriaTransfer->getStoreIds())) {
-            $priceProductOfferQuery->useSpyPriceProductStoreQuery()
-                ->useStoreQuery()
-                ->filterByIdStore_In($storeCriteriaTransfer->getStoreIds())
                 ->endUse()
                 ->endUse();
         }

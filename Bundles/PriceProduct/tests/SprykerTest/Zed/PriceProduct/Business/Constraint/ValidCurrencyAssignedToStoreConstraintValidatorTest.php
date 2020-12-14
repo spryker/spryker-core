@@ -10,7 +10,10 @@ namespace SprykerTest\Zed\PriceProduct\Business\Constraint;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\PriceProduct\Business\Constraint\ValidCurrencyAssignedToStoreConstraint;
 use Spryker\Zed\PriceProduct\Business\Constraint\ValidCurrencyAssignedToStoreConstraintValidator;
+use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
@@ -49,12 +52,19 @@ class ValidCurrencyAssignedToStoreConstraintValidatorTest extends Unit
     protected $executionContextMock;
 
     /**
+     * @var \PHPUnit\Framework\MockObject\MockObject & PriceProductToStoreFacadeInterface
+     */
+    protected $storeFacadeMock;
+
+    /**
      * @return void
      */
     public function setUp(): void
     {
         parent::setUp();
-        $this->validCurrencyAssignedToStoreConstraint = $this->tester->getFacade()->getValidCurrencyAssignedToStoreConstraint();
+
+        $this->storeFacadeMock = $this->getMockForAbstractClass(PriceProductToStoreFacadeInterface::class);
+        $this->validCurrencyAssignedToStoreConstraint = new ValidCurrencyAssignedToStoreConstraint($this->storeFacadeMock);
         $this->validCurrencyAssignedToStoreConstraintValidator = new ValidCurrencyAssignedToStoreConstraintValidator();
         $this->executionContextMock = $this->getMockForAbstractClass(ExecutionContextInterface::class);
         $this->validCurrencyAssignedToStoreConstraintValidator->initialize($this->executionContextMock);
@@ -66,12 +76,14 @@ class ValidCurrencyAssignedToStoreConstraintValidatorTest extends Unit
     public function testValidateSuccess()
     {
         // Assign
-        $priceProductTransfer = new PriceProductTransfer();
-        $moneyValueTransfer = new MoneyValueTransfer();
         $currencyTransfer = $this->tester->haveCurrencyTransfer();
-        $priceProductTransfer->setMoneyValue($moneyValueTransfer);
-        $moneyValueTransfer->setCurrency($currencyTransfer);
-        $moneyValueTransfer->setFkStore(1);
+        $storeTransfer = (new StoreTransfer())->addAvailableCurrencyIsoCode($currencyTransfer->getCode());
+        $this->storeFacadeMock->method('getStoreById')->willReturn($storeTransfer);
+        $moneyValueTransfer = (new MoneyValueTransfer())
+            ->setCurrency($currencyTransfer)
+            ->setFkStore(1);
+        $priceProductTransfer = (new PriceProductTransfer())
+            ->setMoneyValue($moneyValueTransfer);
         $this->executionContextMock->expects($this->never())->method('addViolation');
 
         // Act
@@ -84,13 +96,13 @@ class ValidCurrencyAssignedToStoreConstraintValidatorTest extends Unit
     public function testValidateFails()
     {
         // Assign
-        $priceProductTransfer = new PriceProductTransfer();
-        $moneyValueTransfer = new MoneyValueTransfer();
         $currencyTransfer = $this->tester->haveCurrencyTransfer();
-        $currencyTransfer->setCode(static::FAKE_CURRENCY);
-        $priceProductTransfer->setMoneyValue($moneyValueTransfer);
-        $moneyValueTransfer->setCurrency($currencyTransfer);
-        $moneyValueTransfer->setFkStore(2);
+        $storeTransfer = (new StoreTransfer())->addAvailableCurrencyIsoCode(static::FAKE_CURRENCY);
+        $this->storeFacadeMock->method('getStoreById')->willReturn($storeTransfer);
+        $moneyValueTransfer = (new MoneyValueTransfer())
+            ->setCurrency($currencyTransfer);
+        $priceProductTransfer = (new PriceProductTransfer())
+            ->setMoneyValue($moneyValueTransfer);
         $this->executionContextMock->expects($this->once())->method('addViolation');
 
         // Act

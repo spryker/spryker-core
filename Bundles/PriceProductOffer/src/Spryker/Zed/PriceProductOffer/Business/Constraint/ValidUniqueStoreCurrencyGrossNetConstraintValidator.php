@@ -8,7 +8,6 @@
 namespace Spryker\Zed\PriceProductOffer\Business\Constraint;
 
 use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
-use Generated\Shared\Transfer\PriceProductStoreCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\Kernel\Communication\Validator\AbstractConstraintValidator;
 use Symfony\Component\Validator\Constraint;
@@ -36,19 +35,16 @@ class ValidUniqueStoreCurrencyGrossNetConstraintValidator extends AbstractConstr
             throw new UnexpectedTypeException($constraint, ValidUniqueStoreCurrencyGrossNetConstraint::class);
         }
 
-        if (!$value->getPriceDimension()->getIdProductOffer()) {
+        if (!$value->getPriceDimension() || !$value->getPriceDimension()->getIdProductOffer()) {
             return;
         }
 
         $moneyValueTransfer = $value->getMoneyValueOrFail();
 
-        $priceProductStoreCriteria = new PriceProductStoreCriteriaTransfer();
-        $priceProductStoreCriteria->addIdStore($moneyValueTransfer->getFkStoreOrFail())
-            ->addIdCurrency($moneyValueTransfer->getFkCurrencyOrFail());
-
         $priceProductOfferCriteriaTransfer = new PriceProductOfferCriteriaTransfer();
         $priceProductOfferCriteriaTransfer->setIdProductOffer($value->getPriceDimension()->getIdProductOffer())
-            ->setPriceProductStoreCriteria($priceProductStoreCriteria)
+            ->addIdCurrency($moneyValueTransfer->getFkCurrencyOrFail())
+            ->addIdStore($moneyValueTransfer->getFkStoreOrFail())
             ->addIdPriceType($value->getPriceType()->getIdPriceTypeOrFail());
 
         $priceProductTransfers = $constraint->getPriceProductOfferRepository()->getProductOfferPrices($priceProductOfferCriteriaTransfer);

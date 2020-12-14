@@ -13,7 +13,8 @@
         <property name="idProductOffer" type="int"/>
         <property name="priceProductOfferIds" type="int[]" singular="idPriceProductOffer"/>
         <property name="productOfferCriteriaFilter" type="ProductOfferCriteriaFilter"/>
-        <property name="priceProductStoreCriteria" type="PriceProductStoreCriteria"/>
+        <property name="currencyIds" type="int[]" singular="idCurrency"/>
+        <property name="storeIds" type="int[]" singular="idStore"/>
         <property name="priceTypeIds" type="int[]" singular="idPriceType"/>
     </transfer>
 

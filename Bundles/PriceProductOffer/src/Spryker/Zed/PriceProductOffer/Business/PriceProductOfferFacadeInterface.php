@@ -54,7 +54,7 @@ interface PriceProductOfferFacadeInterface
 
     /**
      * Specification:
-     * - Validates PriceProductTransfer stack.
+     * - Validates product offer prices collection.
      * - Сhecks if there are duplicated prices for store-currency-gross-net combinations.
      * - Checks that currency assigned to a store per prices.
      * - Returns PriceProductOfferCollectionValidationResponseTransfer transfer object.
