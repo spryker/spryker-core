@@ -22,7 +22,7 @@ class StoreRelationshipFilterStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        if ($dataSet[CategoryStoreDataSetInterface::COL_EXCLUDED_STORE_NAME] === static::ALL_STORES_IDENTIFIER) {
+        if ($dataSet[CategoryStoreDataSetInterface::COLUMN_EXCLUDED_STORE_NAME] === static::ALL_STORES_IDENTIFIER) {
             $this->filterAgainstExcludedStores($dataSet);
         }
 
@@ -36,15 +36,15 @@ class StoreRelationshipFilterStep implements DataImportStepInterface
      */
     protected function filterAgainstExcludedStores(DataSetInterface $dataSet): void
     {
-        if ($dataSet[CategoryStoreDataSetInterface::COL_INCLUDED_STORE_NAME] === '*') {
-            $dataSet[CategoryStoreDataSetInterface::COL_INCLUDED_STORE_IDS] = [];
+        if ($dataSet[CategoryStoreDataSetInterface::COLUMN_INCLUDED_STORE_NAME] === static::ALL_STORES_IDENTIFIER) {
+            $dataSet[CategoryStoreDataSetInterface::INCLUDED_STORE_IDS] = [];
 
             return;
         }
 
-        $dataSet[CategoryStoreDataSetInterface::COL_EXCLUDED_STORE_IDS] = array_diff(
-            $dataSet[CategoryStoreDataSetInterface::COL_EXCLUDED_STORE_IDS],
-            $dataSet[CategoryStoreDataSetInterface::COL_INCLUDED_STORE_IDS]
+        $dataSet[CategoryStoreDataSetInterface::EXCLUDED_STORE_IDS] = array_diff(
+            $dataSet[CategoryStoreDataSetInterface::EXCLUDED_STORE_IDS],
+            $dataSet[CategoryStoreDataSetInterface::INCLUDED_STORE_IDS]
         );
     }
 
@@ -55,9 +55,9 @@ class StoreRelationshipFilterStep implements DataImportStepInterface
      */
     protected function filterAgainstIncludedStores(DataSetInterface $dataSet): void
     {
-        $dataSet[CategoryStoreDataSetInterface::COL_INCLUDED_STORE_IDS] = array_diff(
-            $dataSet[CategoryStoreDataSetInterface::COL_INCLUDED_STORE_IDS],
-            $dataSet[CategoryStoreDataSetInterface::COL_EXCLUDED_STORE_IDS]
+        $dataSet[CategoryStoreDataSetInterface::INCLUDED_STORE_IDS] = array_diff(
+            $dataSet[CategoryStoreDataSetInterface::INCLUDED_STORE_IDS],
+            $dataSet[CategoryStoreDataSetInterface::EXCLUDED_STORE_IDS]
         );
     }
 }

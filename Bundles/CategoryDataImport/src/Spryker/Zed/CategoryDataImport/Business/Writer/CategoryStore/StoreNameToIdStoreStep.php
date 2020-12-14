@@ -34,11 +34,11 @@ class StoreNameToIdStoreStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $dataSet[CategoryStoreDataSetInterface::COL_INCLUDED_STORE_IDS] = $this->getStoreIds(
-            $dataSet[CategoryStoreDataSetInterface::COL_INCLUDED_STORE_NAME]
+        $dataSet[CategoryStoreDataSetInterface::INCLUDED_STORE_IDS] = $this->getStoreIds(
+            $dataSet[CategoryStoreDataSetInterface::COLUMN_INCLUDED_STORE_NAME]
         );
-        $dataSet[CategoryStoreDataSetInterface::COL_EXCLUDED_STORE_IDS] = $this->getStoreIds(
-            $dataSet[CategoryStoreDataSetInterface::COL_EXCLUDED_STORE_NAME]
+        $dataSet[CategoryStoreDataSetInterface::EXCLUDED_STORE_IDS] = $this->getStoreIds(
+            $dataSet[CategoryStoreDataSetInterface::COLUMN_EXCLUDED_STORE_NAME]
         );
     }
 

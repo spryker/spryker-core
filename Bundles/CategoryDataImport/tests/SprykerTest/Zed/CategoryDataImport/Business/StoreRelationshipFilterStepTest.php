@@ -43,8 +43,8 @@ class StoreRelationshipFilterStepTest extends Unit
         $storeRelationshipFilterStep->execute($dataSet);
 
         // Assert
-        $this->assertEquals($dataSet[CategoryStoreDataSetInterface::COL_INCLUDED_STORE_IDS], $expInclude);
-        $this->assertEquals($dataSet[CategoryStoreDataSetInterface::COL_EXCLUDED_STORE_IDS], $expExclude);
+        $this->assertEquals($dataSet[CategoryStoreDataSetInterface::INCLUDED_STORE_IDS], $expInclude);
+        $this->assertEquals($dataSet[CategoryStoreDataSetInterface::EXCLUDED_STORE_IDS], $expExclude);
     }
 
     /**
@@ -56,10 +56,10 @@ class StoreRelationshipFilterStepTest extends Unit
             // "" - "" add nothing - remove nothing = nothing
             [
                 [
-                    CategoryStoreDataSetInterface::COL_INCLUDED_STORE_NAME => '',
-                    CategoryStoreDataSetInterface::COL_EXCLUDED_STORE_NAME => '',
-                    CategoryStoreDataSetInterface::COL_INCLUDED_STORE_IDS => [],
-                    CategoryStoreDataSetInterface::COL_EXCLUDED_STORE_IDS => [],
+                    CategoryStoreDataSetInterface::COLUMN_INCLUDED_STORE_NAME => '',
+                    CategoryStoreDataSetInterface::COLUMN_EXCLUDED_STORE_NAME => '',
+                    CategoryStoreDataSetInterface::INCLUDED_STORE_IDS => [],
+                    CategoryStoreDataSetInterface::EXCLUDED_STORE_IDS => [],
                 ],
                 [],
                 [],
@@ -67,10 +67,10 @@ class StoreRelationshipFilterStepTest extends Unit
             // "" - "*" remove all
             [
                 [
-                    CategoryStoreDataSetInterface::COL_INCLUDED_STORE_NAME => '',
-                    CategoryStoreDataSetInterface::COL_EXCLUDED_STORE_NAME => '*',
-                    CategoryStoreDataSetInterface::COL_INCLUDED_STORE_IDS => [],
-                    CategoryStoreDataSetInterface::COL_EXCLUDED_STORE_IDS => [1, 2, 3],
+                    CategoryStoreDataSetInterface::COLUMN_INCLUDED_STORE_NAME => '',
+                    CategoryStoreDataSetInterface::COLUMN_EXCLUDED_STORE_NAME => '*',
+                    CategoryStoreDataSetInterface::INCLUDED_STORE_IDS => [],
+                    CategoryStoreDataSetInterface::EXCLUDED_STORE_IDS => [1, 2, 3],
                 ],
                 [],
                 [1, 2, 3],
@@ -78,10 +78,10 @@ class StoreRelationshipFilterStepTest extends Unit
             // "*" - "" add all
             3 => [
                 [
-                    CategoryStoreDataSetInterface::COL_INCLUDED_STORE_NAME => '*',
-                    CategoryStoreDataSetInterface::COL_EXCLUDED_STORE_NAME => '',
-                    CategoryStoreDataSetInterface::COL_INCLUDED_STORE_IDS => [1, 2, 3],
-                    CategoryStoreDataSetInterface::COL_EXCLUDED_STORE_IDS => [],
+                    CategoryStoreDataSetInterface::COLUMN_INCLUDED_STORE_NAME => '*',
+                    CategoryStoreDataSetInterface::COLUMN_EXCLUDED_STORE_NAME => '',
+                    CategoryStoreDataSetInterface::INCLUDED_STORE_IDS => [1, 2, 3],
+                    CategoryStoreDataSetInterface::EXCLUDED_STORE_IDS => [],
                 ],
                 [1, 2, 3],
                 [],
@@ -89,10 +89,10 @@ class StoreRelationshipFilterStepTest extends Unit
             // "*" - "*" add all, remove all = remove all
             [
                 [
-                    CategoryStoreDataSetInterface::COL_INCLUDED_STORE_NAME => '*',
-                    CategoryStoreDataSetInterface::COL_EXCLUDED_STORE_NAME => '*',
-                    CategoryStoreDataSetInterface::COL_INCLUDED_STORE_IDS => [1, 2, 3],
-                    CategoryStoreDataSetInterface::COL_EXCLUDED_STORE_IDS => [1, 2, 3],
+                    CategoryStoreDataSetInterface::COLUMN_INCLUDED_STORE_NAME => '*',
+                    CategoryStoreDataSetInterface::COLUMN_EXCLUDED_STORE_NAME => '*',
+                    CategoryStoreDataSetInterface::INCLUDED_STORE_IDS => [1, 2, 3],
+                    CategoryStoreDataSetInterface::EXCLUDED_STORE_IDS => [1, 2, 3],
                 ],
                 [],
                 [1, 2, 3],
@@ -100,10 +100,10 @@ class StoreRelationshipFilterStepTest extends Unit
             // "" - "x" remove x
             [
                 [
-                    CategoryStoreDataSetInterface::COL_INCLUDED_STORE_NAME => '',
-                    CategoryStoreDataSetInterface::COL_EXCLUDED_STORE_NAME => 'US',
-                    CategoryStoreDataSetInterface::COL_INCLUDED_STORE_IDS => [],
-                    CategoryStoreDataSetInterface::COL_EXCLUDED_STORE_IDS => [3],
+                    CategoryStoreDataSetInterface::COLUMN_INCLUDED_STORE_NAME => '',
+                    CategoryStoreDataSetInterface::COLUMN_EXCLUDED_STORE_NAME => 'US',
+                    CategoryStoreDataSetInterface::INCLUDED_STORE_IDS => [],
+                    CategoryStoreDataSetInterface::EXCLUDED_STORE_IDS => [3],
                 ],
                 [],
                 [3],
@@ -111,10 +111,10 @@ class StoreRelationshipFilterStepTest extends Unit
             // "*" - "x" add all remove x
             [
                 [
-                    CategoryStoreDataSetInterface::COL_INCLUDED_STORE_NAME => '*',
-                    CategoryStoreDataSetInterface::COL_EXCLUDED_STORE_NAME => 'US',
-                    CategoryStoreDataSetInterface::COL_INCLUDED_STORE_IDS => [1, 2, 3],
-                    CategoryStoreDataSetInterface::COL_EXCLUDED_STORE_IDS => [3],
+                    CategoryStoreDataSetInterface::COLUMN_INCLUDED_STORE_NAME => '*',
+                    CategoryStoreDataSetInterface::COLUMN_EXCLUDED_STORE_NAME => 'US',
+                    CategoryStoreDataSetInterface::INCLUDED_STORE_IDS => [1, 2, 3],
+                    CategoryStoreDataSetInterface::EXCLUDED_STORE_IDS => [3],
                 ],
                 [1, 2],
                 [3],
@@ -122,10 +122,10 @@ class StoreRelationshipFilterStepTest extends Unit
             // "x" - "*" add x remove all others
             [
                 [
-                    CategoryStoreDataSetInterface::COL_INCLUDED_STORE_NAME => 'US',
-                    CategoryStoreDataSetInterface::COL_EXCLUDED_STORE_NAME => '*',
-                    CategoryStoreDataSetInterface::COL_INCLUDED_STORE_IDS => [3],
-                    CategoryStoreDataSetInterface::COL_EXCLUDED_STORE_IDS => [1, 2, 3],
+                    CategoryStoreDataSetInterface::COLUMN_INCLUDED_STORE_NAME => 'US',
+                    CategoryStoreDataSetInterface::COLUMN_EXCLUDED_STORE_NAME => '*',
+                    CategoryStoreDataSetInterface::INCLUDED_STORE_IDS => [3],
+                    CategoryStoreDataSetInterface::EXCLUDED_STORE_IDS => [1, 2, 3],
                 ],
                 [3],
                 [1, 2],
@@ -133,10 +133,10 @@ class StoreRelationshipFilterStepTest extends Unit
             // "x" - "" add x
             [
                 [
-                    CategoryStoreDataSetInterface::COL_INCLUDED_STORE_NAME => 'US',
-                    CategoryStoreDataSetInterface::COL_EXCLUDED_STORE_NAME => '',
-                    CategoryStoreDataSetInterface::COL_INCLUDED_STORE_IDS => [3],
-                    CategoryStoreDataSetInterface::COL_EXCLUDED_STORE_IDS => [],
+                    CategoryStoreDataSetInterface::COLUMN_INCLUDED_STORE_NAME => 'US',
+                    CategoryStoreDataSetInterface::COLUMN_EXCLUDED_STORE_NAME => '',
+                    CategoryStoreDataSetInterface::INCLUDED_STORE_IDS => [3],
+                    CategoryStoreDataSetInterface::EXCLUDED_STORE_IDS => [],
                 ],
                 [3],
                 [],
@@ -144,10 +144,10 @@ class StoreRelationshipFilterStepTest extends Unit
             // "x" - "y,z" add x remove y and z
             [
                 [
-                    CategoryStoreDataSetInterface::COL_INCLUDED_STORE_NAME => 'US',
-                    CategoryStoreDataSetInterface::COL_EXCLUDED_STORE_NAME => 'DE, AT',
-                    CategoryStoreDataSetInterface::COL_INCLUDED_STORE_IDS => [3],
-                    CategoryStoreDataSetInterface::COL_EXCLUDED_STORE_IDS => [1, 2],
+                    CategoryStoreDataSetInterface::COLUMN_INCLUDED_STORE_NAME => 'US',
+                    CategoryStoreDataSetInterface::COLUMN_EXCLUDED_STORE_NAME => 'DE, AT',
+                    CategoryStoreDataSetInterface::INCLUDED_STORE_IDS => [3],
+                    CategoryStoreDataSetInterface::EXCLUDED_STORE_IDS => [1, 2],
                 ],
                 [3],
                 [1, 2],
@@ -155,10 +155,10 @@ class StoreRelationshipFilterStepTest extends Unit
             // "x, y" = "y" add x remove y
             [
                 [
-                    CategoryStoreDataSetInterface::COL_INCLUDED_STORE_NAME => 'DE, AT',
-                    CategoryStoreDataSetInterface::COL_EXCLUDED_STORE_NAME => 'AT',
-                    CategoryStoreDataSetInterface::COL_INCLUDED_STORE_IDS => [1, 2],
-                    CategoryStoreDataSetInterface::COL_EXCLUDED_STORE_IDS => [2],
+                    CategoryStoreDataSetInterface::COLUMN_INCLUDED_STORE_NAME => 'DE, AT',
+                    CategoryStoreDataSetInterface::COLUMN_EXCLUDED_STORE_NAME => 'AT',
+                    CategoryStoreDataSetInterface::INCLUDED_STORE_IDS => [1, 2],
+                    CategoryStoreDataSetInterface::EXCLUDED_STORE_IDS => [2],
                 ],
                 [1],
                 [2],

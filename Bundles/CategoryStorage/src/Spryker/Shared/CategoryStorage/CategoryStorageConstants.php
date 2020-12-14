@@ -43,4 +43,20 @@ class CategoryStorageConstants
      * @api
      */
     public const CATEGORY_TREE_RESOURCE_NAME = 'category_tree';
+
+    /**
+     * Specification
+     * - This events will be used for category_store publishing
+     *
+     * @api
+     */
+    public const CATEGORY_STORE_PUBLISH = 'Category.category_store.publish';
+
+    /**
+     * Specification
+     * - This events will be used for category_store un-publishing
+     *
+     * @api
+     */
+    public const CATEGORY_STORE_UNPUBLISH = 'Category.category_store.unpublish';
 }

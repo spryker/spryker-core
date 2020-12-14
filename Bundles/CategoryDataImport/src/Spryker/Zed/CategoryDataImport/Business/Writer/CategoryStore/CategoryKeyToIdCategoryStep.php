@@ -30,13 +30,13 @@ class CategoryKeyToIdCategoryStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $categoryKey = $dataSet[CategoryStoreDataSetInterface::COL_CATEGORY_KEY];
+        $categoryKey = $dataSet[CategoryStoreDataSetInterface::COLUMN_CATEGORY_KEY];
 
         if (!$categoryKey) {
             throw new DataKeyNotFoundInDataSetException('Category key is missing');
         }
 
-        $dataSet[CategoryStoreDataSetInterface::COL_ID_CATEGORY] = $this->getCategoryId($categoryKey);
+        $dataSet[CategoryStoreDataSetInterface::ID_CATEGORY] = $this->getCategoryId($categoryKey);
     }
 
     /**

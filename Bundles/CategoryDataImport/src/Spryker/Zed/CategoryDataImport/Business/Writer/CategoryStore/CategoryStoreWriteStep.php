@@ -20,7 +20,14 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class CategoryStoreWriteStep extends PublishAwareStep implements DataImportStepInterface
 {
+    /**
+     * @uses \Spryker\Shared\CategoryStorage\CategoryStorageConstants::CATEGORY_STORE_PUBLISH
+     */
     protected const EVENT_CATEGORY_STORE_PUBLISH = 'Category.category_store.publish';
+
+    /**
+     * @uses \Spryker\Shared\CategoryStorage\CategoryStorageConstants::CATEGORY_STORE_UNPUBLISH
+     */
     protected const EVENT_CATEGORY_STORE_UNPUBLISH = 'Category.category_store.unpublish';
 
     protected const CATEGORY_CLOSURE_TABLE_SELF_CATEGORY_NODE_DEPTH = 0;
@@ -43,13 +50,13 @@ class CategoryStoreWriteStep extends PublishAwareStep implements DataImportStepI
      */
     protected function addCategoryStoreRelations(DataSetInterface $dataSet): void
     {
-        foreach ($dataSet[CategoryStoreDataSetInterface::COL_INCLUDED_STORE_IDS] as $idStore) {
-            if (!$this->isParentCategoryHasRelationToStore($dataSet[CategoryStoreDataSetInterface::COL_ID_CATEGORY], $idStore)) {
+        foreach ($dataSet[CategoryStoreDataSetInterface::INCLUDED_STORE_IDS] as $idStore) {
+            if (!$this->isParentCategoryHasRelationToStore($dataSet[CategoryStoreDataSetInterface::ID_CATEGORY], $idStore)) {
                 continue;
             }
 
-            $this->createCategoryStoreEntity($dataSet[CategoryStoreDataSetInterface::COL_ID_CATEGORY], $idStore);
-            $this->addChildrenCategoriesRelationToStore($dataSet[CategoryStoreDataSetInterface::COL_ID_CATEGORY], $idStore);
+            $this->createCategoryStoreEntity($dataSet[CategoryStoreDataSetInterface::ID_CATEGORY], $idStore);
+            $this->addChildrenCategoriesRelationToStore($dataSet[CategoryStoreDataSetInterface::ID_CATEGORY], $idStore);
         }
     }
 
@@ -60,21 +67,21 @@ class CategoryStoreWriteStep extends PublishAwareStep implements DataImportStepI
      */
     protected function removeCategoryStoreRelations(DataSetInterface $dataSet): void
     {
-        if ($dataSet[CategoryStoreDataSetInterface::COL_EXCLUDED_STORE_IDS] === []) {
+        if ($dataSet[CategoryStoreDataSetInterface::EXCLUDED_STORE_IDS] === []) {
             return;
         }
 
         $categoryStoreEntities = SpyCategoryStoreQuery::create()
-            ->filterByFkCategory($dataSet[CategoryStoreDataSetInterface::COL_ID_CATEGORY])
-            ->filterByFkStore_In($dataSet[CategoryStoreDataSetInterface::COL_EXCLUDED_STORE_IDS])
+            ->filterByFkCategory($dataSet[CategoryStoreDataSetInterface::ID_CATEGORY])
+            ->filterByFkStore_In($dataSet[CategoryStoreDataSetInterface::EXCLUDED_STORE_IDS])
             ->find();
 
         foreach ($categoryStoreEntities as $categoryStoreEntity) {
             $this->deleteCategoryStoreEntity($categoryStoreEntity);
         }
         $this->deleteChildrenCategoriesRelationToStore(
-            $dataSet[CategoryStoreDataSetInterface::COL_ID_CATEGORY],
-            $dataSet[CategoryStoreDataSetInterface::COL_EXCLUDED_STORE_IDS]
+            $dataSet[CategoryStoreDataSetInterface::ID_CATEGORY],
+            $dataSet[CategoryStoreDataSetInterface::EXCLUDED_STORE_IDS]
         );
     }
 
@@ -103,6 +110,8 @@ class CategoryStoreWriteStep extends PublishAwareStep implements DataImportStepI
     /**
      * @param int $idParentCategory
      * @param int $idStore
+     *
+     * @return void
      */
     protected function addChildrenCategoriesRelationToStore(int $idParentCategory, int $idStore): void
     {
@@ -179,12 +188,16 @@ class CategoryStoreWriteStep extends PublishAwareStep implements DataImportStepI
             ->endUse()
             ->find();
 
+        if ($categoryClosureTableEntities->count() === 0) {
+            return [];
+        }
+
         $categoryStoreEntities = [];
         foreach ($categoryClosureTableEntities as $categoryClosureTableEntity) {
             $categoryStoreEntities[] = $categoryClosureTableEntity->getDescendantNode()->getCategory()->getSpyCategoryStores()->getArrayCopy();
         }
 
-        return $categoryStoreEntities === [] ? [] : array_merge(...$categoryStoreEntities);
+        return array_merge(...$categoryStoreEntities);
     }
 
     /**
@@ -209,7 +222,7 @@ class CategoryStoreWriteStep extends PublishAwareStep implements DataImportStepI
     /**
      * @param \Orm\Zed\CategoryStore\Persistence\SpyCategoryStore $categoryStoreEntity
      *
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @return void
      */
     protected function deleteCategoryStoreEntity(SpyCategoryStore $categoryStoreEntity): void
     {
