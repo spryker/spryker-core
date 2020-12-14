@@ -18,7 +18,8 @@ class MerchantCartValidator implements MerchantCartValidatorInterface
 {
     protected const MESSAGE_TYPE_ERROR = 'error';
     protected const GLOSSARY_KEY_REMOVED_MERCHANT = 'merchant.message.removed';
-    protected const GLOSSARY_PARAM_SKU = '%sku%';
+    protected const GLOSSARY_KEY_INACTIVE_MERCHANT = 'merchant.message.inactive';
+    protected const GLOSSARY_PARAM_MERCHANT_REFERENCE = '%merchant_reference%';
 
     /**
      * @var \Spryker\Zed\Merchant\Business\MerchantFacadeInterface
@@ -52,9 +53,18 @@ class MerchantCartValidator implements MerchantCartValidatorInterface
                 $messageTransfers[] = (new MessageTransfer())
                     ->setType(static::MESSAGE_TYPE_ERROR)
                     ->setValue(static::GLOSSARY_KEY_REMOVED_MERCHANT)
-                    ->setParameters([static::GLOSSARY_PARAM_SKU => $itemTransfer->getSku()]);
+                    ->setParameters([static::GLOSSARY_PARAM_MERCHANT_REFERENCE => $itemTransfer->getMerchantReference()]);
 
                 continue;
+            }
+
+            if (!$merchantTransfers[$itemTransfer->getMerchantReference()]->getIsActive()) {
+                $messageTransfers[] = (new MessageTransfer())
+                    ->setType(static::MESSAGE_TYPE_ERROR)
+                    ->setValue(static::GLOSSARY_KEY_INACTIVE_MERCHANT)
+                    ->setParameters([
+                        static::GLOSSARY_PARAM_MERCHANT_REFERENCE => $itemTransfer->getMerchantReference(),
+                    ]);
             }
         }
 
@@ -88,7 +98,6 @@ class MerchantCartValidator implements MerchantCartValidatorInterface
         $merchantCollectionTransfer = $this->merchantFacade->get(
             (new MerchantCriteriaTransfer())
                 ->setMerchantReferences($merchantReferences)
-                ->setIsActive(true)
                 ->setStore($cartChangeTransfer->getQuote()->getStore())
         );
         foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {

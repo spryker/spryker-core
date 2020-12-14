@@ -49,7 +49,10 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
      */
     public function get(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): MerchantProductCollectionTransfer
     {
-        $merchantProductAbstractQuery = $this->getFactory()->getMerchantProductAbstractPropelQuery();
+        $merchantProductAbstractQuery = $this->getFactory()
+            ->getMerchantProductAbstractPropelQuery()
+            ->joinWithProductAbstract()
+            ->joinWithMerchant();
 
         $merchantProductAbstractQuery = $this->applyFilters($merchantProductAbstractQuery, $merchantProductCriteriaTransfer);
 
@@ -86,6 +89,11 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
 
         if ($merchantProductCriteriaTransfer->getMerchantProductAbstractIds()) {
             $merchantProductAbstractQuery->filterByIdMerchantProductAbstract_In($merchantProductCriteriaTransfer->getMerchantProductAbstractIds());
+        }
+
+        if ($merchantProductCriteriaTransfer->getSkus()) {
+            $merchantProductAbstractQuery->useProductAbstractQuery()
+                ->filterBySku_In($merchantProductCriteriaTransfer->getSkus());
         }
 
         if ($merchantProductCriteriaTransfer->getMerchantIds()) {

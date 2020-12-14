@@ -32,8 +32,8 @@ class MerchantProductCartItemExpanderPlugin extends AbstractPlugin implements Ca
         CartItemRequestTransfer $cartItemRequestTransfer,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): CartItemRequestTransfer {
-        return $this->getFactory()
-            ->createMerchantProductCartItemExpander()
-            ->expand($cartItemRequestTransfer, $restCartItemsAttributesTransfer);
+        $cartItemRequestTransfer->setMerchantReference($restCartItemsAttributesTransfer->getMerchantReference());
+
+        return $cartItemRequestTransfer;
     }
 }
