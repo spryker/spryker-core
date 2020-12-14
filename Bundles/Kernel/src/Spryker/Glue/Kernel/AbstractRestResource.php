@@ -14,7 +14,7 @@ class AbstractRestResource
     /**
      * @var \Spryker\Glue\Kernel\AbstractFactory
      */
-    private $factory;
+    protected $factory;
 
     /**
      * @api

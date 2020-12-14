@@ -16,22 +16,22 @@ class BundleControllerAction implements BundleControllerActionInterface
     /**
      * @var string
      */
-    private $bundle;
+    protected $bundle;
 
     /**
      * @var string
      */
-    private $controller;
+    protected $controller;
 
     /**
      * @var string
      */
-    private $action;
+    protected $action;
 
     /**
      * @var \Laminas\Filter\Word\DashToCamelCase|null
      */
-    private $filter;
+    protected $filter;
 
     /**
      * @var \Spryker\Shared\Kernel\ClassResolver\ModuleNameResolver|null

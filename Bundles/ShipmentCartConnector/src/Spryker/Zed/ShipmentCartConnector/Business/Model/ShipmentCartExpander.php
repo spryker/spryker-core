@@ -178,7 +178,6 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
         CurrencyTransfer $currencyTransfer,
         $priceMode
     ) {
-
         $netModeIdentifier = $this->priceFacade->getNetPriceModeIdentifier();
         foreach ($shipmentMethodTransfer->getPrices() as $moneyValueTransfer) {
             if ($moneyValueTransfer->getCurrency()->getCode() !== $currencyTransfer->getCode()) {

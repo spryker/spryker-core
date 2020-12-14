@@ -23,7 +23,7 @@ trait BundleDependencyProviderResolverAwareTrait
     /**
      * @var \Spryker\Yves\Kernel\Container
      */
-    private $container;
+    protected $container;
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

@@ -512,7 +512,6 @@ class Builder implements BuilderInterface
         $sourceName,
         TransitionInterface $transition
     ) {
-
         $sourceProcess = $stateToProcessMap[$sourceName];
         $sourceState = $sourceProcess->getState($sourceName);
         $transition->setSourceState($sourceState);

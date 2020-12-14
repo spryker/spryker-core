@@ -49,7 +49,6 @@ class GrandTotalDecisionRule implements DecisionRuleInterface
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
-
         if (!$quoteTransfer->getTotals()) {
             return false;
         }

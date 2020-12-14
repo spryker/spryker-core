@@ -1,64 +1,25 @@
-@import '~@spryker/styles/src/lib/themes/default/external-variables.less';
-@spy-profile-spacing: 15px;
+@import '~@spryker/styles/src/lib/themes/default/variables/index.less';
+
+@profile-card-margin-bottom: 20px;
+@profile-card-label-margin-bottom: 9px;
+@profile-collapsible-margin-bottom: 18px;
 
 .mp-profile {
   font-family: @font-family;
 
-  &__row {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0 -@spy-profile-spacing;
-  }
-
-  &__col {
-    padding: 0 @spy-profile-spacing;
-
-    &--business-left {
-      width: 58.33%;
-    }
-
-    &--business-right {
-      width: 41.67%;
-    }
-
-    &--online-left {
-      width: 66.67%;
-    }
-
-    &--online-right {
-      width: 33.33%;
-    }
-
-    &--full {
-      width: 100%;
-    }
-
-    &--half {
-      width: 50%;
-    }
-
-    &--number {
-      width: 21%;
-    }
-
-    &--code {
-      width: 29%;
-    }
-  }
-
   &__card {
     display: block;
-    margin-bottom: 20px;
+    margin-bottom: @profile-card-margin-bottom;
 
       &--label {
           display: block;
-          margin-bottom: 9px;
+          margin-bottom: @profile-card-label-margin-bottom;
       }
   }
 
   &__collapsible {
     display: block;
-    margin-bottom: 18px;
+    margin-bottom: @profile-collapsible-margin-bottom;
   }
 
   &__status {

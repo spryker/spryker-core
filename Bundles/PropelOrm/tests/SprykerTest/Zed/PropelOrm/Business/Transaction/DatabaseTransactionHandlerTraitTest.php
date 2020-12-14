@@ -60,8 +60,6 @@ class DatabaseTransactionHandlerTraitTest extends Unit
     }
 
     /**
-     * @throws \Exception
-     *
      * @return void
      */
     public function testShouldCatchExceptionAndRollback(): void
