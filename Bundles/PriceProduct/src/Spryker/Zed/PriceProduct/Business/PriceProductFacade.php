@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 /**
  * @method \Spryker\Zed\PriceProduct\Business\PriceProductBusinessFactory getFactory()
@@ -614,17 +613,5 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
         return $this->getFactory()
             ->createPriceProductConcreteReader()
             ->expandProductConcreteWithPrices($productConcreteTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @return \Symfony\Component\Validator\Constraint
-     */
-    public function getValidCurrencyAssignedToStoreConstraint(): SymfonyConstraint
-    {
-        return $this->getFactory()->createValidCurrencyAssignedToStoreConstraint();
     }
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\PriceProduct\Business;
 
 use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\PriceProduct\Business\Constraint\ValidCurrencyAssignedToStoreConstraint;
 use Spryker\Zed\PriceProduct\Business\Internal\Install;
 use Spryker\Zed\PriceProduct\Business\Internal\InstallInterface;
 use Spryker\Zed\PriceProduct\Business\Model\BulkWriter;
@@ -61,7 +60,6 @@ use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToTouchFacadeInterfac
 use Spryker\Zed\PriceProduct\Dependency\Service\PriceProductToUtilEncodingServiceInterface;
 use Spryker\Zed\PriceProduct\PriceProductConfig;
 use Spryker\Zed\PriceProduct\PriceProductDependencyProvider;
-use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 /**
  * @method \Spryker\Zed\PriceProduct\PriceProductConfig getConfig()
@@ -466,13 +464,5 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     public function getPriceProductStorePreDeletePlugins(): array
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRICE_PRODUCT_STORE_PRE_DELETE);
-    }
-
-    /**
-     * @return \Symfony\Component\Validator\Constraint
-     */
-    public function createValidCurrencyAssignedToStoreConstraint(): SymfonyConstraint
-    {
-        return new ValidCurrencyAssignedToStoreConstraint($this->getStoreFacade());
     }
 }

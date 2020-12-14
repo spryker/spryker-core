@@ -34,6 +34,8 @@ use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
  */
 class PriceProductOfferFacadeTest extends Unit
 {
+    protected const FAKE_CURRENCY = 'RUB';
+
     use DataCleanupHelperTrait;
 
     /**
@@ -208,6 +210,35 @@ class PriceProductOfferFacadeTest extends Unit
         $this->assertCount(1, $collectionValidationResponseTransfer->getValidationErrors());
         $this->assertSame(
             'The set of inputs Store and Currency needs to be unique.',
+            $collectionValidationResponseTransfer->getValidationErrors()
+                ->offsetGet(0)
+                ->getMessage()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateProductOfferPricesFailValidCurrencyAssignedToStoreConstraint()
+    {
+        // Arrange
+        $priceProductTransfer = $this->tester->havePriceProductSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+
+        $priceProductTransfer->getMoneyValue()
+            ->getCurrency()
+            ->setCode(static::FAKE_CURRENCY)
+            ->setName(static::FAKE_CURRENCY);
+
+        // Act
+        $collectionValidationResponseTransfer = $this->tester
+            ->getFacade()
+            ->validateProductOfferPrices(new ArrayObject([$priceProductTransfer]));
+
+        // Assert
+        $this->assertFalse($collectionValidationResponseTransfer->getIsSuccessful());
+        $this->assertCount(1, $collectionValidationResponseTransfer->getValidationErrors());
+        $this->assertSame(
+            'Currency "RUB" is not assigned to the store "DE"',
             $collectionValidationResponseTransfer->getValidationErrors()
                 ->offsetGet(0)
                 ->getMessage()

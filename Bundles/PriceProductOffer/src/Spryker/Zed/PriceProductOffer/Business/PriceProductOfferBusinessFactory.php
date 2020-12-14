@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProductOffer\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\PriceProductOffer\Business\Constraint\ValidCurrencyAssignedToStoreConstraint;
 use Spryker\Zed\PriceProductOffer\Business\Constraint\ValidUniqueStoreCurrencyGrossNetConstraint;
 use Spryker\Zed\PriceProductOffer\Business\ConstraintProvider\PriceProductOfferConstraintProvider;
 use Spryker\Zed\PriceProductOffer\Business\ConstraintProvider\PriceProductOfferConstraintProviderInterface;
@@ -79,7 +80,7 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
     public function getPriceProductOfferValidatorConstraintsExtension(): array
     {
         return [
-            $this->getPriceProductFacade()->getValidCurrencyAssignedToStoreConstraint(),
+            $this->createValidCurrencyAssignedToStoreConstraint(),
             $this->createValidUniqueStoreCurrencyGrossNetPriceDataConstraint(),
         ];
     }
@@ -108,6 +109,14 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
     public function createValidUniqueStoreCurrencyGrossNetPriceDataConstraint(): SymfonyConstraint
     {
         return new ValidUniqueStoreCurrencyGrossNetConstraint($this->getRepository());
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    public function createValidCurrencyAssignedToStoreConstraint(): SymfonyConstraint
+    {
+        return new ValidCurrencyAssignedToStoreConstraint($this->getProvidedDependency(PriceProductOfferDependencyProvider::FACADE_STORE));
     }
 
     /**

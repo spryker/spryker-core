@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\PriceProductOffer\Dependency\External\PriceProductOfferToValidationAdapter;
 use Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToPriceProductFacadeBridge;
+use Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToStoreFacadeBridge;
 
 /**
  * @method \Spryker\Zed\Product\ProductConfig getConfig()
@@ -18,6 +19,7 @@ use Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToPriceProd
 class PriceProductOfferDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
+    public const FACADE_STORE = 'FACADE_STORE';
 
     public const EXTERNAL_ADAPTER_VALIDATION = 'EXTERNAL_ADAPTER_VALIDATION';
 
@@ -30,6 +32,7 @@ class PriceProductOfferDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container = $this->addPriceProductFacade($container);
         $container = $this->addValidationAdapter($container);
+        $container = $this->addStoreFacadeFacade($container);
 
         return $container;
     }
@@ -44,6 +47,22 @@ class PriceProductOfferDependencyProvider extends AbstractBundleDependencyProvid
         $container->set(static::FACADE_PRICE_PRODUCT, function (Container $container) {
             return new PriceProductOfferToPriceProductFacadeBridge(
                 $container->getLocator()->priceProduct()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacadeFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new PriceProductOfferToStoreFacadeBridge(
+                $container->getLocator()->store()->facade()
             );
         });
 

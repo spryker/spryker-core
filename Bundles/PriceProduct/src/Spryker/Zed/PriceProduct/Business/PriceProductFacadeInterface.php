@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 interface PriceProductFacadeInterface
 {
@@ -586,14 +585,4 @@ interface PriceProductFacadeInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function expandProductConcreteWithPrices(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
-
-    /**
-     * Specification:
-     * - Returns validCurrencyAssignedToStoreConstraint for further usage in Symfony validator.
-     *
-     * @api
-     *
-     * @return \Symfony\Component\Validator\Constraint
-     */
-    public function getValidCurrencyAssignedToStoreConstraint(): SymfonyConstraint;
 }
