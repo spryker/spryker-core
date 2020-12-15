@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantProduct\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+
 class MerchantProductToProductFacadeBridge implements MerchantProductToProductFacadeInterface
 {
     /**
@@ -30,5 +32,15 @@ class MerchantProductToProductFacadeBridge implements MerchantProductToProductFa
     public function findProductAbstractById(int $idProductAbstract)
     {
         return $this->productFacade->findProductAbstractById($idProductAbstract);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return int
+     */
+    public function saveProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        return $this->productFacade->saveProductAbstract($productAbstractTransfer);
     }
 }

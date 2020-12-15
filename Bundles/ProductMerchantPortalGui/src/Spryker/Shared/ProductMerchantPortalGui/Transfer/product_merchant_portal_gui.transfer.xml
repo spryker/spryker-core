@@ -61,6 +61,7 @@
         <property name="categoryNames" type="string[]" singular="categoryName"/>
         <property name="storeNames" type="string[]" singular="storeName"/>
         <property name="attributes" type="array" singular="attribute"/>
+        <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>
         <property name="imageSets" type="ProductImageSet[]" singular="imageSet"/>
     </transfer>
 
@@ -92,6 +93,26 @@
     <transfer name="MerchantProductCriteria">
         <property name="idProductAbstract" type="int"/>
         <property name="idMerchant" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantProduct">
+        <property name="idMerchant" type="int"/>
+        <property name="productAbstract" type="ProductAbstract"/>
+    </transfer>
+
+    <transfer name="LocalizedAttributes">
+        <property name="name" type="string"/>
+        <property name="description" type="string"/>
+        <property name="locale" type="Locale"/>
+    </transfer>
+
+    <transfer name="ProductAbstractResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
     </transfer>
 
 </transfers>

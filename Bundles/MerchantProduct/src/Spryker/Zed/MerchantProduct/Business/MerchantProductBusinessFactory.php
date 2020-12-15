@@ -10,6 +10,8 @@ namespace Spryker\Zed\MerchantProduct\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MerchantProduct\Business\Reader\ProductAbstractReader;
 use Spryker\Zed\MerchantProduct\Business\Reader\ProductAbstractReaderInterface;
+use Spryker\Zed\MerchantProduct\Business\Updater\ProductAbstractUpdater;
+use Spryker\Zed\MerchantProduct\Business\Updater\ProductAbstractUpdaterInterface;
 use Spryker\Zed\MerchantProduct\Dependency\Facade\MerchantProductToProductFacadeInterface;
 use Spryker\Zed\MerchantProduct\MerchantProductDependencyProvider;
 
@@ -25,6 +27,17 @@ class MerchantProductBusinessFactory extends AbstractBusinessFactory
     public function createProductAbstractReader(): ProductAbstractReaderInterface
     {
         return new ProductAbstractReader(
+            $this->getRepository(),
+            $this->getProductFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProduct\Business\Updater\ProductAbstractUpdaterInterface
+     */
+    public function createProductAbstractUpdater(): ProductAbstractUpdaterInterface
+    {
+        return new ProductAbstractUpdater(
             $this->getRepository(),
             $this->getProductFacade()
         );

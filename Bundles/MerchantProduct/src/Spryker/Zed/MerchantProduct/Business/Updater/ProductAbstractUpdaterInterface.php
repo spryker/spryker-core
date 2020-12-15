@@ -5,24 +5,13 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade;
+namespace Spryker\Zed\MerchantProduct\Business\Updater;
 
-use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractResponseTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 
-interface ProductMerchantPortalGuiToMerchantProductFacadeInterface
+interface ProductAbstractUpdaterInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
-     */
-    public function findProductAbstract(
-        MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
-    ): ?ProductAbstractTransfer;
-
     /**
      * @param \Generated\Shared\Transfer\MerchantProductTransfer $merchantProductTransfer
      *

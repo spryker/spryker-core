@@ -9,7 +9,9 @@ namespace Spryker\Zed\MerchantProduct\Business;
 
 use Generated\Shared\Transfer\MerchantProductCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\ProductAbstractResponseTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 
 interface MerchantProductFacadeInterface
@@ -55,4 +57,18 @@ interface MerchantProductFacadeInterface
     public function findProductAbstract(
         MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
     ): ?ProductAbstractTransfer;
+
+    /**
+     * Specification:
+     * - Updates abstract product if it belongs to merchant.
+     * - Returns ProductAbstractResponseTransfer.isSuccessful = true on successful update.
+     * - Returns ProductAbstractResponseTransfer.isSuccessful = false and corresponding error if product doesn't belong to merchant.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantProductTransfer $merchantProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractResponseTransfer
+     */
+    public function updateProductAbstract(MerchantProductTransfer $merchantProductTransfer): ProductAbstractResponseTransfer;
 }

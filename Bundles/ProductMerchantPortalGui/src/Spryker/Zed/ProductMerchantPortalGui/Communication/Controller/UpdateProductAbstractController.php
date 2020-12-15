@@ -8,7 +8,11 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Controller;
 
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantProductTransfer;
+use Generated\Shared\Transfer\ProductAbstractResponseTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -34,7 +38,7 @@ class UpdateProductAbstractController extends AbstractController
         $idMerchant = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser()->getIdMerchant();
 
         $productAbstractTransfer = $this->getFactory()->getMerchantProductFacade()->findProductAbstract(
-            (new MerchantProductCriteriaTransfer())->setIdMerchant($idMerchant)->setIdProductAbstract($idProductAbstract)
+            (new MerchantProductCriteriaTransfer())->addIdMerchant($idMerchant)->setIdProductAbstract($idProductAbstract)
         );
 
         if (!$productAbstractTransfer) {
@@ -45,9 +49,38 @@ class UpdateProductAbstractController extends AbstractController
             ));
         }
 
-        $localeTransfer = $this->getFactory()
-            ->getLocaleFacade()
-            ->getCurrentLocale();
+        $productAbstractForm = $this->getFactory()->createProductAbstractForm($productAbstractTransfer);
+        $productAbstractForm->handleRequest($request);
+
+        if ($productAbstractForm->isSubmitted() && $productAbstractForm->isValid()) {
+            $productAbstractTransfer = $productAbstractForm->getData();
+            $merchantProductTransfer = (new MerchantProductTransfer())->setProductAbstract($productAbstractTransfer)
+                ->setIdMerchant($idMerchant);
+
+            $productAbstractResponseTransfer = $this->getFactory()
+                ->getMerchantProductFacade()->updateProductAbstract($merchantProductTransfer);
+        }
+
+        $productAbstractResponseTransfer = $productAbstractResponseTransfer ?? new ProductAbstractResponseTransfer();
+
+        return $this->getResponse($productAbstractForm, $productAbstractTransfer, $productAbstractResponseTransfer);
+    }
+
+    /**
+     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $productAbstractForm
+     *
+     * @param \Symfony\Component\Form\FormInterface $productAbstractForm
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractResponseTransfer $productAbstractResponseTransfer
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    protected function getResponse(
+        FormInterface $productAbstractForm,
+        ProductAbstractTransfer $productAbstractTransfer,
+        ProductAbstractResponseTransfer $productAbstractResponseTransfer
+    ): JsonResponse {
+        $localeTransfer = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
         $productAbstractName = $this->getFactory()
             ->createProductAbstractNameBuilder()
             ->buildProductAbstractName($productAbstractTransfer, $localeTransfer);
@@ -56,8 +89,46 @@ class UpdateProductAbstractController extends AbstractController
             'form' => $this->renderView('@ProductMerchantPortalGui/Partials/product_abstract_form.twig', [
                 'productAbstract' => $productAbstractTransfer,
                 'productAbstractName' => $productAbstractName,
+                'form' => $productAbstractForm->createView(),
             ])->getContent(),
         ];
+
+        if (!$productAbstractForm->isSubmitted()) {
+            return new JsonResponse($responseData);
+        }
+
+        if ($productAbstractForm->isValid() && $productAbstractResponseTransfer->getIsSuccessful()) {
+            $responseData['postActions'] = [
+                [
+                    'type' => 'close_overlay',
+                ],
+                [
+                    'type' => 'refresh_table',
+                ],
+            ];
+            $responseData['notifications'] = [[
+                'type' => 'success',
+                'message' => 'The Product is saved.',
+            ]];
+
+            return new JsonResponse($responseData);
+        }
+
+        if (!$productAbstractForm->isValid()) {
+            $responseData['notifications'][] = [
+                'type' => 'error',
+                'message' => 'Please resolve all errors.',
+            ];
+        }
+
+        if (!$productAbstractResponseTransfer->getIsSuccessful()) {
+            foreach ($productAbstractResponseTransfer->getMessages() as $messageTransfer) {
+                $responseData['notifications'][] = [
+                    'type' => 'error',
+                    'message' => $messageTransfer->getValue(),
+                ];
+            }
+        }
 
         return new JsonResponse($responseData);
     }

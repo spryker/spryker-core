@@ -1,13 +1,20 @@
 Categories,Categories
+Description,Description
 Image,Image
 "Manage Product","Manage Product"
 Name,Name
 Offline,Offline
 Online,Online
+"Please resolve all errors.","Please resolve all errors."
 Products,Products
+"Provide a name","Provide a name"
+"Provide description","Provide description"
+Save,Save
 SKU,SKU
 "Search by SKU, Name","Search by SKU, Name"
 Stores,Stores
 "Super Attributes","Super Attributes"
+"The Product is saved.","The Product is saved."
+"The value cannot be empty. Please fill in this input.","The value cannot be empty. Please fill in this input."
 Variants,Variants
 Visibility,Visibility
