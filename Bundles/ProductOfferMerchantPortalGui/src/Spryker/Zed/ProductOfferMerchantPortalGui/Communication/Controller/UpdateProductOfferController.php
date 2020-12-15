@@ -54,9 +54,8 @@ class UpdateProductOfferController extends AbstractProductOfferController
         );
         $productOfferForm->handleRequest($request);
 
-        $initialData = $this->setDefaultInitialData($request, $productOfferForm->getName());
+        $initialData = $this->getDefaultInitialData($request, $productOfferForm->getName());
         $productOfferResponseTransfer = new ProductOfferResponseTransfer();
-        $isPriceProductOffersValid = true;
 
         if ($productOfferForm->isSubmitted() && $productOfferForm->isValid()) {
             $initialData = $this->validateProductOfferPrices($productOfferForm->getData()->getPrices(), $initialData);

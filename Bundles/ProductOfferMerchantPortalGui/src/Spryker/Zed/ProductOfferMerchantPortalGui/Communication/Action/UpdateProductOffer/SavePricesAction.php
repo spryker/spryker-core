@@ -22,16 +22,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SavePricesAction implements ActionInterface
 {
-    protected const PARAM_ID_PRODUCT_OFFER = 'product-offer-id';
     protected const PARAM_TYPE_PRICE_PRODUCT_OFFER_IDS = 'type-price-product-offer-ids';
-    protected const PARAM_NET = 'netAmount';
-    protected const PARAM_GROSS = 'grossAmount';
-    protected const PARAM_STORE = 'store';
-    protected const PARAM_CURRENCY = 'currency';
 
     protected const NOTIFICATION_TYPE_SUCCESS = 'success';
     protected const NOTIFICATION_TYPE_ERROR = 'error';
-    protected const NOTIFICATION_SUCCESS_MESSAGE = 'Offer prices saved successfuly.';
+    protected const NOTIFICATION_SUCCESS_MESSAGE = 'Offer prices saved successfully.';
 
     protected const POST_ACTION_REFRESH_TABLE = 'refresh_table';
 

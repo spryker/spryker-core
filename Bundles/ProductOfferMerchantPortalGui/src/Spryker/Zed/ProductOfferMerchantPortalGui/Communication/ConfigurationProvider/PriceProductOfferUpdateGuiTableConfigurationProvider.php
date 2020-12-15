@@ -28,8 +28,10 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\UpdateProductOfferController::PARAM_ID_PRODUCT_OFFER
      */
     protected const REQUEST_PARAM_ID_PRODUCT_OFFER = 'product-offer-id';
+    /**
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Action\UpdateProductOffer\DeletePricesAction::PARAM_PRICE_PRODUCT_OFFER_IDS
+     */
     protected const REQUEST_PARAM_PRICE_PRODUCT_OFFER_IDS = 'price-product-offer-ids';
-    protected const REQUEST_VALUE_PRICE_PRODUCT_OFFER_IDS = '${row.price_product_offer_ids}';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\UpdateProductOfferController::savePricesAction()
@@ -108,7 +110,7 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
             static::REQUEST_PARAM_ID_PRODUCT_OFFER => (string)$this->idProductOffer,
         ]);
 
-        $url = static::URL_DELETE_PRICE . '?' . $deleteUrlParams . '&' . static::REQUEST_PARAM_PRICE_PRODUCT_OFFER_IDS . '=' . static::REQUEST_VALUE_PRICE_PRODUCT_OFFER_IDS;
+        $url = static::URL_DELETE_PRICE . '?' . $deleteUrlParams . '&' . static::REQUEST_PARAM_PRICE_PRODUCT_OFFER_IDS . '=${row.price_product_offer_ids}';
 
         $guiTableConfigurationBuilder->addRowActionUrl(
             static::ID_ROW_ACTION_DELETE,

@@ -36,12 +36,11 @@ class TransferConstraintValidator extends ConstraintValidator
             throw new UnexpectedValueException($value, AbstractTransfer::class);
         }
         $value = $value->toArray(false, true);
-        $context = $this->context;
         foreach ($constraint->fields as $field => $fieldConstraint) {
             $existsInArray = is_array($value) && array_key_exists($field, $value);
 
             if (!$existsInArray) {
-                $context->buildViolation($constraint->getMissingFieldsMessage())
+                $this->context->buildViolation($constraint->getMissingFieldsMessage())
                     ->atPath('[' . $field . ']')
                     ->setParameter('{{ field }}', $this->formatValue($field))
                     ->setInvalidValue(null)
@@ -50,8 +49,8 @@ class TransferConstraintValidator extends ConstraintValidator
                 continue;
             }
             if (!empty($fieldConstraint)) {
-                    $context->getValidator()
-                        ->inContext($context)
+                $this->context->getValidator()
+                        ->inContext($this->context)
                         ->atPath('[' . $field . ']')
                         ->validate($value[$field], $fieldConstraint);
             }

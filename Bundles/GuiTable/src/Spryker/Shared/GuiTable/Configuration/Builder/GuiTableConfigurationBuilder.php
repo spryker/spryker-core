@@ -798,10 +798,10 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             $this->editableConfiguration = (new GuiTableEditableConfigurationTransfer())->setEnabled(true);
         }
 
-        $initialData = !empty($initialData) ? $this->mapInitialData($initialData) : null;
+        $guiTableEditableInitialDataTransfer = !empty($initialData) ? $this->mapInitialDataToTransfer($initialData) : null;
         $guiTableEditableCreateConfigurationTransfer = (new GuiTableEditableCreateConfigurationTransfer())
             ->setFormInputName($formInputName)
-            ->setInitialData($initialData)
+            ->setInitialData($guiTableEditableInitialDataTransfer)
             ->setCancelButton($this->createEditableCancelButton($cancelButton))
             ->setAddButton($this->createEditableAddButton($addButton));
 
@@ -919,7 +919,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      *
      * @return \Generated\Shared\Transfer\GuiTableEditableInitialDataTransfer
      */
-    protected function mapInitialData(array $initialData): GuiTableEditableInitialDataTransfer
+    protected function mapInitialDataToTransfer(array $initialData): GuiTableEditableInitialDataTransfer
     {
         $guiTableEditableInitialDataTransfer = (new GuiTableEditableInitialDataTransfer())
             ->fromArray($initialData, true);

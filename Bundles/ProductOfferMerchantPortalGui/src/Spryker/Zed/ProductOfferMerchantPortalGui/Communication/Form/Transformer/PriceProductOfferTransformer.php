@@ -114,11 +114,8 @@ class PriceProductOfferTransformer implements DataTransformerInterface
         }
 
         foreach ($newPriceProductOffers as $newPriceProductOffer) {
-            $currencyTransfer = $this->currencyFacade->getByIdCurrency($newPriceProductOffer[PriceProductOfferTableViewTransfer::CURRENCY]);
-
             $priceProductTransfers = $this->addPriceProductTransfers(
                 $newPriceProductOffer,
-                $currencyTransfer,
                 $priceProductDimensionTransfer,
                 $priceProductTransfers
             );
@@ -134,7 +131,6 @@ class PriceProductOfferTransformer implements DataTransformerInterface
      * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      *
      * @param array $newPriceProductOffer
-     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceProductDimensionTransfer
      * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
@@ -142,10 +138,11 @@ class PriceProductOfferTransformer implements DataTransformerInterface
      */
     protected function addPriceProductTransfers(
         array $newPriceProductOffer,
-        CurrencyTransfer $currencyTransfer,
         PriceProductDimensionTransfer $priceProductDimensionTransfer,
         ArrayObject $priceProductTransfers
     ): ArrayObject {
+        $currencyTransfer = $this->currencyFacade->getByIdCurrency($newPriceProductOffer[PriceProductOfferTableViewTransfer::CURRENCY]);
+
         foreach ($this->priceProductFacade->getPriceTypeValues() as $priceTypeTransfer) {
             $storeTransfer = (new StoreTransfer())
                 ->setIdStore($newPriceProductOffer[PriceProductOfferTableViewTransfer::STORE]);

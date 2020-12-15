@@ -87,13 +87,13 @@ class PriceProductOfferMapper
             return $initialData;
         }
 
-        $columnId = $this->transformPropertyPathToColumnId($propertyPath);
+        $idColumn = $this->transformPropertyPathToColumnId($propertyPath);
 
-        if (!$columnId) {
+        if (!$idColumn) {
             return $initialData;
         }
 
-        $initialData[GuiTableEditableInitialDataTransfer::ERRORS][$rowNumber][GuiTableEditableDataErrorTransfer::COLUMN_ERRORS][$columnId] = $errorMessage;
+        $initialData[GuiTableEditableInitialDataTransfer::ERRORS][$rowNumber][GuiTableEditableDataErrorTransfer::COLUMN_ERRORS][$idColumn] = $errorMessage;
 
         return $initialData;
     }

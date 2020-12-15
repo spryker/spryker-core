@@ -84,12 +84,11 @@ class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
             $guiTableDataResponseTransfer->addRow((new GuiTableRowDataResponseTransfer())->setResponseData($responseData));
         }
 
-        /** @var \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer */
-        $paginationTransfer = $priceProductOfferTableViewCollectionTransfer->requirePagination()->getPagination();
+        $paginationTransfer = $priceProductOfferTableViewCollectionTransfer->getPaginationOrFail();
 
         return $guiTableDataResponseTransfer
-            ->setPage($paginationTransfer->requirePage()->getPage())
-            ->setPageSize($paginationTransfer->requireMaxPerPage()->getMaxPerPage())
-            ->setTotal($paginationTransfer->requireNbResults()->getNbResults());
+            ->setPage($paginationTransfer->getPage())
+            ->setPageSize($paginationTransfer->getMaxPerPage())
+            ->setTotal($paginationTransfer->getNbResults());
     }
 }

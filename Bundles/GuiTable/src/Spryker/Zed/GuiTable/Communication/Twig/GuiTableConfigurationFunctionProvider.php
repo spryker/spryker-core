@@ -122,7 +122,7 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
      */
     protected function prepareDataSourceData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
-        $guiTableDataSourceConfigurationTransfer = $guiTableConfigurationTransfer->getDataSource();
+        $guiTableDataSourceConfigurationTransfer = $guiTableConfigurationTransfer->getDataSourceOrFail();
 
         return [
             GuiTableDataSourceConfigurationTransfer::TYPE => $guiTableDataSourceConfigurationTransfer->getType(),
@@ -139,7 +139,7 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
      */
     protected function preparePaginationData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
-        $guiTablePaginationConfigurationTransfer = $guiTableConfigurationTransfer->getPagination();
+        $guiTablePaginationConfigurationTransfer = $guiTableConfigurationTransfer->getPaginationOrFail();
 
         return [
             static::CONFIG_ENABLED => $guiTablePaginationConfigurationTransfer->getIsEnabled(),
@@ -156,7 +156,7 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
      */
     protected function prepareFiltersConfigurationData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
-        $guiTableFiltersConfigurationTransfer = $guiTableConfigurationTransfer->getFilters();
+        $guiTableFiltersConfigurationTransfer = $guiTableConfigurationTransfer->getFiltersOrFail();
 
         $filtersItems = [];
 
@@ -179,7 +179,7 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
      */
     protected function prepareRowActions(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
-        $guiTableRowActionsConfigurationTransfer = $guiTableConfigurationTransfer->getRowActions();
+        $guiTableRowActionsConfigurationTransfer = $guiTableConfigurationTransfer->getRowActionsOrFail();
 
         $actions = [];
 
@@ -205,7 +205,7 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
      */
     protected function prepareBatchActions(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
-        $guiTableBatchActionsConfigurationTransfer = $guiTableConfigurationTransfer->getBatchActions();
+        $guiTableBatchActionsConfigurationTransfer = $guiTableConfigurationTransfer->getBatchActionsOrFail();
 
         $actions = [];
 
@@ -232,7 +232,7 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     protected function prepareItemSelectionData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
         return [
-            static::CONFIG_ENABLED => $guiTableConfigurationTransfer->getItemSelection()->getIsEnabled(),
+            static::CONFIG_ENABLED => $guiTableConfigurationTransfer->getItemSelectionOrFail()->getIsEnabled(),
         ];
     }
 
@@ -246,7 +246,7 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     protected function prepareSyncStateUrlData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
         return [
-            static::CONFIG_ENABLED => $guiTableConfigurationTransfer->getSyncStateUrl()->getIsEnabled(),
+            static::CONFIG_ENABLED => $guiTableConfigurationTransfer->getSyncStateUrlOrFail()->getIsEnabled(),
         ];
     }
 
@@ -259,7 +259,7 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
      */
     protected function prepareSearchData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
-        $guiTableSearchConfigurationTransfer = $guiTableConfigurationTransfer->getSearch();
+        $guiTableSearchConfigurationTransfer = $guiTableConfigurationTransfer->getSearchOrFail();
 
         return $guiTableSearchConfigurationTransfer->getSearch() + [
                 static::CONFIG_ENABLED => $guiTableSearchConfigurationTransfer->getIsEnabled(),

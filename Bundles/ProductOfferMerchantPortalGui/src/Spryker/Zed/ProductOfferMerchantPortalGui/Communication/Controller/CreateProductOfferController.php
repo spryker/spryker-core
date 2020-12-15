@@ -49,7 +49,7 @@ class CreateProductOfferController extends AbstractProductOfferController
         );
         $productOfferForm->handleRequest($request);
 
-        $initialData = $this->setDefaultInitialData($request, $productOfferForm->getName());
+        $initialData = $this->getDefaultInitialData($request, $productOfferForm->getName());
 
         if ($productOfferForm->isSubmitted() && $productOfferForm->isValid()) {
             $initialData = $this->validateProductOfferPrices($productOfferForm->getData()->getPrices(), $initialData);

@@ -48,7 +48,7 @@ class ValidUniqueStoreCurrencyCollectionConstraintValidator extends AbstractCons
                 $moneyValueTransfer->getFkStoreOrFail(),
                 $priceProductTransfer->getPriceTypeOrFail()->getIdPriceTypeOrFail()
             );
-            if (in_array($key, $existingKeys)) {
+            if (in_array($key, $existingKeys, true)) {
                 $this->context->buildViolation($constraint->getMessage())
                     ->atPath("[$position]")
                     ->addViolation();

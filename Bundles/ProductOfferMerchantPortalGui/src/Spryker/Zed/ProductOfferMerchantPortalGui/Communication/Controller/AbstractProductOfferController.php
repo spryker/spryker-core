@@ -80,7 +80,7 @@ class AbstractProductOfferController extends AbstractController
      *
      * @return array
      */
-    protected function setDefaultInitialData(Request $request, string $formName): array
+    protected function getDefaultInitialData(Request $request, string $formName): array
     {
         $requestTableData = $request->get($formName);
         $requestTableData = $this->getFactory()->getUtilEncodingService()->decodeJson(
@@ -88,7 +88,7 @@ class AbstractProductOfferController extends AbstractController
             true
         );
 
-        return $initialData = [
+        return [
             GuiTableEditableInitialDataTransfer::DATA => $requestTableData,
             GuiTableEditableInitialDataTransfer::ERRORS => [],
         ];
