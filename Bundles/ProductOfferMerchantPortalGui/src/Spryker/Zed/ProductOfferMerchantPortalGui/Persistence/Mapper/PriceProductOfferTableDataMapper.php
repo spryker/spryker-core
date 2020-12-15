@@ -60,8 +60,6 @@ class PriceProductOfferTableDataMapper
         array $priceProductOfferTableDataArray,
         PriceProductOfferTableViewCollectionTransfer $priceProductOfferTableViewCollectionTransfer
     ): PriceProductOfferTableViewCollectionTransfer {
-        $priceProductOfferTableViewTransfers = [];
-
         foreach ($priceProductOfferTableDataArray as $priceProductOfferTableRowDataArray) {
             $prices = $this->preparePrices($priceProductOfferTableRowDataArray);
 
@@ -70,7 +68,7 @@ class PriceProductOfferTableDataMapper
                 ->setCurrency($priceProductOfferTableRowDataArray[PriceProductOfferTableViewTransfer::CURRENCY])
                 ->setPrices($prices)
                 ->addPriceProductOfferId($priceProductOfferTableRowDataArray[static::COL_PRICE_PRODUCT_OFFER_IDS])
-                ->addTypePriceProductOfferId($priceProductOfferTableRowDataArray[static::COL_TYPE_PRICE_PRODUCT_OFFER_IDS]);
+                ->setTypePriceProductOfferIds($priceProductOfferTableRowDataArray[static::COL_TYPE_PRICE_PRODUCT_OFFER_IDS]);
 
             $priceProductOfferTableViewCollectionTransfer->addPriceProductOfferTableView($priceProductOfferTableViewTransfer);
         }

@@ -233,7 +233,6 @@ class SavePricesAction implements ActionInterface
      */
     protected function parseTypePriceProductOfferIds(string $requestedTypePriceProductOfferIds): array
     {
-        $requestedTypePriceProductOfferIds = substr($requestedTypePriceProductOfferIds, 1, -1);
         $requestedTypePriceProductOfferIds = explode(',', $requestedTypePriceProductOfferIds);
         $typePriceProductOfferIds = [];
 

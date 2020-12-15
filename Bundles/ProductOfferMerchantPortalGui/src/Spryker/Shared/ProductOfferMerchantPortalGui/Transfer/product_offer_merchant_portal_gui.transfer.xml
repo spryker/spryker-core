@@ -309,7 +309,7 @@
         <property name="idPriceProductOffer"  type="int"/>
         <property name="productOffer"  type="ProductOffer"/>
         <property name="priceProductOfferIds" type="array" singular="priceProductOfferId"/>
-        <property name="typePriceProductOfferIds" type="array" singular="typePriceProductOfferId"/>
+        <property name="typePriceProductOfferIds" type="string"/>
     </transfer>
 
     <transfer name="PriceProductOfferCollection">

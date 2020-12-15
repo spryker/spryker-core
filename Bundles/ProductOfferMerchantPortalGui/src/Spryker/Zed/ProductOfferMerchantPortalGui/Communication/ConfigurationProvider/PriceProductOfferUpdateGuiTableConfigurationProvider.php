@@ -106,12 +106,14 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
     {
         $deleteUrlParams = http_build_query([
             static::REQUEST_PARAM_ID_PRODUCT_OFFER => (string)$this->idProductOffer,
-            static::REQUEST_PARAM_PRICE_PRODUCT_OFFER_IDS => static::REQUEST_VALUE_PRICE_PRODUCT_OFFER_IDS,
         ]);
+
+        $url = static::URL_DELETE_PRICE . '?' . $deleteUrlParams . '&' . static::REQUEST_PARAM_PRICE_PRODUCT_OFFER_IDS . '=' . static::REQUEST_VALUE_PRICE_PRODUCT_OFFER_IDS;
+
         $guiTableConfigurationBuilder->addRowActionUrl(
             static::ID_ROW_ACTION_DELETE,
             static::TITLE_ROW_ACTION_DELETE,
-            static::URL_DELETE_PRICE . '?' . $deleteUrlParams
+            $url
         );
 
         return $guiTableConfigurationBuilder;
