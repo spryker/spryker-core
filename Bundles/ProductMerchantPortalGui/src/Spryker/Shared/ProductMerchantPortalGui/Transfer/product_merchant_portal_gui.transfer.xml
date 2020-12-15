@@ -45,6 +45,7 @@
 
     <transfer name="Locale">
         <property name="idLocale" type="int"/>
+        <property name="localeName" type="string"/>
     </transfer>
 
     <transfer name="ProductAbstractCollection">
@@ -84,6 +85,8 @@
 
     <transfer name="ProductImageSet">
         <property name="productImages" type="ProductImage[]" singular="productImage"/>
+        <property name="locale" type="Locale"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="Store">
