@@ -10,7 +10,6 @@ namespace Spryker\Zed\CategoryGui\Persistence;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery;
-use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Zed\CategoryGui\CategoryGuiDependencyProvider;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
@@ -42,13 +41,5 @@ class CategoryGuiPersistenceFactory extends AbstractPersistenceFactory
     public function getCategoryNodePropelQuery(): SpyCategoryNodeQuery
     {
         return $this->getProvidedDependency(CategoryGuiDependencyProvider::PROPEL_QUERY_CATEGORY_NODE);
-    }
-
-    /**
-     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
-     */
-    public function getUrlPropelQuery(): SpyUrlQuery
-    {
-        return $this->getProvidedDependency(CategoryGuiDependencyProvider::PROPEL_QUERY_URL);
     }
 }

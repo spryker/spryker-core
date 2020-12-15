@@ -40,7 +40,7 @@ class CategoryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testReadWithRootCategoryReturnsCategoryTransfer(): void
+    public function testFindCategoryByIdWithRootCategoryReturnsCategoryTransfer(): void
     {
         $this->assertInstanceOf(CategoryTransfer::class, $this->getFacade()->findCategoryById($this->getRootCategoryId()));
     }
@@ -48,7 +48,7 @@ class CategoryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testReadWithNonRootCategoryReturnsCategoryTransfer(): void
+    public function testFindCategoryByIdWithNonRootCategoryReturnsCategoryTransfer(): void
     {
         $this->assertInstanceOf(CategoryTransfer::class, $this->getFacade()->findCategoryById($this->getNonRootCategoryId()));
     }

@@ -46,7 +46,7 @@ class GetCategoryNodeUrlsTest extends Unit
     /**
      * @return void
      */
-    public function testGetCategoryNodeUrlsFindsUrlsBy(): void
+    public function testGetCategoryNodeUrlsFindsUrlsByIdCategoryNodeList(): void
     {
         // Arrange
         $localeTransfer = $this->tester->getLocator()->locale()->facade()->getCurrentLocale();
