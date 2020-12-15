@@ -11,8 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\MerchantProductCollectionTransfer;
-use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\MerchantProduct\Persistence\MerchantProductRepositoryInterface;
 
@@ -26,14 +24,14 @@ class MerchantProductCartValidator implements MerchantProductCartValidatorInterf
     /**
      * @var \Spryker\Zed\MerchantProduct\Persistence\MerchantProductRepositoryInterface
      */
-    protected $repository;
+    protected $merchantProductRepository;
 
     /**
-     * @param \Spryker\Zed\MerchantProduct\Persistence\MerchantProductRepositoryInterface $repository
+     * @param \Spryker\Zed\MerchantProduct\Persistence\MerchantProductRepositoryInterface $merchantProductRepository
      */
-    public function __construct(MerchantProductRepositoryInterface $repository)
+    public function __construct(MerchantProductRepositoryInterface $merchantProductRepository)
     {
-        $this->repository = $repository;
+        $this->merchantProductRepository = $merchantProductRepository;
     }
 
     /**
@@ -43,16 +41,13 @@ class MerchantProductCartValidator implements MerchantProductCartValidatorInterf
      */
     public function validateCartChange(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
-        $merchantProductSkus = $this->extractMerchantProductSkus($cartChangeTransfer);
-        $merchantProductCollectionTransfer = $this->repository->get(
-            (new MerchantProductCriteriaTransfer())
-                ->setSkus($merchantProductSkus)
-        );
+        $concreteSkus = $this->extractMerchantProductConcreteSkus($cartChangeTransfer);
+        $concreteProductSkuMerchantReferenceMap = $this->merchantProductRepository->getConcreteProductSkuMerchantReferenceMap($concreteSkus);
 
         $messageTransfers = new ArrayObject();
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if ($this->isValidItem($itemTransfer, $merchantProductCollectionTransfer)) {
+            if ($this->isValidItem($itemTransfer, $concreteProductSkuMerchantReferenceMap)) {
                 continue;
             }
 
@@ -73,30 +68,28 @@ class MerchantProductCartValidator implements MerchantProductCartValidatorInterf
     }
 
     /**
+     * @phpstan-param array<string, string> $concreteProductSkuMerchantReferenceMap
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\MerchantProductCollectionTransfer $merchantProductCollectionTransfer
+     * @param array $concreteProductSkuMerchantReferenceMap
      *
      * @return bool
      */
-    protected function isValidItem(ItemTransfer $itemTransfer, MerchantProductCollectionTransfer $merchantProductCollectionTransfer): bool
+    protected function isValidItem(ItemTransfer $itemTransfer, array $concreteProductSkuMerchantReferenceMap): bool
     {
         if (!$this->isMerchantProduct($itemTransfer)) {
             return true;
         }
 
-        foreach ($merchantProductCollectionTransfer->getMerchantProducts() as $merchantProductTransfer) {
-            if ($itemTransfer->getMerchantReference() !== $merchantProductTransfer->getMerchantReference()) {
-                continue;
-            }
-
-            if ($itemTransfer->getAbstractSku() !== $merchantProductTransfer->getSku()) {
-                continue;
-            }
-
-            return true;
+        if (!isset($concreteProductSkuMerchantReferenceMap[$itemTransfer->getSku()])) {
+            return false;
         }
 
-        return false;
+        if ($itemTransfer->getMerchantReference() !== $concreteProductSkuMerchantReferenceMap[$itemTransfer->getSku()]) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -104,9 +97,9 @@ class MerchantProductCartValidator implements MerchantProductCartValidatorInterf
      *
      * @return string[]
      */
-    protected function extractMerchantProductSkus(CartChangeTransfer $cartChangeTransfer): array
+    protected function extractMerchantProductConcreteSkus(CartChangeTransfer $cartChangeTransfer): array
     {
-        $merchantProductSkus = [];
+        $merchantProductConcreteSkus = [];
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             if (!$this->isMerchantProduct($itemTransfer)) {
@@ -118,10 +111,10 @@ class MerchantProductCartValidator implements MerchantProductCartValidatorInterf
              */
             $sku = $itemTransfer->getSku();
 
-            $merchantProductSkus[] = $sku;
+            $merchantProductConcreteSkus[] = $sku;
         }
 
-        return $merchantProductSkus;
+        return $merchantProductConcreteSkus;
     }
 
     /**

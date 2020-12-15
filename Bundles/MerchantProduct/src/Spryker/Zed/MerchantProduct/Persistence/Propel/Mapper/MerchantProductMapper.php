@@ -24,8 +24,6 @@ class MerchantProductMapper
     ): MerchantProductTransfer {
         return $merchantProductTransfer->fromArray($merchantProductEntity->toArray(), true)
             ->setIdProductAbstract($merchantProductEntity->getFkProductAbstract())
-            ->setIdMerchant($merchantProductEntity->getFkMerchant())
-            ->setSku($merchantProductEntity->getProductAbstract()->getSku())
-            ->setMerchantReference($merchantProductEntity->getMerchant()->getMerchantReference());
+            ->setIdMerchant($merchantProductEntity->getFkMerchant());
     }
 }
