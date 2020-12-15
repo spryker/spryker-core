@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <xsd:schema
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="spryker:transfer-01"
     targetNamespace="spryker:transfer-01"
     elementFormDefault="qualified">
 

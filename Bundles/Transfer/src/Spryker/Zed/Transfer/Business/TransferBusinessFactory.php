@@ -34,6 +34,8 @@ use Spryker\Zed\Transfer\Business\Model\TransferCleaner;
 use Spryker\Zed\Transfer\Business\Model\TransferGenerator;
 use Spryker\Zed\Transfer\Business\Model\TransferValidator;
 use Spryker\Zed\Transfer\Business\Transfer\Definition\TransferDefinitionFinder;
+use Spryker\Zed\Transfer\Business\XmlValidator\XmlValidatorInterface;
+use Spryker\Zed\Transfer\Business\XmlValidator\XmlXsdSchemaValidator;
 use Spryker\Zed\Transfer\Dependency\Facade\TransferToPropelFacadeInterface;
 use Spryker\Zed\Transfer\Dependency\Service\TransferToUtilGlobServiceInterface;
 use Spryker\Zed\Transfer\TransferDependencyProvider;
@@ -343,7 +345,8 @@ class TransferBusinessFactory extends AbstractBusinessFactory
         return new TransferValidator(
             $messenger,
             $this->createFinder(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->createXmlValidator()
         );
     }
 
@@ -395,5 +398,13 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     public function getPropelFacade(): TransferToPropelFacadeInterface
     {
         return $this->getProvidedDependency(TransferDependencyProvider::FACADE_PROPEL);
+    }
+
+    /**
+     * @return \Spryker\Zed\Transfer\Business\XmlValidator\XmlValidatorInterface
+     */
+    public function createXmlValidator(): XmlValidatorInterface
+    {
+        return new XmlXsdSchemaValidator();
     }
 }

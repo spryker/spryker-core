@@ -7,9 +7,11 @@
 
 namespace SprykerTest\Zed\Transfer\Business\Model;
 
+use Codeception\Stub;
 use Codeception\Test\Unit;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionFinder;
 use Spryker\Zed\Transfer\Business\Model\TransferValidator;
+use Spryker\Zed\Transfer\Business\XmlValidator\XmlValidatorInterface;
 use Spryker\Zed\Transfer\TransferConfig;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -43,7 +45,8 @@ class TransferValidatorTest extends Unit
         $definitionFinder = $this->getDefinitionFinder($sourceDirectories);
         $messenger = $this->getMessengerMock();
         $config = new TransferConfig();
-        $transferValidator = new TransferValidator($messenger, $definitionFinder, $config);
+        $xmlValidator = $this->getXmlValidatorMock();
+        $transferValidator = new TransferValidator($messenger, $definitionFinder, $config, $xmlValidator);
 
         $options = [
             'bundle' => null,
@@ -65,7 +68,8 @@ class TransferValidatorTest extends Unit
         $definitionFinder = $this->getDefinitionFinder($sourceDirectories);
         $messenger = $this->getMessengerMock();
         $config = new TransferConfig();
-        $transferValidator = new TransferValidator($messenger, $definitionFinder, $config);
+        $xmlValidator = $this->getXmlValidatorMock();
+        $transferValidator = new TransferValidator($messenger, $definitionFinder, $config, $xmlValidator);
 
         $options = [
             'bundle' => null,
@@ -88,8 +92,9 @@ class TransferValidatorTest extends Unit
         $messenger = $this->getMessengerMock();
         $config = $this->getTransferConfigMock();
         $config->expects($this->any())->method('isTransferNameValidated')->willReturn(true);
+        $xmlValidator = $this->getXmlValidatorMock();
 
-        $transferValidator = new TransferValidator($messenger, $definitionFinder, $config);
+        $transferValidator = new TransferValidator($messenger, $definitionFinder, $config, $xmlValidator);
 
         $options = [
             'bundle' => null,
@@ -129,5 +134,15 @@ class TransferValidatorTest extends Unit
     protected function getTransferConfigMock(): TransferConfig
     {
         return $this->getMockBuilder(TransferConfig::class)->setMethods(['isTransferNameValidated'])->getMock();
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Transfer\Business\XmlValidator\XmlValidatorInterface
+     */
+    protected function getXmlValidatorMock(): XmlValidatorInterface
+    {
+        return Stub::makeEmpty(XmlValidatorInterface::class, [
+            'isValid' => true,
+        ]);
     }
 }
