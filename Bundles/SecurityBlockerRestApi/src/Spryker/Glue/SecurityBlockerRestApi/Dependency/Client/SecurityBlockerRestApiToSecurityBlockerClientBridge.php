@@ -7,8 +7,8 @@
 
 namespace Spryker\Glue\SecurityBlockerRestApi\Dependency\Client;
 
-use Generated\Shared\Transfer\AuthContextTransfer;
-use Generated\Shared\Transfer\AuthResponseTransfer;
+use Generated\Shared\Transfer\SecurityCheckAuthContextTransfer;
+use Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer;
 
 class SecurityBlockerRestApiToSecurityBlockerClientBridge implements SecurityBlockerRestApiToSecurityBlockerClientInterface
 {
@@ -26,22 +26,22 @@ class SecurityBlockerRestApiToSecurityBlockerClientBridge implements SecurityBlo
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AuthContextTransfer $authContextTransfer
+     * @param \Generated\Shared\Transfer\SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer
      *
-     * @return \Generated\Shared\Transfer\AuthResponseTransfer
+     * @return \Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer
      */
-    public function incrementLoginAttempt(AuthContextTransfer $authContextTransfer): AuthResponseTransfer
+    public function incrementLoginAttempt(SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer): SecurityCheckAuthResponseTransfer
     {
-        return $this->securityBlockerClient->incrementLoginAttempt($authContextTransfer);
+        return $this->securityBlockerClient->incrementLoginAttempt($securityCheckAuthContextTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AuthContextTransfer $authContextTransfer
+     * @param \Generated\Shared\Transfer\SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer
      *
-     * @return \Generated\Shared\Transfer\AuthResponseTransfer
+     * @return \Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer
      */
-    public function getLoginAttempt(AuthContextTransfer $authContextTransfer): AuthResponseTransfer
+    public function getLoginAttempt(SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer): SecurityCheckAuthResponseTransfer
     {
-        return $this->securityBlockerClient->getLoginAttempt($authContextTransfer);
+        return $this->securityBlockerClient->getLoginAttempt($securityCheckAuthContextTransfer);
     }
 }

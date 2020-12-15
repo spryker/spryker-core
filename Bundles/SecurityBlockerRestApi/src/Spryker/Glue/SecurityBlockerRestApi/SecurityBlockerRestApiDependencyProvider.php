@@ -39,7 +39,7 @@ class SecurityBlockerRestApiDependencyProvider extends AbstractBundleDependencyP
     protected function addSecurityBlockerClient(Container $container): Container
     {
         $container->set(static::CLIENT_SECURITY_BLOCKER, function (Container $container) {
-            new SecurityBlockerRestApiToSecurityBlockerClientBridge(
+            return new SecurityBlockerRestApiToSecurityBlockerClientBridge(
                 $container->getLocator()->securityBlocker()->client()
             );
         });

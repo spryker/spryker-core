@@ -7,9 +7,9 @@
 
 namespace Spryker\Client\SecurityBlocker\Storage;
 
-use Generated\Shared\Transfer\AuthContextTransfer;
-use Generated\Shared\Transfer\AuthResponseTransfer;
-use Generated\Shared\Transfer\SecurityConfigurationSettingTransfer;
+use Generated\Shared\Transfer\SecurityBlockerConfigurationSettingsTransfer;
+use Generated\Shared\Transfer\SecurityCheckAuthContextTransfer;
+use Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer;
 use Spryker\Client\SecurityBlocker\Dependency\Service\SecurityBlockerToUtilEncodingServiceInterface;
 use Spryker\Client\SecurityBlocker\Exception\SecurityBlockerException;
 use Spryker\Client\SecurityBlocker\Redis\SecurityBlockerRedisWrapperInterface;
@@ -50,20 +50,21 @@ class SecurityBlockerStorage implements SecurityBlockerStorageInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AuthContextTransfer $authContextTransfer
+     * @param \Generated\Shared\Transfer\SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer
      *
      * @throws \Spryker\Client\SecurityBlocker\Exception\SecurityBlockerException
      *
-     * @return \Generated\Shared\Transfer\AuthResponseTransfer
+     * @return \Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer
      */
-    public function incrementLoginAttempt(AuthContextTransfer $authContextTransfer): AuthResponseTransfer
+    public function incrementLoginAttempt(SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer): SecurityCheckAuthResponseTransfer
     {
-        $authContextTransfer->requireType();
+        $securityCheckAuthContextTransfer->requireType();
 
-        $securityConfigurationSettings = $this->getSecurityConfigurationSettingsForType($authContextTransfer->getType());
-        $key = $this->getStorageKey($authContextTransfer);
+        $securityBlockerConfigurationSettingsTransfer = $this->securityBlockerConfig
+            ->getSecurityBlockerConfigurationSettingsForType($securityCheckAuthContextTransfer->getTypeOrFail());
+        $key = $this->getStorageKey($securityCheckAuthContextTransfer);
 
-        $newValue = $this->incrementStorageKey($key, $securityConfigurationSettings);
+        $newValue = $this->incrementStorageKey($key, $securityBlockerConfigurationSettingsTransfer);
 
         if (!$newValue) {
             throw new SecurityBlockerException(
@@ -71,84 +72,68 @@ class SecurityBlockerStorage implements SecurityBlockerStorageInterface
             );
         }
 
-        return (new AuthResponseTransfer())
-            ->fromArray($authContextTransfer->toArray(), true)
-            ->setCount($newValue)
-            ->setIsSuccessful($newValue < $securityConfigurationSettings->getCount());
+        return (new SecurityCheckAuthResponseTransfer())
+            ->setSecurityCheckAuthContext($securityCheckAuthContextTransfer)
+            ->setNumberOfAttempts($newValue)
+            ->setIsSuccessful($newValue < $securityBlockerConfigurationSettingsTransfer->getNumberOfAttempts());
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AuthContextTransfer $authContextTransfer
+     * @param \Generated\Shared\Transfer\SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer
      *
-     * @return \Generated\Shared\Transfer\AuthResponseTransfer
+     * @return \Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer
      */
-    public function getLoginAttempt(AuthContextTransfer $authContextTransfer): AuthResponseTransfer
+    public function getLoginAttempt(SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer): SecurityCheckAuthResponseTransfer
     {
-        $storageKey = $this->getStorageKey($authContextTransfer);
+        $securityCheckAuthContextTransfer->requireType();
+
+        $storageKey = $this->getStorageKey($securityCheckAuthContextTransfer);
         $storageValue = $this->securityBlockerRedisWrapper->get($storageKey);
 
+        $securityCheckAuthResponseTransfer = (new SecurityCheckAuthResponseTransfer())
+            ->setSecurityCheckAuthContext($securityCheckAuthContextTransfer);
+
         if (!$storageValue) {
-            return (new AuthResponseTransfer())
-                ->fromArray($authContextTransfer->toArray(), true)
-                ->setIsSuccessful(true);
+            return $securityCheckAuthResponseTransfer->setIsSuccessful(true);
         }
 
         $numberOfAttempts = $this->utilEncodingService->decodeJson($storageValue, true);
 
         if (!$numberOfAttempts) {
-            return (new AuthResponseTransfer())
-                ->fromArray($authContextTransfer->toArray(), true)
-                ->setIsSuccessful(false);
+            return $securityCheckAuthResponseTransfer->setIsSuccessful(false);
         }
 
-        $securityConfigurationSettings = $this->getSecurityConfigurationSettingsForType($authContextTransfer->getType());
+        $securityBlockerConfigurationSettingsTransfer = $this->securityBlockerConfig
+            ->getSecurityBlockerConfigurationSettingsForType($securityCheckAuthContextTransfer->getTypeOrFail());
 
-        return (new AuthResponseTransfer())
-            ->fromArray($authContextTransfer->toArray(), true)
-            ->setCount($numberOfAttempts)
-            ->setIsSuccessful($numberOfAttempts < $securityConfigurationSettings->getCount());
+        return $securityCheckAuthResponseTransfer
+            ->setNumberOfAttempts($numberOfAttempts)
+            ->setIsSuccessful($numberOfAttempts < $securityBlockerConfigurationSettingsTransfer->getNumberOfAttempts());
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AuthContextTransfer $authContextTransfer
+     * @param \Generated\Shared\Transfer\SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer
      *
      * @return string
      */
-    protected function getStorageKey(AuthContextTransfer $authContextTransfer): string
+    protected function getStorageKey(SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer): string
     {
-        return $authContextTransfer->getType()
+        return $securityCheckAuthContextTransfer->getType()
             . static::KEY_PART_SEPARATOR
-            . $authContextTransfer->getIp()
+            . $securityCheckAuthContextTransfer->getIp()
             . static::KEY_PART_SEPARATOR
-            . $authContextTransfer->getAccount();
-    }
-
-    /**
-     * @param string $type
-     *
-     * @return \Generated\Shared\Transfer\SecurityConfigurationSettingTransfer
-     */
-    protected function getSecurityConfigurationSettingsForType(string $type): SecurityConfigurationSettingTransfer
-    {
-        $securityConfigurationSettings = $this->securityBlockerConfig->getSecurityConfigurationSettings();
-        if (!empty($securityConfigurationSettings[$type])) {
-            return (new SecurityConfigurationSettingTransfer())
-                ->fromArray($securityConfigurationSettings[$type], true);
-        }
-
-        return (new SecurityConfigurationSettingTransfer())
-            ->fromArray($securityConfigurationSettings['default'], true);
+            . $securityCheckAuthContextTransfer->getAccount();
     }
 
     /**
      * @param string $storageKey
-     * @param \Generated\Shared\Transfer\SecurityConfigurationSettingTransfer $securityConfigurationSettingTransfer
+     * @param \Generated\Shared\Transfer\SecurityBlockerConfigurationSettingsTransfer $securityBlockerConfigurationSettingsTransfer
      *
      * @return int
      */
     protected function incrementStorageKey(
         string $storageKey,
-        SecurityConfigurationSettingTransfer $securityConfigurationSettingTransfer
+        SecurityBlockerConfigurationSettingsTransfer $securityBlockerConfigurationSettingsTransfer
     ): int {
         $existingValue = (int)$this->securityBlockerRedisWrapper->get($storageKey);
 
@@ -159,7 +144,7 @@ class SecurityBlockerStorage implements SecurityBlockerStorageInterface
         }
 
         $setResult = $this->securityBlockerRedisWrapper
-            ->set($storageKey, '1', 'EX', $securityConfigurationSettingTransfer->getTtl());
+            ->set($storageKey, '1', 'EX', $securityBlockerConfigurationSettingsTransfer->getTtl());
 
         return $setResult ? 1 : 0;
     }

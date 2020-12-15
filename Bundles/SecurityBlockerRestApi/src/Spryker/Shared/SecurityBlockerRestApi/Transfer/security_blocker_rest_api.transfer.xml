@@ -13,13 +13,13 @@
         <property name="status" type="int"/>
     </transfer>
 
-    <transfer name="AuthContext">
+    <transfer name="SecurityCheckAuthContext">
         <property name="type" type="string"/>
         <property name="ip" type="string"/>
         <property name="account" type="string"/>
     </transfer>
 
-    <transfer name="AuthResponse">
+    <transfer name="SecurityCheckAuthResponse">
         <property name="isSuccessful" type="bool"/>
     </transfer>
 

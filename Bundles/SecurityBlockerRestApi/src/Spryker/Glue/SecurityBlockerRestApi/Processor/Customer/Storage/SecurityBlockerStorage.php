@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\SecurityBlockerRestApi\Processor\Customer\Storage;
 
-use Generated\Shared\Transfer\AuthContextTransfer;
+use Generated\Shared\Transfer\SecurityCheckAuthContextTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\SecurityBlockerRestApi\Dependency\Client\SecurityBlockerRestApiToSecurityBlockerClientInterface;
@@ -60,12 +60,12 @@ class SecurityBlockerStorage implements SecurityBlockerStorageInterface
 
         /** @var \Generated\Shared\Transfer\RestAccessTokensAttributesTransfer $restAccessTokensAttributesTransfer */
         $restAccessTokensAttributesTransfer = $restRequest->getResource()->getAttributes();
-        $authContextTransfer = (new AuthContextTransfer())
+        $securityCheckAuthContextTransfer = (new SecurityCheckAuthContextTransfer())
             ->setAccount(SecurityBlockerRestApiConfig::SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE)
             ->setIp($restRequest->getHttpRequest()->getClientIp())
             ->setAccount($restAccessTokensAttributesTransfer->getUsername());
 
-        $this->securityBlockerClient->incrementLoginAttempt($authContextTransfer);
+        $this->securityBlockerClient->incrementLoginAttempt($securityCheckAuthContextTransfer);
     }
 
     /**

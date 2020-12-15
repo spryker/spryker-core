@@ -9,6 +9,7 @@ namespace Spryker\Client\SecurityBlocker;
 
 use Generated\Shared\Transfer\RedisConfigurationTransfer;
 use Generated\Shared\Transfer\RedisCredentialsTransfer;
+use Generated\Shared\Transfer\SecurityBlockerConfigurationSettingsTransfer;
 use Spryker\Client\Kernel\AbstractBundleConfig;
 use Spryker\Shared\SecurityBlocker\SecurityBlockerConstants;
 
@@ -18,6 +19,7 @@ class SecurityBlockerConfig extends AbstractBundleConfig
 
     protected const REDIS_DEFAULT_DATABASE = 0;
     protected const STORAGE_REDIS_CONNECTION_KEY = 'SECURITY_BLOCKER_REDIS';
+    protected const ENTITY_TYPE_DEFAULT = 'default';
 
     /**
      * Specification:
@@ -86,13 +88,37 @@ class SecurityBlockerConfig extends AbstractBundleConfig
      *
      * @return mixed[]
      */
-    public function getSecurityConfigurationSettings(): array
+    public function getSecurityBlockerConfigurationSettings(): array
     {
         return [
-            'default' => [
-                'ttl' => $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_TTL, 600),
-                'count' => $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_NUMBER_OF_TRIES, 10),
+            static::ENTITY_TYPE_DEFAULT => [
+                'ttl' => $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_TTL, 300),
+                'numberOfAttempts' => $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_NUMBER_OF_ATTEMPTS, 10),
             ],
         ];
+    }
+
+    /**
+     * Specification:
+     * - Returns the security configuration for the type.
+     * - Falls back to the default type if no type-specific setting is found.
+     *
+     * @api
+     *
+     * @param string $type
+     *
+     * @return \Generated\Shared\Transfer\SecurityBlockerConfigurationSettingsTransfer
+     */
+    public function getSecurityBlockerConfigurationSettingsForType(string $type): SecurityBlockerConfigurationSettingsTransfer
+    {
+        $securityConfigurationSettings = $this->getSecurityBlockerConfigurationSettings();
+
+        if (!empty($securityConfigurationSettings[$type])) {
+            return (new SecurityBlockerConfigurationSettingsTransfer())
+                ->fromArray($securityConfigurationSettings[$type], true);
+        }
+
+        return (new SecurityBlockerConfigurationSettingsTransfer())
+            ->fromArray($securityConfigurationSettings[static::ENTITY_TYPE_DEFAULT], true);
     }
 }

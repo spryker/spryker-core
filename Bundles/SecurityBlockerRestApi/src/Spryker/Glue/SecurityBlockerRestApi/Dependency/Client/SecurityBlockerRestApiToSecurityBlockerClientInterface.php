@@ -7,22 +7,22 @@
 
 namespace Spryker\Glue\SecurityBlockerRestApi\Dependency\Client;
 
-use Generated\Shared\Transfer\AuthContextTransfer;
-use Generated\Shared\Transfer\AuthResponseTransfer;
+use Generated\Shared\Transfer\SecurityCheckAuthContextTransfer;
+use Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer;
 
 interface SecurityBlockerRestApiToSecurityBlockerClientInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\AuthContextTransfer $authContextTransfer
+     * @param \Generated\Shared\Transfer\SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer
      *
-     * @return \Generated\Shared\Transfer\AuthResponseTransfer
+     * @return \Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer
      */
-    public function incrementLoginAttempt(AuthContextTransfer $authContextTransfer): AuthResponseTransfer;
+    public function incrementLoginAttempt(SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer): SecurityCheckAuthResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\AuthContextTransfer $authContextTransfer
+     * @param \Generated\Shared\Transfer\SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer
      *
-     * @return \Generated\Shared\Transfer\AuthResponseTransfer
+     * @return \Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer
      */
-    public function getLoginAttempt(AuthContextTransfer $authContextTransfer): AuthResponseTransfer;
+    public function getLoginAttempt(SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer): SecurityCheckAuthResponseTransfer;
 }

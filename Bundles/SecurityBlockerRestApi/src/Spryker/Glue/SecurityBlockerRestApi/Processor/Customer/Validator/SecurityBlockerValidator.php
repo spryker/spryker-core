@@ -7,10 +7,10 @@
 
 namespace Spryker\Glue\SecurityBlockerRestApi\Processor\Customer\Validator;
 
-use Generated\Shared\Transfer\AuthContextTransfer;
 use Generated\Shared\Transfer\RestAccessTokensAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Generated\Shared\Transfer\SecurityCheckAuthContextTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\SecurityBlockerRestApi\Dependency\Client\SecurityBlockerRestApiToSecurityBlockerClientInterface;
 use Spryker\Glue\SecurityBlockerRestApi\SecurityBlockerRestApiConfig;
@@ -49,12 +49,12 @@ class SecurityBlockerValidator implements SecurityBlockerValidatorInterface
 
         /** @var \Generated\Shared\Transfer\RestAccessTokensAttributesTransfer $restAccessTokensAttributesTransfer */
         $restAccessTokensAttributesTransfer = $restRequest->getResource()->getAttributes();
-        $authContextTransfer = (new AuthContextTransfer())
+        $securityCheckAuthContextTransfer = (new SecurityCheckAuthContextTransfer())
             ->setAccount(SecurityBlockerRestApiConfig::SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE)
             ->setIp($restRequest->getHttpRequest()->getClientIp())
             ->setAccount($restAccessTokensAttributesTransfer->getUsername());
 
-        $authResponseTransfer = $this->securityBlockerClient->getLoginAttempt($authContextTransfer);
+        $authResponseTransfer = $this->securityBlockerClient->getLoginAttempt($securityCheckAuthContextTransfer);
 
         if ($authResponseTransfer->getIsSuccessful()) {
             return null;
@@ -84,16 +84,10 @@ class SecurityBlockerValidator implements SecurityBlockerValidatorInterface
         RestAccessTokensAttributesTransfer $restAccessTokensAttributesTransfer,
         RestRequestInterface $restRequest
     ): RestErrorCollectionTransfer {
-        $detail = sprintf(
-            SecurityBlockerRestApiConfig::ERROR_RESPONSE_DETAIL_ACCOUNT_BLOCKED,
-            $restAccessTokensAttributesTransfer->getUsername(),
-            $restRequest->getHttpRequest()->getClientIp()
-        );
-
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setStatus(Response::HTTP_TOO_MANY_REQUESTS)
             ->setCode(SecurityBlockerRestApiConfig::ERROR_RESPONSE_CODE_ACCOUNT_BLOCKED)
-            ->setDetail($detail);
+            ->setDetail(SecurityBlockerRestApiConfig::ERROR_RESPONSE_DETAIL_ACCOUNT_BLOCKED);
 
         return (new RestErrorCollectionTransfer())
             ->addRestError($restErrorMessageTransfer);

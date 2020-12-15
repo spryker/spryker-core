@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\SecurityBlocker;
 
-use Generated\Shared\Transfer\AuthContextTransfer;
-use Generated\Shared\Transfer\AuthResponseTransfer;
+use Generated\Shared\Transfer\SecurityCheckAuthContextTransfer;
+use Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -21,17 +21,17 @@ class SecurityBlockerClient extends AbstractClient implements SecurityBlockerCli
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AuthContextTransfer $authContextTransfer
+     * @param \Generated\Shared\Transfer\SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer
      *
      * @throws \Spryker\Client\SecurityBlocker\Exception\SecurityBlockerException
      *
-     * @return \Generated\Shared\Transfer\AuthResponseTransfer
+     * @return \Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer
      */
-    public function incrementLoginAttempt(AuthContextTransfer $authContextTransfer): AuthResponseTransfer
+    public function incrementLoginAttempt(SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer): SecurityCheckAuthResponseTransfer
     {
         return $this->getFactory()
             ->createSecurityBlockerStorage()
-            ->incrementLoginAttempt($authContextTransfer);
+            ->incrementLoginAttempt($securityCheckAuthContextTransfer);
     }
 
     /**
@@ -39,14 +39,14 @@ class SecurityBlockerClient extends AbstractClient implements SecurityBlockerCli
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AuthContextTransfer $authContextTransfer
+     * @param \Generated\Shared\Transfer\SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer
      *
-     * @return \Generated\Shared\Transfer\AuthResponseTransfer
+     * @return \Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer
      */
-    public function getLoginAttempt(AuthContextTransfer $authContextTransfer): AuthResponseTransfer
+    public function getLoginAttempt(SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer): SecurityCheckAuthResponseTransfer
     {
         return $this->getFactory()
             ->createSecurityBlockerStorage()
-            ->getLoginAttempt($authContextTransfer);
+            ->getLoginAttempt($securityCheckAuthContextTransfer);
     }
 }

@@ -11,7 +11,6 @@ use Codeception\TestCase\Test;
 use Generated\Shared\DataBuilder\SecurityCheckAuthContextBuilder;
 use Generated\Shared\Transfer\SecurityCheckAuthContextTransfer;
 use Spryker\Client\SecurityBlocker\Dependency\Client\SecurityBlockerToRedisClientInterface;
-use Spryker\Client\SecurityBlocker\Exception\SecurityBlockerException;
 use Spryker\Client\SecurityBlocker\SecurityBlockerConfig;
 use Spryker\Client\SecurityBlocker\SecurityBlockerDependencyProvider;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
@@ -23,10 +22,10 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
  * @group Client
  * @group SecurityBlocker
  * @group Client
- * @group IncrementLoginAttemptTest
+ * @group GetLoginAttemptTest
  * Add your own group annotations below this line
  */
-class IncrementLoginAttemptTest extends Test
+class GetLoginAttemptTest extends Test
 {
     /**
      * @var \SprykerTest\Client\SecurityBlocker\SecurityBlockerClientTester
@@ -53,20 +52,21 @@ class IncrementLoginAttemptTest extends Test
     /**
      * @return void
      */
-    public function testIncrementLoginAttemptWillRequireType(): void
+    public function testGetLoginAttemptWillRequireType(): void
     {
         // Arrange
         $securityCheckAuthContextTransfer = (new SecurityCheckAuthContextTransfer());
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->tester->getLocator()->securityBlocker()->client()->incrementLoginAttempt($securityCheckAuthContextTransfer);
+        $this->tester->getLocator()->securityBlocker()->client()
+            ->getLoginAttempt($securityCheckAuthContextTransfer);
     }
 
     /**
      * @return void
      */
-    public function testIncrementLoginAttemptWillSucceed(): void
+    public function testGetLoginAttemptWillSucceed(): void
     {
         // Arrange
         $securityCheckAuthContextTransfer = (new SecurityCheckAuthContextBuilder())->build();
@@ -80,36 +80,15 @@ class IncrementLoginAttemptTest extends Test
 
         $this->redisClientMock
             ->expects($this->once())
-            ->method('set')
+            ->method('get')
             ->with(
                 $securityBlockerConfig->getRedisConnectionKey(),
-                $expectedRedisKey,
-                '1',
-                'EX',
-                $securityBlockerConfig->getSecurityBlockerConfigurationSettings()['default']['ttl']
+                $expectedRedisKey
             )
             ->willReturn(true);
 
         // Act
-        $this->tester->getLocator()->securityBlocker()->client()->incrementLoginAttempt($securityCheckAuthContextTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testIncrementLoginAttemptWillFailWithException(): void
-    {
-        // Arrange
-        $securityCheckAuthContextTransfer = (new SecurityCheckAuthContextBuilder())->build();
-
-        $this->redisClientMock
-            ->expects($this->once())
-            ->method('set')
-            ->willReturn(false);
-
-        $this->expectException(SecurityBlockerException::class);
-
-        // Act
-        $this->tester->getLocator()->securityBlocker()->client()->incrementLoginAttempt($securityCheckAuthContextTransfer);
+        $this->tester->getLocator()->securityBlocker()->client()
+            ->getLoginAttempt($securityCheckAuthContextTransfer);
     }
 }
