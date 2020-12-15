@@ -18,6 +18,7 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortal
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantProductFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeBridge;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductCategoryFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToStoreFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToTranslatorFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceBridge;
@@ -33,6 +34,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
     public const FACADE_STORE = 'FACADE_STORE';
     public const FACADE_MERCHANT_PRODUCT = 'FACADE_MERCHANT_PRODUCT';
+    public const FACADE_PRODUCT_CATEGORY = 'FACADE_PRODUCT_CATEGORY';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
@@ -67,6 +69,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
         $container = $this->addGuiTableFactory($container);
         $container = $this->addCategoryFacade($container);
         $container = $this->addMerchantProductFacade($container);
+        $container = $this->addProductCategoryFacade($container);
 
         return $container;
     }
@@ -292,6 +295,22 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
         $container->set(static::FACADE_MERCHANT_PRODUCT, function (Container $container) {
             return new ProductMerchantPortalGuiToMerchantProductFacadeBridge(
                 $container->getLocator()->merchantProduct()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductCategoryFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT_CATEGORY, function (Container $container) {
+            return new ProductMerchantPortalGuiToProductCategoryFacadeBridge(
+                $container->getLocator()->productCategory()->facade()
             );
         });
 

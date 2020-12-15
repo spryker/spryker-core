@@ -124,4 +124,7 @@
         <property name="idStores" type="int[]" singular="idStores"/>
     </transfer>
 
+    <transfer name="CategoryCollection">
+    </transfer>
+
 </transfers>
