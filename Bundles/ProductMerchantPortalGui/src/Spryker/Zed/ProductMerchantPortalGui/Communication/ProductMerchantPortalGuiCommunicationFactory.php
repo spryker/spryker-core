@@ -19,6 +19,8 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\Cat
 use Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\ProductAbstractGuiTableConfigurationProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAbstractTableDataProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductAbstractFormDataProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductAbstractFormDataProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductAbstractForm;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCategoryFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface;
@@ -94,6 +96,17 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     public function createProductAbstractForm(?ProductAbstractTransfer $data = null, array $options = []): FormInterface
     {
         return $this->getFormFactory()->create(ProductAbstractForm::class, $data, $options);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductAbstractFormDataProviderInterface
+     */
+    public function createProductAbstractFormDataProvider(): ProductAbstractFormDataProviderInterface
+    {
+        return new ProductAbstractFormDataProvider(
+            $this->getMerchantProductFacade(),
+            $this->getStoreFacade()
+        );
     }
 
     /**

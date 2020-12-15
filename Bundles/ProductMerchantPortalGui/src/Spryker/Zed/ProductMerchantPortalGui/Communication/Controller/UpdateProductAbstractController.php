@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Controller;
 
-use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractResponseTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
@@ -37,9 +36,9 @@ class UpdateProductAbstractController extends AbstractController
         $idProductAbstract = $this->castId($request->get(static::PARAM_ID_PRODUCT_ABSTRACT));
         $idMerchant = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser()->getIdMerchant();
 
-        $productAbstractTransfer = $this->getFactory()->getMerchantProductFacade()->findProductAbstract(
-            (new MerchantProductCriteriaTransfer())->addIdMerchant($idMerchant)->setIdProductAbstract($idProductAbstract)
-        );
+        $productAbstractTransfer = $this->getFactory()
+            ->createProductAbstractFormDataProvider()
+            ->findProductAbstract($idProductAbstract, $idMerchant);
 
         if (!$productAbstractTransfer) {
             throw new NotFoundHttpException(sprintf(
@@ -49,7 +48,10 @@ class UpdateProductAbstractController extends AbstractController
             ));
         }
 
-        $productAbstractForm = $this->getFactory()->createProductAbstractForm($productAbstractTransfer);
+        $productAbstractForm = $this->getFactory()->createProductAbstractForm(
+            $productAbstractTransfer,
+            $this->getFactory()->createProductAbstractFormDataProvider()->getOptions()
+        );
         $productAbstractForm->handleRequest($request);
 
         if ($productAbstractForm->isSubmitted() && $productAbstractForm->isValid()) {

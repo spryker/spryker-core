@@ -63,6 +63,7 @@
         <property name="attributes" type="array" singular="attribute"/>
         <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>
         <property name="imageSets" type="ProductImageSet[]" singular="imageSet"/>
+        <property name="storeRelation" type="StoreRelation"/>
     </transfer>
 
     <transfer name="Pagination">
@@ -113,6 +114,11 @@
 
     <transfer name="Message">
         <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="idEntity" type="int"/>
+        <property name="idStores" type="int[]" singular="idStores"/>
     </transfer>
 
 </transfers>
