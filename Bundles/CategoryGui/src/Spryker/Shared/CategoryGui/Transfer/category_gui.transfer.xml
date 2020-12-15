@@ -5,49 +5,6 @@
 
     <transfer name="Locale">
         <property name="idLocale" type="int"/>
-        <property name="localeName" type="string"/>
-    </transfer>
-
-    <transfer name="Category">
-        <property name="idCategory" type="int"/>
-        <property name="categoryNode" type="Node"/>
-        <property name="extraParents" singular="extraParent" type="Node[]"/>
-        <property name="isActive" type="bool"/>
-        <property name="localizedAttributes" type="CategoryLocalizedAttributes[]" singular="localizedAttributes"/>
-        <property name="isInMenu" type="bool"/>
-        <property name="isClickable" type="bool"/>
-        <property name="isSearchable" type="bool"/>
-        <property name="parentCategoryNode" type="Node"/>
-    </transfer>
-
-    <transfer name="CategoryLocalizedAttributes">
-        <property name="locale" type="Locale"/>
-    </transfer>
-
-    <transfer name="Node">
-        <property name="idCategoryNode" type="int"/>
-        <property name="isMain" type="bool"/>
-        <property name="path" type="string"/>
-        <property name="name" type="string"/>
-        <property name="fkParentCategoryNode" type="int"/>
-    </transfer>
-
-    <transfer name="TabItem">
-        <property name="name" type="string"/>
-        <property name="title" type="string"/>
-        <property name="template" type="string"/>
-    </transfer>
-
-    <transfer name="TabsView">
-        <property name="tabs" type="TabItem[]" singular="tab"/>
-        <property name="footerTemplate" type="string"/>
-        <property name="isNavigable" type="bool"/>
-    </transfer>
-
-    <transfer name="CategoryResponse">
-        <property name="category" type="Category"/>
-        <property name="isSuccessful" type="bool"/>
-        <property name="messages" type="Message[]"  singular="message"/>
     </transfer>
 
 </transfers>
