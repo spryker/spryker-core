@@ -36,7 +36,10 @@ class ValidCurrencyAssignedToStoreConstraintValidator extends AbstractConstraint
         $storeTransfer = $constraint->getStoreFacade()->getStoreById($moneyValueTransfer->getFkStore());
 
         if (!in_array($moneyValueTransfer->getCurrencyOrFail()->getCode(), $storeTransfer->getAvailableCurrencyIsoCodes(), true)) {
-            $this->context->addViolation($constraint->getMessage(), [$moneyValueTransfer->getCurrency()->getName(), $storeTransfer->getName()]);
+            $this->context->buildViolation($constraint->getMessage())
+                ->setParameter('{{ currency }}', $moneyValueTransfer->getCurrency()->getName())
+                ->setParameter('{{ store }}', $storeTransfer->getName())
+                ->addViolation();
         }
     }
 }
