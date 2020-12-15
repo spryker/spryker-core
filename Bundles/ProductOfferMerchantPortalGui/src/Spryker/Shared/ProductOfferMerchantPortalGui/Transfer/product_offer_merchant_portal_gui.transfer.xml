@@ -322,4 +322,8 @@
         <property name="priceProduct"  type="PriceProduct"/>
     </transfer>
 
+    <transfer name="PriceProductOfferCriteria">
+        <property name="priceProductOfferIds" type="int[]" singular="idPriceProductOffer"/>
+    </transfer>
+
 </transfers>
