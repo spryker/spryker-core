@@ -120,12 +120,12 @@ interface SalesFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressesTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      * @param int $idAddress
      *
      * @return bool
      */
-    public function updateOrderAddress(AddressTransfer $addressesTransfer, $idAddress);
+    public function updateOrderAddress(AddressTransfer $addressTransfer, $idAddress);
 
     /**
      * Specification:
@@ -134,11 +134,11 @@ interface SalesFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressesTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    public function createOrderAddress(AddressTransfer $addressesTransfer): AddressTransfer;
+    public function createOrderAddress(AddressTransfer $addressTransfer): AddressTransfer;
 
     /**
      * Specification:

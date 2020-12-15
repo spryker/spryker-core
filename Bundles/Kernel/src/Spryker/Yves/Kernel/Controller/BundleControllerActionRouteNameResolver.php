@@ -18,12 +18,12 @@ class BundleControllerActionRouteNameResolver implements RouteNameResolverInterf
     /**
      * @var \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface
      */
-    private $bundleControllerAction;
+    protected $bundleControllerAction;
 
     /**
      * @var \Laminas\Filter\FilterChain
      */
-    private $filter;
+    protected $filter;
 
     /**
      * @param \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface $bundleControllerAction

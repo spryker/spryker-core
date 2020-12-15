@@ -45,7 +45,8 @@ class ProductPricesRestApiFactory extends AbstractFactory
     {
         return new ProductPricesMapper(
             $this->getPriceClient(),
-            $this->getCurrencyClient()
+            $this->getCurrencyClient(),
+            $this->getRestProductPricesAttributesMapperPlugins()
         );
     }
 
@@ -180,5 +181,13 @@ class ProductPricesRestApiFactory extends AbstractFactory
     public function getStoreClient(): ProductPricesRestApiToStoreClientInterface
     {
         return $this->getProvidedDependency(ProductPricesRestApiDependencyProvider::CLIENT_STORE);
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductPricesRestApiExtension\Dependency\Plugin\RestProductPricesAttributesMapperPluginInterface[]
+     */
+    public function getRestProductPricesAttributesMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductPricesRestApiDependencyProvider::PLUGINS_REST_PRODUCT_PRICES_ATTRIBUTES_MAPPER);
     }
 }

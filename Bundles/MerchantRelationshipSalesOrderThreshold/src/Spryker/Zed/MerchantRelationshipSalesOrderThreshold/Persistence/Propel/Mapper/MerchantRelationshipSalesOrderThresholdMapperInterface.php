@@ -14,12 +14,12 @@ interface MerchantRelationshipSalesOrderThresholdMapperInterface
 {
     /**
      * @param \Orm\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\SpyMerchantRelationshipSalesOrderThreshold $salesOrderThresholdEntity
-     * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer $salesOrderThresholdTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer
      */
     public function mapMerchantRelationshipSalesOrderThresholdEntityToTransfer(
         SpyMerchantRelationshipSalesOrderThreshold $salesOrderThresholdEntity,
-        MerchantRelationshipSalesOrderThresholdTransfer $salesOrderThresholdTransfer
+        MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
     ): MerchantRelationshipSalesOrderThresholdTransfer;
 }

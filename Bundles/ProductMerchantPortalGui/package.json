@@ -20,7 +20,7 @@
         "@spryker/headline": "^0.2.0-next.0",
         "@spryker/input": "^0.2.0-next.1",
         "@spryker/select": "^0.2.0-next.6",
-        "@spryker/styles": "^0.2.0-next.20",
+        "@spryker/styles": "^0.2.0-next.25",
         "@spryker/table": "^0.2.0-next.23",
         "@spryker/toggle": "^0.2.0-next.2",
         "@spryker/utils": "^0.2.0-next.5",

@@ -31,17 +31,17 @@ class ZedBootstrap
     /**
      * @var \Silex\ServiceProviderInterface[]
      */
-    private $additionalServiceProvider;
+    protected $additionalServiceProvider;
 
     /**
      * @var \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
      */
-    private $additionalApplicationPlugins;
+    protected $additionalApplicationPlugins;
 
     /**
      * @var \Spryker\Shared\Kernel\Communication\Application|null
      */
-    private $legacyApplication;
+    protected $legacyApplication;
 
     /**
      * @param \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[] $additionalApplicationPlugins

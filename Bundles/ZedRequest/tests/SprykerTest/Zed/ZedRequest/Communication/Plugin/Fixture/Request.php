@@ -15,7 +15,7 @@ class Request extends ClientRequest
     /**
      * @var \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    private $transfer;
+    protected $transfer;
 
     /**
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface

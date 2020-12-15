@@ -235,7 +235,6 @@ class DiscountFacadeCalculateTest extends Unit
             ->expects($this->once())
             ->method('filter')
             ->willReturnCallback(function (CollectedDiscountTransfer $collectedDiscountTransfer) {
-
                 $discountableItems = new ArrayObject();
                 foreach ($collectedDiscountTransfer->getDiscountableItems() as $discountableItemTransfer) {
                     if ($discountableItemTransfer->getOriginalItem()->getSku() !== '123') {

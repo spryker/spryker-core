@@ -14,12 +14,12 @@ interface ShipmentMethodRestResponseBuilderInterface
 {
     /**
      * @param string $idShipmentMethod
-     * @param \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer $shipmentMethodTransfer
+     * @param \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer $restShipmentMethodsAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
     public function createShipmentMethodRestResource(
         string $idShipmentMethod,
-        RestShipmentMethodsAttributesTransfer $shipmentMethodTransfer
+        RestShipmentMethodsAttributesTransfer $restShipmentMethodsAttributesTransfer
     ): RestResourceInterface;
 }
