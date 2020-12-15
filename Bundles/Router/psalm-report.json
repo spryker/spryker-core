@@ -2,18 +2,6 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 35,
-            "line_to": 35,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Yves\\Router\\Route\\RouteCollection::add has wrong name $routeName, expecting $name as defined by Symfony\\Component\\Routing\\RouteCollection::add",
-            "file_name": "vendor/spryker/spryker/Bundles/Router/src/Spryker/Yves/Router/Route/RouteCollection.php",
-            "snippet": "    public function add($routeName, Route $route, int $priority = 0): void",
-            "selected_text": "$routeName",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
             "line_from": 99,
             "line_to": 99,
             "type": "InvalidArgument",

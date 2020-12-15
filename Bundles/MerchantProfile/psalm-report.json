@@ -1,18 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 81,
-            "line_to": 81,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\MerchantProfile\\Persistence\\MerchantProfileRepository::buildQueryFromCriteria has wrong name $criteria, expecting $modelCriteria as defined by Spryker\\Zed\\Kernel\\Persistence\\AbstractRepository::buildQueryFromCriteria",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfile/src/Spryker/Zed/MerchantProfile/Persistence/MerchantProfileRepository.php",
-            "snippet": "    public function buildQueryFromCriteria(ModelCriteria $criteria, ?FilterTransfer $filterTransfer = null): ModelCriteria",
-            "selected_text": "$criteria",
-            "error_level": 7,
-            "shortcode": 230
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",

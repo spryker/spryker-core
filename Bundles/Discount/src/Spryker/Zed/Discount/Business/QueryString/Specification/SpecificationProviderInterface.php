@@ -19,18 +19,18 @@ interface SpecificationProviderInterface
     public function getSpecificationContext(ClauseTransfer $clauseTransfer);
 
     /**
-     * @param mixed $leftNode
-     * @param mixed $rightNode
+     * @param mixed $left
+     * @param mixed $right
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface
      */
-    public function createAnd($leftNode, $rightNode);
+    public function createAnd($left, $right);
 
     /**
-     * @param mixed $leftNode
-     * @param mixed $rightNode
+     * @param mixed $left
+     * @param mixed $right
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface
      */
-    public function createOr($leftNode, $rightNode);
+    public function createOr($left, $right);
 }

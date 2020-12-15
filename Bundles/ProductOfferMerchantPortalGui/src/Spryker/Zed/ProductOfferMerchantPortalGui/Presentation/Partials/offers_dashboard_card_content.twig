@@ -1,61 +1,83 @@
 {#
 @var merchantProductOfferCounts \Generated\Shared\Transfer\MerchantProductOfferCountsTransfer
 #}
-<web-mp-dashboard-stats>
-    <span title>{{ 'Stock' | trans }}</span>
+<div class="spy-col spy-col-6 spy-col-gutter-lg">
+    <web-mp-dashboard-stats>
+        <span title>{{ 'Stock' | trans }}</span>
 
-    <div class="mp-dashboard-grid mp-dashboard-grid--stats">
-        <web-mp-dashboard-stats-block
-            name="{{ 'With Stock' | trans }}"
-            count="{{ merchantProductOfferCounts.withStock }}"
-        ></web-mp-dashboard-stats-block>
+        <div class="spy-row spy-row-gutter-sm spy-row-align-row-space-between">
+            <div class="spy-col spy-col-gutter-sm">
+                <web-mp-dashboard-stats-block
+                    name="{{ 'With Stock' | trans }}"
+                    count="{{ merchantProductOfferCounts.withStock }}"
+                ></web-mp-dashboard-stats-block>
+            </div>
 
-        <web-mp-dashboard-stats-block
-            name="{{ 'Low on Stock' | trans }}"
-            count="{{ merchantProductOfferCounts.lowInStock }}"
-        ></web-mp-dashboard-stats-block>
-    </div>
-</web-mp-dashboard-stats>
+            <div class="spy-col spy-col-gutter-sm">
+                <web-mp-dashboard-stats-block
+                    name="{{ 'Low on Stock' | trans }}"
+                    count="{{ merchantProductOfferCounts.lowInStock }}"
+                ></web-mp-dashboard-stats-block>
+            </div>
+        </div>
+    </web-mp-dashboard-stats>
+</div>
 
-<web-mp-dashboard-stats>
-    <span title>{{ 'Validity' | trans }}</span>
+<div class="spy-col spy-col-6 spy-col-gutter-lg">
+    <web-mp-dashboard-stats>
+        <span title>{{ 'Validity' | trans }}</span>
 
-    <div class="mp-dashboard-grid mp-dashboard-grid--stats">
-        <web-mp-dashboard-stats-block
-            name="{{ 'Valid' | trans }}"
-            count="{{ merchantProductOfferCounts.withValidDates }}"
-        ></web-mp-dashboard-stats-block>
+        <div class="spy-row spy-row-gutter-sm spy-row-align-row-space-between">
+            <div class="spy-col spy-col-gutter-sm">
+                <web-mp-dashboard-stats-block
+                    name="{{ 'Valid' | trans }}"
+                    count="{{ merchantProductOfferCounts.withValidDates }}"
+                ></web-mp-dashboard-stats-block>
+            </div>
 
-        <web-mp-dashboard-stats-block
-            name="{{ 'Expiring in %daysNumber% days' | trans({'%daysNumber%': expiringOffersDaysThreshold}) }}"
-            count="{{ merchantProductOfferCounts.expiring }}"
-        ></web-mp-dashboard-stats-block>
-    </div>
-</web-mp-dashboard-stats>
+            <div class="spy-col spy-col-gutter-sm">
+                <web-mp-dashboard-stats-block
+                    name="{{ 'Expiring in %daysNumber% days' | trans({'%daysNumber%': expiringOffersDaysThreshold}) }}"
+                    count="{{ merchantProductOfferCounts.expiring }}"
+                ></web-mp-dashboard-stats-block>
+            </div>
+        </div>
+    </web-mp-dashboard-stats>
+</div>
 
-<web-mp-dashboard-stats>
-    <span title>{{ 'Visibility' | trans }}</span>
+<div class="spy-col spy-col-6 spy-col-gutter-lg">
+    <web-mp-dashboard-stats>
+        <span title>{{ 'Visibility' | trans }}</span>
 
-    <div class="mp-dashboard-grid mp-dashboard-grid--stats">
-        <web-mp-dashboard-stats-block
-            name="{{ 'Online' | trans }}"
-            count="{{ merchantProductOfferCounts.active }}"
-        ></web-mp-dashboard-stats-block>
+        <div class="spy-row spy-row-gutter-sm spy-row-align-row-space-between">
+            <div class="spy-col spy-col-gutter-sm">
+                <web-mp-dashboard-stats-block
+                    name="{{ 'Online' | trans }}"
+                    count="{{ merchantProductOfferCounts.active }}"
+                ></web-mp-dashboard-stats-block>
+            </div>
 
-        <web-mp-dashboard-stats-block
-            name="{{ 'Offline' | trans }}"
-            count="{{ merchantProductOfferCounts.inactive }}"
-        ></web-mp-dashboard-stats-block>
-    </div>
-</web-mp-dashboard-stats>
+            <div class="spy-col spy-col-gutter-sm">
+                <web-mp-dashboard-stats-block
+                    name="{{ 'Offline' | trans }}"
+                    count="{{ merchantProductOfferCounts.inactive }}"
+                ></web-mp-dashboard-stats-block>
+            </div>
+        </div>
+    </web-mp-dashboard-stats>
+</div>
 
-<web-mp-dashboard-stats>
-    <span title>{{ 'On Marketplace' | trans }}</span>
+<div class="spy-col spy-col-6 spy-col-gutter-lg">
+    <web-mp-dashboard-stats>
+        <span title>{{ 'On Marketplace' | trans }}</span>
 
-    <div class="mp-dashboard-grid mp-dashboard-grid--stats">
-        <web-mp-dashboard-stats-block
-            name="{{ 'Valid, online & with Stock' | trans }}"
-            count="{{ merchantProductOfferCounts.visible }}"
-        ></web-mp-dashboard-stats-block>
-    </div>
-</web-mp-dashboard-stats>
+        <div class="spy-row spy-row-gutter-sm spy-row-align-row-space-between">
+            <div class="spy-col spy-col-gutter-sm">
+                <web-mp-dashboard-stats-block
+                    name="{{ 'Valid, online & with Stock' | trans }}"
+                    count="{{ merchantProductOfferCounts.visible }}"
+                ></web-mp-dashboard-stats-block>
+            </div>
+        </div>
+    </web-mp-dashboard-stats>
+</div>

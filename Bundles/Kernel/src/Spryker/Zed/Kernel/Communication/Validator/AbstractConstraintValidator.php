@@ -15,7 +15,7 @@ abstract class AbstractConstraintValidator extends ConstraintValidator
     /**
      * @var \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
-    private $factory;
+    protected $factory;
 
     /**
      * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
