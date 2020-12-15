@@ -9,10 +9,10 @@ namespace Spryker\Zed\PriceProductOffer\Business;
 
 use ArrayObject;
 use Generated\Shared\Transfer\PriceProductOfferCollectionTransfer;
-use Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer;
 use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -73,9 +73,9 @@ class PriceProductOfferFacade extends AbstractFacade implements PriceProductOffe
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
-    public function validateProductOfferPrices(ArrayObject $priceProductTransfers): PriceProductOfferCollectionValidationResponseTransfer
+    public function validateProductOfferPrices(ArrayObject $priceProductTransfers): ValidationResponseTransfer
     {
         return $this->getFactory()
             ->createPriceProductOfferValidator()

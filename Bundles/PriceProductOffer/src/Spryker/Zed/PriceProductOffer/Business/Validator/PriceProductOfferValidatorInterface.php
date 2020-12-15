@@ -8,16 +8,18 @@
 namespace Spryker\Zed\PriceProductOffer\Business\Validator;
 
 use ArrayObject;
-use Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
 
 interface PriceProductOfferValidatorInterface
 {
     /**
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     *
      * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
     public function validateProductOfferPrices(
         ArrayObject $priceProductTransfers
-    ): PriceProductOfferCollectionValidationResponseTransfer;
+    ): ValidationResponseTransfer;
 }

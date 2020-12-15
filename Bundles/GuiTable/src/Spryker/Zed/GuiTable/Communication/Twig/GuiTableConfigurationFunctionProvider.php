@@ -148,7 +148,7 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     }
 
     /**
-     * @phpstan-return array<int|string, mixed>
+     * @phpstan-return array<mixed>
      *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *

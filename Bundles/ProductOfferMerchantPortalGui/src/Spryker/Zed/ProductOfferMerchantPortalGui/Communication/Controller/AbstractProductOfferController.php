@@ -107,15 +107,15 @@ class AbstractProductOfferController extends AbstractController
      */
     protected function validateProductOfferPrices(ArrayObject $priceProductTransfers, array $initialData): array
     {
-        $priceProductOfferCollectionValidationResponseTransfer = $this->getFactory()
+        $validationResponseTransfer = $this->getFactory()
             ->getPriceProductOfferFacade()
             ->validateProductOfferPrices($priceProductTransfers);
 
-        if (!$priceProductOfferCollectionValidationResponseTransfer->getIsSuccessful()) {
+        if (!$validationResponseTransfer->getIsSuccess()) {
             return $this->getFactory()
                 ->createPriceProductOfferMapper()
-                ->mapPriceProductOfferCollectionValidationResponseTransferToInitialDataErrors(
-                    $priceProductOfferCollectionValidationResponseTransfer,
+                ->mapValidationResponseTransferToInitialDataErrors(
+                    $validationResponseTransfer,
                     $initialData
                 );
         }

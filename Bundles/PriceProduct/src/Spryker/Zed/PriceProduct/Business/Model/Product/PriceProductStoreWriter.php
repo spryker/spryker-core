@@ -144,7 +144,7 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
 
         $priceProductStoreEntity->save();
 
-        $moneyValueTransfer->setIdEntity((int)$priceProductStoreEntity->getIdPriceProductStore());
+        $moneyValueTransfer->setIdEntity($priceProductStoreEntity->getIdPriceProductStore());
 
         $priceProductTransfer = $this->persistPriceProductDimension($priceProductTransfer);
 

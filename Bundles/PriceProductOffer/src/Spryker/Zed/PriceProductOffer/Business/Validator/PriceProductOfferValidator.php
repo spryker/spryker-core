@@ -8,8 +8,8 @@
 namespace Spryker\Zed\PriceProductOffer\Business\Validator;
 
 use ArrayObject;
-use Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer;
 use Generated\Shared\Transfer\ValidationErrorTransfer;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\PriceProductOffer\Business\ConstraintProvider\PriceProductOfferConstraintProviderInterface;
 use Spryker\Zed\PriceProductOffer\Dependency\External\PriceProductOfferToValidationAdapterInterface;
 
@@ -42,12 +42,12 @@ class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
-    public function validateProductOfferPrices(ArrayObject $priceProductTransfers): PriceProductOfferCollectionValidationResponseTransfer
+    public function validateProductOfferPrices(ArrayObject $priceProductTransfers): ValidationResponseTransfer
     {
-        $validationResponseTransfer = new PriceProductOfferCollectionValidationResponseTransfer();
-        $validationResponseTransfer->setIsSuccessful(true);
+        $validationResponseTransfer = new ValidationResponseTransfer();
+        $validationResponseTransfer->setIsSuccess(true);
 
         $constraintViolationList = $this->validator->validate($priceProductTransfers, $this->priceProductOfferConstraintProvider->getConstraints());
 
@@ -55,7 +55,7 @@ class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
             return $validationResponseTransfer;
         }
 
-        $validationResponseTransfer->setIsSuccessful(false);
+        $validationResponseTransfer->setIsSuccess(false);
 
         /** @var \Symfony\Component\Validator\ConstraintViolationInterface $constraintViolation */
         foreach ($constraintViolationList as $constraintViolation) {

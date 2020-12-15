@@ -9,10 +9,10 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Action\UpdateP
 
 use ArrayObject;
 use Generated\Shared\Transfer\MoneyValueTransfer;
-use Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer;
 use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Action\ActionInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMoneyFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface;
@@ -73,16 +73,15 @@ class SavePricesAction implements ActionInterface
     public function execute(Request $request): JsonResponse
     {
         $typePriceProductOfferIds = $this->parseTypePriceProductOfferIds($request->get(static::PARAM_TYPE_PRICE_PRODUCT_OFFER_IDS));
-        $idProductOffer = (int)$request->get(static::PARAM_ID_PRODUCT_OFFER);
 
         $data = $this->utilEncodingService->decodeJson((string)$request->getContent(), true)['data'];
 
         $priceProductTransfers = $this->getPriceProductTransfers($typePriceProductOfferIds, $data);
-        $priceProductTransfers = $this->mapDataToProductOfferTransfers($data, $priceProductTransfers);
+        $priceProductTransfers = $this->mapDataToPriceProductTransfers($data, $priceProductTransfers);
 
-        $collectionValidationResponseTransfer = $this->priceProductOfferFacade->validateProductOfferPrices($priceProductTransfers);
-        if (!$collectionValidationResponseTransfer->getIsSuccessful()) {
-            return $this->errorJsonResponse($collectionValidationResponseTransfer);
+        $validationResponseTransfer = $this->priceProductOfferFacade->validateProductOfferPrices($priceProductTransfers);
+        if (!$validationResponseTransfer->getIsSuccess()) {
+            return $this->errorJsonResponse($validationResponseTransfer);
         }
 
         foreach ($priceProductTransfers as $priceProductTransfer) {
@@ -106,8 +105,9 @@ class SavePricesAction implements ActionInterface
     protected function getPriceProductTransfers(array $typePriceProductOfferIds, array $data): ArrayObject
     {
         $priceProductOfferIds = [];
-        if (stristr((string)key($data), '[', true) !== false) {
-            $priceProductOfferIds[] = $typePriceProductOfferIds[mb_strtoupper(stristr((string)key($data), '[', true))];
+        $key = (string)key($data);
+        if (strpos($key, '[') !== false) {
+            $priceProductOfferIds[] = $typePriceProductOfferIds[mb_strtoupper((string)strstr($key, '[', true))];
         } else {
             $priceProductOfferIds = $typePriceProductOfferIds;
         }
@@ -129,61 +129,55 @@ class SavePricesAction implements ActionInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function mapDataToProductOfferTransfers(array $data, ArrayObject $priceProductTransfers): ArrayObject
+    protected function mapDataToPriceProductTransfers(array $data, ArrayObject $priceProductTransfers): ArrayObject
     {
-        $key = (string)key($data);
-        $value = $data[$key] === '' ? null : $data[$key];
-        $key = str_replace(']', '', $key);
-        $key = explode('[', $key);
-        $key = $key[count($key) - 1];
-
         /** @var \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer */
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            $this->mapDataToProductOfferTransfer($key, $value, $priceProductTransfer->getMoneyValueOrFail());
+            $this->mapDataToMoneyValueTransfer($data, $priceProductTransfer->getMoneyValueOrFail());
         }
 
         return $priceProductTransfers;
     }
 
     /**
-     * @param string $dataType
-     * @param string|null $value
+     * @phpstan-param array<mixed> $data
+     *
+     * @param array $data
      * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
      *
      * @return \Generated\Shared\Transfer\MoneyValueTransfer
      */
-    protected function mapDataToProductOfferTransfer(string $dataType, ?string $value, MoneyValueTransfer $moneyValueTransfer): MoneyValueTransfer
+    protected function mapDataToMoneyValueTransfer(array $data, MoneyValueTransfer $moneyValueTransfer): MoneyValueTransfer
     {
-        if ($value !== null) {
-            switch ($dataType) {
-                case static::PARAM_NET:
-                case static::PARAM_GROSS:
-                    $value = $this->moneyFacade->convertDecimalToInteger((float)$value);
-
-                    break;
-                default:
-                    $value = (int)$value;
-            }
-        }
-
-        switch ($dataType) {
-            case static::PARAM_NET:
+        foreach ($data as $key => $value) {
+            if (strpos($key, MoneyValueTransfer::NET_AMOUNT) !== false) {
+                $value = $this->moneyFacade->convertDecimalToInteger((float)$value);
                 $moneyValueTransfer->setNetAmount($value);
 
-                break;
-            case static::PARAM_GROSS:
+                continue;
+            }
+
+            if (strpos($key, MoneyValueTransfer::GROSS_AMOUNT) !== false) {
+                $value = $this->moneyFacade->convertDecimalToInteger((float)$value);
                 $moneyValueTransfer->setGrossAmount($value);
 
-                break;
-            case static::PARAM_STORE:
+                continue;
+            }
+
+            if ($key === MoneyValueTransfer::STORE) {
+                $value = (int)$value;
                 $moneyValueTransfer->setFkStore($value);
                 $moneyValueTransfer->setStore((new StoreTransfer())->setIdStore($value));
 
-                break;
-            case static::PARAM_CURRENCY:
+                continue;
+            }
+
+            if ($key === MoneyValueTransfer::CURRENCY) {
+                $value = (int)$value;
                 $moneyValueTransfer->setFkCurrency($value);
 
-                break;
+                continue;
+            }
         }
 
         return $moneyValueTransfer;
@@ -199,10 +193,12 @@ class SavePricesAction implements ActionInterface
                 [
                     'type' => static::NOTIFICATION_TYPE_SUCCESS,
                     'message' => static::NOTIFICATION_SUCCESS_MESSAGE,
-                ]
+                ],
             ],
             'postActions' => [
-                ['type' => static::POST_ACTION_REFRESH_TABLE]
+                [
+                    'type' => static::POST_ACTION_REFRESH_TABLE,
+                ],
             ],
         ];
 
@@ -210,11 +206,11 @@ class SavePricesAction implements ActionInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer $validationResponseTransfer
+     * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    protected function errorJsonResponse(PriceProductOfferCollectionValidationResponseTransfer $validationResponseTransfer): JsonResponse
+    protected function errorJsonResponse(ValidationResponseTransfer $validationResponseTransfer): JsonResponse
     {
         $notifications = [];
         /** @var \Generated\Shared\Transfer\ValidationErrorTransfer $validationErrorTransfer */

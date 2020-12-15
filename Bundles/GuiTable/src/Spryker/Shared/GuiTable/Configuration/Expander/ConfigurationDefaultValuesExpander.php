@@ -50,7 +50,7 @@ class ConfigurationDefaultValuesExpander implements ConfigurationDefaultValuesEx
         $guiTableConfigurationTransfer = $this->setDefaultFilters($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->setDefaultItemSelection($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->setDefaultSyncStateUrl($guiTableConfigurationTransfer);
-        $guiTableConfigurationTransfer = $this->setDefaultSettings($guiTableConfigurationTransfer);
+        $guiTableConfigurationTransfer = $this->setDefaultColumnConfigurator($guiTableConfigurationTransfer);
 
         return $guiTableConfigurationTransfer;
     }
@@ -234,7 +234,7 @@ class ConfigurationDefaultValuesExpander implements ConfigurationDefaultValuesEx
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
-    protected function setDefaultSettings(
+    protected function setDefaultColumnConfigurator(
         GuiTableConfigurationTransfer $guiTableConfigurationTransfer
     ): GuiTableConfigurationTransfer {
         $guiTableColumnConfiguratorConfigurationTransfer = $guiTableConfigurationTransfer->getColumnConfigurator() ?? new GuiTableColumnConfiguratorConfigurationTransfer();

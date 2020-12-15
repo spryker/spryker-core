@@ -9,10 +9,10 @@ namespace Spryker\Zed\PriceProductOffer\Business;
 
 use ArrayObject;
 use Generated\Shared\Transfer\PriceProductOfferCollectionTransfer;
-use Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer;
 use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
 
 interface PriceProductOfferFacadeInterface
 {
@@ -57,7 +57,7 @@ interface PriceProductOfferFacadeInterface
      * - Validates product offer prices collection.
      * - Сhecks if there are duplicated prices for store-currency-gross-net combinations.
      * - Checks that currency assigned to a store per prices.
-     * - Returns PriceProductOfferCollectionValidationResponseTransfer transfer object.
+     * - Returns ValidationResponseTransfer transfer object.
      *
      * @api
      *
@@ -65,9 +65,9 @@ interface PriceProductOfferFacadeInterface
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
-    public function validateProductOfferPrices(ArrayObject $priceProductTransfers): PriceProductOfferCollectionValidationResponseTransfer;
+    public function validateProductOfferPrices(ArrayObject $priceProductTransfers): ValidationResponseTransfer;
 
     /**
      * Specification:

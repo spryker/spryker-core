@@ -9,10 +9,10 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Mapper;
 
 use Generated\Shared\Transfer\GuiTableEditableDataErrorTransfer;
 use Generated\Shared\Transfer\GuiTableEditableInitialDataTransfer;
-use Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTableViewTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ValidationErrorTransfer;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface;
 
 class PriceProductOfferMapper
@@ -35,16 +35,16 @@ class PriceProductOfferMapper
      *
      * @phpstan-return array<mixed>
      *
-     * @param \Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer $priceProductOfferCollectionValidationResponseTransfer
+     * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
      * @param array $initialData
      *
      * @return array
      */
-    public function mapPriceProductOfferCollectionValidationResponseTransferToInitialDataErrors(
-        PriceProductOfferCollectionValidationResponseTransfer $priceProductOfferCollectionValidationResponseTransfer,
+    public function mapValidationResponseTransferToInitialDataErrors(
+        ValidationResponseTransfer $validationResponseTransfer,
         array $initialData
     ): array {
-        $validationErrorTransfers = $priceProductOfferCollectionValidationResponseTransfer->getValidationErrors();
+        $validationErrorTransfers = $validationResponseTransfer->getValidationErrors();
 
         foreach ($validationErrorTransfers as $validationErrorTransfer) {
             if (!$validationErrorTransfer->getPropertyPath()) {
@@ -129,7 +129,7 @@ class PriceProductOfferMapper
             return '';
         }
 
-        if ($propertyPath[1] === PriceProductTransfer::MONEY_VALUE) {
+        if ($entityName === PriceProductTransfer::MONEY_VALUE) {
             $priceTypes = $this->priceProductFacade->getPriceTypeValues();
             $priceTypeName = mb_strtolower($priceTypes[$entityNumber]->getName());
 
@@ -140,6 +140,6 @@ class PriceProductOfferMapper
             return sprintf('%s[%s][%s]', $priceTypeName, (string)$entityName, (string)$fieldName);
         }
 
-        return (string)$propertyPath[1];
+        return (string)$entityName;
     }
 }

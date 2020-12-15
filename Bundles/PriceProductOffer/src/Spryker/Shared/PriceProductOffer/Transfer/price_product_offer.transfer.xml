@@ -110,7 +110,7 @@
         <property name="priceProductOffers" type="PriceProductOffer[]" singular="priceProductOffer"/>
     </transfer>
 
-    <transfer name="PriceProductOfferCollectionValidationResponse">
+    <transfer name="ValidationResponse">
         <property name="isSuccessful" type="bool"/>
         <property name="validationErrors" type="ValidationError[]" singular="validationError"/>
     </transfer>

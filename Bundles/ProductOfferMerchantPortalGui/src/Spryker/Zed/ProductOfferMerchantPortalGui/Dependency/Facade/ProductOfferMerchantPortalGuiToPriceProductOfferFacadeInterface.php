@@ -9,9 +9,9 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade;
 
 use ArrayObject;
 use Generated\Shared\Transfer\PriceProductOfferCollectionTransfer;
-use Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer;
 use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
 
 interface ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface
 {
@@ -27,9 +27,9 @@ interface ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductOfferCollectionValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
-    public function validateProductOfferPrices(ArrayObject $priceProductTransfers): PriceProductOfferCollectionValidationResponseTransfer;
+    public function validateProductOfferPrices(ArrayObject $priceProductTransfers): ValidationResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer
