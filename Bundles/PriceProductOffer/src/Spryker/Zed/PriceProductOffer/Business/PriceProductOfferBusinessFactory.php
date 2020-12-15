@@ -50,7 +50,6 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
     public function createPriceProductOfferDeleter(): PriceProductOfferDeleterInterface
     {
         return new PriceProductOfferDeleter(
-            $this->getPriceProductFacade(),
             $this->getEntityManager()
         );
     }

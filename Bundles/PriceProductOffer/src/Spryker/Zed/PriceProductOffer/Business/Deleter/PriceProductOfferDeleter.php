@@ -9,30 +9,21 @@ namespace Spryker\Zed\PriceProductOffer\Business\Deleter;
 
 use Generated\Shared\Transfer\PriceProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
-use Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductOffer\Persistence\PriceProductOfferEntityManagerInterface;
 
 class PriceProductOfferDeleter implements PriceProductOfferDeleterInterface
 {
-    /**
-     * @var \Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToPriceProductFacadeInterface
-     */
-    protected $priceProductFacade;
-
     /**
      * @var \Spryker\Zed\PriceProductOffer\Persistence\PriceProductOfferEntityManagerInterface
      */
     protected $priceProductOfferEntityManager;
 
     /**
-     * @param \Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\PriceProductOffer\Persistence\PriceProductOfferEntityManagerInterface $priceProductOfferEntityManager
      */
     public function __construct(
-        PriceProductOfferToPriceProductFacadeInterface $priceProductFacade,
         PriceProductOfferEntityManagerInterface $priceProductOfferEntityManager
     ) {
-        $this->priceProductFacade = $priceProductFacade;
         $this->priceProductOfferEntityManager = $priceProductOfferEntityManager;
     }
 
@@ -51,6 +42,5 @@ class PriceProductOfferDeleter implements PriceProductOfferDeleterInterface
         }
         $priceProductOfferCriteriaTransfer->setPriceProductOfferIds($priceProductOfferIds);
         $this->priceProductOfferEntityManager->delete($priceProductOfferCriteriaTransfer);
-        $this->priceProductFacade->deleteOrphanPriceProductStoreEntities();
     }
 }
