@@ -14,6 +14,7 @@ use Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageClient
 use Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageDependencyProvider;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Storage\StorageConstants;
+use Spryker\Shared\StorageRedis\StorageRedisConstants;
 
 /**
  * @method void wantToTest($text)
@@ -35,6 +36,7 @@ class ProductConfigurationStorageClientTester extends Actor
 
     /**
      * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_PROTOCOL
+     * @deprecated Use {@link \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_SCHEME} instead.
      */
     protected const REDIS_PROTOCOL = 'STORAGE_REDIS:STORAGE_REDIS_PROTOCOL';
 
@@ -91,7 +93,7 @@ class ProductConfigurationStorageClientTester extends Actor
      */
     public function setupStorageRedisConfig(): void
     {
-        $this->setConfig(StorageConstants::STORAGE_REDIS_PROTOCOL, Config::get(static::REDIS_PROTOCOL));
+        $this->setConfig(StorageConstants::STORAGE_REDIS_PROTOCOL, Config::hasKey(StorageRedisConstants::STORAGE_REDIS_SCHEME) ? Config::get(StorageRedisConstants::STORAGE_REDIS_SCHEME) : Config::get(static::REDIS_PROTOCOL));
         $this->setConfig(StorageConstants::STORAGE_REDIS_PORT, Config::get(static::REDIS_PORT));
         $this->setConfig(StorageConstants::STORAGE_REDIS_HOST, Config::get(static::REDIS_HOST));
         $this->setConfig(StorageConstants::STORAGE_REDIS_DATABASE, Config::get(static::REDIS_DATABASE));
