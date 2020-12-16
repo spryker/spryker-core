@@ -75,7 +75,8 @@ class PriceProductOfferMapper
             return $initialData;
         }
 
-        $rowNumber = (int)$propertyPath[0] === 0 ? 0 : round(((int)$propertyPath[0] - 1) / 2);
+        $priceTypes = $this->priceProductFacade->getPriceTypeValues();
+        $rowNumber = (int)$propertyPath[0] === 0 ? 0 : round(((int)$propertyPath[0] - 1) / count($priceTypes));
         $isRowError = count($propertyPath) < 3;
         $errorMessage = $validationErrorTransfer->getMessage();
 
