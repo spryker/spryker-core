@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTableViewTransfer;

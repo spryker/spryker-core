@@ -51,7 +51,7 @@ class CreateProductOfferController extends AbstractProductOfferController
 
         $initialData = $this->getDefaultInitialData($request, $productOfferForm->getName());
 
-        if (!$productOfferForm->isSubmitted() || !$productOfferForm->isValid()) {
+        if (!$productOfferForm->isSubmitted()) {
             return $this->getResponse($productOfferForm, $productConcreteTransfer, $productAbstractTransfer, $initialData);
         }
 
@@ -59,18 +59,18 @@ class CreateProductOfferController extends AbstractProductOfferController
             ->getPriceProductOfferFacade()
             ->validateProductOfferPrices($productOfferForm->getData()->getPrices());
 
-        if (!$validationResponseTransfer->getIsSuccess()) {
+        if (!$productOfferForm->isValid() || !$validationResponseTransfer->getIsSuccess()) {
             $initialData = $this->getFactory()
                 ->createPriceProductOfferMapper()
                 ->mapValidationResponseTransferToInitialDataErrors(
                     $validationResponseTransfer,
                     $initialData
                 );
+
+            return $this->getResponse($productOfferForm, $productConcreteTransfer, $productAbstractTransfer, $initialData);
         }
 
-        if ($validationResponseTransfer->getIsSuccess()) {
-            $this->getFactory()->getProductOfferFacade()->create($productOfferForm->getData());
-        }
+        $this->getFactory()->getProductOfferFacade()->create($productOfferForm->getData());
 
         return $this->getResponse(
             $productOfferForm,
@@ -119,7 +119,7 @@ class CreateProductOfferController extends AbstractProductOfferController
             ->createPriceProductOfferCreateGuiTableConfigurationProvider()
             ->getConfiguration($initialData);
 
-        $isPriceProductOffersValid = empty($initialData['errors']);
+        $isPriceProductOffersValid = count($initialData['errors']) === 0;
 
         $responseData = [
             'form' => $this->renderView('@ProductOfferMerchantPortalGui/Partials/offer_form.twig', [
@@ -135,18 +135,18 @@ class CreateProductOfferController extends AbstractProductOfferController
             return new JsonResponse($responseData);
         }
 
-        if ($productOfferForm->isValid() && empty($initialData['errors'])) {
+        if ($productOfferForm->isValid() && $isPriceProductOffersValid) {
             $responseData['postActions'] = [[
                 'type' => 'redirect',
                 'url' => '/product-offer-merchant-portal-gui/product-offers',
             ]];
 
             $this->addSuccessMessage('The Offer is saved.');
+
+            return new JsonResponse($responseData);
         }
 
-        if (!$productOfferForm->isValid() || !empty($initialData['errors'])) {
-            $responseData = $this->addValidationNotifications($responseData);
-        }
+        $responseData = $this->addValidationNotifications($responseData);
 
         return new JsonResponse($responseData);
     }

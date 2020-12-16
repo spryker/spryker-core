@@ -58,7 +58,7 @@ class UpdateProductOfferController extends AbstractProductOfferController
         $productOfferResponseTransfer = new ProductOfferResponseTransfer();
         $productOfferResponseTransfer->setProductOffer($productOfferTransfer);
 
-        if (!$productOfferForm->isSubmitted() || !$productOfferForm->isValid()) {
+        if (!$productOfferForm->isSubmitted()) {
             return $this->getResponse(
                 $productOfferForm,
                 $productConcreteTransfer,
@@ -73,18 +73,25 @@ class UpdateProductOfferController extends AbstractProductOfferController
             ->getPriceProductOfferFacade()
             ->validateProductOfferPrices($productOfferForm->getData()->getPrices());
 
-        if (!$validationResponseTransfer->getIsSuccess()) {
+        if (!$productOfferForm->isValid() || !$validationResponseTransfer->getIsSuccess()) {
             $initialData = $this->getFactory()
                 ->createPriceProductOfferMapper()
                 ->mapValidationResponseTransferToInitialDataErrors(
                     $validationResponseTransfer,
                     $initialData
                 );
+
+            return $this->getResponse(
+                $productOfferForm,
+                $productConcreteTransfer,
+                $productAbstractTransfer,
+                $productOfferResponseTransfer,
+                $idProductOffer,
+                $initialData
+            );
         }
 
-        if ($validationResponseTransfer->getIsSuccess()) {
-            $productOfferResponseTransfer = $this->getFactory()->getProductOfferFacade()->update($productOfferForm->getData());
-        }
+        $productOfferResponseTransfer = $this->getFactory()->getProductOfferFacade()->update($productOfferForm->getData());
 
         return $this->getResponse(
             $productOfferForm,
@@ -152,10 +159,12 @@ class UpdateProductOfferController extends AbstractProductOfferController
             return new JsonResponse($responseData);
         }
 
+        $isPriceProductOffersValid = count($initialData['errors']) === 0;
+
         if (
             $productOfferForm->isValid()
             && $productOfferResponseTransfer->getIsSuccessful()
-            && empty($initialData['errors'])
+            && $isPriceProductOffersValid
         ) {
             $responseData = [
                 'postActions' => [
@@ -182,9 +191,7 @@ class UpdateProductOfferController extends AbstractProductOfferController
             }
         }
 
-        if (!$productOfferForm->isValid() || !empty($initialData['errors'])) {
-            $responseData = $this->addValidationNotifications($responseData);
-        }
+        $responseData = $this->addValidationNotifications($responseData);
 
         return new JsonResponse($responseData);
     }
