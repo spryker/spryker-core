@@ -26,6 +26,7 @@
         <behavior name="synchronization">
             <parameter name="resource" value="category_node"/>
             <parameter name="locale" required="true"/>
+            <parameter name="store" required="true"/>
             <parameter name="key_suffix_column" value="fk_category_node"/>
             <parameter name="queue_group" value="sync.storage.category"/>
         </behavior>

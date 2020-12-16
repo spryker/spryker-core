@@ -7,14 +7,17 @@
 
 namespace Spryker\Zed\CategoryStorage\Persistence;
 
+use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\CategoryStorage\Persistence\SpyCategoryNodeStorageQuery;
 use Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorageQuery;
 use Spryker\Zed\CategoryStorage\CategoryStorageDependencyProvider;
+use Spryker\Zed\CategoryStorage\Persistence\Propel\Mapper\CategoryNodeMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\CategoryStorage\CategoryStorageConfig getConfig()
  * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageRepositoryInterface getRepository()
  */
 class CategoryStoragePersistenceFactory extends AbstractPersistenceFactory
 {
@@ -35,6 +38,14 @@ class CategoryStoragePersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @return \Spryker\Zed\CategoryStorage\Persistence\Propel\Mapper\CategoryNodeMapper
+     */
+    public function createCategoryNodeMapper(): CategoryNodeMapper
+    {
+        return new CategoryNodeMapper();
+    }
+
+    /**
      * @return \Spryker\Zed\CategoryStorage\Dependency\QueryContainer\CategoryStorageToLocaleQueryContainerInterface
      */
     public function getLocaleQueryContainer()
@@ -48,5 +59,13 @@ class CategoryStoragePersistenceFactory extends AbstractPersistenceFactory
     public function getCategoryQueryContainer()
     {
         return $this->getProvidedDependency(CategoryStorageDependencyProvider::QUERY_CONTAINER_CATEGORY);
+    }
+
+    /**
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function getCategoryNodeQuery(): SpyCategoryNodeQuery
+    {
+        return $this->getProvidedDependency(CategoryStorageDependencyProvider::PROPEL_QUERY_CATEGORY_NODE);
     }
 }

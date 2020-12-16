@@ -12,10 +12,10 @@ interface CategoryTreeStorageInterface
     /**
      * @return void
      */
-    public function publish();
+    public function publish(): void;
 
     /**
      * @return void
      */
-    public function unpublish();
+    public function unpublish(): void;
 }

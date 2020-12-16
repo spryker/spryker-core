@@ -54,4 +54,54 @@
         <property name="reference" type="string"/>
     </transfer>
 
+    <transfer name="Node">
+        <property name="idCategoryNode" type="int"/>
+        <property name="fkParentCategoryNode" type="int"/>
+        <property name="nodeOrder" type="int"/>
+        <property name="category" type="Category"/>
+    </transfer>
+
+    <transfer name="Category">
+        <property name="idCategory" type="int"/>
+        <property name="isActive" type="bool"/>
+        <property name="localizedAttributes" type="CategoryLocalizedAttributes[]" singular="localizedAttributes"/>
+        <property name="categoryTemplate" type="CategoryTemplate"/>
+        <property name="storeRelation" type="StoreRelation"/>
+    </transfer>
+
+    <transfer name="CategoryLocalizedAttributes">
+        <property name="locale" type="Locale"/>
+        <property name="name" type="string"/>
+        <property name="url" type="string"/>
+        <property name="metaTitle" type="string"/>
+        <property name="metaDescription" type="string"/>
+        <property name="metaKeywords" type="string"/>
+        <property name="image" type="Image"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+        <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="idEntity" type="int"/>
+        <property name="idStores" type="int[]" singular="idStores"/>
+        <property name="stores" type="Store[]" singular="stores"/>
+    </transfer>
+
+    <transfer name="CategoryTemplate">
+        <property name="templatePath" type="string"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="Image">
+        <property name="name" type="string"/>
+    </transfer>
+
 </transfers>

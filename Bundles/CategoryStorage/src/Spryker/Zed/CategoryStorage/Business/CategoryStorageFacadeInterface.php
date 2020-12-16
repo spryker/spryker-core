@@ -18,11 +18,11 @@ interface CategoryStorageFacadeInterface
      *
      * @api
      *
-     * @param array $categoryNodeIds
+     * @param int[] $categoryNodeIds
      *
      * @return void
      */
-    public function publish(array $categoryNodeIds);
+    public function publish(array $categoryNodeIds): void;
 
     /**
      * Specification:
@@ -31,11 +31,11 @@ interface CategoryStorageFacadeInterface
      *
      * @api
      *
-     * @param array $categoryNodeIds
+     * @param int[] $categoryNodeIds
      *
      * @return void
      */
-    public function unpublish(array $categoryNodeIds);
+    public function unpublish(array $categoryNodeIds): void;
 
     /**
      * Specification:
@@ -48,7 +48,7 @@ interface CategoryStorageFacadeInterface
      *
      * @return void
      */
-    public function publishCategoryTree();
+    public function publishCategoryTree(): void;
 
     /**
      * Specification:
@@ -59,5 +59,5 @@ interface CategoryStorageFacadeInterface
      *
      * @return void
      */
-    public function unpublishCategoryTree();
+    public function unpublishCategoryTree(): void;
 }

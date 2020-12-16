@@ -10,16 +10,16 @@ namespace Spryker\Zed\CategoryStorage\Business\Storage;
 interface CategoryNodeStorageInterface
 {
     /**
-     * @param array $categoryNodeIds
+     * @param int[] $categoryNodeIds
      *
      * @return void
      */
-    public function publish(array $categoryNodeIds);
+    public function publish(array $categoryNodeIds): void;
 
     /**
-     * @param array $categoryNodeIds
+     * @param int[] $categoryNodeIds
      *
      * @return void
      */
-    public function unpublish(array $categoryNodeIds);
+    public function unpublish(array $categoryNodeIds): void;
 }

@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\CategoryStorage;
 
-use Spryker\Shared\Kernel\Store;
+use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToEventBehaviorFacadeBridge;
+use Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToStoreFacadeBridge;
 use Spryker\Zed\CategoryStorage\Dependency\QueryContainer\CategoryStorageToCategoryQueryContainerBridge;
 use Spryker\Zed\CategoryStorage\Dependency\QueryContainer\CategoryStorageToLocaleQueryContainerBridge;
 use Spryker\Zed\CategoryStorage\Dependency\Service\CategoryStorageToUtilSanitizeServiceBridge;
@@ -22,10 +23,14 @@ class CategoryStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
     public const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
+
+    public const PROPEL_QUERY_CATEGORY_NODE = 'PROPEL_QUERY_CATEGORY_NODE';
+
     public const FACADE_CATEGORY = 'FACADE_CATEGORY';
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    public const FACADE_STORE = 'FACADE_STORE';
+
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
-    public const STORE = 'store';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -52,9 +57,7 @@ class CategoryStorageDependencyProvider extends AbstractBundleDependencyProvider
             return new CategoryStorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
         });
 
-        $container->set(static::STORE, function (Container $container) {
-            return Store::getInstance();
-        });
+        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -72,6 +75,38 @@ class CategoryStorageDependencyProvider extends AbstractBundleDependencyProvider
 
         $container->set(static::QUERY_CONTAINER_LOCALE, function (Container $container) {
             return new CategoryStorageToLocaleQueryContainerBridge($container->getLocator()->locale()->queryContainer());
+        });
+
+        $container = $this->addCategoryNodePropelQuery($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new CategoryStorageToStoreFacadeBridge(
+                $container->getLocator()->store()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCategoryNodePropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_CATEGORY_NODE, function () {
+            return SpyCategoryNodeQuery::create();
         });
 
         return $container;

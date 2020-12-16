@@ -7,13 +7,12 @@
 
 namespace Spryker\Zed\CategoryStorage\Business\Storage;
 
-use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
 use Generated\Shared\Transfer\CategoryTreeStorageTransfer;
-use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorage;
-use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\CategoryStorage\Business\TreeBuilder\CategoryStorageNodeTreeBuilderInterface;
 use Spryker\Zed\CategoryStorage\Dependency\Service\CategoryStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface;
+use Spryker\Zed\CategoryStorage\Persistence\CategoryStorageRepositoryInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class CategoryTreeStorage implements CategoryTreeStorageInterface
@@ -26,92 +25,131 @@ class CategoryTreeStorage implements CategoryTreeStorageInterface
     protected $queryContainer;
 
     /**
+     * @var \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageRepositoryInterface
+     */
+    protected $categoryStorageRepository;
+
+    /**
+     * @var \Spryker\Zed\CategoryStorage\Business\TreeBuilder\CategoryStorageNodeTreeBuilderInterface
+     */
+    protected $categoryStorageNodeTreeBuilder;
+
+    /**
      * @var \Spryker\Zed\CategoryStorage\Dependency\Service\CategoryStorageToUtilSanitizeServiceInterface
      */
     protected $utilSanitize;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
-     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
-     *
-     * @var bool
-     */
-    protected $isSendingToQueue = true;
-
-    /**
      * @param \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageRepositoryInterface $categoryStorageRepository
+     * @param \Spryker\Zed\CategoryStorage\Business\TreeBuilder\CategoryStorageNodeTreeBuilderInterface $categoryStorageNodeTreeBuilder
      * @param \Spryker\Zed\CategoryStorage\Dependency\Service\CategoryStorageToUtilSanitizeServiceInterface $utilSanitize
-     * @param \Spryker\Shared\Kernel\Store $store
-     * @param bool $isSendingToQueue
      */
     public function __construct(
         CategoryStorageQueryContainerInterface $queryContainer,
-        CategoryStorageToUtilSanitizeServiceInterface $utilSanitize,
-        Store $store,
-        $isSendingToQueue
+        CategoryStorageRepositoryInterface $categoryStorageRepository,
+        CategoryStorageNodeTreeBuilderInterface $categoryStorageNodeTreeBuilder,
+        CategoryStorageToUtilSanitizeServiceInterface $utilSanitize
     ) {
         $this->queryContainer = $queryContainer;
+        $this->categoryStorageRepository = $categoryStorageRepository;
+        $this->categoryStorageNodeTreeBuilder = $categoryStorageNodeTreeBuilder;
         $this->utilSanitize = $utilSanitize;
-        $this->store = $store;
-        $this->isSendingToQueue = $isSendingToQueue;
     }
 
     /**
      * @return void
      */
-    public function publish()
+    public function publish(): void
     {
-        $categoryTrees = $this->getCategoryTrees();
-        $spyCategoryStorageEntities = $this->findCategoryStorageEntities();
+        $categoryTrees = $this->getCategoryNodeStorageTransferTrees();
+        $categoryTreeStorageEntities = $this->findCategoryTreeStorageEntities();
+        $categoryTreeStorageEntitiesIndexedByStoreAndLocale = $this->indexCategoryTreeStorageEntitiesByStoreAndLocale($categoryTreeStorageEntities);
 
-        $this->storeData($categoryTrees, $spyCategoryStorageEntities);
+        $this->storeData($categoryTrees, $categoryTreeStorageEntitiesIndexedByStoreAndLocale);
     }
 
     /**
      * @return void
      */
-    public function unpublish()
+    public function unpublish(): void
     {
-        $spyCategoryMenuTranslationStorageEntities = $this->findCategoryStorageEntities();
+        $spyCategoryMenuTranslationStorageEntities = $this->findCategoryTreeStorageEntities();
         foreach ($spyCategoryMenuTranslationStorageEntities as $spyCategoryMenuTranslationStorageEntity) {
             $spyCategoryMenuTranslationStorageEntity->delete();
         }
     }
 
     /**
-     * @param array $categoryTrees
-     * @param array $spyCategoryStorageEntities
+     * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer[][][] $categoryNodeStorageTransferTreesIndexedByStoreAndLocale
+     * @param \Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorage[][] $categoryTreeStorageEntitiesIndexedByStoreAndLocale
      *
      * @return void
      */
-    protected function storeData(array $categoryTrees, array $spyCategoryStorageEntities)
-    {
-        foreach ($categoryTrees as $localeName => $categoryTreeByLocale) {
-            if (isset($spyCategoryStorageEntities[$localeName])) {
-                $this->storeDataSet($categoryTreeByLocale, $localeName, $spyCategoryStorageEntities[$localeName]);
-
-                continue;
+    protected function storeData(
+        array $categoryNodeStorageTransferTreesIndexedByStoreAndLocale,
+        array $categoryTreeStorageEntitiesIndexedByStoreAndLocale
+    ): void {
+        foreach ($categoryNodeStorageTransferTreesIndexedByStoreAndLocale as $storeName => $categoryNodeStorageTransferTreesIndexedByLocale) {
+            foreach ($categoryNodeStorageTransferTreesIndexedByLocale as $localeName => $categoryNodeStorageTransferTrees) {
+                $this->storeCategoryNodeStorageTransferTreesForStoreAndLocale(
+                    $categoryNodeStorageTransferTrees,
+                    $categoryTreeStorageEntitiesIndexedByStoreAndLocale,
+                    $storeName,
+                    $localeName
+                );
             }
-
-            $this->storeDataSet($categoryTreeByLocale, $localeName);
         }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer[] $categoryNodeStorageTransfers
+     * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer[] $categoryNodeStorageTransferTrees
+     * @param \Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorage[][] $categoryTreeStorageEntitiesIndexedByStoreAndLocale
+     * @param string $storeName
      * @param string $localeName
-     * @param \Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorage|null $spyCategoryTreeStorage
      *
      * @return void
      */
-    protected function storeDataSet(array $categoryNodeStorageTransfers, $localeName, ?SpyCategoryTreeStorage $spyCategoryTreeStorage = null)
-    {
-        if ($spyCategoryTreeStorage === null) {
-            $spyCategoryTreeStorage = new SpyCategoryTreeStorage();
+    protected function storeCategoryNodeStorageTransferTreesForStoreAndLocale(
+        array $categoryNodeStorageTransferTrees,
+        array $categoryTreeStorageEntitiesIndexedByStoreAndLocale,
+        string $storeName,
+        string $localeName
+    ): void {
+        if (!isset($categoryTreeStorageEntitiesIndexedByStoreAndLocale[$storeName][$localeName])) {
+            $this->storeDataSet(
+                $categoryNodeStorageTransferTrees,
+                $storeName,
+                $localeName
+            );
+
+            return;
+        }
+
+        $this->storeDataSet(
+            $categoryNodeStorageTransferTrees,
+            $storeName,
+            $localeName,
+            $categoryTreeStorageEntitiesIndexedByStoreAndLocale[$storeName][$localeName],
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer[] $categoryNodeStorageTransfers
+     * @param string $storeName
+     * @param string $localeName
+     * @param \Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorage|null $categoryTreeStorageEntity
+     *
+     * @return void
+     */
+    protected function storeDataSet(
+        array $categoryNodeStorageTransfers,
+        string $storeName,
+        string $localeName,
+        ?SpyCategoryTreeStorage $categoryTreeStorageEntity = null
+    ): void {
+        if ($categoryTreeStorageEntity === null) {
+            $categoryTreeStorageEntity = new SpyCategoryTreeStorage();
         }
 
         $categoryTreeStorageTransfer = new CategoryTreeStorageTransfer();
@@ -119,106 +157,54 @@ class CategoryTreeStorage implements CategoryTreeStorageInterface
             $categoryTreeStorageTransfer->addCategoryNodeStorage($categoryNodeStorageTransfer);
         }
 
-        $data = $this->utilSanitize->arrayFilterRecursive($categoryTreeStorageTransfer->toArray());
-        $spyCategoryTreeStorage->setLocale($localeName);
-        $spyCategoryTreeStorage->setData($data);
-        $spyCategoryTreeStorage->setIsSendingToQueue($this->isSendingToQueue);
-        $spyCategoryTreeStorage->save();
+        $categoryTreeStorageData = $this->utilSanitize->arrayFilterRecursive($categoryTreeStorageTransfer->toArray());
+        $categoryTreeStorageEntity->setLocale($localeName);
+        $categoryTreeStorageEntity->setStore($storeName);
+        $categoryTreeStorageEntity->setData($categoryTreeStorageData);
+        $categoryTreeStorageEntity->save();
     }
 
     /**
-     * @return array
+     * @return \Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorage[]
      */
-    protected function findCategoryStorageEntities()
+    protected function findCategoryTreeStorageEntities(): array
     {
-        $spyCategoryStorageEntities = $this->queryContainer->queryCategoryStorage()->find();
-        $categoryStorageEntitiesByLocale = [];
-        foreach ($spyCategoryStorageEntities as $spyCategoryStorageEntity) {
-            $categoryStorageEntitiesByLocale[$spyCategoryStorageEntity->getLocale()] = $spyCategoryStorageEntity;
+        return $this->queryContainer
+            ->queryCategoryStorage()
+            ->find()
+            ->getArrayCopy();
+    }
+
+    /**
+     * @param \Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorage[] $categoryTreeStorageEntities
+     *
+     * @return \Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorage[][]
+     */
+    protected function indexCategoryTreeStorageEntitiesByStoreAndLocale(array $categoryTreeStorageEntities): array
+    {
+        $categoryStorageEntitiesIndexedByStoreAndLocale = [];
+        foreach ($categoryTreeStorageEntities as $categoryTreeStorageEntity) {
+            $categoryStorageEntitiesIndexedByStoreAndLocale[$categoryTreeStorageEntity->getStore()][$categoryTreeStorageEntity->getLocale()] = $categoryTreeStorageEntity;
         }
 
-        return $categoryStorageEntitiesByLocale;
+        return $categoryStorageEntitiesIndexedByStoreAndLocale;
     }
 
     /**
-     * @return array
+     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[][][]
      */
-    protected function getCategoryTrees()
+    protected function getCategoryNodeStorageTransferTrees(): array
     {
-        $localeNames = $this->getSharedPersistenceLocaleNames();
-        $locales = $this->queryContainer->queryLocalesWithLocaleNames($localeNames)->find();
-
         $rootCategory = $this->queryContainer->queryCategoryRoot()->findOne();
-        $categoryNodeTree = [];
-        $this->disableInstancePooling();
-        foreach ($locales as $locale) {
-            $categoryNodes = $this->queryContainer->queryCategoryNodeTree($locale->getIdLocale())->find()->getData();
-            $categoryNodeTree[$locale->getLocaleName()] = $this->getChildren($rootCategory->getIdCategoryNode(), $categoryNodes);
-        }
-        $this->enableInstancePooling();
-
-        return $categoryNodeTree;
-    }
-
-    /**
-     * @return string[]
-     */
-    protected function getSharedPersistenceLocaleNames(): array
-    {
-        $localeNames = $this->store->getLocales();
-        foreach ($this->store->getStoresWithSharedPersistence() as $storeName) {
-            foreach ($this->store->getLocalesPerStore($storeName) as $localeName) {
-                $localeNames[] = $localeName;
-            }
+        if (!$rootCategory) {
+            return [];
         }
 
-        return array_unique($localeNames);
-    }
+        $categoryNodeTransfers = $this->categoryStorageRepository->getCategoryNodesByCategoryNodeIds([$rootCategory->getIdCategoryNode()]);
 
-    /**
-     * @param int $idCategoryNode
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode[] $categoryNodes
-     *
-     * @return array
-     */
-    protected function getChildren($idCategoryNode, array $categoryNodes)
-    {
-        $children = [];
-        foreach ($categoryNodes as $categoryNode) {
-            if ($categoryNode->getFkParentCategoryNode() === $idCategoryNode) {
-                $categoryTreeStorageTransfer = $this->mapToCategoryNodeStorageTransfer($categoryNodes, $categoryNode);
-
-                $children[] = $categoryTreeStorageTransfer;
-            }
-        }
-
-        return $children;
-    }
-
-    /**
-     * @param array $categoryNodes
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $categoryNode
-     *
-     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer
-     */
-    protected function mapToCategoryNodeStorageTransfer(array $categoryNodes, SpyCategoryNode $categoryNode)
-    {
-        $categoryNodeStorageTransfer = new CategoryNodeStorageTransfer();
-        /** @var \Orm\Zed\Category\Persistence\SpyCategoryAttribute $attribute */
-        $attribute = $categoryNode->getCategory()->getAttributes()->getFirst();
-        $categoryNodeStorageTransfer->setNodeId($categoryNode->getIdCategoryNode());
-        $categoryNodeStorageTransfer->setUrl($categoryNode->getSpyUrls()->getFirst()->getUrl());
-        $categoryNodeStorageTransfer->setName($attribute->getName());
-        $categoryNodeStorageTransfer->setMetaTitle($attribute->getMetaTitle());
-        $categoryNodeStorageTransfer->setMetaDescription($attribute->getMetaDescription());
-        $categoryNodeStorageTransfer->setMetaKeywords($attribute->getMetaDescription());
-        $categoryNodeStorageTransfer->setImage($attribute->getCategoryImageName());
-        $categoryNodeStorageTransfer->setOrder($categoryNode->getNodeOrder());
-        $children = $this->getChildren($categoryNode->getIdCategoryNode(), $categoryNodes);
-        foreach ($children as $child) {
-            $categoryNodeStorageTransfer->addChildren($child);
-        }
-
-        return $categoryNodeStorageTransfer;
+        return $this->categoryStorageNodeTreeBuilder->buildCategoryNodeStorageTransferTreesForLocaleAndStore(
+            [$rootCategory->getIdCategoryNode()],
+            $categoryNodeTransfers
+        );
     }
 }

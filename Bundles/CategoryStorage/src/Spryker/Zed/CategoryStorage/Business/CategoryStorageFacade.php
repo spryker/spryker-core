@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\CategoryStorage\Business\CategoryStorageBusinessFactory getFactory()
+ * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageRepositoryInterface getRepository()
  */
 class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFacadeInterface
 {
@@ -19,11 +20,11 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
      *
      * @api
      *
-     * @param array $categoryNodeIds
+     * @param int[] $categoryNodeIds
      *
      * @return void
      */
-    public function publish(array $categoryNodeIds)
+    public function publish(array $categoryNodeIds): void
     {
         $this->getFactory()->createCategoryNodeStorage()->publish($categoryNodeIds);
     }
@@ -33,11 +34,11 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
      *
      * @api
      *
-     * @param array $categoryNodeIds
+     * @param int[] $categoryNodeIds
      *
      * @return void
      */
-    public function unpublish(array $categoryNodeIds)
+    public function unpublish(array $categoryNodeIds): void
     {
         $this->getFactory()->createCategoryNodeStorage()->unpublish($categoryNodeIds);
     }
@@ -49,7 +50,7 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
      *
      * @return void
      */
-    public function publishCategoryTree()
+    public function publishCategoryTree(): void
     {
         $this->getFactory()->createCategoryTreeStorage()->publish();
     }
@@ -61,7 +62,7 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
      *
      * @return void
      */
-    public function unpublishCategoryTree()
+    public function unpublishCategoryTree(): void
     {
         $this->getFactory()->createCategoryTreeStorage()->unpublish();
     }
