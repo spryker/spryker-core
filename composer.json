@@ -731,6 +731,7 @@
     "spryker/synchronization": "*",
     "spryker/synchronization-extension": "*",
     "spryker/tax": "*",
+    "spryker/tax-merchant-portal-gui": "*",
     "spryker/tax-product-connector": "*",
     "spryker/tax-product-storage": "*",
     "spryker/tax-storage": "*",

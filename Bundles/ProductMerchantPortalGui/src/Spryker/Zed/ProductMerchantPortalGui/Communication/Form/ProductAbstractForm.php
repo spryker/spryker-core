@@ -69,6 +69,8 @@ class ProductAbstractForm extends AbstractType
         $this->addSaveButton($builder)
             ->addLocalizedAttributesSubform($builder)
             ->addStoresField($builder, $options);
+
+        $this->executeProductAbstractFormExpanderPlugins($builder, $options);
     }
 
     /**
@@ -132,6 +134,24 @@ class ProductAbstractForm extends AbstractType
                 'property_path' => 'storeRelation.idStores',
             ]
         );
+
+        return $this;
+    }
+
+    /**
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     * @phpstan-param array<mixed> $options
+     *
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function executeProductAbstractFormExpanderPlugins(FormBuilderInterface $builder, array $options)
+    {
+        foreach ($this->getFactory()->getProductAbstractFormExpanderPlugins() as $productAbstractFormExpanderPlugin) {
+            $builder = $productAbstractFormExpanderPlugin->expand($builder, $options);
+        }
 
         return $this;
     }

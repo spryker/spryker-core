@@ -54,6 +54,8 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     public const PROPEL_QUERY_STORE = 'PROPEL_QUERY_STORE';
     public const PROPEL_QUERY_PRODUCT_CATEGORY = 'PROPEL_QUERY_PRODUCT_CATEGORY';
 
+    public const PLUGINS_PRODUCT_ABSTRACT_FORM_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_FORM_EXPANDER';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -70,6 +72,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
         $container = $this->addCategoryFacade($container);
         $container = $this->addMerchantProductFacade($container);
         $container = $this->addProductCategoryFacade($container);
+        $container = $this->addProductAbstractFormExpanderPlugins($container);
 
         return $container;
     }
@@ -315,5 +318,27 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductAbstractFormExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_ABSTRACT_FORM_EXPANDER, function () {
+            return $this->getProductAbstractFormExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\ProductAbstractFormExpanderPluginInterface[]
+     */
+    protected function getProductAbstractFormExpanderPlugins(): array
+    {
+        return [];
     }
 }

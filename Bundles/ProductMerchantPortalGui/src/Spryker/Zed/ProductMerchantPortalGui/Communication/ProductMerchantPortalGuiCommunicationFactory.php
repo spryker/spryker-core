@@ -181,4 +181,12 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     {
         return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::FACADE_PRODUCT_CATEGORY);
     }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\ProductAbstractFormExpanderPluginInterface[]
+     */
+    public function getProductAbstractFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_FORM_EXPANDER);
+    }
 }
