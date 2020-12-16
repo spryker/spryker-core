@@ -44,11 +44,13 @@ class ProductOfferUpdateFormDataProvider extends AbstractProductOfferFormDataPro
      */
     public function getData(int $idProductOffer): ?ProductOfferTransfer
     {
+        /** @var int $currentMerchantId */
+        $currentMerchantId = $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchantOrFail();
         $productOfferTransfer = $this->productOfferFacade->findOne(
             (new ProductOfferCriteriaFilterTransfer())->setIdProductOffer($idProductOffer)
+                ->addIdMerchant($currentMerchantId)
         );
 
-        $currentMerchantId = $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant();
         if (!$productOfferTransfer || $currentMerchantId !== $productOfferTransfer->getFkMerchant()) {
             return null;
         }

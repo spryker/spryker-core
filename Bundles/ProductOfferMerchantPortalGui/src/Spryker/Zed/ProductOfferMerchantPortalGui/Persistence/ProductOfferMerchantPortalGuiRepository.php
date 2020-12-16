@@ -926,6 +926,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         PriceProductOfferTableCriteriaTransfer $productOfferPriceTableCriteriaTransfer
     ): PriceProductOfferTableViewCollectionTransfer {
         $productOfferPriceTableCriteriaTransfer->requireIdProductOffer();
+        $productOfferPriceTableCriteriaTransfer->requireIdMerchant();
 
         $priceProductStoreQuery = $this->getFactory()
             ->getPriceProductStorePropelQuery()
@@ -1019,7 +1020,10 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
     ): SpyPriceProductStoreQuery {
         $priceProductStoreQuery
             ->useSpyPriceProductOfferQuery()
-                ->filterByFkProductOffer($productOfferPriceTableCriteriaTransfer->getIdProductOffer())
+                ->useSpyProductOfferQuery()
+                    ->filterByFkMerchant($productOfferPriceTableCriteriaTransfer->getIdMerhchant())
+                    ->filterByIdProductOffer($productOfferPriceTableCriteriaTransfer->getIdProductOffer())
+                ->endUse()
             ->endUse();
 
         if (count($productOfferPriceTableCriteriaTransfer->getFilterInStores()) > 0) {

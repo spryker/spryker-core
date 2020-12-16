@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\GuiTableRowDataResponseTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTableCriteriaTransfer;
 use Spryker\Shared\GuiTable\DataProvider\AbstractGuiTableDataProvider;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMoneyFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface;
 
@@ -22,6 +23,11 @@ class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
      * @var int
      */
     protected $idProductOffer;
+
+    /**
+     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface
+     */
+    protected $merchantUserFacade;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface
@@ -34,15 +40,18 @@ class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
     protected $moneyFacade;
 
     /**
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface $productOfferMerchantPortalGuiRepository
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMoneyFacadeInterface $moneyFacade
      * @param int|null $idProductOffer
      */
     public function __construct(
+        ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade,
         ProductOfferMerchantPortalGuiRepositoryInterface $productOfferMerchantPortalGuiRepository,
         ProductOfferMerchantPortalGuiToMoneyFacadeInterface $moneyFacade,
         ?int $idProductOffer = null
     ) {
+        $this->merchantUserFacade = $merchantUserFacade;
         $this->idProductOffer = $idProductOffer;
         $this->productOfferMerchantPortalGuiRepository = $productOfferMerchantPortalGuiRepository;
         $this->moneyFacade = $moneyFacade;
@@ -55,8 +64,12 @@ class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
      */
     protected function createCriteria(GuiTableDataRequestTransfer $guiTableDataRequestTransfer): AbstractTransfer
     {
+        /** @var int $idMerchant */
+        $idMerchant = $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchantOrFail();
+
         return (new PriceProductOfferTableCriteriaTransfer())
-            ->setIdProductOffer($this->idProductOffer);
+            ->setIdProductOffer($this->idProductOffer)
+            ->setIdMerchant($idMerchant);
     }
 
     /**
@@ -70,7 +83,8 @@ class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
             return new GuiTableDataResponseTransfer();
         }
 
-        $priceProductOfferTableViewCollectionTransfer = $this->productOfferMerchantPortalGuiRepository->getProductOfferPriceTableData($criteriaTransfer);
+        $priceProductOfferTableViewCollectionTransfer = $this->productOfferMerchantPortalGuiRepository
+            ->getProductOfferPriceTableData($criteriaTransfer);
 
         $guiTableDataResponseTransfer = new GuiTableDataResponseTransfer();
 
@@ -78,7 +92,7 @@ class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
             $responseData = $priceProductOfferTableViewTransfer->toArray();
 
             foreach ($priceProductOfferTableViewTransfer->getPrices() as $priceType => $priceValue) {
-                $responseData[$priceType] = $this->moneyFacade->convertIntegerToDecimal($priceValue);
+                $responseData[$priceType] = $this->moneyFacade->convertIntegerToDecimal((int)$priceValue);
             }
 
             $guiTableDataResponseTransfer->addRow((new GuiTableRowDataResponseTransfer())->setResponseData($responseData));

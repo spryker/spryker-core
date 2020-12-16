@@ -301,6 +301,7 @@
         <property name="pageSize" type="int"/>
         <property name="orderBy" type="string"/>
         <property name="orderDirection" type="string"/>
+        <property name="idMerchant" type="int"/>
     </transfer>
 
     <transfer name="PriceProductOfferTableViewCollection">

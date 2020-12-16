@@ -153,6 +153,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     public function createProductOfferPriceTableDataProvider(?int $idProductOffer = null): GuiTableDataProviderInterface
     {
         return new ProductOfferPriceGuiTableDataProvider(
+            $this->getMerchantUserFacade(),
             $this->getRepository(),
             $this->getMoneyFacade(),
             $idProductOffer
