@@ -111,7 +111,7 @@
     </transfer>
 
     <transfer name="ValidationResponse">
-        <property name="isSuccessful" type="bool"/>
+        <property name="isSuccess" type="bool"/>
         <property name="validationErrors" type="ValidationError[]" singular="validationError"/>
     </transfer>
 

@@ -76,7 +76,7 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Symfony\Component\Validator\Constraint[]
      */
-    public function getPriceProductOfferValidatorConstraintsExtension(): array
+    public function getPriceProductOfferValidatorConstraints(): array
     {
         return [
             $this->createValidCurrencyAssignedToStoreConstraint(),
@@ -90,7 +90,7 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
     public function createPriceProductOfferConstraintProvider(): PriceProductOfferConstraintProviderInterface
     {
         return new PriceProductOfferConstraintProvider(
-            $this->getPriceProductOfferValidatorConstraintsExtension()
+            $this->getPriceProductOfferValidatorConstraints()
         );
     }
 

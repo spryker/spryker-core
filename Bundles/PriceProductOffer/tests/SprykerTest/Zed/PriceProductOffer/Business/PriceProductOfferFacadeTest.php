@@ -34,9 +34,9 @@ use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
  */
 class PriceProductOfferFacadeTest extends Unit
 {
-    protected const FAKE_CURRENCY = 'RUB';
-
     use DataCleanupHelperTrait;
+
+    protected const FAKE_CURRENCY = 'FAKE_CURRENCY';
 
     /**
      * @var \SprykerTest\Zed\PriceProductOffer\PriceProductOfferBusinessTester
@@ -182,7 +182,7 @@ class PriceProductOfferFacadeTest extends Unit
             ->validateProductOfferPrices(new ArrayObject([$priceProductTransfer]));
 
         // Assert
-        $this->assertTrue($collectionValidationResponseTransfer->getIsSuccessful());
+        $this->assertTrue($collectionValidationResponseTransfer->getIsSuccess());
     }
 
     /**
@@ -206,7 +206,7 @@ class PriceProductOfferFacadeTest extends Unit
             ->validateProductOfferPrices(new ArrayObject([$priceProductTransferDst]));
 
         // Assert
-        $this->assertFalse($collectionValidationResponseTransfer->getIsSuccessful());
+        $this->assertFalse($collectionValidationResponseTransfer->getIsSuccess());
         $this->assertCount(1, $collectionValidationResponseTransfer->getValidationErrors());
         $this->assertSame(
             'The set of inputs Store and Currency needs to be unique.',
@@ -235,10 +235,10 @@ class PriceProductOfferFacadeTest extends Unit
             ->validateProductOfferPrices(new ArrayObject([$priceProductTransfer]));
 
         // Assert
-        $this->assertFalse($collectionValidationResponseTransfer->getIsSuccessful());
+        $this->assertFalse($collectionValidationResponseTransfer->getIsSuccess());
         $this->assertCount(1, $collectionValidationResponseTransfer->getValidationErrors());
         $this->assertSame(
-            'Currency "RUB" is not assigned to the store "DE"',
+            'Currency "FAKE_CURRENCY" is not assigned to the store "DE"',
             $collectionValidationResponseTransfer->getValidationErrors()
                 ->offsetGet(0)
                 ->getMessage()
@@ -264,7 +264,7 @@ class PriceProductOfferFacadeTest extends Unit
             ->validateProductOfferPrices(new ArrayObject([$priceProductTransfer]));
 
         // Assert
-        $this->assertFalse($collectionValidationResponseTransfer->getIsSuccessful());
+        $this->assertFalse($collectionValidationResponseTransfer->getIsSuccess());
         $this->assertSame(
             'This value is not valid.',
             $collectionValidationResponseTransfer->getValidationErrors()
