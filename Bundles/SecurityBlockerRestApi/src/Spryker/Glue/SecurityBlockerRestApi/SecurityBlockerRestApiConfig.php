@@ -16,6 +16,11 @@ class SecurityBlockerRestApiConfig extends AbstractBundleConfig
      */
     public const SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE = 'customer';
 
+    /**
+     * @uses \Spryker\Client\SecurityBlocker\SecurityBlockerConfig::SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE
+     */
+    public const SECURITY_BLOCKER_AGENT_ENTITY_TYPE = 'agent';
+
     public const ERROR_RESPONSE_CODE_ACCOUNT_BLOCKED = '4401';
-    public const ERROR_RESPONSE_DETAIL_ACCOUNT_BLOCKED = 'Too many log in attempts from your address. Please wait 5 minutes before trying again.';
+    public const ERROR_RESPONSE_DETAIL_ACCOUNT_BLOCKED = 'Too many log in attempts from your address. Please wait %s minutes before trying again.';
 }

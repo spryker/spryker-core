@@ -116,4 +116,28 @@ interface SecurityBlockerConstants
      * @api
      */
     public const SECURITY_BLOCKER_BLOCK_FOR = 'SECURITY_BLOCKER:SECURITY_BLOCKER_BLOCK_FOR';
+
+    /**
+     * Specification:
+     * - Specifies the TTL configuration, the period when number of unsuccessful tries will be counted for agent.
+     *
+     * @api
+     */
+    public const SECURITY_BLOCKER_AGENT_BLOCKING_TTL = 'SECURITY_BLOCKER:BLOCKING_AGENT_TTL';
+
+    /**
+     * Specification:
+     * - Specifies the TTL configuration, the period when number of unsuccessful tries will be counted for agent.
+     *
+     * @api
+     */
+    public const SECURITY_BLOCKER_AGENT_BLOCKING_NUMBER_OF_ATTEMPTS = 'SECURITY_BLOCKER:BLOCKING_NUMBER_AGENT_OF_ATTEMPTS';
+
+    /**
+     * Specification:
+     * - Specifies the TTL configuration, the period for which the account is blocked if the number of attempts is exceeded for agent.
+     *
+     * @api
+     */
+    public const SECURITY_BLOCKER_AGENT_BLOCK_FOR = 'SECURITY_BLOCKER:SECURITY_BLOCKER_AGENT_BLOCK_FOR';
 }

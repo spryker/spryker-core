@@ -16,6 +16,7 @@ use Spryker\Shared\SecurityBlocker\SecurityBlockerConstants;
 class SecurityBlockerConfig extends AbstractBundleConfig
 {
     public const SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE = 'customer';
+    public const SECURITY_BLOCKER_AGENT_ENTITY_TYPE = 'agent';
 
     protected const REDIS_DEFAULT_DATABASE = 7;
     protected const STORAGE_REDIS_CONNECTION_KEY = 'SECURITY_BLOCKER_REDIS';

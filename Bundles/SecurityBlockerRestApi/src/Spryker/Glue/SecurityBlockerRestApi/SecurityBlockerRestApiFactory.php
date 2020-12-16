@@ -9,6 +9,10 @@ namespace Spryker\Glue\SecurityBlockerRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\SecurityBlockerRestApi\Dependency\Client\SecurityBlockerRestApiToSecurityBlockerClientInterface;
+use Spryker\Glue\SecurityBlockerRestApi\Processor\Agent\Storage\SecurityBlockerAgentStorage;
+use Spryker\Glue\SecurityBlockerRestApi\Processor\Agent\Storage\SecurityBlockerAgentStorageInterface;
+use Spryker\Glue\SecurityBlockerRestApi\Processor\Agent\Validator\SecurityBlockerAgentValidator;
+use Spryker\Glue\SecurityBlockerRestApi\Processor\Agent\Validator\SecurityBlockerAgentValidatorInterface;
 use Spryker\Glue\SecurityBlockerRestApi\Processor\Customer\Storage\SecurityBlockerStorage;
 use Spryker\Glue\SecurityBlockerRestApi\Processor\Customer\Storage\SecurityBlockerStorageInterface;
 use Spryker\Glue\SecurityBlockerRestApi\Processor\Customer\Validator\SecurityBlockerValidator;
@@ -30,6 +34,22 @@ class SecurityBlockerRestApiFactory extends AbstractFactory
     public function createSecurityBlockerValidator(): SecurityBlockerValidatorInterface
     {
         return new SecurityBlockerValidator($this->getSecurityBlockerRestApiDependencyProvider());
+    }
+
+    /**
+     * @return \Spryker\Glue\SecurityBlockerRestApi\Processor\Agent\Storage\SecurityBlockerAgentStorageInterface
+     */
+    public function createSecurityBlockerAgentStorage(): SecurityBlockerAgentStorageInterface
+    {
+        return new SecurityBlockerAgentStorage($this->getSecurityBlockerRestApiDependencyProvider());
+    }
+
+    /**
+     * @return \Spryker\Glue\SecurityBlockerRestApi\Processor\Agent\Validator\SecurityBlockerAgentValidatorInterface
+     */
+    public function createSecurityBlockerAgentValidator(): SecurityBlockerAgentValidatorInterface
+    {
+        return new SecurityBlockerAgentValidator($this->getSecurityBlockerRestApiDependencyProvider());
     }
 
     /**
