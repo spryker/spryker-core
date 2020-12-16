@@ -75,7 +75,7 @@ class PriceProductOfferMapper
             return $initialData;
         }
 
-        $rowNumber = (int)$propertyPath[0] === 0 ? 0 : ((int)$propertyPath[0] - 1) % 2;
+        $rowNumber = (int)$propertyPath[0] === 0 ? 0 : round(((int)$propertyPath[0] - 1) / 2);
         $isRowError = count($propertyPath) < 3;
         $errorMessage = $validationErrorTransfer->getMessage();
 
