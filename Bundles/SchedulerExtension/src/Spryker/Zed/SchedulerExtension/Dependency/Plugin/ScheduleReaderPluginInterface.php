@@ -21,9 +21,12 @@ interface ScheduleReaderPluginInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $schedulerFilterTransfer
-     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
+     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $schedulerScheduleTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerScheduleTransfer
      */
-    public function readSchedule(SchedulerFilterTransfer $schedulerFilterTransfer, SchedulerScheduleTransfer $scheduleTransfer): SchedulerScheduleTransfer;
+    public function readSchedule(
+        SchedulerFilterTransfer $schedulerFilterTransfer,
+        SchedulerScheduleTransfer $schedulerScheduleTransfer
+    ): SchedulerScheduleTransfer;
 }

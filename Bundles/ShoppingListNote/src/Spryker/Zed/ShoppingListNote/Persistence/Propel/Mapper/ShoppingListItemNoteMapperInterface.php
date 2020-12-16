@@ -17,13 +17,13 @@ interface ShoppingListItemNoteMapperInterface
 {
     /**
      * @param \Orm\Zed\ShoppingListNote\Persistence\SpyShoppingListItemNote $shoppingListItemNote
-     * @param \Generated\Shared\Transfer\ShoppingListItemNoteTransfer $shoppingListTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer
      */
     public function mapShoppingListItemNoteTransfer(
         SpyShoppingListItemNote $shoppingListItemNote,
-        ShoppingListItemNoteTransfer $shoppingListTransfer
+        ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer
     ): ShoppingListItemNoteTransfer;
 
     /**

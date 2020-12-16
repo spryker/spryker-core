@@ -30,11 +30,11 @@ class ConfigurableBundleTemplatePageMapPlugin extends AbstractPlugin implements 
      *
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param array $data
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $data, LocaleTransfer $locale): PageMapTransfer
+    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $data, LocaleTransfer $localeTransfer): PageMapTransfer
     {
         $pageMapTransfer = (new PageMapTransfer())
             ->setLocale($data[ConfigurableBundleTemplatePageSearchTransfer::LOCALE])
@@ -46,7 +46,7 @@ class ConfigurableBundleTemplatePageMapPlugin extends AbstractPlugin implements 
             ->addSearchResultData($pageMapTransfer, ConfigurableBundleTemplatePageSearchTransfer::NAME, $data[ConfigurableBundleTemplatePageSearchTransfer::NAME])
             ->addSearchResultData($pageMapTransfer, ConfigurableBundleTemplatePageSearchTransfer::IMAGES, $data[ConfigurableBundleTemplatePageSearchTransfer::IMAGES]);
 
-        return $this->expandPageMapWithPlugins($pageMapTransfer, $pageMapBuilder, $data, $locale);
+        return $this->expandPageMapWithPlugins($pageMapTransfer, $pageMapBuilder, $data, $localeTransfer);
     }
 
     /**

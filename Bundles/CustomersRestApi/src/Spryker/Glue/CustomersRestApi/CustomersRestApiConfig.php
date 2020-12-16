@@ -74,6 +74,21 @@ class CustomersRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_CUSTOMER_EMAIL_LENGTH_EXCEEDED = '417';
     public const RESPONSE_MESSAGE_CUSTOMER_EMAIL_LENGTH_EXCEEDED = 'Email is too long. It should have 100 characters or less.';
 
+    public const RESPONSE_CODE_CUSTOMER_PASSWORD_TOO_SHORT = '418';
+    public const RESPONSE_MESSAGE_CUSTOMER_PASSWORD_TOO_SHORT = 'The password is too short.';
+
+    public const RESPONSE_CODE_CUSTOMER_PASSWORD_TOO_LONG = '419';
+    public const RESPONSE_MESSAGE_CUSTOMER_PASSWORD_TOO_LONG = 'The password is too long.';
+
+    public const RESPONSE_CODE_CUSTOMER_PASSWORD_INVALID_CHARACTER_SET = '420';
+    public const RESPONSE_MESSAGE_CUSTOMER_PASSWORD_INVALID_CHARACTER_SET = 'The password character set is invalid.';
+
+    public const RESPONSE_CODE_CUSTOMER_PASSWORD_SEQUENCE_NOT_ALLOWED = '421';
+    public const RESPONSE_MESSAGE_CUSTOMER_PASSWORD_SEQUENCE_NOT_ALLOWED = 'The password contains sequence of the same character.';
+
+    public const RESPONSE_CODE_CUSTOMER_PASSWORD_DENY_LIST = '422';
+    public const RESPONSE_MESSAGE_CUSTOMER_PASSWORD_DENY_LIST = 'The password is listed as common.';
+
     /**
      * @deprecated Will be removed without replacement.
      */

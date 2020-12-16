@@ -24,20 +24,20 @@ class UniqueEmailValidator extends AbstractConstraintValidator
      * Checks if the passed email is unique.
      *
      * @param string $email
-     * @param \Symfony\Component\Validator\Constraint $uniqueEmailConstraint
+     * @param \Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      *
      * @return void
      */
-    public function validate($email, Constraint $uniqueEmailConstraint): void
+    public function validate($email, Constraint $constraint): void
     {
         if (empty($email)) {
             return;
         }
 
-        if (!$uniqueEmailConstraint instanceof UniqueEmail) {
-            throw new UnexpectedTypeException($uniqueEmailConstraint, UniqueEmail::class);
+        if (!$constraint instanceof UniqueEmail) {
+            throw new UnexpectedTypeException($constraint, UniqueEmail::class);
         }
 
         $merchantTransfer = $this->findMerchantByEmail($email);
@@ -46,7 +46,7 @@ class UniqueEmailValidator extends AbstractConstraintValidator
             return;
         }
 
-        if ($uniqueEmailConstraint->getCurrentIdMerchant() === $merchantTransfer->getIdMerchant()) {
+        if ($constraint->getCurrentIdMerchant() === $merchantTransfer->getIdMerchant()) {
             return;
         }
 

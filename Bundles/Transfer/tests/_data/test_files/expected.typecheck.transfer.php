@@ -422,6 +422,10 @@ class CatFaceTransfer extends AbstractTransfer
     {
         $this->validateAddSetValueType($typedAssociativeStringArray, 'string[]', __METHOD__);
 
+        if ($typedAssociativeStringArray === null) {
+            $typedAssociativeStringArray = [];
+        }
+
         $this->typedAssociativeStringArray = $typedAssociativeStringArray;
         $this->modifiedProperties[self::TYPED_ASSOCIATIVE_STRING_ARRAY] = true;
 
@@ -532,6 +536,10 @@ class CatFaceTransfer extends AbstractTransfer
     {
         $this->validateAddSetValueType($typedNotAssociativeStringArray, 'string[]', __METHOD__);
 
+        if ($typedNotAssociativeStringArray === null) {
+            $typedNotAssociativeStringArray = [];
+        }
+
         $this->typedNotAssociativeStringArray = $typedNotAssociativeStringArray;
         $this->modifiedProperties[self::TYPED_NOT_ASSOCIATIVE_STRING_ARRAY] = true;
 
@@ -587,6 +595,10 @@ class CatFaceTransfer extends AbstractTransfer
     public function setTypedNotAssociativeArray($typedNotAssociativeArray)
     {
         $this->validateAddSetValueType($typedNotAssociativeArray, 'array', __METHOD__);
+
+        if ($typedNotAssociativeArray === null) {
+            $typedNotAssociativeArray = [];
+        }
 
         $this->typedNotAssociativeArray = $typedNotAssociativeArray;
         $this->modifiedProperties[self::TYPED_NOT_ASSOCIATIVE_ARRAY] = true;

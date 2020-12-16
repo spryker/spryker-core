@@ -160,7 +160,6 @@ class DiscountPersist implements DiscountPersistInterface
         SpyDiscount $discountEntity,
         DiscountConfiguratorTransfer $discountConfiguratorTransfer
     ) {
-
         $this->hydrateDiscountEntity($discountConfiguratorTransfer, $discountEntity);
         $this->updateVoucherPool($discountConfiguratorTransfer, $discountEntity);
 
@@ -325,7 +324,6 @@ class DiscountPersist implements DiscountPersistInterface
         DiscountVoucherTransfer $discountVoucherTransfer,
         SpyDiscount $discountEntity
     ) {
-
         $discountVoucherPoolEntity = $this->saveVoucherPool($discountEntity);
 
         $discountEntity->setFkDiscountVoucherPool($discountVoucherPoolEntity->getIdDiscountVoucherPool());

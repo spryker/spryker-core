@@ -73,7 +73,6 @@ class MoneyCollectionMultiStoreCollectionDataProvider extends BaseMoneyCollectio
         array $storeCurrencyCollection,
         array $existingCurrencyMap
     ) {
-
         foreach ($storeCurrencyCollection as $storeWithCurrencyTransfer) {
             $storeTransfer = $storeWithCurrencyTransfer->getStore();
             foreach ($storeWithCurrencyTransfer->getCurrencies() as $currencyTransfer) {

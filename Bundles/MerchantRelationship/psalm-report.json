@@ -23,30 +23,6 @@
             "selected_text": "$ids",
             "error_level": 6,
             "shortcode": 128
-        },
-        {
-            "severity": "error",
-            "line_from": 85,
-            "line_to": 85,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\MerchantRelationship\\Persistence\\MerchantRelationshipEntityManager::addAssignedCompanyBusinessUnits has wrong name $assignedCompanyBusinessUnitIds, expecting $idAssignedCompanyBusinessUnits as defined by Spryker\\Zed\\MerchantRelationship\\Persistence\\MerchantRelationshipEntityManagerInterface::addAssignedCompanyBusinessUnits",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationship/src/Spryker/Zed/MerchantRelationship/Persistence/MerchantRelationshipEntityManager.php",
-            "snippet": "    public function addAssignedCompanyBusinessUnits(array $assignedCompanyBusinessUnitIds, int $idMerchantRelationship): void",
-            "selected_text": "$assignedCompanyBusinessUnitIds",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 109,
-            "line_to": 109,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\MerchantRelationship\\Persistence\\MerchantRelationshipEntityManager::removeAssignedCompanyBusinessUnits has wrong name $assignedCompanyBusinessUnitIds, expecting $idAssignedCompanyBusinessUnits as defined by Spryker\\Zed\\MerchantRelationship\\Persistence\\MerchantRelationshipEntityManagerInterface::removeAssignedCompanyBusinessUnits",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationship/src/Spryker/Zed/MerchantRelationship/Persistence/MerchantRelationshipEntityManager.php",
-            "snippet": "    public function removeAssignedCompanyBusinessUnits(array $assignedCompanyBusinessUnitIds, int $idMerchantRelationship): void",
-            "selected_text": "$assignedCompanyBusinessUnitIds",
-            "error_level": 7,
-            "shortcode": 230
         }
     ],
     "warning": [
