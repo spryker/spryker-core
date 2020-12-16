@@ -77,16 +77,20 @@ class IncrementLoginAttemptTest extends Test
             $securityCheckAuthContextTransfer->getIp(),
             $securityCheckAuthContextTransfer->getAccount()
         );
+        //$this->tester->getLocator()->redis()->client()->del($securityBlockerConfig->getRedisConnectionKey(), [$expectedRedisKey]);
+
+        $this->redisClientMock
+            ->method('get')
+            ->willReturn('0');
 
         $this->redisClientMock
             ->expects($this->once())
-            ->method('set')
+            ->method('setex')
             ->with(
                 $securityBlockerConfig->getRedisConnectionKey(),
                 $expectedRedisKey,
+                $securityBlockerConfig->getSecurityBlockerConfigurationSettingsForType(SecurityBlockerConfig::SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE)->getTtl(),
                 '1',
-                'EX',
-                $securityBlockerConfig->getSecurityBlockerConfigurationSettings()['default']['ttl']
             )
             ->willReturn(true);
 
@@ -104,7 +108,7 @@ class IncrementLoginAttemptTest extends Test
 
         $this->redisClientMock
             ->expects($this->once())
-            ->method('set')
+            ->method('setex')
             ->willReturn(false);
 
         $this->expectException(SecurityBlockerException::class);

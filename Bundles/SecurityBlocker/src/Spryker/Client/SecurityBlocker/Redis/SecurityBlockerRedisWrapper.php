@@ -54,32 +54,6 @@ class SecurityBlockerRedisWrapper implements SecurityBlockerRedisWrapperInterfac
 
     /**
      * @param string $key
-     * @param string $value
-     * @param string|null $expireResolution
-     * @param int|null $expireTTL
-     * @param string|null $flag
-     *
-     * @return bool
-     */
-    public function set(
-        string $key,
-        string $value,
-        ?string $expireResolution = null,
-        ?int $expireTTL = null,
-        ?string $flag = null
-    ): bool {
-        return $this->redisClient->set(
-            $this->securityBlockerConfig->getRedisConnectionKey(),
-            $this->getStorageKey($key),
-            $value,
-            $expireResolution,
-            $expireTTL,
-            $flag
-        );
-    }
-
-    /**
-     * @param string $key
      *
      * @return bool
      */
@@ -88,6 +62,23 @@ class SecurityBlockerRedisWrapper implements SecurityBlockerRedisWrapperInterfac
         return $this->redisClient->incr(
             $this->securityBlockerConfig->getRedisConnectionKey(),
             $this->getStorageKey($key)
+        );
+    }
+
+    /**
+     * @param string $key
+     * @param int $seconds
+     * @param string $value
+     *
+     * @return bool
+     */
+    public function setex(string $key, int $seconds, string $value): bool
+    {
+        return $this->redisClient->setex(
+            $this->securityBlockerConfig->getRedisConnectionKey(),
+            $this->getStorageKey($key),
+            $seconds,
+            $value
         );
     }
 

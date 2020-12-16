@@ -22,29 +22,20 @@ interface SecurityBlockerToRedisClientInterface
     /**
      * @param string $connectionKey
      * @param string $key
-     * @param string $value
-     * @param string|null $expireResolution
-     * @param int|null $expireTTL
-     * @param string|null $flag
-     *
-     * @return bool
-     */
-    public function set(
-        string $connectionKey,
-        string $key,
-        string $value,
-        ?string $expireResolution = null,
-        ?int $expireTTL = null,
-        ?string $flag = null
-    ): bool;
-
-    /**
-     * @param string $connectionKey
-     * @param string $key
      *
      * @return bool
      */
     public function incr(string $connectionKey, string $key): bool;
+
+    /**
+     * @param string $connectionKey
+     * @param string $key
+     * @param int $seconds
+     * @param string $value
+     *
+     * @return bool
+     */
+    public function setex(string $connectionKey, string $key, int $seconds, string $value): bool;
 
     /**
      * @param string $connectionKey

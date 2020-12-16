@@ -108,4 +108,12 @@ interface SecurityBlockerConstants
      * @api
      */
     public const SECURITY_BLOCKER_BLOCKING_NUMBER_OF_ATTEMPTS = 'SECURITY_BLOCKER:BLOCKING_NUMBER_OF_ATTEMPTS';
+
+    /**
+     * Specification:
+     * - Specifies the TTL configuration, the period for which the account is blocked if the number of attempts is exceeded.
+     *
+     * @api
+     */
+    public const SECURITY_BLOCKER_BLOCK_FOR = 'SECURITY_BLOCKER:SECURITY_BLOCKER_BLOCK_FOR';
 }

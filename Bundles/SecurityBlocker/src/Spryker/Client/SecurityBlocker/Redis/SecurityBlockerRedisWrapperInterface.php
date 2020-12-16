@@ -12,25 +12,23 @@ interface SecurityBlockerRedisWrapperInterface
     /**
      * @param string $key
      *
-     * @return bool
-     */
-    public function incr(string $key): bool;
-
-    /**
-     * @param string $key
-     *
      * @return string|null
      */
     public function get(string $key): ?string;
 
     /**
      * @param string $key
-     * @param string $value
-     * @param string|null $expireResolution
-     * @param int|null $expireTTL
-     * @param string|null $flag
      *
      * @return bool
      */
-    public function set(string $key, string $value, ?string $expireResolution = null, ?int $expireTTL = null, ?string $flag = null): bool;
+    public function incr(string $key): bool;
+
+    /**
+     * @param string $key
+     * @param int $seconds
+     * @param string $value
+     *
+     * @return bool
+     */
+    public function setex(string $key, int $seconds, string $value): bool;
 }

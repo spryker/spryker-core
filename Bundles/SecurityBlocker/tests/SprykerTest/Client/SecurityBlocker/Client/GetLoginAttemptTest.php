@@ -84,8 +84,7 @@ class GetLoginAttemptTest extends Test
             ->with(
                 $securityBlockerConfig->getRedisConnectionKey(),
                 $expectedRedisKey
-            )
-            ->willReturn(true);
+            );
 
         // Act
         $this->tester->getLocator()->securityBlocker()->client()

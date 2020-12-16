@@ -52,7 +52,7 @@ class SecurityBlockerStorage implements SecurityBlockerStorageInterface
         RestResponseInterface $restResponse
     ): void {
         if (
-            !$this->isAuthenticationRequest($action, $restRequest)
+            !$this->isAuthenticationRequest($restRequest)
             || !$this->isFailedAuthenticationResponse($restResponse)
         ) {
             return;
@@ -61,7 +61,7 @@ class SecurityBlockerStorage implements SecurityBlockerStorageInterface
         /** @var \Generated\Shared\Transfer\RestAccessTokensAttributesTransfer $restAccessTokensAttributesTransfer */
         $restAccessTokensAttributesTransfer = $restRequest->getResource()->getAttributes();
         $securityCheckAuthContextTransfer = (new SecurityCheckAuthContextTransfer())
-            ->setAccount(SecurityBlockerRestApiConfig::SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE)
+            ->setType(SecurityBlockerRestApiConfig::SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE)
             ->setIp($restRequest->getHttpRequest()->getClientIp())
             ->setAccount($restAccessTokensAttributesTransfer->getUsername());
 
@@ -69,14 +69,13 @@ class SecurityBlockerStorage implements SecurityBlockerStorageInterface
     }
 
     /**
-     * @param string $action
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return bool
      */
-    protected function isAuthenticationRequest(string $action, RestRequestInterface $restRequest): bool
+    protected function isAuthenticationRequest(RestRequestInterface $restRequest): bool
     {
-        return in_array($action, [static::RESOURCE_ACCESS_TOKENS])
+        return in_array($restRequest->getResource()->getType(), [static::RESOURCE_ACCESS_TOKENS])
             && $restRequest->getHttpRequest()->getMethod() === 'POST';
     }
 
@@ -87,7 +86,7 @@ class SecurityBlockerStorage implements SecurityBlockerStorageInterface
      */
     protected function isFailedAuthenticationResponse(RestResponseInterface $restResponse): bool
     {
-        if ($restResponse->getStatus() !== Response::HTTP_UNAUTHORIZED) {
+        if ($restResponse->getStatus() === Response::HTTP_UNAUTHORIZED) {
             return false;
         }
 

@@ -64,7 +64,7 @@ class SecurityBlockerStorage implements SecurityBlockerStorageInterface
             ->getSecurityBlockerConfigurationSettingsForType($securityCheckAuthContextTransfer->getTypeOrFail());
         $key = $this->getStorageKey($securityCheckAuthContextTransfer);
 
-        $newValue = $this->incrementStorageKey($key, $securityBlockerConfigurationSettingsTransfer);
+        $newValue = $this->updateStorage($key, $securityBlockerConfigurationSettingsTransfer);
 
         if (!$newValue) {
             throw new SecurityBlockerException(
@@ -131,21 +131,25 @@ class SecurityBlockerStorage implements SecurityBlockerStorageInterface
      *
      * @return int
      */
-    protected function incrementStorageKey(
+    protected function updateStorage(
         string $storageKey,
         SecurityBlockerConfigurationSettingsTransfer $securityBlockerConfigurationSettingsTransfer
     ): int {
         $existingValue = (int)$this->securityBlockerRedisWrapper->get($storageKey);
+        $newValue = $existingValue + 1;
 
-        if ($existingValue) {
+        if ($existingValue && $newValue < $securityBlockerConfigurationSettingsTransfer->getNumberOfAttempts()) {
             $incrResult = $this->securityBlockerRedisWrapper->incr($storageKey);
 
-            return $incrResult ? ++$existingValue : 0;
+            return $incrResult ? $newValue : 0;
         }
 
-        $setResult = $this->securityBlockerRedisWrapper
-            ->set($storageKey, '1', 'EX', $securityBlockerConfigurationSettingsTransfer->getTtl());
+        $ttl = !$existingValue
+            ? $securityBlockerConfigurationSettingsTransfer->getTtlOrFail()
+            : $securityBlockerConfigurationSettingsTransfer->getBlockForOrFail();
 
-        return $setResult ? 1 : 0;
+        $setResult = $this->securityBlockerRedisWrapper->setex($storageKey, $ttl, (string)$newValue);
+
+        return $setResult ? $newValue : 0;
     }
 }

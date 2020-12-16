@@ -17,7 +17,7 @@ class SecurityBlockerConfig extends AbstractBundleConfig
 {
     public const SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE = 'customer';
 
-    protected const REDIS_DEFAULT_DATABASE = 0;
+    protected const REDIS_DEFAULT_DATABASE = 7;
     protected const STORAGE_REDIS_CONNECTION_KEY = 'SECURITY_BLOCKER_REDIS';
     protected const ENTITY_TYPE_DEFAULT = 'default';
 
@@ -92,7 +92,8 @@ class SecurityBlockerConfig extends AbstractBundleConfig
     {
         return [
             static::ENTITY_TYPE_DEFAULT => [
-                'ttl' => $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_TTL, 300),
+                'ttl' => $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_TTL, 600),
+                'blockFor' => $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCK_FOR, 300),
                 'numberOfAttempts' => $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_NUMBER_OF_ATTEMPTS, 10),
             ],
         ];

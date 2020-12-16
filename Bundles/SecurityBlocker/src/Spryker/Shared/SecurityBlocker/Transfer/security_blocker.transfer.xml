@@ -18,6 +18,7 @@
     <transfer name="SecurityBlockerConfigurationSettings">
         <property name="numberOfAttempts" type="int"/>
         <property name="ttl" type="int"/>
+        <property name="blockFor" type="int"/>
     </transfer>
 
     <transfer name="RedisConfiguration">

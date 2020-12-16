@@ -50,13 +50,13 @@ class SecurityBlockerValidator implements SecurityBlockerValidatorInterface
         /** @var \Generated\Shared\Transfer\RestAccessTokensAttributesTransfer $restAccessTokensAttributesTransfer */
         $restAccessTokensAttributesTransfer = $restRequest->getResource()->getAttributes();
         $securityCheckAuthContextTransfer = (new SecurityCheckAuthContextTransfer())
-            ->setAccount(SecurityBlockerRestApiConfig::SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE)
+            ->setType(SecurityBlockerRestApiConfig::SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE)
             ->setIp($restRequest->getHttpRequest()->getClientIp())
             ->setAccount($restAccessTokensAttributesTransfer->getUsername());
 
-        $authResponseTransfer = $this->securityBlockerClient->getLoginAttempt($securityCheckAuthContextTransfer);
+        $securityCheckAuthResponseTransfer = $this->securityBlockerClient->getLoginAttempt($securityCheckAuthContextTransfer);
 
-        if ($authResponseTransfer->getIsSuccessful()) {
+        if ($securityCheckAuthResponseTransfer->getIsSuccessful()) {
             return null;
         }
 
