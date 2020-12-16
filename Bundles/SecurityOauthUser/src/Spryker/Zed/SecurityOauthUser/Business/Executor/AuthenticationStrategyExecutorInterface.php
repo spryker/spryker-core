@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SecurityOauthUser\Business\Resolver;
+namespace Spryker\Zed\SecurityOauthUser\Business\Executor;
 
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
-interface AuthenticationStrategyResolverInterface
+interface AuthenticationStrategyExecutorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer

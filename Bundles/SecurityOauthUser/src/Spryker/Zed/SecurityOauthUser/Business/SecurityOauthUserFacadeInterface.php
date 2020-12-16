@@ -56,15 +56,14 @@ interface SecurityOauthUserFacadeInterface
     /**
      * Specification:
      * - Resolves an Oauth user.
-     * - Requires email field to be set.
      * - Uses a strategy to resolve Oauth user.
      * - Returns resolved Oauth user or null otherwise.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $oauthUserCriteriaTransfer
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\UserTransfer|null
      */
-    public function resolveOauthUser(UserCriteriaTransfer $oauthUserCriteriaTransfer): ?UserTransfer;
+    public function resolveOauthUser(UserCriteriaTransfer $userCriteriaTransfer): ?UserTransfer;
 }

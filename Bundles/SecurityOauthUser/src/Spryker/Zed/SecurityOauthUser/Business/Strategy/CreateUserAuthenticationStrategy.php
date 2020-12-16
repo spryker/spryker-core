@@ -67,7 +67,7 @@ class CreateUserAuthenticationStrategy implements AuthenticationStrategyInterfac
             return $this->oauthUserCreator->createOauthUser($userCriteriaTransfer);
         }
 
-        if ($userTransfer->getStatus() !== $this->securityOauthUserConfig->getOauthUserActiveStatus()) {
+        if ($userTransfer->getStatus() !== $this->securityOauthUserConfig->getOauthUserStatusActive()) {
             return null;
         }
 

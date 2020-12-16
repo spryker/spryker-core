@@ -14,10 +14,10 @@ use Spryker\Zed\SecurityOauthUser\Business\Checker\OauthUserRestrictionChecker;
 use Spryker\Zed\SecurityOauthUser\Business\Checker\OauthUserRestrictionCheckerInterface;
 use Spryker\Zed\SecurityOauthUser\Business\Creator\OauthUserCreator;
 use Spryker\Zed\SecurityOauthUser\Business\Creator\OauthUserCreatorInterface;
+use Spryker\Zed\SecurityOauthUser\Business\Executor\AuthenticationStrategyExecutor;
+use Spryker\Zed\SecurityOauthUser\Business\Executor\AuthenticationStrategyExecutorInterface;
 use Spryker\Zed\SecurityOauthUser\Business\Reader\ResourceOwnerReader;
 use Spryker\Zed\SecurityOauthUser\Business\Reader\ResourceOwnerReaderInterface;
-use Spryker\Zed\SecurityOauthUser\Business\Resolver\AuthenticationStrategyResolver;
-use Spryker\Zed\SecurityOauthUser\Business\Resolver\AuthenticationStrategyResolverInterface;
 use Spryker\Zed\SecurityOauthUser\Business\Strategy\AuthenticationStrategyInterface;
 use Spryker\Zed\SecurityOauthUser\Business\Strategy\CreateUserAuthenticationStrategy;
 use Spryker\Zed\SecurityOauthUser\Business\Strategy\ExistingUserAuthenticationStrategy;
@@ -69,17 +69,22 @@ class SecurityOauthUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SecurityOauthUser\Business\Resolver\AuthenticationStrategyResolverInterface
+     * @return \Spryker\Zed\SecurityOauthUser\Business\Executor\AuthenticationStrategyExecutorInterface
      */
-    public function createAuthenticationStrategyResolver(): AuthenticationStrategyResolverInterface
+    public function createAuthenticationStrategyExecutor(): AuthenticationStrategyExecutorInterface
     {
-        return new AuthenticationStrategyResolver(
-            $this->getConfig(),
-            [
-                $this->createExistingUserAuthenticationStrategy(),
-                $this->createCreateUserAuthenticationStrategy(),
-            ]
-        );
+        return new AuthenticationStrategyExecutor($this->getConfig(), $this->getAuthenticationStrategyList());
+    }
+
+    /**
+     * @return \Spryker\Zed\SecurityOauthUser\Business\Strategy\AuthenticationStrategyInterface[]
+     */
+    public function getAuthenticationStrategyList(): array
+    {
+        return [
+            $this->createExistingUserAuthenticationStrategy(),
+            $this->createCreateUserAuthenticationStrategy(),
+        ];
     }
 
     /**

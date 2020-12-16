@@ -25,6 +25,11 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 class OauthUserProvider extends AbstractPlugin implements UserProviderInterface
 {
     /**
+     * {@inheritDoc}
+     * - Loads the Oauth user for the given username.
+     *
+     * @api
+     *
      * @param string $username
      *
      * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
@@ -43,6 +48,11 @@ class OauthUserProvider extends AbstractPlugin implements UserProviderInterface
     }
 
     /**
+     * {@inheritDoc}
+     * - Refreshes the Oauth user.
+     *
+     * @api
+     *
      * @param \Symfony\Component\Security\Core\User\UserInterface $user
      *
      * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
@@ -65,6 +75,11 @@ class OauthUserProvider extends AbstractPlugin implements UserProviderInterface
     }
 
     /**
+     * {@inheritDoc}
+     * - Checks support of the given user class.
+     *
+     * @api
+     *
      * @param string $class
      *
      * @return bool

@@ -17,7 +17,7 @@ interface AuthenticationLinkPluginInterface
     /**
      * Specification:
      * - Provides template which is optional and data that is necessary to render an authorization link.
-     * - Returned query parameter "state" contributes to identify the Oauth client during the response.
+     * - Returned query parameter "state" contributes to identifying the Oauth client during the response.
      *
      * @api
      *

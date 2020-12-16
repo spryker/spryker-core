@@ -15,13 +15,13 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
      * Specification:
      *  - If the user does not exist it will be created automatically based on data from an external service.
      */
-    public const AUTHENTICATION_STRATEGY_CREATE_USER_ON_FIRST_LOGIN = 'CREATE_USER_ON_FIRST_LOGIN_AUTHENTICATION_STRATEGY';
+    public const AUTHENTICATION_STRATEGY_CREATE_USER_ON_FIRST_LOGIN = 'AUTHENTICATION_STRATEGY_CREATE_USER_ON_FIRST_LOGIN';
 
     /**
      * Specification:
      *  - Accepts only existing users for authentication.
      */
-    public const AUTHENTICATION_STRATEGY_ACCEPT_ONLY_EXISTING_USERS = 'ACCEPT_ONLY_EXISTING_USER_AUTHENTICATION_STRATEGY';
+    public const AUTHENTICATION_STRATEGY_ACCEPT_ONLY_EXISTING_USERS = 'AUTHENTICATION_STRATEGY_ACCEPT_ONLY_EXISTING_USERS';
 
     public const REQUEST_PARAMETER_AUTHENTICATION_CODE = 'code';
     public const REQUEST_PARAMETER_AUTHENTICATION_STATE = 'state';
@@ -43,6 +43,10 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
      * @uses \Spryker\Zed\SecurityGui\SecurityGuiConfig::LOGIN_PATH
      */
     protected const LOGIN_PATH = '/security-gui/login';
+
+    /**
+     * @uses \Spryker\Zed\SecurityGui\Communication\Plugin\Security\UserSecurityPlugin::PATH_LOGOUT
+     */
     protected const LOGOUT_PATH = '/auth/logout';
 
     /**
@@ -51,6 +55,9 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
     protected const OAUTH_USER_GROUP_REFERENCE = 'root_group';
 
     /**
+     * Specification:
+     *  - Defines the Oauth user roles for the symfony authentication.
+     *
      * @api
      *
      * @return string[]
@@ -61,6 +68,9 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     *  - Defines secured back-office route pattern.
+     *
      * @api
      *
      * @return string
@@ -71,6 +81,9 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Defines the ignorable path in order to open an entry point for the external system.
+     *
      * @api
      *
      * @return string
@@ -81,6 +94,9 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Defines the URL where the user will be redirected after successful authentication.
+     *
      * @api
      *
      * @return string
@@ -91,6 +107,9 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Defines the URL where the user will be redirected on authentication failure.
+     *
      * @api
      *
      * @return string
@@ -101,6 +120,9 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Defines the logout URL.
+     *
      * @api
      *
      * @return string
@@ -111,6 +133,9 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Defines the Oauth user status when the `create user on first login` strategy is selected.
+     *
      * @api
      *
      * @return string
@@ -121,16 +146,22 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Defines which Oauth user status considered as active.
+     *
      * @api
      *
      * @return string
      */
-    public function getOauthUserActiveStatus(): string
+    public function getOauthUserStatusActive(): string
     {
         return static::OAUTH_USER_STATUS_ACTIVE;
     }
 
     /**
+     * Specification:
+     * - Defines the Oauth user group reference when the `create user on first login` strategy is selected.
+     *
      * @api
      *
      * @return string

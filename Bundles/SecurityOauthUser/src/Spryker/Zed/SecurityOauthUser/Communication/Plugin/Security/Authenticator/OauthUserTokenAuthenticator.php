@@ -25,6 +25,11 @@ use Symfony\Component\Security\Guard\AuthenticatorInterface;
 class OauthUserTokenAuthenticator extends AbstractPlugin implements AuthenticatorInterface
 {
     /**
+     * {@inheritDoc}
+     * - Creates a post authentication guard token for the given user.
+     *
+     * @api
+     *
      * @param \Symfony\Component\Security\Core\User\UserInterface $user
      * @param string $providerKey
      *
@@ -36,6 +41,11 @@ class OauthUserTokenAuthenticator extends AbstractPlugin implements Authenticato
     }
 
     /**
+     * {@inheritDoc}
+     * - Checks do the authenticator support the given request.
+     *
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return bool
@@ -48,6 +58,11 @@ class OauthUserTokenAuthenticator extends AbstractPlugin implements Authenticato
     }
 
     /**
+     * {@inheritDoc}
+     * - Gets the authentication credentials from the request.
+     *
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array|mixed|void
@@ -62,6 +77,11 @@ class OauthUserTokenAuthenticator extends AbstractPlugin implements Authenticato
     }
 
     /**
+     * {@inheritDoc}
+     * - Gets UserInterface object based on the credentials.
+     *
+     * @api
+     *
      * @param mixed $credentials
      * @param \Symfony\Component\Security\Core\User\UserProviderInterface $userProvider
      *
@@ -77,6 +97,11 @@ class OauthUserTokenAuthenticator extends AbstractPlugin implements Authenticato
     }
 
     /**
+     * {@inheritDoc}
+     * - Checks if the credentials are valid.
+     *
+     * @api
+     *
      * @param mixed $credentials
      * @param \Symfony\Component\Security\Core\User\UserInterface $user
      *
@@ -88,6 +113,11 @@ class OauthUserTokenAuthenticator extends AbstractPlugin implements Authenticato
     }
 
     /**
+     * {@inheritDoc}
+     * - Authorizes the Oauth user after successful authentication.
+     *
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
      * @param string $providerKey
@@ -102,6 +132,11 @@ class OauthUserTokenAuthenticator extends AbstractPlugin implements Authenticato
     }
 
     /**
+     * {@inheritDoc}
+     * - Redirects Oauth user to the login page on authentication failure.
+     *
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Security\Core\Exception\AuthenticationException $exception
      *
@@ -115,6 +150,11 @@ class OauthUserTokenAuthenticator extends AbstractPlugin implements Authenticato
     }
 
     /**
+     * {@inheritDoc}
+     * - Returns a response that directs the user to authenticate.
+     *
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Security\Core\Exception\AuthenticationException|null $authException
      *
@@ -126,6 +166,11 @@ class OauthUserTokenAuthenticator extends AbstractPlugin implements Authenticato
     }
 
     /**
+     * {@inheritDoc}
+     * - Checks do this method support remember me cookies.
+     *
+     * @api
+     *
      * @return bool
      */
     public function supportsRememberMe()

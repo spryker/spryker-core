@@ -18,7 +18,7 @@ interface SecurityOauthUserToAclFacadeInterface
      *
      * @return int
      */
-    public function addUserToGroup(int $idUser, int $idGroup);
+    public function addUserToGroup($idUser, $idGroup);
 
     /**
      * @param \Generated\Shared\Transfer\GroupCriteriaTransfer $groupCriteriaTransfer

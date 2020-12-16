@@ -37,7 +37,7 @@ class OauthUserSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
 
     /**
      * {@inheritDoc}
-     * - Extends security service with SystemUser firewall.
+     * - Extends security service with OauthUser firewall.
      *
      * @api
      *
@@ -132,18 +132,18 @@ class OauthUserSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
             }
 
             $securityBuilder->addFirewall(static::SECURITY_USER_FIREWALL_NAME, [
-                    'guard' => [
-                        'authenticators' => [
-                            static::SECURITY_OAUTH_USER_TOKEN_AUTHENTICATOR,
-                        ],
+                'guard' => [
+                    'authenticators' => [
+                        static::SECURITY_OAUTH_USER_TOKEN_AUTHENTICATOR,
                     ],
-                    'users' => function () use ($firewallConfiguration) {
-                        return new ChainUserProvider([
-                            $firewallConfiguration['users'](),
-                            $this->getFactory()->createOauthUserProvider(),
-                        ]);
-                    },
-                ] + $firewallConfiguration);
+                ],
+                'users' => function () use ($firewallConfiguration) {
+                    return new ChainUserProvider([
+                        $firewallConfiguration['users'](),
+                        $this->getFactory()->createOauthUserProvider(),
+                    ]);
+                },
+            ] + $firewallConfiguration);
         }
 
         return $securityBuilder;

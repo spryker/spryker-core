@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SecurityOauthUser\Communication\Handler;
+namespace Spryker\Zed\SecurityOauthUser\Communication\Security\Handler;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\SecurityOauthUser\Dependency\Facade\SecurityOauthUserToMessengerFacadeInterface;

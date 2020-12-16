@@ -58,7 +58,7 @@ class ExistingUserAuthenticationStrategy implements AuthenticationStrategyInterf
             return null;
         }
 
-        if ($userTransfer->getStatus() !== $this->securityOauthUserConfig->getOauthUserActiveStatus()) {
+        if ($userTransfer->getStatus() !== $this->securityOauthUserConfig->getOauthUserStatusActive()) {
             return null;
         }
 

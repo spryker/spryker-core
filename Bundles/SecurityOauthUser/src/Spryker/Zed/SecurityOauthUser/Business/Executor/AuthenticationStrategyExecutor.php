@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SecurityOauthUser\Business\Resolver;
+namespace Spryker\Zed\SecurityOauthUser\Business\Executor;
 
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
@@ -13,7 +13,7 @@ use Spryker\Zed\SecurityOauthUser\Business\Exception\AuthenticationStrategyNotFo
 use Spryker\Zed\SecurityOauthUser\Business\Strategy\AuthenticationStrategyInterface;
 use Spryker\Zed\SecurityOauthUser\SecurityOauthUserConfig;
 
-class AuthenticationStrategyResolver implements AuthenticationStrategyResolverInterface
+class AuthenticationStrategyExecutor implements AuthenticationStrategyExecutorInterface
 {
     /**
      * @var \Spryker\Zed\SecurityOauthUser\SecurityOauthUserConfig

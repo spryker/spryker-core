@@ -9,11 +9,11 @@ namespace Spryker\Zed\SecurityOauthUser\Communication;
 
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\SecurityOauthUser\Communication\Handler\OauthUserAuthenticationFailureHandler;
-use Spryker\Zed\SecurityOauthUser\Communication\Handler\OauthUserAuthenticationSuccessHandler;
 use Spryker\Zed\SecurityOauthUser\Communication\Plugin\Security\Provider\OauthUserProvider;
 use Spryker\Zed\SecurityOauthUser\Communication\Reader\ResourceOwnerReader;
 use Spryker\Zed\SecurityOauthUser\Communication\Reader\ResourceOwnerReaderInterface;
+use Spryker\Zed\SecurityOauthUser\Communication\Security\Handler\OauthUserAuthenticationFailureHandler;
+use Spryker\Zed\SecurityOauthUser\Communication\Security\Handler\OauthUserAuthenticationSuccessHandler;
 use Spryker\Zed\SecurityOauthUser\Communication\Security\SecurityOauthUser;
 use Spryker\Zed\SecurityOauthUser\Communication\Security\SecurityOauthUserInterface;
 use Spryker\Zed\SecurityOauthUser\Dependency\Facade\SecurityOauthUserToMessengerFacadeInterface;
