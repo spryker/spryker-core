@@ -23,18 +23,6 @@
             "selected_text": "$shoppingListItemIds",
             "error_level": 6,
             "shortcode": 128
-        },
-        {
-            "severity": "error",
-            "line_from": 26,
-            "line_to": 26,
-            "type": "ParamNameMismatch",
-            "message": "Argument 2 of Spryker\\Zed\\ShoppingListNote\\Persistence\\Propel\\Mapper\\ShoppingListItemNoteMapper::mapShoppingListItemNoteTransfer has wrong name $shoppingListItemNoteTransfer, expecting $shoppingListTransfer as defined by Spryker\\Zed\\ShoppingListNote\\Persistence\\Propel\\Mapper\\ShoppingListItemNoteMapperInterface::mapShoppingListItemNoteTransfer",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListNote/src/Spryker/Zed/ShoppingListNote/Persistence/Propel/Mapper/ShoppingListItemNoteMapper.php",
-            "snippet": "        ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer",
-            "selected_text": "$shoppingListItemNoteTransfer",
-            "error_level": 7,
-            "shortcode": 230
         }
     ],
     "warning": [

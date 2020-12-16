@@ -170,7 +170,6 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     ) {
-
         $this->getFactory()
             ->createCollectorManager()
             ->runCollector(

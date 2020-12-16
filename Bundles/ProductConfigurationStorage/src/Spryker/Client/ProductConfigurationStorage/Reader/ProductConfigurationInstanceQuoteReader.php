@@ -16,7 +16,7 @@ class ProductConfigurationInstanceQuoteReader implements ProductConfigurationIns
     /**
      * @var \Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToCartClientInterface
      */
-    private $cartClient;
+    protected $cartClient;
 
     /**
      * @param \Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToCartClientInterface $cartClient

@@ -37,6 +37,8 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return string[]
      */
     public function getInfrastructuralProductPackagingUnitTypeNames(): array;
@@ -47,6 +49,8 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return string
      */
     public function getDefaultProductPackagingUnitTypeName(): string;
@@ -56,6 +60,8 @@ interface ProductPackagingUnitFacadeInterface
      * - Retrieves a product packaging unit type using the name within the provided transfer.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
@@ -73,6 +79,8 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
      * @throws \Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeNotFoundException
@@ -88,6 +96,8 @@ interface ProductPackagingUnitFacadeInterface
      * - Retrieves the count of existing packaging units for a given product packaging unit type.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
@@ -116,6 +126,8 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
      * @throws \Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeUniqueViolationException
@@ -132,6 +144,8 @@ interface ProductPackagingUnitFacadeInterface
      * - Validate if the name is still unique.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
@@ -150,6 +164,8 @@ interface ProductPackagingUnitFacadeInterface
      * - Deletes only if no product packaging unit is associated with this unit type.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *

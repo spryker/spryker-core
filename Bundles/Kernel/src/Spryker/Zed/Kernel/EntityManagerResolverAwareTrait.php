@@ -15,7 +15,7 @@ trait EntityManagerResolverAwareTrait
     /**
      * @var \Spryker\Zed\Kernel\Persistence\AbstractEntityManager
      */
-    private $entityManager;
+    protected $entityManager;
 
     /**
      * @param \Spryker\Zed\Kernel\Persistence\AbstractEntityManager $entityManager

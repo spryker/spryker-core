@@ -1,18 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 30,
-            "line_to": 30,
-            "type": "ParamNameMismatch",
-            "message": "Argument 2 of Spryker\\Zed\\BusinessOnBehalfGui\\Communication\\Plugin\\Customer\\BusinessOnBehalfGuiAttachToCompanyButtonCustomerTableActionExpanderPlugin::execute has wrong name $buttonTransfers, expecting $buttons as defined by Spryker\\Zed\\CustomerExtension\\Dependency\\Plugin\\CustomerTableActionExpanderPluginInterface::execute",
-            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfGui/src/Spryker/Zed/BusinessOnBehalfGui/Communication/Plugin/Customer/BusinessOnBehalfGuiAttachToCompanyButtonCustomerTableActionExpanderPlugin.php",
-            "snippet": "    public function execute(int $idCustomer, array $buttonTransfers): array",
-            "selected_text": "$buttonTransfers",
-            "error_level": 7,
-            "shortcode": 230
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",

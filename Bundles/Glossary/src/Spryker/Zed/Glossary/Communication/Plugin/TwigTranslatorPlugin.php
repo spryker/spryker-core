@@ -63,25 +63,25 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
      *
      * @api
      *
-     * @param string $identifier
+     * @param string $id
      * @param array $parameters
      * @param string|null $domain
      * @param string|null $locale
      *
      * @return string
      */
-    public function trans($identifier, array $parameters = [], ?string $domain = null, ?string $locale = null)
+    public function trans($id, array $parameters = [], ?string $domain = null, ?string $locale = null)
     {
         if ($locale !== null) {
             $this->setLocale($locale);
         }
         $localeTransfer = $this->getLocaleTransfer();
 
-        if ($this->getFacade()->hasTranslation($identifier, $localeTransfer)) {
-            $identifier = $this->getFacade()->translate($identifier, $parameters, $localeTransfer);
+        if ($this->getFacade()->hasTranslation($id, $localeTransfer)) {
+            $id = $this->getFacade()->translate($id, $parameters, $localeTransfer);
         }
 
-        return $identifier;
+        return $id;
     }
 
     /**

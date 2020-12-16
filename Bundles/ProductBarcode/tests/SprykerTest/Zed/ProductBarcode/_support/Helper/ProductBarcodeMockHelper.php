@@ -17,7 +17,7 @@ class ProductBarcodeMockHelper extends Module
     protected const GENERATED_ENCODING = 'data:image/png;base64';
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface
+     * @return \Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     public function getBarcodePluginMock(): BarcodeGeneratorPluginInterface
     {
