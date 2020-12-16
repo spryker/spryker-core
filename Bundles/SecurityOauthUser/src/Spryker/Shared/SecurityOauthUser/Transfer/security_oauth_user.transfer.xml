@@ -40,7 +40,7 @@
     </transfer>
 
     <transfer name="GroupCriteria">
-        <property name="reference" type="string"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="Group">

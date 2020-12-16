@@ -42,7 +42,7 @@ class OauthUserTokenAuthenticator extends AbstractPlugin implements Authenticato
 
     /**
      * {@inheritDoc}
-     * - Checks do the authenticator support the given request.
+     * - Checks if the authenticator support the given request.
      *
      * @api
      *
@@ -167,7 +167,7 @@ class OauthUserTokenAuthenticator extends AbstractPlugin implements Authenticato
 
     /**
      * {@inheritDoc}
-     * - Checks do this method support remember me cookies.
+     * - Checks if this method support remember me cookies.
      *
      * @api
      *

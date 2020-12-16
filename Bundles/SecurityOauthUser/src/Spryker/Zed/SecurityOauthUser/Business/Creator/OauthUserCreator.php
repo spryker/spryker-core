@@ -68,7 +68,7 @@ class OauthUserCreator implements OauthUserCreatorInterface
 
         $this->aclGroupAdder->addOauthUserToGroup(
             $userTransfer,
-            $this->securityOauthUserConfig->getOauthUserGroupReference()
+            $this->securityOauthUserConfig->getOauthUserGroupName()
         );
 
         return $userTransfer;
@@ -81,12 +81,10 @@ class OauthUserCreator implements OauthUserCreatorInterface
      */
     protected function createUserTransfer(UserCriteriaTransfer $userCriteriaTransfer): UserTransfer
     {
-        $email = $userCriteriaTransfer->getEmailOrFail();
-
         return (new UserTransfer())
-            ->setUsername($email)
-            ->setFirstName($email)
-            ->setLastName($email)
+            ->setUsername($userCriteriaTransfer->getEmailOrFail())
+            ->setFirstName($userCriteriaTransfer->getEmailOrFail())
+            ->setLastName($userCriteriaTransfer->getEmailOrFail())
             ->setStatus($this->securityOauthUserConfig->getOauthUserCreationStatus())
             ->setPassword($this->utilTextService->generateRandomByteString(
                 static::OAUTH_USER_CREATION_DEFAULT_PASSWORD_LENGTH

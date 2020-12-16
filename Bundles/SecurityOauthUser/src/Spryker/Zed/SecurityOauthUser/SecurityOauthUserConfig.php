@@ -52,7 +52,7 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
     /**
      * @uses \Spryker\Shared\Acl\AclConstants::ROOT_GROUP
      */
-    protected const OAUTH_USER_GROUP_REFERENCE = 'root_group';
+    protected const OAUTH_USER_GROUP_NAME = 'root_group';
 
     /**
      * Specification:
@@ -160,15 +160,15 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Defines the Oauth user group reference when the `create user on first login` strategy is selected.
+     * - Defines the Oauth user group name when the `create user on first login` strategy is selected.
      *
      * @api
      *
      * @return string
      */
-    public function getOauthUserGroupReference(): string
+    public function getOauthUserGroupName(): string
     {
-        return static::OAUTH_USER_GROUP_REFERENCE;
+        return static::OAUTH_USER_GROUP_NAME;
     }
 
     /**

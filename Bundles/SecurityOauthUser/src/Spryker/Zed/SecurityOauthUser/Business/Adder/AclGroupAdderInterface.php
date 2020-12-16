@@ -13,11 +13,11 @@ interface AclGroupAdderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     * @param string $reference
+     * @param string $groupName
      *
      * @throws \Spryker\Zed\MerchantUser\Business\Exception\AclGroupNotFoundException
      *
      * @return void
      */
-    public function addOauthUserToGroup(UserTransfer $userTransfer, string $reference): void;
+    public function addOauthUserToGroup(UserTransfer $userTransfer, string $groupName): void;
 }

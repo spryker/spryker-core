@@ -29,21 +29,21 @@ class AclGroupAdder implements AclGroupAdderInterface
 
     /**
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     * @param string $reference
+     * @param string $groupName
      *
      * @throws \Spryker\Zed\SecurityOauthUser\Business\Exception\AclGroupNotFoundException
      *
      * @return void
      */
-    public function addOauthUserToGroup(UserTransfer $userTransfer, string $reference): void
+    public function addOauthUserToGroup(UserTransfer $userTransfer, string $groupName): void
     {
-        $groupCriteriaTransfer = (new GroupCriteriaTransfer())->setReference($reference);
+        $groupCriteriaTransfer = (new GroupCriteriaTransfer())->setName($groupName);
 
         $groupTransfer = $this->aclFacade->findGroup($groupCriteriaTransfer);
         if (!$groupTransfer) {
             throw new AclGroupNotFoundException(sprintf(
-                'The group with %s reference was not found.',
-                $reference
+                'The group with %s name was not found.',
+                $groupName
             ));
         }
 
