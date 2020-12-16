@@ -22,14 +22,14 @@ class PriceProductOfferConstraintProvider implements PriceProductOfferConstraint
     /**
      * @var \Symfony\Component\Validator\Constraint[]
      */
-    protected $priceProductTransferConstraintsExtension;
+    protected $priceProductTransferConstraints;
 
     /**
-     * @param \Symfony\Component\Validator\Constraint[] $priceProductTransferConstraintsExtension
+     * @param \Symfony\Component\Validator\Constraint[] $priceProductTransferConstraints
      */
-    public function __construct(array $priceProductTransferConstraintsExtension)
+    public function __construct(array $priceProductTransferConstraints)
     {
-        $this->priceProductTransferConstraintsExtension = $priceProductTransferConstraintsExtension;
+        $this->priceProductTransferConstraints = $priceProductTransferConstraints;
     }
 
     /**
@@ -42,7 +42,7 @@ class PriceProductOfferConstraintProvider implements PriceProductOfferConstraint
             new AllConstraint(
                 array_merge(
                     [new TransferConstraint([PriceProductTransfer::MONEY_VALUE => $this->getMoneyValueConstraint()])],
-                    $this->priceProductTransferConstraintsExtension
+                    $this->priceProductTransferConstraints
                 )
             ),
         ];

@@ -51,12 +51,25 @@ class CreateProductOfferController extends AbstractProductOfferController
 
         $initialData = $this->getDefaultInitialData($request, $productOfferForm->getName());
 
-        if ($productOfferForm->isSubmitted() && $productOfferForm->isValid()) {
-            $initialData = $this->validateProductOfferPrices($productOfferForm->getData()->getPrices(), $initialData);
+        if (!$productOfferForm->isSubmitted() || !$productOfferForm->isValid()) {
+            return $this->getResponse($productOfferForm, $productConcreteTransfer, $productAbstractTransfer, $initialData);
+        }
 
-            if (empty($initialData['errors'])) {
-                $this->getFactory()->getProductOfferFacade()->create($productOfferForm->getData());
-            }
+        $validationResponseTransfer = $this->getFactory()
+            ->getPriceProductOfferFacade()
+            ->validateProductOfferPrices($productOfferForm->getData()->getPrices());
+
+        if (!$validationResponseTransfer->getIsSuccess()) {
+            $initialData = $this->getFactory()
+                ->createPriceProductOfferMapper()
+                ->mapValidationResponseTransferToInitialDataErrors(
+                    $validationResponseTransfer,
+                    $initialData
+                );
+        }
+
+        if ($validationResponseTransfer->getIsSuccess()) {
+            $this->getFactory()->getProductOfferFacade()->create($productOfferForm->getData());
         }
 
         return $this->getResponse(
@@ -131,7 +144,9 @@ class CreateProductOfferController extends AbstractProductOfferController
             $this->addSuccessMessage('The Offer is saved.');
         }
 
-        $responseData = $this->addValidationNotifications($responseData, $productOfferForm, $initialData);
+        if (!$productOfferForm->isValid() || !empty($initialData['errors'])) {
+            $responseData = $this->addValidationNotifications($responseData);
+        }
 
         return new JsonResponse($responseData);
     }

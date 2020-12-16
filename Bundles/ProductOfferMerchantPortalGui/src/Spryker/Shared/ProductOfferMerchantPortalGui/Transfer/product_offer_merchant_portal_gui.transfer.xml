@@ -192,6 +192,7 @@
     <transfer name="ProductOfferCriteriaFilter">
         <property name="idProductOffer" type="int"/>
         <property name="productOfferReferences" type="string[]" singular="productOfferReference"/>
+        <property name="merchantIds" type="int[]" singular="idMerchant"/>
     </transfer>
 
     <transfer name="StoreWithCurrency">
@@ -213,11 +214,14 @@
         <property name="currency" type="Currency"/>
         <property name="fkStore" type="int"/>
         <property name="fkCurrency" type="int"/>
+        <property name="netAmount" type="int"/>
+        <property name="grossAmount" type="int"/>
     </transfer>
 
     <transfer name="Currency">
         <property name="idCurrency" type="int"/>
         <property name="symbol" type="string"/>
+        <property name="code" type="string"/>
     </transfer>
 
     <transfer name="PriceProduct">
@@ -225,6 +229,7 @@
         <property name="priceType" type="PriceType"/>
         <property name="fkPriceType" type="int"/>
         <property name="priceDimension" type="PriceProductDimension"/>
+        <property name="idProduct" type="int"/>
     </transfer>
 
     <transfer name="ProductOfferResponse">
@@ -241,6 +246,7 @@
     </transfer>
 
     <transfer name="PriceProductDimension">
+        <property name="idProductOffer" type="int"/>
     </transfer>
 
     <transfer name="ProductOfferError">
@@ -319,11 +325,31 @@
     <transfer name="PriceProductOffer">
         <property name="idPriceProductOffer"  type="int"/>
         <property name="productOffer"  type="ProductOffer"/>
-        <property name="priceProduct"  type="PriceProduct"/>
     </transfer>
 
     <transfer name="PriceProductOfferCriteria">
         <property name="priceProductOfferIds" type="int[]" singular="idPriceProductOffer"/>
+        <property name="productOfferCriteriaFilter" type="ProductOfferCriteriaFilter"/>
+    </transfer>
+
+    <transfer name="ValidationResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="validationErrors" type="ValidationError[]" singular="validationError"/>
+    </transfer>
+
+    <transfer name="ValidationError">
+        <property name="message" type="string"/>
+        <property name="propertyPath" type="string"/>
+    </transfer>
+
+    <transfer name="GuiTableEditableInitialData">
+        <property name="data" type="array" description="Data for rows" singular="data"/>
+        <property name="errors" type="GuiTableEditableDataError[]" singular="error" description="Key is data index."/>
+    </transfer>
+
+    <transfer name="GuiTableEditableDataError">
+        <property name="rowError" type="string"/>
+        <property name="columnErrors" type="array" singular="columnError" associative="true" description="Key is column ID."/>
     </transfer>
 
 </transfers>

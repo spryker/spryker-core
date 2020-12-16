@@ -70,6 +70,7 @@
 
     <transfer name="MoneyValue">
         <property name="fkStore" type="int"/>
+        <property name="fkCurrency" type="int"/>
         <property name="currency" type="Currency"/>
         <property name="netAmount" type="int"/>
         <property name="grossAmount" type="int"/>
@@ -78,6 +79,8 @@
     </transfer>
 
     <transfer name="Currency">
+        <property name="code" type="string"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="ProductOffer">
@@ -92,9 +95,12 @@
     </transfer>
 
     <transfer name="PriceType">
+        <property name="idPrice" type="int"/>
     </transfer>
 
     <transfer name="Store">
+        <property name="name" type="string"/>
+        <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode"/>
     </transfer>
 
     <transfer name="PriceProductValidationResponse">

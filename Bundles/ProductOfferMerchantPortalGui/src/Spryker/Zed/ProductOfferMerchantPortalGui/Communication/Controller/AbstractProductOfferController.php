@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller;
 
-use ArrayObject;
 use Generated\Shared\Transfer\GuiTableEditableInitialDataTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTableViewTransfer;
@@ -15,7 +14,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -95,64 +93,26 @@ class AbstractProductOfferController extends AbstractController
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     * @phpstan-param array<mixed> $initialData
-     *
-     * @phpstan-return array<mixed>
-     *
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     * @param array $initialData
-     *
-     * @return array
-     */
-    protected function validateProductOfferPrices(ArrayObject $priceProductTransfers, array $initialData): array
-    {
-        $validationResponseTransfer = $this->getFactory()
-            ->getPriceProductOfferFacade()
-            ->validateProductOfferPrices($priceProductTransfers);
-
-        if (!$validationResponseTransfer->getIsSuccess()) {
-            return $this->getFactory()
-                ->createPriceProductOfferMapper()
-                ->mapValidationResponseTransferToInitialDataErrors(
-                    $validationResponseTransfer,
-                    $initialData
-                );
-        }
-
-        return $initialData;
-    }
-
-    /**
      * @phpstan-param array<string, mixed> $responseData
-     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $productOfferForm
-     * @phpstan-param array<mixed> $initialData
      *
      * @phpstan-return array<string, mixed>
      *
      * @param array $responseData
-     * @param \Symfony\Component\Form\FormInterface $productOfferForm
-     * @param array $initialData
      *
      * @return array
      */
-    protected function addValidationNotifications(
-        array $responseData,
-        FormInterface $productOfferForm,
-        array $initialData
-    ): array {
-        if (!$productOfferForm->isValid() || !empty($initialData['errors'])) {
-            $responseData['notifications'] = [
-                [
-                    'type' => 'error',
-                    'message' => 'The Offer is not saved.',
-                ],
-                [
-                    'type' => 'error',
-                    'message' => 'To create an Offer please resolve all errors',
-                ],
-            ];
-        }
+    protected function addValidationNotifications(array $responseData): array
+    {
+        $responseData['notifications'] = [
+            [
+                'type' => 'error',
+                'message' => 'The Offer is not saved.',
+            ],
+            [
+                'type' => 'error',
+                'message' => 'To create an Offer please resolve all errors',
+            ],
+        ];
 
         return $responseData;
     }

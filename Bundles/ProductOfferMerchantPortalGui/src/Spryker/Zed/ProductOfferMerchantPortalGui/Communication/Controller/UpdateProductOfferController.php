@@ -56,16 +56,35 @@ class UpdateProductOfferController extends AbstractProductOfferController
 
         $initialData = $this->getDefaultInitialData($request, $productOfferForm->getName());
         $productOfferResponseTransfer = new ProductOfferResponseTransfer();
+        $productOfferResponseTransfer->setProductOffer($productOfferTransfer);
 
-        if ($productOfferForm->isSubmitted() && $productOfferForm->isValid()) {
-            $initialData = $this->validateProductOfferPrices($productOfferForm->getData()->getPrices(), $initialData);
-
-            if (empty($initialData['errors'])) {
-                $productOfferResponseTransfer = $this->getFactory()->getProductOfferFacade()->update($productOfferForm->getData());
-            }
+        if (!$productOfferForm->isSubmitted() || !$productOfferForm->isValid()) {
+            return $this->getResponse(
+                $productOfferForm,
+                $productConcreteTransfer,
+                $productAbstractTransfer,
+                $productOfferResponseTransfer,
+                $idProductOffer,
+                $initialData
+            );
         }
 
-        $productOfferResponseTransfer->setProductOffer($productOfferTransfer);
+        $validationResponseTransfer = $this->getFactory()
+            ->getPriceProductOfferFacade()
+            ->validateProductOfferPrices($productOfferForm->getData()->getPrices());
+
+        if (!$validationResponseTransfer->getIsSuccess()) {
+            $initialData = $this->getFactory()
+                ->createPriceProductOfferMapper()
+                ->mapValidationResponseTransferToInitialDataErrors(
+                    $validationResponseTransfer,
+                    $initialData
+                );
+        }
+
+        if ($validationResponseTransfer->getIsSuccess()) {
+            $productOfferResponseTransfer = $this->getFactory()->getProductOfferFacade()->update($productOfferForm->getData());
+        }
 
         return $this->getResponse(
             $productOfferForm,
@@ -163,7 +182,9 @@ class UpdateProductOfferController extends AbstractProductOfferController
             }
         }
 
-        $responseData = $this->addValidationNotifications($responseData, $productOfferForm, $initialData);
+        if (!$productOfferForm->isValid() || !empty($initialData['errors'])) {
+            $responseData = $this->addValidationNotifications($responseData);
+        }
 
         return new JsonResponse($responseData);
     }
