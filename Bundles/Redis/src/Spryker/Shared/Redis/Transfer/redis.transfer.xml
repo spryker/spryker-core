@@ -11,7 +11,7 @@
     </transfer>
 
     <transfer name="RedisCredentials">
-        <property name="protocol" type="string" deprecated="Use scheme instead"/>
+        <property name="protocol" type="string" deprecated="Use scheme property instead"/>
         <property name="scheme" type="string"/>
         <property name="host" type="string"/>
         <property name="port" type="string"/>
