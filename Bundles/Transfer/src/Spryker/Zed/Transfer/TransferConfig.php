@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Transfer;
 
+use RuntimeException;
 use Spryker\Shared\Transfer\TransferConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
@@ -263,5 +264,39 @@ class TransferConfig extends AbstractBundleConfig
     public function isDebugEnabled(): bool
     {
         return $this->get(TransferConstants::IS_DEBUG_ENABLED, false);
+    }
+
+    /**
+     * Specification:
+     * - Returns the path to XSD schema used to validated transfer XML files.
+     *
+     * @api
+     *
+     * @throws \RuntimeException
+     *
+     * @return string
+     */
+    public function getXsdSchemaFilePath(): string
+    {
+        $xsdSchemaFilePath = realpath(__DIR__ . '/../../../../data/definition/transfer-01.xsd');
+
+        if ($xsdSchemaFilePath === false) {
+            throw new RuntimeException('Cannot find path to XSD schema.');
+        }
+
+        return $xsdSchemaFilePath;
+    }
+
+    /**
+     * Specification:
+     * - When enabled, all the available transfer XML files will be checked for validity during transfer validation.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isTransferXmlValidationEnabled(): bool
+    {
+        return false;
     }
 }
