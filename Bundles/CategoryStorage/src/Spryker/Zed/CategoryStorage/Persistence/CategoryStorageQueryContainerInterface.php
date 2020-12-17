@@ -15,6 +15,8 @@ interface CategoryStorageQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release.
+     *
      * @param array $localeNames
      *
      * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
@@ -23,6 +25,8 @@ interface CategoryStorageQueryContainerInterface extends QueryContainerInterface
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release.
      *
      * @param int $idLocale
      *
@@ -41,6 +45,8 @@ interface CategoryStorageQueryContainerInterface extends QueryContainerInterface
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release.
      *
      * @param int $idLocale
      *
