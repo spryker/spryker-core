@@ -28,6 +28,8 @@ class CheckoutRestApiZedStub implements CheckoutRestApiZedStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\CheckoutRestApi\Communication\Controller\GatewayController::getCheckoutDataAction()
+     *
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestCheckoutDataResponseTransfer
@@ -41,6 +43,8 @@ class CheckoutRestApiZedStub implements CheckoutRestApiZedStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\CheckoutRestApi\Communication\Controller\GatewayController::placeOrderAction()
+     *
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestCheckoutResponseTransfer

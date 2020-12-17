@@ -19,7 +19,7 @@ abstract class AbstractFacade
     /**
      * @var \Spryker\Zed\Kernel\Business\BusinessFactoryInterface
      */
-    private $factory;
+    protected $factory;
 
     /**
      * {@inheritDoc}

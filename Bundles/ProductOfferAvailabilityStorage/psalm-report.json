@@ -2,54 +2,6 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 31,
-            "line_to": 31,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ProductOfferAvailabilityStorage\\Communication\\Plugin\\Event\\Listener\\OmsProductReservationStoragePublishListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferAvailabilityStorage/src/Spryker/Zed/ProductOfferAvailabilityStorage/Communication/Plugin/Event/Listener/OmsProductReservationStoragePublishListener.php",
-            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
-            "selected_text": "$eventTransfers",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 31,
-            "line_to": 31,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ProductOfferAvailabilityStorage\\Communication\\Plugin\\Event\\Listener\\OmsProductReservationStorageUnpublishListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferAvailabilityStorage/src/Spryker/Zed/ProductOfferAvailabilityStorage/Communication/Plugin/Event/Listener/OmsProductReservationStorageUnpublishListener.php",
-            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
-            "selected_text": "$eventTransfers",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 31,
-            "line_to": 31,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ProductOfferAvailabilityStorage\\Communication\\Plugin\\Event\\Listener\\ProductOfferStockStoragePublishListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferAvailabilityStorage/src/Spryker/Zed/ProductOfferAvailabilityStorage/Communication/Plugin/Event/Listener/ProductOfferStockStoragePublishListener.php",
-            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
-            "selected_text": "$eventTransfers",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 31,
-            "line_to": 31,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ProductOfferAvailabilityStorage\\Communication\\Plugin\\Event\\Listener\\ProductOfferStoragePublishListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferAvailabilityStorage/src/Spryker/Zed/ProductOfferAvailabilityStorage/Communication/Plugin/Event/Listener/ProductOfferStoragePublishListener.php",
-            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
-            "selected_text": "$eventTransfers",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
             "line_from": 128,
             "line_to": 129,
             "type": "InvalidReturnStatement",

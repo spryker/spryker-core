@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantShipment\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantShipment\Business\Expander\ShipmentExpander;
+use Spryker\Zed\MerchantShipment\Business\Expander\ShipmentExpanderInterface;
 use Spryker\Zed\MerchantShipment\Business\Reader\MerchantShipmentReader;
 use Spryker\Zed\MerchantShipment\Business\Reader\MerchantShipmentReaderInterface;
 use Spryker\Zed\MerchantShipment\Dependency\Facade\MerchantShipmentToShipmentFacadeInterface;
@@ -28,6 +30,14 @@ class MerchantShipmentBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getShipmentFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantShipment\Business\Expander\ShipmentExpanderInterface
+     */
+    public function createShipmentExpander(): ShipmentExpanderInterface
+    {
+        return new ShipmentExpander();
     }
 
     /**

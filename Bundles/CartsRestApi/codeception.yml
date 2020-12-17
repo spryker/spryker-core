@@ -1,5 +1,6 @@
 namespace: CartsRestApi
 include:
+    - tests/SprykerTest/Glue/CartsRestApi
     - tests/SprykerTest/Zed/CartsRestApi
 paths:
     tests: tests

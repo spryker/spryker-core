@@ -78,7 +78,11 @@ abstract class AbstractProductOfferFormDataProvider
         }
 
         foreach ($storeRelationTransfer->getStores() as $storeTransfer) {
-            $storeChoices[$storeTransfer->getName()] = $storeTransfer->getIdStore();
+            /** @var int $idStore */
+            $idStore = $storeTransfer->requireIdStore()->getIdStore();
+            /** @var string $storeName */
+            $storeName = $storeTransfer->requireName()->getName();
+            $storeChoices[$storeName] = $idStore;
         }
 
         return $storeChoices;
@@ -113,7 +117,11 @@ abstract class AbstractProductOfferFormDataProvider
         }
 
         foreach ($productOfferTransfer->getProductOfferStocks() as $productOfferStockTransfer) {
-            if ($productOfferStockTransfer->getStock()->getIdStock() === $stockTransfers->offsetGet(0)->getIdStock()) {
+            $firstStockTransfer = $stockTransfers->offsetGet(0);
+            /** @var \Generated\Shared\Transfer\StockTransfer $stockTransfer */
+            $stockTransfer = $productOfferStockTransfer->requireStock()->getStock();
+
+            if ($stockTransfer->getIdStock() === $firstStockTransfer->getIdStock()) {
                 $productOfferTransfer->setProductOfferStocks(new ArrayObject([$productOfferStockTransfer]));
 
                 break;

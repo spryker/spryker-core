@@ -55,11 +55,14 @@ class ProductOfferUpdateFormDataProvider extends AbstractProductOfferFormDataPro
             return null;
         }
 
-        $productConcreteTransfer = $this->productFacade->findProductConcreteById(
-            $this->productFacade->findProductConcreteIdBySku($productOfferTransfer->getConcreteSku())
-        );
-        $productOfferTransfer->setIdProductConcrete($productConcreteTransfer->getIdProductConcrete());
+        /** @var string $sku */
+        $sku = $productOfferTransfer->requireConcreteSku()->getConcreteSku();
+        /** @var int $idProductConcrete */
+        $idProductConcrete = $this->productFacade->findProductConcreteIdBySku($sku);
+        /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */
+        $productConcreteTransfer = $this->productFacade->findProductConcreteById($idProductConcrete);
 
+        $productOfferTransfer->setIdProductConcrete($idProductConcrete);
         $productOfferTransfer = $this->setDefaultMerchantStock($productOfferTransfer);
 
         return $productOfferTransfer;

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\DataImport\Business\Model\DataSet;
 
 use Generated\Shared\Transfer\DataSetItemTransfer;
+use Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginApplicableAwareInterface;
 use Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface;
 
 class DataSetWriterCollection implements DataSetWriterInterface
@@ -32,7 +33,7 @@ class DataSetWriterCollection implements DataSetWriterInterface
      */
     public function write(DataSetInterface $dataSet)
     {
-        foreach ($this->dataSetWriters as $dataSetWriter) {
+        foreach ($this->getDatasetWriters() as $dataSetWriter) {
             /**
              * This check was added because of BC and will be removed once the `\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface` is removed.
              */
@@ -52,7 +53,7 @@ class DataSetWriterCollection implements DataSetWriterInterface
      */
     public function flush()
     {
-        foreach ($this->dataSetWriters as $dataSetWriter) {
+        foreach ($this->getDatasetWriters() as $dataSetWriter) {
             $dataSetWriter->flush();
         }
     }
@@ -67,5 +68,25 @@ class DataSetWriterCollection implements DataSetWriterInterface
         return (new DataSetItemTransfer())->setPayload(
             $dataSet->getArrayCopy()
         );
+    }
+
+    /**
+     * Generates DatasetWritersPlugins that are matching conditions.
+     *
+     * @return \Generator
+     */
+    protected function getDatasetWriters()
+    {
+        /**
+         * @var \Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginApplicableAwareInterface $dataSetWriter
+         */
+        foreach ($this->dataSetWriters as $dataSetWriter) {
+            if (
+                !$dataSetWriter instanceof DataSetWriterPluginApplicableAwareInterface
+                || $dataSetWriter->isApplicable()
+            ) {
+                yield $dataSetWriter;
+            }
+        }
     }
 }

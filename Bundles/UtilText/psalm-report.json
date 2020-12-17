@@ -1,18 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 29,
-            "line_to": 29,
-            "type": "ParamNameMismatch",
-            "message": "Argument 2 of Spryker\\Service\\UtilText\\Model\\Token\\Token::check has wrong name $hash, expecting $token as defined by Spryker\\Service\\UtilText\\Model\\Token\\TokenInterface::check",
-            "file_name": "vendor/spryker/spryker/Bundles/UtilText/src/Spryker/Service/UtilText/Model/Token/Token.php",
-            "snippet": "    public function check($rawToken, $hash)",
-            "selected_text": "$hash",
-            "error_level": 7,
-            "shortcode": 230
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
@@ -23,6 +10,18 @@
             "file_name": "vendor/spryker/spryker/Bundles/UtilText/src/Spryker/Service/UtilText/Model/StringGenerator.php",
             "snippet": "        $token = bin2hex(random_bytes($tokenLength));",
             "selected_text": "$tokenLength",
+            "error_level": 4,
+            "shortcode": 12
+        },
+        {
+            "severity": "info",
+            "line_from": 20,
+            "line_to": 20,
+            "type": "InvalidScalarArgument",
+            "message": "Argument 2 of password_hash expects int, string(2y) provided",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilText/src/Spryker/Service/UtilText/Model/Token/Token.php",
+            "snippet": "        return base64_encode(password_hash($rawToken, PASSWORD_DEFAULT, $options));",
+            "selected_text": "PASSWORD_DEFAULT",
             "error_level": 4,
             "shortcode": 12
         },

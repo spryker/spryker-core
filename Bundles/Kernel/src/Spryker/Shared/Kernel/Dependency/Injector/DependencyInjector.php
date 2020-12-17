@@ -14,7 +14,7 @@ class DependencyInjector implements DependencyInjectorInterface
     /**
      * @var \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface
      */
-    private $dependencyInjectorCollection;
+    protected $dependencyInjectorCollection;
 
     /**
      * @param \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface $dependencyInjectorCollection

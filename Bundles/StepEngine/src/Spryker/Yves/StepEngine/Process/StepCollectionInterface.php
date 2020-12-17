@@ -24,19 +24,19 @@ interface StepCollectionInterface extends IteratorAggregate
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $step
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function canAccessStep(StepInterface $step, Request $request, AbstractTransfer $dataTransfer);
+    public function canAccessStep(StepInterface $step, Request $request, AbstractTransfer $quoteTransfer);
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface
      */
-    public function getCurrentStep(Request $request, AbstractTransfer $dataTransfer);
+    public function getCurrentStep(Request $request, AbstractTransfer $quoteTransfer);
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
@@ -62,19 +62,19 @@ interface StepCollectionInterface extends IteratorAggregate
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return string
      */
-    public function getNextUrl(StepInterface $currentStep, AbstractTransfer $dataTransfer);
+    public function getNextUrl(StepInterface $currentStep, AbstractTransfer $quoteTransfer);
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
-     * @param \Generated\Shared\Transfer\QuoteTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
      *
      * @return string
      */
-    public function getPreviousUrl(StepInterface $currentStep, ?AbstractTransfer $dataTransfer = null);
+    public function getPreviousUrl(StepInterface $currentStep, ?AbstractTransfer $quoteTransfer = null);
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep

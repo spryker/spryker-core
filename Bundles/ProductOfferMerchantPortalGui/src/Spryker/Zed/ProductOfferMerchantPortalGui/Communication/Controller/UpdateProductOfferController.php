@@ -39,15 +39,21 @@ class UpdateProductOfferController extends AbstractProductOfferController
         $productOfferTransfer = $productOfferUpdateFormDataProvider->getData($idProductOffer);
 
         if (!$productOfferTransfer) {
-            throw new NotFoundHttpException(sprintf('Product offer not found for id %d.', $idProductOffer));
+            throw new NotFoundHttpException(sprintf('Product offer is not found for id %d.', $idProductOffer));
         }
 
-        $productConcreteTransfer = $this->getFactory()->getProductFacade()->findProductConcreteById(
-            $productOfferTransfer->getIdProductConcrete()
-        );
-        $productAbstractTransfer = $this->getFactory()->getProductFacade()->findProductAbstractById(
-            $productConcreteTransfer->getFkProductAbstract()
-        );
+        /** @var int $idProductConcrete */
+        $idProductConcrete = $productOfferTransfer->requireIdProductConcrete()->getIdProductConcrete();
+        $productConcreteTransfer = $this->getFactory()->getProductFacade()->findProductConcreteById($idProductConcrete);
+        if (!$productConcreteTransfer) {
+            throw new NotFoundHttpException(sprintf('Product is not found for id %d.', $idProductConcrete));
+        }
+
+        /** @var int $idProductAbstract */
+        $idProductAbstract = $productConcreteTransfer->requireFkProductAbstract()->getFkProductAbstract();
+        /** @var \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer */
+        $productAbstractTransfer = $this->getFactory()->getProductFacade()->findProductAbstractById($idProductAbstract);
+
         $productOfferForm = $this->getFactory()->createProductOfferForm(
             $productOfferTransfer,
             $productOfferUpdateFormDataProvider->getOptions($productAbstractTransfer)
@@ -140,6 +146,9 @@ class UpdateProductOfferController extends AbstractProductOfferController
             ->getLocaleFacade()
             ->getCurrentLocale();
 
+        $productOfferTransfer = $productOfferResponseTransfer->getProductOffer();
+        $productOfferReference = $productOfferTransfer ? $productOfferTransfer->getProductOfferReference() : null;
+
         $priceProductOfferTableConfiguration = $this->getFactory()
             ->createPriceProductOfferUpdateGuiTableConfigurationProvider()
             ->getConfiguration($idProductOffer, $initialData);
@@ -150,7 +159,7 @@ class UpdateProductOfferController extends AbstractProductOfferController
                 'product' => $productConcreteTransfer,
                 'productName' => $this->getFactory()->createProductNameBuilder()->buildProductConcreteName($productConcreteTransfer, $localeTransfer),
                 'productAttributes' => $this->getProductAttributes($localeTransfer, $productConcreteTransfer, $productAbstractTransfer),
-                'productOfferReference' => $productOfferResponseTransfer->getProductOffer()->getProductOfferReference(),
+                'productOfferReference' => $productOfferReference,
                 'priceProductOfferTableConfiguration' => $priceProductOfferTableConfiguration,
             ])->getContent(),
         ];

@@ -1,22 +1,30 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
+@image-slider-height: 125px;
+@image-slider-preview-margin-right: 10px;
+@image-slider-preview-img-size: 38px;
+@image-slider-showcard-img-size: 125px;
+@image-slider-border-radius: 10px;
+@image-slider-preview-border: 1px solid transparent;
+@image-slider-preview-margin-bottom: 4px;
+
 .image-slider {
-    height: 125px;
+    height: @image-slider-height;
     display: flex;
 
     &-preview {
         display: flex;
         flex-direction: column;
-        margin-right: 10px;
+        margin-right: @image-slider-preview-margin-right;
 
         &-img {
-            height: 38px;
-            width: 38px;
-            border-radius: 10px;
-            border: 1px solid transparent;
+            height: @image-slider-preview-img-size;
+            width: @image-slider-preview-img-size;
+            border-radius: @image-slider-border-radius;
+            border: @image-slider-preview-border;
 
             &:not(:last-child) {
-                margin-bottom: 4px;
+                margin-bottom: @image-slider-preview-margin-bottom;
             }
 
             &--selected {
@@ -26,9 +34,9 @@
     }
 
     &-showcard {
-        width: 125px;
-        height: 125px;
-        border-radius: 10px;
+        width: @image-slider-showcard-img-size;
+        height: @image-slider-showcard-img-size;
+        border-radius: @image-slider-border-radius;
 
         &-image {
             position: relative;

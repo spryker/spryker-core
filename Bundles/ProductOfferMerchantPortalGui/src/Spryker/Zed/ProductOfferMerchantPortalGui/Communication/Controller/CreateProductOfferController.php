@@ -36,12 +36,13 @@ class CreateProductOfferController extends AbstractProductOfferController
         $productConcreteTransfer = $this->getFactory()->getProductFacade()->findProductConcreteById($idProduct);
 
         if (!$productConcreteTransfer) {
-            throw new NotFoundHttpException(sprintf('Product not found for id %d.', $idProduct));
+            throw new NotFoundHttpException(sprintf('Product is not found for id %d.', $idProduct));
         }
 
-        $productAbstractTransfer = $this->getFactory()->getProductFacade()->findProductAbstractById(
-            $productConcreteTransfer->getFkProductAbstract()
-        );
+        /** @var int $idProductAbstract */
+        $idProductAbstract = $productConcreteTransfer->requireFkProductAbstract()->getFkProductAbstract();
+        /** @var \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer */
+        $productAbstractTransfer = $this->getFactory()->getProductFacade()->findProductAbstractById($idProductAbstract);
         $productOfferCreateFormDataProvider = $this->getFactory()->createProductOfferCreateFormDataProvider();
         $productOfferForm = $this->getFactory()->createProductOfferForm(
             $productOfferCreateFormDataProvider->getData($productConcreteTransfer),

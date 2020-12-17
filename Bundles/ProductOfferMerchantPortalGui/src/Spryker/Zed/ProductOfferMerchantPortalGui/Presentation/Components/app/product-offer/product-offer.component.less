@@ -1,13 +1,16 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
+@product-offer-heading-padding-bottom: 12px;
+@product-offer-description-padding-bottom: 40px;
+
 .mp-product-offer {
     .@{headline-prefix-cls} {
-        padding-bottom: 12px;
+        padding-bottom: @product-offer-heading-padding-bottom;
     }
 
     &__description {
-        font: @font-weight-medium @font-size-base @font-family;
+        font: @font-default;
         color: @gray-darker;
-        padding-bottom: 40px;
+        padding-bottom: @product-offer-description-padding-bottom;
     }
 }

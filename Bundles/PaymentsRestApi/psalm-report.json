@@ -1,18 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 65,
-            "line_to": 65,
-            "type": "ParamNameMismatch",
-            "message": "Argument 3 of Spryker\\Glue\\PaymentsRestApi\\Processor\\Mapper\\PaymentMethodMapper::mapRestCheckoutDataResponseTransferToRestCheckoutDataResponseAttributesTransfer has wrong name $restCheckoutDataResponseAttributesTransfer, expecting $restCheckoutResponseAttributesTransfer as defined by Spryker\\Glue\\PaymentsRestApi\\Processor\\Mapper\\PaymentMethodMapperInterface::mapRestCheckoutDataResponseTransferToRestCheckoutDataResponseAttributesTransfer",
-            "file_name": "vendor/spryker/spryker/Bundles/PaymentsRestApi/src/Spryker/Glue/PaymentsRestApi/Processor/Mapper/PaymentMethodMapper.php",
-            "snippet": "        RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer",
-            "selected_text": "$restCheckoutDataResponseAttributesTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",

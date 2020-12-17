@@ -73,16 +73,23 @@ class ClassDefinitionTest extends Unit
      * @param string|null $singular
      * @param string|null $return
      * @param array $bundles
+     * @param bool $isArrayCollection
      *
      * @return array
      */
-    private function getProperty(string $name, string $type, ?string $singular = null, ?string $return = null, array $bundles = []): array
-    {
+    private function getProperty(
+        string $name,
+        string $type,
+        ?string $singular = null,
+        ?string $return = null,
+        array $bundles = [],
+        bool $isArrayCollection = false
+    ): array {
         $property = [
             'name' => $name,
             'type' => ($return === null) ? $type : $return,
             'bundles' => $bundles,
-            'is_typed_array' => false,
+            'is_array_collection' => $isArrayCollection,
             'is_associative' => false,
         ];
 
@@ -136,7 +143,7 @@ class ClassDefinitionTest extends Unit
 
         $properties = $classDefinition->getProperties();
         $givenProperty = $properties['property1'];
-        $expectedProperty = $this->getProperty('property1', 'array');
+        $expectedProperty = $this->getProperty('property1', 'array', null, null, [], true);
         $this->assertEquals($expectedProperty, $givenProperty);
     }
 
@@ -155,7 +162,7 @@ class ClassDefinitionTest extends Unit
 
         $properties = $classDefinition->getProperties();
         $givenProperty = $properties['property1'];
-        $expectedProperty = $this->getProperty('property1', 'array');
+        $expectedProperty = $this->getProperty('property1', 'array', null, null, [], true);
         $this->assertEquals($expectedProperty, $givenProperty);
     }
 
@@ -317,14 +324,14 @@ class ClassDefinitionTest extends Unit
             'property1' => [
                 'name' => 'property1',
                 'type' => 'string[]',
-                'is_typed_array' => true,
+                'is_array_collection' => true,
                 'bundles' => [
                     'Bundle1',
                 ],
                 'is_associative' => false,
             ],
         ];
-        $this->assertSame($expected, $properties);
+        $this->assertEquals($expected, $properties);
     }
 
     /**
@@ -514,7 +521,7 @@ class ClassDefinitionTest extends Unit
             'name' => $name,
             'type' => ($return === null) ? $type : $return,
             'bundles' => $bundles,
-            'is_typed_array' => false,
+            'is_array_collection' => false,
             'associative' => $isAssociative,
         ];
 
@@ -544,12 +551,12 @@ class ClassDefinitionTest extends Unit
             'property1' => [
                 'name' => 'property1',
                 'type' => 'string[]',
-                'is_typed_array' => true,
+                'is_array_collection' => true,
                 'bundles' => [],
                 'is_associative' => true,
             ],
         ];
-        $this->assertSame($expected, $properties);
+        $this->assertEquals($expected, $properties);
     }
 
     /**
@@ -571,12 +578,12 @@ class ClassDefinitionTest extends Unit
             'property1' => [
                 'name' => 'property1',
                 'type' => "\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]",
-                'is_typed_array' => false,
+                'is_array_collection' => false,
                 'bundles' => [],
                 'is_associative' => true,
             ],
         ];
-        $this->assertSame($expected, $properties);
+        $this->assertEquals($expected, $properties);
     }
 
     /**
@@ -598,12 +605,12 @@ class ClassDefinitionTest extends Unit
             'property1' => [
                 'name' => 'property1',
                 'type' => "\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]",
-                'is_typed_array' => false,
+                'is_array_collection' => false,
                 'bundles' => [],
                 'is_associative' => true,
             ],
         ];
-        $this->assertSame($expected, $properties);
+        $this->assertEquals($expected, $properties);
     }
 
     /**
@@ -654,14 +661,14 @@ class ClassDefinitionTest extends Unit
                 'property1' => [
                     'name' => 'property1',
                     'type' => 'int',
-                    'is_typed_array' => false,
+                    'is_array_collection' => false,
                     'bundles' => [],
                     'is_associative' => false,
                 ],
                 'property2' => [
                     'name' => 'property2',
                     'type' => 'string[]',
-                    'is_typed_array' => true,
+                    'is_array_collection' => true,
                     'bundles' => [],
                     'is_associative' => false,
                 ],
@@ -669,7 +676,7 @@ class ClassDefinitionTest extends Unit
                     'name' => 'property3',
                     'type' => 'array',
                     'is_transfer' => true,
-                    'is_typed_array' => false,
+                    'is_array_collection' => false,
                     'bundles' => [],
                     'is_associative' => false,
                 ],

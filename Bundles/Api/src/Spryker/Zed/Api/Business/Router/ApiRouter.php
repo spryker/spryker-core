@@ -30,7 +30,7 @@ class ApiRouter implements RouterInterface
     /**
      * @var \Symfony\Component\Routing\RequestContext
      */
-    private $context;
+    protected $context;
 
     /**
      * @param \Spryker\Zed\Api\ApiConfig $config

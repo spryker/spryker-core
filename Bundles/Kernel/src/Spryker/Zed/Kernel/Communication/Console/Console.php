@@ -49,22 +49,22 @@ class Console extends SymfonyCommand
     /**
      * @var \Spryker\Zed\Kernel\Business\AbstractFacade|null
      */
-    private $facade;
+    protected $facade;
 
     /**
      * @var \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory|null
      */
-    private $factory;
+    protected $factory;
 
     /**
      * @var \Spryker\Zed\Kernel\Container
      */
-    private $container;
+    protected $container;
 
     /**
      * @var \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
-    private $queryContainer;
+    protected $queryContainer;
 
     /**
      * @var \Psr\Log\LoggerInterface
@@ -74,7 +74,7 @@ class Console extends SymfonyCommand
     /**
      * @var int
      */
-    private $exitCode = self::CODE_SUCCESS;
+    protected $exitCode = self::CODE_SUCCESS;
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

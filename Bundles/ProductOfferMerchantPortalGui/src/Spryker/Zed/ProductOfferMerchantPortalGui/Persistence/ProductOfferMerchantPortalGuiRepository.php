@@ -114,7 +114,12 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
     protected function buildProductTableBaseQuery(ProductTableCriteriaTransfer $productTableCriteriaTransfer): SpyProductQuery
     {
         $productConcreteQuery = $this->getFactory()->getProductConcretePropelQuery();
-        $idLocale = $productTableCriteriaTransfer->requireLocale()->getLocale()->requireIdLocale()->getIdLocale();
+
+        /** @var \Generated\Shared\Transfer\LocaleTransfer $localeTransfer */
+        $localeTransfer = $productTableCriteriaTransfer->requireLocale()->getLocale();
+        /** @var int $idLocale */
+        $idLocale = $localeTransfer->requireIdLocale()->getIdLocale();
+        /** @var int $idMerchant */
         $idMerchant = $productTableCriteriaTransfer->requireIdMerchant()->getIdMerchant();
 
         $productConcreteQuery = $this->addLocalizedAttributesToProductTableQuery($productConcreteQuery, $idLocale);
@@ -375,7 +380,9 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             return $productConcreteQuery;
         }
 
+        /** @var int $merchantUserId */
         $merchantUserId = $productTableCriteriaTransfer->requireIdMerchant()->getIdMerchant();
+
         $productConcreteQuery->where(
             sprintf(
                 '(%s) %s 0',
@@ -432,10 +439,13 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
     protected function buildProductOfferTableBaseQuery(
         ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
     ): SpyProductOfferQuery {
-        $idLocale = $productOfferTableCriteriaTransfer->requireLocale()->getLocale()->requireIdLocale()->getIdLocale();
-        $idMerchant = $productOfferTableCriteriaTransfer->requireIdMerchant()->getIdMerchant();
-
         $productOfferQuery = $this->getFactory()->getProductOfferPropelQuery();
+        /** @var int $idMerchant */
+        $idMerchant = $productOfferTableCriteriaTransfer->requireIdMerchant()->getIdMerchant();
+        /** @var \Generated\Shared\Transfer\LocaleTransfer $localeTransfer */
+        $localeTransfer = $productOfferTableCriteriaTransfer->requireLocale()->getLocale();
+        /** @var int $idLocale */
+        $idLocale = $localeTransfer->requireIdLocale()->getIdLocale();
 
         $productOfferQuery = $this->joinProductLocalizedAttributesToProductOfferQuery($productOfferQuery, $idLocale);
         $productOfferQuery->filterByFkMerchant($idMerchant)

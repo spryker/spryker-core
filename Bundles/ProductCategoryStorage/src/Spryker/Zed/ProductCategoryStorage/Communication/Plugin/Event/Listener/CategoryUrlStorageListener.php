@@ -26,19 +26,19 @@ class CategoryUrlStorageListener extends AbstractPlugin implements EventBulkHand
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
 
         if ($eventName === UrlEvents::ENTITY_SPY_URL_DELETE) {
-            $categoryNodeIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE);
+            $categoryNodeIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventEntityTransfers, SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE);
         } else {
-            $categoryNodeIds = $this->getValidCategoryNodeIds($eventTransfers);
+            $categoryNodeIds = $this->getValidCategoryNodeIds($eventEntityTransfers);
         }
 
         if (empty($categoryNodeIds)) {

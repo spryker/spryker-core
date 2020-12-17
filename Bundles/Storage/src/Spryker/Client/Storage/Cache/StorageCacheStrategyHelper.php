@@ -31,7 +31,6 @@ class StorageCacheStrategyHelper implements StorageCacheStrategyHelperInterface
         StorageClientInterface $storageClient,
         StorageConfig $storageConfig
     ) {
-
         $this->storageClient = $storageClient;
         $this->storageConfig = $storageConfig;
     }
