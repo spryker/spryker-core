@@ -16,8 +16,11 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\Builder\ProductAbstractNa
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Builder\ProductAbstractNameBuilderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\CategoryFilterOptionsProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\CategoryFilterOptionsProviderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\PriceProductAbstractGuiTableConfigurationProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\PriceProductAbstractGuiTableConfigurationProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\ProductAbstractGuiTableConfigurationProviderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\PriceProductAbstractTableDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAbstractTableDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductAbstractFormDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductAbstractFormDataProviderInterface;
@@ -107,6 +110,30 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
         return new ProductAbstractFormDataProvider(
             $this->getMerchantProductFacade(),
             $this->getStoreFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\PriceProductAbstractGuiTableConfigurationProviderInterface
+     */
+    public function createPriceProductAbstractGuiTableConfigurationProvider(): PriceProductAbstractGuiTableConfigurationProviderInterface
+    {
+        return new PriceProductAbstractGuiTableConfigurationProvider(
+            $this->getGuiTableFactory()
+        );
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface
+     */
+    public function createPriceProductAbstractTableDataProvider(int $idProductAbstract): GuiTableDataProviderInterface
+    {
+        return new PriceProductAbstractTableDataProvider(
+            $idProductAbstract,
+            $this->getRepository(),
+            $this->getMerchantUserFacade()
         );
     }
 

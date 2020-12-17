@@ -2,59 +2,67 @@
 @var productAbstract \Generated\Shared\Transfer\ProductAbstractTransfer
 @var imageSet \Generated\Shared\Transfer\ProductImageSetTransfer
 @var productImage \Generated\Shared\Transfer\ProductImageTransfer
+@var priceProductAbstractTableConfiguration \Generated\Shared\Transfer\GuiTableConfigurationTransfer
 #}
 
 {#{% form_theme form '@ZedUi/Form/form-webcomponent-layout.twig' %}#}
 
-<div>
-    {{ productAbstractName }}
-</div>
-<div>
-    {{ productAbstract.sku }}
-</div>
+{#<div>#}
+    {#{{ productAbstractName }}#}
+{#</div>#}
+{#<div>#}
+    {#{{ productAbstract.sku }}#}
+{#</div>#}
 
-<div>
-    {{ form(form) }}
-</div>
+{#<div>#}
+    {#{{ form(form) }}#}
+{#</div>#}
 
 {# block images #}
-{% if productAbstract.imageSets is not null and productAbstract.imageSets | length > 0 %}
-    <div>
-        {{ 'Images' | trans }}
-    </div>
-    {% for imageSet in productAbstract.imageSets %}
-        {% if imageSet.locale is null %}
-            <div>
-                {{ 'Default' | trans }}
-            </div>
+{#{% if productAbstract.imageSets is not null and productAbstract.imageSets | length > 0 %}#}
+    {#<div>#}
+        {#{{ 'Images' | trans }}#}
+    {#</div>#}
+    {#{% for imageSet in productAbstract.imageSets %}#}
+        {#{% if imageSet.locale is null %}#}
+            {#<div>#}
+                {#{{ 'Default' | trans }}#}
+            {#</div>#}
 
-            <div>
-                {{ 'Image Set' | trans }}: {{ imageSet.name }}
-            </div>
+            {#<div>#}
+                {#{{ 'Image Set' | trans }}: {{ imageSet.name }}#}
+            {#</div>#}
 
-            {% for productImage in imageSet.productImages  %}
-                <img style="width: 20px;" src="{{ productImage.externalUrlSmall }}" />
-            {% endfor %}
+            {#{% for productImage in imageSet.productImages  %}#}
+                {#<img style="width: 20px;" src="{{ productImage.externalUrlSmall }}" />#}
+            {#{% endfor %}#}
 
-        {% endif %}
-    {% endfor %}
+        {#{% endif %}#}
+    {#{% endfor %}#}
 
-    {% for imageSet in productAbstract.imageSets %}
-        {% if imageSet.locale is not null %}
-            <div>
-                {{ imageSet.locale.localeName }}
-            </div>
+    {#{% for imageSet in productAbstract.imageSets %}#}
+        {#{% if imageSet.locale is not null %}#}
+            {#<div>#}
+                {#{{ imageSet.locale.localeName }}#}
+            {#</div>#}
 
-            <div>
-                {{ 'Image Set' | trans }}: {{ imageSet.name }}
-            </div>
+            {#<div>#}
+                {#{{ 'Image Set' | trans }}: {{ imageSet.name }}#}
+            {#</div>#}
 
-            {% for productImage in imageSet.productImages  %}
-                <img style="width: 20px;" src="{{ productImage.externalUrlSmall }}" />
-            {% endfor %}
+            {#{% for productImage in imageSet.productImages  %}#}
+                {#<img style="width: 20px;" src="{{ productImage.externalUrlSmall }}" />#}
+            {#{% endfor %}#}
 
-        {% endif %}
-    {% endfor %}
+        {#{% endif %}#}
+    {#{% endfor %}#}
 
-{% endif %}
+{#{% endif %}#}
 {# block images #}
+
+<web-mp-product-list
+        cloak
+        table-id="web-mp-product-list"
+        table-config='{{ guiTableConfiguration(priceProductAbstractTableConfiguration) }}'>
+    <span title>{{ 'Products' | trans }}</span>
+</web-mp-product-list>

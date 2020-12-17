@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -92,6 +93,9 @@ class UpdateProductAbstractController extends AbstractController
                 'productAbstract' => $productAbstractTransfer,
                 'productAbstractName' => $productAbstractName,
                 'form' => $productAbstractForm->createView(),
+                'priceProductAbstractTableConfiguration' => $this->getFactory()
+                    ->createPriceProductAbstractGuiTableConfigurationProvider()
+                    ->getConfiguration(),
             ])->getContent(),
         ];
 
@@ -133,5 +137,19 @@ class UpdateProductAbstractController extends AbstractController
         }
 
         return new JsonResponse($responseData);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function tableDataAction(Request $request): Response
+    {
+        return $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
+            $request,
+            $this->getFactory()->createPriceProductAbstractTableDataProvider(111), //todo
+            $this->getFactory()->createPriceProductAbstractGuiTableConfigurationProvider()->getConfiguration()
+        );
     }
 }

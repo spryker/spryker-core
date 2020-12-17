@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductMerchantPortalGui;
 
 use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery;
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageQuery;
@@ -53,6 +54,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     public const PROPEL_QUERY_PRODUCT_CONCRETE = 'PROPEL_QUERY_PRODUCT_CONCRETE';
     public const PROPEL_QUERY_STORE = 'PROPEL_QUERY_STORE';
     public const PROPEL_QUERY_PRODUCT_CATEGORY = 'PROPEL_QUERY_PRODUCT_CATEGORY';
+    public const PROPEL_QUERY_PRICE_PRODUCT_DEFAULT = 'PROPEL_QUERY_PRICE_PRODUCT_DEFAULT';
 
     public const PLUGINS_PRODUCT_ABSTRACT_FORM_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_FORM_EXPANDER';
 
@@ -89,6 +91,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
         $container = $this->addProductConcretePropelQuery($container);
         $container = $this->addStorePropelQuery($container);
         $container = $this->addProductCategoryPropelQuery($container);
+        $container = $this->addPriceProductDefaultPropelQuery($container);
         $container = $this->addUtilEncodingService($container);
 
         return $container;
@@ -184,6 +187,38 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
         $container->set(static::FACADE_CATEGORY, function (Container $container) {
             return new ProductMerchantPortalGuiToCategoryFacadeBridge(
                 $container->getLocator()->category()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantProductFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MERCHANT_PRODUCT, function (Container $container) {
+            return new ProductMerchantPortalGuiToMerchantProductFacadeBridge(
+                $container->getLocator()->merchantProduct()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductCategoryFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT_CATEGORY, function (Container $container) {
+            return new ProductMerchantPortalGuiToProductCategoryFacadeBridge(
+                $container->getLocator()->productCategory()->facade()
             );
         });
 
@@ -293,29 +328,11 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addMerchantProductFacade(Container $container): Container
+    protected function addPriceProductDefaultPropelQuery(Container $container): Container
     {
-        $container->set(static::FACADE_MERCHANT_PRODUCT, function (Container $container) {
-            return new ProductMerchantPortalGuiToMerchantProductFacadeBridge(
-                $container->getLocator()->merchantProduct()->facade()
-            );
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addProductCategoryFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_PRODUCT_CATEGORY, function (Container $container) {
-            return new ProductMerchantPortalGuiToProductCategoryFacadeBridge(
-                $container->getLocator()->productCategory()->facade()
-            );
-        });
+        $container->set(static::PROPEL_QUERY_PRICE_PRODUCT_DEFAULT, $container->factory(function () {
+            return SpyPriceProductDefaultQuery::create();
+        }));
 
         return $container;
     }

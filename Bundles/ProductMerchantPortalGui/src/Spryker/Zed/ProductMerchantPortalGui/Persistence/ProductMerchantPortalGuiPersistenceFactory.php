@@ -8,13 +8,16 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Persistence;
 
 use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery;
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageQuery;
 use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\PriceProductAbstractTableDataMapper;
 use Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\ProductAbstractTableDataMapper;
+use Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\PropelModelPagerMapper;
 use Spryker\Zed\ProductMerchantPortalGui\ProductMerchantPortalGuiDependencyProvider;
 
 /**
@@ -29,6 +32,19 @@ class ProductMerchantPortalGuiPersistenceFactory extends AbstractPersistenceFact
     public function createProductAbstractTableDataMapper(): ProductAbstractTableDataMapper
     {
         return new ProductAbstractTableDataMapper($this->getUtilEncodingService());
+    }
+
+    public function createPriceProductAbstractTableDataMapper(): PriceProductAbstractTableDataMapper
+    {
+        return new PriceProductAbstractTableDataMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\PropelModelPagerMapper
+     */
+    public function createPropelModelPagerMapper(): PropelModelPagerMapper
+    {
+        return new PropelModelPagerMapper();
     }
 
     /**
@@ -79,6 +95,16 @@ class ProductMerchantPortalGuiPersistenceFactory extends AbstractPersistenceFact
     public function getProductCategoryPropelQuery(): SpyProductCategoryQuery
     {
         return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::PROPEL_QUERY_PRODUCT_CATEGORY);
+    }
+
+    /**
+     * @phpstan-return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery>
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery
+     */
+    public function getPriceProductDefaultPropelQuery(): SpyPriceProductDefaultQuery
+    {
+        return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::PROPEL_QUERY_PRICE_PRODUCT_DEFAULT);
     }
 
     /**

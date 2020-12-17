@@ -8,12 +8,17 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Persistence;
 
 use Generated\Shared\Transfer\MerchantProductTableCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductAbstractTableCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductAbstractTableViewCollectionTransfer;
+use Generated\Shared\Transfer\PriceProductAbstractTableViewTransfer;
 use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
+use Orm\Zed\Currency\Persistence\Map\SpyCurrencyTableMap;
 use Orm\Zed\MerchantProduct\Persistence\Map\SpyMerchantProductAbstractTableMap;
 use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery;
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractStoreTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
@@ -64,13 +69,13 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
             $merchantProductTableCriteriaTransfer->requirePageSize()->getPageSize()
         );
 
-        $productAbstractTableDataMapper = $this->getFactory()->createProductAbstractTableDataMapper();
-
-        $paginationTransfer = $productAbstractTableDataMapper->mapPropelModelPagerToPaginationTransfer($propelPager);
-        $productAbstractCollectionTransfer = $productAbstractTableDataMapper->mapProductAbstractTableDataArrayToProductAbstractCollectionTransfer(
-            $propelPager->getResults()->getData(),
-            new ProductAbstractCollectionTransfer()
-        );
+        $paginationTransfer = $this->getFactory()->createPropelModelPagerMapper()->mapPropelModelPagerToPaginationTransfer($propelPager);
+        $productAbstractCollectionTransfer = $this->getFactory()
+            ->createProductAbstractTableDataMapper()
+            ->mapProductAbstractTableDataArrayToProductAbstractCollectionTransfer(
+                $propelPager->getResults()->getData(),
+                new ProductAbstractCollectionTransfer()
+            );
         $productAbstractCollectionTransfer->setPagination($paginationTransfer);
 
         return $productAbstractCollectionTransfer;
@@ -492,5 +497,75 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
             ->endUse();
 
         return $merchantProductAbstractQuery;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductAbstractTableCriteriaTransfer $priceProductAbstractTableCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductAbstractTableViewCollectionTransfer
+     */
+    public function getPriceProductAbstractTableData(
+        PriceProductAbstractTableCriteriaTransfer $priceProductAbstractTableCriteriaTransfer
+    ): PriceProductAbstractTableViewCollectionTransfer {
+        $priceProductDefaultQueryPropelQuery = $this->buildPriceProductAbstractTableBaseQuery($priceProductAbstractTableCriteriaTransfer);
+        $propelPager = $priceProductDefaultQueryPropelQuery->paginate(
+            $priceProductAbstractTableCriteriaTransfer->requirePage()->getPage(),
+            $priceProductAbstractTableCriteriaTransfer->requirePageSize()->getPageSize()
+        );
+        $paginationTransfer = $this->getFactory()->createPropelModelPagerMapper()->mapPropelModelPagerToPaginationTransfer($propelPager);
+
+        $priceProductAbstractTableViewCollectionTransfer = $this->getFactory()
+            ->createPriceProductAbstractTableDataMapper()
+            ->mapPriceProductAbstractTableDataArrayToPriceProductAbstractTableViewCollectionTransfer(
+                $propelPager->getResults()->getData(),
+                new PriceProductAbstractTableViewCollectionTransfer()
+            );
+        $priceProductAbstractTableViewCollectionTransfer->setPagination($paginationTransfer);
+
+        return $priceProductAbstractTableViewCollectionTransfer;
+    }
+
+    /**
+     * @module PriceProduct
+     * @module Store
+     * @module Currency
+     *
+     * @phpstan-return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery>
+     *
+     * @param \Generated\Shared\Transfer\PriceProductAbstractTableCriteriaTransfer $priceProductAbstractTableCriteriaTransfer
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery
+     */
+    protected function buildPriceProductAbstractTableBaseQuery(
+        PriceProductAbstractTableCriteriaTransfer $priceProductAbstractTableCriteriaTransfer
+    ): SpyPriceProductDefaultQuery {
+        $idMerchant = $priceProductAbstractTableCriteriaTransfer->requireIdMerchant()->getIdMerchant();
+        $idProductAbstract = $priceProductAbstractTableCriteriaTransfer->requireIdProductAbstract()->getIdProductAbstract();
+        $priceProductDefaultQueryPropelQuery = $this->getFactory()->getPriceProductDefaultPropelQuery();
+
+        $priceProductDefaultQueryPropelQuery->joinPriceProductStore()
+            ->usePriceProductStoreQuery()
+                ->joinPriceProduct()
+                ->usePriceProductQuery()
+                    ->joinSpyProductAbstract()
+                    ->useSpyProductAbstractQuery()
+                        ->joinSpyMerchantProductAbstract()
+                        ->useSpyMerchantProductAbstractQuery()
+                            ->filterByFkMerchant($idMerchant)
+                        ->endUse()
+                    ->endUse()
+                    ->filterByFkProductAbstract($idProductAbstract)
+                ->endUse()
+                ->joinCurrency()
+                ->joinStore()
+            ->endUse()
+            ->addAsColumn(PriceProductAbstractTableViewTransfer::STORE, SpyStoreTableMap::COL_NAME)
+            ->addAsColumn(PriceProductAbstractTableViewTransfer::CURRENCY, SpyCurrencyTableMap::COL_CODE)
+            ->select([
+                PriceProductAbstractTableViewTransfer::STORE,
+                PriceProductAbstractTableViewTransfer::CURRENCY,
+            ]);
+
+        return $priceProductDefaultQueryPropelQuery;
     }
 }

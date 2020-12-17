@@ -1,3 +1,5 @@
 parameters:
     ignoreErrors:
         - '#Call to an undefined method Generated\\Zed\\Ide\\AutoCompletion#'
+        - '#Call to an undefined method Orm\\Zed\\Category\\Persistence\\SpyCategoryQuery#'
+        - '#Call to an undefined method Orm\\Zed\\CmsBlockProductConnector\\Persistence\\SpyCmsBlockProductConnectorQuery#'

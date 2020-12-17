@@ -8,14 +8,12 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel;
 
 use ArrayObject;
-use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
-use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface;
 
 class ProductAbstractTableDataMapper
@@ -137,28 +135,5 @@ class ProductAbstractTableDataMapper
         $productAbstractTransfer->setImageSets(new ArrayObject([$productImageSetTransfer]));
 
         return $productAbstractTransfer;
-    }
-
-    /**
-     * @phpstan-param \Propel\Runtime\Util\PropelModelPager<mixed> $propelPager
-     *
-     * @param \Propel\Runtime\Util\PropelModelPager $propelPager
-     *
-     * @return \Generated\Shared\Transfer\PaginationTransfer
-     */
-    public function mapPropelModelPagerToPaginationTransfer(
-        PropelModelPager $propelPager
-    ): PaginationTransfer {
-        return (new PaginationTransfer())
-            ->setNbResults($propelPager->getNbResults())
-            ->setPage($propelPager->getPage())
-            ->setMaxPerPage($propelPager->getMaxPerPage())
-            ->setFirstIndex($propelPager->getFirstIndex())
-            ->setFirstIndex($propelPager->getFirstIndex())
-            ->setLastIndex($propelPager->getLastIndex())
-            ->setFirstPage($propelPager->getFirstPage())
-            ->setLastPage($propelPager->getLastPage())
-            ->setNextPage($propelPager->getNextPage())
-            ->setPreviousPage($propelPager->getPreviousPage());
     }
 }
