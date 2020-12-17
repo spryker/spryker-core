@@ -84,7 +84,7 @@ class StoreNameToIdStoreStep implements DataImportStepInterface
             ->findOne();
 
         if ($storeEntity === null) {
-            throw new EntityNotFoundException(sprintf('Store not found: %s', $storeName));
+            throw new EntityNotFoundException(sprintf('Store not found: %s.', $storeName));
         }
 
         static::$idStoreCache[$storeName] = $storeEntity->getIdStore();

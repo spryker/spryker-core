@@ -33,7 +33,7 @@ class CategoryKeyToIdCategoryStep implements DataImportStepInterface
         $categoryKey = $dataSet[CategoryStoreDataSetInterface::COLUMN_CATEGORY_KEY];
 
         if (!$categoryKey) {
-            throw new DataKeyNotFoundInDataSetException('Category key is missing');
+            throw new DataKeyNotFoundInDataSetException('Category key is missing.');
         }
 
         $dataSet[CategoryStoreDataSetInterface::ID_CATEGORY] = $this->getCategoryId($categoryKey);
@@ -57,7 +57,7 @@ class CategoryKeyToIdCategoryStep implements DataImportStepInterface
             ->findOne();
 
         if ($categoryEntity === null) {
-            throw new EntityNotFoundException(sprintf('Category not found: %s', $categoryKey));
+            throw new EntityNotFoundException(sprintf('Category not found: %s.', $categoryKey));
         }
 
         static::$idCategoryCache[$categoryKey] = $categoryEntity->getIdCategory();

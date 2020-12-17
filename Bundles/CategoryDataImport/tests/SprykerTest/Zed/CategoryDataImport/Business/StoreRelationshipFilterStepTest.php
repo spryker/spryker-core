@@ -25,7 +25,7 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSet;
 class StoreRelationshipFilterStepTest extends Unit
 {
     /**
-     * @dataProvider dataProvider
+     * @dataProvider executeWillCorrectlyFilterStoresToWriteDataProvider
      *
      * @param array $dataSet
      * @param array $expInclude
@@ -50,7 +50,7 @@ class StoreRelationshipFilterStepTest extends Unit
     /**
      * @return array
      */
-    public function dataProvider(): array
+    public function executeWillCorrectlyFilterStoresToWriteDataProvider(): array
     {
         return [
             // "" - "" add nothing - remove nothing = nothing

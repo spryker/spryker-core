@@ -14,7 +14,7 @@ class CategoryStorageConstants
 {
     /**
      * Specification:
-     * - Queue name as used for processing category messages
+     * - Queue name as used for processing category messages.
      *
      * @api
      */
@@ -22,7 +22,7 @@ class CategoryStorageConstants
 
     /**
      * Specification:
-     * - Queue name as used for error category messages
+     * - Queue name as used for error category messages.
      *
      * @api
      */
@@ -30,7 +30,7 @@ class CategoryStorageConstants
 
     /**
      * Specification:
-     * - Resource name, this will use for key generating
+     * - Resource name, this will use for key generating.
      *
      * @api
      */
@@ -38,7 +38,7 @@ class CategoryStorageConstants
 
     /**
      * Specification:
-     * - Resource name, this will use for key generating
+     * - Resource name, this will use for key generating.
      *
      * @api
      */
@@ -46,7 +46,7 @@ class CategoryStorageConstants
 
     /**
      * Specification
-     * - This events will be used for category_store publishing
+     * - This events will be used for category_store publishing.
      *
      * @api
      */
@@ -54,7 +54,7 @@ class CategoryStorageConstants
 
     /**
      * Specification
-     * - This events will be used for category_store un-publishing
+     * - This events will be used for category_store un-publishing.
      *
      * @api
      */

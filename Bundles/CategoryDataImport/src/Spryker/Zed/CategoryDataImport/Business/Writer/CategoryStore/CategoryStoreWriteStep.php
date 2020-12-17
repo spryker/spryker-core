@@ -10,8 +10,8 @@ namespace Spryker\Zed\CategoryDataImport\Business\Writer\CategoryStore;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
-use Orm\Zed\CategoryStore\Persistence\SpyCategoryStore;
-use Orm\Zed\CategoryStore\Persistence\SpyCategoryStoreQuery;
+use Orm\Zed\Category\Persistence\SpyCategoryStore;
+use Orm\Zed\Category\Persistence\SpyCategoryStoreQuery;
 use Spryker\Zed\CategoryDataImport\Business\Writer\CategoryStore\DataSet\CategoryStoreDataSetInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
@@ -220,7 +220,7 @@ class CategoryStoreWriteStep extends PublishAwareStep implements DataImportStepI
     }
 
     /**
-     * @param \Orm\Zed\CategoryStore\Persistence\SpyCategoryStore $categoryStoreEntity
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryStore $categoryStoreEntity
      *
      * @return void
      */
