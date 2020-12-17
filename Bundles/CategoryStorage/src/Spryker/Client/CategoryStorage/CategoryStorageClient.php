@@ -43,11 +43,16 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
      *
      * @param int $idCategoryNode
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer
      */
-    public function getCategoryNodeById($idCategoryNode, $localeName)
+    public function getCategoryNodeById($idCategoryNode, $localeName, ?string $storeName = null)
     {
+        if ($storeName === null) {
+            trigger_error('Pass the $storeName parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
+        }
+
         return $this->getFactory()
             ->createCategoryNodeStorage()
             ->getCategoryNodeById($idCategoryNode, $localeName);
@@ -60,11 +65,16 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
      *
      * @param int[] $categoryNodeIds
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
      */
-    public function getCategoryNodeByIds(array $categoryNodeIds, string $localeName): array
+    public function getCategoryNodeByIds(array $categoryNodeIds, string $localeName, ?string $storeName = null): array
     {
+        if ($storeName === null) {
+            trigger_error('Pass the $storeName parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
+        }
+
         return $this->getFactory()
             ->createCategoryNodeStorage()
             ->getCategoryNodeByIds($categoryNodeIds, $localeName);

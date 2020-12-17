@@ -65,6 +65,6 @@ class ModuleBridgeCreateConsole extends Console
 
         $this->getFacade()->createBridge($module, $toModule, $methods);
 
-        return null;
+        return static::CODE_SUCCESS;
     }
 }
