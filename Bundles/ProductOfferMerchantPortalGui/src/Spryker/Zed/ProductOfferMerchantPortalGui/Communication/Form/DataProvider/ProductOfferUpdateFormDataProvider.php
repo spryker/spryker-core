@@ -51,7 +51,7 @@ class ProductOfferUpdateFormDataProvider extends AbstractProductOfferFormDataPro
                 ->addIdMerchant($currentMerchantId)
         );
 
-        if (!$productOfferTransfer || $currentMerchantId !== $productOfferTransfer->getFkMerchant()) {
+        if (!$productOfferTransfer) {
             return null;
         }
 

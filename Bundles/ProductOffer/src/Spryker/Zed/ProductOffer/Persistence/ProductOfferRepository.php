@@ -148,9 +148,11 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
         }
 
         if ($productOfferCriteriaFilter->getIdProductOffer()) {
-            $productOfferCriteriaFilter->requireMerchantIds();
-            $productOfferQuery->filterByIdProductOffer($productOfferCriteriaFilter->getIdProductOffer())
-                ->filterByFkMerchant_In($productOfferCriteriaFilter->getMerchantIds());
+            $productOfferQuery->filterByIdProductOffer($productOfferCriteriaFilter->getIdProductOffer());
+        }
+
+        if ($productOfferCriteriaFilter->getMerchantIds()) {
+            $productOfferQuery->filterByFkMerchant_In($productOfferCriteriaFilter->getMerchantIds());
         }
 
         if ($productOfferCriteriaFilter->getProductOfferIds()) {
