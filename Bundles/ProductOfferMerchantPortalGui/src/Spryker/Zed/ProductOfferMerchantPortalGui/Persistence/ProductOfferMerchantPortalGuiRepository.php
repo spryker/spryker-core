@@ -1031,7 +1031,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         $priceProductStoreQuery
             ->useSpyPriceProductOfferQuery()
                 ->useSpyProductOfferQuery()
-                    ->filterByFkMerchant($productOfferPriceTableCriteriaTransfer->getIdMerhchant())
+                    ->filterByFkMerchant($productOfferPriceTableCriteriaTransfer->getIdMerchant())
                     ->filterByIdProductOffer($productOfferPriceTableCriteriaTransfer->getIdProductOffer())
                 ->endUse()
             ->endUse();
