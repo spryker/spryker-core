@@ -139,8 +139,8 @@ class OauthUserSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
                 ],
                 'users' => function () use ($firewallConfiguration) {
                     return new ChainUserProvider([
-                        $firewallConfiguration['users'](),
                         $this->getFactory()->createOauthUserProvider(),
+                        $firewallConfiguration['users'](),
                     ]);
                 },
             ] + $firewallConfiguration);

@@ -79,20 +79,20 @@ class SecurityOauthUserBusinessTester extends Actor
 
     /**
      * @param string $authenticationStrategy
-     * @param string|null $groupReference
+     * @param string|null $groupName
      *
      * @return \Spryker\Zed\SecurityOauthUser\Business\SecurityOauthUserFacadeInterface
      */
     public function mockSecurityOauthUserFacade(
         string $authenticationStrategy,
-        ?string $groupReference = null
+        ?string $groupName = null
     ): SecurityOauthUserFacadeInterface {
         $this->mockConfigMethod('getAuthenticationStrategy', function () use ($authenticationStrategy) {
             return $authenticationStrategy;
         });
 
-        $mockConfig = $this->mockConfigMethod('getOauthUserGroupReference', function () use ($groupReference) {
-            return $groupReference;
+        $mockConfig = $this->mockConfigMethod('getOauthUserGroupName', function () use ($groupName) {
+            return $groupName;
         });
 
         $securityOauthUserBusinessFactory = (new SecurityOauthUserBusinessFactory())

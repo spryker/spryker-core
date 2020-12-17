@@ -87,7 +87,7 @@ class ResolveOauthUserTest extends Unit
             static::SOME_GROUP
         );
 
-        $this->tester->haveGroup([GroupTransfer::REFERENCE => static::SOME_GROUP]);
+        $this->tester->haveGroup([GroupTransfer::NAME => static::SOME_GROUP]);
 
         $userCriteriaTransfer = (new UserCriteriaTransfer())
             ->setEmail(static::FAKE_EMAIL);
