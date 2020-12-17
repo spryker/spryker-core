@@ -18,6 +18,8 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Currency\Persistence\Map\SpyCurrencyTableMap;
 use Orm\Zed\MerchantProduct\Persistence\Map\SpyMerchantProductAbstractTableMap;
 use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery;
+use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
+use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractStoreTableMap;
@@ -37,6 +39,9 @@ use Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\ProductAbstractTable
  */
 class ProductMerchantPortalGuiRepository extends AbstractRepository implements ProductMerchantPortalGuiRepositoryInterface
 {
+    protected const SUFFIX_PRICE_TYPE_NET = '_net';
+    protected const SUFFIX_PRICE_TYPE_GROSS = '_gross';
+
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_SKU
      */
@@ -554,10 +559,13 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
                             ->filterByFkMerchant($idMerchant)
                         ->endUse()
                     ->endUse()
+                    ->innerJoinPriceType()
                     ->filterByFkProductAbstract($idProductAbstract)
                 ->endUse()
                 ->joinCurrency()
                 ->joinStore()
+                ->groupBy(SpyStoreTableMap::COL_NAME)
+                ->groupBy(SpyCurrencyTableMap::COL_CODE)
             ->endUse()
             ->addAsColumn(PriceProductAbstractTableViewTransfer::STORE, SpyStoreTableMap::COL_NAME)
             ->addAsColumn(PriceProductAbstractTableViewTransfer::CURRENCY, SpyCurrencyTableMap::COL_CODE)
@@ -565,6 +573,34 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
                 PriceProductAbstractTableViewTransfer::STORE,
                 PriceProductAbstractTableViewTransfer::CURRENCY,
             ]);
+
+        $priceTypeValues = $this->getFactory()->getPriceProductFacade()->getPriceTypeValues();
+
+        foreach ($priceTypeValues as $priceTypeTransfer) {
+            if (!$priceTypeTransfer->getIdPriceType()) {
+                continue;
+            }
+
+            $priceTypeName = mb_strtolower($priceTypeTransfer->getName());
+            $grossColumnName = $priceTypeName . static::SUFFIX_PRICE_TYPE_GROSS;
+            $grossClause = sprintf(
+                'MAX(CASE WHEN %s = %s THEN %s END)',
+                SpyPriceProductTableMap::COL_FK_PRICE_TYPE,
+                $priceTypeTransfer->getIdPriceType(),
+                SpyPriceProductStoreTableMap::COL_GROSS_PRICE
+            );
+
+            $netColumnName = $priceTypeName . static::SUFFIX_PRICE_TYPE_NET;
+            $netClause = sprintf(
+                'MAX(CASE WHEN %s = %s THEN %s END)',
+                SpyPriceProductTableMap::COL_FK_PRICE_TYPE,
+                $priceTypeTransfer->getIdPriceType(),
+                SpyPriceProductStoreTableMap::COL_NET_PRICE
+            );
+
+            $priceProductDefaultQueryPropelQuery->addAsColumn($grossColumnName, $grossClause)
+                ->addAsColumn($netColumnName, $netClause);
+        }
 
         return $priceProductDefaultQueryPropelQuery;
     }

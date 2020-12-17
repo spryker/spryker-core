@@ -19,6 +19,7 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortal
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantProductFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeBridge;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductCategoryFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToStoreFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToTranslatorFacadeBridge;
@@ -36,6 +37,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     public const FACADE_STORE = 'FACADE_STORE';
     public const FACADE_MERCHANT_PRODUCT = 'FACADE_MERCHANT_PRODUCT';
     public const FACADE_PRODUCT_CATEGORY = 'FACADE_PRODUCT_CATEGORY';
+    public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
@@ -93,6 +95,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
         $container = $this->addProductCategoryPropelQuery($container);
         $container = $this->addPriceProductDefaultPropelQuery($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addPriceProductFacade($container);
 
         return $container;
     }
@@ -219,6 +222,22 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
         $container->set(static::FACADE_PRODUCT_CATEGORY, function (Container $container) {
             return new ProductMerchantPortalGuiToProductCategoryFacadeBridge(
                 $container->getLocator()->productCategory()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceProductFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRICE_PRODUCT, function (Container $container) {
+            return new ProductMerchantPortalGuiToPriceProductFacadeBridge(
+                $container->getLocator()->priceProduct()->facade()
             );
         });
 
