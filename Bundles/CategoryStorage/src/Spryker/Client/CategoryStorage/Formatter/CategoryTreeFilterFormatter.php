@@ -30,42 +30,30 @@ class CategoryTreeFilterFormatter implements CategoryTreeFilterFormatterInterfac
     protected const KEY_KEY = 'key';
 
     /**
-     * @var \Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToLocaleClientInterface
-     */
-    protected $localeClient;
-
-    /**
      * @var \Spryker\Client\CategoryStorage\Storage\CategoryTreeStorageReaderInterface
      */
     protected $categoryTreeStorageReader;
 
     /**
-     * @param \Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToLocaleClientInterface $localeClient
      * @param \Spryker\Client\CategoryStorage\Storage\CategoryTreeStorageReaderInterface $categoryTreeStorageReader
      */
-    public function __construct(
-        CategoryStorageToLocaleClientInterface $localeClient,
-        CategoryTreeStorageReaderInterface $categoryTreeStorageReader
-    ) {
-        $this->localeClient = $localeClient;
+    public function __construct(CategoryTreeStorageReaderInterface $categoryTreeStorageReader)
+    {
         $this->categoryTreeStorageReader = $categoryTreeStorageReader;
     }
 
     /**
      * @param array $docCountAggregation
-     * @param string|null $localeName
-     * @param string|null $storeName
+     * @param string $localeName
+     * @param string $storeName
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]
+     * @return \Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]|\ArrayObject
      */
-    public function formatCategoryTreeFilter(array $docCountAggregation, ?string $localeName = null, ?string $storeName = null): ArrayObject
+    public function formatCategoryTreeFilter(array $docCountAggregation, string $localeName, string $storeName): ArrayObject
     {
         $categoryDocCounts = $this->getMappedCategoryDocCountsByNodeId($docCountAggregation);
 
-        $categoryNodeStorageTransfers = $this->categoryTreeStorageReader->getCategories(
-            $this->localeClient->getCurrentLocale()
-        );
-
+        $categoryNodeStorageTransfers = $this->categoryTreeStorageReader->getCategories($localeName, $storeName);
         $categoryNodeSearchResultTransfers = $this->mapCategoryNodeStoragesToCategoryNodeSearchResults(
             $categoryNodeStorageTransfers,
             new ArrayObject()

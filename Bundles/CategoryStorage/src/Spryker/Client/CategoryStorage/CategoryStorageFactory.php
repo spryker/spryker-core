@@ -24,10 +24,7 @@ class CategoryStorageFactory extends AbstractFactory
      */
     public function createCategoryTreeFilterFormatter(): CategoryTreeFilterFormatterInterface
     {
-        return new CategoryTreeFilterFormatter(
-            $this->getLocaleClient(),
-            $this->createCategoryTreeStorageReader()
-        );
+        return new CategoryTreeFilterFormatter($this->createCategoryTreeStorageReader());
     }
 
     /**
