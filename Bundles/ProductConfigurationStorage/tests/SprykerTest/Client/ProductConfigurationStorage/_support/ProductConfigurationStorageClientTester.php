@@ -35,7 +35,7 @@ class ProductConfigurationStorageClientTester extends Actor
 
     /**
      * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_PROTOCOL
-     * @deprecated use ProductConfigurationStorageClientTester::REDIS_SCHEME instead.
+     * @deprecated Use {@link \SprykerTest\Client\ProductConfigurationStorage\ProductConfigurationStorageClientTester::REDIS_SCHEME} instead.
      */
     protected const REDIS_PROTOCOL = 'STORAGE_REDIS:STORAGE_REDIS_PROTOCOL';
 
