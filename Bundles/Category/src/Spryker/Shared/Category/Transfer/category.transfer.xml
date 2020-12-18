@@ -72,6 +72,7 @@
         <property name="storeName" type="string"/>
         <property name="localeName" type="string"/>
         <property name="withChildren" type="bool"/>
+        <property name="isMain" type="bool"/>
         <property name="withChildrenRecursively" type="bool"/>
     </transfer>
 
@@ -116,6 +117,10 @@
     </transfer>
 
     <transfer name="LocalizedAttributes">
+    </transfer>
+
+    <transfer name="CategoryNodeUrlFilter">
+        <property name="categoryNodeIds" type="int[]" singular="idCategoryNode"/>
     </transfer>
 
 </transfers>

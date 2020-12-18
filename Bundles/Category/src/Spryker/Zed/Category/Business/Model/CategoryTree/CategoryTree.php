@@ -76,7 +76,7 @@ class CategoryTree implements CategoryTreeInterface
                 continue;
             }
 
-            $categoryTransfer = $this->categoryFacade->read($childNodeEntity->getFkCategory());
+            $categoryTransfer = $this->categoryFacade->findCategoryById($childNodeEntity->getFkCategory());
 
             if ($childNodeEntity->getIsMain()) {
                 $this->moveMainCategoryNodeSubTree($categoryTransfer, $idDestinationCategoryNode);

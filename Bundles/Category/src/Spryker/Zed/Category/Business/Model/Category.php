@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Category\Business\Exception\MissingCategoryException;
 use Spryker\Zed\Category\Business\Model\Category\CategoryInterface;
 use Spryker\Zed\Category\Business\Model\CategoryAttribute\CategoryAttributeInterface;
 use Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParentsInterface;
@@ -20,7 +19,6 @@ use Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrlInterface;
 use Spryker\Zed\Category\Business\PluginExecutor\CategoryPluginExecutorInterface;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class Category
@@ -53,17 +51,12 @@ class Category
     protected $categoryUrl;
 
     /**
-     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
-     */
-    protected $queryContainer;
-
-    /**
-     * @var array|\Spryker\Zed\Category\Dependency\Plugin\CategoryRelationDeletePluginInterface
+     * @var \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationDeletePluginInterface[]
      */
     protected $deletePlugins;
 
     /**
-     * @var \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationUpdatePluginInterface[]
+     * @var \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationUpdatePluginInterface[]
      */
     protected $updatePlugins;
 
@@ -78,21 +71,14 @@ class Category
     protected $categoryPluginExecutor;
 
     /**
-     * @var \Spryker\Zed\Category\Business\Model\CategoryReaderInterface
-     */
-    protected $categoryReader;
-
-    /**
      * @param \Spryker\Zed\Category\Business\Model\Category\CategoryInterface $category
      * @param \Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNodeInterface $categoryNode
      * @param \Spryker\Zed\Category\Business\Model\CategoryAttribute\CategoryAttributeInterface $categoryAttribute
      * @param \Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrlInterface $categoryUrl
      * @param \Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParentsInterface $categoryExtraParents
-     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationDeletePluginInterface[] $deletePlugins
-     * @param \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationUpdatePluginInterface[] $updatePlugins
+     * @param \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationDeletePluginInterface[] $deletePlugins
+     * @param \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationUpdatePluginInterface[] $updatePlugins
      * @param \Spryker\Zed\Category\Business\PluginExecutor\CategoryPluginExecutorInterface $categoryPluginExecutor
-     * @param \Spryker\Zed\Category\Business\Model\CategoryReaderInterface $categoryReader
      * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface|null $eventFacade
      */
     public function __construct(
@@ -101,11 +87,9 @@ class Category
         CategoryAttributeInterface $categoryAttribute,
         CategoryUrlInterface $categoryUrl,
         CategoryExtraParentsInterface $categoryExtraParents,
-        CategoryQueryContainerInterface $queryContainer,
         array $deletePlugins,
         array $updatePlugins,
         CategoryPluginExecutorInterface $categoryPluginExecutor,
-        CategoryReaderInterface $categoryReader,
         ?CategoryToEventFacadeInterface $eventFacade = null
     ) {
         $this->category = $category;
@@ -113,31 +97,10 @@ class Category
         $this->categoryAttribute = $categoryAttribute;
         $this->categoryUrl = $categoryUrl;
         $this->categoryExtraParents = $categoryExtraParents;
-        $this->queryContainer = $queryContainer;
         $this->deletePlugins = $deletePlugins;
         $this->updatePlugins = $updatePlugins;
         $this->categoryPluginExecutor = $categoryPluginExecutor;
         $this->eventFacade = $eventFacade;
-        $this->categoryReader = $categoryReader;
-    }
-
-    /**
-     * @deprecated Use {@link \Spryker\Zed\Category\Business\Model\CategoryReaderInterface::findCategoryById()} instead.
-     *
-     * @param int $idCategory
-     *
-     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
-    public function read($idCategory)
-    {
-        $categoryTransfer = $this->categoryReader->findCategoryById($idCategory);
-        if (!$categoryTransfer) {
-            throw new MissingCategoryException(sprintf('Could not find category for id "%s"', $idCategory));
-        }
-
-        return $categoryTransfer;
     }
 
     /**
@@ -145,7 +108,7 @@ class Category
      *
      * @return void
      */
-    public function create(CategoryTransfer $categoryTransfer)
+    public function create(CategoryTransfer $categoryTransfer): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($categoryTransfer): void {
             $this->executeCreateTransaction($categoryTransfer);
@@ -157,7 +120,7 @@ class Category
      *
      * @return void
      */
-    public function update(CategoryTransfer $categoryTransfer)
+    public function update(CategoryTransfer $categoryTransfer): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($categoryTransfer): void {
             $this->executeUpdateTransaction($categoryTransfer);
@@ -169,7 +132,7 @@ class Category
      *
      * @return void
      */
-    public function delete($idCategory)
+    public function delete($idCategory): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($idCategory) {
             $this->executeDeleteTransaction($idCategory);

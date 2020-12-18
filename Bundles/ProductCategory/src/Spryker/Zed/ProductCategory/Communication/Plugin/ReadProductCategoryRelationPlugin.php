@@ -13,6 +13,8 @@ use Spryker\Zed\Category\Dependency\Plugin\CategoryRelationReadPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\ProductCategory\Communication\Plugin\ProductCategoryRelationReadPlugin} instead.
+ *
  * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductCategory\Communication\ProductCategoryCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductCategory\ProductCategoryConfig getConfig()

@@ -9,6 +9,9 @@ namespace Spryker\Zed\CategoryExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\TabsViewTransfer;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\CategoryGuiExtension\Dependency\Plugin\CategoryFormTabExpanderPluginInterface} instead.
+ */
 interface CategoryFormTabExpanderPluginInterface
 {
     /**

@@ -9,9 +9,11 @@ namespace Spryker\Zed\Category\Persistence;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
@@ -33,6 +35,11 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     public const NODE_PATH_ZERO_DEPTH = 0;
     public const IS_NOT_ROOT_NODE = 0;
     protected const COL_CATEGORY_NAME = 'name';
+
+    /**
+     * @uses \Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap::COL_LOCALE_NAME
+     */
+    protected const COL_LOCALE_NAME = 'spy_locale.locale_name';
 
     protected const DEPTH_WITH_CHILDREN_RELATIONS = 1;
 
@@ -292,6 +299,31 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer $categoryNodeFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     */
+    public function getCategoryNodeUrls(CategoryNodeUrlFilterTransfer $categoryNodeFilterTransfer): array
+    {
+        $urlQuery = $this->getFactory()
+            ->createUrlQuery()
+            ->joinSpyLocale()
+            ->withColumn(static::COL_LOCALE_NAME);
+
+        if ($categoryNodeFilterTransfer->getCategoryNodeIds()) {
+            $urlQuery->filterByFkResourceCategorynode_In(array_unique($categoryNodeFilterTransfer->getCategoryNodeIds()));
+        }
+
+        $urlTransfers = [];
+
+        foreach ($urlQuery->find() as $urlEntity) {
+            $urlTransfers[] = (new UrlTransfer())->fromArray($urlEntity->toArray(), true);
+        }
+
+        return $urlTransfers;
+    }
+
+    /**
      * @param \Orm\Zed\Category\Persistence\SpyCategoryQuery $categoryQuery
      * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
      *
@@ -301,6 +333,13 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     {
         if ($categoryCriteriaTransfer->getIdCategory()) {
             $categoryQuery->filterByIdCategory($categoryCriteriaTransfer->getIdCategory());
+        }
+
+        if ($categoryCriteriaTransfer->getIsMain() !== null) {
+            $categoryQuery
+                ->useNodeQuery('node', Criteria::LEFT_JOIN)
+                    ->filterByIsMain($categoryCriteriaTransfer->getIsMain())
+                ->endUse();
         }
 
         if ($categoryCriteriaTransfer->getLocaleName()) {

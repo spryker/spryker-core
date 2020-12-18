@@ -11,10 +11,10 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException;
+use Spryker\Zed\Category\Business\Generator\TransferGeneratorInterface;
 use Spryker\Zed\Category\Business\Model\CategoryToucherInterface;
 use Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTreeInterface;
 use Spryker\Zed\Category\Business\Publisher\CategoryNodePublisherInterface;
-use Spryker\Zed\Category\Business\TransferGeneratorInterface;
 use Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
@@ -31,7 +31,7 @@ class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterfac
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\Category\Business\TransferGeneratorInterface
+     * @var \Spryker\Zed\Category\Business\Generator\TransferGeneratorInterface
      */
     protected $transferGenerator;
 
@@ -53,7 +53,7 @@ class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterfac
     /**
      * @param \Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface $closureTableWriter
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Category\Business\TransferGeneratorInterface $transferGenerator
+     * @param \Spryker\Zed\Category\Business\Generator\TransferGeneratorInterface $transferGenerator
      * @param \Spryker\Zed\Category\Business\Model\CategoryToucherInterface $categoryToucher
      * @param \Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTreeInterface $categoryTree
      * @param \Spryker\Zed\Category\Business\Publisher\CategoryNodePublisherInterface $categoryNodePublisher
@@ -72,44 +72,6 @@ class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterfac
         $this->categoryToucher = $categoryToucher;
         $this->categoryTree = $categoryTree;
         $this->categoryNodePublisher = $categoryNodePublisher;
-    }
-
-    /**
-     * @deprecated Use {@link \Spryker\Zed\Category\Business\Model\CategoryReaderInterface::findCategoryById()} instead.
-     *
-     * @param int $idCategory
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
-    public function read($idCategory, CategoryTransfer $categoryTransfer)
-    {
-        $categoryNodeEntity = $this
-            ->queryContainer
-            ->queryMainNodesByCategoryId($idCategory)
-            ->findOne();
-
-        if (!$categoryNodeEntity) {
-            throw new MissingCategoryNodeException(sprintf(
-                'Could not find category node for category with ID "%s"',
-                $idCategory
-            ));
-        }
-
-        $categoryNodeTransfer = new NodeTransfer();
-        $categoryNodeTransfer->fromArray($categoryNodeEntity->toArray(), true);
-        $categoryTransfer->setCategoryNode($categoryNodeTransfer);
-
-        $parentCategoryNodeEntity = $categoryNodeEntity->getParentCategoryNode();
-        $parentCategoryNodeTransfer = new NodeTransfer();
-        if ($parentCategoryNodeEntity !== null) {
-            $parentCategoryNodeTransfer->fromArray($parentCategoryNodeEntity->toArray(), true);
-        }
-        $categoryTransfer->setParentCategoryNode($parentCategoryNodeTransfer);
-
-        return $categoryTransfer;
     }
 
     /**
@@ -318,20 +280,5 @@ class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterfac
         $this->closureTableWriter->delete($categoryNodeEntity->getIdCategoryNode());
 
         $categoryNodeEntity->delete();
-    }
-
-    /**
-     * @deprecated You can directly use ::categoryTree to manipulate with subTree
-     *
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $sourceNodeEntity
-     *
-     * @return void
-     */
-    protected function moveSubTreeToParent(SpyCategoryNode $sourceNodeEntity)
-    {
-        $this->categoryTree->moveSubTree(
-            $sourceNodeEntity->getIdCategoryNode(),
-            $sourceNodeEntity->getFkParentCategoryNode()
-        );
     }
 }

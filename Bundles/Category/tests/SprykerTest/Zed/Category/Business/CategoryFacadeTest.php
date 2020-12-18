@@ -30,7 +30,7 @@ use Spryker\Zed\Category\Business\CategoryFacadeInterface;
  */
 class CategoryFacadeTest extends Unit
 {
-    public const CATEGORY_NODE_ID_ROOT = 1;
+    public const CATEGORY_ID_ROOT = 1;
 
     /**
      * @var \SprykerTest\Zed\Category\CategoryBusinessTester
@@ -40,17 +40,17 @@ class CategoryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testReadWithRootCategoryReturnsCategoryTransfer(): void
+    public function testFindCategoryByIdWithRootCategoryReturnsCategoryTransfer(): void
     {
-        $this->assertInstanceOf(CategoryTransfer::class, $this->getFacade()->read($this->getRootCategoryId()));
+        $this->assertInstanceOf(CategoryTransfer::class, $this->getFacade()->findCategoryById($this->getRootCategoryId()));
     }
 
     /**
      * @return void
      */
-    public function testReadWithNonRootCategoryReturnsCategoryTransfer(): void
+    public function testFindCategoryByIdWithNonRootCategoryReturnsCategoryTransfer(): void
     {
-        $this->assertInstanceOf(CategoryTransfer::class, $this->getFacade()->read($this->getNonRootCategoryId()));
+        $this->assertInstanceOf(CategoryTransfer::class, $this->getFacade()->findCategoryById($this->getNonRootCategoryId()));
     }
 
     /**
@@ -58,7 +58,10 @@ class CategoryFacadeTest extends Unit
      */
     public function testDeleteByIdCategory(): void
     {
-        $rootCategoryNodeTransfer = $this->getFacade()->getNodeById(static::CATEGORY_NODE_ID_ROOT);
+        $categoryTransfer = $this->getFacade()
+            ->findCategory((new CategoryCriteriaTransfer())->setIdCategory(static::CATEGORY_ID_ROOT));
+
+        $rootCategoryNodeTransfer = $categoryTransfer->getCategoryNode();
 
         //create initial category (inside root)
         $categoryTransfer1 = $this->tester->haveCategory([

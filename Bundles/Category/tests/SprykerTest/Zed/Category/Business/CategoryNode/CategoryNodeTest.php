@@ -50,6 +50,11 @@ class CategoryNodeTest extends Unit
     public const CATEGORY_NODE_ID_TABLETS = 8;
 
     /**
+     * @var \SprykerTest\Zed\Category\CategoryBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     public function testUpdatingNodeTouchesEntireTreeBranch(): void
@@ -69,8 +74,8 @@ class CategoryNodeTest extends Unit
         $publisherMock = $this->createCategoryNodePublisherMock(['triggerBulkCategoryNodePublishEventForUpdate']);
         $categoryNodeModel = $this->createCategoryNodeModel($toucherMock, $publisherMock);
 
-        $categoryTransfer = $this->createCategoryTransfer(static::CATEGORY_ID_COMPUTER);
-        $categoryTransfer = $categoryNodeModel->read(static::CATEGORY_ID_COMPUTER, $categoryTransfer);
+        $this->createCategoryTransfer(static::CATEGORY_ID_COMPUTER);
+        $categoryTransfer = $this->tester->getFacade()->findCategoryById(static::CATEGORY_ID_COMPUTER);
 
         $categoryNodeModel->update($categoryTransfer);
     }
@@ -111,8 +116,8 @@ class CategoryNodeTest extends Unit
 
         $categoryNodeModel = $this->createCategoryNodeModel($toucherMock, $publisherMock);
 
-        $categoryTransfer = $this->createCategoryTransfer(static::CATEGORY_ID_TABLETS);
-        $categoryTransfer = $categoryNodeModel->read(static::CATEGORY_ID_TABLETS, $categoryTransfer);
+        $this->createCategoryTransfer(static::CATEGORY_ID_TABLETS);
+        $categoryTransfer = $this->tester->getFacade()->findCategoryById(static::CATEGORY_ID_TABLETS);
 
         $categoryTransfer->getParentCategoryNode()->setIdCategoryNode(static::CATEGORY_NODE_ID_CAMERAS_CAMCORDERS);
         $categoryNodeModel->update($categoryTransfer);

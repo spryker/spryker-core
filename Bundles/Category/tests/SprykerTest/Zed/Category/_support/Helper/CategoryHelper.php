@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Category\Helper;
 use Codeception\Module;
 use Codeception\TestInterface;
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
+use Generated\Shared\Transfer\CategoryTemplateTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategory;
@@ -17,13 +18,17 @@ use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Silex\Application;
 use Spryker\Service\Container\Container;
 use Spryker\Zed\Category\Business\CategoryFacade;
+use Spryker\Zed\Category\CategoryConfig;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Propel\Communication\Plugin\Application\PropelApplicationPlugin;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
+use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 use SprykerTest\Zed\Category\PageObject\CategoryCreatePage;
 
 class CategoryHelper extends Module
 {
+    use LocatorHelperTrait;
+
     /**
      * @return void
      */
@@ -132,9 +137,14 @@ class CategoryHelper extends Module
      */
     public function createCategory(string $categoryKey): CategoryTransfer
     {
-        $categoryTransfer = new CategoryTransfer();
-        $categoryTransfer->setCategoryKey($categoryKey);
-        $categoryTransfer->setIsActive(false);
+        $categoryFacade = new CategoryFacade();
+        $categoryTemplateTransfer = $this->findCategoryTemplateByName(CategoryConfig::CATEGORY_TEMPLATE_DEFAULT);
+
+        $categoryTransfer = (new CategoryTransfer())
+            ->setCategoryKey($categoryKey)
+            ->setFkCategoryTemplate($categoryTemplateTransfer->getIdCategoryTemplate())
+            ->setIsActive(false);
+
         $this->addLocalizedAttributesToCategoryTransfer($categoryTransfer);
 
         $categoryNodeTransfer = new NodeTransfer();
@@ -146,10 +156,29 @@ class CategoryHelper extends Module
         $parentCategoryNodeTransfer->setIdCategoryNode(1);
         $categoryTransfer->setParentCategoryNode($parentCategoryNodeTransfer);
 
-        $categoryFacade = new CategoryFacade();
         $categoryFacade->create($categoryTransfer);
 
         return $categoryTransfer;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return \Generated\Shared\Transfer\CategoryTemplateTransfer|null
+     */
+    protected function findCategoryTemplateByName(string $name): ?CategoryTemplateTransfer
+    {
+        $spyCategoryTemplate = $this->getLocator()
+            ->category()
+            ->queryContainer()
+            ->queryCategoryTemplateByName($name)
+            ->findOne();
+
+        if (!$spyCategoryTemplate) {
+            return null;
+        }
+
+        return (new CategoryTemplateTransfer())->fromArray($spyCategoryTemplate->toArray(), true);
     }
 
     /**
