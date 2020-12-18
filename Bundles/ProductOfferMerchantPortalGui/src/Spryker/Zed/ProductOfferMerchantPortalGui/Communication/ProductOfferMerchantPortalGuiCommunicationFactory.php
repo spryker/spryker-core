@@ -156,6 +156,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
             $this->getMerchantUserFacade(),
             $this->getRepository(),
             $this->getMoneyFacade(),
+            $this->getPriceProductFacade(),
             $idProductOffer
         );
     }

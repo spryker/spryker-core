@@ -10,17 +10,19 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider;
 use Generated\Shared\Transfer\GuiTableDataRequestTransfer;
 use Generated\Shared\Transfer\GuiTableDataResponseTransfer;
 use Generated\Shared\Transfer\GuiTableRowDataResponseTransfer;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTableCriteriaTransfer;
 use Spryker\Shared\GuiTable\DataProvider\AbstractGuiTableDataProvider;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMoneyFacadeInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface;
 
 class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
 {
     /**
-     * @var int
+     * @var int|null
      */
     protected $idProductOffer;
 
@@ -40,21 +42,29 @@ class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
     protected $moneyFacade;
 
     /**
+     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface
+     */
+    protected $priceProductFacade;
+
+    /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface $productOfferMerchantPortalGuiRepository
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMoneyFacadeInterface $moneyFacade
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade
      * @param int|null $idProductOffer
      */
     public function __construct(
         ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade,
         ProductOfferMerchantPortalGuiRepositoryInterface $productOfferMerchantPortalGuiRepository,
         ProductOfferMerchantPortalGuiToMoneyFacadeInterface $moneyFacade,
+        ProductOfferMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade,
         ?int $idProductOffer = null
     ) {
         $this->merchantUserFacade = $merchantUserFacade;
         $this->idProductOffer = $idProductOffer;
         $this->productOfferMerchantPortalGuiRepository = $productOfferMerchantPortalGuiRepository;
         $this->moneyFacade = $moneyFacade;
+        $this->priceProductFacade = $priceProductFacade;
     }
 
     /**
@@ -83,6 +93,8 @@ class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
             return new GuiTableDataResponseTransfer();
         }
 
+        $criteriaTransfer = $this->replaceSortingFields($criteriaTransfer);
+
         $priceProductOfferTableViewCollectionTransfer = $this->productOfferMerchantPortalGuiRepository
             ->getProductOfferPriceTableData($criteriaTransfer);
 
@@ -104,5 +116,39 @@ class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
             ->setPage($paginationTransfer->getPage())
             ->setPageSize($paginationTransfer->getMaxPerPage())
             ->setTotal($paginationTransfer->getNbResults());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductOfferTableCriteriaTransfer $criteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductOfferTableCriteriaTransfer
+     */
+    protected function replaceSortingFields(PriceProductOfferTableCriteriaTransfer $criteriaTransfer): PriceProductOfferTableCriteriaTransfer
+    {
+        $orderByField = $criteriaTransfer->getOrderBy();
+
+        if (!$orderByField) {
+            return $criteriaTransfer;
+        }
+
+        if (strpos($orderByField, '[') === false) {
+            return $criteriaTransfer;
+        }
+
+        foreach ($this->priceProductFacade->getPriceTypeValues() as $priceTypeTransfer) {
+            $priceTypeName = mb_strtolower((string)$priceTypeTransfer->getName());
+            $orderByField = str_replace(']', '', $orderByField);
+            $orderByField = explode('[', (string)$orderByField);
+
+            if ($orderByField[2] === MoneyValueTransfer::NET_AMOUNT) {
+                return $criteriaTransfer->setOrderBy($orderByField[0] . '_net');
+            }
+
+            if ($orderByField[2] === MoneyValueTransfer::GROSS_AMOUNT) {
+                return $criteriaTransfer->setOrderBy($orderByField[0] . '_gross');
+            }
+        }
+
+        return $criteriaTransfer;
     }
 }
