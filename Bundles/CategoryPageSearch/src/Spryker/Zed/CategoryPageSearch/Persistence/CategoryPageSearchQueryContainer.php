@@ -27,6 +27,8 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
      *
      * @api
      *
+     * @deprecated Will be removed with next major release.
+     *
      * @param array $localeNames
      *
      * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
@@ -73,6 +75,8 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
      *
      * @api
      *
+     * @deprecated Will be removed with next major release.
+     *
      * @module Url
      * @module Category
      *
@@ -107,6 +111,8 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
 
     /**
      * {@inheritDoc}
+     *
+     * @deprecated Will be removed with next major release.
      *
      * @api
      *
