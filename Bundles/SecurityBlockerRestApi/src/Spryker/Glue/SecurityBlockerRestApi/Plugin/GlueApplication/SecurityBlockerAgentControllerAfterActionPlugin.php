@@ -19,7 +19,7 @@ class SecurityBlockerAgentControllerAfterActionPlugin extends AbstractPlugin imp
 {
     /**
      * {@inheritDoc}
-     * - Check if the action is a failed login action and logs the attempt for the agent.
+     * - Checks if the action is a failed login action and logs the attempt for the agent.
      *
      * @api
      *

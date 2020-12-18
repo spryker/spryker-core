@@ -7,10 +7,10 @@
 
 namespace Spryker\Glue\SecurityBlockerRestApi\Processor\Customer\Validator;
 
-use Generated\Shared\Transfer\RestAccessTokensAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\SecurityCheckAuthContextTransfer;
+use Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\SecurityBlockerRestApi\Dependency\Client\SecurityBlockerRestApiToSecurityBlockerClientInterface;
 use Spryker\Glue\SecurityBlockerRestApi\SecurityBlockerRestApiConfig;
@@ -60,7 +60,7 @@ class SecurityBlockerValidator implements SecurityBlockerValidatorInterface
             return null;
         }
 
-        return $this->createRestErrorCollectionTransfer($restAccessTokensAttributesTransfer, $restRequest);
+        return $this->createRestErrorCollectionTransfer($securityCheckAuthResponseTransfer);
     }
 
     /**
@@ -75,21 +75,32 @@ class SecurityBlockerValidator implements SecurityBlockerValidatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestAccessTokensAttributesTransfer $restAccessTokensAttributesTransfer
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer $securityCheckAuthResponseTransfer
      *
      * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer
      */
     protected function createRestErrorCollectionTransfer(
-        RestAccessTokensAttributesTransfer $restAccessTokensAttributesTransfer,
-        RestRequestInterface $restRequest
+        SecurityCheckAuthResponseTransfer $securityCheckAuthResponseTransfer
     ): RestErrorCollectionTransfer {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setStatus(Response::HTTP_TOO_MANY_REQUESTS)
             ->setCode(SecurityBlockerRestApiConfig::ERROR_RESPONSE_CODE_ACCOUNT_BLOCKED)
-            ->setDetail(sprintf(SecurityBlockerRestApiConfig::ERROR_RESPONSE_DETAIL_ACCOUNT_BLOCKED, '5'));
+            ->setDetail(sprintf(SecurityBlockerRestApiConfig::ERROR_RESPONSE_DETAIL_ACCOUNT_BLOCKED, $this->convertSecondsToReadableTime($securityCheckAuthResponseTransfer)));
 
         return (new RestErrorCollectionTransfer())
             ->addRestError($restErrorMessageTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer $securityCheckAuthResponseTransfer
+     *
+     * @return string
+     */
+    protected function convertSecondsToReadableTime(
+        SecurityCheckAuthResponseTransfer $securityCheckAuthResponseTransfer
+    ): string {
+        $seconds = $securityCheckAuthResponseTransfer->getBlockedFor();
+
+        return (string)ceil(($seconds % 3600) / 60);
     }
 }

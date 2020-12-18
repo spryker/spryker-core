@@ -75,7 +75,7 @@ class SecurityBlockerAgentStorage implements SecurityBlockerAgentStorageInterfac
      */
     protected function isAuthenticationRequest(RestRequestInterface $restRequest): bool
     {
-        return in_array($restRequest->getResource()->getType(), [static::RESOURCE_AGENT_ACCESS_TOKENS])
+        return $restRequest->getResource()->getType() === static::RESOURCE_AGENT_ACCESS_TOKENS
             && $restRequest->getHttpRequest()->getMethod() === 'POST';
     }
 
