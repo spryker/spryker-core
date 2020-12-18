@@ -14,10 +14,13 @@ use Spryker\Zed\PriceProductOffer\Business\Constraint\TransferConstraint;
 use Spryker\Zed\PriceProductOffer\Business\Constraint\ValidUniqueStoreCurrencyCollectionConstraint;
 use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 use Symfony\Component\Validator\Constraints\All as AllConstraint;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class PriceProductOfferConstraintProvider implements PriceProductOfferConstraintProviderInterface
 {
     protected const VALUE_IS_INVALID = 'This value is not valid.';
+
+    protected const VALUE_CANNOT_BE_EMPTY = 'This field is missing.';
 
     /**
      * @var \Symfony\Component\Validator\Constraint[]
@@ -56,6 +59,8 @@ class PriceProductOfferConstraintProvider implements PriceProductOfferConstraint
         return new TransferConstraint([
             MoneyValueTransfer::NET_AMOUNT => $this->getNetAmountConstraint(),
             MoneyValueTransfer::GROSS_AMOUNT => $this->getGrossAmountConstraint(),
+            MoneyValueTransfer::FK_CURRENCY => $this->getCurrencyConstraint(),
+            MoneyValueTransfer::FK_STORE => $this->getStoreConstraint(),
         ]);
     }
 
@@ -78,6 +83,26 @@ class PriceProductOfferConstraintProvider implements PriceProductOfferConstraint
         return new GreaterThanOrEqualOrEmptyConstraint([
             'value' => 0,
             'message' => static::VALUE_IS_INVALID,
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    protected function getCurrencyConstraint(): SymfonyConstraint
+    {
+        return new NotBlank([
+            'message' => static::VALUE_CANNOT_BE_EMPTY,
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    protected function getStoreConstraint(): SymfonyConstraint
+    {
+        return new NotBlank([
+            'message' => static::VALUE_CANNOT_BE_EMPTY,
         ]);
     }
 }

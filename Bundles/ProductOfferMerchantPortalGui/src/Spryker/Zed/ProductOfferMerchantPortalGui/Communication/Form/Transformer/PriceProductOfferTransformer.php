@@ -22,7 +22,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 class PriceProductOfferTransformer implements DataTransformerInterface
 {
     /**
-     * @var int
+     * @var int|null
      */
     protected $idProductOffer;
 
@@ -140,7 +140,10 @@ class PriceProductOfferTransformer implements DataTransformerInterface
         PriceProductDimensionTransfer $priceProductDimensionTransfer,
         ArrayObject $priceProductTransfers
     ): ArrayObject {
-        $currencyTransfer = $this->currencyFacade->getByIdCurrency($newPriceProductOffer[PriceProductOfferTableViewTransfer::CURRENCY]);
+        $currency = $newPriceProductOffer[PriceProductOfferTableViewTransfer::CURRENCY];
+        $currencyTransfer = $currency ?
+            $this->currencyFacade->getByIdCurrency($currency)
+            : null;
 
         foreach ($this->priceProductFacade->getPriceTypeValues() as $priceTypeTransfer) {
             $storeTransfer = (new StoreTransfer())

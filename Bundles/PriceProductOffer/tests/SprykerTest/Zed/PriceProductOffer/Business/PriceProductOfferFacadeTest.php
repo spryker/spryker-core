@@ -286,6 +286,60 @@ class PriceProductOfferFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testValidateProductOfferPricesFailValidCurrencyValue()
+    {
+        // Arrange
+        $priceProductTransfer = $this->tester->havePriceProduct([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $priceProductTransfer->getMoneyValue()->setFkCurrency(null);
+
+        // Act
+        $collectionValidationResponseTransfer = $this->tester
+            ->getFacade()
+            ->validateProductOfferPrices(new ArrayObject([$priceProductTransfer]));
+
+        // Assert
+        $this->assertFalse($collectionValidationResponseTransfer->getIsSuccess());
+        $validationError = $collectionValidationResponseTransfer->getValidationErrors()->offsetGet(0);
+        $this->assertSame(
+            'This field is missing.',
+            $validationError->getMessage()
+        );
+        $this->assertSame(
+            '[0][moneyValue][fkCurrency]',
+            $validationError->getPropertyPath()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateProductOfferPricesFailValidStoreValue()
+    {
+        // Arrange
+        $priceProductTransfer = $this->tester->havePriceProduct([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $priceProductTransfer->getMoneyValue()->setFkStore(null);
+
+        // Act
+        $collectionValidationResponseTransfer = $this->tester
+            ->getFacade()
+            ->validateProductOfferPrices(new ArrayObject([$priceProductTransfer]));
+
+        // Assert
+        $this->assertFalse($collectionValidationResponseTransfer->getIsSuccess());
+        $validationError = $collectionValidationResponseTransfer->getValidationErrors()->offsetGet(0);
+        $this->assertSame(
+            'This field is missing.',
+            $validationError->getMessage()
+        );
+        $this->assertSame(
+            '[0][moneyValue][fkStore]',
+            $validationError->getPropertyPath()
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testCountPriceProductOfferEntities()
     {
         // Arrange
