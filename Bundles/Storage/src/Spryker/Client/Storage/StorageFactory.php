@@ -168,7 +168,7 @@ class StorageFactory extends AbstractFactory
         }
 
         $config = [
-            'protocol' => Config::get(StorageConstants::STORAGE_REDIS_PROTOCOL),
+            'scheme' => Config::get(StorageConstants::STORAGE_REDIS_SCHEME, false) ?: Config::get(StorageConstants::STORAGE_REDIS_PROTOCOL),
             'port' => Config::get(StorageConstants::STORAGE_REDIS_PORT),
             'host' => Config::get(StorageConstants::STORAGE_REDIS_HOST),
             'database' => Config::get(StorageConstants::STORAGE_REDIS_DATABASE, static::DEFAULT_REDIS_DATABASE),

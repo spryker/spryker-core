@@ -20,6 +20,11 @@ interface StorageConstants
     public const STORAGE_REDIS_PROTOCOL = 'YVES_STORAGE_REDIS_PROTOCOL';
 
     /**
+     * @deprecated Use {@link \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_SCHEME} instead.
+     */
+    public const STORAGE_REDIS_SCHEME = 'STORAGE_REDIS:STORAGE_REDIS_SCHEME';
+
+    /**
      * @deprecated Use {@link \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_PASSWORD} instead.
      */
     public const STORAGE_REDIS_PASSWORD = 'YVES_STORAGE_REDIS_PASSWORD';
