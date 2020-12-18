@@ -101,6 +101,6 @@ class SecurityBlockerValidator implements SecurityBlockerValidatorInterface
     ): string {
         $seconds = $securityCheckAuthResponseTransfer->getBlockedFor();
 
-        return (string)ceil(($seconds % 3600) / 60);
+        return (string)ceil($seconds / 60);
     }
 }
