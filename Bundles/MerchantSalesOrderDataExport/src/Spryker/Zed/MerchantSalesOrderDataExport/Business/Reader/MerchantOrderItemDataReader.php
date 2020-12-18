@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\DataExportBatchTransfer;
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Spryker\Zed\MerchantSalesOrderDataExport\Persistence\MerchantSalesOrderDataExportRepositoryInterface;
 
-class MerchantOrderItemReader implements ReaderInterface
+class MerchantOrderItemDataReader implements MerchantSalesOrderDataReaderInterface
 {
     /**
      * @var \Spryker\Zed\MerchantSalesOrderDataExport\Persistence\MerchantSalesOrderDataExportRepositoryInterface

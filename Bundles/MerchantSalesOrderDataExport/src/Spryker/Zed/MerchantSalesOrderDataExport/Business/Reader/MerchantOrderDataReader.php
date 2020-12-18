@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\DataExportBatchTransfer;
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Spryker\Zed\MerchantSalesOrderDataExport\Persistence\MerchantSalesOrderDataExportRepositoryInterface;
 
-class MerchantOrderExpenseReader implements ReaderInterface
+class MerchantOrderDataReader implements MerchantSalesOrderDataReaderInterface
 {
     /**
      * @var \Spryker\Zed\MerchantSalesOrderDataExport\Persistence\MerchantSalesOrderDataExportRepositoryInterface
@@ -35,6 +35,6 @@ class MerchantOrderExpenseReader implements ReaderInterface
      */
     public function readBatch(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): DataExportBatchTransfer
     {
-        return $this->merchantSalesOrderDataExportRepository->getMerchantOrderExpenseData($dataExportConfigurationTransfer, $offset, $limit);
+        return $this->merchantSalesOrderDataExportRepository->getMerchantOrderData($dataExportConfigurationTransfer, $offset, $limit);
     }
 }

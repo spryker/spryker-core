@@ -7,6 +7,11 @@
 
 namespace Spryker\Zed\MerchantSalesOrderDataExport\Persistence\Propel\Mapper;
 
+use Orm\Zed\MerchantSalesOrder\Persistence\Map\SpyMerchantSalesOrderTableMap;
+use Orm\Zed\Sales\Persistence\Map\SpySalesExpenseTableMap;
+use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
+use Orm\Zed\Sales\Persistence\Map\SpySalesShipmentTableMap;
+
 class MerchantSalesExpenseMapper
 {
     /**
@@ -15,23 +20,23 @@ class MerchantSalesExpenseMapper
      * @var string[]
      */
     protected $fieldMapping = [
-        'merchant_order_reference' => 'SpyMerchantSalesOrder.MerchantSalesOrderReference',
-        'marketplace_order_reference' => 'SpySalesOrder.OrderReference',
-        'shipment_id' => 'SpySalesShipment.IdSalesShipment',
-        'canceled_amount' => 'SpySalesExpense.CanceledAmount',
-        'discount_amount_aggregation' => 'SpySalesExpense.DiscountAmountAggregation',
-        'gross_price' => 'SpySalesExpense.GrossPrice',
-        'name' => 'SpySalesExpense.Name',
-        'net_price' => 'SpySalesExpense.NetPrice',
-        'price' => 'SpySalesExpense.Price',
-        'price_to_pay_aggregation' => 'SpySalesExpense.PriceToPayAggregation',
-        'refundable_amount' => 'SpySalesExpense.RefundableAmount',
-        'tax_amount' => 'SpySalesExpense.TaxAmount',
-        'tax_amount_after_cancellation' => 'SpySalesExpense.TaxAmountAfterCancellation',
-        'tax_rate' => 'SpySalesExpense.TaxRate',
-        'type' => 'SpySalesExpense.Type',
-        'expense_created_at' => 'SpySalesExpense.CreatedAt',
-        'expense_updated_at' => 'SpySalesExpense.UpdatedAt',
+        'merchant_order_reference' => SpyMerchantSalesOrderTableMap::COL_MERCHANT_SALES_ORDER_REFERENCE,
+        'marketplace_order_reference' => SpySalesOrderTableMap::COL_ORDER_REFERENCE,
+        'shipment_id' => SpySalesShipmentTableMap::COL_ID_SALES_SHIPMENT,
+        'canceled_amount' => SpySalesExpenseTableMap::COL_CANCELED_AMOUNT,
+        'discount_amount_aggregation' => SpySalesExpenseTableMap::COL_DISCOUNT_AMOUNT_AGGREGATION,
+        'gross_price' => SpySalesExpenseTableMap::COL_GROSS_PRICE,
+        'name' => SpySalesExpenseTableMap::COL_NAME,
+        'net_price' => SpySalesExpenseTableMap::COL_NET_PRICE,
+        'price' => SpySalesExpenseTableMap::COL_PRICE,
+        'price_to_pay_aggregation' => SpySalesExpenseTableMap::COL_PRICE_TO_PAY_AGGREGATION,
+        'refundable_amount' => SpySalesExpenseTableMap::COL_REFUNDABLE_AMOUNT,
+        'tax_amount' => SpySalesExpenseTableMap::COL_TAX_AMOUNT,
+        'tax_amount_after_cancellation' => SpySalesExpenseTableMap::COL_TAX_AMOUNT_AFTER_CANCELLATION,
+        'tax_rate' => SpySalesExpenseTableMap::COL_TAX_RATE,
+        'type' => SpySalesExpenseTableMap::COL_TYPE,
+        'expense_created_at' => SpySalesExpenseTableMap::COL_CREATED_AT,
+        'expense_updated_at' => SpySalesExpenseTableMap::COL_UPDATED_AT,
     ];
 
     /**

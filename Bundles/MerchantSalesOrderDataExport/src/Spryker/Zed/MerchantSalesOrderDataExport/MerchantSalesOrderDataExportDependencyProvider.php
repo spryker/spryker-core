@@ -14,9 +14,12 @@ use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantSalesOrderDataExport\Dependency\Service\MerchantSalesOrderDataExportToDataExportServiceBridge;
-use Spryker\Zed\SalesDataExport\Dependency\Service\SalesDataExportToUtilEncodingServiceBridge;
-use Spryker\Zed\SalesDataExport\Dependency\Service\SalesDataExportToUtilEncodingServiceInterface;
+use Spryker\Zed\MerchantSalesOrderDataExport\Dependency\Service\MerchantSalesOrderDataExportToUtilEncodingServiceBridge;
+use Spryker\Zed\MerchantSalesOrderDataExport\Dependency\Service\MerchantSalesOrderDataExportToUtilEncodingServiceInterface;
 
+/**
+ * @method \Spryker\Zed\MerchantSalesOrderDataExport\MerchantSalesOrderDataExportConfig getConfig()
+ */
 class MerchantSalesOrderDataExportDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_DATA_EXPORT = 'SERVICE_DATA_EXPORT';
@@ -119,8 +122,8 @@ class MerchantSalesOrderDataExportDependencyProvider extends AbstractBundleDepen
      */
     protected function addUtilEncodingService(Container $container): Container
     {
-        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container): SalesDataExportToUtilEncodingServiceInterface {
-            return new SalesDataExportToUtilEncodingServiceBridge(
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container): MerchantSalesOrderDataExportToUtilEncodingServiceInterface {
+            return new MerchantSalesOrderDataExportToUtilEncodingServiceBridge(
                 $container->getLocator()->utilEncoding()->service()
             );
         });

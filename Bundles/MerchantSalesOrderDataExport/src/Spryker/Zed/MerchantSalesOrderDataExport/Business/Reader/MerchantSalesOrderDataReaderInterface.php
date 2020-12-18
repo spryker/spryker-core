@@ -10,7 +10,7 @@ namespace Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader;
 use Generated\Shared\Transfer\DataExportBatchTransfer;
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 
-interface ReaderInterface
+interface MerchantSalesOrderDataReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer

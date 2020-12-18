@@ -21,6 +21,7 @@ use Spryker\Zed\MerchantSalesOrderDataExport\Persistence\Propel\Mapper\MerchantS
 
 /**
  * @method \Spryker\Zed\MerchantSalesOrderDataExport\Persistence\MerchantSalesOrderDataExportRepositoryInterface getRepository()
+ * @method \Spryker\Zed\MerchantSalesOrderDataExport\MerchantSalesOrderDataExportConfig getConfig()
  */
 class MerchantSalesOrderDataExportPersistenceFactory extends AbstractPersistenceFactory
 {
