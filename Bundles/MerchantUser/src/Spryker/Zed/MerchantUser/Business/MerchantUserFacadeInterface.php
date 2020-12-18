@@ -127,8 +127,8 @@ interface MerchantUserFacadeInterface
 
     /**
      * Specification:
-     * - Requires `OauthUserRestrictionRequestTransfer.user.username` to be provided.
      * - Checks if the Oauth user is restricted.
+     * - Requires `OauthUserRestrictionRequestTransfer.user.username` to be provided.
      * - When the user has a relation to the merchant he is considered as restricted.
      *
      * @api

@@ -104,7 +104,7 @@ class OauthUserProvider extends AbstractPlugin implements UserProviderInterface
         );
 
         if (!$userTransfer) {
-            return null;
+            throw new UnsupportedUserException();
         }
 
         $oauthUserRestrictionResponseTransfer = $this->getFacade()->isOauthUserRestricted(

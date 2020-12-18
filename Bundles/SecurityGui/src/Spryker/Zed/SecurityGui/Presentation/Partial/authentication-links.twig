@@ -10,7 +10,9 @@
          {% else %}
              <div class="form-group">
                  <a href="{{ authenticationLink.href }}" target="{{ authenticationLink.target | escape('html_attr') }}">
-                     {{ authenticationLink.text | escape | trans }}
+                     <button class="btn btn-success btn-block btn" type="button">
+                         {{ authenticationLink.text | escape | trans }}
+                     </button>
                  </a>
              </div>
          {% endif %}

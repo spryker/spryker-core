@@ -34,7 +34,7 @@ class MerchantUserAuthenticator implements MerchantUserAuthenticatorInterface
      */
     public function authenticateMerchantUser(MerchantUserTransfer $merchantUserTransfer): void
     {
-        $userTransfer = $merchantUserTransfer->requireUser()->getUserOrFail();
+        $userTransfer = $merchantUserTransfer->getUserOrFail();
         $this->userFacade->setCurrentUser($userTransfer);
         $this->updateUserLastLoginDate($userTransfer);
     }
