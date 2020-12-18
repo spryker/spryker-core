@@ -16,9 +16,11 @@ use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCategoryFacadeBridge;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCurrencyFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantProductFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeBridge;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductCategoryFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToStoreFacadeBridge;
@@ -38,6 +40,8 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     public const FACADE_MERCHANT_PRODUCT = 'FACADE_MERCHANT_PRODUCT';
     public const FACADE_PRODUCT_CATEGORY = 'FACADE_PRODUCT_CATEGORY';
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
+    public const FACADE_MONEY = 'FACADE_MONEY';
+    public const FACADE_CURRENCY = 'FACADE_CURRENCY';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
@@ -77,6 +81,9 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
         $container = $this->addMerchantProductFacade($container);
         $container = $this->addProductCategoryFacade($container);
         $container = $this->addProductAbstractFormExpanderPlugins($container);
+        $container = $this->addMoneyFacade($container);
+        $container = $this->addPriceProductFacade($container);
+        $container = $this->addCurrencyFacade($container);
 
         return $container;
     }
@@ -239,6 +246,34 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
             return new ProductMerchantPortalGuiToPriceProductFacadeBridge(
                 $container->getLocator()->priceProduct()->facade()
             );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMoneyFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MONEY, function (Container $container) {
+            return new ProductMerchantPortalGuiToMoneyFacadeBridge($container->getLocator()->money()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCurrencyFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_CURRENCY, function (Container $container) {
+            return new ProductMerchantPortalGuiToCurrencyFacadeBridge($container->getLocator()->currency()->facade());
         });
 
         return $container;

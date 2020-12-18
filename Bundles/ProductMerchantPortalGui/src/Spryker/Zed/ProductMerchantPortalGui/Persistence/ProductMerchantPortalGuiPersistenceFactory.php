@@ -35,9 +35,12 @@ class ProductMerchantPortalGuiPersistenceFactory extends AbstractPersistenceFact
         return new ProductAbstractTableDataMapper($this->getUtilEncodingService());
     }
 
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\PriceProductAbstractTableDataMapper
+     */
     public function createPriceProductAbstractTableDataMapper(): PriceProductAbstractTableDataMapper
     {
-        return new PriceProductAbstractTableDataMapper();
+        return new PriceProductAbstractTableDataMapper($this->getPriceProductFacade());
     }
 
     /**

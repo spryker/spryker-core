@@ -11,10 +11,10 @@ use Generated\Shared\Transfer\GuiTableDataRequestTransfer;
 use Generated\Shared\Transfer\GuiTableDataResponseTransfer;
 use Generated\Shared\Transfer\GuiTableRowDataResponseTransfer;
 use Generated\Shared\Transfer\PriceProductAbstractTableCriteriaTransfer;
-use Generated\Shared\Transfer\PriceProductAbstractTableViewTransfer;
 use Spryker\Shared\GuiTable\DataProvider\AbstractGuiTableDataProvider;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface;
 
 class PriceProductAbstractTableDataProvider extends AbstractGuiTableDataProvider
@@ -35,18 +35,26 @@ class PriceProductAbstractTableDataProvider extends AbstractGuiTableDataProvider
     protected $merchantUserFacade;
 
     /**
+     * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeInterface
+     */
+    protected $moneyFacade;
+
+    /**
      * @param int $idProductAbstract
      * @param \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface $productMerchantPortalGuiRepository
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeInterface $moneyFacade
      */
     public function __construct(
         int $idProductAbstract,
         ProductMerchantPortalGuiRepositoryInterface $productMerchantPortalGuiRepository,
-        ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
+        ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade,
+        ProductMerchantPortalGuiToMoneyFacadeInterface $moneyFacade
     ) {
         $this->idProductAbstract = $idProductAbstract;
         $this->productMerchantPortalGuiRepository = $productMerchantPortalGuiRepository;
         $this->merchantUserFacade = $merchantUserFacade;
+        $this->moneyFacade = $moneyFacade;
     }
 
     /**
@@ -73,10 +81,11 @@ class PriceProductAbstractTableDataProvider extends AbstractGuiTableDataProvider
         $guiTableDataResponseTransfer = new GuiTableDataResponseTransfer();
 
         foreach ($priceProductAbstractTableViewCollectionTransfer->getPriceProductAbstractTableViews() as $priceProductAbstractTableViewTransfer) {
-            $responseData = [
-                PriceProductAbstractTableViewTransfer::STORE => $priceProductAbstractTableViewTransfer->getStore(),
-                PriceProductAbstractTableViewTransfer::CURRENCY => $priceProductAbstractTableViewTransfer->getCurrency(),
-            ];
+            $responseData = $priceProductAbstractTableViewTransfer->toArray();
+
+            foreach ($priceProductAbstractTableViewTransfer->getPrices() as $priceType => $priceValue) {
+                $responseData[$priceType] = $this->moneyFacade->convertIntegerToDecimal((int)$priceValue);
+            }
 
             $guiTableDataResponseTransfer->addRow((new GuiTableRowDataResponseTransfer())->setResponseData($responseData));
         }

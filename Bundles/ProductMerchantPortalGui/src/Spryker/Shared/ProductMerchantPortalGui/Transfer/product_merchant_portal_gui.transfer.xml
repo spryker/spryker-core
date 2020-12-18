@@ -146,6 +146,29 @@
     <transfer name="PriceProductAbstractTableView">
         <property name="store" type="string"/>
         <property name="currency" type="string"/>
+        <property name="prices" type="float[]" singular="price" associative="true"/>
+    </transfer>
+
+    <transfer name="PriceProduct">
+        <property name="moneyValue" type="MoneyValue"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="grossAmount" type="int"/>
+        <property name="netAmount" type="int"/>
+    </transfer>
+
+    <transfer name="PriceType">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="StoreWithCurrency">
+        <property name="currencies" type="Currency[]" singular="currency"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="idCurrency" type="int"/>
+        <property name="code" type="string"/>
     </transfer>
 
 </transfers>

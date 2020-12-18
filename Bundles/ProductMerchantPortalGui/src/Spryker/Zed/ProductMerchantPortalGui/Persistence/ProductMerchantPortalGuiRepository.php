@@ -512,8 +512,13 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
     public function getPriceProductAbstractTableData(
         PriceProductAbstractTableCriteriaTransfer $priceProductAbstractTableCriteriaTransfer
     ): PriceProductAbstractTableViewCollectionTransfer {
-        $priceProductDefaultQueryPropelQuery = $this->buildPriceProductAbstractTableBaseQuery($priceProductAbstractTableCriteriaTransfer);
-        $propelPager = $priceProductDefaultQueryPropelQuery->paginate(
+        $priceProductDefaultQuery = $this->buildPriceProductAbstractTableBaseQuery($priceProductAbstractTableCriteriaTransfer);
+        $priceProductDefaultQuery = $this->addPriceProductAbstractTableFilters(
+            $priceProductDefaultQuery,
+            $priceProductAbstractTableCriteriaTransfer
+        );
+
+        $propelPager = $priceProductDefaultQuery->paginate(
             $priceProductAbstractTableCriteriaTransfer->requirePage()->getPage(),
             $priceProductAbstractTableCriteriaTransfer->requirePageSize()->getPageSize()
         );
@@ -534,6 +539,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
      * @module PriceProduct
      * @module Store
      * @module Currency
+     * @module MerchantProduct
      *
      * @phpstan-return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery>
      *
@@ -546,9 +552,9 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
     ): SpyPriceProductDefaultQuery {
         $idMerchant = $priceProductAbstractTableCriteriaTransfer->requireIdMerchant()->getIdMerchant();
         $idProductAbstract = $priceProductAbstractTableCriteriaTransfer->requireIdProductAbstract()->getIdProductAbstract();
-        $priceProductDefaultQueryPropelQuery = $this->getFactory()->getPriceProductDefaultPropelQuery();
+        $priceProductDefaultQuery = $this->getFactory()->getPriceProductDefaultPropelQuery();
 
-        $priceProductDefaultQueryPropelQuery->joinPriceProductStore()
+        $priceProductDefaultQuery->joinPriceProductStore()
             ->usePriceProductStoreQuery()
                 ->joinPriceProduct()
                 ->usePriceProductQuery()
@@ -569,10 +575,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
             ->endUse()
             ->addAsColumn(PriceProductAbstractTableViewTransfer::STORE, SpyStoreTableMap::COL_NAME)
             ->addAsColumn(PriceProductAbstractTableViewTransfer::CURRENCY, SpyCurrencyTableMap::COL_CODE)
-            ->select([
-                PriceProductAbstractTableViewTransfer::STORE,
-                PriceProductAbstractTableViewTransfer::CURRENCY,
-            ]);
+            ->select([SpyStoreTableMap::COL_NAME, SpyCurrencyTableMap::COL_CODE]);
 
         $priceTypeValues = $this->getFactory()->getPriceProductFacade()->getPriceTypeValues();
 
@@ -598,10 +601,51 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
                 SpyPriceProductStoreTableMap::COL_NET_PRICE
             );
 
-            $priceProductDefaultQueryPropelQuery->addAsColumn($grossColumnName, $grossClause)
+            $priceProductDefaultQuery->addAsColumn($grossColumnName, $grossClause)
                 ->addAsColumn($netColumnName, $netClause);
         }
 
-        return $priceProductDefaultQueryPropelQuery;
+        if ($priceProductAbstractTableCriteriaTransfer->getOrderBy()) {
+            $priceProductDefaultQuery->orderBy(
+                $priceProductAbstractTableCriteriaTransfer->getOrderBy(),
+                $priceProductAbstractTableCriteriaTransfer->getOrderDirection()
+            );
+        }
+
+        return $priceProductDefaultQuery;
+    }
+
+    /**
+     * @phpstan-param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery> $priceProductDefaultQuery
+     *
+     * @phpstan-return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery>
+     *
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery $priceProductDefaultQuery
+     * @param \Generated\Shared\Transfer\PriceProductAbstractTableCriteriaTransfer $priceProductAbstractTableCriteriaTransfer
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery
+     */
+    protected function addPriceProductAbstractTableFilters(
+        SpyPriceProductDefaultQuery $priceProductDefaultQuery,
+        PriceProductAbstractTableCriteriaTransfer $priceProductAbstractTableCriteriaTransfer
+    ): SpyPriceProductDefaultQuery {
+        if ($priceProductAbstractTableCriteriaTransfer->getFilterInStores()) {
+            $priceProductDefaultQuery->joinPriceProductStore()
+                ->usePriceProductStoreQuery()
+                    ->filterByFkStore_In($priceProductAbstractTableCriteriaTransfer->getFilterInStores())
+                ->endUse();
+        }
+
+        if ($priceProductAbstractTableCriteriaTransfer->getFilterInCurrencies()) {
+            $priceProductDefaultQuery->joinPriceProductStore()
+                ->usePriceProductStoreQuery()
+                    ->joinCurrency()
+                    ->useCurrencyQuery()
+                        ->filterByIdCurrency_In($priceProductAbstractTableCriteriaTransfer->getFilterInCurrencies())
+                    ->endUse()
+                ->endUse();
+        }
+
+        return $priceProductDefaultQuery;
     }
 }

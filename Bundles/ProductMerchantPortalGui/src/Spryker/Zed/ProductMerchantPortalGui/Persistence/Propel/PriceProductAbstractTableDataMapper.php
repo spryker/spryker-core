@@ -7,12 +7,37 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel;
 
-use ArrayObject;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductAbstractTableViewCollectionTransfer;
 use Generated\Shared\Transfer\PriceProductAbstractTableViewTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface;
 
 class PriceProductAbstractTableDataMapper
 {
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepository::SUFFIX_PRICE_TYPE_NET
+     */
+    protected const SUFFIX_PRICE_TYPE_NET = '_net';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepository::SUFFIX_PRICE_TYPE_GROSS
+     */
+    protected const SUFFIX_PRICE_TYPE_GROSS = '_gross';
+
+    /**
+     * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface
+     */
+    protected $priceProductFacade;
+
+    /**
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade
+     */
+    public function __construct(ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade)
+    {
+        $this->priceProductFacade = $priceProductFacade;
+    }
+
     /**
      * @param mixed[] $priceProductAbstractTableDataArray
      * @param \Generated\Shared\Transfer\PriceProductAbstractTableViewCollectionTransfer $priceProductAbstractTableViewCollectionTransfer
@@ -23,19 +48,78 @@ class PriceProductAbstractTableDataMapper
         array $priceProductAbstractTableDataArray,
         PriceProductAbstractTableViewCollectionTransfer $priceProductAbstractTableViewCollectionTransfer
     ): PriceProductAbstractTableViewCollectionTransfer {
-        $priceProductAbstractTableViewTransfers = [];
+        $priceTypeTransfers = $this->priceProductFacade->getPriceTypeValues();
 
         foreach ($priceProductAbstractTableDataArray as $priceProductAbstractTableRowDataArray) {
             $priceProductAbstractTableViewTransfer = (new PriceProductAbstractTableViewTransfer())
-                ->fromArray($priceProductAbstractTableRowDataArray, true);
+                ->fromArray($priceProductAbstractTableRowDataArray, true)
+                ->setPrices($this->preparePrices($priceProductAbstractTableRowDataArray, $priceTypeTransfers));
 
-            $priceProductAbstractTableViewTransfers[] = $priceProductAbstractTableViewTransfer;
+            $priceProductAbstractTableViewCollectionTransfer->addPriceProductAbstractTableView($priceProductAbstractTableViewTransfer);
         }
 
-        $priceProductAbstractTableViewCollectionTransfer->setPriceProductAbstractTableViews(
-            new ArrayObject($priceProductAbstractTableViewTransfers)
-        );
-
         return $priceProductAbstractTableViewCollectionTransfer;
+    }
+
+    /**
+     * @phpstan-param array<mixed> $priceProductAbstractTableRowDataArray
+     * @phpstan-param array<\Generated\Shared\Transfer\PriceTypeTransfer> $priceTypeTransfers
+     *
+     * @phpstan-return array<mixed>
+     *
+     * @param array $priceProductAbstractTableRowDataArray
+     * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypeTransfers
+     *
+     * @return array
+     */
+    protected function preparePrices(array $priceProductAbstractTableRowDataArray, array $priceTypeTransfers): array
+    {
+        $prices = [];
+
+        foreach ($priceTypeTransfers as $priceTypeTransfer) {
+            $priceTypeName = mb_strtolower($priceTypeTransfer->getName());
+            $keyNetPrice = $priceTypeName . static::SUFFIX_PRICE_TYPE_NET;
+            $keyGrossPrice = $priceTypeName . static::SUFFIX_PRICE_TYPE_GROSS;
+
+            if (isset($priceProductAbstractTableRowDataArray[$keyGrossPrice])) {
+                $prices[$this->createGrossKey($priceTypeName)] = $priceProductAbstractTableRowDataArray[$keyGrossPrice];
+            }
+
+            if (isset($priceProductAbstractTableRowDataArray[$keyNetPrice])) {
+                $prices[$this->createNetKey($priceTypeName)] = $priceProductAbstractTableRowDataArray[$keyNetPrice];
+            }
+        }
+
+        return $prices;
+    }
+
+    /**
+     * @param string $pryceTypeName
+     *
+     * @return string
+     */
+    protected function createGrossKey(string $pryceTypeName): string
+    {
+        return sprintf(
+            '%s[%s][%s]',
+            $pryceTypeName,
+            PriceProductTransfer::MONEY_VALUE,
+            MoneyValueTransfer::GROSS_AMOUNT
+        );
+    }
+
+    /**
+     * @param string $pryceTypeName
+     *
+     * @return string
+     */
+    protected function createNetKey(string $pryceTypeName): string
+    {
+        return sprintf(
+            '%s[%s][%s]',
+            $pryceTypeName,
+            PriceProductTransfer::MONEY_VALUE,
+            MoneyValueTransfer::NET_AMOUNT
+        );
     }
 }

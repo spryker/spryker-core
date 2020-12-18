@@ -60,9 +60,15 @@
 {#{% endif %}#}
 {# block images #}
 
-<web-mp-product-list
+{#<web-mp-product-list#}
+        {#cloak#}
+        {#table-id="web-mp-product-list"#}
+        {#table-config='{{ guiTableConfiguration(priceProductAbstractTableConfiguration) }}'>#}
+    {#<span title>{{ 'Products' | trans }}</span>#}
+{#</web-mp-product-list>#}
+
+<web-mp-offer-prices-table
         cloak
         table-id="web-mp-product-list"
-        table-config='{{ guiTableConfiguration(priceProductAbstractTableConfiguration) }}'>
-    <span title>{{ 'Products' | trans }}</span>
-</web-mp-product-list>
+        config='{{ guiTableConfiguration(priceProductAbstractTableConfiguration) }}'>
+</web-mp-offer-prices-table>

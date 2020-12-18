@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
 use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
-use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToStoreFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToTranslatorFacadeInterface;
 
 class ProductAbstractGuiTableConfigurationProvider implements ProductAbstractGuiTableConfigurationProviderInterface
@@ -46,30 +45,30 @@ class ProductAbstractGuiTableConfigurationProvider implements ProductAbstractGui
     protected $translatorFacade;
 
     /**
-     * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToStoreFacadeInterface
-     */
-    protected $storeFacade;
-
-    /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\CategoryFilterOptionsProviderInterface
      */
     protected $categoryFilterOptionsProvider;
 
     /**
+     * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\StoreFilterOptionsProviderInterface
+     */
+    protected $storeFilterOptionsProvider;
+
+    /**
      * @param \Spryker\Shared\GuiTable\GuiTableFactoryInterface $guiTableFactory
      * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\CategoryFilterOptionsProviderInterface $categoryFilterOptionsProvider
-     * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\StoreFilterOptionsProviderInterface $storeFilterOptionsProvider
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
      */
     public function __construct(
         GuiTableFactoryInterface $guiTableFactory,
         CategoryFilterOptionsProviderInterface $categoryFilterOptionsProvider,
-        ProductMerchantPortalGuiToStoreFacadeInterface $storeFacade,
+        StoreFilterOptionsProviderInterface $storeFilterOptionsProvider,
         ProductMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
     ) {
         $this->guiTableFactory = $guiTableFactory;
         $this->categoryFilterOptionsProvider = $categoryFilterOptionsProvider;
-        $this->storeFacade = $storeFacade;
+        $this->storeFilterOptionsProvider = $storeFilterOptionsProvider;
         $this->translatorFacade = $translatorFacade;
     }
 
@@ -130,29 +129,9 @@ class ProductAbstractGuiTableConfigurationProvider implements ProductAbstractGui
             '1' => static::COLUMN_DATA_VISIBILITY_ONLINE,
             '0' => static::COLUMN_DATA_VISIBILITY_OFFLINE,
         ])
-        ->addFilterSelect('inStores', 'Stores', true, $this->getStoreOptions());
+        ->addFilterSelect('inStores', 'Stores', true, $this->storeFilterOptionsProvider->getStoreOptions());
 
         return $guiTableConfigurationBuilder;
-    }
-
-    /**
-     * @phpstan-return array<int, string>
-     *
-     * @return string[]
-     */
-    protected function getStoreOptions(): array
-    {
-        $storeTransfers = $this->storeFacade->getAllStores();
-
-        $storeOptions = [];
-        foreach ($storeTransfers as $storeTransfer) {
-            if ($storeTransfer->getName() === null) {
-                continue;
-            }
-            $storeOptions[(int)$storeTransfer->getIdStore()] = $storeTransfer->getName();
-        }
-
-        return $storeOptions;
     }
 
     /**
