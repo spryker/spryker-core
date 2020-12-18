@@ -35,11 +35,6 @@ class CategoryTreeController extends AbstractController
             ->queryCategoryByIdAndLocale($idRootNode, $localeTransfer->getIdLocale())
             ->findOne();
 
-        $categoryTree = $this
-            ->getFactory()
-            ->getCategoryFacade()
-            ->getTreeNodeChildrenByIdCategoryAndLocale($idRootNode, $localeTransfer);
-
         $categoriesWithSpecificFilters = $this
             ->getFactory()
             ->getProductCategoryFilterFacade()
@@ -47,7 +42,7 @@ class CategoryTreeController extends AbstractController
 
         return $this->viewResponse([
             'mainCategory' => $mainCategory,
-            'categoryTree' => $categoryTree, //@deprecated Use parameter `childNodes` instead.
+            'categoryTree' => [], //@deprecated Use parameter `childNodes` instead.
             'categoriesWithSpecificFilters' => $categoriesWithSpecificFilters,
             'nodeCollection' => $this->findCategoryNodeTree($idRootNode),
         ]);
