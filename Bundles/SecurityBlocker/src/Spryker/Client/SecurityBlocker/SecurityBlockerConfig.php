@@ -93,9 +93,12 @@ class SecurityBlockerConfig extends AbstractBundleConfig
     {
         return [
             static::ENTITY_TYPE_DEFAULT => [
-                'ttl' => $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_TTL, 600),
-                'blockFor' => $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCK_FOR, 300),
-                'numberOfAttempts' => $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_NUMBER_OF_ATTEMPTS, 10),
+                SecurityBlockerConfigurationSettingsTransfer::TTL
+                    => $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_TTL, 600),
+                SecurityBlockerConfigurationSettingsTransfer::BLOCK_FOR
+                    => $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCK_FOR, 300),
+                SecurityBlockerConfigurationSettingsTransfer::NUMBER_OF_ATTEMPTS
+                    => $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_NUMBER_OF_ATTEMPTS, 10),
             ],
         ];
     }
