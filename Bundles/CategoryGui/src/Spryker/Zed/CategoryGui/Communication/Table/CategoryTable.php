@@ -28,19 +28,8 @@ class CategoryTable extends AbstractTable
     public const IDENTIFIER = 'category_data_table';
     public const COL_ID_CATEGORY_NODE = 'id_category_node';
 
-    /**
-     * @uses \Spryker\Shared\Category\CategoryConstants::PARAM_ID_CATEGORY
-     */
     protected const REQUEST_PARAM_ID_CATEGORY = 'id-category';
-
-    /**
-     * @uses \Spryker\Shared\Category\CategoryConstants::PARAM_ID_NODE
-     */
     protected const REQUEST_PARAM_ID_NODE = 'id-node';
-
-    /**
-     * @uses \Spryker\Shared\Category\CategoryConstants::PARAM_ID_PARENT_NODE
-     */
     protected const REQUEST_PARAM_ID_PARENT_NODE = 'id-parent-node';
 
     /**
