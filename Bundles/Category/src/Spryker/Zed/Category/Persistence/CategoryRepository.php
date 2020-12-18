@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
@@ -321,6 +322,51 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         }
 
         return $urlTransfers;
+    }
+
+    /**
+     * @param int[] $categoryNodeIds
+     *
+     * @return \Generated\Shared\Transfer\NodeTransfer[]
+     */
+    public function getAllCategoryNodeTreeElementsByCategoryNodeIds(array $categoryNodeIds): array
+    {
+        $categoryNodeEntities = $this->getFactory()
+            ->createCategoryNodeQuery()
+            ->leftJoinClosureTable(SpyCategoryClosureTableTableMap::TABLE_NAME)
+            ->addJoinCondition(
+                SpyCategoryClosureTableTableMap::TABLE_NAME,
+                SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT . ' = ' . SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE,
+                null,
+                Criteria::LOGICAL_OR
+            )
+            ->leftJoinWithSpyUrl()
+            ->leftJoinWithCategory()
+            ->useCategoryQuery(null, Criteria::LEFT_JOIN)
+                ->leftJoinWithCategoryTemplate()
+                ->leftJoinWithAttribute()
+                ->useAttributeQuery(null, Criteria::LEFT_JOIN)
+                    ->leftJoinWithLocale()
+                ->endUse()
+                ->leftJoinSpyCategoryStore()
+                ->useSpyCategoryStoreQuery(null, Criteria::LEFT_JOIN)
+                    ->leftJoinWithSpyStore()
+                ->endUse()
+            ->endUse()
+            ->where(SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT . ' IN (' . implode(', ', $categoryNodeIds) . ')')
+            ->_or()
+            ->where(SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE . ' IN (' . implode(', ', $categoryNodeIds) . ')')
+            ->distinct()
+            ->find()
+            ->toKeyIndex();
+
+        if ($categoryNodeEntities === []) {
+            return [];
+        }
+
+        return $this->getFactory()
+            ->createCategoryMapper()
+            ->mapCategoryNodeEntitiesToNodeTransfersIndexedByIdCategoryNode($categoryNodeEntities, []);
     }
 
     /**

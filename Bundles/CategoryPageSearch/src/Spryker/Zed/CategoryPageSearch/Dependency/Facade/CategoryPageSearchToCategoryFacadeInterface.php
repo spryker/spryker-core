@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryStorage\Persistence;
+namespace Spryker\Zed\CategoryPageSearch\Dependency\Facade;
 
-interface CategoryStorageRepositoryInterface
+interface CategoryPageSearchToCategoryFacadeInterface
 {
     /**
      * @param int[] $categoryNodeIds
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
-    public function getCategoryNodesByCategoryNodeIds(array $categoryNodeIds): array;
+    public function getAllCategoryNodeTreeElementsByCategoryNodeIds(array $categoryNodeIds): array;
 }

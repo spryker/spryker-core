@@ -7,24 +7,21 @@
 
 namespace Spryker\Zed\CategoryPageSearch\Business\Search;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-use Orm\Zed\Category\Persistence\SpyCategoryNode;
+use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearch;
-use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper\CategoryNodePageSearchDataMapperInterface;
+use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToCategoryFacadeInterface;
 use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToStoreFacadeInterface;
 use Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilEncodingInterface;
 use Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class CategoryNodePageSearch implements CategoryNodePageSearchInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * @var \Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilEncodingInterface
      */
-    protected $utilEncoding;
+    protected $utilEncodingService;
 
     /**
      * @var \Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper\CategoryNodePageSearchDataMapperInterface
@@ -42,52 +39,53 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
     protected $storeFacade;
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
-     *
-     * @var bool
+     * @var \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToCategoryFacadeInterface
      */
-    protected $isSendingToQueue = true;
+    protected $categoryFacade;
 
     /**
-     * @param \Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilEncodingInterface $utilEncoding
+     * @param \Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilEncodingInterface $utilEncodingService
      * @param \Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper\CategoryNodePageSearchDataMapperInterface $categoryNodePageSearchDataMapper
      * @param \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToStoreFacadeInterface $storeFacade
-     * @param bool $isSendingToQueue
+     * @param \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToCategoryFacadeInterface $categoryFacade
      */
     public function __construct(
-        CategoryPageSearchToUtilEncodingInterface $utilEncoding,
+        CategoryPageSearchToUtilEncodingInterface $utilEncodingService,
         CategoryNodePageSearchDataMapperInterface $categoryNodePageSearchDataMapper,
         CategoryPageSearchQueryContainerInterface $queryContainer,
         CategoryPageSearchToStoreFacadeInterface $storeFacade,
-        $isSendingToQueue
+        CategoryPageSearchToCategoryFacadeInterface $categoryFacade
     ) {
-        $this->utilEncoding = $utilEncoding;
+        $this->utilEncodingService = $utilEncodingService;
         $this->categoryNodePageSearchDataMapper = $categoryNodePageSearchDataMapper;
         $this->queryContainer = $queryContainer;
         $this->storeFacade = $storeFacade;
-        $this->isSendingToQueue = $isSendingToQueue;
+        $this->categoryFacade = $categoryFacade;
     }
 
     /**
-     * @param array $categoryNodeIds
+     * @param int[] $categoryNodeIds
      *
      * @return void
      */
     public function publish(array $categoryNodeIds)
     {
-        $categoryTrees = $this->getCategoryTrees($categoryNodeIds);
-        $spyCategoryNodePageSearchEntities = $this->findCategoryNodePageSearchEntitiesByCategoryNodeIds($categoryNodeIds);
+        $nodeTransfers = $this->categoryFacade->getAllCategoryNodeTreeElementsByCategoryNodeIds($categoryNodeIds);
+        $categoryNodePageSearchEntities = $this->findCategoryNodePageSearchEntitiesByCategoryNodeIds($categoryNodeIds);
 
-        if (!$categoryTrees) {
-            $this->deleteSearchData($spyCategoryNodePageSearchEntities);
+        if (!$nodeTransfers) {
+            $this->deleteSearchData($categoryNodePageSearchEntities);
         }
 
-        $this->storeData($categoryTrees, $spyCategoryNodePageSearchEntities);
+        $indexedCategoryNodePageSearchEntities = $this->indexCategoryNodePageSearchEntitiesByStoreAndLocaleAndIdCategoryNode(
+            $categoryNodePageSearchEntities
+        );
+        $this->storeData($nodeTransfers, $indexedCategoryNodePageSearchEntities);
     }
 
     /**
-     * @param array $categoryNodeIds
+     * @param int[] $categoryNodeIds
      *
      * @return void
      */
@@ -99,54 +97,86 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
     }
 
     /**
-     * @param array $spyCategoryNodePageSearchEntities
+     * @param \Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearch[] $spyCategoryNodePageSearchEntities
      *
      * @return void
      */
-    protected function deleteSearchData(array $spyCategoryNodePageSearchEntities)
+    protected function deleteSearchData(array $spyCategoryNodePageSearchEntities): void
     {
-        foreach ($spyCategoryNodePageSearchEntities as $spyCategoryNodePageSearchLocaleEntities) {
-            foreach ($spyCategoryNodePageSearchLocaleEntities as $spyCategoryNodePageSearchLocaleEntity) {
-                $spyCategoryNodePageSearchLocaleEntity->delete();
+        foreach ($spyCategoryNodePageSearchEntities as $spyCategoryNodePageSearchEntity) {
+            $spyCategoryNodePageSearchEntity->delete();
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer[] $nodeTransfers
+     * @param \Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearch[][][] $categoryNodePageSearchEntities
+     *
+     * @return void
+     */
+    protected function storeData(array $nodeTransfers, array $categoryNodePageSearchEntities): void
+    {
+        $localeNameMapByStoreName = $this->getLocaleNameMapByStoreName();
+        foreach ($localeNameMapByStoreName as $storeName => $localeNames) {
+            foreach ($localeNames as $localeName) {
+                $this->storeDataForStoreAndLocale($nodeTransfers, $categoryNodePageSearchEntities, $storeName, $localeName);
             }
         }
     }
 
     /**
-     * @param array $categoryTrees
-     * @param array $spyCategoryNodePageSearchEntities
+     * @param \Generated\Shared\Transfer\NodeTransfer[] $nodeTransfers
+     * @param \Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearch[][][] $categoryNodePageSearchEntities
+     * @param string $storeName
+     * @param string $localeName
      *
      * @return void
      */
-    protected function storeData(array $categoryTrees, array $spyCategoryNodePageSearchEntities)
-    {
-        foreach ($categoryTrees as $categoryNodeId => $categoryTreeWithLocales) {
-            foreach ($categoryTreeWithLocales as $localeName => $categoryTreeWithLocale) {
-                if (isset($spyCategoryNodePageSearchEntities[$categoryNodeId][$localeName])) {
-                    $this->storeDataSet($categoryTreeWithLocale, $localeName, $spyCategoryNodePageSearchEntities[$categoryNodeId][$localeName]);
-
-                    continue;
-                }
-
-                $this->storeDataSet($categoryTreeWithLocale, $localeName);
+    protected function storeDataForStoreAndLocale(
+        array $nodeTransfers,
+        array $categoryNodePageSearchEntities,
+        string $storeName,
+        string $localeName
+    ): void {
+        foreach ($nodeTransfers as $nodeTransfer) {
+            if (!$this->isCategoryHasStoreRelation($nodeTransfer->getCategoryOrFail(), $storeName)) {
+                continue;
             }
+
+            if (isset($categoryNodePageSearchEntities[$storeName][$localeName][$nodeTransfer->getIdCategoryNode()])) {
+                $this->storeDataSet(
+                    $nodeTransfer,
+                    $storeName,
+                    $localeName,
+                    $categoryNodePageSearchEntities[$storeName][$localeName][$nodeTransfer->getIdCategoryNode()]
+                );
+
+                continue;
+            }
+
+            $this->storeDataSet($nodeTransfer, $storeName, $localeName);
         }
     }
 
     /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $spyCategoryNodeEntity
+     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
+     * @param string $storeName
      * @param string $localeName
      * @param \Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearch|null $spyCategoryNodePageSearchEntity
      *
      * @return void
      */
-    protected function storeDataSet(SpyCategoryNode $spyCategoryNodeEntity, $localeName, ?SpyCategoryNodePageSearch $spyCategoryNodePageSearchEntity = null)
-    {
+    protected function storeDataSet(
+        NodeTransfer $nodeTransfer,
+        string $storeName,
+        string $localeName,
+        ?SpyCategoryNodePageSearch $spyCategoryNodePageSearchEntity = null
+    ): void {
         if ($spyCategoryNodePageSearchEntity === null) {
             $spyCategoryNodePageSearchEntity = new SpyCategoryNodePageSearch();
         }
 
-        if (!$spyCategoryNodeEntity->getCategory()->getIsActive()) {
+        if (!$nodeTransfer->getCategoryOrFail()->getIsActive()) {
             if (!$spyCategoryNodePageSearchEntity->isNew()) {
                 $spyCategoryNodePageSearchEntity->delete();
             }
@@ -154,85 +184,67 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
             return;
         }
 
-        $categoryTreeNodeData = $spyCategoryNodeEntity->toArray(TableMap::TYPE_FIELDNAME, true, [], true);
-        $data = $this->mapToSearchData($categoryTreeNodeData, $localeName);
-        $spyCategoryNodePageSearchEntity->setFkCategoryNode($spyCategoryNodeEntity->getIdCategoryNode());
-        $spyCategoryNodePageSearchEntity->setStructuredData($this->utilEncoding->encodeJson($categoryTreeNodeData));
+        $data = $this->categoryNodePageSearchDataMapper
+            ->mapNodeTransferToCategoryNodePageSearchDataForStoreAndLocale($nodeTransfer, $storeName, $localeName);
+        $spyCategoryNodePageSearchEntity->setFkCategoryNode($nodeTransfer->getIdCategoryNode());
+        $spyCategoryNodePageSearchEntity->setStructuredData($this->utilEncodingService->encodeJson($nodeTransfer->toArray()));
         $spyCategoryNodePageSearchEntity->setData($data);
         $spyCategoryNodePageSearchEntity->setLocale($localeName);
-        $spyCategoryNodePageSearchEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyCategoryNodePageSearchEntity->save();
-    }
-
-    /**
-     * @param array $categoryNodeData
-     * @param string $localeName
-     *
-     * @return array
-     */
-    public function mapToSearchData(array $categoryNodeData, $localeName)
-    {
-        return $this->categoryNodePageSearchDataMapper
-            ->mapCategoryNodeDataToSearchData(
-                $categoryNodeData,
-                (new LocaleTransfer())->setLocaleName($localeName)
-            );
-    }
-
-    /**
-     * @param array $categoryNodeIds
-     *
-     * @return array
-     */
-    protected function findCategoryNodePageSearchEntitiesByCategoryNodeIds(array $categoryNodeIds)
-    {
-        $categoryNodeSearchEntities = $this->queryContainer->queryCategoryNodePageSearchByIds($categoryNodeIds)->find();
-        $categoryNodeSearchEntitiesByIdAndLocale = [];
-        foreach ($categoryNodeSearchEntities as $categoryNodeSearchEntity) {
-            $categoryNodeSearchEntitiesByIdAndLocale[$categoryNodeSearchEntity->getFkCategoryNode()][$categoryNodeSearchEntity->getLocale()] = $categoryNodeSearchEntity;
-        }
-
-        return $categoryNodeSearchEntitiesByIdAndLocale;
     }
 
     /**
      * @param int[] $categoryNodeIds
      *
-     * @return array
+     * @return \Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearch[]
      */
-    protected function getCategoryTrees(array $categoryNodeIds): array
+    protected function findCategoryNodePageSearchEntitiesByCategoryNodeIds(array $categoryNodeIds): array
     {
-        $localeNames = $this->getSharedPersistenceLocaleNames();
-        $locales = $this->queryContainer->queryLocalesWithLocaleNames($localeNames)->find();
-
-        $categoryNodeTree = [];
-        $this->disableInstancePooling();
-        foreach ($locales as $locale) {
-            $categoryNodes = $this->queryContainer->queryWholeCategoryNodeTree($categoryNodeIds, $locale->getIdLocale())->find()->toKeyIndex();
-
-            foreach ($categoryNodeIds as $categoryNodeId) {
-                if (isset($categoryNodes[$categoryNodeId])) {
-                    $categoryNodeTree[$categoryNodeId][$locale->getLocaleName()] = $categoryNodes[$categoryNodeId];
-                }
-            }
-        }
-        $this->enableInstancePooling();
-
-        return $categoryNodeTree;
+        return $this->queryContainer->queryCategoryNodePageSearchByIds($categoryNodeIds)->find()->getArrayCopy();
     }
 
     /**
-     * @return string[]
+     * @param \Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearch[] $categoryNodeSearchEntities
+     *
+     * @return \Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearch[][][]
      */
-    protected function getSharedPersistenceLocaleNames(): array
+    protected function indexCategoryNodePageSearchEntitiesByStoreAndLocaleAndIdCategoryNode(array $categoryNodeSearchEntities): array
     {
-        $currentStoreTransfer = $this->storeFacade->getCurrentStore();
-        $localeNames = $currentStoreTransfer->getAvailableLocaleIsoCodes();
-
-        foreach ($this->storeFacade->getStoresWithSharedPersistence($currentStoreTransfer) as $storeTransfer) {
-            $localeNames = array_merge($localeNames, $storeTransfer->getAvailableLocaleIsoCodes());
+        $indexedCategoryNodeSearchEntities = [];
+        foreach ($categoryNodeSearchEntities as $categoryNodeSearchEntity) {
+            $indexedCategoryNodeSearchEntities[$categoryNodeSearchEntity->getStore()][$categoryNodeSearchEntity->getLocale()][$categoryNodeSearchEntity->getFkCategoryNode()] = $categoryNodeSearchEntity;
         }
 
-        return $localeNames;
+        return $indexedCategoryNodeSearchEntities;
+    }
+
+    /**
+     * @return string[][]
+     */
+    protected function getLocaleNameMapByStoreName(): array
+    {
+        $localeNameMapByStoreName = [];
+        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+            $localeNameMapByStoreName[$storeTransfer->getName()] = $storeTransfer->getAvailableLocaleIsoCodes();
+        }
+
+        return $localeNameMapByStoreName;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param string $storeName
+     *
+     * @return bool
+     */
+    protected function isCategoryHasStoreRelation(CategoryTransfer $categoryTransfer, string $storeName): bool
+    {
+        foreach ($categoryTransfer->getStoreRelationOrFail()->getStores() as $storeTransfer) {
+            if ($storeTransfer->getName() === $storeName) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

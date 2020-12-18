@@ -91,4 +91,11 @@ interface CategoryRepositoryInterface
      * @return \Generated\Shared\Transfer\UrlTransfer[]
      */
     public function getCategoryNodeUrls(CategoryNodeUrlFilterTransfer $categoryNodeFilterTransfer): array;
+
+    /**
+     * @param int[] $categoryNodeIds
+     *
+     * @return \Generated\Shared\Transfer\NodeTransfer[]
+     */
+    public function getAllCategoryNodeTreeElementsByCategoryNodeIds(array $categoryNodeIds): array;
 }

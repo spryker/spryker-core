@@ -8,10 +8,17 @@
 namespace Spryker\Client\CategoryStorage;
 
 use Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToLocaleClientInterface;
+use Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToStorageInterface;
+use Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToStoreClientInterface;
+use Spryker\Client\CategoryStorage\Dependency\Service\CategoryStorageToSynchronizationServiceInterface;
 use Spryker\Client\CategoryStorage\Formatter\CategoryTreeFilterFormatter;
 use Spryker\Client\CategoryStorage\Formatter\CategoryTreeFilterFormatterInterface;
+use Spryker\Client\CategoryStorage\Mapper\UrlStorageCategoryNodeMapper;
+use Spryker\Client\CategoryStorage\Mapper\UrlStorageCategoryNodeMapperInterface;
 use Spryker\Client\CategoryStorage\Storage\CategoryNodeStorage;
+use Spryker\Client\CategoryStorage\Storage\CategoryNodeStorageInterface;
 use Spryker\Client\CategoryStorage\Storage\CategoryTreeStorageReader;
+use Spryker\Client\CategoryStorage\Storage\CategoryTreeStorageReaderInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 /**
@@ -30,10 +37,10 @@ class CategoryStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\CategoryStorage\Storage\CategoryTreeStorageReaderInterface
      */
-    public function createCategoryTreeStorageReader()
+    public function createCategoryTreeStorageReader(): CategoryTreeStorageReaderInterface
     {
         return new CategoryTreeStorageReader(
-            $this->getStorage(),
+            $this->getStorageClient(),
             $this->getSynchronizationService()
         );
     }
@@ -41,18 +48,30 @@ class CategoryStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\CategoryStorage\Storage\CategoryNodeStorageInterface
      */
-    public function createCategoryNodeStorage()
+    public function createCategoryNodeStorage(): CategoryNodeStorageInterface
     {
         return new CategoryNodeStorage(
-            $this->getStorage(),
+            $this->getStorageClient(),
             $this->getSynchronizationService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\CategoryStorage\Mapper\UrlStorageCategoryNodeMapperInterface
+     */
+    public function createUrlStorageCategoryNodeMapper(): UrlStorageCategoryNodeMapperInterface
+    {
+        return new UrlStorageCategoryNodeMapper(
+            $this->getSynchronizationService(),
+            $this->getStoreClient(),
+            $this->getLocaleClient()
         );
     }
 
     /**
      * @return \Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToStorageInterface
      */
-    protected function getStorage()
+    protected function getStorageClient(): CategoryStorageToStorageInterface
     {
         return $this->getProvidedDependency(CategoryStorageDependencyProvider::CLIENT_STORAGE);
     }
@@ -66,9 +85,17 @@ class CategoryStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\CategoryStorage\Dependency\Service\CategoryStorageToSynchronizationServiceBridge
+     * @return \Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToStoreClientInterface
      */
-    public function getSynchronizationService()
+    public function getStoreClient(): CategoryStorageToStoreClientInterface
+    {
+        return $this->getProvidedDependency(CategoryStorageDependencyProvider::CLIENT_STORE);
+    }
+
+    /**
+     * @return \Spryker\Client\CategoryStorage\Dependency\Service\CategoryStorageToSynchronizationServiceInterface
+     */
+    public function getSynchronizationService(): CategoryStorageToSynchronizationServiceInterface
     {
         return $this->getProvidedDependency(CategoryStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
     }

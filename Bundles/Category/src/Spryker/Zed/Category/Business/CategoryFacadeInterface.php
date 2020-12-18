@@ -267,4 +267,16 @@ interface CategoryFacadeInterface
      * @return \Generated\Shared\Transfer\UrlTransfer[]
      */
     public function getCategoryNodeUrls(CategoryNodeUrlFilterTransfer $categoryNodeFilterTransfer): array;
+
+    /**
+     * Specification:
+     * - Retrieves all NodeTransfers by categoryNodeIds and all their parents and children NodeTransfers.
+     *
+     * @api
+     *
+     * @param int[] $categoryNodeIds
+     *
+     * @return \Generated\Shared\Transfer\NodeTransfer[]
+     */
+    public function getAllCategoryNodeTreeElementsByCategoryNodeIds(array $categoryNodeIds): array;
 }

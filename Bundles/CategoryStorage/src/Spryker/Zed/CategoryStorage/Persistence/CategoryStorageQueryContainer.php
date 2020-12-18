@@ -7,11 +7,8 @@
 
 namespace Spryker\Zed\CategoryStorage\Persistence;
 
-use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
-use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -20,48 +17,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class CategoryStorageQueryContainer extends AbstractQueryContainer implements CategoryStorageQueryContainerInterface
 {
     public const ID_CATEGORY_NODE = 'idCategoryNode';
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param array $localeNames
-     *
-     * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
-     */
-    public function queryLocalesWithLocaleNames(array $localeNames)
-    {
-        return $this->getFactory()
-            ->getLocaleQueryContainer()
-            ->queryLocales()
-            ->filterByLocaleName_In($localeNames);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryCategoryNode($idLocale)
-    {
-        $query = $this->getFactory()
-            ->getCategoryQueryContainer()
-            ->queryAllCategoryNodes()
-            ->joinWithSpyUrl()
-            ->joinWithCategory()
-            ->joinWith('Category.Attribute')
-            ->joinWith('Category.CategoryTemplate')
-            ->where(SpyCategoryAttributeTableMap::COL_FK_LOCALE . ' = ?', $idLocale)
-            ->where(SpyUrlTableMap::COL_FK_LOCALE . ' = ?', $idLocale)
-            ->where(SpyCategoryTableMap::COL_IS_ACTIVE . ' = ?', true);
-
-        return $query;
-    }
 
     /**
      * {@inheritDoc}
@@ -78,32 +33,6 @@ class CategoryStorageQueryContainer extends AbstractQueryContainer implements Ca
             ->getCategoryQueryContainer()
             ->queryAllCategoryNodes()
             ->filterByIdCategoryNode_In($categoryNodeIds);
-
-        return $query;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryCategoryNodeTree($idLocale)
-    {
-        $query = $this->getFactory()
-            ->getCategoryQueryContainer()
-            ->queryAllCategoryNodes()
-            ->joinWithSpyUrl()
-            ->joinWithCategory()
-            ->joinWith('Category.Attribute')
-            ->joinWith('Category.CategoryTemplate')
-            ->where(SpyCategoryAttributeTableMap::COL_FK_LOCALE . ' = ?', $idLocale)
-            ->where(SpyUrlTableMap::COL_FK_LOCALE . ' = ?', $idLocale)
-            ->where(SpyCategoryTableMap::COL_IS_ACTIVE . ' = ?', true)
-            ->where(SpyCategoryTableMap::COL_IS_IN_MENU . ' = ?', true);
 
         return $query;
     }

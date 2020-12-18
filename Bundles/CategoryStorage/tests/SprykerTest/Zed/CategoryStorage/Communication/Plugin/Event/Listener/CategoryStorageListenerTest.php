@@ -29,7 +29,6 @@ use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNode
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryTreeStorageListener;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryTreeStoragePublishListener;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryTreeStorageUnpublishListener;
-use SprykerTest\Zed\CategoryStorage\CategoryStorageConfigMock;
 
 /**
  * Auto-generated group annotations
@@ -337,8 +336,6 @@ class CategoryStorageListenerTest extends Unit
     protected function getCategoryStorageFacade(): CategoryStorageFacade
     {
         $factory = new CategoryStorageBusinessFactory();
-        $factory->setConfig(new CategoryStorageConfigMock());
-
         $facade = new CategoryStorageFacade();
         $facade->setFactory($factory);
 

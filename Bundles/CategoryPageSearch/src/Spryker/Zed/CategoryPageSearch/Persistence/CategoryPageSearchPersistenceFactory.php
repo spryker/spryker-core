@@ -26,14 +26,6 @@ class CategoryPageSearchPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\CategoryPageSearch\Dependency\QueryContainer\CategoryPageSearchToLocaleQueryContainerInterface
-     */
-    public function getLocaleQueryContainer()
-    {
-        return $this->getProvidedDependency(CategoryPageSearchDependencyProvider::QUERY_CONTAINER_LOCALE);
-    }
-
-    /**
      * @return \Spryker\Zed\CategoryPageSearch\Dependency\QueryContainer\CategoryPageSearchToCategoryQueryContainerInterface
      */
     public function getCategoryQueryContainer()

@@ -16,6 +16,7 @@ use Spryker\Zed\CategoryStorage\Business\Storage\CategoryTreeStorageInterface;
 use Spryker\Zed\CategoryStorage\Business\TreeBuilder\CategoryStorageNodeTreeBuilder;
 use Spryker\Zed\CategoryStorage\Business\TreeBuilder\CategoryStorageNodeTreeBuilderInterface;
 use Spryker\Zed\CategoryStorage\CategoryStorageDependencyProvider;
+use Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToCategoryFacadeInterface;
 use Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToStoreFacadeInterface;
 use Spryker\Zed\CategoryStorage\Dependency\Service\CategoryStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -23,7 +24,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 /**
  * @method \Spryker\Zed\CategoryStorage\CategoryStorageConfig getConfig()
  * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageRepositoryInterface getRepository()
  */
 class CategoryStorageBusinessFactory extends AbstractBusinessFactory
 {
@@ -70,6 +70,14 @@ class CategoryStorageBusinessFactory extends AbstractBusinessFactory
     public function createCategoryNodeStorageMapper(): CategoryNodeStorageMapperInterface
     {
         return new CategoryNodeStorageMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToCategoryFacadeInterface
+     */
+    public function getCategoryFacade(): CategoryStorageToCategoryFacadeInterface
+    {
+        return $this->getProvidedDependency(CategoryStorageDependencyProvider::FACADE_CATEGORY);
     }
 
     /**

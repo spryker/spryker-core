@@ -10,24 +10,16 @@ namespace Spryker\Zed\CategoryStorage\Business\Storage;
 use Generated\Shared\Transfer\CategoryTreeStorageTransfer;
 use Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorage;
 use Spryker\Zed\CategoryStorage\Business\TreeBuilder\CategoryStorageNodeTreeBuilderInterface;
+use Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToCategoryFacadeInterface;
 use Spryker\Zed\CategoryStorage\Dependency\Service\CategoryStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface;
-use Spryker\Zed\CategoryStorage\Persistence\CategoryStorageRepositoryInterface;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class CategoryTreeStorage implements CategoryTreeStorageInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * @var \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface
      */
     protected $queryContainer;
-
-    /**
-     * @var \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageRepositoryInterface
-     */
-    protected $categoryStorageRepository;
 
     /**
      * @var \Spryker\Zed\CategoryStorage\Business\TreeBuilder\CategoryStorageNodeTreeBuilderInterface
@@ -35,26 +27,31 @@ class CategoryTreeStorage implements CategoryTreeStorageInterface
     protected $categoryStorageNodeTreeBuilder;
 
     /**
+     * @var \Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToCategoryFacadeInterface
+     */
+    protected $categoryFacade;
+
+    /**
      * @var \Spryker\Zed\CategoryStorage\Dependency\Service\CategoryStorageToUtilSanitizeServiceInterface
      */
-    protected $utilSanitize;
+    protected $utilSanitizeService;
 
     /**
      * @param \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageRepositoryInterface $categoryStorageRepository
      * @param \Spryker\Zed\CategoryStorage\Business\TreeBuilder\CategoryStorageNodeTreeBuilderInterface $categoryStorageNodeTreeBuilder
-     * @param \Spryker\Zed\CategoryStorage\Dependency\Service\CategoryStorageToUtilSanitizeServiceInterface $utilSanitize
+     * @param \Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToCategoryFacadeInterface $categoryFacade
+     * @param \Spryker\Zed\CategoryStorage\Dependency\Service\CategoryStorageToUtilSanitizeServiceInterface $utilSanitizeService
      */
     public function __construct(
         CategoryStorageQueryContainerInterface $queryContainer,
-        CategoryStorageRepositoryInterface $categoryStorageRepository,
         CategoryStorageNodeTreeBuilderInterface $categoryStorageNodeTreeBuilder,
-        CategoryStorageToUtilSanitizeServiceInterface $utilSanitize
+        CategoryStorageToCategoryFacadeInterface $categoryFacade,
+        CategoryStorageToUtilSanitizeServiceInterface $utilSanitizeService
     ) {
         $this->queryContainer = $queryContainer;
-        $this->categoryStorageRepository = $categoryStorageRepository;
         $this->categoryStorageNodeTreeBuilder = $categoryStorageNodeTreeBuilder;
-        $this->utilSanitize = $utilSanitize;
+        $this->categoryFacade = $categoryFacade;
+        $this->utilSanitizeService = $utilSanitizeService;
     }
 
     /**
@@ -157,7 +154,7 @@ class CategoryTreeStorage implements CategoryTreeStorageInterface
             $categoryTreeStorageTransfer->addCategoryNodeStorage($categoryNodeStorageTransfer);
         }
 
-        $categoryTreeStorageData = $this->utilSanitize->arrayFilterRecursive($categoryTreeStorageTransfer->toArray());
+        $categoryTreeStorageData = $this->utilSanitizeService->arrayFilterRecursive($categoryTreeStorageTransfer->toArray());
         $categoryTreeStorageEntity->setLocale($localeName);
         $categoryTreeStorageEntity->setStore($storeName);
         $categoryTreeStorageEntity->setData($categoryTreeStorageData);
@@ -200,7 +197,7 @@ class CategoryTreeStorage implements CategoryTreeStorageInterface
             return [];
         }
 
-        $categoryNodeTransfers = $this->categoryStorageRepository->getCategoryNodesByCategoryNodeIds([$rootCategory->getIdCategoryNode()]);
+        $categoryNodeTransfers = $this->categoryFacade->getAllCategoryNodeTreeElementsByCategoryNodeIds([$rootCategory->getIdCategoryNode()]);
 
         return $this->categoryStorageNodeTreeBuilder->buildCategoryNodeStorageTransferTreesForLocaleAndStore(
             [$rootCategory->getIdCategoryNode()],

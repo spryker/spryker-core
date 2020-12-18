@@ -15,38 +15,11 @@ interface CategoryStorageQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param array $localeNames
-     *
-     * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
-     */
-    public function queryLocalesWithLocaleNames(array $localeNames);
-
-    /**
-     * @api
-     *
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryCategoryNode($idLocale);
-
-    /**
-     * @api
-     *
      * @param int[] $categoryNodeIds
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryCategoryNodeByIds(array $categoryNodeIds): SpyCategoryNodeQuery;
-
-    /**
-     * @api
-     *
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryCategoryNodeTree($idLocale);
 
     /**
      * @api

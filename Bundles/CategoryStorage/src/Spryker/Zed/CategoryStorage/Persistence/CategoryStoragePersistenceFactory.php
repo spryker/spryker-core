@@ -46,14 +46,6 @@ class CategoryStoragePersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\CategoryStorage\Dependency\QueryContainer\CategoryStorageToLocaleQueryContainerInterface
-     */
-    public function getLocaleQueryContainer()
-    {
-        return $this->getProvidedDependency(CategoryStorageDependencyProvider::QUERY_CONTAINER_LOCALE);
-    }
-
-    /**
      * @return \Spryker\Zed\CategoryStorage\Dependency\QueryContainer\CategoryStorageToCategoryQueryContainerInterface
      */
     public function getCategoryQueryContainer()
