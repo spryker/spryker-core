@@ -138,7 +138,7 @@ class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
         foreach ($this->priceProductFacade->getPriceTypeValues() as $priceTypeTransfer) {
             $priceTypeName = mb_strtolower((string)$priceTypeTransfer->getName());
             $orderByField = str_replace(']', '', $orderByField);
-            $orderByField = explode('[', (string)$orderByField);
+            $orderByField = explode('[', $orderByField);
 
             if ($orderByField[2] === MoneyValueTransfer::NET_AMOUNT) {
                 return $criteriaTransfer->setOrderBy($orderByField[0] . '_net');
