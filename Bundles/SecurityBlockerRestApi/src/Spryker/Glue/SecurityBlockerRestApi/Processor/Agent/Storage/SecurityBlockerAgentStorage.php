@@ -65,7 +65,7 @@ class SecurityBlockerAgentStorage implements SecurityBlockerAgentStorageInterfac
             ->setIp($restRequest->getHttpRequest()->getClientIp())
             ->setAccount($restAccessTokensAttributesTransfer->getUsername());
 
-        $this->securityBlockerClient->incrementLoginAttempt($securityCheckAuthContextTransfer);
+        $this->securityBlockerClient->incrementLoginAttemptCount($securityCheckAuthContextTransfer);
     }
 
     /**
