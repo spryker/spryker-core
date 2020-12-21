@@ -16,7 +16,7 @@
     "spryker/redis": "^2.0.0",
     "spryker/search": "^6.6.0 || ^7.0.0 || ^8.0.0",
     "spryker/sql-criteria-builder": "^1.0.0",
-    "spryker/storage": "^3.16.1",
+    "spryker/storage": "^3.17.0",
     "spryker/store": "^1.1.0",
     "spryker/symfony": "^3.0.0",
     "spryker/touch": "^4.0.0",
