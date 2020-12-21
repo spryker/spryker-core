@@ -92,6 +92,21 @@ class AbstractProductOfferController extends AbstractController
             true
         );
 
+        if (!$requestTableData) {
+            return [
+                GuiTableEditableInitialDataTransfer::DATA => [],
+                GuiTableEditableInitialDataTransfer::ERRORS => [],
+            ];
+        }
+
+        $requestTableData[0] = array_map(function ($val) {
+            if (!$val) {
+                return (string)$val;
+            }
+
+            return $val;
+        }, $requestTableData[0]);
+
         return [
             GuiTableEditableInitialDataTransfer::DATA => $requestTableData,
             GuiTableEditableInitialDataTransfer::ERRORS => [],

@@ -51,7 +51,7 @@
         "@spryker/table.column.chip": "^0.0.2-next.1",
         "@spryker/table.column.date": "^0.0.2-next.0",
         "@spryker/table.column.image": "^0.0.2-next.0",
-        "@spryker/table.column.input": "^0.0.2-next.2",
+        "@spryker/table.column.input": "^0.0.2-next.3",
         "@spryker/table.column.select": "^0.0.2-next.2",
         "@spryker/table.column.text": "^0.0.2-next.0",
         "@spryker/table.datasource.http": "^0.0.2-next.0",

@@ -96,7 +96,9 @@ class DeletePricesAction implements ActionInterface
 
         $responseData = [
             'postActions' => [
-                'type' => static::POST_ACTION_TYPE_REFRESH_TABLE,
+                [
+                    'type' => static::POST_ACTION_TYPE_REFRESH_TABLE,
+                ],
             ],
             'notifications' => [
                 [
