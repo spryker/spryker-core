@@ -119,7 +119,7 @@ export class TableDefaultConfigData implements Partial<TableConfig> {
         TableColumnImageModule,
         TableColumnDateModule,
 
-        // Table Filters Modules
+        // Table Filter Modules
         TableFilterSelectModule,
         TableFilterDateRangeModule,
         TableFilterTreeSelectModule,
