@@ -28,28 +28,32 @@ interface CategoryStorageClientInterface
     /**
      * Specification:
      *  - Return category node storage data by id category node and locale name.
+     *  - Forward compatibility (from next major): only category nodes assigned with passed $storeName will be returned.
      *
      * @api
      *
      * @param int $idCategoryNode
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer
      */
-    public function getCategoryNodeById($idCategoryNode, $localeName);
+    public function getCategoryNodeById($idCategoryNode, $localeName, ?string $storeName = null);
 
     /**
      * Specification:
      * - Returns category nodes storage data by array of id category node and locale name.
+     * - Forward compatibility (from next major): only category nodes assigned with passed $storeName will be returned.
      *
      * @api
      *
      * @param int[] $categoryNodeIds
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
      */
-    public function getCategoryNodeByIds(array $categoryNodeIds, string $localeName): array;
+    public function getCategoryNodeByIds(array $categoryNodeIds, string $localeName, ?string $storeName = null): array;
 
     /**
      * Specification:
