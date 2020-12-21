@@ -99,14 +99,6 @@ class AbstractProductOfferController extends AbstractController
             ];
         }
 
-        $requestTableData[0] = array_map(function ($val) {
-            if (empty($val)) {
-                return (int)$val;
-            }
-
-            return $val;
-        }, $requestTableData[0]);
-
         return [
             GuiTableEditableInitialDataTransfer::DATA => $requestTableData,
             GuiTableEditableInitialDataTransfer::ERRORS => [],

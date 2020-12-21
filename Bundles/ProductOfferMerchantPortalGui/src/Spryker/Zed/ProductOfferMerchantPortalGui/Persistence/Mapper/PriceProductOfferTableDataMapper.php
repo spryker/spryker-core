@@ -96,8 +96,6 @@ class PriceProductOfferTableDataMapper
             $priceTypeName = mb_strtolower((string)$priceTypeTransfer->getName());
             $keyNetPrice = $priceTypeName . static::SUFFIX_PRICE_TYPE_NET;
             $keyGrossPrice = $priceTypeName . static::SUFFIX_PRICE_TYPE_GROSS;
-            $prices[$this->createNetKey($priceTypeName)] = 0;
-            $prices[$this->createGrossKey($priceTypeName)] = 0;
 
             if (isset($priceProductOfferTableRowDataArray[$keyGrossPrice])) {
                 $prices[$this->createGrossKey($priceTypeName)] = $priceProductOfferTableRowDataArray[$keyGrossPrice];
