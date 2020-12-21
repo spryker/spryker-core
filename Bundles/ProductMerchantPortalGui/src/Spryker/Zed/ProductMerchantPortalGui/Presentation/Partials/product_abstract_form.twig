@@ -5,70 +5,36 @@
 @var priceProductAbstractTableConfiguration \Generated\Shared\Transfer\GuiTableConfigurationTransfer
 #}
 
-{#{% form_theme form '@ZedUi/Form/form-webcomponent-layout.twig' %}#}
+{% block body %}
+    {# TODO: dump data, should be changed when BE will be ready  #}
+    {% set productData = {
+        name: 'Producct Name',
+        sku: 'sku #002002',
+    } %}
 
-{#<div>#}
-    {#{{ productAbstractName }}#}
-{#</div>#}
-{#<div>#}
-    {#{{ productAbstract.sku }}#}
-{#</div>#}
+    {% block editProduct %}
+        <web-mp-edit-abstract-product product="{{ productData | json_encode() }}" cloak>
+            {% block action %}
+                <web-spy-button size="lg" type="submit" action>{{ 'Save' | trans }}</web-spy-button>
+            {% endblock %}
 
-{#<div>#}
-    {#{{ form(form) }}#}
-{#</div>#}
+            {% block tabs %}
+                <web-spy-tabs cloak>
+                    {% block detailTab %}
+                        <web-spy-tab spy-title="{{ 'Product Details' | trans }}">
+                            <web-mp-offer-prices-table
+                                cloak
+                                table-id="web-mp-product-list"
+                                config='{{ guiTableConfiguration(priceProductAbstractTableConfiguration) }}'>
+                            </web-mp-offer-prices-table>
+                        </web-spy-tab>
+                    {% endblock %}
 
-{# block images #}
-{#{% if productAbstract.imageSets is not null and productAbstract.imageSets | length > 0 %}#}
-    {#<div>#}
-        {#{{ 'Images' | trans }}#}
-    {#</div>#}
-    {#{% for imageSet in productAbstract.imageSets %}#}
-        {#{% if imageSet.locale is null %}#}
-            {#<div>#}
-                {#{{ 'Default' | trans }}#}
-            {#</div>#}
-
-            {#<div>#}
-                {#{{ 'Image Set' | trans }}: {{ imageSet.name }}#}
-            {#</div>#}
-
-            {#{% for productImage in imageSet.productImages  %}#}
-                {#<img style="width: 20px;" src="{{ productImage.externalUrlSmall }}" />#}
-            {#{% endfor %}#}
-
-        {#{% endif %}#}
-    {#{% endfor %}#}
-
-    {#{% for imageSet in productAbstract.imageSets %}#}
-        {#{% if imageSet.locale is not null %}#}
-            {#<div>#}
-                {#{{ imageSet.locale.localeName }}#}
-            {#</div>#}
-
-            {#<div>#}
-                {#{{ 'Image Set' | trans }}: {{ imageSet.name }}#}
-            {#</div>#}
-
-            {#{% for productImage in imageSet.productImages  %}#}
-                {#<img style="width: 20px;" src="{{ productImage.externalUrlSmall }}" />#}
-            {#{% endfor %}#}
-
-        {#{% endif %}#}
-    {#{% endfor %}#}
-
-{#{% endif %}#}
-{# block images #}
-
-{#<web-mp-product-list#}
-        {#cloak#}
-        {#table-id="web-mp-product-list"#}
-        {#table-config='{{ guiTableConfiguration(priceProductAbstractTableConfiguration) }}'>#}
-    {#<span title>{{ 'Products' | trans }}</span>#}
-{#</web-mp-product-list>#}
-
-<web-mp-offer-prices-table
-        cloak
-        table-id="web-mp-product-list"
-        config='{{ guiTableConfiguration(priceProductAbstractTableConfiguration) }}'>
-</web-mp-offer-prices-table>
+                    {% block variantsTab %}
+                        <web-spy-tab spy-title="{{ 'Variants' | trans }}"></web-spy-tab>
+                    {% endblock %}
+                </web-spy-tabs>
+            {% endblock %}
+        </web-mp-edit-abstract-product>
+    {% endblock %}
+{% endblock %}

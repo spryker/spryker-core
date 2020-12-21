@@ -1,0 +1,55 @@
+@import '~@spryker/styles/src/lib/themes/default/variables/index.less';
+
+@edit-abstract-product-padding: 30px;
+@edit-abstract-product-common-blocks-indent: 7px;
+@edit-abstract-product-common-padding-bottom: 30px;
+@edit-abstract-product-title-padding-bottom: 15px;
+@edit-abstract-product-default-spacing-top: 20px;
+@edit-abstract-information-margin: -@edit-abstract-product-padding -@edit-abstract-product-padding 0;
+@edit-abstract-heading-margin: 0 -@edit-abstract-product-common-blocks-indent;
+@edit-abstract-heading-padding: 0 @edit-abstract-product-common-blocks-indent;
+
+.mp-edit-abstract-product {
+    display: block;
+    height: 100%;
+    padding: @edit-abstract-product-padding;
+    background: @gray-lighter;
+    font: @font-default;
+    letter-spacing: @letter-spacing-base;
+    color: @ink;
+    overflow-y: auto;
+
+    &__information {
+        margin: @edit-abstract-information-margin;
+        padding: @edit-abstract-product-padding;
+        background: @white;
+    }
+
+    &__heading {
+        display: flex;
+        justify-content: space-between;
+        margin: @edit-abstract-heading-margin;
+
+        &-col {
+            padding: @edit-abstract-heading-padding;
+        }
+    }
+
+    &__title {
+        font-size: @heading-3-font-size;
+        font-weight: @font-weight-semi-bold;
+        padding-bottom: @edit-abstract-product-title-padding-bottom;
+    }
+
+    &__sku {
+        display: block;
+        color: @gray-dark;
+        font-size: @font-size-lg;
+        font-weight: @font-weight-semi-bold;
+    }
+
+    &__content {
+        display: block;
+        padding-top: @edit-abstract-product-default-spacing-top;
+    }
+}
