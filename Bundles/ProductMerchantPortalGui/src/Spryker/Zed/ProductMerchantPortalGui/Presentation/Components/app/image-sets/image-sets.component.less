@@ -1,0 +1,45 @@
+@import '~@spryker/styles/src/lib/themes/default/variables/index.less';
+
+@edit-image-sets-padding: 20px;
+@edit-image-sets-radius: 10px;
+@edit-image-sets-title-padding-bottom: 20px;
+@edit-image-sets-images-padding: 5px;
+@edit-image-sets-images-size: 60px + @edit-image-sets-images-padding * 2;
+
+.mp-image-sets {
+  display: block;
+  padding: @edit-image-sets-padding;
+  border-radius: @edit-image-sets-radius;
+  background: @white;
+
+  &__title {
+    display: block;
+    font: @font-size-sm @font-family;
+    color: @gray-darker;
+    padding-bottom: @edit-image-sets-title-padding-bottom;
+  }
+
+  &__name {
+    color: @ink;
+  }
+
+  &__images {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -@edit-image-sets-images-padding;
+  }
+
+  &__image {
+    width: @edit-image-sets-images-size;
+    height: @edit-image-sets-images-size;
+    padding: @edit-image-sets-images-padding;
+    text-align: center;
+  }
+
+  &__img {
+    max-width: 100%;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}

@@ -6,6 +6,7 @@
 #}
 
 {% block body %}
+    {% set mainClass = 'mp-edit-abstract-product' %}
     {# TODO: dump data, should be changed when BE will be ready  #}
     {% set productData = {
         name: 'Producct Name',
@@ -22,11 +23,183 @@
                 <web-spy-tabs cloak>
                     {% block detailTab %}
                         <web-spy-tab spy-title="{{ 'Product Details' | trans }}">
-                            <web-mp-offer-prices-table
-                                cloak
-                                table-id="web-mp-product-list"
-                                config='{{ guiTableConfiguration(priceProductAbstractTableConfiguration) }}'>
-                            </web-mp-offer-prices-table>
+                            {% block descriptionCard %}
+                                <web-spy-card spy-title="{{ 'Name & Description' | trans }}" class="{{ mainClass }}__card">
+                                    {% block descriptionCardInner %}
+                                        {# TODO: dump data, should be changed when BE will be ready  #}
+                                        <web-spy-collapsible
+                                            cloak
+                                            class="{{ mainClass }}__collapsible"
+                                            title-icon="united-states"
+                                            spy-title="ENGLISH (US)"
+                                            active="true"
+                                        >
+                                            <web-spy-form-item required>
+                                                NAME
+                                                <web-spy-textarea control></web-spy-textarea>
+                                            </web-spy-form-item>
+
+                                            <web-spy-form-item>
+                                                DESCRIPTION
+                                                <web-spy-input control></web-spy-input>
+                                            </web-spy-form-item>
+                                        </web-spy-collapsible>
+
+                                        <web-spy-collapsible
+                                            cloak
+                                            class="{{ mainClass }}__collapsible"
+                                            title-icon="germany"
+                                            spy-title="DEUTSCH (DE)"
+                                        >
+                                            <web-spy-form-item>
+                                                NAME
+                                                <web-spy-textarea control></web-spy-textarea>
+                                            </web-spy-form-item>
+
+                                            <web-spy-form-item>
+                                                DESCRIPTION
+                                                <web-spy-input control></web-spy-input>
+                                            </web-spy-form-item>
+                                        </web-spy-collapsible>
+                                    {% endblock %}
+                                </web-spy-card>
+                            {% endblock %}
+
+                            {% block storesCard %}
+                                <web-spy-card spy-title="{{ 'Stores' | trans }}" class="{{ mainClass }}__card">
+                                    {% block storesCardInner %}
+                                        {# TODO: dump data, should be changed when BE will be ready  #}
+                                        {% set storesOptions = [
+                                            { value: 1, title: 'Option 1' },
+                                            { value: '2', title: 'Option 2' },
+                                            { value: '3', title: 'Option 3' },
+                                        ] %}
+
+                                        <web-spy-select
+                                            options="{{ storesOptions | json_encode }}"
+                                            placeholder="{{ 'Select Stores' | trans }}">
+                                        </web-spy-select>
+                                    {% endblock %}
+                                </web-spy-card>
+                            {% endblock %}
+
+                            {% block priceCard %}
+                                <web-spy-card spy-title="{{ 'Price' | trans }}" class="{{ mainClass }}__card">
+                                    {% block priceCardInner %}
+                                        <web-mp-edit-abstract-product-prices
+                                            table-id="web-mp-edit-abstract-product-prices"
+                                            config='{{ guiTableConfiguration(priceProductAbstractTableConfiguration) }}'>
+                                        </web-mp-edit-abstract-product-prices>
+                                    {% endblock %}
+                                </web-spy-card>
+                            {% endblock %}
+
+                            {% block taxCard %}
+                                <web-spy-card spy-title="{{ 'Tax Set' | trans }}" class="{{ mainClass }}__card">
+                                    {% block taxCardInner %}
+                                        {# TODO: dump data, should be changed when BE will be ready  #}
+                                        {% set taxOptions = [
+                                            { value: 1, title: 'Option 1' },
+                                            { value: '2', title: 'Option 2' },
+                                            { value: '3', title: 'Option 3' },
+                                        ] %}
+
+                                        <web-spy-select
+                                            options="{{ taxOptions | json_encode }}"
+                                            placeholder="{{ 'Select Tax Set' | trans }}"
+                                            class="{{ mainClass }}__md-field">
+                                        </web-spy-select>
+                                    {% endblock %}
+                                </web-spy-card>
+                            {% endblock %}
+
+                            {% block imagesCard %}
+                                <web-spy-card spy-title="{{ 'Images' | trans }}" class="{{ mainClass }}__card">
+                                    {% block imagesCardInner %}
+                                        {# TODO: dump data, should be changed when BE will be ready  #}
+                                        {% set images = [
+                                            { src: 'https://image.flaticon.com/icons/png/512/3/3901.png' },
+                                            { src: 'https://image.flaticon.com/icons/png/512/3/3901.png' },
+                                            { src: 'https://image.flaticon.com/icons/png/512/3/3901.png' },
+                                        ] %}
+
+                                        <web-spy-collapsible
+                                            cloak
+                                            class="{{ mainClass }}__collapsible"
+                                            spy-title="DEFAULT"
+                                            active="true"
+                                        >
+
+                                            <web-mp-image-sets images="{{ images | json_encode }}">
+                                                <span class="mp-image-sets__title">
+                                                    {{ 'Image Set:' | trans }}
+                                                    <span class="mp-image-sets__name">Default</span>
+                                                </span>
+                                            </web-mp-image-sets>
+                                        </web-spy-collapsible>
+
+                                        <web-spy-collapsible
+                                            cloak
+                                            class="{{ mainClass }}__collapsible"
+                                            title-icon="united-states"
+                                            spy-title="ENGLISH (US)"
+                                            active="true"
+                                        >
+
+                                            <web-mp-image-sets images="{{ images | json_encode }}">
+                                                <span class="mp-image-sets__title">
+                                                    {{ 'Image Set:' | trans }}
+                                                    <span class="mp-image-sets__name">Default</span>
+                                                </span>
+                                            </web-mp-image-sets>
+                                        </web-spy-collapsible>
+
+                                        <web-spy-collapsible
+                                            cloak
+                                            class="{{ mainClass }}__collapsible"
+                                            title-icon="germany"
+                                            spy-title="DEUTSCH (DE)"
+                                            active="true"
+                                        >
+                                            <web-mp-image-sets images="{{ images | json_encode }}">
+                                                <span class="mp-image-sets__title">
+                                                    {{ 'Image Set:' | trans }}
+                                                    <span class="mp-image-sets__name">Default</span>
+                                                </span>
+                                            </web-mp-image-sets>
+                                        </web-spy-collapsible>
+                                    {% endblock %}
+                                </web-spy-card>
+                            {% endblock %}
+
+                            {% block attributesCard %}
+                                <web-spy-card spy-title="{{ 'Attributes' | trans }}" class="{{ mainClass }}__card">
+                                    {% block attributesCardInner %}
+                                        <web-mp-edit-abstract-product-attributes
+                                            table-id="web-mp-edit-abstract-product-attributes"
+                                            config='{{ guiTableConfiguration(priceProductAbstractTableConfiguration) }}'>
+                                        </web-mp-edit-abstract-product-attributes>
+                                    {% endblock %}
+                                </web-spy-card>
+                            {% endblock %}
+
+                            {% block categoriesCard %}
+                                <web-spy-card spy-title="{{ 'Categories' | trans }}" class="{{ mainClass }}__card">
+                                    {% block categoriesCardInner %}
+                                        {# TODO: dump data, should be changed when BE will be ready  #}
+                                        {% set categoriesOptions = [
+                                            { value: 1, title: 'Option 1' },
+                                            { value: '2', title: 'Option 2' },
+                                            { value: '3', title: 'Option 3' },
+                                        ] %}
+
+                                        <web-spy-tree-select
+                                            items="{{ categoriesOptions | json_encode }}"
+                                            placeholder="{{ 'Select Categories' | trans }}">
+                                        </web-spy-tree-select>
+                                    {% endblock %}
+                                </web-spy-card>
+                            {% endblock %}
                         </web-spy-tab>
                     {% endblock %}
 

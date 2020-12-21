@@ -8,6 +8,18 @@
 @edit-abstract-information-margin: -@edit-abstract-product-padding -@edit-abstract-product-padding 0;
 @edit-abstract-heading-margin: 0 -@edit-abstract-product-common-blocks-indent;
 @edit-abstract-heading-padding: 0 @edit-abstract-product-common-blocks-indent;
+@edit-abstract-card-padding-bottom: 20px;
+@edit-abstract-table-padding-inside-card: 3px 5px;
+@edit-abstract-collapsible-padding-bottom: 10px;
+@edit-abstract-stores-field-max-width: 420px;
+
+.@{ajax-form-prefix-cls}-container {
+    overflow-y: auto;
+
+    &--loading {
+        overflow: hidden;
+    }
+}
 
 .mp-edit-abstract-product {
     display: block;
@@ -51,5 +63,37 @@
     &__content {
         display: block;
         padding-top: @edit-abstract-product-default-spacing-top;
+    }
+
+    &__card {
+        display: block;
+        padding-bottom: @edit-abstract-card-padding-bottom;
+
+        &:last-child {
+            padding-bottom: 0;
+        }
+
+        .@{table-prefix-cls},
+        .@{table-filters-feature-prefix-cls} {
+            background: @gray-lighter;
+        }
+
+        .@{table-prefix-cls} {
+            padding: @edit-abstract-table-padding-inside-card;
+        }
+    }
+
+    &__collapsible {
+        display: block;
+        padding-bottom: @edit-abstract-collapsible-padding-bottom;
+
+        &:last-child {
+            padding-bottom: 0;
+        }
+    }
+
+    &__md-field {
+        display: block;
+        max-width: @edit-abstract-stores-field-max-width;
     }
 }

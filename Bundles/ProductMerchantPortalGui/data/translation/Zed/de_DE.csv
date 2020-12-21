@@ -1,3 +1,4 @@
+Attributes,Attribute
 Categories,Kategorien
 Currencies,Currencies
 Currency,Currency
@@ -5,21 +6,29 @@ Default,Default
 Description,Description
 Image,Bild
 "Image Set","Image Set"
+"Image Set:","Image Set:"
 Images,Images
 "Manage Product","Manage Product"
 Name,Name
+"Name & Description","Name & Beschreibung"
 Offline,Offline
 Online,Online
 "Please resolve all errors.","Please resolve all errors."
+Price,Preis
 Products,Produkte
+"Product Details",Produktdetails
 "Provide a name","Provide a name"
 "Provide description","Provide description"
 Save,Save
 Select,Select
+"Select Stores","Wählen Sie Stores"
+"Select Tax Set","Wählen Sie Steuersatz"
+"Select Categories","Wählen Sie Kategorien"
 SKU,SKU
 "Search by SKU, Name","Suche nach SKU, Name"
 Stores,Stores
 "Super Attributes",Superattribute
+"Tax Set","Steuersatz"
 "The Product is saved.","The Product is saved."
 "The value cannot be empty. Please fill in this input.","The value cannot be empty. Please fill in this input."
 Variants,Varianten
