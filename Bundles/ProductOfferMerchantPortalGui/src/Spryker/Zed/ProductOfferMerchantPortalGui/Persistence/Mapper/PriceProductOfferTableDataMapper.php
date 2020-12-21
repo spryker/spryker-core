@@ -60,8 +60,10 @@ class PriceProductOfferTableDataMapper
         array $priceProductOfferTableDataArray,
         PriceProductOfferTableViewCollectionTransfer $priceProductOfferTableViewCollectionTransfer
     ): PriceProductOfferTableViewCollectionTransfer {
+        $priceTypeTransfers = $this->priceProductFacade->getPriceTypeValues();
+
         foreach ($priceProductOfferTableDataArray as $priceProductOfferTableRowDataArray) {
-            $prices = $this->preparePrices($priceProductOfferTableRowDataArray);
+            $prices = $this->preparePrices($priceProductOfferTableRowDataArray, $priceTypeTransfers);
 
             $priceProductOfferTableViewTransfer = (new PriceProductOfferTableViewTransfer())
                 ->setStore($priceProductOfferTableRowDataArray[PriceProductOfferTableViewTransfer::STORE])
@@ -82,17 +84,20 @@ class PriceProductOfferTableDataMapper
      * @phpstan-return array<mixed>
      *
      * @param array $priceProductOfferTableRowDataArray
+     * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypeTransfers
      *
      * @return array
      */
-    protected function preparePrices(array $priceProductOfferTableRowDataArray): array
+    protected function preparePrices(array $priceProductOfferTableRowDataArray, array $priceTypeTransfers): array
     {
         $prices = [];
 
-        foreach ($this->priceProductFacade->getPriceTypeValues() as $priceTypeTransfer) {
-            $priceTypeName = mb_strtolower($priceTypeTransfer->getName());
+        foreach ($priceTypeTransfers as $priceTypeTransfer) {
+            $priceTypeName = mb_strtolower((string)$priceTypeTransfer->getName());
             $keyNetPrice = $priceTypeName . static::SUFFIX_PRICE_TYPE_NET;
             $keyGrossPrice = $priceTypeName . static::SUFFIX_PRICE_TYPE_GROSS;
+            $prices[$this->createNetKey($priceTypeName)] = 0;
+            $prices[$this->createGrossKey($priceTypeName)] = 0;
 
             if (isset($priceProductOfferTableRowDataArray[$keyGrossPrice])) {
                 $prices[$this->createGrossKey($priceTypeName)] = $priceProductOfferTableRowDataArray[$keyGrossPrice];

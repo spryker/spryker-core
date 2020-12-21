@@ -63,10 +63,11 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
      */
     public function getConfiguration(int $idProductOffer, array $initialData = []): GuiTableConfigurationTransfer
     {
+        $priceTypeTransfers = $this->priceProductFacade->getPriceTypeValues();
         $this->idProductOffer = $idProductOffer;
         $guiTableConfigurationBuilder = $this->guiTableFactory->createConfigurationBuilder();
 
-        $guiTableConfigurationBuilder = $this->addColumns($guiTableConfigurationBuilder);
+        $guiTableConfigurationBuilder = $this->addColumns($guiTableConfigurationBuilder, $priceTypeTransfers);
         $guiTableConfigurationBuilder = $this->addFilters($guiTableConfigurationBuilder);
         $guiTableConfigurationBuilder = $this->addRowActions($guiTableConfigurationBuilder);
 
@@ -80,6 +81,7 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
 
         $guiTableConfigurationBuilder = $this->setEditableConfiguration(
             $guiTableConfigurationBuilder,
+            $priceTypeTransfers,
             $initialData
         );
 
@@ -125,15 +127,21 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
      * @phpstan-param array<mixed> $initialData
      *
      * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
+     * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypeTransfers
      * @param array $initialData
      *
      * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
      */
     protected function setEditableConfiguration(
         GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder,
+        array $priceTypeTransfers,
         array $initialData = []
     ): GuiTableConfigurationBuilderInterface {
-        $guiTableConfigurationBuilder = parent::setEditableConfiguration($guiTableConfigurationBuilder, $initialData);
+        $guiTableConfigurationBuilder = parent::setEditableConfiguration(
+            $guiTableConfigurationBuilder,
+            $priceTypeTransfers,
+            $initialData
+        );
         $guiTableConfigurationBuilder->enableInlineDataEditing(static::URL_SAVE_PRICES, static::METHOD_UPDATE_ACTION_URL);
 
         return $guiTableConfigurationBuilder;

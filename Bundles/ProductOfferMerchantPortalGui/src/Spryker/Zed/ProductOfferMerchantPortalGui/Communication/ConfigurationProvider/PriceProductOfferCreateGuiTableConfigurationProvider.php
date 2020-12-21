@@ -25,8 +25,9 @@ class PriceProductOfferCreateGuiTableConfigurationProvider extends AbstractPrice
      */
     public function getConfiguration(array $initialData = []): GuiTableConfigurationTransfer
     {
+        $priceTypeTransfers = $this->priceProductFacade->getPriceTypeValues();
         $guiTableConfigurationBuilder = $this->guiTableFactory->createConfigurationBuilder();
-        $guiTableConfigurationBuilder = $this->addColumns($guiTableConfigurationBuilder);
+        $guiTableConfigurationBuilder = $this->addColumns($guiTableConfigurationBuilder, $priceTypeTransfers);
 
         $guiTableConfigurationBuilder
             ->setDataSourceUrl(static::DATA_URL)
@@ -37,6 +38,7 @@ class PriceProductOfferCreateGuiTableConfigurationProvider extends AbstractPrice
 
         $guiTableConfigurationBuilder = $this->setEditableConfiguration(
             $guiTableConfigurationBuilder,
+            $priceTypeTransfers,
             $initialData
         );
 

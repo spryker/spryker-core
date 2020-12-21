@@ -75,29 +75,34 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
      * @phpstan-param array<mixed> $initialData
      *
      * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
+     * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypeTransfers
      * @param array $initialData
      *
      * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
      */
     protected function setEditableConfiguration(
         GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder,
+        array $priceTypeTransfers,
         array $initialData = []
     ): GuiTableConfigurationBuilderInterface {
         $formInputName = sprintf('%s[%s]', static::BLOCK_PREFIX, static::FIELD_PRODUCT_OFFER_PRICES);
 
         $guiTableConfigurationBuilder->enableAddingNewRows($formInputName, $initialData);
-        $guiTableConfigurationBuilder = $this->addEditableColumns($guiTableConfigurationBuilder);
+        $guiTableConfigurationBuilder = $this->addEditableColumns($guiTableConfigurationBuilder, $priceTypeTransfers);
 
         return $guiTableConfigurationBuilder;
     }
 
     /**
      * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
+     * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypeTransfers
      *
      * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
      */
-    protected function addEditableColumns(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
-    {
+    protected function addEditableColumns(
+        GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder,
+        array $priceTypeTransfers
+    ): GuiTableConfigurationBuilderInterface {
         $guiTableConfigurationBuilder->addEditableColumnSelect(
             PriceProductOfferTableViewTransfer::STORE,
             static::TITLE_COLUMN_STORE,
@@ -110,8 +115,8 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
             $this->getCurrencyOptions()
         );
 
-        foreach ($this->priceProductFacade->getPriceTypeValues() as $priceTypeTransfer) {
-            $idPriceTypeName = mb_strtolower($priceTypeTransfer->getName());
+        foreach ($priceTypeTransfers as $priceTypeTransfer) {
+            $idPriceTypeName = mb_strtolower((string)$priceTypeTransfer->getName());
             $titlePriceTypeName = ucfirst($idPriceTypeName);
             $idNetColumn = sprintf(
                 '%s[%s][%s]',
@@ -149,11 +154,14 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
 
     /**
      * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
+     * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypeTransfers
      *
      * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
      */
-    protected function addColumns(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
-    {
+    protected function addColumns(
+        GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder,
+        array $priceTypeTransfers
+    ): GuiTableConfigurationBuilderInterface {
         $guiTableConfigurationBuilder->addColumnChip(
             PriceProductOfferTableViewTransfer::STORE,
             static::TITLE_COLUMN_STORE,
@@ -170,8 +178,8 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
             []
         );
 
-        foreach ($this->priceProductFacade->getPriceTypeValues() as $priceTypeTransfer) {
-            $idPriceTypeName = mb_strtolower($priceTypeTransfer->getName());
+        foreach ($priceTypeTransfers as $priceTypeTransfer) {
+            $idPriceTypeName = mb_strtolower((string)$priceTypeTransfer->getName());
             $titlePriceTypeName = ucfirst($idPriceTypeName);
             $idNetColumn = sprintf(
                 '%s[%s][%s]',
@@ -212,7 +220,7 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
 
         $storeOptions = [];
         foreach ($storeTransfers as $storeTransfer) {
-            $storeOptions[(string)$storeTransfer->getIdStore()] = $storeTransfer->getName();
+            $storeOptions[(string)$storeTransfer->getIdStore()] = (string)$storeTransfer->getName();
         }
 
         return $storeOptions;
@@ -228,7 +236,7 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
         $currencyOptions = [];
         foreach ($storeWithCurrencyTransfers as $storeWithCurrencyTransfer) {
             foreach ($storeWithCurrencyTransfer->getCurrencies() as $currencyTransfer) {
-                $currencyOptions[(string)$currencyTransfer->getIdCurrency()] = $currencyTransfer->getCode();
+                $currencyOptions[(string)$currencyTransfer->getIdCurrency()] = (string)$currencyTransfer->getCode();
             }
         }
 

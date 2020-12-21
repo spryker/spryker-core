@@ -100,8 +100,8 @@ class AbstractProductOfferController extends AbstractController
         }
 
         $requestTableData[0] = array_map(function ($val) {
-            if (!$val) {
-                return (string)$val;
+            if (empty($val)) {
+                return (int)$val;
             }
 
             return $val;

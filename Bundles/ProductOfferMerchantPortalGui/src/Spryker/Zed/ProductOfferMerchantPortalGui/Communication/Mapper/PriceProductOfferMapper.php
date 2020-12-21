@@ -75,7 +75,7 @@ class PriceProductOfferMapper
      */
     protected function addInitialDataErrors(ValidationErrorTransfer $validationErrorTransfer, array $initialData): array
     {
-        $propertyPath = $this->extractPropertyPathValues($validationErrorTransfer->getPropertyPath());
+        $propertyPath = $this->extractPropertyPathValues((string)$validationErrorTransfer->getPropertyPath());
 
         if (!$propertyPath || !is_array($propertyPath)) {
             return $initialData;
@@ -94,7 +94,7 @@ class PriceProductOfferMapper
             return $initialData;
         }
 
-        $idColumn = $this->transformPropertyPathToColumnId($propertyPath);
+        $idColumn = $this->transformPropertyPathToColumnId($propertyPath, $priceTypes);
 
         if (!$idColumn) {
             return $initialData;
@@ -124,10 +124,11 @@ class PriceProductOfferMapper
 
     /**
      * @param string[] $propertyPath
+     * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypes
      *
      * @return string
      */
-    protected function transformPropertyPathToColumnId(array $propertyPath): string
+    protected function transformPropertyPathToColumnId(array $propertyPath, array $priceTypes): string
     {
         [$entityNumber, $entityName, $fieldName] = $propertyPath;
 
@@ -140,8 +141,7 @@ class PriceProductOfferMapper
         }
 
         if ($entityName === PriceProductTransfer::MONEY_VALUE) {
-            $priceTypes = $this->priceProductFacade->getPriceTypeValues();
-            $priceTypeName = mb_strtolower($priceTypes[$entityNumber]->getName());
+            $priceTypeName = mb_strtolower((string)$priceTypes[$entityNumber]->getName());
 
             return sprintf('%s[%s][%s]', $priceTypeName, (string)$entityName, (string)$fieldName);
         }

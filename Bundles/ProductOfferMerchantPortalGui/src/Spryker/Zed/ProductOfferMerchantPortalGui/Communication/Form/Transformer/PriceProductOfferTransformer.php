@@ -155,7 +155,7 @@ class PriceProductOfferTransformer implements DataTransformerInterface
                 ->setFkStore($newPriceProductOffer[PriceProductOfferTableViewTransfer::STORE])
                 ->setFkCurrency($newPriceProductOffer[PriceProductOfferTableViewTransfer::CURRENCY]);
 
-            $priceTypeName = mb_strtolower($priceTypeTransfer->getName());
+            $priceTypeName = mb_strtolower((string)$priceTypeTransfer->getName());
             $netAmountKey = $this->createNetKey($priceTypeName);
             $grossAmountKey = $this->createGrossKey($priceTypeName);
 
@@ -192,16 +192,23 @@ class PriceProductOfferTransformer implements DataTransformerInterface
     protected function addPrices(PriceProductTransfer $priceProductTransfer, array $prices): array
     {
         foreach ($this->priceProductFacade->getPriceTypeValues() as $priceTypeTransfer) {
-            if ($priceProductTransfer->getPriceType()->getName() !== $priceTypeTransfer->getName()) {
+            /** @var string $priceTypeName */
+            $priceTypeName = $priceTypeTransfer->getName();
+
+            /** @var \Generated\Shared\Transfer\PriceTypeTransfer $currentPriceTypeTransfer */
+            $currentPriceTypeTransfer = $priceProductTransfer->getPriceTypeOrFail();
+            if ($currentPriceTypeTransfer->getName() !== $priceTypeName) {
                 continue;
             }
 
-            $priceTypeName = mb_strtolower($priceTypeTransfer->getName());
+            $priceTypeName = mb_strtolower((string)$priceTypeName);
             $netAmountKey = $this->createNetKey($priceTypeName);
             $grossAmountKey = $this->createGrossKey($priceTypeName);
+            /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+            $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
 
-            $prices[$netAmountKey] = $this->moneyFacade->convertIntegerToDecimal($priceProductTransfer->getMoneyValue()->getNetAmount());
-            $prices[$grossAmountKey] = $this->moneyFacade->convertIntegerToDecimal($priceProductTransfer->getMoneyValue()->getGrossAmount());
+            $prices[$netAmountKey] = $this->moneyFacade->convertIntegerToDecimal((int)$moneyValueTransfer->getNetAmount());
+            $prices[$grossAmountKey] = $this->moneyFacade->convertIntegerToDecimal((int)$moneyValueTransfer->getGrossAmount());
         }
 
         return $prices;

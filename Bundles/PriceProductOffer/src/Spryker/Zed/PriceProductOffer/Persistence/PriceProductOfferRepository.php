@@ -137,7 +137,7 @@ class PriceProductOfferRepository extends AbstractRepository implements PricePro
                 ->endUse();
         }
 
-        if ($priceProductOfferCriteriaTransfer->getStoreIds()) {
+        if ($priceProductOfferCriteriaTransfer->getPriceTypeIds()) {
             $priceProductOfferQuery->useSpyPriceProductStoreQuery()
                 ->usePriceProductQuery()
                 ->filterByFkPriceType_In($priceProductOfferCriteriaTransfer->getPriceTypeIds())
