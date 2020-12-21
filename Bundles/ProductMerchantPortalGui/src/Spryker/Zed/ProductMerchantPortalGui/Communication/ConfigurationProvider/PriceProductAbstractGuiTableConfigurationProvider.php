@@ -78,8 +78,9 @@ class PriceProductAbstractGuiTableConfigurationProvider implements PriceProductA
         $guiTableConfigurationBuilder
             ->setDataSourceUrl(static::DATA_URL)
             ->setDefaultPageSize(10)
-            ->isSearchEnabled(false)
-            ->isColumnConfiguratorEnabled(false);
+//            ->isSearchEnabled(false)
+//            ->isColumnConfiguratorEnabled(false)
+        ;
 
         return $guiTableConfigurationBuilder->createConfiguration();
     }
