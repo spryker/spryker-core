@@ -45,7 +45,9 @@ class PriceProductMerchantRelationshipStorageEventSubscriber extends AbstractPlu
             ->addConcretePriceProductMerchantRelationshipDeleteListener($eventCollection)
             ->addAbstractPriceProductMerchantRelationshipCreateListener($eventCollection)
             ->addAbstractPriceProductMerchantRelationshipUpdateListener($eventCollection)
-            ->addAbstractPriceProductMerchantRelationshipDeleteListener($eventCollection);
+            ->addAbstractPriceProductMerchantRelationshipDeleteListener($eventCollection)
+            ->addConcretePriceProductMerchantRelationshipPublishListener($eventCollection)
+            ->addAbstractPriceProductMerchantRelationshipPublishListener($eventCollection);
 
         return $eventCollection;
     }
@@ -154,6 +156,30 @@ class PriceProductMerchantRelationshipStorageEventSubscriber extends AbstractPlu
     protected function addAbstractPriceProductMerchantRelationshipDeleteListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(PriceProductMerchantRelationshipEvents::ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_DELETE, new PriceProductMerchantRelationshipAbstractDeleteListener(), 0, null, $this->getConfig()->getPriceProductAbstractMerchantRelationEventQueueName());
+
+        return $this;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return $this
+     */
+    protected function addConcretePriceProductMerchantRelationshipPublishListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(PriceProductMerchantRelationshipEvents::PRICE_CONCRETE_PUBLISH, new PriceProductMerchantRelationshipConcreteListener(), 0, null, $this->getConfig()->getPriceProductConcreteMerchantRelationEventQueueName());
+
+        return $this;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return $this
+     */
+    protected function addAbstractPriceProductMerchantRelationshipPublishListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(PriceProductMerchantRelationshipEvents::PRICE_ABSTRACT_PUBLISH, new PriceProductMerchantRelationshipAbstractListener(), 0, null, $this->getConfig()->getPriceProductAbstractMerchantRelationEventQueueName());
 
         return $this;
     }
