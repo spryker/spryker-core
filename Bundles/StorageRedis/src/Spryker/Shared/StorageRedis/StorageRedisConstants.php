@@ -17,6 +17,7 @@ interface StorageRedisConstants
      * - Defines a protocol for Redis connection.
      *
      * @api
+     *
      * @deprecated Use {@link \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_SCHEME} instead.
      */
     public const STORAGE_REDIS_PROTOCOL = 'STORAGE_REDIS:STORAGE_REDIS_PROTOCOL';

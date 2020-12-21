@@ -42,6 +42,7 @@ interface SessionRedisConstants
      * - Defines a protocol (tcp:// or redis://) for Redis connection when used as Yves session storage.
      *
      * @api
+     *
      * @deprecated Use {@link \Spryker\Shared\SessionRedis\SessionRedisConstants::YVES_SESSION_REDIS_SCHEME} instead.
      */
     public const YVES_SESSION_REDIS_PROTOCOL = 'SESSION_REDIS:YVES_SESSION_REDIS_PROTOCOL';
@@ -116,6 +117,7 @@ interface SessionRedisConstants
      * - Defines a protocol (tcp:// or redis://) for Redis connection when used as Zed session storage.
      *
      * @api
+     *
      * @deprecated Use {@link \Spryker\Shared\SessionRedis\SessionRedisConstants::ZED_SESSION_REDIS_PROTOCOL} instead.
      */
     public const ZED_SESSION_REDIS_PROTOCOL = 'SESSION_REDIS:ZED_SESSION_REDIS_PROTOCOL';

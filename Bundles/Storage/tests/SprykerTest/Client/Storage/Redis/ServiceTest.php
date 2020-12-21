@@ -29,6 +29,7 @@ class ServiceTest extends Unit
 {
     /**
      * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_PROTOCOL
+     *
      * @deprecated Use {@link \SprykerTest\Client\Storage\Redis\ServiceTest::REDIS_SCHEME} instead.
      */
     protected const REDIS_PROTOCOL = 'STORAGE_REDIS:STORAGE_REDIS_PROTOCOL';
