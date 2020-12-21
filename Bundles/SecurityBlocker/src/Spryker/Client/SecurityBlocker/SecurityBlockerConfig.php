@@ -16,6 +16,7 @@ use Spryker\Shared\SecurityBlocker\SecurityBlockerConstants;
 class SecurityBlockerConfig extends AbstractBundleConfig
 {
     public const SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE = 'customer';
+    public const SECURITY_BLOCKER_AGENT_ENTITY_TYPE = 'agent';
 
     protected const REDIS_DEFAULT_DATABASE = 7;
     protected const STORAGE_REDIS_CONNECTION_KEY = 'SECURITY_BLOCKER_REDIS';
@@ -56,27 +57,6 @@ class SecurityBlockerConfig extends AbstractBundleConfig
 
         return (new SecurityBlockerConfigurationSettingsTransfer())
             ->fromArray($securityConfigurationSettings[static::ENTITY_TYPE_DEFAULT], true);
-    }
-
-    /**
-     * Specification:
-     * - Returns the security configuration per type.
-     *
-     * @phpstan-return array<int|string, array<string, mixed>>
-     *
-     * @api
-     *
-     * @return array[][]
-     */
-    public function getSecurityBlockerConfigurationSettings(): array
-    {
-        return [
-            static::ENTITY_TYPE_DEFAULT => [
-                'ttl' => $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_TTL, 600),
-                'blockFor' => $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCK_FOR, 300),
-                'numberOfAttempts' => $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_NUMBER_OF_ATTEMPTS, 10),
-            ],
-        ];
     }
 
     /**
@@ -123,5 +103,27 @@ class SecurityBlockerConfig extends AbstractBundleConfig
     protected function getConnectionOptions(): array
     {
         return $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_CONNECTION_OPTIONS, []);
+    }
+
+    /**
+     * Specification:
+     * - Returns the security configuration per type.
+     *
+     * @api
+     *
+     * @return mixed[]
+     */
+    public function getSecurityBlockerConfigurationSettings(): array
+    {
+        return [
+            static::ENTITY_TYPE_DEFAULT => [
+                SecurityBlockerConfigurationSettingsTransfer::TTL
+                    => $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_TTL, 600),
+                SecurityBlockerConfigurationSettingsTransfer::BLOCK_FOR
+                    => $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCK_FOR, 300),
+                SecurityBlockerConfigurationSettingsTransfer::NUMBER_OF_ATTEMPTS
+                    => $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_NUMBER_OF_ATTEMPTS, 10),
+            ],
+        ];
     }
 }

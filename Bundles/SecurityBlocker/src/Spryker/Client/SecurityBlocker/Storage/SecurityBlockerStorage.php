@@ -104,6 +104,7 @@ class SecurityBlockerStorage implements SecurityBlockerStorageInterface
 
         return $securityCheckAuthResponseTransfer
             ->setNumberOfAttempts($numberOfAttempts)
+            ->setBlockedFor($securityBlockerConfigurationSettingsTransfer->getBlockFor())
             ->setIsSuccessful($numberOfAttempts < $securityBlockerConfigurationSettingsTransfer->getNumberOfAttempts());
     }
 

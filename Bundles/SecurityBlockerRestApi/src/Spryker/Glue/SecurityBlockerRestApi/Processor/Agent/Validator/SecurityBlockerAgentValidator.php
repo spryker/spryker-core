@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\SecurityBlockerRestApi\Processor\Customer\Validator;
+namespace Spryker\Glue\SecurityBlockerRestApi\Processor\Agent\Validator;
 
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
@@ -16,12 +16,12 @@ use Spryker\Glue\SecurityBlockerRestApi\Dependency\Client\SecurityBlockerRestApi
 use Spryker\Glue\SecurityBlockerRestApi\SecurityBlockerRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
-class SecurityBlockerValidator implements SecurityBlockerValidatorInterface
+class SecurityBlockerAgentValidator implements SecurityBlockerAgentValidatorInterface
 {
     /**
-     * @uses \Spryker\Glue\AuthRestApi\AuthRestApiConfig::RESOURCE_ACCESS_TOKENS
+     * @uses \Spryker\Glue\AgentAuthRestApi\AgentAuthRestApiConfig::RESOURCE_AGENT_ACCESS_TOKENS
      */
-    protected const RESOURCE_ACCESS_TOKENS = 'access-tokens';
+    protected const RESOURCE_AGENT_ACCESS_TOKENS = 'agent-access-tokens';
 
     /**
      * @var \Spryker\Glue\SecurityBlockerRestApi\Dependency\Client\SecurityBlockerRestApiToSecurityBlockerClientInterface
@@ -47,14 +47,15 @@ class SecurityBlockerValidator implements SecurityBlockerValidatorInterface
             return null;
         }
 
-        /** @var \Generated\Shared\Transfer\RestAccessTokensAttributesTransfer $restAccessTokensAttributesTransfer */
-        $restAccessTokensAttributesTransfer = $restRequest->getResource()->getAttributes();
+        /** @var \Generated\Shared\Transfer\RestAgentAccessTokensRequestAttributesTransfer $restAgentAccessTokensRequestAttributesTransfer */
+        $restAgentAccessTokensRequestAttributesTransfer = $restRequest->getResource()->getAttributes();
         $securityCheckAuthContextTransfer = (new SecurityCheckAuthContextTransfer())
-            ->setType(SecurityBlockerRestApiConfig::SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE)
+            ->setType(SecurityBlockerRestApiConfig::SECURITY_BLOCKER_AGENT_ENTITY_TYPE)
             ->setIp($restRequest->getHttpRequest()->getClientIp())
-            ->setAccount($restAccessTokensAttributesTransfer->getUsername());
+            ->setAccount($restAgentAccessTokensRequestAttributesTransfer->getUsername());
 
-        $securityCheckAuthResponseTransfer = $this->securityBlockerClient->getLoginAttemptCount($securityCheckAuthContextTransfer);
+        $securityCheckAuthResponseTransfer = $this->securityBlockerClient
+            ->getLoginAttempt($securityCheckAuthContextTransfer);
 
         if ($securityCheckAuthResponseTransfer->getIsSuccessful()) {
             return null;
@@ -70,7 +71,7 @@ class SecurityBlockerValidator implements SecurityBlockerValidatorInterface
      */
     protected function isAuthenticationRequest(RestRequestInterface $restRequest): bool
     {
-        return $restRequest->getResource()->getType() === static::RESOURCE_ACCESS_TOKENS
+        return in_array($restRequest->getResource()->getType(), [static::RESOURCE_AGENT_ACCESS_TOKENS])
             && $restRequest->getHttpRequest()->getMethod() === 'POST';
     }
 
