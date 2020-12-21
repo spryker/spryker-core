@@ -232,9 +232,9 @@ class LoggableRedisAdapter implements RedisAdapterInterface
     /**
      * @param string $key
      *
-     * @return bool
+     * @return int
      */
-    public function incr(string $key): bool
+    public function incr(string $key): int
     {
         $this->redisLogger->log('INCR', ['key' => $key]);
 

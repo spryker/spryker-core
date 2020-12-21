@@ -138,7 +138,7 @@ class SecurityBlockerStorage implements SecurityBlockerStorageInterface
         if ($existingValue && $newValue < $securityBlockerConfigurationSettingsTransfer->getNumberOfAttempts()) {
             $incrResult = $this->securityBlockerRedisWrapper->incr($storageKey);
 
-            return $incrResult ? $newValue : 0;
+            return $incrResult ?? 0;
         }
 
         $ttl = !$existingValue

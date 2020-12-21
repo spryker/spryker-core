@@ -24,4 +24,12 @@
         <property name="blockedFor" type="int"/>
     </transfer>
 
+    <transfer name="RestAccessTokensAttributes">
+        <property name="username" type="string" restRequestParameter="required"/>
+    </transfer>
+
+    <transfer name="RestAgentAccessTokensRequestAttributes">
+        <property name="username" type="string" restRequestParameter="required"/>
+    </transfer>
+
 </transfers>

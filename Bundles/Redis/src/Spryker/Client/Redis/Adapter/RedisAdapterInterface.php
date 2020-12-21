@@ -116,7 +116,7 @@ interface RedisAdapterInterface
     /**
      * @param string $key
      *
-     * @return bool
+     * @return int
      */
-    public function incr(string $key): bool;
+    public function incr(string $key): int;
 }

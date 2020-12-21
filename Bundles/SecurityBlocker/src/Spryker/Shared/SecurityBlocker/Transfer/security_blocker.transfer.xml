@@ -12,6 +12,7 @@
     <transfer name="SecurityCheckAuthResponse">
         <property name="isSuccessful" type="bool"/>
         <property name="numberOfAttempts" type="int"/>
+        <property name="blockFor" type="int"/>
         <property name="securityCheckAuthContext" type="SecurityCheckAuthContext"/>
     </transfer>
 

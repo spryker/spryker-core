@@ -55,9 +55,9 @@ class SecurityBlockerRedisWrapper implements SecurityBlockerRedisWrapperInterfac
     /**
      * @param string $key
      *
-     * @return bool
+     * @return int
      */
-    public function incr(string $key): bool
+    public function incr(string $key): int
     {
         return $this->redisClient->incr(
             $this->securityBlockerConfig->getRedisConnectionKey(),

@@ -253,7 +253,7 @@ interface RedisClientInterface
      * @param string $connectionKey
      * @param string $key
      *
-     * @return bool
+     * @return int
      */
-    public function incr(string $connectionKey, string $key): bool;
+    public function incr(string $connectionKey, string $key): int;
 }
