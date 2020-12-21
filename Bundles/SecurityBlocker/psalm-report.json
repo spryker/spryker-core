@@ -1,0 +1,54 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 64,
+            "line_to": 64,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Client\\SecurityBlocker\\SecurityBlockerConfig::getSecurityBlockerConfigurationSettingsForType cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityBlocker/src/Spryker/Client/SecurityBlocker/Storage/SecurityBlockerStorage.php",
+            "snippet": "            ->getSecurityBlockerConfigurationSettingsForType($securityCheckAuthContextTransfer->getType());",
+            "selected_text": "$securityCheckAuthContextTransfer->getType()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 105,
+            "line_to": 105,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Client\\SecurityBlocker\\SecurityBlockerConfig::getSecurityBlockerConfigurationSettingsForType cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityBlocker/src/Spryker/Client/SecurityBlocker/Storage/SecurityBlockerStorage.php",
+            "snippet": "            ->getSecurityBlockerConfigurationSettingsForType($securityCheckAuthContextTransfer->getType());",
+            "selected_text": "$securityCheckAuthContextTransfer->getType()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 121,
+            "line_to": 121,
+            "type": "PossiblyNullOperand",
+            "message": "Cannot concatenate with a possibly null null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityBlocker/src/Spryker/Client/SecurityBlocker/Storage/SecurityBlockerStorage.php",
+            "snippet": "            . $securityCheckAuthContextTransfer->getIp()",
+            "selected_text": "$securityCheckAuthContextTransfer->getIp()",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 123,
+            "line_to": 123,
+            "type": "PossiblyNullOperand",
+            "message": "Cannot concatenate with a possibly null null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityBlocker/src/Spryker/Client/SecurityBlocker/Storage/SecurityBlockerStorage.php",
+            "snippet": "            . $securityCheckAuthContextTransfer->getAccount();",
+            "selected_text": "$securityCheckAuthContextTransfer->getAccount()",
+            "error_level": 1,
+            "shortcode": 80
+        }
+    ],
+    "deprecation": []
+}

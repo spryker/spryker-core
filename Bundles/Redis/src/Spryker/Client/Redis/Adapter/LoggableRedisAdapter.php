@@ -228,4 +228,16 @@ class LoggableRedisAdapter implements RedisAdapterInterface
 
         $this->redisAdapter->flushDb();
     }
+
+    /**
+     * @param string $key
+     *
+     * @return bool
+     */
+    public function incr(string $key): bool
+    {
+        $this->redisLogger->log('INCR', ['key' => $key]);
+
+        return $this->redisAdapter->incr($key);
+    }
 }
