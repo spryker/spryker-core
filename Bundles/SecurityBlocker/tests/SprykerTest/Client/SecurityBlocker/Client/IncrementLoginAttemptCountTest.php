@@ -14,7 +14,7 @@ use Spryker\Client\SecurityBlocker\Dependency\Client\SecurityBlockerToRedisClien
 use Spryker\Client\SecurityBlocker\Exception\SecurityBlockerException;
 use Spryker\Client\SecurityBlocker\SecurityBlockerConfig;
 use Spryker\Client\SecurityBlocker\SecurityBlockerDependencyProvider;
-use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
+use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 
 /**
  * Auto-generated group annotations
@@ -57,7 +57,7 @@ class IncrementLoginAttemptCountTest extends Test
     {
         // Arrange
         $securityCheckAuthContextTransfer = (new SecurityCheckAuthContextTransfer());
-        $this->expectException(RequiredTransferPropertyException::class);
+        $this->expectException(NullValueException::class);
 
         // Act
         $this->tester->getLocator()->securityBlocker()->client()->incrementLoginAttemptCount($securityCheckAuthContextTransfer);
