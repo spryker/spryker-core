@@ -225,6 +225,56 @@ class TransferGeneratorTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testStrictTransferCodeLayoutIsCorrect(): void
+    {
+        $sourceDirectories = [
+            codecept_data_dir('Shared/Strict/Transfer/'),
+        ];
+
+        $transferDefinitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories);
+        $messenger = $this->getMessenger();
+        $generator = $this->getClassGenerator();
+
+        $transferGenerator = new TransferGenerator($messenger, $generator, $transferDefinitionBuilder);
+        $transferGenerator->execute();
+
+        $this->assertTransferClassContent(
+            'expected.partially_strict.transfer.php',
+            'PartiallyStrictTransfer.php',
+            'Partially strict transfer has incorrect content'
+        );
+        $this->assertTransferClassContent(
+            'expected.fully_strict.transfer.php',
+            'FullyStrictTransfer.php',
+            'Fully strict transfer has incorrect content'
+        );
+    }
+
+    /**
+     * @param string $expectedTransferFileName
+     * @param string $actualTransferClassName
+     * @param string $message
+     *
+     * @return void
+     */
+    protected function assertTransferClassContent(
+        string $expectedTransferFileName,
+        string $actualTransferClassName,
+        string $message = ''
+    ): void {
+        $generatedTransferFilePath = $this->getTargetDirectory() . $actualTransferClassName;
+        $this->assertFileExists($generatedTransferFilePath);
+
+        $this->assertSame(
+            file_get_contents(codecept_data_dir('test_files/' . $expectedTransferFileName)),
+            file_get_contents($generatedTransferFilePath),
+            $message
+        );
+    }
+
+    /**
      * @return string
      */
     protected function getTargetDirectory(): string

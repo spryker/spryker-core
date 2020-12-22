@@ -25,7 +25,7 @@ abstract class AbstractRepository
     /**
      * @var \Spryker\Zed\Kernel\Persistence\PersistenceFactoryInterface
      */
-    private $factory;
+    protected $factory;
 
     /**
      * @param \Spryker\Zed\Kernel\AbstractBundleDependencyProvider $dependencyProvider

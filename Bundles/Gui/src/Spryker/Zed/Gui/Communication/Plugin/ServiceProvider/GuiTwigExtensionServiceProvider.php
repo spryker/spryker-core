@@ -35,7 +35,6 @@ class GuiTwigExtensionServiceProvider extends AbstractPlugin implements ServiceP
 
         $app['twig'] = $app->share(
             $app->extend('twig', function (Environment $twig) {
-
                 $this->registerTwigFunctions($twig);
                 $this->registerTwigFilters($twig);
 

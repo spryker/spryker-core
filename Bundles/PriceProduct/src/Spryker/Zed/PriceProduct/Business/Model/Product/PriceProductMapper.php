@@ -78,7 +78,6 @@ class PriceProductMapper implements PriceProductMapperInterface
         SpyPriceProductStore $priceProductStoreEntity,
         SpyPriceProduct $priceProductEntity
     ) {
-
         $moneyValueTransfer = $this->mapMoneyValueTransfer($priceProductStoreEntity);
         $priceTypeTransfer = $this->priceProductTypeMapper->mapFromEntity($priceProductEntity->getPriceType());
 

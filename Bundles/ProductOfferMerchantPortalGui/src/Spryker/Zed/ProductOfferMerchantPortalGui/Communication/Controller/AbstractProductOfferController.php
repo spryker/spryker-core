@@ -59,7 +59,13 @@ class AbstractProductOfferController extends AbstractController
     protected function getLocalizedAttributesByLocale(array $localizedAttributes, LocaleTransfer $localeTransfer): array
     {
         foreach ($localizedAttributes as $localizedAttributesTransfer) {
-            if ($localizedAttributesTransfer->getLocale()->getIdLocale() === $localeTransfer->getIdLocale()) {
+            $localeFromLocalizedAttributes = $localizedAttributesTransfer->getLocale();
+
+            if (!$localeFromLocalizedAttributes) {
+                continue;
+            }
+
+            if ($localeFromLocalizedAttributes->getIdLocale() === $localeTransfer->getIdLocale()) {
                 return $localizedAttributesTransfer->getAttributes();
             }
         }

@@ -341,7 +341,6 @@ class Persistence implements PersistenceInterface
         DateTime $timeoutDate,
         $eventName
     ) {
-
         $stateMachineItemTimeoutEntity = new SpyStateMachineEventTimeout();
         $stateMachineItemTimeoutEntity
             ->setTimeout($timeoutDate)
@@ -409,7 +408,6 @@ class Persistence implements PersistenceInterface
         $itemIdentifier,
         SpyStateMachineItemStateHistory $stateMachineItemHistoryEntity
     ) {
-
         $itemStateEntity = $stateMachineItemHistoryEntity->getState();
         $processEntity = $itemStateEntity->getProcess();
 

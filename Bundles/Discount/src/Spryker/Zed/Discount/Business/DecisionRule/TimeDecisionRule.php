@@ -42,7 +42,6 @@ class TimeDecisionRule implements DecisionRuleInterface
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
-
         $currentTime = $this->convertToSeconds(
             $this->getCurrentTime()
         );

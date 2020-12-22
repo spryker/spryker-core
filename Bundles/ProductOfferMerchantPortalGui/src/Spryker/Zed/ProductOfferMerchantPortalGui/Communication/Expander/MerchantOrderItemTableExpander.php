@@ -73,11 +73,12 @@ class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderIn
         foreach ($guiTableDataResponseTransfer->getRows() as $guiTableRowDataResponseTransfer) {
             $responseData = $guiTableRowDataResponseTransfer->getResponseData();
 
-            $productOfferReference = $guiTableRowDataResponseTransfer->requirePayload()
-                ->getPayload()
-                ->requireItem()
-                ->getItem()
-                ->getProductOfferReference();
+            /** @var \Generated\Shared\Transfer\GuiTableDataResponsePayloadTransfer $guiTableDataResponsePayloadTransfer */
+            $guiTableDataResponsePayloadTransfer = $guiTableRowDataResponseTransfer->requirePayload()->getPayload();
+
+            /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+            $itemTransfer = $guiTableDataResponsePayloadTransfer->requireItem()->getItem();
+            $productOfferReference = $itemTransfer->getProductOfferReference();
 
             if (!$productOfferReference) {
                 continue;
@@ -129,7 +130,11 @@ class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderIn
     ): array {
         $merchantSkus = [];
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
-            $merchantSkus[$productOfferTransfer->getProductOfferReference()] = $productOfferTransfer->getMerchantSku();
+            /** @var string $productOfferReference */
+            $productOfferReference = $productOfferTransfer->requireProductOfferReference()->getProductOfferReference();
+            /** @var string $merchantSku */
+            $merchantSku = $productOfferTransfer->requireMerchantSku()->getMerchantSku();
+            $merchantSkus[$productOfferReference] = $merchantSku;
         }
 
         return $merchantSkus;

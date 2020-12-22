@@ -1255,8 +1255,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @throws \LogicException
-     *
      * @return \Spryker\Service\Container\ContainerInterface
      */
     protected function addEntryPointGuardPrototype(ContainerInterface $container): ContainerInterface
@@ -1429,8 +1427,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
 
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @throws \LogicException
      *
      * @return void
      */

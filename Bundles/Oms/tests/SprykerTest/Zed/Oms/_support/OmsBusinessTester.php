@@ -286,7 +286,7 @@ class OmsBusinessTester extends Actor
     }
 
     /**
-     * @return object|\Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface
+     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     public function getOrderStatemachineMockForSuccessfulTriggeredEvents()
     {
@@ -298,9 +298,7 @@ class OmsBusinessTester extends Actor
     }
 
     /**
-     * @throws \Exception
-     *
-     * @return object|\Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface
+     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     public function getOrderStatemachineMockForFailedTriggeredEvents()
     {
