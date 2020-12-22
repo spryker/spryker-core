@@ -21,7 +21,7 @@
         "@angular/compiler": "~9.1.12",
         "@angular/core": "~9.1.12",
         "@spryker/frontend-config.prettier": "~0.0.2",
-        "@spryker/frontend-config.tslint": "~0.0.4",
+        "@spryker/frontend-config.tslint": "~0.0.5",
         "codelyzer": "~5.1.2",
         "prettier": "~2.0.5",
         "rxjs": "~6.6.0",
