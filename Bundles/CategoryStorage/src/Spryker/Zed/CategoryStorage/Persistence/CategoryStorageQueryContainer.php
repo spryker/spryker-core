@@ -26,6 +26,8 @@ class CategoryStorageQueryContainer extends AbstractQueryContainer implements Ca
      *
      * @api
      *
+     * @deprecated Will be removed with next major release.
+     *
      * @param array $localeNames
      *
      * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
@@ -42,6 +44,8 @@ class CategoryStorageQueryContainer extends AbstractQueryContainer implements Ca
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed with next major release.
      *
      * @param int $idLocale
      *
@@ -86,6 +90,8 @@ class CategoryStorageQueryContainer extends AbstractQueryContainer implements Ca
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed with next major release.
      *
      * @param int $idLocale
      *

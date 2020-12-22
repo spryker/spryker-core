@@ -1,18 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "ParamNameMismatch",
-            "message": "Argument 2 of Spryker\\Zed\\CmsBlockCollector\\Communication\\Plugin\\CmsBlockCollectorStoragePlugin::run has wrong name $localeTransfer, expecting $locale as defined by Spryker\\Zed\\Collector\\Dependency\\Plugin\\CollectorPluginInterface::run",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCollector/src/Spryker/Zed/CmsBlockCollector/Communication/Plugin/CmsBlockCollectorStoragePlugin.php",
-            "snippet": "        LocaleTransfer $localeTransfer,",
-            "selected_text": "$localeTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",

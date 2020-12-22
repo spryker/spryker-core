@@ -19,7 +19,7 @@ class Console extends SharedConsole
     /**
      * @var \Spryker\Yves\Kernel\AbstractFactory|null
      */
-    private $factory;
+    protected $factory;
 
     /**
      * @param \Spryker\Yves\Kernel\AbstractFactory $factory

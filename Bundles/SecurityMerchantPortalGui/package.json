@@ -15,7 +15,7 @@
         "@spryker/form-item": "^0.2.0-next.1",
         "@spryker/input": "^0.2.0-next.1",
         "@spryker/logo": "^0.2.0-next.1",
-        "@spryker/styles": "^0.2.0-next.20",
+        "@spryker/styles": "^0.2.0-next.25",
         "@spryker/utils": "^0.2.0-next.5",
         "@spryker/web-components": "^0.2.1-next.3",
         "rxjs": "^6.5.4",

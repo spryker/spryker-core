@@ -53,7 +53,6 @@ class AvailabilityDataFeedQueryContainer extends AbstractQueryContainer implemen
         SpyProductAbstractQuery $entityQuery,
         AvailabilityDataFeedTransfer $availabilityDataFeedTransfer
     ) {
-
         if ($availabilityDataFeedTransfer->getUpdatedFrom()) {
             $entityQuery->condition(
                 self::UPDATED_FROM_CONDITION,

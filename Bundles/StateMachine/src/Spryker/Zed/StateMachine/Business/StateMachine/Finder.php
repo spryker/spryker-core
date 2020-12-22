@@ -349,7 +349,6 @@ class Finder implements FinderInterface
         SpyStateMachineItemState $stateMachineItemEntity,
         SpyStateMachineProcess $stateMachineProcessEntity
     ) {
-
         $stateMachineItemTransfer = new StateMachineItemTransfer();
         $stateMachineItemTransfer->setProcessName($stateMachineProcessTransfer->getProcessName());
         $stateMachineItemTransfer->setIdItemState($stateMachineItemEntity->getIdStateMachineItemState());

@@ -259,7 +259,6 @@ class CmsBlockForm extends AbstractType
     {
         return new Callback([
             'callback' => function ($dateTimeTo, ExecutionContextInterface $context) {
-
                 /** @var \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer */
                 $cmsBlockTransfer = $context->getRoot()->getData();
 

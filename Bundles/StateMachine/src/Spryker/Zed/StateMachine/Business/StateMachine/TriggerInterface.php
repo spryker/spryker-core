@@ -24,11 +24,11 @@ interface TriggerInterface
 
     /**
      * @param string $eventName
-     * @param array $items
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItemTransfers
      *
      * @return int
      */
-    public function triggerEvent($eventName, array $items);
+    public function triggerEvent($eventName, array $stateMachineItemTransfers);
 
     /**
      * @param string $stateMachineName

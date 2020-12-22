@@ -12,7 +12,7 @@ class StepHandlerPluginCollection
     /**
      * @var \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginInterface[]
      */
-    private $stepHandler = [];
+    protected $stepHandler = [];
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginInterface $stepHandlerPlugin

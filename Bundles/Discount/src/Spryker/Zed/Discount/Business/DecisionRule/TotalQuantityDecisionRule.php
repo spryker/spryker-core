@@ -39,7 +39,6 @@ class TotalQuantityDecisionRule implements DecisionRuleInterface
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
-
         $totalQuantity = $this->getQuoteItemQuantity($quoteTransfer);
 
         return $this->comparators->compare($clauseTransfer, $totalQuantity);

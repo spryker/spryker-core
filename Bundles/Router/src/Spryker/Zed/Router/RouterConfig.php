@@ -71,7 +71,7 @@ class RouterConfig extends AbstractBundleConfig
     /**
      * Specification:
      * - Returns an array of directories where Controller are placed.
-     * - Used to build to Router cache.
+     * - Used to build the Router cache.
      *
      * @api
      *
@@ -80,23 +80,51 @@ class RouterConfig extends AbstractBundleConfig
     public function getControllerDirectories(): array
     {
         $controllerDirectories = [];
+        $srcDirectory = $this->getSourceDirectory();
+        $vendorDirectory = $this->getVendorDirectory();
 
         foreach ($this->get(KernelConstants::PROJECT_NAMESPACES) as $projectNamespace) {
-            $controllerDirectories[] = sprintf('%s/%s/Zed/*/Communication/Controller/', rtrim(APPLICATION_SOURCE_DIR, '/'), $projectNamespace);
+            $controllerDirectories[] = sprintf('%s/%s/Zed/*/Communication/Controller/', $srcDirectory, $projectNamespace);
         }
 
         foreach ($this->get(KernelConstants::CORE_NAMESPACES) as $coreNamespace) {
-            $composerPackageNamespace = strtolower(preg_replace('/([a-z0-9])([A-Z])/', '$1-$2', $coreNamespace));
+            $composerPackageNamespace = strtolower(preg_replace('/([a-z0-9]|[A-Z0-9])([A-Z0-9])/', '$1-$2', $coreNamespace));
 
             $controllerDirectories[] = sprintf(
                 '%s/%s/*/src/%s/Zed/*/Communication/Controller/',
-                rtrim(APPLICATION_VENDOR_DIR, '/'),
+                $vendorDirectory,
                 $composerPackageNamespace,
                 $coreNamespace
             );
         }
 
-        return array_filter($controllerDirectories, 'glob');
+        return $this->filterDirectories($controllerDirectories);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getSourceDirectory(): string
+    {
+        return rtrim(APPLICATION_SOURCE_DIR, '/');
+    }
+
+    /**
+     * @return string
+     */
+    protected function getVendorDirectory(): string
+    {
+        return rtrim(APPLICATION_VENDOR_DIR, '/');
+    }
+
+    /**
+     * @param array $directories
+     *
+     * @return array
+     */
+    protected function filterDirectories(array $directories): array
+    {
+        return array_filter($directories, 'glob');
     }
 
     /**

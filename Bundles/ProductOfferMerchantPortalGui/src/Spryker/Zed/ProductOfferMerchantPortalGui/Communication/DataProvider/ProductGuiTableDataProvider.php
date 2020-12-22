@@ -90,12 +90,14 @@ class ProductGuiTableDataProvider extends AbstractGuiTableDataProvider
     {
         $productConcreteCollectionTransfer = $this->productOfferMerchantPortalGuiRepository->getProductTableData($criteriaTransfer);
         $guiTableDataResponseTransfer = new GuiTableDataResponseTransfer();
+        /** @var \Generated\Shared\Transfer\LocaleTransfer $localeTransfer */
+        $localeTransfer = $criteriaTransfer->requireLocale()->getLocale();
 
         foreach ($productConcreteCollectionTransfer->getProducts() as $productConcreteTransfer) {
             $responseData = [
                 ProductConcreteTransfer::ID_PRODUCT_CONCRETE => $productConcreteTransfer->getIdProductConcrete(),
                 ProductGuiTableConfigurationProvider::COL_KEY_SKU => $productConcreteTransfer->getSku(),
-                ProductGuiTableConfigurationProvider::COL_KEY_NAME => $this->productNameBuilder->buildProductConcreteName($productConcreteTransfer, $criteriaTransfer->getLocale()),
+                ProductGuiTableConfigurationProvider::COL_KEY_NAME => $this->productNameBuilder->buildProductConcreteName($productConcreteTransfer, $localeTransfer),
                 ProductGuiTableConfigurationProvider::COL_KEY_STORES => $this->getStoresColumnData($productConcreteTransfer),
                 ProductGuiTableConfigurationProvider::COL_KEY_IMAGE => $this->getImageUrl($productConcreteTransfer),
                 ProductGuiTableConfigurationProvider::COL_KEY_STATUS => $this->getStatusColumnData($productConcreteTransfer),
@@ -107,12 +109,13 @@ class ProductGuiTableDataProvider extends AbstractGuiTableDataProvider
             $guiTableDataResponseTransfer->addRow((new GuiTableRowDataResponseTransfer())->setResponseData($responseData));
         }
 
-        $paginationTransfer = $productConcreteCollectionTransfer->getPagination();
+        /** @var \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer */
+        $paginationTransfer = $productConcreteCollectionTransfer->requirePagination()->getPagination();
 
         return $guiTableDataResponseTransfer
-            ->setPage($paginationTransfer->getPage())
-            ->setPageSize($paginationTransfer->getMaxPerPage())
-            ->setTotal($paginationTransfer->getNbResults());
+            ->setPage($paginationTransfer->requirePage()->getPage())
+            ->setPageSize($paginationTransfer->requireMaxPerPage()->getMaxPerPage())
+            ->setTotal($paginationTransfer->requireNbResults()->getNbResults());
     }
 
     /**
@@ -126,7 +129,9 @@ class ProductGuiTableDataProvider extends AbstractGuiTableDataProvider
         $storeNames = [];
 
         foreach ($storeTransfers as $storeTransfer) {
-            $storeNames[] = $storeTransfer->getName();
+            /** @var string $storeName */
+            $storeName = $storeTransfer->requireName()->getName();
+            $storeNames[] = $storeName;
         }
 
         return $storeNames;
