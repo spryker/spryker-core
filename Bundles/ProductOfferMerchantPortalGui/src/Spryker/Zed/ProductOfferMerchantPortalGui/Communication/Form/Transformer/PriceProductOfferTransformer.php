@@ -75,6 +75,7 @@ class PriceProductOfferTransformer implements DataTransformerInterface
     public function transform($value)
     {
         $prices = [];
+        $priceTypes = $this->priceProductFacade->getPriceTypeValues();
 
         foreach ($value as $priceProductTransfer) {
             if ($priceProductTransfer->getIdPriceProduct()) {
@@ -90,7 +91,7 @@ class PriceProductOfferTransformer implements DataTransformerInterface
             $prices[$key][PriceProductOfferTableViewTransfer::STORE] = $priceProductTransfer->getMoneyValue()->getFkStore();
             $prices[$key][PriceProductOfferTableViewTransfer::CURRENCY] = $priceProductTransfer->getMoneyValue()->getFkCurrency();
 
-            $prices = $this->addPrices($priceProductTransfer, $prices[$key]);
+            $prices = $this->addPrices($priceProductTransfer, $prices[$key], $priceTypes);
         }
 
         return $this->utilEncodingService->encodeJson($prices);
@@ -105,18 +106,21 @@ class PriceProductOfferTransformer implements DataTransformerInterface
     {
         $newPriceProductOffers = $this->utilEncodingService->decodeJson($value, true);
         $priceProductTransfers = new ArrayObject();
-        $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
-            ->setIdProductOffer($this->idProductOffer ?? 0);
 
         if (!$newPriceProductOffers) {
             return $priceProductTransfers;
         }
 
+        $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
+            ->setIdProductOffer($this->idProductOffer ?? 0);
+        $priceTypes = $this->priceProductFacade->getPriceTypeValues();
+
         foreach ($newPriceProductOffers as $newPriceProductOffer) {
             $priceProductTransfers = $this->addPriceProductTransfers(
                 $newPriceProductOffer,
                 $priceProductDimensionTransfer,
-                $priceProductTransfers
+                $priceProductTransfers,
+                $priceTypes
             );
         }
 
@@ -132,20 +136,22 @@ class PriceProductOfferTransformer implements DataTransformerInterface
      * @param array $newPriceProductOffer
      * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceProductDimensionTransfer
      * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypes
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
      */
     protected function addPriceProductTransfers(
         array $newPriceProductOffer,
         PriceProductDimensionTransfer $priceProductDimensionTransfer,
-        ArrayObject $priceProductTransfers
+        ArrayObject $priceProductTransfers,
+        array $priceTypes
     ): ArrayObject {
         $currency = $newPriceProductOffer[PriceProductOfferTableViewTransfer::CURRENCY];
         $currencyTransfer = $currency ?
             $this->currencyFacade->getByIdCurrency($currency)
             : null;
 
-        foreach ($this->priceProductFacade->getPriceTypeValues() as $priceTypeTransfer) {
+        foreach ($priceTypes as $priceTypeTransfer) {
             $storeTransfer = (new StoreTransfer())
                 ->setIdStore($newPriceProductOffer[PriceProductOfferTableViewTransfer::STORE]);
 
@@ -186,12 +192,13 @@ class PriceProductOfferTransformer implements DataTransformerInterface
      *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param array $prices
+     * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypes
      *
      * @return array
      */
-    protected function addPrices(PriceProductTransfer $priceProductTransfer, array $prices): array
+    protected function addPrices(PriceProductTransfer $priceProductTransfer, array $prices, array $priceTypes): array
     {
-        foreach ($this->priceProductFacade->getPriceTypeValues() as $priceTypeTransfer) {
+        foreach ($priceTypes as $priceTypeTransfer) {
             /** @var string $priceTypeName */
             $priceTypeName = $priceTypeTransfer->getName();
 
