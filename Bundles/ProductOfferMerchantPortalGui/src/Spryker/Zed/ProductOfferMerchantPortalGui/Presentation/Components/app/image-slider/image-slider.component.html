@@ -1,16 +1,16 @@
 <div class="image-slider" *ngIf="images?.length">
     <div class="image-slider-preview" *ngIf="images?.length > 1">
-        <img *ngFor="let image of images"
-             class="image-slider-preview-img"
-             [class.image-slider-preview-img--selected]="image === activeImage"
-             [src]="image.src"
-             [alt]="image.alt"
-             (mouseover)="setShowCardImage(image)">
+        <img
+            *ngFor="let image of images"
+            class="image-slider-preview-img"
+            [class.image-slider-preview-img--selected]="image === activeImage"
+            [src]="image.src"
+            [alt]="image.alt"
+            (mouseover)="setShowCardImage(image)"
+        />
     </div>
 
     <div class="image-slider-showcard">
-        <img [src]="activeImage?.src"
-             [alt]="activeImage?.alt"
-             class="image-slider-showcard-image">
+        <img [src]="activeImage?.src" [alt]="activeImage?.alt" class="image-slider-showcard-image" />
     </div>
 </div>

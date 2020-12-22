@@ -18,16 +18,8 @@
         "removeComments": true,
         "rootDir": ".",
         "paths": {
-            "@mp/zed-ui/*": [
-                "./Bundles/ZedUi/src/Spryker/Zed/ZedUi/Presentation/Components/*"
-            ]
+            "@mp/zed-ui/*": ["./Bundles/ZedUi/src/Spryker/Zed/ZedUi/Presentation/Components/*"]
         }
     },
-    "exclude": [
-        "**/node_modules/**",
-        "**/*.spec.ts",
-        "public",
-        "dist",
-        "**/dist/**"
-    ]
+    "exclude": ["**/node_modules/**", "**/*.spec.ts", "public", "dist", "**/dist/**"]
 }

@@ -1,6 +1,6 @@
 {
-  "include": {
-    "spryker/product-storage": "ConfigurableBundleStorage depends on ProductStorage functionality.",
-    "spryker/product-image": "ConfigurableBundleStorage depends on ProductImage functionality."
-  }
+    "include": {
+        "spryker/product-storage": "ConfigurableBundleStorage depends on ProductStorage functionality.",
+        "spryker/product-image": "ConfigurableBundleStorage depends on ProductImage functionality."
+    }
 }

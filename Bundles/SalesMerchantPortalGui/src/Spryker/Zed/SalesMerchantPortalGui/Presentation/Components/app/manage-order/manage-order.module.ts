@@ -10,13 +10,7 @@ import { CollapsibleModule } from '@spryker/collapsible';
 import { UrlHtmlRendererModule } from '@spryker/html-renderer';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        IconModule,
-        IconInfoModule,
-        CollapsibleModule,
-        UrlHtmlRendererModule,
-    ],
+    imports: [CommonModule, IconModule, IconInfoModule, CollapsibleModule, UrlHtmlRendererModule],
     declarations: [
         ManageOrderComponent,
         ManageOrderStatsBlockComponent,
@@ -30,5 +24,4 @@ import { UrlHtmlRendererModule } from '@spryker/html-renderer';
         ManageOrderCollapsibleTotalsComponent,
     ],
 })
-export class ManageOrderModule {
-}
+export class ManageOrderModule {}

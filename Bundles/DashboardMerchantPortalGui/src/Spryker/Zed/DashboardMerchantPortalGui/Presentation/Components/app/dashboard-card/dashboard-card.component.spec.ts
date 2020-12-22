@@ -15,7 +15,7 @@ describe('DashboardCardComponent', () => {
                 <div title class="title-content"></div>
                 <div actions class="actions-content"></div>
             </mp-dashboard-card>
-    `,
+        `,
     })
     class TestComponent {
         count?: string;
@@ -61,7 +61,7 @@ describe('DashboardCardComponent', () => {
     it('should render spy-chips component in the `.ant-card-head-title` if @Input(count) has bound', () => {
         const mockCount = '5';
 
-        component.count = mockCount
+        component.count = mockCount;
         fixture.detectChanges();
 
         const chipsComponent = fixture.debugElement.query(By.css('.ant-card-head-title spy-chips'));
