@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\SecurityBlocker\Redis;
 
-use Generated\Shared\Transfer\RedisConfigurationTransfer;
 use Spryker\Client\SecurityBlocker\Dependency\Client\SecurityBlockerToRedisClientInterface;
 use Spryker\Client\SecurityBlocker\SecurityBlockerConfig;
 
@@ -36,7 +35,7 @@ class SecurityBlockerRedisWrapper implements SecurityBlockerRedisWrapperInterfac
         $this->redisClient = $redisClient;
         $this->securityBlockerConfig = $securityBlockerConfig;
 
-        $this->setupConnection($this->securityBlockerConfig->getRedisConnectionConfiguration());
+        $this->setupConnection();
     }
 
     /**
@@ -83,15 +82,13 @@ class SecurityBlockerRedisWrapper implements SecurityBlockerRedisWrapperInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RedisConfigurationTransfer $redisConfigurationTransfer
-     *
      * @return void
      */
-    protected function setupConnection(RedisConfigurationTransfer $redisConfigurationTransfer): void
+    protected function setupConnection(): void
     {
         $this->redisClient->setupConnection(
             $this->securityBlockerConfig->getRedisConnectionKey(),
-            $redisConfigurationTransfer
+            $this->securityBlockerConfig->getRedisConnectionConfiguration()
         );
     }
 

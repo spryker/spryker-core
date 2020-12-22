@@ -12,8 +12,12 @@ use Spryker\Client\SecurityBlocker\Dependency\Client\SecurityBlockerToRedisClien
 use Spryker\Client\SecurityBlocker\Dependency\Service\SecurityBlockerToUtilEncodingServiceInterface;
 use Spryker\Client\SecurityBlocker\Redis\SecurityBlockerRedisWrapper;
 use Spryker\Client\SecurityBlocker\Redis\SecurityBlockerRedisWrapperInterface;
-use Spryker\Client\SecurityBlocker\Storage\SecurityBlockerStorage;
-use Spryker\Client\SecurityBlocker\Storage\SecurityBlockerStorageInterface;
+use Spryker\Client\SecurityBlocker\Storage\KeyBuilder\SecurityBlockerStorageKeyBuilder;
+use Spryker\Client\SecurityBlocker\Storage\KeyBuilder\SecurityBlockerStorageKeyBuilderInterface;
+use Spryker\Client\SecurityBlocker\Storage\Reader\SecurityBlockerStorageReader;
+use Spryker\Client\SecurityBlocker\Storage\Reader\SecurityBlockerStorageReaderInterface;
+use Spryker\Client\SecurityBlocker\Storage\Writer\SecurityBlockerStorageWriter;
+use Spryker\Client\SecurityBlocker\Storage\Writer\SecurityBlockerStorageWriterInterface;
 
 /**
  * @method \Spryker\Client\SecurityBlocker\SecurityBlockerConfig getConfig()
@@ -21,15 +25,36 @@ use Spryker\Client\SecurityBlocker\Storage\SecurityBlockerStorageInterface;
 class SecurityBlockerFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\SecurityBlocker\Storage\SecurityBlockerStorageInterface
+     * @return \Spryker\Client\SecurityBlocker\Storage\Reader\SecurityBlockerStorageReaderInterface
      */
-    public function createSecurityBlockerStorage(): SecurityBlockerStorageInterface
+    public function createSecurityBlockerStorageReader(): SecurityBlockerStorageReaderInterface
     {
-        return new SecurityBlockerStorage(
+        return new SecurityBlockerStorageReader(
             $this->createSecurityBlockerRedisWrapper(),
+            $this->createSecurityBlockerStorageKeyBuilder(),
             $this->getUtilEncodingService(),
             $this->getConfig()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\SecurityBlocker\Storage\Writer\SecurityBlockerStorageWriterInterface
+     */
+    public function createSecurityBlockerStorageWriter(): SecurityBlockerStorageWriterInterface
+    {
+        return new SecurityBlockerStorageWriter(
+            $this->createSecurityBlockerRedisWrapper(),
+            $this->createSecurityBlockerStorageKeyBuilder(),
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\SecurityBlocker\Storage\KeyBuilder\SecurityBlockerStorageKeyBuilderInterface
+     */
+    public function createSecurityBlockerStorageKeyBuilder(): SecurityBlockerStorageKeyBuilderInterface
+    {
+        return new SecurityBlockerStorageKeyBuilder();
     }
 
     /**

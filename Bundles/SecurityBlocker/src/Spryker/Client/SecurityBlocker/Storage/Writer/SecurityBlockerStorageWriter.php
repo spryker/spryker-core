@@ -5,20 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\SecurityBlocker\Storage;
+namespace Spryker\Client\SecurityBlocker\Storage\Writer;
 
 use Generated\Shared\Transfer\SecurityBlockerConfigurationSettingsTransfer;
 use Generated\Shared\Transfer\SecurityCheckAuthContextTransfer;
 use Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer;
-use Spryker\Client\SecurityBlocker\Dependency\Service\SecurityBlockerToUtilEncodingServiceInterface;
 use Spryker\Client\SecurityBlocker\Exception\SecurityBlockerException;
 use Spryker\Client\SecurityBlocker\Redis\SecurityBlockerRedisWrapperInterface;
 use Spryker\Client\SecurityBlocker\SecurityBlockerConfig;
+use Spryker\Client\SecurityBlocker\Storage\KeyBuilder\SecurityBlockerStorageKeyBuilderInterface;
 
-class SecurityBlockerStorage implements SecurityBlockerStorageInterface
+class SecurityBlockerStorageWriter implements SecurityBlockerStorageWriterInterface
 {
-    protected const KEY_PART_SEPARATOR = ':';
-
     /**
      * @var \Spryker\Client\SecurityBlocker\Redis\SecurityBlockerRedisWrapperInterface
      */
@@ -30,22 +28,22 @@ class SecurityBlockerStorage implements SecurityBlockerStorageInterface
     protected $securityBlockerConfig;
 
     /**
-     * @var \Spryker\Client\SecurityBlocker\Dependency\Service\SecurityBlockerToUtilEncodingServiceInterface
+     * @var \Spryker\Client\SecurityBlocker\Storage\KeyBuilder\SecurityBlockerStorageKeyBuilderInterface
      */
-    protected $utilEncodingService;
+    protected $securityBlockerStorageKeyBuilder;
 
     /**
      * @param \Spryker\Client\SecurityBlocker\Redis\SecurityBlockerRedisWrapperInterface $securityBlockerRedisWrapper
-     * @param \Spryker\Client\SecurityBlocker\Dependency\Service\SecurityBlockerToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Client\SecurityBlocker\Storage\KeyBuilder\SecurityBlockerStorageKeyBuilderInterface $securityBlockerStorageKeyBuilder
      * @param \Spryker\Client\SecurityBlocker\SecurityBlockerConfig $securityBlockerConfig
      */
     public function __construct(
         SecurityBlockerRedisWrapperInterface $securityBlockerRedisWrapper,
-        SecurityBlockerToUtilEncodingServiceInterface $utilEncodingService,
+        SecurityBlockerStorageKeyBuilderInterface $securityBlockerStorageKeyBuilder,
         SecurityBlockerConfig $securityBlockerConfig
     ) {
         $this->securityBlockerRedisWrapper = $securityBlockerRedisWrapper;
-        $this->utilEncodingService = $utilEncodingService;
+        $this->securityBlockerStorageKeyBuilder = $securityBlockerStorageKeyBuilder;
         $this->securityBlockerConfig = $securityBlockerConfig;
     }
 
@@ -60,7 +58,7 @@ class SecurityBlockerStorage implements SecurityBlockerStorageInterface
     {
         $securityBlockerConfigurationSettingsTransfer = $this->securityBlockerConfig
             ->getSecurityBlockerConfigurationSettingsForType($securityCheckAuthContextTransfer->getTypeOrFail());
-        $key = $this->getStorageKey($securityCheckAuthContextTransfer);
+        $key = $this->securityBlockerStorageKeyBuilder->getStorageKey($securityCheckAuthContextTransfer);
 
         $newValue = $this->updateStorage($key, $securityBlockerConfigurationSettingsTransfer);
 
@@ -73,53 +71,7 @@ class SecurityBlockerStorage implements SecurityBlockerStorageInterface
         return (new SecurityCheckAuthResponseTransfer())
             ->setSecurityCheckAuthContext($securityCheckAuthContextTransfer)
             ->setNumberOfAttempts($newValue)
-            ->setIsSuccessful($newValue < $securityBlockerConfigurationSettingsTransfer->getNumberOfAttempts());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer
-     *
-     * @return \Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer
-     */
-    public function getLoginAttemptCount(SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer): SecurityCheckAuthResponseTransfer
-    {
-        $storageKey = $this->getStorageKey($securityCheckAuthContextTransfer);
-        $storageValue = $this->securityBlockerRedisWrapper->get($storageKey);
-
-        $securityCheckAuthResponseTransfer = (new SecurityCheckAuthResponseTransfer())
-            ->setSecurityCheckAuthContext($securityCheckAuthContextTransfer);
-
-        if (!$storageValue) {
-            return $securityCheckAuthResponseTransfer->setIsSuccessful(true);
-        }
-
-        $numberOfAttempts = $this->utilEncodingService->decodeJson($storageValue, true);
-
-        if (!$numberOfAttempts) {
-            return $securityCheckAuthResponseTransfer->setIsSuccessful(false);
-        }
-
-        $securityBlockerConfigurationSettingsTransfer = $this->securityBlockerConfig
-            ->getSecurityBlockerConfigurationSettingsForType($securityCheckAuthContextTransfer->getTypeOrFail());
-
-        return $securityCheckAuthResponseTransfer
-            ->setNumberOfAttempts($numberOfAttempts)
-            ->setBlockedFor($securityBlockerConfigurationSettingsTransfer->getBlockFor())
-            ->setIsSuccessful($numberOfAttempts < $securityBlockerConfigurationSettingsTransfer->getNumberOfAttempts());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer
-     *
-     * @return string
-     */
-    protected function getStorageKey(SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer): string
-    {
-        return $securityCheckAuthContextTransfer->getType()
-            . static::KEY_PART_SEPARATOR
-            . $securityCheckAuthContextTransfer->getIp()
-            . static::KEY_PART_SEPARATOR
-            . $securityCheckAuthContextTransfer->getAccount();
+            ->setIsBlocked($newValue < $securityBlockerConfigurationSettingsTransfer->getNumberOfAttempts());
     }
 
     /**
@@ -138,7 +90,7 @@ class SecurityBlockerStorage implements SecurityBlockerStorageInterface
         if ($existingValue && $newValue < $securityBlockerConfigurationSettingsTransfer->getNumberOfAttempts()) {
             $incrResult = $this->securityBlockerRedisWrapper->incr($storageKey);
 
-            return $incrResult ?? 0;
+            return $incrResult ?: 0;
         }
 
         $ttl = !$existingValue

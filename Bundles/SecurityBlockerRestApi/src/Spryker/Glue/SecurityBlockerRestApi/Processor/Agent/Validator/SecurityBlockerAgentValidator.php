@@ -8,13 +8,12 @@
 namespace Spryker\Glue\SecurityBlockerRestApi\Processor\Agent\Validator;
 
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\SecurityCheckAuthContextTransfer;
-use Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\SecurityBlockerRestApi\Dependency\Client\SecurityBlockerRestApiToSecurityBlockerClientInterface;
+use Spryker\Glue\SecurityBlockerRestApi\Processor\Builder\RestErrorCollectionBuilderInterface;
+use Spryker\Glue\SecurityBlockerRestApi\Processor\Checker\AuthenticationCheckerInterface;
 use Spryker\Glue\SecurityBlockerRestApi\SecurityBlockerRestApiConfig;
-use Symfony\Component\HttpFoundation\Response;
 
 class SecurityBlockerAgentValidator implements SecurityBlockerAgentValidatorInterface
 {
@@ -29,11 +28,28 @@ class SecurityBlockerAgentValidator implements SecurityBlockerAgentValidatorInte
     protected $securityBlockerClient;
 
     /**
-     * @param \Spryker\Glue\SecurityBlockerRestApi\Dependency\Client\SecurityBlockerRestApiToSecurityBlockerClientInterface $securityBlockerClient
+     * @var \Spryker\Glue\SecurityBlockerRestApi\Processor\Checker\AuthenticationCheckerInterface
      */
-    public function __construct(SecurityBlockerRestApiToSecurityBlockerClientInterface $securityBlockerClient)
-    {
+    protected $authenticationChecker;
+
+    /**
+     * @var \Spryker\Glue\SecurityBlockerRestApi\Processor\Builder\RestErrorCollectionBuilderInterface
+     */
+    protected $restErrorCollectionBuilder;
+
+    /**
+     * @param \Spryker\Glue\SecurityBlockerRestApi\Dependency\Client\SecurityBlockerRestApiToSecurityBlockerClientInterface $securityBlockerClient
+     * @param \Spryker\Glue\SecurityBlockerRestApi\Processor\Checker\AuthenticationCheckerInterface $authenticationChecker
+     * @param \Spryker\Glue\SecurityBlockerRestApi\Processor\Builder\RestErrorCollectionBuilderInterface $restErrorCollectionBuilder
+     */
+    public function __construct(
+        SecurityBlockerRestApiToSecurityBlockerClientInterface $securityBlockerClient,
+        AuthenticationCheckerInterface $authenticationChecker,
+        RestErrorCollectionBuilderInterface $restErrorCollectionBuilder
+    ) {
         $this->securityBlockerClient = $securityBlockerClient;
+        $this->authenticationChecker = $authenticationChecker;
+        $this->restErrorCollectionBuilder = $restErrorCollectionBuilder;
     }
 
     /**
@@ -43,16 +59,11 @@ class SecurityBlockerAgentValidator implements SecurityBlockerAgentValidatorInte
      */
     public function isAccountBlocked(RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
-        if (!$this->isAuthenticationRequest($restRequest)) {
+        if (!$this->authenticationChecker->isAuthenticationRequest($restRequest, SecurityBlockerRestApiConfig::RESOURCE_AGENT_ACCESS_TOKENS)) {
             return null;
         }
 
-        /** @var \Generated\Shared\Transfer\RestAgentAccessTokensRequestAttributesTransfer $restAgentAccessTokensRequestAttributesTransfer */
-        $restAgentAccessTokensRequestAttributesTransfer = $restRequest->getResource()->getAttributes();
-        $securityCheckAuthContextTransfer = (new SecurityCheckAuthContextTransfer())
-            ->setType(SecurityBlockerRestApiConfig::SECURITY_BLOCKER_AGENT_ENTITY_TYPE)
-            ->setIp($restRequest->getHttpRequest()->getClientIp())
-            ->setAccount($restAgentAccessTokensRequestAttributesTransfer->getUsername());
+        $securityCheckAuthContextTransfer = $this->createSecurityCheckAuthContextTransfer($restRequest);
 
         $securityCheckAuthResponseTransfer = $this->securityBlockerClient
             ->getLoginAttemptCount($securityCheckAuthContextTransfer);
@@ -61,47 +72,22 @@ class SecurityBlockerAgentValidator implements SecurityBlockerAgentValidatorInte
             return null;
         }
 
-        return $this->createRestErrorCollectionTransfer($securityCheckAuthResponseTransfer);
+        return $this->restErrorCollectionBuilder->createRestErrorCollectionTransfer($securityCheckAuthResponseTransfer);
     }
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\SecurityCheckAuthContextTransfer
      */
-    protected function isAuthenticationRequest(RestRequestInterface $restRequest): bool
+    protected function createSecurityCheckAuthContextTransfer(RestRequestInterface $restRequest): SecurityCheckAuthContextTransfer
     {
-        return in_array($restRequest->getResource()->getType(), [static::RESOURCE_AGENT_ACCESS_TOKENS])
-            && $restRequest->getHttpRequest()->getMethod() === 'POST';
-    }
+        /** @var \Generated\Shared\Transfer\RestAccessTokensAttributesTransfer $restAccessTokensAttributesTransfer */
+        $restAccessTokensAttributesTransfer = $restRequest->getResource()->getAttributes();
 
-    /**
-     * @param \Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer $securityCheckAuthResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer
-     */
-    protected function createRestErrorCollectionTransfer(
-        SecurityCheckAuthResponseTransfer $securityCheckAuthResponseTransfer
-    ): RestErrorCollectionTransfer {
-        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setStatus(Response::HTTP_TOO_MANY_REQUESTS)
-            ->setCode(SecurityBlockerRestApiConfig::ERROR_RESPONSE_CODE_ACCOUNT_BLOCKED)
-            ->setDetail(sprintf(SecurityBlockerRestApiConfig::ERROR_RESPONSE_DETAIL_ACCOUNT_BLOCKED, $this->convertSecondsToReadableTime($securityCheckAuthResponseTransfer)));
-
-        return (new RestErrorCollectionTransfer())
-            ->addRestError($restErrorMessageTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer $securityCheckAuthResponseTransfer
-     *
-     * @return string
-     */
-    protected function convertSecondsToReadableTime(
-        SecurityCheckAuthResponseTransfer $securityCheckAuthResponseTransfer
-    ): string {
-        $seconds = $securityCheckAuthResponseTransfer->getBlockedFor();
-
-        return (string)ceil($seconds / 60);
+        return (new SecurityCheckAuthContextTransfer())
+            ->setType(SecurityBlockerRestApiConfig::SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE)
+            ->setIp($restRequest->getHttpRequest()->getClientIp())
+            ->setAccount($restAccessTokensAttributesTransfer->getUsername());
     }
 }

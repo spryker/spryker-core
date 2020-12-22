@@ -5,23 +5,26 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\SecurityBlockerRestApi\Processor\Agent\Storage;
+namespace Spryker\Glue\SecurityBlockerRestApi\Processor\Checker;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface SecurityBlockerAgentStorageInterface
+interface AuthenticationCheckerInterface
 {
     /**
-     * @param string $action
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     * @param string $expectedResourceType
      *
-     * @return void
+     * @return bool
      */
-    public function incrementLoginAttemptCount(
-        string $action,
-        RestRequestInterface $restRequest,
-        RestResponseInterface $restResponse
-    ): void;
+    public function isAuthenticationRequest(RestRequestInterface $restRequest, string $expectedResourceType): bool;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     * @param string $expectedCode
+     *
+     * @return bool
+     */
+    public function isFailedAuthenticationResponse(RestResponseInterface $restResponse, string $expectedCode): bool;
 }

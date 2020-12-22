@@ -78,7 +78,7 @@ class GetLoginAttemptCountTest extends Test
             $securityCheckAuthContextTransfer->getAccount()
         );
 
-        $expectedNumberOfAttempts = 1;
+        $expectedNumberOfAttempts = '1';
         $this->redisClientMock
             ->expects($this->once())
             ->method('get')
@@ -93,7 +93,7 @@ class GetLoginAttemptCountTest extends Test
 
         // Assert
         $this->assertSame($securityCheckAuthContextTransfer, $actualSecurityCheckAuthResponseTransfer->getSecurityCheckAuthContext());
-        $this->assertSame($expectedNumberOfAttempts, $actualSecurityCheckAuthResponseTransfer->getNumberOfAttempts());
+        $this->assertSame((int)$expectedNumberOfAttempts, $actualSecurityCheckAuthResponseTransfer->getNumberOfAttempts());
         $this->assertTrue($actualSecurityCheckAuthResponseTransfer->getIsSuccessful());
     }
 }

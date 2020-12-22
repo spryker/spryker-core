@@ -12,6 +12,16 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 class SecurityBlockerRestApiConfig extends AbstractBundleConfig
 {
     /**
+     * @uses \Spryker\Glue\AuthRestApi\AuthRestApiConfig::RESOURCE_ACCESS_TOKENS
+     */
+    public const RESOURCE_ACCESS_TOKENS = 'access-tokens';
+
+    /**
+     * @uses \Spryker\Glue\AgentAuthRestApi\AgentAuthRestApiConfig::RESOURCE_AGENT_ACCESS_TOKENS
+     */
+    public const RESOURCE_AGENT_ACCESS_TOKENS = 'agent-access-tokens';
+
+    /**
      * @uses \Spryker\Client\SecurityBlocker\SecurityBlockerConfig::SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE
      */
     public const SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE = 'customer';

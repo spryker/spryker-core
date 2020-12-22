@@ -33,6 +33,6 @@ class SecurityBlockerAgentControllerAfterActionPlugin extends AbstractPlugin imp
     {
         $this->getFactory()
             ->createSecurityBlockerAgentStorage()
-            ->incrementLoginAttempts($action, $restRequest, $restResponse);
+            ->incrementLoginAttemptCount($action, $restRequest, $restResponse);
     }
 }

@@ -11,8 +11,8 @@ use Generated\Shared\Transfer\SecurityCheckAuthContextTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\SecurityBlockerRestApi\Dependency\Client\SecurityBlockerRestApiToSecurityBlockerClientInterface;
+use Spryker\Glue\SecurityBlockerRestApi\Processor\Checker\AuthenticationCheckerInterface;
 use Spryker\Glue\SecurityBlockerRestApi\SecurityBlockerRestApiConfig;
-use Symfony\Component\HttpFoundation\Response;
 
 class SecurityBlockerStorage implements SecurityBlockerStorageInterface
 {
@@ -22,21 +22,25 @@ class SecurityBlockerStorage implements SecurityBlockerStorageInterface
     protected const RESPONSE_INVALID_LOGIN = '003';
 
     /**
-     * @uses \Spryker\Glue\AuthRestApi\AuthRestApiConfig::RESOURCE_ACCESS_TOKENS
-     */
-    protected const RESOURCE_ACCESS_TOKENS = 'access-tokens';
-
-    /**
      * @var \Spryker\Glue\SecurityBlockerRestApi\Dependency\Client\SecurityBlockerRestApiToSecurityBlockerClientInterface
      */
     protected $securityBlockerClient;
 
     /**
-     * @param \Spryker\Glue\SecurityBlockerRestApi\Dependency\Client\SecurityBlockerRestApiToSecurityBlockerClientInterface $securityBlockerClient
+     * @var \Spryker\Glue\SecurityBlockerRestApi\Processor\Checker\AuthenticationCheckerInterface
      */
-    public function __construct(SecurityBlockerRestApiToSecurityBlockerClientInterface $securityBlockerClient)
-    {
+    protected $authenticationChecker;
+
+    /**
+     * @param \Spryker\Glue\SecurityBlockerRestApi\Dependency\Client\SecurityBlockerRestApiToSecurityBlockerClientInterface $securityBlockerClient
+     * @param \Spryker\Glue\SecurityBlockerRestApi\Processor\Checker\AuthenticationCheckerInterface $authenticationChecker
+     */
+    public function __construct(
+        SecurityBlockerRestApiToSecurityBlockerClientInterface $securityBlockerClient,
+        AuthenticationCheckerInterface $authenticationChecker
+    ) {
         $this->securityBlockerClient = $securityBlockerClient;
+        $this->authenticationChecker = $authenticationChecker;
     }
 
     /**
@@ -52,18 +56,13 @@ class SecurityBlockerStorage implements SecurityBlockerStorageInterface
         RestResponseInterface $restResponse
     ): void {
         if (
-            !$this->isAuthenticationRequest($restRequest)
-            || !$this->isFailedAuthenticationResponse($restResponse)
+            !$this->authenticationChecker->isAuthenticationRequest($restRequest, SecurityBlockerRestApiConfig::RESOURCE_ACCESS_TOKENS)
+            || !$this->authenticationChecker->isFailedAuthenticationResponse($restResponse, static::RESPONSE_INVALID_LOGIN)
         ) {
             return;
         }
 
-        /** @var \Generated\Shared\Transfer\RestAccessTokensAttributesTransfer $restAccessTokensAttributesTransfer */
-        $restAccessTokensAttributesTransfer = $restRequest->getResource()->getAttributes();
-        $securityCheckAuthContextTransfer = (new SecurityCheckAuthContextTransfer())
-            ->setType(SecurityBlockerRestApiConfig::SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE)
-            ->setIp($restRequest->getHttpRequest()->getClientIp())
-            ->setAccount($restAccessTokensAttributesTransfer->getUsername());
+        $securityCheckAuthContextTransfer = $this->createSecurityCheckAuthContextTransfer($restRequest);
 
         $this->securityBlockerClient->incrementLoginAttemptCount($securityCheckAuthContextTransfer);
     }
@@ -71,31 +70,16 @@ class SecurityBlockerStorage implements SecurityBlockerStorageInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\SecurityCheckAuthContextTransfer
      */
-    protected function isAuthenticationRequest(RestRequestInterface $restRequest): bool
+    protected function createSecurityCheckAuthContextTransfer(RestRequestInterface $restRequest): SecurityCheckAuthContextTransfer
     {
-        return $restRequest->getResource()->getType() === static::RESOURCE_ACCESS_TOKENS
-            && $restRequest->getHttpRequest()->getMethod() === 'POST';
-    }
+        /** @var \Generated\Shared\Transfer\RestAccessTokensAttributesTransfer $restAccessTokensAttributesTransfer */
+        $restAccessTokensAttributesTransfer = $restRequest->getResource()->getAttributes();
 
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
-     *
-     * @return bool
-     */
-    protected function isFailedAuthenticationResponse(RestResponseInterface $restResponse): bool
-    {
-        if ($restResponse->getStatus() === Response::HTTP_UNAUTHORIZED) {
-            return false;
-        }
-
-        foreach ($restResponse->getErrors() as $restErrorMessageTransfer) {
-            if ($restErrorMessageTransfer->getCode() === static::RESPONSE_INVALID_LOGIN) {
-                return true;
-            }
-        }
-
-        return false;
+        return (new SecurityCheckAuthContextTransfer())
+            ->setType(SecurityBlockerRestApiConfig::SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE)
+            ->setIp($restRequest->getHttpRequest()->getClientIp())
+            ->setAccount($restAccessTokensAttributesTransfer->getUsername());
     }
 }

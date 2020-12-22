@@ -15,7 +15,8 @@ interface SecurityBlockerClientInterface
     /**
      * Specification:
      * - Saves a failed login attempt based on the data provided in the `SecurityCheckAuthContextTransfer`.
-     * - Returns `isSuccessful=false` if the account has exceeded the configured number of login attempts.
+     * - Returns `isBlocked=true` if the account has exceeded the configured number of login attempts and any further attempt to log in will be blocked.
+     * - Returns `isBlocked=false` if the account has not yet exceeded the allowed number of attempts to login.
      * - The TTL and number of attempts configuration for storing records are provided per type of the entity.
      * - Requires the `SecurityCheckAuthContextTransfer.type` to be provided.
      *
@@ -32,7 +33,8 @@ interface SecurityBlockerClientInterface
     /**
      * Specification:
      * - Gets failed login attempt based on the data provided in the `SecurityCheckAuthContextTransfer`.
-     * - Returns `isSuccessful` to indicate whether the account is blocked.
+     * - Returns `isBlocked=true` if the account has exceeded the configured number of login attempts.
+     * - Returns `isBlocked=false` if the account has not yet exceeded the allowed number of attempts to login.
      * - The TTL and number of attempts configuration for the decision are provided per type of the entity.
      * - Requires the `SecurityCheckAuthContextTransfer.type` to be provided.
      *

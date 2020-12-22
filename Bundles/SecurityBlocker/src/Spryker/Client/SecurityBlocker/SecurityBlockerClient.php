@@ -30,7 +30,7 @@ class SecurityBlockerClient extends AbstractClient implements SecurityBlockerCli
     public function incrementLoginAttemptCount(SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer): SecurityCheckAuthResponseTransfer
     {
         return $this->getFactory()
-            ->createSecurityBlockerStorage()
+            ->createSecurityBlockerStorageWriter()
             ->incrementLoginAttemptCount($securityCheckAuthContextTransfer);
     }
 
@@ -46,7 +46,7 @@ class SecurityBlockerClient extends AbstractClient implements SecurityBlockerCli
     public function getLoginAttemptCount(SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer): SecurityCheckAuthResponseTransfer
     {
         return $this->getFactory()
-            ->createSecurityBlockerStorage()
+            ->createSecurityBlockerStorageReader()
             ->getLoginAttemptCount($securityCheckAuthContextTransfer);
     }
 }

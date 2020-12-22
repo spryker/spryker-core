@@ -70,28 +70,11 @@ interface SecurityBlockerConstants
 
     /**
      * Specification:
-     * - Enables/disables debug mode for a Redis connection.
-     * - Enabling debug mode will enable access statistics for a Redis connection.
-     *
-     * @api
-     */
-    public const SECURITY_BLOCKER_REDIS_DEBUG_MODE = 'SECURITY_BLOCKER_REDIS:SECURITY_BLOCKER_REDIS_DEBUG_MODE';
-
-    /**
-     * Specification:
      * - Enables/disables data persistence for a Redis connection.
      *
      * @api
      */
     public const SECURITY_BLOCKER_REDIS_PERSISTENT_CONNECTION = 'SECURITY_BLOCKER_REDIS:SECURITY_BLOCKER_REDIS_PERSISTENT_CONNECTION';
-
-    /**
-     * Specification:
-     * - Specifies the path to rdb dump to import data from.
-     *
-     * @api
-     */
-    public const RDB_DUMP_PATH = 'SECURITY_BLOCKER_REDIS:RDB_DUMP_PATH';
 
     /**
      * Specification:
@@ -103,7 +86,7 @@ interface SecurityBlockerConstants
 
     /**
      * Specification:
-     * - Specifies the TTL configuration, the period when number of unsuccessful tries will be counted.
+     * - Specifies number of failed login attempt an account can make during the `SECURITY_BLOCKER_BLOCKING_TTL` time before it is blocked.
      *
      * @api
      */
@@ -127,7 +110,7 @@ interface SecurityBlockerConstants
 
     /**
      * Specification:
-     * - Specifies the TTL configuration, the period when number of unsuccessful tries will be counted for agent.
+     * - Specifies number of failed login attempt an agent can make during the `SECURITY_BLOCKER_AGENT_BLOCKING_TTL` time before it is blocked.
      *
      * @api
      */
@@ -135,7 +118,7 @@ interface SecurityBlockerConstants
 
     /**
      * Specification:
-     * - Specifies the TTL configuration, the period for which the account is blocked if the number of attempts is exceeded for agent.
+     * - Specifies the TTL configuration, the period for which the agent is blocked if the number of attempts is exceeded for agent.
      *
      * @api
      */
