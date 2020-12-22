@@ -31,4 +31,14 @@ class CategoryStorageToCategoryFacadeBridge implements CategoryStorageToCategory
     {
         return $this->categoryFacade->getAllCategoryNodeTreeElementsByCategoryNodeIds($categoryNodeIds);
     }
+
+    /**
+     * @param int[] $categoryStoreIds
+     *
+     * @return int[]
+     */
+    public function getCategoryNodeIdsByCategoryIds(array $categoryStoreIds): array
+    {
+        return $this->categoryFacade->getCategoryNodeIdsByCategoryIds($categoryStoreIds);
+    }
 }

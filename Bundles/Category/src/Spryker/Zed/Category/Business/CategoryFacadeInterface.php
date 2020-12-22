@@ -279,4 +279,28 @@ interface CategoryFacadeInterface
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
     public function getAllCategoryNodeTreeElementsByCategoryNodeIds(array $categoryNodeIds): array;
+
+    /**
+     * Specification:
+     * - Retrieves category node ids by category ids.
+     *
+     * @api
+     *
+     * @param int[] $categoryIds
+     *
+     * @return int[]
+     */
+    public function getCategoryNodeIdsByCategoryIds(array $categoryIds): array;
+
+    /**
+     * Specification:
+     * - Retrieves category nodes by category node ids.
+     *
+     * @api
+     *
+     * @param int[] $categoryNodeIds
+     *
+     * @return \Generated\Shared\Transfer\NodeTransfer[]
+     */
+    public function getCategoryNodesByCategoryNodeIds(array $categoryNodeIds): array;
 }

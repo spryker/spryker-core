@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CategoryPageSearch;
 
+use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToCategoryFacadeBridge;
 use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToEventBehaviorFacadeBridge;
 use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToStoreFacadeBridge;
 use Spryker\Zed\CategoryPageSearch\Dependency\QueryContainer\CategoryPageSearchToCategoryQueryContainerBridge;
@@ -50,6 +51,8 @@ class CategoryPageSearchDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addCategoryFacade($container);
+        $container = $this->addEventBehaviorFacade($container);
         $container = $this->addUtilEncodingService($container);
 
         return $container;
@@ -62,7 +65,7 @@ class CategoryPageSearchDependencyProvider extends AbstractBundleDependencyProvi
      */
     public function providePersistenceLayerDependencies(Container $container): Container
     {
-        $container = $this->providePersistenceLayerDependencies($container);
+        $container = parent::providePersistenceLayerDependencies($container);
         $container = $this->addCategoryQueryContainer($container);
 
         return $container;
@@ -91,6 +94,20 @@ class CategoryPageSearchDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::FACADE_STORE, function (Container $container) {
             return new CategoryPageSearchToStoreFacadeBridge($container->getLocator()->store()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCategoryFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_CATEGORY, function (Container $container) {
+            return new CategoryPageSearchToCategoryFacadeBridge($container->getLocator()->category()->facade());
         });
 
         return $container;

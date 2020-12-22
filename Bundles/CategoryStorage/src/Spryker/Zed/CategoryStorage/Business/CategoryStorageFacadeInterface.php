@@ -60,4 +60,34 @@ interface CategoryStorageFacadeInterface
      * @return void
      */
     public function unpublishCategoryTree(): void;
+
+    /**
+     * Specification:
+     * - Extracts category store IDs from the $eventTransfers created by category store events.
+     * - Finds all category node IDs related to category store IDs.
+     * - Queries all category nodes with category node IDs.
+     * - Creates a data structure tree.
+     * - Stores data as json encoded to storage table.
+     * - Sends a copy of data to queue based on module config.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCategoryNodeStorageCollectionByCategoryEvents(array $eventEntityTransfers): void;
+
+    /**
+     * Specification:
+     * - Queries all categories.
+     * - Creates a data structure category tree.
+     * - Stores data as json encoded to storage table.
+     * - Sends a copy of data to queue based on module config.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function writeCategoryTreeStorageCollection(): void;
 }

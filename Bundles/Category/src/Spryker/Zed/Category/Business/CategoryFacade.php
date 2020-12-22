@@ -307,4 +307,32 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     {
         return $this->getRepository()->getAllCategoryNodeTreeElementsByCategoryNodeIds($categoryNodeIds);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $categoryIds
+     *
+     * @return int[]
+     */
+    public function getCategoryNodeIdsByCategoryIds(array $categoryIds): array
+    {
+        return $this->getRepository()->getCategoryNodeIdsByCategoryIds($categoryIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $categoryNodeIds
+     *
+     * @return \Generated\Shared\Transfer\NodeTransfer[]
+     */
+    public function getCategoryNodesByCategoryNodeIds(array $categoryNodeIds): array
+    {
+        return $this->getRepository()->getCategoryNodesByCategoryNodeIds($categoryNodeIds);
+    }
 }

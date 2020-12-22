@@ -15,18 +15,13 @@ use Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorageQuery;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\CategoryStorage\Business\CategoryStorageBusinessFactory;
 use Spryker\Zed\CategoryStorage\Business\CategoryStorageFacade;
-use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeCategoryAttributeStorageListener;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeCategoryAttributeStoragePublishListener;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeCategoryAttributeStorageUnpublishListener;
-use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeCategoryStorageListener;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeCategoryStoragePublishListener;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeCategoryStorageUnpublishListener;
-use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeCategoryTemplateStorageListener;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeCategoryTemplateStoragePublishListener;
-use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeStorageListener;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeStoragePublishListener;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeStorageUnpublishListener;
-use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryTreeStorageListener;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryTreeStoragePublishListener;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryTreeStorageUnpublishListener;
 
@@ -45,27 +40,6 @@ use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryTree
  */
 class CategoryStorageListenerTest extends Unit
 {
-    /**
-     * @return void
-     */
-    public function testCategoryNodeStorageListenerStoreData(): void
-    {
-        SpyCategoryNodeStorageQuery::create()->filterByFkCategoryNode(1)->delete();
-        $categoryStorageCount = SpyCategoryNodeStorageQuery::create()->count();
-
-        $categoryNodeStorageListener = new CategoryNodeStorageListener();
-        $categoryNodeStorageListener->setFacade($this->getCategoryStorageFacade());
-
-        $eventTransfers = [
-            (new EventEntityTransfer())->setId(1),
-        ];
-
-        $categoryNodeStorageListener->handleBulk($eventTransfers, CategoryEvents::CATEGORY_NODE_PUBLISH);
-
-        // Assert
-        $this->assertCategoryNodeStorage($categoryStorageCount);
-    }
-
     /**
      * @return void
      */
@@ -108,26 +82,6 @@ class CategoryStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testCategoryStorageListenerStoreData(): void
-    {
-        SpyCategoryNodeStorageQuery::create()->filterByFkCategoryNode(1)->delete();
-        $categoryStorageCount = SpyCategoryNodeStorageQuery::create()->count();
-
-        $categoryNodeStorageListener = new CategoryNodeCategoryStorageListener();
-        $categoryNodeStorageListener->setFacade($this->getCategoryStorageFacade());
-
-        $eventTransfers = [
-            (new EventEntityTransfer())->setId(1),
-        ];
-        $categoryNodeStorageListener->handleBulk($eventTransfers, CategoryEvents::ENTITY_SPY_CATEGORY_CREATE);
-
-        // Assert
-        $this->assertCategoryNodeStorage($categoryStorageCount);
-    }
-
-    /**
-     * @return void
-     */
     public function testCategoryStorageListenerPublish(): void
     {
         SpyCategoryNodeStorageQuery::create()->filterByFkCategoryNode(1)->delete();
@@ -161,27 +115,6 @@ class CategoryStorageListenerTest extends Unit
         $categoryNodeStorageListener->handleBulk($eventTransfers, CategoryEvents::ENTITY_SPY_CATEGORY_DELETE);
 
         $this->assertSame(0, SpyCategoryNodeStorageQuery::create()->filterByFkCategoryNode(1)->count());
-    }
-
-    /**
-     * @return void
-     */
-    public function testCategoryTemplateStorageListenerStoreData(): void
-    {
-        SpyCategoryNodeStorageQuery::create()->filterByFkCategoryNode(1)->delete();
-        $beforeCount = SpyCategoryNodeStorageQuery::create()->count();
-
-        $categoryNodeStorageListener = new CategoryNodeCategoryTemplateStorageListener();
-        $categoryNodeStorageListener->setFacade($this->getCategoryStorageFacade());
-
-        $eventTransfers = [
-            (new EventEntityTransfer())->setId(1),
-        ];
-        $categoryNodeStorageListener->handleBulk($eventTransfers, CategoryEvents::ENTITY_SPY_CATEGORY_TEMPLATE_CREATE);
-
-        // Assert
-        $CategoryStorageCount = SpyCategoryNodeStorageQuery::create()->count();
-        $this->assertGreaterThan($beforeCount, $CategoryStorageCount);
     }
 
     /**
@@ -226,28 +159,6 @@ class CategoryStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testCategoryAttributeStorageListenerStoreData(): void
-    {
-        SpyCategoryNodeStorageQuery::create()->filterByFkCategoryNode(1)->delete();
-        $beforeCount = SpyCategoryNodeStorageQuery::create()->count();
-
-        $categoryNodeStorageListener = new CategoryNodeCategoryAttributeStorageListener();
-        $categoryNodeStorageListener->setFacade($this->getCategoryStorageFacade());
-
-        $eventTransfers = [
-            (new EventEntityTransfer())->setForeignKeys([
-                SpyCategoryAttributeTableMap::COL_FK_CATEGORY => 1,
-            ]),
-        ];
-        $categoryNodeStorageListener->handleBulk($eventTransfers, CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_CREATE);
-
-        // Assert
-        $this->assertCategoryNodeStorage($beforeCount);
-    }
-
-    /**
-     * @return void
-     */
     public function testCategoryAttributeStoragePublishListener(): void
     {
         SpyCategoryNodeStorageQuery::create()->filterByFkCategoryNode(1)->delete();
@@ -284,21 +195,6 @@ class CategoryStorageListenerTest extends Unit
 
         // Assert
         $this->assertSame(0, SpyCategoryNodeStorageQuery::create()->filterByFkCategoryNode(1)->count());
-    }
-
-    /**
-     * @return void
-     */
-    public function testCategoryTreeStorageListenerStoreData(): void
-    {
-        SpyCategoryTreeStorageQuery::create()->deleteall();
-
-        $categoryTreeStorageListener = new CategoryTreeStorageListener();
-        $categoryTreeStorageListener->setFacade($this->getCategoryStorageFacade());
-        $categoryTreeStorageListener->handleBulk([new EventEntityTransfer()], CategoryEvents::CATEGORY_TREE_PUBLISH);
-
-        // Assert
-        $this->assertCategoryTreeStorage();
     }
 
     /**

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
 use Orm\Zed\CategoryStorage\Persistence\SpyCategoryNodeStorage;
 use Spryker\Zed\CategoryStorage\Business\TreeBuilder\CategoryStorageNodeTreeBuilderInterface;
 use Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToCategoryFacadeInterface;
+use Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\CategoryStorage\Dependency\Service\CategoryStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface;
 
@@ -32,6 +33,11 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
     protected $categoryFacade;
 
     /**
+     * @var \Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToEventBehaviorFacadeInterface
+     */
+    protected $eventBehaviorFacade;
+
+    /**
      * @var \Spryker\Zed\CategoryStorage\Dependency\Service\CategoryStorageToUtilSanitizeServiceInterface
      */
     protected $utilSanitizeService;
@@ -40,17 +46,20 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
      * @param \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\CategoryStorage\Business\TreeBuilder\CategoryStorageNodeTreeBuilderInterface $categoryStorageNodeTreeBuilder
      * @param \Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToCategoryFacadeInterface $categoryFacade
+     * @param \Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
      * @param \Spryker\Zed\CategoryStorage\Dependency\Service\CategoryStorageToUtilSanitizeServiceInterface $utilSanitizeService
      */
     public function __construct(
         CategoryStorageQueryContainerInterface $queryContainer,
         CategoryStorageNodeTreeBuilderInterface $categoryStorageNodeTreeBuilder,
         CategoryStorageToCategoryFacadeInterface $categoryFacade,
+        CategoryStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
         CategoryStorageToUtilSanitizeServiceInterface $utilSanitizeService
     ) {
         $this->queryContainer = $queryContainer;
         $this->categoryStorageNodeTreeBuilder = $categoryStorageNodeTreeBuilder;
         $this->categoryFacade = $categoryFacade;
+        $this->eventBehaviorFacade = $eventBehaviorFacade;
         $this->utilSanitizeService = $utilSanitizeService;
     }
 
@@ -60,6 +69,29 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
      * @return void
      */
     public function publish(array $categoryNodeIds): void
+    {
+        $this->writeCollection($categoryNodeIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCategoryNodeStorageCollectionByCategoryEvents(array $eventEntityTransfers): void
+    {
+        $categoryIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
+        $categoryNodeIds = $this->categoryFacade->getCategoryNodeIdsByCategoryIds($categoryIds);
+
+        $this->writeCollection($categoryNodeIds);
+    }
+
+    /**
+     * @param int[] $categoryNodeIds
+     *
+     * @return void
+     */
+    public function writeCollection(array $categoryNodeIds): void
     {
         $nodeTransfers = $this->categoryFacade->getAllCategoryNodeTreeElementsByCategoryNodeIds($categoryNodeIds);
         $categoryNodeStorageEntities = $this->findCategoryNodeStorageEntitiesByCategoryNodeIds($categoryNodeIds);
@@ -86,6 +118,16 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
      * @return void
      */
     public function unpublish(array $categoryNodeIds): void
+    {
+        $this->deleteCollection($categoryNodeIds);
+    }
+
+    /**
+     * @param int[] $categoryNodeIds
+     *
+     * @return void
+     */
+    protected function deleteCollection(array $categoryNodeIds): void
     {
         $categoryNodeStorageEntities = $this->findCategoryNodeStorageEntitiesByCategoryNodeIds($categoryNodeIds);
 

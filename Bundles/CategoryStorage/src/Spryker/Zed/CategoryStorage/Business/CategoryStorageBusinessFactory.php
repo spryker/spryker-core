@@ -17,6 +17,7 @@ use Spryker\Zed\CategoryStorage\Business\TreeBuilder\CategoryStorageNodeTreeBuil
 use Spryker\Zed\CategoryStorage\Business\TreeBuilder\CategoryStorageNodeTreeBuilderInterface;
 use Spryker\Zed\CategoryStorage\CategoryStorageDependencyProvider;
 use Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToCategoryFacadeInterface;
+use Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToStoreFacadeInterface;
 use Spryker\Zed\CategoryStorage\Dependency\Service\CategoryStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -34,8 +35,9 @@ class CategoryStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryNodeStorage(
             $this->getQueryContainer(),
-            $this->getRepository(),
             $this->createCategoryStorageNodeTreeBuilder(),
+            $this->getCategoryFacade(),
+            $this->getEventBehaviorFacade(),
             $this->getUtilSanitizeService()
         );
     }
@@ -47,8 +49,8 @@ class CategoryStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryTreeStorage(
             $this->getQueryContainer(),
-            $this->getRepository(),
             $this->createCategoryStorageNodeTreeBuilder(),
+            $this->getCategoryFacade(),
             $this->getUtilSanitizeService()
         );
     }
@@ -86,6 +88,14 @@ class CategoryStorageBusinessFactory extends AbstractBusinessFactory
     public function getStoreFacade(): CategoryStorageToStoreFacadeInterface
     {
         return $this->getProvidedDependency(CategoryStorageDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToEventBehaviorFacadeInterface
+     */
+    public function getEventBehaviorFacade(): CategoryStorageToEventBehaviorFacadeInterface
+    {
+        return $this->getProvidedDependency(CategoryStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
     }
 
     /**

@@ -13,6 +13,7 @@ use Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper\CategoryNodePageSe
 use Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper\CategoryNodePageSearchDataMapperInterface;
 use Spryker\Zed\CategoryPageSearch\CategoryPageSearchDependencyProvider;
 use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToCategoryFacadeInterface;
+use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToEventBehaviorFacadeInterface;
 use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToStoreFacadeInterface;
 use Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilEncodingInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -33,7 +34,8 @@ class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->createCategoryNodePageSearchDataMapper(),
             $this->getQueryContainer(),
             $this->getStoreFacade(),
-            $this->getCategoryFacade()
+            $this->getCategoryFacade(),
+            $this->getEventBehaviorFacade()
         );
     }
 
@@ -43,14 +45,6 @@ class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
     public function createCategoryNodePageSearchDataMapper(): CategoryNodePageSearchDataMapperInterface
     {
         return new CategoryNodePageSearchDataMapper();
-    }
-
-    /**
-     * @return \Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilEncodingInterface
-     */
-    public function getUtilEncodingService(): CategoryPageSearchToUtilEncodingInterface
-    {
-        return $this->getProvidedDependency(CategoryPageSearchDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
     /**
@@ -67,5 +61,21 @@ class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
     public function getCategoryFacade(): CategoryPageSearchToCategoryFacadeInterface
     {
         return $this->getProvidedDependency(CategoryPageSearchDependencyProvider::FACADE_CATEGORY);
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToEventBehaviorFacadeInterface
+     */
+    public function getEventBehaviorFacade(): CategoryPageSearchToEventBehaviorFacadeInterface
+    {
+        return $this->getProvidedDependency(CategoryPageSearchDependencyProvider::FACADE_EVENT_BEHAVIOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilEncodingInterface
+     */
+    public function getUtilEncodingService(): CategoryPageSearchToUtilEncodingInterface
+    {
+        return $this->getProvidedDependency(CategoryPageSearchDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

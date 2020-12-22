@@ -14,9 +14,12 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Orm\Zed\Category\Persistence\SpyCategoryTemplate;
+use Orm\Zed\Store\Persistence\SpyStore;
 use Orm\Zed\Url\Persistence\SpyUrl;
 use phpDocumentor\Reflection\Types\Iterable_;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -93,8 +96,15 @@ class CategoryMapper implements CategoryMapperInterface
     {
         $nodeTransfer = $this->mapCategoryNode($nodeEntity, $nodeTransfer);
         $categoryEntity = $nodeEntity->getCategory();
+
         $categoryTransfer = $this->mapCategory($categoryEntity, new CategoryTransfer());
         $categoryTransfer = $this->mapLocalizedAttributes($categoryEntity, $categoryTransfer, $nodeEntity->getSpyUrls());
+        $storeRelationTransfer = $this->mapCategoryStoreEntitiesToStoreRelationTransfer(
+            $categoryEntity->getSpyCategoryStores(),
+            (new StoreRelationTransfer())->setIdEntity($categoryEntity->getIdCategory())
+        );
+        $categoryTransfer->setStoreRelation($storeRelationTransfer);
+
         $categoryTemplateTransfer = $this->mapCategoryTemplateEntityToCategoryTemplateTransfer(
             $categoryEntity->getCategoryTemplate(),
             new CategoryTemplateTransfer()
@@ -237,6 +247,36 @@ class CategoryMapper implements CategoryMapperInterface
         CategoryTemplateTransfer $categoryTemplateTransfer
     ): CategoryTemplateTransfer {
         return $categoryTemplateTransfer->fromArray($categoryTemplateEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryStore[]|\Propel\Runtime\Collection\ObjectCollection $categoryStoreEntities
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
+     */
+    protected function mapCategoryStoreEntitiesToStoreRelationTransfer(
+        ObjectCollection $categoryStoreEntities,
+        StoreRelationTransfer $storeRelationTransfer
+    ): StoreRelationTransfer {
+        foreach ($categoryStoreEntities as $categoryStoreEntity) {
+            $storeTransfer = $this->mapStoreEntityToStoreTransfer($categoryStoreEntity->getSpyStore(), new StoreTransfer());
+            $storeRelationTransfer->addStores($storeTransfer);
+            $storeRelationTransfer->addIdStores($storeTransfer->getIdStore());
+        }
+
+        return $storeRelationTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Store\Persistence\SpyStore $storeEntity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected function mapStoreEntityToStoreTransfer(SpyStore $storeEntity, StoreTransfer $storeTransfer): StoreTransfer
+    {
+        return $storeTransfer->fromArray($storeEntity->toArray(), true);
     }
 
     /**

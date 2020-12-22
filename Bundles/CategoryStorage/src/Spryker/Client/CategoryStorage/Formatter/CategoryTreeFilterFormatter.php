@@ -9,7 +9,6 @@ namespace Spryker\Client\CategoryStorage\Formatter;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CategoryNodeSearchResultTransfer;
-use Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToLocaleClientInterface;
 use Spryker\Client\CategoryStorage\Storage\CategoryTreeStorageReaderInterface;
 
 class CategoryTreeFilterFormatter implements CategoryTreeFilterFormatterInterface

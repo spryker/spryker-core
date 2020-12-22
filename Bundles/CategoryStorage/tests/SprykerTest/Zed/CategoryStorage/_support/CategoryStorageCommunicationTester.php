@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\CategoryStorage;
 
 use Codeception\Actor;
+use Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorageQuery;
 
 /**
  * @method void wantToTest($text)
@@ -26,4 +27,12 @@ use Codeception\Actor;
 class CategoryStorageCommunicationTester extends Actor
 {
     use _generated\CategoryStorageCommunicationTesterActions;
+
+    /**
+     * @return void
+     */
+    public function ensureCategoryTreeStorageDatabaseTableIsEmpty(): void
+    {
+        SpyCategoryTreeStorageQuery::create()->deleteAll();
+    }
 }

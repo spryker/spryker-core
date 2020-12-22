@@ -98,4 +98,18 @@ interface CategoryRepositoryInterface
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
     public function getAllCategoryNodeTreeElementsByCategoryNodeIds(array $categoryNodeIds): array;
+
+    /**
+     * @param int[] $categoryIds
+     *
+     * @return int[]
+     */
+    public function getCategoryNodeIdsByCategoryIds(array $categoryIds): array;
+
+    /**
+     * @param int[] $categoryNodeIds
+     *
+     * @return \Generated\Shared\Transfer\NodeTransfer[]
+     */
+    public function getCategoryNodesByCategoryNodeIds(array $categoryNodeIds): array;
 }

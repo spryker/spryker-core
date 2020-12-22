@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\CategoryStorage\Business\CategoryStorageBusinessFactory getFactory()
- * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageRepositoryInterface getRepository()
  */
 class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFacadeInterface
 {
@@ -65,5 +64,33 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
     public function unpublishCategoryTree(): void
     {
         $this->getFactory()->createCategoryTreeStorage()->unpublish();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCategoryNodeStorageCollectionByCategoryEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createCategoryNodeStorage()
+            ->writeCategoryNodeStorageCollectionByCategoryEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function writeCategoryTreeStorageCollection(): void
+    {
+        $this->getFactory()->createCategoryTreeStorage()->writeCategoryTreeStorageCollection();
     }
 }

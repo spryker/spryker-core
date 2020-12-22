@@ -36,4 +36,21 @@ interface CategoryPageSearchFacadeInterface
      * @return void
      */
     public function unpublish(array $categoryNodeIds);
+
+    /**
+     * Specification:
+     * - Extracts category store IDs from the $eventTransfers created by category store events.
+     * - Finds all category node IDs related to category store IDs.
+     * - Queries all category nodes with these ids.
+     * - Creates a data structure tree.
+     * - Stores data as json encoded to search table.
+     * - Sends a copy of data to queue based on module config.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCategoryNodePageSearchCollectionByCategoryEvents(array $eventEntityTransfers): void;
 }

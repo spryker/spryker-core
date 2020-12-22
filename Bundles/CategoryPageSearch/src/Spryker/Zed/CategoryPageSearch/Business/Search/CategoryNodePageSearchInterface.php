@@ -14,12 +14,19 @@ interface CategoryNodePageSearchInterface
      *
      * @return void
      */
-    public function publish(array $categoryNodeIds);
+    public function publish(array $categoryNodeIds): void;
 
     /**
      * @param array $categoryNodeIds
      *
      * @return void
      */
-    public function unpublish(array $categoryNodeIds);
+    public function unpublish(array $categoryNodeIds): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCategoryNodePageSearchCollectionByCategoryEvents(array $eventEntityTransfers): void;
 }

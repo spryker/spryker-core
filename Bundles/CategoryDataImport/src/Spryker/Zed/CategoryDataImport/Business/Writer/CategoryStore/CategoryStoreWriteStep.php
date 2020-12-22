@@ -167,7 +167,7 @@ class CategoryStoreWriteStep extends PublishAwareStep implements DataImportStepI
      * @param int $idParentCategory
      * @param int[] $storeIds
      *
-     * @return \Orm\Zed\CategoryStore\Persistence\SpyCategoryStore[]
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryStore[]
      */
     protected function getChildrenCategoryStoreEntities(int $idParentCategory, array $storeIds): array
     {
@@ -215,7 +215,7 @@ class CategoryStoreWriteStep extends PublishAwareStep implements DataImportStepI
 
         if ($categoryStoreEntity->isNew()) {
             $categoryStoreEntity->save();
-            $this->addPublishEvents(static::EVENT_CATEGORY_STORE_PUBLISH, $categoryStoreEntity->getIdCategoryStore());
+            $this->addPublishEvents(static::EVENT_CATEGORY_STORE_PUBLISH, $categoryStoreEntity->getFkCategory());
         }
     }
 
@@ -227,6 +227,6 @@ class CategoryStoreWriteStep extends PublishAwareStep implements DataImportStepI
     protected function deleteCategoryStoreEntity(SpyCategoryStore $categoryStoreEntity): void
     {
         $categoryStoreEntity->delete();
-        $this->addPublishEvents(static::EVENT_CATEGORY_STORE_UNPUBLISH, $categoryStoreEntity->getIdCategoryStore());
+        $this->addPublishEvents(static::EVENT_CATEGORY_STORE_UNPUBLISH, $categoryStoreEntity->getFkCategory());
     }
 }

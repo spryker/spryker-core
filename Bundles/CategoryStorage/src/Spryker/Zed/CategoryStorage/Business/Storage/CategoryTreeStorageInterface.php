@@ -18,4 +18,14 @@ interface CategoryTreeStorageInterface
      * @return void
      */
     public function unpublish(): void;
+
+    /**
+     * @return void
+     */
+    public function writeCategoryTreeStorageCollection(): void;
+
+    /**
+     * @return void
+     */
+    public function deleteCategoryTreeStorageCollection(): void;
 }

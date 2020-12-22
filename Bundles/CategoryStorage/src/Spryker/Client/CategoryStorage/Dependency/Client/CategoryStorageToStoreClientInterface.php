@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\CategoryStorage\Dependency\Client;
 
-
 interface CategoryStorageToStoreClientInterface
 {
     /**

@@ -7,14 +7,10 @@
 
 namespace Spryker\Client\CategoryStorage\Plugin;
 
-use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Generated\Shared\Transfer\UrlStorageResourceMapTransfer;
 use Generated\Shared\Transfer\UrlStorageTransfer;
-use Spryker\Client\CategoryStorage\CategoryStorageConfig;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface;
-use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
-use Spryker\Shared\Kernel\Store;
 
 /**
  * @method \Spryker\Client\CategoryStorage\CategoryStorageFactory getFactory()

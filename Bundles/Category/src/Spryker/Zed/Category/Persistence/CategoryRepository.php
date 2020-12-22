@@ -370,6 +370,58 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     }
 
     /**
+     * @param int[] $categoryIds
+     *
+     * @return int[]
+     */
+    public function getCategoryNodeIdsByCategoryIds(array $categoryIds): array
+    {
+        return $this->getFactory()
+            ->createCategoryNodeQuery()
+            ->filterByFkCategory_In($categoryIds)
+            ->select([
+                SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE,
+            ])
+            ->find()
+            ->toArray();
+    }
+
+    /**
+     * @param int[] $categoryNodeIds
+     *
+     * @return \Generated\Shared\Transfer\NodeTransfer[]
+     */
+    public function getCategoryNodesByCategoryNodeIds(array $categoryNodeIds): array
+    {
+        $categoryNodeEntities = $this->getFactory()
+            ->createCategoryNodeQuery()
+            ->filterByIdCategoryNode_In($categoryNodeIds)
+            ->leftJoinWithSpyUrl()
+            ->leftJoinWithCategory()
+            ->useCategoryQuery(null, Criteria::LEFT_JOIN)
+                ->leftJoinWithCategoryTemplate()
+                ->leftJoinWithAttribute()
+                ->useAttributeQuery(null, Criteria::LEFT_JOIN)
+                    ->leftJoinWithLocale()
+                ->endUse()
+                ->leftJoinSpyCategoryStore()
+                ->useSpyCategoryStoreQuery(null, Criteria::LEFT_JOIN)
+                    ->leftJoinWithSpyStore()
+                ->endUse()
+            ->endUse()
+            ->find()
+            ->getData();
+
+        if ($categoryNodeEntities === []) {
+            return [];
+        }
+
+        return $this->getFactory()
+            ->createCategoryMapper()
+            ->mapCategoryNodeEntitiesToNodeTransfersIndexedByIdCategoryNode($categoryNodeEntities, []);
+    }
+
+    /**
      * @param \Orm\Zed\Category\Persistence\SpyCategoryQuery $categoryQuery
      * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
      *

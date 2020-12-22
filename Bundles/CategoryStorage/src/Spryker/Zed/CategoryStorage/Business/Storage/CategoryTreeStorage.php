@@ -59,6 +59,22 @@ class CategoryTreeStorage implements CategoryTreeStorageInterface
      */
     public function publish(): void
     {
+        $this->writeCategoryTreeStorageCollection();
+    }
+
+    /**
+     * @return void
+     */
+    public function unpublish(): void
+    {
+        $this->deleteCategoryTreeStorageCollection();
+    }
+
+    /**
+     * @return void
+     */
+    public function writeCategoryTreeStorageCollection(): void
+    {
         $categoryTrees = $this->getCategoryNodeStorageTransferTrees();
         $categoryTreeStorageEntities = $this->findCategoryTreeStorageEntities();
         $categoryTreeStorageEntitiesIndexedByStoreAndLocale = $this->indexCategoryTreeStorageEntitiesByStoreAndLocale($categoryTreeStorageEntities);
@@ -69,7 +85,7 @@ class CategoryTreeStorage implements CategoryTreeStorageInterface
     /**
      * @return void
      */
-    public function unpublish(): void
+    public function deleteCategoryTreeStorageCollection(): void
     {
         $spyCategoryMenuTranslationStorageEntities = $this->findCategoryTreeStorageEntities();
         foreach ($spyCategoryMenuTranslationStorageEntities as $spyCategoryMenuTranslationStorageEntity) {
@@ -113,6 +129,10 @@ class CategoryTreeStorage implements CategoryTreeStorageInterface
         string $storeName,
         string $localeName
     ): void {
+        if ($categoryNodeStorageTransferTrees === []) {
+            return;
+        }
+
         if (!isset($categoryTreeStorageEntitiesIndexedByStoreAndLocale[$storeName][$localeName])) {
             $this->storeDataSet(
                 $categoryNodeStorageTransferTrees,

@@ -15,4 +15,11 @@ interface CategoryStorageToCategoryFacadeInterface
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
     public function getAllCategoryNodeTreeElementsByCategoryNodeIds(array $categoryNodeIds): array;
+
+    /**
+     * @param int[] $categoryStoreIds
+     *
+     * @return int[]
+     */
+    public function getCategoryNodeIdsByCategoryIds(array $categoryStoreIds): array;
 }

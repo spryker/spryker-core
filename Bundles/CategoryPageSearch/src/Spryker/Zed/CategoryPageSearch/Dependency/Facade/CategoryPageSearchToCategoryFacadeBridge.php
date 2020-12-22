@@ -27,8 +27,18 @@ class CategoryPageSearchToCategoryFacadeBridge implements CategoryPageSearchToCa
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
-    public function getAllCategoryNodeTreeElementsByCategoryNodeIds(array $categoryNodeIds): array
+    public function getCategoryNodesByCategoryNodeIds(array $categoryNodeIds): array
     {
-        return $this->categoryFacade->getAllCategoryNodeTreeElementsByCategoryNodeIds($categoryNodeIds);
+        return $this->categoryFacade->getCategoryNodesByCategoryNodeIds($categoryNodeIds);
+    }
+
+    /**
+     * @param int[] $categoryStoreIds
+     *
+     * @return int[]
+     */
+    public function getCategoryNodeIdsByCategoryIds(array $categoryStoreIds): array
+    {
+        return $this->categoryFacade->getCategoryNodeIdsByCategoryIds($categoryStoreIds);
     }
 }

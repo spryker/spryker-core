@@ -41,4 +41,20 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
     {
         $this->getFactory()->createCategoryNodeSearch()->unpublish($categoryNodeIds);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCategoryNodePageSearchCollectionByCategoryEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createCategoryNodeSearch()
+            ->writeCategoryNodePageSearchCollectionByCategoryEvents($eventEntityTransfers);
+    }
 }

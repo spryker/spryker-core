@@ -95,8 +95,9 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
             if (!isset($indexedCategoryNodeStorageTransfers[$idCategoryNode])) {
                 continue;
             }
+            $categoryNodeStorageTransfer = $this->cloneCategoryNodeStorageTransfer($indexedCategoryNodeStorageTransfers[$idCategoryNode]);
             $categoryNodeStorageTransfer = $this->buildChildrenTree(
-                $indexedCategoryNodeStorageTransfers[$idCategoryNode],
+                $categoryNodeStorageTransfer,
                 $indexedNodeTransfers,
                 $indexedCategoryNodeStorageTransfers
             );
@@ -185,8 +186,10 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
     {
         $childrenCategoryNodeStorageTransfers = [];
         foreach ($indexedNodeTransfers as $nodeTransfer) {
-            if ($idCategoryNode === $nodeTransfer->getFkParentCategoryNode()) {
-                $childrenCategoryNodeStorageTransfers[] = $indexedCategoryNodeStorageTransfers[$nodeTransfer->getIdCategoryNode()];
+            if ($idCategoryNode === $nodeTransfer->getFkParentCategoryNode() && isset($indexedCategoryNodeStorageTransfers[$nodeTransfer->getIdCategoryNode()])) {
+                $childrenCategoryNodeStorageTransfers[] = $this->cloneCategoryNodeStorageTransfer(
+                    $indexedCategoryNodeStorageTransfers[$nodeTransfer->getIdCategoryNode()]
+                );
             }
         }
 
@@ -204,10 +207,20 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
         $parentCategoryNodeStorageTransfers = [];
         foreach ($indexedCategoryNodeStorageTransfers as $idCategoryNode => $categoryNodeStorageTransfer) {
             if ($idParentCategoryNode === $idCategoryNode) {
-                $parentCategoryNodeStorageTransfers[] = $categoryNodeStorageTransfer;
+                $parentCategoryNodeStorageTransfers[] = $this->cloneCategoryNodeStorageTransfer($categoryNodeStorageTransfer);
             }
         }
 
         return $parentCategoryNodeStorageTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer $categoryNodeStorageTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer
+     */
+    protected function cloneCategoryNodeStorageTransfer(CategoryNodeStorageTransfer $categoryNodeStorageTransfer): CategoryNodeStorageTransfer
+    {
+        return (new CategoryNodeStorageTransfer())->fromArray($categoryNodeStorageTransfer->toArray(), true);
     }
 }

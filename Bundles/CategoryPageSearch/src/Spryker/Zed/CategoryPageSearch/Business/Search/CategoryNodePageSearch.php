@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearch;
 use Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper\CategoryNodePageSearchDataMapperInterface;
 use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToCategoryFacadeInterface;
+use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToEventBehaviorFacadeInterface;
 use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToStoreFacadeInterface;
 use Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilEncodingInterface;
 use Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface;
@@ -44,24 +45,32 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
     protected $categoryFacade;
 
     /**
+     * @var \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToEventBehaviorFacadeInterface
+     */
+    protected $eventBehaviorFacade;
+
+    /**
      * @param \Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilEncodingInterface $utilEncodingService
      * @param \Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper\CategoryNodePageSearchDataMapperInterface $categoryNodePageSearchDataMapper
      * @param \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToCategoryFacadeInterface $categoryFacade
+     * @param \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToEventBehaviorFacadeInterface $eventBehaviorFacade
      */
     public function __construct(
         CategoryPageSearchToUtilEncodingInterface $utilEncodingService,
         CategoryNodePageSearchDataMapperInterface $categoryNodePageSearchDataMapper,
         CategoryPageSearchQueryContainerInterface $queryContainer,
         CategoryPageSearchToStoreFacadeInterface $storeFacade,
-        CategoryPageSearchToCategoryFacadeInterface $categoryFacade
+        CategoryPageSearchToCategoryFacadeInterface $categoryFacade,
+        CategoryPageSearchToEventBehaviorFacadeInterface $eventBehaviorFacade
     ) {
         $this->utilEncodingService = $utilEncodingService;
         $this->categoryNodePageSearchDataMapper = $categoryNodePageSearchDataMapper;
         $this->queryContainer = $queryContainer;
         $this->storeFacade = $storeFacade;
         $this->categoryFacade = $categoryFacade;
+        $this->eventBehaviorFacade = $eventBehaviorFacade;
     }
 
     /**
@@ -69,9 +78,44 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
      *
      * @return void
      */
-    public function publish(array $categoryNodeIds)
+    public function publish(array $categoryNodeIds): void
     {
-        $nodeTransfers = $this->categoryFacade->getAllCategoryNodeTreeElementsByCategoryNodeIds($categoryNodeIds);
+        $this->writeCollection($categoryNodeIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCategoryNodePageSearchCollectionByCategoryEvents(array $eventEntityTransfers): void
+    {
+        $categoryIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
+        $categoryNodeIds = $this->categoryFacade->getCategoryNodeIdsByCategoryIds($categoryIds);
+
+        $this->writeCollection($categoryNodeIds);
+    }
+
+    /**
+     * @param int[] $categoryNodeIds
+     *
+     * @return void
+     */
+    public function unpublish(array $categoryNodeIds): void
+    {
+        $spyCategoryNodePageSearchEntities = $this->findCategoryNodePageSearchEntitiesByCategoryNodeIds($categoryNodeIds);
+
+        $this->deleteSearchData($spyCategoryNodePageSearchEntities);
+    }
+
+    /**
+     * @param array $categoryNodeIds
+     *
+     * @return void
+     */
+    protected function writeCollection(array $categoryNodeIds): void
+    {
+        $nodeTransfers = $this->categoryFacade->getCategoryNodesByCategoryNodeIds($categoryNodeIds);
         $categoryNodePageSearchEntities = $this->findCategoryNodePageSearchEntitiesByCategoryNodeIds($categoryNodeIds);
 
         if (!$nodeTransfers) {
@@ -82,18 +126,6 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
             $categoryNodePageSearchEntities
         );
         $this->storeData($nodeTransfers, $indexedCategoryNodePageSearchEntities);
-    }
-
-    /**
-     * @param int[] $categoryNodeIds
-     *
-     * @return void
-     */
-    public function unpublish(array $categoryNodeIds)
-    {
-        $spyCategoryNodePageSearchEntities = $this->findCategoryNodePageSearchEntitiesByCategoryNodeIds($categoryNodeIds);
-
-        $this->deleteSearchData($spyCategoryNodePageSearchEntities);
     }
 
     /**
@@ -189,6 +221,7 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
         $spyCategoryNodePageSearchEntity->setFkCategoryNode($nodeTransfer->getIdCategoryNode());
         $spyCategoryNodePageSearchEntity->setStructuredData($this->utilEncodingService->encodeJson($nodeTransfer->toArray()));
         $spyCategoryNodePageSearchEntity->setData($data);
+        $spyCategoryNodePageSearchEntity->setStore($storeName);
         $spyCategoryNodePageSearchEntity->setLocale($localeName);
         $spyCategoryNodePageSearchEntity->save();
     }

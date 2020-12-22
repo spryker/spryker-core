@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Spryker\Zed\Category\Business\CategoryFacadeInterface;
 
@@ -236,6 +237,94 @@ class CategoryFacadeTest extends Unit
         /** @var \Generated\Shared\Transfer\NodeTransfer $firstChildNode */
         $secondChildNode = $secondChildNodeCollectionTransfer->getNodes()->offsetGet(0);
         $this->assertEquals($secondChildNode->getIdCategoryNode(), $categoryTransfer3->getCategoryNode()->getIdCategoryNode());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetAllCategoryNodeTreeElementsByCategoryNodeIdsWillReturnAllRequestedNodeTransfers(): void
+    {
+        // Arrange
+        $categoryTransfer1 = $this->tester->haveCategory();
+        $categoryTransfer2 = $this->tester->haveCategory([
+            CategoryTransfer::PARENT_CATEGORY_NODE => $categoryTransfer1->getCategoryNode()->toArray(),
+        ]);
+        $categoryTransfer3 = $this->tester->haveCategory([
+            CategoryTransfer::PARENT_CATEGORY_NODE => $categoryTransfer2->getCategoryNode()->toArray(),
+        ]);
+        $expectedCategoryNodeIds = [
+            $categoryTransfer1->getCategoryNode()->getIdCategoryNode(),
+            $categoryTransfer2->getCategoryNode()->getIdCategoryNode(),
+            $categoryTransfer3->getCategoryNode()->getIdCategoryNode(),
+        ];
+
+        // Act
+        $nodeTransfers = $this->getFacade()->getAllCategoryNodeTreeElementsByCategoryNodeIds([
+            $categoryTransfer2->getCategoryNode()->getIdCategoryNode()
+        ]);
+
+        // Assert
+        $this->assertCount(3, $nodeTransfers);
+
+        $resultCategoryNodeIds = array_map(function (NodeTransfer $nodeTransfer): int {
+            return $nodeTransfer->getIdCategoryNode();
+        }, $nodeTransfers);
+        $this->assertEmpty(array_diff($expectedCategoryNodeIds, $resultCategoryNodeIds));
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCategoryNodeIdsByCategoryIdsWillReturnCorrectCategoryNodeIds(): void
+    {
+        // Arrange
+        $categoryTransfer1 = $this->tester->haveCategory();
+        $categoryTransfer2 = $this->tester->haveCategory();
+
+        $expectedCategoryNodeIds = [
+            $categoryTransfer1->getCategoryNode()->getIdCategoryNode(),
+            $categoryTransfer2->getCategoryNode()->getIdCategoryNode(),
+        ];
+
+        // Act
+        $resultCategoryNodeIds = $this->getFacade()->getCategoryNodeIdsByCategoryIds([
+            $categoryTransfer1->getIdCategory(),
+            $categoryTransfer2->getIdCategory(),
+        ]);
+
+        // Assert
+        $this->assertEmpty(array_diff($expectedCategoryNodeIds, $resultCategoryNodeIds));
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCategoryNodesByCategoryNodeIdsWillReturnCorrectNodeTransfers(): void
+    {
+        // Arrange
+        $categoryTransfer1 = $this->tester->haveCategory();
+        $categoryTransfer2 = $this->tester->haveCategory();
+
+        $nodeTransfer1 = $categoryTransfer1->getCategoryNode();
+        $nodeTransfer2 = $categoryTransfer2->getCategoryNode();
+        $nodeTransferIds = [
+            $nodeTransfer1->getIdCategoryNode(),
+            $nodeTransfer2->getIdCategoryNode(),
+        ];
+
+        // Act
+        $resultCategoryNodeTransfers = $this->getFacade()->getCategoryNodesByCategoryNodeIds($nodeTransferIds);
+
+        // Assert
+        $this->assertCount(2, $resultCategoryNodeTransfers);
+
+        $resultNodeTransfer1 = array_shift($resultCategoryNodeTransfers);
+        $this->assertInstanceOf(NodeTransfer::class, $resultNodeTransfer1);
+        $this->assertTrue(in_array($resultNodeTransfer1->getIdCategoryNode(), $nodeTransferIds, true));
+
+        $resultNodeTransfer2 = array_shift($resultCategoryNodeTransfers);
+        $this->assertInstanceOf(NodeTransfer::class, $resultNodeTransfer2);
+        $this->assertTrue(in_array($resultNodeTransfer2->getIdCategoryNode(), $nodeTransferIds, true));
     }
 
     /**

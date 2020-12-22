@@ -14,5 +14,12 @@ interface CategoryPageSearchToCategoryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
-    public function getAllCategoryNodeTreeElementsByCategoryNodeIds(array $categoryNodeIds): array;
+    public function getCategoryNodesByCategoryNodeIds(array $categoryNodeIds): array;
+
+    /**
+     * @param int[] $categoryStoreIds
+     *
+     * @return int[]
+     */
+    public function getCategoryNodeIdsByCategoryIds(array $categoryStoreIds): array;
 }
