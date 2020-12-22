@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ProductOfferResponseTransfer;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -22,6 +23,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class UpdateProductOfferController extends AbstractProductOfferController
 {
     protected const PARAM_ID_PRODUCT_OFFER = 'product-offer-id';
+    protected const PARAM_TYPE_PRICE_PRODUCT_OFFER_IDS = 'type-price-product-offer-ids';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -58,23 +60,77 @@ class UpdateProductOfferController extends AbstractProductOfferController
         );
         $productOfferForm->handleRequest($request);
 
-        if ($productOfferForm->isSubmitted() && $productOfferForm->isValid()) {
-            $productOfferResponseTransfer = $this->getFactory()->getProductOfferFacade()->update($productOfferForm->getData());
-        }
-
-        $productOfferResponseTransfer = $productOfferResponseTransfer ?? new ProductOfferResponseTransfer();
+        $initialData = $this->getDefaultInitialData($request, $productOfferForm->getName());
+        $productOfferResponseTransfer = new ProductOfferResponseTransfer();
         $productOfferResponseTransfer->setProductOffer($productOfferTransfer);
 
-        return $this->getResponse($productOfferForm, $productConcreteTransfer, $productAbstractTransfer, $productOfferResponseTransfer);
+        if (!$productOfferForm->isSubmitted()) {
+            return $this->getResponse(
+                $productOfferForm,
+                $productConcreteTransfer,
+                $productAbstractTransfer,
+                $productOfferResponseTransfer,
+                $idProductOffer,
+                $initialData
+            );
+        }
+
+        $validationResponseTransfer = $this->getFactory()
+            ->getPriceProductOfferFacade()
+            ->validateProductOfferPrices($productOfferForm->getData()->getPrices());
+
+        if (!$productOfferForm->isValid() || !$validationResponseTransfer->getIsSuccess()) {
+            $initialData = $this->getFactory()
+                ->createPriceProductOfferMapper()
+                ->mapValidationResponseTransferToInitialDataErrors(
+                    $validationResponseTransfer,
+                    $initialData
+                );
+
+            return $this->getResponse(
+                $productOfferForm,
+                $productConcreteTransfer,
+                $productAbstractTransfer,
+                $productOfferResponseTransfer,
+                $idProductOffer,
+                $initialData
+            );
+        }
+
+        $productOfferResponseTransfer = $this->getFactory()->getProductOfferFacade()->update($productOfferForm->getData());
+
+        return $this->getResponse(
+            $productOfferForm,
+            $productConcreteTransfer,
+            $productAbstractTransfer,
+            $productOfferResponseTransfer,
+            $idProductOffer,
+            $initialData
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function deletePricesAction(Request $request): JsonResponse
+    {
+        return $this->getFactory()
+            ->createDeletePricesAction()
+            ->execute($request);
     }
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $productOfferForm
+     * @phpstan-param array<mixed> $initialData
      *
      * @param \Symfony\Component\Form\FormInterface $productOfferForm
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\ProductOfferResponseTransfer $productOfferResponseTransfer
+     * @param int $idProductOffer
+     * @param array $initialData
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -82,7 +138,9 @@ class UpdateProductOfferController extends AbstractProductOfferController
         FormInterface $productOfferForm,
         ProductConcreteTransfer $productConcreteTransfer,
         ProductAbstractTransfer $productAbstractTransfer,
-        ProductOfferResponseTransfer $productOfferResponseTransfer
+        ProductOfferResponseTransfer $productOfferResponseTransfer,
+        int $idProductOffer,
+        array $initialData
     ): JsonResponse {
         $localeTransfer = $this->getFactory()
             ->getLocaleFacade()
@@ -91,6 +149,10 @@ class UpdateProductOfferController extends AbstractProductOfferController
         $productOfferTransfer = $productOfferResponseTransfer->getProductOffer();
         $productOfferReference = $productOfferTransfer ? $productOfferTransfer->getProductOfferReference() : null;
 
+        $priceProductOfferTableConfiguration = $this->getFactory()
+            ->createPriceProductOfferUpdateGuiTableConfigurationProvider()
+            ->getConfiguration($idProductOffer, $initialData);
+
         $responseData = [
             'form' => $this->renderView('@ProductOfferMerchantPortalGui/Partials/offer_form.twig', [
                 'form' => $productOfferForm->createView(),
@@ -98,6 +160,7 @@ class UpdateProductOfferController extends AbstractProductOfferController
                 'productName' => $this->getFactory()->createProductNameBuilder()->buildProductConcreteName($productConcreteTransfer, $localeTransfer),
                 'productAttributes' => $this->getProductAttributes($localeTransfer, $productConcreteTransfer, $productAbstractTransfer),
                 'productOfferReference' => $productOfferReference,
+                'priceProductOfferTableConfiguration' => $priceProductOfferTableConfiguration,
             ])->getContent(),
         ];
 
@@ -105,19 +168,25 @@ class UpdateProductOfferController extends AbstractProductOfferController
             return new JsonResponse($responseData);
         }
 
-        if ($productOfferForm->isValid() && $productOfferResponseTransfer->getIsSuccessful()) {
-            $responseData['postActions'] = [
-                [
-                    'type' => 'close_overlay',
+        $isPriceProductOffersValid = count($initialData['errors']) === 0;
+
+        if (
+            $productOfferForm->isValid()
+            && $productOfferResponseTransfer->getIsSuccessful()
+            && $isPriceProductOffersValid
+        ) {
+            $responseData = [
+                'postActions' => [
+                    ['type' => 'close_overlay'],
+                    ['type' => 'refresh_table'],
                 ],
-                [
-                    'type' => 'refresh_table',
+                'notifications' => [
+                    [
+                        'type' => 'success',
+                        'message' => 'The Offer is saved.',
+                    ],
                 ],
             ];
-            $responseData['notifications'] = [[
-                'type' => 'success',
-                'message' => 'The Offer is saved.',
-            ]];
 
             return new JsonResponse($responseData);
         }
@@ -131,6 +200,34 @@ class UpdateProductOfferController extends AbstractProductOfferController
             }
         }
 
+        $responseData = $this->addValidationNotifications($responseData);
+
         return new JsonResponse($responseData);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function priceTableDataAction(Request $request): Response
+    {
+        $idProductOffer = (int)$request->get(static::PARAM_ID_PRODUCT_OFFER);
+
+        return $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
+            $request,
+            $this->getFactory()->createProductOfferPriceTableDataProvider($idProductOffer),
+            $this->getFactory()->createPriceProductOfferUpdateGuiTableConfigurationProvider()->getConfiguration($idProductOffer, [])
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function savePricesAction(Request $request)
+    {
+        return $this->getFactory()->createSavePricesAction()->execute($request);
     }
 }

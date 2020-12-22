@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -49,30 +50,77 @@ class CreateProductOfferController extends AbstractProductOfferController
         );
         $productOfferForm->handleRequest($request);
 
-        if ($productOfferForm->isSubmitted() && $productOfferForm->isValid()) {
-            $this->getFactory()->getProductOfferFacade()->create($productOfferForm->getData());
+        $initialData = $this->getDefaultInitialData($request, $productOfferForm->getName());
+
+        if (!$productOfferForm->isSubmitted()) {
+            return $this->getResponse($productOfferForm, $productConcreteTransfer, $productAbstractTransfer, $initialData);
         }
 
-        return $this->getResponse($productOfferForm, $productConcreteTransfer, $productAbstractTransfer);
+        $validationResponseTransfer = $this->getFactory()
+            ->getPriceProductOfferFacade()
+            ->validateProductOfferPrices($productOfferForm->getData()->getPrices());
+
+        if (!$productOfferForm->isValid() || !$validationResponseTransfer->getIsSuccess()) {
+            $initialData = $this->getFactory()
+                ->createPriceProductOfferMapper()
+                ->mapValidationResponseTransferToInitialDataErrors(
+                    $validationResponseTransfer,
+                    $initialData
+                );
+
+            return $this->getResponse($productOfferForm, $productConcreteTransfer, $productAbstractTransfer, $initialData);
+        }
+
+        $this->getFactory()->getProductOfferFacade()->create($productOfferForm->getData());
+
+        return $this->getResponse(
+            $productOfferForm,
+            $productConcreteTransfer,
+            $productAbstractTransfer,
+            $initialData
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function priceTableDataAction(Request $request): Response
+    {
+        return $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
+            $request,
+            $this->getFactory()->createProductOfferPriceTableDataProvider(),
+            $this->getFactory()->createPriceProductOfferCreateGuiTableConfigurationProvider()->getConfiguration([])
+        );
     }
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $productOfferForm
+     * @phpstan-param array<mixed> $initialData
      *
      * @param \Symfony\Component\Form\FormInterface $productOfferForm
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array $initialData
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     protected function getResponse(
         FormInterface $productOfferForm,
         ProductConcreteTransfer $productConcreteTransfer,
-        ProductAbstractTransfer $productAbstractTransfer
+        ProductAbstractTransfer $productAbstractTransfer,
+        array $initialData
     ): JsonResponse {
         $localeTransfer = $this->getFactory()
             ->getLocaleFacade()
             ->getCurrentLocale();
+
+        $priceProductOfferTableConfiguration = $this->getFactory()
+            ->createPriceProductOfferCreateGuiTableConfigurationProvider()
+            ->getConfiguration($initialData);
+
+        $isPriceProductOffersValid = count($initialData['errors']) === 0;
 
         $responseData = [
             'form' => $this->renderView('@ProductOfferMerchantPortalGui/Partials/offer_form.twig', [
@@ -80,6 +128,7 @@ class CreateProductOfferController extends AbstractProductOfferController
                 'product' => $productConcreteTransfer,
                 'productName' => $this->getFactory()->createProductNameBuilder()->buildProductConcreteName($productConcreteTransfer, $localeTransfer),
                 'productAttributes' => $this->getProductAttributes($localeTransfer, $productConcreteTransfer, $productAbstractTransfer),
+                'priceProductOfferTableConfiguration' => $priceProductOfferTableConfiguration,
             ])->getContent(),
         ];
 
@@ -87,14 +136,18 @@ class CreateProductOfferController extends AbstractProductOfferController
             return new JsonResponse($responseData);
         }
 
-        if ($productOfferForm->isValid()) {
+        if ($productOfferForm->isValid() && $isPriceProductOffersValid) {
             $responseData['postActions'] = [[
                 'type' => 'redirect',
                 'url' => '/product-offer-merchant-portal-gui/product-offers',
             ]];
 
             $this->addSuccessMessage('The Offer is saved.');
+
+            return new JsonResponse($responseData);
         }
+
+        $responseData = $this->addValidationNotifications($responseData);
 
         return new JsonResponse($responseData);
     }
