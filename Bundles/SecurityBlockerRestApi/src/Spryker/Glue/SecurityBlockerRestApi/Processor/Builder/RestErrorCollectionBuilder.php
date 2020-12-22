@@ -10,23 +10,45 @@ namespace Spryker\Glue\SecurityBlockerRestApi\Processor\Builder;
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer;
+use Spryker\Glue\SecurityBlockerRestApi\Dependency\Client\SecurityBlockerRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\SecurityBlockerRestApi\SecurityBlockerRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
 class RestErrorCollectionBuilder implements RestErrorCollectionBuilderInterface
 {
     /**
+     * @var \Spryker\Glue\SecurityBlockerRestApi\Dependency\Client\SecurityBlockerRestApiToGlossaryStorageClientInterface
+     */
+    protected $glossaryStorageClient;
+
+    /**
+     * @param \Spryker\Glue\SecurityBlockerRestApi\Dependency\Client\SecurityBlockerRestApiToGlossaryStorageClientInterface $glossaryStorageClient
+     */
+    public function __construct(SecurityBlockerRestApiToGlossaryStorageClientInterface $glossaryStorageClient)
+    {
+        $this->glossaryStorageClient = $glossaryStorageClient;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer $securityCheckAuthResponseTransfer
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer
      */
     public function createRestErrorCollectionTransfer(
-        SecurityCheckAuthResponseTransfer $securityCheckAuthResponseTransfer
+        SecurityCheckAuthResponseTransfer $securityCheckAuthResponseTransfer,
+        string $localeName
     ): RestErrorCollectionTransfer {
+        $translatedMessage = $this->glossaryStorageClient->translate(
+            SecurityBlockerRestApiConfig::ERROR_RESPONSE_DETAIL_ACCOUNT_BLOCKED,
+            $localeName,
+            ['%minutes%' => $this->convertSecondsToReadableTime($securityCheckAuthResponseTransfer)]
+        );
+
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setStatus(Response::HTTP_TOO_MANY_REQUESTS)
             ->setCode(SecurityBlockerRestApiConfig::ERROR_RESPONSE_CODE_ACCOUNT_BLOCKED)
-            ->setDetail(sprintf(SecurityBlockerRestApiConfig::ERROR_RESPONSE_DETAIL_ACCOUNT_BLOCKED, $this->convertSecondsToReadableTime($securityCheckAuthResponseTransfer)));
+            ->setDetail($translatedMessage);
 
         return (new RestErrorCollectionTransfer())
             ->addRestError($restErrorMessageTransfer);

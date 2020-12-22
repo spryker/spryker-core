@@ -3,39 +3,15 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 23,
-            "line_to": 25,
-            "type": "TypeDoesNotContainType",
-            "message": "string is always defined and non-null",
-            "file_name": "vendor/spryker/spryker/Bundles/SecurityBlocker/src/Spryker/Client/SecurityBlocker/Storage/KeyBuilder/SecurityBlockerStorageKeyBuilder.php",
-            "snippet": "        return $securityCheckAuthContextTransfer->getTypeOrFail()\n            . static::KEY_PART_SEPARATOR\n            . $securityCheckAuthContextTransfer->getIp() ?? ''",
-            "selected_text": "$securityCheckAuthContextTransfer->getTypeOrFail()\n            . static::KEY_PART_SEPARATOR\n            . $securityCheckAuthContextTransfer->getIp()",
-            "error_level": 4,
-            "shortcode": 56
-        },
-        {
-            "severity": "info",
             "line_from": 25,
             "line_to": 25,
             "type": "PossiblyNullOperand",
             "message": "Cannot concatenate with a possibly null null|string",
             "file_name": "vendor/spryker/spryker/Bundles/SecurityBlocker/src/Spryker/Client/SecurityBlocker/Storage/KeyBuilder/SecurityBlockerStorageKeyBuilder.php",
-            "snippet": "            . $securityCheckAuthContextTransfer->getIp() ?? ''",
+            "snippet": "        . $securityCheckAuthContextTransfer->getIp()",
             "selected_text": "$securityCheckAuthContextTransfer->getIp()",
             "error_level": 1,
             "shortcode": 80
-        },
-        {
-            "severity": "info",
-            "line_from": 25,
-            "line_to": 27,
-            "type": "TypeDoesNotContainType",
-            "message": "string is always defined and non-null",
-            "file_name": "vendor/spryker/spryker/Bundles/SecurityBlocker/src/Spryker/Client/SecurityBlocker/Storage/KeyBuilder/SecurityBlockerStorageKeyBuilder.php",
-            "snippet": "            . $securityCheckAuthContextTransfer->getIp() ?? ''\n            . static::KEY_PART_SEPARATOR\n            . $securityCheckAuthContextTransfer->getAccount() ?? '';",
-            "selected_text": "''\n            . static::KEY_PART_SEPARATOR\n            . $securityCheckAuthContextTransfer->getAccount()",
-            "error_level": 4,
-            "shortcode": 56
         },
         {
             "severity": "info",
@@ -44,7 +20,7 @@
             "type": "PossiblyNullOperand",
             "message": "Cannot concatenate with a possibly null null|string",
             "file_name": "vendor/spryker/spryker/Bundles/SecurityBlocker/src/Spryker/Client/SecurityBlocker/Storage/KeyBuilder/SecurityBlockerStorageKeyBuilder.php",
-            "snippet": "            . $securityCheckAuthContextTransfer->getAccount() ?? '';",
+            "snippet": "        . $securityCheckAuthContextTransfer->getAccount();",
             "selected_text": "$securityCheckAuthContextTransfer->getAccount()",
             "error_level": 1,
             "shortcode": 80

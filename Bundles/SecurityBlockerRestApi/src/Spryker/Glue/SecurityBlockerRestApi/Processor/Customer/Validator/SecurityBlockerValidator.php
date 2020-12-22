@@ -72,7 +72,10 @@ class SecurityBlockerValidator implements SecurityBlockerValidatorInterface
             return null;
         }
 
-        return $this->restErrorCollectionBuilder->createRestErrorCollectionTransfer($securityCheckAuthResponseTransfer);
+        return $this->restErrorCollectionBuilder->createRestErrorCollectionTransfer(
+            $securityCheckAuthResponseTransfer,
+            $restRequest->getMetadata()->getLocale()
+        );
     }
 
     /**

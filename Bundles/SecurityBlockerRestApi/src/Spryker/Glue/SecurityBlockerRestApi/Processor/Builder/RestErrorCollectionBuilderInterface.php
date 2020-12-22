@@ -14,10 +14,12 @@ interface RestErrorCollectionBuilderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer $securityCheckAuthResponseTransfer
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer
      */
     public function createRestErrorCollectionTransfer(
-        SecurityCheckAuthResponseTransfer $securityCheckAuthResponseTransfer
+        SecurityCheckAuthResponseTransfer $securityCheckAuthResponseTransfer,
+        string $localeName
     ): RestErrorCollectionTransfer;
 }

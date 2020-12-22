@@ -21,9 +21,9 @@ class SecurityBlockerStorageKeyBuilder implements SecurityBlockerStorageKeyBuild
     public function getStorageKey(SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer): string
     {
         return $securityCheckAuthContextTransfer->getTypeOrFail()
-            . static::KEY_PART_SEPARATOR
-            . $securityCheckAuthContextTransfer->getIp() ?? ''
-            . static::KEY_PART_SEPARATOR
-            . $securityCheckAuthContextTransfer->getAccount() ?? '';
+        . static::KEY_PART_SEPARATOR
+        . $securityCheckAuthContextTransfer->getIp()
+        . static::KEY_PART_SEPARATOR
+        . $securityCheckAuthContextTransfer->getAccount();
     }
 }

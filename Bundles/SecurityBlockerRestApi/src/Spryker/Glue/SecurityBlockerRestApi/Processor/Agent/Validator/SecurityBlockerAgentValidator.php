@@ -72,7 +72,10 @@ class SecurityBlockerAgentValidator implements SecurityBlockerAgentValidatorInte
             return null;
         }
 
-        return $this->restErrorCollectionBuilder->createRestErrorCollectionTransfer($securityCheckAuthResponseTransfer);
+        return $this->restErrorCollectionBuilder->createRestErrorCollectionTransfer(
+            $securityCheckAuthResponseTransfer,
+            $restRequest->getMetadata()->getLocale()
+        );
     }
 
     /**
@@ -86,7 +89,7 @@ class SecurityBlockerAgentValidator implements SecurityBlockerAgentValidatorInte
         $restAccessTokensAttributesTransfer = $restRequest->getResource()->getAttributes();
 
         return (new SecurityCheckAuthContextTransfer())
-            ->setType(SecurityBlockerRestApiConfig::SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE)
+            ->setType(SecurityBlockerRestApiConfig::SECURITY_BLOCKER_AGENT_ENTITY_TYPE)
             ->setIp($restRequest->getHttpRequest()->getClientIp())
             ->setAccount($restAccessTokensAttributesTransfer->getUsername());
     }

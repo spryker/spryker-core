@@ -8,6 +8,7 @@
 namespace Spryker\Glue\SecurityBlockerRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
+use Spryker\Glue\SecurityBlockerRestApi\Dependency\Client\SecurityBlockerRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\SecurityBlockerRestApi\Dependency\Client\SecurityBlockerRestApiToSecurityBlockerClientInterface;
 use Spryker\Glue\SecurityBlockerRestApi\Processor\Agent\Storage\SecurityBlockerAgentStorage;
 use Spryker\Glue\SecurityBlockerRestApi\Processor\Agent\Storage\SecurityBlockerAgentStorageInterface;
@@ -75,7 +76,7 @@ class SecurityBlockerRestApiFactory extends AbstractFactory
      */
     public function createRestErrorCollectionBuilder(): RestErrorCollectionBuilderInterface
     {
-        return new RestErrorCollectionBuilder();
+        return new RestErrorCollectionBuilder($this->getGlossaryStorageClient());
     }
 
     /**
@@ -92,5 +93,13 @@ class SecurityBlockerRestApiFactory extends AbstractFactory
     public function getSecurityBlockerClient(): SecurityBlockerRestApiToSecurityBlockerClientInterface
     {
         return $this->getProvidedDependency(SecurityBlockerRestApiDependencyProvider::CLIENT_SECURITY_BLOCKER);
+    }
+
+    /**
+     * @return \Spryker\Glue\SecurityBlockerRestApi\Dependency\Client\SecurityBlockerRestApiToGlossaryStorageClientInterface
+     */
+    public function getGlossaryStorageClient(): SecurityBlockerRestApiToGlossaryStorageClientInterface
+    {
+        return $this->getProvidedDependency(SecurityBlockerRestApiDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 }

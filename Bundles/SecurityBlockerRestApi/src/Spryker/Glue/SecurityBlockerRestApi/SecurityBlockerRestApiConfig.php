@@ -32,5 +32,5 @@ class SecurityBlockerRestApiConfig extends AbstractBundleConfig
     public const SECURITY_BLOCKER_AGENT_ENTITY_TYPE = 'agent';
 
     public const ERROR_RESPONSE_CODE_ACCOUNT_BLOCKED = '4401';
-    public const ERROR_RESPONSE_DETAIL_ACCOUNT_BLOCKED = 'Too many log in attempts from your address. Please wait %s minutes before trying again.';
+    public const ERROR_RESPONSE_DETAIL_ACCOUNT_BLOCKED = 'security_blocker_page.error.account_blocked';
 }
