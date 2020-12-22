@@ -10,10 +10,12 @@ namespace Spryker\Zed\MerchantSalesOrderDataExport\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MerchantSalesOrderDataExport\Business\Exporter\MerchantSalesOrderDataExporter;
 use Spryker\Zed\MerchantSalesOrderDataExport\Business\Exporter\MerchantSalesOrderDataExporterInterface;
+use Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\DataReaderInterface;
 use Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\MerchantOrderDataReader;
 use Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\MerchantOrderExpenseDataReader;
 use Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\MerchantOrderItemDataReader;
-use Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\MerchantSalesOrderDataReaderInterface;
+use Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\MerchantReader;
+use Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\MerchantReaderInterface;
 use Spryker\Zed\MerchantSalesOrderDataExport\Dependency\Service\MerchantSalesOrderDataExportToDataExportServiceInterface;
 use Spryker\Zed\MerchantSalesOrderDataExport\MerchantSalesOrderDataExportDependencyProvider;
 
@@ -31,6 +33,7 @@ class MerchantSalesOrderDataExportBusinessFactory extends AbstractBusinessFactor
         return new MerchantSalesOrderDataExporter(
             $this->getDataExportService(),
             $this->getConfig(),
+            $this->createMerchantReader(),
             $this->createMerchantOrderReader()
         );
     }
@@ -43,6 +46,7 @@ class MerchantSalesOrderDataExportBusinessFactory extends AbstractBusinessFactor
         return new MerchantSalesOrderDataExporter(
             $this->getDataExportService(),
             $this->getConfig(),
+            $this->createMerchantReader(),
             $this->createMerchantOrderItemReader()
         );
     }
@@ -55,32 +59,41 @@ class MerchantSalesOrderDataExportBusinessFactory extends AbstractBusinessFactor
         return new MerchantSalesOrderDataExporter(
             $this->getDataExportService(),
             $this->getConfig(),
+            $this->createMerchantReader(),
             $this->createMerchantOrderExpenseReader()
         );
     }
 
     /**
-     * @return \Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\MerchantSalesOrderDataReaderInterface
+     * @return \Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\DataReaderInterface
      */
-    public function createMerchantOrderReader(): MerchantSalesOrderDataReaderInterface
+    public function createMerchantOrderReader(): DataReaderInterface
     {
         return new MerchantOrderDataReader($this->getRepository());
     }
 
     /**
-     * @return \Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\MerchantSalesOrderDataReaderInterface
+     * @return \Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\DataReaderInterface
      */
-    public function createMerchantOrderItemReader(): MerchantSalesOrderDataReaderInterface
+    public function createMerchantOrderItemReader(): DataReaderInterface
     {
         return new MerchantOrderItemDataReader($this->getRepository());
     }
 
     /**
-     * @return \Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\MerchantSalesOrderDataReaderInterface
+     * @return \Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\DataReaderInterface
      */
-    public function createMerchantOrderExpenseReader(): MerchantSalesOrderDataReaderInterface
+    public function createMerchantOrderExpenseReader(): DataReaderInterface
     {
         return new MerchantOrderExpenseDataReader($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\MerchantReaderInterface
+     */
+    public function createMerchantReader(): MerchantReaderInterface
+    {
+        return new MerchantReader($this->getRepository());
     }
 
     /**

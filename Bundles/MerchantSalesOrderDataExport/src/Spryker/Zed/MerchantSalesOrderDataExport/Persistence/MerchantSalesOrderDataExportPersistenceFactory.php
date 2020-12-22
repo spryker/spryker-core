@@ -10,7 +10,6 @@ namespace Spryker\Zed\MerchantSalesOrderDataExport\Persistence;
 use Orm\Zed\Merchant\Persistence\Base\SpyMerchantQuery;
 use Orm\Zed\MerchantSalesOrder\Persistence\Base\SpyMerchantSalesOrderItemQuery;
 use Orm\Zed\MerchantSalesOrder\Persistence\Base\SpyMerchantSalesOrderQuery;
-use Orm\Zed\Sales\Persistence\Base\SpySalesExpenseQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\MerchantSalesOrderDataExport\Dependency\Service\MerchantSalesOrderDataExportToUtilEncodingServiceInterface;
 use Spryker\Zed\MerchantSalesOrderDataExport\MerchantSalesOrderDataExportDependencyProvider;
@@ -79,14 +78,6 @@ class MerchantSalesOrderDataExportPersistenceFactory extends AbstractPersistence
     public function getMerchantSalesOrderItemPropelQuery(): SpyMerchantSalesOrderItemQuery
     {
         return $this->getProvidedDependency(MerchantSalesOrderDataExportDependencyProvider::PROPEL_QUERY_MERCHANT_SALES_ORDER_ITEM);
-    }
-
-    /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesExpenseQuery
-     */
-    public function getSalesExpensePropelQuery(): SpySalesExpenseQuery
-    {
-        return $this->getProvidedDependency(MerchantSalesOrderDataExportDependencyProvider::PROPEL_QUERY_SALES_EXPENSE);
     }
 
     /**

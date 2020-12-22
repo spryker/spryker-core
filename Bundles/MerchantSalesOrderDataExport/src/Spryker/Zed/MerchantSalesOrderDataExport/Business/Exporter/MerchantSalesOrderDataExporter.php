@@ -10,9 +10,8 @@ namespace Spryker\Zed\MerchantSalesOrderDataExport\Business\Exporter;
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportReportTransfer;
 use Generated\Shared\Transfer\DataExportResultTransfer;
-use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
-use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
-use Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\MerchantSalesOrderDataReaderInterface;
+use Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\DataReaderInterface;
+use Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\MerchantReaderInterface;
 use Spryker\Zed\MerchantSalesOrderDataExport\Dependency\Service\MerchantSalesOrderDataExportToDataExportServiceInterface;
 use Spryker\Zed\MerchantSalesOrderDataExport\MerchantSalesOrderDataExportConfig;
 
@@ -22,6 +21,10 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
     public const FILTER_CRITERIA_KEY_STORE_NAME = 'store_name';
     public const FILTER_CRITERIA_KEY_MERCHANT_ORDER_CREATED_AT = 'merchant_order_created_at';
     public const FILTER_CRITERIA_KEY_MERCHANT_ORDER_UPDATED_AT = 'merchant_order_updated_at';
+
+    public const FILTER_CRITERIA_KEY_OFFSET = 'offset';
+    public const FILTER_CRITERIA_KEY_LIMIT = 'limit';
+
     public const FILTER_CRITERIA_PARAM_DATE_FROM = 'from';
     public const FILTER_CRITERIA_PARAM_DATE_TO = 'to';
 
@@ -38,22 +41,30 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
     protected $salesDataExportConfig;
 
     /**
-     * @var \Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\MerchantSalesOrderDataReaderInterface
+     * @var \Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\MerchantReaderInterface
+     */
+    protected $merchantReader;
+
+    /**
+     * @var \Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\DataReaderInterface
      */
     protected $dataReader;
 
     /**
      * @param \Spryker\Zed\MerchantSalesOrderDataExport\Dependency\Service\MerchantSalesOrderDataExportToDataExportServiceInterface $dataExportService
      * @param \Spryker\Zed\MerchantSalesOrderDataExport\MerchantSalesOrderDataExportConfig $salesDataExportConfig
-     * @param \Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\MerchantSalesOrderDataReaderInterface $dataReader
+     * @param \Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\MerchantReaderInterface $merchantReader
+     * @param \Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\DataReaderInterface $dataReader
      */
     public function __construct(
         MerchantSalesOrderDataExportToDataExportServiceInterface $dataExportService,
         MerchantSalesOrderDataExportConfig $salesDataExportConfig,
-        MerchantSalesOrderDataReaderInterface $dataReader
+        MerchantReaderInterface $merchantReader,
+        DataReaderInterface $dataReader
     ) {
         $this->dataExportService = $dataExportService;
         $this->salesDataExportConfig = $salesDataExportConfig;
+        $this->merchantReader = $merchantReader;
         $this->dataReader = $dataReader;
     }
 
@@ -66,27 +77,16 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
     {
         $dataExportConfigurationTransfer = $this->resolveDataExportActionConfigurationTransfer($dataExportConfigurationTransfer);
 
-        $filterCriteria = $dataExportConfigurationTransfer->getFilterCriteria();
-
         $dataExportResultTransfer = (new DataExportResultTransfer())
             ->setDataEntity($dataExportConfigurationTransfer->getDataEntity())
             ->setIsSuccessful(false);
 
-        $merchantNames = SpyMerchantQuery::create()
-            ->select([SpyMerchantTableMap::COL_NAME])
-            ->find()
-            ->toArray();
-
         $totalExportCount = 0;
 
-        $dataExportConfigurationTransfer->addFilterCriterion(
-            static::FILTER_CRITERIA_KEY_MERCHANT_ORDER_CREATED_AT,
-            $filterCriteria[static::FILTER_CRITERIA_KEY_MERCHANT_ORDER_CREATED_AT]
-        );
-        $dataExportConfigurationTransfer->addFilterCriterion(
-            static::FILTER_CRITERIA_KEY_MERCHANT_ORDER_UPDATED_AT,
-            $filterCriteria[static::FILTER_CRITERIA_KEY_MERCHANT_ORDER_UPDATED_AT]
-        );
+        $dataExportConfigurationTransfer = $this->setBaseFilterCriterions($dataExportConfigurationTransfer);
+
+        $merchantNames = $this->merchantReader->readMerchantNames();
+        $filterCriteria = $dataExportConfigurationTransfer->getFilterCriteria();
 
         foreach ($merchantNames as $merchantName) {
             $dataExportConfigurationTransfer->addFilterCriterion(
@@ -105,7 +105,7 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
                 do {
                     $dataExportConfigurationTransfer->addHook(static::FILTER_CRITERIA_KEY_MERCHANT_NAME, $merchantName);
                     $dataExportConfigurationTransfer->addHook(static::FILTER_CRITERIA_KEY_STORE_NAME, $storeName);
-                    $dataExportBatchTransfer = $this->dataReader->readBatch($dataExportConfigurationTransfer, $offset, static::READ_BATCH_SIZE);
+                    $dataExportBatchTransfer = $this->dataReader->readBatch($dataExportConfigurationTransfer);
                     $dataExportWriteResponseTransfer = $this->dataExportService->write($dataExportBatchTransfer, $dataExportConfigurationTransfer);
 
                     if (!$dataExportWriteResponseTransfer->getIsSuccessful()) {
@@ -124,11 +124,30 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
                         ->setIsSuccessful(true)
                         ->setExportCount($totalExportCount)
                         ->setFileName($dataExportWriteResponseTransfer->getFileName());
-                } while ($exportedRowCount === static::READ_BATCH_SIZE);
+                } while ($exportedRowCount === $filterCriteria[static::FILTER_CRITERIA_KEY_LIMIT]);
             }
         }
 
         return $this->createDataExportReportTransfer($dataExportResultTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataExportConfigurationTransfer
+     */
+    protected function setBaseFilterCriterions(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportConfigurationTransfer
+    {
+        $dataExportConfigurationTransfer->addFilterCriterion(
+            static::FILTER_CRITERIA_KEY_OFFSET,
+            0
+        );
+        $dataExportConfigurationTransfer->addFilterCriterion(
+            static::FILTER_CRITERIA_KEY_LIMIT,
+            100
+        );
+
+        return $dataExportConfigurationTransfer;
     }
 
     /**

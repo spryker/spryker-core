@@ -10,14 +10,12 @@ namespace Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader;
 use Generated\Shared\Transfer\DataExportBatchTransfer;
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 
-interface MerchantSalesOrderDataReaderInterface
+interface DataReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
-     * @param int $offset
-     * @param int $limit
      *
      * @return \Generated\Shared\Transfer\DataExportBatchTransfer
      */
-    public function readBatch(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): DataExportBatchTransfer;
+    public function readBatch(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportBatchTransfer;
 }

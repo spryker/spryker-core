@@ -7,11 +7,9 @@
 
 namespace Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader;
 
-use Generated\Shared\Transfer\DataExportBatchTransfer;
-use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Spryker\Zed\MerchantSalesOrderDataExport\Persistence\MerchantSalesOrderDataExportRepositoryInterface;
 
-class MerchantOrderExpenseDataReader implements DataReaderInterface
+class MerchantReader implements MerchantReaderInterface
 {
     /**
      * @var \Spryker\Zed\MerchantSalesOrderDataExport\Persistence\MerchantSalesOrderDataExportRepositoryInterface
@@ -27,12 +25,10 @@ class MerchantOrderExpenseDataReader implements DataReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
-     *
-     * @return \Generated\Shared\Transfer\DataExportBatchTransfer
+     * @return string[]
      */
-    public function readBatch(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportBatchTransfer
+    public function readMerchantNames(): array
     {
-        return $this->merchantSalesOrderDataExportRepository->getMerchantOrderExpenseData($dataExportConfigurationTransfer);
+        return $this->merchantSalesOrderDataExportRepository->getMerchantNames();
     }
 }

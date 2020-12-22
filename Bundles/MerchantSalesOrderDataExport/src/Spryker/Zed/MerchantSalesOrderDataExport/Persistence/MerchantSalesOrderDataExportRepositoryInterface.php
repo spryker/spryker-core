@@ -20,44 +20,41 @@ interface MerchantSalesOrderDataExportRepositoryInterface
     public function getMerchantNames(): array;
 
     /**
+     * @module MerchantSalesOrder
+     * @module Sales
      * @module Country
      * @module Locale
      *
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
-     * @param int $offset
-     * @param int $limit
      *
      * @return \Generated\Shared\Transfer\DataExportBatchTransfer
      */
-    public function getMerchantOrderData(DataExportConfigurationTransfer $dataExportConfigurationTransfer, int $offset, int $limit): DataExportBatchTransfer;
+    public function getMerchantOrderData(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportBatchTransfer;
 
     /**
+     * @module MerchantSalesOrder
+     * @module Sales
      * @module Country
-     * @module Oms
      * @module Shipment
+     * @module Oms
      *
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
-     * @param int $offset
-     * @param int $limit
      *
      * @return \Generated\Shared\Transfer\DataExportBatchTransfer
      */
     public function getMerchantOrderItemData(
-        DataExportConfigurationTransfer $dataExportConfigurationTransfer,
-        int $offset,
-        int $limit
+        DataExportConfigurationTransfer $dataExportConfigurationTransfer
     ): DataExportBatchTransfer;
 
     /**
+     * @module MerchantSalesOrder
+     * @module Sales
+     *
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
-     * @param int $offset
-     * @param int $limit
      *
      * @return \Generated\Shared\Transfer\DataExportBatchTransfer
      */
     public function getMerchantOrderExpenseData(
-        DataExportConfigurationTransfer $dataExportConfigurationTransfer,
-        int $offset,
-        int $limit
+        DataExportConfigurationTransfer $dataExportConfigurationTransfer
     ): DataExportBatchTransfer;
 }

@@ -10,7 +10,6 @@ namespace Spryker\Zed\MerchantSalesOrderDataExport;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery;
-use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantSalesOrderDataExport\Dependency\Service\MerchantSalesOrderDataExportToDataExportServiceBridge;
@@ -51,9 +50,9 @@ class MerchantSalesOrderDataExportDependencyProvider extends AbstractBundleDepen
     public function providePersistenceLayerDependencies(Container $container): Container
     {
         $container = parent::providePersistenceLayerDependencies($container);
+        $container = $this->addMerchantPropelQuery($container);
         $container = $this->addMerchantSalesOrderPropelQuery($container);
         $container = $this->addMerchantSalesOrderItemPropelQuery($container);
-        $container = $this->addSalesExpensePropelQuery($container);
         $container = $this->addUtilEncodingService($container);
 
         return $container;
@@ -96,20 +95,6 @@ class MerchantSalesOrderDataExportDependencyProvider extends AbstractBundleDepen
     {
         $container->set(static::PROPEL_QUERY_MERCHANT_SALES_ORDER_ITEM, $container->factory(function (): SpyMerchantSalesOrderItemQuery {
             return SpyMerchantSalesOrderItemQuery::create();
-        }));
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addSalesExpensePropelQuery(Container $container): Container
-    {
-        $container->set(static::PROPEL_QUERY_SALES_EXPENSE, $container->factory(function (): SpySalesExpenseQuery {
-            return SpySalesExpenseQuery::create();
         }));
 
         return $container;
