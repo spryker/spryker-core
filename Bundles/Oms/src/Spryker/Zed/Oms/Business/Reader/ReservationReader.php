@@ -325,7 +325,15 @@ class ReservationReader implements ReservationReaderInterface
      */
     protected function assertStateAndProcessExists(OmsStateCollectionTransfer $statesCollection, string $stateName, string $processName): bool
     {
-        return $statesCollection->getStates()->offsetExists($stateName) &&
-            $statesCollection->getStates()[$stateName]->getProcesses()->offsetExists($processName);
+        $omsStateTransfer = $statesCollection->getStates()[$stateName] ?? null;
+
+        if (!$omsStateTransfer) {
+            return false;
+        }
+
+        $groupedStateProcessNames = $this->activeProcessFetcher->getReservedStateNamesWithMainActiveProcessNames();
+        $stateProcessNames = $groupedStateProcessNames[$stateName] ?? [];
+
+        return $omsStateTransfer->getProcesses()->offsetExists($processName) || in_array($processName, $stateProcessNames);
     }
 }

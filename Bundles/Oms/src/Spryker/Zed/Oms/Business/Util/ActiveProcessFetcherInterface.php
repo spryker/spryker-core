@@ -13,4 +13,9 @@ interface ActiveProcessFetcherInterface
      * @return \Spryker\Zed\Oms\Business\Process\StateInterface[]
      */
     public function getReservedStatesFromAllActiveProcesses(): array;
+
+    /**
+     * @return string[][]
+     */
+    public function getReservedStateNamesWithMainActiveProcessNames(): array;
 }
