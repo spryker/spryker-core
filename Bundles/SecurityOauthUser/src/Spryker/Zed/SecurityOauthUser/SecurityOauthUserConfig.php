@@ -35,7 +35,7 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
     protected const OAUTH_USER_STATUS_ACTIVE = 'active';
 
     protected const BACK_OFFICE_ROUTE_PATTERN = '^/';
-    protected const IGNORABLE_ROUTE_PATTERN = '^/security-oauth-user';
+    protected const IGNORABLE_ROUTE_PATTERN = '^/security-oauth-user|^/security-gui';
 
     protected const HOME_PATH = '/';
 

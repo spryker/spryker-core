@@ -33,7 +33,7 @@ class SecurityOauthUserCommunicationTester extends Actor
     use _generated\SecurityOauthUserCommunicationTesterActions;
 
     /**
-     * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory|\Spryker\Zed\SecurityGui\Communication\SecurityOauthUserCommunicationFactory
+     * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory|\Spryker\Zed\SecurityOauthUser\Communication\SecurityOauthUserCommunicationFactory
      */
     public function getCommunicationFactory(): AbstractCommunicationFactory
     {

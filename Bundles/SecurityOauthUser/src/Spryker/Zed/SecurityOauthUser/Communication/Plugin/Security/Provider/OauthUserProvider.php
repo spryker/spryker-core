@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SecurityOauthUser\Communication\Security\SecurityOauthUser;
+use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -92,6 +93,8 @@ class OauthUserProvider extends AbstractPlugin implements UserProviderInterface
     /**
      * @param string $username
      *
+     * @throws \Symfony\Component\Security\Core\Exception\UnsupportedUserException
+     *
      * @return \Generated\Shared\Transfer\UserTransfer|null
      */
     protected function resolveOauthUserByName(string $username): ?UserTransfer
@@ -101,7 +104,7 @@ class OauthUserProvider extends AbstractPlugin implements UserProviderInterface
         );
 
         if (!$userTransfer) {
-            return null;
+            throw new UnsupportedUserException();
         }
 
         $oauthUserRestrictionResponseTransfer = $this->getFacade()->isOauthUserRestricted(
@@ -111,7 +114,7 @@ class OauthUserProvider extends AbstractPlugin implements UserProviderInterface
         if ($oauthUserRestrictionResponseTransfer->getIsRestricted()) {
             $this->addErrorMessages($oauthUserRestrictionResponseTransfer);
 
-            return null;
+            throw new UnsupportedUserException();
         }
 
         return $userTransfer;
