@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\OauthUserRestrictionRequestTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\MerchantUser\Persistence\SpyMerchantUser;
+use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserPasswordResetFacadeInterface;
 use Spryker\Zed\MerchantUser\MerchantUserDependencyProvider;
@@ -461,6 +462,33 @@ class MerchantUserFacadeTest extends Unit
             $oauthUserRestrictionResponseTransfer->getMessages()->count(),
             'Expected that no error message provided.'
         );
+    }
+
+    /**
+     * @dataProvider isOauthUserRestrictedMustFailWhenNoRequireDataIsProvidedDataProvider
+     *
+     * @param \Generated\Shared\Transfer\OauthUserRestrictionRequestTransfer $oauthUserRestrictionRequestTransfer
+     *
+     * @return void
+     */
+    public function testIsOauthUserRestrictedMustFailWhenNoRequireDataIsProvided($oauthUserRestrictionRequestTransfer): void
+    {
+        // Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->tester->getFacade()->isOauthUserRestricted($oauthUserRestrictionRequestTransfer);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\OauthUserRestrictionRequestTransfer[][]
+     */
+    public function isOauthUserRestrictedMustFailWhenNoRequireDataIsProvidedDataProvider(): array
+    {
+        return [
+            [new OauthUserRestrictionRequestTransfer()],
+            [(new OauthUserRestrictionRequestTransfer())->setUser(new UserTransfer())],
+        ];
     }
 
     /**

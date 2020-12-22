@@ -77,7 +77,7 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
             return $merchantUserResponseTransfer->setIsSuccessful(false);
         }
 
-        $userTransfer = $this->userFacade->updateUser($merchantUserTransfer->getUserOrFail());
+        $userTransfer = $this->userFacade->updateUser($merchantUserTransfer->getUser());
 
         $this->resetUserPassword($originalUserTransfer, $userTransfer);
 
@@ -94,7 +94,7 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
         $merchantUserTransfers = $this->merchantUserRepository->find($merchantUserCriteriaTransfer);
 
         foreach ($merchantUserTransfers as $merchantUserTransfer) {
-            $this->userFacade->deactivateUser($merchantUserTransfer->getIdUserOrFail());
+            $this->userFacade->deactivateUser($merchantUserTransfer->getIdUser());
         }
     }
 
@@ -110,7 +110,7 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
             $updatedUserTransfer->getStatus() === static::USER_STATUS_ACTIVE
             && $originalUserTransfer->getStatus() !== $updatedUserTransfer->getStatus()
         ) {
-            $this->userPasswordResetFacade->requestPasswordReset($updatedUserTransfer->getUsernameOrFail());
+            $this->userPasswordResetFacade->requestPasswordReset($updatedUserTransfer->getUsername());
         }
     }
 }

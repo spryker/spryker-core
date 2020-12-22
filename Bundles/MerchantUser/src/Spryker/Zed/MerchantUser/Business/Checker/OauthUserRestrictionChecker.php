@@ -39,7 +39,8 @@ class OauthUserRestrictionChecker implements OauthUserRestrictionCheckerInterfac
         OauthUserRestrictionRequestTransfer $oauthUserRestrictionRequestTransfer
     ): OauthUserRestrictionResponseTransfer {
         $oauthUserRestrictionRequestTransfer
-            ->getUserOrFail()
+            ->requireUser()
+            ->getUser()
             ->requireUsername();
 
         $oauthUserRestrictionResponseTransfer = (new OauthUserRestrictionResponseTransfer())

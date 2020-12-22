@@ -58,8 +58,8 @@ class MerchantUserMapper
     ): SpyMerchantUser {
         $merchantUserEntity->fromArray($merchantUserTransfer->toArray());
 
-        return $merchantUserEntity->setFkUser($merchantUserTransfer->getIdUserOrFail())
-            ->setFkMerchant($merchantUserTransfer->getIdMerchantOrFail());
+        return $merchantUserEntity->setFkUser($merchantUserTransfer->getIdUser())
+            ->setFkMerchant($merchantUserTransfer->getIdMerchant());
     }
 
     /**

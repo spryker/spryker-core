@@ -47,6 +47,6 @@ class AclGroupAdder implements AclGroupAdderInterface
             ));
         }
 
-        $this->aclFacade->addUserToGroup($merchantUserTransfer->getUserOrFail()->getIdUserOrFail(), $groupTransfer->getIdAclGroupOrFail());
+        $this->aclFacade->addUserToGroup($merchantUserTransfer->getUser()->getIdUser(), $groupTransfer->getIdAclGroup());
     }
 }
