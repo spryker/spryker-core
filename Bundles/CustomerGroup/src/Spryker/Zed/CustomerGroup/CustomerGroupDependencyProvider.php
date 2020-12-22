@@ -9,6 +9,7 @@ namespace Spryker\Zed\CustomerGroup;
 
 use Spryker\Zed\CustomerGroup\Dependency\QueryContainer\CustomerGroupToCustomerQueryContainerBridge;
 use Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilEncodingBridge;
+use Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilSanitizeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -20,6 +21,7 @@ class CustomerGroupDependencyProvider extends AbstractBundleDependencyProvider
     public const QUERY_CONTAINER_CUSTOMER = 'QUERY_CONTAINER_CUSTOMER';
     public const SERVICE_DATE_FORMATTER = 'date formatter';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -41,6 +43,7 @@ class CustomerGroupDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addDataFormatterService($container);
         $container = $this->addCustomerQueryContainer($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addUtilSanitizeService($container);
 
         return $container;
     }
@@ -84,6 +87,20 @@ class CustomerGroupDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new CustomerGroupToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilSanitizeService(Container $container)
+    {
+        $container->set(static::SERVICE_UTIL_SANITIZE, function (Container $container) {
+            return new CustomerGroupToUtilSanitizeBridge($container->getLocator()->utilSanitize()->service());
         });
 
         return $container;

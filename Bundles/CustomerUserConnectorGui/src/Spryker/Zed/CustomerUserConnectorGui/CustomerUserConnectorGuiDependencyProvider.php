@@ -10,6 +10,7 @@ namespace Spryker\Zed\CustomerUserConnectorGui;
 use Spryker\Zed\CustomerUserConnectorGui\Dependency\Facade\CustomerUserConnectorGuiToCustomerUserConnectorBridge;
 use Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer\CustomerUserConnectorGuiToCustomerQueryContainerBridge;
 use Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer\CustomerUserConnectorGuiToUserQueryContainerBridge;
+use Spryker\Zed\CustomerUserConnectorGui\Dependency\Service\CustomerUserConnectorGuiToUtilSanitizeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -20,6 +21,7 @@ class CustomerUserConnectorGuiDependencyProvider extends AbstractBundleDependenc
 {
     public const QUERY_CONTAINER_CUSTOMER = 'QUERY_CONTAINER_CUSTOMER';
     public const QUERY_CONTAINER_USER = 'QUERY_CONTAINER_USER';
+    public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
 
     public const FACADE_CUSTOMER_USER_CONNECTOR = 'FACADE_CUSTOMER_USER_CONNECTOR';
 
@@ -75,6 +77,21 @@ class CustomerUserConnectorGuiDependencyProvider extends AbstractBundleDependenc
         $container = $this->addCustomerQueryContainer($container);
         $container = $this->addUserQueryContainer($container);
         $container = $this->addCustomerUserConnectorFacade($container);
+        $container = $this->addUtilSanitizeService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilSanitizeService(Container $container)
+    {
+        $container->set(static::SERVICE_UTIL_SANITIZE, function (Container $container) {
+            return new CustomerUserConnectorGuiToUtilSanitizeBridge($container->getLocator()->utilSanitize()->service());
+        });
 
         return $container;
     }

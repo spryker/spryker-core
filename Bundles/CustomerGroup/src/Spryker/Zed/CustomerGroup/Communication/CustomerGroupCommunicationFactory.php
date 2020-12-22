@@ -61,7 +61,8 @@ class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
         return new AssignedCustomerTable(
             $this->createAssignmentCustomerQueryBuilder(),
             $this->getUtilEncodingService(),
-            $idCustomerGroup
+            $idCustomerGroup,
+            $this->getUtilSanitizeServiceInterface()
         );
     }
 
@@ -75,7 +76,8 @@ class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
         return new AvailableCustomerTable(
             $this->createAssignmentCustomerQueryBuilder(),
             $this->getUtilEncodingService(),
-            $idCustomerGroup
+            $idCustomerGroup,
+            $this->getUtilSanitizeServiceInterface()
         );
     }
 
@@ -140,5 +142,13 @@ class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
     protected function getUtilEncodingService()
     {
         return $this->getProvidedDependency(CustomerGroupDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilSanitizeInterface
+     */
+    protected function getUtilSanitizeServiceInterface()
+    {
+        return $this->getProvidedDependency(CustomerGroupDependencyProvider::SERVICE_UTIL_SANITIZE);
     }
 }

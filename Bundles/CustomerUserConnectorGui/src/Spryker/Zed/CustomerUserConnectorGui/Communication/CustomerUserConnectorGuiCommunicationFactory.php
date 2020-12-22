@@ -14,6 +14,7 @@ use Spryker\Zed\CustomerUserConnectorGui\Communication\Form\DataProvider\Custome
 use Spryker\Zed\CustomerUserConnectorGui\Communication\Table\AssignedCustomerTable;
 use Spryker\Zed\CustomerUserConnectorGui\Communication\Table\AvailableCustomerTable;
 use Spryker\Zed\CustomerUserConnectorGui\CustomerUserConnectorGuiDependencyProvider;
+use Spryker\Zed\CustomerUserConnectorGui\Dependency\Service\CustomerUserConnectorGuiToUtilSanitizeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -30,7 +31,8 @@ class CustomerUserConnectorGuiCommunicationFactory extends AbstractCommunication
     {
         return new AssignedCustomerTable(
             $this->getProvidedDependency(CustomerUserConnectorGuiDependencyProvider::QUERY_CONTAINER_CUSTOMER),
-            $userTransfer
+            $userTransfer,
+            $this->getUtilSanitizeServiceInterface()
         );
     }
 
@@ -43,7 +45,8 @@ class CustomerUserConnectorGuiCommunicationFactory extends AbstractCommunication
     {
         return new AvailableCustomerTable(
             $this->getProvidedDependency(CustomerUserConnectorGuiDependencyProvider::QUERY_CONTAINER_CUSTOMER),
-            $userTransfer
+            $userTransfer,
+            $this->getUtilSanitizeServiceInterface()
         );
     }
 
@@ -93,5 +96,13 @@ class CustomerUserConnectorGuiCommunicationFactory extends AbstractCommunication
     public function getUserQueryContainer()
     {
         return $this->getProvidedDependency(CustomerUserConnectorGuiDependencyProvider::QUERY_CONTAINER_USER);
+    }
+
+    /**
+     * @return \Spryker\Zed\CustomerUserConnectorGui\Dependency\Service\CustomerUserConnectorGuiToUtilSanitizeInterface
+     */
+    protected function getUtilSanitizeServiceInterface(): CustomerUserConnectorGuiToUtilSanitizeInterface
+    {
+        return $this->getProvidedDependency(CustomerUserConnectorGuiDependencyProvider::SERVICE_UTIL_SANITIZE);
     }
 }
