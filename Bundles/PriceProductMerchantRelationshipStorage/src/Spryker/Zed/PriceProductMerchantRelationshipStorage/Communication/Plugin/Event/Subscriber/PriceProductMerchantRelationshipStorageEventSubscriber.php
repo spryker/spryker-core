@@ -47,7 +47,9 @@ class PriceProductMerchantRelationshipStorageEventSubscriber extends AbstractPlu
             ->addAbstractPriceProductMerchantRelationshipUpdateListener($eventCollection)
             ->addAbstractPriceProductMerchantRelationshipDeleteListener($eventCollection)
             ->addConcretePriceProductMerchantRelationshipPublishListener($eventCollection)
-            ->addAbstractPriceProductMerchantRelationshipPublishListener($eventCollection);
+            ->addAbstractPriceProductMerchantRelationshipPublishListener($eventCollection)
+            ->addConcretePriceProductMerchantRelationshipUnpublishListener($eventCollection)
+            ->addAbstractPriceProductMerchantRelationshipUnpublishListener($eventCollection);
 
         return $eventCollection;
     }
@@ -180,6 +182,30 @@ class PriceProductMerchantRelationshipStorageEventSubscriber extends AbstractPlu
     protected function addAbstractPriceProductMerchantRelationshipPublishListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(PriceProductMerchantRelationshipEvents::PRICE_ABSTRACT_PUBLISH, new PriceProductMerchantRelationshipAbstractListener(), 0, null, $this->getConfig()->getPriceProductAbstractMerchantRelationEventQueueName());
+
+        return $this;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return $this
+     */
+    protected function addConcretePriceProductMerchantRelationshipUnpublishListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(PriceProductMerchantRelationshipEvents::PRICE_CONCRETE_UNPUBLISH, new PriceProductMerchantRelationshipConcreteDeleteListener(), 0, null, $this->getConfig()->getPriceProductConcreteMerchantRelationEventQueueName());
+
+        return $this;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return $this
+     */
+    protected function addAbstractPriceProductMerchantRelationshipUnpublishListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(PriceProductMerchantRelationshipEvents::PRICE_ABSTRACT_UNPUBLISH, new PriceProductMerchantRelationshipAbstractDeleteListener(), 0, null, $this->getConfig()->getPriceProductAbstractMerchantRelationEventQueueName());
 
         return $this;
     }
