@@ -28,3 +28,5 @@ Save,Speichern
 "Create new CMS Redirect","Neue CMS-Weiterleitung erstellen"
 "Please select","Bitte auswählen"
 "Edit CMS Redirect","CMS-Weiterleitung bearbeiten"
+"Invalid second character", "Das zweite Zeichen des URLs kann nicht '/' sein"
+"Forbidden sign", "URL kann nicht '\' Zeichen enthalten, stattdessen können Sie '%5C' benutzen"

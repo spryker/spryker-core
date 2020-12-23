@@ -28,3 +28,5 @@ Save,Save
 "Create new CMS Redirect","Create new CMS Redirect"
 "Please select","Please Select"
 "Edit CMS Redirect","Edit CMS Redirect"
+"Invalid second character", "URL's second character cannot be '/'"
+"Forbidden sign", "URL cannot contain '\' sign, you can use '%5C' instead"
