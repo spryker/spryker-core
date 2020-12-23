@@ -71,7 +71,7 @@ class SecurityBlockerStorageWriter implements SecurityBlockerStorageWriterInterf
         return (new SecurityCheckAuthResponseTransfer())
             ->setSecurityCheckAuthContext($securityCheckAuthContextTransfer)
             ->setNumberOfAttempts($newValue)
-            ->setIsBlocked($newValue < $securityBlockerConfigurationSettingsTransfer->getNumberOfAttempts());
+            ->setIsBlocked($newValue >= $securityBlockerConfigurationSettingsTransfer->getNumberOfAttempts());
     }
 
     /**

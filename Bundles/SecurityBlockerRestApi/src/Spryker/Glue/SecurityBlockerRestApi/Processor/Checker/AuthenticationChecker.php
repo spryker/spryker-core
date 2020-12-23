@@ -34,12 +34,15 @@ class AuthenticationChecker implements AuthenticationCheckerInterface
      */
     public function isFailedAuthenticationResponse(RestResponseInterface $restResponse, string $expectedCode): bool
     {
-        if ($restResponse->getStatus() === Response::HTTP_UNAUTHORIZED) {
+        if (empty($restResponse->getErrors())) {
             return false;
         }
 
         foreach ($restResponse->getErrors() as $restErrorMessageTransfer) {
-            if ($restErrorMessageTransfer->getCode() === $expectedCode) {
+            if (
+                $restErrorMessageTransfer->getStatus() === Response::HTTP_UNAUTHORIZED
+                && $restErrorMessageTransfer->getCode() === $expectedCode
+            ) {
                 return true;
             }
         }

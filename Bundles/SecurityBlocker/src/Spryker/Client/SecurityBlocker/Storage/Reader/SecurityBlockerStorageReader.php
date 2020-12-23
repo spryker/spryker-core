@@ -62,19 +62,14 @@ class SecurityBlockerStorageReader implements SecurityBlockerStorageReaderInterf
     public function getLoginAttemptCount(SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer): SecurityCheckAuthResponseTransfer
     {
         $storageKey = $this->securityBlockerStorageKeyBuilder->getStorageKey($securityCheckAuthContextTransfer);
-        $storageValue = $this->securityBlockerRedisWrapper->get($storageKey);
+        $numberOfAttempts = (int)$this->securityBlockerRedisWrapper->get($storageKey);
 
         $securityCheckAuthResponseTransfer = (new SecurityCheckAuthResponseTransfer())
-            ->setSecurityCheckAuthContext($securityCheckAuthContextTransfer);
-
-        if (!$storageValue) {
-            return $securityCheckAuthResponseTransfer->setIsBlocked(true);
-        }
-
-        $numberOfAttempts = $this->utilEncodingService->decodeJson($storageValue, true);
+            ->setSecurityCheckAuthContext($securityCheckAuthContextTransfer)
+            ->setIsBlocked(false);
 
         if (!$numberOfAttempts) {
-            return $securityCheckAuthResponseTransfer->setIsBlocked(false);
+            return $securityCheckAuthResponseTransfer;
         }
 
         $securityBlockerConfigurationSettingsTransfer = $this->securityBlockerConfig
@@ -83,6 +78,6 @@ class SecurityBlockerStorageReader implements SecurityBlockerStorageReaderInterf
         return $securityCheckAuthResponseTransfer
             ->setNumberOfAttempts($numberOfAttempts)
             ->setBlockedFor($securityBlockerConfigurationSettingsTransfer->getBlockFor())
-            ->setIsBlocked($numberOfAttempts < $securityBlockerConfigurationSettingsTransfer->getNumberOfAttempts());
+            ->setIsBlocked($numberOfAttempts >= $securityBlockerConfigurationSettingsTransfer->getNumberOfAttempts());
     }
 }

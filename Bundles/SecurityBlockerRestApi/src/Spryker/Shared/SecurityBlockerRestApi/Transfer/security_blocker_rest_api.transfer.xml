@@ -20,7 +20,7 @@
     </transfer>
 
     <transfer name="SecurityCheckAuthResponse">
-        <property name="isSuccessful" type="bool"/>
+        <property name="isBlocked" type="bool"/>
         <property name="blockedFor" type="int"/>
     </transfer>
 
