@@ -10,13 +10,13 @@ namespace Spryker\Zed\CustomerUserConnectorGui\Dependency\Service;
 interface CustomerUserConnectorGuiToUtilEncodingInterface
 {
     /**
-     * @param array $value
+     * @param mixed $value
      * @param int|null $options
      * @param int|null $depth
      *
-     * @return string
+     * @return string|null
      */
-    public function encodeJson($value, $options = null, $depth = null);
+    public function encodeJson($value, $options = null, $depth = null): ?string;
 
     /**
      * @param string $jsonValue
@@ -24,7 +24,7 @@ interface CustomerUserConnectorGuiToUtilEncodingInterface
      * @param int|null $depth
      * @param int|null $options
      *
-     * @return array
+     * @return mixed|null
      */
-    public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
+    public function decodeJson(string $jsonValue, $assoc = false, $depth = null, $options = null);
 }
