@@ -84,6 +84,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
         $container = $this->addMoneyFacade($container);
         $container = $this->addPriceProductFacade($container);
         $container = $this->addCurrencyFacade($container);
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }

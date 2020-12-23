@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Controller;
 
+use Generated\Shared\Transfer\GuiTableEditableInitialDataTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
+use Generated\Shared\Transfer\PriceProductAbstractTableViewTransfer;
 use Generated\Shared\Transfer\ProductAbstractResponseTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -54,8 +56,18 @@ class UpdateProductAbstractController extends AbstractController
             $this->getFactory()->createProductAbstractFormDataProvider()->getOptions()
         );
         $productAbstractForm->handleRequest($request);
+        $productAbstractResponseTransfer = new ProductAbstractResponseTransfer();
+        $initialData = $this->getDefaultInitialData($request, $productAbstractForm->getName());
 
-        if ($productAbstractForm->isSubmitted() && $productAbstractForm->isValid()) {
+        if (!$productAbstractForm->isSubmitted()) {
+            return $this->getResponse($productAbstractForm, $productAbstractTransfer, $productAbstractResponseTransfer, $initialData);
+        }
+
+        $validationResponseTransfer = $this->getFactory()
+            ->getPriceProductFacade()
+            ->validatePrices($productAbstractForm->getData()->getPrices());
+
+        if ($productAbstractForm->isValid() && $validationResponseTransfer->getIsSuccess()) {
             $productAbstractTransfer = $productAbstractForm->getData();
             $merchantProductTransfer = (new MerchantProductTransfer())->setProductAbstract($productAbstractTransfer)
                 ->setIdMerchant($idMerchant);
@@ -64,24 +76,30 @@ class UpdateProductAbstractController extends AbstractController
                 ->getMerchantProductFacade()->updateProductAbstract($merchantProductTransfer);
         }
 
-        $productAbstractResponseTransfer = $productAbstractResponseTransfer ?? new ProductAbstractResponseTransfer();
+        $initialData = $this->getFactory()->createPriceProductMapper()->mapValidationResponseTransferToInitialDataErrors(
+            $validationResponseTransfer,
+            $initialData
+        );
 
-        return $this->getResponse($productAbstractForm, $productAbstractTransfer, $productAbstractResponseTransfer);
+        return $this->getResponse($productAbstractForm, $productAbstractTransfer, $productAbstractResponseTransfer, $initialData);
     }
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $productAbstractForm
+     * @phpstan-param array<mixed> $initialData
      *
      * @param \Symfony\Component\Form\FormInterface $productAbstractForm
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\ProductAbstractResponseTransfer $productAbstractResponseTransfer
+     * @param array $initialData
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     protected function getResponse(
         FormInterface $productAbstractForm,
         ProductAbstractTransfer $productAbstractTransfer,
-        ProductAbstractResponseTransfer $productAbstractResponseTransfer
+        ProductAbstractResponseTransfer $productAbstractResponseTransfer,
+        array $initialData
     ): JsonResponse {
         $localeTransfer = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
         $productAbstractName = $this->getFactory()
@@ -95,7 +113,7 @@ class UpdateProductAbstractController extends AbstractController
                 'form' => $productAbstractForm->createView(),
                 'priceProductAbstractTableConfiguration' => $this->getFactory()
                     ->createPriceProductAbstractGuiTableConfigurationProvider()
-                    ->getConfiguration(),
+                    ->getConfiguration($productAbstractTransfer->getIdProductAbstract(), $initialData),
                 'productAbstractAttributeTableConfiguration' => $this->getFactory()
                     ->createProductAttributeGuiTableConfigurationProvider()
                     ->getConfiguration($productAbstractTransfer->getAttributes(), $productAbstractTransfer->getLocalizedAttributes()),
@@ -149,10 +167,54 @@ class UpdateProductAbstractController extends AbstractController
      */
     public function tableDataAction(Request $request): Response
     {
+        $idProductAbstract = $this->castId($request->get(PriceProductAbstractTableViewTransfer::ID_PRODUCT_ABSTRACT));
+
         return $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
             $request,
-            $this->getFactory()->createPriceProductAbstractTableDataProvider(111), //todo
-            $this->getFactory()->createPriceProductAbstractGuiTableConfigurationProvider()->getConfiguration()
+            $this->getFactory()->createPriceProductAbstractTableDataProvider($idProductAbstract),
+            $this->getFactory()->createPriceProductAbstractGuiTableConfigurationProvider()->getConfiguration($idProductAbstract)
         );
+    }
+
+    /**
+     * @phpstan-return array<mixed>
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $formName
+     *
+     * @return array
+     */
+    protected function getDefaultInitialData(Request $request, string $formName): array
+    {
+        $requestTableData = $request->get($formName);
+        $requestTableData = $this->getFactory()->getUtilEncodingService()->decodeJson(
+            $requestTableData[PriceProductAbstractTableViewTransfer::PRICES],
+            true
+        );
+
+        return [
+            GuiTableEditableInitialDataTransfer::DATA => $requestTableData,
+            GuiTableEditableInitialDataTransfer::ERRORS => [],
+        ];
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function savePricesAction(Request $request)
+    {
+        return $this->getFactory()->createSavePricesAction()->execute($request);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function deletePricesAction(Request $request): JsonResponse
+    {
+        return $this->getFactory()->createDeletePricesAction()->execute($request);
     }
 }

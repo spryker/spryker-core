@@ -18,8 +18,10 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Currency\Persistence\Map\SpyCurrencyTableMap;
 use Orm\Zed\MerchantProduct\Persistence\Map\SpyMerchantProductAbstractTableMap;
 use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery;
+use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductDefaultTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
+use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceTypeTableMap;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractStoreTableMap;
@@ -575,6 +577,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
             ->endUse()
             ->addAsColumn(PriceProductAbstractTableViewTransfer::STORE, SpyStoreTableMap::COL_NAME)
             ->addAsColumn(PriceProductAbstractTableViewTransfer::CURRENCY, SpyCurrencyTableMap::COL_CODE)
+            ->addAsColumn(PriceProductAbstractTableViewTransfer::ID_PRODUCT_ABSTRACT, SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
             ->select([SpyStoreTableMap::COL_NAME, SpyCurrencyTableMap::COL_CODE]);
 
         $priceTypeValues = $this->getFactory()->getPriceProductFacade()->getPriceTypeValues();
@@ -604,6 +607,18 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
             $priceProductDefaultQuery->addAsColumn($grossColumnName, $grossClause)
                 ->addAsColumn($netColumnName, $netClause);
         }
+
+        $priceProductDefaultQuery->addAsColumn(
+            PriceProductAbstractTableViewTransfer::PRICE_PRODUCT_DEFAULT_IDS,
+            sprintf('GROUP_CONCAT(%s)', SpyPriceProductDefaultTableMap::COL_ID_PRICE_PRODUCT_DEFAULT)
+        )->addAsColumn(
+            PriceProductAbstractTableViewTransfer::TYPE_PRICE_PRODUCT_STORE_IDS,
+            sprintf(
+                'GROUP_CONCAT(CONCAT(%s,\':\',%s))',
+                SpyPriceTypeTableMap::COL_NAME,
+                SpyPriceProductStoreTableMap::COL_ID_PRICE_PRODUCT_STORE
+            )
+        );
 
         if ($priceProductAbstractTableCriteriaTransfer->getOrderBy()) {
             $priceProductDefaultQuery->orderBy(

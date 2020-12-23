@@ -29,4 +29,14 @@ class ProductMerchantPortalGuiToCurrencyFacadeBridge implements ProductMerchantP
     {
         return $this->currencyFacade->getAllStoresWithCurrencies();
     }
+
+    /**
+     * @param int $idCurrency
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    public function getByIdCurrency($idCurrency)
+    {
+        return $this->currencyFacade->getByIdCurrency($idCurrency);
+    }
 }

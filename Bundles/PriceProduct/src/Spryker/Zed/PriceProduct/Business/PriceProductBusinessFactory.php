@@ -9,6 +9,10 @@ namespace Spryker\Zed\PriceProduct\Business;
 
 use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\PriceProduct\Business\Constraint\ValidCurrencyAssignedToStoreConstraint;
+use Spryker\Zed\PriceProduct\Business\Constraint\ValidUniqueStoreCurrencyGrossNetConstraint;
+use Spryker\Zed\PriceProduct\Business\ConstraintProvider\PriceProductConstraintProvider;
+use Spryker\Zed\PriceProduct\Business\ConstraintProvider\PriceProductConstraintProviderInterface;
 use Spryker\Zed\PriceProduct\Business\Internal\Install;
 use Spryker\Zed\PriceProduct\Business\Internal\InstallInterface;
 use Spryker\Zed\PriceProduct\Business\Model\BulkWriter;
@@ -52,6 +56,9 @@ use Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductDefaultRemover;
 use Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductDefaultRemoverInterface;
 use Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductRemover;
 use Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductRemoverInterface;
+use Spryker\Zed\PriceProduct\Business\Validator\PriceProductValidator;
+use Spryker\Zed\PriceProduct\Business\Validator\PriceProductValidatorInterface;
+use Spryker\Zed\PriceProduct\Dependency\External\PriceProductToValidationAdapterInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface;
@@ -60,6 +67,7 @@ use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToTouchFacadeInterfac
 use Spryker\Zed\PriceProduct\Dependency\Service\PriceProductToUtilEncodingServiceInterface;
 use Spryker\Zed\PriceProduct\PriceProductConfig;
 use Spryker\Zed\PriceProduct\PriceProductDependencyProvider;
+use Symfony\Component\Validator\Constraint;
 
 /**
  * @method \Spryker\Zed\PriceProduct\PriceProductConfig getConfig()
@@ -352,6 +360,44 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\PriceProduct\Business\Validator\PriceProductValidatorInterface
+     */
+    public function createPriceProductValidator(): PriceProductValidatorInterface
+    {
+        return new PriceProductValidator(
+            $this->createPriceProductConstraintProvider(),
+            $this->getValidationAdapter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Business\ConstraintProvider\PriceProductConstraintProviderInterface
+     */
+    public function createPriceProductConstraintProvider(): PriceProductConstraintProviderInterface
+    {
+        return new PriceProductConstraintProvider([
+            $this->createValidUniqueStoreCurrencyGrossNetConstraint(),
+            $this->createValidCurrencyAssignedToStoreConstraint(),
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    public function createValidUniqueStoreCurrencyGrossNetConstraint(): Constraint
+    {
+        return new ValidUniqueStoreCurrencyGrossNetConstraint($this->getRepository());
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    public function createValidCurrencyAssignedToStoreConstraint(): Constraint
+    {
+        return new ValidCurrencyAssignedToStoreConstraint($this->getStoreFacade());
+    }
+
+    /**
      * @return \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface
      */
     public function getProductFacade(): PriceProductToProductFacadeInterface
@@ -464,5 +510,13 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     public function getPriceProductStorePreDeletePlugins(): array
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRICE_PRODUCT_STORE_PRE_DELETE);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Dependency\External\PriceProductToValidationAdapterInterface
+     */
+    public function getValidationAdapter(): PriceProductToValidationAdapterInterface
+    {
+        return $this->getProvidedDependency(PriceProductDependencyProvider::EXTERNAL_ADAPTER_VALIDATION);
     }
 }

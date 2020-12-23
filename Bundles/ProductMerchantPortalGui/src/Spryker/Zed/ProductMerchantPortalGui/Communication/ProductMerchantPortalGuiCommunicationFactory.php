@@ -12,6 +12,9 @@ use Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface;
 use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
 use Spryker\Shared\GuiTable\Http\GuiTableDataRequestExecutorInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Action\ActionInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Action\DeletePricesAction;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Action\SavePricesAction;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Builder\ProductAbstractNameBuilder;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Builder\ProductAbstractNameBuilderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\CategoryFilterOptionsProvider;
@@ -33,6 +36,8 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAttri
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductAbstractFormDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductAbstractFormDataProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductAbstractForm;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer\PriceProductTransformer;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductMapper;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCategoryFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCurrencyFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface;
@@ -43,7 +48,9 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortal
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductCategoryFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToStoreFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToTranslatorFacadeInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface;
 use Spryker\Zed\ProductMerchantPortalGui\ProductMerchantPortalGuiDependencyProvider;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormInterface;
 
 /**
@@ -169,6 +176,55 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
+     * @param int $idProductAbstract
+     *
+     * @return \Symfony\Component\Form\DataTransformerInterface
+     */
+    public function createPriceProductTransformer(int $idProductAbstract): DataTransformerInterface
+    {
+        return new PriceProductTransformer(
+            $idProductAbstract,
+            $this->getPriceProductFacade(),
+            $this->getCurrencyFacade(),
+            $this->getMoneyFacade(),
+            $this->getUtilEncodingService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductMapper
+     */
+    public function createPriceProductMapper(): PriceProductMapper
+    {
+        return new PriceProductMapper($this->getPriceProductFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Action\ActionInterface
+     */
+    public function createSavePricesAction(): ActionInterface
+    {
+        return new SavePricesAction(
+            $this->getPriceProductFacade(),
+            $this->getMoneyFacade(),
+            $this->getUtilEncodingService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Action\ActionInterface
+     */
+    public function createDeletePricesAction(): ActionInterface
+    {
+        return new DeletePricesAction(
+            $this->getMerchantUserFacade(),
+            $this->getMerchantProductFacade(),
+            $this->getPriceProductFacade(),
+            $this->getUtilEncodingService()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\ProductAttributeGuiTableConfigurationProviderInterface
      */
     public function createProductAttributeGuiTableConfigurationProvider(): ProductAttributeGuiTableConfigurationProviderInterface
@@ -289,5 +345,13 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     public function getProductAbstractFormExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_FORM_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): ProductMerchantPortalGuiToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

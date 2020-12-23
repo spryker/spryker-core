@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -22,6 +23,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ProductAbstractForm extends AbstractType
 {
     public const OPTION_STORE_CHOICES = 'OPTION_STORE_CHOICES';
+    public const BLOCK_PREFIX = 'productAbstract';
 
     protected const FIELD_STORES = 'stores';
 
@@ -34,7 +36,7 @@ class ProductAbstractForm extends AbstractType
      */
     public function getBlockPrefix(): string
     {
-        return 'productAbstract';
+        return static::BLOCK_PREFIX;
     }
 
     /**
@@ -63,7 +65,8 @@ class ProductAbstractForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addLocalizedAttributesSubform($builder)
-            ->addStoresField($builder, $options);
+            ->addStoresField($builder, $options)
+            ->addPrices($builder, $options);
 
         $this->executeProductAbstractFormExpanderPlugins($builder, $options);
     }
@@ -113,6 +116,30 @@ class ProductAbstractForm extends AbstractType
                 'property_path' => 'storeRelation.idStores',
             ]
         );
+
+        return $this;
+    }
+
+    /**
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     * @phpstan-param array<mixed> $options
+     *
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addPrices(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(ProductAbstractTransfer::PRICES, HiddenType::class, [
+            'required' => false,
+            'label' => false,
+        ]);
+
+        $idProductAbstract = $options['data']->getIdProductAbstract();
+        $priceProductTransformer = $this->getFactory()->createPriceProductTransformer($idProductAbstract);
+
+        $builder->get(ProductAbstractTransfer::PRICES)->addModelTransformer($priceProductTransformer);
 
         return $this;
     }

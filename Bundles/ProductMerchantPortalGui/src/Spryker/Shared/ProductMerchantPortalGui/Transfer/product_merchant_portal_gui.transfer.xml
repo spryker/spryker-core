@@ -148,20 +148,32 @@
         <property name="store" type="string"/>
         <property name="currency" type="string"/>
         <property name="prices" type="float[]" singular="price" associative="true"/>
+        <property name="typePriceProductStoreIds" type="string"/>
+        <property name="priceProductDefaultIds" type="string"/>
+        <property name="idProductAbstract" type="int"/>
     </transfer>
 
     <transfer name="PriceProduct">
         <property name="moneyValue" type="MoneyValue"/>
+        <property name="idProductAbstract" type="int"/>
+        <property name="fkPriceType" type="int"/>
+        <property name="priceType" type="PriceType"/>
+        <property name="priceDimension" type="PriceProductDimension"/>
     </transfer>
 
     <transfer name="MoneyValue">
         <property name="grossAmount" type="int"/>
         <property name="netAmount" type="int"/>
+        <property name="store" type="Store"/>
+        <property name="currency" type="Currency"/>
+        <property name="fkStore" type="int"/>
+        <property name="fkCurrency" type="int"/>
     </transfer>
 
     <transfer name="PriceType">
         <property name="idPriceType" type="int"/>
         <property name="name" type="string"/>
+        <property name="idPriceType" type="int"/>
     </transfer>
 
     <transfer name="StoreWithCurrency">
@@ -171,6 +183,36 @@
     <transfer name="Currency">
         <property name="idCurrency" type="int"/>
         <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="GuiTableEditableInitialData">
+        <property name="data" type="array" description="Data for rows" singular="data"/>
+        <property name="errors" type="GuiTableEditableDataError[]" singular="error" description="Key is data index."/>
+    </transfer>
+
+    <transfer name="GuiTableEditableDataError">
+        <property name="rowError" type="string"/>
+        <property name="columnErrors" type="array" singular="columnError" associative="true" description="Key is column ID."/>
+    </transfer>
+
+    <transfer name="ValidationResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="validationErrors" type="ValidationError[]" singular="validationError"/>
+    </transfer>
+
+    <transfer name="PriceProductCriteria">
+        <property name="priceProductStoreIds" type="int[]" singular="idPriceProductStore"/>
+    </transfer>
+
+    <transfer name="ValidationError">
+        <property name="message" type="string"/>
+        <property name="root" type="object"/>
+        <property name="propertyPath" type="string"/>
+        <property name="invalidValue" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProductDimension">
+        <property name="idPriceProductDefault" type="int"/>
     </transfer>
 
 </transfers>

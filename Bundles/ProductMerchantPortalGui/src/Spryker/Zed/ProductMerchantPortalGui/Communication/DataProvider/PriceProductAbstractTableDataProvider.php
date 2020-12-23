@@ -81,7 +81,7 @@ class PriceProductAbstractTableDataProvider extends AbstractGuiTableDataProvider
         $guiTableDataResponseTransfer = new GuiTableDataResponseTransfer();
 
         foreach ($priceProductAbstractTableViewCollectionTransfer->getPriceProductAbstractTableViews() as $priceProductAbstractTableViewTransfer) {
-            $responseData = $priceProductAbstractTableViewTransfer->toArray();
+            $responseData = $priceProductAbstractTableViewTransfer->toArray(true, true);
 
             foreach ($priceProductAbstractTableViewTransfer->getPrices() as $priceType => $priceValue) {
                 $responseData[$priceType] = $this->moneyFacade->convertIntegerToDecimal((int)$priceValue);

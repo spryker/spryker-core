@@ -77,12 +77,14 @@
     <transfer name="PriceProductCriteria">
         <property name="idStore" type="int"/>
         <property name="idCurrency" type="int"/>
+        <property name="idProductAbstract" type="int"/>
         <property name="priceMode" type="string"/>
         <property name="priceType" type="string"/>
         <property name="priceDimension" type="PriceProductDimension"/>
         <property name="quote" type="Quote"/>
         <property name="quantity" type="int"/>
         <property name="sku" type="string"/>
+        <property name="priceProductStoreIds" type="int[]" singular="idPriceProductStore"/>
     </transfer>
 
     <transfer name="CurrentProductPrice">
@@ -115,6 +117,18 @@
     </transfer>
 
     <transfer name="Quote">
+    </transfer>
+
+    <transfer name="ValidationResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="validationErrors" type="ValidationError[]" singular="validationError"/>
+    </transfer>
+
+    <transfer name="ValidationError">
+        <property name="message" type="string"/>
+        <property name="root" type="object"/>
+        <property name="propertyPath" type="string"/>
+        <property name="invalidValue" type="string"/>
     </transfer>
 
 </transfers>

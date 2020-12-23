@@ -12,7 +12,12 @@ use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 interface PriceProductAbstractGuiTableConfigurationProviderInterface
 {
     /**
+     * @phpstan-param array<mixed> $initialData
+     *
+     * @param int $idProductAbstract
+     * @param array $initialData
+     *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
-    public function getConfiguration(): GuiTableConfigurationTransfer;
+    public function getConfiguration(int $idProductAbstract, array $initialData = []): GuiTableConfigurationTransfer;
 }

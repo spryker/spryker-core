@@ -51,6 +51,11 @@ class PriceProductAbstractTableDataMapper
         $priceTypeTransfers = $this->priceProductFacade->getPriceTypeValues();
 
         foreach ($priceProductAbstractTableDataArray as $priceProductAbstractTableRowDataArray) {
+            $priceProductAbstractTableRowDataArray[PriceProductAbstractTableViewTransfer::PRICE_PRODUCT_DEFAULT_IDS] = explode(
+                ',',
+                $priceProductAbstractTableRowDataArray[PriceProductAbstractTableViewTransfer::PRICE_PRODUCT_DEFAULT_IDS]
+            );
+
             $priceProductAbstractTableViewTransfer = (new PriceProductAbstractTableViewTransfer())
                 ->fromArray($priceProductAbstractTableRowDataArray, true)
                 ->setPrices($this->preparePrices($priceProductAbstractTableRowDataArray, $priceTypeTransfers));
