@@ -97,7 +97,7 @@ class CustomerGroupDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addUtilSanitizeService(Container $container)
+    protected function addUtilSanitizeService(Container $container): Container
     {
         $container->set(static::SERVICE_UTIL_SANITIZE, function (Container $container) {
             return new CustomerGroupToUtilSanitizeBridge($container->getLocator()->utilSanitize()->service());
