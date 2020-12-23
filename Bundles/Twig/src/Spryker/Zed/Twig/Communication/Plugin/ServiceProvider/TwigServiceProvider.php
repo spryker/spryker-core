@@ -35,7 +35,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
     /**
      * @var \Silex\Application|\Spryker\Shared\Kernel\Communication\Application
      */
-    private $app;
+    protected $app;
 
     /**
      * @param \Silex\Application $app

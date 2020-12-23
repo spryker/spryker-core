@@ -15,7 +15,7 @@ class Container extends KernelContainer implements TestifyContainerInterface
     /**
      * @var \Spryker\Zed\Testify\Locator\Business\BusinessLocator
      */
-    private $locator;
+    protected $locator;
 
     /**
      * @param \Spryker\Zed\Testify\Locator\Business\BusinessLocator $locator

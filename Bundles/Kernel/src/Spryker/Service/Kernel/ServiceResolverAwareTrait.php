@@ -14,7 +14,7 @@ trait ServiceResolverAwareTrait
     /**
      * @var \Spryker\Service\Kernel\AbstractService
      */
-    private $service;
+    protected $service;
 
     /**
      * @param \Spryker\Service\Kernel\AbstractService $service

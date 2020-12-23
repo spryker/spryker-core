@@ -14,7 +14,7 @@ trait ClientResolverAwareTrait
     /**
      * @var \Spryker\Client\Kernel\AbstractClient|null
      */
-    private $client;
+    protected $client;
 
     /**
      * @param \Spryker\Client\Kernel\AbstractClient $client

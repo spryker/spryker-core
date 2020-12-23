@@ -126,7 +126,8 @@ class CategoryReader implements CategoryReaderInterface
      */
     public function findCategoryNodeById(int $nodeId, string $locale): ?RestResourceInterface
     {
-        $categoryNodeStorageTransfer = $this->categoryStorageClient->getCategoryNodeById($nodeId, $locale);
+        $storeName = $this->storeClient->getCurrentStore()->getName();
+        $categoryNodeStorageTransfer = $this->categoryStorageClient->getCategoryNodeById($nodeId, $locale, $storeName);
         if (!$categoryNodeStorageTransfer->getIdCategory()) {
             return null;
         }
@@ -142,7 +143,8 @@ class CategoryReader implements CategoryReaderInterface
      */
     public function findCategoryNodeByIds(array $nodeIds, string $localeName): array
     {
-        $categoryNodeStorageTransfers = $this->categoryStorageClient->getCategoryNodeByIds($nodeIds, $localeName);
+        $storeName = $this->storeClient->getCurrentStore()->getName();
+        $categoryNodeStorageTransfers = $this->categoryStorageClient->getCategoryNodeByIds($nodeIds, $localeName, $storeName);
         if (count($categoryNodeStorageTransfers) === 0) {
             return [];
         }

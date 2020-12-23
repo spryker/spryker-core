@@ -44,7 +44,7 @@ class DependencyValidatorModule extends Module
     /**
      * @param array $composerDependency
      *
-     * @return \Spryker\Zed\Development\Business\DevelopmentBusinessFactory|object
+     * @return \Spryker\Zed\Development\Business\DevelopmentBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getDevelopmentFactory(array $composerDependency)
     {

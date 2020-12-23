@@ -45,7 +45,6 @@ class CmsBlockProductConnectorCollectorPlugin extends AbstractCollectorPlugin
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     ) {
-
         $this->getFacade()
             ->runStorageCmsBlockProductCollector(
                 $baseQuery,

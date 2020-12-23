@@ -32,7 +32,6 @@ class ProductListKeyGenerator implements ProductListKeyGeneratorInterface
         ProductListRepositoryInterface $productListRepository,
         ProductListToUtilTextServiceInterface $utilTextService
     ) {
-
         $this->productListRepository = $productListRepository;
         $this->utilTextService = $utilTextService;
     }

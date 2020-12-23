@@ -42,7 +42,6 @@ class MonthDecisionRule implements DecisionRuleInterface
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
-
         $currentMonth = $this->getCurrentMonth();
 
         return $this->comparators->compare($clauseTransfer, $currentMonth);

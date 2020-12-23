@@ -336,7 +336,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->leftJoinClosureTable(SpyCategoryClosureTableTableMap::TABLE_NAME)
             ->addJoinCondition(
                 SpyCategoryClosureTableTableMap::TABLE_NAME,
-                SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT . ' = ' . SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE,
+                sprintf('%s = %s', SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT, SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE),
                 null,
                 Criteria::LOGICAL_OR
             )
@@ -353,9 +353,9 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
                     ->leftJoinWithSpyStore()
                 ->endUse()
             ->endUse()
-            ->where(SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT . ' IN (' . implode(', ', $categoryNodeIds) . ')')
+            ->where(sprintf('%s IN (%s)', SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT, implode(', ', $categoryNodeIds)))
             ->_or()
-            ->where(SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE . ' IN (' . implode(', ', $categoryNodeIds) . ')')
+            ->where(sprintf('%s IN (%s)', SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE, implode(', ', $categoryNodeIds)))
             ->distinct()
             ->find()
             ->toKeyIndex();
