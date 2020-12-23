@@ -416,7 +416,7 @@ class ServiceTest extends Unit
      */
     protected function setupConfig(): void
     {
-        $this->tester->setConfig(StorageConstants::STORAGE_REDIS_SCHEME, Config::get(static::REDIS_SCHEME, false) ?: Config::get(static::REDIS_PROTOCOL, 'tcp'));
+        $this->tester->setConfig(StorageConstants::STORAGE_REDIS_PROTOCOL, Config::get(static::REDIS_SCHEME, false) ?: Config::get(static::REDIS_PROTOCOL, 'tcp'));
         $this->tester->setConfig(StorageConstants::STORAGE_REDIS_PORT, Config::get(static::REDIS_PORT, 10009));
         $this->tester->setConfig(StorageConstants::STORAGE_REDIS_HOST, Config::get(static::REDIS_HOST, '127.0.0.1'));
         $this->tester->setConfig(StorageConstants::STORAGE_REDIS_DATABASE, Config::get(static::REDIS_DATABASE, 3));

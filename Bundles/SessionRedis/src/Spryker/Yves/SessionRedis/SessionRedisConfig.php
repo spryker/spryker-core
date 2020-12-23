@@ -121,15 +121,23 @@ class SessionRedisConfig extends AbstractBundleConfig
      */
     protected function getConnectionCredentials(): RedisCredentialsTransfer
     {
-        $scheme = $this->get(SessionRedisConstants::YVES_SESSION_REDIS_SCHEME, false) ?:
-            $this->get(SessionRedisConstants::YVES_SESSION_REDIS_PROTOCOL);
-
         return (new RedisCredentialsTransfer())
-            ->setScheme($scheme)
+            ->setScheme($this->getScheme())
             ->setHost($this->get(SessionRedisConstants::YVES_SESSION_REDIS_HOST))
             ->setPort($this->get(SessionRedisConstants::YVES_SESSION_REDIS_PORT))
             ->setDatabase($this->get(SessionRedisConstants::YVES_SESSION_REDIS_DATABASE))
             ->setPassword($this->get(SessionRedisConstants::YVES_SESSION_REDIS_PASSWORD, false));
+    }
+
+    /**
+     * @deprecated Use $this->get(SessionRedisConstants::YVES_SESSION_REDIS_SCHEME) instead. Added for BC reason only.
+     *
+     * @return string
+     */
+    protected function getScheme(): string
+    {
+        return $this->get(SessionRedisConstants::YVES_SESSION_REDIS_SCHEME, false) ?:
+            $this->get(SessionRedisConstants::YVES_SESSION_REDIS_PROTOCOL);
     }
 
     /**
