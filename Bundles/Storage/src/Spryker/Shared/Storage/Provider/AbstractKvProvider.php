@@ -25,7 +25,7 @@ abstract class AbstractKvProvider extends AbstractClientProvider
     public const KV_ADAPTER_REDIS = 'redis';
 
     /**
-     * @link \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_SCHEME.
+     * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_SCHEME.
      */
     protected const STORAGE_REDIS_SCHEME = 'STORAGE_REDIS:STORAGE_REDIS_SCHEME';
 

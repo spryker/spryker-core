@@ -25,7 +25,7 @@ class StorageInstanceBuilder
     public const DEFAULT_REDIS_DATABASE = 0;
 
     /**
-     * @link \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_SCHEME.
+     * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_SCHEME.
      */
     protected const STORAGE_REDIS_SCHEME = 'STORAGE_REDIS:STORAGE_REDIS_SCHEME';
 
