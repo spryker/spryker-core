@@ -12,23 +12,15 @@ use Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface;
 use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
 use Spryker\Shared\GuiTable\Http\GuiTableDataRequestExecutorInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Action\ActionInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Action\UpdateProductOffer\DeletePricesAction;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Action\UpdateProductOffer\SavePricesAction;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilder;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\GuiTableConfigurationProviderInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\PriceProductOfferCreateGuiTableConfigurationProvider;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\PriceProductOfferCreateGuiTableConfigurationProviderInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\PriceProductOfferUpdateGuiTableConfigurationProvider;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\PriceProductOfferUpdateGuiTableConfigurationProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductGuiTableConfigurationProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\OffersDashboardCardProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\OffersDashboardCardProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\ProductGuiTableDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\ProductOfferGuiTableDataProvider;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\ProductOfferPriceGuiTableDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Expander\MerchantOrderItemTableExpander;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Expander\MerchantOrderItemTableExpanderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Constraint\ValidProductOfferPriceIdsOwnByMerchantConstraint;
@@ -41,6 +33,11 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\Pri
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\ProductOfferStockTransformer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\QuantityTransformer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\StoresTransformer;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\PriceProductOfferCreateGuiTableConfigurationProvider;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\PriceProductOfferCreateGuiTableConfigurationProviderInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\PriceProductOfferUpdateGuiTableConfigurationProvider;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\PriceProductOfferUpdateGuiTableConfigurationProviderInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\DataProvider\ProductOfferPriceGuiTableDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Mapper\PriceProductOfferMapper;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\External\ProductOfferMerchantPortalGuiToValidationAdapterInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToCurrencyFacadeInterface;
@@ -92,7 +89,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\PriceProductOfferUpdateGuiTableConfigurationProviderInterface
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\PriceProductOfferUpdateGuiTableConfigurationProviderInterface
      */
     public function createPriceProductOfferUpdateGuiTableConfigurationProvider(): PriceProductOfferUpdateGuiTableConfigurationProviderInterface
     {
@@ -105,7 +102,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\PriceProductOfferCreateGuiTableConfigurationProviderInterface
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\PriceProductOfferCreateGuiTableConfigurationProviderInterface
      */
     public function createPriceProductOfferCreateGuiTableConfigurationProvider(): PriceProductOfferCreateGuiTableConfigurationProviderInterface
     {
@@ -268,7 +265,10 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
      */
     public function createPriceProductOfferMapper(): PriceProductOfferMapper
     {
-        return new PriceProductOfferMapper($this->getPriceProductFacade());
+        return new PriceProductOfferMapper(
+            $this->getPriceProductFacade(),
+            $this->getMoneyFacade()
+        );
     }
 
     /**
@@ -405,32 +405,6 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     public function getPriceProductOfferFacade(): ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface
     {
         return $this->getProvidedDependency(ProductOfferMerchantPortalGuiDependencyProvider::FACADE_PRICE_PRODUCT_OFFER);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Action\ActionInterface
-     */
-    public function createDeletePricesAction(): ActionInterface
-    {
-        return new DeletePricesAction(
-            $this->getValidationAdapter(),
-            $this->createValidProductOfferPriceIdsOwnByMerchantConstraint(),
-            $this->getPriceProductOfferFacade(),
-            $this->getMerchantUserFacade(),
-            $this->getUtilEncodingService()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Action\ActionInterface
-     */
-    public function createSavePricesAction(): ActionInterface
-    {
-        return new SavePricesAction(
-            $this->getPriceProductOfferFacade(),
-            $this->getUtilEncodingService(),
-            $this->getMoneyFacade()
-        );
     }
 
     /**

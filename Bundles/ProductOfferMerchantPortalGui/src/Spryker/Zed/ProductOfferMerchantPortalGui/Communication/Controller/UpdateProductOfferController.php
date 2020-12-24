@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller;
 
+use ArrayObject;
+use Generated\Shared\Transfer\PriceProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOfferResponseTransfer;
@@ -75,9 +77,14 @@ class UpdateProductOfferController extends AbstractProductOfferController
             );
         }
 
+        $priceProductOfferCollection = (new PriceProductOfferCollectionTransfer())
+            ->setPriceProductOffers(
+                new ArrayObject($productOfferForm->getData()->getPrices())
+            );
+
         $validationResponseTransfer = $this->getFactory()
             ->getPriceProductOfferFacade()
-            ->validateProductOfferPrices($productOfferForm->getData()->getPrices());
+            ->validateProductOfferPrices($priceProductOfferCollection);
 
         if (!$productOfferForm->isValid() || !$validationResponseTransfer->getIsSuccess()) {
             $initialData = $this->getFactory()
@@ -107,18 +114,6 @@ class UpdateProductOfferController extends AbstractProductOfferController
             $idProductOffer,
             $initialData
         );
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function deletePricesAction(Request $request): JsonResponse
-    {
-        return $this->getFactory()
-            ->createDeletePricesAction()
-            ->execute($request);
     }
 
     /**
@@ -219,15 +214,5 @@ class UpdateProductOfferController extends AbstractProductOfferController
             $this->getFactory()->createProductOfferPriceTableDataProvider($idProductOffer),
             $this->getFactory()->createPriceProductOfferUpdateGuiTableConfigurationProvider()->getConfiguration($idProductOffer, [])
         );
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function savePricesAction(Request $request)
-    {
-        return $this->getFactory()->createSavePricesAction()->execute($request);
     }
 }

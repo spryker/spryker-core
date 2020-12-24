@@ -57,12 +57,12 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\Propel\ProductTableDat
 class ProductOfferMerchantPortalGuiRepository extends AbstractRepository implements ProductOfferMerchantPortalGuiRepositoryInterface
 {
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_OFFER_REFERENCE
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_OFFER_REFERENCE
      */
     protected const COL_KEY_OFFER_REFERENCE = 'offerReference';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_SKU
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_SKU
      */
     protected const COL_KEY_PRODUCT_SKU = 'sku';
 

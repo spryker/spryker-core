@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider;
+namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider;
 
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
@@ -34,14 +34,14 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
     protected const REQUEST_PARAM_PRICE_PRODUCT_OFFER_IDS = 'price-product-offer-ids';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\UpdateProductOfferController::savePricesAction()
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\SavePriceProductOfferController::indexAction()
      */
-    protected const URL_SAVE_PRICES = '/product-offer-merchant-portal-gui/update-product-offer/save-prices?type-price-product-offer-ids=${row.type_price_product_offer_ids}';
+    protected const URL_SAVE_PRICES = '/product-offer-merchant-portal-gui/save-price-product-offer?type-price-product-offer-ids=${row.type_price_product_offer_ids}';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\UpdateProductOfferController::deletePricesAction()
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\DeletePriceProductOfferController::indexAction()
      */
-    protected const URL_DELETE_PRICE = '/product-offer-merchant-portal-gui/update-product-offer/delete-prices';
+    protected const URL_DELETE_PRICE = '/product-offer-merchant-portal-gui/delete-price-product-offer';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\UpdateProductOfferController::priceTableDataAction()

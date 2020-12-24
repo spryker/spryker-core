@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductOffer\Business\ConstraintProvider;
+namespace Spryker\Zed\PriceProductOffer\Business\Validator;
 
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Zed\PriceProductOffer\Business\Constraint\GreaterThanOrEqualOrEmptyConstraint;
-use Spryker\Zed\PriceProductOffer\Business\Constraint\TransferConstraint;
-use Spryker\Zed\PriceProductOffer\Business\Constraint\ValidUniqueStoreCurrencyCollectionConstraint;
+use Spryker\Zed\PriceProductOffer\Business\Validator\Constraint\GreaterThanOrEqualOrEmptyConstraint;
+use Spryker\Zed\PriceProductOffer\Business\Validator\Constraint\TransferConstraint;
+use Spryker\Zed\PriceProductOffer\Business\Validator\Constraint\ValidUniqueStoreCurrencyCollectionConstraint;
 use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 use Symfony\Component\Validator\Constraints\All as AllConstraint;
 use Symfony\Component\Validator\Constraints\NotBlank;

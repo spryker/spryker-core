@@ -8,14 +8,14 @@
 namespace Spryker\Zed\PriceProductOffer\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\PriceProductOffer\Business\Constraint\ValidCurrencyAssignedToStoreConstraint;
-use Spryker\Zed\PriceProductOffer\Business\Constraint\ValidUniqueStoreCurrencyGrossNetConstraint;
-use Spryker\Zed\PriceProductOffer\Business\ConstraintProvider\PriceProductOfferConstraintProvider;
-use Spryker\Zed\PriceProductOffer\Business\ConstraintProvider\PriceProductOfferConstraintProviderInterface;
 use Spryker\Zed\PriceProductOffer\Business\Deleter\PriceProductOfferDeleter;
 use Spryker\Zed\PriceProductOffer\Business\Deleter\PriceProductOfferDeleterInterface;
 use Spryker\Zed\PriceProductOffer\Business\Expander\ProductOfferExpander;
 use Spryker\Zed\PriceProductOffer\Business\Expander\ProductOfferExpanderInterface;
+use Spryker\Zed\PriceProductOffer\Business\Validator\Constraint\ValidCurrencyAssignedToStoreConstraint;
+use Spryker\Zed\PriceProductOffer\Business\Validator\Constraint\ValidUniqueStoreCurrencyGrossNetConstraint;
+use Spryker\Zed\PriceProductOffer\Business\Validator\PriceProductOfferConstraintProvider;
+use Spryker\Zed\PriceProductOffer\Business\Validator\PriceProductOfferConstraintProviderInterface;
 use Spryker\Zed\PriceProductOffer\Business\Validator\PriceProductOfferValidator;
 use Spryker\Zed\PriceProductOffer\Business\Validator\PriceProductOfferValidatorInterface;
 use Spryker\Zed\PriceProductOffer\Business\Writer\PriceProductOfferWriter;
@@ -85,7 +85,7 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductOffer\Business\ConstraintProvider\PriceProductOfferConstraintProviderInterface
+     * @return \Spryker\Zed\PriceProductOffer\Business\Validator\PriceProductOfferConstraintProviderInterface
      */
     public function createPriceProductOfferConstraintProvider(): PriceProductOfferConstraintProviderInterface
     {

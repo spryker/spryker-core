@@ -39,15 +39,13 @@ class ProductOfferMerchantPortalGuiToPriceProductOfferFacadeBridge implements Pr
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfers
      *
      * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
-    public function validateProductOfferPrices(ArrayObject $priceProductTransfers): ValidationResponseTransfer
+    public function validateProductOfferPrices(PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfers): ValidationResponseTransfer
     {
-        return $this->priceProductOfferFacade->validateProductOfferPrices($priceProductTransfers);
+        return $this->priceProductOfferFacade->validateProductOfferPrices($priceProductOfferCollectionTransfers);
     }
 
     /**

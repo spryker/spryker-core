@@ -7,16 +7,15 @@
 
 namespace Spryker\Zed\PriceProductOffer\Business\Validator;
 
-use ArrayObject;
+use Generated\Shared\Transfer\PriceProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ValidationErrorTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
-use Spryker\Zed\PriceProductOffer\Business\ConstraintProvider\PriceProductOfferConstraintProviderInterface;
 use Spryker\Zed\PriceProductOffer\Dependency\External\PriceProductOfferToValidationAdapterInterface;
 
 class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
 {
     /**
-     * @var \Spryker\Zed\PriceProductOffer\Business\ConstraintProvider\PriceProductOfferConstraintProviderInterface
+     * @var \Spryker\Zed\PriceProductOffer\Business\Validator\PriceProductOfferConstraintProviderInterface
      */
     protected $priceProductOfferConstraintProvider;
 
@@ -26,7 +25,7 @@ class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
     protected $validator;
 
     /**
-     * @param \Spryker\Zed\PriceProductOffer\Business\ConstraintProvider\PriceProductOfferConstraintProviderInterface $priceProductOfferConstraintProvider
+     * @param \Spryker\Zed\PriceProductOffer\Business\Validator\PriceProductOfferConstraintProviderInterface $priceProductOfferConstraintProvider
      * @param \Spryker\Zed\PriceProductOffer\Dependency\External\PriceProductOfferToValidationAdapterInterface $validationAdapter
      */
     public function __construct(
@@ -38,18 +37,17 @@ class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfers
      *
      * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
-    public function validateProductOfferPrices(ArrayObject $priceProductTransfers): ValidationResponseTransfer
+    public function validateProductOfferPrices(PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfers): ValidationResponseTransfer
     {
         $validationResponseTransfer = new ValidationResponseTransfer();
         $validationResponseTransfer->setIsSuccess(true);
+        $priceProductOfferTransfers = $priceProductOfferCollectionTransfers->getPriceProductOffers();
 
-        $constraintViolationList = $this->validator->validate($priceProductTransfers, $this->priceProductOfferConstraintProvider->getConstraints());
+        $constraintViolationList = $this->validator->validate($priceProductOfferTransfers, $this->priceProductOfferConstraintProvider->getConstraints());
 
         if (!$constraintViolationList->count()) {
             return $validationResponseTransfer;
