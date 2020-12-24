@@ -88,23 +88,6 @@ describe('LayoutMainComponent', () => {
             expect(navigationElem.properties.collapsed).toBe(true);
         });
 
-        it('should show collapsed logo class if value is true', () => {
-            const collapsedClass = 'mp-layout-main-cnt__logo--collapsed';
-            const logoContainerElem = layoutFixture.debugElement.query(
-                By.css('spy-sidebar .mp-layout-main-cnt__logo')
-            );
-
-            layoutComponent.isCollapsed = true;
-
-            layoutFixture.detectChanges();
-
-            expect(
-                logoContainerElem.nativeElement.classList.contains(
-                    collapsedClass
-                )
-            ).toBe(true);
-        });
-
         it('should change if `updateCollapseHandler` method invokes', () => {
             layoutComponent.updateCollapseHandler(true);
 

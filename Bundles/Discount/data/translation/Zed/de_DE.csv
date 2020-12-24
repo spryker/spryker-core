@@ -93,3 +93,4 @@ Generate,Generieren
 "Voucher codes successfully generated.","Gutscheincodes erfolgreich generiert."
 "Voucher code successfully deleted.","Gutscheincode erfolgreich gelöscht."
 "Apply to","Anwenden auf"
+"CSRF token is not valid.","CSRF-Token ist ungültig."

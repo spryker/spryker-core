@@ -1,0 +1,22 @@
+{% extends '@SecurityGui/Layout/layout.twig' %}
+
+{% form_theme form '@SecurityGui/Layout/form.twig' %}
+
+{% block content %}
+
+    {{ form_start(form) }}
+        {% include '@SecurityGui/Partial/form-message.twig' %}
+
+        {{ form_errors(form) }}
+
+        {{ form_row(form.password.first) }}
+        {{ form_row(form.password.second) }}
+
+        <div class="form-group">
+            <button class="btn btn-success btn-block btn" type="submit">{{ 'Reset' | trans }}</button>
+        </div>
+
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+{% endblock %}

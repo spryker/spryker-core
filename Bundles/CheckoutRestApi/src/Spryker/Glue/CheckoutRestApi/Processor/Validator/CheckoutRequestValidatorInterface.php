@@ -19,6 +19,17 @@ interface CheckoutRequestValidatorInterface
      *
      * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer
      */
+    public function validateCheckoutDataRequest(
+        RestRequestInterface $restRequest,
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+    ): RestErrorCollectionTransfer;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer
+     */
     public function validateCheckoutRequest(
         RestRequestInterface $restRequest,
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer

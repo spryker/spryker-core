@@ -22,9 +22,9 @@ abstract class AbstractOmsTriggerFormDataProvider
     /**
      * @param string $redirectUrl
      * @param string $event
-     * @param int $idSalesOrderItem
+     * @param int $id
      *
      * @return array
      */
-    abstract public function getOptions(string $redirectUrl, string $event, int $idSalesOrderItem): array;
+    abstract public function getOptions(string $redirectUrl, string $event, int $id): array;
 }

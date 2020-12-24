@@ -1,0 +1,6 @@
+<span>{{ priceToPay | money(true, order.currencyIsoCode) }}</span>
+{% if (subtotal - priceToPay > 0) > 0 %}
+    {% set discountedClass = (subtotal - priceToPay > 0) ? 'discounted' %}
+
+    <span class="{{ discountedClass }}">{{ subtotal | money(true, order.currencyIsoCode) }}</span>
+{% endif %}

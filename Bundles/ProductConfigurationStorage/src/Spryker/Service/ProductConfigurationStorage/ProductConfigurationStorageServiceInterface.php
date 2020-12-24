@@ -28,4 +28,22 @@ interface ProductConfigurationStorageServiceInterface
         array $priceProductTransfers,
         PriceProductFilterTransfer $priceProductFilterTransfer
     ): array;
+
+    /**
+     * Specification:
+     * - Compares singular item prices with volume prices.
+     * - Finds corresponding volume price for provided quantity.
+     * - Returns singular item prices if matching volume price can not be found.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function filterProductConfigurationVolumePrices(
+        array $priceProductTransfers,
+        PriceProductFilterTransfer $priceProductFilterTransfer
+    ): array;
 }

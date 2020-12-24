@@ -24,31 +24,31 @@ class BaseStep extends AbstractBaseStep
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function requireInput(AbstractTransfer $dataTransfer): bool
+    public function requireInput(AbstractTransfer $quoteTransfer): bool
     {
         return true;
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    public function execute(Request $request, AbstractTransfer $dataTransfer): void
+    public function execute(Request $request, AbstractTransfer $quoteTransfer): void
     {
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function postCondition(AbstractTransfer $dataTransfer): bool
+    public function postCondition(AbstractTransfer $quoteTransfer): bool
     {
         return true;
     }

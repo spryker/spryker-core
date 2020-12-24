@@ -34,15 +34,15 @@ class ProductAbstractImageSetStorageListener extends AbstractPlugin implements E
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
-        $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyProductImageSetTableMap::COL_FK_PRODUCT_ABSTRACT);
+        $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventEntityTransfers, SpyProductImageSetTableMap::COL_FK_PRODUCT_ABSTRACT);
 
         if ($eventName === ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_DELETE) {
             $this->getFacade()->unpublishProductAbstractImages($productAbstractIds);

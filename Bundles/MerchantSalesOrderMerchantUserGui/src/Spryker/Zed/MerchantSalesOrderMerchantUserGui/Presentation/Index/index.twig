@@ -1,0 +1,17 @@
+{% extends '@Gui/layout/layout.twig' %}
+
+{% set widget_title = 'Overview of Orders' | trans %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_title -%}
+            <h5>{{ 'List of Orders' | trans}}</h5>
+        {%- endblock %}
+        {% block widget_content %}
+            {{ myOrdersTable | raw }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

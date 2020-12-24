@@ -15,10 +15,10 @@ interface CmsBlockStorageDataExpanderPluginInterface
      *
      * @api
      *
-     * @param array $cmsBlockData
+     * @param array $collectedData
      * @param string $localeName
      *
      * @return array
      */
-    public function expand(array $cmsBlockData, $localeName);
+    public function expand(array $collectedData, $localeName);
 }

@@ -45,7 +45,6 @@ class ProductRelationCollectorFacade extends AbstractFacade implements ProductRe
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     ) {
-
         $collector = $this->getFactory()
             ->createStorageProductRelationCollector();
 

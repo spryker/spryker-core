@@ -14,18 +14,6 @@
         },
         {
             "severity": "error",
-            "line_from": 25,
-            "line_to": 25,
-            "type": "ParamNameMismatch",
-            "message": "Argument 2 of Spryker\\Zed\\PriceProductMerchantRelationshipStorage\\Business\\Model\\PriceGrouper::groupPricesData has wrong name $existingPricesData, expecting $pricesData as defined by Spryker\\Zed\\PriceProductMerchantRelationshipStorage\\Business\\Model\\PriceGrouperInterface::groupPricesData",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipStorage/src/Spryker/Zed/PriceProductMerchantRelationshipStorage/Business/Model/PriceGrouper.php",
-            "snippet": "        array $existingPricesData = []",
-            "selected_text": "$existingPricesData",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
             "line_from": 49,
             "line_to": 49,
             "type": "InvalidArgument",
@@ -47,66 +35,6 @@
             "selected_text": "$priceKeys",
             "error_level": 6,
             "shortcode": 4
-        },
-        {
-            "severity": "error",
-            "line_from": 32,
-            "line_to": 32,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\PriceProductMerchantRelationshipStorage\\Communication\\Plugin\\Event\\Listener\\MerchantRelationshipListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipStorage/src/Spryker/Zed/PriceProductMerchantRelationshipStorage/Communication/Plugin/Event/Listener/MerchantRelationshipListener.php",
-            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
-            "selected_text": "$eventTransfers",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 32,
-            "line_to": 32,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\PriceProductMerchantRelationshipStorage\\Communication\\Plugin\\Event\\Listener\\PriceProductMerchantRelationshipAbstractDeleteListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipStorage/src/Spryker/Zed/PriceProductMerchantRelationshipStorage/Communication/Plugin/Event/Listener/PriceProductMerchantRelationshipAbstractDeleteListener.php",
-            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
-            "selected_text": "$eventTransfers",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 31,
-            "line_to": 31,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\PriceProductMerchantRelationshipStorage\\Communication\\Plugin\\Event\\Listener\\PriceProductMerchantRelationshipAbstractListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipStorage/src/Spryker/Zed/PriceProductMerchantRelationshipStorage/Communication/Plugin/Event/Listener/PriceProductMerchantRelationshipAbstractListener.php",
-            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
-            "selected_text": "$eventTransfers",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 32,
-            "line_to": 32,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\PriceProductMerchantRelationshipStorage\\Communication\\Plugin\\Event\\Listener\\PriceProductMerchantRelationshipConcreteDeleteListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipStorage/src/Spryker/Zed/PriceProductMerchantRelationshipStorage/Communication/Plugin/Event/Listener/PriceProductMerchantRelationshipConcreteDeleteListener.php",
-            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
-            "selected_text": "$eventTransfers",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 31,
-            "line_to": 31,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\PriceProductMerchantRelationshipStorage\\Communication\\Plugin\\Event\\Listener\\PriceProductMerchantRelationshipConcreteListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipStorage/src/Spryker/Zed/PriceProductMerchantRelationshipStorage/Communication/Plugin/Event/Listener/PriceProductMerchantRelationshipConcreteListener.php",
-            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
-            "selected_text": "$eventTransfers",
-            "error_level": 7,
-            "shortcode": 230
         },
         {
             "severity": "error",

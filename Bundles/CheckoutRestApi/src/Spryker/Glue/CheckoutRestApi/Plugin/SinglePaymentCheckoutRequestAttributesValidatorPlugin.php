@@ -31,7 +31,7 @@ class SinglePaymentCheckoutRequestAttributesValidatorPlugin extends AbstractPlug
     public function validateAttributes(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): RestErrorCollectionTransfer
     {
         return $this->getFactory()
-                ->createSinglePaymentValidator()
-                ->validate($restCheckoutRequestAttributesTransfer);
+            ->createSinglePaymentValidator()
+            ->validate($restCheckoutRequestAttributesTransfer);
     }
 }

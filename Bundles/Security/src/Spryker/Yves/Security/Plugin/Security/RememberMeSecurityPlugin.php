@@ -101,8 +101,6 @@ class RememberMeSecurityPlugin implements SecurityPluginInterface
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @throws \Exception
-     *
      * @return \Spryker\Service\Container\ContainerInterface
      */
     protected function addRememberMeServicePrototype(ContainerInterface $container): ContainerInterface

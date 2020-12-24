@@ -172,7 +172,6 @@ class RelationMapper implements RelationMapperInterface
         $foreignPhpIdName,
         $localPhpIdName
     ) {
-
         $addMethod = 'add' . $relationMap->getPluralName();
 
         $relatedCollection = [];

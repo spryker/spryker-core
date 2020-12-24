@@ -74,18 +74,6 @@
         },
         {
             "severity": "error",
-            "line_from": 85,
-            "line_to": 85,
-            "type": "ParamNameMismatch",
-            "message": "Argument 2 of Spryker\\Glue\\GlueApplication\\Rest\\JsonApi\\RestResponse::addLink has wrong name $href, expecting $uri as defined by Spryker\\Glue\\GlueApplication\\Rest\\JsonApi\\RestResponseInterface::addLink",
-            "file_name": "vendor/spryker/spryker/Bundles/GlueApplication/src/Spryker/Glue/GlueApplication/Rest/JsonApi/RestResponse.php",
-            "snippet": "    public function addLink(string $name, string $href): RestResponseInterface",
-            "selected_text": "$href",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
             "line_from": 159,
             "line_to": 159,
             "type": "InvalidReturnType",

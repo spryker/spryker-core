@@ -15,7 +15,7 @@ trait BundleConfigResolverAwareTrait
     /**
      * @var \Spryker\Zed\Kernel\AbstractBundleConfig
      */
-    private $config;
+    protected $config;
 
     /**
      * @param \Spryker\Zed\Kernel\AbstractBundleConfig $config

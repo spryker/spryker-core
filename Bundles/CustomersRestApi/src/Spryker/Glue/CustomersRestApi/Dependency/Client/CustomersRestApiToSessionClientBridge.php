@@ -31,7 +31,7 @@ class CustomersRestApiToSessionClientBridge implements CustomersRestApiToSession
      *
      * @return void
      */
-    public function set($key, $value): void
+    public function set(string $key, $value): void
     {
         $this->sessionClient->set($key, $value);
     }
