@@ -19,54 +19,54 @@ class CheckoutPluginCollection implements CheckoutPluginCollectionInterface
     /**
      * @param \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginInterface $plugin
      * @param string $provider
-     * @param string $pluginType
+     * @param string $type
      *
      * @return $this
      */
-    public function add(CheckoutPluginInterface $plugin, $provider, $pluginType)
+    public function add(CheckoutPluginInterface $plugin, $provider, $type)
     {
-        if (!isset($this->plugins[$pluginType])) {
-            $this->plugins[$pluginType] = [];
+        if (!isset($this->plugins[$type])) {
+            $this->plugins[$type] = [];
         }
 
-        $this->plugins[$pluginType][$provider] = $plugin;
+        $this->plugins[$type][$provider] = $plugin;
 
         return $this;
     }
 
     /**
      * @param string $provider
-     * @param string $pluginType
+     * @param string $type
      *
      * @return bool
      */
-    public function has($provider, $pluginType)
+    public function has($provider, $type)
     {
-        return isset($this->plugins[$pluginType][$provider]);
+        return isset($this->plugins[$type][$provider]);
     }
 
     /**
      * @param string $provider
-     * @param string $pluginType
+     * @param string $type
      *
      * @throws \Spryker\Zed\Payment\Exception\CheckoutPluginNotFoundException
      *
      * @return \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginInterface
      */
-    public function get($provider, $pluginType)
+    public function get($provider, $type)
     {
-        if (empty($this->plugins[$pluginType])) {
+        if (empty($this->plugins[$type])) {
             throw new CheckoutPluginNotFoundException(
-                sprintf('Could not find "%s" plugin type for "%s" provider. You need to add the needed plugins within your DependencyInjector.', $pluginType, $provider)
+                sprintf('Could not find "%s" plugin type for "%s" provider. You need to add the needed plugins within your DependencyInjector.', $type, $provider)
             );
         }
 
-        if (empty($this->plugins[$pluginType][$provider])) {
+        if (empty($this->plugins[$type][$provider])) {
             throw new CheckoutPluginNotFoundException(
                 sprintf('Could not find any plugin for "%s" provider. You need to add the needed plugins within your DependencyInjector.', $provider)
             );
         }
 
-        return $this->plugins[$pluginType][$provider];
+        return $this->plugins[$type][$provider];
     }
 }

@@ -162,6 +162,7 @@
     </transfer>
 
     <transfer name="Discount">
+        <property name="voucherCode" type="string"/>
     </transfer>
 
     <transfer name="TaxTotal">

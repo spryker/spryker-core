@@ -40,8 +40,6 @@ class AvailabilityViewCest
 
         $i->seeBreadcrumbNavigation('Catalog / Availability / Product Availability');
 
-        $i->wait(1);
-
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_VIEW_HEADER);
         $i->assertTableWithDataExists();
 

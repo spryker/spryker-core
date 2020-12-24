@@ -15,6 +15,7 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
     public const KEY_PROPERTY = 'property';
     public const KEY_BUNDLES = 'bundles';
     public const KEY_DEPRECATED = 'deprecated';
+    public const KEY_STRICT_MODE = 'strict';
 
     /**
      * @param array $transferDefinitions
@@ -31,9 +32,10 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
                 self::KEY_NAME => $transferDefinition[self::KEY_NAME],
                 self::KEY_DEPRECATED => isset($transferDefinition[self::KEY_DEPRECATED]) ? $transferDefinition[self::KEY_DEPRECATED] : null,
                 self::KEY_PROPERTY => $this->normalizeAttributes($transferDefinition[self::KEY_PROPERTY] ?? [], $transferDefinition[self::KEY_BUNDLE]),
+                self::KEY_STRICT_MODE => $transferDefinition[static::KEY_STRICT_MODE] ?? null,
             ];
 
-            $normalizedDefinitions[] = $normalizedDefinition;
+            $normalizedDefinitions[] = $this->normalizeStrictMode($normalizedDefinition);
         }
 
         return $normalizedDefinitions;
@@ -71,5 +73,70 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
         }
 
         return $attributes;
+    }
+
+    /**
+     * @param array $transferDefinition
+     *
+     * @return array
+     */
+    protected function normalizeStrictMode(array $transferDefinition): array
+    {
+        $transferDefinition = $this->normalizeTransferDefinitionStrictMode($transferDefinition);
+        $propertyDefinitions = $transferDefinition[static::KEY_PROPERTY] ?? [];
+        $isTransferInStrictMode = $transferDefinition[static::KEY_STRICT_MODE] ?? false;
+
+        if ($propertyDefinitions) {
+            $propertyDefinitions = isset($propertyDefinitions[0]) ? $propertyDefinitions : [$propertyDefinitions];
+            $transferDefinition[static::KEY_PROPERTY] = $this->normalizeTransferPropertyDefinitionStrictMode(
+                $propertyDefinitions,
+                $isTransferInStrictMode
+            );
+        }
+
+        return $transferDefinition;
+    }
+
+    /**
+     * @param array $transferDefinition
+     *
+     * @return array
+     */
+    protected function normalizeTransferDefinitionStrictMode(array $transferDefinition): array
+    {
+        $isTransferInStrictMode = isset($transferDefinition[static::KEY_STRICT_MODE])
+            ? filter_var($transferDefinition[static::KEY_STRICT_MODE], FILTER_VALIDATE_BOOLEAN)
+            : false;
+
+        if ($isTransferInStrictMode) {
+            $transferDefinition[static::KEY_STRICT_MODE] = true;
+        }
+
+        return $transferDefinition;
+    }
+
+    /**
+     * @param array $propertyDefinitions
+     * @param bool $isTransferInStrictMode
+     *
+     * @return array
+     */
+    protected function normalizeTransferPropertyDefinitionStrictMode(array $propertyDefinitions, bool $isTransferInStrictMode): array
+    {
+        $normalizedPropertyDefinitions = [];
+
+        foreach ($propertyDefinitions as $propertyDefinition) {
+            $isPropertyInStrictMode = isset($propertyDefinition[static::KEY_STRICT_MODE])
+                ? filter_var($propertyDefinition[static::KEY_STRICT_MODE], FILTER_VALIDATE_BOOLEAN)
+                : $isTransferInStrictMode;
+
+            if ($isPropertyInStrictMode) {
+                $propertyDefinition[static::KEY_STRICT_MODE] = true;
+            }
+
+            $normalizedPropertyDefinitions[] = $propertyDefinition;
+        }
+
+        return $normalizedPropertyDefinitions;
     }
 }

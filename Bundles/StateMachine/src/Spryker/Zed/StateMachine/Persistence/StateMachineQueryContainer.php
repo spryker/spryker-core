@@ -176,6 +176,7 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
             ->filterByName($states, Criteria::IN)
             ->useStateHistoryQuery()
                 ->orderByCreatedAt($historySortDirection)
+                ->orderByIdStateMachineItemStateHistory($historySortDirection)
             ->endUse();
     }
 

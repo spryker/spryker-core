@@ -16,18 +16,18 @@ class PriceGrouper implements PriceGrouperInterface
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
-     * @param array $existingPricesData
+     * @param array $pricesData
      *
      * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer
      */
     public function groupPricesData(
         PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer,
-        array $existingPricesData = []
+        array $pricesData = []
     ): PriceProductMerchantRelationshipStorageTransfer {
         $groupedPrices = $this->groupPrices($priceProductMerchantRelationshipStorageTransfer);
 
-        if (isset($existingPricesData[static::PRICES])) {
-            $groupedPrices = array_replace_recursive($existingPricesData[static::PRICES], $groupedPrices);
+        if (isset($pricesData[static::PRICES])) {
+            $groupedPrices = array_replace_recursive($pricesData[static::PRICES], $groupedPrices);
         }
 
         $groupedPrices = $this->filterPriceData($groupedPrices, PriceProductMerchantRelationshipStorageConfig::PRICE_DATA);

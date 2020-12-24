@@ -22,9 +22,9 @@ interface MerchantStorageEntityManagerInterface
 
     /**
      * @param int $idMerchant
-     * @param string $store
+     * @param string $storeName
      *
      * @return void
      */
-    public function deleteMerchantStorage(int $idMerchant, string $store): void;
+    public function deleteMerchantStorage(int $idMerchant, string $storeName): void;
 }

@@ -35,16 +35,16 @@ interface SubFormPluginInterface
     public function getPaymentMethod();
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function getData($dataTransfer);
+    public function getData($quoteTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
-    public function getOptions($dataTransfer);
+    public function getOptions($quoteTransfer);
 }

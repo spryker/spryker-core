@@ -1,0 +1,22 @@
+{% for productOption in orderItem.productOptions %}
+    <tr class="addition-row">
+        <td></td>
+        <td>+ <span class="label">{{ 'Option' | trans }}</span></td>
+        <td>
+            <div>
+                <a target="_blank" href="{{ url('/product-management/view/variant', {'id-product-abstract': orderItem.idProductAbstract, 'id-product': orderItem.id, 'type': 'regular'}) }}">{{ productOption.value }}</a>
+            </div>
+            <div class="sku">
+              {{ 'Sku' | trans }}: {{ productOption.sku }}
+            </div>
+        </td>
+        <td></td>
+        <td>
+            <div>
+                {% embed '@MerchantSalesOrderMerchantUserGui/Detail/boxes/discounted-price.twig' with {subtotal: productOption.sumPrice | default(productOption.unitPrice), priceToPay: productOption.sumPrice | default(productOption.unitPrice)} %}{% endembed %}
+            </div>
+            <div class="tax-info">{{ "incl. %tax_amount% % tax" | trans({'%tax_amount%': productOption.taxRate|default(0)}) }}</div>
+        </td>
+        <td colspan="3"></td>
+    </tr>
+{% endfor %}

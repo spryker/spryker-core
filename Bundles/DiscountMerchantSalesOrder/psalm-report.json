@@ -1,0 +1,30 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCalculatedDiscounts on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/DiscountMerchantSalesOrder/src/Spryker/Zed/DiscountMerchantSalesOrder/Business/Filter/MerchantOrderDiscountFilter.php",
+            "snippet": "            $orderTransfer->getCalculatedDiscounts()->getArrayCopy(),",
+            "selected_text": "getCalculatedDiscounts",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\CalculatedDiscountTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/DiscountMerchantSalesOrder/src/Spryker/Zed/DiscountMerchantSalesOrder/Business/Filter/MerchantOrderDiscountFilter.php",
+            "snippet": "            $orderTransfer->getCalculatedDiscounts()->getArrayCopy(),",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": []
+}

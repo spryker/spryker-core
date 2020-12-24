@@ -1,0 +1,36 @@
+{
+  "name": "spryker/merchant-categories-rest-api",
+  "type": "library",
+  "description": "MerchantCategoriesRestApi module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.3",
+    "spryker/glue-application": "^1.9.0",
+    "spryker/kernel": "^3.33.0",
+    "spryker/merchant-category": "^0.2.0",
+    "spryker/merchants-rest-api-extension": "^0.1.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

@@ -15,7 +15,7 @@ trait RepositoryResolverAwareTrait
     /**
      * @var \Spryker\Zed\Kernel\Persistence\AbstractRepository
      */
-    private $repository;
+    protected $repository;
 
     /**
      * @param \Spryker\Zed\Kernel\Persistence\AbstractRepository $repository

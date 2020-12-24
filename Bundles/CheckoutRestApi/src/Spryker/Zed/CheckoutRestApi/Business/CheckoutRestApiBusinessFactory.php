@@ -15,6 +15,10 @@ use Spryker\Zed\CheckoutRestApi\Business\Checkout\PlaceOrderProcessor;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\PlaceOrderProcessorInterface;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote\QuoteReader;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote\QuoteReaderInterface;
+use Spryker\Zed\CheckoutRestApi\Business\Expander\CheckoutExpander;
+use Spryker\Zed\CheckoutRestApi\Business\Expander\CheckoutExpanderInterface;
+use Spryker\Zed\CheckoutRestApi\Business\Validator\CheckoutValidator;
+use Spryker\Zed\CheckoutRestApi\Business\Validator\CheckoutValidatorInterface;
 use Spryker\Zed\CheckoutRestApi\CheckoutRestApiDependencyProvider;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCalculationFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartFacadeInterface;
@@ -37,12 +41,10 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
     public function createCheckoutDataReader(): CheckoutDataReaderInterface
     {
         return new CheckoutDataReader(
-            $this->createQuoteReader(),
-            $this->getShipmentFacade(),
-            $this->getPaymentFacade(),
-            $this->createAddressReader(),
+            $this->getCalculationFacade(),
+            $this->createCheckoutValidator(),
+            $this->createCheckoutExpander(),
             $this->getQuoteMapperPlugins(),
-            $this->getCalculationFacade()
         );
     }
 
@@ -52,13 +54,24 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
     public function createPlaceOrderProcessor(): PlaceOrderProcessorInterface
     {
         return new PlaceOrderProcessor(
-            $this->createQuoteReader(),
-            $this->getCartFacade(),
             $this->getCheckoutFacade(),
             $this->getQuoteFacade(),
             $this->getCalculationFacade(),
-            $this->getQuoteMapperPlugins(),
-            $this->getCheckoutDataValidatorPlugins()
+            $this->createCheckoutValidator(),
+            $this->getQuoteMapperPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CheckoutRestApi\Business\Validator\CheckoutValidatorInterface
+     */
+    public function createCheckoutValidator(): CheckoutValidatorInterface
+    {
+        return new CheckoutValidator(
+            $this->createQuoteReader(),
+            $this->getCartFacade(),
+            $this->getCheckoutDataValidatorPlugins(),
+            $this->getReadCheckoutDataValidatorPlugins()
         );
     }
 
@@ -76,6 +89,19 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
     public function createAddressReader(): AddressReaderInterface
     {
         return new AddressReader($this->getCustomerFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\CheckoutRestApi\Business\Expander\CheckoutExpanderInterface
+     */
+    public function createCheckoutExpander(): CheckoutExpanderInterface
+    {
+        return new CheckoutExpander(
+            $this->getShipmentFacade(),
+            $this->getPaymentFacade(),
+            $this->createAddressReader(),
+            $this->getCheckoutDataExpanderPlugins()
+        );
     }
 
     /**
@@ -156,5 +182,21 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
     public function getCheckoutDataValidatorPlugins(): array
     {
         return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGINS_CHECKOUT_DATA_VALIDATOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\ReadCheckoutDataValidatorPluginInterface[]
+     */
+    public function getReadCheckoutDataValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGINS_READ_CHECKOUT_DATA_VALIDATOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataExpanderPluginInterface[]
+     */
+    public function getCheckoutDataExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGINS_CHECKOUT_DATA_EXPANDER);
     }
 }

@@ -1,6 +1,7 @@
 namespace: SprykerTest
 include:
     - tests/SprykerTest/Client/Redis
+    - tests/SprykerTest/Shared/Redis
 paths:
     tests: tests
     support: .

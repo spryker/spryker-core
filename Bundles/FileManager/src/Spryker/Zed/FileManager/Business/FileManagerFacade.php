@@ -284,4 +284,18 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     {
         return $this->getFactory()->createFileReader()->getFilesByIds($idFiles);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idFile
+     *
+     * @return int
+     */
+    public function getFileInfoVersionsCount(int $idFile): int
+    {
+        return $this->getRepository()->getFileInfoVersionsCount($idFile);
+    }
 }

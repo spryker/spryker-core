@@ -15,12 +15,12 @@ abstract class AbstractController
     /**
      * @var \Silex\Application|\Spryker\Service\Container\ContainerInterface
      */
-    private $application;
+    protected $application;
 
     /**
      * @var \Spryker\Glue\Kernel\AbstractFactory
      */
-    private $factory;
+    protected $factory;
 
     /**
      * @return void

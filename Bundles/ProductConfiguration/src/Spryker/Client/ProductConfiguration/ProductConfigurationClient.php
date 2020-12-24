@@ -41,6 +41,23 @@ class ProductConfigurationClient extends AbstractClient implements ProductConfig
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer
+     */
+    public function resolveProductConfiguratorAccessTokenRedirect(
+        ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
+    ): ProductConfiguratorRedirectTransfer {
+        return $this->getFactory()
+            ->createProductConfiguratorAccessTokenRedirectResolver()
+            ->resolveProductConfiguratorAccessTokenRedirect($productConfiguratorRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
      * @param array $configuratorResponseData
      *
@@ -69,5 +86,24 @@ class ProductConfigurationClient extends AbstractClient implements ProductConfig
         return $this->getFactory()
             ->createQuoteProductConfigurationChecker()
             ->isQuoteProductConfigurationValid($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
+     * @param array $configuratorResponseData
+     *
+     * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
+     */
+    public function validateProductConfiguratorCheckSumResponse(
+        ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer,
+        array $configuratorResponseData
+    ): ProductConfiguratorResponseProcessorResponseTransfer {
+        return $this->getFactory()
+            ->createProductConfiguratorCheckSumResponseValidatorComposite()
+            ->validateProductConfiguratorCheckSumResponse($productConfiguratorResponseProcessorResponseTransfer, $configuratorResponseData);
     }
 }

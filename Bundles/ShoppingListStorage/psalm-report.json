@@ -2,66 +2,6 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 35,
-            "line_to": 35,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ShoppingListStorage\\Communication\\Plugin\\Event\\Listener\\ShoppingListCompanyBusinessUnitStorageListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListStorage/src/Spryker/Zed/ShoppingListStorage/Communication/Plugin/Event/Listener/ShoppingListCompanyBusinessUnitStorageListener.php",
-            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
-            "selected_text": "$eventTransfers",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 35,
-            "line_to": 35,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ShoppingListStorage\\Communication\\Plugin\\Event\\Listener\\ShoppingListCompanyUserStorageListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListStorage/src/Spryker/Zed/ShoppingListStorage/Communication/Plugin/Event/Listener/ShoppingListCompanyUserStorageListener.php",
-            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
-            "selected_text": "$eventTransfers",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 36,
-            "line_to": 36,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ShoppingListStorage\\Communication\\Plugin\\Event\\Listener\\ShoppingListItemStorageListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListStorage/src/Spryker/Zed/ShoppingListStorage/Communication/Plugin/Event/Listener/ShoppingListItemStorageListener.php",
-            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
-            "selected_text": "$eventTransfers",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 35,
-            "line_to": 35,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ShoppingListStorage\\Communication\\Plugin\\Event\\Listener\\ShoppingListStorageListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListStorage/src/Spryker/Zed/ShoppingListStorage/Communication/Plugin/Event/Listener/ShoppingListStorageListener.php",
-            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
-            "selected_text": "$eventTransfers",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 36,
-            "line_to": 36,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ShoppingListStorage\\Communication\\Plugin\\Event\\Listener\\ShoppingListStoragePublishListener::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListStorage/src/Spryker/Zed/ShoppingListStorage/Communication/Plugin/Event/Listener/ShoppingListStoragePublishListener.php",
-            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
-            "selected_text": "$eventTransfers",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
             "line_from": 109,
             "line_to": 109,
             "type": "InvalidReturnStatement",
