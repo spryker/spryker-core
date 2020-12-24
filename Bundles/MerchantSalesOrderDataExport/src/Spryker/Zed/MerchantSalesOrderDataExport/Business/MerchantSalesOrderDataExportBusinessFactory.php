@@ -34,7 +34,7 @@ class MerchantSalesOrderDataExportBusinessFactory extends AbstractBusinessFactor
             $this->getDataExportService(),
             $this->getConfig(),
             $this->createMerchantReader(),
-            $this->createMerchantOrderReader()
+            $this->createMerchantOrderDataReader()
         );
     }
 
@@ -47,7 +47,7 @@ class MerchantSalesOrderDataExportBusinessFactory extends AbstractBusinessFactor
             $this->getDataExportService(),
             $this->getConfig(),
             $this->createMerchantReader(),
-            $this->createMerchantOrderItemReader()
+            $this->createMerchantOrderItemDataReader()
         );
     }
 
@@ -60,14 +60,14 @@ class MerchantSalesOrderDataExportBusinessFactory extends AbstractBusinessFactor
             $this->getDataExportService(),
             $this->getConfig(),
             $this->createMerchantReader(),
-            $this->createMerchantOrderExpenseReader()
+            $this->createMerchantOrderExpenseDataReader()
         );
     }
 
     /**
      * @return \Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\DataReaderInterface
      */
-    public function createMerchantOrderReader(): DataReaderInterface
+    public function createMerchantOrderDataReader(): DataReaderInterface
     {
         return new MerchantOrderDataReader($this->getRepository());
     }
@@ -75,7 +75,7 @@ class MerchantSalesOrderDataExportBusinessFactory extends AbstractBusinessFactor
     /**
      * @return \Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\DataReaderInterface
      */
-    public function createMerchantOrderItemReader(): DataReaderInterface
+    public function createMerchantOrderItemDataReader(): DataReaderInterface
     {
         return new MerchantOrderItemDataReader($this->getRepository());
     }
@@ -83,7 +83,7 @@ class MerchantSalesOrderDataExportBusinessFactory extends AbstractBusinessFactor
     /**
      * @return \Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\DataReaderInterface
      */
-    public function createMerchantOrderExpenseReader(): DataReaderInterface
+    public function createMerchantOrderExpenseDataReader(): DataReaderInterface
     {
         return new MerchantOrderExpenseDataReader($this->getRepository());
     }

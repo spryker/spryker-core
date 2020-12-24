@@ -38,7 +38,7 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
     /**
      * @var \Spryker\Zed\MerchantSalesOrderDataExport\MerchantSalesOrderDataExportConfig
      */
-    protected $salesDataExportConfig;
+    protected $merchantSalesOrderDataExportConfig;
 
     /**
      * @var \Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\MerchantReaderInterface
@@ -52,18 +52,18 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
 
     /**
      * @param \Spryker\Zed\MerchantSalesOrderDataExport\Dependency\Service\MerchantSalesOrderDataExportToDataExportServiceInterface $dataExportService
-     * @param \Spryker\Zed\MerchantSalesOrderDataExport\MerchantSalesOrderDataExportConfig $salesDataExportConfig
+     * @param \Spryker\Zed\MerchantSalesOrderDataExport\MerchantSalesOrderDataExportConfig $merchantSalesOrderDataExportConfig
      * @param \Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\MerchantReaderInterface $merchantReader
      * @param \Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\DataReaderInterface $dataReader
      */
     public function __construct(
         MerchantSalesOrderDataExportToDataExportServiceInterface $dataExportService,
-        MerchantSalesOrderDataExportConfig $salesDataExportConfig,
+        MerchantSalesOrderDataExportConfig $merchantSalesOrderDataExportConfig,
         MerchantReaderInterface $merchantReader,
         DataReaderInterface $dataReader
     ) {
         $this->dataExportService = $dataExportService;
-        $this->salesDataExportConfig = $salesDataExportConfig;
+        $this->merchantSalesOrderDataExportConfig = $merchantSalesOrderDataExportConfig;
         $this->merchantReader = $merchantReader;
         $this->dataReader = $dataReader;
     }
@@ -106,6 +106,7 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
                     $dataExportConfigurationTransfer->addHook(static::FILTER_CRITERIA_KEY_MERCHANT_NAME, $merchantName);
                     $dataExportConfigurationTransfer->addHook(static::FILTER_CRITERIA_KEY_STORE_NAME, $storeName);
                     $dataExportBatchTransfer = $this->dataReader->readBatch($dataExportConfigurationTransfer);
+                    //TODO:
                     $dataExportWriteResponseTransfer = $this->dataExportService->write($dataExportBatchTransfer, $dataExportConfigurationTransfer);
 
                     if (!$dataExportWriteResponseTransfer->getIsSuccessful()) {
@@ -171,7 +172,7 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
         DataExportConfigurationTransfer $dataExportConfigurationTransfer
     ): DataExportConfigurationTransfer {
         $salesDataExportDataExportConfigurationsTransfer = $this->dataExportService->parseConfiguration(
-            $this->salesDataExportConfig->getModuleDataExportConfigurationsFilePath()
+            $this->merchantSalesOrderDataExportConfig->getModuleDataExportConfigurationsFilePath()
         );
         $dataExportConfigurationTransfer = $this->dataExportService->resolveDataExportActionConfiguration(
             $dataExportConfigurationTransfer,

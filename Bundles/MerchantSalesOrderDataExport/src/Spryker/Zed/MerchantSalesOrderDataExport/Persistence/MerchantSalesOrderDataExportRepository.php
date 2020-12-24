@@ -84,6 +84,7 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
             $merchantSalesOrderQuery
         );
 
+        // TODO: what if merchant have no orders
         $merchantSalesOrderQuery->select($selectedColumns);
 
         $merchantSalesOrderData = $merchantSalesOrderQuery->find()->getArrayCopy();
@@ -178,6 +179,8 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
             $merchantSalesOrderQuery
         );
 
+        // TODO what if merchant have no orders
+
         $merchantSalesOrderQuery->select($selectedColumns);
         $merchantOrderExpenseData = $merchantSalesOrderQuery->find()->toArray();
 
@@ -209,6 +212,8 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
 
             if ($spyMerchant) {
                 $merchantSalesOrderQuery->filterByMerchantReference($spyMerchant->getMerchantReference());
+
+                //TODO: if we do not have such a merchant
             }
         }
 
@@ -355,7 +360,7 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
      *
      * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery
      */
-    protected function buildMerchantSalesOrderWithExpenseBaseQuery(int $offset, int $limit)
+    protected function buildMerchantSalesOrderWithExpenseBaseQuery(int $offset, int $limit): SpyMerchantSalesOrderQuery
     {
         return $this->getFactory()
             ->getMerchantSalesOrderPropelQuery()

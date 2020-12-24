@@ -13,6 +13,7 @@ use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantSalesOrderDataExport\Dependency\Service\MerchantSalesOrderDataExportToDataExportServiceBridge;
+use Spryker\Zed\MerchantSalesOrderDataExport\Dependency\Service\MerchantSalesOrderDataExportToDataExportServiceInterface;
 use Spryker\Zed\MerchantSalesOrderDataExport\Dependency\Service\MerchantSalesOrderDataExportToUtilEncodingServiceBridge;
 use Spryker\Zed\MerchantSalesOrderDataExport\Dependency\Service\MerchantSalesOrderDataExportToUtilEncodingServiceInterface;
 
@@ -123,7 +124,7 @@ class MerchantSalesOrderDataExportDependencyProvider extends AbstractBundleDepen
      */
     protected function addDataExportService(Container $container): Container
     {
-        $container->set(static::SERVICE_DATA_EXPORT, function (Container $container) {
+        $container->set(static::SERVICE_DATA_EXPORT, function (Container $container): MerchantSalesOrderDataExportToDataExportServiceInterface {
             return new MerchantSalesOrderDataExportToDataExportServiceBridge(
                 $container->getLocator()->dataExport()->service()
             );
