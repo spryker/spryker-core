@@ -26,9 +26,6 @@ class ProductAbstractForm extends AbstractType
 
     protected const FIELD_STORES = 'stores';
 
-    protected const BUTTON_SAVE = 'save';
-
-    protected const LABEL_SAVE = 'Save';
     protected const LABEL_STORES = 'Stores';
 
     protected const PLACEHOLDER_STORES = 'Select';
@@ -66,27 +63,10 @@ class ProductAbstractForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addSaveButton($builder)
-            ->addLocalizedAttributesSubform($builder)
+        $this->addLocalizedAttributesSubform($builder)
             ->addStoresField($builder, $options);
 
         $this->executeProductAbstractFormExpanderPlugins($builder, $options);
-    }
-
-    /**
-     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     *
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addSaveButton(FormBuilderInterface $builder)
-    {
-        $builder->add(static::BUTTON_SAVE, SubmitType::class, [
-            'label' => static::LABEL_SAVE,
-        ]);
-
-        return $this;
     }
 
     /**

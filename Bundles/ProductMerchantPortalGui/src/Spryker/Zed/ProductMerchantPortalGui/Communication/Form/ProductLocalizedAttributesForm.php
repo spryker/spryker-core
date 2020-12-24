@@ -71,7 +71,7 @@ class ProductLocalizedAttributesForm extends AbstractType
             'attr' => [
                 'placeholder' => static::PLACEHOLDER_NAME,
             ],
-            'required' => false,
+            'required' => true,
             'constraints' => [
                 new NotBlank([
                     'message' => static::VALIDATION_MESSAGE_NOT_BLANK,
