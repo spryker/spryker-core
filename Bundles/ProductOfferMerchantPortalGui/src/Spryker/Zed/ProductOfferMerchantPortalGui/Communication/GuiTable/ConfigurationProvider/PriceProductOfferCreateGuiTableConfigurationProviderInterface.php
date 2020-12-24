@@ -5,19 +5,18 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider;
+namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider;
 
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 
-interface PriceProductOfferUpdateGuiTableConfigurationProviderInterface
+interface PriceProductOfferCreateGuiTableConfigurationProviderInterface
 {
     /**
      * @phpstan-param array<mixed> $initialData
      *
-     * @param int $idProductOffer
      * @param array $initialData
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
-    public function getConfiguration(int $idProductOffer, array $initialData = []): GuiTableConfigurationTransfer;
+    public function getConfiguration(array $initialData = []): GuiTableConfigurationTransfer;
 }

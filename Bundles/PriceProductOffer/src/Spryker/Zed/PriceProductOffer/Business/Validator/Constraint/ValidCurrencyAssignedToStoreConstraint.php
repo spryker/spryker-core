@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductOffer\Business\Constraint;
+namespace Spryker\Zed\PriceProductOffer\Business\Validator\Constraint;
 
 use Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToStoreFacadeInterface;
 use Symfony\Component\Validator\Constraint as SymfonyConstraint;

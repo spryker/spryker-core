@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider;
+namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\DataProvider;
 
 use Generated\Shared\Transfer\GuiTableDataRequestTransfer;
 use Generated\Shared\Transfer\GuiTableDataResponseTransfer;
@@ -125,6 +125,7 @@ class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
      */
     protected function replaceSortingFields(PriceProductOfferTableCriteriaTransfer $criteriaTransfer): PriceProductOfferTableCriteriaTransfer
     {
+        /** @var string $orderByField */
         $orderByField = $criteriaTransfer->getOrderBy();
 
         if (!$orderByField) {
@@ -136,7 +137,7 @@ class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
         }
 
         foreach ($this->priceProductFacade->getPriceTypeValues() as $priceTypeTransfer) {
-            $priceTypeName = mb_strtolower((string)$priceTypeTransfer->getName());
+            /** @var string $orderByField */
             $orderByField = str_replace(']', '', $orderByField);
             $orderByField = explode('[', $orderByField);
 
