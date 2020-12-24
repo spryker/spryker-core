@@ -19,13 +19,6 @@ interface SecurityGuiToUserFacadeInterface
     public function getUserByUsername($username);
 
     /**
-     * @param string $username
-     *
-     * @return bool
-     */
-    public function hasUserByUsername($username);
-
-    /**
      * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
