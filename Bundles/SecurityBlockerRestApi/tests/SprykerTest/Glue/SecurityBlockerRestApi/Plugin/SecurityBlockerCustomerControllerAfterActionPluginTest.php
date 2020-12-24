@@ -60,7 +60,7 @@ class SecurityBlockerCustomerControllerAfterActionPluginTest extends Unit
     /**
      * @return void
      */
-    public function testSecurityBlockerCustomerEventDispatcherPluginWillCallSecurityBlockerClient(): void
+    public function testSecurityBlockerCustomerControllerAfterActionPluginWillCallSecurityBlockerClient(): void
     {
         // Arrange
         $securityBlockerClientMock = $this->getMockBuilder(SecurityBlockerRestApiToSecurityBlockerClientInterface::class)->getMock();
@@ -89,7 +89,7 @@ class SecurityBlockerCustomerControllerAfterActionPluginTest extends Unit
     /**
      * @return void
      */
-    public function testSecurityBlockerCustomerEventDispatcherPluginWillNotCallSecurityBlockerClientOnInvalidRequest(): void
+    public function testSecurityBlockerCustomerControllerAfterActionPluginWillNotCallSecurityBlockerClientOnInvalidRequest(): void
     {
         // Arrange
         $securityBlockerClientMock = $this->getMockBuilder(SecurityBlockerRestApiToSecurityBlockerClientInterface::class)->getMock();

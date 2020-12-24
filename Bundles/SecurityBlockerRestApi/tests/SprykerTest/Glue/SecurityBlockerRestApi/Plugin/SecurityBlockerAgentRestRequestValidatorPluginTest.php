@@ -61,7 +61,7 @@ class SecurityBlockerAgentRestRequestValidatorPluginTest extends Unit
     /**
      * @return void
      */
-    public function testSecurityBlockerAgentEventDispatcherPluginWillCallSecurityBlockerClient(): void
+    public function testSecurityBlockerAgentRestRequestValidatorPluginWillCallSecurityBlockerClient(): void
     {
         // Arrange
         $securityBlockerClientMock = $this->getMockBuilder(SecurityBlockerRestApiToSecurityBlockerClientInterface::class)->getMock();
@@ -89,7 +89,7 @@ class SecurityBlockerAgentRestRequestValidatorPluginTest extends Unit
     /**
      * @return void
      */
-    public function testSecurityBlockerAgentEventDispatcherPluginWillNotCallSecurityBlockerClientOnInvalidRequest(): void
+    public function testSecurityBlockerAgentRestRequestValidatorPluginWillNotCallSecurityBlockerClientOnInvalidRequest(): void
     {
         // Arrange
         $securityBlockerClientMock = $this->getMockBuilder(SecurityBlockerRestApiToSecurityBlockerClientInterface::class)->getMock();

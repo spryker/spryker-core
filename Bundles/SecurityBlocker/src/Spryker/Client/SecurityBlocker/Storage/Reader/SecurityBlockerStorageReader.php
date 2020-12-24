@@ -9,7 +9,6 @@ namespace Spryker\Client\SecurityBlocker\Storage\Reader;
 
 use Generated\Shared\Transfer\SecurityCheckAuthContextTransfer;
 use Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer;
-use Spryker\Client\SecurityBlocker\Dependency\Service\SecurityBlockerToUtilEncodingServiceInterface;
 use Spryker\Client\SecurityBlocker\Redis\SecurityBlockerRedisWrapperInterface;
 use Spryker\Client\SecurityBlocker\SecurityBlockerConfig;
 use Spryker\Client\SecurityBlocker\Storage\KeyBuilder\SecurityBlockerStorageKeyBuilderInterface;
@@ -32,25 +31,17 @@ class SecurityBlockerStorageReader implements SecurityBlockerStorageReaderInterf
     protected $securityBlockerConfig;
 
     /**
-     * @var \Spryker\Client\SecurityBlocker\Dependency\Service\SecurityBlockerToUtilEncodingServiceInterface
-     */
-    protected $utilEncodingService;
-
-    /**
      * @param \Spryker\Client\SecurityBlocker\Redis\SecurityBlockerRedisWrapperInterface $securityBlockerRedisWrapper
      * @param \Spryker\Client\SecurityBlocker\Storage\KeyBuilder\SecurityBlockerStorageKeyBuilderInterface $securityBlockerStorageKeyBuilder
-     * @param \Spryker\Client\SecurityBlocker\Dependency\Service\SecurityBlockerToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Client\SecurityBlocker\SecurityBlockerConfig $securityBlockerConfig
      */
     public function __construct(
         SecurityBlockerRedisWrapperInterface $securityBlockerRedisWrapper,
         SecurityBlockerStorageKeyBuilderInterface $securityBlockerStorageKeyBuilder,
-        SecurityBlockerToUtilEncodingServiceInterface $utilEncodingService,
         SecurityBlockerConfig $securityBlockerConfig
     ) {
         $this->securityBlockerRedisWrapper = $securityBlockerRedisWrapper;
         $this->securityBlockerStorageKeyBuilder = $securityBlockerStorageKeyBuilder;
-        $this->utilEncodingService = $utilEncodingService;
         $this->securityBlockerConfig = $securityBlockerConfig;
     }
 

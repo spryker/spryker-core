@@ -18,11 +18,6 @@ use Spryker\Glue\SecurityBlockerRestApi\SecurityBlockerRestApiConfig;
 class SecurityBlockerAgentValidator implements SecurityBlockerAgentValidatorInterface
 {
     /**
-     * @uses \Spryker\Glue\AgentAuthRestApi\AgentAuthRestApiConfig::RESOURCE_AGENT_ACCESS_TOKENS
-     */
-    protected const RESOURCE_AGENT_ACCESS_TOKENS = 'agent-access-tokens';
-
-    /**
      * @var \Spryker\Glue\SecurityBlockerRestApi\Dependency\Client\SecurityBlockerRestApiToSecurityBlockerClientInterface
      */
     protected $securityBlockerClient;
