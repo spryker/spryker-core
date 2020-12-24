@@ -33,4 +33,11 @@ interface SecurityGuiToUserFacadeInterface
      * @return mixed
      */
     public function setCurrentUser(UserTransfer $user);
+
+    /**
+     * @param string $username
+     *
+     * @return bool
+     */
+    public function hasActiveUserByUsername($username);
 }
