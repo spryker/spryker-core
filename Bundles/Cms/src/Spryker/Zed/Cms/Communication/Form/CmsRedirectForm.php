@@ -188,10 +188,10 @@ class CmsRedirectForm extends AbstractType
                         $context->addViolation('URL must start with a slash');
                     }
                     if ($url[1] === '/') {
-                        $context->addViolation('Invalid second character');
+                        $context->addViolation("URL's second character cannot be '/'");
                     }
                     if (strpos($url, '\\') !== false) {
-                        $context->addViolation('Forbidden sign');
+                        $context->addViolation("URL cannot contain '\' sign, you can use '%5C' instead");
                     }
                 },
             ]),
