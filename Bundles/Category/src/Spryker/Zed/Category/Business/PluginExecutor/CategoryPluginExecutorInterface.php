@@ -40,4 +40,11 @@ interface CategoryPluginExecutorInterface
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
     public function executePostReadPlugins(CategoryTransfer $categoryTransfer): CategoryTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    public function executeCategoryRelationUpdatePlugins(CategoryTransfer $categoryTransfer): void;
 }

@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategory;
+use Orm\Zed\Category\Persistence\SpyCategoryAttribute;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Orm\Zed\Category\Persistence\SpyCategoryTemplate;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -124,6 +125,61 @@ class CategoryMapper implements CategoryMapperInterface
         }
 
         return $nodeCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategory
+     */
+    public function mapCategoryTransferToCategoryEntity(CategoryTransfer $categoryTransfer, SpyCategory $categoryEntity): SpyCategory
+    {
+        $categoryEntity->fromArray($categoryTransfer->modifiedToArray());
+
+        return $categoryEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryAttribute $categoryAttributeEntity
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttribute
+     */
+    public function mapCategoryLocalizedAttributeTransferToCategoryAttributeEntity(
+        CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer,
+        SpyCategoryAttribute $categoryAttributeEntity
+    ): SpyCategoryAttribute {
+        $categoryAttributeEntity->fromArray($categoryLocalizedAttributesTransfer->modifiedToArray());
+        $categoryAttributeEntity->setFkLocale($categoryLocalizedAttributesTransfer->getLocaleOrFail()->getIdLocaleOrFail());
+
+        return $categoryAttributeEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryAttribute $categoryAttributeEntity
+     * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer
+     */
+    public function mapCategoryAttributeEntityToCategoryLocalizedAttributeTransfer(
+        SpyCategoryAttribute $categoryAttributeEntity,
+        CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer
+    ): CategoryLocalizedAttributesTransfer {
+        return $categoryLocalizedAttributesTransfer->fromArray($categoryAttributeEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $categoryNodeEntity
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode
+     */
+    public function mapNodeTransferToCategoryNodeEntity(NodeTransfer $nodeTransfer, SpyCategoryNode $categoryNodeEntity): SpyCategoryNode
+    {
+        $categoryNodeEntity->fromArray($nodeTransfer->modifiedToArray());
+
+        return $categoryNodeEntity;
     }
 
     /**

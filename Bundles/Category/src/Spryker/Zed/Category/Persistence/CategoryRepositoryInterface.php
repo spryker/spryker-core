@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\CategoryUrlPathCriteriaTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 
 interface CategoryRepositoryInterface
@@ -91,4 +92,11 @@ interface CategoryRepositoryInterface
      * @return \Generated\Shared\Transfer\UrlTransfer[]
      */
     public function getCategoryNodeUrls(CategoryNodeUrlFilterTransfer $categoryNodeFilterTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryUrlPathCriteriaTransfer $categoryUrlPathCriteriaTransfer
+     *
+     * @return array
+     */
+    public function getCategoryUrlPathParts(CategoryUrlPathCriteriaTransfer $categoryUrlPathCriteriaTransfer): array;
 }

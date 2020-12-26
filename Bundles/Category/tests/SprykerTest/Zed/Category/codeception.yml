@@ -26,6 +26,7 @@ suites:
                 - \SprykerTest\Zed\Category\Helper\CategoryDataHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper
 
     Persistence:
         path: Persistence
