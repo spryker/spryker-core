@@ -94,6 +94,6 @@ class GetLoginAttemptCountTest extends Test
         // Assert
         $this->assertSame($securityCheckAuthContextTransfer, $actualSecurityCheckAuthResponseTransfer->getSecurityCheckAuthContext());
         $this->assertSame((int)$expectedNumberOfAttempts, $actualSecurityCheckAuthResponseTransfer->getNumberOfAttempts());
-        $this->assertTrue($actualSecurityCheckAuthResponseTransfer->getIsSuccessful());
+        $this->assertFalse($actualSecurityCheckAuthResponseTransfer->getIsBlocked());
     }
 }
