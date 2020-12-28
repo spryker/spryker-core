@@ -24,7 +24,7 @@ interface StorageRedisConstants
 
     /**
      * Specification:
-     * - Defines a scheme|protocol for Redis connection.
+     * - Defines a scheme|protocol (tcp:// or redis://) for Redis connection.
      *
      * @api
      */
