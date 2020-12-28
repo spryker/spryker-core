@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
@@ -321,6 +322,31 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         }
 
         return $urlTransfers;
+    }
+
+    /**
+     * @param int $idCategory
+     * @param bool|null $isMain
+     *
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
+     */
+    public function getCategoryNodesByIdCategory(int $idCategory, ?bool $isMain = null): NodeCollectionTransfer
+    {
+        $categoryNodeQuery = $this->getFactory()
+            ->createCategoryNodeQuery()
+            ->filterByFkCategory($idCategory);
+        if ($isMain !== null) {
+            $categoryNodeQuery->filterByIsMain($isMain);
+        }
+
+        $categoryNodeEntities = $categoryNodeQuery->find();
+        if (!$categoryNodeEntities->count()) {
+            return new NodeCollectionTransfer();
+        }
+
+        return $this->getFactory()
+            ->createCategoryMapper()
+            ->mapNodeCollection($categoryNodeEntities, new NodeCollectionTransfer());
     }
 
     /**

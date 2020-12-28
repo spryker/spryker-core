@@ -7,6 +7,18 @@
 
 namespace Spryker\Zed\Category\Business;
 
+use Spryker\Zed\Category\Business\Category\CategoryDeleter;
+use Spryker\Zed\Category\Business\Category\CategoryDeleterInterface;
+use Spryker\Zed\Category\Business\CategoryAttribute\CategoryAttributeDeleter;
+use Spryker\Zed\Category\Business\CategoryAttribute\CategoryAttributeDeleterInterface;
+use Spryker\Zed\Category\Business\CategoryClosureTable\CategoryClosureTableDeleter;
+use Spryker\Zed\Category\Business\CategoryClosureTable\CategoryClosureTableDeleterInterface;
+use Spryker\Zed\Category\Business\CategoryNode\CategoryNodeDeleter;
+use Spryker\Zed\Category\Business\CategoryNode\CategoryNodeDeleterInterface;
+use Spryker\Zed\Category\Business\CategoryUrl\CategoryUrlDeleter;
+use Spryker\Zed\Category\Business\CategoryUrl\CategoryUrlDeleterInterface;
+use Spryker\Zed\Category\Business\Event\CategoryEventTriggerManager;
+use Spryker\Zed\Category\Business\Event\CategoryEventTriggerManagerInterface;
 use Spryker\Zed\Category\Business\Generator\TransferGenerator;
 use Spryker\Zed\Category\Business\Generator\UrlPathGenerator;
 use Spryker\Zed\Category\Business\Model\Category;
@@ -34,6 +46,7 @@ use Spryker\Zed\Category\CategoryDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
+ * @method \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface getEntityManager()()
  * @method \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface getRepository()
  * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Category\CategoryConfig getConfig()
@@ -313,6 +326,72 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->createPluginExecutor(),
             $this->createCategoryTreeReader()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Category\CategoryDeleterInterface
+     */
+    public function createCategoryDeleter(): CategoryDeleterInterface
+    {
+        return new CategoryDeleter(
+            $this->getEntityManager(),
+            $this->createCategoryAttributeDeleter(),
+            $this->createCategoryUrlDeleter(),
+            $this->createCategoryNodeDeleter(),
+            $this->createCategoryEventTriggerManager(),
+            $this->getRelationDeletePluginStack()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\CategoryAttribute\CategoryAttributeDeleterInterface
+     */
+    public function createCategoryAttributeDeleter(): CategoryAttributeDeleterInterface
+    {
+        return new CategoryAttributeDeleter($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\CategoryClosureTable\CategoryClosureTableDeleterInterface
+     */
+    public function createClosureTableDeleter(): CategoryClosureTableDeleterInterface
+    {
+        return new CategoryClosureTableDeleter($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\CategoryNode\CategoryNodeDeleterInterface
+     */
+    public function createCategoryNodeDeleter(): CategoryNodeDeleterInterface
+    {
+        return new CategoryNodeDeleter(
+            $this->getRepository(),
+            $this->getEntityManager(),
+            $this->createCategoryTree(),
+            $this->createClosureTableDeleter(),
+            $this->createCategoryUrlDeleter(),
+            $this->createCategoryToucher(),
+            $this->createCategoryNodePublisher()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\CategoryUrl\CategoryUrlDeleterInterface
+     */
+    public function createCategoryUrlDeleter(): CategoryUrlDeleterInterface
+    {
+        return new CategoryUrlDeleter(
+            $this->getRepository(),
+            $this->getUrlFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Event\CategoryEventTriggerManagerInterface
+     */
+    public function createCategoryEventTriggerManager(): CategoryEventTriggerManagerInterface
+    {
+        return new CategoryEventTriggerManager($this->getEventFacade());
     }
 
     /**
