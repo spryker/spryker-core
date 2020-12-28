@@ -9,6 +9,7 @@ namespace Spryker\Zed\SalesReclamationGui\Communication;
 
 use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\SalesReclamationGui\Communication\Form\CloseReclamationForm;
 use Spryker\Zed\SalesReclamationGui\Communication\ReclamationItem\ReclamationItemEventsFinder;
 use Spryker\Zed\SalesReclamationGui\Communication\ReclamationItem\ReclamationItemEventsFinderInterface;
 use Spryker\Zed\SalesReclamationGui\Communication\Table\ReclamationTable;
@@ -17,6 +18,7 @@ use Spryker\Zed\SalesReclamationGui\Dependency\Facade\SalesReclamationGuiToSales
 use Spryker\Zed\SalesReclamationGui\Dependency\Facade\SalesReclamationGuiToSalesReclamationFacadeInterface;
 use Spryker\Zed\SalesReclamationGui\Dependency\Service\SalesReclamationGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\SalesReclamationGui\SalesReclamationGuiDependencyProvider;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
@@ -89,5 +91,13 @@ class SalesReclamationGuiCommunicationFactory extends AbstractCommunicationFacto
     public function getCsrfTokenManager(): CsrfTokenManagerInterface
     {
         return $this->getProvidedDependency(SalesReclamationGuiDependencyProvider::SERVICE_FORM_CSRF_PROVIDER);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createCloseReclamationForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(CloseReclamationForm::class);
     }
 }
