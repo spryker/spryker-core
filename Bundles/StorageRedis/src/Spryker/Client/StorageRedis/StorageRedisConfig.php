@@ -94,7 +94,7 @@ class StorageRedisConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    protected function getScheme():string
+    protected function getScheme(): string
     {
         return $this->get(StorageRedisConstants::STORAGE_REDIS_SCHEME, false) ?:
             $this->get(StorageRedisConstants::STORAGE_REDIS_PROTOCOL);
