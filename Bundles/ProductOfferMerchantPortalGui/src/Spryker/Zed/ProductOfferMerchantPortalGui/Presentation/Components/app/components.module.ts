@@ -6,11 +6,12 @@ import {
     ButtonLinkModule,
     ButtonLinkComponent,
 } from '@spryker/button';
-
 import { OffersListComponent } from './offers-list/offers-list.component';
 import { OffersListModule } from './offers-list/offers-list.module';
 import { ProductOfferComponent } from './product-offer/product-offer.component';
 import { ProductOfferModule } from './product-offer/product-offer.module';
+import { OfferPricesTableComponent } from './offer-prices-table/offer-prices-table.component';
+import { OfferPricesTableModule } from './offer-prices-table/offer-prices-table.module';
 import { EditOfferModule } from './edit-offer/edit-offer.module';
 import { EditOfferComponent } from './edit-offer/edit-offer.component';
 import { ChipsModule, ChipsComponent } from '@spryker/chips';
@@ -23,7 +24,6 @@ import {
     DateRangePickerModule,
     DateRangePickerComponent,
 } from '@spryker/date-picker';
-import { CollapsibleModule, CollapsibleComponent } from '@spryker/collapsible';
 import { FormItemModule, FormItemComponent } from '@spryker/form-item';
 
 @NgModule({
@@ -33,7 +33,6 @@ import { FormItemModule, FormItemComponent } from '@spryker/form-item';
         ButtonModule,
         ButtonLinkModule,
         FormItemModule,
-        CollapsibleModule,
         CardModule,
         DateRangePickerModule,
         CheckboxModule,
@@ -42,6 +41,7 @@ import { FormItemModule, FormItemComponent } from '@spryker/form-item';
         ToggleModule,
         ChipsModule,
         EditOfferModule,
+        OfferPricesTableModule,
     ],
 })
 export class ComponentsModule extends CustomElementModule {
@@ -58,7 +58,7 @@ export class ComponentsModule extends CustomElementModule {
         CardComponent,
         DateRangePickerComponent,
         CheckboxComponent,
-        CollapsibleComponent,
         FormItemComponent,
+        OfferPricesTableComponent,
     ];
 }

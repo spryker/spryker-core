@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantProduct\Business;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MerchantProductCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
@@ -47,6 +49,22 @@ class MerchantProductFacade extends AbstractFacade implements MerchantProductFac
     public function get(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): MerchantProductCollectionTransfer
     {
         return $this->getRepository()->get($merchantProductCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function validateCartChange(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
+    {
+        return $this->getFactory()
+            ->createMerchantProductCartValidator()
+            ->validateCartChange($cartChangeTransfer);
     }
 
     /**

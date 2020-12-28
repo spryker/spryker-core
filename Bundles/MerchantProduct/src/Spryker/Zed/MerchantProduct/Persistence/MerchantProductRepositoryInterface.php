@@ -29,6 +29,15 @@ interface MerchantProductRepositoryInterface
     public function get(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): MerchantProductCollectionTransfer;
 
     /**
+     * @phpstan-return array<string, string>
+     *
+     * @param string[] $concreteSku
+     *
+     * @return array
+     */
+    public function getConcreteProductSkuMerchantReferenceMap(array $concreteSku): array;
+
+    /**
      * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProductTransfer|null
