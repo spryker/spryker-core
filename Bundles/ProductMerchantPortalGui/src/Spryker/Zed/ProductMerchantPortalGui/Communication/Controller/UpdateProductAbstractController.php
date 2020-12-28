@@ -96,6 +96,9 @@ class UpdateProductAbstractController extends AbstractController
                 'priceProductAbstractTableConfiguration' => $this->getFactory()
                     ->createPriceProductAbstractGuiTableConfigurationProvider()
                     ->getConfiguration(),
+                'productAbstractAttributeTableConfiguration' => $this->getFactory()
+                    ->createProductAttributeGuiTableConfigurationProvider()
+                    ->getConfiguration($productAbstractTransfer->getAttributes(), $productAbstractTransfer->getLocalizedAttributes()),
             ])->getContent(),
         ];
 

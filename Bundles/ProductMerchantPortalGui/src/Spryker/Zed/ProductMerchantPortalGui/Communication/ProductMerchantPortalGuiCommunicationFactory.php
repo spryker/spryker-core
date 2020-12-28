@@ -22,10 +22,14 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\Pri
 use Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\PriceProductAbstractGuiTableConfigurationProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\ProductAbstractGuiTableConfigurationProviderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\ProductAttributeGuiTableConfigurationProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\ProductAttributeGuiTableConfigurationProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\StoreFilterOptionsProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\StoreFilterOptionsProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\PriceProductAbstractTableDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAbstractTableDataProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAttributeTableDataProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAttributeTableDataProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductAbstractFormDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductAbstractFormDataProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductAbstractForm;
@@ -162,6 +166,25 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     public function createCurrencyFilterConfigurationProvider(): CurrencyFilterConfigurationProviderInterface
     {
         return new CurrencyFilterConfigurationProvider($this->getCurrencyFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\ProductAttributeGuiTableConfigurationProviderInterface
+     */
+    public function createProductAttributeGuiTableConfigurationProvider(): ProductAttributeGuiTableConfigurationProviderInterface
+    {
+        return new ProductAttributeGuiTableConfigurationProvider(
+            $this->getGuiTableFactory(),
+            $this->createProductAttributeTableDataProvider()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAttributeTableDataProviderInterface
+     */
+    public function createProductAttributeTableDataProvider(): ProductAttributeTableDataProviderInterface
+    {
+        return new ProductAttributeTableDataProvider();
     }
 
     /**

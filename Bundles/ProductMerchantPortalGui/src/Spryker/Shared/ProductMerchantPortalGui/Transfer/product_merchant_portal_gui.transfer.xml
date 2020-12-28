@@ -108,6 +108,7 @@
         <property name="name" type="string"/>
         <property name="description" type="string"/>
         <property name="locale" type="Locale"/>
+        <property name="attributes" type="array" singular="attribute"/>
     </transfer>
 
     <transfer name="ProductAbstractResponse">
@@ -159,6 +160,7 @@
     </transfer>
 
     <transfer name="PriceType">
+        <property name="idPriceType" type="int"/>
         <property name="name" type="string"/>
     </transfer>
 

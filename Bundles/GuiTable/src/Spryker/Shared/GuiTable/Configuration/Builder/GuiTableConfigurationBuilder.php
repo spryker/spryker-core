@@ -91,7 +91,17 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     /**
      * @var string
      */
+    protected $dataSourceType;
+
+    /**
+     * @var string
+     */
     protected $dataSourceUrl;
+
+    /**
+     * @var string[][]
+     */
+    protected $dataSourceData;
 
     /**
      * @var int
@@ -585,6 +595,20 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     /**
      * @api
      *
+     * @param string $type
+     *
+     * @return $this
+     */
+    public function setDataSourceType(string $type)
+    {
+        $this->dataSourceType = $type;
+
+        return $this;
+    }
+
+    /**
+     * @api
+     *
      * @param string $url
      *
      * @return $this
@@ -592,6 +616,20 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     public function setDataSourceUrl(string $url)
     {
         $this->dataSourceUrl = $url;
+
+        return $this;
+    }
+
+    /**
+     * @api
+     *
+     * @param string[][] $data
+     *
+     * @return $this
+     */
+    public function setDataSourceData(array $data)
+    {
+        $this->dataSourceData = $data;
 
         return $this;
     }
@@ -669,18 +707,13 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
         $guiTableConfigurationTransfer = $this->setFilters($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->setRowActions($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->setBatchActions($guiTableConfigurationTransfer);
+        $guiTableConfigurationTransfer = $this->setDataSource($guiTableConfigurationTransfer);
 
         if ($this->title) {
             $guiTableConfigurationTransfer->setTitle(
                 (new GuiTableTitleConfigurationTransfer())
                     ->setIsEnabled(true)
                     ->setTitle($this->title)
-            );
-        }
-
-        if ($this->dataSourceUrl) {
-            $guiTableConfigurationTransfer->setDataSource(
-                (new GuiTableDataSourceConfigurationTransfer())->setUrl($this->dataSourceUrl)
             );
         }
 
@@ -768,6 +801,32 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
                 ->setAvailableActionsPath($this->availableBatchActionsPath)
                 ->setNoActionsMessage($this->noBatchActionsMessage);
         }
+
+        return $guiTableConfigurationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     */
+    protected function setDataSource(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
+    {
+        $guiTableDataSourceConfigurationTransfer = new GuiTableDataSourceConfigurationTransfer;
+
+        if ($this->dataSourceType) {
+            $guiTableDataSourceConfigurationTransfer->setType($this->dataSourceType);
+        }
+
+        if ($this->dataSourceUrl) {
+            $guiTableDataSourceConfigurationTransfer->setUrl($this->dataSourceUrl);
+        }
+
+        if ($this->dataSourceData) {
+            $guiTableDataSourceConfigurationTransfer->setData($this->dataSourceData);
+        }
+
+        $guiTableConfigurationTransfer->setDataSource($guiTableDataSourceConfigurationTransfer);
 
         return $guiTableConfigurationTransfer;
     }
