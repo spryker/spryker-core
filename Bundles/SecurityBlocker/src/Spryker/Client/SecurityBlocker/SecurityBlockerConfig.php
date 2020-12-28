@@ -15,12 +15,14 @@ use Spryker\Shared\SecurityBlocker\SecurityBlockerConstants;
 
 class SecurityBlockerConfig extends AbstractBundleConfig
 {
-    public const SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE = 'customer';
     public const SECURITY_BLOCKER_AGENT_ENTITY_TYPE = 'agent';
 
     protected const REDIS_DEFAULT_DATABASE = 7;
     protected const STORAGE_REDIS_CONNECTION_KEY = 'SECURITY_BLOCKER_REDIS';
     protected const ENTITY_TYPE_DEFAULT = 'default';
+    protected const DEFAULT_BLOCKING_TTL = 600;
+    protected const DEFAULT_BLOCK_FOR = 300;
+    protected const DEFAULT_BLOCKING_NUMBER_OF_ATTEMPTS = 10;
 
     /**
      * Specification:
@@ -33,30 +35,6 @@ class SecurityBlockerConfig extends AbstractBundleConfig
     public function getRedisConnectionKey(): string
     {
         return static::STORAGE_REDIS_CONNECTION_KEY;
-    }
-
-    /**
-     * Specification:
-     * - Returns the security configuration for the type.
-     * - Falls back to the default type if no type-specific setting is found.
-     *
-     * @api
-     *
-     * @param string $type
-     *
-     * @return \Generated\Shared\Transfer\SecurityBlockerConfigurationSettingsTransfer
-     */
-    public function getSecurityBlockerConfigurationSettingsForType(string $type): SecurityBlockerConfigurationSettingsTransfer
-    {
-        $securityConfigurationSettings = $this->getSecurityBlockerConfigurationSettings();
-
-        if (!empty($securityConfigurationSettings[$type])) {
-            return (new SecurityBlockerConfigurationSettingsTransfer())
-                ->fromArray($securityConfigurationSettings[$type], true);
-        }
-
-        return (new SecurityBlockerConfigurationSettingsTransfer())
-            ->fromArray($securityConfigurationSettings[static::ENTITY_TYPE_DEFAULT], true);
     }
 
     /**
@@ -92,7 +70,7 @@ class SecurityBlockerConfig extends AbstractBundleConfig
             ->setProtocol($this->get(SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_PROTOCOL))
             ->setHost($this->get(SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_HOST))
             ->setPort($this->get(SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_PORT))
-            ->setDatabase($this->get(SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_DATABASE, static::REDIS_DEFAULT_DATABASE))
+            ->setDatabase($this->get(SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_DATABASE))
             ->setPassword($this->get(SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_PASSWORD, false))
             ->setIsPersistent($this->get(SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_PERSISTENT_CONNECTION, false));
     }
@@ -109,21 +87,38 @@ class SecurityBlockerConfig extends AbstractBundleConfig
      * Specification:
      * - Returns the security configuration per type.
      *
+     * @phpstan-return array<int|string, \Generated\Shared\Transfer\SecurityBlockerConfigurationSettingsTransfer>
+     *
      * @api
      *
-     * @return mixed[]
+     * @return \Generated\Shared\Transfer\SecurityBlockerConfigurationSettingsTransfer[]
      */
     public function getSecurityBlockerConfigurationSettings(): array
     {
         return [
-            static::ENTITY_TYPE_DEFAULT => [
-                SecurityBlockerConfigurationSettingsTransfer::TTL
-                    => $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_TTL, 600),
-                SecurityBlockerConfigurationSettingsTransfer::BLOCK_FOR
-                    => $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCK_FOR, 300),
-                SecurityBlockerConfigurationSettingsTransfer::NUMBER_OF_ATTEMPTS
-                    => $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_NUMBER_OF_ATTEMPTS, 10),
-            ],
+            static::SECURITY_BLOCKER_AGENT_ENTITY_TYPE => (new SecurityBlockerConfigurationSettingsTransfer())
+                ->setTtl($this->get(SecurityBlockerConstants::SECURITY_BLOCKER_AGENT_BLOCKING_TTL))
+                ->setBlockFor($this->get(SecurityBlockerConstants::SECURITY_BLOCKER_AGENT_BLOCK_FOR))
+                ->setNumberOfAttempts($this->get(SecurityBlockerConstants::SECURITY_BLOCKER_AGENT_BLOCKING_NUMBER_OF_ATTEMPTS)),
         ];
+    }
+
+    /**
+     * Specification:
+     * - Returns the default security configuration.
+     * - Used as fallback for all the entity types if the type-specific configuration is not given.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\SecurityBlockerConfigurationSettingsTransfer
+     */
+    public function getDefaultSecurityBlockerConfigurationSettings(): SecurityBlockerConfigurationSettingsTransfer
+    {
+        return (new SecurityBlockerConfigurationSettingsTransfer())
+            ->setTtl($this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_TTL, static::DEFAULT_BLOCKING_TTL))
+            ->setBlockFor($this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCK_FOR, static::DEFAULT_BLOCK_FOR))
+            ->setNumberOfAttempts(
+                $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_NUMBER_OF_ATTEMPTS, static::DEFAULT_BLOCKING_NUMBER_OF_ATTEMPTS)
+            );
     }
 }

@@ -64,7 +64,7 @@ class SecurityBlockerCustomerRestRequestValidatorPluginTest extends Unit
         // Arrange
         $securityBlockerClientMock = $this->getMockBuilder(SecurityBlockerRestApiToSecurityBlockerClientInterface::class)->getMock();
         $securityBlockerClientMock->expects($this->once())
-            ->method('getLoginAttemptCount')
+            ->method('isAccountBlocked')
             ->with($this->securityCheckAuthContextTransfer)
             ->willReturn((new SecurityCheckAuthResponseTransfer())->setIsBlocked(true));
 

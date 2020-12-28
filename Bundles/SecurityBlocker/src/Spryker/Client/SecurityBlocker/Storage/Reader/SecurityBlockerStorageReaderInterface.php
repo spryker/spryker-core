@@ -17,5 +17,5 @@ interface SecurityBlockerStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer
      */
-    public function getLoginAttemptCount(SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer): SecurityCheckAuthResponseTransfer;
+    public function isAccountBlocked(SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer): SecurityCheckAuthResponseTransfer;
 }

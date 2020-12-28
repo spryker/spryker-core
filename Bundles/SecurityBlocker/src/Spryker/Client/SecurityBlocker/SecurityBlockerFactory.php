@@ -11,6 +11,8 @@ use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\SecurityBlocker\Dependency\Client\SecurityBlockerToRedisClientInterface;
 use Spryker\Client\SecurityBlocker\Redis\SecurityBlockerRedisWrapper;
 use Spryker\Client\SecurityBlocker\Redis\SecurityBlockerRedisWrapperInterface;
+use Spryker\Client\SecurityBlocker\Resolver\ConfigurationResolver;
+use Spryker\Client\SecurityBlocker\Resolver\ConfigurationResolverInterface;
 use Spryker\Client\SecurityBlocker\Storage\KeyBuilder\SecurityBlockerStorageKeyBuilder;
 use Spryker\Client\SecurityBlocker\Storage\KeyBuilder\SecurityBlockerStorageKeyBuilderInterface;
 use Spryker\Client\SecurityBlocker\Storage\Reader\SecurityBlockerStorageReader;
@@ -31,7 +33,7 @@ class SecurityBlockerFactory extends AbstractFactory
         return new SecurityBlockerStorageReader(
             $this->createSecurityBlockerRedisWrapper(),
             $this->createSecurityBlockerStorageKeyBuilder(),
-            $this->getConfig()
+            $this->createConfigurationResolver()
         );
     }
 
@@ -43,7 +45,7 @@ class SecurityBlockerFactory extends AbstractFactory
         return new SecurityBlockerStorageWriter(
             $this->createSecurityBlockerRedisWrapper(),
             $this->createSecurityBlockerStorageKeyBuilder(),
-            $this->getConfig()
+            $this->createConfigurationResolver()
         );
     }
 
@@ -64,6 +66,14 @@ class SecurityBlockerFactory extends AbstractFactory
             $this->getRedisClient(),
             $this->getConfig()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\SecurityBlocker\Resolver\ConfigurationResolverInterface
+     */
+    public function createConfigurationResolver(): ConfigurationResolverInterface
+    {
+        return new ConfigurationResolver($this->getConfig());
     }
 
     /**

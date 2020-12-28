@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\SecurityCheckAuthContextTransfer;
 use Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer;
 use Spryker\Client\SecurityBlocker\Exception\SecurityBlockerException;
 use Spryker\Client\SecurityBlocker\Redis\SecurityBlockerRedisWrapperInterface;
-use Spryker\Client\SecurityBlocker\SecurityBlockerConfig;
+use Spryker\Client\SecurityBlocker\Resolver\ConfigurationResolverInterface;
 use Spryker\Client\SecurityBlocker\Storage\KeyBuilder\SecurityBlockerStorageKeyBuilderInterface;
 
 class SecurityBlockerStorageWriter implements SecurityBlockerStorageWriterInterface
@@ -23,28 +23,28 @@ class SecurityBlockerStorageWriter implements SecurityBlockerStorageWriterInterf
     protected $securityBlockerRedisWrapper;
 
     /**
-     * @var \Spryker\Client\SecurityBlocker\SecurityBlockerConfig
-     */
-    protected $securityBlockerConfig;
-
-    /**
      * @var \Spryker\Client\SecurityBlocker\Storage\KeyBuilder\SecurityBlockerStorageKeyBuilderInterface
      */
     protected $securityBlockerStorageKeyBuilder;
 
     /**
+     * @var \Spryker\Client\SecurityBlocker\Resolver\ConfigurationResolverInterface
+     */
+    protected $configurationResolver;
+
+    /**
      * @param \Spryker\Client\SecurityBlocker\Redis\SecurityBlockerRedisWrapperInterface $securityBlockerRedisWrapper
      * @param \Spryker\Client\SecurityBlocker\Storage\KeyBuilder\SecurityBlockerStorageKeyBuilderInterface $securityBlockerStorageKeyBuilder
-     * @param \Spryker\Client\SecurityBlocker\SecurityBlockerConfig $securityBlockerConfig
+     * @param \Spryker\Client\SecurityBlocker\Resolver\ConfigurationResolverInterface $configurationResolver
      */
     public function __construct(
         SecurityBlockerRedisWrapperInterface $securityBlockerRedisWrapper,
         SecurityBlockerStorageKeyBuilderInterface $securityBlockerStorageKeyBuilder,
-        SecurityBlockerConfig $securityBlockerConfig
+        ConfigurationResolverInterface $configurationResolver
     ) {
         $this->securityBlockerRedisWrapper = $securityBlockerRedisWrapper;
         $this->securityBlockerStorageKeyBuilder = $securityBlockerStorageKeyBuilder;
-        $this->securityBlockerConfig = $securityBlockerConfig;
+        $this->configurationResolver = $configurationResolver;
     }
 
     /**
@@ -56,7 +56,7 @@ class SecurityBlockerStorageWriter implements SecurityBlockerStorageWriterInterf
      */
     public function incrementLoginAttemptCount(SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer): SecurityCheckAuthResponseTransfer
     {
-        $securityBlockerConfigurationSettingsTransfer = $this->securityBlockerConfig
+        $securityBlockerConfigurationSettingsTransfer = $this->configurationResolver
             ->getSecurityBlockerConfigurationSettingsForType($securityCheckAuthContextTransfer->getTypeOrFail());
         $key = $this->securityBlockerStorageKeyBuilder->getStorageKey($securityCheckAuthContextTransfer);
 
@@ -78,6 +78,8 @@ class SecurityBlockerStorageWriter implements SecurityBlockerStorageWriterInterf
      * @param string $storageKey
      * @param \Generated\Shared\Transfer\SecurityBlockerConfigurationSettingsTransfer $securityBlockerConfigurationSettingsTransfer
      *
+     * @throws \Spryker\Client\SecurityBlocker\Exception\SecurityBlockerException
+     *
      * @return int
      */
     protected function updateStorage(
@@ -90,7 +92,13 @@ class SecurityBlockerStorageWriter implements SecurityBlockerStorageWriterInterf
         if ($existingValue && $newValue < $securityBlockerConfigurationSettingsTransfer->getNumberOfAttempts()) {
             $incrResult = $this->securityBlockerRedisWrapper->incr($storageKey);
 
-            return $incrResult ?: 0;
+            if (!$incrResult) {
+                throw new SecurityBlockerException(
+                    sprintf('Could not increment redisKey: "%s"', $storageKey)
+                );
+            }
+
+            return $incrResult;
         }
 
         $ttl = !$existingValue
@@ -99,6 +107,12 @@ class SecurityBlockerStorageWriter implements SecurityBlockerStorageWriterInterf
 
         $setResult = $this->securityBlockerRedisWrapper->setex($storageKey, $ttl, (string)$newValue);
 
-        return $setResult ? $newValue : 0;
+        if (!$setResult) {
+            throw new SecurityBlockerException(
+                sprintf('Could not set redisKey: "%s" with value: "%s"', $storageKey, $newValue)
+            );
+        }
+
+        return $newValue;
     }
 }

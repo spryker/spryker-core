@@ -61,7 +61,7 @@ class SecurityBlockerAgentValidator implements SecurityBlockerAgentValidatorInte
         $securityCheckAuthContextTransfer = $this->createSecurityCheckAuthContextTransfer($restRequest);
 
         $securityCheckAuthResponseTransfer = $this->securityBlockerClient
-            ->getLoginAttemptCount($securityCheckAuthContextTransfer);
+            ->isAccountBlocked($securityCheckAuthContextTransfer);
 
         if (!$securityCheckAuthResponseTransfer->getIsBlocked()) {
             return null;

@@ -40,8 +40,8 @@ class SecurityBlockerRestApiToSecurityBlockerClientBridge implements SecurityBlo
      *
      * @return \Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer
      */
-    public function getLoginAttemptCount(SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer): SecurityCheckAuthResponseTransfer
+    public function isAccountBlocked(SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer): SecurityCheckAuthResponseTransfer
     {
-        return $this->securityBlockerClient->getLoginAttemptCount($securityCheckAuthContextTransfer);
+        return $this->securityBlockerClient->isAccountBlocked($securityCheckAuthContextTransfer);
     }
 }

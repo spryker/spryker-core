@@ -22,12 +22,12 @@ class SecurityBlockerRestApiConfig extends AbstractBundleConfig
     public const RESOURCE_AGENT_ACCESS_TOKENS = 'agent-access-tokens';
 
     /**
-     * @uses \Spryker\Client\SecurityBlocker\SecurityBlockerConfig::SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE
+     * @uses \SprykerShop\Yves\SecurityBlockerPage\SecurityBlockerPageConfig::SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE
      */
     public const SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE = 'customer';
 
     /**
-     * @uses \Spryker\Client\SecurityBlocker\SecurityBlockerConfig::SECURITY_BLOCKER_CUSTOMER_ENTITY_TYPE
+     * @uses \SprykerShop\Yves\SecurityBlockerPage\SecurityBlockerPageConfig::SECURITY_BLOCKER_AGENT_ENTITY_TYPE
      */
     public const SECURITY_BLOCKER_AGENT_ENTITY_TYPE = 'agent';
 

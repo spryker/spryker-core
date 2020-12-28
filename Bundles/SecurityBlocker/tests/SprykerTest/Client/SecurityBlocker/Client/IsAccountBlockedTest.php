@@ -22,10 +22,10 @@ use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
  * @group Client
  * @group SecurityBlocker
  * @group Client
- * @group GetLoginAttemptCountTest
+ * @group IsAccountBlockedTest
  * Add your own group annotations below this line
  */
-class GetLoginAttemptCountTest extends Test
+class IsAccountBlockedTest extends Test
 {
     /**
      * @var \SprykerTest\Client\SecurityBlocker\SecurityBlockerClientTester
@@ -52,7 +52,7 @@ class GetLoginAttemptCountTest extends Test
     /**
      * @return void
      */
-    public function testGetLoginAttemptCountWillRequireType(): void
+    public function testIsAccountBlockedWillRequireType(): void
     {
         // Arrange
         $securityCheckAuthContextTransfer = (new SecurityCheckAuthContextTransfer());
@@ -60,13 +60,13 @@ class GetLoginAttemptCountTest extends Test
 
         // Act
         $this->tester->getLocator()->securityBlocker()->client()
-            ->getLoginAttemptCount($securityCheckAuthContextTransfer);
+            ->isAccountBlocked($securityCheckAuthContextTransfer);
     }
 
     /**
      * @return void
      */
-    public function testGetLoginAttemptCountWillSucceed(): void
+    public function testIsAccountBlockedWillSucceed(): void
     {
         // Arrange
         $securityCheckAuthContextTransfer = (new SecurityCheckAuthContextBuilder())->build();
@@ -89,7 +89,7 @@ class GetLoginAttemptCountTest extends Test
 
         // Act
         $actualSecurityCheckAuthResponseTransfer = $this->tester->getLocator()->securityBlocker()->client()
-            ->getLoginAttemptCount($securityCheckAuthContextTransfer);
+            ->isAccountBlocked($securityCheckAuthContextTransfer);
 
         // Assert
         $this->assertSame($securityCheckAuthContextTransfer, $actualSecurityCheckAuthResponseTransfer->getSecurityCheckAuthContext());

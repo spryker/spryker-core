@@ -10,7 +10,7 @@ namespace Spryker\Client\SecurityBlocker\Storage\Reader;
 use Generated\Shared\Transfer\SecurityCheckAuthContextTransfer;
 use Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer;
 use Spryker\Client\SecurityBlocker\Redis\SecurityBlockerRedisWrapperInterface;
-use Spryker\Client\SecurityBlocker\SecurityBlockerConfig;
+use Spryker\Client\SecurityBlocker\Resolver\ConfigurationResolverInterface;
 use Spryker\Client\SecurityBlocker\Storage\KeyBuilder\SecurityBlockerStorageKeyBuilderInterface;
 
 class SecurityBlockerStorageReader implements SecurityBlockerStorageReaderInterface
@@ -26,23 +26,23 @@ class SecurityBlockerStorageReader implements SecurityBlockerStorageReaderInterf
     protected $securityBlockerStorageKeyBuilder;
 
     /**
-     * @var \Spryker\Client\SecurityBlocker\SecurityBlockerConfig
+     * @var \Spryker\Client\SecurityBlocker\Resolver\ConfigurationResolverInterface
      */
-    protected $securityBlockerConfig;
+    protected $configurationResolver;
 
     /**
      * @param \Spryker\Client\SecurityBlocker\Redis\SecurityBlockerRedisWrapperInterface $securityBlockerRedisWrapper
      * @param \Spryker\Client\SecurityBlocker\Storage\KeyBuilder\SecurityBlockerStorageKeyBuilderInterface $securityBlockerStorageKeyBuilder
-     * @param \Spryker\Client\SecurityBlocker\SecurityBlockerConfig $securityBlockerConfig
+     * @param \Spryker\Client\SecurityBlocker\Resolver\ConfigurationResolverInterface $configurationResolver
      */
     public function __construct(
         SecurityBlockerRedisWrapperInterface $securityBlockerRedisWrapper,
         SecurityBlockerStorageKeyBuilderInterface $securityBlockerStorageKeyBuilder,
-        SecurityBlockerConfig $securityBlockerConfig
+        ConfigurationResolverInterface $configurationResolver
     ) {
         $this->securityBlockerRedisWrapper = $securityBlockerRedisWrapper;
         $this->securityBlockerStorageKeyBuilder = $securityBlockerStorageKeyBuilder;
-        $this->securityBlockerConfig = $securityBlockerConfig;
+        $this->configurationResolver = $configurationResolver;
     }
 
     /**
@@ -50,7 +50,7 @@ class SecurityBlockerStorageReader implements SecurityBlockerStorageReaderInterf
      *
      * @return \Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer
      */
-    public function getLoginAttemptCount(SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer): SecurityCheckAuthResponseTransfer
+    public function isAccountBlocked(SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer): SecurityCheckAuthResponseTransfer
     {
         $storageKey = $this->securityBlockerStorageKeyBuilder->getStorageKey($securityCheckAuthContextTransfer);
         $numberOfAttempts = (int)$this->securityBlockerRedisWrapper->get($storageKey);
@@ -63,7 +63,7 @@ class SecurityBlockerStorageReader implements SecurityBlockerStorageReaderInterf
             return $securityCheckAuthResponseTransfer;
         }
 
-        $securityBlockerConfigurationSettingsTransfer = $this->securityBlockerConfig
+        $securityBlockerConfigurationSettingsTransfer = $this->configurationResolver
             ->getSecurityBlockerConfigurationSettingsForType($securityCheckAuthContextTransfer->getTypeOrFail());
 
         return $securityCheckAuthResponseTransfer

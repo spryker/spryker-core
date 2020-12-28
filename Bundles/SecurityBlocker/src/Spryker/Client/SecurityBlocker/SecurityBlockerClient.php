@@ -43,10 +43,10 @@ class SecurityBlockerClient extends AbstractClient implements SecurityBlockerCli
      *
      * @return \Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer
      */
-    public function getLoginAttemptCount(SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer): SecurityCheckAuthResponseTransfer
+    public function isAccountBlocked(SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer): SecurityCheckAuthResponseTransfer
     {
         return $this->getFactory()
             ->createSecurityBlockerStorageReader()
-            ->getLoginAttemptCount($securityCheckAuthContextTransfer);
+            ->isAccountBlocked($securityCheckAuthContextTransfer);
     }
 }
