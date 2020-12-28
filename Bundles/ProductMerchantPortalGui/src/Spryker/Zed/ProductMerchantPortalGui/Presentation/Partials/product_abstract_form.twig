@@ -76,6 +76,7 @@
                                             table-id="web-mp-edit-abstract-product-prices"
                                             config='{{ guiTableConfiguration(priceProductAbstractTableConfiguration) }}'>
                                         </web-mp-edit-abstract-product-prices>
+                                        {% do form.prices.setRendered %}
                                     {% endblock %}
                                 </web-spy-card>
                             {% endblock %}
