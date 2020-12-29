@@ -55,7 +55,6 @@ class EventQueueConsumer implements EventQueueConsumerInterface
         EventToUtilEncodingInterface $utilEncodingService,
         EventConfig $eventConfig
     ) {
-
         $this->eventLogger = $eventLogger;
         $this->utilEncodingService = $utilEncodingService;
         $this->eventConfig = $eventConfig;

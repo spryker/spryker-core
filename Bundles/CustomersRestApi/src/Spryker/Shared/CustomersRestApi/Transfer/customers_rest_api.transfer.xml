@@ -66,6 +66,16 @@
         <property name="fkCustomer" type="int"/>
         <property name="idCustomerAddress" type="int"/>
         <property name="country" type="Country"/>
+        <property name="salutation" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="address1" type="string"/>
+        <property name="address2" type="string"/>
+        <property name="address3" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="city" type="string"/>
+        <property name="iso2Code" type="string"/>
+        <property name="company" type="string"/>
     </transfer>
 
     <transfer name="RestCustomerForgottenPasswordAttributes">
@@ -99,6 +109,16 @@
 
     <transfer name="RestAddress">
         <property name="id" type="string"/>
+        <property name="salutation" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="address1" type="string"/>
+        <property name="address2" type="string"/>
+        <property name="address3" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="city" type="string"/>
+        <property name="iso2Code" type="string"/>
+        <property name="company" type="string"/>
     </transfer>
 
     <transfer name="Item">
@@ -152,6 +172,31 @@
 
     <transfer name="CustomerError">
         <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="RestCheckoutData">
+        <property name="addresses" type="Addresses"/>
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="errorIdentifier" type="string"/>
+        <property name="message" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="CheckoutError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="CheckoutData">
+        <property name="quote" type="Quote"/>
+        <property name="shipments" type="RestShipments[]" singular="shipment"/>
+    </transfer>
+
+    <transfer name="RestShipments">
+        <property name="shippingAddress" type="RestAddress" restRequestParameter="yes"/>
     </transfer>
 
 </transfers>

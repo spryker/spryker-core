@@ -33,4 +33,23 @@ class ProductConfigurationStorageService extends AbstractService implements Prod
             ->createPriceProductConfigurationFilter()
             ->filterProductConfigurationPrices($priceProductTransfers, $priceProductFilterTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function filterProductConfigurationVolumePrices(
+        array $priceProductTransfers,
+        PriceProductFilterTransfer $priceProductFilterTransfer
+    ): array {
+        return $this->getFactory()
+            ->createVolumePriceProductConfigurationFilter()
+            ->filterProductConfigurationVolumePrices($priceProductTransfers, $priceProductFilterTransfer);
+    }
 }

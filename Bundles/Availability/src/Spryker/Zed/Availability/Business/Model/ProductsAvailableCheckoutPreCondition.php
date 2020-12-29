@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Availability\Business\Model;
 
+use Generated\Shared\Transfer\CartItemQuantityTransfer;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -30,13 +31,23 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
     protected $availabilityConfig;
 
     /**
+     * @var \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface[]
+     */
+    protected $cartItemQuantityCounterStrategyPlugins;
+
+    /**
      * @param \Spryker\Zed\Availability\Business\Model\SellableInterface $sellable
      * @param \Spryker\Zed\Availability\AvailabilityConfig $availabilityConfig
+     * @param \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface[] $cartItemQuantityCounterStrategyPlugins
      */
-    public function __construct(SellableInterface $sellable, AvailabilityConfig $availabilityConfig)
-    {
+    public function __construct(
+        SellableInterface $sellable,
+        AvailabilityConfig $availabilityConfig,
+        array $cartItemQuantityCounterStrategyPlugins
+    ) {
         $this->sellable = $sellable;
         $this->availabilityConfig = $availabilityConfig;
+        $this->cartItemQuantityCounterStrategyPlugins = $cartItemQuantityCounterStrategyPlugins;
     }
 
     /**
@@ -52,7 +63,7 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
         $storeTransfer = $quoteTransfer->getStore();
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $quantity = $this->getAccumulatedItemQuantityForGivenItemSku($quoteTransfer, $itemTransfer->getSku());
+            $quantity = $this->getAccumulatedItemQuantityForGivenItemSku($quoteTransfer, $itemTransfer);
 
             $productAvailabilityCriteriaTransfer = (new ProductAvailabilityCriteriaTransfer())
                 ->fromArray($itemTransfer->toArray(), true);
@@ -70,11 +81,30 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    protected function getAccumulatedItemQuantityForGivenItemSku(
+        QuoteTransfer $quoteTransfer,
+        ItemTransfer $itemTransfer
+    ): Decimal {
+        $cartItemQuantity = $this->executeCartItemQuantityCounterStrategyPlugin($quoteTransfer, $itemTransfer);
+
+        if ($cartItemQuantity) {
+            return (new Decimal(0))->add($cartItemQuantity->getQuantity());
+        }
+
+        return $this->calculateCurrentCartQuantityForGivenSku($quoteTransfer, $itemTransfer->getSku());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $sku
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    protected function getAccumulatedItemQuantityForGivenItemSku(QuoteTransfer $quoteTransfer, string $sku): Decimal
+    protected function calculateCurrentCartQuantityForGivenSku(QuoteTransfer $quoteTransfer, string $sku): Decimal
     {
         $quantity = new Decimal(0);
 
@@ -87,6 +117,28 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
         }
 
         return $quantity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartItemQuantityTransfer|null
+     */
+    protected function executeCartItemQuantityCounterStrategyPlugin(
+        QuoteTransfer $quoteTransfer,
+        ItemTransfer $itemTransfer
+    ): ?CartItemQuantityTransfer {
+        foreach ($this->cartItemQuantityCounterStrategyPlugins as $cartItemQuantityCounterStrategyPlugin) {
+            if ($cartItemQuantityCounterStrategyPlugin->isApplicable($quoteTransfer->getItems(), $itemTransfer)) {
+                return $cartItemQuantityCounterStrategyPlugin->countCartItemQuantity(
+                    $quoteTransfer->getItems(),
+                    $itemTransfer
+                );
+            }
+        }
+
+        return null;
     }
 
     /**

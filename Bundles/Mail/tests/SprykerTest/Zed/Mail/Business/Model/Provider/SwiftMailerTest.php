@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Mail\Business\Model\Provider;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\MailAttachmentTransfer;
 use Generated\Shared\Transfer\MailRecipientTransfer;
 use Generated\Shared\Transfer\MailSenderTransfer;
 use Generated\Shared\Transfer\MailTemplateTransfer;
@@ -41,6 +42,7 @@ class SwiftMailerTest extends Unit
     protected const BCC_NAME = 'bccName';
     protected const HTML_MAIL_CONTENT = 'html mail content';
     protected const TEXT_MAIL_CONTENT = 'text mail content';
+    protected const MAIL_ATTACHMENT_URL = 'http://mail-attachment-url';
 
     /**
      * @return void
@@ -197,6 +199,65 @@ class SwiftMailerTest extends Unit
     }
 
     /**
+     * @uses MailToMailerInterface::attach()
+     *
+     * @dataProvider sendMailAddsAttachmentsDataProvider
+     *
+     * @param \Generated\Shared\Transfer\MailAttachmentTransfer[] $mailAttachmentTransfers
+     *
+     * @return void
+     */
+    public function testSendMailAddsAttachments(array $mailAttachmentTransfers): void
+    {
+        // Assign
+        $mailerMock = $this->getMailerMock();
+        $swiftMailer = $this->getSwiftMailerWithMocks($mailerMock);
+        $mailTransfer = $this->getMailTransfer();
+
+        foreach ($mailAttachmentTransfers as $mailAttachmentTransfer) {
+            $mailTransfer->addAttachment($mailAttachmentTransfer);
+        }
+
+        // Assert
+        $mailerMock->expects($this->exactly(count($mailAttachmentTransfers)))->method('attach');
+
+        // Act
+        $swiftMailer->sendMail($mailTransfer);
+    }
+
+    /**
+     * @return array
+     */
+    public function sendMailAddsAttachmentsDataProvider(): array
+    {
+        return [
+            [ // 0 Attachments
+                [],
+            ],
+            [ // 1 Attachment
+                [
+                    (new MailAttachmentTransfer())
+                        ->setAttachmentUrl(static::MAIL_ATTACHMENT_URL),
+                ],
+            ],
+            [ // multiple Attachments
+                [
+                    (new MailAttachmentTransfer())
+                        ->setAttachmentUrl(static::MAIL_ATTACHMENT_URL),
+                ],
+                [
+                    (new MailAttachmentTransfer())
+                        ->setAttachmentUrl(static::MAIL_ATTACHMENT_URL),
+                ],
+                [
+                    (new MailAttachmentTransfer())
+                        ->setAttachmentUrl(static::MAIL_ATTACHMENT_URL),
+                ],
+            ],
+        ];
+    }
+
+    /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Business\Model\Renderer\RendererInterface
      */
     protected function getRendererMock(): RendererInterface
@@ -253,13 +314,14 @@ class SwiftMailerTest extends Unit
      * @uses MailToMailerInterface::setHtmlContent()
      * @uses MailToMailerInterface::setTextContent()
      * @uses MailToMailerInterface::send()
+     * @uses MailToMailerInterface::attach()
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Dependency\Mailer\MailToMailerInterface
      */
     protected function getMailerMock(): MailToMailerInterface
     {
         $mailerMock = $this->getMockBuilder(MailToMailerInterface::class)
-            ->setMethods(['setSubject', 'setFrom', 'addTo', 'addBcc', 'setHtmlContent', 'setTextContent', 'send'])
+            ->setMethods(['setSubject', 'setFrom', 'addTo', 'addBcc', 'setHtmlContent', 'setTextContent', 'send', 'attach'])
             ->getMock();
 
         return $mailerMock;

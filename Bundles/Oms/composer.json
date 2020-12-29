@@ -27,7 +27,6 @@
     "spryker/application": "*",
     "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
-    "spryker/config": "*",
     "spryker/customer": "*",
     "spryker/testify": "*"
   },

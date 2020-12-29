@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\CartPageExtension\Dependency\Plugin\PreAddToCartPluginInterface;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\MerchantShipment\Communication\Plugin\Cart\MerchantShipmentItemExpanderPlugin} instead.
+ */
 class MerchantShipmentPreAddToCartPlugin extends AbstractPlugin implements PreAddToCartPluginInterface
 {
     /**
@@ -26,12 +29,14 @@ class MerchantShipmentPreAddToCartPlugin extends AbstractPlugin implements PreAd
      */
     public function preAddToCart(ItemTransfer $itemTransfer, array $params): ItemTransfer
     {
-        if (!$itemTransfer->getShipment()) {
+        $shipmentTransfer = $itemTransfer->getShipment();
+
+        if (!$shipmentTransfer) {
             return $itemTransfer;
         }
 
-        $itemTransfer->getShipment()->setMerchantReference($itemTransfer->getMerchantReference());
+        $shipmentTransfer->setMerchantReference($itemTransfer->getMerchantReference());
 
-        return $itemTransfer;
+        return $itemTransfer->setShipment($shipmentTransfer);
     }
 }

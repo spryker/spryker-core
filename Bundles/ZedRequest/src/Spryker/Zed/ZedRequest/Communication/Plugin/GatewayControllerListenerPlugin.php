@@ -51,7 +51,6 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
         }
 
         $newController = function () use ($controller, $action) {
-
             MessengerConfig::setMessageTray(MessengerConstants::IN_MEMORY_TRAY);
 
             $requestTransfer = $this->getRequestTransfer($controller, $action);

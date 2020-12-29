@@ -7,18 +7,20 @@
 
 namespace Spryker\Client\MerchantSearch;
 
-use Generated\Shared\Transfer\MerchantCollectionTransfer;
+use Generated\Shared\Transfer\MerchantSearchRequestTransfer;
 
 interface MerchantSearchClientInterface
 {
     /**
      * Specification:
-     * - Makes Zed request.
-     * - Returns the list of merchants with isActive=true.
+     * - Makes ElasticSearch request.
+     * - Returns the list of active merchants.
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
+     * @param \Generated\Shared\Transfer\MerchantSearchRequestTransfer $merchantSearchRequestTransfer
+     *
+     * @return mixed
      */
-    public function getMerchantCollection(): MerchantCollectionTransfer;
+    public function search(MerchantSearchRequestTransfer $merchantSearchRequestTransfer);
 }

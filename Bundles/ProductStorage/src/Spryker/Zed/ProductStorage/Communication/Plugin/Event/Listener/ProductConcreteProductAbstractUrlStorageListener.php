@@ -25,15 +25,15 @@ class ProductConcreteProductAbstractUrlStorageListener extends AbstractPlugin im
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
-        $productAbstractIds = $this->getValidProductIds($eventTransfers);
+        $productAbstractIds = $this->getValidProductIds($eventEntityTransfers);
         if (empty($productAbstractIds)) {
             return;
         }

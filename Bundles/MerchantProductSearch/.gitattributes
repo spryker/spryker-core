@@ -2,6 +2,8 @@
 # Set the default behavior, in case people don't have core.autocrlf set.
 * text text=auto eol=lf
 
+*.php diff=php
+
 # Denote all files that are truly binary and should not be modified.
 *.png binary
 *.jpg binary
@@ -24,6 +26,7 @@ codeception.yml export-ignore
 dependency.json export-ignore
 phpstan.json export-ignore
 phpstan.neon export-ignore
+psalm-report.json export-ignore linguist-generated=true
 tooling.yml export-ignore
 .coveralls.yml export-ignore
 .travis.yml export-ignore

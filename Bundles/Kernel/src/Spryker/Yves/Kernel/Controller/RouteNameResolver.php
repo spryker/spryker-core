@@ -14,7 +14,7 @@ class RouteNameResolver implements RouteNameResolverInterface
     /**
      * @var string
      */
-    private $path;
+    protected $path;
 
     /**
      * @param string $path

@@ -11,7 +11,9 @@ use Generated\Shared\Transfer\MerchantProductCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -68,6 +70,28 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
         }
 
         return $merchantProductCollectionTransfer;
+    }
+
+    /**
+     * @phpstan-return array<string, string>
+     *
+     * @param string[] $concreteSku
+     *
+     * @return array
+     */
+    public function getConcreteProductSkuMerchantReferenceMap(array $concreteSku): array
+    {
+        return $this->getFactory()
+            ->getMerchantProductAbstractPropelQuery()
+            ->select([SpyMerchantTableMap::COL_MERCHANT_REFERENCE, SpyProductTableMap::COL_SKU])
+            ->joinMerchant()
+            ->useProductAbstractQuery()
+                ->useSpyProductQuery()
+                    ->filterBySku_In($concreteSku)
+                ->endUse()
+            ->endUse()
+            ->find()
+            ->toKeyValue(SpyProductTableMap::COL_SKU, SpyMerchantTableMap::COL_MERCHANT_REFERENCE);
     }
 
     /**

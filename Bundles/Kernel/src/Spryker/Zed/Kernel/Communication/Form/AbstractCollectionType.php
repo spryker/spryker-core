@@ -23,22 +23,22 @@ abstract class AbstractCollectionType extends CollectionType
     /**
      * @var \Spryker\Zed\Kernel\Business\AbstractFacade
      */
-    private $facade;
+    protected $facade;
 
     /**
      * @var \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
-    private $factory;
+    protected $factory;
 
     /**
      * @var \Spryker\Zed\Kernel\AbstractBundleConfig
      */
-    private $config;
+    protected $config;
 
     /**
      * @var \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
-    private $queryContainer;
+    protected $queryContainer;
 
     /**
      * @param \Spryker\Zed\Kernel\Business\AbstractFacade $facade
