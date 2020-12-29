@@ -40,9 +40,17 @@ class ConfigurationResolver implements ConfigurationResolverInterface
             return $defaultSecurityBlockerConfigurationSettingsTransfer;
         }
 
-        return (new SecurityBlockerConfigurationSettingsTransfer())->fromArray(
-            $securityConfigurationSettingTransfers[$type]->modifiedToArray()
-            + $defaultSecurityBlockerConfigurationSettingsTransfer->toArray()
-        );
+        foreach ($securityConfigurationSettingTransfers[$type]->toArray() as $property => $value) {
+            if ($value) {
+                continue;
+            }
+
+            $securityConfigurationSettingTransfers[$type]->offsetSet(
+                $property,
+                $defaultSecurityBlockerConfigurationSettingsTransfer->offsetGet($property)
+            );
+        }
+
+        return $securityConfigurationSettingTransfers[$type];
     }
 }
