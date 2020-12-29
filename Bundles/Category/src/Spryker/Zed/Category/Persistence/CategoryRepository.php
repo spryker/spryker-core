@@ -366,9 +366,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->withColumn(SpyCategoryTableMap::COL_CATEGORY_KEY, static::KEY_CATEGORY_KEY)
             ->withColumn(SpyCategoryAttributeTableMap::COL_FK_LOCALE, static::COL_FK_LOCALE);
 
-        return $nodeQuery->setFormatter(new PropelArraySetFormatter())
-            ->find()
-            ->getData();
+        return $nodeQuery->find()->toArray();
     }
 
     /**

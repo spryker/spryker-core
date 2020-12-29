@@ -21,7 +21,10 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryStoreQuery;
+use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Zed\Category\Business\CategoryFacadeInterface;
+use Spryker\Zed\Category\CategoryDependencyProvider;
+use Spryker\Zed\Category\Communication\Plugin\CategoryUrlPathPrefixUpdaterPlugin;
 
 /**
  * Auto-generated group annotations
@@ -289,6 +292,56 @@ class CategoryFacadeTest extends Unit
             ->filterByFkStore($storeTransfer->getIdStore())
             ->findOne();
         $this->assertNotNull($categoryStoreEntity);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateCategoryWillCreateCategoryNodeWithCorrectUrl(): void
+    {
+        // Arrange
+        $this->tester->setDependency(CategoryDependencyProvider::PLUGINS_CATEGORY_URL_PATH, [
+            new CategoryUrlPathPrefixUpdaterPlugin(),
+        ]);
+
+        $parentCategoryTransfer = $this->tester->haveCategory();
+
+        $localeTransfer = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE]);
+        $categoryTemplateTransfer = $this->tester->haveCategoryTemplate();
+        $categoryLocalizedAttributesTransfer = $this->createCategoryLocalizedAttributesTransferForLocale($localeTransfer);
+
+        $categoryTransfer = (new CategoryBuilder([
+            CategoryTransfer::ID_CATEGORY => null,
+            CategoryTransfer::LOCALIZED_ATTRIBUTES => [
+                $categoryLocalizedAttributesTransfer->toArray(),
+            ],
+            CategoryTransfer::CATEGORY_TEMPLATE => $categoryTemplateTransfer->toArray(),
+            CategoryTransfer::FK_CATEGORY_TEMPLATE => $categoryTemplateTransfer->getIdCategoryTemplate(),
+            CategoryTransfer::PARENT_CATEGORY_NODE => $parentCategoryTransfer->getCategoryNode(),
+        ]))->withCategoryNode([
+            NodeTransfer::ID_CATEGORY_NODE => null,
+        ])->build();
+        $expectedUrl = '/en/' . mb_strtolower(str_replace(' ', '-', $categoryLocalizedAttributesTransfer->getName()));
+
+        // Act
+        $this->getFacade()->create($categoryTransfer);
+
+        // Assert
+        $categoryEntity = SpyCategoryQuery::create()
+            ->filterByCategoryKey($categoryTransfer->getCategoryKey())
+            ->findOne();
+        $this->assertNotNull($categoryEntity);
+
+        $categoryNodeEntity = SpyCategoryNodeQuery::create()
+            ->filterByFkCategory($categoryEntity->getIdCategory())
+            ->findOne();
+        $this->assertNotNull($categoryNodeEntity);
+
+        $urlEntity = SpyUrlQuery::create()
+            ->filterByFkResourceCategorynode($categoryNodeEntity->getIdCategoryNode())
+            ->findOne();
+        $this->assertNotNull($urlEntity);
+        $this->assertEquals($expectedUrl, $urlEntity->getUrl());
     }
 
     /**

@@ -69,12 +69,12 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
      */
     public function createCategoryNode(NodeTransfer $nodeTransfer): NodeTransfer
     {
-        $mapper = $this->getFactory()->createCategoryMapper();
+        $categoryMapper = $this->getFactory()->createCategoryMapper();
 
-        $categoryNodeEntity = $mapper->mapNodeTransferToCategoryNodeEntity($nodeTransfer, new SpyCategoryNode());
+        $categoryNodeEntity = $categoryMapper->mapNodeTransferToCategoryNodeEntity($nodeTransfer, new SpyCategoryNode());
         $categoryNodeEntity->save();
 
-        return $mapper->mapCategoryNode($categoryNodeEntity, $nodeTransfer);
+        return $categoryMapper->mapCategoryNode($categoryNodeEntity, $nodeTransfer);
     }
 
     /**

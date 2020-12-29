@@ -17,6 +17,8 @@ use Spryker\Zed\Category\Business\CategoryNode\CategoryNodeCreator;
 use Spryker\Zed\Category\Business\CategoryNode\CategoryNodeCreatorInterface;
 use Spryker\Zed\Category\Business\CategoryUrl\CategoryUrlCreator;
 use Spryker\Zed\Category\Business\CategoryUrl\CategoryUrlCreatorInterface;
+use Spryker\Zed\Category\Business\Event\CategoryEventTriggerManager;
+use Spryker\Zed\Category\Business\Event\CategoryEventTriggerManagerInterface;
 use Spryker\Zed\Category\Business\Generator\TransferGenerator;
 use Spryker\Zed\Category\Business\Generator\UrlPathGenerator;
 use Spryker\Zed\Category\Business\Model\Category;
@@ -63,7 +65,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->createCategoryNodeCreator(),
             $this->createCategoryAttributeCreator(),
             $this->createCategoryUrlCreator(),
-            $this->getEventFacade(),
+            $this->createCategoryEventTriggerManager(),
             $this->createPluginExecutor()
         );
     }
@@ -108,6 +110,14 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     public function createCategoryClosureTableCreator(): CategoryClosureTableCreatorInterface
     {
         return new CategoryClosureTableCreator($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Event\CategoryEventTriggerManagerInterface
+     */
+    public function createCategoryEventTriggerManager(): CategoryEventTriggerManagerInterface
+    {
+        return new CategoryEventTriggerManager($this->getEventFacade());
     }
 
     /**

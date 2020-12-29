@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\CategoryTransfer;
 interface CategoryAttributeCreatorInterface
 {
     /**
-     * @rturn void
-     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
      */
     public function createCategoryLocalizedAttributes(CategoryTransfer $categoryTransfer): void;
 }
