@@ -25,7 +25,6 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
 
     public const REQUEST_PARAMETER_AUTHENTICATION_CODE = 'code';
     public const REQUEST_PARAMETER_AUTHENTICATION_STATE = 'state';
-    public const REQUEST_PARAMETER_AUTHENTICATION_ERROR = 'error';
 
     /**
      * @uses \Spryker\Zed\SecurityGui\SecurityGuiConfig::ROLE_BACK_OFFICE_USER
