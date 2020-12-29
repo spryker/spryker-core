@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider;
+namespace Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider;
 
-interface CurrencyFilterConfigurationProviderInterface
+interface StoreFilterOptionsProviderInterface
 {
     /**
      * @phpstan-return array<int, string>
      *
      * @return string[]
      */
-    public function getCurrencyOptions(): array;
+    public function getStoreOptions(): array;
 }

@@ -19,42 +19,42 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPorta
 class ProductAbstractTableDataMapper
 {
     /**
-     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_SKU
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_SKU
      */
     protected const COL_KEY_SKU = 'sku';
 
     /**
-     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_IMAGE
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_IMAGE
      */
     protected const COL_KEY_IMAGE = 'image';
 
     /**
-     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_NAME
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_NAME
      */
     protected const COL_KEY_NAME = 'name';
 
     /**
-     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_SUPER_ATTRIBUTES
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_SUPER_ATTRIBUTES
      */
     protected const COL_KEY_SUPER_ATTRIBUTES = 'superAttributes';
 
     /**
-     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_VARIANTS
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_VARIANTS
      */
     protected const COL_KEY_VARIANTS = 'variants';
 
     /**
-     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_CATEGORIES
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_CATEGORIES
      */
     protected const COL_KEY_CATEGORIES = 'categories';
 
     /**
-     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_STORES
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_STORES
      */
     protected const COL_KEY_STORES = 'stores';
 
     /**
-     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_VISIBILITY
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_VISIBILITY
      */
     protected const COL_KEY_VISIBILITY = 'visibility';
 

@@ -45,7 +45,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
     protected const SUFFIX_PRICE_TYPE_GROSS = '_gross';
 
     /**
-     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_SKU
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_SKU
      */
     protected const COL_KEY_PRODUCT_ABSTRACT_SKU = 'sku';
 

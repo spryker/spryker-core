@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider;
+namespace Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider;
 
 use ArrayObject;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\ProductAttributeGuiTableConfigurationProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAttributeGuiTableConfigurationProvider;
 
 class ProductAttributeTableDataProvider implements ProductAttributeTableDataProviderInterface
 {

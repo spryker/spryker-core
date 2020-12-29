@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider;
+namespace Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider;
 
 use ArrayObject;
 use Generated\Shared\Transfer\OptionSelectGuiTableFilterTypeOptionsTransfer;

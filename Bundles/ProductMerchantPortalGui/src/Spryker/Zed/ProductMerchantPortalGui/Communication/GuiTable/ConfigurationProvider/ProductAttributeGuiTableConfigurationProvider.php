@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider;
+namespace Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider;
 
 use ArrayObject;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAttributeTableDataProviderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\ProductAttributeTableDataProviderInterface;
 
 class ProductAttributeGuiTableConfigurationProvider implements ProductAttributeGuiTableConfigurationProviderInterface
 {
@@ -25,13 +25,13 @@ class ProductAttributeGuiTableConfigurationProvider implements ProductAttributeG
     protected $guiTableFactory;
 
     /**
-     * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAttributeTableDataProviderInterface
+     * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\ProductAttributeTableDataProviderInterface
      */
     protected $productAttributeTableDataProvider;
 
     /**
      * @param \Spryker\Shared\GuiTable\GuiTableFactoryInterface $guiTableFactory
-     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAttributeTableDataProviderInterface $productAttributeTableDataProvider
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\ProductAttributeTableDataProviderInterface $productAttributeTableDataProvider
      */
     public function __construct(
         GuiTableFactoryInterface $guiTableFactory,
