@@ -7,13 +7,16 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\GuiTableEditableDataErrorTransfer;
 use Generated\Shared\Transfer\GuiTableEditableInitialDataTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductAbstractTableViewTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\ValidationErrorTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface;
 
 class PriceProductMapper
@@ -29,11 +32,20 @@ class PriceProductMapper
     protected $priceProductFacade;
 
     /**
-     * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade
+     * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeInterface
      */
-    public function __construct(ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade)
-    {
+    protected $moneyFacade;
+
+    /**
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeInterface $moneyFacade
+     */
+    public function __construct(
+        ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade,
+        ProductMerchantPortalGuiToMoneyFacadeInterface $moneyFacade
+    ) {
         $this->priceProductFacade = $priceProductFacade;
+        $this->moneyFacade = $moneyFacade;
     }
 
     /**
@@ -154,5 +166,70 @@ class PriceProductMapper
         }
 
         return (string)$entityName;
+    }
+
+    /**
+     * @phpstan-param array<mixed> $data
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     *
+     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
+     *
+     * @param array $data
+     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function mapDataToPriceProductTransfers(array $data, ArrayObject $priceProductTransfers): ArrayObject
+    {
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer */
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            $this->mapDataToMoneyValueTransfer($data, $priceProductTransfer->getMoneyValueOrFail());
+        }
+
+        return $priceProductTransfers;
+    }
+
+    /**
+     * @phpstan-param array<mixed> $data
+     *
+     * @param array $data
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
+     *
+     * @return \Generated\Shared\Transfer\MoneyValueTransfer
+     */
+    protected function mapDataToMoneyValueTransfer(array $data, MoneyValueTransfer $moneyValueTransfer): MoneyValueTransfer
+    {
+        foreach ($data as $key => $value) {
+            if (strpos($key, MoneyValueTransfer::NET_AMOUNT) !== false) {
+                $value = $this->moneyFacade->convertDecimalToInteger((float)$value);
+                $moneyValueTransfer->setNetAmount($value);
+
+                continue;
+            }
+
+            if (strpos($key, MoneyValueTransfer::GROSS_AMOUNT) !== false) {
+                $value = $this->moneyFacade->convertDecimalToInteger((float)$value);
+                $moneyValueTransfer->setGrossAmount($value);
+
+                continue;
+            }
+
+            if ($key === MoneyValueTransfer::STORE) {
+                $value = (int)$value;
+                $moneyValueTransfer->setFkStore($value);
+                $moneyValueTransfer->setStore((new StoreTransfer())->setIdStore($value));
+
+                continue;
+            }
+
+            if ($key === MoneyValueTransfer::CURRENCY) {
+                $value = (int)$value;
+                $moneyValueTransfer->setFkCurrency($value);
+
+                continue;
+            }
+        }
+
+        return $moneyValueTransfer;
     }
 }

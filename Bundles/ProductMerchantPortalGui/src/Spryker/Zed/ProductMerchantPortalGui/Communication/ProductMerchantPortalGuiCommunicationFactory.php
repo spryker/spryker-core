@@ -12,9 +12,6 @@ use Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface;
 use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
 use Spryker\Shared\GuiTable\Http\GuiTableDataRequestExecutorInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Action\ActionInterface;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Action\DeletePricesAction;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Action\SavePricesAction;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Builder\ProductAbstractNameBuilder;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Builder\ProductAbstractNameBuilderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\ConfigurationProvider\CategoryFilterOptionsProvider;
@@ -200,31 +197,9 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
      */
     public function createPriceProductMapper(): PriceProductMapper
     {
-        return new PriceProductMapper($this->getPriceProductFacade());
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Action\ActionInterface
-     */
-    public function createSavePricesAction(): ActionInterface
-    {
-        return new SavePricesAction(
+        return new PriceProductMapper(
             $this->getPriceProductFacade(),
-            $this->getMoneyFacade(),
-            $this->getUtilEncodingService()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Action\ActionInterface
-     */
-    public function createDeletePricesAction(): ActionInterface
-    {
-        return new DeletePricesAction(
-            $this->getMerchantUserFacade(),
-            $this->getMerchantProductFacade(),
-            $this->getPriceProductFacade(),
-            $this->getUtilEncodingService()
+            $this->getMoneyFacade()
         );
     }
 

@@ -195,30 +195,17 @@ class UpdateProductAbstractController extends AbstractController
             true
         );
 
+        if (!$requestTableData) {
+            return [
+                GuiTableEditableInitialDataTransfer::DATA => [],
+                GuiTableEditableInitialDataTransfer::ERRORS => [],
+            ];
+        }
+
         return [
             GuiTableEditableInitialDataTransfer::DATA => $requestTableData,
             GuiTableEditableInitialDataTransfer::ERRORS => [],
         ];
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function savePricesAction(Request $request)
-    {
-        return $this->getFactory()->createSavePricesAction()->execute($request);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function deletePricesAction(Request $request): JsonResponse
-    {
-        return $this->getFactory()->createDeletePricesAction()->execute($request);
     }
 
     /**

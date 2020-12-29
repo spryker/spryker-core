@@ -10,13 +10,13 @@ namespace Spryker\Zed\PriceProduct\Business\Validator;
 use ArrayObject;
 use Generated\Shared\Transfer\ValidationErrorTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
-use Spryker\Zed\PriceProduct\Business\ConstraintProvider\PriceProductConstraintProviderInterface;
+use Spryker\Zed\PriceProduct\Business\Validator\ConstraintProvider\PriceProductConstraintProviderInterface;
 use Spryker\Zed\PriceProduct\Dependency\External\PriceProductToValidationAdapterInterface;
 
 class PriceProductValidator implements PriceProductValidatorInterface
 {
     /**
-     * @var \Spryker\Zed\PriceProduct\Business\ConstraintProvider\PriceProductConstraintProviderInterface
+     * @var \Spryker\Zed\PriceProduct\Business\Validator\ConstraintProvider\PriceProductConstraintProviderInterface
      */
     protected $priceProductConstraintProvider;
 
@@ -26,7 +26,7 @@ class PriceProductValidator implements PriceProductValidatorInterface
     protected $validator;
 
     /**
-     * @param \Spryker\Zed\PriceProduct\Business\ConstraintProvider\PriceProductConstraintProviderInterface $priceProductConstraintProvider
+     * @param \Spryker\Zed\PriceProduct\Business\Validator\ConstraintProvider\PriceProductConstraintProviderInterface $priceProductConstraintProvider
      * @param \Spryker\Zed\PriceProduct\Dependency\External\PriceProductToValidationAdapterInterface $validationAdapter
      */
     public function __construct(

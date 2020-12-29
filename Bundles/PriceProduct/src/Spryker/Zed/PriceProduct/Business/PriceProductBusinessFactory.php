@@ -9,10 +9,10 @@ namespace Spryker\Zed\PriceProduct\Business;
 
 use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\PriceProduct\Business\Constraint\ValidCurrencyAssignedToStoreConstraint;
-use Spryker\Zed\PriceProduct\Business\Constraint\ValidUniqueStoreCurrencyGrossNetConstraint;
-use Spryker\Zed\PriceProduct\Business\ConstraintProvider\PriceProductConstraintProvider;
-use Spryker\Zed\PriceProduct\Business\ConstraintProvider\PriceProductConstraintProviderInterface;
+use Spryker\Zed\PriceProduct\Business\Validator\Constraint\ValidCurrencyAssignedToStoreConstraint;
+use Spryker\Zed\PriceProduct\Business\Validator\Constraint\ValidUniqueStoreCurrencyGrossNetConstraint;
+use Spryker\Zed\PriceProduct\Business\Validator\ConstraintProvider\PriceProductConstraintProvider;
+use Spryker\Zed\PriceProduct\Business\Validator\ConstraintProvider\PriceProductConstraintProviderInterface;
 use Spryker\Zed\PriceProduct\Business\Internal\Install;
 use Spryker\Zed\PriceProduct\Business\Internal\InstallInterface;
 use Spryker\Zed\PriceProduct\Business\Model\BulkWriter;
@@ -371,7 +371,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProduct\Business\ConstraintProvider\PriceProductConstraintProviderInterface
+     * @return \Spryker\Zed\PriceProduct\Business\Validator\ConstraintProvider\PriceProductConstraintProviderInterface
      */
     public function createPriceProductConstraintProvider(): PriceProductConstraintProviderInterface
     {

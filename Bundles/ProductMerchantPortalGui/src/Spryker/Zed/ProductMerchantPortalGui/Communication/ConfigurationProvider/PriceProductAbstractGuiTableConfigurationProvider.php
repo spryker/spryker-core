@@ -35,14 +35,14 @@ class PriceProductAbstractGuiTableConfigurationProvider implements PriceProductA
     protected const DATA_URL = '/product-merchant-portal-gui/update-product-abstract/table-data';
 
     /**
-     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\UpdateProductAbstractController::savePricesAction()
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\SavePriceProductAbstractController::indexAction()
      */
-    protected const URL_SAVE_PRICES = '/product-merchant-portal-gui/update-product-abstract/save-prices';
+    protected const URL_SAVE_PRICES = '/product-merchant-portal-gui/save-price-product-abstract';
 
     /**
-     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\UpdateProductAbstractController::deletePricesAction()
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\DeletePriceProductAbstractController::indexAction()
      */
-    protected const URL_DELETE_PRICE = '/product-merchant-portal-gui/update-product-abstract/delete-prices';
+    protected const URL_DELETE_PRICE = '/product-merchant-portal-gui/delete-price-product-abstract';
 
     /**
      * @var \Spryker\Shared\GuiTable\GuiTableFactoryInterface

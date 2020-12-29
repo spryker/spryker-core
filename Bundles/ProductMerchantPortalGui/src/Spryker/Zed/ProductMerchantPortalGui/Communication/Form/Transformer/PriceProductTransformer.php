@@ -197,16 +197,23 @@ class PriceProductTransformer implements DataTransformerInterface
         array $prices
     ): array {
         foreach ($priceTypeTransfers as $priceTypeTransfer) {
-            if ($priceProductTransfer->getPriceType()->getName() !== $priceTypeTransfer->getName()) {
+            /** @var string $priceTypeName */
+            $priceTypeName = $priceTypeTransfer->getName();
+
+            /** @var \Generated\Shared\Transfer\PriceTypeTransfer $currentPriceTypeTransfer */
+            $currentPriceTypeTransfer = $priceProductTransfer->getPriceTypeOrFail();
+            if ($currentPriceTypeTransfer->getName() !== $priceTypeName) {
                 continue;
             }
 
-            $priceTypeName = mb_strtolower($priceTypeTransfer->getName());
+            $priceTypeName = mb_strtolower((string)$priceTypeName);
             $netAmountKey = $this->createNetKey($priceTypeName);
             $grossAmountKey = $this->createGrossKey($priceTypeName);
+            /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+            $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
 
-            $prices[$netAmountKey] = $this->moneyFacade->convertIntegerToDecimal($priceProductTransfer->getMoneyValue()->getNetAmount());
-            $prices[$grossAmountKey] = $this->moneyFacade->convertIntegerToDecimal($priceProductTransfer->getMoneyValue()->getGrossAmount());
+            $prices[$netAmountKey] = $this->moneyFacade->convertIntegerToDecimal((int)$moneyValueTransfer->getNetAmount());
+            $prices[$grossAmountKey] = $this->moneyFacade->convertIntegerToDecimal((int)$moneyValueTransfer->getGrossAmount());
         }
 
         return $prices;
