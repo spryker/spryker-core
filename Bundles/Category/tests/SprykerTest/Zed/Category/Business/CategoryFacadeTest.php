@@ -14,7 +14,9 @@ use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
+use Orm\Zed\Category\Persistence\SpyCategoryStoreQuery;
 use Spryker\Zed\Category\Business\CategoryFacadeInterface;
 
 /**
@@ -31,6 +33,8 @@ use Spryker\Zed\Category\Business\CategoryFacadeInterface;
 class CategoryFacadeTest extends Unit
 {
     public const CATEGORY_ID_ROOT = 1;
+
+    protected const TEST_STORE_NAME = 'DE';
 
     /**
      * @var \SprykerTest\Zed\Category\CategoryBusinessTester
@@ -54,6 +58,8 @@ class CategoryFacadeTest extends Unit
     }
 
     /**
+     * @group new
+     *
      * @return void
      */
     public function testDeleteByIdCategory(): void
@@ -93,6 +99,28 @@ class CategoryFacadeTest extends Unit
 
         $this->assertSame(1, $resultNodes->count(), 'If parent already contains a moving child category OR it is the same category, then they should be skipped');
         $this->assertEquals($categoryTransfer3->getCategoryNode()->getIdCategoryNode(), $resultNodes->getFirst()->getIdCategoryNode());
+    }
+
+    /**
+     * @group new
+     *
+     * @return void
+     */
+    public function testDeleteWillDeleteCategoryStoreRelation(): void
+    {
+        // Arrange
+        $categoryTransfer = $this->tester->haveCategory();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_NAME]);
+        $this->tester->haveCategoryStoreRelation($categoryTransfer->getIdCategory(), $storeTransfer->getIdStore());
+
+        // Act
+        $this->getFacade()->delete($categoryTransfer->getIdCategory());
+
+        // Assert
+        $categoryStoreRelationsCount = SpyCategoryStoreQuery::create()
+            ->filterByFkCategory($categoryTransfer->getIdCategory())
+            ->count();
+        $this->assertSame(0, $categoryStoreRelationsCount);
     }
 
     /**

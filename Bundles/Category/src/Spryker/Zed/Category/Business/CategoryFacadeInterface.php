@@ -112,7 +112,7 @@ interface CategoryFacadeInterface
      *
      * @return void
      */
-    public function delete($idCategory): void;
+    public function delete(int $idCategory): void;
 
     /**
      * Specification:
