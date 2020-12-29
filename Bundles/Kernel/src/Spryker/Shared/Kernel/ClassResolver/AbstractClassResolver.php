@@ -75,7 +75,7 @@ abstract class AbstractClassResolver
     /**
      * @var string
      */
-    private $resolvedClassName;
+    protected $resolvedClassName;
 
     /**
      * @var \Spryker\Shared\Kernel\ClassResolver\ClassInfo

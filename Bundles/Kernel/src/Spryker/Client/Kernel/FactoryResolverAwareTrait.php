@@ -14,7 +14,7 @@ trait FactoryResolverAwareTrait
     /**
      * @var \Spryker\Client\Kernel\AbstractFactory|null
      */
-    private $factory;
+    protected $factory;
 
     /**
      * @param \Spryker\Client\Kernel\AbstractFactory $factory

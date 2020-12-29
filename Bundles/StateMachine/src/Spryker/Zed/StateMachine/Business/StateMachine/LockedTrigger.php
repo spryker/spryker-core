@@ -61,18 +61,18 @@ class LockedTrigger implements TriggerInterface
 
     /**
      * @param string $eventName
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItemTransfers
      *
      * @return int
      */
-    public function triggerEvent($eventName, array $stateMachineItems)
+    public function triggerEvent($eventName, array $stateMachineItemTransfers)
     {
-        $identifier = $this->buildIdentifierForMultipleItemLock($stateMachineItems);
+        $identifier = $this->buildIdentifierForMultipleItemLock($stateMachineItemTransfers);
 
         $this->itemLock->acquire($identifier);
 
         try {
-            $triggerEventResult = $this->stateMachineTrigger->triggerEvent($eventName, $stateMachineItems);
+            $triggerEventResult = $this->stateMachineTrigger->triggerEvent($eventName, $stateMachineItemTransfers);
         } finally {
             $this->itemLock->release($identifier);
         }

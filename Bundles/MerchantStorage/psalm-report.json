@@ -1,18 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 48,
-            "line_to": 48,
-            "type": "ParamNameMismatch",
-            "message": "Argument 2 of Spryker\\Zed\\MerchantStorage\\Persistence\\MerchantStorageEntityManager::deleteMerchantStorage has wrong name $storeName, expecting $store as defined by Spryker\\Zed\\MerchantStorage\\Persistence\\MerchantStorageEntityManagerInterface::deleteMerchantStorage",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantStorage/src/Spryker/Zed/MerchantStorage/Persistence/MerchantStorageEntityManager.php",
-            "snippet": "    public function deleteMerchantStorage(int $idMerchant, string $storeName): void",
-            "selected_text": "$storeName",
-            "error_level": 7,
-            "shortcode": 230
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",

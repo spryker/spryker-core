@@ -82,8 +82,6 @@ class Reader implements ReaderInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\Flysystem\Exception\MetadataNotFoundException
-     *
      * @return \Generated\Shared\Transfer\FlysystemResourceMetadataTransfer
      */
     public function getMetadata($filesystemName, $path)

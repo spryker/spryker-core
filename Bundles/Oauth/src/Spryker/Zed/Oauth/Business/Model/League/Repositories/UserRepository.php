@@ -41,7 +41,6 @@ class UserRepository implements UserRepositoryInterface
         $grantType,
         ClientEntityInterface $clientEntity
     ) {
-
         $oauthUserTransfer = $this->createOauthUserTransfer($username, $password, $grantType, $clientEntity);
         $oauthUserTransfer = $this->findUser($oauthUserTransfer);
 

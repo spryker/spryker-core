@@ -32,7 +32,8 @@ class UniqueUrlValidator extends AbstractConstraintValidator
      */
     public function validate($value, Constraint $constraint): void
     {
-        if (!$value->getUrl()) {
+        $url = $value->getUrl();
+        if (!$url) {
             return;
         }
 
@@ -44,7 +45,7 @@ class UniqueUrlValidator extends AbstractConstraintValidator
             return;
         }
 
-        if ($this->hasUrlCaseInsensitive($value->getUrl())) {
+        if ($this->hasUrlCaseInsensitive($url)) {
             $this->context
                 ->buildViolation(sprintf('Provided URL "%s" is already taken.', $value->getUrl()))
                 ->atPath(MerchantProfileUrlCollectionFormType::FIELD_URL)
@@ -97,7 +98,9 @@ class UniqueUrlValidator extends AbstractConstraintValidator
      */
     protected function isUrlChanged(UrlTransfer $urlTransfer, UniqueUrl $constraint): bool
     {
-        $existingUrlTransfer = $this->findExistingUrl($urlTransfer->getUrl());
+        /** @var string $url */
+        $url = $urlTransfer->requireUrl()->getUrl();
+        $existingUrlTransfer = $this->findExistingUrl($url);
 
         if (!$existingUrlTransfer) {
             return true;

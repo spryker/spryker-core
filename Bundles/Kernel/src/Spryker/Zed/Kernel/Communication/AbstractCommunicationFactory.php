@@ -20,7 +20,7 @@ abstract class AbstractCommunicationFactory extends AbstractFactory
     /**
      * @var \Spryker\Zed\Kernel\Business\AbstractFacade
      */
-    private $facade;
+    protected $facade;
 
     /**
      * @return \Spryker\Zed\Kernel\Business\AbstractFacade

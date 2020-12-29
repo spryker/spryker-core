@@ -19,15 +19,19 @@ class ProfileController extends AbstractController
     protected const MESSAGE_MERCHANT_UPDATE_SUCCESS = 'The Profile has been changed successfully.';
 
     /**
+     * @phpstan-return array<mixed>
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
     public function indexAction(Request $request): array
     {
+        /** @var int $idMerchant */
         $idMerchant = $this->getFactory()
             ->getMerchantUserFacade()
             ->getCurrentMerchantUser()
+            ->requireIdMerchant()
             ->getIdMerchant();
 
         $merchantProfileFormDataProvider = $this->getFactory()->createMerchantProfileFormDataProvider();
@@ -46,6 +50,8 @@ class ProfileController extends AbstractController
     }
 
     /**
+     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $merchantForm
+     *
      * @param \Symfony\Component\Form\FormInterface $merchantForm
      *
      * @return void
@@ -65,7 +71,9 @@ class ProfileController extends AbstractController
         }
 
         foreach ($merchantResponseTransfer->getErrors() as $merchantErrorTransfer) {
-            $this->addErrorMessage($merchantErrorTransfer->getMessage());
+            /** @var string $message */
+            $message = $merchantErrorTransfer->requireMessage()->getMessage();
+            $this->addErrorMessage($message);
         }
     }
 }

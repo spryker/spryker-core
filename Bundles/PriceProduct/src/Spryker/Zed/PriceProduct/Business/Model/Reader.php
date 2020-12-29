@@ -367,7 +367,6 @@ class Reader implements ReaderInterface
         PriceProductTransfer $priceProductAbstractTransfer,
         PriceProductTransfer $priceProductConcreteTransfer
     ) {
-
         $abstractMoneyValueTransfer = $priceProductAbstractTransfer->getMoneyValue();
         $concreteMoneyValueTransfer = $priceProductConcreteTransfer->getMoneyValue();
 
