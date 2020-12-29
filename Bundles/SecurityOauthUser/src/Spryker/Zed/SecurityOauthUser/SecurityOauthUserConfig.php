@@ -25,6 +25,10 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
 
     public const REQUEST_PARAMETER_AUTHENTICATION_CODE = 'code';
     public const REQUEST_PARAMETER_AUTHENTICATION_STATE = 'state';
+
+    /**
+     * @uses \Spryker\Zed\SecurityGui\SecurityGuiConfig::ROLE_BACK_OFFICE_USER
+     */
     public const ROLE_BACK_OFFICE_USER = 'ROLE_BACK_OFFICE_USER';
     public const ROLE_OAUTH_USER = 'ROLE_OAUTH_USER';
     public const ROUTE_NAME_OAUTH_USER_LOGIN = 'security-oauth-user:login';
@@ -108,7 +112,8 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Defines the URL where the user will be redirected on authentication failure.
+     * - Defines the URL of the login page.
+     * - Also it is used for the user redirect on authentication failure.
      *
      * @api
      *

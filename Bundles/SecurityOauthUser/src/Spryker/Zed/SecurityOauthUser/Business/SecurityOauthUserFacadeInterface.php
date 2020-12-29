@@ -20,7 +20,7 @@ interface SecurityOauthUserFacadeInterface
      * Specification:
      * - Requests a resource owner using a specified option set.
      * - Requires code field to be set.
-     * - Requires state field to be set, contributes to identify the Oauth client during the request.
+     * - Requires state field to be set, contributes to identifying the Oauth client during the request.
      * - Runs a stack of `OauthUserClientStrategyPluginInterface` plugins to get suitable Oauth client.
      * - Returns `ResourceOwnerResponseTransfer::isSuccessful = true` in case the request has been handled by appropriate plugin.
      * - Returns `ResourceOwnerResponseTransfer::isSuccessful = false` in case the request has not been handled.

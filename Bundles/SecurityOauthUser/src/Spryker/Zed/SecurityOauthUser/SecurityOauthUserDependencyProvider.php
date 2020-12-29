@@ -22,7 +22,7 @@ class SecurityOauthUserDependencyProvider extends AbstractBundleDependencyProvid
     public const FACADE_USER = 'FACADE_USER';
     public const FACADE_ACL = 'FACADE_ACL';
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
-    public const SERVICE_UTIL_TEXT = 'UTIL_TEXT_SERVICE';
+    public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
 
     public const PLUGINS_OAUTH_USER_CLIENT_STRATEGY = 'PLUGINS_OAUTH_USER_CLIENT_STRATEGY';
     public const PLUGINS_OAUTH_USER_RESTRICTION = 'PLUGINS_OAUTH_USER_RESTRICTION';
