@@ -51,7 +51,7 @@ class ShoppingListConfig extends AbstractBundleConfig
      */
     public function isShoppingListOverviewWithShoppingLists(): bool
     {
-        return false;
+        return true;
     }
 
     /**
