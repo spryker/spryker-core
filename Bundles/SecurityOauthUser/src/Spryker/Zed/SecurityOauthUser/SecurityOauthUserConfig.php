@@ -25,6 +25,7 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
 
     public const REQUEST_PARAMETER_AUTHENTICATION_CODE = 'code';
     public const REQUEST_PARAMETER_AUTHENTICATION_STATE = 'state';
+    public const REQUEST_PARAMETER_AUTHENTICATION_ERROR = 'error';
     public const ROLE_BACK_OFFICE_USER = 'ROLE_BACK_OFFICE_USER';
     public const ROLE_OAUTH_USER = 'ROLE_OAUTH_USER';
     public const ROUTE_NAME_OAUTH_USER_LOGIN = 'security-oauth-user:login';
