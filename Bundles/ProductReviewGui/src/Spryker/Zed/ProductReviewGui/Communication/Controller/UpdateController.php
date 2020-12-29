@@ -30,7 +30,7 @@ class UpdateController extends AbstractController
      */
     public function approveAction(Request $request): RedirectResponse
     {
-        if (($response = $this->checkForm($request)) !== null) {
+        if (($response = $this->checkFormValidationInRequest($request)) !== null) {
             return $response;
         }
 
@@ -57,7 +57,7 @@ class UpdateController extends AbstractController
      */
     public function rejectAction(Request $request): RedirectResponse
     {
-        if (($response = $this->checkForm($request)) !== null) {
+        if (($response = $this->checkFormValidationInRequest($request)) !== null) {
             return $response;
         }
 
@@ -82,7 +82,7 @@ class UpdateController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|null
      */
-    protected function checkForm(Request $request): ?RedirectResponse
+    protected function checkFormValidationInRequest(Request $request): ?RedirectResponse
     {
         $form = $this->getFactory()->createStatusProductReviewForm()->handleRequest($request);
 
