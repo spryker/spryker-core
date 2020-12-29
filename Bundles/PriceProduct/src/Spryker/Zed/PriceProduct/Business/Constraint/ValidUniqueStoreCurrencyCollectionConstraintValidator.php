@@ -43,6 +43,10 @@ class ValidUniqueStoreCurrencyCollectionConstraintValidator extends AbstractCons
             }
             $moneyValueTransfer = $priceProductTransfer->getMoneyValueOrFail();
 
+            if (!$moneyValueTransfer->getFkCurrency() || !$moneyValueTransfer->getFkStore()) {
+                continue;
+            }
+
             $key = sprintf(
                 '%s-%s-%s',
                 $moneyValueTransfer->getFkCurrencyOrFail(),

@@ -33,16 +33,16 @@ class ValidUniqueStoreCurrencyGrossNetConstraintValidator extends AbstractConstr
             throw new UnexpectedTypeException($constraint, ValidUniqueStoreCurrencyGrossNetConstraint::class);
         }
 
-        if (!$value->getIdProductAbstract()) {
+        $moneyValueTransfer = $value->getMoneyValueOrFail();
+
+        if (!$value->getIdProductAbstract() || !$moneyValueTransfer->getFkStore() || !$moneyValueTransfer->getFkCurrency()) {
             return;
         }
 
-        $moneyValueTransfer = $value->getMoneyValueOrFail();
-
         $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
             ->setIdProductAbstract($value->getIdProductAbstract())
-            ->setIdCurrency($moneyValueTransfer->getFkCurrencyOrFail())
-            ->setIdStore($moneyValueTransfer->getFkStoreOrFail())
+            ->setIdCurrency($moneyValueTransfer->getFkCurrency())
+            ->setIdStore($moneyValueTransfer->getFkStore())
             ->setPriceType($value->getPriceType()->getNameOrFail());
 
         $priceProductTransfers = $constraint->getPriceProductRepository()->getProductPricesByCriteria($priceProductCriteriaTransfer);

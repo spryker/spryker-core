@@ -142,7 +142,8 @@ class PriceProductTransformer implements DataTransformerInterface
         array $priceTypeTransfers,
         ArrayObject $priceProductTransfers
     ): ArrayObject {
-        $currencyTransfer = $this->currencyFacade->getByIdCurrency($newPriceProduct[PriceProductAbstractTableViewTransfer::CURRENCY]);
+        $currency = $newPriceProduct[PriceProductAbstractTableViewTransfer::CURRENCY];
+        $currencyTransfer = $currency ? $this->currencyFacade->getByIdCurrency($currency) : null;
 
         foreach ($priceTypeTransfers as $priceTypeTransfer) {
             $storeTransfer = (new StoreTransfer())

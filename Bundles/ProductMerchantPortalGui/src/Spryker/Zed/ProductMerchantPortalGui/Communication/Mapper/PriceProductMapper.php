@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper;
 
 use Generated\Shared\Transfer\GuiTableEditableDataErrorTransfer;
 use Generated\Shared\Transfer\GuiTableEditableInitialDataTransfer;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductAbstractTableViewTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ValidationErrorTransfer;
@@ -17,6 +18,11 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortal
 
 class PriceProductMapper
 {
+    protected const MAP_FIELD_NAMES = [
+        MoneyValueTransfer::FK_STORE => PriceProductAbstractTableViewTransfer::STORE,
+        MoneyValueTransfer::FK_CURRENCY => PriceProductAbstractTableViewTransfer::CURRENCY,
+    ];
+
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface
      */
@@ -133,16 +139,16 @@ class PriceProductMapper
     {
         [$entityNumber, $entityName, $fieldName] = $propertyPath;
 
-        if (!$entityName) {
+        if (!$entityName || !$fieldName) {
             return '';
+        }
+
+        if (!empty(static::MAP_FIELD_NAMES[$fieldName])) {
+            return static::MAP_FIELD_NAMES[$fieldName];
         }
 
         if ($entityName === PriceProductTransfer::MONEY_VALUE) {
             $priceTypeName = mb_strtolower($priceTypeTransfers[$entityNumber]->getName());
-
-            if (!$fieldName) {
-                return '';
-            }
 
             return sprintf('%s[%s][%s]', $priceTypeName, (string)$entityName, (string)$fieldName);
         }

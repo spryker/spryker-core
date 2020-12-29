@@ -33,6 +33,10 @@ class ValidCurrencyAssignedToStoreConstraintValidator extends AbstractConstraint
         }
         $moneyValueTransfer = $value->getMoneyValueOrFail();
 
+        if (!$moneyValueTransfer->getFkStore() || !$moneyValueTransfer->getCurrency()) {
+            return;
+        }
+
         $storeTransfer = $constraint->getStoreFacade()->getStoreById($moneyValueTransfer->getFkStore());
 
         if (!in_array($moneyValueTransfer->getCurrencyOrFail()->getCode(), $storeTransfer->getAvailableCurrencyIsoCodes(), true)) {
