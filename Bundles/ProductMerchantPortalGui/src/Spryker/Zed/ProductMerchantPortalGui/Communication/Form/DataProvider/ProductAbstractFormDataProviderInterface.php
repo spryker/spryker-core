@@ -23,4 +23,9 @@ interface ProductAbstractFormDataProviderInterface
      * @return int[][]
      */
     public function getOptions(): array;
+
+    /**
+     * @return mixed[]
+     */
+    public function getProductCategoryTree(): array;
 }

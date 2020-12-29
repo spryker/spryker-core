@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider;
 use Generated\Shared\Transfer\GuiTableDataRequestTransfer;
 use Generated\Shared\Transfer\GuiTableDataResponseTransfer;
 use Generated\Shared\Transfer\GuiTableRowDataResponseTransfer;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductAbstractTableCriteriaTransfer;
 use Spryker\Shared\GuiTable\DataProvider\AbstractGuiTableDataProvider;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
@@ -76,6 +77,8 @@ class PriceProductAbstractTableDataProvider extends AbstractGuiTableDataProvider
      */
     protected function fetchData(AbstractTransfer $criteriaTransfer): GuiTableDataResponseTransfer
     {
+        $criteriaTransfer = $this->replacePriceSortingFields($criteriaTransfer);
+
         $priceProductAbstractTableViewCollectionTransfer = $this->productMerchantPortalGuiRepository
             ->getPriceProductAbstractTableData($criteriaTransfer);
         $guiTableDataResponseTransfer = new GuiTableDataResponseTransfer();
@@ -96,5 +99,39 @@ class PriceProductAbstractTableDataProvider extends AbstractGuiTableDataProvider
             ->setPage($paginationTransfer->getPage())
             ->setPageSize($paginationTransfer->getMaxPerPage())
             ->setTotal($paginationTransfer->getNbResults());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductAbstractTableCriteriaTransfer $priceProductAbstractTableCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductAbstractTableCriteriaTransfer
+     */
+    protected function replacePriceSortingFields(
+        PriceProductAbstractTableCriteriaTransfer $priceProductAbstractTableCriteriaTransfer
+    ): PriceProductAbstractTableCriteriaTransfer {
+        /** @var string $orderByField */
+        $orderByField = $priceProductAbstractTableCriteriaTransfer->getOrderBy();
+
+        if (!$orderByField) {
+            return $priceProductAbstractTableCriteriaTransfer;
+        }
+
+        if (strpos($orderByField, '[') === false) {
+            return $priceProductAbstractTableCriteriaTransfer;
+        }
+
+        /** @var string $orderByField */
+        $orderByField = str_replace(']', '', $orderByField);
+        $orderByField = explode('[', $orderByField);
+
+        if ($orderByField[2] === MoneyValueTransfer::NET_AMOUNT) {
+            return $priceProductAbstractTableCriteriaTransfer->setOrderBy($orderByField[0] . '_net');
+        }
+
+        if ($orderByField[2] === MoneyValueTransfer::GROSS_AMOUNT) {
+            return $priceProductAbstractTableCriteriaTransfer->setOrderBy($orderByField[0] . '_gross');
+        }
+
+        return $priceProductAbstractTableCriteriaTransfer;
     }
 }

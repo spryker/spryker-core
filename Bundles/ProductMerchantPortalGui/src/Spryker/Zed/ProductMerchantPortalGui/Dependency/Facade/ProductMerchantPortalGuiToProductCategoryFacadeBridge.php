@@ -35,4 +35,30 @@ class ProductMerchantPortalGuiToProductCategoryFacadeBridge implements ProductMe
     {
         return $this->productCategoryFacade->getCategoryTransferCollectionByIdProductAbstract($idProductAbstract, $localeTransfer);
     }
+
+    /**
+     * @phpstan-param array<int> $productIdsToAssign
+     *
+     * @param int $idCategory
+     * @param array $productIdsToAssign
+     *
+     * @return void
+     */
+    public function createProductCategoryMappings($idCategory, array $productIdsToAssign)
+    {
+        $this->productCategoryFacade->createProductCategoryMappings($idCategory, $productIdsToAssign);
+    }
+
+    /**
+     * @phpstan-param array<int> $productIdsToUnAssign
+     *
+     * @param int $idCategory
+     * @param array $productIdsToUnAssign
+     *
+     * @return void
+     */
+    public function removeProductCategoryMappings($idCategory, array $productIdsToUnAssign)
+    {
+        $this->productCategoryFacade->removeProductCategoryMappings($idCategory, $productIdsToUnAssign);
+    }
 }

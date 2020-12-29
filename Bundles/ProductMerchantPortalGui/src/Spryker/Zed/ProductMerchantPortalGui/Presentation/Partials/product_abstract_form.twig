@@ -146,23 +146,21 @@
                                 </web-spy-card>
                             {% endblock %}
 
-                            {#{% block categoriesCard %}#}
-                                {#<web-spy-card spy-title="{{ 'Categories' | trans }}" class="{{ mainClass }}__card">#}
-                                    {#{% block categoriesCardInner %}#}
-                                        {# TODO: dump data, should be changed when BE will be ready  #}
-                                        {#{% set categoriesOptions = [#}
-                                            {#{ value: 1, title: 'Option 1' },#}
-                                            {#{ value: '2', title: 'Option 2' },#}
-                                            {#{ value: '3', title: 'Option 3' },#}
-                                        {#] %}#}
-
-                                        {#<web-spy-tree-select#}
-                                            {#items="{{ categoriesOptions | json_encode }}"#}
-                                            {#placeholder="{{ 'Select Categories' | trans }}">#}
-                                        {#</web-spy-tree-select>#}
-                                    {#{% endblock %}#}
-                                {#</web-spy-card>#}
-                            {#{% endblock %}#}
+                            {% block categoriesCard %}
+                                <web-spy-card spy-title="{{ 'Categories' | trans }}" class="{{ mainClass }}__card">
+                                    {% block categoriesCardInner %}
+                                        <web-spy-tree-select
+                                            multiple="true"
+                                            name="{{ form.categoryIds.vars.full_name }}"
+                                            items="{{ productCategoryTree | json_encode }}"
+                                            placeholder="{{ 'Select Categories' | trans }}"
+                                            value="{{ productAbstract.categoryIds | json_encode}}"
+                                        >
+                                        </web-spy-tree-select>
+                                        {% do form.categoryIds.setRendered %}
+                                    {% endblock %}
+                                </web-spy-card>
+                            {% endblock %}
 
                             {% for child in form -%}
                                 {% if not child.rendered and child.vars['block_prefixes'][1] != 'hidden'%}

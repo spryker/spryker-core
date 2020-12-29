@@ -23,13 +23,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ProductAbstractForm extends AbstractType
 {
     public const OPTION_STORE_CHOICES = 'OPTION_STORE_CHOICES';
+    public const OPTION_PRODUCT_CATEGORY_CHOICES = 'OPTION_PRODUCT_CATEGORY_CHOICES';
+
     public const BLOCK_PREFIX = 'productAbstract';
 
     protected const FIELD_STORES = 'stores';
 
     protected const LABEL_STORES = 'Stores';
+    protected const LABEL_CATEGORIES = 'Categories';
 
     protected const PLACEHOLDER_STORES = 'Select';
+    protected const PLACEHOLDER_CATEGORIES = 'Select';
 
     /**
      * @return string
@@ -51,6 +55,7 @@ class ProductAbstractForm extends AbstractType
         ]);
 
         $resolver->setRequired(static::OPTION_STORE_CHOICES);
+        $resolver->setRequired(static::OPTION_PRODUCT_CATEGORY_CHOICES);
     }
 
     /**
@@ -66,7 +71,8 @@ class ProductAbstractForm extends AbstractType
     {
         $this->addLocalizedAttributesSubform($builder)
             ->addStoresField($builder, $options)
-            ->addPrices($builder, $options);
+            ->addPrices($builder, $options)
+            ->addCategories($builder, $options);
 
         $this->executeProductAbstractFormExpanderPlugins($builder, $options);
     }
@@ -140,6 +146,35 @@ class ProductAbstractForm extends AbstractType
         $priceProductTransformer = $this->getFactory()->createPriceProductTransformer($idProductAbstract);
 
         $builder->get(ProductAbstractTransfer::PRICES)->addModelTransformer($priceProductTransformer);
+
+        return $this;
+    }
+
+    /**
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     * @phpstan-param array<mixed> $options
+     *
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addCategories(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(
+            ProductAbstractTransfer::CATEGORY_IDS,
+            ChoiceType::class,
+            [
+                'choices' => $options[static::OPTION_PRODUCT_CATEGORY_CHOICES],
+                'multiple' => true,
+                'label' => static::LABEL_CATEGORIES,
+                'required' => false,
+                'empty_data' => [],
+                'attr' => [
+                    'placeholder' => static::PLACEHOLDER_CATEGORIES,
+                ],
+            ]
+        );
 
         return $this;
     }
