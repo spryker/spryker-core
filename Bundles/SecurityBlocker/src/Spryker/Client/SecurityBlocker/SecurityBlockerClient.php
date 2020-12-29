@@ -46,7 +46,7 @@ class SecurityBlockerClient extends AbstractClient implements SecurityBlockerCli
     public function isAccountBlocked(SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer): SecurityCheckAuthResponseTransfer
     {
         return $this->getFactory()
-            ->createSecurityBlockerStorageReader()
+            ->createSecurityBlockerStorageChecker()
             ->isAccountBlocked($securityCheckAuthContextTransfer);
     }
 }

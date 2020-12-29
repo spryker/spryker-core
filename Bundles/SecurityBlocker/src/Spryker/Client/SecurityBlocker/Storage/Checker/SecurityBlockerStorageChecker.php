@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\SecurityBlocker\Storage\Reader;
+namespace Spryker\Client\SecurityBlocker\Storage\Checker;
 
 use Generated\Shared\Transfer\SecurityCheckAuthContextTransfer;
 use Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer;
@@ -13,7 +13,7 @@ use Spryker\Client\SecurityBlocker\Redis\SecurityBlockerRedisWrapperInterface;
 use Spryker\Client\SecurityBlocker\Resolver\ConfigurationResolverInterface;
 use Spryker\Client\SecurityBlocker\Storage\KeyBuilder\SecurityBlockerStorageKeyBuilderInterface;
 
-class SecurityBlockerStorageReader implements SecurityBlockerStorageReaderInterface
+class SecurityBlockerStorageChecker implements SecurityBlockerStorageCheckerInterface
 {
     /**
      * @var \Spryker\Client\SecurityBlocker\Redis\SecurityBlockerRedisWrapperInterface

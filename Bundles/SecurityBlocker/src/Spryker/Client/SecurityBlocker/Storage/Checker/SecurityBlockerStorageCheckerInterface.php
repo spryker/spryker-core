@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\SecurityBlocker\Storage\Reader;
+namespace Spryker\Client\SecurityBlocker\Storage\Checker;
 
 use Generated\Shared\Transfer\SecurityCheckAuthContextTransfer;
 use Generated\Shared\Transfer\SecurityCheckAuthResponseTransfer;
 
-interface SecurityBlockerStorageReaderInterface
+interface SecurityBlockerStorageCheckerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\SecurityCheckAuthContextTransfer $securityCheckAuthContextTransfer
