@@ -15,8 +15,7 @@ use Spryker\Shared\SecurityBlocker\SecurityBlockerConstants;
 
 class SecurityBlockerConfig extends AbstractBundleConfig
 {
-    public const SECURITY_BLOCKER_AGENT_ENTITY_TYPE = 'agent';
-
+    protected const SECURITY_BLOCKER_AGENT_ENTITY_TYPE = 'agent';
     protected const STORAGE_REDIS_CONNECTION_KEY = 'SECURITY_BLOCKER_REDIS';
     protected const DEFAULT_BLOCKING_TTL = 600;
     protected const DEFAULT_BLOCK_FOR = 300;
@@ -93,11 +92,13 @@ class SecurityBlockerConfig extends AbstractBundleConfig
      */
     public function getSecurityBlockerConfigurationSettings(): array
     {
-        $ttl = $this->getConfig()->hasValue(SecurityBlockerConstants::SECURITY_BLOCKER_AGENT_BLOCKING_TTL)
+        $sharedConfig = $this->getConfig();
+
+        $ttl = $sharedConfig::hasValue(SecurityBlockerConstants::SECURITY_BLOCKER_AGENT_BLOCKING_TTL)
             ? $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_AGENT_BLOCKING_TTL) : null;
-        $blockFor = $this->getConfig()->hasValue(SecurityBlockerConstants::SECURITY_BLOCKER_AGENT_BLOCK_FOR)
+        $blockFor = $sharedConfig::hasValue(SecurityBlockerConstants::SECURITY_BLOCKER_AGENT_BLOCK_FOR)
             ? $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_AGENT_BLOCK_FOR) : null;
-        $numberOfAttempts = $this->getConfig()->hasValue(SecurityBlockerConstants::SECURITY_BLOCKER_AGENT_BLOCKING_NUMBER_OF_ATTEMPTS)
+        $numberOfAttempts = $sharedConfig::hasValue(SecurityBlockerConstants::SECURITY_BLOCKER_AGENT_BLOCKING_NUMBER_OF_ATTEMPTS)
             ? $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_AGENT_BLOCKING_NUMBER_OF_ATTEMPTS) : null;
 
         return [
