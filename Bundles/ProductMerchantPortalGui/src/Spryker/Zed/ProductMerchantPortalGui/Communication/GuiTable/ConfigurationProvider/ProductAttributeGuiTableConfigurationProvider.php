@@ -69,7 +69,9 @@ class ProductAttributeGuiTableConfigurationProvider implements ProductAttributeG
 
         $guiTableConfigurationBuilder
             ->setDataSourceType(static::DATA_SOURCE_TYPE_INLINE)
-            ->setDataSourceData($this->productAttributeTableDataProvider->getData($attributes, $localizedAttributeTransfers));
+            ->setDataSourceData($this->productAttributeTableDataProvider->getData($attributes, $localizedAttributeTransfers))
+            ->setIsPaginationEnabled(false)
+            ->isSearchEnabled(false);
 
         return $guiTableConfigurationBuilder->createConfiguration();
     }

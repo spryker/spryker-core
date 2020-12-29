@@ -391,6 +391,15 @@ interface GuiTableConfigurationBuilderInterface
     /**
      * @api
      *
+     * @param bool $isPaginationEnabled
+     *
+     * @return $this
+     */
+    public function setIsPaginationEnabled(bool $isPaginationEnabled);
+
+    /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
     public function createConfiguration(): GuiTableConfigurationTransfer;

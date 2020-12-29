@@ -147,6 +147,11 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     protected $editableConfiguration;
 
     /**
+     * @var bool
+     */
+    protected $isPaginationEnabled;
+
+    /**
      * @api
      *
      * @param string $id
@@ -749,6 +754,20 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     /**
      * @api
      *
+     * @param bool $isPaginationEnabled
+     *
+     * @return $this
+     */
+    public function setIsPaginationEnabled(bool $isPaginationEnabled)
+    {
+        $this->isPaginationEnabled = $isPaginationEnabled;
+
+        return $this;
+    }
+
+    /**
+     * @api
+     *
      * @throws \Spryker\Shared\GuiTable\Exception\InvalidConfigurationException
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
@@ -802,6 +821,12 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
 
         if ($this->editableConfiguration) {
             $guiTableConfigurationTransfer->setEditable($this->editableConfiguration);
+        }
+
+        if ($this->isPaginationEnabled !== null) {
+            $guiTableConfigurationTransfer->setPagination(
+                (new GuiTablePaginationConfigurationTransfer())->setIsEnabled($this->isPaginationEnabled)
+            );
         }
 
         return $guiTableConfigurationTransfer;
