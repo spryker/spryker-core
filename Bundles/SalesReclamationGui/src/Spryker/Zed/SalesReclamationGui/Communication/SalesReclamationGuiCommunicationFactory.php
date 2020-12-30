@@ -96,7 +96,7 @@ class SalesReclamationGuiCommunicationFactory extends AbstractCommunicationFacto
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCloseReclamationForm(): FormInterface
+    public function getCloseReclamationForm(): FormInterface
     {
         return $this->getFormFactory()->create(CloseReclamationForm::class);
     }
