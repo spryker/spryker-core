@@ -673,6 +673,8 @@
     "spryker/search-elasticsearch-gui": "*",
     "spryker/search-extension": "*",
     "spryker/security": "*",
+    "spryker/security-blocker": "*",
+    "spryker/security-blocker-rest-api": "*",
     "spryker/security-extension": "*",
     "spryker/security-gui": "*",
     "spryker/security-merchant-portal-gui": "*",
