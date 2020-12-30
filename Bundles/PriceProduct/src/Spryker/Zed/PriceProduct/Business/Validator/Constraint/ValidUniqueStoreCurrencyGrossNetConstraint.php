@@ -21,7 +21,7 @@ class ValidUniqueStoreCurrencyGrossNetConstraint extends SymfonyConstraint
 
     /**
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface $priceProductRepository
-     * @param null $options
+     * @param mixed $options
      */
     public function __construct(PriceProductRepositoryInterface $priceProductRepository, $options = null)
     {

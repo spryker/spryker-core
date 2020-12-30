@@ -1167,7 +1167,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      */
     protected function setDataSource(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
-        $guiTableDataSourceConfigurationTransfer = new GuiTableDataSourceConfigurationTransfer;
+        $guiTableDataSourceConfigurationTransfer = new GuiTableDataSourceConfigurationTransfer();
 
         if ($this->dataSourceType) {
             $guiTableDataSourceConfigurationTransfer->setType($this->dataSourceType);
