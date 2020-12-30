@@ -170,12 +170,12 @@ abstract class AbstractCustomerTable extends AbstractTable
             'js-customer-checkbox',
             $customerEntity->getIdCustomer(),
             static::IS_CHECKBOX_SET_BY_DEFAULT ? 'checked' : '',
-            $this->utilSanitizeService->escapeHtml($this->utilEncoding->encodeJson($this->utilSanitizeService->escapeHtml([
+            $this->utilSanitizeService->escapeHtml($this->utilEncoding->encodeJson([
                 'idCustomer' => $customerEntity->getIdCustomer(),
-                'firstname' => $customerEntity->getFirstName(),
-                'lastname' => $customerEntity->getLastName(),
+                'firstname' => $this->utilSanitizeService->escapeHtml($customerEntity->getFirstName()),
+                'lastname' => $this->utilSanitizeService->escapeHtml($customerEntity->getLastName()),
                 'gender' => $customerEntity->getGender(),
-            ])))
+            ]))
         );
     }
 

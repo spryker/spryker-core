@@ -217,12 +217,12 @@ abstract class AbstractAssignmentTable extends AbstractTable
             'js-item-checkbox',
             $customerEntity->getIdCustomer(),
             $this->getCheckboxCheckedAttribute(),
-            $this->utilSanitizeService->escapeHtml($this->utilEncoding->encodeJson($this->utilSanitizeService->escapeHtml([
+            $this->utilSanitizeService->escapeHtml($this->utilEncoding->encodeJson([
                 'id' => $customerEntity->getIdCustomer(),
                 'email' => $customerEntity->getEmail(),
-                'firstName' => $customerEntity->getFirstName(),
-                'lastName' => $customerEntity->getLastName(),
-            ])))
+                'firstName' => $this->utilSanitizeService->escapeHtml($customerEntity->getFirstName()),
+                'lastName' => $this->utilSanitizeService->escapeHtml($customerEntity->getLastName()),
+            ]))
         );
     }
 

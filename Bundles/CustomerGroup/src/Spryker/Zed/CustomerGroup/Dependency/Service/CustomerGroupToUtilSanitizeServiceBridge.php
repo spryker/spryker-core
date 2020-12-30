@@ -23,11 +23,11 @@ class CustomerGroupToUtilSanitizeServiceBridge implements CustomerGroupToUtilSan
     }
 
     /**
-     * @param string|array|object $text
+     * @param string $text
      * @param bool $double
      * @param string|null $charset
      *
-     * @return string|array Wrapped text.
+     * @return string
      */
     public function escapeHtml($text, $double = true, $charset = null)
     {

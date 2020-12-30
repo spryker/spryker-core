@@ -23,11 +23,11 @@ class CustomerUserConnectorGuiToUtilSanitizeServiceBridge implements CustomerUse
     }
 
     /**
-     * @param string|array|object $text
+     * @param string $text
      * @param bool $double
      * @param string|null $charset
      *
-     * @return string|array
+     * @return string
      */
     public function escapeHtml($text, $double = true, $charset = null)
     {

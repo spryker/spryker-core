@@ -10,11 +10,11 @@ namespace Spryker\Zed\CustomerUserConnectorGui\Dependency\Service;
 interface CustomerUserConnectorGuiToUtilSanitizeServiceInterface
 {
     /**
-     * @param string|array|object $text
+     * @param string $text
      * @param bool $double
      * @param string|null $charset
      *
-     * @return string|array
+     * @return string
      */
     public function escapeHtml($text, $double = true, $charset = null);
 }
