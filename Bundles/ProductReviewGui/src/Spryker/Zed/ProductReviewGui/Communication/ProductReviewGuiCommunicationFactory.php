@@ -76,7 +76,7 @@ class ProductReviewGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createStatusProductReviewForm(): FormInterface
+    public function getStatusProductReviewForm(): FormInterface
     {
         return $this->getFormFactory()->create(StatusProductReviewForm::class);
     }
