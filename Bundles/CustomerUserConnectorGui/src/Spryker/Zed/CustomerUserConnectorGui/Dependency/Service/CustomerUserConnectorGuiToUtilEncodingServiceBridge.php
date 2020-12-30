@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CustomerUserConnectorGui\Dependency\Service;
 
-class CustomerUserConnectorGuiToUtilEncodingBridge implements CustomerUserConnectorGuiToUtilEncodingInterface
+class CustomerUserConnectorGuiToUtilEncodingServiceBridge implements CustomerUserConnectorGuiToUtilEncodingServiceInterface
 {
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface

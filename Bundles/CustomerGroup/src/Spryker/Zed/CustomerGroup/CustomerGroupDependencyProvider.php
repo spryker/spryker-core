@@ -9,7 +9,7 @@ namespace Spryker\Zed\CustomerGroup;
 
 use Spryker\Zed\CustomerGroup\Dependency\QueryContainer\CustomerGroupToCustomerQueryContainerBridge;
 use Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilEncodingBridge;
-use Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilSanitizeBridge;
+use Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilSanitizeServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -100,7 +100,7 @@ class CustomerGroupDependencyProvider extends AbstractBundleDependencyProvider
     protected function addUtilSanitizeService(Container $container): Container
     {
         $container->set(static::SERVICE_UTIL_SANITIZE, function (Container $container) {
-            return new CustomerGroupToUtilSanitizeBridge($container->getLocator()->utilSanitize()->service());
+            return new CustomerGroupToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
         });
 
         return $container;

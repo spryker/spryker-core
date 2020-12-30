@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CustomerUserConnectorGui\Dependency\Service;
+namespace Spryker\Zed\CustomerGroup\Dependency\Service;
 
-class CustomerUserConnectorGuiToUtilSanitizeBridge implements CustomerUserConnectorGuiToUtilSanitizeInterface
+class CustomerGroupToUtilSanitizeServiceBridge implements CustomerGroupToUtilSanitizeServiceInterface
 {
     /**
      * @var \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface
@@ -27,7 +27,7 @@ class CustomerUserConnectorGuiToUtilSanitizeBridge implements CustomerUserConnec
      * @param bool $double
      * @param string|null $charset
      *
-     * @return string|array
+     * @return string|array Wrapped text.
      */
     public function escapeHtml($text, $double = true, $charset = null)
     {

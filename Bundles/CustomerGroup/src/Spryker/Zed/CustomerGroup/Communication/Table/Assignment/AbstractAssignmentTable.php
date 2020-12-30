@@ -11,7 +11,7 @@ use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilEncodingInterface;
-use Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilSanitizeInterface;
+use Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilSanitizeServiceInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -36,7 +36,7 @@ abstract class AbstractAssignmentTable extends AbstractTable
     protected $tableQueryBuilder;
 
     /**
-     * @var \Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilSanitizeInterface
+     * @var \Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilSanitizeServiceInterface
      */
     protected $utilSanitizeService;
 
@@ -49,13 +49,13 @@ abstract class AbstractAssignmentTable extends AbstractTable
      * @param \Spryker\Zed\CustomerGroup\Communication\Table\Assignment\AssignmentCustomerQueryBuilderInterface $tableQueryBuilder
      * @param \Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilEncodingInterface $utilEncoding
      * @param int $idCustomerGroup
-     * @param \Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilSanitizeInterface $utilSanitizeService
+     * @param \Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilSanitizeServiceInterface $utilSanitizeService
      */
     public function __construct(
         AssignmentCustomerQueryBuilderInterface $tableQueryBuilder,
         CustomerGroupToUtilEncodingInterface $utilEncoding,
         $idCustomerGroup,
-        CustomerGroupToUtilSanitizeInterface $utilSanitizeService
+        CustomerGroupToUtilSanitizeServiceInterface $utilSanitizeService
     ) {
         $this->tableQueryBuilder = $tableQueryBuilder;
         $this->utilEncoding = $utilEncoding;

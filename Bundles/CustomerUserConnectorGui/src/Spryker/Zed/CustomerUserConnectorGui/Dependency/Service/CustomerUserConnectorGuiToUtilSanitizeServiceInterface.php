@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CustomerUserConnectorGui\Dependency\Service;
 
-interface CustomerUserConnectorGuiToUtilSanitizeInterface
+interface CustomerUserConnectorGuiToUtilSanitizeServiceInterface
 {
     /**
      * @param string|array|object $text

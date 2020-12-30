@@ -17,6 +17,7 @@ use Spryker\Zed\CustomerGroup\Communication\Table\CustomerGroupTable;
 use Spryker\Zed\CustomerGroup\Communication\Table\CustomerTable;
 use Spryker\Zed\CustomerGroup\Communication\Tabs\CustomerGroupFormTabs;
 use Spryker\Zed\CustomerGroup\CustomerGroupDependencyProvider;
+use Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilSanitizeServiceInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -62,7 +63,7 @@ class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
             $this->createAssignmentCustomerQueryBuilder(),
             $this->getUtilEncodingService(),
             $idCustomerGroup,
-            $this->getUtilSanitizeServiceInterface()
+            $this->getUtilSanitizeService()
         );
     }
 
@@ -77,7 +78,7 @@ class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
             $this->createAssignmentCustomerQueryBuilder(),
             $this->getUtilEncodingService(),
             $idCustomerGroup,
-            $this->getUtilSanitizeServiceInterface()
+            $this->getUtilSanitizeService()
         );
     }
 
@@ -145,9 +146,9 @@ class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilSanitizeInterface
+     * @return \Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilSanitizeServiceInterface
      */
-    protected function getUtilSanitizeServiceInterface()
+    public function getUtilSanitizeService(): CustomerGroupToUtilSanitizeServiceInterface
     {
         return $this->getProvidedDependency(CustomerGroupDependencyProvider::SERVICE_UTIL_SANITIZE);
     }

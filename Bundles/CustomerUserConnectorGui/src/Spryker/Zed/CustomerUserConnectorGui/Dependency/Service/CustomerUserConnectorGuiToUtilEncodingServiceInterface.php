@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CustomerUserConnectorGui\Dependency\Service;
 
-interface CustomerUserConnectorGuiToUtilEncodingInterface
+interface CustomerUserConnectorGuiToUtilEncodingServiceInterface
 {
     /**
      * @param mixed $value
@@ -26,5 +26,5 @@ interface CustomerUserConnectorGuiToUtilEncodingInterface
      *
      * @return mixed|null
      */
-    public function decodeJson(string $jsonValue, $assoc = false, $depth = null, $options = null);
+    public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
 }

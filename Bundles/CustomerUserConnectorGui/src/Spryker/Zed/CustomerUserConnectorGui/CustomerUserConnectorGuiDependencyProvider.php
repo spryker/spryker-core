@@ -10,8 +10,8 @@ namespace Spryker\Zed\CustomerUserConnectorGui;
 use Spryker\Zed\CustomerUserConnectorGui\Dependency\Facade\CustomerUserConnectorGuiToCustomerUserConnectorBridge;
 use Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer\CustomerUserConnectorGuiToCustomerQueryContainerBridge;
 use Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer\CustomerUserConnectorGuiToUserQueryContainerBridge;
-use Spryker\Zed\CustomerUserConnectorGui\Dependency\Service\CustomerUserConnectorGuiToUtilEncodingBridge;
-use Spryker\Zed\CustomerUserConnectorGui\Dependency\Service\CustomerUserConnectorGuiToUtilSanitizeBridge;
+use Spryker\Zed\CustomerUserConnectorGui\Dependency\Service\CustomerUserConnectorGuiToUtilEncodingServiceBridge;
+use Spryker\Zed\CustomerUserConnectorGui\Dependency\Service\CustomerUserConnectorGuiToUtilSanitizeServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -93,7 +93,7 @@ class CustomerUserConnectorGuiDependencyProvider extends AbstractBundleDependenc
     protected function addUtilSanitizeService(Container $container): Container
     {
         $container->set(static::SERVICE_UTIL_SANITIZE, function (Container $container) {
-            return new CustomerUserConnectorGuiToUtilSanitizeBridge($container->getLocator()->utilSanitize()->service());
+            return new CustomerUserConnectorGuiToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
         });
 
         return $container;
@@ -107,7 +107,7 @@ class CustomerUserConnectorGuiDependencyProvider extends AbstractBundleDependenc
     protected function addUtilEncodingService(Container $container): Container
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
-            return new CustomerUserConnectorGuiToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
+            return new CustomerUserConnectorGuiToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
         });
 
         return $container;

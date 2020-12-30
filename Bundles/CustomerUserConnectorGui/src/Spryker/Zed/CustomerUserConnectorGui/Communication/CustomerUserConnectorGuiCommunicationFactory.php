@@ -14,8 +14,8 @@ use Spryker\Zed\CustomerUserConnectorGui\Communication\Form\DataProvider\Custome
 use Spryker\Zed\CustomerUserConnectorGui\Communication\Table\AssignedCustomerTable;
 use Spryker\Zed\CustomerUserConnectorGui\Communication\Table\AvailableCustomerTable;
 use Spryker\Zed\CustomerUserConnectorGui\CustomerUserConnectorGuiDependencyProvider;
-use Spryker\Zed\CustomerUserConnectorGui\Dependency\Service\CustomerUserConnectorGuiToUtilEncodingInterface;
-use Spryker\Zed\CustomerUserConnectorGui\Dependency\Service\CustomerUserConnectorGuiToUtilSanitizeInterface;
+use Spryker\Zed\CustomerUserConnectorGui\Dependency\Service\CustomerUserConnectorGuiToUtilEncodingServiceInterface;
+use Spryker\Zed\CustomerUserConnectorGui\Dependency\Service\CustomerUserConnectorGuiToUtilSanitizeServiceInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -33,8 +33,8 @@ class CustomerUserConnectorGuiCommunicationFactory extends AbstractCommunication
         return new AssignedCustomerTable(
             $this->getProvidedDependency(CustomerUserConnectorGuiDependencyProvider::QUERY_CONTAINER_CUSTOMER),
             $userTransfer,
-            $this->getUtilSanitizeServiceInterface(),
-            $this->getUtilEncodingServiceInterface()
+            $this->getUtilSanitizeService(),
+            $this->getUtilEncodingService()
         );
     }
 
@@ -48,8 +48,8 @@ class CustomerUserConnectorGuiCommunicationFactory extends AbstractCommunication
         return new AvailableCustomerTable(
             $this->getProvidedDependency(CustomerUserConnectorGuiDependencyProvider::QUERY_CONTAINER_CUSTOMER),
             $userTransfer,
-            $this->getUtilSanitizeServiceInterface(),
-            $this->getUtilEncodingServiceInterface()
+            $this->getUtilSanitizeService(),
+            $this->getUtilEncodingService()
         );
     }
 
@@ -102,17 +102,17 @@ class CustomerUserConnectorGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @return \Spryker\Zed\CustomerUserConnectorGui\Dependency\Service\CustomerUserConnectorGuiToUtilSanitizeInterface
+     * @return \Spryker\Zed\CustomerUserConnectorGui\Dependency\Service\CustomerUserConnectorGuiToUtilSanitizeServiceInterface
      */
-    protected function getUtilSanitizeServiceInterface(): CustomerUserConnectorGuiToUtilSanitizeInterface
+    public function getUtilSanitizeService(): CustomerUserConnectorGuiToUtilSanitizeServiceInterface
     {
         return $this->getProvidedDependency(CustomerUserConnectorGuiDependencyProvider::SERVICE_UTIL_SANITIZE);
     }
 
     /**
-     * @return \Spryker\Zed\CustomerUserConnectorGui\Dependency\Service\CustomerUserConnectorGuiToUtilEncodingInterface
+     * @return \Spryker\Zed\CustomerUserConnectorGui\Dependency\Service\CustomerUserConnectorGuiToUtilEncodingServiceInterface
      */
-    protected function getUtilEncodingServiceInterface(): CustomerUserConnectorGuiToUtilEncodingInterface
+    public function getUtilEncodingService(): CustomerUserConnectorGuiToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(CustomerUserConnectorGuiDependencyProvider::SERVICE_UTIL_ENCODING);
     }
