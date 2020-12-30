@@ -17,10 +17,12 @@ class SecurityGuiConfig extends AbstractBundleConfig
     protected const PASSWORD_RESET_PATH = '/security-gui/password/reset';
     protected const BACKOFFICE_ROUTE_PATTERN = '^/';
     protected const IGNORABLE_ROUTE_PATTERN = '^/security-gui';
+
     /**
      * @uses \Spryker\Zed\User\UserConfig::MIN_LENGTH_USER_PASSWORD
      */
     protected const MIN_LENGTH_USER_PASSWORD = 8;
+
     /**
      * @uses \Spryker\Zed\User\UserConfig::MAX_LENGTH_USER_PASSWORD
      */
