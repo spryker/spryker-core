@@ -42,29 +42,21 @@ class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
     protected $moneyFacade;
 
     /**
-     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface
-     */
-    protected $priceProductFacade;
-
-    /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface $productOfferMerchantPortalGuiRepository
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMoneyFacadeInterface $moneyFacade
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade
      * @param int|null $idProductOffer
      */
     public function __construct(
         ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade,
         ProductOfferMerchantPortalGuiRepositoryInterface $productOfferMerchantPortalGuiRepository,
         ProductOfferMerchantPortalGuiToMoneyFacadeInterface $moneyFacade,
-        ProductOfferMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade,
         ?int $idProductOffer = null
     ) {
         $this->merchantUserFacade = $merchantUserFacade;
         $this->idProductOffer = $idProductOffer;
         $this->productOfferMerchantPortalGuiRepository = $productOfferMerchantPortalGuiRepository;
         $this->moneyFacade = $moneyFacade;
-        $this->priceProductFacade = $priceProductFacade;
     }
 
     /**
@@ -136,18 +128,16 @@ class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
             return $criteriaTransfer;
         }
 
-        foreach ($this->priceProductFacade->getPriceTypeValues() as $priceTypeTransfer) {
-            /** @var string $orderByField */
-            $orderByField = str_replace(']', '', $orderByField);
-            $orderByField = explode('[', $orderByField);
+        /** @var string $orderByField */
+        $orderByField = str_replace(']', '', $orderByField);
+        $orderByField = explode('[', $orderByField);
 
-            if ($orderByField[2] === MoneyValueTransfer::NET_AMOUNT) {
-                return $criteriaTransfer->setOrderBy($orderByField[0] . '_net');
-            }
+        if ($orderByField[2] === MoneyValueTransfer::NET_AMOUNT) {
+            return $criteriaTransfer->setOrderBy($orderByField[0] . '_net');
+        }
 
-            if ($orderByField[2] === MoneyValueTransfer::GROSS_AMOUNT) {
-                return $criteriaTransfer->setOrderBy($orderByField[0] . '_gross');
-            }
+        if ($orderByField[2] === MoneyValueTransfer::GROSS_AMOUNT) {
+            return $criteriaTransfer->setOrderBy($orderByField[0] . '_gross');
         }
 
         return $criteriaTransfer;
