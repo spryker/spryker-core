@@ -29,7 +29,7 @@ class MerchantSalesOrderDataExportToUtilEncodingServiceBridge implements Merchan
      *
      * @return string|null
      */
-    public function encodeJson($value, $options = null, $depth = null)
+    public function encodeJson($value, ?int $options = null, ?int $depth = null)
     {
         return $this->utilEncodingService->encodeJson($value, $options, $depth);
     }

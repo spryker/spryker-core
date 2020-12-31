@@ -15,7 +15,6 @@ use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery;
 use Orm\Zed\Sales\Persistence\Base\SpySalesOrderCommentQuery;
 use Orm\Zed\Sales\Persistence\Map\SpySalesExpenseTableMap;
-use Orm\Zed\Sales\Persistence\Map\SpySalesShipmentTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\MerchantSalesOrderDataExport\Persistence\Propel\Mapper\MerchantSalesOrderMapper;
@@ -30,6 +29,8 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
     public const FILTER_CRITERIA_KEY_MERCHANT_ORDER_CREATED_AT = 'merchant_order_created_at';
     public const FILTER_CRITERIA_KEY_MERCHANT_ORDER_UPDATED_AT = 'merchant_order_updated_at';
 
+    public const SPY_MERCHANT_NAME_COL = 'merchant_name';
+
     public const FILTER_CRITERIA_PARAM_OFFSET = 'offset';
     public const FILTER_CRITERIA_PARAM_LIMIT = 'limit';
 
@@ -38,19 +39,6 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
 
     public const PROPEL_CRITERIA_BETWEEN_MIN = 'min';
     public const PROPEL_CRITERIA_BETWEEN_MAX = 'max';
-
-    /**
-     * @module Metchant
-     *
-     * @return string[]
-     */
-    public function getMerchantNames(): array
-    {
-        return $merchantNames = $this->getFactory()->getMerchantPropelQuery()
-            ->select([SpyMerchantTableMap::COL_NAME])
-            ->find()
-            ->toArray();
-    }
 
     /**
      * @module MerchantSalesOrder
@@ -67,31 +55,41 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
         $selectedColumns = $this->getMerchantSalesOrderSelectedColumns($dataExportConfigurationTransfer);
         $selectedFields = array_flip($selectedColumns);
 
+        //TODO move to mapper
         $hasComments = in_array(MerchantSalesOrderMapper::KEY_MERCHANT_ORDER_COMMENTS, $dataExportConfigurationTransfer->getFields(), true);
         if ($hasComments) {
             $selectedFields[MerchantSalesOrderMapper::KEY_MERCHANT_ORDER_COMMENTS] = MerchantSalesOrderMapper::KEY_MERCHANT_ORDER_COMMENTS;
             $selectedColumns[SpyMerchantSalesOrderTableMap::COL_FK_SALES_ORDER] = SpyMerchantSalesOrderTableMap::COL_FK_SALES_ORDER;
         }
+
         $filterCriteria = $dataExportConfigurationTransfer->getFilterCriteria();
-        $offset = $filterCriteria[static::FILTER_CRITERIA_PARAM_OFFSET];
-        $limit = $filterCriteria[static::FILTER_CRITERIA_PARAM_LIMIT];
 
-        $dataExportBatchTransfer = $this->getDataExportBatchTransfer($offset, $selectedFields);
+        $dataExportBatchTransfer = $this->getDataExportBatchTransfer(
+            $filterCriteria[static::FILTER_CRITERIA_PARAM_OFFSET],
+            $selectedFields
+        );
 
-        $merchantSalesOrderQuery = $this->buildMerchantSalesOrderBaseQuery($offset, $limit);
+        $merchantSalesOrderQuery = $this->buildMerchantSalesOrderBaseQuery(
+            $filterCriteria[static::FILTER_CRITERIA_PARAM_OFFSET],
+            $filterCriteria[static::FILTER_CRITERIA_PARAM_LIMIT]
+        );
+
         $merchantSalesOrderQuery = $this->applyFilterCriteriaToMerchantSalesOrderQuery(
             $dataExportConfigurationTransfer->getFilterCriteria(),
             $merchantSalesOrderQuery
         );
 
-        // TODO: what if merchant have no orders
-        $merchantSalesOrderQuery->select($selectedColumns);
+        foreach ($selectedColumns as $selectedField => $selectedColumn) {
+            $merchantSalesOrderQuery->addAsColumn(sprintf('"%s"', $selectedColumn), $selectedColumn);
+        }
 
-        $merchantSalesOrderData = $merchantSalesOrderQuery->find()->getArrayCopy();
+        $merchantSalesOrderData = $merchantSalesOrderQuery->find()->toArray();
 
         if ($merchantSalesOrderData === []) {
             return $dataExportBatchTransfer;
         }
+
+        $merchantSalesOrderData = $this->formatRowItemsDataKeys($merchantSalesOrderData);
 
         if ($hasComments) {
             $salesOrderIds = array_column($merchantSalesOrderData, SpyMerchantSalesOrderTableMap::COL_FK_SALES_ORDER);
@@ -127,24 +125,32 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
         $selectedFields = array_flip($selectedColumns);
 
         $filterCriteria = $dataExportConfigurationTransfer->getFilterCriteria();
-        $offset = $filterCriteria[static::FILTER_CRITERIA_PARAM_OFFSET];
-        $limit = $filterCriteria[static::FILTER_CRITERIA_PARAM_LIMIT];
 
-        $dataExportBatchTransfer = $this->getDataExportBatchTransfer($offset, $selectedFields);
+        $dataExportBatchTransfer = $this->getDataExportBatchTransfer(
+            $filterCriteria[static::FILTER_CRITERIA_PARAM_OFFSET],
+            $selectedFields
+        );
 
-        $merchantSalesOrderItemQuery = $this->buildMerchantSalesOrderItemBaseQuery($offset, $limit);
+        $merchantSalesOrderItemQuery = $this->buildMerchantSalesOrderItemBaseQuery(
+            $filterCriteria[static::FILTER_CRITERIA_PARAM_OFFSET],
+            $filterCriteria[static::FILTER_CRITERIA_PARAM_LIMIT]
+        );
         $merchantSalesOrderItemQuery = $this->applyFilterCriteriaToMerchantSalesOrderItemQuery(
             $dataExportConfigurationTransfer->getFilterCriteria(),
             $merchantSalesOrderItemQuery
         );
 
-        $merchantSalesOrderItemQuery->select($selectedColumns);
+        foreach ($selectedColumns as $selectedField => $selectedColumn) {
+            $merchantSalesOrderItemQuery->addAsColumn(sprintf('"%s"', $selectedColumn), $selectedColumn);
+        }
 
         $merchantSalesOrderItemData = $merchantSalesOrderItemQuery->find()->toArray();
 
         if ($merchantSalesOrderItemData === []) {
             return $dataExportBatchTransfer;
         }
+
+        $merchantSalesOrderItemData = $this->formatRowItemsDataKeys($merchantSalesOrderItemData);
 
         $data = $this->getFactory()
             ->createMerchantSalesOrderItemMapper()
@@ -168,25 +174,33 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
         $selectedFields = array_flip($selectedColumns);
 
         $filterCriteria = $dataExportConfigurationTransfer->getFilterCriteria();
-        $offset = $filterCriteria[static::FILTER_CRITERIA_PARAM_OFFSET];
-        $limit = $filterCriteria[static::FILTER_CRITERIA_PARAM_LIMIT];
 
-        $dataExportBatchTransfer = $this->getDataExportBatchTransfer($offset, $selectedFields);
+        $dataExportBatchTransfer = $this->getDataExportBatchTransfer(
+            $filterCriteria[static::FILTER_CRITERIA_PARAM_OFFSET],
+            $selectedFields
+        );
 
-        $merchantSalesOrderQuery = $this->buildMerchantSalesOrderWithExpenseBaseQuery($offset, $limit);
+        $merchantSalesOrderQuery = $this->buildMerchantSalesOrderWithExpenseBaseQuery(
+            $filterCriteria[static::FILTER_CRITERIA_PARAM_OFFSET],
+            $filterCriteria[static::FILTER_CRITERIA_PARAM_LIMIT]
+        );
+
         $merchantSalesOrderQuery = $this->applyFilterCriteriaToMerchantSalesOrderQuery(
             $dataExportConfigurationTransfer->getFilterCriteria(),
             $merchantSalesOrderQuery
         );
 
-        // TODO what if merchant have no orders
+        foreach ($selectedColumns as $selectedField => $selectedColumn) {
+            $merchantSalesOrderQuery->addAsColumn(sprintf('"%s"', $selectedColumn), $selectedColumn);
+        }
 
-        $merchantSalesOrderQuery->select($selectedColumns);
         $merchantOrderExpenseData = $merchantSalesOrderQuery->find()->toArray();
 
         if ($merchantOrderExpenseData === []) {
             return $dataExportBatchTransfer;
         }
+
+        $merchantOrderExpenseData = $this->formatRowItemsDataKeys($merchantOrderExpenseData);
 
         $data = $this->getFactory()
             ->createMerchantSalesExpenseMapper()
@@ -205,25 +219,12 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
         array $filterCriteria,
         SpyMerchantSalesOrderQuery $merchantSalesOrderQuery
     ): SpyMerchantSalesOrderQuery {
-        if (isset($filterCriteria[static::FILTER_CRITERIA_KEY_MERCHANT_NAME])) {
-            $spyMerchant = $this->getFactory()
-                ->getMerchantPropelQuery()
-                ->findOneByName($filterCriteria[static::FILTER_CRITERIA_KEY_MERCHANT_NAME]);
-
-            if ($spyMerchant) {
-                $merchantSalesOrderQuery->filterByMerchantReference($spyMerchant->getMerchantReference());
-
-                //TODO: if we do not have such a merchant
-            }
-        }
-
         if (isset($filterCriteria[static::FILTER_CRITERIA_KEY_STORE_NAME])) {
             $merchantSalesOrderQuery
                 ->useOrderQuery()
                 ->filterByStore($filterCriteria[static::FILTER_CRITERIA_KEY_STORE_NAME], Criteria::IN)
                 ->endUse();
         }
-
         if (isset($filterCriteria[static::FILTER_CRITERIA_KEY_MERCHANT_ORDER_CREATED_AT])) {
             $merchantSalesOrderQuery->filterByCreatedAt_Between([
                 static::PROPEL_CRITERIA_BETWEEN_MIN => $filterCriteria[static::FILTER_CRITERIA_KEY_MERCHANT_ORDER_CREATED_AT][static::FILTER_CRITERIA_PARAM_DATE_FROM],
@@ -251,28 +252,14 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
         array $filterCriteria,
         SpyMerchantSalesOrderItemQuery $merchantSalesOrderItemQuery
     ): SpyMerchantSalesOrderItemQuery {
-        if (isset($filterCriteria[static::FILTER_CRITERIA_KEY_MERCHANT_NAME])) {
-            $spyMerchant = $this->getFactory()
-                ->getMerchantPropelQuery()
-                ->findOneByName($filterCriteria[static::FILTER_CRITERIA_KEY_MERCHANT_NAME]);
-
-            if ($spyMerchant) {
-                $merchantSalesOrderItemQuery
-                    ->useMerchantSalesOderQuery()
-                      ->filterByMerchantReference($spyMerchant->getMerchantReference())
-                    ->endUse();
-            }
-        }
-
         if (isset($filterCriteria[static::FILTER_CRITERIA_KEY_STORE_NAME])) {
             $merchantSalesOrderItemQuery
-                ->useSalesOrderItemQuery()
+                ->useMerchantSalesOderQuery()
                     ->useOrderQuery()
                         ->filterByStore($filterCriteria[static::FILTER_CRITERIA_KEY_STORE_NAME], Criteria::IN)
                     ->endUse()
                 ->endUse();
         }
-
         if (isset($filterCriteria[static::FILTER_CRITERIA_KEY_MERCHANT_ORDER_CREATED_AT])) {
             $merchantSalesOrderItemQuery
                 ->useMerchantSalesOderQuery()
@@ -306,18 +293,23 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
     {
         return $this->getFactory()
             ->getMerchantSalesOrderPropelQuery()
+            ->orderByMerchantReference()
+            ->addJoin(
+                SpyMerchantSalesOrderTableMap::COL_MERCHANT_REFERENCE,
+                SpyMerchantTableMap::COL_MERCHANT_REFERENCE,
+                Criteria::LEFT_JOIN
+            )
             ->leftJoinMerchantSalesOrderTotal()
             ->joinOrder()
             ->useOrderQuery(null, Criteria::LEFT_JOIN)
+                ->orderByStore()
                 ->joinLocale()
                 ->leftJoinBillingAddress()
                 ->useBillingAddressQuery(null, Criteria::LEFT_JOIN)
                     ->leftJoinCountry()
                     ->leftJoinRegion()
-                 ->endUse()
-                ->orderByIdSalesOrder()
+                ->endUse()
             ->endUse()
-            ->orderByIdMerchantSalesOrder()
             ->offset($offset)
             ->limit($limit);
     }
@@ -332,24 +324,35 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
     {
         return $this->getFactory()
             ->getMerchantSalesOrderItemPropelQuery()
-            ->leftJoinWithMerchantSalesOder()
-            ->leftJoinWithStateMachineItemState()
-            ->useStateMachineItemStateQuery()
-                ->leftJoinWithProcess()
+            ->leftJoinMerchantSalesOder()
+            ->useMerchantSalesOderQuery()
+                ->addJoin(
+                    SpyMerchantSalesOrderTableMap::COL_MERCHANT_REFERENCE,
+                    SpyMerchantTableMap::COL_MERCHANT_REFERENCE,
+                    Criteria::LEFT_JOIN
+                )
+                ->orderByMerchantReference()
+                ->leftJoinOrder()
+                ->useOrderQuery()
+                    ->orderByStore()
+                ->endUse()
             ->endUse()
-            ->joinWithSalesOrderItem()
+            ->leftJoinStateMachineItemState()
+            ->useStateMachineItemStateQuery()
+                ->leftJoinProcess()
+            ->endUse()
+            ->joinSalesOrderItem()
             ->useSalesOrderItemQuery()
                 ->leftJoinSalesOrderItemBundle()
-                ->leftJoinWithSpySalesShipment()
+                ->leftJoinSpySalesShipment()
                 ->useSpySalesShipmentQuery()
-                    ->leftJoinWithSpySalesOrderAddress()
+                    ->leftJoinSpySalesOrderAddress()
                     ->useSpySalesOrderAddressQuery()
-                        ->leftJoinWithCountry()
+                        ->leftJoinCountry()
                         ->leftJoinRegion()
                     ->endUse()
                 ->endUse()
             ->endUse()
-            ->orderByIdMerchantSalesOrderItem()
             ->offset($offset)
             ->limit($limit);
     }
@@ -362,15 +365,25 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
      */
     protected function buildMerchantSalesOrderWithExpenseBaseQuery(int $offset, int $limit): SpyMerchantSalesOrderQuery
     {
-        return $this->getFactory()
+        return $merchantSalesOrderQuery = $this->getFactory()
             ->getMerchantSalesOrderPropelQuery()
-            ->joinWithOrder()
+            ->addJoin(
+                SpyMerchantSalesOrderTableMap::COL_MERCHANT_REFERENCE,
+                SpyMerchantTableMap::COL_MERCHANT_REFERENCE,
+                Criteria::LEFT_JOIN
+            )
+            ->leftJoinOrder()
             ->useOrderQuery()
-                ->leftJoinWithSpySalesShipment()
-                ->leftJoinWithExpense()
-                ->addJoinCondition('SpySalesShipment', sprintf('%s = %s', SpySalesShipmentTableMap::COL_MERCHANT_REFERENCE, SpyMerchantSalesOrderTableMap::COL_MERCHANT_REFERENCE))
-                ->addJoinCondition('Expense', sprintf('%s = %s', SpySalesExpenseTableMap::COL_MERCHANT_REFERENCE, SpyMerchantSalesOrderTableMap::COL_MERCHANT_REFERENCE))
-            ->endUse();
+                ->leftJoinExpense()
+                ->where(SpySalesExpenseTableMap::COL_MERCHANT_REFERENCE . '=' . SpyMerchantSalesOrderTableMap::COL_MERCHANT_REFERENCE)
+                ->useExpenseQuery()
+                    ->leftJoinSpySalesShipment()
+                ->endUse()
+                ->orderByStore()
+            ->endUse()
+            ->orderByMerchantReference()
+            ->offset($offset)
+            ->limit($limit);
     }
 
     /**
@@ -453,5 +466,26 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
             ->setOffset($offset)
             ->setFields($selectedFields)
             ->setData([]);
+    }
+
+    /**
+     * @param array $rowItemsData
+     *
+     * @return array
+     */
+    protected function formatRowItemsDataKeys(array $rowItemsData)
+    {
+        foreach ($rowItemsData as $key => $rowItemData) {
+            foreach ($rowItemData as $rowKey => $rowValue) {
+                $trimmedRowKey = trim($rowKey, '"');
+                if ($trimmedRowKey !== $rowKey) {
+                    $rowItemData[$trimmedRowKey] = $rowValue;
+                    unset($rowItemData[$rowKey]);
+                }
+            }
+            $rowItemsData[$key] = $rowItemData;
+        }
+
+        return $rowItemsData;
     }
 }

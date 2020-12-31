@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantSalesOrderDataExport\Persistence\Propel\Mapper;
 use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
 use Orm\Zed\Country\Persistence\Map\SpyRegionTableMap;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
+use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\MerchantSalesOrder\Persistence\Map\SpyMerchantSalesOrderTableMap;
 use Orm\Zed\MerchantSalesOrder\Persistence\Map\SpyMerchantSalesOrderTotalsTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderAddressTableMap;
@@ -18,6 +19,7 @@ use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 class MerchantSalesOrderMapper
 {
     public const KEY_MERCHANT_ORDER_COMMENTS = 'merchant_order_comments';
+    public const KEY_MERCHANT_NAME = 'merchant_name';
 
     /**
      * @var \Spryker\Zed\MerchantSalesOrderDataExport\Persistence\Propel\Mapper\MerchantSalesOrderCommentMapper
@@ -69,6 +71,7 @@ class MerchantSalesOrderMapper
         'merchant_order_totals_refund_total' => SpyMerchantSalesOrderTotalsTableMap::COL_REFUND_TOTAL,
         'merchant_order_totals_subtotal' => SpyMerchantSalesOrderTotalsTableMap::COL_SUBTOTAL,
         'merchant_order_totals_tax_total' => SpyMerchantSalesOrderTotalsTableMap::COL_TAX_TOTAL,
+        'merchant_name' => SpyMerchantTableMap::COL_NAME,
     ];
 
     /**
@@ -97,17 +100,15 @@ class MerchantSalesOrderMapper
      */
     public function mapMerchantSalesOrderDataByField(array $merchantSalesOrderRows, array $fields): array
     {
-        $selectedFields = array_values(array_intersect_key($fields, $merchantSalesOrderRows[0] ?? []));
-
         $mappedMerchantSalesOrders = [];
         foreach ($merchantSalesOrderRows as $merchantSalesOrderRow) {
-            $mappedMerchantSalesOrderRow = array_combine($selectedFields, $merchantSalesOrderRow);
-
+            foreach ($fields as $coloumn => $field) {
+                $mappedMerchantSalesOrderRow[$field] = $merchantSalesOrderRow[$coloumn] ?? null;
+            }
             if (($mappedMerchantSalesOrderRow[static::KEY_MERCHANT_ORDER_COMMENTS])) {
                 $mappedMerchantSalesOrderRow[static::KEY_MERCHANT_ORDER_COMMENTS] = $this->merchantSalesOrderCommentMapper
                     ->mapMerchantSalesOrderCommentTransfersToJson($mappedMerchantSalesOrderRow[static::KEY_MERCHANT_ORDER_COMMENTS]);
             }
-
             $mappedMerchantSalesOrders[] = $mappedMerchantSalesOrderRow;
         }
 

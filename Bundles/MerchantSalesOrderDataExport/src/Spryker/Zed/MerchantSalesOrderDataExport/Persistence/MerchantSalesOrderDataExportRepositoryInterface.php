@@ -13,13 +13,6 @@ use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 interface MerchantSalesOrderDataExportRepositoryInterface
 {
     /**
-     * @module Metchant
-     *
-     * @return string[]
-     */
-    public function getMerchantNames(): array;
-
-    /**
      * @module MerchantSalesOrder
      * @module Sales
      * @module Country

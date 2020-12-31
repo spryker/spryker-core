@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantSalesOrderDataExport\Persistence\Propel\Mapper;
 
 use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
 use Orm\Zed\Country\Persistence\Map\SpyRegionTableMap;
+use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\MerchantSalesOrder\Persistence\Map\SpyMerchantSalesOrderTableMap;
 use Orm\Zed\ProductBundle\Persistence\Map\SpySalesOrderItemBundleTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderAddressTableMap;
@@ -87,6 +88,8 @@ class MerchantSalesOrderItemMapper
         'shipping_address_comment' => SpySalesOrderAddressTableMap::COL_COMMENT,
         'shipping_address_country' => SpyCountryTableMap::COL_NAME,
         'shipping_address_region' => SpyRegionTableMap::COL_NAME,
+        'merchant_order_store' => SpySalesOrderTableMap::COL_STORE,
+        'merchant_name' => SpyMerchantTableMap::COL_NAME,
     ];
 
     /**
@@ -107,11 +110,13 @@ class MerchantSalesOrderItemMapper
     public function mapMerchantSalesOrderItemDataByField(array $merchantSalesOrderItemRows): array
     {
         $fields = $this->getFields();
-        $selectedFields = array_values(array_intersect_key($fields, $merchantSalesOrderItemRows[0] ?? []));
 
         $mappedMerchantSalesOrderItems = [];
         foreach ($merchantSalesOrderItemRows as $merchantSalesOrderItemRow) {
-            $mappedMerchantSalesOrderItems[] = array_combine($selectedFields, $merchantSalesOrderItemRow);
+            foreach ($fields as $coloumn => $field) {
+                $mappedMerchantSalesOrderItemRow[$field] = $merchantSalesOrderItemRow[$coloumn] ?? null;
+            }
+            $mappedMerchantSalesOrderItems[] = $mappedMerchantSalesOrderItemRow;
         }
 
         return $mappedMerchantSalesOrderItems;

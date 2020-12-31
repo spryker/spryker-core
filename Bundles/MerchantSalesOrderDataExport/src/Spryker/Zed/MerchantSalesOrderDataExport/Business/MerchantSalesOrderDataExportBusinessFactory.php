@@ -14,8 +14,6 @@ use Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\DataReaderInterface
 use Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\MerchantOrderDataReader;
 use Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\MerchantOrderExpenseDataReader;
 use Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\MerchantOrderItemDataReader;
-use Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\MerchantReader;
-use Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\MerchantReaderInterface;
 use Spryker\Zed\MerchantSalesOrderDataExport\Dependency\Service\MerchantSalesOrderDataExportToDataExportServiceInterface;
 use Spryker\Zed\MerchantSalesOrderDataExport\MerchantSalesOrderDataExportDependencyProvider;
 
@@ -33,7 +31,6 @@ class MerchantSalesOrderDataExportBusinessFactory extends AbstractBusinessFactor
         return new MerchantSalesOrderDataExporter(
             $this->getDataExportService(),
             $this->getConfig(),
-            $this->createMerchantReader(),
             $this->createMerchantOrderDataReader()
         );
     }
@@ -46,7 +43,6 @@ class MerchantSalesOrderDataExportBusinessFactory extends AbstractBusinessFactor
         return new MerchantSalesOrderDataExporter(
             $this->getDataExportService(),
             $this->getConfig(),
-            $this->createMerchantReader(),
             $this->createMerchantOrderItemDataReader()
         );
     }
@@ -59,7 +55,6 @@ class MerchantSalesOrderDataExportBusinessFactory extends AbstractBusinessFactor
         return new MerchantSalesOrderDataExporter(
             $this->getDataExportService(),
             $this->getConfig(),
-            $this->createMerchantReader(),
             $this->createMerchantOrderExpenseDataReader()
         );
     }
@@ -86,14 +81,6 @@ class MerchantSalesOrderDataExportBusinessFactory extends AbstractBusinessFactor
     public function createMerchantOrderExpenseDataReader(): DataReaderInterface
     {
         return new MerchantOrderExpenseDataReader($this->getRepository());
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\MerchantReaderInterface
-     */
-    public function createMerchantReader(): MerchantReaderInterface
-    {
-        return new MerchantReader($this->getRepository());
     }
 
     /**

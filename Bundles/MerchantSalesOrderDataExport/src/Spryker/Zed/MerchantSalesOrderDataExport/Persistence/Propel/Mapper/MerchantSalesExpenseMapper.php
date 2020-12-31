@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantSalesOrderDataExport\Persistence\Propel\Mapper;
 
+use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\MerchantSalesOrder\Persistence\Map\SpyMerchantSalesOrderTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesExpenseTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
@@ -37,6 +38,8 @@ class MerchantSalesExpenseMapper
         'type' => SpySalesExpenseTableMap::COL_TYPE,
         'expense_created_at' => SpySalesExpenseTableMap::COL_CREATED_AT,
         'expense_updated_at' => SpySalesExpenseTableMap::COL_UPDATED_AT,
+        'merchant_order_store' => SpySalesOrderTableMap::COL_STORE,
+        'merchant_name' => SpyMerchantTableMap::COL_NAME,
     ];
 
     /**
@@ -57,11 +60,13 @@ class MerchantSalesExpenseMapper
     public function mapMerchantSalesExpenseDataByField(array $merchantSalesExpenseRows): array
     {
         $fields = $this->getFields();
-        $selectedFields = array_values(array_intersect_key($fields, $merchantSalesExpenseRows[0] ?? []));
 
         $mappedMerchantSalesExpenses = [];
         foreach ($merchantSalesExpenseRows as $merchantSalesExpenseRow) {
-            $mappedMerchantSalesExpenses[] = array_combine($selectedFields, $merchantSalesExpenseRow);
+            foreach ($fields as $coloumn => $field) {
+                $mappedMerchantSalesExpenseRow[$field] = $merchantSalesExpenseRow[$coloumn] ?? null;
+            }
+            $mappedMerchantSalesExpenses[] = $mappedMerchantSalesExpenseRow;
         }
 
         return $mappedMerchantSalesExpenses;
