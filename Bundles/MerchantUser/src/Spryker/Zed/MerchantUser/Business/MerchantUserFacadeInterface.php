@@ -10,6 +10,8 @@ namespace Spryker\Zed\MerchantUser\Business;
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
+use Generated\Shared\Transfer\OauthUserRestrictionRequestTransfer;
+use Generated\Shared\Transfer\OauthUserRestrictionResponseTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
@@ -122,4 +124,20 @@ interface MerchantUserFacadeInterface
      * @return void
      */
     public function authenticateMerchantUser(MerchantUserTransfer $merchantUserTransfer): void;
+
+    /**
+     * Specification:
+     * - Checks if the Oauth user is restricted.
+     * - Requires `OauthUserRestrictionRequestTransfer.user.username` to be provided.
+     * - When the user has a relation to the merchant he is considered as restricted.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OauthUserRestrictionRequestTransfer $oauthUserRestrictionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthUserRestrictionResponseTransfer
+     */
+    public function isOauthUserRestricted(
+        OauthUserRestrictionRequestTransfer $oauthUserRestrictionRequestTransfer
+    ): OauthUserRestrictionResponseTransfer;
 }

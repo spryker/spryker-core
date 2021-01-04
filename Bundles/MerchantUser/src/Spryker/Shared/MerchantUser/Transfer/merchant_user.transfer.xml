@@ -52,6 +52,7 @@
 
     <transfer name="Message">
         <property name="message" type="string"/>
+        <property name="value" type="string"/>
     </transfer>
 
     <transfer name="Role">
@@ -84,6 +85,15 @@
 
     <transfer name="MerchantCriteria">
         <property name="idMerchant" type="int"/>
+    </transfer>
+
+    <transfer name="OauthUserRestrictionRequest">
+        <property name="user" type="User"/>
+    </transfer>
+
+    <transfer name="OauthUserRestrictionResponse">
+        <property name="isRestricted" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
 </transfers>

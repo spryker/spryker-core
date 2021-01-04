@@ -124,4 +124,12 @@ class SecurityGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(SecurityGuiDependencyProvider::FACADE_SECURITY);
     }
+
+    /**
+     * @return \Spryker\Zed\SecurityGuiExtension\Dependency\Plugin\AuthenticationLinkPluginInterface[]
+     */
+    public function getAuthenticationLinkPlugins(): array
+    {
+        return $this->getProvidedDependency(SecurityGuiDependencyProvider::PLUGINS_AUTHENTICATION_LINK);
+    }
 }
