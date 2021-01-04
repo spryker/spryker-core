@@ -11,8 +11,10 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
+use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
+use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
@@ -238,13 +240,17 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
 
         $nodeQuery
             ->useClosureTableQuery()
-            ->orderByFkCategoryNodeDescendant(Criteria::DESC)
-            ->orderByDepth(Criteria::DESC)
-            ->filterByDepth(null, Criteria::NOT_EQUAL)
+                ->orderByFkCategoryNodeDescendant(Criteria::DESC)
+                ->orderByDepth(Criteria::DESC)
+                ->filterByDepth(null, Criteria::NOT_EQUAL)
             ->endUse()
             ->useCategoryQuery()
-            ->useAttributeQuery()
-            ->endUse()
+                ->useSpyCategoryStoreQuery(null, Criteria::LEFT_JOIN)
+                    ->joinWithSpyStore()
+                ->endUse()
+                ->useAttributeQuery(null, Criteria::LEFT_JOIN)
+                    ->joinWithLocale()
+                ->endUse()
             ->endUse();
 
         $nodeQuery->filterByIsRoot(false);
@@ -255,8 +261,22 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
             ->withColumn(SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT, 'fk_category_node_descendant')
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name')
             ->withColumn(SpyCategoryTableMap::COL_CATEGORY_KEY, 'category_key')
-            ->withColumn(SpyCategoryAttributeTableMap::COL_FK_LOCALE, 'fk_locale')
+            ->withColumn(SpyCategoryAttributeTableMap::COL_FK_LOCALE, 'fk_locale') // can be removed
+            ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME, 'locale')
+            ->withColumn(SpyStoreTableMap::COL_NAME, 'store')
             ->withColumn(SpyUrlTableMap::COL_URL, 'url');
+
+        $nodeQuery->select([
+            'fk_category',
+            'id_category_node',
+            'fk_category_node_descendant',
+            'name',
+            'category_key',
+            'fk_locale',
+            'locale',
+            'store',
+            'url',
+        ]);
 
         $nodeQuery->setFormatter(new PropelArraySetFormatter());
 

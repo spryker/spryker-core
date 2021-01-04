@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToCategoryBridge;
 use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToEventBehaviorFacadeBridge;
+use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToStoreFacadeBridge;
 use Spryker\Zed\ProductCategoryStorage\Dependency\QueryContainer\ProductCategoryStorageToCategoryQueryContainerBridge;
 use Spryker\Zed\ProductCategoryStorage\Dependency\QueryContainer\ProductCategoryStorageToProductCategoryQueryContainerBridge;
 use Spryker\Zed\ProductCategoryStorage\Dependency\QueryContainer\ProductCategoryStorageToProductQueryContainerBridge;
@@ -25,6 +26,7 @@ class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyP
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
     public const FACADE_CATEGORY = 'FACADE_CATEGORY';
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    public const FACADE_STORE = 'FACADE_STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -51,6 +53,8 @@ class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyP
             return new ProductCategoryStorageToCategoryBridge($container->getLocator()->category()->facade());
         });
 
+        $container = $this->addStoreFacade($container);
+
         return $container;
     }
 
@@ -71,6 +75,22 @@ class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyP
 
         $container->set(static::QUERY_CONTAINER_PRODUCT, function (Container $container) {
             return new ProductCategoryStorageToProductQueryContainerBridge($container->getLocator()->product()->queryContainer());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new ProductCategoryStorageToStoreFacadeBridge(
+                $container->getLocator()->store()->facade()
+            );
         });
 
         return $container;

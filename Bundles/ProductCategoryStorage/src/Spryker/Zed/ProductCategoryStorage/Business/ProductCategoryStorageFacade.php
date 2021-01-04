@@ -25,7 +25,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      */
     public function publish(array $productAbstractIds)
     {
-        $this->getFactory()->createProductCategoryStorageWriter()->publish($productAbstractIds);
+        $this->getFactory()->createMultiStoreProductCategoryStorageWriter()->publish($productAbstractIds);
     }
 
     /**
@@ -39,7 +39,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      */
     public function unpublish(array $productAbstractIds)
     {
-        $this->getFactory()->createProductCategoryStorageWriter()->unpublish($productAbstractIds);
+        $this->getFactory()->createMultiStoreProductCategoryStorageWriter()->unpublish($productAbstractIds);
     }
 
     /**
@@ -53,6 +53,6 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      */
     public function getRelatedCategoryIds(array $categoryIds)
     {
-        return $this->getFactory()->createProductCategoryStorageWriter()->getRelatedCategoryIds($categoryIds);
+        return $this->getFactory()->createMultiStoreProductCategoryStorageWriter()->getRelatedCategoryIds($categoryIds);
     }
 }
