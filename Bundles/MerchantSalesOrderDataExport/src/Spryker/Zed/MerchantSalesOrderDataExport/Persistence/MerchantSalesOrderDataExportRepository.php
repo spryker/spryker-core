@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\MerchantSalesOrderDataExport\Persistence;
@@ -29,16 +29,14 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
     public const FILTER_CRITERIA_KEY_MERCHANT_ORDER_CREATED_AT = 'merchant_order_created_at';
     public const FILTER_CRITERIA_KEY_MERCHANT_ORDER_UPDATED_AT = 'merchant_order_updated_at';
 
-    public const SPY_MERCHANT_NAME_COL = 'merchant_name';
-
     public const FILTER_CRITERIA_PARAM_OFFSET = 'offset';
     public const FILTER_CRITERIA_PARAM_LIMIT = 'limit';
 
     public const FILTER_CRITERIA_PARAM_DATE_FROM = 'from';
     public const FILTER_CRITERIA_PARAM_DATE_TO = 'to';
 
-    public const PROPEL_CRITERIA_BETWEEN_MIN = 'min';
-    public const PROPEL_CRITERIA_BETWEEN_MAX = 'max';
+    protected const PROPEL_CRITERIA_BETWEEN_MIN = 'min';
+    protected const PROPEL_CRITERIA_BETWEEN_MAX = 'max';
 
     /**
      * @module MerchantSalesOrder
@@ -93,7 +91,7 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
 
         if ($hasComments) {
             $salesOrderIds = array_column($merchantSalesOrderData, SpyMerchantSalesOrderTableMap::COL_FK_SALES_ORDER);
-            $merchantSalesOrderCommentTransfers = $this->getCommentsByOrderId($salesOrderIds);
+            $merchantSalesOrderCommentTransfers = $this->getCommentsByOrderIds($salesOrderIds);
 
             foreach ($salesOrderIds as $salesOrderDataKey => $idSalesOrder) {
                 $merchantSalesOrderData[$salesOrderDataKey][MerchantSalesOrderMapper::KEY_MERCHANT_ORDER_COMMENTS] = $merchantSalesOrderCommentTransfers[$idSalesOrder] ?? null;
@@ -210,7 +208,11 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
     }
 
     /**
-     * @param array $filterCriteria
+     * @phpstan-param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<mixed> $merchantSalesOrderQuery
+     *
+     * @phpstan-return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<mixed>
+     *
+     * @param mixed[] $filterCriteria
      * @param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery $merchantSalesOrderQuery
      *
      * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery
@@ -243,7 +245,11 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
     }
 
     /**
-     * @param array $filterCriteria
+     * @phpstan-param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery<mixed> $merchantSalesOrderItemQuery
+     *
+     * @phpstan-return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery<mixed>
+     *
+     * @param mixed[] $filterCriteria
      * @param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery $merchantSalesOrderItemQuery
      *
      * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery
@@ -284,6 +290,8 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
     }
 
     /**
+     * @phpstan-return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<mixed>
+     *
      * @param int $offset
      * @param int $limit
      *
@@ -315,6 +323,8 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
     }
 
     /**
+     * @phpstan-return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery<mixed>
+     *
      * @param int $offset
      * @param int $limit
      *
@@ -358,6 +368,8 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
     }
 
     /**
+     * @phpstan-return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<mixed>
+     *
      * @param int $offset
      * @param int $limit
      *
@@ -439,7 +451,7 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
      *
      * @return \Generated\Shared\Transfer\CommentTransfer[]
      */
-    public function getCommentsByOrderId(array $salesOrderIds): array
+    public function getCommentsByOrderIds(array $salesOrderIds): array
     {
         $salesOrderCommentEntities = SpySalesOrderCommentQuery::create()
             ->filterByFkSalesOrder_In($salesOrderIds)
@@ -469,11 +481,11 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
     }
 
     /**
-     * @param array $rowItemsData
+     * @param array[] $rowItemsData
      *
-     * @return array
+     * @return array[]
      */
-    protected function formatRowItemsDataKeys(array $rowItemsData)
+    protected function formatRowItemsDataKeys(array $rowItemsData): array
     {
         foreach ($rowItemsData as $key => $rowItemData) {
             foreach ($rowItemData as $rowKey => $rowValue) {

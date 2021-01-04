@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\MerchantSalesOrderDataExport\Persistence\Propel\Mapper;
@@ -103,9 +103,9 @@ class MerchantSalesOrderItemMapper
     }
 
     /**
-     * @param array $merchantSalesOrderItemRows
+     * @param array[] $merchantSalesOrderItemRows
      *
-     * @return array
+     * @return array[]
      */
     public function mapMerchantSalesOrderItemDataByField(array $merchantSalesOrderItemRows): array
     {
@@ -113,6 +113,7 @@ class MerchantSalesOrderItemMapper
 
         $mappedMerchantSalesOrderItems = [];
         foreach ($merchantSalesOrderItemRows as $merchantSalesOrderItemRow) {
+            $mappedMerchantSalesOrderItemRow = [];
             foreach ($fields as $coloumn => $field) {
                 $mappedMerchantSalesOrderItemRow[$field] = $merchantSalesOrderItemRow[$coloumn] ?? null;
             }

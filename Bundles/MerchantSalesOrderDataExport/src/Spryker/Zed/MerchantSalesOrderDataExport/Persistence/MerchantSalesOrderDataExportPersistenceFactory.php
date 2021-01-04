@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\MerchantSalesOrderDataExport\Persistence;
@@ -57,6 +57,8 @@ class MerchantSalesOrderDataExportPersistenceFactory extends AbstractPersistence
     }
 
     /**
+     * @phpstan-return \Orm\Zed\Merchant\Persistence\Base\SpyMerchantQuery<mixed>
+     *
      * @return \Orm\Zed\Merchant\Persistence\Base\SpyMerchantQuery
      */
     public function getMerchantPropelQuery(): SpyMerchantQuery
@@ -65,6 +67,8 @@ class MerchantSalesOrderDataExportPersistenceFactory extends AbstractPersistence
     }
 
     /**
+     * @phpstan-return \Orm\Zed\MerchantSalesOrder\Persistence\Base\SpyMerchantSalesOrderQuery<mixed>
+     *
      * @return \Orm\Zed\MerchantSalesOrder\Persistence\Base\SpyMerchantSalesOrderQuery
      */
     public function getMerchantSalesOrderPropelQuery(): SpyMerchantSalesOrderQuery
@@ -73,7 +77,9 @@ class MerchantSalesOrderDataExportPersistenceFactory extends AbstractPersistence
     }
 
     /**
-     * @return \Orm\Zed\MerchantSalesOrder\Persistence\Base\SpyMerchantSalesOrderItemQuery;
+     * @phpstan-return \Orm\Zed\MerchantSalesOrder\Persistence\Base\SpyMerchantSalesOrderItemQuery<mixed>
+     *
+     * @return \Orm\Zed\MerchantSalesOrder\Persistence\Base\SpyMerchantSalesOrderItemQuery
      */
     public function getMerchantSalesOrderItemPropelQuery(): SpyMerchantSalesOrderItemQuery
     {
