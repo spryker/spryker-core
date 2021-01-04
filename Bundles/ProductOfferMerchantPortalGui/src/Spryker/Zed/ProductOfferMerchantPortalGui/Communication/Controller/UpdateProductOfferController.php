@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller;
 
-use ArrayObject;
 use Generated\Shared\Transfer\PriceProductOfferCollectionTransfer;
+use Generated\Shared\Transfer\PriceProductOfferTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOfferResponseTransfer;
@@ -77,14 +77,15 @@ class UpdateProductOfferController extends AbstractProductOfferController
             );
         }
 
-        $priceProductOfferCollection = (new PriceProductOfferCollectionTransfer())
-            ->setPriceProductOffers(
-                new ArrayObject($productOfferForm->getData()->getPrices())
-            );
+        $priceProductOfferTransfer = (new PriceProductOfferTransfer())
+            ->setProductOffer($productOfferForm->getData());
+
+        $priceProductOfferCollectionTransfer = (new PriceProductOfferCollectionTransfer())
+            ->addPriceProductOffer($priceProductOfferTransfer);
 
         $validationResponseTransfer = $this->getFactory()
             ->getPriceProductOfferFacade()
-            ->validateProductOfferPrices($priceProductOfferCollection);
+            ->validateProductOfferPrices($priceProductOfferCollectionTransfer);
 
         if (!$productOfferForm->isValid() || !$validationResponseTransfer->getIsSuccess()) {
             $initialData = $this->getFactory()

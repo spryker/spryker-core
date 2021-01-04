@@ -8,7 +8,7 @@
 namespace Spryker\Zed\PriceProductOffer\Business\Validator\Constraint;
 
 use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\PriceProductOfferTransfer;
 use Spryker\Zed\Kernel\Communication\Validator\AbstractConstraintValidator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -18,7 +18,7 @@ class ValidUniqueStoreCurrencyGrossNetConstraintValidator extends AbstractConstr
     /**
      * Checks if the Valid from value is earlier than Valid to.
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $value
+     * @param \Generated\Shared\Transfer\PriceProductOfferTransfer $value
      * @param \Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
@@ -27,38 +27,42 @@ class ValidUniqueStoreCurrencyGrossNetConstraintValidator extends AbstractConstr
      */
     public function validate($value, Constraint $constraint): void
     {
-        if (!$value instanceof PriceProductTransfer) {
-            throw new UnexpectedTypeException($value, PriceProductTransfer::class);
+        if (!$value instanceof PriceProductOfferTransfer) {
+            throw new UnexpectedTypeException($value, PriceProductOfferTransfer::class);
         }
 
         if (!$constraint instanceof ValidUniqueStoreCurrencyGrossNetConstraint) {
             throw new UnexpectedTypeException($constraint, ValidUniqueStoreCurrencyGrossNetConstraint::class);
         }
 
-        $moneyValueTransfer = $value->getMoneyValueOrFail();
+        $priceProductTransfers = $value->getProductOfferOrFail()->getPrices();
 
-        if (
-            !$value->getPriceDimension()
-            || !$value->getPriceDimension()->getIdProductOffer()
-            || !$moneyValueTransfer->getFkStore()
-            || !$moneyValueTransfer->getFkCurrency()
-        ) {
-            return;
-        }
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            $moneyValueTransfer = $priceProductTransfer->getMoneyValueOrFail();
 
-        $priceProductOfferCriteriaTransfer = new PriceProductOfferCriteriaTransfer();
-        $priceProductOfferCriteriaTransfer->setIdProductOffer($value->getPriceDimension()->getIdProductOffer())
-            ->addIdCurrency($moneyValueTransfer->getFkCurrency())
-            ->addIdStore($moneyValueTransfer->getFkStore())
-            ->addIdPriceType($value->getPriceType()->getIdPriceTypeOrFail());
+            if (
+                !$priceProductTransfer->getPriceDimension()
+                || !$priceProductTransfer->getPriceDimension()->getIdProductOffer()
+                || !$moneyValueTransfer->getFkStore()
+                || !$moneyValueTransfer->getFkCurrency()
+            ) {
+                return;
+            }
 
-        $priceProductTransfers = $constraint->getPriceProductOfferRepository()->getProductOfferPrices($priceProductOfferCriteriaTransfer);
-        if (
-            $priceProductTransfers->count() > 1
-            || ($priceProductTransfers->count() === 1
-                && $priceProductTransfers->offsetGet(0)->getMoneyValue()->getIdEntity() !== $value->getMoneyValue()->getIdEntity())
-        ) {
-            $this->context->addViolation($constraint->getMessage());
+            $priceProductOfferCriteriaTransfer = new PriceProductOfferCriteriaTransfer();
+            $priceProductOfferCriteriaTransfer->setIdProductOffer($priceProductTransfer->getPriceDimension()->getIdProductOffer())
+                ->addIdCurrency($moneyValueTransfer->getFkCurrency())
+                ->addIdStore($moneyValueTransfer->getFkStore())
+                ->addIdPriceType($priceProductTransfer->getPriceType()->getIdPriceTypeOrFail());
+
+            $priceProductTransfers = $constraint->getPriceProductOfferRepository()->getProductOfferPrices($priceProductOfferCriteriaTransfer);
+            if (
+                $priceProductTransfers->count() > 1
+                || ($priceProductTransfers->count() === 1
+                    && $priceProductTransfers->offsetGet(0)->getMoneyValue()->getIdEntity() !== $priceProductTransfer->getMoneyValue()->getIdEntity())
+            ) {
+                $this->context->addViolation($constraint->getMessage());
+            }
         }
     }
 }

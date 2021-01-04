@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller;
 use ArrayObject;
 use Generated\Shared\Transfer\PriceProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductOfferTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -46,12 +47,13 @@ class SavePriceProductOfferController extends AbstractController
             ->createPriceProductOfferMapper()
             ->mapRequestDataToPriceProductTransfers($requestData, $priceProductTransfers);
 
-        $priceProductOfferCollection = (new PriceProductOfferCollectionTransfer())
-            ->setPriceProductOffers(
-                new ArrayObject($priceProductTransfers)
-            );
+        $priceProductOfferTransfer = (new PriceProductOfferTransfer())
+            ->setProductOffer((new ProductOfferTransfer())->setPrices(new ArrayObject($priceProductTransfers)));
 
-        $validationResponseTransfer = $this->getFactory()->getPriceProductOfferFacade()->validateProductOfferPrices($priceProductOfferCollection);
+        $priceProductOfferCollectionTransfer = (new PriceProductOfferCollectionTransfer())
+            ->addPriceProductOffer($priceProductOfferTransfer);
+
+        $validationResponseTransfer = $this->getFactory()->getPriceProductOfferFacade()->validateProductOfferPrices($priceProductOfferCollectionTransfer);
         if (!$validationResponseTransfer->getIsSuccess()) {
             return $this->errorJsonResponse($validationResponseTransfer);
         }

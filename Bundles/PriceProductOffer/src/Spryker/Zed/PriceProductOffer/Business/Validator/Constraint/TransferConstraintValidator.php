@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductOffer\Business\Validator\Constraint;
 
+use Generated\Shared\Transfer\PriceProductOfferTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -35,6 +36,34 @@ class TransferConstraintValidator extends ConstraintValidator
         if (!$value instanceof AbstractTransfer) {
             throw new UnexpectedValueException($value, AbstractTransfer::class);
         }
+
+        if ($value instanceof PriceProductOfferTransfer) {
+            $priceProductTransfers = $value->getProductOfferOrFail()->getPrices();
+
+            foreach ($priceProductTransfers as $priceProductTransfer) {
+                $this->checkFields($priceProductTransfer, $constraint);
+            }
+
+            return;
+        }
+
+        $this->checkFields($value, $constraint);
+    }
+
+    /**
+     * @param mixed $value
+     * @param \Symfony\Component\Validator\Constraint $constraint
+     *
+     * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
+     *
+     * @return void
+     */
+    protected function checkFields($value, Constraint $constraint)
+    {
+        if (!$constraint instanceof TransferConstraint) {
+            throw new UnexpectedTypeException($constraint, TransferConstraint::class);
+        }
+
         $value = $value->toArray(false, true);
         foreach ($constraint->fields as $field => $fieldConstraint) {
             $existsInArray = is_array($value) && array_key_exists($field, $value);
@@ -50,9 +79,9 @@ class TransferConstraintValidator extends ConstraintValidator
             }
             if (!empty($fieldConstraint)) {
                 $this->context->getValidator()
-                        ->inContext($this->context)
-                        ->atPath('[' . $field . ']')
-                        ->validate($value[$field], $fieldConstraint);
+                    ->inContext($this->context)
+                    ->atPath('[' . $field . ']')
+                    ->validate($value[$field], $fieldConstraint);
             }
         }
     }

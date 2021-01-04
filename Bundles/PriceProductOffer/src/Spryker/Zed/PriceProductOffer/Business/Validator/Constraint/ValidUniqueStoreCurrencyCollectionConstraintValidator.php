@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\PriceProductOffer\Business\Validator\Constraint;
 
-use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\PriceProductOfferTransfer;
 use Spryker\Zed\Kernel\Communication\Validator\AbstractConstraintValidator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -16,7 +16,7 @@ use Traversable;
 class ValidUniqueStoreCurrencyCollectionConstraintValidator extends AbstractConstraintValidator
 {
     /**
-     * @phpstan-param \Traversable<int, \Generated\Shared\Transfer\PriceProductTransfer> $value
+     * @phpstan-param \Traversable<int, \Generated\Shared\Transfer\PriceProductOfferTransfer> $value
      *
      * @param \Traversable $value
      * @param \Symfony\Component\Validator\Constraint $constraint
@@ -36,27 +36,32 @@ class ValidUniqueStoreCurrencyCollectionConstraintValidator extends AbstractCons
         }
 
         $existingKeys = [];
-        foreach ($value as $position => $priceProductTransfer) {
-            if (!$priceProductTransfer instanceof PriceProductTransfer) {
-                throw new UnexpectedTypeException($priceProductTransfer, PriceProductTransfer::class);
-            }
-            $moneyValueTransfer = $priceProductTransfer->getMoneyValueOrFail();
-            if (!$moneyValueTransfer->getFkCurrency() || !$moneyValueTransfer->getFkStore()) {
-                continue;
-            }
-            $key = sprintf(
-                '%s-%s-%s',
-                $moneyValueTransfer->getFkCurrencyOrFail(),
-                $moneyValueTransfer->getFkStoreOrFail(),
-                $priceProductTransfer->getPriceTypeOrFail()->getIdPriceTypeOrFail()
-            );
-            if (in_array($key, $existingKeys, true)) {
-                $this->context->buildViolation($constraint->getMessage())
-                    ->atPath("[$position]")
-                    ->addViolation();
+        foreach ($value as $priceProductOfferTransfer) {
+            if (!$priceProductOfferTransfer instanceof PriceProductOfferTransfer) {
+                throw new UnexpectedTypeException($priceProductOfferTransfer, PriceProductOfferTransfer::class);
             }
 
-            $existingKeys[] = $key;
+            $priceProductTransfers = $priceProductOfferTransfer->getProductOfferOrFail()->getPrices();
+
+            foreach ($priceProductTransfers as $position => $priceProductTransfer) {
+                $moneyValueTransfer = $priceProductTransfer->getMoneyValueOrFail();
+                if (!$moneyValueTransfer->getFkCurrency() || !$moneyValueTransfer->getFkStore()) {
+                    continue;
+                }
+                $key = sprintf(
+                    '%s-%s-%s',
+                    $moneyValueTransfer->getFkCurrencyOrFail(),
+                    $moneyValueTransfer->getFkStoreOrFail(),
+                    $priceProductTransfer->getPriceTypeOrFail()->getIdPriceTypeOrFail()
+                );
+                if (in_array($key, $existingKeys, true)) {
+                    $this->context->buildViolation($constraint->getMessage())
+                        ->atPath("[$position]")
+                        ->addViolation();
+                }
+
+                $existingKeys[] = $key;
+            }
         }
     }
 }
