@@ -158,6 +158,9 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
         MerchantStorageTransfer $merchantStorageTransfer
     ): MerchantStorageTransfer {
         $merchantStorageTransfer = $merchantStorageTransfer->fromArray($merchantTransfer->modifiedToArray(), true);
+        $merchantStorageTransfer->getMerchantProfile()->getAddressCollection()->exchangeArray(
+            $merchantTransfer->getMerchantProfile()->getAddressCollection()->modifiedToArray()
+        );
 
         return $merchantStorageTransfer;
     }
