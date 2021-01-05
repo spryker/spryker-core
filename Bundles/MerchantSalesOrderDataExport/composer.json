@@ -13,7 +13,7 @@
     "spryker/merchant": "^1.0.0 || ^2.0.0 || ^3.0.0",
     "spryker/merchant-sales-order": "^0.7.0",
     "spryker/oms": "^10.0.0 || ^11.0.0",
-    "spryker/product-bundle": "^7.2.0",
+    "spryker/product-bundle": "^6.0.0 || ^7.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/sales": "^11.0.0",
     "spryker/sales-oms": "^0.1.0",
