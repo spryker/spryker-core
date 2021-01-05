@@ -33,13 +33,15 @@ class MerchantSalesOrderDataExportBusinessTester extends Actor
 
     /**
      * @param int $idSalesOrder
+     * @param string $merchantReference
      *
      * @return void
      */
-    public function haveOrderExpense(int $idSalesOrder): void
+    public function createOrderExpense(int $idSalesOrder, string $merchantReference): void
     {
         $expenseTransfer = (new ExpenseBuilder([
             ExpenseTransfer::FK_SALES_ORDER => $idSalesOrder,
+            ExpenseTransfer::MERCHANT_REFERENCE => $merchantReference,
         ]))->build();
 
         $salesExpenseEntity = SpySalesExpenseQuery::create()
@@ -47,6 +49,7 @@ class MerchantSalesOrderDataExportBusinessTester extends Actor
             ->findOneOrCreate();
 
         $salesExpenseEntity->fromArray($expenseTransfer->toArray());
+        $salesExpenseEntity->setMerchantReference($expenseTransfer->getMerchantReference());
         $salesExpenseEntity->setGrossPrice($expenseTransfer->getSumGrossPrice());
         $salesExpenseEntity->setNetPrice($expenseTransfer->getSumNetPrice());
         $salesExpenseEntity->setPrice($expenseTransfer->getSumPrice());

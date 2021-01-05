@@ -76,12 +76,12 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
 
         $this->tester->configureTestStateMachine([BusinessHelper::DEFAULT_OMS_PROCESS_NAME]);
         $merchantTransfer = $this->tester->haveMerchant();
-        $this->marchantName = $merchantTransfer->getName();
+        $this->merchantName = $merchantTransfer->getName();
 
         $salesOrder = $this->tester->haveOrder([], BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
 
         $salesOrderItem = $this->tester->createSalesOrderItemForOrder($salesOrder->getIdSalesOrder());
-        $this->tester->haveOrderExpense($salesOrder->getIdSalesOrder());
+        $this->tester->createOrderExpense($salesOrder->getIdSalesOrder(), $merchantTransfer->getMerchantReference());
 
         $merchantOrderTransfer = $this->tester->haveMerchantOrder([
             MerchantOrderTransfer::ID_ORDER => $salesOrder->getIdSalesOrder(),
@@ -229,7 +229,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
         );
 
         $filePath = APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'data/export' .
-            DIRECTORY_SEPARATOR . 'merchants' . DIRECTORY_SEPARATOR . $this->marchantName .
+            DIRECTORY_SEPARATOR . 'merchants' . DIRECTORY_SEPARATOR . $this->merchantName .
             DIRECTORY_SEPARATOR . 'merchant-orders' . DIRECTORY_SEPARATOR . $fileName;
         $this->assertFileExists($filePath);
 
