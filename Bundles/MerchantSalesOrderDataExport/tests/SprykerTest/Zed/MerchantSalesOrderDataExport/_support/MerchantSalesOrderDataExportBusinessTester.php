@@ -8,9 +8,6 @@
 namespace SprykerTest\Zed\MerchantSalesOrderDataExport;
 
 use Codeception\Actor;
-use Generated\Shared\DataBuilder\ExpenseBuilder;
-use Generated\Shared\Transfer\ExpenseTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
 
 /**
  * @method void wantToTest($text)
@@ -30,35 +27,6 @@ use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
 class MerchantSalesOrderDataExportBusinessTester extends Actor
 {
     use _generated\MerchantSalesOrderDataExportBusinessTesterActions;
-
-    /**
-     * @param int $idSalesOrder
-     * @param string $merchantReference
-     *
-     * @return void
-     */
-    public function createOrderExpense(int $idSalesOrder, string $merchantReference): void
-    {
-        $expenseTransfer = (new ExpenseBuilder([
-            ExpenseTransfer::FK_SALES_ORDER => $idSalesOrder,
-            ExpenseTransfer::MERCHANT_REFERENCE => $merchantReference,
-        ]))->build();
-
-        $salesExpenseEntity = SpySalesExpenseQuery::create()
-            ->filterByFkSalesOrder($idSalesOrder)
-            ->findOneOrCreate();
-
-        $salesExpenseEntity->fromArray($expenseTransfer->toArray());
-        $salesExpenseEntity->setMerchantReference($expenseTransfer->getMerchantReference());
-        $salesExpenseEntity->setGrossPrice($expenseTransfer->getSumGrossPrice());
-        $salesExpenseEntity->setNetPrice($expenseTransfer->getSumNetPrice());
-        $salesExpenseEntity->setPrice($expenseTransfer->getSumPrice());
-        $salesExpenseEntity->setTaxAmount($expenseTransfer->getSumTaxAmount());
-        $salesExpenseEntity->setDiscountAmountAggregation($expenseTransfer->getSumDiscountAmountAggregation());
-        $salesExpenseEntity->setPriceToPayAggregation($expenseTransfer->getSumPriceToPayAggregation());
-
-        $salesExpenseEntity->save();
-    }
 
     /**
      * @param string $filePath

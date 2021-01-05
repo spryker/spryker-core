@@ -53,33 +53,21 @@ class MerchantSalesExpenseMapper
     }
 
     /**
-     * @param array[] $merchantSalesExpenseRows
+     * @param mixed[][] $merchantSalesExpenseRows
      *
-     * @return array[]
+     * @return mixed[][]
      */
     public function mapMerchantSalesExpenseDataByField(array $merchantSalesExpenseRows): array
     {
-        $fields = $this->getFields();
-
         $mappedMerchantSalesExpenses = [];
         foreach ($merchantSalesExpenseRows as $merchantSalesExpenseRow) {
             $mappedMerchantSalesExpenseRow = [];
-            foreach ($fields as $coloumn => $field) {
-                $mappedMerchantSalesExpenseRow[$field] = $merchantSalesExpenseRow[$coloumn] ?? null;
+            foreach ($this->fieldMapping as $field => $column) {
+                $mappedMerchantSalesExpenseRow[$field] = $merchantSalesExpenseRow[$column] ?? null;
             }
             $mappedMerchantSalesExpenses[] = $mappedMerchantSalesExpenseRow;
         }
 
         return $mappedMerchantSalesExpenses;
-    }
-
-    /**
-     * @phpstan-return array<string, string>
-     *
-     * @return string[]
-     */
-    protected function getFields(): array
-    {
-        return array_flip($this->fieldMapping);
     }
 }

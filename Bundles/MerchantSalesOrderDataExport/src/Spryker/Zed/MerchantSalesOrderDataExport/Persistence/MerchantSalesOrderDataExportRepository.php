@@ -53,7 +53,6 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
         $selectedColumns = $this->getMerchantSalesOrderSelectedColumns($dataExportConfigurationTransfer);
         $selectedFields = array_flip($selectedColumns);
 
-        //TODO move to mapper
         $hasComments = in_array(MerchantSalesOrderMapper::KEY_MERCHANT_ORDER_COMMENTS, $dataExportConfigurationTransfer->getFields(), true);
         if ($hasComments) {
             $selectedFields[MerchantSalesOrderMapper::KEY_MERCHANT_ORDER_COMMENTS] = MerchantSalesOrderMapper::KEY_MERCHANT_ORDER_COMMENTS;
@@ -481,9 +480,9 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
     }
 
     /**
-     * @param array[] $rowItemsData
+     * @param string[][] $rowItemsData
      *
-     * @return array[]
+     * @return string[][]
      */
     protected function formatRowItemsDataKeys(array $rowItemsData): array
     {

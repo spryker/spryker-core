@@ -12,8 +12,6 @@ use DateTime;
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportConnectionConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportFormatConfigurationTransfer;
-use Generated\Shared\Transfer\DataExportReportTransfer;
-use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use SprykerTest\Zed\Sales\Helper\BusinessHelper;
 
@@ -68,6 +66,16 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
     protected $merchantName;
 
     /**
+     * @var string|null
+     */
+    protected $merchantReference;
+
+    /**
+     * @var string
+     */
+    protected $exportFilePath;
+
+    /**
      * @return void
      */
     protected function setUp(): void
@@ -76,82 +84,121 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
 
         $this->tester->configureTestStateMachine([BusinessHelper::DEFAULT_OMS_PROCESS_NAME]);
         $merchantTransfer = $this->tester->haveMerchant();
+        $this->merchantReference = $merchantTransfer->getMerchantReference();
         $this->merchantName = $merchantTransfer->getName();
-
-        $salesOrder = $this->tester->haveOrder([], BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
-
-        $salesOrderItem = $this->tester->createSalesOrderItemForOrder($salesOrder->getIdSalesOrder());
-        $this->tester->createOrderExpense($salesOrder->getIdSalesOrder(), $merchantTransfer->getMerchantReference());
-
-        $merchantOrderTransfer = $this->tester->haveMerchantOrder([
-            MerchantOrderTransfer::ID_ORDER => $salesOrder->getIdSalesOrder(),
-            MerchantOrderTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
-        ]);
-        $merchantOrderItemTransfer = $this->tester->haveMerchantOrderItem([
-            MerchantOrderItemTransfer::ID_ORDER_ITEM => $salesOrderItem->getIdSalesOrderItem(),
-            MerchantOrderItemTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
-        ]);
-
         $this->timestamp = time();
     }
 
     /**
      * @return void
      */
-    public function testMerchantOrderExportWillReturnReportTransferWithCorrectData(): void
+    public function testExportMerchantOrderWillReturnResultTransferWithCorrectData(): void
     {
-        //Arrange
+        // Arrange
+        $dataExportConfigurationTransfer = $this->createDataExportConfigurationTransfer(
+            static::DATA_ENTITY_MERCHANT_ORDER
+        );
+        $salesOrder = $this->tester->haveOrder([], BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
+        $this->tester->haveMerchantOrder([
+            MerchantOrderTransfer::ID_ORDER => $salesOrder->getIdSalesOrder(),
+            MerchantOrderTransfer::MERCHANT_REFERENCE => $this->merchantReference,
+        ]);
+
+        // Act
+        $dataExportReportTransfer = $this->tester->getFacade()->exportMerchantOrder($dataExportConfigurationTransfer);
+
+        // Assert
+        /** @var \Generated\Shared\Transfer\DataExportResultTransfer $dataExportResultTransfer */
+        $dataExportResultTransfer = $dataExportReportTransfer->getDataExportResults()->offsetGet(0);
+        $exportCount = $dataExportResultTransfer->getExportCount();
+        $this->assertSame(
+            1,
+            $dataExportResultTransfer->getExportCount(),
+            'Exported rows count does not equals to an expected value.'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testExportMerchantOrderWillReturnTheCorrectQuantityOfResultTransfers(): void
+    {
+        // Arrange
+        $dataExportConfigurationTransfer = $this->createDataExportConfigurationTransfer(
+            static::DATA_ENTITY_MERCHANT_ORDER
+        );
+        $salesOrder = $this->tester->haveOrder([], BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
+        $this->tester->haveMerchantOrder([
+            MerchantOrderTransfer::ID_ORDER => $salesOrder->getIdSalesOrder(),
+            MerchantOrderTransfer::MERCHANT_REFERENCE => $this->merchantReference,
+        ]);
+
+        // Act
+        $dataExportReportTransfer = $this->tester->getFacade()->exportMerchantOrder($dataExportConfigurationTransfer);
+
+        // Assert
+        $this->assertTrue($dataExportReportTransfer->getIsSuccessful());
+        $this->assertCount(
+            1,
+            $dataExportReportTransfer->getDataExportResults(),
+            'Number of result transfers does not equals to an expected value.'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testExportMerchantOrderWillCreateExportFileWithCorrectNameAndFilePath(): void
+    {
+        // Arrange
+        $dataExportConfigurationTransfer = $this->createDataExportConfigurationTransfer(
+            static::DATA_ENTITY_MERCHANT_ORDER
+        );
+        $salesOrder = $this->tester->haveOrder([], BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
+        $this->tester->haveMerchantOrder([
+            MerchantOrderTransfer::ID_ORDER => $salesOrder->getIdSalesOrder(),
+            MerchantOrderTransfer::MERCHANT_REFERENCE => $this->merchantReference,
+        ]);
+
+        // Act
+        $dataExportReportTransfer = $this->tester->getFacade()->exportMerchantOrder($dataExportConfigurationTransfer);
+
+        // Assert
+        /** @var \Generated\Shared\Transfer\DataExportResultTransfer $dataExportResultTransfer */
+        $dataExportResultTransfer = $dataExportReportTransfer->getDataExportResults()->offsetGet(0);
+
+        $this->assertSame(
+            sprintf(static::DATA_EXPORT_RESULT_FILE_NAME_TEMPLATE_MERCHANT_ORDER, $this->timestamp),
+            $dataExportResultTransfer->getFileName(),
+            'File name does not equals to an expected value'
+        );
+
+        $this->exportFilePath = APPLICATION_ROOT_DIR . 'data/export' .
+            DIRECTORY_SEPARATOR . 'merchants' . DIRECTORY_SEPARATOR . $this->merchantName .
+            DIRECTORY_SEPARATOR . 'merchant-orders' . DIRECTORY_SEPARATOR . $dataExportResultTransfer->getFileName();
+
+        $this->assertFileExists($this->exportFilePath);
+
+        $this->tester->removeGeneratedFile($this->exportFilePath);
+    }
+
+   /**
+    * @return void
+    */
+    public function testExportMerchantOrderWillReturnUnsuccessfulDataExportReportTransferInCaseOfEmptyData(): void
+    {
+        // Arrange
         $dataExportConfigurationTransfer = $this->createDataExportConfigurationTransfer(
             static::DATA_ENTITY_MERCHANT_ORDER
         );
 
-        //Act
+        // Act
         $dataExportReportTransfer = $this->tester->getFacade()->exportMerchantOrder($dataExportConfigurationTransfer);
 
-        //Assert
-        $this->assertDataExport(
-            $dataExportReportTransfer,
-            static::DATA_EXPORT_RESULT_FILE_NAME_TEMPLATE_MERCHANT_ORDER
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testMerchantOrderItemExportWillReturnReportTransferWithCorrectData(): void
-    {
-        //Arrange
-        $dataExportConfigurationTransfer = $this->createDataExportConfigurationTransfer(
-            static::DATA_ENTITY_MERCHANT_ORDER_ITEM
-        );
-
-        //Act
-        $dataExportReportTransfer = $this->tester->getFacade()->exportMerchantOrderItem($dataExportConfigurationTransfer);
-
-        //Assert
-        $this->assertDataExport(
-            $dataExportReportTransfer,
-            static::DATA_EXPORT_RESULT_FILE_NAME_TEMPLATE_MERCHANT_ORDER_ITEM
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testMerchantOrderExpenseExportWillReturnReportTransferWithCorrectData(): void
-    {
-        //Arrange
-        $dataExportConfigurationTransfer = $this->createDataExportConfigurationTransfer(
-            static::DATA_ENTITY_MERCHANT_ORDER_EXPENSE
-        );
-
-        //Act
-        $dataExportReportTransfer = $this->tester->getFacade()->exportMerchantOrderExpense($dataExportConfigurationTransfer);
-
-        //Assert
-        $this->assertDataExport(
-            $dataExportReportTransfer,
-            static::DATA_EXPORT_RESULT_FILE_NAME_TEMPLATE_MERCHANT_ORDER_EXPENSE
+        // Assert
+        $this->assertFalse(
+            $dataExportReportTransfer->getIsSuccessful(),
+            'The data export is successful despite the empty data.'
         );
     }
 
@@ -193,46 +240,5 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
                 'timestamp' => $this->timestamp,
                 'extension' => static::EXTENSION,
             ]);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DataExportReportTransfer $dataExportReportTransfer
-     * @param string $dataExportResultFileTemplate
-     *
-     * @return void
-     */
-    protected function assertDataExport(
-        DataExportReportTransfer $dataExportReportTransfer,
-        string $dataExportResultFileTemplate
-    ): void {
-        $this->assertTrue($dataExportReportTransfer->getIsSuccessful());
-        $this->assertCount(
-            1,
-            $dataExportReportTransfer->getDataExportResults(),
-            'Number of result transfers does not equals to an expected value.'
-        );
-
-        /** @var \Generated\Shared\Transfer\DataExportResultTransfer $dataExportResultTransfer */
-        $dataExportResultTransfer = $dataExportReportTransfer->getDataExportResults()->offsetGet(0);
-        $exportCount = $dataExportResultTransfer->getExportCount();
-        $this->assertSame(
-            1,
-            $dataExportResultTransfer->getExportCount(),
-            'Export count does not equals to an expected value.'
-        );
-
-        $fileName = $dataExportResultTransfer->getFileName();
-        $this->assertSame(
-            sprintf($dataExportResultFileTemplate, $this->timestamp),
-            $fileName,
-            'File name does not equals to an expected value'
-        );
-
-        $filePath = APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'data/export' .
-            DIRECTORY_SEPARATOR . 'merchants' . DIRECTORY_SEPARATOR . $this->merchantName .
-            DIRECTORY_SEPARATOR . 'merchant-orders' . DIRECTORY_SEPARATOR . $fileName;
-        $this->assertFileExists($filePath);
-
-        $this->tester->removeGeneratedFile($filePath);
     }
 }

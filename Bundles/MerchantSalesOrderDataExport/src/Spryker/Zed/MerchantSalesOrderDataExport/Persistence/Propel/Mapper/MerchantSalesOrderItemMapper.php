@@ -24,8 +24,6 @@ class MerchantSalesOrderItemMapper
     /**
      * @phpstan-var array<string, string>
      *
-     * @module SalesOms
-     *
      * @var string[]
      */
     protected $fieldMapping = [
@@ -103,33 +101,21 @@ class MerchantSalesOrderItemMapper
     }
 
     /**
-     * @param array[] $merchantSalesOrderItemRows
+     * @param mixed[][] $merchantSalesOrderItemRows
      *
-     * @return array[]
+     * @return mixed[][]
      */
     public function mapMerchantSalesOrderItemDataByField(array $merchantSalesOrderItemRows): array
     {
-        $fields = $this->getFields();
-
         $mappedMerchantSalesOrderItems = [];
         foreach ($merchantSalesOrderItemRows as $merchantSalesOrderItemRow) {
             $mappedMerchantSalesOrderItemRow = [];
-            foreach ($fields as $coloumn => $field) {
-                $mappedMerchantSalesOrderItemRow[$field] = $merchantSalesOrderItemRow[$coloumn] ?? null;
+            foreach ($this->fieldMapping as $field => $column) {
+                $mappedMerchantSalesOrderItemRow[$field] = $merchantSalesOrderItemRow[$column] ?? null;
             }
             $mappedMerchantSalesOrderItems[] = $mappedMerchantSalesOrderItemRow;
         }
 
         return $mappedMerchantSalesOrderItems;
-    }
-
-    /**
-     * @phpstan-return array<string, string>
-     *
-     * @return string[]
-     */
-    protected function getFields(): array
-    {
-        return array_flip($this->fieldMapping);
     }
 }

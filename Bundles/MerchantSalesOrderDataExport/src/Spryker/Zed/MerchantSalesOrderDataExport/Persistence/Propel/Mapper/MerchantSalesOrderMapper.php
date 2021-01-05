@@ -93,18 +93,18 @@ class MerchantSalesOrderMapper
     }
 
     /**
-     * @param array[] $merchantSalesOrderRows
+     * @param mixed[][] $merchantSalesOrderRows
      * @param string[] $fields
      *
-     * @return array[]
+     * @return mixed[][]
      */
     public function mapMerchantSalesOrderDataByField(array $merchantSalesOrderRows, array $fields): array
     {
         $mappedMerchantSalesOrders = [];
         foreach ($merchantSalesOrderRows as $merchantSalesOrderRow) {
             $mappedMerchantSalesOrderRow = [];
-            foreach ($fields as $coloumn => $field) {
-                $mappedMerchantSalesOrderRow[$field] = $merchantSalesOrderRow[$coloumn] ?? null;
+            foreach ($fields as $column => $field) {
+                $mappedMerchantSalesOrderRow[$field] = $merchantSalesOrderRow[$column] ?? null;
             }
             if (($mappedMerchantSalesOrderRow[static::KEY_MERCHANT_ORDER_COMMENTS])) {
                 $mappedMerchantSalesOrderRow[static::KEY_MERCHANT_ORDER_COMMENTS] = $this->merchantSalesOrderCommentMapper
