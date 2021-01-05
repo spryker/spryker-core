@@ -1,0 +1,30 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 26,
+            "line_to": 26,
+            "type": "MissingReturnType",
+            "message": "Method Symfony\\Component\\Security\\Http\\Util\\TargetPathTrait::saveTargetPath does not have a return type, expecting void",
+            "file_name": "vendor/symfony/security-http/Util/TargetPathTrait.php",
+            "snippet": "    private function saveTargetPath(SessionInterface $session, string $firewallName, string $uri)",
+            "selected_text": "saveTargetPath",
+            "error_level": 2,
+            "shortcode": 50
+        },
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "MissingReturnType",
+            "message": "Method Symfony\\Component\\Security\\Http\\Util\\TargetPathTrait::removeTargetPath does not have a return type, expecting void",
+            "file_name": "vendor/symfony/security-http/Util/TargetPathTrait.php",
+            "snippet": "    private function removeTargetPath(SessionInterface $session, string $firewallName)",
+            "selected_text": "removeTargetPath",
+            "error_level": 2,
+            "shortcode": 50
+        }
+    ],
+    "deprecation": []
+}
