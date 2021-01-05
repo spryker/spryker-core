@@ -27,6 +27,14 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
 {
     public const FK_CATEGORY = 'fkCategory';
 
+    protected const COL_ID_CATEGORY_NODE = 'id_category_node';
+    protected const COL_FK_CATEGORY_NODE_DESCENDANT = 'fk_category_node_descendant';
+    protected const COL_FK_CATEGORY = 'fk_category';
+    protected const COL_NAME = 'name';
+    protected const COL_URL = 'url';
+    protected const COL_LOCALE = 'locale';
+    protected const COL_STORE = 'store';
+
     /**
      * {@inheritDoc}
      *
@@ -256,26 +264,22 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
         $nodeQuery->filterByIsRoot(false);
 
         $nodeQuery
-            ->withColumn(SpyCategoryNodeTableMap::COL_FK_CATEGORY, 'fk_category')
-            ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, 'id_category_node')
-            ->withColumn(SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT, 'fk_category_node_descendant')
-            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name')
-            ->withColumn(SpyCategoryTableMap::COL_CATEGORY_KEY, 'category_key')
-            ->withColumn(SpyCategoryAttributeTableMap::COL_FK_LOCALE, 'fk_locale') // can be removed
-            ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME, 'locale')
-            ->withColumn(SpyStoreTableMap::COL_NAME, 'store')
-            ->withColumn(SpyUrlTableMap::COL_URL, 'url');
+            ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, static::COL_ID_CATEGORY_NODE)
+            ->withColumn(SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT, static::COL_FK_CATEGORY_NODE_DESCENDANT)
+            ->withColumn(SpyCategoryNodeTableMap::COL_FK_CATEGORY, static::COL_FK_CATEGORY)
+            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, static::COL_NAME)
+            ->withColumn(SpyUrlTableMap::COL_URL, static::COL_URL)
+            ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME, static::COL_LOCALE)
+            ->withColumn(SpyStoreTableMap::COL_NAME, static::COL_STORE);
 
         $nodeQuery->select([
-            'fk_category',
-            'id_category_node',
-            'fk_category_node_descendant',
-            'name',
-            'category_key',
-            'fk_locale',
-            'locale',
-            'store',
-            'url',
+            static::COL_ID_CATEGORY_NODE,
+            static::COL_FK_CATEGORY_NODE_DESCENDANT,
+            static::COL_FK_CATEGORY,
+            static::COL_NAME,
+            static::COL_URL,
+            static::COL_LOCALE,
+            static::COL_STORE,
         ]);
 
         $nodeQuery->setFormatter(new PropelArraySetFormatter());

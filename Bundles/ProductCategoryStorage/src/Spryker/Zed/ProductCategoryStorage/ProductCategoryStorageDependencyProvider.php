@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductCategoryStorage;
 
+use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToCategoryBridge;
@@ -24,9 +25,12 @@ class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyP
     public const QUERY_CONTAINER_PRODUCT_CATEGORY = 'QUERY_CONTAINER_PRODUCT_CATEGORY';
     public const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
+
     public const FACADE_CATEGORY = 'FACADE_CATEGORY';
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const FACADE_STORE = 'FACADE_STORE';
+
+    public const PROPEL_QUERY_CATEGORY_NODE = 'PROPEL_QUERY_CATEGORY_NODE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -47,7 +51,7 @@ class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyP
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container->set(static::FACADE_CATEGORY, function (Container $container) {
             return new ProductCategoryStorageToCategoryBridge($container->getLocator()->category()->facade());
@@ -63,7 +67,7 @@ class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyP
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function providePersistenceLayerDependencies(Container $container)
+    public function providePersistenceLayerDependencies(Container $container): Container
     {
         $container->set(static::QUERY_CONTAINER_PRODUCT_CATEGORY, function (Container $container) {
             return new ProductCategoryStorageToProductCategoryQueryContainerBridge($container->getLocator()->productCategory()->queryContainer());
@@ -76,6 +80,8 @@ class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyP
         $container->set(static::QUERY_CONTAINER_PRODUCT, function (Container $container) {
             return new ProductCategoryStorageToProductQueryContainerBridge($container->getLocator()->product()->queryContainer());
         });
+
+        $container = $this->addCategoryNodeQuery($container);
 
         return $container;
     }
@@ -92,6 +98,22 @@ class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyP
                 $container->getLocator()->store()->facade()
             );
         });
+
+        return $container;
+    }
+
+    /**
+     * @module Category
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCategoryNodeQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_CATEGORY_NODE, $container->factory(function () {
+            return SpyCategoryNodeQuery::create();
+        }));
 
         return $container;
     }

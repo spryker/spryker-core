@@ -16,6 +16,7 @@ use Spryker\Zed\ProductCategoryStorage\ProductCategoryStorageDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductCategoryStorage\ProductCategoryStorageConfig getConfig()
  * @method \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepositoryInterface getRepository()
  */
 class ProductCategoryStorageBusinessFactory extends AbstractBusinessFactory
 {
@@ -39,7 +40,8 @@ class ProductCategoryStorageBusinessFactory extends AbstractBusinessFactory
         return new MultiStoreProductCategoryStorageWriter(
             $this->getCategoryFacade(),
             $this->getQueryContainer(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getRepository()
         );
     }
 

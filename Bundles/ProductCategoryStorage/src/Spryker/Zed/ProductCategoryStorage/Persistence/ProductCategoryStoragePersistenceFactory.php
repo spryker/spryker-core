@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductCategoryStorage\Persistence;
 
+use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductCategoryStorage\ProductCategoryStorageDependencyProvider;
@@ -47,5 +48,13 @@ class ProductCategoryStoragePersistenceFactory extends AbstractPersistenceFactor
     public function createSpyProductAbstractCategoryStorageQuery()
     {
         return SpyProductAbstractCategoryStorageQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function getCategoryNodeQuery(): SpyCategoryNodeQuery
+    {
+        return $this->getProvidedDependency(ProductCategoryStorageDependencyProvider::PROPEL_QUERY_CATEGORY_NODE);
     }
 }

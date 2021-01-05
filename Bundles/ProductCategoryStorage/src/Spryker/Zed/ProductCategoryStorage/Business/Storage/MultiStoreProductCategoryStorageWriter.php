@@ -15,13 +15,44 @@ use Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage
 use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToCategoryInterface;
 use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToStoreFacadeInterface;
 use Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageQueryContainerInterface;
+use Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepositoryInterface;
 
 class MultiStoreProductCategoryStorageWriter implements ProductCategoryStorageWriterInterface
 {
-    public const ID_CATEGORY_NODE = 'id_category_node';
-    public const FK_CATEGORY = 'fk_category';
-    public const NAME = 'name';
-    public const URL = 'url';
+    /**
+     * @uses \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepository::COL_ID_CATEGORY_NODE
+     */
+    protected const COL_ID_CATEGORY_NODE = 'id_category_node';
+
+    /**
+     * @uses \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepository::COL_FK_CATEGORY_NODE_DESCENDANT
+     */
+    protected const COL_FK_CATEGORY_NODE_DESCENDANT = 'fk_category_node_descendant';
+
+    /**
+     * @uses \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepository::COL_FK_CATEGORY
+     */
+    protected const COL_FK_CATEGORY = 'fk_category';
+
+    /**
+     * @uses \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepository::COL_NAME
+     */
+    protected const COL_NAME = 'name';
+
+    /**
+     * @uses \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepository::COL_URL
+     */
+    protected const COL_URL = 'url';
+
+    /**
+     * @uses \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepository::COL_LOCALE
+     */
+    protected const COL_LOCALE = 'locale';
+
+    /**
+     * @uses \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepository::COL_STORE
+     */
+    protected const COL_STORE = 'store';
 
     /**
      * @var \Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToCategoryInterface
@@ -39,6 +70,11 @@ class MultiStoreProductCategoryStorageWriter implements ProductCategoryStorageWr
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepositoryInterface
+     */
+    protected $productCategoryStorageRepository;
+
+    /**
      * @var array|null
      */
     protected static $categoryTree;
@@ -47,15 +83,18 @@ class MultiStoreProductCategoryStorageWriter implements ProductCategoryStorageWr
      * @param \Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToCategoryInterface $categoryFacade
      * @param \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepositoryInterface $productCategoryStorageRepository
      */
     public function __construct(
         ProductCategoryStorageToCategoryInterface $categoryFacade,
         ProductCategoryStorageQueryContainerInterface $queryContainer,
-        ProductCategoryStorageToStoreFacadeInterface $storeFacade
+        ProductCategoryStorageToStoreFacadeInterface $storeFacade,
+        ProductCategoryStorageRepositoryInterface $productCategoryStorageRepository
     ) {
         $this->categoryFacade = $categoryFacade;
         $this->queryContainer = $queryContainer;
         $this->storeFacade = $storeFacade;
+        $this->productCategoryStorageRepository = $productCategoryStorageRepository;
     }
 
     /**
@@ -65,6 +104,8 @@ class MultiStoreProductCategoryStorageWriter implements ProductCategoryStorageWr
      */
     public function publish(array $productAbstractIds): void
     {
+        $productAbstractIds = [60];
+
         $productAbstractLocalizedEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);
         $productAbstractCategoryStorageEntities = $this->findProductAbstractCategoryStorageEntitiesByProductAbstractIds($productAbstractIds);
 
@@ -107,7 +148,6 @@ class MultiStoreProductCategoryStorageWriter implements ProductCategoryStorageWr
             }
         }
     }
-
 
     /**
      * @param int[] $productAbstractIds
@@ -219,12 +259,9 @@ class MultiStoreProductCategoryStorageWriter implements ProductCategoryStorageWr
         $productCategoryTransfers = [];
 
         foreach ($pathTokens as $pathItem) {
-            $idNode = (int)$pathItem[static::ID_CATEGORY_NODE];
-            $idCategory = (int)$pathItem[static::FK_CATEGORY];
-
             $productCategoryTransfers[] = (new ProductCategoryStorageTransfer())
-                ->setCategoryNodeId($idNode)
-                ->setCategoryId($idCategory)
+                ->setCategoryNodeId((int)$pathItem[static::ID_CATEGORY_NODE])
+                ->setCategoryId((int)$pathItem[static::FK_CATEGORY])
                 ->setUrl($pathItem[static::URL])
                 ->setName($pathItem[static::NAME]);
         }
@@ -284,42 +321,42 @@ class MultiStoreProductCategoryStorageWriter implements ProductCategoryStorageWr
     {
         static::$categoryTree = [];
 
-        $categoryNodes = $this->queryContainer->queryAllCategoryNodes()->find();
-        /** @var array $categoryEntities */
-        $categoryEntities = $this->queryContainer->queryAllCategoriesWithAttributesAndOrderByDescendant()->find();
-        $formattedCategoriesByLocaleAndNodeIds = $this->formatCategoriesWithLocaleAndNodIds($categoryEntities);
+        $categories = $this->productCategoryStorageRepository->getAllCategoriesOrderedByDescendant();
+        $formattedCategories = $this->formatCategories($categories);
 
-        foreach ($categoryNodes as $categoryNodeEntity) {
+        $categoryNodeIds = $this->productCategoryStorageRepository->getAllCategoryNodeIds();
+
+        foreach ($categoryNodeIds as $idCategoryNode) {
             $pathData = [];
 
-            if (isset($formattedCategoriesByLocaleAndNodeIds[$categoryNodeEntity->getIdCategoryNode()])) {
-                $pathData = $formattedCategoriesByLocaleAndNodeIds[$categoryNodeEntity->getIdCategoryNode()];
+            if (isset($formattedCategories[$idCategoryNode])) {
+                $pathData = $formattedCategories[$idCategoryNode];
             }
 
-            static::$categoryTree[$categoryNodeEntity->getIdCategoryNode()] = [];
+            static::$categoryTree[$idCategoryNode] = [];
 
             foreach ($pathData as $path) {
-                $idCategoryNode = (int)$path['id_category_node'];
-                if (!in_array($idCategoryNode, static::$categoryTree[$categoryNodeEntity->getIdCategoryNode()])) {
-                    static::$categoryTree[$categoryNodeEntity->getIdCategoryNode()][] = $path;
+                if (!in_array((int)$path[static::COL_ID_CATEGORY_NODE], static::$categoryTree[$idCategoryNode])) {
+                    static::$categoryTree[$idCategoryNode][] = $path;
                 }
             }
         }
     }
 
     /**
-     * @param array $categoryEntities
+     * @param array $categories
      *
      * @return array
      */
-    protected function formatCategoriesWithLocaleAndNodIds(array $categoryEntities): array
+    protected function formatCategories(array $categories): array
     {
-        $categories = [];
-        foreach ($categoryEntities as $categoryEntity) {
-            $categories[$categoryEntity['fk_category_node_descendant']][] = $categoryEntity;
+        $formattedCategories = [];
+
+        foreach ($categories as $category) {
+            $formattedCategories[$category['fk_category_node_descendant']][] = $category;
         }
 
-        return $categories;
+        return $formattedCategories;
     }
 
     /**
