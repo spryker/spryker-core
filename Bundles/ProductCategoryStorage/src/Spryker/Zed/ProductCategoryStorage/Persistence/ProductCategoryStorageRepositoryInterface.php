@@ -18,4 +18,39 @@ interface ProductCategoryStorageRepositoryInterface
      * @return int[]
      */
     public function getAllCategoryNodeIds(): array;
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage[]
+     */
+    public function getProductAbstractCategoryStoragesByIds(array $productAbstractIds): array;
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return int[]
+     */
+    public function getAllCategoryIdsByCategoryNodeId(int $idCategoryNode): array;
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes[]
+     */
+    public function getProductAbstractLocalizedAttributes(array $productAbstractIds): array;
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]
+     */
+    public function getProductCategoryWithCategoryNodes(array $productAbstractIds): array;
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage[]
+     */
+    public function getProductAbstractCategoryStorageByIds(array $productAbstractIds): array;
 }

@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductCategoryStorage\Business\ProductCategoryStorageBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepositoryInterface getRepository()
  */
 class ProductCategoryStorageFacade extends AbstractFacade implements ProductCategoryStorageFacadeInterface
 {
@@ -25,7 +26,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      */
     public function publish(array $productAbstractIds)
     {
-        $this->getFactory()->createMultiStoreProductCategoryStorageWriter()->publish($productAbstractIds);
+        $this->getFactory()->createProductCategoryStorageWriter()->publish($productAbstractIds);
     }
 
     /**
@@ -39,7 +40,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      */
     public function unpublish(array $productAbstractIds)
     {
-        $this->getFactory()->createMultiStoreProductCategoryStorageWriter()->unpublish($productAbstractIds);
+        $this->getFactory()->createProductCategoryStorageWriter()->unpublish($productAbstractIds);
     }
 
     /**
@@ -53,6 +54,6 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      */
     public function getRelatedCategoryIds(array $categoryIds)
     {
-        return $this->getFactory()->createMultiStoreProductCategoryStorageWriter()->getRelatedCategoryIds($categoryIds);
+        return $this->getFactory()->createProductCategoryStorageWriter()->getRelatedCategoryIds($categoryIds);
     }
 }

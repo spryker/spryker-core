@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\ProductCategoryStorage;
 
+use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
+use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery;
+use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToCategoryBridge;
@@ -31,17 +34,20 @@ class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyP
     public const FACADE_STORE = 'FACADE_STORE';
 
     public const PROPEL_QUERY_CATEGORY_NODE = 'PROPEL_QUERY_CATEGORY_NODE';
+    public const PROPEL_QUERY_CATEGORY_CLOSURE_TABLE = 'PROPEL_QUERY_CATEGORY_CLOSURE_TABLE';
+    public const PROPEL_QUERY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES = 'PROPEL_QUERY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES';
+    public const PROPEL_QUERY_PRODUCT_CATEGORY = 'PROPEL_QUERY_PRODUCT_CATEGORY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
-        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
-            return new ProductCategoryStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        });
+        $container = parent::provideCommunicationLayerDependencies($container);
+
+        $container = $this->addEventBehaviorFacade($container);
 
         return $container;
     }
@@ -53,10 +59,9 @@ class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyP
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
-        $container->set(static::FACADE_CATEGORY, function (Container $container) {
-            return new ProductCategoryStorageToCategoryBridge($container->getLocator()->category()->facade());
-        });
+        $container = parent::provideBusinessLayerDependencies($container);
 
+        $container = $this->addCategoryFacade($container);
         $container = $this->addStoreFacade($container);
 
         return $container;
@@ -81,7 +86,38 @@ class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyP
             return new ProductCategoryStorageToProductQueryContainerBridge($container->getLocator()->product()->queryContainer());
         });
 
-        $container = $this->addCategoryNodeQuery($container);
+        $container = $this->addCategoryNodePropelQuery($container);
+        $container = $this->addCategoryClosureTablePropelQuery($container);
+        $container = $this->addProductAbstractLocalizedAttributesPropelQuery($container);
+        $container = $this->addProductCategoryPropelQuery($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCategoryFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_CATEGORY, function (Container $container) {
+            return new ProductCategoryStorageToCategoryBridge($container->getLocator()->category()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addEventBehaviorFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
+            return new ProductCategoryStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
+        });
 
         return $container;
     }
@@ -94,9 +130,7 @@ class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyP
     protected function addStoreFacade(Container $container): Container
     {
         $container->set(static::FACADE_STORE, function (Container $container) {
-            return new ProductCategoryStorageToStoreFacadeBridge(
-                $container->getLocator()->store()->facade()
-            );
+            return new ProductCategoryStorageToStoreFacadeBridge($container->getLocator()->store()->facade());
         });
 
         return $container;
@@ -109,10 +143,58 @@ class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyP
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCategoryNodeQuery(Container $container): Container
+    protected function addCategoryNodePropelQuery(Container $container): Container
     {
         $container->set(static::PROPEL_QUERY_CATEGORY_NODE, $container->factory(function () {
             return SpyCategoryNodeQuery::create();
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @module Category
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCategoryClosureTablePropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_CATEGORY_CLOSURE_TABLE, $container->factory(function () {
+            return SpyCategoryClosureTableQuery::create();
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @module Product
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductAbstractLocalizedAttributesPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES, $container->factory(function () {
+            return SpyProductAbstractLocalizedAttributesQuery::create();
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @module ProductCategory
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductCategoryPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_PRODUCT_CATEGORY, $container->factory(function () {
+            return SpyProductCategoryQuery::create();
         }));
 
         return $container;

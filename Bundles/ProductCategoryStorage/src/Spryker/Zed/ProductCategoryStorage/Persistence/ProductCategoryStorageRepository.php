@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductCategoryStorage\Persistence;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
@@ -36,7 +37,7 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
     public function getAllCategoriesOrderedByDescendant(): array
     {
         $categoryNodeQuery = $this->getFactory()
-            ->getCategoryNodeQuery()
+            ->getCategoryNodePropelQuery()
             ->orderBy(SpyCategoryNodeTableMap::COL_NODE_ORDER, Criteria::DESC)
             ->addJoin(
                 SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE,
@@ -83,7 +84,7 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
 
         $categoryNodeQuery->setFormatter(new PropelArraySetFormatter());
 
-        return $categoryNodeQuery->find();
+        return $categoryNodeQuery->find()->getData();
     }
 
     /**
@@ -92,10 +93,97 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
     public function getAllCategoryNodeIds(): array
     {
         return $this->getFactory()
-            ->getCategoryNodeQuery()
+            ->getCategoryNodePropelQuery()
             ->orderBy(SpyCategoryNodeTableMap::COL_NODE_ORDER, Criteria::DESC)
             ->select([SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE])
             ->find()
             ->toArray();
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage[]
+     */
+    public function getProductAbstractCategoryStoragesByIds(array $productAbstractIds): array
+    {
+        return $this
+            ->getFactory()
+            ->createSpyProductAbstractCategoryStorageQuery()
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->find()
+            ->getData();
+    }
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return int[]
+     */
+    public function getAllCategoryIdsByCategoryNodeId(int $idCategoryNode): array
+    {
+        return $this->getFactory()
+            ->getCategoryClosureTablePropelQuery()
+            ->where(SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE . ' = ?', $idCategoryNode)
+            ->_or()
+            ->where(SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT . ' = ?', $idCategoryNode)
+            ->joinDescendantNode()
+            ->withColumn(SpyCategoryNodeTableMap::COL_FK_CATEGORY, static::COL_FK_CATEGORY)
+            ->select([static::COL_FK_CATEGORY])
+            ->find()
+            ->getData();
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes[]
+     */
+    public function getProductAbstractLocalizedAttributes(array $productAbstractIds): array
+    {
+        return $this->getFactory()
+            ->getProductAbstractLocalizedAttributesPropelQuery()
+            ->joinWithLocale()
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->find()
+            ->getData();
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]
+     */
+    public function getProductCategoryWithCategoryNodes(array $productAbstractIds): array
+    {
+        return $this->getFactory()
+            ->getProductCategoryPropelQuery()
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->innerJoinSpyCategory()
+            ->addAnd(
+                SpyCategoryTableMap::COL_IS_ACTIVE,
+                true,
+                Criteria::EQUAL
+            )
+            ->joinWithSpyCategory()
+            ->joinWith('SpyCategory.Node')
+            ->orderByProductOrder()
+            ->find()
+            ->getData();
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage[]
+     */
+    public function getProductAbstractCategoryStorageByIds(array $productAbstractIds): array
+    {
+        return $this
+            ->getFactory()
+            ->createSpyProductAbstractCategoryStorageQuery()
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->find()
+            ->getData();
     }
 }

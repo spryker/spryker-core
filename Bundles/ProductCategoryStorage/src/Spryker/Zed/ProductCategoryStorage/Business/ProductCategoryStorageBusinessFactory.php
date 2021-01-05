@@ -8,8 +8,9 @@
 namespace Spryker\Zed\ProductCategoryStorage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductCategoryStorage\Business\Storage\MultiStoreProductCategoryStorageWriter;
 use Spryker\Zed\ProductCategoryStorage\Business\Storage\ProductCategoryStorageWriter;
+use Spryker\Zed\ProductCategoryStorage\Business\Storage\ProductCategoryStorageWriterInterface;
+use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToCategoryInterface;
 use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToStoreFacadeInterface;
 use Spryker\Zed\ProductCategoryStorage\ProductCategoryStorageDependencyProvider;
 
@@ -23,32 +24,19 @@ class ProductCategoryStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductCategoryStorage\Business\Storage\ProductCategoryStorageWriterInterface
      */
-    public function createProductCategoryStorageWriter()
+    public function createProductCategoryStorageWriter(): ProductCategoryStorageWriterInterface
     {
         return new ProductCategoryStorageWriter(
             $this->getCategoryFacade(),
-            $this->getQueryContainer(),
-            $this->getConfig()->isSendingToQueue()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductCategoryStorage\Business\Storage\ProductCategoryStorageWriterInterface
-     */
-    public function createMultiStoreProductCategoryStorageWriter()
-    {
-        return new MultiStoreProductCategoryStorageWriter(
-            $this->getCategoryFacade(),
-            $this->getQueryContainer(),
             $this->getStoreFacade(),
             $this->getRepository()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToCategoryBridge
+     * @return \Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToCategoryInterface
      */
-    protected function getCategoryFacade()
+    public function getCategoryFacade(): ProductCategoryStorageToCategoryInterface
     {
         return $this->getProvidedDependency(ProductCategoryStorageDependencyProvider::FACADE_CATEGORY);
     }
@@ -56,7 +44,7 @@ class ProductCategoryStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToStoreFacadeInterface
      */
-    protected function getStoreFacade(): ProductCategoryStorageToStoreFacadeInterface
+    public function getStoreFacade(): ProductCategoryStorageToStoreFacadeInterface
     {
         return $this->getProvidedDependency(ProductCategoryStorageDependencyProvider::FACADE_STORE);
     }
