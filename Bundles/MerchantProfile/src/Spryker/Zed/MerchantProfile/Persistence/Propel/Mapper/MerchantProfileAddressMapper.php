@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantProfile\Persistence\Propel\Mapper;
 
-use Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer;
+use ArrayObject;
 use Generated\Shared\Transfer\MerchantProfileAddressTransfer;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -33,22 +33,23 @@ class MerchantProfileAddressMapper implements MerchantProfileAddressMapperInterf
 
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress[] $merchantProfileAddressEntities
-     * @param \Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer $merchantProfileAddressCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer
+     * @return \ArrayObject|\Generated\Shared\Transfer\MerchantProfileAddressTransfer[]
      */
-    public function mapMerchantProfileAddressEntityCollectionToMerchantProfileAddressCollectionTransfer(
-        ObjectCollection $merchantProfileAddressEntities,
-        MerchantProfileAddressCollectionTransfer $merchantProfileAddressCollectionTransfer
-    ): MerchantProfileAddressCollectionTransfer {
+    public function mapMerchantProfileAddressEntityCollectionToMerchantProfileAddressTransfers(
+        ObjectCollection $merchantProfileAddressEntities
+    ): ArrayObject {
+        $merchantProfileAddressTransfers = new ArrayObject();
         foreach ($merchantProfileAddressEntities as $merchantProfileAddressEntity) {
-            $merchantProfileAddressCollectionTransfer->addAddress($this->mapMerchantProfileAddressEntityToMerchantProfileAddressTransfer(
-                $merchantProfileAddressEntity,
-                new MerchantProfileAddressTransfer()
-            ));
+            $merchantProfileAddressTransfers->append(
+                $this->mapMerchantProfileAddressEntityToMerchantProfileAddressTransfer(
+                    $merchantProfileAddressEntity,
+                    new MerchantProfileAddressTransfer()
+                )
+            );
         }
 
-        return $merchantProfileAddressCollectionTransfer;
+        return $merchantProfileAddressTransfers;
     }
 
     /**

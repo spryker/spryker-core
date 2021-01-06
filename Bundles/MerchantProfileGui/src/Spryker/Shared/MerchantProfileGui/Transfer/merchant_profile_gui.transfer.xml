@@ -84,10 +84,6 @@
         <property name="isActive" type="bool"/>
     </transfer>
 
-    <transfer name="MerchantProfileAddressCollection">
-        <property name="addresses" type="MerchantProfileAddress[]" singular="address"/>
-    </transfer>
-
     <transfer name="MerchantProfileAddress">
     </transfer>
 
