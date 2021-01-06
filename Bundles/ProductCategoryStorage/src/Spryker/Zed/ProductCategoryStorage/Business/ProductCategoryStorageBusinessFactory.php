@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductCategoryStorage\Business\Storage\ProductCategoryStorageWriter;
 use Spryker\Zed\ProductCategoryStorage\Business\Storage\ProductCategoryStorageWriterInterface;
 use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToCategoryInterface;
+use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToStoreFacadeInterface;
 use Spryker\Zed\ProductCategoryStorage\ProductCategoryStorageDependencyProvider;
 
@@ -29,6 +30,7 @@ class ProductCategoryStorageBusinessFactory extends AbstractBusinessFactory
         return new ProductCategoryStorageWriter(
             $this->getCategoryFacade(),
             $this->getStoreFacade(),
+            $this->getEventBehaviorFacade(),
             $this->getRepository()
         );
     }
@@ -47,5 +49,13 @@ class ProductCategoryStorageBusinessFactory extends AbstractBusinessFactory
     public function getStoreFacade(): ProductCategoryStorageToStoreFacadeInterface
     {
         return $this->getProvidedDependency(ProductCategoryStorageDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToEventBehaviorFacadeInterface
+     */
+    public function getEventBehaviorFacade(): ProductCategoryStorageToEventBehaviorFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductCategoryStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
     }
 }

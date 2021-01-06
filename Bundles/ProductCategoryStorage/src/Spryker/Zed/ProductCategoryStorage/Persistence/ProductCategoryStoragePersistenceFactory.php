@@ -39,14 +39,6 @@ class ProductCategoryStoragePersistenceFactory extends AbstractPersistenceFactor
     }
 
     /**
-     * @return \Spryker\Zed\ProductCategoryStorage\Dependency\QueryContainer\ProductCategoryStorageToProductQueryContainerInterface
-     */
-    public function getProductQueryContainer()
-    {
-        return $this->getProvidedDependency(ProductCategoryStorageDependencyProvider::QUERY_CONTAINER_PRODUCT);
-    }
-
-    /**
      * @return \Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorageQuery
      */
     public function createSpyProductAbstractCategoryStorageQuery(): SpyProductAbstractCategoryStorageQuery

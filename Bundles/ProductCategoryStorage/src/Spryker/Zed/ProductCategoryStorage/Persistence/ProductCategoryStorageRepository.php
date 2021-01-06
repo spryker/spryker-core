@@ -12,10 +12,10 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
+use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
-use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
@@ -81,8 +81,6 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
             static::COL_LOCALE,
             static::COL_STORE,
         ]);
-
-        $categoryNodeQuery->setFormatter(new PropelArraySetFormatter());
 
         return $categoryNodeQuery->find()->getData();
     }
@@ -183,6 +181,41 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
             ->getFactory()
             ->createSpyProductAbstractCategoryStorageQuery()
             ->filterByFkProductAbstract_In($productAbstractIds)
+            ->find()
+            ->getData();
+    }
+
+    /**
+     * @param int[] $categoryStoreIds
+     *
+     * @return int[]
+     */
+    public function getCategoryNodeIdsByCategoryStoreIds(array $categoryStoreIds): array
+    {
+        return $this->getFactory()
+            ->getCategoryNodePropelQuery()
+            ->useCategoryQuery(null, Criteria::LEFT_JOIN)
+                ->useSpyCategoryStoreQuery(null, Criteria::LEFT_JOIN)
+                    ->filterByIdCategoryStore_In($categoryStoreIds)
+                ->endUse()
+            ->endUse()
+            ->select([SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE])
+            ->orderByNodeOrder(Criteria::ASC)
+            ->find()
+            ->getData();
+    }
+
+    /**
+     * @param int[] $categoryIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByCategoryIds(array $categoryIds): array
+    {
+        return $this->getFactory()
+            ->getProductCategoryPropelQuery()
+            ->filterByFkCategory_In($categoryIds)
+            ->select(SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT)
             ->find()
             ->getData();
     }

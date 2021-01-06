@@ -29,4 +29,11 @@ interface ProductCategoryStorageWriterInterface
      * @return array
      */
     public function getRelatedCategoryIds(array $categoryIds);
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeProductCategoryStorageCollectionByCategoryStoreEvents(array $eventEntityTransfers): void;
 }

@@ -47,4 +47,21 @@ interface ProductCategoryStorageFacadeInterface
      * @return array
      */
     public function getRelatedCategoryIds(array $categoryIds);
+
+    /**
+     * Specification:
+     * - Extracts category store IDs from the $eventTransfers created by category store events.
+     * - Finds all category IDs related to category store IDs.
+     * - Queries all product abstract IDs related to categories.
+     * - Queries all productCategories with the given productAbstractIds.
+     * - Stores data as json encoded to storage table.
+     * - Sends a copy of data to queue based on module config.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeProductCategoryStorageCollectionByCategoryStoreEvents(array $eventEntityTransfers): void;
 }

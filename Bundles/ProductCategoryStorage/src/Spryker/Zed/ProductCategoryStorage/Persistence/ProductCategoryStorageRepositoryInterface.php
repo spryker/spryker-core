@@ -53,4 +53,18 @@ interface ProductCategoryStorageRepositoryInterface
      * @return \Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage[]
      */
     public function getProductAbstractCategoryStorageByIds(array $productAbstractIds): array;
+
+    /**
+     * @param int[] $categoryStoreIds
+     *
+     * @return int[]
+     */
+    public function getCategoryNodeIdsByCategoryStoreIds(array $categoryStoreIds): array;
+
+    /**
+     * @param int[] $categoryIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByCategoryIds(array $categoryIds): array;
 }

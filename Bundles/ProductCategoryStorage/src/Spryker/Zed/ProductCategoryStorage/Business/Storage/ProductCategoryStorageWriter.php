@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ProductCategoryStorageTransfer;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
 use Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage;
 use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToCategoryInterface;
+use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToStoreFacadeInterface;
 use Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepositoryInterface;
 
@@ -64,6 +65,11 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToEventBehaviorFacadeInterface
+     */
+    protected $eventBehaviorFacade;
+
+    /**
      * @var \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepositoryInterface
      */
     protected $productCategoryStorageRepository;
@@ -76,15 +82,18 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     /**
      * @param \Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToCategoryInterface $categoryFacade
      * @param \Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
      * @param \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepositoryInterface $productCategoryStorageRepository
      */
     public function __construct(
         ProductCategoryStorageToCategoryInterface $categoryFacade,
         ProductCategoryStorageToStoreFacadeInterface $storeFacade,
+        ProductCategoryStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
         ProductCategoryStorageRepositoryInterface $productCategoryStorageRepository
     ) {
         $this->categoryFacade = $categoryFacade;
         $this->storeFacade = $storeFacade;
+        $this->eventBehaviorFacade = $eventBehaviorFacade;
         $this->productCategoryStorageRepository = $productCategoryStorageRepository;
     }
 
@@ -137,6 +146,42 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
 
                 $relatedCategoryIds = array_merge($relatedCategoryIds, $categoryIdsByNodeId);
             }
+        }
+
+        return array_unique($relatedCategoryIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeProductCategoryStorageCollectionByCategoryStoreEvents(array $eventEntityTransfers): void
+    {
+        $categoryStoreIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
+        $relatedCategoryIds = $this->getRelatedCategoryIdsByCategoryStoreIds($categoryStoreIds);
+
+        $productAbstractIds = $this->productCategoryStorageRepository->getProductAbstractIdsByCategoryIds($relatedCategoryIds);
+
+        $this->publish($productAbstractIds);
+    }
+
+    /**
+     * @param int[] $categoryStoreIds
+     *
+     * @return int[]
+     */
+    protected function getRelatedCategoryIdsByCategoryStoreIds(array $categoryStoreIds): array
+    {
+        $relatedCategoryIds = [];
+        $categoryNodeIds = $this->productCategoryStorageRepository
+            ->getCategoryNodeIdsByCategoryStoreIds($categoryStoreIds);
+
+        foreach ($categoryNodeIds as $idCategoryNode) {
+            $categoryIdsByNodeId = $this->productCategoryStorageRepository
+                ->getAllCategoryIdsByCategoryNodeId($idCategoryNode);
+
+            $relatedCategoryIds = array_merge($relatedCategoryIds, $categoryIdsByNodeId);
         }
 
         return array_unique($relatedCategoryIds);

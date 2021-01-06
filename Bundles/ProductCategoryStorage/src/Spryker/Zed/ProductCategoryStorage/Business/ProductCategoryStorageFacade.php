@@ -56,4 +56,20 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
     {
         return $this->getFactory()->createProductCategoryStorageWriter()->getRelatedCategoryIds($categoryIds);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeProductCategoryStorageCollectionByCategoryStoreEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createProductCategoryStorageWriter()
+            ->writeProductCategoryStorageCollectionByCategoryStoreEvents($eventEntityTransfers);
+    }
 }

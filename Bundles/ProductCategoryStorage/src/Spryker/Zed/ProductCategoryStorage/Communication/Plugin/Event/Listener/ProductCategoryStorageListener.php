@@ -32,6 +32,12 @@ class ProductCategoryStorageListener extends AbstractPlugin implements EventBulk
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
+//        (new SpyCategoryStore())
+//            ->setFkStore(2)
+//            ->setFkCategory(18)->save();
+
+//        (SpyCategoryStoreQuery::create())->findByIdCategoryStore(41)->delete();
+
         $this->preventTransaction();
         $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventEntityTransfers, SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT);
 

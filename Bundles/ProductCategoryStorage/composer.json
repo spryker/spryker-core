@@ -6,7 +6,7 @@
   "require": {
     "everon/collection": "^1.0.0",
     "php": ">=7.3",
-    "spryker/category": "^4.3.0",
+    "spryker/category": "^5.0.0",
     "spryker/event-behavior": "^1.10.0",
     "spryker/kernel": "^3.30.0",
     "spryker/product": "^5.5.0 || ^6.0.0",

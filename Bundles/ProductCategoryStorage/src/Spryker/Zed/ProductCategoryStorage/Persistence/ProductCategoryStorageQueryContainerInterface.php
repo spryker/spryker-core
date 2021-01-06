@@ -13,28 +13,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface ProductCategoryStorageQueryContainerInterface extends QueryContainerInterface
 {
     /**
-     * @api
-     *
-     * @deprecated Will be removed in the next major.
-     *
-     * @param int $idProductAbstract
-     *
-     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
-     */
-    public function queryProductCategoryMappings($idProductAbstract);
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed in the next major.
-     *
-     * @param int[] $productCategoryIds
-     *
-     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
-     */
-    public function queryProductCategoryByIds($productCategoryIds);
-
-    /**
      * Specification:
      * - Returns a a query for the table `spy_product_category` filtered by primary ids.
      *
@@ -49,61 +27,11 @@ interface ProductCategoryStorageQueryContainerInterface extends QueryContainerIn
     /**
      * @api
      *
-     * @deprecated Will be removed in the next major.
-     *
-     * @param int $idNode
-     * @param int $idLocale
-     * @param bool $excludeRootNode
-     * @param bool $onlyParents
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryPath($idNode, $idLocale, $excludeRootNode = true, $onlyParents = false);
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed in the next major.
-     *
-     * @param int $idCategoryNode
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
-     */
-    public function queryUrlByIdCategoryNode($idCategoryNode, $idLocale);
-
-    /**
-     * @api
-     *
      * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorageQuery
      */
     public function queryProductAbstractCategoryStorageByIds(array $productAbstractIds);
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed in the next major.
-     *
-     * @param int[] $productAbstractIds
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
-     */
-    public function queryProductAbstractLocalizedByIds(array $productAbstractIds);
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed in the next major.
-     *
-     * @param int $idNode
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
-     */
-    public function queryAllCategoryIdsByNodeId($idNode);
 
     /**
      * @api
@@ -122,33 +50,4 @@ interface ProductCategoryStorageQueryContainerInterface extends QueryContainerIn
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryCategoryIdsByNodeIds(array $nodeIds);
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed in the next major.
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryAllCategoriesWithAttributesAndOrderByDescendant();
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed in the next major.
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryAllCategoryNodes();
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed in the next major.
-     *
-     * @param int[] $productAbstractIds
-     *
-     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
-     */
-    public function queryProductCategoryWithCategoryNodes(array $productAbstractIds);
 }
