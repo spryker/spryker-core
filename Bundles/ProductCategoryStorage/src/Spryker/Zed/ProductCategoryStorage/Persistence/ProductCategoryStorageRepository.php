@@ -186,26 +186,6 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * @param int[] $categoryStoreIds
-     *
-     * @return int[]
-     */
-    public function getCategoryNodeIdsByCategoryStoreIds(array $categoryStoreIds): array
-    {
-        return $this->getFactory()
-            ->getCategoryNodePropelQuery()
-            ->useCategoryQuery(null, Criteria::LEFT_JOIN)
-                ->useSpyCategoryStoreQuery(null, Criteria::LEFT_JOIN)
-                    ->filterByIdCategoryStore_In($categoryStoreIds)
-                ->endUse()
-            ->endUse()
-            ->select([SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE])
-            ->orderByNodeOrder(Criteria::ASC)
-            ->find()
-            ->getData();
-    }
-
-    /**
      * @param int[] $categoryIds
      *
      * @return int[]

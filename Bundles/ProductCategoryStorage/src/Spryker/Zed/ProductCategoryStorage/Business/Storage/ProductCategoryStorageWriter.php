@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductCategoryStorage\Business\Storage;
 use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
 use Generated\Shared\Transfer\ProductCategoryStorageTransfer;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryStoreTableMap;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
 use Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage;
 use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToCategoryInterface;
@@ -158,33 +159,15 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
      */
     public function writeProductCategoryStorageCollectionByCategoryStoreEvents(array $eventEntityTransfers): void
     {
-        $categoryStoreIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
-        $relatedCategoryIds = $this->getRelatedCategoryIdsByCategoryStoreIds($categoryStoreIds);
+        $categoryIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
+            $eventEntityTransfers,
+            SpyCategoryStoreTableMap::COL_FK_CATEGORY
+        );
 
+        $relatedCategoryIds = $this->getRelatedCategoryIds($categoryIds);
         $productAbstractIds = $this->productCategoryStorageRepository->getProductAbstractIdsByCategoryIds($relatedCategoryIds);
 
         $this->publish($productAbstractIds);
-    }
-
-    /**
-     * @param int[] $categoryStoreIds
-     *
-     * @return int[]
-     */
-    protected function getRelatedCategoryIdsByCategoryStoreIds(array $categoryStoreIds): array
-    {
-        $relatedCategoryIds = [];
-        $categoryNodeIds = $this->productCategoryStorageRepository
-            ->getCategoryNodeIdsByCategoryStoreIds($categoryStoreIds);
-
-        foreach ($categoryNodeIds as $idCategoryNode) {
-            $categoryIdsByNodeId = $this->productCategoryStorageRepository
-                ->getAllCategoryIdsByCategoryNodeId($idCategoryNode);
-
-            $relatedCategoryIds = array_merge($relatedCategoryIds, $categoryIdsByNodeId);
-        }
-
-        return array_unique($relatedCategoryIds);
     }
 
     /**
