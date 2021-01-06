@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\ProductCategoryStorage;
 
+use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
+
 interface ProductCategoryStorageClientInterface
 {
     /**
@@ -16,11 +18,16 @@ interface ProductCategoryStorageClientInterface
      * @api
      *
      * @param int $idProductAbstract
-     * @param string $locale
+     * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer|null
      */
-    public function findProductAbstractCategory($idProductAbstract, $locale);
+    public function findProductAbstractCategory(
+        int $idProductAbstract,
+        string $localeName,
+        string $storeName
+    ): ?ProductAbstractCategoryStorageTransfer;
 
     /**
      * Specification:
@@ -30,8 +37,9 @@ interface ProductCategoryStorageClientInterface
      *
      * @param int[] $productAbstractIds
      * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[]
      */
-    public function findBulkProductAbstractCategory(array $productAbstractIds, string $localeName): array;
+    public function findBulkProductAbstractCategory(array $productAbstractIds, string $localeName, string $storeName): array;
 }

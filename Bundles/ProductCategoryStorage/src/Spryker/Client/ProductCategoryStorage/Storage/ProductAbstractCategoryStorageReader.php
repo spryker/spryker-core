@@ -41,13 +41,17 @@ class ProductAbstractCategoryStorageReader implements ProductAbstractCategorySto
 
     /**
      * @param int $idProductAbstract
-     * @param string $locale
+     * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer|null
      */
-    public function findProductAbstractCategory($idProductAbstract, $locale)
-    {
-        $productAbstractCategoryStorageData = $this->findStorageData($idProductAbstract, $locale);
+    public function findProductAbstractCategory(
+        int $idProductAbstract,
+        string $localeName,
+        string $storeName
+    ): ?ProductAbstractCategoryStorageTransfer {
+        $productAbstractCategoryStorageData = $this->findStorageData($idProductAbstract, $localeName, $storeName);
 
         if (!$productAbstractCategoryStorageData) {
             return null;
@@ -61,12 +65,13 @@ class ProductAbstractCategoryStorageReader implements ProductAbstractCategorySto
     /**
      * @param int[] $productAbstractIds
      * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[]
      */
-    public function findBulkProductAbstractCategory(array $productAbstractIds, string $localeName): array
+    public function findBulkProductAbstractCategory(array $productAbstractIds, string $localeName, string $storeName): array
     {
-        $productAbstractCategoryStorageData = $this->findBulkStorageData($productAbstractIds, $localeName);
+        $productAbstractCategoryStorageData = $this->findBulkStorageData($productAbstractIds, $localeName, $storeName);
         $productAbstractCategoryStorageData = array_filter($productAbstractCategoryStorageData);
 
         if (!$productAbstractCategoryStorageData) {
@@ -84,17 +89,19 @@ class ProductAbstractCategoryStorageReader implements ProductAbstractCategorySto
 
     /**
      * @param int $idProductAbstract
-     * @param string $locale
+     * @param string $localeName
+     * @param string $storeName
      *
      * @return array|null
      */
-    protected function findStorageData(int $idProductAbstract, string $locale): ?array
+    protected function findStorageData(int $idProductAbstract, string $localeName, string $storeName): ?array
     {
         if (ProductCategoryStorageConfig::isCollectorCompatibilityMode()) {
             $clientLocatorClassName = Locator::class;
             /** @var \Spryker\Client\Product\ProductClientInterface $productClient */
             $productClient = $clientLocatorClassName::getInstance()->product()->client();
-            $collectorData = $productClient->getProductAbstractFromStorageById($idProductAbstract, $locale);
+            // TODO: $storeName should be used here too.
+            $collectorData = $productClient->getProductAbstractFromStorageById($idProductAbstract, $localeName);
             $categories = [];
 
             foreach ($collectorData['categories'] as $category) {
@@ -111,7 +118,7 @@ class ProductAbstractCategoryStorageReader implements ProductAbstractCategorySto
             ];
         }
 
-        $key = $this->generateKey($idProductAbstract, $locale);
+        $key = $this->generateKey($idProductAbstract, $localeName, $storeName);
         $productAbstractCategoryStorageData = $this->storageClient->get($key);
 
         return $productAbstractCategoryStorageData;
@@ -120,14 +127,15 @@ class ProductAbstractCategoryStorageReader implements ProductAbstractCategorySto
     /**
      * @param int[] $productAbstractIds
      * @param string $localeName
+     * @param string $storeName
      *
      * @return array
      */
-    protected function findBulkStorageData(array $productAbstractIds, string $localeName): array
+    protected function findBulkStorageData(array $productAbstractIds, string $localeName, string $storeName): array
     {
         $storageKeys = [];
         foreach ($productAbstractIds as $idProductAbstract) {
-            $storageKeys[] = $this->generateKey($idProductAbstract, $localeName);
+            $storageKeys[] = $this->generateKey($idProductAbstract, $localeName, $storeName);
         }
 
         $productAbstractCategoryStorageData = $this->storageClient->getMulti($storageKeys);
@@ -143,14 +151,16 @@ class ProductAbstractCategoryStorageReader implements ProductAbstractCategorySto
     /**
      * @param int|string $idProductAbstract
      * @param string $localeName
+     * @param string $storeName
      *
      * @return string
      */
-    protected function generateKey($idProductAbstract, string $localeName): string
+    protected function generateKey($idProductAbstract, string $localeName, string $storeName): string
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
             ->setLocale($localeName)
+            ->setStore($storeName)
             ->setReference($idProductAbstract);
 
         return $this->synchronizationService
