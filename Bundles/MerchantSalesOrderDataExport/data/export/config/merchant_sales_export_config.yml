@@ -69,8 +69,8 @@ actions:
           - tax_amount_full_aggregation
           - tax_rate
           - tax_rate_average_aggregation
-          - created_at
-          - uploaded_at
+          - merchant_order_item_created_at
+          - merchant_order_item_updated_at
           - merchant_order_item_state
           - merchant_order_item_state_description
           - merchant_order_item_process

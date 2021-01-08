@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantSalesOrderDataExport\Persistence\Propel\Mapper;
 use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
 use Orm\Zed\Country\Persistence\Map\SpyRegionTableMap;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
+use Orm\Zed\MerchantSalesOrder\Persistence\Map\SpyMerchantSalesOrderItemTableMap;
 use Orm\Zed\MerchantSalesOrder\Persistence\Map\SpyMerchantSalesOrderTableMap;
 use Orm\Zed\ProductBundle\Persistence\Map\SpySalesOrderItemBundleTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderAddressTableMap;
@@ -30,7 +31,7 @@ class MerchantSalesOrderItemMapper
         'merchant_order_reference' => SpyMerchantSalesOrderTableMap::COL_MERCHANT_SALES_ORDER_REFERENCE,
         'marketplace_order_reference' => SpySalesOrderTableMap::COL_ORDER_REFERENCE,
         'product_name' => SpySalesOrderItemTableMap::COL_NAME,
-        'merchant_order_item_reference' => SpySalesOrderItemTableMap::COL_ORDER_ITEM_REFERENCE,
+        'merchant_order_item_reference' => SpyMerchantSalesOrderItemTableMap::COL_MERCHANT_ORDER_ITEM_REFERENCE,
         'product_sku' => SpySalesOrderItemTableMap::COL_SKU,
         'canceled_amount' => SpySalesOrderItemTableMap::COL_CANCELED_AMOUNT,
         'order_item_note' => SpySalesOrderItemTableMap::COL_CART_NOTE,
@@ -39,7 +40,7 @@ class MerchantSalesOrderItemMapper
         'expense_price_aggregation' => SpySalesOrderItemTableMap::COL_EXPENSE_PRICE_AGGREGATION,
         'gross_price' => SpySalesOrderItemTableMap::COL_GROSS_PRICE,
         'net_price' => SpySalesOrderItemTableMap::COL_NET_PRICE,
-        'price' => SpySalesOrderItemTableMap::COL_NET_PRICE,
+        'price' => SpySalesOrderItemTableMap::COL_PRICE,
         'price_to_pay_aggregation' => SpySalesOrderItemTableMap::COL_PRICE_TO_PAY_AGGREGATION,
         'product_option_price_aggregation' => SpySalesOrderItemTableMap::COL_PRODUCT_OPTION_PRICE_AGGREGATION,
         'quantity' => SpySalesOrderItemTableMap::COL_QUANTITY,
@@ -50,15 +51,15 @@ class MerchantSalesOrderItemMapper
         'tax_amount_full_aggregation' => SpySalesOrderItemTableMap::COL_TAX_AMOUNT_FULL_AGGREGATION,
         'tax_rate' => SpySalesOrderItemTableMap::COL_TAX_RATE,
         'tax_rate_average_aggregation' => SpySalesOrderItemTableMap::COL_TAX_RATE_AVERAGE_AGGREGATION,
-        'created_at' => SpySalesOrderItemTableMap::COL_CREATED_AT,
-        'updated_at' => SpySalesOrderItemTableMap::COL_UPDATED_AT,
+        'merchant_order_item_created_at' => SpyMerchantSalesOrderItemTableMap::COL_CREATED_AT,
+        'merchant_order_item_updated_at' => SpyMerchantSalesOrderItemTableMap::COL_UPDATED_AT,
         'merchant_order_item_state' => SpyStateMachineItemStateTableMap::COL_NAME,
         'merchant_order_item_state_description' => SpyStateMachineItemStateTableMap::COL_DESCRIPTION,
         'merchant_order_item_process' => SpyStateMachineProcessTableMap::COL_NAME,
         'merchant_order_item_bundle_id' => SpySalesOrderItemBundleTableMap::COL_ID_SALES_ORDER_ITEM_BUNDLE,
         'merchant_order_item_bundle_note' => SpySalesOrderItemBundleTableMap::COL_CART_NOTE,
         'merchant_order_item_bundle_gross_price' => SpySalesOrderItemBundleTableMap::COL_GROSS_PRICE,
-        'merchant_order_item_bundle_image' => SpySalesOrderItemBundleTableMap::COL_ID_SALES_ORDER_ITEM_BUNDLE,
+        'merchant_order_item_bundle_image' => SpySalesOrderItemBundleTableMap::COL_IMAGE,
         'merchant_order_item_bundle_product_name' => SpySalesOrderItemBundleTableMap::COL_NAME,
         'merchant_order_item_bundle_net_price' => SpySalesOrderItemBundleTableMap::COL_NET_PRICE,
         'merchant_order_item_bundle_price' => SpySalesOrderItemBundleTableMap::COL_PRICE,
