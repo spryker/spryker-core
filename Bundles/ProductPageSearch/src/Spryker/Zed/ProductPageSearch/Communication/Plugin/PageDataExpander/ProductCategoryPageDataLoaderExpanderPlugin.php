@@ -216,9 +216,11 @@ class ProductCategoryPageDataLoaderExpanderPlugin extends AbstractPlugin impleme
     ) {
         $maxProductOrder = (pow(2, 31) - 1);
 
+        $store = $productAbstractPageSearchTransfer->getStore();
         $filteredProductCategoriesByDirectParents = [];
-        if ($productCategoryEntities) {
-            foreach ($productCategoryEntities as $productCategory) {
+
+        if ($productCategoryEntities && isset($productCategoryEntities[$store])) {
+            foreach ($productCategoryEntities[$store] as $productCategory) {
                 if (in_array($productCategory->getVirtualColumn('id_category_node'), $directParentCategories)) {
                     $filteredProductCategoriesByDirectParents[] = $productCategory;
                 }
