@@ -187,8 +187,11 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
         foreach ($localeNameMapByStoreName as $storeName => $storeLocales) {
             foreach ($storeLocales as $localeName) {
                 foreach ($productAbstractLocalizedAttributesEntities as $productAbstractLocalizedAttributesEntity) {
-                    $idProductAbstract = $productAbstractLocalizedAttributesEntity->getFkProductAbstract();
+                    if ($productAbstractLocalizedAttributesEntity->getLocale()->getLocaleName() !== $localeName) {
+                        continue;
+                    }
 
+                    $idProductAbstract = $productAbstractLocalizedAttributesEntity->getFkProductAbstract();
                     $productCategoryTransfers = $this->getProductCategoriesFromCategories(
                         $productCategoryEntities[$idProductAbstract] ?? [],
                         $storeName,
@@ -198,6 +201,10 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
                     $productAbstractCategoryStorageEntity
                         = $productAbstractCategoryStorageEntities[$idProductAbstract][$storeName][$localeName]
                         ?? new SpyProductAbstractCategoryStorage();
+
+                    if (!$productAbstractCategoryStorageEntity->isNew()) {
+                        unset($productAbstractCategoryStorageEntities[$idProductAbstract][$storeName][$localeName]);
+                    }
 
                     if (!count($productCategoryTransfers)) {
                         if (!$productAbstractCategoryStorageEntity->isNew()) {
@@ -218,6 +225,28 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
                         ->setData($productAbstractCategoryStorageTransfer->toArray());
 
                     $productAbstractCategoryStorageEntity->save();
+                }
+            }
+        }
+
+        $this->removeProductAbstractCategoryStorageEntities($productAbstractCategoryStorageEntities);
+    }
+
+    /**
+     * @param array $productAbstractCategoryStorageEntities
+     *
+     * @return void
+     */
+    protected function removeProductAbstractCategoryStorageEntities(array $productAbstractCategoryStorageEntities): void
+    {
+        foreach ($productAbstractCategoryStorageEntities as $idProductAbstract => $relatedToProductEntities) {
+            foreach ($relatedToProductEntities as $storeName => $relatedToStoreEntities) {
+                foreach ($relatedToStoreEntities as $localeName => $productAbstractCategoryStorageEntity) {
+                    if (!$productAbstractCategoryStorageEntity) {
+                        continue;
+                    }
+
+                    $productAbstractCategoryStorageEntity->delete();
                 }
             }
         }
