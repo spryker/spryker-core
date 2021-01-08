@@ -31,7 +31,7 @@
         <property name="latitude" type="string"/>
         <property name="longitude" type="string"/>
         <property name="faxNumber" type="string"/>
-        <property name="addresses" type="MerchantStorageProfileAddress[]" singular="address"/>
+        <property name="addressCollection" type="MerchantStorageProfileAddress[]" singular="address"/>
     </transfer>
 
     <transfer name="MerchantStorageProfileAddress">

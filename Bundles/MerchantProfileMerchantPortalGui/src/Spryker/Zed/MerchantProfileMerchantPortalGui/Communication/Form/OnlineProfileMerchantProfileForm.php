@@ -32,7 +32,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
     protected const FIELD_PUBLIC_EMAIL = 'public_email';
     protected const FIELD_PUBLIC_PHONE = 'public_phone';
     protected const FIELD_MERCHANT_PROFILE_LOCALIZED_GLOSSARY_ATTRIBUTES = 'merchantProfileLocalizedGlossaryAttributes';
-    protected const FIELD_ADDRESSES = 'addresses';
+    protected const FIELD_ADDRESS_COLLECTION = 'addressCollection';
     protected const FIELD_IS_ACTIVE = 'is_active';
     protected const FIELD_URL_COLLECTION = 'urlCollection';
     protected const FIELD_LATITUDE = 'latitude';
@@ -68,7 +68,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
             ->addFaxNumberField($builder)
             ->addLatitudeField($builder)
             ->addLongitudeField($builder)
-            ->addAddressesSubform($builder);
+            ->addAddressCollectionSubform($builder);
     }
 
     /**
@@ -192,10 +192,10 @@ class OnlineProfileMerchantProfileForm extends AbstractType
      *
      * @return $this
      */
-    protected function addAddressesSubform(FormBuilderInterface $builder)
+    protected function addAddressCollectionSubform(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_ADDRESSES, MerchantProfileAddressFormType::class, [
-            'property_path' => 'merchantProfile.addresses',
+        $builder->add(static::FIELD_ADDRESS_COLLECTION, MerchantProfileAddressFormType::class, [
+            'property_path' => 'merchantProfile.addressCollection',
         ]);
 
         return $this;

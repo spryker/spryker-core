@@ -46,7 +46,7 @@ class MerchantProfileMapper implements MerchantProfileMapperInterface
         $merchantProfileAddressTransfers = $this->merchantProfileAddressMapper->mapMerchantProfileAddressEntityCollectionToMerchantProfileAddressTransfers(
             $merchantProfileEntity->getSpyMerchantProfileAddresses(),
         );
-        $merchantProfileTransfer->setAddresses($merchantProfileAddressTransfers);
+        $merchantProfileTransfer->setAddressCollection($merchantProfileAddressTransfers);
 
         return $merchantProfileTransfer;
     }

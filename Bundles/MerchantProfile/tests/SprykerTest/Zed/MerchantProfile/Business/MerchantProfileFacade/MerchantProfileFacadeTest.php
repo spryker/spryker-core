@@ -88,7 +88,7 @@ class MerchantProfileFacadeTest extends Unit
         $this->assertSame($expectedIdMerchantProfile, $updatedMerchantProfileTransfer->getIdMerchantProfile());
         $this->assertSame('Role two', $updatedMerchantProfileTransfer->getContactPersonRole());
         $this->assertSame('First Name Two', $updatedMerchantProfileTransfer->getContactPersonFirstName());
-        $this->assertNotEmpty($updatedMerchantProfileTransfer->getAddresses());
+        $this->assertNotEmpty($updatedMerchantProfileTransfer->getAddressCollection());
     }
 
     /**

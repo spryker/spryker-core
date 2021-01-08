@@ -112,10 +112,10 @@ class MerchantProfileWriter implements MerchantProfileWriterInterface
         MerchantProfileTransfer $merchantProfileTransfer
     ): MerchantProfileTransfer {
         $merchantProfileAddressTransfers = $this->merchantProfileAddressWriter->saveMerchantProfileAddresses(
-            $merchantProfileTransfer->getAddresses(),
+            $merchantProfileTransfer->getAddressCollection(),
             $merchantProfileTransfer->getIdMerchantProfile()
         );
-        $merchantProfileTransfer->setAddresses($merchantProfileAddressTransfers);
+        $merchantProfileTransfer->setAddressCollection($merchantProfileAddressTransfers);
 
         return $merchantProfileTransfer;
     }

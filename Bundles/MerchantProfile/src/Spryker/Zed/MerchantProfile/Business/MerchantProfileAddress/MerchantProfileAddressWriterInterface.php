@@ -30,7 +30,7 @@ interface MerchantProfileAddressWriterInterface
      * @param \ArrayObject|\Generated\Shared\Transfer\MerchantProfileAddressTransfer[] $merchantProfileAddressTransfers
      * @param int $idMerchantProfile
      *
-     * @return \Generated\Shared\Transfer\MerchantProfileAddressTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\MerchantProfileAddressTransfer[]
      */
     public function saveMerchantProfileAddresses(
         ArrayObject $merchantProfileAddressTransfers,

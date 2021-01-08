@@ -10,7 +10,7 @@
 
 {% set businessInfoMerchantProfileFields = businessInfoMerchantProfileForm.children %}
 {% set onlineProfileMerchantProfileFields = onlineProfileMerchantProfileForm.children %}
-{% set addressFields = onlineProfileMerchantProfileFields.addresses.children %}
+{% set addressCollectionFields = onlineProfileMerchantProfileFields.addressCollection.children %}
 {% set glossaryCollectionFields = onlineProfileMerchantProfileFields.merchantProfileLocalizedGlossaryAttributes.children %}
 
 
@@ -102,22 +102,22 @@
                             <web-spy-card class="mp-profile__card" cloak spy-title="{{ 'Contact Details & Address' | trans }}">
                                 <div class="spy-row spy-row-gutter-md">
                                     <div class="spy-col spy-col-gutter-md spy-col-6">
-                                        {{ form_row(addressFields.address1) }}
+                                        {{ form_row(addressCollectionFields.address1) }}
                                     </div>
                                     <div class="spy-col spy-col-gutter-md spy-col-2">
-                                        {{ form_row(addressFields.address2) }}
+                                        {{ form_row(addressCollectionFields.address2) }}
                                     </div>
                                     <div class="spy-col spy-col-gutter-md spy-col-4">
-                                        {{ form_row(addressFields.zip_code) }}
+                                        {{ form_row(addressCollectionFields.zip_code) }}
                                     </div>
                                     <div class="spy-col spy-col-gutter-md spy-col-12">
-                                        {{ form_row(addressFields.address3) }}
+                                        {{ form_row(addressCollectionFields.address3) }}
                                     </div>
                                     <div class="spy-col spy-col-gutter-md spy-col-6">
-                                        {{ form_row(addressFields.city) }}
+                                        {{ form_row(addressCollectionFields.city) }}
                                     </div>
                                     <div class="spy-col spy-col-gutter-md spy-col-6">
-                                        {{ form_row(addressFields.fk_country) }}
+                                        {{ form_row(addressCollectionFields.fk_country) }}
                                     </div>
                                     <div class="spy-col spy-col-gutter-md spy-col-6">
                                         {{ form_row(onlineProfileMerchantProfileFields.longitude) }}

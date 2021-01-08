@@ -26,7 +26,7 @@
         <property name="imprintGlossaryKey" dataBuilderRule="word"/>
         <property name="dataPrivacyGlossaryKey" dataBuilderRule="word"/>
         <property name="fkMerchant" dataBuilderRule="randomNumber(5)"/>
-        <property name="addresses" type="MerchantProfileAddress[]"/>
+        <property name="addressCollection" type="MerchantProfileAddress[]"/>
         <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]"/>
     </transfer>
 

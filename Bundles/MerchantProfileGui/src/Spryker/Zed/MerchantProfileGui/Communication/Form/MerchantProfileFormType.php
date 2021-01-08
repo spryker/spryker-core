@@ -108,7 +108,7 @@ class MerchantProfileFormType extends AbstractType
             ->addFaxNumber($builder)
             ->addLatitudeField($builder)
             ->addLongitudeField($builder)
-            ->addAddressesSubform($builder);
+            ->addAddressCollectionSubform($builder);
     }
 
     /**
@@ -361,12 +361,12 @@ class MerchantProfileFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addAddressesSubform(FormBuilderInterface $builder)
+    protected function addAddressCollectionSubform(FormBuilderInterface $builder)
     {
         $merchantProfileAddressFormDataProvider = $this->getFactory()->createMerchantProfileAddressFormDataProvider();
 
         $builder->add(
-            'addresses',
+            'addressCollection',
             MerchantProfileAddressFormType::class,
             $merchantProfileAddressFormDataProvider->getOptions()
         );
