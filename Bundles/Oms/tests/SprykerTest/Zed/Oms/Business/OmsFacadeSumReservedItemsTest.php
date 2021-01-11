@@ -103,24 +103,23 @@ class OmsFacadeSumReservedItemsTest extends Unit
     public function testSumReservedItemsShouldSumAllItemsInReservedStateIncludedSubProcesses(): void
     {
         // Arrange
-        $salesOrderEntity1 = $this->createTestOrder('123', 'Test06', static::NOT_RESERVED_SUBPROCESS_ITEM_STATE);
-        $this->createTestOrder('456', 'Test06', static::RESERVED_SUBPROCESS_ITEM_STATE);
+        $salesOrderEntity = $this->createTestOrder('123', 'Test06', static::NOT_RESERVED_SUBPROCESS_ITEM_STATE);
 
         // Assert
         $this->assertTrue(
             $this->getOmsFacade()
                 ->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU)
-                ->equals(50)
+                ->equals(0)
         );
 
-        foreach ($salesOrderEntity1->getItems() as $orderItem) {
+        foreach ($salesOrderEntity->getItems() as $orderItem) {
             $orderItem->setState($this->createOmsOrderItemState(static::RESERVED_SUBPROCESS_ITEM_STATE))->save();
         }
 
         $this->assertTrue(
             $this->getOmsFacade()
                 ->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU)
-                ->equals(100)
+                ->equals(50)
         );
     }
 
