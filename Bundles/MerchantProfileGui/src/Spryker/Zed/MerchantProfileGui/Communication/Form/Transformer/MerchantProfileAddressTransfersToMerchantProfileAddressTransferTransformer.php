@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantProfileGui\Communication\Form\Transformer;
 
+use ArrayAccess;
 use ArrayObject;
 use Generated\Shared\Transfer\MerchantProfileAddressTransfer;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -26,7 +27,7 @@ class MerchantProfileAddressTransfersToMerchantProfileAddressTransferTransformer
      */
     public function transform($value): MerchantProfileAddressTransfer
     {
-        if ($value instanceof ArrayObject && $value->offsetExists(0)) {
+        if ($value instanceof ArrayAccess && $value->offsetExists(0)) {
             return $value->offsetGet(0);
         }
 
@@ -42,11 +43,11 @@ class MerchantProfileAddressTransfersToMerchantProfileAddressTransferTransformer
      */
     public function reverseTransform($value): ArrayObject
     {
+        $merchantProfileAddressTransfers = new ArrayObject();
         if (!$value instanceof MerchantProfileAddressTransfer) {
-            return new ArrayObject();
+            return $merchantProfileAddressTransfers;
         }
 
-        $merchantProfileAddressTransfers = new ArrayObject();
         $merchantProfileAddressTransfers->append($value);
 
         return $merchantProfileAddressTransfers;
