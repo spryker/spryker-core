@@ -119,11 +119,7 @@ class AbstractProductOfferController extends AbstractController
         $responseData['notifications'] = [
             [
                 'type' => 'error',
-                'message' => 'The Offer is not saved.',
-            ],
-            [
-                'type' => 'error',
-                'message' => 'To create an Offer please resolve all errors',
+                'message' => 'To save an Offer please resolve all errors.',
             ],
         ];
 

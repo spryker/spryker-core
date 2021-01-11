@@ -403,6 +403,11 @@ class Builder implements BuilderInterface
                     $transition->setHappy($this->getAttributeBoolean($xmlTransition, 'happy'));
 
                     $sourceName = (string)$xmlTransition->source;
+
+                    if (!isset($stateToProcessMap[$sourceName])) {
+                        throw new LogicException(sprintf('Source: %s does not exist.', $sourceName));
+                    }
+
                     $sourceProcess = $stateToProcessMap[$sourceName];
                     $sourceState = $sourceProcess->getState($sourceName);
                     $transition->setSource($sourceState);

@@ -103,10 +103,6 @@
         <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode"/>
     </transfer>
 
-    <transfer name="PriceProductValidationError">
-        <property name="message" type="string"/>
-    </transfer>
-
     <transfer name="PriceProductOfferCollection">
         <property name="priceProductOffers" type="PriceProductOffer[]" singular="priceProductOffer"/>
     </transfer>

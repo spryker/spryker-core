@@ -108,14 +108,14 @@ class PriceProductOfferMapper
     {
         foreach ($requestData as $key => $value) {
             if (strpos($key, MoneyValueTransfer::NET_AMOUNT) !== false) {
-                $value = $this->moneyFacade->convertDecimalToInteger((float)$value);
+                $value = $this->convertDecimalToInteger($value);
                 $moneyValueTransfer->setNetAmount($value);
 
                 continue;
             }
 
             if (strpos($key, MoneyValueTransfer::GROSS_AMOUNT) !== false) {
-                $value = $this->moneyFacade->convertDecimalToInteger((float)$value);
+                $value = $this->convertDecimalToInteger($value);
                 $moneyValueTransfer->setGrossAmount($value);
 
                 continue;
@@ -160,6 +160,7 @@ class PriceProductOfferMapper
 
         $priceTypes = $this->priceProductFacade->getPriceTypeValues();
         $rowNumber = (int)$propertyPath[0] === 0 ? 0 : round(((int)$propertyPath[0] - 1) / count($priceTypes));
+
         $isRowError = count($propertyPath) < 3;
         $errorMessage = $validationErrorTransfer->getMessage();
 
@@ -171,7 +172,7 @@ class PriceProductOfferMapper
             return $initialData;
         }
 
-        $idColumn = $this->transformPropertyPathToColumnId($propertyPath, $priceTypes);
+        $idColumn = $this->transformPropertyPathToColumnId($propertyPath);
 
         if (!$idColumn) {
             return $initialData;
@@ -201,13 +202,12 @@ class PriceProductOfferMapper
 
     /**
      * @param string[] $propertyPath
-     * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypes
      *
      * @return string
      */
-    protected function transformPropertyPathToColumnId(array $propertyPath, array $priceTypes): string
+    protected function transformPropertyPathToColumnId(array $propertyPath): string
     {
-        [$entityNumber, $entityName, $fieldName] = $propertyPath;
+        [$rowNumber, $entityNumber, $entityName, $fieldName] = $propertyPath;
 
         if (!$entityName || !$fieldName) {
             return '';
@@ -218,11 +218,25 @@ class PriceProductOfferMapper
         }
 
         if ($entityName === PriceProductTransfer::MONEY_VALUE) {
-            $priceTypeName = mb_strtolower((string)$priceTypes[$entityNumber]->getName());
+            $priceTypeName = $entityNumber;
 
-            return sprintf('%s[%s][%s]', $priceTypeName, (string)$entityName, (string)$fieldName);
+            return sprintf('%s[%s][%s]', $priceTypeName, $entityName, (string)$fieldName);
         }
 
         return (string)$entityName;
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @return int|null
+     */
+    protected function convertDecimalToInteger($value): ?int
+    {
+        if ($value === '' || $value === null) {
+            return null;
+        }
+
+        return $this->moneyFacade->convertDecimalToInteger((float)$value);
     }
 }

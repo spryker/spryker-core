@@ -14,6 +14,8 @@ use Spryker\Zed\PriceProductOffer\Business\Expander\ProductOfferExpander;
 use Spryker\Zed\PriceProductOffer\Business\Expander\ProductOfferExpanderInterface;
 use Spryker\Zed\PriceProductOffer\Business\Validator\Constraint\ValidCurrencyAssignedToStoreConstraint;
 use Spryker\Zed\PriceProductOffer\Business\Validator\Constraint\ValidUniqueStoreCurrencyGrossNetConstraint;
+use Spryker\Zed\PriceProductOffer\Business\Validator\PriceProductConstraintProvider;
+use Spryker\Zed\PriceProductOffer\Business\Validator\PriceProductConstraintProviderInterface;
 use Spryker\Zed\PriceProductOffer\Business\Validator\PriceProductOfferConstraintProvider;
 use Spryker\Zed\PriceProductOffer\Business\Validator\PriceProductOfferConstraintProviderInterface;
 use Spryker\Zed\PriceProductOffer\Business\Validator\PriceProductOfferValidator;
@@ -69,6 +71,7 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceProductOfferValidator(
             $this->createPriceProductOfferConstraintProvider(),
+            $this->createPriceProductConstraintProvider(),
             $this->getValidationAdapter()
         );
     }
@@ -92,6 +95,14 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
         return new PriceProductOfferConstraintProvider(
             $this->getPriceProductOfferValidatorConstraints()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductOffer\Business\Validator\PriceProductConstraintProviderInterface
+     */
+    public function createPriceProductConstraintProvider(): PriceProductConstraintProviderInterface
+    {
+        return new PriceProductConstraintProvider();
     }
 
     /**

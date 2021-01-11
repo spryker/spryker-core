@@ -951,7 +951,10 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
                 continue;
             }
 
-            $priceTypeName = mb_strtolower($priceTypeTransfer->getName());
+            /** @var string $priceTypeName */
+            $priceTypeName = $priceTypeTransfer->getName();
+
+            $priceTypeName = mb_strtolower($priceTypeName);
             $grossColumnName = $priceTypeName . static::SUFFIX_PRICE_TYPE_GROSS;
             $grossClause = sprintf(
                 'MAX(CASE WHEN %s = %s THEN %s END)',
@@ -996,7 +999,11 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             ->groupBy(SpyCurrencyTableMap::COL_CODE);
 
         if ($productOfferPriceTableCriteriaTransfer->getOrderBy()) {
-            $priceProductStoreQuery->orderBy($productOfferPriceTableCriteriaTransfer->getOrderBy(), $productOfferPriceTableCriteriaTransfer->getOrderDirection());
+            /** @var string $orderBy */
+            $orderBy = $productOfferPriceTableCriteriaTransfer->getOrderBy();
+            /** @var string $orderDirection */
+            $orderDirection = $productOfferPriceTableCriteriaTransfer->getOrderDirection();
+            $priceProductStoreQuery->orderBy($orderBy, $orderDirection);
         }
 
         $paginate = $priceProductStoreQuery->paginate(

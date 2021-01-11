@@ -7,7 +7,6 @@
 
 namespace SprykerTest\Zed\PriceProductOffer\Business;
 
-use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PriceProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
@@ -175,11 +174,17 @@ class PriceProductOfferFacadeTest extends Unit
         $priceProductTransfer = $this->tester->havePriceProductSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
         $priceProductTransfer->getMoneyValue()->setNetAmount(10);
         $priceProductTransfer->getMoneyValue()->setGrossAmount(100);
+        $priceProductOfferTransfer = (new PriceProductOfferTransfer())
+            ->setProductOffer(
+                (new ProductOfferTransfer())->addPrice($priceProductTransfer)
+            );
+        $priceProductOfferCollectionTransfer = (new PriceProductOfferCollectionTransfer())
+            ->addPriceProductOffer($priceProductOfferTransfer);
 
         // Act
         $collectionValidationResponseTransfer = $this->tester
             ->getFacade()
-            ->validateProductOfferPrices(new ArrayObject([$priceProductTransfer]));
+            ->validateProductOfferPrices($priceProductOfferCollectionTransfer);
 
         // Assert
         $this->assertTrue($collectionValidationResponseTransfer->getIsSuccess());
@@ -200,10 +205,16 @@ class PriceProductOfferFacadeTest extends Unit
         $priceProductTransferDst->getPriceDimension()->setIdProductOffer($priceProductTransferSrc->getPriceDimension()->getIdProductOffer());
         $priceProductTransferDst->setPriceType($priceProductTransferSrc->getPriceType());
 
+        $priceProductOfferTransfer = (new PriceProductOfferTransfer())
+            ->setProductOffer((new ProductOfferTransfer())->addPrice($priceProductTransferDst));
+
+        $priceProductOfferCollectionTransfer = (new PriceProductOfferCollectionTransfer())
+            ->addPriceProductOffer($priceProductOfferTransfer);
+
         // Act
         $collectionValidationResponseTransfer = $this->tester
             ->getFacade()
-            ->validateProductOfferPrices(new ArrayObject([$priceProductTransferDst]));
+            ->validateProductOfferPrices($priceProductOfferCollectionTransfer);
 
         // Assert
         $this->assertFalse($collectionValidationResponseTransfer->getIsSuccess());
@@ -229,10 +240,16 @@ class PriceProductOfferFacadeTest extends Unit
             ->setCode(static::FAKE_CURRENCY)
             ->setName(static::FAKE_CURRENCY);
 
+        $priceProductOfferTransfer = (new PriceProductOfferTransfer())
+            ->setProductOffer((new ProductOfferTransfer())->addPrice($priceProductTransfer));
+
+        $priceProductOfferCollectionTransfer = (new PriceProductOfferCollectionTransfer())
+            ->addPriceProductOffer($priceProductOfferTransfer);
+
         // Act
         $collectionValidationResponseTransfer = $this->tester
             ->getFacade()
-            ->validateProductOfferPrices(new ArrayObject([$priceProductTransfer]));
+            ->validateProductOfferPrices($priceProductOfferCollectionTransfer);
 
         // Assert
         $this->assertFalse($collectionValidationResponseTransfer->getIsSuccess());
@@ -258,10 +275,16 @@ class PriceProductOfferFacadeTest extends Unit
         $priceProductTransfer = $this->tester->havePriceProduct([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
         $priceProductTransfer->getMoneyValue()->setNetAmount($invalidValue);
 
+        $priceProductOfferTransfer = (new PriceProductOfferTransfer())
+            ->setProductOffer((new ProductOfferTransfer())->addPrice($priceProductTransfer));
+
+        $priceProductOfferCollectionTransfer = (new PriceProductOfferCollectionTransfer())
+            ->addPriceProductOffer($priceProductOfferTransfer);
+
         // Act
         $collectionValidationResponseTransfer = $this->tester
             ->getFacade()
-            ->validateProductOfferPrices(new ArrayObject([$priceProductTransfer]));
+            ->validateProductOfferPrices($priceProductOfferCollectionTransfer);
 
         // Assert
         $this->assertFalse($collectionValidationResponseTransfer->getIsSuccess());
@@ -292,10 +315,16 @@ class PriceProductOfferFacadeTest extends Unit
         $priceProductTransfer = $this->tester->havePriceProduct([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
         $priceProductTransfer->getMoneyValue()->setFkCurrency(null);
 
+        $priceProductOfferTransfer = (new PriceProductOfferTransfer())
+            ->setProductOffer((new ProductOfferTransfer())->addPrice($priceProductTransfer));
+
+        $priceProductOfferCollectionTransfer = (new PriceProductOfferCollectionTransfer())
+            ->addPriceProductOffer($priceProductOfferTransfer);
+
         // Act
         $collectionValidationResponseTransfer = $this->tester
             ->getFacade()
-            ->validateProductOfferPrices(new ArrayObject([$priceProductTransfer]));
+            ->validateProductOfferPrices($priceProductOfferCollectionTransfer);
 
         // Assert
         $this->assertFalse($collectionValidationResponseTransfer->getIsSuccess());
@@ -319,10 +348,16 @@ class PriceProductOfferFacadeTest extends Unit
         $priceProductTransfer = $this->tester->havePriceProduct([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
         $priceProductTransfer->getMoneyValue()->setFkStore(null);
 
+        $priceProductOfferTransfer = (new PriceProductOfferTransfer())
+            ->setProductOffer((new ProductOfferTransfer())->addPrice($priceProductTransfer));
+
+        $priceProductOfferCollectionTransfer = (new PriceProductOfferCollectionTransfer())
+            ->addPriceProductOffer($priceProductOfferTransfer);
+
         // Act
         $collectionValidationResponseTransfer = $this->tester
             ->getFacade()
-            ->validateProductOfferPrices(new ArrayObject([$priceProductTransfer]));
+            ->validateProductOfferPrices($priceProductOfferCollectionTransfer);
 
         // Assert
         $this->assertFalse($collectionValidationResponseTransfer->getIsSuccess());
