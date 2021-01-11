@@ -26,6 +26,8 @@ interface MerchantProfileAddressMapperInterface
     ): SpyMerchantProfileAddress;
 
     /**
+     * @phpstan-return \ArrayObject<int,\Generated\Shared\Transfer\MerchantProfileAddressTransfer>
+     *
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress[] $merchantProfileAddressEntities
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\MerchantProfileAddressTransfer[]

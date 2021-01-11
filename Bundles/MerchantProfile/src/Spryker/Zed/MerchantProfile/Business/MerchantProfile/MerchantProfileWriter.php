@@ -111,6 +111,10 @@ class MerchantProfileWriter implements MerchantProfileWriterInterface
     protected function saveMerchantProfileAddress(
         MerchantProfileTransfer $merchantProfileTransfer
     ): MerchantProfileTransfer {
+        if ($merchantProfileTransfer->getAddressCollection()->count() === 0) {
+            return $merchantProfileTransfer;
+        }
+
         $merchantProfileAddressTransfers = $this->merchantProfileAddressWriter->saveMerchantProfileAddresses(
             $merchantProfileTransfer->getAddressCollection(),
             $merchantProfileTransfer->getIdMerchantProfile()

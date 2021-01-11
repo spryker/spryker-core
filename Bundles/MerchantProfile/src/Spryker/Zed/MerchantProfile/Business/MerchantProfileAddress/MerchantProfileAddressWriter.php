@@ -47,6 +47,10 @@ class MerchantProfileAddressWriter implements MerchantProfileAddressWriterInterf
     }
 
     /**
+     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\MerchantProfileAddressTransfer> $merchantProfileAddressTransfers
+     *
+     * @phpstan-return \ArrayObject<int,\Generated\Shared\Transfer\MerchantProfileAddressTransfer>
+     *
      * @param \ArrayObject|\Generated\Shared\Transfer\MerchantProfileAddressTransfer[] $merchantProfileAddressTransfers
      * @param int $idMerchantProfile
      *

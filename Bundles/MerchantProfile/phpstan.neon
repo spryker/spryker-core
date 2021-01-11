@@ -1,3 +1,2 @@
 parameters:
-    checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
