@@ -201,14 +201,14 @@ class PriceProductMapper
     {
         foreach ($data as $key => $value) {
             if (strpos($key, MoneyValueTransfer::NET_AMOUNT) !== false) {
-                $value = $this->moneyFacade->convertDecimalToInteger((float)$value);
+                $value = $this->convertDecimalToInteger((float)$value);
                 $moneyValueTransfer->setNetAmount($value);
 
                 continue;
             }
 
             if (strpos($key, MoneyValueTransfer::GROSS_AMOUNT) !== false) {
-                $value = $this->moneyFacade->convertDecimalToInteger((float)$value);
+                $value = $this->convertDecimalToInteger((float)$value);
                 $moneyValueTransfer->setGrossAmount($value);
 
                 continue;
@@ -231,5 +231,19 @@ class PriceProductMapper
         }
 
         return $moneyValueTransfer;
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @return int|null
+     */
+    protected function convertDecimalToInteger($value): ?int
+    {
+        if ($value === '' || $value === null) {
+            return null;
+        }
+
+        return $this->moneyFacade->convertDecimalToInteger((float)$value);
     }
 }

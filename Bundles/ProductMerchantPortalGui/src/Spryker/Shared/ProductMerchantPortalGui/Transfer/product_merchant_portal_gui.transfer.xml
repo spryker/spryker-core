@@ -179,7 +179,6 @@
     <transfer name="PriceType">
         <property name="idPriceType" type="int"/>
         <property name="name" type="string"/>
-        <property name="idPriceType" type="int"/>
     </transfer>
 
     <transfer name="StoreWithCurrency">

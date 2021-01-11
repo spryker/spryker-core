@@ -1151,7 +1151,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidatePricesIsSuccessful()
+    public function testValidatePricesIsSuccessful(): void
     {
         // Arrange
         $priceProductTransfer = $this->tester->havePriceProduct([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
@@ -1170,7 +1170,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidatePricesFailsValidUniqueStoreCurrencyGrossNetConstraint()
+    public function testValidatePricesFailsValidUniqueStoreCurrencyGrossNetConstraint(): void
     {
         $productTransfer = $this->tester->haveProduct();
 
@@ -1202,7 +1202,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidatePricesFailsValidCurrencyAssignedToStoreConstraint()
+    public function testValidatePricesFailsValidCurrencyAssignedToStoreConstraint(): void
     {
         // Arrange
         $productTransfer = $this->tester->haveProduct();
@@ -1233,11 +1233,9 @@ class PriceProductFacadeTest extends Unit
     }
 
     /**
-     * @param mixed $invalidValue
-     *
      * @return void
      */
-    public function testValidateFailsValidNetAmountValue()
+    public function testValidateFailsValidNetAmountValue(): void
     {
         // Arrange
         $productTransfer = $this->tester->haveProduct();
@@ -1261,7 +1259,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidatePricesFailsValidCurrencyValue()
+    public function testValidatePricesFailsValidCurrencyValue(): void
     {
         // Arrange
         $productTransfer = $this->tester->haveProduct();
@@ -1284,7 +1282,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidatePricesFailsValidStoreValue()
+    public function testValidatePricesFailsValidStoreValue(): void
     {
         // Arrange
         $productTransfer = $this->tester->haveProduct();
