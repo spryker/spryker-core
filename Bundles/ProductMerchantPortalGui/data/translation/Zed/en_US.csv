@@ -6,7 +6,6 @@ Default,Default
 Description,Description
 Image,Image
 "Image Set","Image Set"
-"Image Set:","Image Set:"
 Images,Images
 "Manage Product","Manage Product"
 Name,Name
@@ -26,6 +25,7 @@ Select,Select
 "Select Categories","Select Categories"
 SKU,SKU
 "Search by SKU, Name","Search by SKU, Name"
+Store,Store
 Stores,Stores
 "Super Attributes","Super Attributes"
 "Tax Set","Tax Set"
@@ -33,3 +33,9 @@ Stores,Stores
 "The value cannot be empty. Please fill in this input.","The value cannot be empty. Please fill in this input."
 Variants,Variants
 Visibility,Visibility
+"Success! The Price is deleted.","Success! The Price is deleted."
+"Something went wrong, please try again.","Something went wrong, please try again."
+"Product prices saved successfully.","Product prices saved successfully."
+Net,Net
+Gross,Gross
+Delete,Delete

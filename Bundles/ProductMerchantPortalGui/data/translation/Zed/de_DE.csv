@@ -1,13 +1,12 @@
 Attributes,Attribute
 Categories,Kategorien
 Currencies,Currencies
-Currency,Currency
-Default,Default
-Description,Description
+Currency,Währung
+Default,Standard
+Description,Beschreibung
 Image,Bild
-"Image Set","Image Set"
-"Image Set:","Image Set:"
-Images,Images
+"Image Set",Bildersets
+Images,Bilder
 "Manage Product","Manage Product"
 Name,Name
 "Name & Description","Name & Beschreibung"
@@ -19,13 +18,14 @@ Products,Produkte
 "Product Details",Produktdetails
 "Provide a name","Provide a name"
 "Provide description","Provide description"
-Save,Save
-Select,Select
+Save,Speichern
+Select,Auswählen
 "Select Stores","Wählen Sie Stores"
 "Select Tax Set","Wählen Sie Steuersatz"
 "Select Categories","Wählen Sie Kategorien"
 SKU,SKU
 "Search by SKU, Name","Suche nach SKU, Name"
+Store,Store
 Stores,Stores
 "Super Attributes",Superattribute
 "Tax Set",Steuersatz
@@ -33,3 +33,9 @@ Stores,Stores
 "The value cannot be empty. Please fill in this input.","The value cannot be empty. Please fill in this input."
 Variants,Varianten
 Visibility,Sichtbarkeit
+"Success! The Price is deleted.","Der Preis wurde gelöscht."
+"Something went wrong, please try again.","Etwas ist schief gelaufen, bitte versuchen Sie es noch einmal."
+"Product prices saved successfully.","Product prices saved successfully."
+Net,Net
+Gross,Gross
+Delete,Löschen
