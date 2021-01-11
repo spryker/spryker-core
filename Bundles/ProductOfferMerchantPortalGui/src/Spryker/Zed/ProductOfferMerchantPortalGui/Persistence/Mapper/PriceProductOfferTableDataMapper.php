@@ -97,11 +97,11 @@ class PriceProductOfferTableDataMapper
             $keyNetPrice = $priceTypeName . static::SUFFIX_PRICE_TYPE_NET;
             $keyGrossPrice = $priceTypeName . static::SUFFIX_PRICE_TYPE_GROSS;
 
-            if (isset($priceProductOfferTableRowDataArray[$keyGrossPrice])) {
+            if (array_key_exists($keyGrossPrice, $priceProductOfferTableRowDataArray)) {
                 $prices[$this->createGrossKey($priceTypeName)] = $priceProductOfferTableRowDataArray[$keyGrossPrice];
             }
 
-            if (isset($priceProductOfferTableRowDataArray[$keyNetPrice])) {
+            if (array_key_exists($keyNetPrice, $priceProductOfferTableRowDataArray)) {
                 $prices[$this->createNetKey($priceTypeName)] = $priceProductOfferTableRowDataArray[$keyNetPrice];
             }
         }
