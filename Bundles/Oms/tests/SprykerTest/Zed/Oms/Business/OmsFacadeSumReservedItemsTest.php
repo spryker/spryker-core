@@ -104,22 +104,25 @@ class OmsFacadeSumReservedItemsTest extends Unit
     {
         // Arrange
         $salesOrderEntity = $this->createTestOrder('123', 'Test06', static::NOT_RESERVED_SUBPROCESS_ITEM_STATE);
+        $sumReservedProductQuantitiesForSku = $this->getOmsFacade()
+            ->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU);
 
-        // Assert
-        $this->assertTrue(
-            $this->getOmsFacade()
-                ->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU)
-                ->equals(0)
-        );
-
+        //Act
         foreach ($salesOrderEntity->getItems() as $orderItem) {
             $orderItem->setState($this->createOmsOrderItemState(static::RESERVED_SUBPROCESS_ITEM_STATE))->save();
         }
 
+        // Assert
+        $this->assertTrue(
+            $sumReservedProductQuantitiesForSku->equals(0),
+            'Expected reserved product quantity to be 0 for non-reserved state of subprocess.'
+        );
+
         $this->assertTrue(
             $this->getOmsFacade()
                 ->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU)
-                ->equals(50)
+                ->equals(50),
+            'Expected reserved product quantity to be 50 for reserved state of subprocess.'
         );
     }
 
