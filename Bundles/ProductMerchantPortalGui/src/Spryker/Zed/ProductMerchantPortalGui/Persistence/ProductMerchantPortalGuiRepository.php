@@ -7,13 +7,18 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Persistence;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\MerchantProductTableCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductAbstractTableCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductAbstractTableViewCollectionTransfer;
 use Generated\Shared\Transfer\PriceProductAbstractTableViewTransfer;
 use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
+use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Currency\Persistence\Map\SpyCurrencyTableMap;
 use Orm\Zed\MerchantProduct\Persistence\Map\SpyMerchantProductAbstractTableMap;
@@ -26,10 +31,13 @@ use Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractStoreTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageTableMap;
+use Orm\Zed\ProductValidity\Persistence\Map\SpyProductValidityTableMap;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Criterion\LikeCriterion;
@@ -662,5 +670,99 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         }
 
         return $priceProductDefaultQuery;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
+     */
+    public function getProductTableData(ProductTableCriteriaTransfer $productTableCriteriaTransfer): ProductConcreteCollectionTransfer
+    {
+        /** @var \Generated\Shared\Transfer\LocaleTransfer $localeTransfer */
+        $localeTransfer = $productTableCriteriaTransfer->getLocaleOrFail();
+        $productConcreteQuery = $this->buildProductTableBaseQuery($productTableCriteriaTransfer, $localeTransfer);
+
+        $propelPager = $productConcreteQuery->paginate(
+            $productTableCriteriaTransfer->requirePage()->getPage(),
+            $productTableCriteriaTransfer->requirePageSize()->getPageSize()
+        );
+        $paginationTransfer = $this->getFactory()
+            ->createPropelModelPagerMapper()
+            ->mapPropelModelPagerToPaginationTransfer($propelPager);
+
+        $productConcreteCollectionTransfer = $this->getFactory()
+            ->createProductTableDataMapper()
+            ->mapProductTableDataArrayToProductConcreteCollectionTransfer(
+                $propelPager->getResults()->getData(),
+                new ProductConcreteCollectionTransfer(),
+                $localeTransfer
+            );
+        $productConcreteCollectionTransfer->setPagination($paginationTransfer);
+
+        return $productConcreteCollectionTransfer;
+    }
+
+    /**
+     * @module Product
+     * @module ProductImage
+     * @module ProductValidity
+     * @module MerchantProduct
+     *
+     * @phpstan-return \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct>
+     *
+     * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected function buildProductTableBaseQuery(
+        ProductTableCriteriaTransfer $productTableCriteriaTransfer,
+        LocaleTransfer $localeTransfer
+    ): SpyProductQuery {
+        /** @var int $idLocale */
+        $idLocale = $localeTransfer->getIdLocaleOrFail();
+        /** @var int $idMerchant */
+        $idMerchant = $productTableCriteriaTransfer->getIdMerchantOrFail();
+        /** @var int $idProductAbstract */
+        $idProductAbstract = $productTableCriteriaTransfer->getIdProductAbstractOrFail();
+
+        $productConcreteQuery = $this->getFactory()->getProductConcretePropelQuery();
+        $productConcreteQuery->leftJoinSpyProductValidity()
+            ->joinSpyProductAbstract()
+            ->filterByFkProductAbstract($idProductAbstract)
+            ->useSpyProductAbstractQuery()
+                ->joinSpyMerchantProductAbstract()
+                ->useSpyMerchantProductAbstractQuery()
+                    ->filterByFkMerchant($idMerchant)
+                ->endUse()
+            ->endUse()
+            ->joinSpyProductLocalizedAttributes()
+            ->useSpyProductLocalizedAttributesQuery()
+                ->filterByFkLocale($idLocale)
+            ->endUse()
+            ->addAsColumn(ProductConcreteTransfer::ID_PRODUCT_CONCRETE, SpyProductTableMap::COL_ID_PRODUCT)
+            ->addAsColumn(ProductConcreteTransfer::FK_PRODUCT_ABSTRACT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT)
+            ->addAsColumn(ProductConcreteTransfer::SKU, SpyProductTableMap::COL_SKU)
+            ->addAsColumn(ProductConcreteTransfer::IS_ACTIVE, SpyProductTableMap::COL_IS_ACTIVE)
+            ->addAsColumn(ProductConcreteTransfer::ATTRIBUTES, SpyProductTableMap::COL_ATTRIBUTES)
+            ->addAsColumn(ProductConcreteTransfer::LOCALIZED_ATTRIBUTES, SpyProductLocalizedAttributesTableMap::COL_ATTRIBUTES)
+            ->addAsColumn(LocalizedAttributesTransfer::NAME, SpyProductLocalizedAttributesTableMap::COL_NAME)
+            ->addAsColumn(ProductConcreteTransfer::VALID_FROM, SpyProductValidityTableMap::COL_VALID_FROM)
+            ->addAsColumn(ProductConcreteTransfer::VALID_TO, SpyProductValidityTableMap::COL_VALID_TO)
+            ->addAsColumn(ProductImageTransfer::EXTERNAL_URL_SMALL, sprintf('(%s)', $this->createProductImagesSubquery($idLocale)))
+            ->select([
+                ProductConcreteTransfer::ID_PRODUCT_CONCRETE,
+                ProductConcreteTransfer::FK_PRODUCT_ABSTRACT,
+                ProductConcreteTransfer::SKU,
+                ProductConcreteTransfer::IS_ACTIVE,
+                ProductConcreteTransfer::ATTRIBUTES,
+                ProductConcreteTransfer::LOCALIZED_ATTRIBUTES,
+                ProductConcreteTransfer::VALID_FROM,
+                ProductConcreteTransfer::VALID_TO,
+                ProductImageTransfer::EXTERNAL_URL_SMALL,
+            ]);
+
+        return $productConcreteQuery;
     }
 }
