@@ -12,8 +12,6 @@ use Spryker\Shared\Kernel\Container\AbstractApplicationContainer;
 class Container extends AbstractApplicationContainer
 {
     /**
-     * @phpstan-return \Generated\Zed\Ide\AutoCompletion
-     *
      * @return \Generated\Zed\Ide\AutoCompletion|\Spryker\Shared\Kernel\LocatorLocatorInterface
      */
     public function getLocator()
