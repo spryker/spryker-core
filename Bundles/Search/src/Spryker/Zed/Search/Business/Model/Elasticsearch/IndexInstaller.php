@@ -163,7 +163,6 @@ class IndexInstaller implements SearchInstallerInterface
         ElasticsearchIndexDefinitionTransfer $indexDefinitionTransfer,
         Index $index
     ) {
-
         $mappings = $this->mergeMappings($indexDefinitionTransfer, $index);
 
         $data = ['mappings' => $mappings];

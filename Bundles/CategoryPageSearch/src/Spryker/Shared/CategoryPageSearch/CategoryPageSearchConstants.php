@@ -70,7 +70,7 @@ class CategoryPageSearchConstants
 
     /**
      * Specification:
-     * - This events will be used for spy_category_store entity changes.
+     * - This events will be used for spy_category_store entity deletion.
      *
      * @api
      */

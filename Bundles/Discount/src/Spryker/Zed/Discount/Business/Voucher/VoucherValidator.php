@@ -38,7 +38,6 @@ class VoucherValidator implements VoucherValidatorInterface
         DiscountQueryContainerInterface $discountQueryContainer,
         DiscountToMessengerInterface $messengerFacade
     ) {
-
         $this->discountQueryContainer = $discountQueryContainer;
         $this->messengerFacade = $messengerFacade;
     }

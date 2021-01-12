@@ -153,6 +153,7 @@ class CartMapper implements CartMapperInterface
         foreach ($quoteTransfer->getVoucherDiscounts() as $discountTransfer) {
             $restCartsDiscounts = new RestCartsDiscountsTransfer();
             $restCartsDiscounts->fromArray($discountTransfer->toArray(), true);
+            $restCartsDiscounts->setCode($discountTransfer->getVoucherCode());
             $restCartsAttributesTransfer->addDiscount($restCartsDiscounts);
         }
 

@@ -23,7 +23,7 @@ class Backtrace
     /**
      * @var string
      */
-    private $backtrace;
+    protected $backtrace;
 
     public function __construct()
     {

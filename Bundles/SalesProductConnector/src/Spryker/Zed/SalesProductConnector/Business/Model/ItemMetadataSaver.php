@@ -37,7 +37,6 @@ class ItemMetadataSaver implements ItemMetadataSaverInterface
         SalesProductConnectorToUtilEncodingInterface $utilEncodingService,
         SalesProductConnectorQueryContainerInterface $salesProductConnectorQueryContainer
     ) {
-
         $this->salesProductConnectorQueryContainer = $salesProductConnectorQueryContainer;
         $this->utilEncodingService = $utilEncodingService;
     }

@@ -30,7 +30,6 @@ class PriceCalculator implements CalculatorInterface
         array $netPriceCalculators,
         array $grossPriceCalculators
     ) {
-
         $this->netPriceCalculators = $netPriceCalculators;
         $this->grossPriceCalculators = $grossPriceCalculators;
     }

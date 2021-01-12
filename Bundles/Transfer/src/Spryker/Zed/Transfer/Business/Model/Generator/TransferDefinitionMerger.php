@@ -8,10 +8,11 @@
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
 use Exception;
+use Spryker\Zed\Transfer\Business\Exception\TransferDefinitionMismatchException;
 
 class TransferDefinitionMerger implements MergerInterface
 {
-    public const ERROR_MESSAGE_ATTRIBUTES_NOT_IDENTICAL =
+    public const ERROR_MESSAGE_PROPERTY_ATTRIBUTES_NOT_IDENTICAL =
         'Value mismatch for "%1$s.%2$s" transfer property. Value1: "%3$s"; Value2: "%4$s". ' .
         'To fix this, search for \'property name="%2$s"\' in the code base and fix the wrong one.';
 
@@ -53,12 +54,20 @@ class TransferDefinitionMerger implements MergerInterface
      */
     protected function mergeDefinitions(array $existingDefinition, array $definitionToMerge, $transferName)
     {
-        return [
+        $this->assertTransferStrictModeIsConsistent($existingDefinition, $definitionToMerge);
+
+        $mergedDefinition = [
             'name' => $existingDefinition['name'],
             'entity-namespace' => isset($existingDefinition['entity-namespace']) ? $existingDefinition['entity-namespace'] : null,
             'deprecated' => $this->mergeDeprecatedClassDefinition($existingDefinition, $definitionToMerge),
             'property' => $this->mergeProperty($existingDefinition['property'], $definitionToMerge['property'], $transferName),
         ];
+
+        if (isset($existingDefinition[DefinitionNormalizer::KEY_STRICT_MODE])) {
+            $mergedDefinition[DefinitionNormalizer::KEY_STRICT_MODE] = $existingDefinition[DefinitionNormalizer::KEY_STRICT_MODE];
+        }
+
+        return $mergedDefinition;
     }
 
     /**
@@ -123,6 +132,8 @@ class TransferDefinitionMerger implements MergerInterface
     protected function mergeProperties(array $property, array $propertyToMerge, $transferName)
     {
         foreach ($propertyToMerge as $propertyName => $propertyValue) {
+            $this->assertTransferPropertyStrictModeIsConsistent($property, $propertyToMerge, $transferName);
+
             if (!array_key_exists($propertyName, $property)) {
                 $property[$propertyName] = $propertyValue;
 
@@ -141,7 +152,7 @@ class TransferDefinitionMerger implements MergerInterface
                 default:
                     if ($propertyValue !== $property[$propertyName]) {
                         throw new Exception(sprintf(
-                            static::ERROR_MESSAGE_ATTRIBUTES_NOT_IDENTICAL,
+                            static::ERROR_MESSAGE_PROPERTY_ATTRIBUTES_NOT_IDENTICAL,
                             $transferName,
                             $property['name'],
                             $property[$propertyName],
@@ -186,5 +197,70 @@ class TransferDefinitionMerger implements MergerInterface
         }
 
         return $deprecated1;
+    }
+
+    /**
+     * @param array $existingTransferDefinition
+     * @param array $transferDefinitionToMerge
+     *
+     * @throws \Spryker\Zed\Transfer\Business\Exception\TransferDefinitionMismatchException
+     *
+     * @return void
+     */
+    protected function assertTransferStrictModeIsConsistent(array $existingTransferDefinition, array $transferDefinitionToMerge): void
+    {
+        if ($this->validateNonMergeableAttribute(DefinitionNormalizer::KEY_STRICT_MODE, $existingTransferDefinition, $transferDefinitionToMerge)) {
+            return;
+        }
+
+        throw new TransferDefinitionMismatchException(
+            sprintf(
+                'Strict mode violation detected for transfer %s. "strict" attribute value for this transfer must be identical across all definitions.',
+                $existingTransferDefinition['name']
+            )
+        );
+    }
+
+    /**
+     * @param array $existingTransferProperty
+     * @param array $transferPropertyToMerge
+     * @param string $transferName
+     *
+     * @throws \Spryker\Zed\Transfer\Business\Exception\TransferDefinitionMismatchException
+     *
+     * @return void
+     */
+    protected function assertTransferPropertyStrictModeIsConsistent(array $existingTransferProperty, array $transferPropertyToMerge, string $transferName): void
+    {
+        if ($this->validateNonMergeableAttribute(DefinitionNormalizer::KEY_STRICT_MODE, $existingTransferProperty, $transferPropertyToMerge)) {
+            return;
+        }
+
+        throw new TransferDefinitionMismatchException(
+            sprintf(
+                'Strict mode violation detected for transfer property %s.%s. "strict" attribute value for this property must be identical across all definitions.',
+                $transferName,
+                $existingTransferProperty['name']
+            )
+        );
+    }
+
+    /**
+     * @param string $attributeName
+     * @param array $existingDefinition
+     * @param array $definitionToMerge
+     *
+     * @return bool
+     */
+    protected function validateNonMergeableAttribute(string $attributeName, array $existingDefinition, array $definitionToMerge): bool
+    {
+        $existingAttributeValue = isset($existingDefinition[$attributeName]) ?? false;
+        $newAttributeValue = isset($definitionToMerge[$attributeName]) ?? false;
+
+        if ($existingAttributeValue !== $newAttributeValue) {
+            return false;
+        }
+
+        return true;
     }
 }

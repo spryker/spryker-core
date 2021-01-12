@@ -19,17 +19,17 @@ abstract class AbstractGatewayController extends AbstractController
     /**
      * @var \Generated\Shared\Transfer\MessageTransfer[]
      */
-    private $errorMessages = [];
+    protected $errorMessages = [];
 
     /**
      * @var \Generated\Shared\Transfer\MessageTransfer[]
      */
-    private $infoMessages = [];
+    protected $infoMessages = [];
 
     /**
      * @var \Generated\Shared\Transfer\MessageTransfer[]
      */
-    private $successMessages = [];
+    protected $successMessages = [];
 
     /**
      * @return bool

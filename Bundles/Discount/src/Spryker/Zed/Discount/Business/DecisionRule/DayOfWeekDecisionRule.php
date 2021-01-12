@@ -42,7 +42,6 @@ class DayOfWeekDecisionRule implements DecisionRuleInterface
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
-
         $dayOfWeek = $this->getCurrentDateOfWeek();
 
         return $this->comparators->compare($clauseTransfer, $dayOfWeek);
