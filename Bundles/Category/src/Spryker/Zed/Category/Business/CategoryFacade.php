@@ -9,9 +9,11 @@ namespace Spryker\Zed\Category\Business;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeTreeElementCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -299,13 +301,15 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @api
      *
-     * @param int[] $categoryNodeIds
+     * @param \Generated\Shared\Transfer\CategoryNodeTreeElementCriteriaTransfer $categoryNodeTreeElementCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
-    public function getAllCategoryNodeTreeElementsByCategoryNodeIds(array $categoryNodeIds): array
-    {
-        return $this->getRepository()->getAllCategoryNodeTreeElementsByCategoryNodeIds($categoryNodeIds);
+    public function getAllActiveCategoryNodeTreeMenuElementsByCategoryNodeIds(
+        CategoryNodeTreeElementCriteriaTransfer $categoryNodeTreeElementCriteriaTransfer
+    ): array {
+        return $this->getRepository()
+            ->getAllActiveCategoryNodeTreeMenuElementsByCategoryNodeIds($categoryNodeTreeElementCriteriaTransfer);
     }
 
     /**
@@ -329,10 +333,22 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @param int[] $categoryNodeIds
      *
-     * @return \Generated\Shared\Transfer\NodeTransfer[]
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function getCategoryNodesByCategoryNodeIds(array $categoryNodeIds): array
+    public function getActiveCategoryNodesByCategoryNodeIds(array $categoryNodeIds): NodeCollectionTransfer
     {
-        return $this->getRepository()->getCategoryNodesByCategoryNodeIds($categoryNodeIds);
+        return $this->getRepository()->getActiveCategoryNodesByCategoryNodeIds($categoryNodeIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
+     */
+    public function getRootCategoryNodes(): NodeCollectionTransfer
+    {
+        return $this->getRepository()->getRootCategoryNodes();
     }
 }

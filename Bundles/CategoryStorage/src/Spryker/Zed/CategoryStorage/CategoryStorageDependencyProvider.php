@@ -55,7 +55,6 @@ class CategoryStorageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCategoryFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addEventBehaviorFacade($container);
-        $container = $this->addUtilSanitizeService($container);
 
         return $container;
     }
@@ -70,6 +69,7 @@ class CategoryStorageDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::providePersistenceLayerDependencies($container);
         $container = $this->addCategoryNodePropelQuery($container);
         $container = $this->addCategoryQueryContainer($container);
+        $container = $this->addUtilSanitizeService($container);
 
         return $container;
     }

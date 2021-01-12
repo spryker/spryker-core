@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\CategoryStorage\Plugin;
 
-use Generated\Shared\Transfer\UrlStorageResourceMapTransfer;
 use Generated\Shared\Transfer\UrlStorageTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface;
@@ -19,7 +18,7 @@ class UrlStorageCategoryNodeMapperPlugin extends AbstractPlugin implements UrlSt
 {
     /**
      * {@inheritDoc}
-     * - Maps category node storage data to UrlStorageResourceMapTransfer if UrlStorageTransfer.fkResourceCategorynode is provided.
+     * - Maps category node storage data to `UrlStorageResourceMapTransfer` if `UrlStorageTransfer.fkResourceCategorynode` is provided.
      *
      * @api
      *
@@ -28,7 +27,7 @@ class UrlStorageCategoryNodeMapperPlugin extends AbstractPlugin implements UrlSt
      *
      * @return \Generated\Shared\Transfer\UrlStorageResourceMapTransfer
      */
-    public function map(UrlStorageTransfer $urlStorageTransfer, array $options = []): UrlStorageResourceMapTransfer
+    public function map(UrlStorageTransfer $urlStorageTransfer, array $options = [])
     {
         return $this->getFactory()
             ->createUrlStorageCategoryNodeMapper()

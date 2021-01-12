@@ -5,9 +5,10 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.3",
-    "spryker/category": "^4.3.0",
+    "spryker/category": "^5.0.0",
     "spryker/event-behavior": "^1.1.0",
     "spryker/kernel": "^3.30.0",
+    "spryker/publisher-extension": "^1.0.0",
     "spryker/store": "^1.12.0",
     "spryker/synchronization-behavior": "^1.0.0",
     "spryker/synchronization-extension": "^1.0.0",
@@ -19,6 +20,7 @@
     "spryker/event": "*",
     "spryker/propel": "*",
     "spryker/propel-orm": "*",
+    "spryker/queue": "*",
     "spryker/search": "*",
     "spryker/testify": "*"
   },

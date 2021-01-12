@@ -27,6 +27,7 @@
 
     <transfer name="Category">
         <property name="isActive" type="bool"/>
+        <property name="isSearchable" type="bool"/>
         <property name="localizedAttributes" type="CategoryLocalizedAttributes[]" singular="localizedAttributes"/>
         <property name="storeRelation" type="StoreRelation"/>
     </transfer>
@@ -42,6 +43,18 @@
         <property name="metaTitle" type="string"/>
         <property name="metaDescription" type="string"/>
         <property name="metaKeywords" type="string"/>
+    </transfer>
+
+    <transfer name="CategoryNodePageSearch">
+        <property name="idCategoryNode" type="int"/>
+        <property name="node" type="Node"/>
+        <property name="data" type="array" singular="data"/>
+        <property name="locale" type="string"/>
+        <property name="store" type="string"/>
+    </transfer>
+
+    <transfer name="NodeCollection">
+        <property name="nodes" type="Node[]" singular="node"/>
     </transfer>
 
 </transfers>

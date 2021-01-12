@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\Category;
+namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\CategoryStore;
 
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -17,11 +17,10 @@ use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
  * @method \Spryker\Zed\CategoryStorage\Communication\CategoryStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\CategoryStorage\CategoryStorageConfig getConfig()
  */
-class CategoryWritePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
+class CategoryStoreWritePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Publishes category node data by CategoryStore publish and un-publish events.
      * - Publishes category node data by SpyCategoryStore entity events.
      *
      * @api
@@ -33,7 +32,7 @@ class CategoryWritePublisherPlugin extends AbstractPlugin implements PublisherPl
      */
     public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        $this->getFacade()->writeCategoryNodeStorageCollectionByCategoryEvents($eventEntityTransfers);
+        $this->getFacade()->writeCategoryNodeStorageCollectionByCategoryStoreEvents($eventEntityTransfers);
     }
 
     /**

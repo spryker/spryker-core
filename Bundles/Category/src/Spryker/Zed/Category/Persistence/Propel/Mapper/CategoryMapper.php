@@ -15,17 +15,35 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Orm\Zed\Category\Persistence\SpyCategoryTemplate;
-use Orm\Zed\Store\Persistence\SpyStore;
-use Orm\Zed\Url\Persistence\SpyUrl;
-use phpDocumentor\Reflection\Types\Iterable_;
 use Propel\Runtime\Collection\ObjectCollection;
 
 class CategoryMapper implements CategoryMapperInterface
 {
+    /**
+     * @var \Spryker\Zed\Category\Persistence\Propel\Mapper\CategoryStoreRelationMapper
+     */
+    protected $categoryStoreRelationMapper;
+
+    /**
+     * @var \Spryker\Zed\Category\Persistence\Propel\Mapper\CategoryLocalizedAttributesUrlMapper
+     */
+    protected $categoryLocalizedAttributesUrlMapper;
+
+    /**
+     * @param \Spryker\Zed\Category\Persistence\Propel\Mapper\CategoryStoreRelationMapper $categoryStoreRelationMapper
+     * @param \Spryker\Zed\Category\Persistence\Propel\Mapper\CategoryLocalizedAttributesUrlMapper $categoryLocalizedAttributesUrlMapper
+     */
+    public function __construct(
+        CategoryStoreRelationMapper $categoryStoreRelationMapper,
+        CategoryLocalizedAttributesUrlMapper $categoryLocalizedAttributesUrlMapper
+    ) {
+        $this->categoryStoreRelationMapper = $categoryStoreRelationMapper;
+        $this->categoryLocalizedAttributesUrlMapper = $categoryLocalizedAttributesUrlMapper;
+    }
+
     /**
      * @param \Orm\Zed\Category\Persistence\SpyCategory $spyCategory
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
@@ -53,6 +71,11 @@ class CategoryMapper implements CategoryMapperInterface
             new CategoryTemplateTransfer()
         ));
         $categoryTransfer = $this->mapCategoryNodes($spyCategory, $categoryTransfer);
+        $storeRelationTransfer = $this->categoryStoreRelationMapper->mapCategoryStoreEntitiesToStoreRelationTransfer(
+            $spyCategory->getSpyCategoryStores(),
+            (new StoreRelationTransfer())->setIdEntity($spyCategory->getIdCategory())
+        );
+        $categoryTransfer->setStoreRelation($storeRelationTransfer);
 
         return $categoryTransfer;
     }
@@ -87,6 +110,23 @@ class CategoryMapper implements CategoryMapperInterface
     }
 
     /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection $nodeEntities
+     * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
+     */
+    public function mapCategoryNodeEntitiesToNodeCollectionTransferWithCategoryRelation(
+        ObjectCollection $nodeEntities,
+        NodeCollectionTransfer $nodeCollectionTransfer
+    ): NodeCollectionTransfer {
+        foreach ($nodeEntities as $nodeEntity) {
+            $nodeCollectionTransfer->addNode($this->mapCategoryNodeEntityToNodeTransferWithCategoryRelation($nodeEntity, new NodeTransfer()));
+        }
+
+        return $nodeCollectionTransfer;
+    }
+
+    /**
      * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $nodeEntity
      * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
      *
@@ -99,7 +139,7 @@ class CategoryMapper implements CategoryMapperInterface
 
         $categoryTransfer = $this->mapCategory($categoryEntity, new CategoryTransfer());
         $categoryTransfer = $this->mapLocalizedAttributes($categoryEntity, $categoryTransfer, $nodeEntity->getSpyUrls());
-        $storeRelationTransfer = $this->mapCategoryStoreEntitiesToStoreRelationTransfer(
+        $storeRelationTransfer = $this->categoryStoreRelationMapper->mapCategoryStoreEntitiesToStoreRelationTransfer(
             $categoryEntity->getSpyCategoryStores(),
             (new StoreRelationTransfer())->setIdEntity($categoryEntity->getIdCategory())
         );
@@ -134,6 +174,12 @@ class CategoryMapper implements CategoryMapperInterface
 
             $nodeCollectionTransfer = $this->mapNodeCollection($categoryEntity->getNodes(), new NodeCollectionTransfer());
             $categoryTransfer->setNodeCollection($nodeCollectionTransfer);
+
+            $storeRelationTransfer = $this->categoryStoreRelationMapper->mapCategoryStoreEntitiesToStoreRelationTransfer(
+                $categoryEntity->getSpyCategoryStores(),
+                (new StoreRelationTransfer())->setIdEntity($categoryEntity->getIdCategory())
+            );
+            $categoryTransfer->setStoreRelation($storeRelationTransfer);
 
             $categoryCollectionTransfer->addCategory($categoryTransfer);
         }
@@ -205,8 +251,8 @@ class CategoryMapper implements CategoryMapperInterface
 
     /**
      * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
-     * @param \Orm\Zed\Url\Persistence\SpyUrl[]|\Propel\Runtime\Collection\ObjectCollection|null $urlEntities
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Orm\Zed\Url\Persistence\SpyUrl[]|\Propel\Runtime\Collection\ObjectCollection|null $urlEntities
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
@@ -224,7 +270,7 @@ class CategoryMapper implements CategoryMapperInterface
             $categoryLocalizedAttributesTransfer->setLocale($localeTransfer);
 
             if ($urlEntities) {
-                $categoryLocalizedAttributesTransfer = $this->mapUrlEntitiesToCategoryLocalizedAttributesTransfer(
+                $categoryLocalizedAttributesTransfer = $this->categoryLocalizedAttributesUrlMapper->mapUrlEntitiesToCategoryLocalizedAttributesTransfer(
                     $urlEntities,
                     $categoryLocalizedAttributesTransfer
                 );
@@ -247,70 +293,5 @@ class CategoryMapper implements CategoryMapperInterface
         CategoryTemplateTransfer $categoryTemplateTransfer
     ): CategoryTemplateTransfer {
         return $categoryTemplateTransfer->fromArray($categoryTemplateEntity->toArray(), true);
-    }
-
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryStore[]|\Propel\Runtime\Collection\ObjectCollection $categoryStoreEntities
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
-     *
-     * @return \Generated\Shared\Transfer\StoreRelationTransfer
-     */
-    protected function mapCategoryStoreEntitiesToStoreRelationTransfer(
-        ObjectCollection $categoryStoreEntities,
-        StoreRelationTransfer $storeRelationTransfer
-    ): StoreRelationTransfer {
-        foreach ($categoryStoreEntities as $categoryStoreEntity) {
-            $storeTransfer = $this->mapStoreEntityToStoreTransfer($categoryStoreEntity->getSpyStore(), new StoreTransfer());
-            $storeRelationTransfer->addStores($storeTransfer);
-            $storeRelationTransfer->addIdStores($storeTransfer->getIdStore());
-        }
-
-        return $storeRelationTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\Store\Persistence\SpyStore $storeEntity
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    protected function mapStoreEntityToStoreTransfer(SpyStore $storeEntity, StoreTransfer $storeTransfer): StoreTransfer
-    {
-        return $storeTransfer->fromArray($storeEntity->toArray(), true);
-    }
-
-    /**
-     * @param \Orm\Zed\Url\Persistence\SpyUrl[]|\Propel\Runtime\Collection\ObjectCollection $urlEntities
-     * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer
-     */
-    protected function mapUrlEntitiesToCategoryLocalizedAttributesTransfer(
-        ObjectCollection $urlEntities,
-        CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer
-    ): CategoryLocalizedAttributesTransfer {
-        $urlEntity = $this->findUrlForLocale($urlEntities, $categoryLocalizedAttributesTransfer->getLocale());
-        if (!$urlEntity) {
-            return $categoryLocalizedAttributesTransfer;
-        }
-
-        return $categoryLocalizedAttributesTransfer->setUrl($urlEntity->getUrl());
-    }
-
-    /**
-     * @param \Orm\Zed\Url\Persistence\SpyUrl[]|\Propel\Runtime\Collection\ObjectCollection $urlEntities
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return \Orm\Zed\Url\Persistence\SpyUrl|null
-     */
-    protected function findUrlForLocale(ObjectCollection $urlEntities, LocaleTransfer $localeTransfer): ?SpyUrl
-    {
-        foreach ($urlEntities as $urlEntity) {
-            if ($urlEntity->getFkLocale() === $localeTransfer->getIdLocale()) {
-                return $urlEntity;
-            }
-        }
-
-        return null;
     }
 }

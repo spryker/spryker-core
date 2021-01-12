@@ -53,7 +53,6 @@ class CategoryPageSearchDependencyProvider extends AbstractBundleDependencyProvi
         $container = $this->addStoreFacade($container);
         $container = $this->addCategoryFacade($container);
         $container = $this->addEventBehaviorFacade($container);
-        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -67,6 +66,7 @@ class CategoryPageSearchDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container = parent::providePersistenceLayerDependencies($container);
         $container = $this->addCategoryQueryContainer($container);
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }

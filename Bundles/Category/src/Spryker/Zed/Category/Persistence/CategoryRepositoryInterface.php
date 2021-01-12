@@ -9,9 +9,11 @@ namespace Spryker\Zed\Category\Persistence;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeTreeElementCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\NodeCollectionTransfer;
 
 interface CategoryRepositoryInterface
 {
@@ -93,11 +95,13 @@ interface CategoryRepositoryInterface
     public function getCategoryNodeUrls(CategoryNodeUrlFilterTransfer $categoryNodeFilterTransfer): array;
 
     /**
-     * @param int[] $categoryNodeIds
+     * @param \Generated\Shared\Transfer\CategoryNodeTreeElementCriteriaTransfer $categoryNodeTreeElementCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
-    public function getAllCategoryNodeTreeElementsByCategoryNodeIds(array $categoryNodeIds): array;
+    public function getAllActiveCategoryNodeTreeMenuElementsByCategoryNodeIds(
+        CategoryNodeTreeElementCriteriaTransfer $categoryNodeTreeElementCriteriaTransfer
+    ): array;
 
     /**
      * @param int[] $categoryIds
@@ -109,7 +113,12 @@ interface CategoryRepositoryInterface
     /**
      * @param int[] $categoryNodeIds
      *
-     * @return \Generated\Shared\Transfer\NodeTransfer[]
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function getCategoryNodesByCategoryNodeIds(array $categoryNodeIds): array;
+    public function getActiveCategoryNodesByCategoryNodeIds(array $categoryNodeIds): NodeCollectionTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
+     */
+    public function getRootCategoryNodes(): NodeCollectionTransfer;
 }

@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\CategoryStorage\Dependency\Facade;
 
+use Generated\Shared\Transfer\CategoryNodeTreeElementCriteriaTransfer;
+use Generated\Shared\Transfer\NodeCollectionTransfer;
+
 class CategoryStorageToCategoryFacadeBridge implements CategoryStorageToCategoryFacadeInterface
 {
     /**
@@ -23,22 +26,31 @@ class CategoryStorageToCategoryFacadeBridge implements CategoryStorageToCategory
     }
 
     /**
-     * @param int[] $categoryNodeIds
+     * @param \Generated\Shared\Transfer\CategoryNodeTreeElementCriteriaTransfer $categoryNodeTreeElementCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
-    public function getAllCategoryNodeTreeElementsByCategoryNodeIds(array $categoryNodeIds): array
-    {
-        return $this->categoryFacade->getAllCategoryNodeTreeElementsByCategoryNodeIds($categoryNodeIds);
+    public function getAllActiveCategoryNodeTreeMenuElementsByCategoryNodeIds(
+        CategoryNodeTreeElementCriteriaTransfer $categoryNodeTreeElementCriteriaTransfer
+    ): array {
+        return $this->categoryFacade->getAllActiveCategoryNodeTreeMenuElementsByCategoryNodeIds($categoryNodeTreeElementCriteriaTransfer);
     }
 
     /**
-     * @param int[] $categoryStoreIds
+     * @param int[] $categoryIds
      *
      * @return int[]
      */
-    public function getCategoryNodeIdsByCategoryIds(array $categoryStoreIds): array
+    public function getCategoryNodeIdsByCategoryIds(array $categoryIds): array
     {
-        return $this->categoryFacade->getCategoryNodeIdsByCategoryIds($categoryStoreIds);
+        return $this->categoryFacade->getCategoryNodeIdsByCategoryIds($categoryIds);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
+     */
+    public function getRootCategoryNodes(): NodeCollectionTransfer
+    {
+        return $this->categoryFacade->getRootCategoryNodes();
     }
 }

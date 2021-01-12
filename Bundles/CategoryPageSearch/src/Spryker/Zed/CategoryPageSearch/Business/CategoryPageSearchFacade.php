@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\CategoryPageSearch\Business\CategoryPageSearchBusinessFactory getFactory()
+ * @method \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchEntityManagerInterface getEntityManager()
  */
 class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSearchFacadeInterface
 {
@@ -51,10 +52,26 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
      *
      * @return void
      */
-    public function writeCategoryNodePageSearchCollectionByCategoryEvents(array $eventEntityTransfers): void
+    public function writeCategoryNodePageSearchCollectionByCategoryStoreEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createCategoryNodeSearch()
-            ->writeCategoryNodePageSearchCollectionByCategoryEvents($eventEntityTransfers);
+            ->createCategoryNodePageSearchWriter()
+            ->writeCategoryNodePageSearchCollectionByCategoryStoreEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCategoryNodePageSearchCollectionByCategoryStorePublishEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createCategoryNodePageSearchWriter()
+            ->writeCategoryNodePageSearchCollectionByCategoryStorePublishEvents($eventEntityTransfers);
     }
 }

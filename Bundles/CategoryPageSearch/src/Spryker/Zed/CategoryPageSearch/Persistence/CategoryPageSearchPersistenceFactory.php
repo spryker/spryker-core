@@ -9,11 +9,14 @@ namespace Spryker\Zed\CategoryPageSearch\Persistence;
 
 use Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearchQuery;
 use Spryker\Zed\CategoryPageSearch\CategoryPageSearchDependencyProvider;
+use Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilEncodingInterface;
+use Spryker\Zed\CategoryPageSearch\Persistence\Propel\Mapper\CategoryNodePageSearchMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\CategoryPageSearch\CategoryPageSearchConfig getConfig()
  * @method \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchEntityManagerInterface getEntityManager()
  */
 class CategoryPageSearchPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -26,10 +29,26 @@ class CategoryPageSearchPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @return \Spryker\Zed\CategoryPageSearch\Persistence\Propel\Mapper\CategoryNodePageSearchMapper
+     */
+    public function createCategoryNodePageSearchMapper(): CategoryNodePageSearchMapper
+    {
+        return new CategoryNodePageSearchMapper($this->getUtilEncodingService());
+    }
+
+    /**
      * @return \Spryker\Zed\CategoryPageSearch\Dependency\QueryContainer\CategoryPageSearchToCategoryQueryContainerInterface
      */
     public function getCategoryQueryContainer()
     {
         return $this->getProvidedDependency(CategoryPageSearchDependencyProvider::QUERY_CONTAINER_CATEGORY);
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilEncodingInterface
+     */
+    public function getUtilEncodingService(): CategoryPageSearchToUtilEncodingInterface
+    {
+        return $this->getProvidedDependency(CategoryPageSearchDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

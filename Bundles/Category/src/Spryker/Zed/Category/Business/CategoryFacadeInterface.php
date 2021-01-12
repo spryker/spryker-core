@@ -9,9 +9,11 @@ namespace Spryker\Zed\Category\Business;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeTreeElementCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\NodeCollectionTransfer;
 
 interface CategoryFacadeInterface
 {
@@ -271,14 +273,18 @@ interface CategoryFacadeInterface
     /**
      * Specification:
      * - Retrieves all NodeTransfers by categoryNodeIds and all their parents and children NodeTransfers.
+     * - Filters category nodes according to `CategoryNodeTreeElementCriteriaTransfer`.
+     * - Requires `CategoryNodeTreeElementCriteriaTransfer.categoryNodeIds` to be set.
      *
      * @api
      *
-     * @param int[] $categoryNodeIds
+     * @param \Generated\Shared\Transfer\CategoryNodeTreeElementCriteriaTransfer $categoryNodeTreeElementCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
-    public function getAllCategoryNodeTreeElementsByCategoryNodeIds(array $categoryNodeIds): array;
+    public function getAllActiveCategoryNodeTreeMenuElementsByCategoryNodeIds(
+        CategoryNodeTreeElementCriteriaTransfer $categoryNodeTreeElementCriteriaTransfer
+    ): array;
 
     /**
      * Specification:
@@ -294,13 +300,24 @@ interface CategoryFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves category nodes by category node ids.
+     * - Retrieves category node collection by category node ids.
+     * - Filters category nodes by `spy_category.is_active=true`.
      *
      * @api
      *
      * @param int[] $categoryNodeIds
      *
-     * @return \Generated\Shared\Transfer\NodeTransfer[]
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function getCategoryNodesByCategoryNodeIds(array $categoryNodeIds): array;
+    public function getActiveCategoryNodesByCategoryNodeIds(array $categoryNodeIds): NodeCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves all root category nodes.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
+     */
+    public function getRootCategoryNodes(): NodeCollectionTransfer;
 }

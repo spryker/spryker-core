@@ -14,7 +14,6 @@ use Generated\Shared\DataBuilder\NodeBuilder;
 use Generated\Shared\Transfer\CategoryTemplateTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
-use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryStore;
 use Orm\Zed\Category\Persistence\SpyCategoryStoreQuery;
 use Spryker\Zed\Category\Business\CategoryFacadeInterface;

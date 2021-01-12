@@ -8,13 +8,12 @@
 namespace Spryker\Client\CategoryStorage;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
 
 interface CategoryStorageClientInterface
 {
     /**
      * Specification:
-     *  - Return category node storage data by locale name.
+     *  - Return category node storage data by locale name and store name.
      *
      * @api
      *
@@ -23,11 +22,11 @@ interface CategoryStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]|\ArrayObject
      */
-    public function getCategories(string $locale, string $storeName);
+    public function getCategories($locale, string $storeName);
 
     /**
      * Specification:
-     *  - Return category node storage data by id category node and locale name.
+     *  - Return category node storage data by id category node, locale name and store name.
      *
      * @api
      *
@@ -37,11 +36,11 @@ interface CategoryStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer
      */
-    public function getCategoryNodeById(int $idCategoryNode, string $localeName, string $storeName): CategoryNodeStorageTransfer;
+    public function getCategoryNodeById($idCategoryNode, $localeName, string $storeName);
 
     /**
      * Specification:
-     * - Returns category nodes storage data by array of id category node and locale name.
+     * - Returns category nodes storage data by array of id category node, locale name and store name.
      *
      * @api
      *
@@ -51,21 +50,21 @@ interface CategoryStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
      */
-    public function getCategoryNodeByIds(array $categoryNodeIds, string $localeName, string $storeName): array;
+    public function getCategoryNodeByIds($categoryNodeIds, $localeName, string $storeName): array;
 
     /**
      * Specification:
      * - Returns category nodes with the `docCount` relevant for the result set.
-     * - Retrieves category tree from storage by locale name.
+     * - Retrieves category tree from storage by locale name and store name.
      * - Recursively merges each category node in the category tree with `docCount` taken from the `ResultSet` aggregations.
      *
      * @api
      *
      * @param array $docCountAggregation
-     * @param string
-     * @param string
+     * @param string $localeName
+     * @param string $storeName
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]
+     * @return \Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]|\ArrayObject
      */
     public function formatCategoryTreeFilter(array $docCountAggregation, string $localeName, string $storeName): ArrayObject;
 }

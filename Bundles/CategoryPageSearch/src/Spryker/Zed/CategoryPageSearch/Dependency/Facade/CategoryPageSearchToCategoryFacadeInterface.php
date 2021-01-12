@@ -7,19 +7,21 @@
 
 namespace Spryker\Zed\CategoryPageSearch\Dependency\Facade;
 
+use Generated\Shared\Transfer\NodeCollectionTransfer;
+
 interface CategoryPageSearchToCategoryFacadeInterface
 {
     /**
      * @param int[] $categoryNodeIds
      *
-     * @return \Generated\Shared\Transfer\NodeTransfer[]
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function getCategoryNodesByCategoryNodeIds(array $categoryNodeIds): array;
+    public function getActiveCategoryNodesByCategoryNodeIds(array $categoryNodeIds): NodeCollectionTransfer;
 
     /**
-     * @param int[] $categoryStoreIds
+     * @param int[] $categoryIds
      *
      * @return int[]
      */
-    public function getCategoryNodeIdsByCategoryIds(array $categoryStoreIds): array;
+    public function getCategoryNodeIdsByCategoryIds(array $categoryIds): array;
 }

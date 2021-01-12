@@ -8,7 +8,6 @@
 namespace Spryker\Client\CategoryStorage;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -26,7 +25,7 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]|\ArrayObject
      */
-    public function getCategories(string $locale, string $storeName)
+    public function getCategories($locale, string $storeName)
     {
         return $this->getFactory()
             ->createCategoryTreeStorageReader()
@@ -44,7 +43,7 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer
      */
-    public function getCategoryNodeById(int $idCategoryNode, string $localeName, string $storeName): CategoryNodeStorageTransfer
+    public function getCategoryNodeById($idCategoryNode, $localeName, string $storeName)
     {
         return $this->getFactory()
             ->createCategoryNodeStorage()
@@ -62,7 +61,7 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
      */
-    public function getCategoryNodeByIds(array $categoryNodeIds, string $localeName, string $storeName): array
+    public function getCategoryNodeByIds($categoryNodeIds, $localeName, string $storeName): array
     {
         return $this->getFactory()
             ->createCategoryNodeStorage()

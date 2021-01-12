@@ -5,33 +5,34 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryPageSearch\Communication\Plugin\Publisher\Category;
+namespace Spryker\Zed\CategoryPageSearch\Communication\Plugin\Publisher\CategoryStore;
 
 use Spryker\Shared\CategoryPageSearch\CategoryPageSearchConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
 /**
+ * @method \Spryker\Zed\CategoryPageSearch\Communication\CategoryPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\CategoryPageSearch\Business\CategoryPageSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\CategoryPageSearch\Communication\CategoryPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\CategoryPageSearch\CategoryPageSearchConfig getConfig()
  */
-class CategoryWritePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
+class CategoryStoreWriteForPublishingPublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
 {
     /**
      * {@inheritDoc}
+     * - Publishes category node page search data by CategoryStore publish and unpublish events.
      *
      * @api
      *
-     * @param array $eventEntityTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
     public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        $this->getFacade()->writeCategoryNodePageSearchCollectionByCategoryEvents($eventEntityTransfers);
+        $this->getFacade()->writeCategoryNodePageSearchCollectionByCategoryStoreEvents($eventEntityTransfers);
     }
 
     /**
@@ -46,9 +47,6 @@ class CategoryWritePublisherPlugin extends AbstractPlugin implements PublisherPl
         return [
             CategoryPageSearchConstants::CATEGORY_STORE_PUBLISH,
             CategoryPageSearchConstants::CATEGORY_STORE_UNPUBLISH,
-            CategoryPageSearchConstants::ENTITY_SPY_CATEGORY_STORE_CREATE,
-            CategoryPageSearchConstants::ENTITY_SPY_CATEGORY_STORE_UPDATE,
-            CategoryPageSearchConstants::ENTITY_SPY_CATEGORY_STORE_DELETE,
         ];
     }
 }

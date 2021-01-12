@@ -22,11 +22,4 @@ interface CategoryNodeStorageInterface
      * @return void
      */
     public function unpublish(array $categoryNodeIds): void;
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
-     *
-     * @return void
-     */
-    public function writeCategoryNodeStorageCollectionByCategoryEvents(array $eventEntityTransfers): void;
 }

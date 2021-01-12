@@ -22,11 +22,4 @@ interface CategoryNodePageSearchInterface
      * @return void
      */
     public function unpublish(array $categoryNodeIds): void;
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
-     *
-     * @return void
-     */
-    public function writeCategoryNodePageSearchCollectionByCategoryEvents(array $eventEntityTransfers): void;
 }

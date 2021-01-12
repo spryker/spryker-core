@@ -252,6 +252,6 @@ class CategoryNodePageSearchListenerTest extends Unit
         $this->assertNotNull($categoryPageSearchEntity);
         $data = $categoryPageSearchEntity->getStructuredData();
         $encodedData = json_decode($data, true);
-        $this->assertSame('demoshop', $encodedData['spy_category']['category_key']);
+        $this->assertSame('demoshop', $encodedData['category']['category_key']);
     }
 }

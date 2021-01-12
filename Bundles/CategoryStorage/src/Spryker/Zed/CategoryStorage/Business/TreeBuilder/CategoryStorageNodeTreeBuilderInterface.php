@@ -10,7 +10,7 @@ namespace Spryker\Zed\CategoryStorage\Business\TreeBuilder;
 interface CategoryStorageNodeTreeBuilderInterface
 {
     /**
-     * @param array $categoryNodeIds
+     * @param int[] $categoryNodeIds
      * @param \Generated\Shared\Transfer\NodeTransfer[] $nodeTransfers
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[][][]

@@ -46,6 +46,8 @@ interface CategoryStorageFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\CategoryStorage\Business\CategoryStorageFacadeInterface::writeCategoryTreeStorageCollection} instead.
+     *
      * @return void
      */
     public function publishCategoryTree(): void;
@@ -57,13 +59,15 @@ interface CategoryStorageFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\CategoryStorage\Business\CategoryStorageFacadeInterface::deleteCategoryTreeStorageCollection()} instead.
+     *
      * @return void
      */
     public function unpublishCategoryTree(): void;
 
     /**
      * Specification:
-     * - Extracts category store IDs from the $eventTransfers created by category store events.
+     * - Extracts category store IDs from the $eventTransfers created by category store entity events.
      * - Finds all category node IDs related to category store IDs.
      * - Queries all category nodes with category node IDs.
      * - Creates a data structure tree.
@@ -76,7 +80,23 @@ interface CategoryStorageFacadeInterface
      *
      * @return void
      */
-    public function writeCategoryNodeStorageCollectionByCategoryEvents(array $eventEntityTransfers): void;
+    public function writeCategoryNodeStorageCollectionByCategoryStoreEvents(array $eventEntityTransfers): void;
+
+    /**
+     * - Extracts category store IDs from the $eventTransfers created by category store publish events.
+     * - Finds all category node IDs related to category store IDs.
+     * - Queries all category nodes with category node IDs.
+     * - Creates a data structure tree.
+     * - Stores data as json encoded to storage table.
+     * - Sends a copy of data to queue based on module config.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCategoryNodeStorageCollectionByCategoryStorePublishEvents(array $eventEntityTransfers): void;
 
     /**
      * Specification:
@@ -90,4 +110,15 @@ interface CategoryStorageFacadeInterface
      * @return void
      */
     public function writeCategoryTreeStorageCollection(): void;
+
+    /**
+     * Specification:
+     * - Finds and deletes all category tree storage entities.
+     * - Sends delete message to queue based on module config.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function deleteCategoryTreeStorageCollection(): void;
 }

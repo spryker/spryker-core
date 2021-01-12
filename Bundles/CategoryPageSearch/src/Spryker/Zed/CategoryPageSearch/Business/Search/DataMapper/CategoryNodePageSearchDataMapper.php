@@ -39,7 +39,7 @@ class CategoryNodePageSearchDataMapper implements CategoryNodePageSearchDataMapp
         );
 
         return [
-            PageIndexMap::IS_ACTIVE => $nodeTransfer->getCategoryOrFail()->getIsActive(),
+            PageIndexMap::IS_ACTIVE => $nodeTransfer->getCategoryOrFail()->getIsActive() && $nodeTransfer->getCategoryOrFail()->getIsSearchable(),
             PageIndexMap::STORE => $storeName,
             PageIndexMap::LOCALE => $localeName,
             PageIndexMap::TYPE => static::TYPE_CATEGORY,

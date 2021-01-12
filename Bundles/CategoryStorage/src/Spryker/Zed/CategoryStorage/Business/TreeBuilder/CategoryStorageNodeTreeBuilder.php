@@ -36,12 +36,13 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
     }
 
     /**
-     * @param array $categoryNodeIds
+     * @param int[] $categoryNodeIds
      * @param \Generated\Shared\Transfer\NodeTransfer[] $nodeTransfers
+     * @param bool $excludeRootNodes
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[][][]
      */
-    public function buildCategoryNodeStorageTransferTreesForLocaleAndStore(array $categoryNodeIds, array $nodeTransfers): array
+    public function buildCategoryNodeStorageTransferTreesForLocaleAndStore(array $categoryNodeIds, array $nodeTransfers, bool $excludeRootNodes = false): array
     {
         $localeNameMapByStoreName = $this->getLocaleNameMapByStoreName();
 
@@ -95,6 +96,7 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
             if (!isset($indexedCategoryNodeStorageTransfers[$idCategoryNode])) {
                 continue;
             }
+
             $categoryNodeStorageTransfer = $this->cloneCategoryNodeStorageTransfer($indexedCategoryNodeStorageTransfers[$idCategoryNode]);
             $categoryNodeStorageTransfer = $this->buildChildrenTree(
                 $categoryNodeStorageTransfer,
@@ -154,8 +156,8 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
         array $indexedNodeTransfers,
         array $indexedCategoryNodeStorageTransfers
     ): CategoryNodeStorageTransfer {
-        $nodeTransfer = $indexedNodeTransfers[$categoryNodeStorageTransfer->getNodeId()];
-        if (!$nodeTransfer->getFkParentCategoryNode()) {
+        $nodeTransfer = $indexedNodeTransfers[$categoryNodeStorageTransfer->getNodeId()] ?? null;
+        if (!$nodeTransfer || !$nodeTransfer->getFkParentCategoryNode()) {
             return $categoryNodeStorageTransfer;
         }
 

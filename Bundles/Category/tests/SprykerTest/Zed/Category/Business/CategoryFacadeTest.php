@@ -12,6 +12,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CategoryLocalizedAttributesBuilder;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
+use Generated\Shared\Transfer\CategoryNodeTreeElementCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
@@ -258,18 +259,21 @@ class CategoryFacadeTest extends Unit
             $categoryTransfer3->getCategoryNode()->getIdCategoryNode(),
         ];
 
+        $categoryNodeTreeElementCriteriaTransfer = (new CategoryNodeTreeElementCriteriaTransfer())
+            ->addIdCategoryNode($categoryTransfer2->getCategoryNode()->getIdCategoryNode());
+
         // Act
-        $nodeTransfers = $this->getFacade()->getAllCategoryNodeTreeElementsByCategoryNodeIds([
-            $categoryTransfer2->getCategoryNode()->getIdCategoryNode()
-        ]);
+        $nodeTransfers = $this->getFacade()->getAllActiveCategoryNodeTreeMenuElementsByCategoryNodeIds(
+            $categoryNodeTreeElementCriteriaTransfer
+        );
 
         // Assert
-        $this->assertCount(3, $nodeTransfers);
+        $this->assertCount(3, $nodeTransfers, 'The number of category nodes does not equal the expected value.');
 
         $resultCategoryNodeIds = array_map(function (NodeTransfer $nodeTransfer): int {
             return $nodeTransfer->getIdCategoryNode();
         }, $nodeTransfers);
-        $this->assertEmpty(array_diff($expectedCategoryNodeIds, $resultCategoryNodeIds));
+        $this->assertEmpty(array_diff($expectedCategoryNodeIds, $resultCategoryNodeIds), 'Returned category nodes ids do not equal expected values.');
     }
 
     /**
@@ -293,7 +297,7 @@ class CategoryFacadeTest extends Unit
         ]);
 
         // Assert
-        $this->assertEmpty(array_diff($expectedCategoryNodeIds, $resultCategoryNodeIds));
+        $this->assertEmpty(array_diff($expectedCategoryNodeIds, $resultCategoryNodeIds), 'Returned category nodes ids do not equal expected values.');
     }
 
     /**
@@ -313,18 +317,32 @@ class CategoryFacadeTest extends Unit
         ];
 
         // Act
-        $resultCategoryNodeTransfers = $this->getFacade()->getCategoryNodesByCategoryNodeIds($nodeTransferIds);
+        $nodeCollectionTransfers = $this->getFacade()->getActiveCategoryNodesByCategoryNodeIds($nodeTransferIds);
 
         // Assert
-        $this->assertCount(2, $resultCategoryNodeTransfers);
+        $this->assertCount(2, $nodeCollectionTransfers->getNodes(), 'The number of category nodes does not equal the expected value.');
 
-        $resultNodeTransfer1 = array_shift($resultCategoryNodeTransfers);
-        $this->assertInstanceOf(NodeTransfer::class, $resultNodeTransfer1);
-        $this->assertTrue(in_array($resultNodeTransfer1->getIdCategoryNode(), $nodeTransferIds, true));
+        $resultNodeTransfer1 = $nodeCollectionTransfers->getNodes()->offsetGet(0);
+        $this->assertInstanceOf(
+            NodeTransfer::class,
+            $resultNodeTransfer1,
+            'The class of returned category node does not equal to an expected value.'
+        );
+        $this->assertTrue(
+            in_array($resultNodeTransfer1->getIdCategoryNode(), $nodeTransferIds, true),
+            'The returned category node id does not present in the list of expected category node ids.'
+        );
 
-        $resultNodeTransfer2 = array_shift($resultCategoryNodeTransfers);
-        $this->assertInstanceOf(NodeTransfer::class, $resultNodeTransfer2);
-        $this->assertTrue(in_array($resultNodeTransfer2->getIdCategoryNode(), $nodeTransferIds, true));
+        $resultNodeTransfer2 = $nodeCollectionTransfers->getNodes()->offsetGet(1);
+        $this->assertInstanceOf(
+            NodeTransfer::class,
+            $resultNodeTransfer2,
+            'The class of returned category node does not equal to an expected value.'
+        );
+        $this->assertTrue(
+            in_array($resultNodeTransfer2->getIdCategoryNode(), $nodeTransferIds, true),
+            'The returned category node id does not present in the list of expected category node ids.'
+        );
     }
 
     /**
