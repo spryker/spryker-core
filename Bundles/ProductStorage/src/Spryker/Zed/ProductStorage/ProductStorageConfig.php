@@ -62,4 +62,17 @@ class ProductStorageConfig extends AbstractBundleConfig
     {
         return null;
     }
+
+    /**
+     * Specification:
+     *  - Determines whether to generate permutations for single-value product attributes.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isPermutationForSingleValueProductAttributesEnabled(): bool
+    {
+        return false;
+    }
 }
