@@ -32,6 +32,7 @@ interface CategoryFacadeInterface
     /**
      * Specification:
      *  - Hydrates category entity from CategoryTransfer and persists it
+     *  - Creates the relationships between category and store if data is provided.
      *  - Hydrates category-node entity from nested NodeTransfer and persists it
      *  - Hydrates category-attribute entities from nested CategoryLocalizedAttributesTransfer (for all given locals) and persists them
      *  - Hydrates extra-parent category-node entities from nested NodeTransfer and persists them

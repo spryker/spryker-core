@@ -47,16 +47,16 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
         int $idCategory,
         CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer
     ): CategoryLocalizedAttributesTransfer {
-        $categoryMapper = $this->getFactory()->createCategoryMapper();
+        $categoryLocalizedAttributeMapper = $this->getFactory()->createCategoryLocalizedAttributeMapper();
 
-        $categoryAttributeEntity = $categoryMapper->mapCategoryLocalizedAttributeTransferToCategoryAttributeEntity(
+        $categoryAttributeEntity = $categoryLocalizedAttributeMapper->mapCategoryLocalizedAttributeTransferToCategoryAttributeEntity(
             $categoryLocalizedAttributesTransfer,
             new SpyCategoryAttribute()
         );
         $categoryAttributeEntity->setFkCategory($idCategory);
         $categoryAttributeEntity->save();
 
-        return $categoryMapper->mapCategoryAttributeEntityToCategoryLocalizedAttributeTransfer(
+        return $categoryLocalizedAttributeMapper->mapCategoryAttributeEntityToCategoryLocalizedAttributeTransfer(
             $categoryAttributeEntity,
             $categoryLocalizedAttributesTransfer
         );
@@ -69,12 +69,12 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
      */
     public function createCategoryNode(NodeTransfer $nodeTransfer): NodeTransfer
     {
-        $categoryMapper = $this->getFactory()->createCategoryMapper();
+        $categoryNodeMapper = $this->getFactory()->createCategoryNodeMapper();
 
-        $categoryNodeEntity = $categoryMapper->mapNodeTransferToCategoryNodeEntity($nodeTransfer, new SpyCategoryNode());
+        $categoryNodeEntity = $categoryNodeMapper->mapNodeTransferToCategoryNodeEntity($nodeTransfer, new SpyCategoryNode());
         $categoryNodeEntity->save();
 
-        return $categoryMapper->mapCategoryNode($categoryNodeEntity, $nodeTransfer);
+        return $categoryNodeMapper->mapCategoryNode($categoryNodeEntity, $nodeTransfer);
     }
 
     /**
@@ -95,13 +95,13 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
         $categoryNodeEntity->save();
 
         return $this->getFactory()
-            ->createCategoryMapper()
+            ->createCategoryNodeMapper()
             ->mapCategoryNode($categoryNodeEntity, new NodeTransfer());
     }
 
     /**
      * @param int $idCategory
-     * @param array $storeIds
+     * @param int[] $storeIds
      *
      * @return void
      */
@@ -122,7 +122,7 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
      */
     public function createCategoryClosureTableRootNode(NodeTransfer $nodeTransfer): void
     {
-        $idCategoryNode = $nodeTransfer->getIdCategoryNode();
+        $idCategoryNode = $nodeTransfer->getIdCategoryNodeOrFail();
 
         $this->createCategoryClosureTable($idCategoryNode, $idCategoryNode);
     }

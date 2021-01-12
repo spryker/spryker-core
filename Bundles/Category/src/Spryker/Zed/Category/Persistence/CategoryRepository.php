@@ -31,12 +31,12 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class CategoryRepository extends AbstractRepository implements CategoryRepositoryInterface
 {
-    public const KEY_FK_CATEGORY = 'fk_category';
-    public const KEY_ID_CATEGORY_NODE = 'id_category_node';
-    public const KEY_FK_CATEGORY_NODE_DESCENDANT = 'fk_category_node_descendant';
-    public const KEY_NAME = 'name';
-    public const KEY_CATEGORY_KEY = 'category_key';
-    public const COL_FK_LOCALE = 'fk_locale';
+    protected const KEY_FK_CATEGORY = 'fk_category';
+    protected const KEY_ID_CATEGORY_NODE = 'id_category_node';
+    protected const KEY_FK_CATEGORY_NODE_DESCENDANT = 'fk_category_node_descendant';
+    protected const KEY_NAME = 'name';
+    protected const KEY_CATEGORY_KEY = 'category_key';
+    protected const COL_FK_LOCALE = 'fk_locale';
 
     public const NODE_PATH_GLUE = '/';
     public const CATEGORY_NODE_PATH_GLUE = ' / ';

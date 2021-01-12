@@ -285,13 +285,13 @@ class CategoryFacadeTest extends Unit
         $categoryEntity = SpyCategoryQuery::create()
             ->filterByCategoryKey($categoryTransfer->getCategoryKey())
             ->findOne();
-        $this->assertNotNull($categoryEntity);
+        $this->assertNotNull($categoryEntity, 'Category should be successfully created.');
 
         $categoryStoreEntity = SpyCategoryStoreQuery::create()
             ->filterByFkCategory($categoryEntity->getIdCategory())
             ->filterByFkStore($storeTransfer->getIdStore())
             ->findOne();
-        $this->assertNotNull($categoryStoreEntity);
+        $this->assertNotNull($categoryStoreEntity, 'Relation between Category and Store should be successfully created.');
     }
 
     /**
@@ -330,18 +330,18 @@ class CategoryFacadeTest extends Unit
         $categoryEntity = SpyCategoryQuery::create()
             ->filterByCategoryKey($categoryTransfer->getCategoryKey())
             ->findOne();
-        $this->assertNotNull($categoryEntity);
+        $this->assertNotNull($categoryEntity, 'Category should be successfully created.');
 
         $categoryNodeEntity = SpyCategoryNodeQuery::create()
             ->filterByFkCategory($categoryEntity->getIdCategory())
             ->findOne();
-        $this->assertNotNull($categoryNodeEntity);
+        $this->assertNotNull($categoryNodeEntity, 'Category Node should be successfully created.');
 
         $urlEntity = SpyUrlQuery::create()
             ->filterByFkResourceCategorynode($categoryNodeEntity->getIdCategoryNode())
             ->findOne();
-        $this->assertNotNull($urlEntity);
-        $this->assertEquals($expectedUrl, $urlEntity->getUrl());
+        $this->assertNotNull($urlEntity, 'Category Url should be successfully created.');
+        $this->assertEquals($expectedUrl, $urlEntity->getUrl(), 'Urls should be the same.');
     }
 
     /**

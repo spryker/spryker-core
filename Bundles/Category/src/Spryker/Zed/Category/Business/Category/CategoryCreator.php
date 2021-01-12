@@ -10,9 +10,11 @@ namespace Spryker\Zed\Category\Business\Category;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\Category\Business\CategoryAttribute\CategoryAttributeCreatorInterface;
 use Spryker\Zed\Category\Business\CategoryNode\CategoryNodeCreatorInterface;
+use Spryker\Zed\Category\Business\CategoryStore\CategoryStoreCreatorInterface;
 use Spryker\Zed\Category\Business\CategoryUrl\CategoryUrlCreatorInterface;
-use Spryker\Zed\Category\Business\Event\CategoryEventTriggerManagerInterface;
 use Spryker\Zed\Category\Business\PluginExecutor\CategoryPluginExecutorInterface;
+use Spryker\Zed\Category\Dependency\CategoryEvents;
+use Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface;
 use Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
@@ -41,9 +43,14 @@ class CategoryCreator implements CategoryCreatorInterface
     protected $categoryUrlCreator;
 
     /**
-     * @var \Spryker\Zed\Category\Business\Event\CategoryEventTriggerManagerInterface
+     * @var \Spryker\Zed\Category\Business\CategoryStore\CategoryStoreCreatorInterface
      */
-    protected $categoryEventTriggerManager;
+    protected $categoryStoreCreator;
+
+    /**
+     * @var \Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface
+     */
+    protected $eventFacade;
 
     /**
      * @var \Spryker\Zed\Category\Business\PluginExecutor\CategoryPluginExecutorInterface
@@ -55,7 +62,8 @@ class CategoryCreator implements CategoryCreatorInterface
      * @param \Spryker\Zed\Category\Business\CategoryNode\CategoryNodeCreatorInterface $categoryNodeCreator
      * @param \Spryker\Zed\Category\Business\CategoryAttribute\CategoryAttributeCreatorInterface $categoryAttributeCreator
      * @param \Spryker\Zed\Category\Business\CategoryUrl\CategoryUrlCreatorInterface $categoryUrlCreator
-     * @param \Spryker\Zed\Category\Business\Event\CategoryEventTriggerManagerInterface $categoryEventTriggerManager
+     * @param \Spryker\Zed\Category\Business\CategoryStore\CategoryStoreCreatorInterface $categoryStoreCreator
+     * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface $eventFacade
      * @param \Spryker\Zed\Category\Business\PluginExecutor\CategoryPluginExecutorInterface $categoryPluginExecutor
      */
     public function __construct(
@@ -63,14 +71,16 @@ class CategoryCreator implements CategoryCreatorInterface
         CategoryNodeCreatorInterface $categoryNodeCreator,
         CategoryAttributeCreatorInterface $categoryAttributeCreator,
         CategoryUrlCreatorInterface $categoryUrlCreator,
-        CategoryEventTriggerManagerInterface $categoryEventTriggerManager,
+        CategoryStoreCreatorInterface $categoryStoreCreator,
+        CategoryToEventFacadeInterface $eventFacade,
         CategoryPluginExecutorInterface $categoryPluginExecutor
     ) {
         $this->categoryEntityManager = $categoryEntityManager;
         $this->categoryNodeCreator = $categoryNodeCreator;
         $this->categoryAttributeCreator = $categoryAttributeCreator;
         $this->categoryUrlCreator = $categoryUrlCreator;
-        $this->categoryEventTriggerManager = $categoryEventTriggerManager;
+        $this->categoryStoreCreator = $categoryStoreCreator;
+        $this->eventFacade = $eventFacade;
         $this->categoryPluginExecutor = $categoryPluginExecutor;
     }
 
@@ -93,23 +103,20 @@ class CategoryCreator implements CategoryCreatorInterface
      */
     protected function executeCreateCategoryTransaction(CategoryTransfer $categoryTransfer): void
     {
-        $this->categoryEventTriggerManager->triggerCategoryBeforeCreateEvent($categoryTransfer);
+        $this->eventFacade->trigger(CategoryEvents::CATEGORY_BEFORE_CREATE, $categoryTransfer);
 
         $this->categoryEntityManager->createCategory($categoryTransfer);
-        if ($categoryTransfer->getStoreRelation()) {
-            $this->categoryEntityManager->createCategoryStoreRelationForStores(
-                $categoryTransfer->getIdCategory(),
-                $categoryTransfer->getStoreRelation()->getIdStores()
-            );
-        }
 
+        $this->categoryStoreCreator->createCategoryStoreRelations($categoryTransfer);
         $this->categoryNodeCreator->createCategoryNode($categoryTransfer);
         $this->categoryNodeCreator->createExtraParentsCategoryNodes($categoryTransfer);
         $this->categoryAttributeCreator->createCategoryLocalizedAttributes($categoryTransfer);
         $this->categoryUrlCreator->createCategoryUrl($categoryTransfer);
 
         $this->categoryPluginExecutor->executeCategoryRelationUpdatePlugins($categoryTransfer);
-        $this->categoryEventTriggerManager->triggerCategoryAfterCreateEvent($categoryTransfer);
+
+        $this->eventFacade->trigger(CategoryEvents::CATEGORY_AFTER_CREATE, $categoryTransfer);
+
         $this->categoryPluginExecutor->executePostCreatePlugins($categoryTransfer);
     }
 }

@@ -10,6 +10,7 @@ namespace Spryker\Zed\Category\Business\CategoryNode;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Zed\Category\Business\CategoryClosureTable\CategoryClosureTableCreatorInterface;
+use Spryker\Zed\Category\Business\CategoryUrl\CategoryUrlCreatorInterface;
 use Spryker\Zed\Category\Business\Model\CategoryToucherInterface;
 use Spryker\Zed\Category\Business\Publisher\CategoryNodePublisherInterface;
 use Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface;
@@ -48,17 +49,20 @@ class CategoryNodeCreator implements CategoryNodeCreatorInterface
      * @param \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface $categoryEntityManager
      * @param \Spryker\Zed\Category\Business\Publisher\CategoryNodePublisherInterface $categoryNodePublisher
      * @param \Spryker\Zed\Category\Business\CategoryClosureTable\CategoryClosureTableCreatorInterface $categoryClosureTableCreator
+     * @param \Spryker\Zed\Category\Business\CategoryUrl\CategoryUrlCreatorInterface $categoryUrlCreator
      * @param \Spryker\Zed\Category\Business\Model\CategoryToucherInterface $categoryToucher
      */
     public function __construct(
         CategoryEntityManagerInterface $categoryEntityManager,
         CategoryNodePublisherInterface $categoryNodePublisher,
         CategoryClosureTableCreatorInterface $categoryClosureTableCreator,
+        CategoryUrlCreatorInterface $categoryUrlCreator,
         CategoryToucherInterface $categoryToucher
     ) {
         $this->categoryEntityManager = $categoryEntityManager;
         $this->categoryNodePublisher = $categoryNodePublisher;
         $this->categoryClosureTableCreator = $categoryClosureTableCreator;
+        $this->categoryUrlCreator = $categoryUrlCreator;
         $this->categoryToucher = $categoryToucher;
     }
 

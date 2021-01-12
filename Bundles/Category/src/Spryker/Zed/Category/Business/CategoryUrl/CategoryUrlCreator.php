@@ -170,6 +170,17 @@ class CategoryUrlCreator implements CategoryUrlCreatorInterface
 
         $categoryUrlPathParts = $this->categoryRepository->getCategoryUrlPathParts($categoryUrlPathCriteriaTransfer);
 
+        return $this->executeCategoryUrlPathPlugins($categoryUrlPathParts, $localeTransfer);
+    }
+
+    /**
+     * @param array $categoryUrlPathParts
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return array
+     */
+    protected function executeCategoryUrlPathPlugins(array $categoryUrlPathParts, LocaleTransfer $localeTransfer): array
+    {
         foreach ($this->categoryUrlPathPlugins as $categoryUrlPathPlugin) {
             $categoryUrlPathParts = $categoryUrlPathPlugin->update($categoryUrlPathParts, $localeTransfer);
         }

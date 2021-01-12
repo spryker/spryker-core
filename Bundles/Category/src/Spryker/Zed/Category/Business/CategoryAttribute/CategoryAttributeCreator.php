@@ -36,7 +36,7 @@ class CategoryAttributeCreator implements CategoryAttributeCreatorInterface
     public function createCategoryLocalizedAttributes(CategoryTransfer $categoryTransfer): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($categoryTransfer) {
-            $this->executeCategoryLocalizedAttributesTransaction($categoryTransfer);
+            $this->executeCreateCategoryLocalizedAttributesTransaction($categoryTransfer);
         });
     }
 
@@ -45,7 +45,7 @@ class CategoryAttributeCreator implements CategoryAttributeCreatorInterface
      *
      * @return void
      */
-    protected function executeCategoryLocalizedAttributesTransaction(CategoryTransfer $categoryTransfer): void
+    protected function executeCreateCategoryLocalizedAttributesTransaction(CategoryTransfer $categoryTransfer): void
     {
         foreach ($categoryTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
             $this->categoryEntityManager->createCategoryAttribute($categoryTransfer->getIdCategory(), $localizedAttributesTransfer);
