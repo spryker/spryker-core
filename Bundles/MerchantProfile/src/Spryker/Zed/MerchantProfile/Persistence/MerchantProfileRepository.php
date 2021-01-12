@@ -50,6 +50,7 @@ class MerchantProfileRepository extends AbstractRepository implements MerchantPr
     public function find(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): MerchantProfileCollectionTransfer
     {
         $merchantProfileCollectionTransfer = new MerchantProfileCollectionTransfer();
+        /** @var \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileQuery $merchantProfileQuery */
         $merchantProfileQuery = $this->getFactory()
             ->createMerchantProfileQuery()
             ->joinWithSpyMerchant()
