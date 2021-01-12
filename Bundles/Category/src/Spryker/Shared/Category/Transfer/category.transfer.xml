@@ -123,4 +123,9 @@
         <property name="categoryNodeIds" type="int[]" singular="idCategoryNode"/>
     </transfer>
 
+    <transfer name="CategoryNodeFilter">
+        <property name="categoryIds" type="int[]" singular="idCategory"/>
+        <property name="isMain" type="bool"/>
+    </transfer>
+
 </transfers>

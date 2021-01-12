@@ -5,15 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Category\Business\CategoryClosureTable;
+namespace Spryker\Zed\Category\Business\Deleter;
 
 use Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface;
-use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class CategoryClosureTableDeleter implements CategoryClosureTableDeleterInterface
 {
-    use TransactionTrait;
-
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface
      */
@@ -33,18 +30,6 @@ class CategoryClosureTableDeleter implements CategoryClosureTableDeleterInterfac
      * @return void
      */
     public function deleteCategoryClosureTable(int $idCategoryNode): void
-    {
-        $this->getTransactionHandler()->handleTransaction(function () use ($idCategoryNode) {
-            $this->executeDeleteCategoryClosureTableTransaction($idCategoryNode);
-        });
-    }
-
-    /**
-     * @param int $idCategoryNode
-     *
-     * @return void
-     */
-    protected function executeDeleteCategoryClosureTableTransaction(int $idCategoryNode): void
     {
         $this->categoryEntityManager->deleteCategoryClosureTable($idCategoryNode);
     }

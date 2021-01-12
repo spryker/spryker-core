@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Category\Business\CategoryAttribute;
+namespace Spryker\Zed\Category\Business\Deleter;
 
 interface CategoryAttributeDeleterInterface
 {

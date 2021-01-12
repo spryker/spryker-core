@@ -5,9 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Category\Business\Category;
+namespace Spryker\Zed\Category\Business\Deleter;
 
 interface CategoryDeleterInterface
 {
+    /**
+     * @param int $idCategory
+     *
+     * @return void
+     */
     public function deleteCategory(int $idCategory): void;
 }

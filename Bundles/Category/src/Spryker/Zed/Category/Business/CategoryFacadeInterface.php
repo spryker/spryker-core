@@ -99,6 +99,7 @@ interface CategoryFacadeInterface
      *  - Finds extra-parent category-nodes and removes them from persistence
      *  - Finds url entities and removes them from persistence
      *  - Finds sub-trees for all category-nodes to be deleted and moves them to the next higher node in the tree
+     *  - Removes the relationships between category and store.
      *  - Updates all category-node entities of all sub-trees that are moved
      *  - Touches all deleted category-node entities deleted (via TouchFacade)
      *  - Touches all deleted url entities deleted (via TouchFacade)
@@ -112,7 +113,7 @@ interface CategoryFacadeInterface
      *
      * @return void
      */
-    public function delete(int $idCategory): void;
+    public function delete($idCategory): void;
 
     /**
      * Specification:

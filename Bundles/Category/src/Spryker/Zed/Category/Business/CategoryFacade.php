@@ -94,7 +94,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return void
      */
-    public function delete(int $idCategory): void
+    public function delete($idCategory): void
     {
         $this
             ->getFactory()

@@ -5,18 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Category\Business\CategoryUrl;
+namespace Spryker\Zed\Category\Business\Deleter;
 
+use Generated\Shared\Transfer\CategoryNodeFilterTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
-use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
 use Spryker\Zed\Category\Persistence\CategoryRepositoryInterface;
-use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class CategoryUrlDeleter implements CategoryUrlDeleterInterface
 {
-    use TransactionTrait;
-
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface
      */
@@ -46,30 +43,6 @@ class CategoryUrlDeleter implements CategoryUrlDeleterInterface
      */
     public function deleteCategoryUrlsForCategory(int $idCategory): void
     {
-        $this->getTransactionHandler()->handleTransaction(function () use ($idCategory) {
-            $this->executeDeleteCategoryUrlsForCategoryTransaction($idCategory);
-        });
-    }
-
-    /**
-     * @param int $idCategoryNode
-     *
-     * @return void
-     */
-    public function deleteCategoryUrlsForCategoryNode(int $idCategoryNode): void
-    {
-        $this->getTransactionHandler()->handleTransaction(function () use ($idCategoryNode) {
-            $this->executeDeleteCategoryUrlsForCategoryNodeTransaction($idCategoryNode);
-        });
-    }
-
-    /**
-     * @param int $idCategory
-     *
-     * @return void
-     */
-    public function executeDeleteCategoryUrlsForCategoryTransaction(int $idCategory): void
-    {
         $categoryNodeUrlFilterTransfer = (new CategoryNodeUrlFilterTransfer())
             ->setCategoryNodeIds($this->getCategoryNodeIdsForCategory($idCategory));
 
@@ -81,7 +54,7 @@ class CategoryUrlDeleter implements CategoryUrlDeleterInterface
      *
      * @return void
      */
-    protected function executeDeleteCategoryUrlsForCategoryNodeTransaction(int $idCategoryNode): void
+    public function deleteCategoryUrlsForCategoryNode(int $idCategoryNode): void
     {
         $categoryNodeUrlFilterTransfer = (new CategoryNodeUrlFilterTransfer())
             ->addIdCategoryNode($idCategoryNode);
@@ -96,11 +69,17 @@ class CategoryUrlDeleter implements CategoryUrlDeleterInterface
      */
     protected function getCategoryNodeIdsForCategory(int $idCategory): array
     {
-        $nodeCollectionTransfer = $this->categoryRepository->getCategoryNodesByIdCategory($idCategory);
+        $categoryNodeIds = [];
+        $categoryNodeFilterTransfer = (new CategoryNodeFilterTransfer())
+            ->addIdCategory($idCategory);
 
-        return array_map(function (NodeTransfer $nodeTransfer): int {
-            return $nodeTransfer->getIdCategoryNode();
-        }, $nodeCollectionTransfer->getNodes()->getArrayCopy());
+        $nodeCollectionTransfer = $this->categoryRepository->getCategoryNodesByIdCategory($categoryNodeFilterTransfer);
+
+        foreach ($nodeCollectionTransfer->getNodes() as $nodeTransfer) {
+            $categoryNodeIds[] = $nodeTransfer->getIdCategoryNode();
+        }
+
+        return $categoryNodeIds;
     }
 
     /**
@@ -111,6 +90,7 @@ class CategoryUrlDeleter implements CategoryUrlDeleterInterface
     protected function deleteUrlsByCategoryNodeUrlFilter(CategoryNodeUrlFilterTransfer $categoryNodeUrlFilterTransfer): void
     {
         $urlTransfers = $this->categoryRepository->getCategoryNodeUrls($categoryNodeUrlFilterTransfer);
+
         foreach ($urlTransfers as $urlTransfer) {
             $this->urlFacade->deleteUrl($urlTransfer);
         }

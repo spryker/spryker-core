@@ -5,22 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Category\Business\CategoryNode;
+namespace Spryker\Zed\Category\Business\Deleter;
 
+use Generated\Shared\Transfer\CategoryNodeFilterTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
-use Spryker\Zed\Category\Business\CategoryClosureTable\CategoryClosureTableDeleterInterface;
-use Spryker\Zed\Category\Business\CategoryUrl\CategoryUrlDeleterInterface;
 use Spryker\Zed\Category\Business\Model\CategoryToucherInterface;
 use Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTreeInterface;
 use Spryker\Zed\Category\Business\Publisher\CategoryNodePublisherInterface;
 use Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface;
 use Spryker\Zed\Category\Persistence\CategoryRepositoryInterface;
-use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class CategoryNodeDeleter implements CategoryNodeDeleterInterface
 {
-    use TransactionTrait;
-
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface
      */
@@ -37,12 +33,12 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
     protected $categoryTree;
 
     /**
-     * @var \Spryker\Zed\Category\Business\CategoryClosureTable\CategoryClosureTableDeleterInterface
+     * @var \Spryker\Zed\Category\Business\Deleter\CategoryClosureTableDeleterInterface
      */
     protected $categoryClosureTableDeleter;
 
     /**
-     * @var \Spryker\Zed\Category\Business\CategoryUrl\CategoryUrlDeleterInterface
+     * @var \Spryker\Zed\Category\Business\Deleter\CategoryUrlDeleterInterface
      */
     protected $categoryUrlDeleter;
 
@@ -60,8 +56,8 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
      * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
      * @param \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface $categoryEntityManager
      * @param \Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTreeInterface $categoryTree
-     * @param \Spryker\Zed\Category\Business\CategoryClosureTable\CategoryClosureTableDeleterInterface $categoryClosureTableDeleter
-     * @param \Spryker\Zed\Category\Business\CategoryUrl\CategoryUrlDeleterInterface $categoryUrlDeleter
+     * @param \Spryker\Zed\Category\Business\Deleter\CategoryClosureTableDeleterInterface $categoryClosureTableDeleter
+     * @param \Spryker\Zed\Category\Business\Deleter\CategoryUrlDeleterInterface $categoryUrlDeleter
      * @param \Spryker\Zed\Category\Business\Model\CategoryToucherInterface $categoryToucher
      * @param \Spryker\Zed\Category\Business\Publisher\CategoryNodePublisherInterface $categoryNodePublisher
      */
@@ -90,9 +86,14 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
      */
     public function deleteCategoryNodes(int $idCategory): void
     {
-        $this->getTransactionHandler()->handleTransaction(function () use ($idCategory) {
-            $this->executeDeleteCategoryNodesTransaction($idCategory);
-        });
+        $categoryNodeFilterTransfer = (new CategoryNodeFilterTransfer())
+            ->addIdCategory($idCategory);
+
+        $nodeCollectionTransfer = $this->categoryRepository->getCategoryNodesByIdCategory($categoryNodeFilterTransfer);
+
+        foreach ($nodeCollectionTransfer->getNodes() as $nodeTransfer) {
+            $this->deleteNode($nodeTransfer);
+        }
     }
 
     /**
@@ -102,53 +103,28 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
      */
     public function deleteCategoryExtraParentNodes(int $idCategory): void
     {
-        $this->getTransactionHandler()->handleTransaction(function () use ($idCategory) {
-            $this->executeDeleteCategoryExtraParentNodesTransaction($idCategory);
-        });
-    }
+        $categoryNodeFilterTransfer = (new CategoryNodeFilterTransfer())
+            ->addIdCategory($idCategory)
+            ->setIsMain(false);
 
-    /**
-     * @param int $idCategory
-     *
-     * @return void
-     */
-    protected function executeDeleteCategoryNodesTransaction(int $idCategory): void
-    {
-        $nodeCollectionTransfer = $this->categoryRepository->getCategoryNodesByIdCategory($idCategory);
+        $nodeCollectionTransfer = $this->categoryRepository->getCategoryNodesByIdCategory($categoryNodeFilterTransfer);
 
         foreach ($nodeCollectionTransfer->getNodes() as $nodeTransfer) {
-            $this->deleteNode($nodeTransfer);
-        }
-    }
-
-    /**
-     * @return void
-     */
-    protected function executeDeleteCategoryExtraParentNodesTransaction(int $idCategory): void
-    {
-        $nodeCollection = $this->categoryRepository->getCategoryNodesByIdCategory($idCategory, false);
-
-        foreach ($nodeCollection->getNodes() as $nodeTransfer) {
             $this->deleteExtraParentNode($nodeTransfer);
         }
     }
 
     /**
      * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     * @param int|null $idChildrenDestinationNode
      *
      * @return void
      */
-    protected function deleteNode(NodeTransfer $nodeTransfer, ?int $idChildrenDestinationNode = null): void
+    protected function deleteNode(NodeTransfer $nodeTransfer): void
     {
-        if (!$idChildrenDestinationNode) {
-            $idChildrenDestinationNode = $nodeTransfer->getFkParentCategoryNode();
-        }
-
         do {
             $childrenMoved = $this->categoryTree->moveSubTree(
                 $nodeTransfer->getIdCategoryNode(),
-                $idChildrenDestinationNode
+                $nodeTransfer->getFkParentCategoryNode()
             );
         } while ($childrenMoved > 0);
 

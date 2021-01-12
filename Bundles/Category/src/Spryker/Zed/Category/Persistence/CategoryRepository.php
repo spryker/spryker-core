@@ -9,6 +9,7 @@ namespace Spryker\Zed\Category\Persistence;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeFilterTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -325,28 +326,25 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     }
 
     /**
-     * @param int $idCategory
-     * @param bool|null $isMain
+     * @param \Generated\Shared\Transfer\CategoryNodeFilterTransfer $categoryNodeFilterTransfer
      *
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function getCategoryNodesByIdCategory(int $idCategory, ?bool $isMain = null): NodeCollectionTransfer
+    public function getCategoryNodesByIdCategory(CategoryNodeFilterTransfer $categoryNodeFilterTransfer): NodeCollectionTransfer
     {
-        $categoryNodeQuery = $this->getFactory()
-            ->createCategoryNodeQuery()
-            ->filterByFkCategory($idCategory);
-        if ($isMain !== null) {
-            $categoryNodeQuery->filterByIsMain($isMain);
+        $categoryNodeQuery = $this->getFactory()->createCategoryNodeQuery();
+
+        if ($categoryNodeFilterTransfer->getCategoryIds()) {
+            $categoryNodeQuery->filterByFkCategory_In($categoryNodeFilterTransfer->getCategoryIds());
         }
 
-        $categoryNodeEntities = $categoryNodeQuery->find();
-        if (!$categoryNodeEntities->count()) {
-            return new NodeCollectionTransfer();
+        if ($categoryNodeFilterTransfer->getIsMain() !== null) {
+            $categoryNodeQuery->filterByIsMain($categoryNodeFilterTransfer->getIsMain());
         }
 
         return $this->getFactory()
             ->createCategoryMapper()
-            ->mapNodeCollection($categoryNodeEntities, new NodeCollectionTransfer());
+            ->mapNodeCollection($categoryNodeQuery->find(), new NodeCollectionTransfer());
     }
 
     /**

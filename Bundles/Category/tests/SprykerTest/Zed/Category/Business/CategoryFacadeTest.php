@@ -58,8 +58,6 @@ class CategoryFacadeTest extends Unit
     }
 
     /**
-     * @group new
-     *
      * @return void
      */
     public function testDeleteByIdCategory(): void
@@ -102,8 +100,6 @@ class CategoryFacadeTest extends Unit
     }
 
     /**
-     * @group new
-     *
      * @return void
      */
     public function testDeleteWillDeleteCategoryStoreRelation(): void
@@ -120,7 +116,7 @@ class CategoryFacadeTest extends Unit
         $categoryStoreRelationsCount = SpyCategoryStoreQuery::create()
             ->filterByFkCategory($categoryTransfer->getIdCategory())
             ->count();
-        $this->assertSame(0, $categoryStoreRelationsCount);
+        $this->assertSame(0, $categoryStoreRelationsCount, 'Relations between Category and Store should deleted.');
     }
 
     /**

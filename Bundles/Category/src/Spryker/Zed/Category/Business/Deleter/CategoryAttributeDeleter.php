@@ -5,15 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Category\Business\CategoryAttribute;
+namespace Spryker\Zed\Category\Business\Deleter;
 
 use Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface;
-use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class CategoryAttributeDeleter implements CategoryAttributeDeleterInterface
 {
-    use TransactionTrait;
-
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface
      */
@@ -33,18 +30,6 @@ class CategoryAttributeDeleter implements CategoryAttributeDeleterInterface
      * @return void
      */
     public function deleteCategoryLocalizedAttributes(int $idCategory): void
-    {
-        $this->getTransactionHandler()->handleTransaction(function () use ($idCategory) {
-            $this->executeDeleteCategoryLocalizedAttributesTransaction($idCategory);
-        });
-    }
-
-    /**
-     * @param int $idCategory
-     *
-     * @return void
-     */
-    protected function executeDeleteCategoryLocalizedAttributesTransaction(int $idCategory): void
     {
         $this->categoryEntityManager->deleteCategoryLocalizedAttributes($idCategory);
     }

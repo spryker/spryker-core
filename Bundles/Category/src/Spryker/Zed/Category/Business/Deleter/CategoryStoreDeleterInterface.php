@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Category\Business\CategoryClosureTable;
+namespace Spryker\Zed\Category\Business\Deleter;
 
-interface CategoryClosureTableDeleterInterface
+interface CategoryStoreDeleterInterface
 {
     /**
-     * @param int $idCategoryNode
+     * @param int $idCategory
      *
      * @return void
      */
-    public function deleteCategoryClosureTable(int $idCategoryNode): void;
+    public function deleteCategoryStoreRelations(int $idCategory): void;
 }

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Category\Persistence;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeFilterTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -94,10 +95,9 @@ interface CategoryRepositoryInterface
     public function getCategoryNodeUrls(CategoryNodeUrlFilterTransfer $categoryNodeFilterTransfer): array;
 
     /**
-     * @param int $idCategory
-     * @param bool|null $isMain
+     * @param \Generated\Shared\Transfer\CategoryNodeFilterTransfer $categoryNodeFilterTransfer
      *
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function getCategoryNodesByIdCategory(int $idCategory, ?bool $isMain = null): NodeCollectionTransfer;
+    public function getCategoryNodesByIdCategory(CategoryNodeFilterTransfer $categoryNodeFilterTransfer): NodeCollectionTransfer;
 }

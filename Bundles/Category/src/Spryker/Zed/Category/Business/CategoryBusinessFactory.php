@@ -7,18 +7,20 @@
 
 namespace Spryker\Zed\Category\Business;
 
-use Spryker\Zed\Category\Business\Category\CategoryDeleter;
-use Spryker\Zed\Category\Business\Category\CategoryDeleterInterface;
-use Spryker\Zed\Category\Business\CategoryAttribute\CategoryAttributeDeleter;
-use Spryker\Zed\Category\Business\CategoryAttribute\CategoryAttributeDeleterInterface;
-use Spryker\Zed\Category\Business\CategoryClosureTable\CategoryClosureTableDeleter;
-use Spryker\Zed\Category\Business\CategoryClosureTable\CategoryClosureTableDeleterInterface;
-use Spryker\Zed\Category\Business\CategoryNode\CategoryNodeDeleter;
-use Spryker\Zed\Category\Business\CategoryNode\CategoryNodeDeleterInterface;
-use Spryker\Zed\Category\Business\CategoryUrl\CategoryUrlDeleter;
-use Spryker\Zed\Category\Business\CategoryUrl\CategoryUrlDeleterInterface;
-use Spryker\Zed\Category\Business\Event\CategoryEventTriggerManager;
-use Spryker\Zed\Category\Business\Event\CategoryEventTriggerManagerInterface;
+use Spryker\Zed\Category\Business\Deleter\CategoryAttributeDeleter;
+use Spryker\Zed\Category\Business\Deleter\CategoryAttributeDeleterInterface;
+use Spryker\Zed\Category\Business\Deleter\CategoryClosureTableDeleter;
+use Spryker\Zed\Category\Business\Deleter\CategoryClosureTableDeleterInterface;
+use Spryker\Zed\Category\Business\Deleter\CategoryDeleter;
+use Spryker\Zed\Category\Business\Deleter\CategoryDeleterInterface;
+use Spryker\Zed\Category\Business\Deleter\CategoryNodeDeleter;
+use Spryker\Zed\Category\Business\Deleter\CategoryNodeDeleterInterface;
+use Spryker\Zed\Category\Business\Deleter\CategoryRelationshipDeleter;
+use Spryker\Zed\Category\Business\Deleter\CategoryRelationshipDeleterInterface;
+use Spryker\Zed\Category\Business\Deleter\CategoryStoreDeleter;
+use Spryker\Zed\Category\Business\Deleter\CategoryStoreDeleterInterface;
+use Spryker\Zed\Category\Business\Deleter\CategoryUrlDeleter;
+use Spryker\Zed\Category\Business\Deleter\CategoryUrlDeleterInterface;
 use Spryker\Zed\Category\Business\Generator\TransferGenerator;
 use Spryker\Zed\Category\Business\Generator\UrlPathGenerator;
 use Spryker\Zed\Category\Business\Model\Category;
@@ -329,22 +331,19 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Category\Business\Category\CategoryDeleterInterface
+     * @return \Spryker\Zed\Category\Business\Deleter\CategoryDeleterInterface
      */
     public function createCategoryDeleter(): CategoryDeleterInterface
     {
         return new CategoryDeleter(
             $this->getEntityManager(),
-            $this->createCategoryAttributeDeleter(),
-            $this->createCategoryUrlDeleter(),
-            $this->createCategoryNodeDeleter(),
-            $this->createCategoryEventTriggerManager(),
-            $this->getRelationDeletePluginStack()
+            $this->createCategoryRelationshipDeleter(),
+            $this->getEventFacade()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Category\Business\CategoryAttribute\CategoryAttributeDeleterInterface
+     * @return \Spryker\Zed\Category\Business\Deleter\CategoryAttributeDeleterInterface
      */
     public function createCategoryAttributeDeleter(): CategoryAttributeDeleterInterface
     {
@@ -352,7 +351,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Category\Business\CategoryClosureTable\CategoryClosureTableDeleterInterface
+     * @return \Spryker\Zed\Category\Business\Deleter\CategoryClosureTableDeleterInterface
      */
     public function createClosureTableDeleter(): CategoryClosureTableDeleterInterface
     {
@@ -360,7 +359,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Category\Business\CategoryNode\CategoryNodeDeleterInterface
+     * @return \Spryker\Zed\Category\Business\Deleter\CategoryNodeDeleterInterface
      */
     public function createCategoryNodeDeleter(): CategoryNodeDeleterInterface
     {
@@ -376,7 +375,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Category\Business\CategoryUrl\CategoryUrlDeleterInterface
+     * @return \Spryker\Zed\Category\Business\Deleter\CategoryUrlDeleterInterface
      */
     public function createCategoryUrlDeleter(): CategoryUrlDeleterInterface
     {
@@ -384,14 +383,6 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getUrlFacade()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\Category\Business\Event\CategoryEventTriggerManagerInterface
-     */
-    public function createCategoryEventTriggerManager(): CategoryEventTriggerManagerInterface
-    {
-        return new CategoryEventTriggerManager($this->getEventFacade());
     }
 
     /**
@@ -427,6 +418,30 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->getCategoryPostCreatePlugins(),
             $this->getCategoryPostUpdatePlugins(),
             $this->getCategoryPostReadPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Deleter\CategoryRelationshipDeleterInterface
+     */
+    public function createCategoryRelationshipDeleter(): CategoryRelationshipDeleterInterface
+    {
+        return new CategoryRelationshipDeleter(
+            $this->createCategoryAttributeDeleter(),
+            $this->createCategoryUrlDeleter(),
+            $this->createCategoryNodeDeleter(),
+            $this->createCategoryStoreDeleter(),
+            $this->getRelationDeletePluginStack()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Deleter\CategoryStoreDeleterInterface
+     */
+    public function createCategoryStoreDeleter(): CategoryStoreDeleterInterface
+    {
+        return new CategoryStoreDeleter(
+            $this->getEntityManager()
         );
     }
 }
