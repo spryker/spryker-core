@@ -82,7 +82,8 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
         $guiTableConfigurationBuilder = $this->setEditableConfiguration(
             $guiTableConfigurationBuilder,
             $priceTypeTransfers,
-            $initialData
+            $initialData,
+            $idProductOffer
         );
 
         return $guiTableConfigurationBuilder->createConfiguration();
@@ -129,20 +130,29 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
      * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
      * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypeTransfers
      * @param array $initialData
+     * @param int|null $idProductOffer
      *
      * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
      */
     protected function setEditableConfiguration(
         GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder,
         array $priceTypeTransfers,
-        array $initialData = []
+        array $initialData = [],
+        ?int $idProductOffer = null
     ): GuiTableConfigurationBuilderInterface {
         $guiTableConfigurationBuilder = parent::setEditableConfiguration(
             $guiTableConfigurationBuilder,
             $priceTypeTransfers,
             $initialData
         );
-        $guiTableConfigurationBuilder->enableInlineDataEditing(static::URL_SAVE_PRICES, static::METHOD_UPDATE_ACTION_URL);
+
+        $url = sprintf(
+            '%s&%s',
+            static::URL_SAVE_PRICES,
+            static::REQUEST_PARAM_ID_PRODUCT_OFFER . '=' . $idProductOffer
+        );
+
+        $guiTableConfigurationBuilder->enableInlineDataEditing($url, static::METHOD_UPDATE_ACTION_URL);
 
         return $guiTableConfigurationBuilder;
     }

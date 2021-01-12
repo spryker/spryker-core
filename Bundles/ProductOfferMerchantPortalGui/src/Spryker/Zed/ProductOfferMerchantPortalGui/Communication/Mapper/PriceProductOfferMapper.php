@@ -11,8 +11,10 @@ use ArrayObject;
 use Generated\Shared\Transfer\GuiTableEditableDataErrorTransfer;
 use Generated\Shared\Transfer\GuiTableEditableInitialDataTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTableViewTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\ValidationErrorTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
@@ -138,6 +140,30 @@ class PriceProductOfferMapper
         }
 
         return $moneyValueTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    public function mapProductOfferTransferToPriceProductTransfer(
+        ProductOfferTransfer $productOfferTransfer,
+        PriceProductTransfer $priceProductTransfer
+    ) {
+        return $priceProductTransfer->setIdProduct($productOfferTransfer->getIdProductConcrete())
+            ->setPriceDimension(
+                (new PriceProductDimensionTransfer())
+                    ->setIdProductOffer($productOfferTransfer->getIdProductOffer())
+            )
+            ->setMoneyValue(
+                (new MoneyValueTransfer())
+                    ->setCurrency($productOfferTransfer->getPrices()->getIterator()->current()->getMoneyValue()->getCurrency())
+                    ->setFkStore($productOfferTransfer->getPrices()->getIterator()->current()->getMoneyValue()->getFkStore())
+                    ->setStore($productOfferTransfer->getPrices()->getIterator()->current()->getMoneyValue()->getStore())
+                    ->setFkCurrency($productOfferTransfer->getPrices()->getIterator()->current()->getMoneyValue()->getFkCurrency())
+            );
     }
 
     /**

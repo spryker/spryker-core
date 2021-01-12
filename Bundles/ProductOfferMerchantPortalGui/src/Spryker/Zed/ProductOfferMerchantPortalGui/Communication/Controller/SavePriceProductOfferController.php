@@ -11,6 +11,8 @@ use ArrayObject;
 use Generated\Shared\Transfer\PriceProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -24,6 +26,7 @@ use Symfony\Component\HttpFoundation\Request;
 class SavePriceProductOfferController extends AbstractController
 {
     protected const PARAM_TYPE_PRICE_PRODUCT_OFFER_IDS = 'type-price-product-offer-ids';
+    protected const PARAM_PRODUCT_OFFER_ID = 'product-offer-id';
 
     protected const NOTIFICATION_TYPE_SUCCESS = 'success';
     protected const NOTIFICATION_TYPE_ERROR = 'error';
@@ -42,7 +45,8 @@ class SavePriceProductOfferController extends AbstractController
 
         $requestData = $this->getFactory()->getUtilEncodingService()->decodeJson((string)$request->getContent(), true)['data'];
 
-        $priceProductTransfers = $this->getPriceProductTransfers($typePriceProductOfferIds, $requestData);
+        $idProductOffer = $request->get(static::PARAM_PRODUCT_OFFER_ID);
+        $priceProductTransfers = $this->getPriceProductTransfers($idProductOffer, $typePriceProductOfferIds, $requestData);
         $priceProductTransfers = $this->getFactory()
             ->createPriceProductOfferMapper()
             ->mapRequestDataToPriceProductTransfers($requestData, $priceProductTransfers);
@@ -74,19 +78,51 @@ class SavePriceProductOfferController extends AbstractController
     /**
      * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      *
+     * @param int $idProductOffer
      * @param int[] $typePriceProductOfferIds
      * @param string[] $data
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function getPriceProductTransfers(array $typePriceProductOfferIds, array $data): ArrayObject
-    {
+    protected function getPriceProductTransfers(
+        int $idProductOffer,
+        array $typePriceProductOfferIds,
+        array $data
+    ): ArrayObject {
         $priceProductOfferIds = [];
         $key = (string)key($data);
+        $priceTypeName = mb_strtoupper((string)strstr($key, '[', true));
         if (strpos($key, '[') !== false) {
-            $priceProductOfferIds[] = $typePriceProductOfferIds[mb_strtoupper((string)strstr($key, '[', true))];
+            if (array_key_exists($priceTypeName, $typePriceProductOfferIds)) {
+                $priceProductOfferIds[] = $typePriceProductOfferIds[$priceTypeName];
+            }
         } else {
             $priceProductOfferIds = $typePriceProductOfferIds;
+        }
+
+        if (!$priceProductOfferIds) {
+            $priceProductTransfers = new ArrayObject();
+
+            /** @var \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer */
+            $productOfferTransfer = $this->getFactory()
+                ->getProductOfferFacade()
+                ->findOne((new ProductOfferCriteriaFilterTransfer())->setIdProductOffer($idProductOffer));
+
+            /** @var string $concreteSku */
+            $concreteSku = $productOfferTransfer->getConcreteSku();
+            /** @var int $idProductConcrete */
+            $idProductConcrete = $this->getFactory()
+                ->getProductFacade()
+                ->findProductConcreteIdBySku($concreteSku);
+            $productOfferTransfer->setIdProductConcrete($idProductConcrete);
+
+            $priceProductTransfer = $this->getFactory()
+                ->createPriceProductOfferMapper()
+                ->mapProductOfferTransferToPriceProductTransfer($productOfferTransfer, new PriceProductTransfer());
+            $priceProductTransfer = $this->setPriceTypeToPriceProduct($priceTypeName, $priceProductTransfer);
+            $priceProductTransfers->append($priceProductTransfer);
+
+            return $priceProductTransfers;
         }
 
         $priceProductOfferCriteriaTransfer = new PriceProductOfferCriteriaTransfer();
@@ -154,5 +190,25 @@ class SavePriceProductOfferController extends AbstractController
         }
 
         return $typePriceProductOfferIds;
+    }
+
+    /**
+     * @param string $priceTypeName
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function setPriceTypeToPriceProduct(
+        string $priceTypeName,
+        PriceProductTransfer $priceProductTransfer
+    ): PriceProductTransfer {
+        $priceTypes = $this->getFactory()->getPriceProductFacade()->getPriceTypeValues();
+        foreach ($priceTypes as $priceTypeTransfer) {
+            if ($priceTypeTransfer->getName() === $priceTypeName) {
+                return $priceProductTransfer->setPriceType($priceTypeTransfer);
+            }
+        }
+
+        return $priceProductTransfer;
     }
 }
