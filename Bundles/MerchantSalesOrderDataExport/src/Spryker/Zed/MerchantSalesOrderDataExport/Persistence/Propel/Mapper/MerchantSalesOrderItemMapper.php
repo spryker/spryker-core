@@ -22,6 +22,8 @@ use Orm\Zed\StateMachine\Persistence\Map\SpyStateMachineProcessTableMap;
 
 class MerchantSalesOrderItemMapper
 {
+    protected const KEY_SHIPPING_ADDRESS_SALUTATION = 'shipping_address_salutation';
+
     /**
      * @phpstan-var array<string, string>
      *
@@ -113,6 +115,10 @@ class MerchantSalesOrderItemMapper
             $mappedMerchantSalesOrderItemRow = [];
             foreach ($this->fieldMapping as $field => $column) {
                 $mappedMerchantSalesOrderItemRow[$field] = $merchantSalesOrderItemRow[$column] ?? null;
+            }
+            if ($merchantSalesOrderItemRow[SpySalesOrderAddressTableMap::COL_SALUTATION] !== null) {
+                $shippingAddressSalutationValueSet = SpySalesOrderAddressTableMap::getValueSet(SpySalesOrderAddressTableMap::COL_SALUTATION);
+                $mappedMerchantSalesOrderItemRow[static::KEY_SHIPPING_ADDRESS_SALUTATION] = $shippingAddressSalutationValueSet[$merchantSalesOrderItemRow[SpySalesOrderAddressTableMap::COL_SALUTATION]];
             }
             $mappedMerchantSalesOrderItems[] = $mappedMerchantSalesOrderItemRow;
         }

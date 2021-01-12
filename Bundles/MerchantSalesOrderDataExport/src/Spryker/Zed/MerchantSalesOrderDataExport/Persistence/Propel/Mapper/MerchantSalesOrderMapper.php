@@ -20,6 +20,9 @@ class MerchantSalesOrderMapper
 {
     public const KEY_MERCHANT_ORDER_COMMENTS = 'merchant_order_comments';
     public const KEY_MERCHANT_NAME = 'merchant_name';
+    protected const KEY_ORDER_SALUTATION = 'salutation';
+    protected const KEY_BILLING_ADDRESS_SALUTATION = 'billing_address_salutation';
+    protected const KEY_PRICE_MODE = 'price_mode';
 
     /**
      * @var \Spryker\Zed\MerchantSalesOrderDataExport\Persistence\Propel\Mapper\MerchantSalesOrderCommentMapper
@@ -110,6 +113,21 @@ class MerchantSalesOrderMapper
                 $mappedMerchantSalesOrderRow[static::KEY_MERCHANT_ORDER_COMMENTS] = $this->merchantSalesOrderCommentMapper
                     ->mapMerchantSalesOrderCommentTransfersToJson($mappedMerchantSalesOrderRow[static::KEY_MERCHANT_ORDER_COMMENTS]);
             }
+            if ($merchantSalesOrderRow[SpySalesOrderTableMap::COL_SALUTATION] !== null) {
+                $orderSalutationValueSet = SpySalesOrderTableMap::getValueSet(SpySalesOrderTableMap::COL_SALUTATION);
+                $mappedMerchantSalesOrderRow[static::KEY_ORDER_SALUTATION] = $orderSalutationValueSet[$merchantSalesOrderRow[SpySalesOrderTableMap::COL_SALUTATION]];
+            }
+            if ($merchantSalesOrderRow[SpySalesOrderAddressTableMap::COL_SALUTATION] !== null) {
+                $orderAddressSalutationValueSet = SpySalesOrderAddressTableMap::getValueSet(
+                    SpySalesOrderAddressTableMap::COL_SALUTATION
+                );
+                $mappedMerchantSalesOrderRow[static::KEY_BILLING_ADDRESS_SALUTATION] = $orderAddressSalutationValueSet[$merchantSalesOrderRow[SpySalesOrderAddressTableMap::COL_SALUTATION]];
+            }
+            if ($merchantSalesOrderRow[SpySalesOrderTableMap::COL_PRICE_MODE] !== null) {
+                $orderPriceModeValueSet = SpySalesOrderTableMap::getValueSet(SpySalesOrderTableMap::COL_PRICE_MODE);
+                $mappedMerchantSalesOrderRow[static::KEY_PRICE_MODE] = $orderPriceModeValueSet[$merchantSalesOrderRow[SpySalesOrderTableMap::COL_PRICE_MODE]];
+            }
+
             $mappedMerchantSalesOrders[] = $mappedMerchantSalesOrderRow;
         }
 
