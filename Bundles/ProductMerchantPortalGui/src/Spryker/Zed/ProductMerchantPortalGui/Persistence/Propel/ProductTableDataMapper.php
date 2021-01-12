@@ -14,10 +14,58 @@ use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
+use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\ProductValidity\Persistence\Map\SpyProductValidityTableMap;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface;
 
 class ProductTableDataMapper
 {
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_SKU
+     */
+    protected const COL_KEY_SKU = 'sku';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_NAME
+     */
+    protected const COL_KEY_NAME = 'name';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_STATUS
+     */
+    protected const COL_KEY_STATUS = 'status';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_IMAGE
+     */
+    protected const COL_KEY_IMAGE = 'image';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_SUPER_ATTRIBUTES
+     */
+    protected const COL_KEY_SUPER_ATTRIBUTES = 'superAttributes';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_VALID_FROM
+     */
+    protected const COL_KEY_VALID_FROM = 'validFrom';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_VALID_TO
+     */
+    protected const COL_KEY_VALID_TO = 'validTo';
+
+    public const PRODUCT_DATA_COLUMN_MAP = [
+        self::COL_KEY_SKU => SpyProductTableMap::COL_SKU,
+        self::COL_KEY_NAME => SpyProductLocalizedAttributesTableMap::COL_NAME,
+        self::COL_KEY_STATUS => SpyProductTableMap::COL_IS_ACTIVE,
+        self::COL_KEY_IMAGE => ProductImageTransfer::EXTERNAL_URL_SMALL,
+        self::COL_KEY_SUPER_ATTRIBUTES => SpyProductLocalizedAttributesTableMap::COL_ATTRIBUTES,
+        self::COL_KEY_VALID_FROM => SpyProductValidityTableMap::COL_VALID_FROM,
+        self::COL_KEY_VALID_TO => SpyProductValidityTableMap::COL_VALID_TO,
+    ];
+
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface
      */

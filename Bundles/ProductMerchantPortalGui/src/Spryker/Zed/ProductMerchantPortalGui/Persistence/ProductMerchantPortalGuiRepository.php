@@ -41,8 +41,10 @@ use Orm\Zed\ProductValidity\Persistence\Map\SpyProductValidityTableMap;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Criterion\LikeCriterion;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\ProductAbstractTableDataMapper;
+use Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\ProductTableDataMapper;
 
 /**
  * @method \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiPersistenceFactory getFactory()
@@ -56,6 +58,11 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_SKU
      */
     protected const COL_KEY_PRODUCT_ABSTRACT_SKU = 'sku';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_SKU
+     */
+    protected const COL_KEY_PRODUCT_SKU = 'sku';
 
     /**
      * @param \Generated\Shared\Transfer\MerchantProductTableCriteriaTransfer $merchantProductTableCriteriaTransfer
@@ -360,6 +367,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         $orderColumn = ProductAbstractTableDataMapper::PRODUCT_ABSTRACT_DATA_COLUMN_MAP[$orderColumn] ?? $orderColumn;
 
         if ($orderColumn === SpyProductAbstractTableMap::COL_SKU) {
+            /** @var \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract> $merchantProductAbstractQuery */
             $merchantProductAbstractQuery = $this->addNaturalSorting($merchantProductAbstractQuery, $orderColumn, $orderDirection);
         }
 
@@ -369,21 +377,21 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
     }
 
     /**
-     * @phpstan-param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract> $query
+     * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<mixed> $query
      *
-     * @phpstan-return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract>
+     * @phpstan-return \Propel\Runtime\ActiveQuery\ModelCriteria<mixed>
      *
-     * @param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param string $orderColumn
      * @param string $orderDirection
      *
-     * @return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     protected function addNaturalSorting(
-        SpyMerchantProductAbstractQuery $query,
+        ModelCriteria $query,
         string $orderColumn,
         string $orderDirection
-    ): SpyMerchantProductAbstractQuery {
+    ): ModelCriteria {
         if ($orderDirection === Criteria::ASC) {
             $query->addAscendingOrderByColumn("LENGTH($orderColumn)");
         }
@@ -681,7 +689,10 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
     {
         /** @var \Generated\Shared\Transfer\LocaleTransfer $localeTransfer */
         $localeTransfer = $productTableCriteriaTransfer->getLocaleOrFail();
+
         $productConcreteQuery = $this->buildProductTableBaseQuery($productTableCriteriaTransfer, $localeTransfer);
+        $productConcreteQuery = $this->applyProductConcreteSearch($productConcreteQuery, $productTableCriteriaTransfer);
+        $productConcreteQuery = $this->applyProductConcreteSorting($productConcreteQuery, $productTableCriteriaTransfer);
 
         $propelPager = $productConcreteQuery->paginate(
             $productTableCriteriaTransfer->requirePage()->getPage(),
@@ -762,6 +773,103 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
                 ProductConcreteTransfer::VALID_TO,
                 ProductImageTransfer::EXTERNAL_URL_SMALL,
             ]);
+
+        return $productConcreteQuery;
+    }
+
+    /**
+     * @phpstan-param \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct> $productConcreteQuery
+     *
+     * @phpstan-return \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct>
+     *
+     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery
+     * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected function applyProductConcreteSearch(
+        SpyProductQuery $productConcreteQuery,
+        ProductTableCriteriaTransfer $productTableCriteriaTransfer
+    ): SpyProductQuery {
+        $searchTerm = $productTableCriteriaTransfer->getSearchTerm();
+
+        if (!$searchTerm) {
+            return $productConcreteQuery;
+        }
+
+        $criteria = new Criteria();
+        $productNameSearchCriterion = $this->getProductConcreteNameSearchCriteria($criteria, $searchTerm);
+        $productSkuSearchCriterion = $this->getProductConcreteSkuSearchCriteria($criteria, $searchTerm);
+        $productNameSearchCriterion->addOr($productSkuSearchCriterion);
+
+        return $productConcreteQuery->addAnd($productNameSearchCriterion);
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\Criteria $criteria
+     * @param string $searchTerm
+     *
+     * @return \Propel\Runtime\ActiveQuery\Criterion\LikeCriterion
+     */
+    protected function getProductConcreteNameSearchCriteria(Criteria $criteria, string $searchTerm): LikeCriterion
+    {
+        /** @var \Propel\Runtime\ActiveQuery\Criterion\LikeCriterion $likeCriterion */
+        $likeCriterion = $criteria->getNewCriterion(
+            SpyProductLocalizedAttributesTableMap::COL_NAME,
+            '%' . $searchTerm . '%',
+            Criteria::LIKE
+        );
+
+        return $likeCriterion->setIgnoreCase(true);
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\Criteria $criteria
+     * @param string $searchTerm
+     *
+     * @return \Propel\Runtime\ActiveQuery\Criterion\LikeCriterion
+     */
+    protected function getProductConcreteSkuSearchCriteria(Criteria $criteria, string $searchTerm): LikeCriterion
+    {
+        /** @var \Propel\Runtime\ActiveQuery\Criterion\LikeCriterion $likeCriterion */
+        $likeCriterion = $criteria->getNewCriterion(
+            SpyProductTableMap::COL_SKU,
+            '%' . $searchTerm . '%',
+            Criteria::LIKE
+        );
+
+        return $likeCriterion->setIgnoreCase(true);
+    }
+
+    /**
+     * @phpstan-param \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct> $productConcreteQuery
+     *
+     * @phpstan-return \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct>
+     *
+     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery
+     * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected function applyProductConcreteSorting(
+        SpyProductQuery $productConcreteQuery,
+        ProductTableCriteriaTransfer $productTableCriteriaTransfer
+    ): SpyProductQuery {
+        $orderColumn = $productTableCriteriaTransfer->getOrderBy() ?? static::COL_KEY_PRODUCT_SKU;
+        $orderDirection = $productTableCriteriaTransfer->getOrderDirection() ?? Criteria::DESC;
+
+        if (!$orderColumn || !$orderDirection) {
+            return $productConcreteQuery;
+        }
+
+        $orderColumn = ProductTableDataMapper::PRODUCT_DATA_COLUMN_MAP[$orderColumn] ?? $orderColumn;
+
+        if ($orderColumn === SpyProductTableMap::COL_SKU) {
+            /** @var \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct> $productConcreteQuery */
+            $productConcreteQuery = $this->addNaturalSorting($productConcreteQuery, $orderColumn, $orderDirection);
+        }
+
+        $productConcreteQuery->orderBy($orderColumn, $orderDirection);
 
         return $productConcreteQuery;
     }
