@@ -693,6 +693,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         $productConcreteQuery = $this->buildProductTableBaseQuery($productTableCriteriaTransfer, $localeTransfer);
         $productConcreteQuery = $this->applyProductConcreteSearch($productConcreteQuery, $productTableCriteriaTransfer);
         $productConcreteQuery = $this->applyProductConcreteSorting($productConcreteQuery, $productTableCriteriaTransfer);
+        $productConcreteQuery = $this->applyProductConcreteFilters($productConcreteQuery, $productTableCriteriaTransfer);
 
         $propelPager = $productConcreteQuery->paginate(
             $productTableCriteriaTransfer->requirePage()->getPage(),
@@ -870,6 +871,85 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         }
 
         $productConcreteQuery->orderBy($orderColumn, $orderDirection);
+
+        return $productConcreteQuery;
+    }
+
+    /**
+     * @phpstan-param \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct> $productConcreteQuery
+     *
+     * @phpstan-return \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct>
+     *
+     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery
+     * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected function applyProductConcreteFilters(
+        SpyProductQuery $productConcreteQuery,
+        ProductTableCriteriaTransfer $productTableCriteriaTransfer
+    ): SpyProductQuery {
+        $productConcreteQuery = $this->addIsActiveProductFilter($productConcreteQuery, $productTableCriteriaTransfer);
+        $productConcreteQuery = $this->addValidityProductFilter($productConcreteQuery, $productTableCriteriaTransfer);
+
+        return $productConcreteQuery;
+    }
+
+    /**
+     * @phpstan-param \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct> $productConcreteQuery
+     *
+     * @phpstan-return \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct>
+     *
+     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery
+     * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected function addIsActiveProductFilter(
+        SpyProductQuery $productConcreteQuery,
+        ProductTableCriteriaTransfer $productTableCriteriaTransfer
+    ): SpyProductQuery {
+        $filterValue = $productTableCriteriaTransfer->getFilterIsActive();
+        if (!isset($filterValue)) {
+            return $productConcreteQuery;
+        }
+
+        $productConcreteQuery->filterByIsActive($filterValue);
+
+        return $productConcreteQuery;
+    }
+
+    /**
+     * @phpstan-param \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct> $productConcreteQuery
+     *
+     * @phpstan-return \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct>
+     *
+     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery
+     * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected function addValidityProductFilter(
+        SpyProductQuery $productConcreteQuery,
+        ProductTableCriteriaTransfer $productTableCriteriaTransfer
+    ): SpyProductQuery {
+        $criteriaRangeFilterTransfer = $productTableCriteriaTransfer->getFilterValidity();
+
+        if (!$criteriaRangeFilterTransfer) {
+            return $productConcreteQuery;
+        }
+
+        if ($criteriaRangeFilterTransfer->getFrom()) {
+            $productConcreteQuery->useSpyProductValidityQuery()
+                    ->filterByValidFrom($criteriaRangeFilterTransfer->getFrom(), Criteria::GREATER_EQUAL)
+                ->endUse();
+        }
+
+        if ($criteriaRangeFilterTransfer->getTo()) {
+            $productConcreteQuery->useSpyProductValidityQuery()
+                    ->filterByValidTo($criteriaRangeFilterTransfer->getTo(), Criteria::LESS_THAN)
+                ->endUse();
+        }
 
         return $productConcreteQuery;
     }

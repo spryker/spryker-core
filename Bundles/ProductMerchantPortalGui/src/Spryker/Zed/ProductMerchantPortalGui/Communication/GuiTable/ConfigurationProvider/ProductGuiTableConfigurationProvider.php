@@ -65,6 +65,7 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
         $guiTableConfigurationBuilder = $this->guiTableFactory->createConfigurationBuilder();
 
         $guiTableConfigurationBuilder = $this->addColumns($guiTableConfigurationBuilder);
+        $guiTableConfigurationBuilder = $this->addFilters($guiTableConfigurationBuilder);
 
         $guiTableConfigurationBuilder
             ->setDataSourceUrl($this->getDataUrl($idProductAbstract))
@@ -107,5 +108,22 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
             ProductConcreteTransfer::FK_PRODUCT_ABSTRACT,
             $idProductAbstract
         );
+    }
+
+    /**
+     * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
+     *
+     * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
+     */
+    protected function addFilters(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
+    {
+        $guiTableConfigurationBuilder
+            ->addFilterSelect('isActive', 'Status', false, [
+                '1' => static::COLUMN_DATA_STATUS_ACTIVE,
+                '0' => static::COLUMN_DATA_STATUS_INACTIVE,
+            ])
+            ->addFilterDateRange('validity', 'Validity');
+
+        return $guiTableConfigurationBuilder;
     }
 }
