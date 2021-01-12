@@ -151,7 +151,7 @@ class PriceProductOfferMapper
     public function mapProductOfferTransferToPriceProductTransfer(
         ProductOfferTransfer $productOfferTransfer,
         PriceProductTransfer $priceProductTransfer
-    ) {
+    ): PriceProductTransfer {
         return $priceProductTransfer->setIdProduct($productOfferTransfer->getIdProductConcrete())
             ->setPriceDimension(
                 (new PriceProductDimensionTransfer())
