@@ -67,4 +67,39 @@ interface CategoryEntityManagerInterface
      * @return void
      */
     public function createCategoryClosureTableNodes(NodeTransfer $nodeTransfer): void;
+
+    /**
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    public function deleteCategory(int $idCategory): void;
+
+    /**
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    public function deleteCategoryLocalizedAttributes(int $idCategory): void;
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return void
+     */
+    public function deleteCategoryNode(int $idCategoryNode): void;
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return void
+     */
+    public function deleteCategoryClosureTable(int $idCategoryNode): void;
+
+    /**
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    public function deleteCategoryStoreRelations(int $idCategory): void;
 }

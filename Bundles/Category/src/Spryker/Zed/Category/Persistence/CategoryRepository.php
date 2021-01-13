@@ -9,10 +9,12 @@ namespace Spryker\Zed\Category\Persistence;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeFilterTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\CategoryUrlPathCriteriaTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
@@ -367,6 +369,28 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->withColumn(SpyCategoryAttributeTableMap::COL_FK_LOCALE, static::COL_FK_LOCALE);
 
         return $nodeQuery->find()->toArray();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryNodeFilterTransfer $categoryNodeFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
+     */
+    public function getCategoryNodesByCriteria(CategoryNodeFilterTransfer $categoryNodeFilterTransfer): NodeCollectionTransfer
+    {
+        $categoryNodeQuery = $this->getFactory()->createCategoryNodeQuery();
+
+        if ($categoryNodeFilterTransfer->getCategoryIds()) {
+            $categoryNodeQuery->filterByFkCategory_In($categoryNodeFilterTransfer->getCategoryIds());
+        }
+
+        if ($categoryNodeFilterTransfer->getIsMain() !== null) {
+            $categoryNodeQuery->filterByIsMain($categoryNodeFilterTransfer->getIsMain());
+        }
+
+        return $this->getFactory()
+            ->createCategoryNodeMapper()
+            ->mapNodeCollection($categoryNodeQuery->find(), new NodeCollectionTransfer());
     }
 
     /**

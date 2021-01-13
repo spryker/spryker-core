@@ -11,6 +11,7 @@ use Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
+use Orm\Zed\Category\Persistence\SpyCategoryStoreQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -89,6 +90,14 @@ class CategoryPersistenceFactory extends AbstractPersistenceFactory
     public function createCategoryTemplateQuery()
     {
         return SpyCategoryTemplateQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryStoreQuery
+     */
+    public function createCategoryStoreQuery(): SpyCategoryStoreQuery
+    {
+        return SpyCategoryStoreQuery::create();
     }
 
     /**

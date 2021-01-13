@@ -21,7 +21,6 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryStoreQuery;
-use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Zed\Category\Business\CategoryFacadeInterface;
 use Spryker\Zed\Category\CategoryDependencyProvider;
 use Spryker\Zed\Category\Communication\Plugin\CategoryUrlPathPrefixUpdaterPlugin;
@@ -105,6 +104,26 @@ class CategoryFacadeTest extends Unit
 
         $this->assertSame(1, $resultNodes->count(), 'If parent already contains a moving child category OR it is the same category, then they should be skipped');
         $this->assertEquals($categoryTransfer3->getCategoryNode()->getIdCategoryNode(), $resultNodes->getFirst()->getIdCategoryNode());
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteWillDeleteCategoryStoreRelation(): void
+    {
+        // Arrange
+        $categoryTransfer = $this->tester->haveCategory();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE]);
+        $this->tester->haveCategoryStoreRelation($categoryTransfer->getIdCategory(), $storeTransfer->getIdStore());
+
+        // Act
+        $this->getFacade()->delete($categoryTransfer->getIdCategory());
+
+        // Assert
+        $categoryStoreRelationsCount = SpyCategoryStoreQuery::create()
+            ->filterByFkCategory($categoryTransfer->getIdCategory())
+            ->count();
+        $this->assertSame(0, $categoryStoreRelationsCount, 'Relations between Category and Store should deleted.');
     }
 
     /**

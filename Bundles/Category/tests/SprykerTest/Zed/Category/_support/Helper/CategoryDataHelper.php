@@ -14,6 +14,8 @@ use Generated\Shared\DataBuilder\NodeBuilder;
 use Generated\Shared\Transfer\CategoryTemplateTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Orm\Zed\Category\Persistence\SpyCategoryStore;
+use Orm\Zed\Category\Persistence\SpyCategoryStoreQuery;
 use Spryker\Zed\Category\Business\CategoryFacadeInterface;
 use Spryker\Zed\Category\CategoryConfig;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
@@ -85,6 +87,28 @@ class CategoryDataHelper extends Module
         $categoryTemplateTransfer->fromArray($seedData, true);
 
         return $categoryTemplateTransfer;
+    }
+
+    /**
+     * @param int $idCategory
+     * @param int $idStore
+     *
+     * @return void
+     */
+    public function haveCategoryStoreRelation(int $idCategory, int $idStore): void
+    {
+        $categoryStoreEntity = SpyCategoryStoreQuery::create()
+            ->filterByFkCategory($idCategory)
+            ->filterByFkStore($idStore)
+            ->findOneOrCreate();
+
+        if ($categoryStoreEntity->isNew()) {
+            $categoryStoreEntity->save();
+        }
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($categoryStoreEntity): void {
+            $this->cleanupCategoryStoreRelation($categoryStoreEntity);
+        });
     }
 
     /**
@@ -169,5 +193,17 @@ class CategoryDataHelper extends Module
     protected function cleanupCategory(CategoryTransfer $categoryTransfer): void
     {
         $this->getCategoryFacade()->delete($categoryTransfer->getIdCategory());
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryStore $categoryStoreEntity
+     *
+     * @return void
+     */
+    protected function cleanupCategoryStoreRelation(SpyCategoryStore $categoryStoreEntity): void
+    {
+        SpyCategoryStoreQuery::create()
+            ->filterByIdCategoryStore($categoryStoreEntity->getIdCategoryStore())
+            ->delete();
     }
 }

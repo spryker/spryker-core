@@ -21,6 +21,20 @@ use Spryker\Zed\Category\Business\Creator\CategoryStoreCreator;
 use Spryker\Zed\Category\Business\Creator\CategoryStoreCreatorInterface;
 use Spryker\Zed\Category\Business\Creator\CategoryUrlCreator;
 use Spryker\Zed\Category\Business\Creator\CategoryUrlCreatorInterface;
+use Spryker\Zed\Category\Business\Deleter\CategoryAttributeDeleter;
+use Spryker\Zed\Category\Business\Deleter\CategoryAttributeDeleterInterface;
+use Spryker\Zed\Category\Business\Deleter\CategoryClosureTableDeleter;
+use Spryker\Zed\Category\Business\Deleter\CategoryClosureTableDeleterInterface;
+use Spryker\Zed\Category\Business\Deleter\CategoryDeleter;
+use Spryker\Zed\Category\Business\Deleter\CategoryDeleterInterface;
+use Spryker\Zed\Category\Business\Deleter\CategoryNodeDeleter;
+use Spryker\Zed\Category\Business\Deleter\CategoryNodeDeleterInterface;
+use Spryker\Zed\Category\Business\Deleter\CategoryRelationshipDeleter;
+use Spryker\Zed\Category\Business\Deleter\CategoryRelationshipDeleterInterface;
+use Spryker\Zed\Category\Business\Deleter\CategoryStoreDeleter;
+use Spryker\Zed\Category\Business\Deleter\CategoryStoreDeleterInterface;
+use Spryker\Zed\Category\Business\Deleter\CategoryUrlDeleter;
+use Spryker\Zed\Category\Business\Deleter\CategoryUrlDeleterInterface;
 use Spryker\Zed\Category\Business\Generator\TransferGenerator;
 use Spryker\Zed\Category\Business\Generator\TransferGeneratorInterface;
 use Spryker\Zed\Category\Business\Generator\UrlPathGenerator;
@@ -403,6 +417,61 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Category\Business\Deleter\CategoryDeleterInterface
+     */
+    public function createCategoryDeleter(): CategoryDeleterInterface
+    {
+        return new CategoryDeleter(
+            $this->getEntityManager(),
+            $this->createCategoryRelationshipDeleter(),
+            $this->getEventFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Deleter\CategoryAttributeDeleterInterface
+     */
+    public function createCategoryAttributeDeleter(): CategoryAttributeDeleterInterface
+    {
+        return new CategoryAttributeDeleter($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Deleter\CategoryClosureTableDeleterInterface
+     */
+    public function createClosureTableDeleter(): CategoryClosureTableDeleterInterface
+    {
+        return new CategoryClosureTableDeleter($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Deleter\CategoryNodeDeleterInterface
+     */
+    public function createCategoryNodeDeleter(): CategoryNodeDeleterInterface
+    {
+        return new CategoryNodeDeleter(
+            $this->getRepository(),
+            $this->getEntityManager(),
+            $this->createCategoryTree(),
+            $this->createClosureTableDeleter(),
+            $this->createCategoryUrlDeleter(),
+            $this->createCategoryToucher(),
+            $this->createCategoryNodePublisher()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Deleter\CategoryUrlDeleterInterface
+     */
+    public function createCategoryUrlDeleter(): CategoryUrlDeleterInterface
+    {
+        return new CategoryUrlDeleter(
+            $this->getRepository(),
+            $this->getUrlFacade()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryCreateAfterPluginInterface[]
      */
     public function getCategoryPostCreatePlugins(): array
@@ -457,6 +526,30 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->createCategoryUrlCreator(),
             $this->createCategoryStoreCreator(),
             $this->getRelationUpdatePluginStack()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Deleter\CategoryRelationshipDeleterInterface
+     */
+    public function createCategoryRelationshipDeleter(): CategoryRelationshipDeleterInterface
+    {
+        return new CategoryRelationshipDeleter(
+            $this->createCategoryAttributeDeleter(),
+            $this->createCategoryUrlDeleter(),
+            $this->createCategoryNodeDeleter(),
+            $this->createCategoryStoreDeleter(),
+            $this->getRelationDeletePluginStack()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Deleter\CategoryStoreDeleterInterface
+     */
+    public function createCategoryStoreDeleter(): CategoryStoreDeleterInterface
+    {
+        return new CategoryStoreDeleter(
+            $this->getEntityManager()
         );
     }
 }

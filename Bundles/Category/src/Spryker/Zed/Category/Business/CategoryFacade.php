@@ -89,16 +89,14 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @param int $idCategory
      *
-     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
-     *
      * @return void
      */
     public function delete($idCategory): void
     {
         $this
             ->getFactory()
-            ->createCategory()
-            ->delete($idCategory);
+            ->createCategoryDeleter()
+            ->deleteCategory($idCategory);
     }
 
     /**
