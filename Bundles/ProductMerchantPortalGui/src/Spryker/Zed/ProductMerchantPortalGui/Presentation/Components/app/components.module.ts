@@ -21,6 +21,10 @@ import { EditAbstractProductAttributesComponent } from './edit-abstract-product-
 import { EditAbstractProductAttributesModule } from './edit-abstract-product-attributes/edit-abstract-product-attributes.module';
 import { ImageSetsComponent } from './image-sets/image-sets.component';
 import { ImageSetsModule } from './image-sets/image-sets.module';
+import { EditAbstractProductVariantsComponent } from './edit-abstract-product-variants/edit-abstract-product-variants.component';
+import { EditAbstractProductVariantsModule } from './edit-abstract-product-variants/edit-abstract-product-variants.module';
+import { BulkEditProductVariantsComponent } from './bulk-edit-product-variants/bulk-edit-product-variants.component';
+import { BulkEditProductVariantsModule } from './bulk-edit-product-variants/bulk-edit-product-variants.module';
 
 @NgModule({
     imports: [
@@ -40,6 +44,8 @@ import { ImageSetsModule } from './image-sets/image-sets.module';
         IconUnitedStatesModule,
         TextareaModule,
         ImageSetsModule,
+        BulkEditProductVariantsModule,
+        EditAbstractProductVariantsModule,
     ],
 })
 export class ComponentsModule extends CustomElementModule {
@@ -59,5 +65,7 @@ export class ComponentsModule extends CustomElementModule {
         EditAbstractProductPricesComponent,
         TextareaComponent,
         ImageSetsComponent,
+        BulkEditProductVariantsComponent,
+        EditAbstractProductVariantsComponent,
     ];
 }

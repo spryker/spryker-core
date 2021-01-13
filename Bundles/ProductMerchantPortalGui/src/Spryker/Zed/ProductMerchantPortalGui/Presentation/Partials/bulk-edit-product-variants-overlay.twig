@@ -1,0 +1,39 @@
+{% block body %}
+    {# TODO: dump data, should be changed when BE will be ready  #}
+    {% set bulkSections = {
+        status: {
+            title: 'Status' | trans,
+            activationName: 'status_activationName',
+            name: 'status_name',
+            placeholder: 'Active' | trans,
+        },
+        validity: {
+            title: 'Validity Dates & Time' | trans,
+            activationName: 'validity_activationName',
+            name: {
+                from: 'validity_formName',
+                to: 'validity_toName',
+            },
+            placeholder: {
+                from: 'From' | trans,
+                to: 'To' | trans,
+            },
+        }
+    } %}
+
+    {% block bulkEditProduct %}
+        <web-mp-bulk-edit-product-variants
+            sections="{{ bulkSections | json_encode }}"
+            notification-text="{{ 'Enabling an option below will overwrite the existing input.' | trans }}"
+            cloak
+        >
+            {% block title %}
+                <span title>{{ 'Bulk edit variants' | trans({ '%number%': 2 }) }}</span>
+            {% endblock %}
+
+            {% block action %}
+                <web-spy-button size="lg" type="submit" action>{{ 'Save' | trans }}</web-spy-button>
+            {% endblock %}
+        </web-mp-bulk-edit-product-variants>
+    {% endblock %}
+{% endblock %}
