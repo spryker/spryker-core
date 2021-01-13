@@ -17,7 +17,7 @@ interface ProductOfferStockFacadeInterface
 {
     /**
      * Specification:
-     * - Provides resulting data of all the stockes for provided store and productOfferReference.
+     * - Provides resulting data of all the stocks for provided store and productOfferReference.
      * - Expects ProductOfferStockRequestTransfer.store to be provided.
      * - Expects ProductOfferStockRequestTransfer.productOfferReference to be provided.
      *
