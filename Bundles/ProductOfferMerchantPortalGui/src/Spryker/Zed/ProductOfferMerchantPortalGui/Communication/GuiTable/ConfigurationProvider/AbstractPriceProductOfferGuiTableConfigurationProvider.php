@@ -77,15 +77,13 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
      * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
      * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypeTransfers
      * @param array $initialData
-     * @param int|null $idProductOffer
      *
      * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
      */
     protected function setEditableConfiguration(
         GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder,
         array $priceTypeTransfers,
-        array $initialData = [],
-        ?int $idProductOffer = null
+        array $initialData = []
     ): GuiTableConfigurationBuilderInterface {
         $formInputName = sprintf('%s[%s]', static::BLOCK_PREFIX, static::FIELD_PRODUCT_OFFER_PRICES);
 
