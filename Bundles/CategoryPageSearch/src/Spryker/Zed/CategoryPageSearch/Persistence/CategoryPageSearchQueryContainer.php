@@ -75,8 +75,6 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
      *
      * @api
      *
-     * @deprecated Will be removed with next major release.
-     *
      * @module Url
      * @module Category
      *
