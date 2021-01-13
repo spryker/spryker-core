@@ -14,9 +14,12 @@ use Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTreeInterface;
 use Spryker\Zed\Category\Business\Publisher\CategoryNodePublisherInterface;
 use Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface;
 use Spryker\Zed\Category\Persistence\CategoryRepositoryInterface;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class CategoryNodeDeleter implements CategoryNodeDeleterInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface
      */
@@ -86,6 +89,30 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
      */
     public function deleteCategoryNodes(int $idCategory): void
     {
+        $this->getTransactionHandler()->handleTransaction(function () use ($idCategory) {
+            $this->executeDeleteCategoryNodesTransaction($idCategory);
+        });
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    public function deleteCategoryExtraParentNodes(int $idCategory): void
+    {
+        $this->getTransactionHandler()->handleTransaction(function () use ($idCategory) {
+            $this->executeDeleteCategoryExtraParentNodesTransaction($idCategory);
+        });
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    protected function executeDeleteCategoryNodesTransaction(int $idCategory): void
+    {
         $categoryNodeFilterTransfer = (new CategoryNodeFilterTransfer())
             ->addIdCategory($idCategory);
 
@@ -101,7 +128,7 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
      *
      * @return void
      */
-    public function deleteCategoryExtraParentNodes(int $idCategory): void
+    protected function executeDeleteCategoryExtraParentNodesTransaction(int $idCategory): void
     {
         $categoryNodeFilterTransfer = (new CategoryNodeFilterTransfer())
             ->addIdCategory($idCategory)

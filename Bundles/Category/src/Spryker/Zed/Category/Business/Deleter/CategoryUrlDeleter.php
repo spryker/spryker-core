@@ -11,9 +11,12 @@ use Generated\Shared\Transfer\CategoryNodeFilterTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
 use Spryker\Zed\Category\Persistence\CategoryRepositoryInterface;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class CategoryUrlDeleter implements CategoryUrlDeleterInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface
      */
@@ -46,7 +49,9 @@ class CategoryUrlDeleter implements CategoryUrlDeleterInterface
         $categoryNodeUrlFilterTransfer = (new CategoryNodeUrlFilterTransfer())
             ->setCategoryNodeIds($this->getCategoryNodeIdsForCategory($idCategory));
 
-        $this->deleteUrlsByCategoryNodeUrlFilter($categoryNodeUrlFilterTransfer);
+        $this->getTransactionHandler()->handleTransaction(function () use ($categoryNodeUrlFilterTransfer) {
+            $this->executeDeleteUrlsByCategoryNodeUrlFilterTransaction($categoryNodeUrlFilterTransfer);
+        });
     }
 
     /**
@@ -59,7 +64,9 @@ class CategoryUrlDeleter implements CategoryUrlDeleterInterface
         $categoryNodeUrlFilterTransfer = (new CategoryNodeUrlFilterTransfer())
             ->addIdCategoryNode($idCategoryNode);
 
-        $this->deleteUrlsByCategoryNodeUrlFilter($categoryNodeUrlFilterTransfer);
+        $this->getTransactionHandler()->handleTransaction(function () use ($categoryNodeUrlFilterTransfer) {
+            $this->executeDeleteUrlsByCategoryNodeUrlFilterTransaction($categoryNodeUrlFilterTransfer);
+        });
     }
 
     /**
@@ -87,8 +94,9 @@ class CategoryUrlDeleter implements CategoryUrlDeleterInterface
      *
      * @return void
      */
-    protected function deleteUrlsByCategoryNodeUrlFilter(CategoryNodeUrlFilterTransfer $categoryNodeUrlFilterTransfer): void
-    {
+    protected function executeDeleteUrlsByCategoryNodeUrlFilterTransaction(
+        CategoryNodeUrlFilterTransfer $categoryNodeUrlFilterTransfer
+    ): void {
         $urlTransfers = $this->categoryRepository->getCategoryNodeUrls($categoryNodeUrlFilterTransfer);
 
         foreach ($urlTransfers as $urlTransfer) {

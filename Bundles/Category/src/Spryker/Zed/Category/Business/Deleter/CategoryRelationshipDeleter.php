@@ -8,9 +8,12 @@
 namespace Spryker\Zed\Category\Business\Deleter;
 
 use Generated\Shared\Transfer\CategoryTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class CategoryRelationshipDeleter implements CategoryRelationshipDeleterInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\Category\Business\Deleter\CategoryAttributeDeleterInterface
      */
@@ -63,6 +66,18 @@ class CategoryRelationshipDeleter implements CategoryRelationshipDeleterInterfac
      * @return void
      */
     public function deleteCategoryRelationships(CategoryTransfer $categoryTransfer): void
+    {
+        $this->getTransactionHandler()->handleTransaction(function () use ($categoryTransfer) {
+            $this->executeDeleteCategoryRelationshipsTransaction($categoryTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    protected function executeDeleteCategoryRelationshipsTransaction(CategoryTransfer $categoryTransfer): void
     {
         $idCategory = $categoryTransfer->getIdCategoryOrFail();
 
