@@ -27,26 +27,18 @@ class CategoryPluginExecutor implements CategoryPluginExecutorInterface
     protected $categoryPostReadPlugins;
 
     /**
-     * @var \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationUpdatePluginInterface[]
-     */
-    protected $categoryRelationUpdatePlugins;
-
-    /**
      * @param \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryCreateAfterPluginInterface[] $categoryPostCreatePlugins
      * @param \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUpdateAfterPluginInterface[] $categoryPostUpdatePlugins
      * @param \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryTransferExpanderPluginInterface[] $categoryPostReadPlugins
-     * @param \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationUpdatePluginInterface[] $categoryRelationUpdatePlugins
      */
     public function __construct(
         array $categoryPostCreatePlugins = [],
         array $categoryPostUpdatePlugins = [],
-        array $categoryPostReadPlugins = [],
-        array $categoryRelationUpdatePlugins = []
+        array $categoryPostReadPlugins = []
     ) {
         $this->categoryPostCreatePlugins = $categoryPostCreatePlugins;
         $this->categoryPostUpdatePlugins = $categoryPostUpdatePlugins;
         $this->categoryPostReadPlugins = $categoryPostReadPlugins;
-        $this->categoryRelationUpdatePlugins = $categoryRelationUpdatePlugins;
     }
 
     /**
@@ -85,17 +77,5 @@ class CategoryPluginExecutor implements CategoryPluginExecutorInterface
         }
 
         return $categoryTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
-    public function executeCategoryRelationUpdatePlugins(CategoryTransfer $categoryTransfer): void
-    {
-        foreach ($this->categoryRelationUpdatePlugins as $categoryRelationUpdatePlugin) {
-            $categoryRelationUpdatePlugin->update($categoryTransfer);
-        }
     }
 }

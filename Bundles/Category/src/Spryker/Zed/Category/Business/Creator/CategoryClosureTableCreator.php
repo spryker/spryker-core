@@ -5,16 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Category\Business\CategoryClosureTable;
+namespace Spryker\Zed\Category\Business\Creator;
 
 use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface;
-use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class CategoryClosureTableCreator implements CategoryClosureTableCreatorInterface
 {
-    use TransactionTrait;
-
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface
      */
@@ -34,18 +31,6 @@ class CategoryClosureTableCreator implements CategoryClosureTableCreatorInterfac
      * @return void
      */
     public function createCategoryClosureTable(NodeTransfer $nodeTransfer): void
-    {
-        $this->getTransactionHandler()->handleTransaction(function () use ($nodeTransfer) {
-            $this->executeCreateCategoryClosureTableTransaction($nodeTransfer);
-        });
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     *
-     * @return void
-     */
-    protected function executeCreateCategoryClosureTableTransaction(NodeTransfer $nodeTransfer): void
     {
         if (!$nodeTransfer->getFkParentCategoryNode()) {
             $this->categoryEntityManager->createCategoryClosureTableRootNode($nodeTransfer);

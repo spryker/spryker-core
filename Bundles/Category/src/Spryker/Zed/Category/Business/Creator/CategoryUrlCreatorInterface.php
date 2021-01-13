@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Category\Business\CategoryUrl;
+namespace Spryker\Zed\Category\Business\Creator;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CategoryTransfer;

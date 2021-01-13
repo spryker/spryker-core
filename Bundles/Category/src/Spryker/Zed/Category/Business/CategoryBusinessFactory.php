@@ -7,18 +7,20 @@
 
 namespace Spryker\Zed\Category\Business;
 
-use Spryker\Zed\Category\Business\Category\CategoryCreator;
-use Spryker\Zed\Category\Business\Category\CategoryCreatorInterface;
-use Spryker\Zed\Category\Business\CategoryAttribute\CategoryAttributeCreator;
-use Spryker\Zed\Category\Business\CategoryAttribute\CategoryAttributeCreatorInterface;
-use Spryker\Zed\Category\Business\CategoryClosureTable\CategoryClosureTableCreator;
-use Spryker\Zed\Category\Business\CategoryClosureTable\CategoryClosureTableCreatorInterface;
-use Spryker\Zed\Category\Business\CategoryNode\CategoryNodeCreator;
-use Spryker\Zed\Category\Business\CategoryNode\CategoryNodeCreatorInterface;
-use Spryker\Zed\Category\Business\CategoryStore\CategoryStoreCreator;
-use Spryker\Zed\Category\Business\CategoryStore\CategoryStoreCreatorInterface;
-use Spryker\Zed\Category\Business\CategoryUrl\CategoryUrlCreator;
-use Spryker\Zed\Category\Business\CategoryUrl\CategoryUrlCreatorInterface;
+use Spryker\Zed\Category\Business\Creator\CategoryAttributeCreator;
+use Spryker\Zed\Category\Business\Creator\CategoryAttributeCreatorInterface;
+use Spryker\Zed\Category\Business\Creator\CategoryClosureTableCreator;
+use Spryker\Zed\Category\Business\Creator\CategoryClosureTableCreatorInterface;
+use Spryker\Zed\Category\Business\Creator\CategoryCreator;
+use Spryker\Zed\Category\Business\Creator\CategoryCreatorInterface;
+use Spryker\Zed\Category\Business\Creator\CategoryNodeCreator;
+use Spryker\Zed\Category\Business\Creator\CategoryNodeCreatorInterface;
+use Spryker\Zed\Category\Business\Creator\CategoryRelationshipCreator;
+use Spryker\Zed\Category\Business\Creator\CategoryRelationshipCreatorInterface;
+use Spryker\Zed\Category\Business\Creator\CategoryStoreCreator;
+use Spryker\Zed\Category\Business\Creator\CategoryStoreCreatorInterface;
+use Spryker\Zed\Category\Business\Creator\CategoryUrlCreator;
+use Spryker\Zed\Category\Business\Creator\CategoryUrlCreatorInterface;
 use Spryker\Zed\Category\Business\Generator\TransferGenerator;
 use Spryker\Zed\Category\Business\Generator\TransferGeneratorInterface;
 use Spryker\Zed\Category\Business\Generator\UrlPathGenerator;
@@ -70,23 +72,20 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class CategoryBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\Category\Business\Category\CategoryCreatorInterface
+     * @return \Spryker\Zed\Category\Business\Creator\CategoryCreatorInterface
      */
     public function createCategoryCreator(): CategoryCreatorInterface
     {
         return new CategoryCreator(
             $this->getEntityManager(),
-            $this->createCategoryNodeCreator(),
-            $this->createCategoryAttributeCreator(),
-            $this->createCategoryUrlCreator(),
-            $this->createCategoryStoreCreator(),
+            $this->createCategoryRelationshipCreator(),
             $this->getEventFacade(),
-            $this->createPluginExecutor()
+            $this->getCategoryPostCreatePlugins()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Category\Business\CategoryNode\CategoryNodeCreatorInterface
+     * @return \Spryker\Zed\Category\Business\Creator\CategoryNodeCreatorInterface
      */
     public function createCategoryNodeCreator(): CategoryNodeCreatorInterface
     {
@@ -100,7 +99,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Category\Business\CategoryUrl\CategoryUrlCreatorInterface
+     * @return \Spryker\Zed\Category\Business\Creator\CategoryUrlCreatorInterface
      */
     public function createCategoryUrlCreator(): CategoryUrlCreatorInterface
     {
@@ -113,7 +112,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Category\Business\CategoryAttribute\CategoryAttributeCreatorInterface
+     * @return \Spryker\Zed\Category\Business\Creator\CategoryAttributeCreatorInterface
      */
     public function createCategoryAttributeCreator(): CategoryAttributeCreatorInterface
     {
@@ -121,7 +120,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Category\Business\CategoryClosureTable\CategoryClosureTableCreatorInterface
+     * @return \Spryker\Zed\Category\Business\Creator\CategoryClosureTableCreatorInterface
      */
     public function createCategoryClosureTableCreator(): CategoryClosureTableCreatorInterface
     {
@@ -435,16 +434,29 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
         return new CategoryPluginExecutor(
             $this->getCategoryPostCreatePlugins(),
             $this->getCategoryPostUpdatePlugins(),
-            $this->getCategoryPostReadPlugins(),
-            $this->getRelationUpdatePluginStack()
+            $this->getCategoryPostReadPlugins()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Category\Business\CategoryStore\CategoryStoreCreatorInterface
+     * @return \Spryker\Zed\Category\Business\Creator\CategoryStoreCreatorInterface
      */
     public function createCategoryStoreCreator(): CategoryStoreCreatorInterface
     {
         return new CategoryStoreCreator($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Creator\CategoryRelationshipCreatorInterface
+     */
+    public function createCategoryRelationshipCreator(): CategoryRelationshipCreatorInterface
+    {
+        return new CategoryRelationshipCreator(
+            $this->createCategoryNodeCreator(),
+            $this->createCategoryAttributeCreator(),
+            $this->createCategoryUrlCreator(),
+            $this->createCategoryStoreCreator(),
+            $this->getRelationUpdatePluginStack()
+        );
     }
 }

@@ -104,28 +104,16 @@ class CategoryMapper implements CategoryMapperInterface
                 $categoryTransfer->fromArray($localizedAttribute->toArray(), true);
             }
 
-            $nodeCollectionTransfer = $this->mapNodeCollection($categoryEntity->getNodes(), new NodeCollectionTransfer());
+            $nodeCollectionTransfer = $this->categoryNodeMapper->mapNodeCollection(
+                $categoryEntity->getNodes(),
+                new NodeCollectionTransfer()
+            );
             $categoryTransfer->setNodeCollection($nodeCollectionTransfer);
 
             $categoryCollectionTransfer->addCategory($categoryTransfer);
         }
 
         return $categoryCollectionTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection $nodeEntities
-     * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
-     */
-    public function mapNodeCollection(ObjectCollection $nodeEntities, NodeCollectionTransfer $nodeCollectionTransfer): NodeCollectionTransfer
-    {
-        foreach ($nodeEntities as $nodeEntity) {
-            $nodeCollectionTransfer->addNode($this->categoryNodeMapper->mapCategoryNode($nodeEntity, new NodeTransfer()));
-        }
-
-        return $nodeCollectionTransfer;
     }
 
     /**

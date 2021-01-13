@@ -5,12 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Category\Business\CategoryNode;
+namespace Spryker\Zed\Category\Business\Creator;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
-use Spryker\Zed\Category\Business\CategoryClosureTable\CategoryClosureTableCreatorInterface;
-use Spryker\Zed\Category\Business\CategoryUrl\CategoryUrlCreatorInterface;
 use Spryker\Zed\Category\Business\Model\CategoryToucherInterface;
 use Spryker\Zed\Category\Business\Publisher\CategoryNodePublisherInterface;
 use Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface;
@@ -31,12 +29,12 @@ class CategoryNodeCreator implements CategoryNodeCreatorInterface
     protected $categoryNodePublisher;
 
     /**
-     * @var \Spryker\Zed\Category\Business\CategoryClosureTable\CategoryClosureTableCreatorInterface
+     * @var \Spryker\Zed\Category\Business\Creator\CategoryClosureTableCreatorInterface
      */
     protected $categoryClosureTableCreator;
 
     /**
-     * @var \Spryker\Zed\Category\Business\CategoryUrl\CategoryUrlCreatorInterface
+     * @var \Spryker\Zed\Category\Business\Creator\CategoryUrlCreatorInterface
      */
     protected $categoryUrlCreator;
 
@@ -48,8 +46,8 @@ class CategoryNodeCreator implements CategoryNodeCreatorInterface
     /**
      * @param \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface $categoryEntityManager
      * @param \Spryker\Zed\Category\Business\Publisher\CategoryNodePublisherInterface $categoryNodePublisher
-     * @param \Spryker\Zed\Category\Business\CategoryClosureTable\CategoryClosureTableCreatorInterface $categoryClosureTableCreator
-     * @param \Spryker\Zed\Category\Business\CategoryUrl\CategoryUrlCreatorInterface $categoryUrlCreator
+     * @param \Spryker\Zed\Category\Business\Creator\CategoryClosureTableCreatorInterface $categoryClosureTableCreator
+     * @param \Spryker\Zed\Category\Business\Creator\CategoryUrlCreatorInterface $categoryUrlCreator
      * @param \Spryker\Zed\Category\Business\Model\CategoryToucherInterface $categoryToucher
      */
     public function __construct(
@@ -73,9 +71,20 @@ class CategoryNodeCreator implements CategoryNodeCreatorInterface
      */
     public function createCategoryNode(CategoryTransfer $categoryTransfer): void
     {
-        $this->getTransactionHandler()->handleTransaction(function () use ($categoryTransfer) {
-            $this->executeCreateCategoryNodeTransaction($categoryTransfer);
-        });
+        $nodeTransfer = $categoryTransfer->getCategoryNodeOrFail()
+            ->setIsMain(true)
+            ->setFkParentCategoryNode($categoryTransfer->getParentCategoryNodeOrFail()->getIdCategoryNode())
+            ->setFkCategory($categoryTransfer->getIdCategory());
+
+        $nodeTransfer = $this->categoryEntityManager->createCategoryNode($nodeTransfer);
+
+        $this->categoryClosureTableCreator->createCategoryClosureTable($nodeTransfer);
+
+        if ($categoryTransfer->getIsActive()) {
+            $this->categoryToucher->touchCategoryNodeActiveRecursively($nodeTransfer->getIdCategoryNode());
+        }
+
+        $this->categoryNodePublisher->triggerBulkCategoryNodePublishEventForCreate($nodeTransfer->getIdCategoryNode());
     }
 
     /**
@@ -92,28 +101,6 @@ class CategoryNodeCreator implements CategoryNodeCreatorInterface
         $this->getTransactionHandler()->handleTransaction(function () use ($categoryTransfer) {
             $this->executeCreateExtraParentsCategoryNodesTransaction($categoryTransfer);
         });
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
-    protected function executeCreateCategoryNodeTransaction(CategoryTransfer $categoryTransfer): void
-    {
-        $nodeTransfer = $categoryTransfer->getCategoryNodeOrFail()
-            ->setIsMain(true)
-            ->setFkParentCategoryNode($categoryTransfer->getParentCategoryNodeOrFail()->getIdCategoryNode())
-            ->setFkCategory($categoryTransfer->getIdCategory());
-        $nodeTransfer = $this->categoryEntityManager->createCategoryNode($nodeTransfer);
-
-        $this->categoryClosureTableCreator->createCategoryClosureTable($nodeTransfer);
-
-        if ($categoryTransfer->getIsActive()) {
-            $this->categoryToucher->touchCategoryNodeActiveRecursively($nodeTransfer->getIdCategoryNode());
-        }
-
-        $this->categoryNodePublisher->triggerBulkCategoryNodePublishEventForCreate($nodeTransfer->getIdCategoryNode());
     }
 
     /**

@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Category\Business\Category;
+namespace Spryker\Zed\Category\Business\Creator;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 
-interface CategoryCreatorInterface
+interface CategoryStoreCreatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return void
      */
-    public function createCategory(CategoryTransfer $categoryTransfer): void;
+    public function createCategoryStoreRelations(CategoryTransfer $categoryTransfer): void;
 }

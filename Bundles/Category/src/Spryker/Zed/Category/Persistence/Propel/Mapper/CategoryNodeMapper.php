@@ -7,11 +7,28 @@
 
 namespace Spryker\Zed\Category\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class CategoryNodeMapper
 {
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection $nodeEntities
+     * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
+     */
+    public function mapNodeCollection(ObjectCollection $nodeEntities, NodeCollectionTransfer $nodeCollectionTransfer): NodeCollectionTransfer
+    {
+        foreach ($nodeEntities as $nodeEntity) {
+            $nodeCollectionTransfer->addNode($this->mapCategoryNode($nodeEntity, new NodeTransfer()));
+        }
+
+        return $nodeCollectionTransfer;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
      * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $categoryNodeEntity
