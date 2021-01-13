@@ -27,7 +27,6 @@ use Symfony\Component\HttpFoundation\Request;
 class SavePriceProductOfferController extends AbstractController
 {
     protected const PARAM_TYPE_PRICE_PRODUCT_OFFER_IDS = 'type-price-product-offer-ids';
-    protected const PARAM_PRODUCT_OFFER_ID = 'product-offer-id';
 
     protected const NOTIFICATION_TYPE_SUCCESS = 'success';
     protected const NOTIFICATION_TYPE_ERROR = 'error';
