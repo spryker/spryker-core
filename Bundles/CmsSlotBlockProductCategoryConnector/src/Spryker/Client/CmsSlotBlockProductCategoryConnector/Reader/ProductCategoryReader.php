@@ -46,7 +46,7 @@ class ProductCategoryReader implements ProductCategoryReaderInterface
         $productAbstractCategoryStorageTransfer = $this->productCategoryStorageClient->findProductAbstractCategory(
             $idProductAbstract,
             $localeName,
-            getenv('APPLICATION_STORE') // is it acceptable?
+            APPLICATION_STORE
         );
 
         if (!$productAbstractCategoryStorageTransfer) {

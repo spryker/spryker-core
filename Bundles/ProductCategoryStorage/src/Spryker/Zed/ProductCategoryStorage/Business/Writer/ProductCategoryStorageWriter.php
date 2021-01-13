@@ -5,12 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductCategoryStorage\Business\Storage;
+namespace Spryker\Zed\ProductCategoryStorage\Business\Writer;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
 use Generated\Shared\Transfer\ProductCategoryStorageTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryStoreTableMap;
+use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
 use Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage;
 use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToCategoryInterface;
@@ -138,15 +139,15 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     {
         $relatedCategoryIds = [];
 
-        foreach ($categoryIds as $categoryId) {
-            $categoryNodes = $this->categoryFacade->getAllNodesByIdCategory($categoryId);
+        foreach ($categoryIds as $idCategory) {
+            $categoryNodes = $this->categoryFacade->getAllNodesByIdCategory($idCategory);
 
             foreach ($categoryNodes as $categoryNode) {
-                $categoryIdsByNodeId = $this->productCategoryStorageRepository
+                $relatedCategoryIds[] = $this->productCategoryStorageRepository
                     ->getAllCategoryIdsByCategoryNodeId($categoryNode->getIdCategoryNode());
-
-                $relatedCategoryIds = array_merge($relatedCategoryIds, $categoryIdsByNodeId);
             }
+
+            $relatedCategoryIds = array_merge(...$relatedCategoryIds);
         }
 
         return array_unique($relatedCategoryIds);
@@ -187,49 +188,95 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
         foreach ($localeNameMapByStoreName as $storeName => $storeLocales) {
             foreach ($storeLocales as $localeName) {
                 foreach ($productAbstractLocalizedAttributesEntities as $productAbstractLocalizedAttributesEntity) {
-                    if ($productAbstractLocalizedAttributesEntity->getLocale()->getLocaleName() !== $localeName) {
-                        continue;
-                    }
-
-                    $idProductAbstract = $productAbstractLocalizedAttributesEntity->getFkProductAbstract();
-                    $productCategoryTransfers = $this->getProductCategoriesFromCategories(
-                        $productCategoryEntities[$idProductAbstract] ?? [],
+                    $this->saveProductAbstractCategoryStorageEntities(
+                        $productCategoryEntities,
+                        $productAbstractCategoryStorageEntities,
+                        $productAbstractLocalizedAttributesEntity,
                         $storeName,
                         $localeName
                     );
-
-                    $productAbstractCategoryStorageEntity
-                        = $productAbstractCategoryStorageEntities[$idProductAbstract][$storeName][$localeName]
-                        ?? new SpyProductAbstractCategoryStorage();
-
-                    if (!$productAbstractCategoryStorageEntity->isNew()) {
-                        unset($productAbstractCategoryStorageEntities[$idProductAbstract][$storeName][$localeName]);
-                    }
-
-                    if (!count($productCategoryTransfers)) {
-                        if (!$productAbstractCategoryStorageEntity->isNew()) {
-                            $productAbstractCategoryStorageEntity->delete();
-                        }
-
-                        continue;
-                    }
-
-                    $productAbstractCategoryStorageTransfer = (new ProductAbstractCategoryStorageTransfer())
-                        ->setCategories((new ArrayObject($productCategoryTransfers)))
-                        ->setIdProductAbstract($idProductAbstract);
-
-                    $productAbstractCategoryStorageEntity
-                        ->setFkProductAbstract($idProductAbstract)
-                        ->setStore($storeName)
-                        ->setLocale($localeName)
-                        ->setData($productAbstractCategoryStorageTransfer->toArray());
-
-                    $productAbstractCategoryStorageEntity->save();
                 }
             }
         }
 
         $this->removeProductAbstractCategoryStorageEntities($productAbstractCategoryStorageEntities);
+    }
+
+    /**
+     * @param \Orm\Zed\ProductCategory\Persistence\SpyProductCategory[][] $productCategoryEntities
+     * @param \Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage[][][] $productAbstractCategoryStorageEntities
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes $productAbstractLocalizedAttributesEntity
+     * @param string $storeName
+     * @param string $localeName
+     *
+     * @return void
+     */
+    protected function saveProductAbstractCategoryStorageEntities(
+        array $productCategoryEntities,
+        array $productAbstractCategoryStorageEntities,
+        SpyProductAbstractLocalizedAttributes $productAbstractLocalizedAttributesEntity,
+        string $storeName,
+        string $localeName
+    ): void {
+        if ($productAbstractLocalizedAttributesEntity->getLocale()->getLocaleName() !== $localeName) {
+            return;
+        }
+
+        $idProductAbstract = $productAbstractLocalizedAttributesEntity->getFkProductAbstract();
+        $productCategoryTransfers = $this->getProductCategoriesFromCategories(
+            $productCategoryEntities[$idProductAbstract] ?? [],
+            $storeName,
+            $localeName
+        );
+
+        $productAbstractCategoryStorageEntity
+            = $productAbstractCategoryStorageEntities[$idProductAbstract][$storeName][$localeName]
+            ?? new SpyProductAbstractCategoryStorage();
+
+        if (!$productAbstractCategoryStorageEntity->isNew()) {
+            unset($productAbstractCategoryStorageEntities[$idProductAbstract][$storeName][$localeName]);
+        }
+
+        if (!count($productCategoryTransfers)) {
+            if (!$productAbstractCategoryStorageEntity->isNew()) {
+                $productAbstractCategoryStorageEntity->delete();
+            }
+
+            return;
+        }
+
+        $this->saveProductAbstractCategoryStorageEntity(
+            $idProductAbstract, $productAbstractCategoryStorageEntity, $productCategoryTransfers, $storeName, $localeName
+        );
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param \Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage $productAbstractCategoryStorageEntity
+     * @param \Generated\Shared\Transfer\ProductCategoryStorageTransfer[] $productCategoryTransfers
+     * @param string $storeName
+     * @param string $localeName
+     *
+     * @return void
+     */
+    protected function saveProductAbstractCategoryStorageEntity(
+        int $idProductAbstract,
+        SpyProductAbstractCategoryStorage $productAbstractCategoryStorageEntity,
+        array $productCategoryTransfers,
+        string $storeName,
+        string $localeName
+    ): void {
+        $productAbstractCategoryStorageTransfer = (new ProductAbstractCategoryStorageTransfer())
+            ->setCategories((new ArrayObject($productCategoryTransfers)))
+            ->setIdProductAbstract($idProductAbstract);
+
+        $productAbstractCategoryStorageEntity
+            ->setFkProductAbstract($idProductAbstract)
+            ->setStore($storeName)
+            ->setLocale($localeName)
+            ->setData($productAbstractCategoryStorageTransfer->toArray());
+
+        $productAbstractCategoryStorageEntity->save();
     }
 
     /**

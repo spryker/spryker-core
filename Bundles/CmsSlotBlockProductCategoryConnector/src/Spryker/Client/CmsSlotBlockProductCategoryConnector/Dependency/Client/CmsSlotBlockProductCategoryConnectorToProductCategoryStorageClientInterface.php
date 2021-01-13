@@ -7,20 +7,14 @@
 
 namespace Spryker\Client\CmsSlotBlockProductCategoryConnector\Dependency\Client;
 
-use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
-
 interface CmsSlotBlockProductCategoryConnectorToProductCategoryStorageClientInterface
 {
     /**
      * @param int $idProductAbstract
-     * @param string $localeName
+     * @param string $locale
      * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer|null
      */
-    public function findProductAbstractCategory(
-        int $idProductAbstract,
-        string $localeName,
-        string $storeName
-    ): ?ProductAbstractCategoryStorageTransfer;
+    public function findProductAbstractCategory($idProductAbstract, $locale, string $storeName);
 }

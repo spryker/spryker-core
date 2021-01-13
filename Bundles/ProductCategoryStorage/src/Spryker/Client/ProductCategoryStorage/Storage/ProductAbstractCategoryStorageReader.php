@@ -119,9 +119,8 @@ class ProductAbstractCategoryStorageReader implements ProductAbstractCategorySto
         }
 
         $key = $this->generateKey($idProductAbstract, $localeName, $storeName);
-        $productAbstractCategoryStorageData = $this->storageClient->get($key);
 
-        return $productAbstractCategoryStorageData;
+        return $this->storageClient->get($key);
     }
 
     /**

@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductCategoryStorage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductCategoryStorage\Business\Storage\ProductCategoryStorageWriter;
-use Spryker\Zed\ProductCategoryStorage\Business\Storage\ProductCategoryStorageWriterInterface;
+use Spryker\Zed\ProductCategoryStorage\Business\Writer\ProductCategoryStorageWriter;
+use Spryker\Zed\ProductCategoryStorage\Business\Writer\ProductCategoryStorageWriterInterface;
 use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToCategoryInterface;
 use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToStoreFacadeInterface;
@@ -23,7 +23,7 @@ use Spryker\Zed\ProductCategoryStorage\ProductCategoryStorageDependencyProvider;
 class ProductCategoryStorageBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\ProductCategoryStorage\Business\Storage\ProductCategoryStorageWriterInterface
+     * @return \Spryker\Zed\ProductCategoryStorage\Business\Writer\ProductCategoryStorageWriterInterface
      */
     public function createProductCategoryStorageWriter(): ProductCategoryStorageWriterInterface
     {
