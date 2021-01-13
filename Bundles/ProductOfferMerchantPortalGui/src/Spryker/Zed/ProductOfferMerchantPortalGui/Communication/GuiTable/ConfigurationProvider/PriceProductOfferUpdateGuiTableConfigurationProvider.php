@@ -142,6 +142,7 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
             $priceTypeTransfers,
             $initialData
         );
+
         $guiTableConfigurationBuilder->enableInlineDataEditing(static::URL_SAVE_PRICES, static::METHOD_UPDATE_ACTION_URL);
 
         return $guiTableConfigurationBuilder;
