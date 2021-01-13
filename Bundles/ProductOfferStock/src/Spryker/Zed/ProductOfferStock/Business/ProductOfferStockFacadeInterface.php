@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ProductOfferStock\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
+use Generated\Shared\Transfer\ProductOfferStockResultTransfer;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 
@@ -15,7 +17,7 @@ interface ProductOfferStockFacadeInterface
 {
     /**
      * Specification:
-     * - Retrieves product offer stock from database for provided store.
+     * - Provides resulting data of all the stockes for provided store and productOfferReference.
      * - Expects ProductOfferStockRequestTransfer.store to be provided.
      * - Expects ProductOfferStockRequestTransfer.productOfferReference to be provided.
      *
@@ -23,9 +25,28 @@ interface ProductOfferStockFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferStockTransfer
+     * @throws \Spryker\Zed\ProductOfferStock\Business\Exception\ProductOfferNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferStockResultTransfer
      */
-    public function getProductOfferStock(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ProductOfferStockTransfer;
+    public function getProductOfferStockResult(
+        ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
+    ): ProductOfferStockResultTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves product offer stocks from database for provided productOfferReference.
+     * - Expects ProductOfferStockRequestTransfer.productOfferReference to be provided.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
+     *
+     * @throws \Spryker\Zed\ProductOfferStock\Business\Exception\ProductOfferNotFoundException
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductOfferStockTransfer[]
+     */
+    public function getProductOfferStocks(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ArrayObject;
 
     /**
      * Specification:

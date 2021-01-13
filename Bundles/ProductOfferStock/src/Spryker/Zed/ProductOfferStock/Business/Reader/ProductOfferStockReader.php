@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\ProductOfferStock\Business\Reader;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
-use Generated\Shared\Transfer\ProductOfferStockTransfer;
+use Generated\Shared\Transfer\ProductOfferStockResultTransfer;
 use Spryker\Zed\ProductOfferStock\Business\Exception\ProductOfferNotFoundException;
+use Spryker\Zed\ProductOfferStock\Business\Mapper\ProductOfferStockResultMapperInterface;
 use Spryker\Zed\ProductOfferStock\Persistence\ProductOfferStockRepositoryInterface;
 
 class ProductOfferStockReader implements ProductOfferStockReaderInterface
@@ -20,11 +22,20 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
     protected $productOfferStockRepository;
 
     /**
-     * @param \Spryker\Zed\ProductOfferStock\Persistence\ProductOfferStockRepositoryInterface $productOfferStockRepository
+     * @var \Spryker\Zed\ProductOfferStock\Business\Mapper\ProductOfferStockResultMapperInterface
      */
-    public function __construct(ProductOfferStockRepositoryInterface $productOfferStockRepository)
-    {
+    protected $productOfferStockResultMapper;
+
+    /**
+     * @param \Spryker\Zed\ProductOfferStock\Persistence\ProductOfferStockRepositoryInterface $productOfferStockRepository
+     * @param \Spryker\Zed\ProductOfferStock\Business\Mapper\ProductOfferStockResultMapperInterface $productOfferStockResultMapper
+     */
+    public function __construct(
+        ProductOfferStockRepositoryInterface $productOfferStockRepository,
+        ProductOfferStockResultMapperInterface $productOfferStockResultMapper
+    ) {
         $this->productOfferStockRepository = $productOfferStockRepository;
+        $this->productOfferStockResultMapper = $productOfferStockResultMapper;
     }
 
     /**
@@ -32,18 +43,50 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
      *
      * @throws \Spryker\Zed\ProductOfferStock\Business\Exception\ProductOfferNotFoundException
      *
-     * @return \Generated\Shared\Transfer\ProductOfferStockTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferStockResultTransfer
      */
-    public function getProductOfferStock(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ProductOfferStockTransfer
+    public function getProductOfferStockResult(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ProductOfferStockResultTransfer
     {
         $productOfferStockRequestTransfer->requireProductOfferReference()
             ->requireStore()
             ->getStore()
             ->requireName();
 
-        $productOfferStockTransfer = $this->productOfferStockRepository->findOne($productOfferStockRequestTransfer);
+        $productOfferStockTransfers = $this->productOfferStockRepository->find($productOfferStockRequestTransfer);
 
-        if (!$productOfferStockTransfer) {
+        if (!$productOfferStockTransfers->getArrayCopy()) {
+            throw new ProductOfferNotFoundException(
+                sprintf(
+                    'Product offer stock with product reference: %s, not found',
+                    $productOfferStockRequestTransfer->getProductOfferReference()
+                )
+            );
+        }
+        $productOfferStockResult = $this->productOfferStockResultMapper
+            ->mapProductOfferStockTransfersToProductOfferStockResultTransfer(
+                $productOfferStockTransfers
+            );
+
+        return $productOfferStockResult;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
+     *
+     * @throws \Spryker\Zed\ProductOfferStock\Business\Exception\ProductOfferNotFoundException
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductOfferStockTransfer[]
+     */
+    public function getProductOfferStocks(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ArrayObject
+    {
+        $productOfferStockRequestTransfer->requireProductOfferReference()
+            ->requireStore()
+            ->getStore()
+            ->requireName();
+
+        $productOfferStockTransfers = $this->productOfferStockRepository->find($productOfferStockRequestTransfer);
+
+        if (!$productOfferStockTransfers->getArrayCopy()) {
             throw new ProductOfferNotFoundException(
                 sprintf(
                     'Product offer stock with product reference: %s, not found',
@@ -52,6 +95,6 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
             );
         }
 
-        return $productOfferStockTransfer;
+        return $productOfferStockTransfers;
     }
 }

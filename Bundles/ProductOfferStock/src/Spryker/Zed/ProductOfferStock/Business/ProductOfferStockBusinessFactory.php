@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductOfferStock\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductOfferStock\Business\Expander\ProductOfferExpander;
 use Spryker\Zed\ProductOfferStock\Business\Expander\ProductOfferExpanderInterface;
+use Spryker\Zed\ProductOfferStock\Business\Mapper\ProductOfferStockResultMapper;
 use Spryker\Zed\ProductOfferStock\Business\Reader\ProductOfferStockReader;
 use Spryker\Zed\ProductOfferStock\Business\Reader\ProductOfferStockReaderInterface;
 
@@ -25,7 +26,7 @@ class ProductOfferStockBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductOfferStockReader(): ProductOfferStockReaderInterface
     {
-        return new ProductOfferStockReader($this->getRepository());
+        return new ProductOfferStockReader($this->getRepository(), $this->createProductOfferStockResultMapper());
     }
 
     /**
@@ -34,5 +35,13 @@ class ProductOfferStockBusinessFactory extends AbstractBusinessFactory
     public function createProductOfferExpander(): ProductOfferExpanderInterface
     {
         return new ProductOfferExpander($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferStock\Business\Mapper\ProductOfferStockResultMapper
+     */
+    public function createProductOfferStockResultMapper(): ProductOfferStockResultMapper
+    {
+        return new ProductOfferStockResultMapper();
     }
 }

@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ProductOfferStock\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
+use Generated\Shared\Transfer\ProductOfferStockResultTransfer;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -28,13 +30,32 @@ class ProductOfferStockFacade extends AbstractFacade implements ProductOfferStoc
      *
      * @throws \Spryker\Zed\ProductOfferStock\Business\Exception\ProductOfferNotFoundException
      *
-     * @return \Generated\Shared\Transfer\ProductOfferStockTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferStockResultTransfer
      */
-    public function getProductOfferStock(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ProductOfferStockTransfer
+    public function getProductOfferStockResult(
+        ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
+    ): ProductOfferStockResultTransfer {
+        return $this->getFactory()
+            ->createProductOfferStockReader()
+            ->getProductOfferStockResult($productOfferStockRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
+     *
+     * @throws \Spryker\Zed\ProductOfferStock\Business\Exception\ProductOfferNotFoundException
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductOfferStockTransfer[]
+     */
+    public function getProductOfferStocks(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ArrayObject
     {
         return $this->getFactory()
             ->createProductOfferStockReader()
-            ->getProductOfferStock($productOfferStockRequestTransfer);
+            ->getProductOfferStocks($productOfferStockRequestTransfer);
     }
 
     /**
