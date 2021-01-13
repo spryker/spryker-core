@@ -14,5 +14,5 @@ interface UrlPathGeneratorInterface
      *
      * @return string
      */
-    public function generate(array $categoryPath);
+    public function generate(array $categoryPath): string;
 }

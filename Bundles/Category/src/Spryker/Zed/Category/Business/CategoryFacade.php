@@ -50,17 +50,14 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @throws \Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
-     *
      * @return void
      */
     public function create(CategoryTransfer $categoryTransfer): void
     {
         $this
             ->getFactory()
-            ->createCategory()
-            ->create($categoryTransfer);
+            ->createCategoryCreator()
+            ->createCategory($categoryTransfer);
     }
 
     /**

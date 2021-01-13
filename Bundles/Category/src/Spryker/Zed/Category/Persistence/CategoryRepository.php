@@ -12,12 +12,15 @@ use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeFilterTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\CategoryUrlPathCriteriaTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
@@ -30,6 +33,13 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class CategoryRepository extends AbstractRepository implements CategoryRepositoryInterface
 {
+    protected const KEY_FK_CATEGORY = 'fk_category';
+    protected const KEY_ID_CATEGORY_NODE = 'id_category_node';
+    protected const KEY_FK_CATEGORY_NODE_DESCENDANT = 'fk_category_node_descendant';
+    protected const KEY_NAME = 'name';
+    protected const KEY_CATEGORY_KEY = 'category_key';
+    protected const COL_FK_LOCALE = 'fk_locale';
+
     public const NODE_PATH_GLUE = '/';
     public const CATEGORY_NODE_PATH_GLUE = ' / ';
     public const EXCLUDE_NODE_PATH_ROOT = true;
@@ -323,6 +333,42 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         }
 
         return $urlTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryUrlPathCriteriaTransfer $categoryUrlPathCriteriaTransfer
+     *
+     * @return array
+     */
+    public function getCategoryUrlPathParts(CategoryUrlPathCriteriaTransfer $categoryUrlPathCriteriaTransfer): array
+    {
+        $depth = $categoryUrlPathCriteriaTransfer->getOnlyParents() ? 0 : null;
+
+        $nodeQuery = $this->getFactory()->createCategoryNodeQuery();
+        if ($categoryUrlPathCriteriaTransfer->getExcludeRootNode()) {
+            $nodeQuery->filterByIsRoot(false);
+        }
+
+        $nodeQuery
+            ->useClosureTableQuery()
+                ->orderByFkCategoryNodeDescendant(Criteria::DESC)
+                ->orderByDepth(Criteria::DESC)
+                ->filterByFkCategoryNodeDescendant($categoryUrlPathCriteriaTransfer->getIdCategoryNodeOrFail())
+                ->filterByDepth($depth, Criteria::NOT_EQUAL)
+            ->endUse()
+            ->useCategoryQuery()
+                ->useAttributeQuery()
+                    ->filterByFkLocale($categoryUrlPathCriteriaTransfer->getIdLocaleOrFail())
+                ->endUse()
+            ->endUse()
+            ->withColumn(SpyCategoryNodeTableMap::COL_FK_CATEGORY, static::KEY_FK_CATEGORY)
+            ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, static::KEY_ID_CATEGORY_NODE)
+            ->withColumn(SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT, static::KEY_FK_CATEGORY_NODE_DESCENDANT)
+            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, static::KEY_NAME)
+            ->withColumn(SpyCategoryTableMap::COL_CATEGORY_KEY, static::KEY_CATEGORY_KEY)
+            ->withColumn(SpyCategoryAttributeTableMap::COL_FK_LOCALE, static::COL_FK_LOCALE);
+
+        return $nodeQuery->find()->toArray();
     }
 
     /**

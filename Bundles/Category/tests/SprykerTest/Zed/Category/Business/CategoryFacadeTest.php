@@ -9,15 +9,23 @@ namespace SprykerTest\Zed\Category\Business;
 
 use ArrayObject;
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\CategoryBuilder;
 use Generated\Shared\DataBuilder\CategoryLocalizedAttributesBuilder;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
+use Orm\Zed\Category\Persistence\SpyCategoryQuery;
+use Orm\Zed\Category\Persistence\SpyCategoryStoreQuery;
+use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryStoreQuery;
 use Spryker\Zed\Category\Business\CategoryFacadeInterface;
+use Spryker\Zed\Category\CategoryDependencyProvider;
+use Spryker\Zed\Category\Communication\Plugin\CategoryUrlPathPrefixUpdaterPlugin;
 
 /**
  * Auto-generated group annotations
@@ -33,6 +41,9 @@ use Spryker\Zed\Category\Business\CategoryFacadeInterface;
 class CategoryFacadeTest extends Unit
 {
     public const CATEGORY_ID_ROOT = 1;
+
+    protected const TEST_LOCALE = 'en_US';
+    protected const TEST_STORE = 'DE';
 
     protected const TEST_STORE_NAME = 'DE';
 
@@ -260,6 +271,100 @@ class CategoryFacadeTest extends Unit
         /** @var \Generated\Shared\Transfer\NodeTransfer $firstChildNode */
         $secondChildNode = $secondChildNodeCollectionTransfer->getNodes()->offsetGet(0);
         $this->assertEquals($secondChildNode->getIdCategoryNode(), $categoryTransfer3->getCategoryNode()->getIdCategoryNode());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateCategoryWillCreateCategoryWithStoreRelation(): void
+    {
+        // Arrange
+        $parentCategoryTransfer = $this->tester->haveCategory();
+
+        $localeTransfer = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE]);
+        $storeRelationTransfer = (new StoreRelationTransfer())
+            ->addIdStores($storeTransfer->getIdStore())
+            ->addStores($storeTransfer);
+        $categoryTemplateTransfer = $this->tester->haveCategoryTemplate();
+
+        $categoryTransfer = (new CategoryBuilder([
+            CategoryTransfer::ID_CATEGORY => null,
+            CategoryTransfer::LOCALIZED_ATTRIBUTES => [
+                $this->createCategoryLocalizedAttributesTransferForLocale($localeTransfer)->toArray(),
+            ],
+            CategoryTransfer::STORE_RELATION => $storeRelationTransfer->toArray(),
+            CategoryTransfer::CATEGORY_TEMPLATE => $categoryTemplateTransfer->toArray(),
+            CategoryTransfer::FK_CATEGORY_TEMPLATE => $categoryTemplateTransfer->getIdCategoryTemplate(),
+            CategoryTransfer::PARENT_CATEGORY_NODE => $parentCategoryTransfer->getCategoryNode(),
+        ]))->withCategoryNode([
+            NodeTransfer::ID_CATEGORY_NODE => null,
+        ])->build();
+
+        // Act
+        $this->getFacade()->create($categoryTransfer);
+
+        // Assert
+        $categoryEntity = SpyCategoryQuery::create()
+            ->filterByCategoryKey($categoryTransfer->getCategoryKey())
+            ->findOne();
+        $this->assertNotNull($categoryEntity, 'Category should be successfully created.');
+
+        $categoryStoreEntity = SpyCategoryStoreQuery::create()
+            ->filterByFkCategory($categoryEntity->getIdCategory())
+            ->filterByFkStore($storeTransfer->getIdStore())
+            ->findOne();
+        $this->assertNotNull($categoryStoreEntity, 'Relation between Category and Store should be successfully created.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateCategoryWillCreateCategoryNodeWithCorrectUrl(): void
+    {
+        // Arrange
+        $this->tester->setDependency(CategoryDependencyProvider::PLUGINS_CATEGORY_URL_PATH, [
+            new CategoryUrlPathPrefixUpdaterPlugin(),
+        ]);
+
+        $parentCategoryTransfer = $this->tester->haveCategory();
+
+        $localeTransfer = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE]);
+        $categoryTemplateTransfer = $this->tester->haveCategoryTemplate();
+        $categoryLocalizedAttributesTransfer = $this->createCategoryLocalizedAttributesTransferForLocale($localeTransfer);
+
+        $categoryTransfer = (new CategoryBuilder([
+            CategoryTransfer::ID_CATEGORY => null,
+            CategoryTransfer::LOCALIZED_ATTRIBUTES => [
+                $categoryLocalizedAttributesTransfer->toArray(),
+            ],
+            CategoryTransfer::CATEGORY_TEMPLATE => $categoryTemplateTransfer->toArray(),
+            CategoryTransfer::FK_CATEGORY_TEMPLATE => $categoryTemplateTransfer->getIdCategoryTemplate(),
+            CategoryTransfer::PARENT_CATEGORY_NODE => $parentCategoryTransfer->getCategoryNode(),
+        ]))->withCategoryNode([
+            NodeTransfer::ID_CATEGORY_NODE => null,
+        ])->build();
+        $expectedUrl = '/en/' . mb_strtolower(str_replace(' ', '-', $categoryLocalizedAttributesTransfer->getName()));
+
+        // Act
+        $this->getFacade()->create($categoryTransfer);
+
+        // Assert
+        $categoryEntity = SpyCategoryQuery::create()
+            ->filterByCategoryKey($categoryTransfer->getCategoryKey())
+            ->findOne();
+        $this->assertNotNull($categoryEntity, 'Category should be successfully created.');
+
+        $categoryNodeEntity = SpyCategoryNodeQuery::create()
+            ->filterByFkCategory($categoryEntity->getIdCategory())
+            ->findOne();
+        $this->assertNotNull($categoryNodeEntity, 'Category Node should be successfully created.');
+
+        $urlEntity = SpyUrlQuery::create()
+            ->filterByFkResourceCategorynode($categoryNodeEntity->getIdCategoryNode())
+            ->findOne();
+        $this->assertNotNull($urlEntity, 'Category Url should be successfully created.');
+        $this->assertEquals($expectedUrl, $urlEntity->getUrl(), 'Urls should be the same.');
     }
 
     /**
