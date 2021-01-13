@@ -99,5 +99,5 @@ interface CategoryRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function getCategoryNodesByIdCategory(CategoryNodeFilterTransfer $categoryNodeFilterTransfer): NodeCollectionTransfer;
+    public function getCategoryNodesByCriteria(CategoryNodeFilterTransfer $categoryNodeFilterTransfer): NodeCollectionTransfer;
 }

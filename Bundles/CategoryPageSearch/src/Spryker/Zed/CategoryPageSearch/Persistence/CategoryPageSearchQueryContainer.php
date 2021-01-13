@@ -75,10 +75,10 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
      *
      * @api
      *
-     * @deprecated Will be removed with next major release.
-     *
      * @module Url
      * @module Category
+     *
+     * @deprecated Will be removed with next major release.
      *
      * @param int[] $categoryNodeIds
      * @param int $idLocale
@@ -112,9 +112,9 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
     /**
      * {@inheritDoc}
      *
-     * @deprecated Will be removed with next major release.
-     *
      * @api
+     *
+     * @deprecated Will be removed with next major release.
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */

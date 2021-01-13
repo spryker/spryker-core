@@ -48,7 +48,7 @@ use Spryker\Zed\Category\CategoryDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
- * @method \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface getEntityManager()()
+ * @method \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface getRepository()
  * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Category\CategoryConfig getConfig()
