@@ -73,6 +73,6 @@ class ProductStorageConfig extends AbstractBundleConfig
      */
     public function isPermutationForSingleValueProductAttributesEnabled(): bool
     {
-        return false;
+        return true;
     }
 }

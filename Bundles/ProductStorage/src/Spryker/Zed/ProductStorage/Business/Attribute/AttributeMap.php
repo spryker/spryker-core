@@ -131,7 +131,6 @@ class AttributeMap implements AttributeMapInterface
             }
         }
 
-
         if (!$this->productStorageConfig->isPermutationForSingleValueProductAttributesEnabled()) {
             $productConcreteSuperAttributes = $this->singleValueSuperAttributeFilter->filterOutSingleValueSuperAttributes(
                 $productConcreteSuperAttributes,
