@@ -389,7 +389,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         }
 
         return $this->getFactory()
-            ->createCategoryMapper()
+            ->createCategoryNodeMapper()
             ->mapNodeCollection($categoryNodeQuery->find(), new NodeCollectionTransfer());
     }
 

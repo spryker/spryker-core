@@ -21,8 +21,6 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryStoreQuery;
-use Orm\Zed\Url\Persistence\SpyUrlQuery;
-use Orm\Zed\Category\Persistence\SpyCategoryStoreQuery;
 use Spryker\Zed\Category\Business\CategoryFacadeInterface;
 use Spryker\Zed\Category\CategoryDependencyProvider;
 use Spryker\Zed\Category\Communication\Plugin\CategoryUrlPathPrefixUpdaterPlugin;
@@ -44,8 +42,6 @@ class CategoryFacadeTest extends Unit
 
     protected const TEST_LOCALE = 'en_US';
     protected const TEST_STORE = 'DE';
-
-    protected const TEST_STORE_NAME = 'DE';
 
     /**
      * @var \SprykerTest\Zed\Category\CategoryBusinessTester
@@ -117,7 +113,7 @@ class CategoryFacadeTest extends Unit
     {
         // Arrange
         $categoryTransfer = $this->tester->haveCategory();
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_NAME]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE]);
         $this->tester->haveCategoryStoreRelation($categoryTransfer->getIdCategory(), $storeTransfer->getIdStore());
 
         // Act
