@@ -52,7 +52,7 @@ class ProductStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductStorage\Business\Filter\SingleValueSuperAttributeFilterInterface
      */
-    public function createSingleValueSuperAttributeFilter():SingleValueSuperAttributeFilterInterface
+    public function createSingleValueSuperAttributeFilter(): SingleValueSuperAttributeFilterInterface
     {
         return new SingleValueSuperAttributeFilter();
     }

@@ -36,10 +36,12 @@ class AttributeMap implements AttributeMapInterface
      * @var array|null
      */
     protected static $superAttributesCache;
+
     /**
      * @var \Spryker\Zed\ProductStorage\ProductStorageConfig
      */
     protected $productStorageConfig;
+
     /**
      * @var \Spryker\Zed\ProductStorage\Business\Filter\SingleValueSuperAttributeFilterInterface
      */
