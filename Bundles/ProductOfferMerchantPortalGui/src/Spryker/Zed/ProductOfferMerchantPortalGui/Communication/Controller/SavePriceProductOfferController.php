@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller;
 
 use ArrayObject;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTransfer;
@@ -102,24 +103,7 @@ class SavePriceProductOfferController extends AbstractController
 
         if (!$priceProductOfferIds) {
             $priceProductTransfers = new ArrayObject();
-
-            /** @var \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer */
-            $productOfferTransfer = $this->getFactory()
-                ->getProductOfferFacade()
-                ->findOne((new ProductOfferCriteriaFilterTransfer())->setIdProductOffer($idProductOffer));
-
-            /** @var string $concreteSku */
-            $concreteSku = $productOfferTransfer->getConcreteSku();
-            /** @var int $idProductConcrete */
-            $idProductConcrete = $this->getFactory()
-                ->getProductFacade()
-                ->findProductConcreteIdBySku($concreteSku);
-            $productOfferTransfer->setIdProductConcrete($idProductConcrete);
-
-            $priceProductTransfer = $this->getFactory()
-                ->createPriceProductOfferMapper()
-                ->mapProductOfferTransferToPriceProductTransfer($productOfferTransfer, new PriceProductTransfer());
-            $priceProductTransfer = $this->setPriceTypeToPriceProduct($priceTypeName, $priceProductTransfer);
+            $priceProductTransfer = $this->createNewPriceForProductOffer($typePriceProductOfferIds, $idProductOffer, $priceTypeName);
             $priceProductTransfers->append($priceProductTransfer);
 
             return $priceProductTransfers;
@@ -208,6 +192,53 @@ class SavePriceProductOfferController extends AbstractController
                 return $priceProductTransfer->setPriceType($priceTypeTransfer);
             }
         }
+
+        return $priceProductTransfer;
+    }
+
+    /**
+     * @param int[] $typePriceProductOfferIds
+     * @param int $idProductOffer
+     * @param string $priceTypeName
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function createNewPriceForProductOffer(array $typePriceProductOfferIds, int $idProductOffer, string $priceTypeName): PriceProductTransfer
+    {
+        $priceProductOfferCriteriaTransfer = new PriceProductOfferCriteriaTransfer();
+        $priceProductOfferCriteriaTransfer->setPriceProductOfferIds($typePriceProductOfferIds);
+
+        $offerPriceProductTransfers = $this->getFactory()
+            ->getPriceProductOfferFacade()
+            ->getProductOfferPrices($priceProductOfferCriteriaTransfer);
+
+        /** @var \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer */
+        $productOfferTransfer = $this->getFactory()
+            ->getProductOfferFacade()
+            ->findOne((new ProductOfferCriteriaFilterTransfer())->setIdProductOffer($idProductOffer));
+
+        /** @var string $concreteSku */
+        $concreteSku = $productOfferTransfer->getConcreteSku();
+        /** @var int $idProductConcrete */
+        $idProductConcrete = $this->getFactory()
+            ->getProductFacade()
+            ->findProductConcreteIdBySku($concreteSku);
+        $productOfferTransfer->setIdProductConcrete($idProductConcrete);
+
+        $priceProductTransfer = $this->getFactory()
+            ->createPriceProductOfferMapper()
+            ->mapProductOfferTransferToPriceProductTransfer($productOfferTransfer, new PriceProductTransfer());
+        $priceProductTransfer = $this->setPriceTypeToPriceProduct($priceTypeName, $priceProductTransfer);
+
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+        $moneyValueTransfer = $offerPriceProductTransfers->getIterator()->current()->getMoneyValue();
+        $priceProductTransfer->setMoneyValue(
+            (new MoneyValueTransfer())
+                ->setCurrency($moneyValueTransfer->getCurrency())
+                ->setFkStore($moneyValueTransfer->getFkStore())
+                ->setStore($moneyValueTransfer->getStore())
+                ->setFkCurrency($moneyValueTransfer->getFkCurrency())
+        );
 
         return $priceProductTransfer;
     }

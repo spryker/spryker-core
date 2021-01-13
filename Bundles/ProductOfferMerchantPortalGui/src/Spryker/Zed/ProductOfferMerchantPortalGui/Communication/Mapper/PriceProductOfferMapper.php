@@ -156,13 +156,6 @@ class PriceProductOfferMapper
             ->setPriceDimension(
                 (new PriceProductDimensionTransfer())
                     ->setIdProductOffer($productOfferTransfer->getIdProductOffer())
-            )
-            ->setMoneyValue(
-                (new MoneyValueTransfer())
-                    ->setCurrency($productOfferTransfer->getPrices()->getIterator()->current()->getMoneyValue()->getCurrency())
-                    ->setFkStore($productOfferTransfer->getPrices()->getIterator()->current()->getMoneyValue()->getFkStore())
-                    ->setStore($productOfferTransfer->getPrices()->getIterator()->current()->getMoneyValue()->getStore())
-                    ->setFkCurrency($productOfferTransfer->getPrices()->getIterator()->current()->getMoneyValue()->getFkCurrency())
             );
     }
 
