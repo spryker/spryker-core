@@ -8,9 +8,12 @@
 namespace Spryker\Zed\Category\Business\Creator;
 
 use Generated\Shared\Transfer\CategoryTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class CategoryRelationshipCreator implements CategoryRelationshipCreatorInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\Category\Business\Creator\CategoryNodeCreatorInterface
      */
@@ -63,6 +66,18 @@ class CategoryRelationshipCreator implements CategoryRelationshipCreatorInterfac
      * @return void
      */
     public function createCategoryRelationships(CategoryTransfer $categoryTransfer): void
+    {
+        $this->getTransactionHandler()->handleTransaction(function () use ($categoryTransfer) {
+            $this->executeCreateCategoryRelationshipsTransaction($categoryTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    protected function executeCreateCategoryRelationshipsTransaction(CategoryTransfer $categoryTransfer): void
     {
         $this->categoryStoreCreator->createCategoryStoreRelations($categoryTransfer);
         $this->categoryNodeCreator->createCategoryNode($categoryTransfer);
