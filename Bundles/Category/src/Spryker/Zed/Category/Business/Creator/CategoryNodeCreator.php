@@ -71,20 +71,9 @@ class CategoryNodeCreator implements CategoryNodeCreatorInterface
      */
     public function createCategoryNode(CategoryTransfer $categoryTransfer): void
     {
-        $nodeTransfer = $categoryTransfer->getCategoryNodeOrFail()
-            ->setIsMain(true)
-            ->setFkParentCategoryNode($categoryTransfer->getParentCategoryNodeOrFail()->getIdCategoryNode())
-            ->setFkCategory($categoryTransfer->getIdCategory());
-
-        $nodeTransfer = $this->categoryEntityManager->createCategoryNode($nodeTransfer);
-
-        $this->categoryClosureTableCreator->createCategoryClosureTable($nodeTransfer);
-
-        if ($categoryTransfer->getIsActive()) {
-            $this->categoryToucher->touchCategoryNodeActiveRecursively($nodeTransfer->getIdCategoryNode());
-        }
-
-        $this->categoryNodePublisher->triggerBulkCategoryNodePublishEventForCreate($nodeTransfer->getIdCategoryNode());
+        $this->getTransactionHandler()->handleTransaction(function () use ($categoryTransfer) {
+            $this->executeCreateCategoryNodeTransaction($categoryTransfer);
+        });
     }
 
     /**
@@ -101,6 +90,29 @@ class CategoryNodeCreator implements CategoryNodeCreatorInterface
         $this->getTransactionHandler()->handleTransaction(function () use ($categoryTransfer) {
             $this->executeCreateExtraParentsCategoryNodesTransaction($categoryTransfer);
         });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    protected function executeCreateCategoryNodeTransaction(CategoryTransfer $categoryTransfer): void
+    {
+        $nodeTransfer = $categoryTransfer->getCategoryNodeOrFail()
+            ->setIsMain(true)
+            ->setFkParentCategoryNode($categoryTransfer->getParentCategoryNodeOrFail()->getIdCategoryNode())
+            ->setFkCategory($categoryTransfer->getIdCategory());
+
+        $nodeTransfer = $this->categoryEntityManager->createCategoryNode($nodeTransfer);
+
+        $this->categoryClosureTableCreator->createCategoryClosureTable($nodeTransfer);
+
+        if ($categoryTransfer->getIsActive()) {
+            $this->categoryToucher->touchCategoryNodeActiveRecursively($nodeTransfer->getIdCategoryNode());
+        }
+
+        $this->categoryNodePublisher->triggerBulkCategoryNodePublishEventForCreate($nodeTransfer->getIdCategoryNode());
     }
 
     /**

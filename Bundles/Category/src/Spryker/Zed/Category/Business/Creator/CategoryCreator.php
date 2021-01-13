@@ -91,8 +91,8 @@ class CategoryCreator implements CategoryCreatorInterface
      */
     protected function executePostCreatePlugins(CategoryTransfer $categoryTransfer): void
     {
-        foreach ($this->categoryPostCreatePlugins as $plugin) {
-            $plugin->execute($categoryTransfer);
+        foreach ($this->categoryPostCreatePlugins as $categoryPostCreatePlugin) {
+            $categoryPostCreatePlugin->execute($categoryTransfer);
         }
     }
 }
