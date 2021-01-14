@@ -190,13 +190,13 @@
 
     <transfer name="QuoteResponse">
         <property name="isSuccessful" type="bool"/>
-        <property name="quoteTransfer" type="QuoteRequestVersion"/>
+        <property name="quoteTransfer" type="Quote"/>
 
     </transfer>
 
     <transfer name="QuoteRequestVersion">
         <property name="quote" type="Quote"/>
-        <property name="metadata" type="string"/>
+        <property name="metadata" type="array" singular="metadata"/>
     </transfer>
 
     <transfer name="RestQuoteRequestsConfiguredBundle">
@@ -239,8 +239,8 @@
     </transfer>
 
     <transfer name="Shipment">
-        <property name="shippingAddress" type="ShipmentMethod"/>
-        <property name="method" type="Address"/>
+        <property name="shippingAddress" type="Address"/>
+        <property name="method" type="ShipmentMethod"/>
     </transfer>
 
     <transfer name="Expense">

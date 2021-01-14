@@ -142,10 +142,14 @@ class QuoteRequestsRestResponseBuilder implements QuoteRequestsRestResponseBuild
     public function createQuoteRequestCollectionRestResponse(
         QuoteRequestCollectionTransfer $quoteRequestCollectionTransfer
     ): RestResponseInterface {
-        $restResponse = $this->restResourceBuilder->createRestResponse(
-//            $quoteRequestCollectionTransfer->getPagination()->getNbResults(),
-//            $quoteRequestCollectionTransfer->getPagination()->getMaxPerPage()
-        );
+        $totalItems = 0;
+        $limit = 0;
+        if ($quoteRequestCollectionTransfer->getPagination()) {
+            $totalItems = $quoteRequestCollectionTransfer->getPagination()->getNbResults();
+            $limit = $quoteRequestCollectionTransfer->getPagination()->getMaxPerPage();
+        }
+
+        $restResponse = $this->restResourceBuilder->createRestResponse($totalItems, $limit);
 
         foreach ($quoteRequestCollectionTransfer->getQuoteRequests() as $quoteRequestTransfer) {
             $restResponse->addResource($this->createQuoteRequestResource($quoteRequestTransfer));

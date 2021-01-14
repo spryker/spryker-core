@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\QuoteRequestsRestApi\Processor\Reader;
 
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -80,6 +81,14 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
     {
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
             ->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser());
+
+        if ($restRequest->getPage()) {
+            $quoteRequestFilterTransfer->setPagination(
+                (new PaginationTransfer())
+                    ->setMaxPerPage($restRequest->getPage()->getLimit())
+                    ->setPage(($restRequest->getPage()->getOffset() / $restRequest->getPage()->getLimit()) + 1)
+            );
+        }
 
         $quoteRequestCollectionTransfer = $this->quoteRequestClient
             ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer);
