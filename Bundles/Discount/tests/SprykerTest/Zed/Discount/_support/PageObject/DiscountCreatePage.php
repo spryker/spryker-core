@@ -113,7 +113,7 @@ class DiscountCreatePage
         $i->amLoggedInUser();
 
         $dynamicData = [
-            'name' => $this->discountData[$discountName]['name'] . ' ' . rand(1, 999),
+            'name' => $this->discountData[$discountName]['name'] . ' ' . random_int(1, PHP_INT_MAX),
             'validFrom' => '2016-01-01',
             'validTo' => date('Y-m-d', strtotime('tomorrow')),
             'dayNumber' => date('N'),
@@ -127,8 +127,8 @@ class DiscountCreatePage
         !$data['name'] ?: $i->fillField('#discount_discountGeneral_display_name', $data['name']);
         !$data['description'] ?: $i->fillField('#discount_discountGeneral_description', $data['description']);
         !$data['excl'] ?: $i->click('#discount_discountGeneral_is_exclusive_' . $data['excl']);
-        !$data['validFrom'] ?: $i->fillField('#discount_discountGeneral_valid_from', $data['validFrom']);
-        !$data['validTo'] ?: $i->fillField('#discount_discountGeneral_valid_to', $data['validTo']);
+        !$data['validFrom'] ?: $i->fillField('#discount_discountGeneral_valid_from', $i->adaptDateInputForBrowser($data['validFrom']));
+        !$data['validTo'] ?: $i->fillField('#discount_discountGeneral_valid_to', $i->adaptDateInputForBrowser($data['validTo']));
 
         $this->tab('tab-content-discount');
         !$data['calcType'] ?: $i->selectOption('#discount_discountCalculator_calculator_plugin', $data['calcType']);
