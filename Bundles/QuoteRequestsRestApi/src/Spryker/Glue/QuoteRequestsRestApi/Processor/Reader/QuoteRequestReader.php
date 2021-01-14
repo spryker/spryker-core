@@ -17,8 +17,6 @@ use Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequest
 
 class QuoteRequestReader implements QuoteRequestReaderInterface
 {
-    protected const PARAM_QUOTE_REQUEST_VERSION_REFERENCE = 'quoteRequestVersionReference';
-
     /**
      * @var \Spryker\Glue\QuoteRequestsRestApi\Dependency\Client\QuoteRequestsRestApiToQuoteRequestClientInterface
      */

@@ -1,7 +1,7 @@
 # QuoteRequestsRestApi Module
 [![Build Status](https://travis-ci.org/spryker/quote-requests-rest-api.svg)](https://travis-ci.org/spryker/quote-requests-rest-api)
 
-QuoteRequestsRestApi module provides rest API endpoints to create, get, delete quote requests as a company user.
+QuoteRequestsRestApi module provides rest API endpoints to manage quote requests as a company user.
 
 ## Installation
 
