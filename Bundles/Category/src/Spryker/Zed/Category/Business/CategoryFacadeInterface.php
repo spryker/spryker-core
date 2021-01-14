@@ -32,6 +32,7 @@ interface CategoryFacadeInterface
     /**
      * Specification:
      *  - Hydrates category entity from CategoryTransfer and persists it
+     *  - Creates the relationships between category and store if data is provided.
      *  - Hydrates category-node entity from nested NodeTransfer and persists it
      *  - Hydrates category-attribute entities from nested CategoryLocalizedAttributesTransfer (for all given locals) and persists them
      *  - Hydrates extra-parent category-node entities from nested NodeTransfer and persists them
@@ -99,6 +100,7 @@ interface CategoryFacadeInterface
      *  - Finds extra-parent category-nodes and removes them from persistence
      *  - Finds url entities and removes them from persistence
      *  - Finds sub-trees for all category-nodes to be deleted and moves them to the next higher node in the tree
+     *  - Removes the relationships between category and store.
      *  - Updates all category-node entities of all sub-trees that are moved
      *  - Touches all deleted category-node entities deleted (via TouchFacade)
      *  - Touches all deleted url entities deleted (via TouchFacade)
