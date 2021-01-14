@@ -1,0 +1,21 @@
+namespace: SprykerTest\Glue\SecurityBlockerRestApi
+
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    log: ../../../_output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    Glue:
+        path: .
+        class_name: SecurityBlockerRestApiTester
+        modules:
+            enabled:
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
