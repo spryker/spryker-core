@@ -72,9 +72,6 @@ class ProductCategoryStorageDeleter implements ProductCategoryStorageDeleterInte
      */
     public function unpublish(array $productAbstractIds): void
     {
-        $productAbstractCategoryStorageKeys = $this->productCategoryStorageRepository
-            ->getProductAbstractCategoryStorageKeysByProductAbstractIds($productAbstractIds);
-
-        $this->productCategoryStorageEntityManager->deleteProductAbstractCategoryStorages($productAbstractCategoryStorageKeys);
+        $this->productCategoryStorageEntityManager->deleteProductAbstractCategoryStorages($productAbstractIds);
     }
 }

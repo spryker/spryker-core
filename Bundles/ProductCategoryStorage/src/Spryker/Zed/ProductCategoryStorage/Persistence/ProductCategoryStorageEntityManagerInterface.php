@@ -12,11 +12,11 @@ use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
 interface ProductCategoryStorageEntityManagerInterface
 {
     /**
-     * @param string[] $keys
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
-    public function deleteProductAbstractCategoryStorages(array $keys): void;
+    public function deleteProductAbstractCategoryStorages(array $productAbstractIds): void;
 
     /**
      * @param int $idProductAbstract

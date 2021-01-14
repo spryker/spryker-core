@@ -17,15 +17,15 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class ProductCategoryStorageEntityManager extends AbstractEntityManager implements ProductCategoryStorageEntityManagerInterface
 {
     /**
-     * @param string[] $keys
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
-    public function deleteProductAbstractCategoryStorages(array $keys): void
+    public function deleteProductAbstractCategoryStorages(array $productAbstractIds): void
     {
         $productAbstractCategoryStorageEntities = $this->getFactory()
             ->createProductAbstractCategoryStoragePropelQuery()
-            ->filterByKey_In($keys)
+            ->filterByFkProductAbstract_In($productAbstractIds)
             ->find();
 
         foreach ($productAbstractCategoryStorageEntities as $productAbstractCategoryStorageEntity) {

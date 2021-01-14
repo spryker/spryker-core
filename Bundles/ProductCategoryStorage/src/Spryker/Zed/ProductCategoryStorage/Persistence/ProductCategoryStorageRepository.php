@@ -14,7 +14,6 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryStoreTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
-use Orm\Zed\ProductCategoryStorage\Persistence\Map\SpyProductAbstractCategoryStorageTableMap;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -98,22 +97,6 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
             ->select([SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE])
             ->find()
             ->toArray();
-    }
-
-    /**
-     * @param int[] $productAbstractIds
-     *
-     * @return string[]
-     */
-    public function getProductAbstractCategoryStorageKeysByProductAbstractIds(array $productAbstractIds): array
-    {
-        return $this
-            ->getFactory()
-            ->createProductAbstractCategoryStoragePropelQuery()
-            ->filterByFkProductAbstract_In($productAbstractIds)
-            ->select([SpyProductAbstractCategoryStorageTableMap::COL_KEY])
-            ->find()
-            ->getData();
     }
 
     /**
