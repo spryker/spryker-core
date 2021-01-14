@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\ProductLabelStorage\Business;
+namespace SprykerTest\Zed\ProductStorage\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
