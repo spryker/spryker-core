@@ -224,10 +224,11 @@ interface GuiTableConfigurationBuilderInterface
      * @param string $id
      * @param string $title
      * @param string $url
+     * @param null $type
      *
      * @return $this
      */
-    public function addBatchActionUrl(string $id, string $title, string $url);
+    public function addBatchActionUrl(string $id, string $title, string $url, $type = null);
 
     /**
      * Sets an action ID which will be triggered when clicking on a row.

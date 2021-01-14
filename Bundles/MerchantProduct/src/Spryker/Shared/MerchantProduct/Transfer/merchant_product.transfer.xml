@@ -8,6 +8,7 @@
 
     <transfer name="MerchantProductCriteria">
         <property name="idProductAbstract" type="int"/>
+        <property name="productConcreteIds" type="int[]" singular="idProductConcrete"/>
         <property name="merchantIds" type="int[]" singular="idMerchant"/>
         <property name="merchantProductAbstractIds" type="int[]" singular="merchantProductAbstractId"/>
     </transfer>
@@ -52,5 +53,9 @@
         <property name="productAbstract" type="ProductAbstract"/>
         <property name="isSuccessful" type="bool"/>
         <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="ProductConcreteCollection">
+        <property name="products" type="ProductConcrete[]" singular="product"/>
     </transfer>
 </transfers>

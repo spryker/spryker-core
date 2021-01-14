@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractResponseTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 
 class ProductMerchantPortalGuiToMerchantProductFacadeBridge implements ProductMerchantPortalGuiToMerchantProductFacadeInterface
 {
@@ -46,5 +47,16 @@ class ProductMerchantPortalGuiToMerchantProductFacadeBridge implements ProductMe
     public function updateProductAbstract(MerchantProductTransfer $merchantProductTransfer): ProductAbstractResponseTransfer
     {
         return $this->merchantProductFacade->updateProductAbstract($merchantProductTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
+     */
+    public function getProductConcreteCollection(
+        MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+    ): ProductConcreteCollectionTransfer {
+        return $this->merchantProductFacade->getProductConcreteCollection($merchantProductCriteriaTransfer);
     }
 }

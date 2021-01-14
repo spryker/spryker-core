@@ -34,6 +34,11 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
     protected const DATA_URL = '/product-merchant-portal-gui/products-concrete/table-data';
 
     /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductsConcreteController::bulkEditAction()
+     */
+    protected const BULK_EDIT_URL = '/product-merchant-portal-gui/products-concrete/bulk-edit?product-ids=${rowIds}';
+
+    /**
      * @var \Spryker\Shared\GuiTable\GuiTableFactoryInterface
      */
     protected $guiTableFactory;
@@ -66,11 +71,13 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
 
         $guiTableConfigurationBuilder = $this->addColumns($guiTableConfigurationBuilder);
         $guiTableConfigurationBuilder = $this->addFilters($guiTableConfigurationBuilder);
+        $guiTableConfigurationBuilder = $this->addBatchActions($guiTableConfigurationBuilder);
 
         $guiTableConfigurationBuilder
             ->setDataSourceUrl($this->getDataUrl($idProductAbstract))
             ->setSearchPlaceholder(static::SEARCH_PLACEHOLDER)
-            ->setDefaultPageSize(10);
+            ->setDefaultPageSize(10)
+            ->setIsItemSelectionEnabled(true);
 
         return $guiTableConfigurationBuilder->createConfiguration();
     }
@@ -123,6 +130,26 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
                 '0' => static::COLUMN_DATA_STATUS_INACTIVE,
             ])
             ->addFilterDateRange('validity', 'Validity');
+
+        return $guiTableConfigurationBuilder;
+    }
+
+    /**
+     * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
+     *
+     * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
+     */
+    protected function addBatchActions(
+        GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
+    ): GuiTableConfigurationBuilderInterface {
+        $guiTableConfigurationBuilder->addBatchActionUrl(
+            'Edit',
+            'Bulk edit',
+            static::BULK_EDIT_URL,
+            GuiTableConfigurationBuilderInterface::ACTION_TYPE_FORM_OVERLAY
+        );
+
+        $guiTableConfigurationBuilder->setBatchActionRowIdPath(ProductConcreteTransfer::ID_PRODUCT_CONCRETE);
 
         return $guiTableConfigurationBuilder;
     }

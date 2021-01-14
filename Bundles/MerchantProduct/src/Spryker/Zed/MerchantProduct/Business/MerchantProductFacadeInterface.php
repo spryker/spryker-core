@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\ProductAbstractResponseTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 
 interface MerchantProductFacadeInterface
 {
@@ -85,4 +86,19 @@ interface MerchantProductFacadeInterface
      * @return \Generated\Shared\Transfer\ProductAbstractResponseTransfer
      */
     public function updateProductAbstract(MerchantProductTransfer $merchantProductTransfer): ProductAbstractResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires merchant ID.
+     * - Returns the list of concrete products related to the provided merchant by checking abstract product - merchant relationship and criteria.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
+     */
+    public function getProductConcreteCollection(
+        MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+    ): ProductConcreteCollectionTransfer;
 }

@@ -43,4 +43,14 @@ class MerchantProductToProductFacadeBridge implements MerchantProductToProductFa
     {
         return $this->productFacade->saveProductAbstract($productAbstractTransfer);
     }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getConcreteProductsByAbstractProductId(int $idProductAbstract)
+    {
+        return $this->productFacade->getConcreteProductsByAbstractProductId($idProductAbstract);
+    }
 }

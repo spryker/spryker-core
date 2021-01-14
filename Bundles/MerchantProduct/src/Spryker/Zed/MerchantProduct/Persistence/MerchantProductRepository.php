@@ -12,8 +12,10 @@ use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
+use Orm\Zed\MerchantProduct\Persistence\Map\SpyMerchantProductAbstractTableMap;
 use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -137,6 +139,22 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
 
         if ($merchantProductCriteriaTransfer->getMerchantIds()) {
             $merchantProductAbstractQuery->filterByFkMerchant_In($merchantProductCriteriaTransfer->getMerchantIds());
+        }
+
+        if ($merchantProductCriteriaTransfer->getIdMerchant()) {
+            $merchantProductAbstractQuery->filterByFkMerchant($merchantProductCriteriaTransfer->getIdMerchant());
+        }
+
+        if ($merchantProductCriteriaTransfer->getProductConcreteIds()) {
+            $merchantProductAbstractQuery->addJoin(
+                SpyMerchantProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT,
+                SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
+                Criteria::INNER_JOIN
+            )->where(sprintf(
+                '%s IN (%s)',
+                SpyProductTableMap::COL_ID_PRODUCT,
+                implode(',', $merchantProductCriteriaTransfer->getProductConcreteIds())
+            ))->groupByFkProductAbstract();
         }
 
         return $merchantProductAbstractQuery;
