@@ -64,7 +64,7 @@ class SecurityBlockerConfig extends AbstractBundleConfig
     protected function getConnectionCredentials(): RedisCredentialsTransfer
     {
         return (new RedisCredentialsTransfer())
-            ->setProtocol($this->get(SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_PROTOCOL))
+            ->setScheme($this->getZedSessionScheme())
             ->setHost($this->get(SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_HOST))
             ->setPort($this->get(SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_PORT))
             ->setDatabase($this->get(SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_DATABASE))
@@ -126,5 +126,16 @@ class SecurityBlockerConfig extends AbstractBundleConfig
             ->setNumberOfAttempts(
                 $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_NUMBER_OF_ATTEMPTS, static::DEFAULT_BLOCKING_NUMBER_OF_ATTEMPTS)
             );
+    }
+
+    /**
+     * @deprecated Use $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_SCHEME) instead. Added for BC reason only.
+     *
+     * @return string
+     */
+    protected function getZedSessionScheme(): string
+    {
+        return $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_SCHEME, false) ?:
+            $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_PROTOCOL);
     }
 }
