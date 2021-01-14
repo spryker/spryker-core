@@ -28,5 +28,5 @@ Save,Speichern
 "Create new CMS Redirect","Neue CMS-Weiterleitung erstellen"
 "Please select","Bitte auswählen"
 "Edit CMS Redirect","CMS-Weiterleitung bearbeiten"
-"URL's second character cannot be slash","Das zweite Zeichen des URLs kann nicht Schrägstrich sein"
+"URL's second character cannot be slash","Das zweite Zeichen der URL kann kein Schrägstrich sein"
 "URL cannot contain backslash sign, you can use '%5C' instead","URL kann nicht Backslash-Zeichen enthalten, stattdessen können Sie '%5C' benutzen"
