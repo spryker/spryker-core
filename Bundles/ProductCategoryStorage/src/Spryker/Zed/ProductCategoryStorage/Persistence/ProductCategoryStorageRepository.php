@@ -10,9 +10,11 @@ namespace Spryker\Zed\ProductCategoryStorage\Persistence;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryStoreTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
+use Orm\Zed\ProductCategoryStorage\Persistence\Map\SpyProductAbstractCategoryStorageTableMap;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -101,14 +103,15 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
     /**
      * @param int[] $productAbstractIds
      *
-     * @return \Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage[]
+     * @return string[]
      */
-    public function getProductAbstractCategoryStoragesByIds(array $productAbstractIds): array
+    public function getProductAbstractCategoryStorageKeysByProductAbstractIds(array $productAbstractIds): array
     {
         return $this
             ->getFactory()
-            ->createSpyProductAbstractCategoryStorageQuery()
+            ->createProductAbstractCategoryStoragePropelQuery()
             ->filterByFkProductAbstract_In($productAbstractIds)
+            ->select([SpyProductAbstractCategoryStorageTableMap::COL_KEY])
             ->find()
             ->getData();
     }
@@ -135,26 +138,29 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
     /**
      * @param int[] $productAbstractIds
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes[]
+     * @return \Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer[]
      */
     public function getProductAbstractLocalizedAttributes(array $productAbstractIds): array
     {
-        return $this->getFactory()
+        $productAbstractLocalizedAttributesEntities = $this->getFactory()
             ->getProductAbstractLocalizedAttributesPropelQuery()
             ->joinWithLocale()
             ->filterByFkProductAbstract_In($productAbstractIds)
-            ->find()
-            ->getData();
+            ->find();
+
+        return $this->getFactory()
+            ->createProductAbstractLocalizedAttributesMapper()
+            ->mapProductAbstractLocalizedAttributesEntitiesToProductAbstractLocalizedAttributesTransfers($productAbstractLocalizedAttributesEntities);
     }
 
     /**
      * @param int[] $productAbstractIds
      *
-     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]
+     * @return \Generated\Shared\Transfer\ProductCategoryTransfer[]
      */
     public function getProductCategoryWithCategoryNodes(array $productAbstractIds): array
     {
-        return $this->getFactory()
+        $productCategoryQuery = $this->getFactory()
             ->getProductCategoryPropelQuery()
             ->filterByFkProductAbstract_In($productAbstractIds)
             ->innerJoinSpyCategory()
@@ -165,24 +171,29 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
             )
             ->joinWithSpyCategory()
             ->joinWith('SpyCategory.Node')
-            ->orderByProductOrder()
-            ->find()
-            ->getData();
+            ->orderByProductOrder();
+
+        return $this->getFactory()
+            ->createProductCategoryMapper()
+            ->mapProductCategoryEntitiesToProductCategoryTransfers($productCategoryQuery->find());
     }
 
     /**
      * @param int[] $productAbstractIds
      *
-     * @return \Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage[]
+     * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[][][]
      */
-    public function getProductAbstractCategoryStorageByIds(array $productAbstractIds): array
+    public function getMappedProductAbstractCategoryStorages(array $productAbstractIds): array
     {
-        return $this
+        $productAbstractCategoryStorageEntities = $this
             ->getFactory()
-            ->createSpyProductAbstractCategoryStorageQuery()
+            ->createProductAbstractCategoryStoragePropelQuery()
             ->filterByFkProductAbstract_In($productAbstractIds)
-            ->find()
-            ->getData();
+            ->find();
+
+        return $this->getFactory()
+            ->createProductCategoryStorageMapper()
+            ->mapProductAbstractCategoryStorageEntitiesToProductAbstractCategoryStorageTransfers($productAbstractCategoryStorageEntities);
     }
 
     /**
@@ -196,6 +207,21 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
             ->getProductCategoryPropelQuery()
             ->filterByFkCategory_In($categoryIds)
             ->select(SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT)
+            ->find()
+            ->getData();
+    }
+
+    /**
+     * @param int[] $categoryStoreIds
+     *
+     * @return int[]
+     */
+    public function getCategoryIdsByCategoryStoreIds(array $categoryStoreIds): array
+    {
+        return $this->getFactory()
+            ->getCategoryStorePropelQuery()
+            ->filterByIdCategoryStore_In($categoryStoreIds)
+            ->select(SpyCategoryStoreTableMap::COL_FK_CATEGORY)
             ->find()
             ->getData();
     }

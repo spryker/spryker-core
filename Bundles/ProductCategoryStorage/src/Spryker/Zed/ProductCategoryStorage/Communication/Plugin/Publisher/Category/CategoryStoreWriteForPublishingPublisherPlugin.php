@@ -12,17 +12,16 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
 /**
- * @method \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductCategoryStorage\Business\ProductCategoryStorageFacadeInterface getFacade()
- * @method \Spryker\Zed\ProductCategoryStorage\Communication\ProductCategoryStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductCategoryStorage\ProductCategoryStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductCategoryStorage\Communication\ProductCategoryStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageQueryContainerInterface getQueryContainer()
  */
-class CategoryStoreWritePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
+class CategoryStoreWriteForPublishingPublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Publishes product category data by CategoryStore publish and un-publish events.
-     * - Publishes product category data by SpyCategoryStore entity events.
+     * - Publishes product category data by CategoryStore publish event.
      *
      * @api
      *
@@ -33,7 +32,7 @@ class CategoryStoreWritePublisherPlugin extends AbstractPlugin implements Publis
      */
     public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        $this->getFacade()->writeCollectionByCategoryStoreIdEvents($eventEntityTransfers);
+        $this->getFacade()->writeCollectionByCategoryStorePublishingEvents($eventEntityTransfers);
     }
 
     /**
@@ -47,9 +46,6 @@ class CategoryStoreWritePublisherPlugin extends AbstractPlugin implements Publis
     {
         return [
             ProductCategoryStorageConfig::CATEGORY_STORE_PUBLISH,
-            ProductCategoryStorageConfig::ENTITY_SPY_CATEGORY_STORE_CREATE,
-            ProductCategoryStorageConfig::ENTITY_SPY_CATEGORY_STORE_UPDATE,
-            ProductCategoryStorageConfig::ENTITY_SPY_CATEGORY_STORE_DELETE,
         ];
     }
 }

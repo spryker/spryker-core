@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductCategoryStorage;
 
+use Orm\Zed\Category\Persistence\Base\SpyCategoryStoreQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery;
@@ -32,6 +33,7 @@ class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyP
     public const FACADE_STORE = 'FACADE_STORE';
 
     public const PROPEL_QUERY_CATEGORY_NODE = 'PROPEL_QUERY_CATEGORY_NODE';
+    public const PROPEL_QUERY_CATEGORY_STORE = 'PROPEL_QUERY_CATEGORY_STORE';
     public const PROPEL_QUERY_CATEGORY_CLOSURE_TABLE = 'PROPEL_QUERY_CATEGORY_CLOSURE_TABLE';
     public const PROPEL_QUERY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES = 'PROPEL_QUERY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES';
     public const PROPEL_QUERY_PRODUCT_CATEGORY = 'PROPEL_QUERY_PRODUCT_CATEGORY';
@@ -82,6 +84,7 @@ class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyP
         });
 
         $container = $this->addCategoryNodePropelQuery($container);
+        $container = $this->addCategoryStorePropelQuery($container);
         $container = $this->addCategoryClosureTablePropelQuery($container);
         $container = $this->addProductAbstractLocalizedAttributesPropelQuery($container);
         $container = $this->addProductCategoryPropelQuery($container);
@@ -142,6 +145,22 @@ class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::PROPEL_QUERY_CATEGORY_NODE, $container->factory(function () {
             return SpyCategoryNodeQuery::create();
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @module Category
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCategoryStorePropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_CATEGORY_STORE, $container->factory(function () {
+            return SpyCategoryStoreQuery::create();
         }));
 
         return $container;

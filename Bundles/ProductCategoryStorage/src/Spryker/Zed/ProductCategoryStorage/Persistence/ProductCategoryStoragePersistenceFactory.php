@@ -7,18 +7,23 @@
 
 namespace Spryker\Zed\ProductCategoryStorage\Persistence;
 
+use Orm\Zed\Category\Persistence\Base\SpyCategoryStoreQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductCategoryStorage\Persistence\Propel\Mapper\ProductAbstractLocalizedAttributesMapper;
+use Spryker\Zed\ProductCategoryStorage\Persistence\Propel\Mapper\ProductCategoryMapper;
+use Spryker\Zed\ProductCategoryStorage\Persistence\Propel\Mapper\ProductCategoryStorageMapper;
 use Spryker\Zed\ProductCategoryStorage\ProductCategoryStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductCategoryStorage\ProductCategoryStorageConfig getConfig()
  * @method \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageEntityManagerInterface getEntityManager()
  */
 class ProductCategoryStoragePersistenceFactory extends AbstractPersistenceFactory
 {
@@ -41,7 +46,7 @@ class ProductCategoryStoragePersistenceFactory extends AbstractPersistenceFactor
     /**
      * @return \Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorageQuery
      */
-    public function createSpyProductAbstractCategoryStorageQuery(): SpyProductAbstractCategoryStorageQuery
+    public function createProductAbstractCategoryStoragePropelQuery(): SpyProductAbstractCategoryStorageQuery
     {
         return SpyProductAbstractCategoryStorageQuery::create();
     }
@@ -52,6 +57,14 @@ class ProductCategoryStoragePersistenceFactory extends AbstractPersistenceFactor
     public function getCategoryNodePropelQuery(): SpyCategoryNodeQuery
     {
         return $this->getProvidedDependency(ProductCategoryStorageDependencyProvider::PROPEL_QUERY_CATEGORY_NODE);
+    }
+
+    /**
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryStoreQuery
+     */
+    public function getCategoryStorePropelQuery(): SpyCategoryStoreQuery
+    {
+        return $this->getProvidedDependency(ProductCategoryStorageDependencyProvider::PROPEL_QUERY_CATEGORY_STORE);
     }
 
     /**
@@ -76,5 +89,29 @@ class ProductCategoryStoragePersistenceFactory extends AbstractPersistenceFactor
     public function getProductCategoryPropelQuery(): SpyProductCategoryQuery
     {
         return $this->getProvidedDependency(ProductCategoryStorageDependencyProvider::PROPEL_QUERY_PRODUCT_CATEGORY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategoryStorage\Persistence\Propel\Mapper\ProductCategoryStorageMapper
+     */
+    public function createProductCategoryStorageMapper(): ProductCategoryStorageMapper
+    {
+        return new ProductCategoryStorageMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategoryStorage\Persistence\Propel\Mapper\ProductCategoryMapper
+     */
+    public function createProductCategoryMapper(): ProductCategoryMapper
+    {
+        return new ProductCategoryMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategoryStorage\Persistence\Propel\Mapper\ProductAbstractLocalizedAttributesMapper
+     */
+    public function createProductAbstractLocalizedAttributesMapper(): ProductAbstractLocalizedAttributesMapper
+    {
+        return new ProductAbstractLocalizedAttributesMapper();
     }
 }

@@ -22,9 +22,9 @@ interface ProductCategoryStorageRepositoryInterface
     /**
      * @param int[] $productAbstractIds
      *
-     * @return \Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage[]
+     * @return string[]
      */
-    public function getProductAbstractCategoryStoragesByIds(array $productAbstractIds): array;
+    public function getProductAbstractCategoryStorageKeysByProductAbstractIds(array $productAbstractIds): array;
 
     /**
      * @param int $idCategoryNode
@@ -36,23 +36,23 @@ interface ProductCategoryStorageRepositoryInterface
     /**
      * @param int[] $productAbstractIds
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes[]
+     * @return \Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer[]
      */
     public function getProductAbstractLocalizedAttributes(array $productAbstractIds): array;
 
     /**
      * @param int[] $productAbstractIds
      *
-     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]
+     * @return \Generated\Shared\Transfer\ProductCategoryTransfer[]
      */
     public function getProductCategoryWithCategoryNodes(array $productAbstractIds): array;
 
     /**
      * @param int[] $productAbstractIds
      *
-     * @return \Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage[]
+     * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[][][]
      */
-    public function getProductAbstractCategoryStorageByIds(array $productAbstractIds): array;
+    public function getMappedProductAbstractCategoryStorages(array $productAbstractIds): array;
 
     /**
      * @param int[] $categoryIds
@@ -60,4 +60,11 @@ interface ProductCategoryStorageRepositoryInterface
      * @return int[]
      */
     public function getProductAbstractIdsByCategoryIds(array $categoryIds): array;
+
+    /**
+     * @param int[] $categoryStoreIds
+     *
+     * @return int[]
+     */
+    public function getCategoryIdsByCategoryStoreIds(array $categoryStoreIds): array;
 }

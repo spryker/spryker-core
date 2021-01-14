@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ProductCategoryStorage;
 
-use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**

@@ -15,6 +15,7 @@ use Spryker\Zed\ProductCategoryStorage\ProductCategoryStorageDependencyProvider;
  * @method \Spryker\Zed\ProductCategoryStorage\ProductCategoryStorageConfig getConfig()
  * @method \Spryker\Zed\ProductCategoryStorage\Business\ProductCategoryStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageEntityManagerInterface getEntityManager()
  */
 class ProductCategoryStorageCommunicationFactory extends AbstractCommunicationFactory
 {

@@ -49,7 +49,7 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
     {
         return $this
             ->getFactory()
-            ->createSpyProductAbstractCategoryStorageQuery()
+            ->createProductAbstractCategoryStoragePropelQuery()
             ->filterByFkProductAbstract_In($productAbstractIds);
     }
 

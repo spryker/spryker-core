@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\ProductCategoryStorage\Business\ProductCategoryStorageBusinessFactory getFactory()
  * @method \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageEntityManagerInterface getEntityManager()
  */
 class ProductCategoryStorageFacade extends AbstractFacade implements ProductCategoryStorageFacadeInterface
 {
@@ -40,7 +41,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      */
     public function unpublish(array $productAbstractIds)
     {
-        $this->getFactory()->createProductCategoryStorageWriter()->unpublish($productAbstractIds);
+        $this->getFactory()->createProductCategoryStorageDeleter()->unpublish($productAbstractIds);
     }
 
     /**
@@ -54,7 +55,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      */
     public function getRelatedCategoryIds(array $categoryIds)
     {
-        return $this->getFactory()->createProductCategoryStorageWriter()->getRelatedCategoryIds($categoryIds);
+        return $this->getFactory()->createProductAbstractReader()->getRelatedCategoryIds($categoryIds);
     }
 
     /**
@@ -66,10 +67,42 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      *
      * @return void
      */
-    public function writeProductCategoryStorageCollectionByCategoryStoreEvents(array $eventEntityTransfers): void
+    public function writeCollectionByCategoryStoreIdEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
             ->createProductCategoryStorageWriter()
-            ->writeProductCategoryStorageCollectionByCategoryStoreEvents($eventEntityTransfers);
+            ->writeCollectionByCategoryStoreIdEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByCategoryStorePublishingEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createProductCategoryStorageWriter()
+            ->writeCollectionByCategoryStorePublishingEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function deleteCollectionByCategoryStoreIdEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createProductCategoryStorageDeleter()
+            ->deleteCollectionByCategoryStoreIdEvents($eventEntityTransfers);
     }
 }

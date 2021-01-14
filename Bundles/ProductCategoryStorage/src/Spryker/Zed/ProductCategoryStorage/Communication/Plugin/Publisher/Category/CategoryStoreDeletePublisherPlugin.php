@@ -17,12 +17,11 @@ use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
  * @method \Spryker\Zed\ProductCategoryStorage\Communication\ProductCategoryStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductCategoryStorage\ProductCategoryStorageConfig getConfig()
  */
-class CategoryStoreWritePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
+class CategoryStoreDeletePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Publishes product category data by CategoryStore publish and un-publish events.
-     * - Publishes product category data by SpyCategoryStore entity events.
+     * - Publishes product category data by CategoryStore un-publish event.
      *
      * @api
      *
@@ -33,7 +32,7 @@ class CategoryStoreWritePublisherPlugin extends AbstractPlugin implements Publis
      */
     public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        $this->getFacade()->writeCollectionByCategoryStoreIdEvents($eventEntityTransfers);
+        $this->getFacade()->deleteCollectionByCategoryStoreIdEvents($eventEntityTransfers);
     }
 
     /**
@@ -46,10 +45,7 @@ class CategoryStoreWritePublisherPlugin extends AbstractPlugin implements Publis
     public function getSubscribedEvents(): array
     {
         return [
-            ProductCategoryStorageConfig::CATEGORY_STORE_PUBLISH,
-            ProductCategoryStorageConfig::ENTITY_SPY_CATEGORY_STORE_CREATE,
-            ProductCategoryStorageConfig::ENTITY_SPY_CATEGORY_STORE_UPDATE,
-            ProductCategoryStorageConfig::ENTITY_SPY_CATEGORY_STORE_DELETE,
+            ProductCategoryStorageConfig::CATEGORY_STORE_UNPUBLISH,
         ];
     }
 }

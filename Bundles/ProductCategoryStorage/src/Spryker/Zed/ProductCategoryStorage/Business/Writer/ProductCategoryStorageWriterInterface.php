@@ -10,30 +10,23 @@ namespace Spryker\Zed\ProductCategoryStorage\Business\Writer;
 interface ProductCategoryStorageWriterInterface
 {
     /**
-     * @param int[] $productAbstractIds
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      *
      * @return void
      */
-    public function publish(array $productAbstractIds);
-
-    /**
-     * @param int[] $productAbstractIds
-     *
-     * @return void
-     */
-    public function unpublish(array $productAbstractIds);
-
-    /**
-     * @param array $categoryIds
-     *
-     * @return array
-     */
-    public function getRelatedCategoryIds(array $categoryIds);
+    public function writeCollectionByCategoryStoreIdEvents(array $eventEntityTransfers): void;
 
     /**
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      *
      * @return void
      */
-    public function writeProductCategoryStorageCollectionByCategoryStoreEvents(array $eventEntityTransfers): void;
+    public function writeCollectionByCategoryStorePublishingEvents(array $eventEntityTransfers): void;
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return void
+     */
+    public function publish(array $productAbstractIds): void;
 }
