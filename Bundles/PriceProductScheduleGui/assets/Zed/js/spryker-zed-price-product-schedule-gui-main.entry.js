@@ -9,7 +9,7 @@ var PriceProductScheduleCreate = require('./modules/price-product-schedule-creat
 require('./modules/scheduled-prices-errors-form');
 require('../sass/main.scss');
 
-$(document).ready(function() {
+$(document).ready(function () {
     new PriceProductScheduleCreate({
         $activeFrom: $('#price_product_schedule_activeFrom_date'),
         $activeTo: $('#price_product_schedule_activeTo_date'),
@@ -23,7 +23,7 @@ $(document).ready(function() {
         currencies: {
             response: 'currencies',
             value: 'id_currency',
-            text: 'code'
+            text: 'code',
         },
         submit: $('#price_product_schedule_submit'),
         form: $('#price_product_schedule_form'),

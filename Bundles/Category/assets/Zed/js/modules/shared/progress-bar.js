@@ -10,7 +10,7 @@
  */
 var domElements = {
     wrapper: null,
-    bar: null
+    bar: null,
 };
 
 var selector = '#progress-bar';
@@ -20,16 +20,14 @@ var selector = '#progress-bar';
  *
  * @return {void}
  */
-function setSelector(progressBarSelector)
-{
+function setSelector(progressBarSelector) {
     selector = progressBarSelector;
 }
 
 /**
  * @return {void}
  */
-function show()
-{
+function show() {
     getDomElements().wrapper.removeClass('hidden');
     getDomElements().bar.css('width', '100%');
 }
@@ -37,8 +35,7 @@ function show()
 /**
  * @return {void}
  */
-function hide()
-{
+function hide() {
     getDomElements().bar.css('width', 0);
     getDomElements().wrapper.addClass('hidden');
 }
@@ -47,8 +44,7 @@ function hide()
  *
  * @return {object}
  */
-function getDomElements()
-{
+function getDomElements() {
     if (domElements.wrapper === null) {
         domElements.wrapper = jQuery(selector);
         domElements.bar = domElements.wrapper.children('.progress-bar');
@@ -60,5 +56,5 @@ function getDomElements()
 module.exports = {
     setSelector: setSelector,
     show: show,
-    hide: hide
+    hide: hide,
 };

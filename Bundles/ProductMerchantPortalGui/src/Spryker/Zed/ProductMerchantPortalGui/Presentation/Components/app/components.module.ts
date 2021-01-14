@@ -1,11 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CustomElementModule, WebComponentDefs } from '@spryker/web-components';
-import {
-    ButtonModule,
-    ButtonComponent,
-    ButtonLinkModule,
-    ButtonLinkComponent,
-} from '@spryker/button';
+import { ButtonModule, ButtonComponent, ButtonLinkModule, ButtonLinkComponent } from '@spryker/button';
 
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductListModule } from './product-list/product-list.module';
@@ -15,10 +10,7 @@ import { CardModule, CardComponent } from '@spryker/card';
 import { SelectModule, SelectComponent } from '@spryker/select';
 import { InputModule, InputComponent } from '@spryker/input';
 import { CheckboxModule, CheckboxComponent } from '@spryker/checkbox';
-import {
-    DateRangePickerModule,
-    DateRangePickerComponent,
-} from '@spryker/date-picker';
+import { DateRangePickerModule, DateRangePickerComponent } from '@spryker/date-picker';
 import { CollapsibleModule, CollapsibleComponent } from '@spryker/collapsible';
 import { FormItemModule, FormItemComponent } from '@spryker/form-item';
 

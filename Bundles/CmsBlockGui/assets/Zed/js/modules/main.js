@@ -5,8 +5,7 @@
 
 'use strict';
 
-$(document).ready( function () {
-
+$(document).ready(function () {
     var validFrom = $('#cms_block_validFrom');
     var validTo = $('#cms_block_validTo');
 
@@ -16,9 +15,9 @@ $(document).ready( function () {
         numberOfMonths: 3,
         maxDate: validTo.val(),
         defaultData: 0,
-        onClose: function(selectedDate) {
+        onClose: function (selectedDate) {
             validTo.datepicker('option', 'minDate', selectedDate);
-        }
+        },
     });
 
     validTo.datepicker({
@@ -27,16 +26,15 @@ $(document).ready( function () {
         changeMonth: true,
         numberOfMonths: 3,
         minDate: validFrom.val(),
-        onClose: function(selectedDate) {
+        onClose: function (selectedDate) {
             validFrom.datepicker('option', 'maxDate', selectedDate);
-        }
+        },
     });
 
-    $('[name=cms_block_glossary]').on('submit', function() {
+    $('[name=cms_block_glossary]').on('submit', function () {
         var self = $(this);
 
         self.find('.html-editor').each(function (index, element) {
-
             var editor = $(element);
 
             if (editor.summernote('codeview.isActivated')) {

@@ -7,8 +7,8 @@
 
 require('./legacy/logic');
 
-$(document).ready( function () {
-    $('[name=translation]').on('submit', function() {
+$(document).ready(function () {
+    $('[name=translation]').on('submit', function () {
         var self = $(this);
 
         self.find('.html-editor').each(function (index, element) {

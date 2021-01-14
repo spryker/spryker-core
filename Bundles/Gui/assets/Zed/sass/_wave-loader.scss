@@ -4,7 +4,7 @@ $wave-loader-on-button-width: 33px;
 .sk-spinner-three-bounce.wave-loader {
     display: inline-block;
     width: $wave-loader-default-width;
-    height: round($wave-loader-default-width * .3);
+    height: round($wave-loader-default-width * 0.3);
 
     > .sk-bounce1,
     > .sk-bounce2,
@@ -26,7 +26,7 @@ $wave-loader-on-button-width: 33px;
     &--on-button {
         margin-right: 5px;
         width: $wave-loader-on-button-width;
-        height: round($wave-loader-on-button-width * .3);
+        height: round($wave-loader-on-button-width * 0.3);
 
         > .sk-bounce1,
         > .sk-bounce2,

@@ -13,38 +13,41 @@ function FormAction(options) {
     this.$actionButton = $(this.actionButtonSelector);
     this.checkedItemIds = [];
 
-    this.init = function() {
+    this.init = function () {
         this.mapEvents();
     };
 
-    this.mapEvents = function() {
+    this.mapEvents = function () {
         var self = this;
 
-        this.$actionButton.on('click', function(event) {
+        this.$actionButton.on('click', function (event) {
             event.preventDefault();
             self.updateFormAction($(this));
         });
     };
 
-    this.updateFormAction = function($actionButton) {
+    this.updateFormAction = function ($actionButton) {
         var $form = $actionButton.closest('form');
         var formUrl = decodeURI($form.attr('action'));
 
         this.setCheckedItemIds();
 
         if (this.checkedItemIds.length) {
-            formUrl = formUrl.replace(/&items\[(\d+)?\]=\d+/g, '') + '&' + $.param({
-                items: this.checkedItemIds
-            });
+            formUrl =
+                formUrl.replace(/&items\[(\d+)?\]=\d+/g, '') +
+                '&' +
+                $.param({
+                    items: this.checkedItemIds,
+                });
         }
 
         this.formSubmit($actionButton, $form, formUrl);
     };
 
-    this.setCheckedItemIds = function() {
+    this.setCheckedItemIds = function () {
         var self = this;
 
-        this.$item.each(function() {
+        this.$item.each(function () {
             if (!$(this).prop('checked')) {
                 return;
             }
@@ -53,7 +56,7 @@ function FormAction(options) {
         });
     };
 
-    this.formSubmit = function($button, $form, formUrl) {
+    this.formSubmit = function ($button, $form, formUrl) {
         $button.prop('disabled', true).addClass('disabled');
         $form.attr('action', formUrl);
         $form.submit();
