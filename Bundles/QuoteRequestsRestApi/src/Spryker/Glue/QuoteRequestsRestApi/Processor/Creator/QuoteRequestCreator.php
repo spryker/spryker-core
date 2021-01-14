@@ -70,13 +70,16 @@ class QuoteRequestCreator implements QuoteRequestCreatorInterface
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->quoteRequestsRestResponseBuilder->createCartNotFoundErrorResponse();
         }
+        if (!$quoteResponseTransfer->getQuoteTransferOrFail()->getItems()->count()) {
+            return $this->quoteRequestsRestResponseBuilder->createCartIsEmptyErrorResponse();
+        }
 
         $quoteRequestTransfer = $this->quoteRequestsRequestMapper
-            ->mapRestRequestToQuoteRequestTransfer($restRequest, $quoteResponseTransfer->getQuoteTransfer());
+            ->mapRestRequestToQuoteRequestTransfer($restRequest, $quoteResponseTransfer->getQuoteTransferOrFail());
 
         $quoteRequestResponseTransfer = $this->quoteRequestClient->createQuoteRequest($quoteRequestTransfer);
 
-        if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
+        if (!$quoteRequestResponseTransfer->getIsSuccessfulOrFail()) {
             return $this->quoteRequestsRestResponseBuilder->createFailedErrorResponse($quoteRequestResponseTransfer->getMessages());
         }
 
@@ -104,7 +107,7 @@ class QuoteRequestCreator implements QuoteRequestCreatorInterface
             ->setCompanyUserTransfer($companyUserTransfer);
 
         $quoteTransfer = (new QuoteTransfer())
-            ->setUuid($restQuoteRequestsRequestAttributesTransfer->getCartUuid())
+            ->setUuid($restQuoteRequestsRequestAttributesTransfer->getCartUuidOrFail())
             ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifierOrFail())
             ->setCustomer($customerTransfer);
 

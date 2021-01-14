@@ -36,6 +36,11 @@ interface QuoteRequestsRestResponseBuilderInterface
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
+    public function createCartIsEmptyErrorResponse(): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
     public function createQuoteRequestNotFoundErrorResponse(): RestResponseInterface;
 
     /**

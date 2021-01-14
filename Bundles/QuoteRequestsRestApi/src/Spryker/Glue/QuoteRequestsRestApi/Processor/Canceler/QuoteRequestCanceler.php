@@ -45,16 +45,16 @@ class QuoteRequestCanceler implements QuoteRequestCancelerInterface
      */
     public function cancelQuoteRequest(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $quoteRequestReference = $restRequest
-            ->findParentResourceByType(QuoteRequestsRestApiConfig::RESOURCE_QUOTE_REQUESTS)
-            ->getId();
-
         if (
-            !$restRequest->findParentResourceByType(QuoteRequestsRestApiConfig::RESOURCE_QUOTE_REQUESTS)
-            || $restRequest->findParentResourceByType(QuoteRequestsRestApiConfig::RESOURCE_QUOTE_REQUESTS)->getId()
+            $restRequest->findParentResourceByType(QuoteRequestsRestApiConfig::RESOURCE_QUOTE_REQUESTS) === null
+            || $restRequest->findParentResourceByType(QuoteRequestsRestApiConfig::RESOURCE_QUOTE_REQUESTS)->getId() === null
         ) {
             return $this->quoteRequestsRestResponseBuilder->createQuoteRequestReferenceMissingErrorResponse();
         }
+
+        $quoteRequestReference = $restRequest
+            ->findParentResourceByType(QuoteRequestsRestApiConfig::RESOURCE_QUOTE_REQUESTS)
+            ->getId();
 
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
             ->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUserOrFail())

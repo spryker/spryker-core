@@ -25,8 +25,25 @@ class QuoteRequestsResourceController extends AbstractController
      *          "parameters": [{
      *              "ref": "acceptLanguage"
      *          }],
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestQuoteRequestsAttributesTransfer",
      *          "responses": {
-     *              "404": "Quote request not found."
+     *              "404": "Quote request not found.",
+     *              "403": "Unauthorized request.",
+     *              "400": "Bad request."
+     *          }
+     *     },
+     *     "getCollection": {
+     *          "summary": [
+     *              "Retrieves quote request list."
+     *          ],
+     *          "parameters": [{
+     *              "ref": "acceptLanguage"
+     *          }],
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestQuoteRequestsAttributesTransfer",
+     *          "responses": {
+     *              "404": "Quote request not found.",
+     *              "403": "Unauthorized request.",
+     *              "400": "Bad request."
      *          }
      *     }
      * })
@@ -62,8 +79,7 @@ class QuoteRequestsResourceController extends AbstractController
      *              "400": "Bad request",
      *              "403": "Unauthorized request.",
      *              "422": "Unprocessable entity."
-     *          },
-     *          "isIdNullable": true
+     *          }
      *     }
      * })
      *

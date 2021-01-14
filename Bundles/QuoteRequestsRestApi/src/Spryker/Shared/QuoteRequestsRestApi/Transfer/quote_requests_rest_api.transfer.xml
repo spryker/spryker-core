@@ -21,9 +21,8 @@
     </transfer>
 
     <transfer name="RestQuoteRequestsRequestAttributes">
-        <property name="cartUuid" type="string"/>
-        <property name="meta" type="array" singular="meta"/>
-        <property name="idCompanyUser" type="int"/>
+        <property name="cartUuid" type="string" restRequestParameter="required"/>
+        <property name="meta" type="array" singular="meta" restRequestParameter="yes"/>
     </transfer>
 
     <transfer name="RestQuoteRequestsCart">
@@ -70,9 +69,17 @@
     </transfer>
 
     <transfer name="RestQuoteRequestShipment">
-        <property name="method" type="string"/>
+        <property name="method" type="RestQuoteRequestShipmentMethod"/>
         <property name="shippingAddress" type="RestQuoteRequestsAddress"/>
         <property name="items" type="string[]" singular="item"/>
+    </transfer>
+
+    <transfer name="RestQuoteRequestShipmentMethod">
+        <property name="name" type="string"/>
+        <property name="carrierName" type="string"/>
+        <property name="deliveryTime" type="int"/>
+        <property name="price" type="int"/>
+        <property name="currencyIsoCode" type="string"/>
     </transfer>
 
     <transfer name="RestQuoteRequestsItem">
@@ -81,13 +88,7 @@
         <property name="groupKey" type="string"/>
         <property name="abstractSku" type="string"/>
         <property name="amount" type="int"/>
-        <property name="productOfferReference" type="string"/>
-        <property name="merchantReference" type="string"/>
         <property name="calculations" type="RestQuoteRequestsCalculations"/>
-        <property name="configuredBundle" type="RestQuoteRequestsConfiguredBundle"/>
-        <property name="configuredBundleItem" type="RestQuoteRequestsConfiguredBundleItem"/>
-        <property name="salesUnit" type="RestQuoteRequestsSalesUnit"/>
-        <property name="selectedProductOptions" type="RestQuoteRequestsProductOption[]" singular="selectedProductOption"/>
     </transfer>
 
     <transfer name="RestQuoteRequestsCalculations">
@@ -135,6 +136,7 @@
 
     <transfer name="Message">
         <property name="message" type="string"/>
+        <property name="value" type="string"/>
     </transfer>
 
     <transfer name="QuoteRequest">
@@ -199,24 +201,13 @@
         <property name="metadata" type="array" singular="metadata"/>
     </transfer>
 
-    <transfer name="RestQuoteRequestsConfiguredBundle">
-    </transfer>
-
-    <transfer name="RestQuoteRequestsConfiguredBundleItem">
-    </transfer>
-
-    <transfer name="RestQuoteRequestsSalesUnit">
-    </transfer>
-
-    <transfer name="RestQuoteRequestsProductOption">
-    </transfer>
-
     <transfer name="RestQuoteRequestCancelAttributes">
     </transfer>
 
     <transfer name="QuoteRequestFilter">
         <property name="idCompanyUser" type="int"/>
         <property name="quoteRequestReference" type="string"/>
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
     <transfer name="QuoteRequestCollection">
@@ -247,9 +238,13 @@
     </transfer>
 
     <transfer name="Pagination">
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="page" type="int"/>
     </transfer>
 
     <transfer name="ShipmentMethod">
+        <property name="storeCurrencyPrice" type="int"/>
     </transfer>
 
 </transfers>

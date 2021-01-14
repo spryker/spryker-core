@@ -67,7 +67,7 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
             return $this->quoteRequestsRestResponseBuilder->createQuoteRequestNotFoundErrorResponse();
         }
 
-        $quoteRequestTransfer = $quoteRequestResponseTransfer->getQuoteRequest();
+        $quoteRequestTransfer = $quoteRequestResponseTransfer->getQuoteRequestOrFail();
 
         return $this->quoteRequestsRestResponseBuilder->createQuoteRequestRestResponse($quoteRequestTransfer);
     }
@@ -82,7 +82,7 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
             ->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser());
 
-        if ($restRequest->getPage()) {
+        if ($restRequest->getPage() !== null) {
             $quoteRequestFilterTransfer->setPagination(
                 (new PaginationTransfer())
                     ->setMaxPerPage($restRequest->getPage()->getLimit())

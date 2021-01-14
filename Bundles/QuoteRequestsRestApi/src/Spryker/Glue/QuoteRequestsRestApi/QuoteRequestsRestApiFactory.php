@@ -15,8 +15,6 @@ use Spryker\Glue\QuoteRequestsRestApi\Processor\Canceler\QuoteRequestCanceler;
 use Spryker\Glue\QuoteRequestsRestApi\Processor\Canceler\QuoteRequestCancelerInterface;
 use Spryker\Glue\QuoteRequestsRestApi\Processor\Creator\QuoteRequestCreator;
 use Spryker\Glue\QuoteRequestsRestApi\Processor\Creator\QuoteRequestCreatorInterface;
-use Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\ErrorMapper;
-use Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\ErrorMapperInterface;
 use Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\QuoteRequestMapper;
 use Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\QuoteRequestMapperInterface;
 use Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\QuoteRequestsRequestMapper;
@@ -26,6 +24,9 @@ use Spryker\Glue\QuoteRequestsRestApi\Processor\Reader\QuoteRequestReaderInterfa
 use Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequestsRestResponseBuilder;
 use Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequestsRestResponseBuilderInterface;
 
+/**
+ * @method \Spryker\Glue\QuoteRequestsRestApi\QuoteRequestsRestApiConfig getConfig()
+ */
 class QuoteRequestsRestApiFactory extends AbstractFactory
 {
     /**
@@ -34,14 +35,6 @@ class QuoteRequestsRestApiFactory extends AbstractFactory
     public function createQuoteRequestMapper(): QuoteRequestMapperInterface
     {
         return new QuoteRequestMapper($this->getShipmentService());
-    }
-
-    /**
-     * @return \Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\ErrorMapperInterface
-     */
-    public function createErrorMapper(): ErrorMapperInterface
-    {
-        return new ErrorMapper();
     }
 
     /**
@@ -83,7 +76,7 @@ class QuoteRequestsRestApiFactory extends AbstractFactory
         return new QuoteRequestsRestResponseBuilder(
             $this->getResourceBuilder(),
             $this->createQuoteRequestMapper(),
-            $this->createErrorMapper()
+            $this->getConfig()
         );
     }
 

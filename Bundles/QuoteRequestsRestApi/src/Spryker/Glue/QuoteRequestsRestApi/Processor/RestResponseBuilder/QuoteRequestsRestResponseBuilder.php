@@ -8,6 +8,7 @@
 namespace Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder;
 
 use ArrayObject;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
@@ -15,7 +16,6 @@ use Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
-use Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\ErrorMapperInterface;
 use Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\QuoteRequestMapperInterface;
 use Spryker\Glue\QuoteRequestsRestApi\QuoteRequestsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,23 +33,23 @@ class QuoteRequestsRestResponseBuilder implements QuoteRequestsRestResponseBuild
     protected $quoteRequestMapper;
 
     /**
-     * @var \Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\ErrorMapperInterface
+     * @var \Spryker\Glue\QuoteRequestsRestApi\QuoteRequestsRestApiConfig
      */
-    protected $errorMapper;
+    protected $quoteRequestsRestApiConfig;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\QuoteRequestMapperInterface $quoteRequestMapper
-     * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\ErrorMapperInterface $errorMapper
+     * @param \Spryker\Glue\QuoteRequestsRestApi\QuoteRequestsRestApiConfig $quoteRequestsRestApiConfig
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         QuoteRequestMapperInterface $quoteRequestMapper,
-        ErrorMapperInterface $errorMapper
+        QuoteRequestsRestApiConfig $quoteRequestsRestApiConfig
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->quoteRequestMapper = $quoteRequestMapper;
-        $this->errorMapper = $errorMapper;
+        $this->quoteRequestsRestApiConfig = $quoteRequestsRestApiConfig;
     }
 
     /**
@@ -63,7 +63,7 @@ class QuoteRequestsRestResponseBuilder implements QuoteRequestsRestResponseBuild
 
         foreach ($errors as $messageTransfer) {
             $restResponse->addError(
-                $this->errorMapper->mapQuoteRequestErrorMessageTransferToRestErrorMessageTransfer(
+                $this->mapQuoteRequestErrorMessageTransferToRestErrorMessageTransfer(
                     $messageTransfer,
                     new RestErrorMessageTransfer()
                 )
@@ -99,6 +99,19 @@ class QuoteRequestsRestResponseBuilder implements QuoteRequestsRestResponseBuild
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
+    public function createCartIsEmptyErrorResponse(): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(QuoteRequestsRestApiConfig::RESPONSE_CODE_CART_IS_EMPTY)
+            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+            ->setDetail(QuoteRequestsRestApiConfig::RESPONSE_DETAIL_CART_IS_EMPTY);
+
+        return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
     public function createQuoteRequestNotFoundErrorResponse(): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
@@ -116,7 +129,7 @@ class QuoteRequestsRestResponseBuilder implements QuoteRequestsRestResponseBuild
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(QuoteRequestsRestApiConfig::RESPONSE_CODE_QUOTE_REQUEST_REFERENCE_MISSING)
-            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail(QuoteRequestsRestApiConfig::RESPONSE_DETAIL_QUOTE_REQUEST_REFERENCE_MISSING);
 
         return $this->restResourceBuilder
@@ -145,8 +158,8 @@ class QuoteRequestsRestResponseBuilder implements QuoteRequestsRestResponseBuild
         $totalItems = 0;
         $limit = 0;
         if ($quoteRequestCollectionTransfer->getPagination()) {
-            $totalItems = $quoteRequestCollectionTransfer->getPagination()->getNbResults();
-            $limit = $quoteRequestCollectionTransfer->getPagination()->getMaxPerPage();
+            $totalItems = $quoteRequestCollectionTransfer->getPagination()->getNbResultsOrFail();
+            $limit = $quoteRequestCollectionTransfer->getPagination()->getMaxPerPageOrFail();
         }
 
         $restResponse = $this->restResourceBuilder->createRestResponse($totalItems, $limit);
@@ -185,5 +198,27 @@ class QuoteRequestsRestResponseBuilder implements QuoteRequestsRestResponseBuild
         $cartResource->setPayload($quoteRequestTransfer);
 
         return $cartResource;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
+     * @param \Generated\Shared\Transfer\RestErrorMessageTransfer $restErrorMessageTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    protected function mapQuoteRequestErrorMessageTransferToRestErrorMessageTransfer(
+        MessageTransfer $messageTransfer,
+        RestErrorMessageTransfer $restErrorMessageTransfer
+    ): RestErrorMessageTransfer {
+        $errorMapping = $this->quoteRequestsRestApiConfig->getErrorMapping();
+
+        if (!isset($errorMapping[$messageTransfer->getValue()])) {
+            return $restErrorMessageTransfer
+                ->setCode(QuoteRequestsRestApiConfig::RESPONSE_CODE_QUOTE_REQUEST_VALIDATION)
+                ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+                ->setDetail(QuoteRequestsRestApiConfig::RESPONSE_DETAIL_QUOTE_REQUEST_VALIDATION);
+        }
+
+        return $restErrorMessageTransfer->fromArray($errorMapping[$messageTransfer->getValue()], true);
     }
 }

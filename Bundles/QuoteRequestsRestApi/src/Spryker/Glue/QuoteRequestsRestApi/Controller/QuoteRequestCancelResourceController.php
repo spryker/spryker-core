@@ -26,11 +26,11 @@ class QuoteRequestCancelResourceController extends AbstractController
      *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
+     *              "204": "Quote request canceled.",
      *              "400": "Bad request",
      *              "403": "Unauthorized request.",
      *              "422": "Unprocessable entity."
-     *          },
-     *          "isIdNullable": true
+     *          }
      *     }
      * })
      *
