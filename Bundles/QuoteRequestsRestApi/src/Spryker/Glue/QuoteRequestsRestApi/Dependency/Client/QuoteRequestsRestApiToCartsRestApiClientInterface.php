@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\QuoteRequestsRestApi\Dependency\Facade;
+namespace Spryker\Glue\QuoteRequestsRestApi\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteRequestsRestApiToCartsRestApiFacadeInterface
+interface QuoteRequestsRestApiToCartsRestApiClientInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

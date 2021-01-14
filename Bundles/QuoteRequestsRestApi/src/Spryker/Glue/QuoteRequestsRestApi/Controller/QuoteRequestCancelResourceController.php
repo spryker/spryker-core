@@ -14,44 +14,17 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 /**
  * @method \Spryker\Glue\QuoteRequestsRestApi\QuoteRequestsRestApiFactory getFactory()
  */
-class QuoteRequestsResourceController extends AbstractController
+class QuoteRequestCancelResourceController extends AbstractController
 {
-    /**
-     * @Glue({
-     *     "getResourceById": {
-     *          "summary": [
-     *              "Retrieves a quote request by reference."
-     *          ],
-     *          "parameters": [{
-     *              "ref": "acceptLanguage"
-     *          }],
-     *          "responses": {
-     *              "404": "Quote request not found."
-     *          }
-     *     }
-     * })
-     *
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function getAction(RestRequestInterface $restRequest): RestResponseInterface
-    {
-        return $this->getFactory()
-            ->createQuoteRequestsReader()
-            ->getQuoteRequest($restRequest);
-    }
-
     /**
      * @Glue({
      *     "post": {
      *          "summary": [
-     *              "Creates a quote request as a company user."
+     *              "Cancels the quote request."
      *          ],
      *          "parameters": [{
      *              "ref": "acceptLanguage"
      *          }],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestQuoteRequestsAttributesTransfer",
      *          "responses": {
      *              "400": "Bad request",
      *              "403": "Unauthorized request.",
@@ -68,7 +41,7 @@ class QuoteRequestsResourceController extends AbstractController
     public function postAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
-            ->createQuoteRequestCreator()
-            ->createQuoteRequest($restRequest);
+            ->createQuoteRequestCanceler()
+            ->cancelQuoteRequest($restRequest);
     }
 }

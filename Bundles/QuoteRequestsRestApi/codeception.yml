@@ -1,6 +1,4 @@
 namespace: SprykerTest
-include:
-    - tests/SprykerTest/Zed/QuoteRequestsRestApi
 paths:
     tests: tests
     support: .

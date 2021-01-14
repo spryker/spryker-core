@@ -10,19 +10,11 @@
     "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/quote-request": "^2.0.0",
-    "spryker/quote-requests-rest-api-extension": "^1.0.0",
     "spryker/shipment": "^8.6.0",
-    "spryker/symfony": "^3.0.0",
-    "spryker/zed-request": "^3.4.0"
+    "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/company": "*",
-    "spryker/company-user": "*",
-    "spryker/company-business-unit": "*",
-    "spryker/customer": "*",
-    "spryker/propel": "*",
-    "spryker/quote": "*",
     "spryker/testify": "*"
   },
   "autoload": {

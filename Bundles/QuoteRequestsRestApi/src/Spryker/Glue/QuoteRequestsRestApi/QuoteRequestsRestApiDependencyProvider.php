@@ -9,7 +9,9 @@ namespace Spryker\Glue\QuoteRequestsRestApi;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
-use Spryker\Glue\QuoteRequestsRestApi\Dependency\QuoteRequestsRestApiToShipmentServiceBridge;
+use Spryker\Glue\QuoteRequestsRestApi\Dependency\Client\QuoteRequestsRestApiToCartsRestApiClientBridge;
+use Spryker\Glue\QuoteRequestsRestApi\Dependency\Client\QuoteRequestsRestApiToQuoteRequestClientBridge;
+use Spryker\Glue\QuoteRequestsRestApi\Dependency\Service\QuoteRequestsRestApiToShipmentServiceBridge;
 
 /**
  * @method \Spryker\Glue\QuoteRequestsRestApi\QuoteRequestsRestApiConfig getConfig()
@@ -17,7 +19,8 @@ use Spryker\Glue\QuoteRequestsRestApi\Dependency\QuoteRequestsRestApiToShipmentS
 class QuoteRequestsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
-    public const PLUGINS_REST_QUOTE_REQUEST_ITEM_EXPANDER = 'PLUGINS_REST_QUOTE_REQUEST_ITEM_EXPANDER';
+    public const CLIENT_CARTS_REST_API = 'CLIENT_CARTS_REST_API';
+    public const CLIENT_QUOTE_REQUEST = 'CLIENT_QUOTE_REQUEST';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -28,7 +31,8 @@ class QuoteRequestsRestApiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container = parent::provideDependencies($container);
         $container = $this->addShipmentService($container);
-        $container = $this->addRestQuoteRequestsItemExpanderPlugins($container);
+        $container = $this->addCartsRestApiClient($container);
+        $container = $this->addQuoteRequestClient($container);
 
         return $container;
     }
@@ -54,20 +58,30 @@ class QuoteRequestsRestApiDependencyProvider extends AbstractBundleDependencyPro
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addRestQuoteRequestsItemExpanderPlugins(Container $container): Container
+    protected function addCartsRestApiClient(Container $container): Container
     {
-        $container->set(static::PLUGINS_REST_QUOTE_REQUEST_ITEM_EXPANDER, function () {
-            return $this->getRestQuoteRequestsItemExpanderPlugins();
+        $container->set(static::CLIENT_CARTS_REST_API, function (Container $container) {
+            return new QuoteRequestsRestApiToCartsRestApiClientBridge(
+                $container->getLocator()->cartsRestApi()->client()
+            );
         });
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Glue\QuoteRequestsRestApiExtension\Dependency\Plugin\RestQuoteRequestsItemExpanderPluginInterface[]
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
      */
-    protected function getRestQuoteRequestsItemExpanderPlugins(): array
+    protected function addQuoteRequestClient(Container $container): Container
     {
-        return [];
+        $container->set(static::CLIENT_QUOTE_REQUEST, function (Container $container) {
+            return new QuoteRequestsRestApiToQuoteRequestClientBridge(
+                $container->getLocator()->quoteRequest()->client()
+            );
+        });
+
+        return $container;
     }
 }

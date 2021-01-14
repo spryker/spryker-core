@@ -8,32 +8,35 @@
 namespace Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\QuoteRequestsRequestTransfer;
+use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class QuoteRequestsRequestMapper implements QuoteRequestsRequestMapperInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteRequestsRequestTransfer
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
      */
-    public function mapRestRequestToQuoteRequestsRequestTransfer(RestRequestInterface $restRequest): QuoteRequestsRequestTransfer
-    {
+    public function mapRestRequestToQuoteRequestTransfer(
+        RestRequestInterface $restRequest,
+        QuoteTransfer $quoteTransfer
+    ): QuoteRequestTransfer {
         /** @var \Generated\Shared\Transfer\RestQuoteRequestsRequestAttributesTransfer $quoteRequestsRequestAttributesTransfer */
         $quoteRequestsRequestAttributesTransfer = $restRequest->getResource()->getAttributes();
-        $restUser = $restRequest->getRestUser();
-        $companyUserTransfer = (new CompanyUserTransfer())
-            ->setIdCompanyUser($restUser->getIdCompanyUser());
-        $customerTransfer = (new CustomerTransfer())
-            ->setIdCustomer($restUser->getSurrogateIdentifier())
-            ->setCompanyUserTransfer($companyUserTransfer)
-            ->setCustomerReference($restUser->getNaturalIdentifier());
 
-        return (new QuoteRequestsRequestTransfer())
-            ->setCustomer($customerTransfer)
-            ->setCartUuid($quoteRequestsRequestAttributesTransfer->getCartUuid())
-            ->setMeta($quoteRequestsRequestAttributesTransfer->getMeta());
+        $companyUserTransfer = (new CompanyUserTransfer())
+            ->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser());
+
+        $quoteRequestVersionTransfer = (new QuoteRequestVersionTransfer())
+            ->setMetadata($quoteRequestsRequestAttributesTransfer->getMeta())
+            ->setQuote($quoteTransfer);
+
+        return (new QuoteRequestTransfer())
+            ->setCompanyUser($companyUserTransfer)
+            ->setLatestVersion($quoteRequestVersionTransfer);
     }
 }

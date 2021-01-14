@@ -7,15 +7,20 @@
 
 namespace Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\QuoteRequestsRequestTransfer;
+use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 interface QuoteRequestsRequestMapperInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteRequestsRequestTransfer
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
      */
-    public function mapRestRequestToQuoteRequestsRequestTransfer(RestRequestInterface $restRequest): QuoteRequestsRequestTransfer;
+    public function mapRestRequestToQuoteRequestTransfer(
+        RestRequestInterface $restRequest,
+        QuoteTransfer $quoteTransfer
+    ): QuoteRequestTransfer;
 }

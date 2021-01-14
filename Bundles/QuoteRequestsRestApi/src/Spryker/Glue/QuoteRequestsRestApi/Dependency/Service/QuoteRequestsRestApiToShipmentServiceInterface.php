@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\QuoteRequestsRestApi\Dependency;
+namespace Spryker\Glue\QuoteRequestsRestApi\Dependency\Service;
 
 use ArrayObject;
 

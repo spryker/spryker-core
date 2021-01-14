@@ -190,4 +190,7 @@
     <transfer name="RestQuoteRequestsProductOption">
     </transfer>
 
+    <transfer name="RestQuoteRequestCancelAttributes">
+    </transfer>
+
 </transfers>

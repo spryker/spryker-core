@@ -20,30 +20,21 @@ use Generated\Shared\Transfer\RestQuoteRequestShipmentTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestsItemTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestsTotalsTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestVersionTransfer;
-use Spryker\Glue\QuoteRequestsRestApi\Dependency\QuoteRequestsRestApiToShipmentServiceInterface;
+use Spryker\Glue\QuoteRequestsRestApi\Dependency\Service\QuoteRequestsRestApiToShipmentServiceInterface;
 
 class QuoteRequestMapper implements QuoteRequestMapperInterface
 {
     /**
-     * @var \Spryker\Glue\QuoteRequestsRestApi\Dependency\QuoteRequestsRestApiToShipmentServiceInterface
+     * @var \Spryker\Glue\QuoteRequestsRestApi\Dependency\Service\QuoteRequestsRestApiToShipmentServiceInterface
      */
     protected $shipmentService;
 
     /**
-     * @var \Spryker\Glue\QuoteRequestsRestApiExtension\Dependency\Plugin\RestQuoteRequestsItemExpanderPluginInterface[]
+     * @param \Spryker\Glue\QuoteRequestsRestApi\Dependency\Service\QuoteRequestsRestApiToShipmentServiceInterface $shipmentService
      */
-    protected $restItemExpanderPlugins;
-
-    /**
-     * @param \Spryker\Glue\QuoteRequestsRestApi\Dependency\QuoteRequestsRestApiToShipmentServiceInterface $shipmentService
-     * @param \Spryker\Glue\QuoteRequestsRestApiExtension\Dependency\Plugin\RestQuoteRequestsItemExpanderPluginInterface[] $restItemExpanderPlugins
-     */
-    public function __construct(
-        QuoteRequestsRestApiToShipmentServiceInterface $shipmentService,
-        array $restItemExpanderPlugins
-    ) {
+    public function __construct(QuoteRequestsRestApiToShipmentServiceInterface $shipmentService)
+    {
         $this->shipmentService = $shipmentService;
-        $this->restItemExpanderPlugins = $restItemExpanderPlugins;
     }
 
     /**
@@ -78,6 +69,11 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
     protected function buildRestCartTransfer(QuoteTransfer $quoteTransfer): RestQuoteRequestsCartTransfer
     {
         $restCartTransfer = new RestQuoteRequestsCartTransfer();
+
+        if (!$quoteTransfer->getIdQuote()) {
+            return $restCartTransfer;
+        }
+
         $restCartTransfer->setPriceMode($quoteTransfer->getPriceMode());
         $restCartTransfer->setCurrency($quoteTransfer->getCurrency()->getCode());
         $restCartTransfer->setStore($quoteTransfer->getStore()->getName());
@@ -275,24 +271,6 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
         $restCalculationsTransfer = new RestQuoteRequestsCalculationsTransfer();
         $restCalculationsTransfer->fromArray($itemTransfer->toArray(), true);
         $restItemTransfer->setCalculations($restCalculationsTransfer);
-        $restItemTransfer = $this->executeRestItemExpanders($itemTransfer, $restItemTransfer);
-
-        return $restItemTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\RestQuoteRequestsItemTransfer $restItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestQuoteRequestsItemTransfer
-     */
-    protected function executeRestItemExpanders(
-        ItemTransfer $itemTransfer,
-        RestQuoteRequestsItemTransfer $restItemTransfer
-    ): RestQuoteRequestsItemTransfer {
-        foreach ($this->restItemExpanderPlugins as $restItemExpanderPlugin) {
-            $restItemTransfer = $restItemExpanderPlugin->expand($itemTransfer, $restItemTransfer);
-        }
 
         return $restItemTransfer;
     }

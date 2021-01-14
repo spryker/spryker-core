@@ -5,24 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\QuoteRequestsRestApi\Dependency\Facade;
+namespace Spryker\Glue\QuoteRequestsRestApi\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-class QuoteRequestsRestApiToCartsRestApiFacadeBridge implements QuoteRequestsRestApiToCartsRestApiFacadeInterface
+class QuoteRequestsRestApiToCartsRestApiClientBridge implements QuoteRequestsRestApiToCartsRestApiClientInterface
 {
     /**
-     * @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacadeInterface
+     * @var \Spryker\Client\CartsRestApi\CartsRestApiClientInterface
      */
-    protected $cartsRestApiFacade;
+    protected $cartsRestApiClient;
 
     /**
-     * @param \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacadeInterface $cartsRestApiFacade
+     * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
      */
-    public function __construct($cartsRestApiFacade)
+    public function __construct($cartsRestApiClient)
     {
-        $this->cartsRestApiFacade = $cartsRestApiFacade;
+        $this->cartsRestApiClient = $cartsRestApiClient;
     }
 
     /**
@@ -32,6 +32,6 @@ class QuoteRequestsRestApiToCartsRestApiFacadeBridge implements QuoteRequestsRes
      */
     public function findQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->cartsRestApiFacade->findQuoteByUuid($quoteTransfer);
+        return $this->cartsRestApiClient->findQuoteByUuid($quoteTransfer);
     }
 }
