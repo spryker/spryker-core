@@ -4,8 +4,8 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestQuoteRequestsAttributes">
+        <property name="status" type="string"/>
         <property name="quoteRequestReference" type="string"/>
-        <property name="companyUserName" type="string"/>
         <property name="createdAt" type="string"/>
         <property name="validUntil" type="string"/>
         <property name="versions" type="RestQuoteRequestVersion[]" singular="version"/>
@@ -24,12 +24,6 @@
         <property name="cartUuid" type="string"/>
         <property name="meta" type="array" singular="meta"/>
         <property name="idCompanyUser" type="int"/>
-    </transfer>
-
-    <transfer name="QuoteRequestsRequest">
-        <property name="cartUuid" type="string"/>
-        <property name="meta" type="array" singular="meta"/>
-        <property name="customer" type="Customer"/>
     </transfer>
 
     <transfer name="RestQuoteRequestsCart">
@@ -78,7 +72,7 @@
     <transfer name="RestQuoteRequestShipment">
         <property name="method" type="string"/>
         <property name="shippingAddress" type="RestQuoteRequestsAddress"/>
-        <property name="items" type="RestQuoteRequestsItem[]" singular="item"/>
+        <property name="items" type="string[]" singular="item"/>
     </transfer>
 
     <transfer name="RestQuoteRequestsItem">
@@ -130,31 +124,52 @@
     <transfer name="QuoteRequestResponse">
         <property name="isSuccessful" type="bool"/>
         <property name="messages" type="Message[]" singular="message"/>
+        <property name="quoteRequest" type="QuoteRequest"/>
     </transfer>
 
     <transfer name="RestErrorMessage">
         <property name="code" type="string"/>
+        <property name="status" type="int"/>
+        <property name="detail" type="string"/>
     </transfer>
 
     <transfer name="Message">
+        <property name="message" type="string"/>
     </transfer>
 
     <transfer name="QuoteRequest">
         <property name="quoteRequestReference" type="string"/>
         <property name="latestVersion" type="QuoteRequestVersion"/>
+        <property name="companyUser" type="CompanyUser"/>
     </transfer>
 
     <transfer name="Quote">
+        <property name="uuid" type="string"/>
+        <property name="customerReference" type="string"/>
+        <property name="customer" type="Customer"/>
+        <property name="priceMode" type="string"/>
+        <property name="store" type="Store"/>
+        <property name="billingAddress" type="Address"/>
+        <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
+        <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
+        <property name="currency" type="Currency"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="totals" type="Totals"/>
+        <property name="expenses" type="Expense[]" singular="expense"/>
     </transfer>
 
     <transfer name="Discount">
+        <property name="voucherCode" type="string"/>
     </transfer>
 
     <transfer name="ShipmentGroup">
         <property name="items" type="Item[]" singular="item"/>
+        <property name="shipment" type="Shipment"/>
     </transfer>
 
     <transfer name="Item">
+        <property name="groupKey" type="string"/>
+        <property name="shipment" type="Shipment"/>
     </transfer>
 
     <transfer name="CompanyUser">
@@ -164,18 +179,24 @@
     <transfer name="RestUser">
         <property name="surrogateIdentifier" type="int"/>
         <property name="naturalIdentifier" type="string"/>
+        <property name="idCompanyUser" type="int"/>
     </transfer>
 
     <transfer name="Customer">
         <property name="idCustomer" type="int"/>
+        <property name="customerReference" type="string"/>
+        <property name="companyUserTransfer" type="CompanyUser"/>
     </transfer>
 
     <transfer name="QuoteResponse">
         <property name="isSuccessful" type="bool"/>
+        <property name="quoteTransfer" type="QuoteRequestVersion"/>
+
     </transfer>
 
     <transfer name="QuoteRequestVersion">
         <property name="quote" type="Quote"/>
+        <property name="metadata" type="string"/>
     </transfer>
 
     <transfer name="RestQuoteRequestsConfiguredBundle">
@@ -191,6 +212,44 @@
     </transfer>
 
     <transfer name="RestQuoteRequestCancelAttributes">
+    </transfer>
+
+    <transfer name="QuoteRequestFilter">
+        <property name="idCompanyUser" type="int"/>
+        <property name="quoteRequestReference" type="string"/>
+    </transfer>
+
+    <transfer name="QuoteRequestCollection">
+        <property name="quoteRequests" type="QuoteRequest[]" singular="quoteRequest"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Address">
+    </transfer>
+
+    <transfer name="Totals">
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="shippingAddress" type="ShipmentMethod"/>
+        <property name="method" type="Address"/>
+    </transfer>
+
+    <transfer name="Expense">
+    </transfer>
+
+    <transfer name="Pagination">
+    </transfer>
+
+    <transfer name="ShipmentMethod">
     </transfer>
 
 </transfers>

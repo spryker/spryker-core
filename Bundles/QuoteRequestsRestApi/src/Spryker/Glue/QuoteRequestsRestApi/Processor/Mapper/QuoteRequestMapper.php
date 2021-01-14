@@ -47,16 +47,15 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
         QuoteRequestTransfer $quoteRequestTransfer,
         RestQuoteRequestsAttributesTransfer $restQuoteRequestsAttributesTransfer
     ): RestQuoteRequestsAttributesTransfer {
-        $restQuoteRequestsAttributesTransfer->fromArray($quoteRequestTransfer->toArray(), true);
         $quoteRequestVersionTransfer = $quoteRequestTransfer->getLatestVersionOrFail();
-        $restQuoteRequestVersionTransfer = new RestQuoteRequestVersionTransfer();
-        $restQuoteRequestVersionTransfer->fromArray($quoteRequestVersionTransfer->toArray(), true);
-        $restQuoteRequestVersionTransfer->setMeta($quoteRequestVersionTransfer->getMetadata());
-        $quoteTransfer = $quoteRequestVersionTransfer->getQuoteOrFail();
-        $restQuoteRequestsAttributesTransfer->setCompanyUserName($quoteRequestTransfer->getCompanyUser()->getKey());
-        $restCartTransfer = $this->buildRestCartTransfer($quoteTransfer);
-        $restQuoteRequestVersionTransfer->setCart($restCartTransfer);
-        $restQuoteRequestsAttributesTransfer->setShownVersion($restQuoteRequestVersionTransfer);
+        $restQuoteRequestVersionTransfer = (new RestQuoteRequestVersionTransfer())
+            ->fromArray($quoteRequestVersionTransfer->toArray(), true)
+            ->setMeta($quoteRequestVersionTransfer->getMetadata())
+            ->setCart($this->buildRestCartTransfer($quoteRequestVersionTransfer->getQuoteOrFail()));
+
+        $restQuoteRequestsAttributesTransfer
+            ->fromArray($quoteRequestTransfer->toArray(), true)
+            ->setShownVersion($restQuoteRequestVersionTransfer);
 
         return $restQuoteRequestsAttributesTransfer;
     }
@@ -70,7 +69,7 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
     {
         $restCartTransfer = new RestQuoteRequestsCartTransfer();
 
-        if (!$quoteTransfer->getIdQuote()) {
+        if (!$quoteTransfer->getCustomerReference()) {
             return $restCartTransfer;
         }
 
@@ -199,21 +198,28 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
         $shipmentGroupTransfers = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
 
         foreach ($shipmentGroupTransfers as $shipmentGroupTransfer) {
-            $restShipmentTransfer = new RestQuoteRequestShipmentTransfer();
             $shipmentTransfer = $shipmentGroupTransfer->getShipmentOrFail();
-            $restShipmentTransfer->setMethod($shipmentTransfer->getMethodOrFail()->getName());
             $shipmentAddress = $shipmentTransfer->getShippingAddress();
-            $restAddressTransfer = new RestQuoteRequestsAddressTransfer();
-            $restAddressTransfer->fromArray($shipmentAddress->toArray(), true);
-            $restShipmentTransfer->setShippingAddress($restAddressTransfer);
+
+            $restAddressTransfer = (new RestQuoteRequestsAddressTransfer())
+                ->fromArray($shipmentAddress->toArray(), true);
+
+            $itemGroupKeys = [];
             foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
                 $restItemTransfer = $this->mapItemTransferToRestItemTransfer(
                     $itemTransfer,
                     new RestQuoteRequestsItemTransfer()
                 );
-                $restShipmentTransfer->addItem($restItemTransfer);
                 $restCartTransfer->addItem($restItemTransfer);
+
+                $itemGroupKeys[] = $itemTransfer->getGroupKey();
             }
+
+            $restShipmentTransfer = (new RestQuoteRequestShipmentTransfer())
+                ->setMethod($shipmentTransfer->getMethodOrFail()->getName())
+                ->setShippingAddress($restAddressTransfer)
+                ->setItems($itemGroupKeys);
+
             $restCartTransfer->addShipment($restShipmentTransfer);
         }
 

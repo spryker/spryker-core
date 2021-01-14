@@ -8,6 +8,7 @@
 namespace Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder;
 
 use ArrayObject;
+use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
@@ -46,4 +47,11 @@ interface QuoteRequestsRestResponseBuilderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createNoContentResponse(): RestResponseInterface;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestCollectionTransfer $quoteRequestCollectionTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createQuoteRequestCollectionRestResponse(QuoteRequestCollectionTransfer $quoteRequestCollectionTransfer): RestResponseInterface;
 }

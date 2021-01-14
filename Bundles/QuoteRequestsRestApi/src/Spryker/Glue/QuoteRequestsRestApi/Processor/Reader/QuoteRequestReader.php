@@ -13,7 +13,6 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\QuoteRequestsRestApi\Dependency\Client\QuoteRequestsRestApiToQuoteRequestClientInterface;
 use Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\QuoteRequestsRequestMapperInterface;
 use Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequestsRestResponseBuilderInterface;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class QuoteRequestReader implements QuoteRequestReaderInterface
 {
@@ -52,15 +51,13 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function getQuoteRequest(RestRequestInterface $restRequest): RestResponseInterface
     {
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
             ->setQuoteRequestReference($restRequest->getResource()->getId())
-            ->setIdCompanyUser($restRequest->getRestUser()->getIdCompany());
+            ->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser());
 
         $quoteRequestResponseTransfer = $this->quoteRequestClient
             ->getQuoteRequest($quoteRequestFilterTransfer);
@@ -72,5 +69,21 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
         $quoteRequestTransfer = $quoteRequestResponseTransfer->getQuoteRequest();
 
         return $this->quoteRequestsRestResponseBuilder->createQuoteRequestRestResponse($quoteRequestTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function getQuoteRequestCollection(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
+            ->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser());
+
+        $quoteRequestCollectionTransfer = $this->quoteRequestClient
+            ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer);
+
+        return $this->quoteRequestsRestResponseBuilder->createQuoteRequestCollectionRestResponse($quoteRequestCollectionTransfer);
     }
 }

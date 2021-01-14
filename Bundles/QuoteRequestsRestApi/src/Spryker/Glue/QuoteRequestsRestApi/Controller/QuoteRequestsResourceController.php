@@ -37,9 +37,15 @@ class QuoteRequestsResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
+        if ($restRequest->getResource()->getId()) {
+            return $this->getFactory()
+                ->createQuoteRequestsReader()
+                ->getQuoteRequest($restRequest);
+        }
+
         return $this->getFactory()
             ->createQuoteRequestsReader()
-            ->getQuoteRequest($restRequest);
+            ->getQuoteRequestCollection($restRequest);
     }
 
     /**

@@ -8,6 +8,7 @@
 namespace Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder;
 
 use ArrayObject;
+use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer;
@@ -103,7 +104,7 @@ class QuoteRequestsRestResponseBuilder implements QuoteRequestsRestResponseBuild
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(QuoteRequestsRestApiConfig::RESPONSE_CODE_QUOTE_REQUEST_NOT_FOUND)
             ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(QuoteRequestsRestApiConfig::RESPONSE_CODE_QUOTE_REQUEST_NOT_FOUND);
+            ->setDetail(QuoteRequestsRestApiConfig::RESPONSE_DETAIL_QUOTE_REQUEST_NOT_FOUND);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
     }
@@ -131,6 +132,26 @@ class QuoteRequestsRestResponseBuilder implements QuoteRequestsRestResponseBuild
         return $this->restResourceBuilder
             ->createRestResponse()
             ->setStatus(Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestCollectionTransfer $quoteRequestCollectionTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createQuoteRequestCollectionRestResponse(
+        QuoteRequestCollectionTransfer $quoteRequestCollectionTransfer
+    ): RestResponseInterface {
+        $restResponse = $this->restResourceBuilder->createRestResponse(
+//            $quoteRequestCollectionTransfer->getPagination()->getNbResults(),
+//            $quoteRequestCollectionTransfer->getPagination()->getMaxPerPage()
+        );
+
+        foreach ($quoteRequestCollectionTransfer->getQuoteRequests() as $quoteRequestTransfer) {
+            $restResponse->addResource($this->createQuoteRequestResource($quoteRequestTransfer));
+        }
+
+        return $restResponse;
     }
 
     /**
