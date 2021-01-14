@@ -10,30 +10,30 @@ function CustomerIdSelector() {
     var selectedIds = {};
     var idKey = 'id';
 
-    selector.addIdToSelection = function(id) {
+    selector.addIdToSelection = function (id) {
         selectedIds[id] = id;
     };
 
-    selector.removeIdFromSelection = function(id) {
+    selector.removeIdFromSelection = function (id) {
         delete selectedIds[id];
     };
 
-    selector.isIdSelected = function(id) {
+    selector.isIdSelected = function (id) {
         return selectedIds.hasOwnProperty(id);
     };
 
-    selector.clearAllSelections = function() {
+    selector.clearAllSelections = function () {
         selectedIds = {};
     };
 
-    selector.addAllToSelection = function(data) {
+    selector.addAllToSelection = function (data) {
         for (var i = 0; i < data.length; i++) {
             var id = data[i][idKey];
             selectedIds[id] = id;
         }
     };
 
-    selector.getSelected = function() {
+    selector.getSelected = function () {
         return selectedIds;
     };
 
@@ -44,7 +44,7 @@ module.exports = {
     /**
      * @return {CustomerIdSelector}
      */
-    create: function() {
+    create: function () {
         return new CustomerIdSelector();
-    }
+    },
 };

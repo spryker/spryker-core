@@ -10,5 +10,4 @@ import { DashboardCardComponent } from './dashboard-card.component';
     declarations: [DashboardCardComponent],
     exports: [DashboardCardComponent],
 })
-export class DashboardCardModule {
-}
+export class DashboardCardModule {}

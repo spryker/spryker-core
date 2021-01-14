@@ -1,62 +1,62 @@
 /**
- * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved. 
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file. 
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 'use strict';
 
 var filterList = {};
 
-var showLoaderBar = function(btn){
+var showLoaderBar = function (btn) {
     $('.progress').removeClass('hidden');
     $(btn).addClass('hidden');
 };
 
-var closeLoaderBar = function(btn){
+var closeLoaderBar = function (btn) {
     $('.progress').addClass('hidden');
     $(btn).removeClass('hidden');
 };
 
-$(document).ready(function() {
-
+$(document).ready(function () {
     /**
      * Save filter order on click
      */
-    $('#save-filter-order').on('click', function() {
+    $('#save-filter-order').on('click', function () {
         var button = this;
         showLoaderBar(button);
 
         $.ajax('/product-search/filter-reorder/save', {
             method: 'POST',
             data: {
-                'filter_list': filterList
+                filter_list: filterList,
             },
-            complete: function() {
+            complete: function () {
                 closeLoaderBar(button);
             },
-            success: function(response) {
+            success: function (response) {
                 swal({
-                    title: "Success",
+                    title: 'Success',
                     text: response.message,
-                    type: "success"
+                    type: 'success',
                 });
             },
-            error: function(response) {
+            error: function (response) {
                 swal({
-                    title: "Error",
+                    title: 'Error',
                     text: response.message,
-                    type: "error"
+                    type: 'error',
                 });
             },
         });
     });
 
-    $('#filter-container').nestable({
-        group: 1,
-        maxDepth: 1
-    }).on('change', function(e) {
-        var list = e.length ? e : $(e.target);
-        filterList = list.nestable('serialize');
-    });
-
+    $('#filter-container')
+        .nestable({
+            group: 1,
+            maxDepth: 1,
+        })
+        .on('change', function (e) {
+            var list = e.length ? e : $(e.target);
+            filterList = list.nestable('serialize');
+        });
 });

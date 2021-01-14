@@ -9,5 +9,4 @@ import { CollapsibleModule } from '@spryker/collapsible';
     declarations: [EditOfferComponent],
     exports: [EditOfferComponent],
 })
-export class EditOfferModule {
-}
+export class EditOfferModule {}
