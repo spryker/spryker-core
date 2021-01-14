@@ -73,14 +73,15 @@ class ProductAttributeDataHelper extends Module
 
     /**
      * @param array $seedData
+     * @param array $productAttributeKeySeed
      *
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute
      */
-    public function haveProductManagementAttributeEntity(array $seedData = []): SpyProductManagementAttribute
+    public function haveProductManagementAttributeEntity(array $seedData = [], array $productAttributeKeySeed = []): SpyProductManagementAttribute
     {
         $seedData = $seedData + [
             'input_type' => 'bar',
-            'fk_product_attribute_key' => $this->haveProductAttributeKeyEntity()->getIdProductAttributeKey(),
+            'fk_product_attribute_key' => $this->haveProductAttributeKeyEntity($productAttributeKeySeed)->getIdProductAttributeKey(),
         ];
 
         $productManagementAttributeEntity = new SpyProductManagementAttribute();
