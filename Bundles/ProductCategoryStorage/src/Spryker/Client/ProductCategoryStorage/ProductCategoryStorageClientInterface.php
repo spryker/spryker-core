@@ -12,6 +12,7 @@ interface ProductCategoryStorageClientInterface
     /**
      * Specification:
      * - Returns Product Abstract Category by id.
+     * - Forward compatibility (from next major): only product abstract categories assigned with passed $storeName will be returned.
      *
      * @api
      *
@@ -26,6 +27,7 @@ interface ProductCategoryStorageClientInterface
     /**
      * Specification:
      * - Returns Categories grouped by Product Abstract id.
+     * - Forward compatibility (from next major): only product abstract categories assigned with passed $storeName will be returned.
      *
      * @api
      *
