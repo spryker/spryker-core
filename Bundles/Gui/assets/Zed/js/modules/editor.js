@@ -6,10 +6,10 @@
 'use strict';
 
 module.exports = {
-    getGlobalConfig: function(configName) {
-        return Boolean(configName &&
-            window.editorConfiguration &&
-            window.editorConfiguration[configName]) ? window.editorConfiguration[configName] : null;
+    getGlobalConfig: function (configName) {
+        return Boolean(configName && window.editorConfiguration && window.editorConfiguration[configName])
+            ? window.editorConfiguration[configName]
+            : null;
     },
     mergeConfigs: function (baseConfig, newConfig) {
         for (var property in newConfig) {
@@ -38,11 +38,11 @@ module.exports = {
 
         return baseConfig;
     },
-    getConfig: function(content) {
-    	content = content || '';
+    getConfig: function (content) {
+        content = content || '';
 
         return {
-        	height: 300,
+            height: 300,
             maxHeight: 600,
             inputText: content,
             focus: true,
@@ -54,14 +54,14 @@ module.exports = {
                 ['para', ['ul', 'ol', 'paragraph']],
                 ['insert', ['picture', 'link', 'video', 'table', 'hr']],
                 ['misc', ['undo', 'redo', 'codeview']],
-                ['custom', []]
-            ]
+                ['custom', []],
+            ],
         };
-    }
+    },
 };
 
 if (!Array.prototype.findIndex) {
-    Array.prototype.findIndex = function(predicate) {
+    Array.prototype.findIndex = function (predicate) {
         if (this === null) {
             throw new TypeError('Array.prototype.findIndex called on null or undefined');
         }
@@ -85,7 +85,7 @@ if (!Array.prototype.findIndex) {
 
 var updateToolbarOptions = function (baseConfig, newConfig) {
     newConfig.toolbar.forEach(function (newToolbarOption) {
-        var existingOptionIndex = baseConfig.toolbar.findIndex(function(defaultToolbarOption) {
+        var existingOptionIndex = baseConfig.toolbar.findIndex(function (defaultToolbarOption) {
             return newToolbarOption[0] === defaultToolbarOption[0];
         });
 

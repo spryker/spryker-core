@@ -12,16 +12,14 @@ describe('LoginComponent', () => {
 
     @Component({
         selector: 'test',
-        template: `
-            <mp-login>Card Content</mp-login>
-        `
+        template: ` <mp-login>Card Content</mp-login> `,
     })
     class TestComponent {}
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [CardModule, LogoModule],
-            declarations: [LoginComponent, TestComponent]
+            declarations: [LoginComponent, TestComponent],
         }).compileComponents();
     }));
 

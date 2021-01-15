@@ -1,16 +1,16 @@
 {
-  "mappings": {
-    "page1": {
-      "properties": {
-        "foo": {
-          "analyzer": "my_analyzer"
-        },
-        "bar": {
-          "properties": {
-            "baz": {}
-          }
+    "mappings": {
+        "page1": {
+            "properties": {
+                "foo": {
+                    "analyzer": "my_analyzer"
+                },
+                "bar": {
+                    "properties": {
+                        "baz": {}
+                    }
+                }
+            }
         }
-      }
     }
-  }
 }
