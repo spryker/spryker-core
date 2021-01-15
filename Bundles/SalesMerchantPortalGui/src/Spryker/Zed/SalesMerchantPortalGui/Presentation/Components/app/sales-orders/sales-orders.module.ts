@@ -5,17 +5,8 @@ import { SalesOrdersComponent } from './sales-orders.component';
 import { SalesOrdersTableModule } from '../sales-orders-table/sales-orders-table.module';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        SalesOrdersTableModule,
-        HeadlineModule,
-    ],
-    declarations: [
-        SalesOrdersComponent,
-    ],
-    exports: [
-        SalesOrdersComponent,
-    ],
+    imports: [CommonModule, SalesOrdersTableModule, HeadlineModule],
+    declarations: [SalesOrdersComponent],
+    exports: [SalesOrdersComponent],
 })
-export class SalesOrdersModule {
-}
+export class SalesOrdersModule {}

@@ -45,7 +45,6 @@ class ProductRelationCollectorPlugin extends AbstractCollectorPlugin
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     ) {
-
         $this->getFacade()->runStorageProductRelationCollector(
             $baseQuery,
             $localeTransfer,

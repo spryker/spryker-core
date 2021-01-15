@@ -69,9 +69,14 @@ class OffersDashboardCardProvider implements OffersDashboardCardProviderInterfac
      */
     public function getDashboardCard(): MerchantDashboardCardTransfer
     {
-        $merchantProductOfferCountsTransfer = $this->productOfferMerchantPortalGuiRepository->getOffersDashboardCardCounts(
-            $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant()
-        );
+        /** @var int $idMerchant */
+        $idMerchant = $this->merchantUserFacade
+            ->getCurrentMerchantUser()
+            ->requireIdMerchant()
+            ->getIdMerchant();
+
+        $merchantProductOfferCountsTransfer = $this->productOfferMerchantPortalGuiRepository
+            ->getOffersDashboardCardCounts($idMerchant);
 
         $title = $this->twigEnvironment->render(
             '@ProductOfferMerchantPortalGui/Partials/offers_dashboard_card_title.twig',

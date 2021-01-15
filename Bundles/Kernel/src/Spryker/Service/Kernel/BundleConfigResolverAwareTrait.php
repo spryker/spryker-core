@@ -14,7 +14,7 @@ trait BundleConfigResolverAwareTrait
     /**
      * @var \Spryker\Service\Kernel\AbstractBundleConfig
      */
-    private $config;
+    protected $config;
 
     /**
      * @param \Spryker\Service\Kernel\AbstractBundleConfig $config

@@ -12,10 +12,10 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 interface ProductLabelByProductConcreteSkuExpanderInterface
 {
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $restResources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): array;
+    public function addResourceRelationships(array $restResources, RestRequestInterface $restRequest): array;
 }

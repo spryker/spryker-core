@@ -10,6 +10,3 @@ if (!window.ContentGui) {
     require('./modules/form-clear');
     window.ContentGui = true;
 }
-
-
-

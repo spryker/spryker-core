@@ -35,16 +35,6 @@ class SecurityGuiToUserFacadeBridge implements SecurityGuiToUserFacadeInterface
     }
 
     /**
-     * @param string $username
-     *
-     * @return bool
-     */
-    public function hasUserByUsername($username)
-    {
-        return $this->userFacade->hasUserByUsername($username);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return \Generated\Shared\Transfer\UserTransfer
@@ -62,5 +52,15 @@ class SecurityGuiToUserFacadeBridge implements SecurityGuiToUserFacadeInterface
     public function setCurrentUser(UserTransfer $user)
     {
         return $this->userFacade->setCurrentUser($user);
+    }
+
+    /**
+     * @param string $username
+     *
+     * @return bool
+     */
+    public function hasActiveUserByUsername($username)
+    {
+        return $this->userFacade->hasActiveUserByUsername($username);
     }
 }

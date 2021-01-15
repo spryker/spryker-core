@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantProduct\Business;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MerchantProductCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
@@ -38,4 +40,16 @@ interface MerchantProductFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantProductCollectionTransfer
      */
     public function get(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): MerchantProductCollectionTransfer;
+
+    /**
+     * Specifications:
+     * - Validates that merchant references in the cart items match existing merchant products.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function validateCartChange(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
 }

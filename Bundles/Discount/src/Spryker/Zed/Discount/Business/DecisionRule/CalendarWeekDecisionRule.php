@@ -42,7 +42,6 @@ class CalendarWeekDecisionRule implements DecisionRuleInterface
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
-
         $calendarWeek = $this->getCalendarWeek();
 
         return $this->comparators->compare($clauseTransfer, $calendarWeek);

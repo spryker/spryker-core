@@ -1,45 +1,43 @@
 {
-  "mappings": {
-    "product-review": {
-      "dynamic_templates": [
-        {
-          "search-result-data": {
-            "mapping": {
-              "index": "false"
-            },
-            "path_match": "search-result-data.*"
-          }
+    "mappings": {
+        "product-review": {
+            "dynamic_templates": [
+                {
+                    "search-result-data": {
+                        "mapping": {
+                            "index": "false"
+                        },
+                        "path_match": "search-result-data.*"
+                    }
+                }
+            ],
+            "properties": {
+                "search-result-data": {
+                    "type": "object",
+                    "include_in_all": false,
+                    "properties": {}
+                },
+                "store": {
+                    "type": "keyword",
+                    "include_in_all": false
+                },
+                "locale": {
+                    "type": "keyword",
+                    "include_in_all": false
+                },
+                "id-product-abstract": {
+                    "type": "integer",
+                    "include_in_all": false
+                },
+                "rating": {
+                    "type": "integer",
+                    "include_in_all": false
+                },
+                "created-at": {
+                    "type": "keyword",
+                    "include_in_all": false
+                }
+            }
         }
-      ],
-      "properties": {
-        "search-result-data": {
-          "type": "object",
-          "include_in_all": false,
-          "properties": {
-
-          }
-        },
-        "store": {
-          "type": "keyword",
-          "include_in_all": false
-        },
-        "locale": {
-          "type": "keyword",
-          "include_in_all": false
-        },
-        "id-product-abstract": {
-          "type": "integer",
-          "include_in_all": false
-        },
-        "rating": {
-          "type": "integer",
-          "include_in_all": false
-        },
-        "created-at": {
-          "type": "keyword",
-          "include_in_all": false
-        }
-      }
     }
-  }
 }

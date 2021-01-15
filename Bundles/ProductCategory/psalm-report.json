@@ -2,18 +2,6 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 57,
-            "line_to": 57,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ProductCategory\\Persistence\\Mapper\\CategoryMapper::mapCategoryCollection has wrong name $productCategoryEntities, expecting $categoryEntities as defined by Spryker\\Zed\\ProductCategory\\Persistence\\Mapper\\CategoryMapperInterface::mapCategoryCollection",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductCategory/src/Spryker/Zed/ProductCategory/Persistence/Mapper/CategoryMapper.php",
-            "snippet": "        ObjectCollection $productCategoryEntities,",
-            "selected_text": "$productCategoryEntities",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
             "line_from": 170,
             "line_to": 170,
             "type": "ParamNameMismatch",
@@ -223,9 +211,9 @@
             "line_from": 16,
             "line_to": 16,
             "type": "MismatchingDocblockParamType",
-            "message": "Parameter $categoryEntities has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategory>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
+            "message": "Parameter $productCategoryEntities has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategory>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
             "file_name": "vendor/spryker/spryker/Bundles/ProductCategory/src/Spryker/Zed/ProductCategory/Persistence/Mapper/CategoryMapperInterface.php",
-            "snippet": "     * @param \\Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategory[]|\\Propel\\Runtime\\Collection\\ObjectCollection $categoryEntities",
+            "snippet": "     * @param \\Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategory[]|\\Propel\\Runtime\\Collection\\ObjectCollection $productCategoryEntities",
             "selected_text": "\\Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategory[]|\\Propel\\Runtime\\Collection\\ObjectCollection",
             "error_level": 4,
             "shortcode": 141

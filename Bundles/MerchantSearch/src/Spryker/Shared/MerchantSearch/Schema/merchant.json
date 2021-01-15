@@ -8,18 +8,14 @@
             "analyzer": {
                 "suggestion_analyzer": {
                     "tokenizer": "standard",
-                    "filter": [
-                        "lowercase"
-                    ]
+                    "filter": ["lowercase"]
                 }
             },
             "normalizer": {
                 "lowercase_normalizer": {
                     "type": "custom",
                     "char_filter": [],
-                    "filter": [
-                        "lowercase"
-                    ]
+                    "filter": ["lowercase"]
                 }
             }
         }
@@ -39,8 +35,7 @@
             "properties": {
                 "search-result-data": {
                     "type": "object",
-                    "properties": {
-                    }
+                    "properties": {}
                 },
                 "type": {
                     "type": "keyword"
@@ -58,8 +53,7 @@
                 },
                 "string-sort": {
                     "type": "object",
-                    "properties": {
-                    }
+                    "properties": {}
                 },
                 "store": {
                     "type": "text"
