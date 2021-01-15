@@ -41,11 +41,11 @@ class TableDefaultConfigData implements Partial<TableConfig> {
             syncStateUrl: () => import('@spryker/table.feature.sync-state').then((m) => m.TableSyncStateFeatureModule),
             total: () => import('@spryker/table.feature.total').then((m) => m.TableTotalFeatureModule),
             itemSelection: () =>
-              import('@spryker/table.feature.selectable').then((m) => m.TableSelectableFeatureModule),
+                import('@spryker/table.feature.selectable').then((m) => m.TableSelectableFeatureModule),
             batchActions: () =>
-              import('@spryker/table.feature.batch-actions').then((m) => m.TableBatchActionsFeatureModule),
+                import('@spryker/table.feature.batch-actions').then((m) => m.TableBatchActionsFeatureModule),
             columnConfigurator: () =>
-              import('@spryker/table.feature.settings').then((m) => m.TableSettingsFeatureModule),
+                import('@spryker/table.feature.settings').then((m) => m.TableSettingsFeatureModule),
             title: () => import('@spryker/table.feature.title').then((m) => m.TableTitleFeatureModule),
             editable: () => import('@spryker/table.feature.editable').then((m) => m.TableEditableFeatureModule),
         }),

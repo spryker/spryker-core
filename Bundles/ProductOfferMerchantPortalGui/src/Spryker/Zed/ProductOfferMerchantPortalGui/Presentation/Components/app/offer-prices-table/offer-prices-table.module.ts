@@ -8,5 +8,4 @@ import { TableModule } from '@spryker/table';
     declarations: [OfferPricesTableComponent],
     exports: [OfferPricesTableComponent],
 })
-export class OfferPricesTableModule {
-}
+export class OfferPricesTableModule {}

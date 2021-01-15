@@ -22,7 +22,7 @@ import { IconDashboardModule, IconProfileModule, IconOffersModule, IconOrdersMod
         ApplyContextsModule,
         CustomElementBoundaryModule,
         IconDashboardModule,
-	      IconProfileModule,
+        IconProfileModule,
         IconOrdersModule,
         IconOffersModule,
     ],
