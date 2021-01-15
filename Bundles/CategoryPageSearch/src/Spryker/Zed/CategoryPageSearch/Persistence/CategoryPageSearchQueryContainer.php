@@ -55,62 +55,6 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
      *
      * @api
      *
-     * @module Url
-     * @module Category
-     *
-     * @deprecated Will be removed with next major release.
-     *
-     * @param int[] $categoryNodeIds
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryWholeCategoryNodeTree(array $categoryNodeIds, int $idLocale): SpyCategoryNodeQuery
-    {
-        /** @var \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $categoryNodeQuery */
-        $categoryNodeQuery = $this->getFactory()
-            ->getCategoryQueryContainer()
-            ->queryAllCategoryNodes()
-            ->filterByIdCategoryNode_In($categoryNodeIds)
-            ->joinWithSpyUrl()
-            ->useSpyUrlQuery(null, Criteria::INNER_JOIN)
-                ->filterByFkLocale($idLocale)
-            ->endUse()
-            ->joinWithCategory()
-            ->useCategoryQuery()
-                ->joinWithAttribute()
-                ->useAttributeQuery()
-                    ->filterByFkLocale($idLocale)
-                ->endUse()
-                ->filterByIsActive(true)
-                ->joinWithCategoryTemplate()
-            ->endUse();
-
-        return $categoryNodeQuery;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @deprecated Will be removed with next major release.
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryCategoryRoot()
-    {
-        return $this->getFactory()
-            ->getCategoryQueryContainer()
-            ->queryAllCategoryNodes()
-            ->filterByIsRoot(true);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param int[] $categoryIds
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery|\Propel\Runtime\ActiveQuery\ModelCriteria

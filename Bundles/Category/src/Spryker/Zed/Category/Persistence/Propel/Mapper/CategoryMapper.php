@@ -39,20 +39,15 @@ class CategoryMapper implements CategoryMapperInterface
 
     /**
      * @param \Spryker\Zed\Category\Persistence\Propel\Mapper\CategoryNodeMapper $categoryNodeMapper
-     */
-    public function __construct(CategoryNodeMapper $categoryNodeMapper)
-    {
-        $this->categoryNodeMapper = $categoryNodeMapper;
-    }
-
-    /**
      * @param \Spryker\Zed\Category\Persistence\Propel\Mapper\CategoryStoreRelationMapper $categoryStoreRelationMapper
      * @param \Spryker\Zed\Category\Persistence\Propel\Mapper\CategoryLocalizedAttributesUrlMapper $categoryLocalizedAttributesUrlMapper
      */
     public function __construct(
+        CategoryNodeMapper $categoryNodeMapper,
         CategoryStoreRelationMapper $categoryStoreRelationMapper,
         CategoryLocalizedAttributesUrlMapper $categoryLocalizedAttributesUrlMapper
     ) {
+        $this->categoryNodeMapper = $categoryNodeMapper;
         $this->categoryStoreRelationMapper = $categoryStoreRelationMapper;
         $this->categoryLocalizedAttributesUrlMapper = $categoryLocalizedAttributesUrlMapper;
     }

@@ -146,9 +146,6 @@
         <property name="isMain" type="bool"/>
     </transfer>
 
-    <transfer name="StoreRelation">
-    </transfer>
-
     <transfer name="Store">
     </transfer>
 
