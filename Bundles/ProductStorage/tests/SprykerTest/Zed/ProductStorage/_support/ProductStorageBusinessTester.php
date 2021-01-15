@@ -38,10 +38,6 @@ class ProductStorageBusinessTester extends Actor
      */
     public function getProductStorageFacade(bool $enableSingleValueAttributePermutation = true): ProductStorageFacade
     {
-        $this->mockConfigMethod('isSendingToQueue', function () {
-            return false;
-        });
-
         $mockConfig = $this->mockConfigMethod('isPermutationForSingleValueProductAttributesEnabled', function () use ($enableSingleValueAttributePermutation) {
             return $enableSingleValueAttributePermutation;
         });

@@ -45,6 +45,6 @@ class SingleValueSuperAttributeFilter implements SingleValueSuperAttributeFilter
     protected function isSingleValueSuperAttribute(array $superAttributeVariations, string $attributeName): bool
     {
         return isset($superAttributeVariations[$attributeName])
-            && count($superAttributeVariations[$attributeName]) === self::SINGLE_VALUE_ATTRIBUTE_COUNT;
+            && count($superAttributeVariations[$attributeName]) === static::SINGLE_VALUE_ATTRIBUTE_COUNT;
     }
 }
