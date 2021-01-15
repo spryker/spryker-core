@@ -205,7 +205,7 @@
     </transfer>
 
     <transfer name="QuoteRequestFilter">
-        <property name="idCompanyUser" type="int"/>
+        <property name="companyUser" type="CompanyUser"/>
         <property name="quoteRequestReference" type="string"/>
         <property name="pagination" type="Pagination"/>
     </transfer>

@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\QuoteRequestsRestApi\Processor\Canceler;
 
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -56,8 +57,11 @@ class QuoteRequestCanceler implements QuoteRequestCancelerInterface
             ->findParentResourceByType(QuoteRequestsRestApiConfig::RESOURCE_QUOTE_REQUESTS)
             ->getId();
 
+        $companyUserTransfer = (new CompanyUserTransfer())
+            ->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser());
+
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
-            ->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUserOrFail())
+            ->setCompanyUser($companyUserTransfer)
             ->setQuoteRequestReference($quoteRequestReference);
 
         $quoteRequestResponseTransfer = $this->quoteRequestClient->cancelQuoteRequest($quoteRequestFilterTransfer);
