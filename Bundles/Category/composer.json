@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.3",
     "spryker/category-extension": "^1.1.0",
-    "spryker/event": "^1.0.0 || ^2.0.0",
+    "spryker/event": "^2.0.0",
     "spryker/graph": "^3.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/key-builder": "^1.0.0",
@@ -14,7 +14,7 @@
     "spryker/propel-orm": "^1.0.0",
     "spryker/storage": "^3.0.0",
     "spryker/store": "^1.4.0",
-    "spryker/touch": "^3.0.0 || ^4.0.0",
+    "spryker/touch": "^4.0.0",
     "spryker/url": "^3.5.0"
   },
   "require-dev": {

@@ -27,6 +27,7 @@
         <property name="extraParents" singular="extraParent" type="Node[]"/>
         <property name="fkCategoryTemplate" type="int"/>
         <property name="categoryTemplate" type="CategoryTemplate"/>
+        <property name="storeRelation" type="StoreRelation"/>
     </transfer>
 
     <transfer name="CategoryCollection">
@@ -127,6 +128,22 @@
 
     <transfer name="CategoryNodeUrlFilter">
         <property name="categoryNodeIds" type="int[]" singular="idCategoryNode"/>
+    </transfer>
+
+    <transfer name="CategoryUrlPathCriteria">
+        <property name="idCategoryNode" type="int"/>
+        <property name="idLocale" type="int"/>
+        <property name="excludeRootNode" type="bool"/>
+        <property name="onlyParents" type="bool"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="idStores" type="int[]" singular="idStores"/>
+    </transfer>
+
+    <transfer name="CategoryNodeFilter">
+        <property name="categoryIds" type="int[]" singular="idCategory"/>
+        <property name="isMain" type="bool"/>
     </transfer>
 
     <transfer name="StoreRelation">

@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Category\Business\Generator;
+namespace Spryker\Zed\Category\Business\Deleter;
 
-interface UrlPathGeneratorInterface
+interface CategoryStoreDeleterInterface
 {
     /**
-     * @param array $categoryPath
+     * @param int $idCategory
      *
-     * @return string
+     * @return void
      */
-    public function generate(array $categoryPath): string;
+    public function deleteCategoryStoreRelations(int $idCategory): void;
 }

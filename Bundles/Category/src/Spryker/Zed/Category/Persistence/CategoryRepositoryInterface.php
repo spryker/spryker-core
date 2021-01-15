@@ -9,9 +9,11 @@ namespace Spryker\Zed\Category\Persistence;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeFilterTransfer;
 use Generated\Shared\Transfer\CategoryNodeTreeElementCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\CategoryUrlPathCriteriaTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 
@@ -93,6 +95,20 @@ interface CategoryRepositoryInterface
      * @return \Generated\Shared\Transfer\UrlTransfer[]
      */
     public function getCategoryNodeUrls(CategoryNodeUrlFilterTransfer $categoryNodeFilterTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryUrlPathCriteriaTransfer $categoryUrlPathCriteriaTransfer
+     *
+     * @return array
+     */
+    public function getCategoryUrlPathParts(CategoryUrlPathCriteriaTransfer $categoryUrlPathCriteriaTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryNodeFilterTransfer $categoryNodeFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
+     */
+    public function getCategoryNodesByCriteria(CategoryNodeFilterTransfer $categoryNodeFilterTransfer): NodeCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CategoryNodeTreeElementCriteriaTransfer $categoryNodeTreeElementCriteriaTransfer

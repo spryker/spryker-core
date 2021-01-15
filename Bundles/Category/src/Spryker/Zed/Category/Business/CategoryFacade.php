@@ -19,6 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Category\Business\CategoryBusinessFactory getFactory()
  * @method \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface getEntityManager()
  */
 class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
 {
@@ -51,17 +52,14 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @throws \Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
-     *
      * @return void
      */
     public function create(CategoryTransfer $categoryTransfer): void
     {
         $this
             ->getFactory()
-            ->createCategory()
-            ->create($categoryTransfer);
+            ->createCategoryCreator()
+            ->createCategory($categoryTransfer);
     }
 
     /**
@@ -93,16 +91,14 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @param int $idCategory
      *
-     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
-     *
      * @return void
      */
     public function delete($idCategory): void
     {
         $this
             ->getFactory()
-            ->createCategory()
-            ->delete($idCategory);
+            ->createCategoryDeleter()
+            ->deleteCategory($idCategory);
     }
 
     /**
