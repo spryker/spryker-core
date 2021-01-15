@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\QuoteRequestsRestApi\Processor\Reader;
 
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -54,9 +55,11 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
      */
     public function getQuoteRequest(RestRequestInterface $restRequest): RestResponseInterface
     {
+        $companyUserTransfer = (new CompanyUserTransfer())
+            ->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser());
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
             ->setQuoteRequestReference($restRequest->getResource()->getId())
-            ->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser());
+            ->setCompanyUser($companyUserTransfer);
 
         $quoteRequestResponseTransfer = $this->quoteRequestClient
             ->getQuoteRequest($quoteRequestFilterTransfer);
@@ -77,8 +80,10 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
      */
     public function getQuoteRequestCollection(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
+        $companyUserTransfer = (new CompanyUserTransfer())
             ->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser());
+        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
+            ->setCompanyUser($companyUserTransfer);
 
         if ($restRequest->getPage() !== null) {
             $quoteRequestFilterTransfer->setPagination(
