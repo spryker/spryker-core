@@ -26,6 +26,8 @@ class ProductOfferStockGuiToProductOfferStockFacadeBridge implements ProductOffe
     }
 
     /**
+     * @phpstan-return \ArrayObject<int,\Generated\Shared\Transfer\ProductOfferStockTransfer>
+     *
      * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ProductOfferStockTransfer[]

@@ -62,15 +62,17 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
                 )
             );
         }
-        $productOfferStockResult = $this->productOfferStockResultMapper
+         $productOfferStockResultTransfer = $this->productOfferStockResultMapper
             ->mapProductOfferStockTransfersToProductOfferStockResultTransfer(
                 $productOfferStockTransfers
             );
 
-        return $productOfferStockResult;
+        return $productOfferStockResultTransfer;
     }
 
     /**
+     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer>
+     *
      * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
      *
      * @throws \Spryker\Zed\ProductOfferStock\Business\Exception\ProductOfferNotFoundException

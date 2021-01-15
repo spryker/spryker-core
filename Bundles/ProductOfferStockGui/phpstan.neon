@@ -1,2 +1,2 @@
 parameters:
-    checkGenericClassInNonGenericObjectType: false
+    ignoreErrors:

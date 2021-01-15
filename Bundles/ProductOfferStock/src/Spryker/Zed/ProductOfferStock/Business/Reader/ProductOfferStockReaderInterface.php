@@ -20,9 +20,13 @@ interface ProductOfferStockReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductOfferStockResultTransfer
      */
-    public function getProductOfferStockResult(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ProductOfferStockResultTransfer;
+    public function getProductOfferStockResult(
+        ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
+    ): ProductOfferStockResultTransfer;
 
     /**
+     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer>
+     *
      * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
      *
      * @throws \Spryker\Zed\ProductOfferStock\Business\Exception\ProductOfferNotFoundException

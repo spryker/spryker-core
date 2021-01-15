@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductOfferStock\Business\Expander\ProductOfferExpander;
 use Spryker\Zed\ProductOfferStock\Business\Expander\ProductOfferExpanderInterface;
 use Spryker\Zed\ProductOfferStock\Business\Mapper\ProductOfferStockResultMapper;
+use Spryker\Zed\ProductOfferStock\Business\Mapper\ProductOfferStockResultMapperInterface;
 use Spryker\Zed\ProductOfferStock\Business\Reader\ProductOfferStockReader;
 use Spryker\Zed\ProductOfferStock\Business\Reader\ProductOfferStockReaderInterface;
 
@@ -38,9 +39,9 @@ class ProductOfferStockBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferStock\Business\Mapper\ProductOfferStockResultMapper
+     * @return \Spryker\Zed\ProductOfferStock\Business\Mapper\ProductOfferStockResultMapperInterface
      */
-    public function createProductOfferStockResultMapper(): ProductOfferStockResultMapper
+    public function createProductOfferStockResultMapper(): ProductOfferStockResultMapperInterface
     {
         return new ProductOfferStockResultMapper();
     }

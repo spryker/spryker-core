@@ -28,8 +28,6 @@ class ProductOfferStockFacade extends AbstractFacade implements ProductOfferStoc
      *
      * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
      *
-     * @throws \Spryker\Zed\ProductOfferStock\Business\Exception\ProductOfferNotFoundException
-     *
      * @return \Generated\Shared\Transfer\ProductOfferStockResultTransfer
      */
     public function getProductOfferStockResult(
@@ -45,9 +43,9 @@ class ProductOfferStockFacade extends AbstractFacade implements ProductOfferStoc
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
+     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer>
      *
-     * @throws \Spryker\Zed\ProductOfferStock\Business\Exception\ProductOfferNotFoundException
+     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ProductOfferStockTransfer[]
      */

@@ -204,16 +204,13 @@ class ProductOfferStockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductOfferStocksReturnsNothingIfProductOfferNotExists(): void
+    public function testGetProductOfferStocksReturnsNullIfProductOfferNotExists(): void
     {
         // Arrange
-        $notExistingProductOfferReference = 'not-existing-product-offer-reference';
-
         $this->expectException(ProductOfferNotFoundException::class);
-
         $storeTransfer = $this->tester->haveStore();
         $productOfferStockRequestTransfer = (new ProductOfferStockRequestTransfer())
-            ->setProductOfferReference($notExistingProductOfferReference)
+            ->setProductOfferReference('not-existing-product-offer-reference')
             ->setStore($storeTransfer);
 
         // Act

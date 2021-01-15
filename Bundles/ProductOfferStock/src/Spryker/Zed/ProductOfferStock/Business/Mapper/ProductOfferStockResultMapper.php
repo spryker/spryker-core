@@ -14,6 +14,8 @@ use Spryker\DecimalObject\Decimal;
 class ProductOfferStockResultMapper implements ProductOfferStockResultMapperInterface
 {
     /**
+     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\ProductOfferStockTransfer> $productOfferStockTransfers
+     *
      * @param \ArrayObject|\Generated\Shared\Transfer\ProductOfferStockTransfer[] $productOfferStockTransfers
      *
      * @return \Generated\Shared\Transfer\ProductOfferStockResultTransfer
@@ -22,19 +24,18 @@ class ProductOfferStockResultMapper implements ProductOfferStockResultMapperInte
         ArrayObject $productOfferStockTransfers
     ): ProductOfferStockResultTransfer {
         $productOfferStockResultTransfer = new ProductOfferStockResultTransfer();
-        $quantity = new Decimal(0);
-        $isNeverOutOfStock = null;
+
+        $productOfferStockResultTransfer->setIsNeverOutOfStock(false);
+        $totalQuantity = new Decimal(0);
 
         foreach ($productOfferStockTransfers as $productOfferStockTransfer) {
-            /** @var \Generated\Shared\Transfer\ProductOfferStockTransfer $productOfferStockTransfer */
-            $quantity = $quantity->add($productOfferStockTransfer->getQuantity());
+            $totalQuantity = $totalQuantity->add($productOfferStockTransfer->getQuantity());
             if ($productOfferStockTransfer->getIsNeverOutOfStock() && $productOfferStockTransfer->getIsNeverOutOfStock() !== null) {
-                $isNeverOutOfStock = true;
+                $productOfferStockResultTransfer->setIsNeverOutOfStock(true);
             }
         }
+        $productOfferStockResultTransfer->setQuantity($totalQuantity);
 
-        return $productOfferStockResultTransfer
-            ->setQuantity($quantity)
-            ->setIsNeverOutOfStock($isNeverOutOfStock);
+        return $productOfferStockResultTransfer;
     }
 }
