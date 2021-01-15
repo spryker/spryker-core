@@ -1,5 +1,5 @@
 {
-  "include": {
-    "spryker/gift-card": "GiftCard provides base functionality."
-  }
+    "include": {
+        "spryker/gift-card": "GiftCard provides base functionality."
+    }
 }

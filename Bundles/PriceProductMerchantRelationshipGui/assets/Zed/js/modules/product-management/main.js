@@ -17,31 +17,29 @@ const priceDimensionParam = 'price-dimension';
 const selectIdPath = '#price-dimension-merchant-relationship';
 
 $(document).ready(function () {
-
-    let selectedValue = parseInt(getUrlParam(priceDimensionParam + "[idMerchantRelationship]", 0));
+    let selectedValue = parseInt(getUrlParam(priceDimensionParam + '[idMerchantRelationship]', 0));
 
     if (selectedValue) {
         $(selectIdPath + " option[value='" + selectedValue + "']").attr('selected', 'selected');
     }
 
-    $(selectIdPath).change(function() {
+    $(selectIdPath).change(function () {
         if (!$(this).val()) {
-            removeParamsFromUrl()
+            removeParamsFromUrl();
         } else {
             addNewParamsToUrl();
         }
     });
 
     function addNewParamsToUrl() {
-
         let url = window.location.search;
 
-        $(selectIdPath + " option:selected").each(function () {
-            url = removeParam(priceDimensionParam + "[type]", url);
-            url = updateUrl(url, priceDimensionParam + "[type]", $(this).closest('select').attr('data-type'));
+        $(selectIdPath + ' option:selected').each(function () {
+            url = removeParam(priceDimensionParam + '[type]', url);
+            url = updateUrl(url, priceDimensionParam + '[type]', $(this).closest('select').attr('data-type'));
 
-            url = removeParam(priceDimensionParam + "[idMerchantRelationship]", url);
-            url = updateUrl(url, priceDimensionParam + "[idMerchantRelationship]", $(this).val());
+            url = removeParam(priceDimensionParam + '[idMerchantRelationship]', url);
+            url = updateUrl(url, priceDimensionParam + '[idMerchantRelationship]', $(this).val());
         });
 
         window.location.search = url;
@@ -50,14 +48,13 @@ $(document).ready(function () {
     function removeParamsFromUrl() {
         let url = window.location.search;
 
-        url = removeParam(priceDimensionParam + "[type]", url);
-        url = removeParam(priceDimensionParam + "[idMerchantRelationship]", url);
+        url = removeParam(priceDimensionParam + '[type]', url);
+        url = removeParam(priceDimensionParam + '[idMerchantRelationship]', url);
 
         window.location.search = url;
     }
 
     function updateUrl(url, paramName, paramValue) {
-
         if (url.includes(paramName)) {
             return setParam(url, paramName, paramValue);
         }
@@ -67,25 +64,28 @@ $(document).ready(function () {
 
     function setParam(uri, key, val) {
         return uri
-            .replace(new RegExp("([?&]" + key + "(?=[=&#]|$)[^#&]*|(?=#|$))"), "&" + key + "=" + encodeURIComponent(val))
-            .replace(/^([^?&]+)&/, "$1?");
+            .replace(
+                new RegExp('([?&]' + key + '(?=[=&#]|$)[^#&]*|(?=#|$))'),
+                '&' + key + '=' + encodeURIComponent(val),
+            )
+            .replace(/^([^?&]+)&/, '$1?');
     }
 
     function removeParam(key, sourceURL) {
-        let rtn = sourceURL.split("?")[0],
+        let rtn = sourceURL.split('?')[0],
             param,
             params_arr = [],
-            queryString = (sourceURL.indexOf("?") !== -1) ? sourceURL.split("?")[1] : "";
+            queryString = sourceURL.indexOf('?') !== -1 ? sourceURL.split('?')[1] : '';
 
-        if (queryString !== "") {
-            params_arr = queryString.split("&");
+        if (queryString !== '') {
+            params_arr = queryString.split('&');
             for (let i = params_arr.length - 1; i >= 0; i -= 1) {
-                param = params_arr[i].split("=")[0];
+                param = params_arr[i].split('=')[0];
                 if (param === key) {
                     params_arr.splice(i, 1);
                 }
             }
-            rtn = rtn + "?" + params_arr.join("&");
+            rtn = rtn + '?' + params_arr.join('&');
         }
         return rtn;
     }
