@@ -110,8 +110,8 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
     ): RestQuoteRequestsCartTransfer {
         $addressTransfer = $quoteTransfer->getBillingAddress();
         if ($addressTransfer !== null) {
-            $restAddressTransfer = new RestQuoteRequestsAddressTransfer();
-            $restAddressTransfer->fromArray($quoteTransfer->getBillingAddress()->toArray(), true);
+            $restAddressTransfer = (new RestQuoteRequestsAddressTransfer())
+                ->fromArray($addressTransfer->toArray(), true);
             $restCartTransfer->setBillingAddress($restAddressTransfer);
         }
 
@@ -218,14 +218,17 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
                 $itemGroupKeys[] = $itemTransfer->getGroupKey();
             }
 
-            $restQuoteRequestShipmentMethodTransfer = (new RestQuoteRequestShipmentMethodTransfer())
-                ->fromArray($shipmentTransfer->getMethodOrFail()->toArray(), true)
-                ->setPrice($shipmentTransfer->getMethod()->getStoreCurrencyPrice());
-
             $restShipmentTransfer = (new RestQuoteRequestShipmentTransfer())
-                ->setMethod($restQuoteRequestShipmentMethodTransfer)
                 ->setShippingAddress($restAddressTransfer)
                 ->setItems(array_filter($itemGroupKeys));
+
+            if ($shipmentTransfer->getMethod() !== null) {
+                $restShipmentTransfer->setMethod(
+                    (new RestQuoteRequestShipmentMethodTransfer())
+                        ->fromArray($shipmentTransfer->getMethodOrFail()->toArray(), true)
+                        ->setPrice($shipmentTransfer->getMethod()->getStoreCurrencyPrice())
+                );
+            }
 
             $restCartTransfer->addShipment($restShipmentTransfer);
         }

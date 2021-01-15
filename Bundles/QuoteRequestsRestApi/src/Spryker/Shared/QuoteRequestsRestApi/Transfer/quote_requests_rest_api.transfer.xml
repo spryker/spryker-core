@@ -227,7 +227,11 @@
     </transfer>
 
     <transfer name="Totals">
-        <property name="taxTotal" type="int"/>
+        <property name="taxTotal" type="TaxTotal"/>
+    </transfer>
+
+    <transfer name="TaxTotal">
+        <property name="amount" type="int"/>
     </transfer>
 
     <transfer name="Shipment">
