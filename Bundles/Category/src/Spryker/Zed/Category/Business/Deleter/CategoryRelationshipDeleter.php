@@ -83,8 +83,8 @@ class CategoryRelationshipDeleter implements CategoryRelationshipDeleterInterfac
 
         $this->categoryAttributeDeleter->deleteCategoryLocalizedAttributes($idCategory);
         $this->categoryUrlDeleter->deleteCategoryUrlsForCategory($idCategory);
-        $this->categoryNodeDeleter->deleteCategoryNodes($idCategory);
-        $this->categoryNodeDeleter->deleteCategoryExtraParentNodes($idCategory);
+        $this->categoryNodeDeleter->deleteCategoryNodesForCategory($idCategory);
+        $this->categoryNodeDeleter->deleteCategoryExtraParentNodesForCategory($idCategory);
         $this->categoryStoreDeleter->deleteCategoryStoreRelations($idCategory);
 
         $this->executeCategoryRelationDeletePlugins($idCategory);

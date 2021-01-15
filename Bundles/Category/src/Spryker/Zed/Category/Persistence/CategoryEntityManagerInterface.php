@@ -29,30 +29,11 @@ interface CategoryEntityManagerInterface
     public function createCategoryStoreRelationForStores(int $idCategory, array $storeIds): void;
 
     /**
-     * @param int $idCategory
-     * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer
-     */
-    public function createCategoryAttribute(
-        int $idCategory,
-        CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer
-    ): CategoryLocalizedAttributesTransfer;
-
-    /**
      * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
      *
      * @return \Generated\Shared\Transfer\NodeTransfer
      */
     public function createCategoryNode(NodeTransfer $nodeTransfer): NodeTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\NodeTransfer $extraParentNodeTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeTransfer
-     */
-    public function saveCategoryExtraParentNode(CategoryTransfer $categoryTransfer, NodeTransfer $extraParentNodeTransfer): NodeTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
@@ -67,6 +48,43 @@ interface CategoryEntityManagerInterface
      * @return void
      */
     public function createCategoryClosureTableNodes(NodeTransfer $nodeTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
+     *
+     * @return void
+     */
+    public function createCategoryClosureTableParentEntriesForCategoryNode(NodeTransfer $nodeTransfer): void;
+
+    /**
+     * @param int $idCategory
+     * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer
+     *
+     * @return void
+     */
+    public function saveCategoryAttribute(int $idCategory, CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\NodeTransfer $extraParentNodeTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeTransfer
+     */
+    public function saveCategoryExtraParentNode(CategoryTransfer $categoryTransfer, NodeTransfer $extraParentNodeTransfer): NodeTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    public function updateCategory(CategoryTransfer $categoryTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeTransfer
+     */
+    public function updateCategoryNode(NodeTransfer $nodeTransfer): NodeTransfer;
 
     /**
      * @param int $idCategory
@@ -102,4 +120,27 @@ interface CategoryEntityManagerInterface
      * @return void
      */
     public function deleteCategoryStoreRelations(int $idCategory): void;
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return void
+     */
+    public function deleteCategoryClosureTableParentEntriesForCategoryNode(int $idCategoryNode): void;
+
+    /**
+     * @param int $idCategory
+     * @param int[] $storeIds
+     *
+     * @return void
+     */
+    public function deleteCategoryStoreRelationForStores(int $idCategory, array $storeIds): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param int[] $parentCategoryNodeIds
+     *
+     * @return void
+     */
+    public function deleteExtraCategoryNodesForCategory(CategoryTransfer $categoryTransfer, array $parentCategoryNodeIds): void;
 }

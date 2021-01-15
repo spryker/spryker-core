@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Category\Business\Creator;
+namespace Spryker\Zed\Category\Business\Updater;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
-class CategoryAttributeCreator implements CategoryAttributeCreatorInterface
+class CategoryAttributeUpdater implements CategoryAttributeUpdaterInterface
 {
     use TransactionTrait;
 
@@ -33,10 +33,10 @@ class CategoryAttributeCreator implements CategoryAttributeCreatorInterface
      *
      * @return void
      */
-    public function createCategoryLocalizedAttributes(CategoryTransfer $categoryTransfer): void
+    public function updateCategoryAttributes(CategoryTransfer $categoryTransfer): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($categoryTransfer) {
-            $this->executeCreateCategoryLocalizedAttributesTransaction($categoryTransfer);
+            $this->executeUpdateCategoryAttributesTransaction($categoryTransfer);
         });
     }
 
@@ -45,10 +45,12 @@ class CategoryAttributeCreator implements CategoryAttributeCreatorInterface
      *
      * @return void
      */
-    protected function executeCreateCategoryLocalizedAttributesTransaction(CategoryTransfer $categoryTransfer): void
+    protected function executeUpdateCategoryAttributesTransaction(CategoryTransfer $categoryTransfer): void
     {
-        foreach ($categoryTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
-            $this->categoryEntityManager->saveCategoryAttribute($categoryTransfer->getIdCategory(), $localizedAttributesTransfer);
+        $idCategory = $categoryTransfer->getIdCategoryOrFail();
+
+        foreach ($categoryTransfer->getLocalizedAttributes() as $categoryLocalizedAttributesTransfer) {
+            $this->categoryEntityManager->saveCategoryAttribute($idCategory, $categoryLocalizedAttributesTransfer);
         }
     }
 }

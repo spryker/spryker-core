@@ -87,10 +87,10 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
      *
      * @return void
      */
-    public function deleteCategoryNodes(int $idCategory): void
+    public function deleteCategoryNodesForCategory(int $idCategory): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($idCategory) {
-            $this->executeDeleteCategoryNodesTransaction($idCategory);
+            $this->executeDeleteCategoryNodesForCategoryTransaction($idCategory);
         });
     }
 
@@ -99,7 +99,7 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
      *
      * @return void
      */
-    public function deleteCategoryExtraParentNodes(int $idCategory): void
+    public function deleteCategoryExtraParentNodesForCategory(int $idCategory): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($idCategory) {
             $this->executeDeleteCategoryExtraParentNodesTransaction($idCategory);
@@ -107,11 +107,23 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\NodeTransfer[] $nodeTransfers
+     *
+     * @return void
+     */
+    public function deleteCategoryNodes(array $nodeTransfers): void
+    {
+        $this->getTransactionHandler()->handleTransaction(function () use ($nodeTransfers) {
+            $this->executeDeleteCategoryNodesTransaction($nodeTransfers);
+        });
+    }
+
+    /**
      * @param int $idCategory
      *
      * @return void
      */
-    protected function executeDeleteCategoryNodesTransaction(int $idCategory): void
+    protected function executeDeleteCategoryNodesForCategoryTransaction(int $idCategory): void
     {
         $categoryNodeFilterTransfer = (new CategoryNodeFilterTransfer())
             ->addIdCategory($idCategory);
@@ -138,6 +150,18 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
 
         foreach ($nodeCollectionTransfer->getNodes() as $nodeTransfer) {
             $this->deleteExtraParentNode($nodeTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer[] $nodeTransfers
+     *
+     * @return void
+     */
+    protected function executeDeleteCategoryNodesTransaction(array $nodeTransfers): void
+    {
+        foreach ($nodeTransfers as $nodeTransfer) {
+            $this->deleteNode($nodeTransfer);
         }
     }
 

@@ -15,6 +15,8 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\CategoryUrlPathCriteriaTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 
 interface CategoryRepositoryInterface
 {
@@ -108,4 +110,26 @@ interface CategoryRepositoryInterface
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
     public function getCategoryNodesByCriteria(CategoryNodeFilterTransfer $categoryNodeFilterTransfer): NodeCollectionTransfer;
+
+    /**
+     * @param int $idCategory
+     *
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
+     */
+    public function getCategoryStoreRelationByIdCategory(int $idCategory): StoreRelationTransfer;
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return \Generated\Shared\Transfer\NodeTransfer|null
+     */
+    public function findCategoryNodeByIdCategoryNode(int $idCategoryNode): ?NodeTransfer;
+
+    /**
+     * @param int $idCategory
+     * @param int $idStore
+     *
+     * @return bool
+     */
+    public function isParentCategoryHasRelationToStore(int $idCategory, int $idStore): bool;
 }

@@ -9,19 +9,29 @@ namespace Spryker\Zed\Category\Business\Creator;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface;
+use Spryker\Zed\Category\Persistence\CategoryRepositoryInterface;
 
 class CategoryStoreCreator implements CategoryStoreCreatorInterface
 {
+    /**
+     * @var \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface
+     */
+    protected $categoryRepository;
+
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface
      */
     protected $categoryEntityManager;
 
     /**
+     * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
      * @param \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface $categoryEntityManager
      */
-    public function __construct(CategoryEntityManagerInterface $categoryEntityManager)
-    {
+    public function __construct(
+        CategoryRepositoryInterface $categoryRepository,
+        CategoryEntityManagerInterface $categoryEntityManager
+    ) {
+        $this->categoryRepository = $categoryRepository;
         $this->categoryEntityManager = $categoryEntityManager;
     }
 
@@ -38,7 +48,23 @@ class CategoryStoreCreator implements CategoryStoreCreatorInterface
 
         $this->categoryEntityManager->createCategoryStoreRelationForStores(
             $categoryTransfer->getIdCategoryOrFail(),
-            $categoryTransfer->getStoreRelation()->getIdStores()
+            $this->filterOutStoreIdsMissingInParentCategoryStoreRelation(
+                $categoryTransfer->getIdCategory(),
+                $categoryTransfer->getStoreRelation()->getIdStores()
+            )
         );
+    }
+
+    /**
+     * @param int $idCategory
+     * @param int[] $storeIds
+     *
+     * @return int[]
+     */
+    protected function filterOutStoreIdsMissingInParentCategoryStoreRelation(int $idCategory, array $storeIds): array
+    {
+        return array_filter($storeIds, function (int $idStore) use ($idCategory) {
+            return $this->categoryRepository->isParentCategoryHasRelationToStore($idCategory, $idStore);
+        });
     }
 }

@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -67,19 +68,38 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
-     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException
-     * @throws \Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
-     *
      * @return void
      */
     public function update(CategoryTransfer $categoryTransfer): void
     {
         $this
             ->getFactory()
-            ->createCategory()
-            ->update($categoryTransfer);
+            ->createCategoryUpdater()
+            ->updateCategory($categoryTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     * Specification:
+     * - Updates category store relation of provided category.
+     * - Updates category store relation for all main children nodes of provided category.
+     *
+     * @api
+     *
+     * @param int $idCategory
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $newStoreAssignment
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer|null $currentStoreAssignment
+     *
+     * @return void
+     */
+    public function updateCategoryStoreRelationWithMainChildrenPropagation(
+        int $idCategory,
+        StoreRelationTransfer $newStoreAssignment,
+        ?StoreRelationtransfer $currentStoreAssignment = null
+    ): void {
+        $this->getFactory()
+            ->createCategoryStoreUpdater()
+            ->updateCategoryStoreRelationWithMainChildrenPropagation($idCategory, $newStoreAssignment, $currentStoreAssignment);
     }
 
     /**

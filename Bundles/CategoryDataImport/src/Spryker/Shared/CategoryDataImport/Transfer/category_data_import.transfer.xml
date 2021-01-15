@@ -9,4 +9,8 @@
     <transfer name="DataImporterReport">
     </transfer>
 
+    <transfer name="StoreRelation">
+        <property name="idStores" type="int[]" singular="idStores"/>
+    </transfer>
+
 </transfers>

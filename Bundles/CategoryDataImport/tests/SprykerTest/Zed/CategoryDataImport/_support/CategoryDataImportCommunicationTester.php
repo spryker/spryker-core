@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\CategoryDataImport;
 
 use Codeception\Actor;
-use Orm\Zed\CategoryStore\Persistence\SpyCategoryStoreQuery;
+use Orm\Zed\Category\Persistence\SpyCategoryStoreQuery;
 
 /**
  * Inherited Methods

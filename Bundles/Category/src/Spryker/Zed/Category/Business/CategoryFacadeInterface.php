@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 
 interface CategoryFacadeInterface
 {
@@ -60,6 +61,7 @@ interface CategoryFacadeInterface
      *  - Finds or creates extra-parent category-node entities, hydrates them from CategoryTransfer, and persists them
      *  - Generates urls from category names for all given locales (names are part of the attributes)
      *  - Finds url entities, hydrates them with generated URLs, and persists them
+     *  - Updates the relationships between category and store if data is provided.
      *  - Touches modified category-node entities active (via TouchFacade)
      *  - Touches modified url entities active (via TouchFacade)
      *  - Touches navigation active (via TouchFacade)
@@ -91,6 +93,25 @@ interface CategoryFacadeInterface
      * @return void
      */
     public function update(CategoryTransfer $categoryTransfer): void;
+
+    /**
+     * Specification:
+     * - Updates category store relation of provided category.
+     * - Updates category store relation for all main children nodes of provided category.
+     *
+     * @api
+     *
+     * @param int $idCategory
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $newStoreAssignment
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer|null $currentStoreAssignment
+     *
+     * @return void
+     */
+    public function updateCategoryStoreRelationWithMainChildrenPropagation(
+        int $idCategory,
+        StoreRelationTransfer $newStoreAssignment,
+        ?StoreRelationtransfer $currentStoreAssignment = null
+    ): void;
 
     /**
      * Specification:

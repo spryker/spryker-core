@@ -18,9 +18,11 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryStoreTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryStoreQuery;
+use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Zed\Category\Business\CategoryFacadeInterface;
 use Spryker\Zed\Category\CategoryDependencyProvider;
 use Spryker\Zed\Category\Communication\Plugin\CategoryUrlPathPrefixUpdaterPlugin;
@@ -41,7 +43,8 @@ class CategoryFacadeTest extends Unit
     public const CATEGORY_ID_ROOT = 1;
 
     protected const TEST_LOCALE = 'en_US';
-    protected const TEST_STORE = 'DE';
+    protected const TEST_STORE_DE = 'DE';
+    protected const TEST_STORE_AT = 'AT';
 
     /**
      * @var \SprykerTest\Zed\Category\CategoryBusinessTester
@@ -113,7 +116,7 @@ class CategoryFacadeTest extends Unit
     {
         // Arrange
         $categoryTransfer = $this->tester->haveCategory();
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_DE]);
         $this->tester->haveCategoryStoreRelation($categoryTransfer->getIdCategory(), $storeTransfer->getIdStore());
 
         // Act
@@ -275,13 +278,13 @@ class CategoryFacadeTest extends Unit
     public function testCreateCategoryWillCreateCategoryWithStoreRelation(): void
     {
         // Arrange
-        $parentCategoryTransfer = $this->tester->haveCategory();
-
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_DE]);
         $localeTransfer = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE]);
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE]);
-        $storeRelationTransfer = (new StoreRelationTransfer())
-            ->addIdStores($storeTransfer->getIdStore())
-            ->addStores($storeTransfer);
+
+        $parentCategoryTransfer = $this->tester->haveCategory();
+        $this->tester->haveCategoryStoreRelation($parentCategoryTransfer->getIdCategory(), $storeTransfer->getIdStore());
+
+        $storeRelationTransfer = (new StoreRelationTransfer())->addIdStores($storeTransfer->getIdStore());
         $categoryTemplateTransfer = $this->tester->haveCategoryTemplate();
 
         $categoryTransfer = (new CategoryBuilder([
@@ -364,6 +367,132 @@ class CategoryFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testUpdateCategoryStoreRelationWithMainChildrenPropagationWillAddOnlyNewStoreRelation(): void
+    {
+        // Arrange
+        $deStoreTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_DE]);
+        $atStoreTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_AT]);
+
+        $parentCategoryTransfer = $this->tester->haveCategory();
+        $this->tester->haveCategoryStoreRelation($parentCategoryTransfer->getIdCategory(), $deStoreTransfer->getIdStore());
+
+        $childCategoryTransfer = $this->tester->haveCategory([
+            CategoryTransfer::PARENT_CATEGORY_NODE => $parentCategoryTransfer->getCategoryNode(),
+        ]);
+
+        $newStoreRelationTransfer = (new StoreRelationTransfer())
+            ->addIdStores($deStoreTransfer->getIdStore())
+            ->addIdStores($atStoreTransfer->getIdStore());
+
+        // Act
+        $this->getFacade()->updateCategoryStoreRelationWithMainChildrenPropagation(
+            $parentCategoryTransfer->getIdCategory(),
+            $newStoreRelationTransfer
+        );
+
+        // Assert
+        $parentCategoryStoreRelationStoreIds = $this->getCategoryRelationStoreIds($parentCategoryTransfer->getIdCategory());
+        $childCategoryStoreRelationStoreIds = $this->getCategoryRelationStoreIds($childCategoryTransfer->getIdCategory());
+
+        $this->assertCount(2, $parentCategoryStoreRelationStoreIds, 'Number of category store relations does not equals to expected value.');
+        $this->assertCount(1, $childCategoryStoreRelationStoreIds, 'Number of category store relations does not equals to expected value.');
+
+        $this->assertEmpty(
+            array_diff([$deStoreTransfer->getIdStore(), $atStoreTransfer->getIdStore()], $parentCategoryStoreRelationStoreIds),
+            'Category store relations are different from expecting value.'
+        );
+        $this->assertEmpty(
+            array_diff([$atStoreTransfer->getIdStore()], $childCategoryStoreRelationStoreIds),
+            'Category store relations are different from expecting value.'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateCategoryStoreRelationWithMainChildrenPropagationWillDeleteObsoleteStoreRelation(): void
+    {
+        // Arrange
+        $deStoreTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_DE]);
+        $atStoreTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_AT]);
+
+        $parentCategoryTransfer = $this->tester->haveCategory();
+        $this->tester->haveCategoryStoreRelation($parentCategoryTransfer->getIdCategory(), $deStoreTransfer->getIdStore());
+        $this->tester->haveCategoryStoreRelation($parentCategoryTransfer->getIdCategory(), $atStoreTransfer->getIdStore());
+
+        $childCategoryTransfer = $this->tester->haveCategory([
+            CategoryTransfer::PARENT_CATEGORY_NODE => $parentCategoryTransfer->getCategoryNode(),
+        ]);
+        $this->tester->haveCategoryStoreRelation($parentCategoryTransfer->getIdCategory(), $atStoreTransfer->getIdStore());
+
+        $newStoreRelationTransfer = (new StoreRelationTransfer())
+            ->addIdStores($deStoreTransfer->getIdStore());
+
+        // Act
+        $this->getFacade()->updateCategoryStoreRelationWithMainChildrenPropagation(
+            $parentCategoryTransfer->getIdCategory(),
+            $newStoreRelationTransfer
+        );
+
+        // Assert
+        $parentCategoryStoreRelationStoreIds = $this->getCategoryRelationStoreIds($parentCategoryTransfer->getIdCategory());
+        $childCategoryStoreRelationStoreIds = $this->getCategoryRelationStoreIds($childCategoryTransfer->getIdCategory());
+
+        $this->assertCount(1, $parentCategoryStoreRelationStoreIds, 'Number of category store relations does not equals to expected value.');
+        $this->assertCount(0, $childCategoryStoreRelationStoreIds, 'Number of category store relations does not equals to expected value.');
+
+        $this->assertEmpty(
+            array_diff([$deStoreTransfer->getIdStore()], $parentCategoryStoreRelationStoreIds),
+            'Category store relations are different from expecting value.'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateCategoryStoreRelationWithMainChildrenPropagationWillNotCreateCategoryStoreRelationIfParentCategoryDontHaveIt(): void
+    {
+        // Arrange
+        $deStoreTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_DE]);
+        $atStoreTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_AT]);
+
+        $parentCategoryTransfer = $this->tester->haveCategory();
+        $this->tester->haveCategoryStoreRelation($parentCategoryTransfer->getIdCategory(), $deStoreTransfer->getIdStore());
+
+        $childCategoryTransfer = $this->tester->haveCategory([
+            CategoryTransfer::PARENT_CATEGORY_NODE => $parentCategoryTransfer->getCategoryNode(),
+        ]);
+        $this->tester->haveCategoryStoreRelation($childCategoryTransfer->getIdCategory(), $deStoreTransfer->getIdStore());
+
+        $newStoreRelationTransfer = (new StoreRelationTransfer())
+            ->addIdStores($deStoreTransfer->getIdStore())
+            ->addIdStores($atStoreTransfer->getIdStore());
+
+        // Act
+        $this->getFacade()->updateCategoryStoreRelationWithMainChildrenPropagation(
+            $childCategoryTransfer->getIdCategory(),
+            $newStoreRelationTransfer
+        );
+
+        // Assert
+        $parentCategoryStoreRelationStoreIds = $this->getCategoryRelationStoreIds($parentCategoryTransfer->getIdCategory());
+        $childCategoryStoreRelationStoreIds = $this->getCategoryRelationStoreIds($childCategoryTransfer->getIdCategory());
+
+        $this->assertCount(1, $parentCategoryStoreRelationStoreIds, 'Number of category store relations does not equals to expected value.');
+        $this->assertCount(1, $childCategoryStoreRelationStoreIds, 'Number of category store relations does not equals to expected value.');
+
+        $this->assertEmpty(
+            array_diff([$deStoreTransfer->getIdStore()], $parentCategoryStoreRelationStoreIds),
+            'Category store relations are different from expecting value.'
+        );$this->assertEmpty(
+            array_diff([$deStoreTransfer->getIdStore()], $parentCategoryStoreRelationStoreIds),
+            'Category store relations are different from expecting value.'
+        );
+    }
+
+    /**
      * @return int
      */
     protected function getRootCategoryId(): int
@@ -405,5 +534,19 @@ class CategoryFacadeTest extends Unit
         return (new CategoryLocalizedAttributesBuilder([
             CategoryLocalizedAttributesTransfer::LOCALE => $localeTransfer->toArray(),
         ]))->build();
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return int[]
+     */
+    protected function getCategoryRelationStoreIds(int $idCategory): array
+    {
+        return SpyCategoryStoreQuery::create()
+            ->filterByFkCategory($idCategory)
+            ->select(SpyCategoryStoreTableMap::COL_FK_STORE)
+            ->find()
+            ->getData();
     }
 }

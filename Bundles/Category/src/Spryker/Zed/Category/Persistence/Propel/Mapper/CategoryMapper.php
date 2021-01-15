@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Orm\Zed\Category\Persistence\SpyCategoryTemplate;
@@ -27,11 +28,20 @@ class CategoryMapper implements CategoryMapperInterface
     protected $categoryNodeMapper;
 
     /**
-     * @param \Spryker\Zed\Category\Persistence\Propel\Mapper\CategoryNodeMapper $categoryNodeMapper
+     * @var \Spryker\Zed\Category\Persistence\Propel\Mapper\CategoryStoreRelationMapper
      */
-    public function __construct(CategoryNodeMapper $categoryNodeMapper)
-    {
+    protected $categoryStoreRelationMapper;
+
+    /**
+     * @param \Spryker\Zed\Category\Persistence\Propel\Mapper\CategoryNodeMapper $categoryNodeMapper
+     * @param \Spryker\Zed\Category\Persistence\Propel\Mapper\CategoryStoreRelationMapper $categoryStoreRelationMapper
+     */
+    public function __construct(
+        CategoryNodeMapper $categoryNodeMapper,
+        CategoryStoreRelationMapper $categoryStoreRelationMapper
+    ) {
         $this->categoryNodeMapper = $categoryNodeMapper;
+        $this->categoryStoreRelationMapper = $categoryStoreRelationMapper;
     }
 
     /**
@@ -61,6 +71,12 @@ class CategoryMapper implements CategoryMapperInterface
             new CategoryTemplateTransfer()
         ));
         $categoryTransfer = $this->mapCategoryNodes($spyCategory, $categoryTransfer);
+
+        $storeRelationTransfer = $this->categoryStoreRelationMapper->mapCategoryStoreEntitiesToStoreRelationTransfer(
+            $spyCategory->getSpyCategoryStores(),
+            new StoreRelationTransfer()
+        );
+        $categoryTransfer->setStoreRelation($storeRelationTransfer);
 
         return $categoryTransfer;
     }
@@ -127,6 +143,19 @@ class CategoryMapper implements CategoryMapperInterface
         $categoryEntity->fromArray($categoryTransfer->modifiedToArray());
 
         return $categoryEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $categoryNodeEntity
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode
+     */
+    public function mapNodeTransferToCategoryNodeEntity(NodeTransfer $nodeTransfer, SpyCategoryNode $categoryNodeEntity): SpyCategoryNode
+    {
+        $categoryNodeEntity->fromArray($nodeTransfer->modifiedToArray());
+
+        return $categoryNodeEntity;
     }
 
     /**

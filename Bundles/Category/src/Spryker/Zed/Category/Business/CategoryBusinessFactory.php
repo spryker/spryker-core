@@ -69,11 +69,26 @@ use Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface;
 use Spryker\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter;
 use Spryker\Zed\Category\Business\Tree\NodeWriter;
 use Spryker\Zed\Category\Business\Tree\NodeWriterInterface;
+use Spryker\Zed\Category\Business\Updater\CategoryAttributeUpdater;
+use Spryker\Zed\Category\Business\Updater\CategoryAttributeUpdaterInterface;
+use Spryker\Zed\Category\Business\Updater\CategoryClosureTableUpdater;
+use Spryker\Zed\Category\Business\Updater\CategoryClosureTableUpdaterInterface;
+use Spryker\Zed\Category\Business\Updater\CategoryNodeUpdater;
+use Spryker\Zed\Category\Business\Updater\CategoryNodeUpdaterInterface;
+use Spryker\Zed\Category\Business\Updater\CategoryRelationshipUpdater;
+use Spryker\Zed\Category\Business\Updater\CategoryRelationshipUpdaterInterface;
+use Spryker\Zed\Category\Business\Updater\CategoryStoreUpdater;
+use Spryker\Zed\Category\Business\Updater\CategoryStoreUpdaterInterface;
+use Spryker\Zed\Category\Business\Updater\CategoryUpdater;
+use Spryker\Zed\Category\Business\Updater\CategoryUpdaterInterface;
+use Spryker\Zed\Category\Business\Updater\CategoryUrlUpdater;
+use Spryker\Zed\Category\Business\Updater\CategoryUrlUpdaterInterface;
 use Spryker\Zed\Category\CategoryDependencyProvider;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleInterface;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
+use Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryStoreAssignerPluginInterface;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -142,6 +157,90 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Category\Business\Updater\CategoryUpdaterInterface
+     */
+    public function createCategoryUpdater(): CategoryUpdaterInterface
+    {
+        return new CategoryUpdater(
+            $this->getEntityManager(),
+            $this->createCategoryRelationshipUpdater(),
+            $this->getEventFacade(),
+            $this->getCategoryPostUpdatePlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Updater\CategoryRelationshipUpdaterInterface
+     */
+    public function createCategoryRelationshipUpdater(): CategoryRelationshipUpdaterInterface
+    {
+        return new CategoryRelationshipUpdater(
+            $this->createCategoryNodeUpdater(),
+            $this->createCategoryUrlUpdater(),
+            $this->createCategoryAttributeUpdater(),
+            $this->getCategoryStoreAssignerPlugin(),
+            $this->getRelationUpdatePluginStack()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Updater\CategoryStoreUpdaterInterface
+     */
+    public function createCategoryStoreUpdater(): CategoryStoreUpdaterInterface
+    {
+        return new CategoryStoreUpdater(
+            $this->getRepository(),
+            $this->getEntityManager(),
+            $this->createCategoryReader(),
+            $this->getEventFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Updater\CategoryNodeUpdaterInterface
+     */
+    public function createCategoryNodeUpdater(): CategoryNodeUpdaterInterface
+    {
+        return new CategoryNodeUpdater(
+            $this->getRepository(),
+            $this->getEntityManager(),
+            $this->createCategoryClosureTableUpdater(),
+            $this->createCategoryToucher(),
+            $this->createCategoryNodePublisher(),
+            $this->createCategoryNodeDeleter(),
+            $this->createCategoryNodeCreator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Updater\CategoryClosureTableUpdaterInterface
+     */
+    public function createCategoryClosureTableUpdater(): CategoryClosureTableUpdaterInterface
+    {
+        return new CategoryClosureTableUpdater($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Updater\CategoryAttributeUpdaterInterface
+     */
+    public function createCategoryAttributeUpdater(): CategoryAttributeUpdaterInterface
+    {
+        return new CategoryAttributeUpdater($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Updater\CategoryUrlUpdaterInterface
+     */
+    public function createCategoryUrlUpdater(): CategoryUrlUpdaterInterface
+    {
+        return new CategoryUrlUpdater(
+            $this->getRepository(),
+            $this->createUrlPathGenerator(),
+            $this->getUrlFacade()
+        );
+    }
+
+    /**
      * @param array $category
      *
      * @return \Spryker\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter
@@ -160,14 +259,6 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getRepository()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\Graph\Communication\Plugin\GraphPlugin
-     */
-    public function getGraph(): GraphPlugin
-    {
-        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_GRAPH);
     }
 
     /**
@@ -290,30 +381,6 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationDeletePluginInterface[]
-     */
-    public function getRelationDeletePluginStack(): array
-    {
-        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_STACK_RELATION_DELETE);
-    }
-
-    /**
-     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationUpdatePluginInterface[]
-     */
-    public function getRelationUpdatePluginStack(): array
-    {
-        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_STACK_RELATION_UPDATE);
-    }
-
-    /**
-     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUrlPathPluginInterface[]
-     */
-    public function getCategoryUrlPathPlugins(): array
-    {
-        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGINS_CATEGORY_URL_PATH);
-    }
-
-    /**
      * @return \Spryker\Zed\Category\Business\Tree\NodeWriterInterface
      */
     public function createNodeWriter(): NodeWriterInterface
@@ -335,38 +402,6 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     public function createUrlPathGenerator(): UrlPathGeneratorInterface
     {
         return new UrlPathGenerator();
-    }
-
-    /**
-     * @return \Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface
-     */
-    public function getEventFacade(): CategoryToEventFacadeInterface
-    {
-        return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_EVENT);
-    }
-
-    /**
-     * @return \Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface
-     */
-    public function getTouchFacade(): CategoryToTouchInterface
-    {
-        return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_TOUCH);
-    }
-
-    /**
-     * @return \Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleInterface
-     */
-    public function getLocaleFacade(): CategoryToLocaleInterface
-    {
-        return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_LOCALE);
-    }
-
-    /**
-     * @return \Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface
-     */
-    public function getUrlFacade(): CategoryToUrlInterface
-    {
-        return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_URL);
     }
 
     /**
@@ -472,30 +507,6 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryCreateAfterPluginInterface[]
-     */
-    public function getCategoryPostCreatePlugins(): array
-    {
-        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_CATEGORY_POST_CREATE);
-    }
-
-    /**
-     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUpdateAfterPluginInterface[]
-     */
-    public function getCategoryPostUpdatePlugins(): array
-    {
-        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_CATEGORY_POST_UPDATE);
-    }
-
-    /**
-     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryTransferExpanderPluginInterface[]
-     */
-    public function getCategoryPostReadPlugins(): array
-    {
-        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_CATEGORY_POST_READ);
-    }
-
-    /**
      * @return \Spryker\Zed\Category\Business\PluginExecutor\CategoryPluginExecutorInterface
      */
     public function createPluginExecutor(): CategoryPluginExecutorInterface
@@ -512,7 +523,10 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
      */
     public function createCategoryStoreCreator(): CategoryStoreCreatorInterface
     {
-        return new CategoryStoreCreator($this->getEntityManager());
+        return new CategoryStoreCreator(
+            $this->getRepository(),
+            $this->getEntityManager()
+        );
     }
 
     /**
@@ -551,5 +565,101 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
         return new CategoryStoreDeleter(
             $this->getEntityManager()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Graph\Communication\Plugin\GraphPlugin
+     */
+    public function getGraph(): GraphPlugin
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_GRAPH);
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface
+     */
+    public function getEventFacade(): CategoryToEventFacadeInterface
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_EVENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface
+     */
+    public function getTouchFacade(): CategoryToTouchInterface
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_TOUCH);
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleInterface
+     */
+    public function getLocaleFacade(): CategoryToLocaleInterface
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface
+     */
+    public function getUrlFacade(): CategoryToUrlInterface
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_URL);
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationDeletePluginInterface[]
+     */
+    public function getRelationDeletePluginStack(): array
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_STACK_RELATION_DELETE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationUpdatePluginInterface[]
+     */
+    public function getRelationUpdatePluginStack(): array
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_STACK_RELATION_UPDATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUrlPathPluginInterface[]
+     */
+    public function getCategoryUrlPathPlugins(): array
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGINS_CATEGORY_URL_PATH);
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryCreateAfterPluginInterface[]
+     */
+    public function getCategoryPostCreatePlugins(): array
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_CATEGORY_POST_CREATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUpdateAfterPluginInterface[]
+     */
+    public function getCategoryPostUpdatePlugins(): array
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_CATEGORY_POST_UPDATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryTransferExpanderPluginInterface[]
+     */
+    public function getCategoryPostReadPlugins(): array
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_CATEGORY_POST_READ);
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryStoreAssignerPluginInterface
+     */
+    public function getCategoryStoreAssignerPlugin(): CategoryStoreAssignerPluginInterface
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_CATEGORY_STORE_ASSIGNER);
     }
 }

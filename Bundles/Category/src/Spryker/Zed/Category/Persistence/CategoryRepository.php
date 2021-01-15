@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\CategoryUrlPathCriteriaTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
@@ -391,6 +392,90 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         return $this->getFactory()
             ->createCategoryNodeMapper()
             ->mapNodeCollection($categoryNodeQuery->find(), new NodeCollectionTransfer());
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
+     */
+    public function getCategoryStoreRelationByIdCategory(int $idCategory): StoreRelationTransfer
+    {
+        $storeRelationTransfer = (new StoreRelationTransfer())->setIdEntity($idCategory);
+
+        $categoryStoreEntities = $this->getFactory()
+            ->createCategoryStoreQuery()
+            ->filterByFkCategory($idCategory)
+            ->find();
+
+        if (!$categoryStoreEntities->count()) {
+            return $storeRelationTransfer;
+        }
+
+        return $this->getFactory()
+            ->createCategoryStoreRelationMapper()
+            ->mapCategoryStoreEntitiesToStoreRelationTransfer(
+                $categoryStoreEntities,
+                $storeRelationTransfer
+            );
+    }
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return \Generated\Shared\Transfer\NodeTransfer|null
+     */
+    public function findCategoryNodeByIdCategoryNode(int $idCategoryNode): ?NodeTransfer
+    {
+        $categoryNodeEntity = $this->getFactory()
+            ->createCategoryNodeQuery()
+            ->filterByIdCategoryNode($idCategoryNode)
+            ->findOne();
+
+        if (!$categoryNodeEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createCategoryNodeMapper()
+            ->mapCategoryNode($categoryNodeEntity, new NodeTransfer());
+    }
+
+    /**
+     * @param int $idCategory
+     * @param int $idStore
+     *
+     * @return bool
+     */
+    public function isParentCategoryHasRelationToStore(int $idCategory, int $idStore): bool
+    {
+        $q = $this->getFactory()->createCategoryNodeQuery()
+            ->filterByFkCategory($idCategory)
+            ->useParentCategoryNodeQuery('parentCategory', Criteria::LEFT_JOIN)
+            ->useCategoryQuery(null, Criteria::LEFT_JOIN)
+            ->useSpyCategoryStoreQuery(null, Criteria::LEFT_JOIN)
+            ->filterByFkStore($idStore)
+            ->endUse()
+            ->endUse()
+            ->endUse()
+            ->_or()
+            ->where(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE . ' IS NULL');
+
+        $p = [];
+        $sql = $q->addSelfSelectColumns()->createSelectSql($p);
+
+        return $this->getFactory()->createCategoryNodeQuery()
+            ->filterByFkCategory($idCategory)
+            ->useParentCategoryNodeQuery('parentCategory', Criteria::LEFT_JOIN)
+                ->useCategoryQuery(null, Criteria::LEFT_JOIN)
+                    ->useSpyCategoryStoreQuery(null, Criteria::LEFT_JOIN)
+                        ->filterByFkStore($idStore)
+                    ->endUse()
+                ->endUse()
+            ->endUse()
+            ->_or()
+            ->where(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE . ' IS NULL')
+            ->exists();
     }
 
     /**

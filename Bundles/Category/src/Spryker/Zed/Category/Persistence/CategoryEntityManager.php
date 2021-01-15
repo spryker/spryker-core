@@ -10,11 +10,13 @@ namespace Spryker\Zed\Category\Persistence;
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\SpyCategory;
-use Orm\Zed\Category\Persistence\SpyCategoryAttribute;
 use Orm\Zed\Category\Persistence\SpyCategoryClosureTable;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Orm\Zed\Category\Persistence\SpyCategoryStore;
+use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\Join;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -38,31 +40,6 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
     }
 
     /**
-     * @param int $idCategory
-     * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer
-     */
-    public function createCategoryAttribute(
-        int $idCategory,
-        CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer
-    ): CategoryLocalizedAttributesTransfer {
-        $categoryLocalizedAttributeMapper = $this->getFactory()->createCategoryLocalizedAttributeMapper();
-
-        $categoryAttributeEntity = $categoryLocalizedAttributeMapper->mapCategoryLocalizedAttributeTransferToCategoryAttributeEntity(
-            $categoryLocalizedAttributesTransfer,
-            new SpyCategoryAttribute()
-        );
-        $categoryAttributeEntity->setFkCategory($idCategory);
-        $categoryAttributeEntity->save();
-
-        return $categoryLocalizedAttributeMapper->mapCategoryAttributeEntityToCategoryLocalizedAttributeTransfer(
-            $categoryAttributeEntity,
-            $categoryLocalizedAttributesTransfer
-        );
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
      *
      * @return \Generated\Shared\Transfer\NodeTransfer
@@ -75,28 +52,6 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
         $categoryNodeEntity->save();
 
         return $categoryNodeMapper->mapCategoryNode($categoryNodeEntity, $nodeTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\NodeTransfer $extraParentNodeTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeTransfer
-     */
-    public function saveCategoryExtraParentNode(CategoryTransfer $categoryTransfer, NodeTransfer $extraParentNodeTransfer): NodeTransfer
-    {
-        $categoryNodeEntity = $this->getFactory()
-            ->createCategoryNodeQuery()
-            ->filterByFkCategory($categoryTransfer->getIdCategory())
-            ->filterByIsMain(false)
-            ->filterByFkParentCategoryNode($extraParentNodeTransfer->getIdCategoryNodeOrFail())
-            ->findOneOrCreate();
-
-        $categoryNodeEntity->save();
-
-        return $this->getFactory()
-            ->createCategoryNodeMapper()
-            ->mapCategoryNode($categoryNodeEntity, new NodeTransfer());
     }
 
     /**
@@ -151,6 +106,117 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
         }
 
         $this->createCategoryClosureTable($idCategoryNode, $idCategoryNode);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
+     *
+     * @return void
+     */
+    public function createCategoryClosureTableParentEntriesForCategoryNode(NodeTransfer $nodeTransfer): void
+    {
+        $categoryClosureTableEntities = $this->getFactory()
+            ->createCategoryClosureTableQuery()
+            ->filterByFkCategoryNode($nodeTransfer->getIdCategoryNode())
+            ->find();
+
+        $parentCategoryClosureTableEntities = $this->getFactory()
+            ->createCategoryClosureTableQuery()
+            ->filterByFkCategoryNodeDescendant($nodeTransfer->getIdCategoryNode())
+            ->find();
+
+        foreach ($categoryClosureTableEntities as $categoryClosureTableEntity) {
+            foreach ($parentCategoryClosureTableEntities as $parentCategoryClosureTableEntity) {
+                $depth = $categoryClosureTableEntity->getDepth() + $parentCategoryClosureTableEntity->getDepth() + 1;
+                $this->createCategoryClosureTable(
+                    $parentCategoryClosureTableEntity->getFkCategoryNode(),
+                    $categoryClosureTableEntity->getFkCategoryNodeDescendant(),
+                    $depth
+                );
+            }
+        }
+    }
+
+    /**
+     * @param int $idCategory
+     * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer
+     *
+     * @return void
+     */
+    public function saveCategoryAttribute(int $idCategory, CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer): void
+    {
+        $categoryAttributeEntity = $this->getFactory()
+            ->createCategoryAttributeQuery()
+            ->filterByFkCategory($idCategory)
+            ->filterByFkLocale($categoryLocalizedAttributesTransfer->getLocaleOrFail()->getIdLocaleOrFail())
+            ->findOneOrCreate();
+
+        $categoryAttributeEntity = $this->getFactory()
+            ->createCategoryLocalizedAttributeMapper()
+            ->mapCategoryLocalizedAttributeTransferToCategoryAttributeEntity(
+                $categoryLocalizedAttributesTransfer,
+                $categoryAttributeEntity
+            );
+
+        $categoryAttributeEntity->save();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\NodeTransfer $extraParentNodeTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeTransfer
+     */
+    public function saveCategoryExtraParentNode(CategoryTransfer $categoryTransfer, NodeTransfer $extraParentNodeTransfer): NodeTransfer
+    {
+        $categoryNodeEntity = $this->getFactory()
+            ->createCategoryNodeQuery()
+            ->filterByFkCategory($categoryTransfer->getIdCategory())
+            ->filterByIsMain(false)
+            ->filterByFkParentCategoryNode($extraParentNodeTransfer->getIdCategoryNodeOrFail())
+            ->findOneOrCreate();
+
+        $categoryNodeEntity->save();
+
+        return $this->getFactory()
+            ->createCategoryNodeMapper()
+            ->mapCategoryNode($categoryNodeEntity, new NodeTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    public function updateCategory(CategoryTransfer $categoryTransfer): void
+    {
+        $categoryEntity = $this->getFactory()->createCategoryQuery()
+            ->filterByIdCategory($categoryTransfer->getIdCategoryOrFail())
+            ->findOne();
+
+        $categoryEntity = $this->getFactory()
+            ->createCategoryMapper()
+            ->mapCategoryTransferToCategoryEntity($categoryTransfer, $categoryEntity);
+
+        $categoryEntity->save();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeTransfer
+     */
+    public function updateCategoryNode(NodeTransfer $nodeTransfer): NodeTransfer
+    {
+        $categoryNodeMapper = $this->getFactory()->createCategoryNodeMapper();
+        $categoryNodeEntity = $this->getFactory()
+            ->createCategoryNodeQuery()
+            ->findOneByIdCategoryNode($nodeTransfer->getIdCategoryNodeOrFail());
+
+        $categoryNodeMapper->mapNodeTransferToCategoryNodeEntity($nodeTransfer, $categoryNodeEntity);
+        $categoryNodeEntity->save();
+
+        return $categoryNodeMapper->mapCategoryNode($categoryNodeEntity, $nodeTransfer);
     }
 
     /**
@@ -218,6 +284,92 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
         $this->getFactory()
             ->createCategoryStoreQuery()
             ->filterByFkCategory($idCategory)
+            ->find()
+            ->delete();
+    }
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return void
+     */
+    public function deleteCategoryClosureTableParentEntriesForCategoryNode(int $idCategoryNode): void
+    {
+        $categoryClosureTableQuery = $this->getFactory()
+            ->createCategoryClosureTableQuery()
+            ->setModelAlias('node');
+
+        $joinCategoryNodeDescendant = new Join(
+            'node.fk_category_node_descendant',
+            'descendants.fk_category_node_descendant',
+            Criteria::LEFT_JOIN
+        );
+        $joinCategoryNodeDescendant
+            ->setRightTableName(SpyCategoryClosureTableTableMap::TABLE_NAME)
+            ->setRightTableAlias('descendants')
+            ->setLeftTableName(SpyCategoryClosureTableTableMap::TABLE_NAME)
+            ->setLeftTableAlias('node');
+
+        $joinCategoryNodeAscendant = new Join(
+            'descendants.fk_category_node',
+            'ascendants.fk_category_node',
+            Criteria::LEFT_JOIN
+        );
+        $joinCategoryNodeAscendant
+            ->setRightTableName(SpyCategoryClosureTableTableMap::TABLE_NAME)
+            ->setRightTableAlias('ascendants')
+            ->setLeftTableName(SpyCategoryClosureTableTableMap::TABLE_NAME)
+            ->setLeftTableAlias('descendants');
+
+        $categoryClosureTableQuery->addJoinObject($joinCategoryNodeDescendant)
+            ->addJoinObject($joinCategoryNodeAscendant, 'ascendantsJoin')
+            ->addJoinCondition(
+                'ascendantsJoin',
+                'ascendants.fk_category_node_descendant = node.fk_category_node'
+            )
+            ->where(sprintf('descendants.fk_category_node = %d', $idCategoryNode))
+            ->where('ascendants.fk_category_node IS NULL')
+            ->find()
+            ->delete();
+    }
+
+    /**
+     * @param int $idCategory
+     * @param int[] $storeIds
+     *
+     * @return void
+     */
+    public function deleteCategoryStoreRelationForStores(int $idCategory, array $storeIds): void
+    {
+        if ($storeIds === []) {
+            return;
+        }
+
+        $this->getFactory()
+            ->createCategoryStoreQuery()
+            ->filterByFkCategory($idCategory)
+            ->filterByFkStore_In($storeIds)
+            ->find()
+            ->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param int[] $parentCategoryNodeIds
+     *
+     * @return void
+     */
+    public function deleteExtraCategoryNodesForCategory(CategoryTransfer $categoryTransfer, array $parentCategoryNodeIds): void
+    {
+        if ($parentCategoryNodeIds === []) {
+            return;
+        }
+
+        $this->getFactory()
+            ->createCategoryNodeQuery()
+            ->filterByIsMain(false)
+            ->filterByFkCategory($categoryTransfer->getIdCategoryOrFail())
+            ->filterByFkParentCategoryNode_In($parentCategoryNodeIds)
             ->find()
             ->delete();
     }

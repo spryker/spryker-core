@@ -19,6 +19,7 @@ use Spryker\Zed\Category\Persistence\Propel\Mapper\CategoryLocalizedAttributeMap
 use Spryker\Zed\Category\Persistence\Propel\Mapper\CategoryMapper;
 use Spryker\Zed\Category\Persistence\Propel\Mapper\CategoryMapperInterface;
 use Spryker\Zed\Category\Persistence\Propel\Mapper\CategoryNodeMapper;
+use Spryker\Zed\Category\Persistence\Propel\Mapper\CategoryStoreRelationMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -106,7 +107,8 @@ class CategoryPersistenceFactory extends AbstractPersistenceFactory
     public function createCategoryMapper(): CategoryMapperInterface
     {
         return new CategoryMapper(
-            $this->createCategoryNodeMapper()
+            $this->createCategoryNodeMapper(),
+            $this->createCategoryStoreRelationMapper(),
         );
     }
 
@@ -124,5 +126,13 @@ class CategoryPersistenceFactory extends AbstractPersistenceFactory
     public function createCategoryNodeMapper(): CategoryNodeMapper
     {
         return new CategoryNodeMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Persistence\Propel\Mapper\CategoryStoreRelationMapper
+     */
+    public function createCategoryStoreRelationMapper(): CategoryStoreRelationMapper
+    {
+        return new CategoryStoreRelationMapper();
     }
 }

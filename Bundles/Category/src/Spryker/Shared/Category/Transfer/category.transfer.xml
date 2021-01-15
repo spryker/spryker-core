@@ -133,11 +133,16 @@
 
     <transfer name="StoreRelation">
         <property name="idStores" type="int[]" singular="idStores"/>
+        <property name="idEntity" type="int"/>
+        <property name="stores" type="Store[]" singular="stores"/>
     </transfer>
 
     <transfer name="CategoryNodeFilter">
         <property name="categoryIds" type="int[]" singular="idCategory"/>
         <property name="isMain" type="bool"/>
+    </transfer>
+
+    <transfer name="Store">
     </transfer>
 
 </transfers>

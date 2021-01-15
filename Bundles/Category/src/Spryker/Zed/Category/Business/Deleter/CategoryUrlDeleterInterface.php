@@ -22,4 +22,11 @@ interface CategoryUrlDeleterInterface
      * @return void
      */
     public function deleteCategoryUrlsForCategoryNode(int $idCategoryNode): void;
+
+    /**
+     * @param int[] $categoryNodeIds
+     *
+     * @return void
+     */
+    public function deleteCategoryUrlsForCategoryNodes(array $categoryNodeIds): void;
 }
