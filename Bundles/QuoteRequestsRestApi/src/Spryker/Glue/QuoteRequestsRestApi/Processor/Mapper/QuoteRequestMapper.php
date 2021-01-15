@@ -222,6 +222,7 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
 
             $restShipmentTransfer = (new RestQuoteRequestShipmentTransfer())
                 ->setShippingAddress($restAddressTransfer)
+                ->setRequestedDeliveryDate($shipmentTransfer->getRequestedDeliveryDate())
                 ->setItems(array_filter($itemGroupKeys));
 
             if ($shipmentTransfer->getMethod() !== null) {

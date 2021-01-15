@@ -62,6 +62,7 @@ class QuoteRequestCanceler implements QuoteRequestCancelerInterface
 
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
             ->setCompanyUser($companyUserTransfer)
+            ->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser())
             ->setQuoteRequestReference($quoteRequestReference);
 
         $quoteRequestResponseTransfer = $this->quoteRequestClient->cancelQuoteRequest($quoteRequestFilterTransfer);

@@ -72,6 +72,7 @@
         <property name="method" type="RestQuoteRequestShipmentMethod"/>
         <property name="shippingAddress" type="RestQuoteRequestsAddress"/>
         <property name="items" type="string[]" singular="item"/>
+        <property name="requestedDeliveryDate" type="string"/>
     </transfer>
 
     <transfer name="RestQuoteRequestShipmentMethod">
@@ -206,6 +207,7 @@
 
     <transfer name="QuoteRequestFilter">
         <property name="companyUser" type="CompanyUser"/>
+        <property name="idCompanyUser" type="int"/>
         <property name="quoteRequestReference" type="string"/>
         <property name="pagination" type="Pagination"/>
     </transfer>
@@ -237,6 +239,7 @@
     <transfer name="Shipment">
         <property name="shippingAddress" type="Address"/>
         <property name="method" type="ShipmentMethod"/>
+        <property name="requestedDeliveryDate" type="string"/>
     </transfer>
 
     <transfer name="Expense">
