@@ -70,7 +70,7 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
     {
         $restCartTransfer = new RestQuoteRequestsCartTransfer();
 
-        if (!$quoteTransfer->getCustomerReference()) {
+        if (!$quoteTransfer->getItems()->count()) {
             return $restCartTransfer;
         }
 
@@ -128,11 +128,13 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
         QuoteTransfer $quoteTransfer,
         RestQuoteRequestsCartTransfer $restCartTransfer
     ): RestQuoteRequestsCartTransfer {
-        $restTotalsTransfer = (new RestQuoteRequestsTotalsTransfer())
-            ->fromArray($quoteTransfer->getTotalsOrFail()->toArray(), true)
-            ->setTaxTotal($quoteTransfer->getTotalsOrFail()->getTaxTotalOrFail()->getAmountOrFail());
+        if ($quoteTransfer->getTotals() !== null) {
+            $restTotalsTransfer = (new RestQuoteRequestsTotalsTransfer())
+                ->fromArray($quoteTransfer->getTotalsOrFail()->toArray(), true)
+                ->setTaxTotal($quoteTransfer->getTotalsOrFail()->getTaxTotalOrFail()->getAmountOrFail());
 
-        $restCartTransfer->setTotals($restTotalsTransfer);
+            $restCartTransfer->setTotals($restTotalsTransfer);
+        }
 
         return $restCartTransfer;
     }
@@ -175,7 +177,7 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
     ): RestQuoteRequestsCartTransfer {
         $restDiscountTransfer = new RestQuoteRequestsDiscountsTransfer();
         $restDiscountTransfer->fromArray($discountTransfer->toArray(), true);
-        $restDiscountTransfer->setCode($discountTransfer->getVoucherCodeOrFail());
+        $restDiscountTransfer->setCode($discountTransfer->getVoucherCode());
         $restCartTransfer->addDiscount($restDiscountTransfer);
 
         return $restCartTransfer;
