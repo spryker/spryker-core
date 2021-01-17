@@ -9,11 +9,25 @@ namespace Spryker\Zed\MerchantStock\Persistence\Mapper;
 
 use Generated\Shared\Transfer\MerchantStockTransfer;
 use Generated\Shared\Transfer\StockTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\MerchantStock\Persistence\SpyMerchantStock;
 use Orm\Zed\Stock\Persistence\SpyStock;
 
 class MerchantStockMapper
 {
+    /**
+     * @var \Spryker\Zed\MerchantStock\Persistence\Mapper\StockStoreRelationMapper
+     */
+    protected $stockStoreRelationMapper;
+
+    /**
+     * @param \Spryker\Zed\MerchantStock\Persistence\Mapper\StockStoreRelationMapper $stockStoreRelationMapper
+     */
+    public function __construct(StockStoreRelationMapper $stockStoreRelationMapper)
+    {
+        $this->stockStoreRelationMapper = $stockStoreRelationMapper;
+    }
+
     /**
      * @param \Orm\Zed\Stock\Persistence\SpyStock $stockEntity
      * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
@@ -24,7 +38,16 @@ class MerchantStockMapper
         SpyStock $stockEntity,
         StockTransfer $stockTransfer
     ): StockTransfer {
-        return $stockTransfer->fromArray($stockEntity->toArray());
+        $stockTransfer->fromArray($stockEntity->toArray(), true);
+        $stockTransfer->setStoreRelation(
+            $this->stockStoreRelationMapper->mapStockStoreEntitiesToStoreRelationTransfer(
+                $stockEntity->getIdStock(),
+                $stockEntity->getStockStores()->getArrayCopy(),
+                new StoreRelationTransfer()
+            )
+        );
+
+        return $stockTransfer;
     }
 
     /**

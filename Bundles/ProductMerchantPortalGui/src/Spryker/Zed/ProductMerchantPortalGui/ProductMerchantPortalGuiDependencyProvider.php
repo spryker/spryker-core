@@ -65,6 +65,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     public const PROPEL_QUERY_PRICE_PRODUCT_DEFAULT = 'PROPEL_QUERY_PRICE_PRODUCT_DEFAULT';
 
     public const PLUGINS_PRODUCT_ABSTRACT_FORM_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_FORM_EXPANDER';
+    public const PLUGINS_PRODUCT_CONCRETE_TABLE_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_TABLE_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -82,12 +83,14 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
         $container = $this->addCategoryFacade($container);
         $container = $this->addMerchantProductFacade($container);
         $container = $this->addProductCategoryFacade($container);
-        $container = $this->addProductAbstractFormExpanderPlugins($container);
         $container = $this->addMoneyFacade($container);
         $container = $this->addPriceProductFacade($container);
         $container = $this->addCurrencyFacade($container);
         $container = $this->addUtilEncodingService($container);
         $container = $this->addProductFacade($container);
+
+        $container = $this->addProductAbstractFormExpanderPlugins($container);
+        $container = $this->addProductConcreteTableExpanderPlugins($container);
 
         return $container;
     }
@@ -427,6 +430,28 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
      * @return \Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\ProductAbstractFormExpanderPluginInterface[]
      */
     protected function getProductAbstractFormExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductConcreteTableExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_CONCRETE_TABLE_EXPANDER, function () {
+            return $this->getProductConcreteTableExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\ProductConcreteTableExpanderPluginInterface[]
+     */
+    protected function getProductConcreteTableExpanderPlugins(): array
     {
         return [];
     }

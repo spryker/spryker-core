@@ -49,15 +49,23 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
     protected $translatorFacade;
 
     /**
+     * @var array|\Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\ProductConcreteTableExpanderPluginInterface[]
+     */
+    protected $productConcreteTableExpanderPlugins;
+
+    /**
      * @param \Spryker\Shared\GuiTable\GuiTableFactoryInterface $guiTableFactory
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
+     * @param \Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\ProductConcreteTableExpanderPluginInterface[] $productConcreteTableExpanderPlugins
      */
     public function __construct(
         GuiTableFactoryInterface $guiTableFactory,
-        ProductMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
+        ProductMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade,
+        array $productConcreteTableExpanderPlugins = []
     ) {
         $this->guiTableFactory = $guiTableFactory;
         $this->translatorFacade = $translatorFacade;
+        $this->productConcreteTableExpanderPlugins = $productConcreteTableExpanderPlugins;
     }
 
     /**
@@ -79,7 +87,13 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
             ->setDefaultPageSize(10)
             ->setIsItemSelectionEnabled(true);
 
-        return $guiTableConfigurationBuilder->createConfiguration();
+        $guiTableConfigurationTransfer = $guiTableConfigurationBuilder->createConfiguration();
+
+        foreach ($this->productConcreteTableExpanderPlugins as $productConcreteTableExpanderPlugin) {
+            $guiTableConfigurationTransfer = $productConcreteTableExpanderPlugin->expandConfiguration($guiTableConfigurationTransfer);
+        }
+
+        return $guiTableConfigurationTransfer;
     }
 
     /**

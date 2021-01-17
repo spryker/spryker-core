@@ -235,7 +235,8 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     {
         return new ProductGuiTableConfigurationProvider(
             $this->getGuiTableFactory(),
-            $this->getTranslatorFacade()
+            $this->getTranslatorFacade(),
+            $this->getProductConcreteTableExpanderPlugins()
         );
     }
 
@@ -251,7 +252,8 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
             $this->getRepository(),
             $this->getLocaleFacade(),
             $this->getMerchantUserFacade(),
-            $this->getTranslatorFacade()
+            $this->getTranslatorFacade(),
+            $this->getProductConcreteTableExpanderPlugins()
         );
     }
 
@@ -388,5 +390,13 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     public function getUtilEncodingService(): ProductMerchantPortalGuiToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\ProductConcreteTableExpanderPluginInterface[]
+     */
+    public function getProductConcreteTableExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::PLUGINS_PRODUCT_CONCRETE_TABLE_EXPANDER);
     }
 }

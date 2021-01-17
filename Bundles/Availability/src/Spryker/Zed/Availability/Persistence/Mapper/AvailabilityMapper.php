@@ -8,8 +8,10 @@
 namespace Spryker\Zed\Availability\Persistence\Mapper;
 
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\DecimalObject\Decimal;
 
 class AvailabilityMapper implements AvailabilityMapperInterface
@@ -44,6 +46,28 @@ class AvailabilityMapper implements AvailabilityMapperInterface
 
         return $productAbstractAvailabilityTransfer
             ->fromArray($availabilityAbstractEntityArray, true);
+    }
+
+    /**
+     * @param \Orm\Zed\Availability\Persistence\SpyAvailability[]|\Propel\Runtime\Collection\ObjectCollection $availabilityEntities
+     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer $productConcreteAvailabilityCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer
+     */
+    public function mapAvailabilityEntitiesToMerchantOrderItemCollectionTransfer(
+        ObjectCollection $availabilityEntities,
+        ProductConcreteAvailabilityCollectionTransfer $productConcreteAvailabilityCollectionTransfer
+    ): ProductConcreteAvailabilityCollectionTransfer {
+        foreach ($availabilityEntities as $availabilityEntity) {
+            $productConcreteAvailabilityCollectionTransfer->addProductConcreteAvailability(
+                $this->mapAvailabilityEntityToProductConcreteAvailabilityTransfer(
+                    $availabilityEntity,
+                    new ProductConcreteAvailabilityTransfer()
+                )
+            );
+        }
+
+        return $productConcreteAvailabilityCollectionTransfer;
     }
 
     /**

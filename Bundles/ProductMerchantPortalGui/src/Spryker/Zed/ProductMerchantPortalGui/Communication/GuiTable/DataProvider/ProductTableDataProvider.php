@@ -48,24 +48,32 @@ class ProductTableDataProvider extends AbstractGuiTableDataProvider
     protected $translatorFacade;
 
     /**
+     * @var array|\Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\ProductConcreteTableExpanderPluginInterface[]
+     */
+    protected $productConcreteTableExpanderPlugins;
+
+    /**
      * @param int $idProductAbstract
      * @param \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface $productMerchantPortalGuiRepository
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
+     * @param \Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\ProductConcreteTableExpanderPluginInterface[] $productConcreteTableExpanderPlugins
      */
     public function __construct(
         int $idProductAbstract,
         ProductMerchantPortalGuiRepositoryInterface $productMerchantPortalGuiRepository,
         ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade,
         ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade,
-        ProductMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
+        ProductMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade,
+        array $productConcreteTableExpanderPlugins = []
     ) {
         $this->idProductAbstract = $idProductAbstract;
         $this->productMerchantPortalGuiRepository = $productMerchantPortalGuiRepository;
         $this->localeFacade = $localeFacade;
         $this->merchantUserFacade = $merchantUserFacade;
         $this->translatorFacade = $translatorFacade;
+        $this->productConcreteTableExpanderPlugins = $productConcreteTableExpanderPlugins;
     }
 
     /**
@@ -108,10 +116,16 @@ class ProductTableDataProvider extends AbstractGuiTableDataProvider
         /** @var \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer */
         $paginationTransfer = $productConcreteCollectionTransfer->requirePagination()->getPagination();
 
-        return $guiTableDataResponseTransfer
+        $guiTableDataResponseTransfer
             ->setPage($paginationTransfer->requirePage()->getPage())
             ->setPageSize($paginationTransfer->requireMaxPerPage()->getMaxPerPage())
             ->setTotal($paginationTransfer->requireNbResults()->getNbResults());
+
+        foreach ($this->productConcreteTableExpanderPlugins as $productConcreteTableExpanderPlugin) {
+            $guiTableDataResponseTransfer = $productConcreteTableExpanderPlugin->expandDataResponse($guiTableDataResponseTransfer);
+        }
+
+        return $guiTableDataResponseTransfer;
     }
 
     /**
