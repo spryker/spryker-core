@@ -9,8 +9,8 @@ namespace Spryker\Zed\Category\Persistence;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeFilterTransfer;
-use Generated\Shared\Transfer\CategoryNodeTreeElementCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\CategoryUrlPathCriteriaTransfer;
@@ -111,12 +111,12 @@ interface CategoryRepositoryInterface
     public function getCategoryNodesByCriteria(CategoryNodeFilterTransfer $categoryNodeFilterTransfer): NodeCollectionTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryNodeTreeElementCriteriaTransfer $categoryNodeTreeElementCriteriaTransfer
+     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
-    public function getAllActiveCategoryNodeTreeMenuElementsByCategoryNodeIds(
-        CategoryNodeTreeElementCriteriaTransfer $categoryNodeTreeElementCriteriaTransfer
+    public function getCategoryNodesWithRelativeNodesByCriteria(
+        CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
     ): array;
 
     /**
@@ -127,14 +127,9 @@ interface CategoryRepositoryInterface
     public function getCategoryNodeIdsByCategoryIds(array $categoryIds): array;
 
     /**
-     * @param int[] $categoryNodeIds
+     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function getActiveCategoryNodesByCategoryNodeIds(array $categoryNodeIds): NodeCollectionTransfer;
-
-    /**
-     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
-     */
-    public function getRootCategoryNodes(): NodeCollectionTransfer;
+    public function getCategoryNodeCollectionByCriteria(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer;
 }

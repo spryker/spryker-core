@@ -9,7 +9,7 @@ namespace Spryker\Zed\Category\Business;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
-use Generated\Shared\Transfer\CategoryNodeTreeElementCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -275,17 +275,17 @@ interface CategoryFacadeInterface
     /**
      * Specification:
      * - Retrieves all NodeTransfers by categoryNodeIds and all their parents and children NodeTransfers.
-     * - Filters category nodes according to `CategoryNodeTreeElementCriteriaTransfer`.
-     * - Requires `CategoryNodeTreeElementCriteriaTransfer.categoryNodeIds` to be set.
+     * - Filters category nodes according to `CategoryNodeCriteriaTransfer`.
+     * - Requires `CategoryNodeCriteriaTransfer.categoryNodeIds` to be set.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CategoryNodeTreeElementCriteriaTransfer $categoryNodeTreeElementCriteriaTransfer
+     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
-    public function getAllActiveCategoryNodeTreeMenuElementsByCategoryNodeIds(
-        CategoryNodeTreeElementCriteriaTransfer $categoryNodeTreeElementCriteriaTransfer
+    public function getCategoryNodesWithRelativeNodesByCriteria(
+        CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
     ): array;
 
     /**
@@ -302,24 +302,13 @@ interface CategoryFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves category node collection by category node ids.
-     * - Filters category nodes by `spy_category.is_active=true`.
+     * - Retrieves category node collection by criteria filter.
      *
      * @api
      *
-     * @param int[] $categoryNodeIds
+     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function getActiveCategoryNodesByCategoryNodeIds(array $categoryNodeIds): NodeCollectionTransfer;
-
-    /**
-     * Specification:
-     * - Retrieves all root category nodes.
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
-     */
-    public function getRootCategoryNodes(): NodeCollectionTransfer;
+    public function getCategoryNodeCollectionByCriteria(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer;
 }

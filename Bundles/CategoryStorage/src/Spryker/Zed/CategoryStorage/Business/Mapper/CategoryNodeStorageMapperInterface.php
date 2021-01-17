@@ -16,5 +16,5 @@ interface CategoryNodeStorageMapperInterface
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
      */
-    public function mapNodeTransfersToCategoryNodeStorageTransfersForLocaleAndStore(array $nodeTransfers, string $localeName, string $storeName): array;
+    public function mapNodeTransfersToCategoryNodeStorageTransfersByLocaleAndStore(array $nodeTransfers, string $localeName, string $storeName): array;
 }

@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\CategoryStorage\Business;
 
+use Spryker\Zed\CategoryStorage\Business\Deleter\CategoryNodeStorageDeleter;
+use Spryker\Zed\CategoryStorage\Business\Deleter\CategoryNodeStorageDeleterInterface;
 use Spryker\Zed\CategoryStorage\Business\Mapper\CategoryLocalizedAttributesMapper;
 use Spryker\Zed\CategoryStorage\Business\Mapper\CategoryLocalizedAttributesMapperInterface;
 use Spryker\Zed\CategoryStorage\Business\Mapper\CategoryNodeStorageMapper;
 use Spryker\Zed\CategoryStorage\Business\Mapper\CategoryNodeStorageMapperInterface;
-use Spryker\Zed\CategoryStorage\Business\Storage\CategoryNodeStorage;
-use Spryker\Zed\CategoryStorage\Business\Storage\CategoryNodeStorageInterface;
 use Spryker\Zed\CategoryStorage\Business\TreeBuilder\CategoryStorageNodeTreeBuilder;
 use Spryker\Zed\CategoryStorage\Business\TreeBuilder\CategoryStorageNodeTreeBuilderInterface;
 use Spryker\Zed\CategoryStorage\Business\Writer\CategoryNodeStorageWriter;
@@ -34,17 +34,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class CategoryStorageBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\CategoryStorage\Business\Storage\CategoryNodeStorageInterface
-     */
-    public function createCategoryNodeStorage(): CategoryNodeStorageInterface
-    {
-        return new CategoryNodeStorage(
-            $this->getQueryContainer(),
-            $this->createCategoryNodeStorageWriter()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\CategoryStorage\Business\Writer\CategoryNodeStorageWriterInterface
      */
     public function createCategoryNodeStorageWriter(): CategoryNodeStorageWriterInterface
@@ -53,7 +42,8 @@ class CategoryStorageBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createCategoryStorageNodeTreeBuilder(),
             $this->getCategoryFacade(),
-            $this->getEventBehaviorFacade()
+            $this->getEventBehaviorFacade(),
+            $this->createCategoryNodeStorageDeleter()
         );
     }
 
@@ -78,6 +68,16 @@ class CategoryStorageBusinessFactory extends AbstractBusinessFactory
         return new CategoryStorageNodeTreeBuilder(
             $this->getStoreFacade(),
             $this->createCategoryNodeStorageMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryStorage\Business\Deleter\CategoryNodeStorageDeleterInterface
+     */
+    public function createCategoryNodeStorageDeleter(): CategoryNodeStorageDeleterInterface
+    {
+        return new CategoryNodeStorageDeleter(
+            $this->getEntityManager()
         );
     }
 

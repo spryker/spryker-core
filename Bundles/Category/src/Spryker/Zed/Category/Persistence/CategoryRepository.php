@@ -9,8 +9,8 @@ namespace Spryker\Zed\Category\Persistence;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeFilterTransfer;
-use Generated\Shared\Transfer\CategoryNodeTreeElementCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\CategoryUrlPathCriteriaTransfer;
@@ -399,14 +399,14 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      * @module Store
      * @module Url
      *
-     * @param \Generated\Shared\Transfer\CategoryNodeTreeElementCriteriaTransfer $categoryNodeTreeElementCriteriaTransfer
+     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
-    public function getAllActiveCategoryNodeTreeMenuElementsByCategoryNodeIds(
-        CategoryNodeTreeElementCriteriaTransfer $categoryNodeTreeElementCriteriaTransfer
+    public function getCategoryNodesWithRelativeNodesByCriteria(
+        CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
     ): array {
-        $categoryNodeIdsImploded = implode(', ', $categoryNodeTreeElementCriteriaTransfer->requireCategoryNodeIds()->getCategoryNodeIds());
+        $categoryNodeIdsImploded = implode(', ', $categoryNodeCriteriaTransfer->requireCategoryNodeIds()->getCategoryNodeIds());
 
         $categoryNodeQuery = $this->getFactory()
             ->createCategoryNodeQuery()
@@ -436,15 +436,15 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->orderByNodeOrder(Criteria::DESC)
             ->distinct();
 
-        if ($categoryNodeTreeElementCriteriaTransfer->getIsActive() !== null) {
+        if ($categoryNodeCriteriaTransfer->getIsActive() !== null) {
             $categoryNodeQuery->useCategoryQuery(null, Criteria::LEFT_JOIN)
-                ->filterByIsActive($categoryNodeTreeElementCriteriaTransfer->getIsActive())
+                ->filterByIsActive($categoryNodeCriteriaTransfer->getIsActive())
                 ->endUse();
         }
 
-        if ($categoryNodeTreeElementCriteriaTransfer->getIsInMenu() !== null) {
+        if ($categoryNodeCriteriaTransfer->getIsInMenu() !== null) {
             $categoryNodeQuery->useCategoryQuery(null, Criteria::LEFT_JOIN)
-                ->filterByIsInMenu($categoryNodeTreeElementCriteriaTransfer->getIsInMenu())
+                ->filterByIsInMenu($categoryNodeCriteriaTransfer->getIsInMenu())
                 ->endUse();
         }
 
@@ -481,19 +481,34 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      * @module Store
      * @module Url
      *
-     * @param int[] $categoryNodeIds
+     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function getActiveCategoryNodesByCategoryNodeIds(array $categoryNodeIds): NodeCollectionTransfer
+    public function getCategoryNodeCollectionByCriteria(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer
     {
-        $categoryNodeEntities = $this->getFactory()
-            ->createCategoryNodeQuery()
-            ->filterByIdCategoryNode_In($categoryNodeIds)
+        $categoryNodeQuery = $this->getFactory()
+            ->createCategoryNodeQuery();
+
+        if ($categoryNodeCriteriaTransfer->getCategoryNodeIds()) {
+            $categoryNodeQuery->filterByIdCategoryNode_In($categoryNodeCriteriaTransfer->getCategoryNodeIds());
+        }
+
+        if ($categoryNodeCriteriaTransfer->getIsActive() !== null) {
+            $categoryNodeQuery
+                ->useCategoryQuery(null, Criteria::LEFT_JOIN)
+                    ->filterByIsActive($categoryNodeCriteriaTransfer->getIsActive())
+                ->endUse();
+        }
+
+        if ($categoryNodeCriteriaTransfer->getIsRoot() !== null) {
+            $categoryNodeQuery->filterByIsRoot($categoryNodeCriteriaTransfer->getIsRoot());
+        }
+
+        $categoryNodeQuery
             ->leftJoinWithSpyUrl()
             ->leftJoinWithCategory()
             ->useCategoryQuery(null, Criteria::LEFT_JOIN)
-                ->filterByIsActive(true)
                 ->leftJoinWithCategoryTemplate()
                 ->leftJoinWithAttribute()
                 ->useAttributeQuery(null, Criteria::LEFT_JOIN)
@@ -503,35 +518,14 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
                 ->useSpyCategoryStoreQuery(null, Criteria::LEFT_JOIN)
                     ->leftJoinWithSpyStore()
                 ->endUse()
-            ->endUse()
-            ->find();
-
-        if ($categoryNodeEntities === []) {
-            new NodeCollectionTransfer();
-        }
+            ->endUse();
 
         return $this->getFactory()
             ->createCategoryMapper()
-            ->mapCategoryNodeEntitiesToNodeCollectionTransferWithCategoryRelation($categoryNodeEntities, new NodeCollectionTransfer());
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
-     */
-    public function getRootCategoryNodes(): NodeCollectionTransfer
-    {
-        $categoryNodeEntities = $this->getFactory()
-            ->createCategoryNodeQuery()
-            ->filterByIsRoot(true)
-            ->find();
-
-        if (!$categoryNodeEntities->count()) {
-            return new NodeCollectionTransfer();
-        }
-
-        return $this->getFactory()
-            ->createCategoryMapper()
-            ->mapCategoryNodeEntitiesToNodeCollectionTransferWithCategoryRelation($categoryNodeEntities, new NodeCollectionTransfer());
+            ->mapCategoryNodeEntitiesToNodeCollectionTransferWithCategoryRelation(
+                $categoryNodeQuery->find(),
+                new NodeCollectionTransfer()
+            );
     }
 
     /**

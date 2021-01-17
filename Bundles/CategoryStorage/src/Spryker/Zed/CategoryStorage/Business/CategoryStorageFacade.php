@@ -27,7 +27,7 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
      */
     public function publish(array $categoryNodeIds): void
     {
-        $this->getFactory()->createCategoryNodeStorage()->publish($categoryNodeIds);
+        $this->getFactory()->createCategoryNodeStorageWriter()->writeCategoryNodeStorageCollection($categoryNodeIds);
     }
 
     /**
@@ -41,7 +41,7 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
      */
     public function unpublish(array $categoryNodeIds): void
     {
-        $this->getFactory()->createCategoryNodeStorage()->unpublish($categoryNodeIds);
+        $this->getFactory()->createCategoryNodeStorageDeleter()->deleteCollection($categoryNodeIds);
     }
 
     /**

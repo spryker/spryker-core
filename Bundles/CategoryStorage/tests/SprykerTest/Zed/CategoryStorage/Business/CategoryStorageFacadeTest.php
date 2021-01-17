@@ -72,7 +72,7 @@ class CategoryStorageFacadeTest extends Unit
         // Act
         $this->tester->getFacade()->writeCategoryNodeStorageCollectionByCategoryStorePublishEvents([$eventEntityTransfer]);
 
-        // Arrange
+        // Assert
         $categoryNodeStorageEntity = SpyCategoryNodeStorageQuery::create()
             ->filterByFkCategoryNode($categoryTransfer->getCategoryNode()->getIdCategoryNode())
             ->filterByStore($storeTransfer->getName())
@@ -107,7 +107,7 @@ class CategoryStorageFacadeTest extends Unit
         // Act
         $this->tester->getFacade()->writeCategoryNodeStorageCollectionByCategoryStoreEvents([$eventEntityTransfer]);
 
-        // Arrange
+        // Assert
         $categoryNodeStorageEntity = SpyCategoryNodeStorageQuery::create()
             ->filterByFkCategoryNode($categoryTransfer->getCategoryNode()->getIdCategoryNode())
             ->filterByStore($storeTransfer->getName())
@@ -138,7 +138,7 @@ class CategoryStorageFacadeTest extends Unit
         // Act
         $this->tester->getFacade()->writeCategoryTreeStorageCollection();
 
-        // Arrange
+        // Assert
         $categoryTreeStorageEntities = SpyCategoryTreeStorageQuery::create()
             ->filterByStore($storeTransfer->getName())
             ->filterByLocale($categoryTransfer->getLocalizedAttributes()->offsetGet(0)->getLocale()->getLocaleName())
@@ -152,6 +152,8 @@ class CategoryStorageFacadeTest extends Unit
     public function testDeleteCategoryTreeStorageCollectionWillDeleteCategoryTreeStorageData(): void
     {
         // Arrange
+        $this->tester->ensureCategoryTreeStorageDatabaseTableIsEmpty();
+
         $categoryTransfer = $this->tester->haveLocalizedCategory();
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME]);
         $this->tester->haveCategoryStoreRelation($categoryTransfer->getIdCategory(), $storeTransfer->getIdStore());

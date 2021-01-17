@@ -5,21 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryStorage\Business\Storage;
+namespace Spryker\Zed\CategoryStorage\Business\Deleter;
 
-interface CategoryNodeStorageInterface
+interface CategoryNodeStorageDeleterInterface
 {
     /**
+     * @param \Generated\Shared\Transfer\NodeTransfer[] $nodeTransfers
      * @param int[] $categoryNodeIds
      *
      * @return void
      */
-    public function publish(array $categoryNodeIds): void;
+    public function deleteMissingCategoryNodeStorage(array $nodeTransfers, array $categoryNodeIds): void;
 
     /**
      * @param int[] $categoryNodeIds
      *
      * @return void
      */
-    public function unpublish(array $categoryNodeIds): void;
+    public function deleteCollection(array $categoryNodeIds): void;
 }

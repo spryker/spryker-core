@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\CategoryPageSearch\Business\Writer;
 
+use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodePageSearchTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryStoreTableMap;
+use Spryker\Zed\CategoryPageSearch\Business\Deleter\CategoryNodePageSearchDeleterInterface;
 use Spryker\Zed\CategoryPageSearch\Business\Mapper\CategoryNodePageSearchMapperInterface;
 use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToCategoryFacadeInterface;
 use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToEventBehaviorFacadeInterface;
@@ -46,24 +48,32 @@ class CategoryNodePageSearchWriter implements CategoryNodePageSearchWriterInterf
     protected $eventBehaviorFacade;
 
     /**
+     * @var \Spryker\Zed\CategoryPageSearch\Business\Deleter\CategoryNodePageSearchDeleterInterface
+     */
+    protected $categoryNodePageSearchDeleter;
+
+    /**
      * @param \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchEntityManagerInterface $categoryPageSearchEntityManager
      * @param \Spryker\Zed\CategoryPageSearch\Business\Mapper\CategoryNodePageSearchMapperInterface $categoryNodePageSearchMapper
      * @param \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToCategoryFacadeInterface $categoryFacade
      * @param \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToEventBehaviorFacadeInterface $eventBehaviorFacade
+     * @param \Spryker\Zed\CategoryPageSearch\Business\Deleter\CategoryNodePageSearchDeleterInterface $categoryNodePageSearchDeleter
      */
     public function __construct(
         CategoryPageSearchEntityManagerInterface $categoryPageSearchEntityManager,
         CategoryNodePageSearchMapperInterface $categoryNodePageSearchMapper,
         CategoryPageSearchToCategoryFacadeInterface $categoryFacade,
         CategoryPageSearchToStoreFacadeInterface $storeFacade,
-        CategoryPageSearchToEventBehaviorFacadeInterface $eventBehaviorFacade
+        CategoryPageSearchToEventBehaviorFacadeInterface $eventBehaviorFacade,
+        CategoryNodePageSearchDeleterInterface $categoryNodePageSearchDeleter
     ) {
         $this->categoryPageSearchEntityManager = $categoryPageSearchEntityManager;
         $this->categoryNodePageSearchMapper = $categoryNodePageSearchMapper;
         $this->categoryFacade = $categoryFacade;
         $this->storeFacade = $storeFacade;
         $this->eventBehaviorFacade = $eventBehaviorFacade;
+        $this->categoryNodePageSearchDeleter = $categoryNodePageSearchDeleter;
     }
 
     /**
@@ -76,7 +86,7 @@ class CategoryNodePageSearchWriter implements CategoryNodePageSearchWriterInterf
         $categoryIds = $this->eventBehaviorFacade->getEventTransferForeignKeys($eventEntityTransfers, SpyCategoryStoreTableMap::COL_FK_CATEGORY);
         $categoryNodeIds = $this->categoryFacade->getCategoryNodeIdsByCategoryIds($categoryIds);
 
-        $this->writeCollection($categoryNodeIds);
+        $this->writeCategoryNodePageSearchCollection($categoryNodeIds);
     }
 
     /**
@@ -89,7 +99,7 @@ class CategoryNodePageSearchWriter implements CategoryNodePageSearchWriterInterf
         $categoryIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
         $categoryNodeIds = $this->categoryFacade->getCategoryNodeIdsByCategoryIds($categoryIds);
 
-        $this->writeCollection($categoryNodeIds);
+        $this->writeCategoryNodePageSearchCollection($categoryNodeIds);
     }
 
     /**
@@ -97,38 +107,16 @@ class CategoryNodePageSearchWriter implements CategoryNodePageSearchWriterInterf
      *
      * @return void
      */
-    public function writeCollection(array $categoryNodeIds): void
+    public function writeCategoryNodePageSearchCollection(array $categoryNodeIds): void
     {
-        $nodeCollectionTransfer = $this->categoryFacade->getActiveCategoryNodesByCategoryNodeIds($categoryNodeIds);
+        $categoryNodeCriteriaTransfer = (new CategoryNodeCriteriaTransfer())
+            ->setCategoryNodeIds($categoryNodeIds)
+            ->setIsActive(true);
+
+        $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodeCollectionByCriteria($categoryNodeCriteriaTransfer);
 
         $this->storeData($nodeCollectionTransfer);
-        $this->deleteMissingCategoryNodeStorage($nodeCollectionTransfer, $categoryNodeIds);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
-     * @param int[] $categoryNodeIds
-     *
-     * @return void
-     */
-    protected function deleteMissingCategoryNodeStorage(NodeCollectionTransfer $nodeCollectionTransfer, array $categoryNodeIds): void
-    {
-        $existingCategoryNodeIds = $this->getCategoryNodeIdsFromNodeTransfers($nodeCollectionTransfer);
-        $categoryNodeIdsToDelete = array_diff($categoryNodeIds, $existingCategoryNodeIds);
-
-        $this->categoryPageSearchEntityManager->deleteCategoryNodePageSearchByCategoryNodeIds($categoryNodeIdsToDelete);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
-     *
-     * @return int[]
-     */
-    protected function getCategoryNodeIdsFromNodeTransfers(NodeCollectionTransfer $nodeCollectionTransfer): array
-    {
-        return array_map(function (NodeTransfer $nodeTransfer): int {
-            return $nodeTransfer->getIdCategoryNode();
-        }, $nodeCollectionTransfer->getNodes()->getArrayCopy());
+        $this->categoryNodePageSearchDeleter->deleteMissingCategoryNodeStorage($nodeCollectionTransfer, $categoryNodeIds);
     }
 
     /**

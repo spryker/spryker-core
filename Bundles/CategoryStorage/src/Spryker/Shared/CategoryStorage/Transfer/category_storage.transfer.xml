@@ -107,10 +107,11 @@
         <property name="name" type="string"/>
     </transfer>
 
-    <transfer name="CategoryNodeTreeElementCriteria">
+    <transfer name="CategoryNodeCriteria">
         <property name="categoryNodeIds" type="int[]" singular="idCategoryNode"/>
         <property name="isActive" type="bool"/>
         <property name="isInMenu" type="bool"/>
+        <property name="isRoot" type="bool"/>
     </transfer>
 
     <transfer name="NodeCollection">

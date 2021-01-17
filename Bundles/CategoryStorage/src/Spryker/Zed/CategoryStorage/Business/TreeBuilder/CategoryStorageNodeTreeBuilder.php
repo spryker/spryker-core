@@ -49,7 +49,7 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
         $categoryNodeStorageTransferTrees = [];
         foreach ($localeNameMapByStoreName as $storeName => $localeNames) {
             foreach ($localeNames as $localeName) {
-                $categoryNodeStorageTransfers = $this->categoryNodeStorageMapper->mapNodeTransfersToCategoryNodeStorageTransfersForLocaleAndStore(
+                $categoryNodeStorageTransfers = $this->categoryNodeStorageMapper->mapNodeTransfersToCategoryNodeStorageTransfersByLocaleAndStore(
                     $nodeTransfers,
                     $localeName,
                     $storeName

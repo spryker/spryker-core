@@ -72,6 +72,6 @@ class CategoryNodeStorageMapper
         SpyCategoryNodeStorage $categoryNodeStorageEntity,
         CategoryNodeStorageTransfer $categoryNodeStorageTransfer
     ): CategoryNodeStorageTransfer {
-        return $categoryNodeStorageTransfer->fromArray($categoryNodeStorageEntity->getData());
+        return $categoryNodeStorageTransfer->fromArray($categoryNodeStorageEntity->getData(), true);
     }
 }

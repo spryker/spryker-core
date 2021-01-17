@@ -40,7 +40,7 @@ class CategoryStoreWritePublisherPlugin extends AbstractPlugin implements Publis
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getSubscribedEvents(): array
     {

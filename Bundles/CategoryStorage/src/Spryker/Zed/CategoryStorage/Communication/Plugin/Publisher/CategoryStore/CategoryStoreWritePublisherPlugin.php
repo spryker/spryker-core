@@ -45,8 +45,6 @@ class CategoryStoreWritePublisherPlugin extends AbstractPlugin implements Publis
     public function getSubscribedEvents(): array
     {
         return [
-            CategoryStorageConstants::CATEGORY_STORE_PUBLISH,
-            CategoryStorageConstants::CATEGORY_STORE_UNPUBLISH,
             CategoryStorageConstants::ENTITY_SPY_CATEGORY_STORE_CREATE,
             CategoryStorageConstants::ENTITY_SPY_CATEGORY_STORE_UPDATE,
             CategoryStorageConstants::ENTITY_SPY_CATEGORY_STORE_DELETE,

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CategoryStorage\Business\Writer;
 
-use Generated\Shared\Transfer\CategoryNodeTreeElementCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTreeStorageTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
@@ -111,19 +111,23 @@ class CategoryTreeStorageWriter implements CategoryTreeStorageWriterInterface
      */
     protected function getCategoryNodeStorageTransferTrees(): array
     {
-        $nodeCollectionTransfer = $this->categoryFacade->getRootCategoryNodes();
+        $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodeCollectionByCriteria(
+            (new CategoryNodeCriteriaTransfer())->setIsRoot(true)
+        );
+
         if (!$nodeCollectionTransfer->getNodes()->count()) {
             return [];
         }
+
         $categoryNodeIds = $this->getCategoryNodeIdsFromNodeCollectionTransfer($nodeCollectionTransfer);
 
-        $categoryNodeTreeElementCriteriaTransfer = (new CategoryNodeTreeElementCriteriaTransfer())
+        $categoryNodeCriteriaTransfer = (new CategoryNodeCriteriaTransfer())
             ->setIsActive(true)
             ->setIsInMenu(true)
             ->setCategoryNodeIds($categoryNodeIds);
 
-        $categoryNodeTransfers = $this->categoryFacade->getAllActiveCategoryNodeTreeMenuElementsByCategoryNodeIds(
-            $categoryNodeTreeElementCriteriaTransfer
+        $categoryNodeTransfers = $this->categoryFacade->getCategoryNodesWithRelativeNodesByCriteria(
+            $categoryNodeCriteriaTransfer
         );
 
         return $this->categoryStorageNodeTreeBuilder->buildCategoryNodeStorageTransferTreesForLocaleAndStore(

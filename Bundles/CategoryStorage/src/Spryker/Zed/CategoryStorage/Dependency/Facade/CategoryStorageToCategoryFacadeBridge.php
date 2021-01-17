@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CategoryStorage\Dependency\Facade;
 
-use Generated\Shared\Transfer\CategoryNodeTreeElementCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 
 class CategoryStorageToCategoryFacadeBridge implements CategoryStorageToCategoryFacadeInterface
@@ -26,14 +26,14 @@ class CategoryStorageToCategoryFacadeBridge implements CategoryStorageToCategory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryNodeTreeElementCriteriaTransfer $categoryNodeTreeElementCriteriaTransfer
+     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
-    public function getAllActiveCategoryNodeTreeMenuElementsByCategoryNodeIds(
-        CategoryNodeTreeElementCriteriaTransfer $categoryNodeTreeElementCriteriaTransfer
+    public function getCategoryNodesWithRelativeNodesByCriteria(
+        CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
     ): array {
-        return $this->categoryFacade->getAllActiveCategoryNodeTreeMenuElementsByCategoryNodeIds($categoryNodeTreeElementCriteriaTransfer);
+        return $this->categoryFacade->getCategoryNodesWithRelativeNodesByCriteria($categoryNodeCriteriaTransfer);
     }
 
     /**
@@ -47,10 +47,12 @@ class CategoryStorageToCategoryFacadeBridge implements CategoryStorageToCategory
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
+     *
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function getRootCategoryNodes(): NodeCollectionTransfer
+    public function getCategoryNodeCollectionByCriteria(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer
     {
-        return $this->categoryFacade->getRootCategoryNodes();
+        return $this->categoryFacade->getCategoryNodeCollectionByCriteria($categoryNodeCriteriaTransfer);
     }
 }

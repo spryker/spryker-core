@@ -32,7 +32,7 @@ class CategoryStoreWriteForPublishingPublisherPlugin extends AbstractPlugin impl
      */
     public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        $this->getFacade()->writeCategoryNodePageSearchCollectionByCategoryStoreEvents($eventEntityTransfers);
+        $this->getFacade()->writeCategoryNodePageSearchCollectionByCategoryStorePublishEvents($eventEntityTransfers);
     }
 
     /**
@@ -40,7 +40,7 @@ class CategoryStoreWriteForPublishingPublisherPlugin extends AbstractPlugin impl
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getSubscribedEvents(): array
     {

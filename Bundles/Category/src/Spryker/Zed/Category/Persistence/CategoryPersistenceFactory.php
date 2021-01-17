@@ -108,7 +108,9 @@ class CategoryPersistenceFactory extends AbstractPersistenceFactory
     public function createCategoryMapper(): CategoryMapperInterface
     {
         return new CategoryMapper(
-            $this->createCategoryNodeMapper()
+            $this->createCategoryNodeMapper(),
+            $this->createCategoryStoreRelationMapper(),
+            $this->createCategoryLocalizedAttributesUrlMapper()
         );
     }
 

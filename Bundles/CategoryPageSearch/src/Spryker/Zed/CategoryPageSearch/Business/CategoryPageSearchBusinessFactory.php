@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\CategoryPageSearch\Business;
 
+use Spryker\Zed\CategoryPageSearch\Business\Deleter\CategoryNodePageSearchDeleter;
+use Spryker\Zed\CategoryPageSearch\Business\Deleter\CategoryNodePageSearchDeleterInterface;
 use Spryker\Zed\CategoryPageSearch\Business\Mapper\CategoryNodePageSearchMapper;
 use Spryker\Zed\CategoryPageSearch\Business\Mapper\CategoryNodePageSearchMapperInterface;
-use Spryker\Zed\CategoryPageSearch\Business\Search\CategoryNodePageSearch;
-use Spryker\Zed\CategoryPageSearch\Business\Search\CategoryNodePageSearchInterface;
 use Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper\CategoryNodePageSearchDataMapper;
 use Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper\CategoryNodePageSearchDataMapperInterface;
 use Spryker\Zed\CategoryPageSearch\Business\Writer\CategoryNodePageSearchWriter;
@@ -29,17 +29,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\CategoryPageSearch\Business\Search\CategoryNodePageSearchInterface
-     */
-    public function createCategoryNodeSearch(): CategoryNodePageSearchInterface
-    {
-        return new CategoryNodePageSearch(
-            $this->getQueryContainer(),
-            $this->createCategoryNodePageSearchWriter()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\CategoryPageSearch\Business\Writer\CategoryNodePageSearchWriterInterface
      */
     public function createCategoryNodePageSearchWriter(): CategoryNodePageSearchWriterInterface
@@ -49,10 +38,14 @@ class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->createCategoryNodePageSearchMapper(),
             $this->getCategoryFacade(),
             $this->getStoreFacade(),
-            $this->getEventBehaviorFacade()
+            $this->getEventBehaviorFacade(),
+            $this->createCategoryNodePageSearchDeleter()
         );
     }
 
+    /**
+     * @return \Spryker\Zed\CategoryPageSearch\Business\Mapper\CategoryNodePageSearchMapperInterface
+     */
     public function createCategoryNodePageSearchMapper(): CategoryNodePageSearchMapperInterface
     {
         return new CategoryNodePageSearchMapper($this->createCategoryNodePageSearchDataMapper());
@@ -64,6 +57,16 @@ class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
     public function createCategoryNodePageSearchDataMapper(): CategoryNodePageSearchDataMapperInterface
     {
         return new CategoryNodePageSearchDataMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryPageSearch\Business\Deleter\CategoryNodePageSearchDeleterInterface
+     */
+    public function createCategoryNodePageSearchDeleter(): CategoryNodePageSearchDeleterInterface
+    {
+        return new CategoryNodePageSearchDeleter(
+            $this->getEntityManager()
+        );
     }
 
     /**

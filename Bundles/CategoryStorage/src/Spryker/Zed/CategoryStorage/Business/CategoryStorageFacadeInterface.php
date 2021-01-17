@@ -72,7 +72,7 @@ interface CategoryStorageFacadeInterface
      * - Queries all category nodes with category node IDs.
      * - Creates a data structure tree.
      * - Stores data as json encoded to storage table.
-     * - Sends a copy of data to queue based on module config.
+     * - Sends a copy of data to the queue.
      *
      * @api
      *
@@ -88,7 +88,7 @@ interface CategoryStorageFacadeInterface
      * - Queries all category nodes with category node IDs.
      * - Creates a data structure tree.
      * - Stores data as json encoded to storage table.
-     * - Sends a copy of data to queue based on module config.
+     * - Sends a copy of data to the queue.
      *
      * @api
      *
@@ -103,7 +103,7 @@ interface CategoryStorageFacadeInterface
      * - Queries all categories.
      * - Creates a data structure category tree.
      * - Stores data as json encoded to storage table.
-     * - Sends a copy of data to queue based on module config.
+     * - Sends a copy of data to the queue.
      *
      * @api
      *

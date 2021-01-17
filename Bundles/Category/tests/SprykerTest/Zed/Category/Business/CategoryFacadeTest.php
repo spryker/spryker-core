@@ -13,7 +13,7 @@ use Generated\Shared\DataBuilder\CategoryBuilder;
 use Generated\Shared\DataBuilder\CategoryLocalizedAttributesBuilder;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
-use Generated\Shared\Transfer\CategoryNodeTreeElementCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
@@ -22,6 +22,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryStoreQuery;
+use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Zed\Category\Business\CategoryFacadeInterface;
 use Spryker\Zed\Category\CategoryDependencyProvider;
 use Spryker\Zed\Category\Communication\Plugin\CategoryUrlPathPrefixUpdaterPlugin;
@@ -367,7 +368,7 @@ class CategoryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetAllCategoryNodeTreeElementsByCategoryNodeIdsWillReturnAllRequestedNodeTransfers(): void
+    public function testGetCategoryNodesWithRelativeNodesByCriteriaWillReturnAllRequestedNodeTransfers(): void
     {
         // Arrange
         $categoryTransfer1 = $this->tester->haveCategory();
@@ -383,12 +384,12 @@ class CategoryFacadeTest extends Unit
             $categoryTransfer3->getCategoryNode()->getIdCategoryNode(),
         ];
 
-        $categoryNodeTreeElementCriteriaTransfer = (new CategoryNodeTreeElementCriteriaTransfer())
+        $categoryNodeCriteriaTransfer = (new CategoryNodeCriteriaTransfer())
             ->addIdCategoryNode($categoryTransfer2->getCategoryNode()->getIdCategoryNode());
 
         // Act
-        $nodeTransfers = $this->getFacade()->getAllActiveCategoryNodeTreeMenuElementsByCategoryNodeIds(
-            $categoryNodeTreeElementCriteriaTransfer
+        $nodeTransfers = $this->getFacade()->getCategoryNodesWithRelativeNodesByCriteria(
+            $categoryNodeCriteriaTransfer
         );
 
         // Assert
@@ -427,7 +428,7 @@ class CategoryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCategoryNodesByCategoryNodeIdsWillReturnCorrectNodeTransfers(): void
+    public function testGetCategoryNodeCollectionByCriteriaWillReturnCorrectNodeTransfers(): void
     {
         // Arrange
         $categoryTransfer1 = $this->tester->haveCategory();
@@ -441,12 +442,14 @@ class CategoryFacadeTest extends Unit
         ];
 
         // Act
-        $nodeCollectionTransfers = $this->getFacade()->getActiveCategoryNodesByCategoryNodeIds($nodeTransferIds);
+        $nodeCollectionTransfer = $this->getFacade()->getCategoryNodeCollectionByCriteria(
+            (new CategoryNodeCriteriaTransfer())->setCategoryNodeIds($nodeTransferIds)
+        );
 
         // Assert
-        $this->assertCount(2, $nodeCollectionTransfers->getNodes(), 'The number of category nodes does not equal the expected value.');
+        $this->assertCount(2, $nodeCollectionTransfer->getNodes(), 'The number of category nodes does not equal the expected value.');
 
-        $resultNodeTransfer1 = $nodeCollectionTransfers->getNodes()->offsetGet(0);
+        $resultNodeTransfer1 = $nodeCollectionTransfer->getNodes()->offsetGet(0);
         $this->assertInstanceOf(
             NodeTransfer::class,
             $resultNodeTransfer1,
@@ -457,7 +460,7 @@ class CategoryFacadeTest extends Unit
             'The returned category node id does not present in the list of expected category node ids.'
         );
 
-        $resultNodeTransfer2 = $nodeCollectionTransfers->getNodes()->offsetGet(1);
+        $resultNodeTransfer2 = $nodeCollectionTransfer->getNodes()->offsetGet(1);
         $this->assertInstanceOf(
             NodeTransfer::class,
             $resultNodeTransfer2,

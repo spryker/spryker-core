@@ -28,5 +28,5 @@ interface CategoryNodePageSearchWriterInterface
      *
      * @return void
      */
-    public function writeCollection(array $categoryNodeIds): void;
+    public function writeCategoryNodePageSearchCollection(array $categoryNodeIds): void;
 }

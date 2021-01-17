@@ -28,5 +28,5 @@ interface CategoryNodeStorageWriterInterface
      *
      * @return void
      */
-    public function writeCollection(array $categoryNodeIds): void;
+    public function writeCategoryNodeStorageCollection(array $categoryNodeIds): void;
 }

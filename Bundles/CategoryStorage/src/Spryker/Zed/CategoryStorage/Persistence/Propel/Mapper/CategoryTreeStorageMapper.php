@@ -49,6 +49,12 @@ class CategoryTreeStorageMapper
         return $categoryTreeStorageTransfers;
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTreeStorageTransfer $categoryTreeStorageTransfer
+     * @param \Orm\Zed\CategoryStorage\Persistence\Base\SpyCategoryTreeStorage $categoryTreeStorageEntity
+     *
+     * @return \Orm\Zed\CategoryStorage\Persistence\Base\SpyCategoryTreeStorage
+     */
     public function mapCategoryTreeStorageTransferToCategoryTreeStorageEntity(
         CategoryTreeStorageTransfer $categoryTreeStorageTransfer,
         SpyCategoryTreeStorage $categoryTreeStorageEntity

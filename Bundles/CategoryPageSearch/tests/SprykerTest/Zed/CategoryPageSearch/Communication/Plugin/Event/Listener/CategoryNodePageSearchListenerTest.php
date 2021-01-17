@@ -41,16 +41,6 @@ class CategoryNodePageSearchListenerTest extends Unit
     /**
      * @return void
      */
-    protected function _setUp(): void
-    {
-        parent::_setUp();
-
-        $this->tester->mockConfigMethod('isSendingToQueue', false);
-    }
-
-    /**
-     * @return void
-     */
     public function testCategoryPageSearchPublishListener(): void
     {
         // Prepare

@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\CategoryStorage\Business\Mapper;
 
-use ArrayObject;
-use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
@@ -35,7 +33,7 @@ class CategoryNodeStorageMapper implements CategoryNodeStorageMapperInterface
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
      */
-    public function mapNodeTransfersToCategoryNodeStorageTransfersForLocaleAndStore(array $nodeTransfers, string $localeName, string $storeName): array
+    public function mapNodeTransfersToCategoryNodeStorageTransfersByLocaleAndStore(array $nodeTransfers, string $localeName, string $storeName): array
     {
         $localizedCategoryNodeStorageTransfers = [];
         foreach ($nodeTransfers as $nodeTransfer) {
@@ -73,58 +71,6 @@ class CategoryNodeStorageMapper implements CategoryNodeStorageMapperInterface
         }
 
         return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer[]|\ArrayObject $categoryLocalizedAttributesTransfers
-     * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer $categoryNodeStorageTransfer
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer
-     */
-    protected function mapCategoryLocalizedAttributesTransfersToCategoryNodeStorageTransferForLocale(
-        ArrayObject $categoryLocalizedAttributesTransfers,
-        CategoryNodeStorageTransfer $categoryNodeStorageTransfer,
-        string $localeName
-    ): CategoryNodeStorageTransfer {
-        $categoryLocalizedAttributesTransfer = $this->findCategoryLocalizedAttributesTransferForLocale(
-            $categoryLocalizedAttributesTransfers,
-            $localeName
-        );
-
-        if (!$categoryLocalizedAttributesTransfer) {
-            return $categoryNodeStorageTransfer;
-        }
-
-        if ($categoryLocalizedAttributesTransfer->getImage()) {
-            $categoryNodeStorageTransfer->setImage($categoryLocalizedAttributesTransfer->getImage()->getName());
-        }
-
-        return $categoryNodeStorageTransfer
-            ->setUrl($categoryLocalizedAttributesTransfer->getUrl())
-            ->setName($categoryLocalizedAttributesTransfer->getName())
-            ->setMetaTitle($categoryLocalizedAttributesTransfer->getMetaTitle())
-            ->setMetaDescription($categoryLocalizedAttributesTransfer->getMetaDescription())
-            ->setMetaKeywords($categoryLocalizedAttributesTransfer->getMetaKeywords());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer[]|\ArrayObject $categoryLocalizedAttributesTransfers
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer|null
-     */
-    protected function findCategoryLocalizedAttributesTransferForLocale(
-        ArrayObject $categoryLocalizedAttributesTransfers,
-        string $localeName
-    ): ?CategoryLocalizedAttributesTransfer {
-        foreach ($categoryLocalizedAttributesTransfers as $categoryLocalizedAttributesTransfer) {
-            if ($localeName === $categoryLocalizedAttributesTransfer->getLocale()->getLocaleName()) {
-                return $categoryLocalizedAttributesTransfer;
-            }
-        }
-
-        return null;
     }
 
     /**
