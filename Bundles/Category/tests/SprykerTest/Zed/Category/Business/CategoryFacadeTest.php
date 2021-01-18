@@ -14,6 +14,7 @@ use Generated\Shared\DataBuilder\CategoryLocalizedAttributesBuilder;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeFilterTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
@@ -404,25 +405,31 @@ class CategoryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCategoryNodeIdsByCategoryIdsWillReturnCorrectCategoryNodeIds(): void
+    public function testGetCategoryNodesByCriteriaWillReturnCorrectCategoryNodes(): void
     {
         // Arrange
         $categoryTransfer1 = $this->tester->haveCategory();
         $categoryTransfer2 = $this->tester->haveCategory();
 
-        $expectedCategoryNodeIds = [
-            $categoryTransfer1->getCategoryNode()->getIdCategoryNode(),
-            $categoryTransfer2->getCategoryNode()->getIdCategoryNode(),
-        ];
+        $categoryNodeFilterTransfer = (new CategoryNodeFilterTransfer())
+            ->addIdCategory($categoryTransfer1->getIdCategory())
+            ->addIdCategory($categoryTransfer2->getIdCategory());
 
         // Act
-        $resultCategoryNodeIds = $this->getFacade()->getCategoryNodeIdsByCategoryIds([
-            $categoryTransfer1->getIdCategory(),
-            $categoryTransfer2->getIdCategory(),
-        ]);
+        $nodeCollectionTransfer = $this->getFacade()->getCategoryNodesByCriteria($categoryNodeFilterTransfer);
 
         // Assert
-        $this->assertEmpty(array_diff($expectedCategoryNodeIds, $resultCategoryNodeIds), 'Returned category nodes ids do not equal expected values.');
+        $this->assertCount(2, $nodeCollectionTransfer->getNodes(), 'Expected 2 category nodes in results.');
+        $this->assertSame(
+            $categoryTransfer1->getCategoryNode()->getIdCategoryNode(),
+            $nodeCollectionTransfer->getNodes()->offsetGet(0)->getIdCategoryNode(),
+            'Returned category nodes id do not equal expected value.'
+        );
+        $this->assertSame(
+            $categoryTransfer2->getCategoryNode()->getIdCategoryNode(),
+            $nodeCollectionTransfer->getNodes()->offsetGet(1)->getIdCategoryNode(),
+            'Returned category nodes id do not equal expected value.'
+        );
     }
 
     /**

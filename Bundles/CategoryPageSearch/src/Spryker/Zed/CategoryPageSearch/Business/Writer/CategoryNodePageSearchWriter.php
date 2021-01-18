@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CategoryPageSearch\Business\Writer;
 
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeFilterTransfer;
 use Generated\Shared\Transfer\CategoryNodePageSearchTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
@@ -84,7 +85,11 @@ class CategoryNodePageSearchWriter implements CategoryNodePageSearchWriterInterf
     public function writeCategoryNodePageSearchCollectionByCategoryStoreEvents(array $eventEntityTransfers): void
     {
         $categoryIds = $this->eventBehaviorFacade->getEventTransferForeignKeys($eventEntityTransfers, SpyCategoryStoreTableMap::COL_FK_CATEGORY);
-        $categoryNodeIds = $this->categoryFacade->getCategoryNodeIdsByCategoryIds($categoryIds);
+        $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodesByCriteria(
+            (new CategoryNodeFilterTransfer())->setCategoryIds($categoryIds)
+        );
+
+        $categoryNodeIds = $this->extractCategoryNodeIdsFromNodeCollection($nodeCollectionTransfer);
 
         $this->writeCategoryNodePageSearchCollection($categoryNodeIds);
     }
@@ -97,7 +102,11 @@ class CategoryNodePageSearchWriter implements CategoryNodePageSearchWriterInterf
     public function writeCategoryNodePageSearchCollectionByCategoryStorePublishEvents(array $eventEntityTransfers): void
     {
         $categoryIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
-        $categoryNodeIds = $this->categoryFacade->getCategoryNodeIdsByCategoryIds($categoryIds);
+        $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodesByCriteria(
+            (new CategoryNodeFilterTransfer())->setCategoryIds($categoryIds)
+        );
+
+        $categoryNodeIds = $this->extractCategoryNodeIdsFromNodeCollection($nodeCollectionTransfer);
 
         $this->writeCategoryNodePageSearchCollection($categoryNodeIds);
     }
@@ -116,7 +125,7 @@ class CategoryNodePageSearchWriter implements CategoryNodePageSearchWriterInterf
         $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodeCollectionByCriteria($categoryNodeCriteriaTransfer);
 
         $this->storeData($nodeCollectionTransfer);
-        $this->categoryNodePageSearchDeleter->deleteMissingCategoryNodeStorage($nodeCollectionTransfer, $categoryNodeIds);
+        $this->categoryNodePageSearchDeleter->deleteMissingCategoryNodePageSearchCollection($nodeCollectionTransfer, $categoryNodeIds);
     }
 
     /**
@@ -205,5 +214,21 @@ class CategoryNodePageSearchWriter implements CategoryNodePageSearchWriterInterf
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
+     *
+     * @return int[]
+     */
+    protected function extractCategoryNodeIdsFromNodeCollection(NodeCollectionTransfer $nodeCollectionTransfer): array
+    {
+        $categoryNodeIds = [];
+
+        foreach ($nodeCollectionTransfer->getNodes() as $nodeTransfer) {
+            $categoryNodeIds[] = $nodeTransfer->getIdCategoryNode();
+        }
+
+        return $categoryNodeIds;
     }
 }

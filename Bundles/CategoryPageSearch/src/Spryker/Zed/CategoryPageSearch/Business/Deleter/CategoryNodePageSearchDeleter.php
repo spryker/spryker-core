@@ -32,12 +32,12 @@ class CategoryNodePageSearchDeleter implements CategoryNodePageSearchDeleterInte
      *
      * @return void
      */
-    public function deleteMissingCategoryNodeStorage(NodeCollectionTransfer $nodeCollectionTransfer, array $categoryNodeIds): void
+    public function deleteMissingCategoryNodePageSearchCollection(NodeCollectionTransfer $nodeCollectionTransfer, array $categoryNodeIds): void
     {
         $existingCategoryNodeIds = $this->getCategoryNodeIdsFromNodeTransfers($nodeCollectionTransfer);
         $categoryNodeIdsToDelete = array_diff($categoryNodeIds, $existingCategoryNodeIds);
 
-        $this->deleteCollection($categoryNodeIdsToDelete);
+        $this->deleteCategoryNodePageSearchCollection($categoryNodeIdsToDelete);
     }
 
     /**
@@ -45,7 +45,7 @@ class CategoryNodePageSearchDeleter implements CategoryNodePageSearchDeleterInte
      *
      * @return void
      */
-    public function deleteCollection(array $categoryNodeIds): void
+    public function deleteCategoryNodePageSearchCollection(array $categoryNodeIds): void
     {
         $this->categoryPageSearchEntityManager->deleteCategoryNodePageSearchByCategoryNodeIds($categoryNodeIds);
     }

@@ -8,6 +8,8 @@
 namespace Spryker\Zed\CategoryStorage\Business\Writer;
 
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeFilterTransfer;
+use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryStoreTableMap;
 use Spryker\Zed\CategoryStorage\Business\Deleter\CategoryNodeStorageDeleterInterface;
 use Spryker\Zed\CategoryStorage\Business\TreeBuilder\CategoryStorageNodeTreeBuilderInterface;
@@ -71,7 +73,11 @@ class CategoryNodeStorageWriter implements CategoryNodeStorageWriterInterface
     public function writeCategoryNodeStorageCollectionByCategoryStoreEvents(array $eventEntityTransfers): void
     {
         $categoryIds = $this->eventBehaviorFacade->getEventTransferForeignKeys($eventEntityTransfers, SpyCategoryStoreTableMap::COL_FK_CATEGORY);
-        $categoryNodeIds = $this->categoryFacade->getCategoryNodeIdsByCategoryIds($categoryIds);
+        $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodesByCriteria(
+            (new CategoryNodeFilterTransfer())->setCategoryIds($categoryIds)
+        );
+
+        $categoryNodeIds = $this->extractCategoryNodeIdsFromNodeCollection($nodeCollectionTransfer);
 
         $this->writeCategoryNodeStorageCollection($categoryNodeIds);
     }
@@ -84,7 +90,11 @@ class CategoryNodeStorageWriter implements CategoryNodeStorageWriterInterface
     public function writeCategoryNodeStorageCollectionByCategoryStorePublishEvents(array $eventEntityTransfers): void
     {
         $categoryIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
-        $categoryNodeIds = $this->categoryFacade->getCategoryNodeIdsByCategoryIds($categoryIds);
+        $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodesByCriteria(
+            (new CategoryNodeFilterTransfer())->setCategoryIds($categoryIds)
+        );
+
+        $categoryNodeIds = $this->extractCategoryNodeIdsFromNodeCollection($nodeCollectionTransfer);
 
         $this->writeCategoryNodeStorageCollection($categoryNodeIds);
     }
@@ -147,5 +157,21 @@ class CategoryNodeStorageWriter implements CategoryNodeStorageWriterInterface
                 $localeName
             );
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
+     *
+     * @return int[]
+     */
+    protected function extractCategoryNodeIdsFromNodeCollection(NodeCollectionTransfer $nodeCollectionTransfer): array
+    {
+        $categoryNodeIds = [];
+
+        foreach ($nodeCollectionTransfer->getNodes() as $nodeTransfer) {
+            $categoryNodeIds[] = $nodeTransfer->getIdCategoryNode();
+        }
+
+        return $categoryNodeIds;
     }
 }

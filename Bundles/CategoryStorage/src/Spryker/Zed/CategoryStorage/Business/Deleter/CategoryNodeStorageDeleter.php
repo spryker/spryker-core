@@ -18,8 +18,6 @@ class CategoryNodeStorageDeleter implements CategoryNodeStorageDeleterInterface
     protected $categoryStorageEntityManager;
 
     /**
-     * /**
-     *
      * @param \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageEntityManagerInterface $categoryStorageEntityManager
      */
     public function __construct(CategoryStorageEntityManagerInterface $categoryStorageEntityManager)
@@ -38,7 +36,7 @@ class CategoryNodeStorageDeleter implements CategoryNodeStorageDeleterInterface
         $existingCategoryNodeIds = $this->getCategoryNodeIdsFromNodeTransfers($nodeTransfers);
         $categoryNodeIdsToDelete = array_diff($categoryNodeIds, $existingCategoryNodeIds);
 
-        $this->deleteCollection($categoryNodeIdsToDelete);
+        $this->deleteCategoryNodeStorageCollection($categoryNodeIdsToDelete);
     }
 
     /**
@@ -46,7 +44,7 @@ class CategoryNodeStorageDeleter implements CategoryNodeStorageDeleterInterface
      *
      * @return void
      */
-    public function deleteCollection(array $categoryNodeIds): void
+    public function deleteCategoryNodeStorageCollection(array $categoryNodeIds): void
     {
         $this->categoryStorageEntityManager->deleteCategoryNodeStorageByCategoryNodeIds($categoryNodeIds);
     }

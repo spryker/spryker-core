@@ -10,6 +10,7 @@ namespace Spryker\Zed\Category\Business;
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeFilterTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -290,19 +291,19 @@ interface CategoryFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves category node ids by category ids.
+     * - Retrieves category node ids by criteria filter (without any relationships).
      *
      * @api
      *
-     * @param int[] $categoryIds
+     * @param \Generated\Shared\Transfer\CategoryNodeFilterTransfer $categoryNodeFilterTransfer
      *
-     * @return int[]
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function getCategoryNodeIdsByCategoryIds(array $categoryIds): array;
+    public function getCategoryNodesByCriteria(CategoryNodeFilterTransfer $categoryNodeFilterTransfer): NodeCollectionTransfer;
 
     /**
      * Specification:
-     * - Retrieves category node collection by criteria filter.
+     * - Retrieves category node collection by criteria filter (with relationships).
      *
      * @api
      *

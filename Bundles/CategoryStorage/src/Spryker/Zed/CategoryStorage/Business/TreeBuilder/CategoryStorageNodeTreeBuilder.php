@@ -38,11 +38,10 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
     /**
      * @param int[] $categoryNodeIds
      * @param \Generated\Shared\Transfer\NodeTransfer[] $nodeTransfers
-     * @param bool $excludeRootNodes
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[][][]
      */
-    public function buildCategoryNodeStorageTransferTreesForLocaleAndStore(array $categoryNodeIds, array $nodeTransfers, bool $excludeRootNodes = false): array
+    public function buildCategoryNodeStorageTransferTreesForLocaleAndStore(array $categoryNodeIds, array $nodeTransfers): array
     {
         $localeNameMapByStoreName = $this->getLocaleNameMapByStoreName();
 

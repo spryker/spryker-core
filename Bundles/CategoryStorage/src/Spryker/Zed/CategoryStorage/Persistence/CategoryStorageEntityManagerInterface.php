@@ -42,5 +42,5 @@ interface CategoryStorageEntityManagerInterface
     /**
      * @return void
      */
-    public function deleteCategoryTreeStorage(): void;
+    public function deleteCategoryTreeStorageCollection(): void;
 }

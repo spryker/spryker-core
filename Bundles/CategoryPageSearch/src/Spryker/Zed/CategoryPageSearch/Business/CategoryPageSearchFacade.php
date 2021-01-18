@@ -40,7 +40,7 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
      */
     public function unpublish(array $categoryNodeIds)
     {
-        $this->getFactory()->createCategoryNodePageSearchDeleter()->deleteCollection($categoryNodeIds);
+        $this->getFactory()->createCategoryNodePageSearchDeleter()->deleteCategoryNodePageSearchCollection($categoryNodeIds);
     }
 
     /**

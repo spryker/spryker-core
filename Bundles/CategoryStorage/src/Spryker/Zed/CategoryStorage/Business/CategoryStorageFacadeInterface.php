@@ -14,7 +14,7 @@ interface CategoryStorageFacadeInterface
      * - Queries all category nodes with categoryNodeIds
      * - Creates a data structure tree
      * - Stores data as json encoded to storage table
-     * - Sends a copy of data to queue based on module config
+     * - Sends a copy of data to the queue.
      *
      * @api
      *
@@ -27,7 +27,7 @@ interface CategoryStorageFacadeInterface
     /**
      * Specification:
      * - Finds and deletes category node storage entities with categoryNodeIds
-     * - Sends delete message to queue based on module config
+     * - Sends a copy of data to the queue.
      *
      * @api
      *
@@ -42,7 +42,7 @@ interface CategoryStorageFacadeInterface
      * - Queries all categories
      * - Creates a data structure category tree
      * - Stores data as json encoded to storage table
-     * - Sends a copy of data to queue based on module config
+     * - Sends a copy of data to the queue.
      *
      * @api
      *
@@ -55,7 +55,7 @@ interface CategoryStorageFacadeInterface
     /**
      * Specification:
      * - Finds and deletes all category tree storage entities
-     * - Sends delete message to queue based on module config
+     * - Sends a copy of data to the queue.
      *
      * @api
      *
@@ -114,7 +114,7 @@ interface CategoryStorageFacadeInterface
     /**
      * Specification:
      * - Finds and deletes all category tree storage entities.
-     * - Sends delete message to queue based on module config.
+     * - Sends a copy of data to the queue.
      *
      * @api
      *

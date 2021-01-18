@@ -22,5 +22,5 @@ interface CategoryNodeStorageDeleterInterface
      *
      * @return void
      */
-    public function deleteCollection(array $categoryNodeIds): void;
+    public function deleteCategoryNodeStorageCollection(array $categoryNodeIds): void;
 }

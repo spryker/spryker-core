@@ -79,7 +79,7 @@ class CategoryStorageEntityManager extends AbstractEntityManager implements Cate
     /**
      * @return void
      */
-    public function deleteCategoryTreeStorage(): void
+    public function deleteCategoryTreeStorageCollection(): void
     {
         $this->getFactory()
             ->createSpyCategoryTreeStorageQuery()

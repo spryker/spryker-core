@@ -17,12 +17,12 @@ interface CategoryNodePageSearchDeleterInterface
      *
      * @return void
      */
-    public function deleteMissingCategoryNodeStorage(NodeCollectionTransfer $nodeCollectionTransfer, array $categoryNodeIds): void;
+    public function deleteMissingCategoryNodePageSearchCollection(NodeCollectionTransfer $nodeCollectionTransfer, array $categoryNodeIds): void;
 
     /**
      * @param int[] $categoryNodeIds
      *
      * @return void
      */
-    public function deleteCollection(array $categoryNodeIds): void;
+    public function deleteCategoryNodePageSearchCollection(array $categoryNodeIds): void;
 }
