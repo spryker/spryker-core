@@ -22,6 +22,11 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 class MerchantUserProvider extends AbstractPlugin implements UserProviderInterface
 {
     /**
+     * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_APPROVED
+     */
+    protected const MERCHANT_STATUS_APPROVED = 'approved';
+
+    /**
      * @param string $username
      *
      * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
@@ -86,7 +91,7 @@ class MerchantUserProvider extends AbstractPlugin implements UserProviderInterfa
                     ->setUsername($username)
                     ->setWithUser(true)
                     ->setStatus('active')
-                    ->setMerchantStatus('approved')
+                    ->setMerchantStatus(static::MERCHANT_STATUS_APPROVED)
             );
     }
 }

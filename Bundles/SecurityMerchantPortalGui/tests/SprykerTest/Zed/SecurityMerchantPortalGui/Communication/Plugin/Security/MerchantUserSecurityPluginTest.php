@@ -38,6 +38,16 @@ class MerchantUserSecurityPluginTest extends Unit
     protected const SERVICE_SECURITY_TOKEN_STORAGE = 'security.token_storage';
 
     /**
+     * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_APPROVED
+     */
+    protected const MERCHANT_STATUS_APPROVED = 'approved';
+
+    /**
+     * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_WAITING_FOR_APPROVAL
+     */
+    protected const MERCHANT_STATUS_WAITING_FOR_APPROVAL = 'waiting-for-approval';
+
+    /**
      * @var \SprykerTest\Zed\SecurityMerchantPortalGui\SecurityMerchantPortalGuiCommunicationTester
      */
     protected $tester;
@@ -64,7 +74,7 @@ class MerchantUserSecurityPluginTest extends Unit
             UserTransfer::PASSWORD => 'foo',
         ]);
         $merchantTransfer = $this->tester->haveMerchant([
-            MerchantTransfer::STATUS => 'approved',
+            MerchantTransfer::STATUS => static::MERCHANT_STATUS_APPROVED,
         ]);
         $this->tester->haveMerchantUser($merchantTransfer, $userTransfer);
 
@@ -113,7 +123,7 @@ class MerchantUserSecurityPluginTest extends Unit
             UserTransfer::PASSWORD => 'foo',
         ]);
         $merchantTransfer = $this->tester->haveMerchant([
-            MerchantTransfer::STATUS => 'approved',
+            MerchantTransfer::STATUS => static::MERCHANT_STATUS_APPROVED,
         ]);
         $this->tester->haveMerchantUser($merchantTransfer, $userTransfer);
 
@@ -157,7 +167,7 @@ class MerchantUserSecurityPluginTest extends Unit
             UserTransfer::STATUS => 'blocked',
         ]);
         $merchantTransfer = $this->tester->haveMerchant([
-            MerchantTransfer::STATUS => 'approved',
+            MerchantTransfer::STATUS => static::MERCHANT_STATUS_APPROVED,
         ]);
         $this->tester->haveMerchantUser($merchantTransfer, $userTransfer);
 
@@ -205,7 +215,7 @@ class MerchantUserSecurityPluginTest extends Unit
             UserTransfer::PASSWORD => 'foo',
         ]);
         $merchantTransfer = $this->tester->haveMerchant([
-            MerchantTransfer::STATUS => 'waiting-for-approval',
+            MerchantTransfer::STATUS => static::MERCHANT_STATUS_WAITING_FOR_APPROVAL,
         ]);
         $merchantUserTransfer = $this->tester->haveMerchantUser($merchantTransfer, $userTransfer);
 
