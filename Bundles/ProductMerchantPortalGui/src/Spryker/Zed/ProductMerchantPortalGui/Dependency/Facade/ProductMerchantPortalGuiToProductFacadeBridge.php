@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade;
 
-use Generated\Shared\Transfer\ProductConcreteTransfer;
-
 class ProductMerchantPortalGuiToProductFacadeBridge implements ProductMerchantPortalGuiToProductFacadeInterface
 {
     /**
@@ -25,12 +23,22 @@ class ProductMerchantPortalGuiToProductFacadeBridge implements ProductMerchantPo
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param int $idProductConcrete
      *
-     * @return int
+     * @return void
      */
-    public function saveProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
+    public function activateProductConcrete($idProductConcrete)
     {
-        return $this->productFacade->saveProductConcrete($productConcreteTransfer);
+        $this->productFacade->activateProductConcrete($idProductConcrete);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function deactivateProductConcrete($idProductConcrete)
+    {
+        $this->productFacade->deactivateProductConcrete($idProductConcrete);
     }
 }

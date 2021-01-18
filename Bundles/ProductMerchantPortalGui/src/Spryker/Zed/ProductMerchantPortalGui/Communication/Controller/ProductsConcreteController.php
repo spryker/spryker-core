@@ -97,16 +97,19 @@ class ProductsConcreteController extends AbstractController
         }
 
         foreach ($productConcreteCollectionTransfer->getProducts() as $productConcreteTransfer) {
+            $idProductConcrete = $productConcreteTransfer->getIdProductConcrete();
+
             if ($request->get(static::PARAM_ACTIVATION_NAME_STATUS)) {
-                $productConcreteTransfer->setIsActive($productConcreteTransferToSave->getIsActive());
+                $productConcreteTransferToSave->getIsActive()
+                    ? $this->getFactory()->getProductFacade()->activateProductConcrete($idProductConcrete)
+                    : $this->getFactory()->getProductFacade()->deactivateProductConcrete($idProductConcrete);
             }
 
             if ($request->get(static::PARAM_ACTIVATION_NAME_VALIDITY)) {
-                $productConcreteTransfer->setValidFrom($productConcreteTransferToSave->getValidFrom());
-                $productConcreteTransfer->setValidTo($productConcreteTransferToSave->getValidTo());
+                $this->getFactory()->getProductValidityFacade()->saveProductValidity(
+                    $productConcreteTransferToSave->setIdProductConcrete($idProductConcrete)
+                );
             }
-
-            $this->getFactory()->getProductFacade()->saveProductConcrete($productConcreteTransfer);
         }
     }
 }

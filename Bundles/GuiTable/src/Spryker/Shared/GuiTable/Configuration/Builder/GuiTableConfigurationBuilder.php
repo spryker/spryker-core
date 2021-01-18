@@ -506,11 +506,11 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @param string $id
      * @param string $title
      * @param string $url
-     * @param null $type
+     * @param string|null $type
      *
      * @return $this
      */
-    public function addBatchActionUrl(string $id, string $title, string $url, $type = null)
+    public function addBatchActionUrl(string $id, string $title, string $url, ?string $type = null)
     {
         $type = $type ?? static::ACTION_TYPE_URL;
         $this->addBatchAction($id, $title, $type, ['url' => $url]);

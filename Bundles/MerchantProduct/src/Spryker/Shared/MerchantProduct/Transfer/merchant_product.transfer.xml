@@ -18,6 +18,7 @@
         <property name="idProductAbstract" type="int"/>
         <property name="idMerchant" type="int"/>
         <property name="productAbstract" type="ProductAbstract"/>
+        <property name="productConcreteIds" type="int[]" singular="idProductConcrete"/>
     </transfer>
 
     <transfer name="MerchantProductCollection">

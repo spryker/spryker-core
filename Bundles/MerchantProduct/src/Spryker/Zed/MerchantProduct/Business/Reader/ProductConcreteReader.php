@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\MerchantProduct\Business\Reader;
 
+use ArrayObject;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
-use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Spryker\Zed\MerchantProduct\Dependency\Facade\MerchantProductToProductFacadeInterface;
 use Spryker\Zed\MerchantProduct\Persistence\MerchantProductRepositoryInterface;
@@ -46,29 +46,18 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
         MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
     ): ProductConcreteCollectionTransfer {
         $merchantProductCriteriaTransfer->requireIdMerchant();
-        $productConcreteIds = $merchantProductCriteriaTransfer->getProductConcreteIds();
-        $productConcreteCollectionTransfer = new ProductConcreteCollectionTransfer();
-
-        if (!count($productConcreteIds)) {
-            return $productConcreteCollectionTransfer;
-        }
 
         $merchantProductCollectionTransfer = $this->merchantProductRepository->get($merchantProductCriteriaTransfer);
 
-        $productAbstractIds = array_map(function (MerchantProductTransfer $merchantProductTransfer): int {
-            return (int)$merchantProductTransfer->getIdProductAbstract();
-        }, $merchantProductCollectionTransfer->getMerchantProducts()->getArrayCopy());
-
-        $productConcreteTransfers = [];
-        foreach ($productAbstractIds as $idProductAbstract) {
-            $productConcreteTransfers += $this->productFacade->getConcreteProductsByAbstractProductId($idProductAbstract);
+        $productConcreteIds = [];
+        foreach ($merchantProductCollectionTransfer->getMerchantProducts() as $merchantProductTransfer) {
+            $productConcreteIds = array_merge($productConcreteIds, $merchantProductTransfer->getProductConcreteIds());
         }
 
-        foreach ($productConcreteTransfers as $productConcreteTransfer) {
-            if (in_array($productConcreteTransfer->getIdProductConcrete(), $productConcreteIds)) {
-                $productConcreteCollectionTransfer->addProduct($productConcreteTransfer);
-            }
-        }
+        $productConcreteTransfers = $this->productFacade->getProductConcreteTransfersByProductIds($productConcreteIds);
+
+        $productConcreteCollectionTransfer = (new ProductConcreteCollectionTransfer())
+            ->setProducts(new ArrayObject($productConcreteTransfers));
 
         return $productConcreteCollectionTransfer;
     }

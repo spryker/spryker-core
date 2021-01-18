@@ -26,7 +26,6 @@ class ValidFromRangeConstraintValidator extends AbstractConstraintValidator
      */
     public function validate($validFrom, Constraint $constraint): void
     {
-        $this->context->addViolation('The first date cannot be later than the second one.');
         if (!$validFrom) {
             return;
         }

@@ -53,7 +53,12 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
      */
     public function get(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): MerchantProductCollectionTransfer
     {
-        $merchantProductAbstractQuery = $this->getFactory()->getMerchantProductAbstractPropelQuery();
+        $merchantProductAbstractQuery = $this->getFactory()
+            ->getMerchantProductAbstractPropelQuery()
+            ->leftJoinWithProductAbstract()
+            ->useProductAbstractQuery()
+                ->leftJoinWithSpyProduct()
+            ->endUse();
 
         $merchantProductAbstractQuery = $this->applyFilters($merchantProductAbstractQuery, $merchantProductCriteriaTransfer);
 
@@ -146,15 +151,12 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
         }
 
         if ($merchantProductCriteriaTransfer->getProductConcreteIds()) {
-            $merchantProductAbstractQuery->addJoin(
-                SpyMerchantProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT,
-                SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
-                Criteria::INNER_JOIN
-            )->where(sprintf(
-                '%s IN (%s)',
-                SpyProductTableMap::COL_ID_PRODUCT,
-                implode(',', $merchantProductCriteriaTransfer->getProductConcreteIds())
-            ))->groupByFkProductAbstract();
+            $merchantProductAbstractQuery
+                ->useProductAbstractQuery()
+                    ->useSpyProductQuery()
+                        ->filterByIdProduct_In($merchantProductCriteriaTransfer->getProductConcreteIds())
+                    ->endUse()
+                ->endUse();
         }
 
         return $merchantProductAbstractQuery;
