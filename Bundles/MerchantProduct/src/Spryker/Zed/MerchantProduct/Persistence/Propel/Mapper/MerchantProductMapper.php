@@ -53,6 +53,4 @@ class MerchantProductMapper
 
         return $merchantProductTransfer;
     }
-
-
 }
