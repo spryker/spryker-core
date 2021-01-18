@@ -85,6 +85,8 @@ class MerchantUserProvider extends AbstractPlugin implements UserProviderInterfa
                 (new MerchantUserCriteriaTransfer())
                     ->setUsername($username)
                     ->setWithUser(true)
+                    ->setStatus('active')
+                    ->setMerchantStatus('approved')
             );
     }
 }
