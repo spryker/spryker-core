@@ -33,6 +33,10 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
     protected const COL_STORE = 'store';
 
     /**
+     * @module Url
+     * @module Store
+     * @module Locale
+     *
      * @return array
      */
     public function getAllCategoriesOrderedByDescendant(): array
@@ -119,6 +123,8 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
     }
 
     /**
+     * @module Locale
+     *
      * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer[]
@@ -133,7 +139,10 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
 
         return $this->getFactory()
             ->createProductAbstractLocalizedAttributesMapper()
-            ->mapProductAbstractLocalizedAttributesEntitiesToProductAbstractLocalizedAttributesTransfers($productAbstractLocalizedAttributesEntities);
+            ->mapProductAbstractLocalizedAttributesEntitiesToProductAbstractLocalizedAttributesTransfers(
+                $productAbstractLocalizedAttributesEntities,
+                []
+            );
     }
 
     /**
@@ -158,7 +167,7 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
 
         return $this->getFactory()
             ->createProductCategoryMapper()
-            ->mapProductCategoryEntitiesToProductCategoryTransfers($productCategoryQuery->find());
+            ->mapProductCategoryEntitiesToProductCategoryTransfers($productCategoryQuery->find(), []);
     }
 
     /**
@@ -176,7 +185,10 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
 
         return $this->getFactory()
             ->createProductCategoryStorageMapper()
-            ->mapProductAbstractCategoryStorageEntitiesToProductAbstractCategoryStorageTransfers($productAbstractCategoryStorageEntities);
+            ->mapProductAbstractCategoryStorageEntitiesToProductAbstractCategoryStorageTransfers(
+                $productAbstractCategoryStorageEntities,
+                []
+            );
     }
 
     /**

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductCategoryStorage\Persistence;
 
 use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
-use Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -28,9 +27,11 @@ class ProductCategoryStorageEntityManager extends AbstractEntityManager implemen
             ->filterByFkProductAbstract_In($productAbstractIds)
             ->find();
 
-        foreach ($productAbstractCategoryStorageEntities as $productAbstractCategoryStorageEntity) {
-            $productAbstractCategoryStorageEntity->delete();
+        if (!$productAbstractCategoryStorageEntities->count()) {
+            return;
         }
+
+        $productAbstractCategoryStorageEntities->delete();
     }
 
     /**
@@ -70,11 +71,14 @@ class ProductCategoryStorageEntityManager extends AbstractEntityManager implemen
         string $localeName,
         ProductAbstractCategoryStorageTransfer $productAbstractCategoryStorageTransfer
     ): void {
-        $productAbstractCategoryStorageEntity = (new SpyProductAbstractCategoryStorage())
-            ->setFkProductAbstract($idProductAbstract)
-            ->setStore($storeName)
-            ->setLocale($localeName)
-            ->setData($productAbstractCategoryStorageTransfer->toArray());
+        $productAbstractCategoryStorageEntity = $this->getFactory()
+            ->createProductCategoryStorageMapper()
+            ->mapProductAbstractCategoryStorageEntity(
+                $idProductAbstract,
+                $storeName,
+                $localeName,
+                $productAbstractCategoryStorageTransfer
+            );
 
         $productAbstractCategoryStorageEntity->save();
     }

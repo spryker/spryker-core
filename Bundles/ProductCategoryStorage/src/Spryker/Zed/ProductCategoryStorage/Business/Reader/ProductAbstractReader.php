@@ -75,9 +75,9 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
                 $relatedCategoryIds[] = $this->productCategoryStorageRepository
                     ->getAllCategoryIdsByCategoryNodeId($categoryNode->getIdCategoryNode());
             }
-
-            $relatedCategoryIds = array_merge(...$relatedCategoryIds);
         }
+
+        $relatedCategoryIds = array_merge(...$relatedCategoryIds);
 
         return array_unique($relatedCategoryIds);
     }

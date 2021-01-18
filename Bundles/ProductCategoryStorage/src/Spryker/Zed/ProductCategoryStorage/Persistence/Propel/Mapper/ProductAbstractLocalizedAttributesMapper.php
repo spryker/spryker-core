@@ -16,14 +16,14 @@ class ProductAbstractLocalizedAttributesMapper
 {
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes[] $productAbstractLocalizedAttributesEntities
+     * @param \Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer[] $productAbstractLocalizedAttributesTransfers
      *
      * @return \Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer[]
      */
     public function mapProductAbstractLocalizedAttributesEntitiesToProductAbstractLocalizedAttributesTransfers(
-        ObjectCollection $productAbstractLocalizedAttributesEntities
+        ObjectCollection $productAbstractLocalizedAttributesEntities,
+        array $productAbstractLocalizedAttributesTransfers
     ): array {
-        $productAbstractLocalizedAttributesTransfers = [];
-
         foreach ($productAbstractLocalizedAttributesEntities as $productAbstractLocalizedAttributesEntity) {
             $localeTransfer = $this->mapLocaleEntityToLocaleTransfer(
                 $productAbstractLocalizedAttributesEntity->getLocale(),

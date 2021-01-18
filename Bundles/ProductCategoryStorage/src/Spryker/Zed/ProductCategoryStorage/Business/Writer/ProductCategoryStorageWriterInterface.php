@@ -14,7 +14,7 @@ interface ProductCategoryStorageWriterInterface
      *
      * @return void
      */
-    public function writeCollectionByCategoryStoreIdEvents(array $eventEntityTransfers): void;
+    public function writeCollectionByCategoryStoreEvents(array $eventEntityTransfers): void;
 
     /**
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers

@@ -210,7 +210,7 @@ class ProductCategoryStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testWriteCollectionByCategoryStoreIdEvents(): void
+    public function testWriteCollectionByCategoryStoreEvents(): void
     {
         // Arrange
         $productAbstractIds = $this->findProductAbstractIdsByIdCategory(1);
@@ -224,7 +224,7 @@ class ProductCategoryStorageListenerTest extends Unit
         ];
 
         // Act
-        $this->getProductCategoryStorageFacade()->writeCollectionByCategoryStoreIdEvents($eventTransfers);
+        $this->getProductCategoryStorageFacade()->writeCollectionByCategoryStoreEvents($eventTransfers);
 
         // Assert
         $this->assertProductAbstractStorage($beforeCount);

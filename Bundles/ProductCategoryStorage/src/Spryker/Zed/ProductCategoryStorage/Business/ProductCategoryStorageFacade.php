@@ -49,9 +49,9 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      *
      * @api
      *
-     * @param array $categoryIds
+     * @param int[] $categoryIds
      *
-     * @return array
+     * @return int[]
      */
     public function getRelatedCategoryIds(array $categoryIds)
     {
@@ -67,11 +67,11 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      *
      * @return void
      */
-    public function writeCollectionByCategoryStoreIdEvents(array $eventEntityTransfers): void
+    public function writeCollectionByCategoryStoreEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
             ->createProductCategoryStorageWriter()
-            ->writeCollectionByCategoryStoreIdEvents($eventEntityTransfers);
+            ->writeCollectionByCategoryStoreEvents($eventEntityTransfers);
     }
 
     /**

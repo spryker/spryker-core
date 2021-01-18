@@ -33,7 +33,7 @@ class CategoryStoreWritePublisherPlugin extends AbstractPlugin implements Publis
      */
     public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        $this->getFacade()->writeCollectionByCategoryStoreIdEvents($eventEntityTransfers);
+        $this->getFacade()->writeCollectionByCategoryStoreEvents($eventEntityTransfers);
     }
 
     /**

@@ -42,9 +42,9 @@ interface ProductCategoryStorageFacadeInterface
      *
      * @api
      *
-     * @param array $categoryIds
+     * @param int[] $categoryIds
      *
-     * @return array
+     * @return int[]
      */
     public function getRelatedCategoryIds(array $categoryIds);
 
@@ -63,7 +63,7 @@ interface ProductCategoryStorageFacadeInterface
      *
      * @return void
      */
-    public function writeCollectionByCategoryStoreIdEvents(array $eventEntityTransfers): void;
+    public function writeCollectionByCategoryStoreEvents(array $eventEntityTransfers): void;
 
     /**
      * Specification:
@@ -92,7 +92,7 @@ interface ProductCategoryStorageFacadeInterface
      *
      * @api
      *
-     * @param array $eventEntityTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      *
      * @return void
      */
