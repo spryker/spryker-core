@@ -30,24 +30,4 @@ use Spryker\Zed\ProductStorage\Business\ProductStorageFacade;
 class ProductStorageBusinessTester extends Actor
 {
     use _generated\ProductStorageBusinessTesterActions;
-
-    /**
-     * @param bool $enableSingleValueAttributePermutation
-     *
-     * @return \Spryker\Zed\ProductStorage\Business\ProductStorageFacade
-     */
-    public function getProductStorageFacade(bool $enableSingleValueAttributePermutation = true): ProductStorageFacade
-    {
-        $mockConfig = $this->mockConfigMethod('isPermutationForSingleValueProductAttributesEnabled', function () use ($enableSingleValueAttributePermutation) {
-            return $enableSingleValueAttributePermutation;
-        });
-
-        $productStorageBusinessFactory = new ProductStorageBusinessFactory();
-        $productStorageBusinessFactory->setConfig($mockConfig);
-
-        $productStorageFacade = new ProductStorageFacade();
-        $productStorageFacade->setFactory($productStorageBusinessFactory);
-
-        return $productStorageFacade;
-    }
 }

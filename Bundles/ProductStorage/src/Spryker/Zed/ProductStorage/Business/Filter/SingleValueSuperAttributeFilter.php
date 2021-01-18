@@ -21,19 +21,39 @@ class SingleValueSuperAttributeFilter implements SingleValueSuperAttributeFilter
         array $productConcreteSuperAttributeMap,
         array $superAttributeVariations
     ): array {
-        $filteredProductConcreteSuperAttributeMap = $productConcreteSuperAttributeMap;
-
+        $filteredProductConcreteSuperAttributeMap = [];
         foreach ($productConcreteSuperAttributeMap as $productId => $attributes) {
-            foreach ($attributes as $attributeName => $attributeValue) {
-                if (!$this->isSingleValueSuperAttribute($superAttributeVariations, $attributeName)) {
-                    continue;
-                }
+            $filteredSuperAttributes = $this->filterSingleValueSuperAttributes(
+                $attributes,
+                $superAttributeVariations
+            );
 
-                unset($filteredProductConcreteSuperAttributeMap[$productId][$attributeName]);
-            }
+            $filteredProductConcreteSuperAttributeMap[$productId] = $filteredSuperAttributes;
         }
 
         return $filteredProductConcreteSuperAttributeMap;
+    }
+
+    /**
+     * @param string[] $attributes
+     * @param string[][] $superAttributeVariations
+     *
+     * @return string[]
+     */
+    protected function filterSingleValueSuperAttributes(
+        array $attributes,
+        array $superAttributeVariations
+    ): array {
+        $filteredSuperAttributes = [];
+        foreach ($attributes as $attributeName => $attributeValue) {
+            if ($this->isSingleValueSuperAttribute($superAttributeVariations, $attributeName)) {
+                continue;
+            }
+
+            $filteredSuperAttributes[$attributeName] = $attributeValue;
+        }
+
+        return $filteredSuperAttributes;
     }
 
     /**
