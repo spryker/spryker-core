@@ -212,5 +212,5 @@ customer-restore-password:
 
 customer-confirmation:
   post:
-    confirmationCode:
+      registrationKey:
       - NotBlank

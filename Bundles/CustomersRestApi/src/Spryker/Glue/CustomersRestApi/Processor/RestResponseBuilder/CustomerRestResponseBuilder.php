@@ -87,7 +87,7 @@ class CustomerRestResponseBuilder implements CustomerRestResponseBuilderInterfac
         $restResponse = $this->mapCustomerErrorsToRestResponse($customerErrorTransfers, $restResponse);
 
         if (!count($restResponse->getErrors())) {
-            $this->addDefaultCustomerConfirmationError($restResponse);
+            $this->addCustomerConfirmationFailedError($restResponse);
         }
 
         return $restResponse;
@@ -111,7 +111,7 @@ class CustomerRestResponseBuilder implements CustomerRestResponseBuilderInterfac
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function addDefaultCustomerConfirmationError(RestResponseInterface $restResponse): RestResponseInterface
+    protected function addCustomerConfirmationFailedError(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CONFIRMATION_FAILED)

@@ -47,12 +47,12 @@ class CustomerActivator implements CustomerActivatorInterface
         /** @var \Generated\Shared\Transfer\RestCustomerConfirmationAttributesTransfer $restCustomerConfirmationAttributesTransfer */
         $restCustomerConfirmationAttributesTransfer = $restRequest->getResource()->getAttributes();
 
-        if (!$restCustomerConfirmationAttributesTransfer->getConfirmationCode()) {
+        if (!$restCustomerConfirmationAttributesTransfer->getRegistrationKey()) {
             return $this->customerRestResponseBuilder->createCustomerConfirmationCodeMissingErrorResponse();
         }
 
         $customerTransfer = (new CustomerTransfer())
-            ->setRegistrationKey($restCustomerConfirmationAttributesTransfer->getConfirmationCode());
+            ->setRegistrationKey($restCustomerConfirmationAttributesTransfer->getRegistrationKey());
 
         $customerResponseTransfer = $this->customerClient->confirmCustomerRegistration($customerTransfer);
 

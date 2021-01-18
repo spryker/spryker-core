@@ -62,7 +62,7 @@
     </transfer>
 
     <transfer name="RestCustomerConfirmationAttributes">
-        <property name="confirmationCode" type="string" restRequestParameter="required"/>
+        <property name="registrationKey" type="string" restRequestParameter="required"/>
     </transfer>
 
     <transfer name="Address">
