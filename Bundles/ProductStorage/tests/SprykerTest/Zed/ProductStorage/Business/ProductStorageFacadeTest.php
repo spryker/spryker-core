@@ -36,8 +36,8 @@ class ProductStorageFacadeTest extends Unit
 
     protected const SUPER_ATTRIBUTE_NAME_PREFIX = 'attribute';
 
-    protected const SUPER_ATTRIBUTE_ONE = 'attribute_15567';
-    protected const SUPER_ATTRIBUTE_TWO = 'attribute_25567';
+    protected const SUPER_ATTRIBUTE_ONE = 'attribute_1';
+    protected const SUPER_ATTRIBUTE_TWO = 'attribute_2';
 
     protected const SUPER_ATTRIBUTE_ONE_VALUE = 'value_1';
     protected const SUPER_ATTRIBUTE_TWO_VALUE = 'value_2';
@@ -72,8 +72,7 @@ class ProductStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function PublishAbstractProductsWithEnabledSingleValueAttributePermutationShouldBuildAttributeVariantsMap(
-    ): void
+    public function PublishAbstractProductsWithEnabledSingleValueAttributePermutationShouldBuildAttributeVariantsMap(): void
     {
         //Arrange
         $this->tester->haveProductManagementAttributeEntity([], [
