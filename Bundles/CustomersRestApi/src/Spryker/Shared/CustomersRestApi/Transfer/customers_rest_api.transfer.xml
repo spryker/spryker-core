@@ -61,6 +61,10 @@
         <property name="confirmPassword" type="string" restRequestParameter="required"/>
     </transfer>
 
+    <transfer name="RestCustomerConfirmationAttributes">
+        <property name="confirmationCode" type="string" restRequestParameter="required"/>
+    </transfer>
+
     <transfer name="Address">
         <property name="uuid" type="string"/>
         <property name="fkCustomer" type="int"/>
@@ -152,6 +156,7 @@
         <property name="isDirty" type="bool"/>
         <property name="isGuest" type="bool"/>
         <property name="gender" type="string"/>
+        <property name="registrationKey" type="string"/>
     </transfer>
 
     <transfer name="CustomerResponse">

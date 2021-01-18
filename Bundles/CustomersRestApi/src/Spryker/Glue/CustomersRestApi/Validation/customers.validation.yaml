@@ -209,3 +209,8 @@ customer-restore-password:
       - Length:
           min: 7
           max: 72
+
+customer-confirmation:
+  post:
+    confirmationCode:
+      - NotBlank

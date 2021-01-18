@@ -7,11 +7,15 @@
 
 namespace Spryker\Glue\CustomersRestApi\Processor\RestResponseBuilder;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCustomersResponseAttributesTransfer;
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class CustomerRestResponseBuilder implements CustomerRestResponseBuilderInterface
 {
@@ -21,11 +25,20 @@ class CustomerRestResponseBuilder implements CustomerRestResponseBuilderInterfac
     protected $restResourceBuilder;
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @var \Spryker\Glue\CustomersRestApi\CustomersRestApiConfig
      */
-    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
-    {
+    protected $customersRestApiConfig;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @param \Spryker\Glue\CustomersRestApi\CustomersRestApiConfig $customersRestApiConfig
+     */
+    public function __construct(
+        RestResourceBuilderInterface $restResourceBuilder,
+        CustomersRestApiConfig $customersRestApiConfig
+    ) {
         $this->restResourceBuilder = $restResourceBuilder;
+        $this->customersRestApiConfig = $customersRestApiConfig;
     }
 
     /**
@@ -51,5 +64,86 @@ class CustomerRestResponseBuilder implements CustomerRestResponseBuilderInterfac
         }
 
         return $customerRestResource;
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createNoContentResponse(): RestResponseInterface
+    {
+        return $this->restResourceBuilder->createRestResponse()
+            ->setStatus(Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\CustomerErrorTransfer[] $customerErrorTransfers
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createCustomerConfirmationErrorResponse(ArrayObject $customerErrorTransfers): RestResponseInterface
+    {
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+
+        $restResponse = $this->mapCustomerErrorsToRestResponse($customerErrorTransfers, $restResponse);
+
+        if (!count($restResponse->getErrors())) {
+            $this->addDefaultCustomerConfirmationError($restResponse);
+        }
+
+        return $restResponse;
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createCustomerConfirmationCodeMissingErrorResponse(): RestResponseInterface
+    {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CONFIRMATION_CODE_MISSING)
+            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CONFIRMATION_CODE_MISSING);
+
+        return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function addDefaultCustomerConfirmationError(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CONFIRMATION_FAILED)
+            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CONFIRMATION_FAILED);
+
+        $restResponse->addError($restErrorMessageTransfer);
+
+        return $restResponse;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\CustomerErrorTransfer[] $customerErrorTransfers
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function mapCustomerErrorsToRestResponse(ArrayObject $customerErrorTransfers, RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $errorMapping = $this->customersRestApiConfig->getErrorMapping();
+
+        foreach ($customerErrorTransfers as $customerErrorTransfer) {
+            if (!isset($errorMapping[$customerErrorTransfer->getMessage()])) {
+                continue;
+            }
+
+            $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+                ->fromArray($errorMapping[$customerErrorTransfer->getMessage()], true);
+
+            $restResponse->addError($restErrorMessageTransfer);
+        }
+
+        return $restResponse;
     }
 }
