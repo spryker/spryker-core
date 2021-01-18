@@ -99,10 +99,10 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      *
      * @return void
      */
-    public function deleteCollectionByCategoryStoreIdEvents(array $eventEntityTransfers): void
+    public function deleteCollectionByCategoryStoreEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
             ->createProductCategoryStorageDeleter()
-            ->deleteCollectionByCategoryStoreIdEvents($eventEntityTransfers);
+            ->deleteCollectionByCategoryStoreEvents($eventEntityTransfers);
     }
 }

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductCategoryStorage\Persistence;
 
-use Orm\Zed\Category\Persistence\Base\SpyCategoryStoreQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery;
@@ -57,14 +56,6 @@ class ProductCategoryStoragePersistenceFactory extends AbstractPersistenceFactor
     public function getCategoryNodePropelQuery(): SpyCategoryNodeQuery
     {
         return $this->getProvidedDependency(ProductCategoryStorageDependencyProvider::PROPEL_QUERY_CATEGORY_NODE);
-    }
-
-    /**
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryStoreQuery
-     */
-    public function getCategoryStorePropelQuery(): SpyCategoryStoreQuery
-    {
-        return $this->getProvidedDependency(ProductCategoryStorageDependencyProvider::PROPEL_QUERY_CATEGORY_STORE);
     }
 
     /**

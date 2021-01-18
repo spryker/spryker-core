@@ -136,8 +136,8 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
      */
     public function writeCollectionByCategoryStorePublishingEvents(array $eventEntityTransfers): void
     {
-        $categoryStoreIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
-        $productAbstractIds = $this->productAbstractReader->getProductAbstractIdsByCategoryStoreIds($categoryStoreIds);
+        $categoryIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
+        $productAbstractIds = $this->productAbstractReader->getProductAbstractIdsByCategoryIds($categoryIds);
 
         $this->publish($productAbstractIds);
     }

@@ -57,10 +57,10 @@ class ProductCategoryStorageDeleter implements ProductCategoryStorageDeleterInte
      *
      * @return void
      */
-    public function deleteCollectionByCategoryStoreIdEvents(array $eventEntityTransfers): void
+    public function deleteCollectionByCategoryStoreEvents(array $eventEntityTransfers): void
     {
-        $categoryStoreIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
-        $productAbstractIds = $this->productAbstractReader->getProductAbstractIdsByCategoryStoreIds($categoryStoreIds);
+        $categoryIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
+        $productAbstractIds = $this->productAbstractReader->getProductAbstractIdsByCategoryIds($categoryIds);
 
         $this->unpublish($productAbstractIds);
     }

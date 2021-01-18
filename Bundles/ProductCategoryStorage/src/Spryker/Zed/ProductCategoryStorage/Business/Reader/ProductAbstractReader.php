@@ -35,19 +35,6 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
     }
 
     /**
-     * @param int[] $categoryStoreIds
-     *
-     * @return int[]
-     */
-    public function getProductAbstractIdsByCategoryStoreIds(array $categoryStoreIds): array
-    {
-        $categoryIds = $this->productCategoryStorageRepository->getCategoryIdsByCategoryStoreIds($categoryStoreIds);
-        $relatedCategoryIds = $this->getRelatedCategoryIds($categoryIds);
-
-        return $this->productCategoryStorageRepository->getProductAbstractIdsByCategoryIds($relatedCategoryIds);
-    }
-
-    /**
      * @param int[] $categoryIds
      *
      * @return int[]

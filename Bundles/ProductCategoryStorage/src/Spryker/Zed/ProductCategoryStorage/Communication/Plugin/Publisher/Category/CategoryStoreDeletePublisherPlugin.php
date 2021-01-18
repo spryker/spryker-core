@@ -32,7 +32,7 @@ class CategoryStoreDeletePublisherPlugin extends AbstractPlugin implements Publi
      */
     public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        $this->getFacade()->deleteCollectionByCategoryStoreIdEvents($eventEntityTransfers);
+        $this->getFacade()->deleteCollectionByCategoryStoreEvents($eventEntityTransfers);
     }
 
     /**

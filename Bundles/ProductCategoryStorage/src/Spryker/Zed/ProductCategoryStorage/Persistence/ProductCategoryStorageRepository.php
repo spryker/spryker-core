@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductCategoryStorage\Persistence;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryStoreTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
@@ -202,21 +201,6 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
             ->getProductCategoryPropelQuery()
             ->filterByFkCategory_In($categoryIds)
             ->select(SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT)
-            ->find()
-            ->getData();
-    }
-
-    /**
-     * @param int[] $categoryStoreIds
-     *
-     * @return int[]
-     */
-    public function getCategoryIdsByCategoryStoreIds(array $categoryStoreIds): array
-    {
-        return $this->getFactory()
-            ->getCategoryStorePropelQuery()
-            ->filterByIdCategoryStore_In($categoryStoreIds)
-            ->select(SpyCategoryStoreTableMap::COL_FK_CATEGORY)
             ->find()
             ->getData();
     }

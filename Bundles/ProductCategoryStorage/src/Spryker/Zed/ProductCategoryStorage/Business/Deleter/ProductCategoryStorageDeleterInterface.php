@@ -14,7 +14,7 @@ interface ProductCategoryStorageDeleterInterface
      *
      * @return void
      */
-    public function deleteCollectionByCategoryStoreIdEvents(array $eventEntityTransfers): void;
+    public function deleteCollectionByCategoryStoreEvents(array $eventEntityTransfers): void;
 
     /**
      * @param int[] $productAbstractIds
