@@ -9,7 +9,6 @@ namespace SprykerTest\Shared\User\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\UserBuilder;
-use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\User\Business\UserFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
@@ -36,8 +35,8 @@ class UserDataHelper extends Module
             $userTransfer->getPassword(),
         );
 
-        if (isset($override[MerchantTransfer::STATUS])) {
-            $userTransfer->setStatus($override[MerchantTransfer::STATUS]);
+        if (isset($override[UserTransfer::STATUS])) {
+            $userTransfer->setStatus($override[UserTransfer::STATUS]);
             $userTransfer = $this->getUserFacade()->updateUser($userTransfer);
         }
 
