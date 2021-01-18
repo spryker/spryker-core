@@ -22,16 +22,15 @@ class ProductCategoryStorageEntityManager extends AbstractEntityManager implemen
      */
     public function deleteProductAbstractCategoryStorages(array $productAbstractIds): void
     {
-        $productAbstractCategoryStorageEntities = $this->getFactory()
-            ->createProductAbstractCategoryStoragePropelQuery()
-            ->filterByFkProductAbstract_In($productAbstractIds)
-            ->find();
-
-        if (!$productAbstractCategoryStorageEntities->count()) {
+        if ($productAbstractIds === []) {
             return;
         }
 
-        $productAbstractCategoryStorageEntities->delete();
+        $this->getFactory()
+            ->createProductAbstractCategoryStoragePropelQuery()
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->find()
+            ->delete();
     }
 
     /**
