@@ -39,3 +39,19 @@ Visibility,Visibility
 Net,Net
 Gross,Gross
 Delete,Delete
+Active,Active
+Inactive,Inactive
+Search,Search
+Status,Status
+"Valid From","Valid From"
+"Valid To","Valid To"
+Validity,Validity
+"Validity Dates & Time","Validity Dates & Time"
+"Enabling an option below will overwrite the existing input.","Enabling an option below will overwrite the existing input."
+"Bulk edit %number% variants","Bulk edit %number% variants"
+"The first date cannot be later than the second one.","The first date cannot be later than the second one."
+"The first date is the same as the second one.","The first date is the same as the second one."
+"The second date cannot be earlier than the first one.","The second date cannot be earlier than the first one."
+From,From
+To,To
+"Bulk edit","Bulk edit"
