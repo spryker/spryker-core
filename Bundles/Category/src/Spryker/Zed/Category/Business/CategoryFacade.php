@@ -80,9 +80,6 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
 
     /**
      * {@inheritDoc}
-     * Specification:
-     * - Updates category store relation of provided category.
-     * - Updates category store relation for all main children nodes of provided category.
      *
      * @api
      *

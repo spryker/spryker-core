@@ -9,9 +9,12 @@ namespace Spryker\Zed\Category\Business\Updater;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryStoreAssignerPluginInterface;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class CategoryRelationshipUpdater implements CategoryRelationshipUpdaterInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\Category\Business\Updater\CategoryNodeUpdaterInterface
      */
@@ -64,6 +67,18 @@ class CategoryRelationshipUpdater implements CategoryRelationshipUpdaterInterfac
      * @return void
      */
     public function updateCategoryRelationships(CategoryTransfer $categoryTransfer): void
+    {
+        $this->getTransactionHandler()->handleTransaction(function () use ($categoryTransfer) {
+            $this->executeUpdateCategoryRelationshipsTransaction($categoryTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    protected function executeUpdateCategoryRelationshipsTransaction(CategoryTransfer $categoryTransfer): void
     {
         $this->executeCategoryRelationUpdatePlugins($categoryTransfer);
 

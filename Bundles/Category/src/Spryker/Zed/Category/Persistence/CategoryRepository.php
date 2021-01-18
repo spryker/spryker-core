@@ -449,21 +449,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      */
     public function isParentCategoryHasRelationToStore(int $idCategory, int $idStore): bool
     {
-        $q = $this->getFactory()->createCategoryNodeQuery()
-            ->filterByFkCategory($idCategory)
-            ->useParentCategoryNodeQuery('parentCategory', Criteria::LEFT_JOIN)
-            ->useCategoryQuery(null, Criteria::LEFT_JOIN)
-            ->useSpyCategoryStoreQuery(null, Criteria::LEFT_JOIN)
-            ->filterByFkStore($idStore)
-            ->endUse()
-            ->endUse()
-            ->endUse()
-            ->_or()
-            ->where(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE . ' IS NULL');
-
-        $p = [];
-        $sql = $q->addSelfSelectColumns()->createSelectSql($p);
-
         return $this->getFactory()->createCategoryNodeQuery()
             ->filterByFkCategory($idCategory)
             ->useParentCategoryNodeQuery('parentCategory', Criteria::LEFT_JOIN)

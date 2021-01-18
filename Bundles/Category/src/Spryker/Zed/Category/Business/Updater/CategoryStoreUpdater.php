@@ -76,11 +76,6 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
         $this->getTransactionHandler()->handleTransaction(function () use ($idCategory, $newStoreAssignment, $currentStoreAssignment) {
             $this->executeUpdateCategoryStoreRelationWithMainChildrenPropagationTransaction($idCategory, $newStoreAssignment, $currentStoreAssignment);
         });
-
-        $this->eventFacade->trigger(
-            CategoryEvents::CATEGORY_TREE_PUBLISH,
-            (new CategoryTransfer())->setIdCategory($idCategory)
-        );
     }
 
     /**
@@ -117,6 +112,8 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
         $this->updateCategoryStoreRelations($idCategory, $storeIdsToAdd, $storeIdsToDelete);
 
         if (!$categoryTransfer->getNodeCollection()) {
+            $this->triggerCategoryTreePublishEvent($idCategory);
+
             return;
         }
 
@@ -125,6 +122,8 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
                 $this->updateMainChildCategoryStoreRelation($nodeTransfer->getChildrenNodes(), $storeIdsToAdd, $storeIdsToDelete);
             }
         }
+
+        $this->triggerCategoryTreePublishEvent($idCategory);
     }
 
     /**
@@ -200,5 +199,18 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
 
             $this->updateMainChildCategoryStoreRelation($nodeTransfer->getChildrenNodes(), $storeIdsToAdd, $storeIdsToDelete);
         }
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    protected function triggerCategoryTreePublishEvent(int $idCategory): void
+    {
+        $this->eventFacade->trigger(
+            CategoryEvents::CATEGORY_TREE_PUBLISH,
+            (new CategoryTransfer())->setIdCategory($idCategory)
+        );
     }
 }
