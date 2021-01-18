@@ -8,8 +8,8 @@
 var config = {
     slotTableColumnsMapping: {
         idSlot: 0,
-        slotName: 1
-    }
+        slotName: 1,
+    },
 };
 
 var isInitialDraw = true,
@@ -51,9 +51,13 @@ function addSlotTableDrawHandler() {
 
 function loadSlotProductsTable() {
     var $slotProductsTable = $slotProductsTableWrapper.find('.dataTables_scrollBody table').first(),
-        slotProductsTableLoadUrl = '/configurable-bundle-gui/template/slot-products-table?id-configurable-bundle-template-slot=';
+        slotProductsTableLoadUrl =
+            '/configurable-bundle-gui/template/slot-products-table?id-configurable-bundle-template-slot=';
 
-    $slotProductsTable.DataTable().ajax.url(slotProductsTableLoadUrl + selectedIdSlot).load();
+    $slotProductsTable
+        .DataTable()
+        .ajax.url(slotProductsTableLoadUrl + selectedIdSlot)
+        .load();
 }
 
 function markSelectedRow($row) {
@@ -105,5 +109,5 @@ function updateSlotProductsTable(row, $slotTable) {
 }
 
 module.exports = {
-    init: init
+    init: init,
 };

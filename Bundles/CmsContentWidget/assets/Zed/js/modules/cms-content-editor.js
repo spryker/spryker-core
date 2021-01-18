@@ -12,8 +12,7 @@ const editorConfig = require('ZedGuiEditorConfiguration');
  *
  * @constructor
  */
-var CmsContentEditor = function CmsContentEditor(options)
-{
+var CmsContentEditor = function CmsContentEditor(options) {
     this.dropdownItems = [];
 
     $.extend(this, options);
@@ -24,8 +23,7 @@ var CmsContentEditor = function CmsContentEditor(options)
  *
  * @returns array
  */
-CmsContentEditor.prototype.getEditorConfig = function(baseConfig = '')
-{
+CmsContentEditor.prototype.getEditorConfig = function (baseConfig = '') {
     baseConfig = editorConfig.getGlobalConfig(baseConfig);
 
     if (!baseConfig) {
@@ -33,12 +31,10 @@ CmsContentEditor.prototype.getEditorConfig = function(baseConfig = '')
     }
 
     const cmsContentWidgetConfig = {
-        toolbar: [
-            ['insert', ['cmsContentWidget']]
-        ],
+        toolbar: [['insert', ['cmsContentWidget']]],
         buttons: {
-            cmsContentWidget : this.createCmsContentWidgetButton(this.dropdownItems)
-        }
+            cmsContentWidget: this.createCmsContentWidgetButton(this.dropdownItems),
+        },
     };
 
     return editorConfig.mergeConfigs(baseConfig, cmsContentWidgetConfig);
@@ -49,8 +45,7 @@ CmsContentEditor.prototype.getEditorConfig = function(baseConfig = '')
  *
  * @returns {Function}
  */
-CmsContentEditor.prototype.createCmsContentWidgetButton = function (cmsContentWidgetDropDownItems)
-{
+CmsContentEditor.prototype.createCmsContentWidgetButton = function (cmsContentWidgetDropDownItems) {
     return function (context) {
         var ui = $.summernote.ui;
 
@@ -58,22 +53,24 @@ CmsContentEditor.prototype.createCmsContentWidgetButton = function (cmsContentWi
             ui.button({
                 contents: 'content widget <i class="fa fa-caret-down" aria-hidden="true"></i>',
                 data: {
-                    toggle: 'dropdown'
-                }
+                    toggle: 'dropdown',
+                },
             }),
             ui.dropdown({
                 items: cmsContentWidgetDropDownItems,
                 callback: function (items) {
-                    $(items).find('li a').on('click', function(event) {
-                        context.invoke("editor.insertText", " {{ "  + $(this).html() + "(['identifier']) }} ");
-                        event.preventDefault();
-                    })
-                }
-            })
+                    $(items)
+                        .find('li a')
+                        .on('click', function (event) {
+                            context.invoke('editor.insertText', ' {{ ' + $(this).html() + "(['identifier']) }} ");
+                            event.preventDefault();
+                        });
+                },
+            }),
         ]);
 
         return button.render();
-    }
+    };
 };
 
 module.exports = CmsContentEditor;
