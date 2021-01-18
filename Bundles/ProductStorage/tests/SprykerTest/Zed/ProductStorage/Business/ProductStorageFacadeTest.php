@@ -47,7 +47,6 @@ class ProductStorageFacadeTest extends Unit
     protected const ATTRIBUTE_VARIANTS_KEY = 'attribute_variants';
     protected const DATA_KEY = 'data';
 
-
     /**
      * @var \SprykerTest\Zed\ProductStorage\ProductStorageBusinessTester
      */
@@ -72,7 +71,7 @@ class ProductStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function PublishAbstractProductsWithEnabledSingleValueAttributePermutationShouldBuildAttributeVariantsMap(): void
+    public function testPublishAbstractProductsWithEnabledSingleValueAttributePermutationShouldBuildAttributeVariantsMap(): void
     {
         //Arrange
         $this->tester->haveProductManagementAttributeEntity([], [
@@ -121,8 +120,7 @@ class ProductStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testPublishAbstractProductsWithDisabledSingleValueAttributePermutationShouldBuildAttributeVariantsMap(
-    ): void
+    public function testPublishAbstractProductsWithDisabledSingleValueAttributePermutationShouldBuildAttributeVariantsMap(): void
     {
         //Arrange
         $this->tester->haveProductManagementAttributeEntity([], [
@@ -210,12 +208,14 @@ class ProductStorageFacadeTest extends Unit
      *
      * @return \Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface
      */
-    protected function getProductStorageFacade(bool $enableSingleValueAttributePermutation = true
-    ): ProductStorageFacadeInterface {
-        $configMock = $this->tester->mockConfigMethod('isPermutationForSingleValueProductAttributesEnabled',
+    protected function getProductStorageFacade(bool $enableSingleValueAttributePermutation = true): ProductStorageFacadeInterface
+    {
+        $configMock = $this->tester->mockConfigMethod(
+            'isPermutationForSingleValueProductAttributesEnabled',
             function () use ($enableSingleValueAttributePermutation) {
                 return $enableSingleValueAttributePermutation;
-            });
+            }
+        );
 
         $productStorageBusinessFactory = new ProductStorageBusinessFactory();
         $productStorageBusinessFactory->setConfig($configMock);
@@ -239,21 +239,21 @@ class ProductStorageFacadeTest extends Unit
         return [
             'attribute_1:value_1' => [
                 'attribute_2:value_2' => [
-                    "id_product_concrete" => $productConcreteId
+                    'id_product_concrete' => $productConcreteId,
                 ],
                 'attribute_2:value_3' => [
-                    "id_product_concrete" => $productConcreteTwoId
-                ]
+                    'id_product_concrete' => $productConcreteTwoId,
+                ],
             ],
             'attribute_2:value_2' => [
                 'attribute_1:value_1' => [
-                    'id_product_concrete' => $productConcreteId
-                ]
+                    'id_product_concrete' => $productConcreteId,
+                ],
             ],
             'attribute_2:value_3' => [
                 'attribute_1:value_1' => [
-                    'id_product_concrete' => $productConcreteTwoId
-                ]
+                    'id_product_concrete' => $productConcreteTwoId,
+                ],
             ],
         ];
     }
@@ -269,11 +269,11 @@ class ProductStorageFacadeTest extends Unit
         int $productConcreteTwoId
     ): array {
         return [
-            "attribute_2:value_2" => [
-                "id_product_concrete" => $productConcreteId
+            'attribute_2:value_2' => [
+                'id_product_concrete' => $productConcreteId,
             ],
-            "attribute_2:value_3" => [
-                "id_product_concrete" => $productConcreteTwoId
+            'attribute_2:value_3' => [
+                'id_product_concrete' => $productConcreteTwoId,
             ],
         ];
     }

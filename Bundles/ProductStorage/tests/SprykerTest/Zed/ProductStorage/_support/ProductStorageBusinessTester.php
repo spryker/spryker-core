@@ -8,8 +8,6 @@
 namespace SprykerTest\Zed\ProductStorage;
 
 use Codeception\Actor;
-use Spryker\Zed\ProductStorage\Business\ProductStorageBusinessFactory;
-use Spryker\Zed\ProductStorage\Business\ProductStorageFacade;
 
 /**
  * Inherited Methods
