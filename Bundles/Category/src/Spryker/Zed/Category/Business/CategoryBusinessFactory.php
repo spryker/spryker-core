@@ -109,7 +109,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createCategoryRelationshipCreator(),
             $this->getEventFacade(),
-            $this->getCategoryPostCreatePlugins()
+            $this->getCategoryCreateAfterPlugins()
         );
     }
 
@@ -165,7 +165,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createCategoryRelationshipUpdater(),
             $this->getEventFacade(),
-            $this->getCategoryPostUpdatePlugins()
+            $this->getCategoryUpdateAfterPlugins()
         );
     }
 
@@ -179,7 +179,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->createCategoryUrlUpdater(),
             $this->createCategoryAttributeUpdater(),
             $this->getCategoryStoreAssignerPlugin(),
-            $this->getRelationUpdatePluginStack()
+            $this->getCategoryRelationUpdatePlugins()
         );
     }
 
@@ -272,8 +272,8 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->createCategoryAttribute(),
             $this->createCategoryUrl(),
             $this->createCategoryExtraParents(),
-            $this->getRelationDeletePluginStack(),
-            $this->getRelationUpdatePluginStack(),
+            $this->getCategoryRelationDeletePlugins(),
+            $this->getCategoryRelationUpdatePlugins(),
             $this->createPluginExecutor(),
             $this->getEventFacade()
         );
@@ -512,9 +512,9 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     public function createPluginExecutor(): CategoryPluginExecutorInterface
     {
         return new CategoryPluginExecutor(
-            $this->getCategoryPostCreatePlugins(),
-            $this->getCategoryPostUpdatePlugins(),
-            $this->getCategoryPostReadPlugins()
+            $this->getCategoryCreateAfterPlugins(),
+            $this->getCategoryUpdateAfterPlugins(),
+            $this->getCategoryTransferExpanderPlugins()
         );
     }
 
@@ -539,7 +539,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->createCategoryAttributeCreator(),
             $this->createCategoryUrlCreator(),
             $this->createCategoryStoreCreator(),
-            $this->getRelationUpdatePluginStack()
+            $this->getCategoryRelationUpdatePlugins()
         );
     }
 
@@ -553,7 +553,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->createCategoryUrlDeleter(),
             $this->createCategoryNodeDeleter(),
             $this->createCategoryStoreDeleter(),
-            $this->getRelationDeletePluginStack()
+            $this->getCategoryRelationDeletePlugins()
         );
     }
 
@@ -570,7 +570,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Graph\Communication\Plugin\GraphPlugin
      */
-    public function getGraph(): GraphPlugin
+    public function getGraphPlugin(): GraphPlugin
     {
         return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_GRAPH);
     }
@@ -610,7 +610,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationDeletePluginInterface[]
      */
-    public function getRelationDeletePluginStack(): array
+    public function getCategoryRelationDeletePlugins(): array
     {
         return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_STACK_RELATION_DELETE);
     }
@@ -618,7 +618,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationUpdatePluginInterface[]
      */
-    public function getRelationUpdatePluginStack(): array
+    public function getCategoryRelationUpdatePlugins(): array
     {
         return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_STACK_RELATION_UPDATE);
     }
@@ -634,7 +634,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryCreateAfterPluginInterface[]
      */
-    public function getCategoryPostCreatePlugins(): array
+    public function getCategoryCreateAfterPlugins(): array
     {
         return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_CATEGORY_POST_CREATE);
     }
@@ -642,7 +642,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUpdateAfterPluginInterface[]
      */
-    public function getCategoryPostUpdatePlugins(): array
+    public function getCategoryUpdateAfterPlugins(): array
     {
         return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_CATEGORY_POST_UPDATE);
     }
@@ -650,7 +650,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryTransferExpanderPluginInterface[]
      */
-    public function getCategoryPostReadPlugins(): array
+    public function getCategoryTransferExpanderPlugins(): array
     {
         return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_CATEGORY_POST_READ);
     }
