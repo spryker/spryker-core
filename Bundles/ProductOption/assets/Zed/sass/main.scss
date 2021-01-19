@@ -3,26 +3,27 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-.form-product-option-row, .form-product-option-translation-row {
-  .form-group {
-    vertical-align: top;
-    margin-top:5px;
-    margin-bottom:5px;
-  }
+.form-product-option-row,
+.form-product-option-translation-row {
+    .form-group {
+        vertical-align: top;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
 
-  margin: 0px 0px 30px 0px;
+    margin: 0px 0px 30px 0px;
 }
 
 .select-all-btn {
-  .active {
-    font-weight: bold;
-  }
+    .active {
+        font-weight: bold;
+    }
 }
 
 table.dataTable.gui-table-data {
-  width: 100% !important;
+    width: 100% !important;
 }
 
 .copy-language {
-  display:block;
+    display: block;
 }

@@ -7,5 +7,4 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation, Input } from '@a
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
 })
-export class DashboardComponent {
-}
+export class DashboardComponent {}
