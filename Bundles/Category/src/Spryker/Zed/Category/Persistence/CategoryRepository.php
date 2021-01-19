@@ -9,6 +9,7 @@ namespace Spryker\Zed\Category\Persistence;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeFilterTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
@@ -392,6 +393,129 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         return $this->getFactory()
             ->createCategoryNodeMapper()
             ->mapNodeCollection($categoryNodeQuery->find(), new NodeCollectionTransfer());
+    }
+
+    /**
+     * @module Locale
+     * @module Store
+     * @module Url
+     *
+     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeTransfer[]
+     */
+    public function getCategoryNodesWithRelativeNodesByCriteria(
+        CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
+    ): array {
+        $categoryNodeIds = $categoryNodeCriteriaTransfer->requireCategoryNodeIds()->getCategoryNodeIds();
+
+        if ($categoryNodeIds === []) {
+            return [];
+        }
+
+        $categoryNodeIdsImploded = implode(', ', $categoryNodeIds);
+
+        $categoryNodeQuery = $this->getFactory()
+            ->createCategoryNodeQuery()
+            ->leftJoinClosureTable(SpyCategoryClosureTableTableMap::TABLE_NAME)
+            ->addJoinCondition(
+                SpyCategoryClosureTableTableMap::TABLE_NAME,
+                sprintf('%s = %s', SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT, SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE),
+                null,
+                Criteria::LOGICAL_OR
+            )
+            ->leftJoinWithSpyUrl()
+            ->leftJoinWithCategory()
+            ->useCategoryQuery(null, Criteria::LEFT_JOIN)
+                ->leftJoinWithCategoryTemplate()
+                ->leftJoinWithAttribute()
+                ->useAttributeQuery(null, Criteria::LEFT_JOIN)
+                    ->leftJoinWithLocale()
+                ->endUse()
+                ->leftJoinSpyCategoryStore()
+                ->useSpyCategoryStoreQuery(null, Criteria::LEFT_JOIN)
+                    ->leftJoinWithSpyStore()
+                ->endUse()
+            ->endUse()
+            ->where(sprintf('%s IN (%s)', SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT, $categoryNodeIdsImploded))
+            ->_or()
+            ->where(sprintf('%s IN (%s)', SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE, $categoryNodeIdsImploded))
+            ->orderByNodeOrder(Criteria::DESC)
+            ->distinct();
+
+        if ($categoryNodeCriteriaTransfer->getIsActive() !== null) {
+            $categoryNodeQuery->useCategoryQuery(null, Criteria::LEFT_JOIN)
+                ->filterByIsActive($categoryNodeCriteriaTransfer->getIsActive())
+                ->endUse();
+        }
+
+        if ($categoryNodeCriteriaTransfer->getIsInMenu() !== null) {
+            $categoryNodeQuery->useCategoryQuery(null, Criteria::LEFT_JOIN)
+                ->filterByIsInMenu($categoryNodeCriteriaTransfer->getIsInMenu())
+                ->endUse();
+        }
+
+        $categoryNodeEntities = $categoryNodeQuery->find()->toKeyIndex();
+
+        if ($categoryNodeEntities === []) {
+            return [];
+        }
+
+        return $this->getFactory()
+            ->createCategoryMapper()
+            ->mapCategoryNodeEntitiesToNodeTransfersIndexedByIdCategoryNode($categoryNodeEntities, []);
+    }
+
+    /**
+     * @module Locale
+     * @module Store
+     * @module Url
+     *
+     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
+     */
+    public function getCategoryNodeCollectionByCriteria(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer
+    {
+        $categoryNodeQuery = $this->getFactory()
+            ->createCategoryNodeQuery();
+
+        if ($categoryNodeCriteriaTransfer->getCategoryNodeIds()) {
+            $categoryNodeQuery->filterByIdCategoryNode_In($categoryNodeCriteriaTransfer->getCategoryNodeIds());
+        }
+
+        if ($categoryNodeCriteriaTransfer->getIsActive() !== null) {
+            $categoryNodeQuery
+                ->useCategoryQuery(null, Criteria::LEFT_JOIN)
+                    ->filterByIsActive($categoryNodeCriteriaTransfer->getIsActive())
+                ->endUse();
+        }
+
+        if ($categoryNodeCriteriaTransfer->getIsRoot() !== null) {
+            $categoryNodeQuery->filterByIsRoot($categoryNodeCriteriaTransfer->getIsRoot());
+        }
+
+        $categoryNodeQuery
+            ->leftJoinWithSpyUrl()
+            ->leftJoinWithCategory()
+            ->useCategoryQuery(null, Criteria::LEFT_JOIN)
+                ->leftJoinWithCategoryTemplate()
+                ->leftJoinWithAttribute()
+                ->useAttributeQuery(null, Criteria::LEFT_JOIN)
+                    ->leftJoinWithLocale()
+                ->endUse()
+                ->leftJoinSpyCategoryStore()
+                ->useSpyCategoryStoreQuery(null, Criteria::LEFT_JOIN)
+                    ->leftJoinWithSpyStore()
+                ->endUse()
+            ->endUse();
+
+        return $this->getFactory()
+            ->createCategoryMapper()
+            ->mapCategoryNodeEntitiesToNodeCollectionTransferWithCategoryRelation(
+                $categoryNodeQuery->find(),
+                new NodeCollectionTransfer()
+            );
     }
 
     /**

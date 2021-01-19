@@ -7,14 +7,20 @@
 
 namespace Spryker\Zed\CategoryStorage\Persistence;
 
+use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\CategoryStorage\Persistence\SpyCategoryNodeStorageQuery;
 use Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorageQuery;
 use Spryker\Zed\CategoryStorage\CategoryStorageDependencyProvider;
+use Spryker\Zed\CategoryStorage\Dependency\Service\CategoryStorageToUtilSanitizeServiceInterface;
+use Spryker\Zed\CategoryStorage\Persistence\Propel\Mapper\CategoryNodeStorageMapper;
+use Spryker\Zed\CategoryStorage\Persistence\Propel\Mapper\CategoryTreeStorageMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\CategoryStorage\CategoryStorageConfig getConfig()
  * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageRepositoryInterface getRepository()
+ * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageEntityManagerInterface getEntityManager()
  */
 class CategoryStoragePersistenceFactory extends AbstractPersistenceFactory
 {
@@ -35,11 +41,19 @@ class CategoryStoragePersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\CategoryStorage\Dependency\QueryContainer\CategoryStorageToLocaleQueryContainerInterface
+     * @return \Spryker\Zed\CategoryStorage\Persistence\Propel\Mapper\CategoryNodeStorageMapper
      */
-    public function getLocaleQueryContainer()
+    public function createCategoryNodeStorageMapper(): CategoryNodeStorageMapper
     {
-        return $this->getProvidedDependency(CategoryStorageDependencyProvider::QUERY_CONTAINER_LOCALE);
+        return new CategoryNodeStorageMapper($this->getUtilSanitizeService());
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryStorage\Persistence\Propel\Mapper\CategoryTreeStorageMapper
+     */
+    public function createCategoryTreeStorageMapper(): CategoryTreeStorageMapper
+    {
+        return new CategoryTreeStorageMapper($this->getUtilSanitizeService());
     }
 
     /**
@@ -48,5 +62,21 @@ class CategoryStoragePersistenceFactory extends AbstractPersistenceFactory
     public function getCategoryQueryContainer()
     {
         return $this->getProvidedDependency(CategoryStorageDependencyProvider::QUERY_CONTAINER_CATEGORY);
+    }
+
+    /**
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function getCategoryNodeQuery(): SpyCategoryNodeQuery
+    {
+        return $this->getProvidedDependency(CategoryStorageDependencyProvider::PROPEL_QUERY_CATEGORY_NODE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryStorage\Dependency\Service\CategoryStorageToUtilSanitizeServiceInterface
+     */
+    public function getUtilSanitizeService(): CategoryStorageToUtilSanitizeServiceInterface
+    {
+        return $this->getProvidedDependency(CategoryStorageDependencyProvider::SERVICE_UTIL_SANITIZE);
     }
 }

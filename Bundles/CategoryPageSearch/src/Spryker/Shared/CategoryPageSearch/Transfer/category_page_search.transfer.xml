@@ -16,6 +16,45 @@
 
     <transfer name="Store">
         <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Node">
+        <property name="idCategoryNode" type="int"/>
+        <property name="fkCategory" type="int"/>
+        <property name="category" type="Category"/>
+    </transfer>
+
+    <transfer name="Category">
+        <property name="isActive" type="bool"/>
+        <property name="isSearchable" type="bool"/>
+        <property name="localizedAttributes" type="CategoryLocalizedAttributes[]" singular="localizedAttributes"/>
+        <property name="storeRelation" type="StoreRelation"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="stores" type="Store[]" singular="stores"/>
+    </transfer>
+
+    <transfer name="CategoryLocalizedAttributes">
+        <property name="locale" type="Locale"/>
+        <property name="name" type="string"/>
+        <property name="url" type="string"/>
+        <property name="metaTitle" type="string"/>
+        <property name="metaDescription" type="string"/>
+        <property name="metaKeywords" type="string"/>
+    </transfer>
+
+    <transfer name="CategoryNodePageSearch">
+        <property name="idCategoryNode" type="int"/>
+        <property name="node" type="Node"/>
+        <property name="data" type="array" singular="data"/>
+        <property name="locale" type="string"/>
+        <property name="store" type="string"/>
+    </transfer>
+
+    <transfer name="NodeCollection">
+        <property name="nodes" type="Node[]" singular="node"/>
     </transfer>
 
 </transfers>

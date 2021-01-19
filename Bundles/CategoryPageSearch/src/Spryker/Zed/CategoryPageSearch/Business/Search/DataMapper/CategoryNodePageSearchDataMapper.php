@@ -7,123 +7,139 @@
 
 namespace Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper;
 
+use ArrayObject;
 use Generated\Shared\Search\PageIndexMap;
-use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Shared\Kernel\Store;
+use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
 
 class CategoryNodePageSearchDataMapper implements CategoryNodePageSearchDataMapperInterface
 {
     protected const TYPE_CATEGORY = 'category';
 
-    protected const KEY_SPY_CATEGORY = 'spy_category';
-    protected const KEY_SPY_CATEGORY_ATTRIBUTES = 'spy_category_attributes';
-    protected const KEY_IS_ACTIVE = 'is_active';
-    protected const KEY_IS_SEARCHABLE = 'is_searchable';
     protected const KEY_ID_CATEGORY = 'id_category';
     protected const KEY_NAME = 'name';
-    protected const KEY_SPY_URLS = 'spy_urls';
     protected const KEY_URL = 'url';
-    protected const KEY_FK_CATEGORY = 'fk_category';
     protected const KEY_TYPE = 'type';
-    protected const KEY_META_TITLE = 'meta_title';
-    protected const KEY_META_KEYWORDS = 'meta_keywords';
-    protected const KEY_META_DESCRIPTION = 'meta_description';
 
     /**
-     * @param array $data
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
+     * @param string $storeName
+     * @param string $localeName
      *
-     * @return array
+     * @return array<string, mixed>
      */
-    public function mapCategoryNodeDataToSearchData(array $data, LocaleTransfer $localeTransfer): array
-    {
+    public function mapNodeTransferToCategoryNodePageSearchDataForStoreAndLocale(
+        NodeTransfer $nodeTransfer,
+        string $storeName,
+        string $localeName
+    ): array {
+        $categoryLocalizedAttributesTransfer = $this->findCategoryLocalizedAttributesTransferForLocale(
+            $nodeTransfer->getCategoryOrFail()->getLocalizedAttributes(),
+            $localeName
+        );
+
         return [
-            PageIndexMap::IS_ACTIVE => $data[static::KEY_SPY_CATEGORY][static::KEY_IS_ACTIVE] && $data[static::KEY_SPY_CATEGORY][static::KEY_IS_SEARCHABLE],
-            PageIndexMap::STORE => Store::getInstance()->getStoreName(),
-            PageIndexMap::LOCALE => $localeTransfer->getLocaleName(),
+            PageIndexMap::IS_ACTIVE => $nodeTransfer->getCategoryOrFail()->getIsActive() && $nodeTransfer->getCategoryOrFail()->getIsSearchable(),
+            PageIndexMap::STORE => $storeName,
+            PageIndexMap::LOCALE => $localeName,
             PageIndexMap::TYPE => static::TYPE_CATEGORY,
-            PageIndexMap::SEARCH_RESULT_DATA => $this->getSearchResultData($data),
-            PageIndexMap::FULL_TEXT_BOOSTED => $this->getFullTextBoostedData($data),
-            PageIndexMap::FULL_TEXT => $this->getFullTextData($data),
-            PageIndexMap::SUGGESTION_TERMS => $this->getSuggestionTermsData($data),
-            PageIndexMap::COMPLETION_TERMS => $this->getCompletionTermsData($data),
+            PageIndexMap::SEARCH_RESULT_DATA => $this->getSearchResultData($nodeTransfer, $categoryLocalizedAttributesTransfer),
+            PageIndexMap::FULL_TEXT_BOOSTED => $this->getFullTextBoostedData($categoryLocalizedAttributesTransfer),
+            PageIndexMap::FULL_TEXT => $this->getFullTextData($categoryLocalizedAttributesTransfer),
+            PageIndexMap::SUGGESTION_TERMS => $this->getSuggestionTermsData($categoryLocalizedAttributesTransfer),
+            PageIndexMap::COMPLETION_TERMS => $this->getCompletionTermsData($categoryLocalizedAttributesTransfer),
         ];
     }
 
     /**
-     * @param array $data
+     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
+     * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer|null $categoryLocalizedAttributesTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
-    protected function getSearchResultData(array $data): array
-    {
-        return [
-            static::KEY_ID_CATEGORY => $data[static::KEY_FK_CATEGORY],
-            static::KEY_NAME => $this->getCategoryAttribute($data)[static::KEY_NAME],
-            static::KEY_URL => $data[static::KEY_SPY_URLS][0][static::KEY_URL],
+    protected function getSearchResultData(
+        NodeTransfer $nodeTransfer,
+        ?CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer = null
+    ): array {
+        $searchResultData = [
+            static::KEY_ID_CATEGORY => $nodeTransfer->getFkCategory(),
             static::KEY_TYPE => static::TYPE_CATEGORY,
         ];
+
+        if (!$categoryLocalizedAttributesTransfer) {
+            return $searchResultData;
+        }
+
+        $searchResultData[static::KEY_NAME] = $categoryLocalizedAttributesTransfer->getName();
+        $searchResultData[static::KEY_URL] = $categoryLocalizedAttributesTransfer->getUrl();
+
+        return $searchResultData;
     }
 
     /**
-     * @param array $data
+     * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer|null $categoryLocalizedAttributesTransfer
      *
-     * @return array
+     * @return string[]
      */
-    protected function getFullTextBoostedData(array $data): array
+    protected function getFullTextBoostedData(?CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer): array
     {
+        return $categoryLocalizedAttributesTransfer ? [$categoryLocalizedAttributesTransfer->getName()] : [''];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer|null $categoryLocalizedAttributesTransfer
+     *
+     * @return string[]
+     */
+    protected function getFullTextData(?CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer): array
+    {
+        if (!$categoryLocalizedAttributesTransfer) {
+            return [''];
+        }
+
         return [
-            $this->getCategoryAttribute($data)[static::KEY_NAME],
+            $categoryLocalizedAttributesTransfer->getMetaTitle() ?? '',
+            $categoryLocalizedAttributesTransfer->getMetaKeywords() ?? '',
+            $categoryLocalizedAttributesTransfer->getMetaDescription() ?? '',
         ];
     }
 
     /**
-     * @param array $data
+     * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer|null $categoryLocalizedAttributesTransfer
      *
-     * @return array
+     * @return string[]
      */
-    protected function getFullTextData(array $data): array
+    protected function getSuggestionTermsData(?CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer): array
     {
-        $categoryAttribute = $this->getCategoryAttribute($data);
-
-        return [
-            $categoryAttribute[static::KEY_META_TITLE] ?? '',
-            $categoryAttribute[static::KEY_META_KEYWORDS] ?? '',
-            $categoryAttribute[static::KEY_META_DESCRIPTION] ?? '',
-        ];
+        return $categoryLocalizedAttributesTransfer ? [$categoryLocalizedAttributesTransfer->getName()] : [''];
     }
 
     /**
-     * @param array $data
+     * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer|null $categoryLocalizedAttributesTransfer
      *
-     * @return array
+     * @return string[]
      */
-    protected function getSuggestionTermsData(array $data): array
+    protected function getCompletionTermsData(?CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer): array
     {
-        return [
-            $this->getCategoryAttribute($data)[static::KEY_NAME],
-        ];
+        return $categoryLocalizedAttributesTransfer ? [$categoryLocalizedAttributesTransfer->getName()] : [''];
     }
 
     /**
-     * @param array $data
+     * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer[]|\ArrayObject $categoryLocalizedAttributesTransfers
+     * @param string $localeName
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer|null
      */
-    protected function getCompletionTermsData(array $data): array
-    {
-        return [
-            $this->getCategoryAttribute($data)[static::KEY_NAME],
-        ];
-    }
+    protected function findCategoryLocalizedAttributesTransferForLocale(
+        ArrayObject $categoryLocalizedAttributesTransfers,
+        string $localeName
+    ): ?CategoryLocalizedAttributesTransfer {
+        foreach ($categoryLocalizedAttributesTransfers as $categoryLocalizedAttributesTransfer) {
+            if ($localeName === $categoryLocalizedAttributesTransfer->getLocale()->getLocaleName()) {
+                return $categoryLocalizedAttributesTransfer;
+            }
+        }
 
-    /**
-     * @param array $data
-     *
-     * @return array
-     */
-    protected function getCategoryAttribute(array $data): array
-    {
-        return reset($data[static::KEY_SPY_CATEGORY][static::KEY_SPY_CATEGORY_ATTRIBUTES]);
+        return null;
     }
 }
