@@ -15,44 +15,12 @@ interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterf
     /**
      * @api
      *
-     * @deprecated Will be removed with next major release.
-     *
-     * @param array $localeNames
-     *
-     * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
-     */
-    public function queryLocalesWithLocaleNames(array $localeNames);
-
-    /**
-     * @api
-     *
      * @param array $categoryNodeIds
      * @param int $idLocale
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryCategoryNodeTree(array $categoryNodeIds, $idLocale);
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed with next major release.
-     *
-     * @param int[] $categoryNodeIds
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryWholeCategoryNodeTree(array $categoryNodeIds, int $idLocale): SpyCategoryNodeQuery;
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed with next major release.
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryCategoryRoot();
 
     /**
      * @api

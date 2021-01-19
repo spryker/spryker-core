@@ -13,62 +13,58 @@ interface CategoryStorageClientInterface
 {
     /**
      * Specification:
-     *  - Return category node storage data by locale name.
-     *  - Forward compatibility (from next major): only categories assigned with passed $storeName will be returned.
+     *  - Return category node storage data by locale name and store name.
      *
      * @api
      *
      * @param string $locale
-     * @param string|null $storeName the parameter is going to be required in the next major.
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]|\ArrayObject
      */
-    public function getCategories($locale, ?string $storeName = null);
+    public function getCategories($locale, string $storeName);
 
     /**
      * Specification:
-     *  - Return category node storage data by id category node and locale name.
-     *  - Forward compatibility (from next major): only category nodes assigned with passed $storeName will be returned.
+     *  - Return category node storage data by id category node, locale name and store name.
      *
      * @api
      *
      * @param int $idCategoryNode
      * @param string $localeName
-     * @param string|null $storeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer
      */
-    public function getCategoryNodeById($idCategoryNode, $localeName, ?string $storeName = null);
+    public function getCategoryNodeById($idCategoryNode, $localeName, string $storeName);
 
     /**
      * Specification:
-     * - Returns category nodes storage data by array of id category node and locale name.
-     * - Forward compatibility (from next major): only category nodes assigned with passed $storeName will be returned.
+     * - Returns category nodes storage data by array of id category node, locale name and store name.
      *
      * @api
      *
      * @param int[] $categoryNodeIds
      * @param string $localeName
-     * @param string|null $storeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
      */
-    public function getCategoryNodeByIds(array $categoryNodeIds, string $localeName, ?string $storeName = null): array;
+    public function getCategoryNodeByIds($categoryNodeIds, $localeName, string $storeName): array;
 
     /**
      * Specification:
      * - Returns category nodes with the `docCount` relevant for the result set.
-     * - Retrieves category tree from storage by locale name.
+     * - Retrieves category tree from storage by locale name and store name.
      * - Recursively merges each category node in the category tree with `docCount` taken from the `ResultSet` aggregations.
-     * - Forward compatibility (from next major): only categories assigned with passed $localeName and $storeName will be returned.
      *
      * @api
      *
      * @param array $docCountAggregation
-     * @param string|null $localeName the parameter is going to be required in the next major.
-     * @param string|null $storeName the parameter is going to be required in the next major.
+     * @param string $localeName
+     * @param string $storeName
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]
+     * @return \Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]|\ArrayObject
      */
-    public function formatCategoryTreeFilter(array $docCountAggregation, ?string $localeName = null, ?string $storeName = null): ArrayObject;
+    public function formatCategoryTreeFilter(array $docCountAggregation, string $localeName, string $storeName): ArrayObject;
 }

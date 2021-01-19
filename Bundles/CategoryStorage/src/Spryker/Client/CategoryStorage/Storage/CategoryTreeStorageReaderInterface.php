@@ -7,13 +7,15 @@
 
 namespace Spryker\Client\CategoryStorage\Storage;
 
+use ArrayObject;
+
 interface CategoryTreeStorageReaderInterface
 {
     /**
      * @param string $locale
-     * @param string|null $storeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]|\ArrayObject
      */
-    public function getCategories($locale, ?string $storeName = null);
+    public function getCategories(string $locale, string $storeName): ArrayObject;
 }

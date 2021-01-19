@@ -13,6 +13,8 @@ use Generated\Shared\DataBuilder\CategoryBuilder;
 use Generated\Shared\DataBuilder\CategoryLocalizedAttributesBuilder;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
+use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeFilterTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
@@ -21,6 +23,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryStoreQuery;
+use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Zed\Category\Business\CategoryFacadeInterface;
 use Spryker\Zed\Category\CategoryDependencyProvider;
 use Spryker\Zed\Category\Communication\Plugin\CategoryUrlPathPrefixUpdaterPlugin;
@@ -361,6 +364,119 @@ class CategoryFacadeTest extends Unit
             ->findOne();
         $this->assertNotNull($urlEntity, 'Category Url should be successfully created.');
         $this->assertEquals($expectedUrl, $urlEntity->getUrl(), 'Urls should be the same.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCategoryNodesWithRelativeNodesByCriteriaWillReturnAllRequestedNodeTransfers(): void
+    {
+        // Arrange
+        $categoryTransfer1 = $this->tester->haveCategory();
+        $categoryTransfer2 = $this->tester->haveCategory([
+            CategoryTransfer::PARENT_CATEGORY_NODE => $categoryTransfer1->getCategoryNode()->toArray(),
+        ]);
+        $categoryTransfer3 = $this->tester->haveCategory([
+            CategoryTransfer::PARENT_CATEGORY_NODE => $categoryTransfer2->getCategoryNode()->toArray(),
+        ]);
+        $expectedCategoryNodeIds = [
+            $categoryTransfer1->getCategoryNode()->getIdCategoryNode(),
+            $categoryTransfer2->getCategoryNode()->getIdCategoryNode(),
+            $categoryTransfer3->getCategoryNode()->getIdCategoryNode(),
+        ];
+
+        $categoryNodeCriteriaTransfer = (new CategoryNodeCriteriaTransfer())
+            ->addIdCategoryNode($categoryTransfer2->getCategoryNode()->getIdCategoryNode());
+
+        // Act
+        $nodeTransfers = $this->getFacade()->getCategoryNodesWithRelativeNodesByCriteria(
+            $categoryNodeCriteriaTransfer
+        );
+
+        // Assert
+        $this->assertCount(3, $nodeTransfers, 'The number of category nodes does not equal the expected value.');
+
+        $resultCategoryNodeIds = array_map(function (NodeTransfer $nodeTransfer): int {
+            return $nodeTransfer->getIdCategoryNode();
+        }, $nodeTransfers);
+        $this->assertEmpty(array_diff($expectedCategoryNodeIds, $resultCategoryNodeIds), 'Returned category nodes ids do not equal expected values.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCategoryNodesByCriteriaWillReturnCorrectCategoryNodes(): void
+    {
+        // Arrange
+        $categoryTransfer1 = $this->tester->haveCategory();
+        $categoryTransfer2 = $this->tester->haveCategory();
+
+        $categoryNodeFilterTransfer = (new CategoryNodeFilterTransfer())
+            ->addIdCategory($categoryTransfer1->getIdCategory())
+            ->addIdCategory($categoryTransfer2->getIdCategory());
+
+        // Act
+        $nodeCollectionTransfer = $this->getFacade()->getCategoryNodesByCriteria($categoryNodeFilterTransfer);
+
+        // Assert
+        $this->assertCount(2, $nodeCollectionTransfer->getNodes(), 'Expected 2 category nodes in results.');
+        $this->assertSame(
+            $categoryTransfer1->getCategoryNode()->getIdCategoryNode(),
+            $nodeCollectionTransfer->getNodes()->offsetGet(0)->getIdCategoryNode(),
+            'Returned category nodes id do not equal expected value.'
+        );
+        $this->assertSame(
+            $categoryTransfer2->getCategoryNode()->getIdCategoryNode(),
+            $nodeCollectionTransfer->getNodes()->offsetGet(1)->getIdCategoryNode(),
+            'Returned category nodes id do not equal expected value.'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCategoryNodeCollectionByCriteriaWillReturnCorrectNodeTransfers(): void
+    {
+        // Arrange
+        $categoryTransfer1 = $this->tester->haveCategory();
+        $categoryTransfer2 = $this->tester->haveCategory();
+
+        $nodeTransfer1 = $categoryTransfer1->getCategoryNode();
+        $nodeTransfer2 = $categoryTransfer2->getCategoryNode();
+        $nodeTransferIds = [
+            $nodeTransfer1->getIdCategoryNode(),
+            $nodeTransfer2->getIdCategoryNode(),
+        ];
+
+        // Act
+        $nodeCollectionTransfer = $this->getFacade()->getCategoryNodeCollectionByCriteria(
+            (new CategoryNodeCriteriaTransfer())->setCategoryNodeIds($nodeTransferIds)
+        );
+
+        // Assert
+        $this->assertCount(2, $nodeCollectionTransfer->getNodes(), 'The number of category nodes does not equal the expected value.');
+
+        $resultNodeTransfer1 = $nodeCollectionTransfer->getNodes()->offsetGet(0);
+        $this->assertInstanceOf(
+            NodeTransfer::class,
+            $resultNodeTransfer1,
+            'The class of returned category node does not equal to an expected value.'
+        );
+        $this->assertTrue(
+            in_array($resultNodeTransfer1->getIdCategoryNode(), $nodeTransferIds, true),
+            'The returned category node id does not present in the list of expected category node ids.'
+        );
+
+        $resultNodeTransfer2 = $nodeCollectionTransfer->getNodes()->offsetGet(1);
+        $this->assertInstanceOf(
+            NodeTransfer::class,
+            $resultNodeTransfer2,
+            'The class of returned category node does not equal to an expected value.'
+        );
+        $this->assertTrue(
+            in_array($resultNodeTransfer2->getIdCategoryNode(), $nodeTransferIds, true),
+            'The returned category node id does not present in the list of expected category node ids.'
+        );
     }
 
     /**

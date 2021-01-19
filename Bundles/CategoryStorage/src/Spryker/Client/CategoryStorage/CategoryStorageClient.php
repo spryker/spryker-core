@@ -21,19 +21,15 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
      * @api
      *
      * @param string $locale
-     * @param string|null $storeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]|\ArrayObject
      */
-    public function getCategories($locale, ?string $storeName = null)
+    public function getCategories($locale, string $storeName)
     {
-        if ($storeName === null) {
-            trigger_error('Pass the $storeName parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
-        }
-
         return $this->getFactory()
             ->createCategoryTreeStorageReader()
-            ->getCategories($locale);
+            ->getCategories($locale, $storeName);
     }
 
     /**
@@ -43,19 +39,15 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
      *
      * @param int $idCategoryNode
      * @param string $localeName
-     * @param string|null $storeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer
      */
-    public function getCategoryNodeById($idCategoryNode, $localeName, ?string $storeName = null)
+    public function getCategoryNodeById($idCategoryNode, $localeName, string $storeName)
     {
-        if ($storeName === null) {
-            trigger_error('Pass the $storeName parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
-        }
-
         return $this->getFactory()
             ->createCategoryNodeStorage()
-            ->getCategoryNodeById($idCategoryNode, $localeName);
+            ->getCategoryNodeById($idCategoryNode, $localeName, $storeName);
     }
 
     /**
@@ -65,19 +57,15 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
      *
      * @param int[] $categoryNodeIds
      * @param string $localeName
-     * @param string|null $storeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
      */
-    public function getCategoryNodeByIds(array $categoryNodeIds, string $localeName, ?string $storeName = null): array
+    public function getCategoryNodeByIds($categoryNodeIds, $localeName, string $storeName): array
     {
-        if ($storeName === null) {
-            trigger_error('Pass the $storeName parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
-        }
-
         return $this->getFactory()
             ->createCategoryNodeStorage()
-            ->getCategoryNodeByIds($categoryNodeIds, $localeName);
+            ->getCategoryNodeByIds($categoryNodeIds, $localeName, $storeName);
     }
 
     /**
@@ -86,23 +74,15 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
      * @api
      *
      * @param array $docCountAggregation
-     * @param string|null $localeName
-     * @param string|null $storeName
+     * @param string $localeName
+     * @param string $storeName
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]
+     * @return \Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]|\ArrayObject
      */
-    public function formatCategoryTreeFilter(array $docCountAggregation, ?string $localeName = null, ?string $storeName = null): ArrayObject
+    public function formatCategoryTreeFilter(array $docCountAggregation, string $localeName, string $storeName): ArrayObject
     {
-        if ($localeName === null) {
-            trigger_error('Pass the $localeName parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
-        }
-
-        if ($storeName === null) {
-            trigger_error('Pass the $storeName parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
-        }
-
         return $this->getFactory()
             ->createCategoryTreeFilterFormatter()
-            ->formatCategoryTreeFilter($docCountAggregation);
+            ->formatCategoryTreeFilter($docCountAggregation, $localeName, $storeName);
     }
 }
