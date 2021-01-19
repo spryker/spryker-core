@@ -36,14 +36,14 @@ abstract class AbstractLocatorLocator implements LocatorLocatorInterface
         return self::$instance;
     }
 
-    private function __construct()
+    final public function __construct()
     {
     }
 
     /**
      * @return void
      */
-    private function __clone()
+    final public function __clone()
     {
     }
 
