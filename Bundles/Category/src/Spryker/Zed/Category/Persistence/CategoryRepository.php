@@ -406,7 +406,13 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     public function getCategoryNodesWithRelativeNodesByCriteria(
         CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
     ): array {
-        $categoryNodeIdsImploded = implode(', ', $categoryNodeCriteriaTransfer->requireCategoryNodeIds()->getCategoryNodeIds());
+        $categoryNodeIds = $categoryNodeCriteriaTransfer->requireCategoryNodeIds()->getCategoryNodeIds();
+
+        if ($categoryNodeIds === []) {
+            return [];
+        }
+
+        $categoryNodeIdsImploded = implode(', ', $categoryNodeIds);
 
         $categoryNodeQuery = $this->getFactory()
             ->createCategoryNodeQuery()
