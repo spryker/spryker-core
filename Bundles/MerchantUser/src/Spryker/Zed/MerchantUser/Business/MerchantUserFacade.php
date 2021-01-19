@@ -10,8 +10,6 @@ namespace Spryker\Zed\MerchantUser\Business;
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
-use Generated\Shared\Transfer\OauthUserRestrictionRequestTransfer;
-use Generated\Shared\Transfer\OauthUserRestrictionResponseTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -147,22 +145,5 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
         $this->getFactory()
             ->createMerchantUserAuthenticator()
             ->authenticateMerchantUser($merchantUserTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\OauthUserRestrictionRequestTransfer $oauthUserRestrictionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\OauthUserRestrictionResponseTransfer
-     */
-    public function isOauthUserRestricted(
-        OauthUserRestrictionRequestTransfer $oauthUserRestrictionRequestTransfer
-    ): OauthUserRestrictionResponseTransfer {
-        return $this->getFactory()
-            ->createOauthUserRestrictionChecker()
-            ->isOauthUserRestricted($oauthUserRestrictionRequestTransfer);
     }
 }

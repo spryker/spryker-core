@@ -9,34 +9,34 @@
  * Inactive nodes
  */
 .jstree-default .jstree-node.node-inactive > a {
-  opacity: 0.5;
+    opacity: 0.5;
 }
 
 .product-category-filter-progress {
-  width: 100%;
+    width: 100%;
 }
 
 .product-category-filter-progress-container {
-  &.progress-inline {
-    margin: 5px 0;
-  }
+    &.progress-inline {
+        margin: 5px 0;
+    }
 }
 
 #root-node-table {
-  width: 100% !important;
-  tbody {
-    tr {
-      &.selected {
-        background-color: rgba(#0088cc, .2);
-        color: inherit;
-      }
+    width: 100% !important;
+    tbody {
+        tr {
+            &.selected {
+                background-color: rgba(#0088cc, 0.2);
+                color: inherit;
+            }
+        }
     }
-  }
 }
 
 #category-tree {
-  .dd-handle:hover {
-    cursor: inherit;
-    font-weight: inherit;
-  }
+    .dd-handle:hover {
+        cursor: inherit;
+        font-weight: inherit;
+    }
 }

@@ -12,11 +12,9 @@ use Generated\Shared\DataBuilder\UserBuilder;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
-use Generated\Shared\Transfer\OauthUserRestrictionRequestTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\MerchantUser\Persistence\SpyMerchantUser;
-use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserPasswordResetFacadeInterface;
 use Spryker\Zed\MerchantUser\MerchantUserDependencyProvider;
@@ -403,92 +401,6 @@ class MerchantUserFacadeTest extends Unit
 
         // Act
         $this->tester->getFacade()->authenticateMerchantUser($merchantUserTransfer->setUser($userTransfer));
-    }
-
-    /**
-     * @return void
-     */
-    public function testIsOauthUserRestrictedMustRestrictMerchantUser(): void
-    {
-        // Arrange
-        $userTransfer = $this->tester->haveUser();
-        $this->tester->haveMerchantUser(
-            $this->tester->haveMerchant(),
-            $userTransfer
-        );
-
-        $oauthUserRestrictionRequestTransfer = (new OauthUserRestrictionRequestTransfer())->setUser($userTransfer);
-
-        // Act
-        $oauthUserRestrictionResponseTransfer = $this->tester
-            ->getFacade()
-            ->isOauthUserRestricted($oauthUserRestrictionRequestTransfer);
-
-        // Assert
-        $this->assertTrue(
-            $oauthUserRestrictionResponseTransfer->getIsRestricted(),
-            'Expected that merchant user is restricted.'
-        );
-
-        $this->assertCount(
-            1,
-            $oauthUserRestrictionResponseTransfer->getMessages(),
-            'Expected that error message provided.'
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testIsOauthUserRestrictedMustNotRestrictUser(): void
-    {
-        // Arrange
-        $userTransfer = $this->tester->haveUser();
-        $oauthUserRestrictionRequestTransfer = (new OauthUserRestrictionRequestTransfer())->setUser($userTransfer);
-
-        // Act
-        $oauthUserRestrictionResponseTransfer = $this->tester
-            ->getFacade()
-            ->isOauthUserRestricted($oauthUserRestrictionRequestTransfer);
-
-        // Assert
-        $this->assertFalse(
-            $oauthUserRestrictionResponseTransfer->getIsRestricted(),
-            'Expected that user is not restricted.'
-        );
-
-        $this->assertEquals(
-            0,
-            $oauthUserRestrictionResponseTransfer->getMessages()->count(),
-            'Expected that no error message provided.'
-        );
-    }
-
-    /**
-     * @dataProvider isOauthUserRestrictedMustFailWhenNoRequireDataIsProvidedDataProvider
-     *
-     * @param \Generated\Shared\Transfer\OauthUserRestrictionRequestTransfer $oauthUserRestrictionRequestTransfer
-     *
-     * @return void
-     */
-    public function testIsOauthUserRestrictedMustFailWhenNoRequireDataIsProvided($oauthUserRestrictionRequestTransfer): void
-    {
-        // Assert
-        $this->expectException(RequiredTransferPropertyException::class);
-
-        // Act
-        $this->tester->getFacade()->isOauthUserRestricted($oauthUserRestrictionRequestTransfer);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\OauthUserRestrictionRequestTransfer[][]
-     */
-    public function isOauthUserRestrictedMustFailWhenNoRequireDataIsProvidedDataProvider(): array
-    {
-        return [
-            [new OauthUserRestrictionRequestTransfer()],
-            [(new OauthUserRestrictionRequestTransfer())->setUser(new UserTransfer())],
-        ];
     }
 
     /**

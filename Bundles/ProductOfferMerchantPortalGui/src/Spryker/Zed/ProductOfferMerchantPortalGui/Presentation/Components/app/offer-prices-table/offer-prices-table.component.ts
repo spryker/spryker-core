@@ -7,7 +7,7 @@ import { ToJson } from '@spryker/utils';
     templateUrl: './offer-prices-table.component.html',
     styleUrls: ['./offer-prices-table.component.less'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
 })
 export class OfferPricesTableComponent {
     @Input() config: TableConfig;

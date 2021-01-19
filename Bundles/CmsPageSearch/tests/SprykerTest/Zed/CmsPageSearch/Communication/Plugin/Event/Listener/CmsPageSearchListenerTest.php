@@ -46,6 +46,8 @@ class CmsPageSearchListenerTest extends Unit
     }
 
     /**
+     * @skip Requires refactoring
+     *
      * @return void
      */
     public function testCmsPageVersionSearchListenerStoreData(): void
@@ -72,6 +74,8 @@ class CmsPageSearchListenerTest extends Unit
     }
 
     /**
+     * @skip Requires refactoring
+     *
      * @return void
      */
     public function testCmsPageUrlSearchListenerStoreData(): void
@@ -99,6 +103,8 @@ class CmsPageSearchListenerTest extends Unit
     }
 
     /**
+     * @skip Requires refactoring
+     *
      * @return void
      */
     public function testCmsPageSearchListenerStoreData(): void

@@ -28,10 +28,10 @@ function initialize() {
         $(destinationTabLabelSelector).text(),
         destinationTabLabelSelector,
         'customerUserConnection_idCustomersToDeAssign',
-        onRemove
+        onRemove,
     );
 
-    tableHandler.getInitialCheckboxCheckedState = function() {
+    tableHandler.getInitialCheckboxCheckedState = function () {
         return RelatedCustomerTable.CHECKBOX_CHECKED_STATE_CHECKED;
     };
 
@@ -57,5 +57,5 @@ function onRemove() {
 }
 
 module.exports = {
-    initialize: initialize
+    initialize: initialize,
 };

@@ -10,5 +10,4 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
         class: 'mp-dashboard-stats',
     },
 })
-export class DashboardStatsComponent {
-}
+export class DashboardStatsComponent {}

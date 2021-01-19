@@ -18,7 +18,10 @@ import { ModalModule } from '@spryker/modal';
 import { UnsavedChangesModule } from '@spryker/unsaved-changes';
 import { UnsavedChangesBrowserGuardModule } from '@spryker/unsaved-changes.guard.browser';
 import { UnsavedChangesDrawerGuardModule } from '@spryker/unsaved-changes.guard.drawer';
-import { UnsavedChangesGuardNavigationModule, UnsavedChangesNavigationGuard } from '@spryker/unsaved-changes.guard.navigation';
+import {
+    UnsavedChangesGuardNavigationModule,
+    UnsavedChangesNavigationGuard,
+} from '@spryker/unsaved-changes.guard.navigation';
 
 import { _getNgModules, ComponentsNgModule } from './registry';
 import { TableRootModule } from './table/table-root.module';

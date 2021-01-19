@@ -12,8 +12,6 @@ use Spryker\Zed\MerchantUser\Business\AclGroup\AclGroupAdder;
 use Spryker\Zed\MerchantUser\Business\AclGroup\AclGroupAdderInterface;
 use Spryker\Zed\MerchantUser\Business\Authenticator\MerchantUserAuthenticator;
 use Spryker\Zed\MerchantUser\Business\Authenticator\MerchantUserAuthenticatorInterface;
-use Spryker\Zed\MerchantUser\Business\Checker\OauthUserRestrictionChecker;
-use Spryker\Zed\MerchantUser\Business\Checker\OauthUserRestrictionCheckerInterface;
 use Spryker\Zed\MerchantUser\Business\Creator\MerchantUserCreator;
 use Spryker\Zed\MerchantUser\Business\Creator\MerchantUserCreatorInterface;
 use Spryker\Zed\MerchantUser\Business\Deleter\MerchantUserDeleter;
@@ -112,14 +110,6 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     public function createMerchantUserAuthenticator(): MerchantUserAuthenticatorInterface
     {
         return new MerchantUserAuthenticator($this->getUserFacade());
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantUser\Business\Checker\OauthUserRestrictionCheckerInterface
-     */
-    public function createOauthUserRestrictionChecker(): OauthUserRestrictionCheckerInterface
-    {
-        return new OauthUserRestrictionChecker($this->getRepository());
     }
 
     /**

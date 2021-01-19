@@ -12,10 +12,5 @@ import { LoginModule } from './login/login.module';
     providers: [],
 })
 export class ComponentsModule extends CustomElementModule {
-    protected components: WebComponentDefs = [
-        ButtonComponent,
-        LoginComponent,
-        FormItemComponent,
-        InputComponent,
-    ];
+    protected components: WebComponentDefs = [ButtonComponent, LoginComponent, FormItemComponent, InputComponent];
 }

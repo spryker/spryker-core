@@ -1,11 +1,11 @@
 {
-  "mappings": {
-    "page": {
-      "properties": {
-        "merchant_references": {
-          "type": "keyword"
+    "mappings": {
+        "page": {
+            "properties": {
+                "merchant_references": {
+                    "type": "keyword"
+                }
+            }
         }
-      }
     }
-  }
 }

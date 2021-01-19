@@ -42,50 +42,20 @@ class TableDefaultConfigData implements Partial<TableConfig> {
     imports: [
         TableModule.forRoot(),
         TableModule.withFeatures({
-            filters: () =>
-                import('@spryker/table.feature.filters').then(
-                    m => m.TableFiltersFeatureModule
-                ),
-            pagination: () =>
-                import('@spryker/table.feature.pagination').then(
-                    m => m.TablePaginationFeatureModule
-                ),
-            rowActions: () =>
-                import('@spryker/table.feature.row-actions').then(
-                    m => m.TableRowActionsFeatureModule
-                ),
-            search: () =>
-                import('@spryker/table.feature.search').then(
-                    m => m.TableSearchFeatureModule
-                ),
-            syncStateUrl: () =>
-                import('@spryker/table.feature.sync-state').then(
-                    m => m.TableSyncStateFeatureModule
-                ),
-            total: () =>
-                import('@spryker/table.feature.total').then(
-                    m => m.TableTotalFeatureModule
-                ),
+            filters: () => import('@spryker/table.feature.filters').then((m) => m.TableFiltersFeatureModule),
+            pagination: () => import('@spryker/table.feature.pagination').then((m) => m.TablePaginationFeatureModule),
+            rowActions: () => import('@spryker/table.feature.row-actions').then((m) => m.TableRowActionsFeatureModule),
+            search: () => import('@spryker/table.feature.search').then((m) => m.TableSearchFeatureModule),
+            syncStateUrl: () => import('@spryker/table.feature.sync-state').then((m) => m.TableSyncStateFeatureModule),
+            total: () => import('@spryker/table.feature.total').then((m) => m.TableTotalFeatureModule),
             itemSelection: () =>
-                import('@spryker/table.feature.selectable').then(
-                    m => m.TableSelectableFeatureModule
-                ),
+                import('@spryker/table.feature.selectable').then((m) => m.TableSelectableFeatureModule),
             batchActions: () =>
-                import('@spryker/table.feature.batch-actions').then(
-                    m => m.TableBatchActionsFeatureModule
-                ),
+                import('@spryker/table.feature.batch-actions').then((m) => m.TableBatchActionsFeatureModule),
             columnConfigurator: () =>
-                import('@spryker/table.feature.settings').then(
-                    m => m.TableSettingsFeatureModule,
-                ),
-            title: () =>
-                import('@spryker/table.feature.title').then(
-                    m => m.TableTitleFeatureModule
-                ),
-            editable: () =>
-                import('@spryker/table.feature.editable').then(
-                    m => m.TableEditableFeatureModule
-                ),
+                import('@spryker/table.feature.settings').then((m) => m.TableSettingsFeatureModule),
+            title: () => import('@spryker/table.feature.title').then((m) => m.TableTitleFeatureModule),
+            editable: () => import('@spryker/table.feature.editable').then((m) => m.TableEditableFeatureModule),
         }),
         TableModule.withColumnComponents({
             text: TableColumnTextComponent,
@@ -107,7 +77,7 @@ class TableDefaultConfigData implements Partial<TableConfig> {
         TableModule.withActions({
             'form-overlay': TableFormOverlayActionHandlerService,
             'html-overlay': TableHtmlOverlayActionHandlerService,
-            'url': TableUrlActionHandlerService,
+            url: TableUrlActionHandlerService,
         }),
         TableDatasourceInlineModule.withFilters({
             equals: TableDatasourceEqualsFilter,
