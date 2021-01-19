@@ -70,12 +70,10 @@ class PriceProductAbstractTableDataMapper
      * @phpstan-param array<mixed> $priceProductAbstractTableRowDataArray
      * @phpstan-param array<\Generated\Shared\Transfer\PriceTypeTransfer> $priceTypeTransfers
      *
-     * @phpstan-return array<mixed>
-     *
      * @param array $priceProductAbstractTableRowDataArray
      * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypeTransfers
      *
-     * @return array
+     * @return mixed[]
      */
     protected function preparePrices(array $priceProductAbstractTableRowDataArray, array $priceTypeTransfers): array
     {

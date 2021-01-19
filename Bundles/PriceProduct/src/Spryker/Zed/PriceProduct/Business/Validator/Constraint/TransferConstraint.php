@@ -40,7 +40,7 @@ class TransferConstraint extends Composite
      *
      * @return void
      */
-    protected function initializeNestedConstraints()
+    protected function initializeNestedConstraints(): void
     {
         parent::initializeNestedConstraints();
 
@@ -52,7 +52,7 @@ class TransferConstraint extends Composite
     /**
      * @return string[]
      */
-    public function getRequiredOptions()
+    public function getRequiredOptions(): array
     {
         return [static::FIELDS];
     }
@@ -76,7 +76,7 @@ class TransferConstraint extends Composite
     /**
      * @return string
      */
-    protected function getCompositeOption()
+    protected function getCompositeOption(): string
     {
         return static::FIELDS;
     }

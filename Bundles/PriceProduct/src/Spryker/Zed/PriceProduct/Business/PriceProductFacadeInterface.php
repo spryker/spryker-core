@@ -592,7 +592,7 @@ interface PriceProductFacadeInterface
      * Specification:
      * - Validates product prices collection.
      * - Checks if there are duplicated prices for store-currency-gross-net combinations.
-     * - Checks that currency assigned to a store per prices.
+     * - Checks that currency assigned to a store for each price.
      * - Returns ValidationResponseTransfer transfer object.
      *
      * @api

@@ -382,6 +382,8 @@ interface GuiTableConfigurationBuilderInterface
     public function setIsItemSelectionEnabled(bool $isItemSelectionEnabled);
 
     /**
+     * Sets table title.
+     *
      * @param string $title
      *
      * @return $this
@@ -389,6 +391,8 @@ interface GuiTableConfigurationBuilderInterface
     public function setTableTitle(string $title);
 
     /**
+     * Sets if pagination is enabled.
+     *
      * @api
      *
      * @param bool $isPaginationEnabled

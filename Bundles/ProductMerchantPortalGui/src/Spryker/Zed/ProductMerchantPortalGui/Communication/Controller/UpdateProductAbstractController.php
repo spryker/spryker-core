@@ -88,12 +88,11 @@ class UpdateProductAbstractController extends AbstractController
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $productAbstractForm
-     * @phpstan-param array<mixed> $initialData
      *
      * @param \Symfony\Component\Form\FormInterface $productAbstractForm
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\ProductAbstractResponseTransfer $productAbstractResponseTransfer
-     * @param array $initialData
+     * @param mixed[] $initialData
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -180,12 +179,10 @@ class UpdateProductAbstractController extends AbstractController
     }
 
     /**
-     * @phpstan-return array<mixed>
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $formName
      *
-     * @return array
+     * @return mixed[]
      */
     protected function getDefaultInitialData(Request $request, string $formName): array
     {

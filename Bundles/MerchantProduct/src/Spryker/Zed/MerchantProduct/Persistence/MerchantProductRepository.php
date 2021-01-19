@@ -99,7 +99,7 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
      *
      * @return \Generated\Shared\Transfer\MerchantProductTransfer|null
      */
-    public function findMerchantProductAbstract(
+    public function findMerchantProduct(
         MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
     ): ?MerchantProductTransfer {
         $merchantProductAbstractQuery = $this->getFactory()->getMerchantProductAbstractPropelQuery();

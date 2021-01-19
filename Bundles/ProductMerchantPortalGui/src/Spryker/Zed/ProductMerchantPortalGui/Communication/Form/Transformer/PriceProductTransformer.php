@@ -125,13 +125,13 @@ class PriceProductTransformer implements DataTransformerInterface
     }
 
     /**
-     * @phpstan-param array<mixed> $newPriceProduct
+
      * @phpstan-param array<int, \Generated\Shared\Transfer\PriceTypeTransfer> $priceTypeTransfers
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      *
-     * @param array $newPriceProduct
+     * @param mixed[] $newPriceProduct
      * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypeTransfers
      * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
@@ -181,15 +181,12 @@ class PriceProductTransformer implements DataTransformerInterface
 
     /**
      * @phpstan-param array<int, \Generated\Shared\Transfer\PriceTypeTransfer> $priceTypeTransfers
-     * @phpstan-param array<mixed> $prices
-     *
-     * @phpstan-return array<mixed>
      *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypeTransfers
-     * @param array $prices
+     * @param mixed[] $prices
      *
-     * @return array
+     * @return mixed[]
      */
     protected function addPrices(
         PriceProductTransfer $priceProductTransfer,

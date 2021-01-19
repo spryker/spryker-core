@@ -19,7 +19,7 @@ use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface;
 
-class PriceProductMapper
+class PriceProductMapper implements PriceProductMapperInterface
 {
     protected const MAP_FIELD_NAMES = [
         MoneyValueTransfer::FK_STORE => PriceProductAbstractTableViewTransfer::STORE,
@@ -49,14 +49,10 @@ class PriceProductMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $initialData
-     *
-     * @phpstan-return array<mixed>
-     *
      * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
-     * @param array $initialData
+     * @param mixed[] $initialData
      *
-     * @return array
+     * @return mixed[]
      */
     public function mapValidationResponseTransferToInitialDataErrors(
         ValidationResponseTransfer $validationResponseTransfer,
@@ -77,16 +73,13 @@ class PriceProductMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $initialData
      * @phpstan-param array<\Generated\Shared\Transfer\PriceTypeTransfer> $priceTypeTransfers
-     *
-     * @phpstan-return array<mixed>
      *
      * @param \Generated\Shared\Transfer\ValidationErrorTransfer $validationErrorTransfer
      * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypeTransfers
-     * @param array $initialData
+     * @param mixed[] $initialData
      *
-     * @return array
+     * @return mixed[]
      */
     protected function addInitialDataErrors(
         ValidationErrorTransfer $validationErrorTransfer,
@@ -169,19 +162,17 @@ class PriceProductMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $data
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      *
-     * @param array $data
+     * @param mixed[] $data
      * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function mapDataToPriceProductTransfers(array $data, ArrayObject $priceProductTransfers): ArrayObject
     {
-        /** @var \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer */
         foreach ($priceProductTransfers as $priceProductTransfer) {
             $this->mapDataToMoneyValueTransfer($data, $priceProductTransfer->getMoneyValueOrFail());
         }
@@ -190,9 +181,7 @@ class PriceProductMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $data
-     *
-     * @param array $data
+     * @param mixed[] $data
      * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
      *
      * @return \Generated\Shared\Transfer\MoneyValueTransfer

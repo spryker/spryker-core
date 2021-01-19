@@ -44,7 +44,7 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
     public function findProductAbstract(
         MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
     ): ?ProductAbstractTransfer {
-        $merchantProductTransfer = $this->merchantProductRepository->findMerchantProductAbstract($merchantProductCriteriaTransfer);
+        $merchantProductTransfer = $this->merchantProductRepository->findMerchantProduct($merchantProductCriteriaTransfer);
 
         if (!$merchantProductTransfer || $merchantProductTransfer->getIdProductAbstract() === null) {
             return null;

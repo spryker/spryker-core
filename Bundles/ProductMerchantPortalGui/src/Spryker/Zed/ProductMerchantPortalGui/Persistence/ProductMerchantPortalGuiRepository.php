@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MerchantProductTableCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductAbstractTableCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductAbstractTableViewCollectionTransfer;
 use Generated\Shared\Transfer\PriceProductAbstractTableViewTransfer;
+use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
@@ -580,32 +581,14 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
             ->addAsColumn(PriceProductAbstractTableViewTransfer::ID_PRODUCT_ABSTRACT, SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
             ->select([SpyStoreTableMap::COL_NAME, SpyCurrencyTableMap::COL_CODE]);
 
-        $priceTypeValues = $this->getFactory()->getPriceProductFacade()->getPriceTypeValues();
+        $priceTypeTransfers = $this->getFactory()->getPriceProductFacade()->getPriceTypeValues();
 
-        foreach ($priceTypeValues as $priceTypeTransfer) {
+        foreach ($priceTypeTransfers as $priceTypeTransfer) {
             if (!$priceTypeTransfer->getIdPriceType()) {
                 continue;
             }
 
-            $priceTypeName = mb_strtolower($priceTypeTransfer->getName());
-            $grossColumnName = $priceTypeName . static::SUFFIX_PRICE_TYPE_GROSS;
-            $grossClause = sprintf(
-                'MAX(CASE WHEN %s = %s THEN %s END)',
-                SpyPriceProductTableMap::COL_FK_PRICE_TYPE,
-                $priceTypeTransfer->getIdPriceType(),
-                SpyPriceProductStoreTableMap::COL_GROSS_PRICE
-            );
-
-            $netColumnName = $priceTypeName . static::SUFFIX_PRICE_TYPE_NET;
-            $netClause = sprintf(
-                'MAX(CASE WHEN %s = %s THEN %s END)',
-                SpyPriceProductTableMap::COL_FK_PRICE_TYPE,
-                $priceTypeTransfer->getIdPriceType(),
-                SpyPriceProductStoreTableMap::COL_NET_PRICE
-            );
-
-            $priceProductDefaultQuery->addAsColumn($grossColumnName, $grossClause)
-                ->addAsColumn($netColumnName, $netClause);
+            $priceProductDefaultQuery = $this->addPriceTypeColumns($priceProductDefaultQuery, $priceTypeTransfer);
         }
 
         $priceProductDefaultQuery->addAsColumn(
@@ -626,6 +609,43 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
                 $priceProductAbstractTableCriteriaTransfer->getOrderDirection()
             );
         }
+
+        return $priceProductDefaultQuery;
+    }
+
+    /**
+     * @phpstan-param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery> $priceProductDefaultQuery
+     *
+     * @phpstan-return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery>
+     *
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery $priceProductDefaultQuery
+     * @param \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery
+     */
+    protected function addPriceTypeColumns(
+        SpyPriceProductDefaultQuery $priceProductDefaultQuery,
+        PriceTypeTransfer $priceTypeTransfer
+    ): SpyPriceProductDefaultQuery {
+        $priceTypeName = mb_strtolower($priceTypeTransfer->getName());
+        $grossColumnName = $priceTypeName . static::SUFFIX_PRICE_TYPE_GROSS;
+        $grossClause = sprintf(
+            'MAX(CASE WHEN %s = %s THEN %s END)',
+            SpyPriceProductTableMap::COL_FK_PRICE_TYPE,
+            $priceTypeTransfer->getIdPriceType(),
+            SpyPriceProductStoreTableMap::COL_GROSS_PRICE
+        );
+
+        $netColumnName = $priceTypeName . static::SUFFIX_PRICE_TYPE_NET;
+        $netClause = sprintf(
+            'MAX(CASE WHEN %s = %s THEN %s END)',
+            SpyPriceProductTableMap::COL_FK_PRICE_TYPE,
+            $priceTypeTransfer->getIdPriceType(),
+            SpyPriceProductStoreTableMap::COL_NET_PRICE
+        );
+
+        $priceProductDefaultQuery->addAsColumn($grossColumnName, $grossClause)
+            ->addAsColumn($netColumnName, $netClause);
 
         return $priceProductDefaultQuery;
     }

@@ -63,7 +63,7 @@ class ProductAbstractUpdater implements ProductAbstractUpdaterInterface
             ->addIdMerchant($idMerchant)
             ->setIdProductAbstract($idProductAbstract);
 
-        $storedMerchantProductTransfer = $this->merchantProductRepository->findMerchantProductAbstract($merchantProductCriteriaTransfer);
+        $storedMerchantProductTransfer = $this->merchantProductRepository->findMerchantProduct($merchantProductCriteriaTransfer);
 
         if (!$storedMerchantProductTransfer) {
             $productAbstractResponseTransfer->setIsSuccessful(false)

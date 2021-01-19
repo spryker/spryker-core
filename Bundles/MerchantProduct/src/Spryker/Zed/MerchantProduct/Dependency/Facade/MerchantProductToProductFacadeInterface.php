@@ -16,7 +16,7 @@ interface MerchantProductToProductFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
      */
-    public function findProductAbstractById(int $idProductAbstract);
+    public function findProductAbstractById($idProductAbstract);
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer

@@ -1172,6 +1172,7 @@ class PriceProductFacadeTest extends Unit
      */
     public function testValidatePricesFailsValidUniqueStoreCurrencyGrossNetConstraint(): void
     {
+        // Arrange
         $productTransfer = $this->tester->haveProduct();
 
         $priceProductTransfer1 = $this->tester->havePriceProductAbstract($productTransfer->getFkProductAbstract(), [
