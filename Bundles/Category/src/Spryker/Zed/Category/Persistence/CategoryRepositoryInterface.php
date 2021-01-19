@@ -120,13 +120,6 @@ interface CategoryRepositoryInterface
     ): array;
 
     /**
-     * @param int[] $categoryIds
-     *
-     * @return int[]
-     */
-    public function getCategoryNodeIdsByCategoryIds(array $categoryIds): array;
-
-    /**
      * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer

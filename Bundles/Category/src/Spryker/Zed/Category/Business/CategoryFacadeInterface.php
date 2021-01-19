@@ -291,7 +291,7 @@ interface CategoryFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves category node ids by criteria filter (without any relationships).
+     * - Retrieves category nodes by criteria filter (without any relationships).
      *
      * @api
      *

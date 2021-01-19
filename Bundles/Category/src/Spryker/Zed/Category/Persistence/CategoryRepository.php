@@ -460,23 +460,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     }
 
     /**
-     * @param int[] $categoryIds
-     *
-     * @return int[]
-     */
-    public function getCategoryNodeIdsByCategoryIds(array $categoryIds): array
-    {
-        return $this->getFactory()
-            ->createCategoryNodeQuery()
-            ->filterByFkCategory_In($categoryIds)
-            ->select([
-                SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE,
-            ])
-            ->find()
-            ->toArray();
-    }
-
-    /**
      * @module Locale
      * @module Store
      * @module Url

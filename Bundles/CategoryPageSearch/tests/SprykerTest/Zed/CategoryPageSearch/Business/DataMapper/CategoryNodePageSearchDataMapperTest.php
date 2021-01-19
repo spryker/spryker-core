@@ -31,6 +31,7 @@ class CategoryNodePageSearchDataMapperTest extends Unit
      *
      * @param array $inputData
      * @param array $expected
+     * @param string $storeName
      * @param string $localeName
      *
      * @return void
