@@ -18,7 +18,6 @@ use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
 use Generated\Shared\Transfer\WishlistPaginationTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
-use Orm\Zed\Product\Persistence\SpyProduct;
 use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\Wishlist\Business\Exception\MissingWishlistException;
 use Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapperInterface;
@@ -181,6 +180,8 @@ class Reader implements ReaderInterface
     }
 
     /**
+     * @phpstan-param \Propel\Runtime\Util\PropelModelPager<mixed> $itemPaginationModel
+     *
      * @param \Generated\Shared\Transfer\WishlistPaginationTransfer $paginationTransfer
      * @param \Propel\Runtime\Util\PropelModelPager $itemPaginationModel
      *
@@ -248,6 +249,8 @@ class Reader implements ReaderInterface
     }
 
     /**
+     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemMetaTransfer>
+     *
      * @param int $idWishlist
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\WishlistItemMetaTransfer[]
@@ -261,27 +264,14 @@ class Reader implements ReaderInterface
         $wishlistItemMetaTransfers = new ArrayObject();
         foreach ($wishlistItemEntities as $wishlistItemEntity) {
             $productEntity = $wishlistItemEntity->getSpyProduct();
-            $wishlistItemMetaTransfer = $this->convertProductEntityToWishlistItemMetaTransfer($productEntity);
+            $wishlistItemMetaTransfer = new WishlistItemMetaTransfer();
+            $wishlistItemMetaTransfer->fromArray($wishlistItemEntity->toArray(), true);
+            $wishlistItemMetaTransfer = $this->transferMapper
+                ->mapProductEntityToWishlistItemMetaTransfer($productEntity, $wishlistItemMetaTransfer);
             $wishlistItemMetaTransfers->append($wishlistItemMetaTransfer);
         }
 
         return $wishlistItemMetaTransfers;
-    }
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemMetaTransfer
-     */
-    protected function convertProductEntityToWishlistItemMetaTransfer(SpyProduct $productEntity)
-    {
-        $wishlistItemMetaTransfer = new WishlistItemMetaTransfer();
-        $wishlistItemMetaTransfer
-            ->setIdProductAbstract($productEntity->getFkProductAbstract())
-            ->setIdProduct($productEntity->getIdProduct())
-            ->setSku($productEntity->getSku());
-
-        return $wishlistItemMetaTransfer;
     }
 
     /**
@@ -320,6 +310,8 @@ class Reader implements ReaderInterface
     }
 
     /**
+     * @phpstan-return array<int, string>
+     *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer[] $itemCollection
      *
      * @return array

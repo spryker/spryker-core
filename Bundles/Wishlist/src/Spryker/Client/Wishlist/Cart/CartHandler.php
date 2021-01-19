@@ -102,9 +102,9 @@ class CartHandler implements CartHandlerInterface
         $cartChangeTransfer->setQuote($this->cartClient->getQuote());
         foreach ($wishlistMoveToCartRequestCollectionTransfer->getRequests() as $wishlistMoveToCartRequestTransfer) {
             $this->assertRequestTransfer($wishlistMoveToCartRequestTransfer);
-            $cartChangeTransfer->addItem(
-                $this->createItemTransfer($wishlistMoveToCartRequestTransfer->getSku())
-            );
+            $itemTransfer = $this->createItemTransfer($wishlistMoveToCartRequestTransfer->getSku());
+            $itemTransfer->fromArray($wishlistMoveToCartRequestTransfer->toArray(), true);
+            $cartChangeTransfer->addItem($itemTransfer);
         }
         $quoteTransfer = $this->cartClient->addValidItems($cartChangeTransfer);
 
@@ -161,6 +161,8 @@ class CartHandler implements CartHandlerInterface
     }
 
     /**
+     * @phpstan-return array<string, bool>
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
