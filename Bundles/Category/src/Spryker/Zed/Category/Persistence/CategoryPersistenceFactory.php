@@ -16,9 +16,11 @@ use Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Category\Persistence\Propel\Mapper\CategoryLocalizedAttributeMapper;
+use Spryker\Zed\Category\Persistence\Propel\Mapper\CategoryLocalizedAttributesUrlMapper;
 use Spryker\Zed\Category\Persistence\Propel\Mapper\CategoryMapper;
 use Spryker\Zed\Category\Persistence\Propel\Mapper\CategoryMapperInterface;
 use Spryker\Zed\Category\Persistence\Propel\Mapper\CategoryNodeMapper;
+use Spryker\Zed\Category\Persistence\Propel\Mapper\CategoryStoreRelationMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -106,7 +108,9 @@ class CategoryPersistenceFactory extends AbstractPersistenceFactory
     public function createCategoryMapper(): CategoryMapperInterface
     {
         return new CategoryMapper(
-            $this->createCategoryNodeMapper()
+            $this->createCategoryNodeMapper(),
+            $this->createCategoryStoreRelationMapper(),
+            $this->createCategoryLocalizedAttributesUrlMapper()
         );
     }
 
@@ -124,5 +128,21 @@ class CategoryPersistenceFactory extends AbstractPersistenceFactory
     public function createCategoryNodeMapper(): CategoryNodeMapper
     {
         return new CategoryNodeMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Persistence\Propel\Mapper\CategoryStoreRelationMapper
+     */
+    public function createCategoryStoreRelationMapper(): CategoryStoreRelationMapper
+    {
+        return new CategoryStoreRelationMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Persistence\Propel\Mapper\CategoryLocalizedAttributesUrlMapper
+     */
+    public function createCategoryLocalizedAttributesUrlMapper(): CategoryLocalizedAttributesUrlMapper
+    {
+        return new CategoryLocalizedAttributesUrlMapper();
     }
 }

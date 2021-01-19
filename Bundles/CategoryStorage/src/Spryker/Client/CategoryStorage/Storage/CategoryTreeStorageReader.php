@@ -38,37 +38,39 @@ class CategoryTreeStorageReader implements CategoryTreeStorageReaderInterface
      * @param \Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToStorageInterface $storageClient
      * @param \Spryker\Client\CategoryStorage\Dependency\Service\CategoryStorageToSynchronizationServiceInterface $synchronizationService
      */
-    public function __construct(CategoryStorageToStorageInterface $storageClient, CategoryStorageToSynchronizationServiceInterface $synchronizationService)
-    {
+    public function __construct(
+        CategoryStorageToStorageInterface $storageClient,
+        CategoryStorageToSynchronizationServiceInterface $synchronizationService
+    ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
     }
 
     /**
      * @param string $locale
-     * @param string|null $storeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]|\ArrayObject
      */
-    public function getCategories($locale, ?string $storeName = null)
+    public function getCategories(string $locale, string $storeName): ArrayObject
     {
-        $categories = $this->getStorageData($locale);
+        $categories = $this->getStorageData($locale, $storeName);
         if (!$categories) {
             return new ArrayObject();
         }
 
-        $categoryTreeStorageTransfer = new CategoryTreeStorageTransfer();
-        $categoryTreeStorageTransfer->fromArray($categories, true);
+        $categoryTreeStorageTransfer = (new CategoryTreeStorageTransfer())->fromArray($categories, true);
 
         return $categoryTreeStorageTransfer->getCategoryNodesStorage();
     }
 
     /**
      * @param string $localeName
+     * @param string $storeName
      *
      * @return array|null
      */
-    protected function getStorageData(string $localeName)
+    protected function getStorageData(string $localeName, string $storeName): ?array
     {
         if (CategoryStorageConfig::isCollectorCompatibilityMode()) {
             $clientLocatorClassName = Locator::class;
@@ -82,10 +84,9 @@ class CategoryTreeStorageReader implements CategoryTreeStorageReaderInterface
             return $collectorCategories;
         }
 
-        $categoryTreeKey = $this->generateKey($localeName);
-        $categories = $this->storageClient->get($categoryTreeKey);
+        $categoryTreeKey = $this->generateKey($localeName, $storeName);
 
-        return $categories;
+        return $this->storageClient->get($categoryTreeKey);
     }
 
     /**
@@ -110,14 +111,16 @@ class CategoryTreeStorageReader implements CategoryTreeStorageReaderInterface
     }
 
     /**
-     * @param string $locale
+     * @param string $localeName
+     * @param string $storeName
      *
      * @return string
      */
-    protected function generateKey($locale)
+    protected function generateKey(string $localeName, string $storeName): string
     {
-        $synchronizationDataTransfer = new SynchronizationDataTransfer();
-        $synchronizationDataTransfer->setLocale($locale);
+        $synchronizationDataTransfer = (new SynchronizationDataTransfer())
+            ->setStore($storeName)
+            ->setLocale($localeName);
 
         return $this->getStorageKeyBuilder()->generateKey($synchronizationDataTransfer);
     }
