@@ -8,8 +8,11 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Controller;
 
 use ArrayObject;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductAbstractTableViewTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -21,6 +24,11 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SavePriceProductAbstractController extends AbstractController
 {
+    /**
+     * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DIMENSION_DEFAULT
+     */
+    protected const PRICE_DIMENSION_TYPE_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -62,7 +70,17 @@ class SavePriceProductAbstractController extends AbstractController
         array $typePriceProductStoreIds,
         array $data
     ): ArrayObject {
-        $priceProductStoreIds = $this->getPriceProductStoreIds($data, $typePriceProductStoreIds);
+        $key = (string)key($data);
+        $priceTypeName = mb_strtoupper((string)strstr($key, '[', true));
+        $priceProductStoreIds = $this->getPriceProductStoreIds($key, $priceTypeName, $typePriceProductStoreIds);
+
+        if (!$priceProductStoreIds) {
+            $priceProductTransfers = new ArrayObject();
+            $priceProductTransfer = $this->createNewPriceProduct($typePriceProductStoreIds, $priceTypeName, $idProductAbstract);
+            $priceProductTransfers->append($priceProductTransfer);
+
+            return $priceProductTransfers;
+        }
 
         $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())->setPriceProductStoreIds($priceProductStoreIds);
 
@@ -133,22 +151,83 @@ class SavePriceProductAbstractController extends AbstractController
     }
 
     /**
-     * @param string[] $data
+     * @param string $key
+     * @param string $priceTypeName
      * @param int[] $typePriceProductStoreIds
      *
      * @return int[]
      */
-    protected function getPriceProductStoreIds(array $data, array $typePriceProductStoreIds): array
+    protected function getPriceProductStoreIds(string $key, string $priceTypeName, array $typePriceProductStoreIds): array
     {
         $priceProductStoreIds = [];
-        $key = (string)key($data);
-
         if (strpos($key, '[') !== false) {
-            $priceProductStoreIds[] = $typePriceProductStoreIds[mb_strtoupper((string)strstr($key, '[', true))];
+            if (array_key_exists($priceTypeName, $typePriceProductStoreIds)) {
+                $priceProductStoreIds[] = $typePriceProductStoreIds[$priceTypeName];
+            }
 
             return $priceProductStoreIds;
         }
 
         return $typePriceProductStoreIds;
+    }
+
+    /**
+     * @param int[] $typePriceProductStoreIds
+     * @param string $priceTypeName
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function createNewPriceProduct(
+        array $typePriceProductStoreIds,
+        string $priceTypeName,
+        int $idProductAbstract
+    ): PriceProductTransfer {
+        $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())->setPriceProductStoreIds($typePriceProductStoreIds);
+
+        $priceProductTransfers = $this->getFactory()
+            ->getPriceProductFacade()
+            ->findProductAbstractPricesWithoutPriceExtraction($idProductAbstract, $priceProductCriteriaTransfer);
+
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer */
+        $priceProductTransfer = $priceProductTransfers[0];
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+
+        $priceProductTransfer = (new PriceProductTransfer())
+            ->setIdProductAbstract($idProductAbstract)
+            ->setMoneyValue(
+                (new MoneyValueTransfer())
+                    ->setCurrency($moneyValueTransfer->getCurrency())
+                    ->setFkStore($moneyValueTransfer->getFkStore())
+                    ->setStore($moneyValueTransfer->getStore())
+                    ->setFkCurrency($moneyValueTransfer->getFkCurrency())
+            );
+
+        return $this->setPriceTypeToPriceProduct($priceTypeName, $priceProductTransfer);
+    }
+
+    /**
+     * @param string $priceTypeName
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function setPriceTypeToPriceProduct(
+        string $priceTypeName,
+        PriceProductTransfer $priceProductTransfer
+    ): PriceProductTransfer {
+        $priceTypes = $this->getFactory()->getPriceProductFacade()->getPriceTypeValues();
+        foreach ($priceTypes as $priceTypeTransfer) {
+            if ($priceTypeTransfer->getName() === $priceTypeName) {
+                return $priceProductTransfer->setPriceType($priceTypeTransfer)
+                    ->setFkPriceType($priceTypeTransfer->getIdPriceType())
+                    ->setPriceDimension(
+                        (new PriceProductDimensionTransfer())->setType(static::PRICE_DIMENSION_TYPE_DEFAULT)
+                    );
+            }
+        }
+
+        return $priceProductTransfer;
     }
 }

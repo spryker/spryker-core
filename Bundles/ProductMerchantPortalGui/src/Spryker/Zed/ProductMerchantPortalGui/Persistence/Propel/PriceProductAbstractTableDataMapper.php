@@ -84,11 +84,11 @@ class PriceProductAbstractTableDataMapper
             $keyNetPrice = $priceTypeName . static::SUFFIX_PRICE_TYPE_NET;
             $keyGrossPrice = $priceTypeName . static::SUFFIX_PRICE_TYPE_GROSS;
 
-            if (isset($priceProductAbstractTableRowDataArray[$keyGrossPrice])) {
+            if (array_key_exists($keyGrossPrice, $priceProductAbstractTableRowDataArray)) {
                 $prices[$this->createGrossKey($priceTypeName)] = $priceProductAbstractTableRowDataArray[$keyGrossPrice];
             }
 
-            if (isset($priceProductAbstractTableRowDataArray[$keyNetPrice])) {
+            if (array_key_exists($keyNetPrice, $priceProductAbstractTableRowDataArray)) {
                 $prices[$this->createNetKey($priceTypeName)] = $priceProductAbstractTableRowDataArray[$keyNetPrice];
             }
         }

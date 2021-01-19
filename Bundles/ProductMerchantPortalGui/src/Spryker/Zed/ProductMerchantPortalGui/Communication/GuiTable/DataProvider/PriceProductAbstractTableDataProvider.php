@@ -87,7 +87,7 @@ class PriceProductAbstractTableDataProvider extends AbstractGuiTableDataProvider
             $responseData = $priceProductAbstractTableViewTransfer->toArray(true, true);
 
             foreach ($priceProductAbstractTableViewTransfer->getPrices() as $priceType => $priceValue) {
-                $responseData[$priceType] = $this->moneyFacade->convertIntegerToDecimal((int)$priceValue);
+                $responseData[$priceType] = $this->convertIntegerToDecimal($priceValue);
             }
 
             $guiTableDataResponseTransfer->addRow((new GuiTableRowDataResponseTransfer())->setResponseData($responseData));
@@ -133,5 +133,19 @@ class PriceProductAbstractTableDataProvider extends AbstractGuiTableDataProvider
         }
 
         return $priceProductAbstractTableCriteriaTransfer;
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @return float|null
+     */
+    protected function convertIntegerToDecimal($value): ?float
+    {
+        if ($value === '' || $value === null) {
+            return null;
+        }
+
+        return $this->moneyFacade->convertIntegerToDecimal((int)$value);
     }
 }

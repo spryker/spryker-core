@@ -190,14 +190,14 @@ class PriceProductMapper implements PriceProductMapperInterface
     {
         foreach ($data as $key => $value) {
             if (strpos($key, MoneyValueTransfer::NET_AMOUNT) !== false) {
-                $value = $this->convertDecimalToInteger((float)$value);
+                $value = $this->convertDecimalToInteger($value);
                 $moneyValueTransfer->setNetAmount($value);
 
                 continue;
             }
 
             if (strpos($key, MoneyValueTransfer::GROSS_AMOUNT) !== false) {
-                $value = $this->convertDecimalToInteger((float)$value);
+                $value = $this->convertDecimalToInteger($value);
                 $moneyValueTransfer->setGrossAmount($value);
 
                 continue;
