@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\ProductStorage\Business;
 
+use Closure;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorageQuery;
@@ -69,10 +70,17 @@ class ProductStorageFacadeTest extends Unit
     }
 
     /**
+     * @dataProvider attributeMapDataProvider
+     *
+     * @param bool $isProductAttributesWithSingleValueIncluded
+     * @param \Closure $expectedAttributeVariantsMapClosure
+     *
      * @return void
      */
-    public function testPublishAbstractProductsWithEnabledSingleValueAttributePermutationShouldBuildAttributeVariantsMap(): void
-    {
+    public function testPublishAbstractProductsBuildsCorrectAttributeVariantsMap(
+        bool $isProductAttributesWithSingleValueIncluded,
+        Closure $expectedAttributeVariantsMapClosure
+    ): void {
         //Arrange
         $this->tester->haveProductManagementAttributeEntity([], [
             static::IS_SUPER_ATTRIBUTE_KEY => true,
@@ -95,7 +103,7 @@ class ProductStorageFacadeTest extends Unit
         $productConcreteTransfer2 = $this->tester->haveProductConcrete($productConcreteTransfer2->toArray());
 
         // Act
-        $this->getProductStorageFacade(true)
+        $this->getProductStorageFacade($isProductAttributesWithSingleValueIncluded)
             ->publishAbstractProducts([$productConcreteTransfer1->getFkProductAbstract()]);
 
         $productAbstractStorageEntity = SpyProductAbstractStorageQuery::create()
@@ -104,56 +112,7 @@ class ProductStorageFacadeTest extends Unit
 
         $attributeVariantsMap = $productAbstractStorageEntity->toArray()[static::DATA_KEY][static::ATTRIBUTE_MAP_KEY][static::ATTRIBUTE_VARIANTS_KEY];
 
-        $expectedAttributeVariantsMap = $this->getAttributeMapWithSingleValuePermutation(
-            $productConcreteTransfer1->getIdProductConcrete(),
-            $productConcreteTransfer2->getIdProductConcrete()
-        );
-
-        // Assert
-        $this->assertSame(
-            $expectedAttributeVariantsMap,
-            $attributeVariantsMap,
-            'Expected that generated attribute variants map match'
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testPublishAbstractProductsWithDisabledSingleValueAttributePermutationShouldBuildAttributeVariantsMap(): void
-    {
-        //Arrange
-        $this->tester->haveProductManagementAttributeEntity([], [
-            static::IS_SUPER_ATTRIBUTE_KEY => true,
-            static::ATTRIBUTE_KEY => static::SUPER_ATTRIBUTE_ONE,
-        ]);
-
-        $this->tester->haveProductManagementAttributeEntity([], [
-            static::IS_SUPER_ATTRIBUTE_KEY => true,
-            static::ATTRIBUTE_KEY => static::SUPER_ATTRIBUTE_TWO,
-        ]);
-
-        $productConcreteTransfer1 = $this->tester->haveFullProduct([
-            ProductConcreteTransfer::ATTRIBUTES => [
-                static::SUPER_ATTRIBUTE_ONE => static::SUPER_ATTRIBUTE_ONE_VALUE,
-                static::SUPER_ATTRIBUTE_TWO => static::SUPER_ATTRIBUTE_TWO_VALUE,
-            ],
-        ]);
-
-        $productConcreteTransfer2 = $this->cloneProductConcrete($productConcreteTransfer1);
-        $productConcreteTransfer2 = $this->tester->haveProductConcrete($productConcreteTransfer2->toArray());
-
-        // Act
-        $this->getProductStorageFacade(false)
-            ->publishAbstractProducts([$productConcreteTransfer1->getFkProductAbstract()]);
-
-        $productAbstractStorageEntity = SpyProductAbstractStorageQuery::create()
-            ->filterByFkProductAbstract($productConcreteTransfer1->getFkProductAbstract())
-            ->findOne();
-
-        $attributeVariantsMap = $productAbstractStorageEntity->toArray()[static::DATA_KEY][static::ATTRIBUTE_MAP_KEY][static::ATTRIBUTE_VARIANTS_KEY];
-
-        $expectedAttributeVariantsMap = $this->getAttributeMapWithoutSingleValuePermutation(
+        $expectedAttributeVariantsMap = $expectedAttributeVariantsMapClosure(
             $productConcreteTransfer1->getIdProductConcrete(),
             $productConcreteTransfer2->getIdProductConcrete()
         );
@@ -204,16 +163,17 @@ class ProductStorageFacadeTest extends Unit
     }
 
     /**
-     * @param bool $enableSingleValueAttributePermutation
+     * @param bool $isProductAttributesWithSingleValueIncluded
      *
      * @return \Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface
      */
-    protected function getProductStorageFacade(bool $enableSingleValueAttributePermutation = true): ProductStorageFacadeInterface
-    {
+    protected function getProductStorageFacade(
+        bool $isProductAttributesWithSingleValueIncluded = true
+    ): ProductStorageFacadeInterface {
         $configMock = $this->tester->mockConfigMethod(
-            'isPermutationForSingleValueProductAttributesEnabled',
-            function () use ($enableSingleValueAttributePermutation) {
-                return $enableSingleValueAttributePermutation;
+            'isProductAttributesWithSingleValueIncluded',
+            function () use ($isProductAttributesWithSingleValueIncluded) {
+                return $isProductAttributesWithSingleValueIncluded;
             }
         );
 
@@ -227,53 +187,48 @@ class ProductStorageFacadeTest extends Unit
     }
 
     /**
-     * @param int $productConcreteId
-     * @param int $productConcreteTwoId
-     *
-     * @return array
+     * @return array[]
      */
-    protected function getAttributeMapWithSingleValuePermutation(
-        int $productConcreteId,
-        int $productConcreteTwoId
-    ): array {
+    public function attributeMapDataProvider(): array
+    {
         return [
-            'attribute_1:value_1' => [
-                'attribute_2:value_2' => [
-                    'id_product_concrete' => $productConcreteId,
-                ],
-                'attribute_2:value_3' => [
-                    'id_product_concrete' => $productConcreteTwoId,
-                ],
+            'attribute map with single values included' => [
+                true,
+                function (int $productConcreteId, int $productConcreteTwoId): array {
+                    return [
+                        'attribute_1:value_1' => [
+                            'attribute_2:value_2' => [
+                                'id_product_concrete' => $productConcreteId,
+                            ],
+                            'attribute_2:value_3' => [
+                                'id_product_concrete' => $productConcreteTwoId,
+                            ],
+                        ],
+                        'attribute_2:value_2' => [
+                            'attribute_1:value_1' => [
+                                'id_product_concrete' => $productConcreteId,
+                            ],
+                        ],
+                        'attribute_2:value_3' => [
+                            'attribute_1:value_1' => [
+                                'id_product_concrete' => $productConcreteTwoId,
+                            ],
+                        ],
+                    ];
+                },
             ],
-            'attribute_2:value_2' => [
-                'attribute_1:value_1' => [
-                    'id_product_concrete' => $productConcreteId,
-                ],
-            ],
-            'attribute_2:value_3' => [
-                'attribute_1:value_1' => [
-                    'id_product_concrete' => $productConcreteTwoId,
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * @param int $productConcreteId
-     * @param int $productConcreteTwoId
-     *
-     * @return array
-     */
-    protected function getAttributeMapWithoutSingleValuePermutation(
-        int $productConcreteId,
-        int $productConcreteTwoId
-    ): array {
-        return [
-            'attribute_2:value_2' => [
-                'id_product_concrete' => $productConcreteId,
-            ],
-            'attribute_2:value_3' => [
-                'id_product_concrete' => $productConcreteTwoId,
+            'attribute map with single values excluded' => [
+                false,
+                function (int $productConcreteId, int $productConcreteTwoId): array {
+                    return [
+                        'attribute_2:value_2' => [
+                            'id_product_concrete' => $productConcreteId,
+                        ],
+                        'attribute_2:value_3' => [
+                            'id_product_concrete' => $productConcreteTwoId,
+                        ],
+                    ];
+                },
             ],
         ];
     }

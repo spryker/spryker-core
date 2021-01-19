@@ -27,6 +27,8 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Client\ProductStorage\Mapper\ProductVariantExpander::expandProductViewWithProductVariant()} instead.
+     *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param string $locale
      *
@@ -43,12 +45,43 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
             return $this->getFirstProductVariant($productViewTransfer, $locale);
         }
 
-        $productViewTransfer = $this->addSelectedSingleValueAttributes($productViewTransfer);
-
         $selectedVariantNode = $this->getSelectedVariantNode($productViewTransfer);
 
         if ($productViewTransfer->getSelectedAttributes()) {
             $productViewTransfer = $this->getSelectedProductVariant($productViewTransfer, $locale, $selectedVariantNode);
+        }
+
+        if (!$productViewTransfer->getIdProductConcrete()) {
+            $productViewTransfer = $this->setAvailableAttributes($selectedVariantNode, $productViewTransfer);
+        }
+
+        return $productViewTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    public function expandProductViewWithProductVariant(
+        ProductViewTransfer $productViewTransfer,
+        string $localeName
+    ): ProductViewTransfer {
+        $productViewTransfer->requireAttributeMap();
+
+        if (
+            count($productViewTransfer->getAttributeMap()->getProductConcreteIds()) === 1 ||
+            count($productViewTransfer->getAttributeMap()->getSuperAttributes()) === 0
+        ) {
+            return $this->getFirstProductVariant($productViewTransfer, $localeName);
+        }
+
+        $productViewTransfer = $this->setSingleValueAttributesAsSelected($productViewTransfer);
+        $selectedVariantNode = $this->getSelectedVariantNode($productViewTransfer);
+
+        if ($productViewTransfer->getSelectedAttributes()) {
+            $productViewTransfer = $this->getSelectedProductVariant($productViewTransfer, $localeName, $selectedVariantNode);
         }
 
         if (!$productViewTransfer->getIdProductConcrete()) {
@@ -261,7 +294,7 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    protected function addSelectedSingleValueAttributes(ProductViewTransfer $productViewTransfer): ProductViewTransfer
+    protected function setSingleValueAttributesAsSelected(ProductViewTransfer $productViewTransfer): ProductViewTransfer
     {
         $originalSelectedAttributes = $productViewTransfer->getSelectedAttributes();
 

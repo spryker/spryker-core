@@ -13,15 +13,14 @@ use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteView
 use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderPluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Client\ProductStorage\Plugin\ProductVariantProductViewExpanderPlugin} instead.
- *
  * @method \Spryker\Client\ProductStorage\ProductStorageFactory getFactory()
  */
-class ProductViewVariantExpanderPlugin extends AbstractPlugin implements ProductViewExpanderPluginInterface, ProductConcreteViewExpanderExcluderPluginInterface
+class ProductVariantProductViewExpanderPlugin extends AbstractPlugin implements ProductViewExpanderPluginInterface, ProductConcreteViewExpanderExcluderPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Expands the transfer object with the attribute map, product variant map.
+     * - Expands the transfer object with an attribute map and a product variant map.
+     * - Marks the product variants with an only one possible value as the selected ones.
      * - Expands the transfer object with product concrete ID using the values of `selectedAttributes`.
      *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
@@ -34,6 +33,6 @@ class ProductViewVariantExpanderPlugin extends AbstractPlugin implements Product
     {
         return $this->getFactory()
             ->createVariantExpander()
-            ->expandProductVariantData($productViewTransfer, $localeName);
+            ->expandProductViewWithProductVariant($productViewTransfer, $localeName);
     }
 }

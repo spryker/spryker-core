@@ -65,13 +65,13 @@ class ProductStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     *  - Determines whether to generate permutations for single-value product attributes.
+     *  - Determines whether to include the single-valued product super attributes into a product map.
      *
      * @api
      *
      * @return bool
      */
-    public function isPermutationForSingleValueProductAttributesEnabled(): bool
+    public function isProductAttributesWithSingleValueIncluded(): bool
     {
         return true;
     }

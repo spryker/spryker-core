@@ -8,7 +8,9 @@
 namespace SprykerTest\Client\ProductStorage;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\AttributeMapStorageBuilder;
 use Generated\Shared\DataBuilder\ProductAbstractStorageBuilder;
+use Generated\Shared\Transfer\AttributeMapStorageTransfer;
 use Generated\Shared\Transfer\ProductAbstractStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface;
@@ -28,6 +30,12 @@ use Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReaderInterface;
  */
 class ProductStorageClientTest extends Unit
 {
+    protected const SUPER_ATTRIBUTE_NAME_1 = 'super_attribute_name_1';
+    protected const SUPER_ATTRIBUTE_NAME_2 = 'super_attribute_name_2';
+    protected const SUPER_ATTRIBUTE_VALUE_1 = 'super_attribute_value_1';
+    protected const SUPER_ATTRIBUTE_VALUE_2_1 = 'super_attribute_value_2_1';
+    protected const SUPER_ATTRIBUTE_VALUE_2_2 = 'super_attribute_value_2_2';
+
     /**
      * @var \SprykerTest\Client\ProductStorage\ProductStorageClientTester
      */
@@ -80,6 +88,51 @@ class ProductStorageClientTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testExpandProductViewWithProductVariantMergeAbstractAndConcreteArrayFilterDoesNotRemoveFalse(): void
+    {
+        // Arrange
+        $productViewTransfer = $this->tester->createProductViewTransfer();
+        $productConcreteStorageReaderMock = $this->getProductConcreteStorageReaderMock();
+
+        // Act
+        $expandedProductViewTransfer = (new ProductVariantExpander($productConcreteStorageReaderMock))
+            ->expandProductViewWithProductVariant($productViewTransfer, 'DE');
+
+        // Assert
+        $this->assertFalse($expandedProductViewTransfer->getAvailable());
+    }
+
+    /**
+     * @dataProvider superAttributesDataProvider
+     *
+     * @param \Generated\Shared\Transfer\AttributeMapStorageTransfer $attributeMapStorageTransfer
+     * @param string[] $originalSelectedAttributes
+     * @param mixed[] $expectedSelectedAttributes
+     *
+     * @return void
+     */
+    public function testExpandProductViewWithProductVariantSelectsProductVariantsWithSingleValue(
+        AttributeMapStorageTransfer $attributeMapStorageTransfer,
+        array $originalSelectedAttributes,
+        array $expectedSelectedAttributes
+    ): void {
+        // Arrange
+        $productViewTransfer = $this->tester->createProductViewTransfer();
+        $productConcreteStorageReaderMock = $this->getProductConcreteStorageReaderMock();
+        $productViewTransfer->setAttributeMap($attributeMapStorageTransfer);
+        $productViewTransfer->setSelectedAttributes($originalSelectedAttributes);
+
+        // Act
+        $expandedProductViewTransfer = (new ProductVariantExpander($productConcreteStorageReaderMock))
+            ->expandProductViewWithProductVariant($productViewTransfer, 'DE');
+
+        // Assert
+        $this->assertSame($expectedSelectedAttributes, $expandedProductViewTransfer->getSelectedAttributes());
+    }
+
+    /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface
      */
     protected function getStorageClientMock(): ProductStorageToStorageClientInterface
@@ -115,5 +168,91 @@ class ProductStorageClientTest extends Unit
     protected function getProductAbstractStorage(array $seedData = []): ProductAbstractStorageTransfer
     {
         return (new ProductAbstractStorageBuilder($seedData))->build();
+    }
+
+    /**
+     * @param mixed[] $seedData
+     *
+     * @return \Generated\Shared\Transfer\AttributeMapStorageTransfer
+     */
+    protected function buildAttributeMapStorageTransfer(array $seedData): AttributeMapStorageTransfer
+    {
+        return (new AttributeMapStorageBuilder($seedData))->build();
+    }
+
+    /**
+     * @return array[]
+     */
+    public function superAttributesDataProvider(): array
+    {
+        return [
+            'super attributes with single and multiple values and existing selected attribute' => [
+                $this->buildAttributeMapStorageTransfer([
+                    AttributeMapStorageTransfer::SUPER_ATTRIBUTES => [
+                        static::SUPER_ATTRIBUTE_NAME_1 => [
+                            static::SUPER_ATTRIBUTE_VALUE_1,
+                        ],
+                        static::SUPER_ATTRIBUTE_NAME_2 => [
+                            static::SUPER_ATTRIBUTE_VALUE_2_1,
+                            static::SUPER_ATTRIBUTE_VALUE_2_2,
+                        ],
+                    ],
+                ]),
+                [
+                    static::SUPER_ATTRIBUTE_NAME_2 => static::SUPER_ATTRIBUTE_VALUE_2_1,
+                ],
+                [
+                    static::SUPER_ATTRIBUTE_NAME_1 => static::SUPER_ATTRIBUTE_VALUE_1,
+                    static::SUPER_ATTRIBUTE_NAME_2 => static::SUPER_ATTRIBUTE_VALUE_2_1,
+                ],
+            ],
+            'super attributes with single and multiple values without existing selected attribute' => [
+                $this->buildAttributeMapStorageTransfer([
+                    AttributeMapStorageTransfer::SUPER_ATTRIBUTES => [
+                        static::SUPER_ATTRIBUTE_NAME_1 => [
+                            static::SUPER_ATTRIBUTE_VALUE_1,
+                        ],
+                        static::SUPER_ATTRIBUTE_NAME_2 => [
+                            static::SUPER_ATTRIBUTE_VALUE_2_1,
+                            static::SUPER_ATTRIBUTE_VALUE_2_2,
+                        ],
+                    ],
+                ]),
+                [],
+                [
+                    static::SUPER_ATTRIBUTE_NAME_1 => static::SUPER_ATTRIBUTE_VALUE_1,
+                ],
+            ],
+            'super attributes with only single value' => [
+                $this->buildAttributeMapStorageTransfer([
+                    AttributeMapStorageTransfer::SUPER_ATTRIBUTES => [
+                        static::SUPER_ATTRIBUTE_NAME_1 => [
+                            static::SUPER_ATTRIBUTE_VALUE_1,
+                        ],
+                    ],
+                ]),
+                [],
+                [
+                    static::SUPER_ATTRIBUTE_NAME_1 => static::SUPER_ATTRIBUTE_VALUE_1,
+                ],
+            ],
+            'super attributes with only multiple values' => [
+                $this->buildAttributeMapStorageTransfer([
+                    AttributeMapStorageTransfer::SUPER_ATTRIBUTES => [
+                        static::SUPER_ATTRIBUTE_NAME_2 => [
+                            static::SUPER_ATTRIBUTE_VALUE_2_1,
+                            static::SUPER_ATTRIBUTE_VALUE_2_2,
+                        ],
+                    ],
+                ]),
+                [],
+                [],
+            ],
+            'super attributes are empty' => [
+                $this->buildAttributeMapStorageTransfer([]),
+                [],
+                [],
+            ],
+        ];
     }
 }
