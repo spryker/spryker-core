@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\SearchElasticsearch\Index;
+namespace Spryker\Client\SearchElasticsearch\Index\IndexNameResolver;
 
 interface IndexNameResolverInterface
 {
