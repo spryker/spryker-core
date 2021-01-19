@@ -14,7 +14,7 @@ interface ProductCategoryStorageQueryContainerInterface extends QueryContainerIn
 {
     /**
      * Specification:
-     * - Returns a a query for the table `spy_product_category` filtered by primary ids.
+     * - Returns a query for the table `spy_product_category` filtered by primary ids.
      *
      * @api
      *

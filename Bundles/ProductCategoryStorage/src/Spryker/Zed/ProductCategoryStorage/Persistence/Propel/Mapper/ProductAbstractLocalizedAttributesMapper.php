@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductCategoryStorage\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer;
 use Orm\Zed\Locale\Persistence\SpyLocale;
+use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
 use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductAbstractLocalizedAttributesMapper
@@ -25,18 +26,36 @@ class ProductAbstractLocalizedAttributesMapper
         array $productAbstractLocalizedAttributesTransfers
     ): array {
         foreach ($productAbstractLocalizedAttributesEntities as $productAbstractLocalizedAttributesEntity) {
+            $productAbstractLocalizedAttributesTransfer = $this->mapProductAbstractLocalizedAttributesEntityToTransfer(
+                $productAbstractLocalizedAttributesEntity,
+                new ProductAbstractLocalizedAttributesTransfer()
+            );
+
             $localeTransfer = $this->mapLocaleEntityToLocaleTransfer(
                 $productAbstractLocalizedAttributesEntity->getLocale(),
                 new LocaleTransfer()
             );
 
-            $productAbstractLocalizedAttributesTransfers[] = (new ProductAbstractLocalizedAttributesTransfer())
-                ->fromArray($productAbstractLocalizedAttributesEntity->toArray(), true)
-                ->setIdProductAbstract($productAbstractLocalizedAttributesEntity->getFkProductAbstract())
-                ->setLocale($localeTransfer);
+            $productAbstractLocalizedAttributesTransfer->setLocale($localeTransfer);
+            $productAbstractLocalizedAttributesTransfers[] = $productAbstractLocalizedAttributesTransfer;
         }
 
         return $productAbstractLocalizedAttributesTransfers;
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes $productAbstractLocalizedAttributesEntity
+     * @param \Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer $productAbstractLocalizedAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer
+     */
+    protected function mapProductAbstractLocalizedAttributesEntityToTransfer(
+        SpyProductAbstractLocalizedAttributes $productAbstractLocalizedAttributesEntity,
+        ProductAbstractLocalizedAttributesTransfer $productAbstractLocalizedAttributesTransfer
+    ): ProductAbstractLocalizedAttributesTransfer {
+        return $productAbstractLocalizedAttributesTransfer
+            ->fromArray($productAbstractLocalizedAttributesEntity->toArray(), true)
+            ->setIdProductAbstract($productAbstractLocalizedAttributesEntity->getFkProductAbstract());
     }
 
     /**
@@ -49,8 +68,6 @@ class ProductAbstractLocalizedAttributesMapper
         SpyLocale $localeEntity,
         LocaleTransfer $localeTransfer
     ): LocaleTransfer {
-        $localeTransfer->fromArray($localeEntity->toArray(), true);
-
-        return $localeTransfer;
+        return $localeTransfer->fromArray($localeEntity->toArray(), true);
     }
 }

@@ -56,16 +56,30 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
         $relatedCategoryIds = [];
 
         foreach ($categoryIds as $idCategory) {
-            $categoryNodes = $this->categoryFacade->getAllNodesByIdCategory($idCategory);
-
-            foreach ($categoryNodes as $categoryNode) {
-                $relatedCategoryIds[] = $this->productCategoryStorageRepository
-                    ->getAllCategoryIdsByCategoryNodeId($categoryNode->getIdCategoryNode());
-            }
+            $relatedCategoryIds = $this->getRelatedCategoryIdsFromCategoryNodes(
+                $this->categoryFacade->getAllNodesByIdCategory($idCategory),
+                $relatedCategoryIds
+            );
         }
 
         $relatedCategoryIds = array_merge(...$relatedCategoryIds);
 
         return array_unique($relatedCategoryIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer[] $nodeTransfers
+     * @param int[][] $relatedCategoryIds
+     *
+     * @return int[][]
+     */
+    protected function getRelatedCategoryIdsFromCategoryNodes(array $nodeTransfers, array $relatedCategoryIds): array
+    {
+        foreach ($nodeTransfers as $nodeTransfer) {
+            $relatedCategoryIds[] = $this->productCategoryStorageRepository
+                ->getAllCategoryIdsByCategoryNodeId($nodeTransfer->getIdCategoryNode());
+        }
+
+        return $relatedCategoryIds;
     }
 }

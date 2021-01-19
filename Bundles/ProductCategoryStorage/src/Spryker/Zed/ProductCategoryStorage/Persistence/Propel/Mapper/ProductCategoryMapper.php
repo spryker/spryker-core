@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\ProductCategoryTransfer;
 use Orm\Zed\Category\Persistence\SpyCategory;
+use Orm\Zed\Category\Persistence\SpyCategoryNode;
+use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
 use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductCategoryMapper
@@ -27,17 +29,34 @@ class ProductCategoryMapper
         array $productCategoryTransfers
     ): array {
         foreach ($productCategoryEntities as $productCategoryEntity) {
+            $productCategoryTransfer = $this->mapProductCategoryEntityToProductCategoryTransfer(
+                $productCategoryEntity,
+                new ProductCategoryTransfer()
+            );
+
             $categoryTransfer = $this->mapCategoryEntityToCategoryTransfer(
                 $productCategoryEntity->getSpyCategory(),
                 new CategoryTransfer()
             );
 
-            $productCategoryTransfers[] = (new ProductCategoryTransfer())
-                ->fromArray($productCategoryEntity->toArray(), true)
-                ->setCategory($categoryTransfer);
+            $productCategoryTransfer->setCategory($categoryTransfer);
+            $productCategoryTransfers[] = $productCategoryTransfer;
         }
 
         return $productCategoryTransfers;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductCategory\Persistence\SpyProductCategory $productCategoryEntity
+     * @param \Generated\Shared\Transfer\ProductCategoryTransfer $productCategoryTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductCategoryTransfer
+     */
+    protected function mapProductCategoryEntityToProductCategoryTransfer(
+        SpyProductCategory $productCategoryEntity,
+        ProductCategoryTransfer $productCategoryTransfer
+    ): ProductCategoryTransfer {
+        return $productCategoryTransfer->fromArray($productCategoryEntity->toArray(), true);
     }
 
     /**
@@ -56,9 +75,22 @@ class ProductCategoryMapper
 
         foreach ($productCategoryEntity->getNodes() as $categoryNodeEntity) {
             $categoryTransfer->getNodeCollection()
-                ->addNode((new NodeTransfer())->fromArray($categoryNodeEntity->toArray(), true));
+                ->addNode($this->mapCategoryNodeEntityToNodeTransfer($categoryNodeEntity, new NodeTransfer()));
         }
 
         return $categoryTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $categoryNodeEntity
+     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeTransfer
+     */
+    protected function mapCategoryNodeEntityToNodeTransfer(
+        SpyCategoryNode $categoryNodeEntity,
+        NodeTransfer $nodeTransfer
+    ): NodeTransfer {
+        return $nodeTransfer->fromArray($categoryNodeEntity->toArray(), true);
     }
 }

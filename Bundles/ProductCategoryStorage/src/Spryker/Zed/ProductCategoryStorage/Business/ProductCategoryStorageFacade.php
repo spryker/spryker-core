@@ -27,7 +27,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      */
     public function publish(array $productAbstractIds)
     {
-        $this->getFactory()->createProductCategoryStorageWriter()->publish($productAbstractIds);
+        $this->getFactory()->createProductCategoryStorageWriter()->writeCollection($productAbstractIds);
     }
 
     /**
@@ -41,7 +41,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      */
     public function unpublish(array $productAbstractIds)
     {
-        $this->getFactory()->createProductCategoryStorageDeleter()->unpublish($productAbstractIds);
+        $this->getFactory()->createProductCategoryStorageDeleter()->deleteCollection($productAbstractIds);
     }
 
     /**

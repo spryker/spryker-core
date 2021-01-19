@@ -21,7 +21,6 @@ class CategoryStoreWritePublisherPlugin extends AbstractPlugin implements Publis
 {
     /**
      * {@inheritDoc}
-     * - Publishes product category data by CategoryStore publish and un-publish events.
      * - Publishes product category data by SpyCategoryStore entity events.
      *
      * @api

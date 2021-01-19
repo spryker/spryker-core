@@ -126,7 +126,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
 
         $productAbstractIds = $this->productAbstractReader->getProductAbstractIdsByCategoryIds($categoryIds);
 
-        $this->publish($productAbstractIds);
+        $this->writeCollection($productAbstractIds);
     }
 
     /**
@@ -139,7 +139,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
         $categoryIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
         $productAbstractIds = $this->productAbstractReader->getProductAbstractIdsByCategoryIds($categoryIds);
 
-        $this->publish($productAbstractIds);
+        $this->writeCollection($productAbstractIds);
     }
 
     /**
@@ -147,7 +147,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
      *
      * @return void
      */
-    public function publish(array $productAbstractIds): void
+    public function writeCollection(array $productAbstractIds): void
     {
         $productCategoryTransfers = $this->findProductCategories($productAbstractIds);
         $productAbstractLocalizedAttributesTransfers = $this->productCategoryStorageRepository

@@ -73,14 +73,10 @@ class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyP
      */
     public function providePersistenceLayerDependencies(Container $container): Container
     {
-        $container->set(static::QUERY_CONTAINER_PRODUCT_CATEGORY, function (Container $container) {
-            return new ProductCategoryStorageToProductCategoryQueryContainerBridge($container->getLocator()->productCategory()->queryContainer());
-        });
+        $container = parent::providePersistenceLayerDependencies($container);
 
-        $container->set(static::QUERY_CONTAINER_CATEGORY, function (Container $container) {
-            return new ProductCategoryStorageToCategoryQueryContainerBridge($container->getLocator()->category()->queryContainer());
-        });
-
+        $container = $this->addProductCategoryQueryContainer($container);
+        $container = $this->addCategoryQueryContainer($container);
         $container = $this->addCategoryNodePropelQuery($container);
         $container = $this->addCategoryClosureTablePropelQuery($container);
         $container = $this->addProductAbstractLocalizedAttributesPropelQuery($container);
@@ -191,6 +187,38 @@ class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyP
         $container->set(static::PROPEL_QUERY_PRODUCT_CATEGORY, $container->factory(function () {
             return SpyProductCategoryQuery::create();
         }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductCategoryQueryContainer(Container $container): Container
+    {
+        $container->set(static::QUERY_CONTAINER_PRODUCT_CATEGORY, function (Container $container) {
+            return new ProductCategoryStorageToProductCategoryQueryContainerBridge(
+                $container->getLocator()->productCategory()->queryContainer()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCategoryQueryContainer(Container $container): Container
+    {
+        $container->set(static::QUERY_CONTAINER_CATEGORY, function (Container $container) {
+            return new ProductCategoryStorageToCategoryQueryContainerBridge(
+                $container->getLocator()->category()->queryContainer()
+            );
+        });
 
         return $container;
     }

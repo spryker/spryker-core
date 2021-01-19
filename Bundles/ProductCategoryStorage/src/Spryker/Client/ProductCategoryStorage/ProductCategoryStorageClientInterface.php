@@ -11,7 +11,7 @@ interface ProductCategoryStorageClientInterface
 {
     /**
      * Specification:
-     * - Returns Product Abstract Category by id.
+     * - Returns Product Abstract Category by id for given store and locale.
      *
      * @api
      *
@@ -25,7 +25,7 @@ interface ProductCategoryStorageClientInterface
 
     /**
      * Specification:
-     * - Returns Categories grouped by Product Abstract id.
+     * - Returns Product Abstract Categories grouped by Product Abstract ids for given store and locale.
      *
      * @api
      *

@@ -62,7 +62,7 @@ class ProductCategoryStorageDeleter implements ProductCategoryStorageDeleterInte
         $categoryIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
         $productAbstractIds = $this->productAbstractReader->getProductAbstractIdsByCategoryIds($categoryIds);
 
-        $this->unpublish($productAbstractIds);
+        $this->deleteCollection($productAbstractIds);
     }
 
     /**
@@ -70,7 +70,7 @@ class ProductCategoryStorageDeleter implements ProductCategoryStorageDeleterInte
      *
      * @return void
      */
-    public function unpublish(array $productAbstractIds): void
+    public function deleteCollection(array $productAbstractIds): void
     {
         $this->productCategoryStorageEntityManager->deleteProductAbstractCategoryStorages($productAbstractIds);
     }
