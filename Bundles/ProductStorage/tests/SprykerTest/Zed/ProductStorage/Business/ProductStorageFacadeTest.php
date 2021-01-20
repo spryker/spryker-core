@@ -114,7 +114,7 @@ class ProductStorageFacadeTest extends Unit
         );
 
         // Assert
-        $this->assertSame(
+        $this->assertEqualsCanonicalizing(
             $expectedAttributeVariantsMap,
             $attributeVariantsMap,
             'Expected that generated attribute variants map match'
