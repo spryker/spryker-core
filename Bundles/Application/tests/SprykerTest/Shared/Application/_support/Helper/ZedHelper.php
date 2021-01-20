@@ -66,7 +66,7 @@ class ZedHelper extends Module
     {
         $tester = $this->getWebDriver();
 
-        if (static::$alreadyLoggedIn) {
+        if ($this->isLoggedInUser()) {
             return;
         }
 
@@ -87,6 +87,24 @@ class ZedHelper extends Module
     protected function getWebDriver()
     {
         return $this->getModule('WebDriver');
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isLoggedInUser(): bool
+    {
+        if (static::$alreadyLoggedIn) {
+            return true;
+        }
+
+        $tester = $this->getWebDriver();
+
+        $tester->amOnPage('/');
+
+        static::$alreadyLoggedIn = !$this->seeElement('#auth_username');
+
+        return static::$alreadyLoggedIn;
     }
 
     /**
