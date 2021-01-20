@@ -35,14 +35,8 @@ class ProductStorageFacadeTest extends Unit
     protected const IS_SUPER_ATTRIBUTE_KEY = 'is_super';
     protected const ATTRIBUTE_KEY = 'key';
 
-    protected const SUPER_ATTRIBUTE_NAME_PREFIX = 'attribute';
-
-    protected const SUPER_ATTRIBUTE_ONE = 'attribute_1';
-    protected const SUPER_ATTRIBUTE_TWO = 'attribute_2';
-
-    protected const SUPER_ATTRIBUTE_ONE_VALUE = 'value_1';
-    protected const SUPER_ATTRIBUTE_TWO_VALUE = 'value_2';
-    protected const SUPER_ATTRIBUTE_TWO_SECOND_VALUE = 'value_3';
+    protected const FORMAT_SUPER_ATTRIBUTE = 'attribute_%d';
+    protected const FORMAT_SUPER_ATTRIBUTE_VALUE = 'value_%d_%d';
 
     protected const ATTRIBUTE_MAP_KEY = 'attribute_map';
     protected const ATTRIBUTE_VARIANTS_KEY = 'attribute_variants';
@@ -72,31 +66,33 @@ class ProductStorageFacadeTest extends Unit
     /**
      * @dataProvider attributeMapDataProvider
      *
+     * @param int $attributeKeyCount
      * @param bool $isProductAttributesWithSingleValueIncluded
      * @param \Closure $expectedAttributeVariantsMapClosure
      *
      * @return void
      */
     public function testPublishAbstractProductsBuildsCorrectAttributeVariantsMap(
+        int $attributeKeyCount,
         bool $isProductAttributesWithSingleValueIncluded,
         Closure $expectedAttributeVariantsMapClosure
     ): void {
         //Arrange
-        $this->tester->haveProductManagementAttributeEntity([], [
-            static::IS_SUPER_ATTRIBUTE_KEY => true,
-            static::ATTRIBUTE_KEY => static::SUPER_ATTRIBUTE_ONE,
-        ]);
+        $productConcreteAttributes = [];
 
-        $this->tester->haveProductManagementAttributeEntity([], [
-            static::IS_SUPER_ATTRIBUTE_KEY => true,
-            static::ATTRIBUTE_KEY => static::SUPER_ATTRIBUTE_TWO,
-        ]);
+        for ($i = 1; $i <= $attributeKeyCount; $i++) {
+            $superAttributeKey = sprintf(static::FORMAT_SUPER_ATTRIBUTE, $i);
+
+            $this->tester->haveProductManagementAttributeEntity([], [
+                static::IS_SUPER_ATTRIBUTE_KEY => true,
+                static::ATTRIBUTE_KEY => $superAttributeKey,
+            ]);
+
+            $productConcreteAttributes[$superAttributeKey] = sprintf(static::FORMAT_SUPER_ATTRIBUTE_VALUE, $i, 1);
+        }
 
         $productConcreteTransfer1 = $this->tester->haveFullProduct([
-            ProductConcreteTransfer::ATTRIBUTES => [
-                static::SUPER_ATTRIBUTE_ONE => static::SUPER_ATTRIBUTE_ONE_VALUE,
-                static::SUPER_ATTRIBUTE_TWO => static::SUPER_ATTRIBUTE_TWO_VALUE,
-            ],
+            ProductConcreteTransfer::ATTRIBUTES => $productConcreteAttributes,
         ]);
 
         $productConcreteTransfer2 = $this->cloneProductConcrete($productConcreteTransfer1);
@@ -138,16 +134,19 @@ class ProductStorageFacadeTest extends Unit
             ->setIdProductConcrete(null)
             ->setSku(uniqid('SKU', true));
 
-        $attributes = [
-            static::SUPER_ATTRIBUTE_ONE => static::SUPER_ATTRIBUTE_ONE_VALUE,
-            static::SUPER_ATTRIBUTE_TWO => static::SUPER_ATTRIBUTE_TWO_SECOND_VALUE,
-        ];
+        $productConcreteAttributes = $productConcreteTransfer1->getAttributes();
+        $superAttributeKeyNumberToReplace = 2;
+        $productConcreteAttributes[sprintf(static::FORMAT_SUPER_ATTRIBUTE, $superAttributeKeyNumberToReplace)] = sprintf(
+            static::FORMAT_SUPER_ATTRIBUTE_VALUE,
+            $superAttributeKeyNumberToReplace,
+            2
+        );
 
         $productConcreteTransfer2
-            ->setAttributes($attributes)
+            ->setAttributes($productConcreteAttributes)
             ->getLocalizedAttributes()
             ->offsetGet(0)
-            ->setAttributes($attributes);
+            ->setAttributes($productConcreteAttributes);
 
         return $productConcreteTransfer2;
     }
@@ -193,24 +192,25 @@ class ProductStorageFacadeTest extends Unit
     {
         return [
             'attribute map with single values included' => [
-                true,
-                function (int $productConcreteId, int $productConcreteTwoId): array {
+                'attributeKeyCount' => 2,
+                'configValue' => true,
+                'closure' => function (int $productConcreteId, int $productConcreteTwoId): array {
                     return [
-                        'attribute_1:value_1' => [
-                            'attribute_2:value_2' => [
+                        'attribute_1:value_1_1' => [
+                            'attribute_2:value_2_1' => [
                                 'id_product_concrete' => $productConcreteId,
                             ],
-                            'attribute_2:value_3' => [
+                            'attribute_2:value_2_2' => [
                                 'id_product_concrete' => $productConcreteTwoId,
                             ],
                         ],
-                        'attribute_2:value_2' => [
-                            'attribute_1:value_1' => [
+                        'attribute_2:value_2_1' => [
+                            'attribute_1:value_1_1' => [
                                 'id_product_concrete' => $productConcreteId,
                             ],
                         ],
-                        'attribute_2:value_3' => [
-                            'attribute_1:value_1' => [
+                        'attribute_2:value_2_2' => [
+                            'attribute_1:value_1_1' => [
                                 'id_product_concrete' => $productConcreteTwoId,
                             ],
                         ],
@@ -218,13 +218,28 @@ class ProductStorageFacadeTest extends Unit
                 },
             ],
             'attribute map with single values excluded' => [
-                false,
-                function (int $productConcreteId, int $productConcreteTwoId): array {
+                'attributeKeyCount' => 2,
+                'configValue' => false,
+                'closure' => function (int $productConcreteId, int $productConcreteTwoId): array {
                     return [
-                        'attribute_2:value_2' => [
+                        'attribute_2:value_2_1' => [
                             'id_product_concrete' => $productConcreteId,
                         ],
-                        'attribute_2:value_3' => [
+                        'attribute_2:value_2_2' => [
+                            'id_product_concrete' => $productConcreteTwoId,
+                        ],
+                    ];
+                },
+            ],
+            'attribute map with single values excluded (9 super attributes case)' => [
+                'attributeKeyCount' => 9,
+                'configValue' => false,
+                'closure' => function (int $productConcreteId, int $productConcreteTwoId): array {
+                    return [
+                        'attribute_2:value_2_1' => [
+                            'id_product_concrete' => $productConcreteId,
+                        ],
+                        'attribute_2:value_2_2' => [
                             'id_product_concrete' => $productConcreteTwoId,
                         ],
                     ];

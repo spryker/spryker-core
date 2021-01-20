@@ -38,10 +38,7 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
     {
         $productViewTransfer->requireAttributeMap();
 
-        if (
-            count($productViewTransfer->getAttributeMap()->getProductConcreteIds()) === 1 ||
-            count($productViewTransfer->getAttributeMap()->getSuperAttributes()) === 0
-        ) {
+        if ($this->isOnlyOneProductVariantCanBeSelected($productViewTransfer)) {
             return $this->getFirstProductVariant($productViewTransfer, $locale);
         }
 
@@ -70,10 +67,7 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
     ): ProductViewTransfer {
         $productViewTransfer->requireAttributeMap();
 
-        if (
-            count($productViewTransfer->getAttributeMap()->getProductConcreteIds()) === 1 ||
-            count($productViewTransfer->getAttributeMap()->getSuperAttributes()) === 0
-        ) {
+        if ($this->isOnlyOneProductVariantCanBeSelected($productViewTransfer)) {
             return $this->getFirstProductVariant($productViewTransfer, $localeName);
         }
 
@@ -89,6 +83,17 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
         }
 
         return $productViewTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return bool
+     */
+    protected function isOnlyOneProductVariantCanBeSelected(ProductViewTransfer $productViewTransfer): bool
+    {
+        return count($productViewTransfer->getAttributeMap()->getProductConcreteIds()) === 1 ||
+            count($productViewTransfer->getAttributeMap()->getSuperAttributes()) === 0;
     }
 
     /**

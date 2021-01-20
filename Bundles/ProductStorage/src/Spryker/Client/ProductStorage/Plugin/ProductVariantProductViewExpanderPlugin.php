@@ -19,9 +19,9 @@ class ProductVariantProductViewExpanderPlugin extends AbstractPlugin implements 
 {
     /**
      * {@inheritDoc}
-     * - Expands the transfer object with an attribute map and a product variant map.
+     * - Expands the product view with an attribute map and a product variant map.
      * - Marks the product variants with an only one possible value as the selected ones.
-     * - Expands the transfer object with product concrete ID using the values of `selectedAttributes`.
+     * - Expands the product view with product concrete ID using the values of `selectedAttributes`.
      *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param array $productData
