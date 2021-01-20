@@ -23,7 +23,7 @@ class SessionKeyBuilder implements SessionKeyBuilderInterface
      */
     public function buildSessionKey(string $sessionId): string
     {
-        if (mb_strlen($sessionId) >= static::MAX_SESSION_KEY_LENGTH) {
+        if (mb_strlen($sessionId) > static::MAX_SESSION_KEY_LENGTH) {
             $sessionId = mb_substr($sessionId, 0, static::MAX_SESSION_KEY_LENGTH);
         }
 
