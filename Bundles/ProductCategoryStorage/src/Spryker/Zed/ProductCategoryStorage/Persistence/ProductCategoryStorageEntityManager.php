@@ -71,14 +71,13 @@ class ProductCategoryStorageEntityManager extends AbstractEntityManager implemen
         ProductAbstractCategoryStorageTransfer $productAbstractCategoryStorageTransfer
     ): void {
         $productAbstractCategoryStorageEntity = $this->getFactory()
-            ->createProductCategoryStorageMapper()
-            ->mapProductAbstractCategoryStorageEntity(
-                $idProductAbstract,
-                $storeName,
-                $localeName,
-                $productAbstractCategoryStorageTransfer
-            );
+            ->createProductAbstractCategoryStoragePropelQuery()
+            ->filterByFkProductAbstract($idProductAbstract)
+            ->filterByStore($storeName)
+            ->filterByLocale($localeName)
+            ->findOneOrCreate();
 
+        $productAbstractCategoryStorageEntity->setData($productAbstractCategoryStorageTransfer->toArray());
         $productAbstractCategoryStorageEntity->save();
     }
 }

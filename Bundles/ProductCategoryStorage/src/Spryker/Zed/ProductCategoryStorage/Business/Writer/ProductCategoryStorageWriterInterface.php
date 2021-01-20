@@ -28,5 +28,5 @@ interface ProductCategoryStorageWriterInterface
      *
      * @return void
      */
-    public function publish(array $productAbstractIds): void;
+    public function writeCollection(array $productAbstractIds): void;
 }

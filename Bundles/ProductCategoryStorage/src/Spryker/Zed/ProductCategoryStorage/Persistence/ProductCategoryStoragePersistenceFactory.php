@@ -13,6 +13,7 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductCategoryStorage\Persistence\Propel\Mapper\CategoryNodeMapper;
 use Spryker\Zed\ProductCategoryStorage\Persistence\Propel\Mapper\ProductAbstractLocalizedAttributesMapper;
 use Spryker\Zed\ProductCategoryStorage\Persistence\Propel\Mapper\ProductCategoryMapper;
 use Spryker\Zed\ProductCategoryStorage\Persistence\Propel\Mapper\ProductCategoryStorageMapper;
@@ -104,5 +105,13 @@ class ProductCategoryStoragePersistenceFactory extends AbstractPersistenceFactor
     public function createProductAbstractLocalizedAttributesMapper(): ProductAbstractLocalizedAttributesMapper
     {
         return new ProductAbstractLocalizedAttributesMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategoryStorage\Persistence\Propel\Mapper\CategoryNodeMapper
+     */
+    public function createCategoryNodeMapper(): CategoryNodeMapper
+    {
+        return new CategoryNodeMapper();
     }
 }

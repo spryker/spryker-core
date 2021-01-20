@@ -49,4 +49,14 @@
         <property name="idCategoryNode" type="int"/>
     </transfer>
 
+    <transfer name="CategoryNodeAggregation">
+        <property name="idCategoryNode" type="int"/>
+        <property name="idCategoryNodeDescendant" type="int"/>
+        <property name="idCategory" type="int"/>
+        <property name="name" type="string"/>
+        <property name="url" type="string"/>
+        <property name="locale" type="string"/>
+        <property name="store" type="string"/>
+    </transfer>
+
 </transfers>

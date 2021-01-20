@@ -10,9 +10,9 @@ namespace Spryker\Zed\ProductCategoryStorage\Persistence;
 interface ProductCategoryStorageRepositoryInterface
 {
     /**
-     * @return array
+     * @return \Generated\Shared\Transfer\CategoryNodeAggregationTransfer[]
      */
-    public function getAllCategoriesOrderedByDescendant(): array;
+    public function getAllCategoryNodeAggregationsOrderedByDescendant(): array;
 
     /**
      * @return int[]

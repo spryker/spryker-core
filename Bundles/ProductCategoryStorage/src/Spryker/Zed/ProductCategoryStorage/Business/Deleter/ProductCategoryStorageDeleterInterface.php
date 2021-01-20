@@ -21,5 +21,5 @@ interface ProductCategoryStorageDeleterInterface
      *
      * @return void
      */
-    public function unpublish(array $productAbstractIds): void;
+    public function deleteCollection(array $productAbstractIds): void;
 }

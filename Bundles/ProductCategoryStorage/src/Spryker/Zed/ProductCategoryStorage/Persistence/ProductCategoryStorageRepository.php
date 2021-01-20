@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductCategoryStorage\Persistence;
 
+use Generated\Shared\Transfer\CategoryNodeAggregationTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
@@ -23,22 +24,16 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class ProductCategoryStorageRepository extends AbstractRepository implements ProductCategoryStorageRepositoryInterface
 {
-    protected const COL_ID_CATEGORY_NODE = 'id_category_node';
-    protected const COL_FK_CATEGORY_NODE_DESCENDANT = 'fk_category_node_descendant';
     protected const COL_FK_CATEGORY = 'fk_category';
-    protected const COL_NAME = 'name';
-    protected const COL_URL = 'url';
-    protected const COL_LOCALE = 'locale';
-    protected const COL_STORE = 'store';
 
     /**
      * @module Url
      * @module Store
      * @module Locale
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\CategoryNodeAggregationTransfer[]
      */
-    public function getAllCategoriesOrderedByDescendant(): array
+    public function getAllCategoryNodeAggregationsOrderedByDescendant(): array
     {
         $categoryNodeQuery = $this->getFactory()
             ->getCategoryNodePropelQuery()
@@ -68,25 +63,27 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
         $categoryNodeQuery->filterByIsRoot(false);
 
         $categoryNodeQuery
-            ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, static::COL_ID_CATEGORY_NODE)
-            ->withColumn(SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT, static::COL_FK_CATEGORY_NODE_DESCENDANT)
-            ->withColumn(SpyCategoryNodeTableMap::COL_FK_CATEGORY, static::COL_FK_CATEGORY)
-            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, static::COL_NAME)
-            ->withColumn(SpyUrlTableMap::COL_URL, static::COL_URL)
-            ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME, static::COL_LOCALE)
-            ->withColumn(SpyStoreTableMap::COL_NAME, static::COL_STORE);
+            ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, CategoryNodeAggregationTransfer::ID_CATEGORY_NODE)
+            ->withColumn(SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT, CategoryNodeAggregationTransfer::ID_CATEGORY_NODE_DESCENDANT)
+            ->withColumn(SpyCategoryNodeTableMap::COL_FK_CATEGORY, CategoryNodeAggregationTransfer::ID_CATEGORY)
+            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, CategoryNodeAggregationTransfer::NAME)
+            ->withColumn(SpyUrlTableMap::COL_URL, CategoryNodeAggregationTransfer::URL)
+            ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME, CategoryNodeAggregationTransfer::LOCALE)
+            ->withColumn(SpyStoreTableMap::COL_NAME, CategoryNodeAggregationTransfer::STORE);
 
         $categoryNodeQuery->select([
-            static::COL_ID_CATEGORY_NODE,
-            static::COL_FK_CATEGORY_NODE_DESCENDANT,
-            static::COL_FK_CATEGORY,
-            static::COL_NAME,
-            static::COL_URL,
-            static::COL_LOCALE,
-            static::COL_STORE,
+            CategoryNodeAggregationTransfer::ID_CATEGORY_NODE,
+            CategoryNodeAggregationTransfer::ID_CATEGORY_NODE_DESCENDANT,
+            CategoryNodeAggregationTransfer::ID_CATEGORY,
+            CategoryNodeAggregationTransfer::NAME,
+            CategoryNodeAggregationTransfer::URL,
+            CategoryNodeAggregationTransfer::LOCALE,
+            CategoryNodeAggregationTransfer::STORE,
         ]);
 
-        return $categoryNodeQuery->find()->getData();
+        return $this->getFactory()
+            ->createCategoryNodeMapper()
+            ->mapCategoryNodesToCategoryNodeAggregationTransfers($categoryNodeQuery->find(), []);
     }
 
     /**

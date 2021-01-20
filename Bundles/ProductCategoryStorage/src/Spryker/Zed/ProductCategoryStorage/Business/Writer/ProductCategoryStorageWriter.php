@@ -8,14 +8,11 @@
 namespace Spryker\Zed\ProductCategoryStorage\Business\Writer;
 
 use ArrayObject;
-use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
 use Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer;
-use Generated\Shared\Transfer\ProductCategoryStorageTransfer;
-use Generated\Shared\Transfer\ProductCategoryTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryStoreTableMap;
-use Spryker\Zed\ProductCategoryStorage\Business\Loader\CategoryTreeLoaderInterface;
 use Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductAbstractReaderInterface;
+use Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductCategoryStorageReaderInterface;
 use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToStoreFacadeInterface;
 use Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageEntityManagerInterface;
@@ -23,36 +20,6 @@ use Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageReposit
 
 class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterface
 {
-    /**
-     * @uses \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepository::COL_ID_CATEGORY_NODE
-     */
-    protected const COL_ID_CATEGORY_NODE = 'id_category_node';
-
-    /**
-     * @uses \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepository::COL_FK_CATEGORY
-     */
-    protected const COL_FK_CATEGORY = 'fk_category';
-
-    /**
-     * @uses \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepository::COL_URL
-     */
-    protected const COL_URL = 'url';
-
-    /**
-     * @uses \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepository::COL_NAME
-     */
-    protected const COL_NAME = 'name';
-
-    /**
-     * @uses \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepository::COL_LOCALE
-     */
-    protected const COL_LOCALE = 'locale';
-
-    /**
-     * @uses \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepository::COL_STORE
-     */
-    protected const COL_STORE = 'store';
-
     /**
      * @var \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepositoryInterface
      */
@@ -79,14 +46,9 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     protected $productAbstractReader;
 
     /**
-     * @var \Spryker\Zed\ProductCategoryStorage\Business\Loader\CategoryTreeLoaderInterface
+     * @var \Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductCategoryStorageReaderInterface
      */
-    protected $categoryTreeLoader;
-
-    /**
-     * @var array|null
-     */
-    protected static $categoryTree;
+    protected $productCategoryStorageReader;
 
     /**
      * @param \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepositoryInterface $productCategoryStorageRepository
@@ -94,7 +56,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
      * @param \Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
      * @param \Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductAbstractReaderInterface $productAbstractReader
-     * @param \Spryker\Zed\ProductCategoryStorage\Business\Loader\CategoryTreeLoaderInterface $categoryTreeLoader
+     * @param \Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductCategoryStorageReaderInterface $productCategoryStorageReader
      */
     public function __construct(
         ProductCategoryStorageRepositoryInterface $productCategoryStorageRepository,
@@ -102,14 +64,14 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
         ProductCategoryStorageToStoreFacadeInterface $storeFacade,
         ProductCategoryStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
         ProductAbstractReaderInterface $productAbstractReader,
-        CategoryTreeLoaderInterface $categoryTreeLoader
+        ProductCategoryStorageReaderInterface $productCategoryStorageReader
     ) {
         $this->productCategoryStorageRepository = $productCategoryStorageRepository;
         $this->productCategoryStorageEntityManager = $productCategoryStorageEntityManager;
         $this->storeFacade = $storeFacade;
         $this->eventBehaviorFacade = $eventBehaviorFacade;
         $this->productAbstractReader = $productAbstractReader;
-        $this->categoryTreeLoader = $categoryTreeLoader;
+        $this->productCategoryStorageReader = $productCategoryStorageReader;
     }
 
     /**
@@ -236,7 +198,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
         string $localeName
     ): void {
         $idProductAbstract = $productAbstractLocalizedAttributesTransfer->getIdProductAbstract();
-        $relatedProductCategoryTransfers = $this->getRelatedProductCategoriesFromCategoryTree(
+        $productCategoryStorageTransfers = $this->productCategoryStorageReader->getProductCategoryStoragesFromCategoryTree(
             $productCategoryTransfers[$idProductAbstract] ?? [],
             $storeName,
             $localeName
@@ -250,20 +212,20 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
             unset($productAbstractCategoryStorageTransfers[$idProductAbstract][$storeName][$localeName]);
         }
 
-        if (!count($relatedProductCategoryTransfers)) {
-            if ($productAbstractCategoryStorageTransfer) {
-                $this->productCategoryStorageEntityManager->deleteProductAbstractCategoryStorage(
-                    $idProductAbstract,
-                    $storeName,
-                    $localeName
-                );
-            }
+        if (!count($productCategoryStorageTransfers) && $productAbstractCategoryStorageTransfer) {
+            $this->productCategoryStorageEntityManager->deleteProductAbstractCategoryStorage(
+                $idProductAbstract,
+                $storeName,
+                $localeName
+            );
+        }
 
+        if (!count($productCategoryStorageTransfers)) {
             return;
         }
 
         $productAbstractCategoryStorageTransfer = (new ProductAbstractCategoryStorageTransfer())
-            ->setCategories((new ArrayObject($relatedProductCategoryTransfers)))
+            ->setCategories((new ArrayObject($productCategoryStorageTransfers)))
             ->setIdProductAbstract($idProductAbstract);
 
         $this->productCategoryStorageEntityManager->saveProductAbstractCategoryStorage(
@@ -314,74 +276,6 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductCategoryTransfer[] $productCategoryTransfers
-     * @param string $storeName
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\ProductCategoryStorageTransfer[]
-     */
-    protected function getRelatedProductCategoriesFromCategoryTree(
-        array $productCategoryTransfers,
-        string $storeName,
-        string $localeName
-    ): array {
-        $relatedProductCategoryTransfers = [];
-
-        foreach ($productCategoryTransfers as $productCategoryTransfer) {
-            $relatedProductCategoryTransfers[] = $this->generateProductCategoryStorageTransfers($productCategoryTransfer, $storeName, $localeName);
-        }
-
-        return array_merge(...$relatedProductCategoryTransfers);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductCategoryTransfer $productCategoryTransfer
-     * @param string $storeName
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\ProductCategoryStorageTransfer[]
-     */
-    protected function generateProductCategoryStorageTransfers(
-        ProductCategoryTransfer $productCategoryTransfer,
-        string $storeName,
-        string $localeName
-    ): array {
-        $productCategoryTransfers = [];
-
-        foreach ($productCategoryTransfer->getCategory()->getNodeCollection()->getNodes() as $nodeTransfer) {
-            $productCategories = $this->extractProductCategoriesFromCategoryTree($nodeTransfer, $storeName, $localeName);
-
-            $productCategoryTransfers[] = $this->mapProductCategoryStorageTransfers($productCategories);
-        }
-
-        return array_merge(...$productCategoryTransfers);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     * @param string $storeName
-     * @param string $localeName
-     *
-     * @return array
-     */
-    protected function extractProductCategoriesFromCategoryTree(
-        NodeTransfer $nodeTransfer,
-        string $storeName,
-        string $localeName
-    ): array {
-        $productCategories = [];
-        $categoryPaths = $this->getCategoriesFromCategoryTree($nodeTransfer->getIdCategoryNode());
-
-        foreach ($categoryPaths as $idCategoryNode => $categoryPath) {
-            if ($categoryPath[static::COL_STORE] === $storeName && $categoryPath[static::COL_LOCALE] === $localeName) {
-                $productCategories[] = $categoryPath;
-            }
-        }
-
-        return $productCategories;
-    }
-
-    /**
      * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\ProductCategoryTransfer[][]
@@ -400,20 +294,6 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     }
 
     /**
-     * @param int $idCategoryNode
-     *
-     * @return array
-     */
-    protected function getCategoriesFromCategoryTree(int $idCategoryNode): array
-    {
-        if (static::$categoryTree === null) {
-            static::$categoryTree = $this->categoryTreeLoader->loadCategoryTree();
-        }
-
-        return static::$categoryTree[$idCategoryNode] ?? [];
-    }
-
-    /**
      * @return string[][]
      */
     protected function getLocaleNameMapByStoreName(): array
@@ -426,25 +306,5 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
         }
 
         return $localeNameMapByStoreName;
-    }
-
-    /**
-     * @param array $productCategories
-     *
-     * @return \Generated\Shared\Transfer\ProductCategoryStorageTransfer[]
-     */
-    protected function mapProductCategoryStorageTransfers(array $productCategories): array
-    {
-        $productCategoryTransfers = [];
-
-        foreach ($productCategories as $productCategory) {
-            $productCategoryTransfers[] = (new ProductCategoryStorageTransfer())
-                ->setCategoryNodeId((int)$productCategory[static::COL_ID_CATEGORY_NODE])
-                ->setCategoryId((int)$productCategory[static::COL_FK_CATEGORY])
-                ->setUrl($productCategory[static::COL_URL])
-                ->setName($productCategory[static::COL_NAME]);
-        }
-
-        return $productCategoryTransfers;
     }
 }

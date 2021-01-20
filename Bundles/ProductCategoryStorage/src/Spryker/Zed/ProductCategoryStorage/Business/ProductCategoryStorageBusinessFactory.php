@@ -8,12 +8,14 @@
 namespace Spryker\Zed\ProductCategoryStorage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductCategoryStorage\Business\Builder\CategoryTreeBuilder;
+use Spryker\Zed\ProductCategoryStorage\Business\Builder\CategoryTreeBuilderInterface;
 use Spryker\Zed\ProductCategoryStorage\Business\Deleter\ProductCategoryStorageDeleter;
 use Spryker\Zed\ProductCategoryStorage\Business\Deleter\ProductCategoryStorageDeleterInterface;
-use Spryker\Zed\ProductCategoryStorage\Business\Loader\CategoryTreeLoader;
-use Spryker\Zed\ProductCategoryStorage\Business\Loader\CategoryTreeLoaderInterface;
 use Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductAbstractReader;
 use Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductAbstractReaderInterface;
+use Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductCategoryStorageReader;
+use Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductCategoryStorageReaderInterface;
 use Spryker\Zed\ProductCategoryStorage\Business\Writer\ProductCategoryStorageWriter;
 use Spryker\Zed\ProductCategoryStorage\Business\Writer\ProductCategoryStorageWriterInterface;
 use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToCategoryInterface;
@@ -40,7 +42,7 @@ class ProductCategoryStorageBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->getEventBehaviorFacade(),
             $this->createProductAbstractReader(),
-            $this->createCategoryTreeLoader()
+            $this->createProductCategoryStorageReader()
         );
     }
 
@@ -69,11 +71,21 @@ class ProductCategoryStorageBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductCategoryStorage\Business\Loader\CategoryTreeLoaderInterface
+     * @return \Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductCategoryStorageReaderInterface
      */
-    public function createCategoryTreeLoader(): CategoryTreeLoaderInterface
+    public function createProductCategoryStorageReader(): ProductCategoryStorageReaderInterface
     {
-        return new CategoryTreeLoader(
+        return new ProductCategoryStorageReader(
+            $this->createCategoryTreeBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategoryStorage\Business\Builder\CategoryTreeBuilderInterface
+     */
+    public function createCategoryTreeBuilder(): CategoryTreeBuilderInterface
+    {
+        return new CategoryTreeBuilder(
             $this->getRepository()
         );
     }
