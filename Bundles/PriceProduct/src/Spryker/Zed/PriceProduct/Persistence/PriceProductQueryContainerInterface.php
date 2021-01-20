@@ -18,6 +18,9 @@ interface PriceProductQueryContainerInterface
     public const COL_NET_PRICE = 'net_price';
 
     /**
+     * Specification:
+     * TODO: Add method specification.
+     *
      * @api
      *
      * @param string $name
@@ -27,6 +30,9 @@ interface PriceProductQueryContainerInterface
     public function queryPriceType($name): SpyPriceTypeQuery;
 
     /**
+     * Specification:
+     * TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceTypeQuery
@@ -34,6 +40,9 @@ interface PriceProductQueryContainerInterface
     public function queryAllPriceTypes(): SpyPriceTypeQuery;
 
     /**
+     * Specification:
+     * TODO: Add method specification.
+     *
      * @api
      *
      * @param string $sku
@@ -44,6 +53,9 @@ interface PriceProductQueryContainerInterface
     public function queryPriceEntityForProductAbstract($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): SpyPriceProductQuery;
 
     /**
+     * Specification:
+     * TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idAbstractProduct
@@ -57,6 +69,9 @@ interface PriceProductQueryContainerInterface
     ): SpyPriceProductStoreQuery;
 
     /**
+     * Specification:
+     * TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idPriceProduct
@@ -68,6 +83,9 @@ interface PriceProductQueryContainerInterface
     public function queryPriceProductStoreByProductCurrencyStore($idPriceProduct, $idCurrency, $idStore): SpyPriceProductStoreQuery;
 
     /**
+     * Specification:
+     * TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idPriceProductStore
@@ -77,6 +95,9 @@ interface PriceProductQueryContainerInterface
     public function queryPriceProductStoreById($idPriceProductStore): SpyPriceProductStoreQuery;
 
     /**
+     * Specification:
+     * TODO: Add method specification.
+     *
      * @api
      *
      * @param string $sku
@@ -87,6 +108,9 @@ interface PriceProductQueryContainerInterface
     public function queryPricesForProductAbstractBySkuForStore($sku, $idStore): SpyPriceProductQuery;
 
     /**
+     * Specification:
+     * TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -96,6 +120,9 @@ interface PriceProductQueryContainerInterface
     public function queryPricesForProductAbstractById($idProductAbstract): SpyPriceProductQuery;
 
     /**
+     * Specification:
+     * TODO: Add method specification.
+     *
      * @api
 
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
@@ -103,6 +130,9 @@ interface PriceProductQueryContainerInterface
     public function queryPriceProduct();
 
     /**
+     * Specification:
+     * TODO: Add method specification.
+     *
      * @api
      *
      * @param string $sku
@@ -113,6 +143,9 @@ interface PriceProductQueryContainerInterface
     public function queryPriceEntityForProductConcrete($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): SpyPriceProductQuery;
 
     /**
+     * Specification:
+     * TODO: Add method specification.
+     *
      * @api
      *
      * @param string $sku
@@ -123,6 +156,9 @@ interface PriceProductQueryContainerInterface
     public function queryPricesForProductConcreteBySkuForStore($sku, $idStore): SpyPriceProductQuery;
 
     /**
+     * Specification:
+     * TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductConcrete
@@ -132,6 +168,9 @@ interface PriceProductQueryContainerInterface
     public function queryPricesForProductConcreteById($idProductConcrete): SpyPriceProductQuery;
 
     /**
+     * Specification:
+     * TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idPriceProduct
@@ -141,6 +180,9 @@ interface PriceProductQueryContainerInterface
     public function queryPriceProductEntity($idPriceProduct): SpyPriceProductQuery;
 
     /**
+     * Specification:
+     * TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductConcrete
@@ -151,6 +193,9 @@ interface PriceProductQueryContainerInterface
     public function queryPriceProductForConcreteProductBy($idProductConcrete, $idPriceType): SpyPriceProductQuery;
 
     /**
+     * Specification:
+     * TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductAbstract
