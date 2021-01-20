@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductCategoryStorage\Business\Deleter;
 use Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductAbstractReaderInterface;
 use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageEntityManagerInterface;
-use Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepositoryInterface;
 
 class ProductCategoryStorageDeleter implements ProductCategoryStorageDeleterInterface
 {
@@ -18,11 +17,6 @@ class ProductCategoryStorageDeleter implements ProductCategoryStorageDeleterInte
      * @var \Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToEventBehaviorFacadeInterface
      */
     protected $eventBehaviorFacade;
-
-    /**
-     * @var \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepositoryInterface
-     */
-    protected $productCategoryStorageRepository;
 
     /**
      * @var \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageEntityManagerInterface
@@ -36,18 +30,15 @@ class ProductCategoryStorageDeleter implements ProductCategoryStorageDeleterInte
 
     /**
      * @param \Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
-     * @param \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepositoryInterface $productCategoryStorageRepository
      * @param \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageEntityManagerInterface $productCategoryStorageEntityManager
      * @param \Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductAbstractReaderInterface $productAbstractReader
      */
     public function __construct(
         ProductCategoryStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
-        ProductCategoryStorageRepositoryInterface $productCategoryStorageRepository,
         ProductCategoryStorageEntityManagerInterface $productCategoryStorageEntityManager,
         ProductAbstractReaderInterface $productAbstractReader
     ) {
         $this->eventBehaviorFacade = $eventBehaviorFacade;
-        $this->productCategoryStorageRepository = $productCategoryStorageRepository;
         $this->productCategoryStorageEntityManager = $productCategoryStorageEntityManager;
         $this->productAbstractReader = $productAbstractReader;
     }

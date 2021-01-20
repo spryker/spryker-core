@@ -53,7 +53,6 @@ class ProductCategoryStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductCategoryStorageDeleter(
             $this->getEventBehaviorFacade(),
-            $this->getRepository(),
             $this->getEntityManager(),
             $this->createProductAbstractReader()
         );
