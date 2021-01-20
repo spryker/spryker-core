@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\CustomersRestApi\Controller;
 
-use Generated\Shared\Transfer\RestCustomerPasswordAttributesTransfer;
+use Generated\Shared\Transfer\RestCustomerConfirmationAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
@@ -15,37 +15,36 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 /**
  * @method \Spryker\Glue\CustomersRestApi\CustomersRestApiFactory getFactory()
  */
-class CustomerPasswordResourceController extends AbstractController
+class CustomerConfirmationResourceController extends AbstractController
 {
     /**
      * @Glue({
-     *     "patch": {
+     *     "post": {
      *          "summary": [
-     *              "Updates customer password."
+     *              "Confirms customer registration."
      *          ],
      *          "parameters": [{
      *              "ref": "acceptLanguage"
      *          }],
-     *          "isEmptyResponse": true,
      *          "responses": {
-     *              "400": "Passwords don't match.",
-     *              "404": "Customer not found.",
-     *              "403": "Customer unauthorized.",
-     *              "406": "Invalid password.",
-     *              "422": "Unprocessable entity"
-     *          }
+     *              "204": "No content.",
+     *              "422": "This email confirmation code is invalid or has been already used."
+     *          },
+     *          "isEmptyResponse": true
      *     }
      * })
      *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestCustomerPasswordAttributesTransfer $passwordAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCustomerConfirmationAttributesTransfer $restCustomerConfirmationAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function patchAction(RestRequestInterface $restRequest, RestCustomerPasswordAttributesTransfer $passwordAttributesTransfer): RestResponseInterface
-    {
+    public function postAction(
+        RestRequestInterface $restRequest,
+        RestCustomerConfirmationAttributesTransfer $restCustomerConfirmationAttributesTransfer
+    ): RestResponseInterface {
         return $this->getFactory()
-            ->createCustomerWriter()
-            ->updateCustomerPassword($restRequest, $passwordAttributesTransfer);
+            ->createCustomerActivator()
+            ->confirmCustomer($restRequest);
     }
 }
