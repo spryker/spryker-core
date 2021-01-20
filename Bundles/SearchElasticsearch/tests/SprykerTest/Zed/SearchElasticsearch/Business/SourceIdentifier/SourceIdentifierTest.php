@@ -24,7 +24,7 @@ use Spryker\Zed\SearchElasticsearch\Business\SourceIdentifier\SourceIdentifier;
 class SourceIdentifierTest extends Unit
 {
     /**
-     * @dataProvider canTranslateSourceIdentifierToValidIndexNameDataProvider
+     * @dataProvider sourceIdentifierTranslationDataProvider
      *
      * @param string|null $expectedIndexName
      * @param string $sourceIdentifier
@@ -50,7 +50,7 @@ class SourceIdentifierTest extends Unit
     /**
      * @return array
      */
-    public function canTranslateSourceIdentifierToValidIndexNameDataProvider(): array
+    public function sourceIdentifierTranslationDataProvider(): array
     {
         return [
             'no store prefix' => [

@@ -13,6 +13,8 @@ class SourceIdentifier implements SourceIdentifierInterface
 {
     protected const STORE_PREFIX_DELIMITER = '_';
 
+    protected const INVALID_SOURCE_IDENTIFIER_MESSAGE_TEMPLATE = 'Provided source identifier `%s` is not supported or cannot be installed for store `%s`.';
+
     /**
      * @var string[]
      */
@@ -38,7 +40,7 @@ class SourceIdentifier implements SourceIdentifierInterface
         if (!$this->isSupported($sourceIdentifier)) {
             throw new InvalidSourceIdentifierException(
                 sprintf(
-                    'Provided source identifier `%s` is not supported or cannot be installed for store `%s`.',
+                    static::INVALID_SOURCE_IDENTIFIER_MESSAGE_TEMPLATE,
                     $sourceIdentifier,
                     $this->getCurrentStore()
                 )
@@ -61,7 +63,7 @@ class SourceIdentifier implements SourceIdentifierInterface
     {
         $configSourceIdentifier = $this->getMatchingConfigSourceIdentifier($sourceIdentifier);
 
-        if (!$configSourceIdentifier) {
+        if ($configSourceIdentifier === null) {
             return false;
         }
 
@@ -79,10 +81,24 @@ class SourceIdentifier implements SourceIdentifierInterface
     /**
      * @param string $sourceIdentifier
      *
+     * @throws \Spryker\Zed\SearchElasticsearch\Business\Exception\InvalidSourceIdentifierException
+     *
      * @return bool
      */
     public function isPrefixedWithStoreName(string $sourceIdentifier): bool
     {
+        $configSourceIdentifier = $this->getMatchingConfigSourceIdentifier($sourceIdentifier);
+
+        if ($configSourceIdentifier === null) {
+            throw new InvalidSourceIdentifierException(
+                sprintf(
+                    static::INVALID_SOURCE_IDENTIFIER_MESSAGE_TEMPLATE,
+                    $sourceIdentifier,
+                    $this->getCurrentStore()
+                )
+            );
+        }
+
         return mb_strpos($sourceIdentifier, $this->getMatchingConfigSourceIdentifier($sourceIdentifier)) > 0;
     }
 
@@ -105,9 +121,9 @@ class SourceIdentifier implements SourceIdentifierInterface
     /**
      * @param string $sourceIdentifier
      *
-     * @return string
+     * @return string|null
      */
-    protected function getMatchingConfigSourceIdentifier(string $sourceIdentifier): string
+    protected function getMatchingConfigSourceIdentifier(string $sourceIdentifier): ?string
     {
         foreach ($this->supportedSourceIdentifiers as $supportedSourceIdentifier) {
             if (preg_match(sprintf('/(.+%s)?%s$/', static::STORE_PREFIX_DELIMITER, $supportedSourceIdentifier), $sourceIdentifier)) {
@@ -115,7 +131,7 @@ class SourceIdentifier implements SourceIdentifierInterface
             }
         }
 
-        return '';
+        return null;
     }
 
     /**
