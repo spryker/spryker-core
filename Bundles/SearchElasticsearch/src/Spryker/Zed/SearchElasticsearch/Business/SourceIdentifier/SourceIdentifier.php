@@ -61,7 +61,7 @@ class SourceIdentifier implements SourceIdentifierInterface
      */
     public function isSupported(string $sourceIdentifier): bool
     {
-        $configSourceIdentifier = $this->getMatchingConfigSourceIdentifier($sourceIdentifier);
+        $configSourceIdentifier = $this->findMatchingConfigSourceIdentifier($sourceIdentifier);
 
         if ($configSourceIdentifier === null) {
             return false;
@@ -87,7 +87,7 @@ class SourceIdentifier implements SourceIdentifierInterface
      */
     public function isPrefixedWithStoreName(string $sourceIdentifier): bool
     {
-        $configSourceIdentifier = $this->getMatchingConfigSourceIdentifier($sourceIdentifier);
+        $configSourceIdentifier = $this->findMatchingConfigSourceIdentifier($sourceIdentifier);
 
         if ($configSourceIdentifier === null) {
             throw new InvalidSourceIdentifierException(
@@ -99,7 +99,7 @@ class SourceIdentifier implements SourceIdentifierInterface
             );
         }
 
-        return mb_strpos($sourceIdentifier, $this->getMatchingConfigSourceIdentifier($sourceIdentifier)) > 0;
+        return mb_strpos($sourceIdentifier, $this->findMatchingConfigSourceIdentifier($sourceIdentifier)) > 0;
     }
 
     /**
