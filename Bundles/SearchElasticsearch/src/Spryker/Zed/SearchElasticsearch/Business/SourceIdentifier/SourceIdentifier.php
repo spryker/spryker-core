@@ -123,7 +123,7 @@ class SourceIdentifier implements SourceIdentifierInterface
      *
      * @return string|null
      */
-    protected function getMatchingConfigSourceIdentifier(string $sourceIdentifier): ?string
+    protected function findMatchingConfigSourceIdentifier(string $sourceIdentifier): ?string
     {
         foreach ($this->supportedSourceIdentifiers as $supportedSourceIdentifier) {
             if (preg_match(sprintf('/(.+%s)?%s$/', static::STORE_PREFIX_DELIMITER, $supportedSourceIdentifier), $sourceIdentifier)) {
