@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\ProductPageSearch\Elasticsearch;
+namespace Spryker\Zed\ProductCategorySearch\Communication\Plugin\ProductCategorySearch\Elasticsearch;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
@@ -14,17 +14,18 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapExpanderPluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\ProductCategorySearch\Communication\Plugin\ProductCategorySearch\Elasticsearch\ProductCategoryMapExpanderPlugin} instead.
- *
- * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
- * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
+ * @method \Spryker\Zed\ProductCategorySearch\Communication\ProductCategorySearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductCategorySearch\Business\ProductCategorySearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductCategorySearch\ProductCategorySearchConfig getConfig()
  */
 class ProductCategoryMapExpanderPlugin extends AbstractPlugin implements ProductAbstractMapExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
+     * - Expands PageMapTransfer with category map data.
+     * - Expands PageMapTransfer with full text search data.
+     * - Expands PageMapTransfer with sorting data.
+     * - Returns expanded PageMapTransfer.
      *
      * @api
      *
