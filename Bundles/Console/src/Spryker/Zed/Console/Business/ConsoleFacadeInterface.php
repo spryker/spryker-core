@@ -13,7 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 interface ConsoleFacadeInterface
 {
     /**
-     * Specification
+     * Specification:
      * - Returns an array of console commands
      *
      * @api
@@ -23,7 +23,7 @@ interface ConsoleFacadeInterface
     public function getConsoleCommands();
 
     /**
-     * Specification
+     * Specification:
      * - Returns an array of event subscribers.
      *
      * @api

@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface ItemCountPluginInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

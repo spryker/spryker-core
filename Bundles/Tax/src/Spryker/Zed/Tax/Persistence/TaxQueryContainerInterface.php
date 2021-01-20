@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface TaxQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $id
@@ -22,6 +25,9 @@ interface TaxQueryContainerInterface extends QueryContainerInterface
     public function queryTaxRate($id);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxRateQuery
@@ -29,6 +35,9 @@ interface TaxQueryContainerInterface extends QueryContainerInterface
     public function queryAllTaxRates();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $id
@@ -38,6 +47,9 @@ interface TaxQueryContainerInterface extends QueryContainerInterface
     public function queryTaxSet($id);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
@@ -45,6 +57,9 @@ interface TaxQueryContainerInterface extends QueryContainerInterface
     public function queryAllTaxSets();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
@@ -54,6 +69,9 @@ interface TaxQueryContainerInterface extends QueryContainerInterface
     public function joinTaxRates(ModelCriteria $expandableQuery);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $name

@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface ProductAttributeQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery
@@ -19,6 +22,9 @@ interface ProductAttributeQueryContainerInterface extends QueryContainerInterfac
     public function queryProductManagementAttribute();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery
@@ -26,6 +32,9 @@ interface ProductAttributeQueryContainerInterface extends QueryContainerInterfac
     public function queryProductManagementAttributeValue();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
@@ -33,6 +42,9 @@ interface ProductAttributeQueryContainerInterface extends QueryContainerInterfac
     public function queryProductAttributeKey();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string[] $keys
@@ -42,6 +54,9 @@ interface ProductAttributeQueryContainerInterface extends QueryContainerInterfac
     public function queryProductAttributeKeyByKeys(array $keys);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery
@@ -49,6 +64,9 @@ interface ProductAttributeQueryContainerInterface extends QueryContainerInterfac
     public function queryProductManagementAttributeValueQuery();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueTranslationQuery
@@ -56,6 +74,9 @@ interface ProductAttributeQueryContainerInterface extends QueryContainerInterfac
     public function queryProductManagementAttributeValueTranslation();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $attributeKeys
@@ -65,6 +86,9 @@ interface ProductAttributeQueryContainerInterface extends QueryContainerInterfac
     public function queryMetaAttributesByKeys(array $attributeKeys);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $searchText
@@ -75,6 +99,9 @@ interface ProductAttributeQueryContainerInterface extends QueryContainerInterfac
     public function querySuggestKeys($searchText, $limit = 10);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductManagementAttribute
@@ -94,6 +121,9 @@ interface ProductAttributeQueryContainerInterface extends QueryContainerInterfac
     );
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $searchText
@@ -104,6 +134,9 @@ interface ProductAttributeQueryContainerInterface extends QueryContainerInterfac
     public function queryUnusedProductAttributeKeys($searchText = '', $limit = 10);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductManagementAttribute
@@ -113,6 +146,9 @@ interface ProductAttributeQueryContainerInterface extends QueryContainerInterfac
     public function queryProductManagementAttributeValueTranslationById($idProductManagementAttribute);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $attributes
@@ -123,6 +159,9 @@ interface ProductAttributeQueryContainerInterface extends QueryContainerInterfac
     public function queryAttributeValues(array $attributes = [], $isSuper = null);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductManagementAttribute
@@ -132,6 +171,9 @@ interface ProductAttributeQueryContainerInterface extends QueryContainerInterfac
     public function queryProductManagementAttributeById($idProductManagementAttribute);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery
@@ -139,6 +181,9 @@ interface ProductAttributeQueryContainerInterface extends QueryContainerInterfac
     public function queryProductAttributeCollection();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductManagementAttribute

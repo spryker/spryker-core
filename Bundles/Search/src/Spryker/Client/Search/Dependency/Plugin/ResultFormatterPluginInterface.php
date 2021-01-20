@@ -23,13 +23,19 @@ if (false) {
     interface ResultFormatterPluginInterface
     {
         /**
-         * @api
+         * Specification:
+         * - TODO: Add method specification.
+         *
+          * @api
          *
          * @return string
          */
         public function getName();
 
         /**
+         * Specification:
+         * - TODO: Add method specification.
+         *
          * @api
          *
          * @param mixed $searchResult

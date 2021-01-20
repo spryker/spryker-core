@@ -19,7 +19,7 @@ interface PriceProductQueryContainerInterface
 
     /**
      * Specification:
-     * TODO: Add method specification.
+     * - TODO: Add method specification.
      *
      * @api
      *
@@ -31,7 +31,7 @@ interface PriceProductQueryContainerInterface
 
     /**
      * Specification:
-     * TODO: Add method specification.
+     * - TODO: Add method specification.
      *
      * @api
      *
@@ -41,7 +41,7 @@ interface PriceProductQueryContainerInterface
 
     /**
      * Specification:
-     * TODO: Add method specification.
+     * - TODO: Add method specification.
      *
      * @api
      *
@@ -54,7 +54,7 @@ interface PriceProductQueryContainerInterface
 
     /**
      * Specification:
-     * TODO: Add method specification.
+     * - TODO: Add method specification.
      *
      * @api
      *
@@ -70,7 +70,7 @@ interface PriceProductQueryContainerInterface
 
     /**
      * Specification:
-     * TODO: Add method specification.
+     * - TODO: Add method specification.
      *
      * @api
      *
@@ -84,7 +84,7 @@ interface PriceProductQueryContainerInterface
 
     /**
      * Specification:
-     * TODO: Add method specification.
+     * - TODO: Add method specification.
      *
      * @api
      *
@@ -96,7 +96,7 @@ interface PriceProductQueryContainerInterface
 
     /**
      * Specification:
-     * TODO: Add method specification.
+     * - TODO: Add method specification.
      *
      * @api
      *
@@ -109,7 +109,7 @@ interface PriceProductQueryContainerInterface
 
     /**
      * Specification:
-     * TODO: Add method specification.
+     * - TODO: Add method specification.
      *
      * @api
      *
@@ -121,7 +121,7 @@ interface PriceProductQueryContainerInterface
 
     /**
      * Specification:
-     * TODO: Add method specification.
+     * - TODO: Add method specification.
      *
      * @api
 
@@ -131,7 +131,7 @@ interface PriceProductQueryContainerInterface
 
     /**
      * Specification:
-     * TODO: Add method specification.
+     * - TODO: Add method specification.
      *
      * @api
      *
@@ -144,7 +144,7 @@ interface PriceProductQueryContainerInterface
 
     /**
      * Specification:
-     * TODO: Add method specification.
+     * - TODO: Add method specification.
      *
      * @api
      *
@@ -157,7 +157,7 @@ interface PriceProductQueryContainerInterface
 
     /**
      * Specification:
-     * TODO: Add method specification.
+     * - TODO: Add method specification.
      *
      * @api
      *
@@ -169,7 +169,7 @@ interface PriceProductQueryContainerInterface
 
     /**
      * Specification:
-     * TODO: Add method specification.
+     * - TODO: Add method specification.
      *
      * @api
      *
@@ -181,7 +181,7 @@ interface PriceProductQueryContainerInterface
 
     /**
      * Specification:
-     * TODO: Add method specification.
+     * - TODO: Add method specification.
      *
      * @api
      *
@@ -194,7 +194,7 @@ interface PriceProductQueryContainerInterface
 
     /**
      * Specification:
-     * TODO: Add method specification.
+     * - TODO: Add method specification.
      *
      * @api
      *

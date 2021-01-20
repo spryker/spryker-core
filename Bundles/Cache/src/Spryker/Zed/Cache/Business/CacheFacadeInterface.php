@@ -10,6 +10,9 @@ namespace Spryker\Zed\Cache\Business;
 interface CacheFacadeInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use {@link emptyCache()} instead
@@ -49,6 +52,9 @@ interface CacheFacadeInterface
     public function emptyDefaultCodeBucketCache(): string;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use {@link emptyAutoLoaderCache()} instead

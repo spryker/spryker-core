@@ -78,6 +78,9 @@ interface DevelopmentFacadeInterface
     public function runPhpMd($module, array $options = []);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @internal
@@ -91,6 +94,9 @@ interface DevelopmentFacadeInterface
     public function createBridge($module, $toModule, array $methods);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use Spryk tool instead.
@@ -118,6 +124,9 @@ interface DevelopmentFacadeInterface
     public function showOutgoingDependenciesForModule(ModuleTransfer $moduleTransfer, ?string $dependencyType = null): DependencyCollectionTransfer;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @internal
@@ -129,6 +138,9 @@ interface DevelopmentFacadeInterface
     public function showIncomingDependenciesForModule($moduleName);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use {@link getModules()} instead.
@@ -138,6 +150,9 @@ interface DevelopmentFacadeInterface
     public function getAllModules();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use {@link getAllModules()} instead.
@@ -170,6 +185,9 @@ interface DevelopmentFacadeInterface
     public function calculateStability();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string|bool $moduleToView
@@ -181,6 +199,9 @@ interface DevelopmentFacadeInterface
     public function drawOutgoingDependencyTreeGraph($moduleToView, array $excludedModules = [], $showIncomingDependencies = false);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string|bool $moduleToView
@@ -190,6 +211,9 @@ interface DevelopmentFacadeInterface
     public function drawDetailedDependencyTreeGraph($moduleToView);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param bool $showEngineModule
@@ -200,6 +224,9 @@ interface DevelopmentFacadeInterface
     public function drawSimpleDependencyTreeGraph($showEngineModule, $moduleToView);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $moduleToView
@@ -209,6 +236,9 @@ interface DevelopmentFacadeInterface
     public function drawExternalDependencyTreeGraph($moduleToView);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return array
@@ -216,6 +246,9 @@ interface DevelopmentFacadeInterface
     public function getAdjacencyMatrixData();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return array
@@ -223,6 +256,9 @@ interface DevelopmentFacadeInterface
     public function getDependencyViolations();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return string[]
@@ -230,6 +266,9 @@ interface DevelopmentFacadeInterface
     public function getEngineModuleList();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @internal
@@ -242,6 +281,9 @@ interface DevelopmentFacadeInterface
     public function updateComposerJsonInModules(array $modules, $dryRun = false): array;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return array
@@ -249,6 +291,9 @@ interface DevelopmentFacadeInterface
     public function getExternalDependencyTree();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\DependencyCollectionTransfer $dependencyCollectionTransfer
@@ -258,6 +303,9 @@ interface DevelopmentFacadeInterface
     public function getComposerDependencyComparison(DependencyCollectionTransfer $dependencyCollectionTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return void
@@ -275,6 +323,9 @@ interface DevelopmentFacadeInterface
     public function removeYvesIdeAutoCompletion(): void;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return void
@@ -292,6 +343,9 @@ interface DevelopmentFacadeInterface
     public function removeZedIdeAutoCompletion(): void;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return void
@@ -309,6 +363,9 @@ interface DevelopmentFacadeInterface
     public function removeClientIdeAutoCompletion(): void;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return void
@@ -326,6 +383,9 @@ interface DevelopmentFacadeInterface
     public function removeServiceIdeAutoCompletion(): void;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return void
@@ -343,7 +403,8 @@ interface DevelopmentFacadeInterface
     public function removeGlueIdeAutoCompletion(): void;
 
     /**
-     * Run the architecture sniffer against the given module and returns the violations
+     * Specification:
+     * - Run the architecture sniffer against the given module and returns the violations
      *
      * @api
      *
@@ -355,7 +416,8 @@ interface DevelopmentFacadeInterface
     public function runArchitectureSniffer($directory, array $options = []);
 
     /**
-     * Returns a list of all modules in project and core namespaces
+     * Specification:
+     * - Returns a list of all modules in project and core namespaces.
      *
      * @api
      *
@@ -373,7 +435,8 @@ interface DevelopmentFacadeInterface
     public function listAllBundles();
 
     /**
-     * Returns all architecture rules
+     * Specification:
+     * - Returns all architecture rules
      *
      * @api
      *
