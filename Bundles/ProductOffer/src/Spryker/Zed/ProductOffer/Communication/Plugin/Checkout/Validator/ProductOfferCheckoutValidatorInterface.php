@@ -10,6 +10,9 @@ namespace Spryker\Zed\ProductOffer\Communication\Plugin\Checkout\Validator;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
+/**
+ * Provides ability to check validity of product offers for all quote items during checkout.
+ */
 interface ProductOfferCheckoutValidatorInterface
 {
     /**
