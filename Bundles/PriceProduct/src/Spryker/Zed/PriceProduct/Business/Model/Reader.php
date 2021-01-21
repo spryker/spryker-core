@@ -606,6 +606,8 @@ class Reader implements ReaderInterface
             );
         }
 
+        dump(static::$resolvedPriceProductTransferCollection);
+
         return static::$resolvedPriceProductTransferCollection[$priceProductCriteriaIdentifier];
     }
 
@@ -754,6 +756,7 @@ class Reader implements ReaderInterface
             $priceProductFilterTransfer->toArray(),
             true
         );
+        $priceProductFilterIdentifierTransfer->setQuantity((int)$priceProductFilterTransfer->getQuantity());
 
         return md5(serialize($priceProductFilterIdentifierTransfer->toArray()));
     }
