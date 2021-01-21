@@ -31,22 +31,4 @@ class CategoryPageSearchToStoreFacadeBridge implements CategoryPageSearchToStore
     {
         return $this->storeFacade->getAllStores();
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
-     */
-    public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer)
-    {
-        return $this->storeFacade->getStoresWithSharedPersistence($storeTransfer);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    public function getCurrentStore()
-    {
-        return $this->storeFacade->getCurrentStore();
-    }
 }

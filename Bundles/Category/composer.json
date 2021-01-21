@@ -7,7 +7,6 @@
     "php": ">=7.3",
     "spryker/category-extension": "^1.1.0",
     "spryker/event": "^2.0.0",
-    "spryker/graph": "^3.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/key-builder": "^1.0.0",
     "spryker/locale": "^3.0.0",

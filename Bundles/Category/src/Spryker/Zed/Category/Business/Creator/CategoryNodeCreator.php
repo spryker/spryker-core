@@ -101,7 +101,7 @@ class CategoryNodeCreator implements CategoryNodeCreatorInterface
     public function addExtraParentCategoryNodeToCategory(CategoryTransfer $categoryTransfer, NodeTransfer $extraParentNodeTransfer): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($categoryTransfer, $extraParentNodeTransfer) {
-            $this->executeAddExtraParentCategoryNodeToCategoryTransaction($categoryTransfer, $extraParentNodeTransfer);
+            $this->assignExtraParent($categoryTransfer, $extraParentNodeTransfer);
         });
     }
 
@@ -138,19 +138,6 @@ class CategoryNodeCreator implements CategoryNodeCreatorInterface
         foreach ($categoryTransfer->getExtraParents() as $extraParentNodeTransfer) {
             $this->assignExtraParent($categoryTransfer, $extraParentNodeTransfer);
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\NodeTransfer $extraParentNodeTransfer
-     *
-     * @return void
-     */
-    public function executeAddExtraParentCategoryNodeToCategoryTransaction(
-        CategoryTransfer $categoryTransfer,
-        NodeTransfer $extraParentNodeTransfer
-    ): void {
-        $this->assignExtraParent($categoryTransfer, $extraParentNodeTransfer);
     }
 
     /**

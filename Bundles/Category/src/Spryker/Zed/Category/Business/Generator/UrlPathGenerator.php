@@ -10,6 +10,7 @@ namespace Spryker\Zed\Category\Business\Generator;
 use Generated\Shared\Transfer\CategoryUrlPathCriteriaTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Spryker\Zed\Category\Persistence\CategoryRepositoryInterface;
 
 class UrlPathGenerator implements UrlPathGeneratorInterface
 {
@@ -27,6 +28,16 @@ class UrlPathGenerator implements UrlPathGeneratorInterface
      * @var \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUrlPathPluginInterface[]
      */
     protected $categoryUrlPathPlugins;
+
+    /**
+     * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
+     * @param \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUrlPathPluginInterface[] $categoryUrlPathPlugins
+     */
+    public function __construct(CategoryRepositoryInterface $categoryRepository, array $categoryUrlPathPlugins)
+    {
+        $this->categoryRepository = $categoryRepository;
+        $this->categoryUrlPathPlugins = $categoryUrlPathPlugins;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer

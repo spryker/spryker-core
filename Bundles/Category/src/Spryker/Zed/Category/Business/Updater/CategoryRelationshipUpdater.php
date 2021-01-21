@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Category\Business\Updater;
 
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryStoreAssignerPluginInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 

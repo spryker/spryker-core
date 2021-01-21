@@ -24,4 +24,12 @@ interface CategoryNodeUpdaterInterface
      * @return void
      */
     public function updateExtraParentCategoryNodes(CategoryTransfer $categoryTransfer): void;
+
+    /**
+     * @param int $idCategoryNode
+     * @param int $position
+     *
+     * @return void
+     */
+    public function updateCategoryNodeOrder(int $idCategoryNode, int $position): void;
 }

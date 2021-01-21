@@ -43,15 +43,4 @@ class CategoryToTouchBridge implements CategoryToTouchInterface
     {
         return $this->touchFacade->touchDeleted($itemType, $itemId);
     }
-
-    /**
-     * @param string $itemType
-     * @param array $itemIds
-     *
-     * @return int
-     */
-    public function bulkTouchSetActive($itemType, array $itemIds = [])
-    {
-        return $this->touchFacade->bulkTouchSetActive($itemType, $itemIds);
-    }
 }

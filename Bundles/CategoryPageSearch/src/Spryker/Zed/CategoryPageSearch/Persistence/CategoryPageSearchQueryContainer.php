@@ -55,25 +55,6 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
      *
      * @api
      *
-     * @param int[] $categoryIds
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
-     */
-    public function queryCategoryNodeIdsByCategoryIds(array $categoryIds)
-    {
-        return $this->getFactory()
-            ->getCategoryQueryContainer()
-            ->queryAllCategoryNodes()
-            ->filterByFkCategory_In($categoryIds)
-            ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, static::ID_CATEGORY_NODE)
-            ->select([static::ID_CATEGORY_NODE]);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param int[] $categoryNodeIds
      *
      * @return \Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearchQuery

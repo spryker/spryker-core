@@ -54,6 +54,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
+     * @throws \Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException
+     *
      * @return void
      */
     public function create(CategoryTransfer $categoryTransfer): void
@@ -89,6 +91,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\StoreRelationTransfer $newStoreAssignment
      * @param \Generated\Shared\Transfer\StoreRelationTransfer|null $currentStoreAssignment
+     *
+     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
      *
      * @return void
      */
@@ -132,7 +136,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     public function deleteNodeById($idCategoryNode, $idChildrenDestinationNode)
     {
         $this->getFactory()
-            ->createCategoryNode()
+            ->createCategoryNodeDeleter()
             ->deleteNodeById($idCategoryNode, $idChildrenDestinationNode);
     }
 
@@ -148,10 +152,9 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function updateCategoryNodeOrder($idCategoryNode, $position): void
     {
-        $this
-            ->getFactory()
-            ->createNodeWriter()
-            ->updateOrder($idCategoryNode, $position);
+        $this->getFactory()
+            ->createCategoryNodeUpdater()
+            ->updateCategoryNodeOrder($idCategoryNode, $position);
     }
 
     /**
@@ -221,18 +224,14 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param string|null $storeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function getAllCategoryCollection(LocaleTransfer $localeTransfer, ?string $storeName = null): CategoryCollectionTransfer
+    public function getAllCategoryCollection(LocaleTransfer $localeTransfer, string $storeName): CategoryCollectionTransfer
     {
-        if ($storeName === null) {
-            trigger_error('Pass the $storeName parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
-        }
-
         return $this->getFactory()
-            ->createCategory()
+            ->createCategoryReader()
             ->getAllCategoryCollection($localeTransfer, $storeName);
     }
 

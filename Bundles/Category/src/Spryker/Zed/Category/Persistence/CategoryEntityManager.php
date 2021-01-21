@@ -17,6 +17,7 @@ use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Orm\Zed\Category\Persistence\SpyCategoryStore;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -126,14 +127,7 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
             ->find();
 
         foreach ($categoryClosureTableEntities as $categoryClosureTableEntity) {
-            foreach ($parentCategoryClosureTableEntities as $parentCategoryClosureTableEntity) {
-                $depth = $categoryClosureTableEntity->getDepth() + $parentCategoryClosureTableEntity->getDepth() + 1;
-                $this->createCategoryClosureTable(
-                    $parentCategoryClosureTableEntity->getFkCategoryNode(),
-                    $categoryClosureTableEntity->getFkCategoryNodeDescendant(),
-                    $depth
-                );
-            }
+            $this->createCategoryClosureTableParentEntries($parentCategoryClosureTableEntities, $categoryClosureTableEntity);
         }
     }
 
@@ -372,6 +366,26 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
             ->filterByFkParentCategoryNode_In($parentCategoryNodeIds)
             ->find()
             ->delete();
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryClosureTable[]|\Propel\Runtime\Collection\ObjectCollection $parentCategoryClosureTableEntities
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryClosureTable $categoryClosureTableEntity
+     *
+     * @return void
+     */
+    protected function createCategoryClosureTableParentEntries(
+        ObjectCollection $parentCategoryClosureTableEntities,
+        SpyCategoryClosureTable $categoryClosureTableEntity
+    ): void {
+        foreach ($parentCategoryClosureTableEntities as $parentCategoryClosureTableEntity) {
+            $depth = $categoryClosureTableEntity->getDepth() + $parentCategoryClosureTableEntity->getDepth() + 1;
+            $this->createCategoryClosureTable(
+                $parentCategoryClosureTableEntity->getFkCategoryNode(),
+                $categoryClosureTableEntity->getFkCategoryNodeDescendant(),
+                $depth
+            );
+        }
     }
 
     /**

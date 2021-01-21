@@ -567,7 +567,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
 
     /**
      * @param int $idCategory
-     * @param int $idStore
      *
      * @return bool
      */

@@ -13,10 +13,12 @@ use Generated\Shared\Transfer\CategoryUrlPathCriteriaTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
 use Spryker\Zed\Category\Persistence\CategoryRepositoryInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 class CategoryUrlCreator implements CategoryUrlCreatorInterface
 {
@@ -117,6 +119,8 @@ class CategoryUrlCreator implements CategoryUrlCreatorInterface
      * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
+     * @throws \Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException
+     *
      * @return void
      */
     public function saveLocalizedUrlForNode(NodeTransfer $nodeTransfer, LocaleTransfer $localeTransfer): void
@@ -126,7 +130,11 @@ class CategoryUrlCreator implements CategoryUrlCreatorInterface
             return;
         }
 
-        $this->urlFacade->createUrl($urlTransfer);
+        try {
+            $this->urlFacade->createUrl($urlTransfer);
+        } catch (UrlExistsException $e) {
+            throw new CategoryUrlExistsException($e->getMessage(), $e->getCode(), $e);
+        }
     }
 
     /**

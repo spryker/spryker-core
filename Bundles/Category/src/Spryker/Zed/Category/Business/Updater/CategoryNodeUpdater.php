@@ -111,6 +111,21 @@ class CategoryNodeUpdater implements CategoryNodeUpdaterInterface
     }
 
     /**
+     * @param int $idCategoryNode
+     * @param int $position
+     *
+     * @return void
+     */
+    public function updateCategoryNodeOrder(int $idCategoryNode, int $position): void
+    {
+        $nodeTransfer = (new NodeTransfer())
+            ->setIdCategoryNode($idCategoryNode)
+            ->setNodeOrder($position);
+
+        $this->categoryEntityManager->updateCategoryNode($nodeTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return void
@@ -126,6 +141,9 @@ class CategoryNodeUpdater implements CategoryNodeUpdaterInterface
             $currentCategoryNodeTransfer,
             $categoryTransfer
         );
+        if ($idFormerParentCategoryNode) {
+            $nodeTransfer->setFkParentCategoryNode($categoryTransfer->getParentCategoryNodeOrFail()->getIdCategoryNodeOrFail());
+        }
 
         $nodeTransfer = $this->categoryEntityManager->updateCategoryNode($nodeTransfer);
         $this->categoryClosureTableUpdater->updateCategoryClosureTableParentEntriesForCategoryNode($nodeTransfer);
@@ -273,6 +291,7 @@ class CategoryNodeUpdater implements CategoryNodeUpdaterInterface
 
     /**
      * @param \Generated\Shared\Transfer\NodeCollectionTransfer $existingExtraParentNodeCollection
+     * @param int[] $extraParentNodeIdsToDelete
      *
      * @return void
      */

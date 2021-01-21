@@ -33,17 +33,4 @@ class CategoryPageSearchToUtilEncodingBridge implements CategoryPageSearchToUtil
     {
         return $this->utilEncodingService->encodeJson($value, $options, $depth);
     }
-
-    /**
-     * @param string $jsonValue
-     * @param bool $assoc
-     * @param int|null $depth
-     * @param int|null $options
-     *
-     * @return array
-     */
-    public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null)
-    {
-        return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
-    }
 }

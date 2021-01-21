@@ -608,6 +608,41 @@ class CategoryFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testUpdateCategoryWhenParentCategoryIsChangedWillRemoveStoreRelationsMissingForParentCategory(): void
+    {
+        // Arrange
+        $deStoreTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_DE]);
+        $atStoreTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_AT]);
+
+        $firstParentCategoryTransfer = $this->tester->haveCategory();
+        $this->tester->haveCategoryStoreRelation($firstParentCategoryTransfer->getIdCategory(), $deStoreTransfer->getIdStore());
+
+        $secondParentCategoryTransfer = $this->tester->haveCategory();
+        $this->tester->haveCategoryStoreRelation($secondParentCategoryTransfer->getIdCategory(), $atStoreTransfer->getIdStore());
+
+        $childCategoryTransfer = $this->tester->haveCategory([
+            CategoryTransfer::PARENT_CATEGORY_NODE => $firstParentCategoryTransfer->getCategoryNode(),
+        ]);
+        $this->tester->haveCategoryStoreRelation($childCategoryTransfer->getIdCategory(), $deStoreTransfer->getIdStore());
+
+        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
+            ->setIdCategory($childCategoryTransfer->getIdCategory())
+            ->setWithChildrenRecursively(true);
+        $childCategoryTransfer = $this->getFacade()->findCategory($categoryCriteriaTransfer);
+
+        $childCategoryTransfer->setParentCategoryNode($secondParentCategoryTransfer->getCategoryNode());
+
+        // Act
+        $this->getFacade()->update($childCategoryTransfer);
+
+        // Assert
+        $childCategoryStoreRelationStoreIds = $this->getCategoryRelationStoreIds($childCategoryTransfer->getIdCategory());
+        $this->assertCount(0, $childCategoryStoreRelationStoreIds, 'Number of category store relations does not equals to expected value.');
+    }
+
+    /**
      * @return int
      */
     protected function getRootCategoryId(): int

@@ -130,12 +130,14 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
         $categoryNodeIds = [];
         foreach ($nodeCollectionTransfer->getNodes() as $nodeTransfer) {
             $categoryNodeIds[] = $nodeTransfer->getIdCategoryNodeOrFail();
-            if ($nodeTransfer->getChildrenNodes()) {
-                $categoryNodeIds = array_merge(
-                    $categoryNodeIds,
-                    $this->getCategoryNodeIdsFromNodeCollection($nodeTransfer->getChildrenNodes())
-                );
+            if (!$nodeTransfer->getChildrenNodes()) {
+                continue;
             }
+
+            $categoryNodeIds = array_merge(
+                $categoryNodeIds,
+                $this->getCategoryNodeIdsFromNodeCollection($nodeTransfer->getChildrenNodes())
+            );
         }
 
         return $categoryNodeIds;

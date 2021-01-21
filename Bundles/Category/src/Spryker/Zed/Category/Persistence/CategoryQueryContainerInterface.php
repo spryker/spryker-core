@@ -96,18 +96,6 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
      *
      * @param int $idNode
      * @param int $idLocale
-     * @param bool $onlyOneLevel
-     * @param bool $excludeStartNode
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryChildren($idNode, $idLocale, $onlyOneLevel = true, $excludeStartNode = true);
-
-    /**
-     * @api
-     *
-     * @param int $idNode
-     * @param int $idLocale
      * @param bool $excludeRootNode
      * @param bool $onlyParents
      *
@@ -147,36 +135,9 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
      *
      * @param int $idCategory
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryMainNodesByCategoryId($idCategory);
-
-    /**
-     * @api
-     *
-     * @param int $idCategory
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryNotMainNodesByCategoryId($idCategory);
-
-    /**
-     * @api
-     *
-     * @param int $idCategory
-     *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */
     public function queryCategoryById($idCategory);
-
-    /**
-     * @api
-     *
-     * @param int $idNode
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryCategoryNodeByNodeId($idNode);
 
     /**
      * @api
@@ -206,16 +167,6 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryUrlByIdCategoryNode($idCategoryNode);
-
-    /**
-     * @api
-     *
-     * @param int $idCategoryNode
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
-     */
-    public function queryResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $idLocale);
 
     /**
      * @api

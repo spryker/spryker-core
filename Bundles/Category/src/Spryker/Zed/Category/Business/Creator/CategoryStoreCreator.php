@@ -46,25 +46,30 @@ class CategoryStoreCreator implements CategoryStoreCreatorInterface
             return;
         }
 
+        $storeIdsToAdd = $categoryTransfer->getStoreRelation()->getIdStores();
+        if ($categoryTransfer->getParentCategoryNode()) {
+            $storeIdsToAdd = $this->filterOutStoreIdsMissingInParentCategoryStoreRelation(
+                $categoryTransfer->getParentCategoryNode()->getFkCategoryOrFail(),
+                $storeIdsToAdd
+            );
+        }
+
         $this->categoryEntityManager->createCategoryStoreRelationForStores(
             $categoryTransfer->getIdCategoryOrFail(),
-            $this->filterOutStoreIdsMissingInParentCategoryStoreRelation(
-                $categoryTransfer->getIdCategory(),
-                $categoryTransfer->getStoreRelation()->getIdStores()
-            )
+            $storeIdsToAdd
         );
     }
 
     /**
-     * @param int $idCategory
+     * @param int $parentIdCategory
      * @param int[] $storeIds
      *
      * @return int[]
      */
-    protected function filterOutStoreIdsMissingInParentCategoryStoreRelation(int $idCategory, array $storeIds): array
+    protected function filterOutStoreIdsMissingInParentCategoryStoreRelation(int $parentIdCategory, array $storeIds): array
     {
-        return array_filter($storeIds, function (int $idStore) use ($idCategory) {
-            return $this->categoryRepository->isParentCategoryHasRelationToStore($idCategory, $idStore);
-        });
+        $parentStoreRelationTransfer = $this->categoryRepository->getCategoryStoreRelationByIdCategory($parentIdCategory);
+
+        return array_intersect($parentStoreRelationTransfer->getIdStores(), $storeIds);
     }
 }

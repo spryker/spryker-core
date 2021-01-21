@@ -8,7 +8,9 @@
 namespace Spryker\Zed\CategoryExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\StoreRelationTransfer;
-
+/**
+ * Use this plugin interface to handle updating of the category store relations.
+ */
 interface CategoryStoreAssignerPluginInterface
 {
     /**
