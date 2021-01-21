@@ -244,14 +244,6 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToStoreFacadeInterface
-     */
-    public function getStoreFacade(): ProductListGuiToStoreFacadeInterface
-    {
-        return $this->getProvidedDependency(ProductListGuiDependencyProvider::FACADE_STORE);
-    }
-
-    /**
      * @return \Spryker\Zed\ProductListGui\Communication\Exporter\ProductListExporterInterface
      */
     public function createProductListExporter(): ProductListExporterInterface
