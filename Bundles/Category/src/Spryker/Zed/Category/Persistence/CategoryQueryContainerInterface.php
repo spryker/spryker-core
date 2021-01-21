@@ -132,6 +132,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release.
+     *
      * @param int $idNode
      * @param int $idLocale
      * @param bool $onlyOneLevel
@@ -219,6 +221,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release.
+     *
      * @param int $idCategory
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
@@ -227,6 +231,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release.
      *
      * @param int $idCategory
      *
@@ -267,6 +273,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release.
      *
      * @param int $idNode
      *
@@ -487,6 +495,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * @api
+     *
+     * @deprecated Will be removed with next major release.
      *
      * @param int $idCategoryNode
      * @param int $idLocale
