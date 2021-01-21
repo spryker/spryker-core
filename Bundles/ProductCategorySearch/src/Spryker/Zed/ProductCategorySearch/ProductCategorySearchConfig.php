@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductCategorySearch;
 
-use Spryker\Glue\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductCategorySearchConfig extends AbstractBundleConfig
 {

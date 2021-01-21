@@ -107,9 +107,12 @@ class ProductCategorySearchRepository extends AbstractRepository implements Prod
             ->withColumn(SpyCategoryTableMap::COL_CATEGORY_KEY, static::COLUMN_CATEGORY_KEY)
             ->withColumn(SpyCategoryAttributeTableMap::COL_FK_LOCALE, static::COLUMN_FK_LOCALE);
 
-        $categoryNodeQuery->setFormatter(new PropelArraySetFormatter());
+        /** @var array $categoryNodes */
+        $categoryNodes = $categoryNodeQuery
+            ->setFormatter(new PropelArraySetFormatter())
+            ->find();
 
-        return $categoryNodeQuery->find();
+        return $categoryNodes;
     }
 
     /**
