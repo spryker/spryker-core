@@ -39,12 +39,13 @@ class ProductOfferCheckoutValidator implements ProductOfferCheckoutValidatorInte
      *
      * @return bool
      */
-    public function checkCondition(
+    public function isQuoteItemsValid(
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ): bool {
-        $validationPassed = true;
-        $productOfferTransfersByProductOfferReference = $this->getProductOfferTransfersByProductOfferReference($quoteTransfer);
+        $checkoutResponseTransfer->setIsSuccess(true);
+        $productOfferTransfersByProductOfferReference = $this
+            ->groupProductOfferTransfersByProductOfferReference($quoteTransfer);
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if (!$itemTransfer->getProductOfferReference()) {
@@ -57,15 +58,11 @@ class ProductOfferCheckoutValidator implements ProductOfferCheckoutValidatorInte
                     ->setParameters([static::GLOSSARY_PARAM_SKU => $itemTransfer->getSku()]);
 
                 $checkoutResponseTransfer->addError($checkoutErrorTransfer);
-                $validationPassed = false;
+                $checkoutResponseTransfer->setIsSuccess(false);
             }
         }
 
-        if (!$validationPassed) {
-            $checkoutResponseTransfer->setIsSuccess(false);
-        }
-
-        return $validationPassed;
+        return $checkoutResponseTransfer->getIsSuccess();
     }
 
     /**
@@ -73,7 +70,7 @@ class ProductOfferCheckoutValidator implements ProductOfferCheckoutValidatorInte
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer[]
      */
-    protected function getProductOfferTransfersByProductOfferReference(
+    protected function groupProductOfferTransfersByProductOfferReference(
         QuoteTransfer $quoteTransfer
     ): array {
         $productOfferTransfers = [];

@@ -13,10 +13,14 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface ProductOfferCheckoutValidatorInterface
 {
     /**
+     * Specification:
+     * - Returns `false` response if at least one quote item transfer has items with inactive or not approved ProductOffer.
+     * - Sets error messages to checkout response, in case if items contain inactive or not approved ProductOffer items.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return bool
      */
-    public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
+    public function isQuoteItemsValid(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
 }
