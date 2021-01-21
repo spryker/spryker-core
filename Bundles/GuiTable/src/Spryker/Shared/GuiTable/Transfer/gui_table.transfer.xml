@@ -23,6 +23,8 @@
         <property name="filters" type="GuiTableFiltersConfiguration"/>
         <property name="itemSelection" type="GuiTableItemSelectionConfiguration"/>
         <property name="syncStateUrl" type="GuiTableSyncStateUrlConfiguration"/>
+        <property name="editable" type="GuiTableEditableConfiguration"/>
+        <property name="columnConfigurator" type="GuiTableColumnConfiguratorConfiguration"/>
     </transfer>
 
     <transfer name="GuiTableColumnConfiguration">
@@ -87,6 +89,46 @@
         <property name="isEnabled" type="bool"/>
     </transfer>
 
+    <transfer name="GuiTableEditableConfiguration">
+        <property name="enabled" type="bool"/>
+        <property name="columns" type="GuiTableColumnConfiguration[]" singular="column" description="The configuration for columns are in editable mode."/>
+        <property name="create" type="GuiTableEditableCreateConfiguration"/>
+        <property name="update" type="GuiTableEditableUpdateConfiguration"/>
+    </transfer>
+
+    <transfer name="GuiTableEditableCreateConfiguration">
+        <property name="addButton" type="GuiTableEditableButton" description="Optional. Only if you need to customize button view, wording or disable save button."/>
+        <property name="cancelButton" type="GuiTableEditableButton" description="Optional. Only if you need to customize button view, wording or disable cancel button."/>
+        <property name="formInputName" type="string" description="Name of form input to put data from new rows."/>
+        <property name="initialData" type="GuiTableEditableInitialData" description="Static data which could be used when dataSink type is form."/>
+    </transfer>
+
+    <transfer name="GuiTableEditableUpdateConfiguration">
+        <property name="saveButton" type="GuiTableEditableButton" description="Optional. Only if you need to customize button look and wording or disable save button."/>
+        <property name="cancelButton" type="GuiTableEditableButton" description="Optional. Only if you need to customize button look and wording or disable cancel button."/>
+        <property name="url" type="GuiTableEditableUrl"/>
+    </transfer>
+
+    <transfer name="GuiTableEditableButton">
+        <property name="title" type="string"/>
+        <property name="icon" type="string"/>
+    </transfer>
+
+    <transfer name="GuiTableEditableUrl">
+        <property name="url" type="string"/>
+        <property name="method" type="string"/>
+    </transfer>
+
+    <transfer name="GuiTableEditableInitialData">
+        <property name="data" type="array" description="Data for rows" singular="data"/>
+        <property name="errors" type="GuiTableEditableDataError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="GuiTableEditableDataError">
+        <property name="rowError" type="string"/>
+        <property name="columnErrors" type="array" singular="columnError" associative="true" description="Key is column ID."/>
+    </transfer>
+
     <transfer name="GuiTableDataResponse">
         <property name="rows" type="GuiTableRowDataResponse[]" singular="row"/>
     </transfer>
@@ -138,6 +180,10 @@
         <property name="title" type="string"/>
         <property name="type" type="string"/>
         <property name="typeOptions" type="array" singular="typeOption" associative="true"/>
+    </transfer>
+
+    <transfer name="GuiTableColumnConfiguratorConfiguration">
+        <property name="enabled" type="bool"/>
     </transfer>
 
 </transfers>
