@@ -17,16 +17,23 @@ class IndexNameResolver implements IndexNameResolverInterface
     protected $storeClient;
 
     /**
+     * @var \Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig
+     */
+    protected $searchElasticsearchConfig;
+
+    /**
      * @var string|null
      */
     protected static $storeName;
 
     /**
      * @param \Spryker\Client\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface $storeClient
+     * @param \Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig $searchElasticsearchConfig
      */
-    public function __construct(SearchElasticsearchToStoreClientInterface $storeClient)
+    public function __construct(SearchElasticsearchToStoreClientInterface $storeClient, SearchElasticsearchConfig $searchElasticsearchConfig)
     {
         $this->storeClient = $storeClient;
+        $this->searchElasticsearchConfig = $searchElasticsearchConfig;
     }
 
     /**
@@ -36,13 +43,13 @@ class IndexNameResolver implements IndexNameResolverInterface
      */
     public function resolve(string $sourceIdentifier): string
     {
-        $indexName = sprintf(
-            '%s_%s',
+        $indexParameters = [
+            $this->searchElasticsearchConfig->getIndexPrefix(),
             $this->getStoreName(),
-            $sourceIdentifier
-        );
+            $sourceIdentifier,
+        ];
 
-        return mb_strtolower($indexName);
+        return mb_strtolower(implode('_', array_filter($indexParameters)));
     }
 
     /**
