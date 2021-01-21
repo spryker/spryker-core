@@ -13,11 +13,6 @@ use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 interface MerchantSalesOrderDataExportRepositoryInterface
 {
     /**
-     * @module MerchantSalesOrder
-     * @module Sales
-     * @module Country
-     * @module Locale
-     *
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataExportBatchTransfer
@@ -25,12 +20,6 @@ interface MerchantSalesOrderDataExportRepositoryInterface
     public function getMerchantOrderData(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportBatchTransfer;
 
     /**
-     * @module MerchantSalesOrder
-     * @module Sales
-     * @module Country
-     * @module Shipment
-     * @module Oms
-     *
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataExportBatchTransfer
@@ -40,9 +29,6 @@ interface MerchantSalesOrderDataExportRepositoryInterface
     ): DataExportBatchTransfer;
 
     /**
-     * @module MerchantSalesOrder
-     * @module Sales
-     *
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataExportBatchTransfer

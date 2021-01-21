@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantSalesOrderDataExport;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery;
+use Orm\Zed\Sales\Persistence\Base\SpySalesOrderCommentQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantSalesOrderDataExport\Dependency\Service\MerchantSalesOrderDataExportToDataExportServiceBridge;
@@ -28,7 +29,7 @@ class MerchantSalesOrderDataExportDependencyProvider extends AbstractBundleDepen
     public const PROPEL_QUERY_MERCHANT = 'PROPEL_QUERY_MERCHANT';
     public const PROPEL_QUERY_MERCHANT_SALES_ORDER = 'PROPEL_QUERY_MERCHANT_SALES_ORDER';
     public const PROPEL_QUERY_MERCHANT_SALES_ORDER_ITEM = 'PROPEL_QUERY_MERCHANT_SALES_ORDER_ITEM';
-    public const PROPEL_QUERY_SALES_EXPENSE = 'PROPEL_QUERY_SALES_EXPENSE';
+    public const PROPEL_QUERY_SALES_ORDER_COMMENT = 'PROPEL_QUERY_SALES_ORDER_COMMENT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -38,6 +39,7 @@ class MerchantSalesOrderDataExportDependencyProvider extends AbstractBundleDepen
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
+
         $container = $this->addDataExportService($container);
 
         return $container;
@@ -51,6 +53,7 @@ class MerchantSalesOrderDataExportDependencyProvider extends AbstractBundleDepen
     public function providePersistenceLayerDependencies(Container $container): Container
     {
         $container = parent::providePersistenceLayerDependencies($container);
+
         $container = $this->addMerchantPropelQuery($container);
         $container = $this->addMerchantSalesOrderPropelQuery($container);
         $container = $this->addMerchantSalesOrderItemPropelQuery($container);
@@ -96,6 +99,20 @@ class MerchantSalesOrderDataExportDependencyProvider extends AbstractBundleDepen
     {
         $container->set(static::PROPEL_QUERY_MERCHANT_SALES_ORDER_ITEM, $container->factory(function (): SpyMerchantSalesOrderItemQuery {
             return SpyMerchantSalesOrderItemQuery::create();
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesOrderCommentPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_SALES_ORDER_COMMENT, $container->factory(function (): SpySalesOrderCommentQuery {
+            return SpySalesOrderCommentQuery::create();
         }));
 
         return $container;

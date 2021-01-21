@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantSalesOrderDataExport\Persistence;
 use Orm\Zed\Merchant\Persistence\Base\SpyMerchantQuery;
 use Orm\Zed\MerchantSalesOrder\Persistence\Base\SpyMerchantSalesOrderItemQuery;
 use Orm\Zed\MerchantSalesOrder\Persistence\Base\SpyMerchantSalesOrderQuery;
+use Orm\Zed\Sales\Persistence\Base\SpySalesOrderCommentQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\MerchantSalesOrderDataExport\Dependency\Service\MerchantSalesOrderDataExportToUtilEncodingServiceInterface;
 use Spryker\Zed\MerchantSalesOrderDataExport\MerchantSalesOrderDataExportDependencyProvider;
@@ -57,7 +58,7 @@ class MerchantSalesOrderDataExportPersistenceFactory extends AbstractPersistence
     }
 
     /**
-     * @phpstan-return \Orm\Zed\Merchant\Persistence\Base\SpyMerchantQuery<mixed>
+     * @phpstan-return \Orm\Zed\Merchant\Persistence\Base\SpyMerchantQuery<\Orm\Zed\Merchant\Persistence\SpyMerchant>
      *
      * @return \Orm\Zed\Merchant\Persistence\Base\SpyMerchantQuery
      */
@@ -67,7 +68,7 @@ class MerchantSalesOrderDataExportPersistenceFactory extends AbstractPersistence
     }
 
     /**
-     * @phpstan-return \Orm\Zed\MerchantSalesOrder\Persistence\Base\SpyMerchantSalesOrderQuery<mixed>
+     * @phpstan-return \Orm\Zed\MerchantSalesOrder\Persistence\Base\SpyMerchantSalesOrderQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder>
      *
      * @return \Orm\Zed\MerchantSalesOrder\Persistence\Base\SpyMerchantSalesOrderQuery
      */
@@ -77,13 +78,23 @@ class MerchantSalesOrderDataExportPersistenceFactory extends AbstractPersistence
     }
 
     /**
-     * @phpstan-return \Orm\Zed\MerchantSalesOrder\Persistence\Base\SpyMerchantSalesOrderItemQuery<mixed>
+     * @phpstan-return \Orm\Zed\MerchantSalesOrder\Persistence\Base\SpyMerchantSalesOrderItemQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem>
      *
      * @return \Orm\Zed\MerchantSalesOrder\Persistence\Base\SpyMerchantSalesOrderItemQuery
      */
     public function getMerchantSalesOrderItemPropelQuery(): SpyMerchantSalesOrderItemQuery
     {
         return $this->getProvidedDependency(MerchantSalesOrderDataExportDependencyProvider::PROPEL_QUERY_MERCHANT_SALES_ORDER_ITEM);
+    }
+
+    /**
+     * @phpstan-return \Orm\Zed\Sales\Persistence\Base\SpySalesOrderCommentQuery
+     *
+     * @return \Orm\Zed\Sales\Persistence\Base\SpySalesOrderCommentQuery
+     */
+    public function getSalesOrderCommentPropelQuery(): SpySalesOrderCommentQuery
+    {
+        return $this->getProvidedDependency(MerchantSalesOrderDataExportDependencyProvider::PROPEL_QUERY_SALES_ORDER_COMMENT);
     }
 
     /**

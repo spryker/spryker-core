@@ -24,12 +24,7 @@ class MerchantSalesOrderItemMapper
 {
     protected const KEY_SHIPPING_ADDRESS_SALUTATION = 'shipping_address_salutation';
 
-    /**
-     * @phpstan-var array<string, string>
-     *
-     * @var string[]
-     */
-    protected $fieldMapping = [
+    protected const FIELD_MAPPING = [
         'merchant_order_reference' => SpyMerchantSalesOrderTableMap::COL_MERCHANT_SALES_ORDER_REFERENCE,
         'marketplace_order_reference' => SpySalesOrderTableMap::COL_ORDER_REFERENCE,
         'product_name' => SpySalesOrderItemTableMap::COL_NAME,
@@ -100,7 +95,7 @@ class MerchantSalesOrderItemMapper
      */
     public function getFieldMapping(): array
     {
-        return $this->fieldMapping;
+        return static::FIELD_MAPPING;
     }
 
     /**
@@ -113,7 +108,7 @@ class MerchantSalesOrderItemMapper
         $mappedMerchantSalesOrderItems = [];
         foreach ($merchantSalesOrderItemRows as $merchantSalesOrderItemRow) {
             $mappedMerchantSalesOrderItemRow = [];
-            foreach ($this->fieldMapping as $field => $column) {
+            foreach (static::FIELD_MAPPING as $field => $column) {
                 $mappedMerchantSalesOrderItemRow[$field] = $merchantSalesOrderItemRow[$column] ?? null;
             }
             if ($merchantSalesOrderItemRow[SpySalesOrderAddressTableMap::COL_SALUTATION] !== null) {

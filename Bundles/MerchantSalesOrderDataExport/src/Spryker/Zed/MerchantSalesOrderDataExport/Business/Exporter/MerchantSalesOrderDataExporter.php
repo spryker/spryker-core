@@ -15,17 +15,29 @@ use Generated\Shared\Transfer\DataExportWriteResponseTransfer;
 use Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\DataReaderInterface;
 use Spryker\Zed\MerchantSalesOrderDataExport\Dependency\Service\MerchantSalesOrderDataExportToDataExportServiceInterface;
 use Spryker\Zed\MerchantSalesOrderDataExport\MerchantSalesOrderDataExportConfig;
-use Spryker\Zed\MerchantSalesOrderDataExport\Persistence\MerchantSalesOrderDataExportRepository;
 
 class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterInterface
 {
     protected const LIMIT_VALUE = 200;
 
+    /**
+     * @uses \Spryker\Zed\MerchantSalesOrderDataExport\Persistence\MerchantSalesOrderDataExportRepository::FILTER_CRITERIA_PARAM_OFFSET
+     */
+    protected const FILTER_CRITERIA_KEY_OFFSET = 'offset';
+
+    /**
+     * @uses \Spryker\Zed\MerchantSalesOrderDataExport\Persistence\MerchantSalesOrderDataExportRepository::FILTER_CRITERIA_PARAM_LIMIT
+     */
+    protected const FILTER_CRITERIA_KEY_LIMIT = 'limit';
+
     protected const HOOK_KEY_MERCHANT_NAME = 'merchant_name';
     protected const HOOK_KEY_STORE_NAME = 'store_name';
 
-    protected const  EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_NAME = 'merchant_name';
-    protected const  EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_ORDER_STORE = 'merchant_order_store';
+    /**
+     * @uses \Spryker\Zed\MerchantSalesOrderDataExport\Persistence\Propel\Mapper\MerchantSalesOrderMapper::KEY_MERCHANT_NAME
+     */
+    protected const EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_NAME = 'merchant_name';
+    protected const EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_ORDER_STORE = 'merchant_order_store';
 
     protected const DATA_ENTITY_MERCHANT_ORDER = 'merchant-order';
 
@@ -70,10 +82,10 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
 
         $dataExportResultTransfer = $this->createDataExportResultTransfer($dataExportConfigurationTransfer);
 
-        $extendedDataExportConfigurationTransfer = $this->getExtendedDataExportConfigurationTransfer($dataExportConfigurationTransfer);
+        $extendedDataExportConfigurationTransfer = $this->extendDataExportConfigurationTransfer($dataExportConfigurationTransfer);
         $extendedDataExportConfigurationTransfer
-            ->addFilterCriterion(MerchantSalesOrderDataExportRepository::FILTER_CRITERIA_PARAM_OFFSET, 0)
-            ->addFilterCriterion(MerchantSalesOrderDataExportRepository::FILTER_CRITERIA_PARAM_LIMIT, static::LIMIT_VALUE);
+            ->addFilterCriterion(static::FILTER_CRITERIA_KEY_OFFSET, 0)
+            ->addFilterCriterion(static::FILTER_CRITERIA_KEY_LIMIT, static::LIMIT_VALUE);
         $dataExportBatchTransfer = $this->dataReader->readBatch($extendedDataExportConfigurationTransfer);
         $dataExportBatchData = $dataExportBatchTransfer->getData();
 
@@ -83,11 +95,11 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
         $merchantName = $dataExportBatchData[0][static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_NAME];
         $storeName = $dataExportBatchData[0][static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_ORDER_STORE];
         $exportData = [];
-        $exportedRawsCount = 0;
+        $exportedRowsCount = 0;
 
         while (!empty($dataExportBatchData)) :
             foreach ($dataExportBatchData as $dataExportRow) {
-                $exportedRawsCount++;
+                $exportedRowsCount++;
                 if (
                     $dataExportRow[static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_NAME] === $merchantName
                     && $dataExportRow[static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_ORDER_STORE] === $storeName
@@ -108,8 +120,8 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
                 $exportData[] = $dataExportRow;
             }
             $extendedDataExportConfigurationTransfer->addFilterCriterion(
-                MerchantSalesOrderDataExportRepository::FILTER_CRITERIA_PARAM_OFFSET,
-                $exportedRawsCount
+                static::FILTER_CRITERIA_KEY_OFFSET,
+                $exportedRowsCount
             );
             $dataExportBatchTransfer = $this->dataReader->readBatch($extendedDataExportConfigurationTransfer);
             $dataExportBatchData = $dataExportBatchTransfer->getData();
@@ -126,7 +138,7 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
         if (isset($dataExportWriteResponseTransfer) && !$dataExportWriteResponseTransfer->getIsSuccessful()) {
             $dataExportResultTransfer
                 ->fromArray($dataExportWriteResponseTransfer->toArray(), true)
-                ->setExportCount($exportedRawsCount);
+                ->setExportCount($exportedRowsCount);
 
             return $this->createDataExportReportTransfer($dataExportResultTransfer);
         }
@@ -134,7 +146,7 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
         if (isset($dataExportWriteResponseTransfer)) {
             $dataExportResultTransfer
                 ->setIsSuccessful(true)
-                ->setExportCount($exportedRawsCount)
+                ->setExportCount($exportedRowsCount)
                 ->setFileName($dataExportWriteResponseTransfer->getFileName());
         }
 
@@ -164,7 +176,7 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
 
         $dataExportBatchTransfer->setData($exportData);
         $dataExportBatchTransfer->setOffset(0);
-        $dataExportBatchTransfer = $this->trimData($dataExportBatchTransfer, $dataExportConfigurationTransfer->getDataEntity());
+        $dataExportBatchTransfer = $this->removeConfigurationFields($dataExportBatchTransfer, $dataExportConfigurationTransfer->getDataEntity());
 
         return $this->dataExportService->write(
             $dataExportBatchTransfer,
@@ -222,7 +234,7 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
      *
      * @return \Generated\Shared\Transfer\DataExportBatchTransfer
      */
-    protected function trimData(DataExportBatchTransfer $dataExportBatchTransfer, ?string $dataEntity): DataExportBatchTransfer
+    protected function removeConfigurationFields(DataExportBatchTransfer $dataExportBatchTransfer, ?string $dataEntity): DataExportBatchTransfer
     {
         $data = $dataExportBatchTransfer->getData();
         foreach ($data as $dataKey => $dataRow) {
@@ -251,7 +263,7 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
      *
      * @return \Generated\Shared\Transfer\DataExportConfigurationTransfer
      */
-    protected function getExtendedDataExportConfigurationTransfer(
+    protected function extendDataExportConfigurationTransfer(
         DataExportConfigurationTransfer $dataExportConfigurationTransfer
     ): DataExportConfigurationTransfer {
         $extendedDataExportConfigurationTransfer = clone $dataExportConfigurationTransfer;

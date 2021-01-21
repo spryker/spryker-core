@@ -15,12 +15,7 @@ use Orm\Zed\Sales\Persistence\Map\SpySalesShipmentTableMap;
 
 class MerchantSalesExpenseMapper
 {
-    /**
-     * @phpstan-var array<string, string>
-     *
-     * @var string[]
-     */
-    protected $fieldMapping = [
+    protected const FIELD_MAPPING = [
         'merchant_order_reference' => SpyMerchantSalesOrderTableMap::COL_MERCHANT_SALES_ORDER_REFERENCE,
         'marketplace_order_reference' => SpySalesOrderTableMap::COL_ORDER_REFERENCE,
         'shipment_id' => SpySalesShipmentTableMap::COL_ID_SALES_SHIPMENT,
@@ -49,7 +44,7 @@ class MerchantSalesExpenseMapper
      */
     public function getFieldMapping(): array
     {
-        return $this->fieldMapping;
+        return static::FIELD_MAPPING;
     }
 
     /**
@@ -62,7 +57,7 @@ class MerchantSalesExpenseMapper
         $mappedMerchantSalesExpenses = [];
         foreach ($merchantSalesExpenseRows as $merchantSalesExpenseRow) {
             $mappedMerchantSalesExpenseRow = [];
-            foreach ($this->fieldMapping as $field => $column) {
+            foreach (static::FIELD_MAPPING as $field => $column) {
                 $mappedMerchantSalesExpenseRow[$field] = $merchantSalesExpenseRow[$column] ?? null;
             }
             $mappedMerchantSalesExpenses[] = $mappedMerchantSalesExpenseRow;
