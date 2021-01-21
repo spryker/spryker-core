@@ -606,8 +606,6 @@ class Reader implements ReaderInterface
             );
         }
 
-        dump(static::$resolvedPriceProductTransferCollection);
-
         return static::$resolvedPriceProductTransferCollection[$priceProductCriteriaIdentifier];
     }
 
