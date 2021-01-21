@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductCategorySearch\Communication\Plugin\ProductCategorySearch\Elasticsearch;
+namespace Spryker\Zed\ProductCategorySearch\Communication\Plugin\ProductPageSearch\Elasticsearch;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;

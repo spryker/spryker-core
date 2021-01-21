@@ -62,6 +62,10 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
             );
         }
 
+        if ($relatedCategoryIds === []) {
+            return [];
+        }
+
         $relatedCategoryIds = array_merge(...$relatedCategoryIds);
 
         return array_unique($relatedCategoryIds);
