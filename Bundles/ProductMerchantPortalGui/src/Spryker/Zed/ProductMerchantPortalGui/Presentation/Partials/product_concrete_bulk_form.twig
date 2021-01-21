@@ -5,6 +5,8 @@
             activationName: activationNameStatus,
             name: productConcreteBulkForm.children.isActive.vars.full_name,
             placeholder: productConcreteBulkForm.children.isActive.vars.label | trans,
+            value: false,
+            error: '',
         },
         validity: {
             title: 'Validity Dates & Time' | trans,
@@ -17,6 +19,11 @@
                 from: productConcreteBulkForm.children.validFrom.vars.label | trans,
                 to: productConcreteBulkForm.children.validTo.vars.label | trans,
             },
+            value: {
+                from: '',
+                to: '',
+            },
+            error: '',
         }
     } %}
 
@@ -24,7 +31,6 @@
         {{ form_start(productConcreteBulkForm, {attr: {excludeFormTag: true}}) }}
             <web-mp-bulk-edit-product-variants
                     sections="{{ bulkSections | json_encode }}"
-                    notification-text="{{ 'Enabling an option below will overwrite the existing input.' | trans }}"
                     cloak
             >
                 {% block title %}
@@ -33,6 +39,14 @@
 
                 {% block action %}
                     <web-spy-button size="lg" type="submit" action>{{ 'Save' | trans }}</web-spy-button>
+                {% endblock %}
+
+                {% block natification %}
+                    <web-spy-notification type="info" floating="false">
+                        <span title>
+                            {{ 'Enabling an option below will overwrite the existing input.' | trans }}
+                        </span>
+                    </web-spy-notification>
                 {% endblock %}
             </web-mp-bulk-edit-product-variants>
             {% do productConcreteBulkForm.isActive.setRendered %}

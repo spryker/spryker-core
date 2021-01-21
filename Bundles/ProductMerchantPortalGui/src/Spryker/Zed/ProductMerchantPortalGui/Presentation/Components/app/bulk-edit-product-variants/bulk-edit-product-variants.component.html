@@ -13,12 +13,7 @@
 </div>
 
 <div class="mp-bulk-edit-product-variants__content">
-	<spy-notification
-		[type]="notificationType.Info"
-		floating="false"
-	>
-		<div title>{{ notificationText }}</div>
-	</spy-notification>
+	<ng-content select="[notification]"></ng-content>
 
 	<spy-card
 		*ngIf="sections?.status"
@@ -26,7 +21,7 @@
 		class="mp-bulk-edit-product-variants__content"
 	>
 		<div class="mp-bulk-edit-product-variants__card-content">
-			<spy-form-item noSpaces>
+			<spy-form-item noSpaces [error]="sections.status.error">
 				<spy-toggle
 					[(value)]="statusValue"
 					[disabled]="!isStatusActive"
@@ -45,7 +40,8 @@
 		class="mp-bulk-edit-product-variants__content"
 	>
 		<div class="mp-bulk-edit-product-variants__card-content">
-			<spy-form-item noSpaces class="mp-bulk-edit-product-variants__range">
+			<spy-form-item noSpaces class="mp-bulk-edit-product-variants__range"
+				[error]="sections.validity.error">
 				<spy-date-range-picker
 					[(dates)]="validityDates"
 					[placeholderFrom]="sections.validity.placeholder.from"

@@ -8,18 +8,22 @@ export interface BulkEditProductVariantSection {
   activationName: string;
   name: unknown;
   placeholder: unknown;
+  value?: unknown;
+  error?: string;
 }
 
 export interface BulkEditProductVariantSectionStatus
   extends BulkEditProductVariantSection {
   name: string;
   placeholder: string;
+  value?: boolean;
 }
 
 export interface BulkEditProductVariantSectionValidity
   extends BulkEditProductVariantSection {
   name: BulkEditProductVariantSectionValidityRange;
   placeholder: BulkEditProductVariantSectionValidityRange;
+  value?: BulkEditProductVariantSectionValidityRange;
 }
 
 export interface BulkEditProductVariantSectionValidityRange {
