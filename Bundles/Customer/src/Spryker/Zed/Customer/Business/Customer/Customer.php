@@ -336,10 +336,7 @@ class Customer implements CustomerInterface
      */
     protected function sendRegistrationToken(CustomerTransfer $customerTransfer)
     {
-        $confirmationLink = $this->customerConfig
-            ->getRegisterConfirmTokenUrl($customerTransfer->getRegistrationKey());
-
-        $customerTransfer->setConfirmationLink($confirmationLink);
+        $customerTransfer = $this->setConfirmationLinkToCustomer($customerTransfer);
 
         $mailType = $this->customerConfig->isDoubleOptInEnabled()
             ? CustomerConfig::CUSTOMER_REGISTRATION_WITH_CONFIRMATION_MAIL_TYPE
@@ -353,6 +350,21 @@ class Customer implements CustomerInterface
         $this->mailFacade->handleMail($mailTransfer);
 
         return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function setConfirmationLinkToCustomer(CustomerTransfer $customerTransfer): CustomerTransfer
+    {
+        $confirmationBaseUrl = $this->customerConfig->getRegistrationConfirmationBaseUrl();
+        $confirmationUrl = sprintf($this->customerConfig->getRegistrationConfirmationUrl(), $customerTransfer->getRegistrationKey());
+        $confirmationLink = sprintf('%s%s', $confirmationBaseUrl, $confirmationUrl);
+        $customerTransfer->setConfirmationLink($confirmationLink);
+
+        return $customerTransfer;
     }
 
     /**

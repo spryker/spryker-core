@@ -60,6 +60,8 @@ class CustomerConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Use getRegistrationConfirmationBaseUrl() and getRegistrationConfirmationUrl() instead.
+     *
      * @param string $token
      *
      * @return string
@@ -67,6 +69,26 @@ class CustomerConfig extends AbstractBundleConfig
     public function getRegisterConfirmTokenUrl($token)
     {
         return $this->getHostYves() . '/register/confirm?token=' . $token;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getRegistrationConfirmationBaseUrl(): string
+    {
+        return $this->get(CustomerConstants::REGISTRATION_CONFIRMATION_BASE_URL, $this->getHostYves());
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getRegistrationConfirmationUrl(): string
+    {
+        return $this->get(CustomerConstants::REGISTRATION_CONFIRMATION_URL, '/register/confirm?token=%s');
     }
 
     /**
