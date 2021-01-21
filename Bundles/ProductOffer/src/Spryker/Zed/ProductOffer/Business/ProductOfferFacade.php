@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductOffer\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferResponseTransfer;
@@ -127,5 +128,24 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
     public function getApplicableApprovalStatuses(string $currentStatus): array
     {
         return $this->getFactory()->createProductOfferStatusReader()->getApplicableApprovalStatuses($currentStatus);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function validateCheckoutProductOffer(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): bool {
+        return $this->getFactory()
+            ->createProductOfferCheckoutValidator()
+            ->checkCondition($quoteTransfer, $checkoutResponseTransfer);
     }
 }

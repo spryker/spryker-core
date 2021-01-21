@@ -8,8 +8,6 @@
 namespace Spryker\Zed\ProductOffer\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductOffer\Communication\Plugin\Checkout\Validator\ProductOfferCheckoutValidator;
-use Spryker\Zed\ProductOffer\Communication\Plugin\Checkout\Validator\ProductOfferCheckoutValidatorInterface;
 
 /**
  * @method \Spryker\Zed\ProductOffer\Business\ProductOfferFacade getFacade()
@@ -19,11 +17,4 @@ use Spryker\Zed\ProductOffer\Communication\Plugin\Checkout\Validator\ProductOffe
  */
 class ProductOfferCommunicationFactory extends AbstractCommunicationFactory
 {
-    /**
-     * @return \Spryker\Zed\ProductOffer\Communication\Plugin\Checkout\Validator\ProductOfferCheckoutValidatorInterface
-     */
-    public function createProductOfferCheckoutValidator(): ProductOfferCheckoutValidatorInterface
-    {
-        return new ProductOfferCheckoutValidator($this->getFacade());
-    }
 }

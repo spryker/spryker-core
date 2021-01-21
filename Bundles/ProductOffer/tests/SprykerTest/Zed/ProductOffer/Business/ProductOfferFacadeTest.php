@@ -9,8 +9,10 @@ namespace SprykerTest\Zed\ProductOffer\Business;
 
 use ArrayObject;
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\ProductOfferBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
@@ -449,5 +451,89 @@ class ProductOfferFacadeTest extends Unit
 
         // Assert
         $this->assertSame($expectedResult, $result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateCheckoutProductOfferWithValidProductOffer(): void
+    {
+        // Arrange
+        $productOfferTransfer = $this->tester->haveProductOffer([
+            ProductOfferTransfer::IS_ACTIVE => true,
+            ProductOfferTransfer::APPROVAL_STATUS => 'approved',
+        ]);
+
+        $itemTransfer = (new ItemBuilder([
+            ItemTransfer::PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference(),
+        ]))->build();
+
+        $quoteTransfer = (new QuoteTransfer())->addItem($itemTransfer);
+
+        //Act
+        $isCheckoutProductOfferValid = $this->tester->getFacade()
+            ->validateCheckoutProductOffer($quoteTransfer, new CheckoutResponseTransfer());
+
+        //Assert
+        $this->assertTrue(
+            $isCheckoutProductOfferValid,
+            'Expects that quote transfer will be valid when product offer is valid.'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateCheckoutProductOfferWithInactiveProductOffer(): void
+    {
+        // Arrange
+        $productOfferTransfer = $this->tester->haveProductOffer([
+            ProductOfferTransfer::IS_ACTIVE => false,
+            ProductOfferTransfer::APPROVAL_STATUS => 'approved',
+        ]);
+
+        $itemTransfer = (new ItemBuilder([
+            ItemTransfer::PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference(),
+        ]))->build();
+
+        $quoteTransfer = (new QuoteTransfer())->addItem($itemTransfer);
+
+        //Act
+        $isCheckoutProductOfferValid = $this->tester->getFacade()
+            ->validateCheckoutProductOffer($quoteTransfer, new CheckoutResponseTransfer());
+
+        //Assert
+        $this->assertFalse(
+            $isCheckoutProductOfferValid,
+            'Expects that quote transfer will be invalid when product offer is inactive.'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateCheckoutProductOfferWithNotApprovedProductOffer(): void
+    {
+        // Arrange
+        $productOfferTransfer = $this->tester->haveProductOffer([
+            ProductOfferTransfer::IS_ACTIVE => true,
+            ProductOfferTransfer::APPROVAL_STATUS => 'waiting_for_approval',
+        ]);
+
+        $itemTransfer = (new ItemBuilder([
+            ItemTransfer::PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference(),
+        ]))->build();
+
+        $quoteTransfer = (new QuoteTransfer())->addItem($itemTransfer);
+
+        //Act
+        $isCheckoutProductOfferValid = $this->tester->getFacade()
+            ->validateCheckoutProductOffer($quoteTransfer, new CheckoutResponseTransfer());
+
+        //Assert
+        $this->assertFalse(
+            $isCheckoutProductOfferValid,
+            'Expects that quote transfer will be invalid when product offer not approved.'
+        );
     }
 }

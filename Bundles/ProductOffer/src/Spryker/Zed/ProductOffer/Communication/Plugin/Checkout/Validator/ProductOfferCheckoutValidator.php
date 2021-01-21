@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\ProductOffer\ProductOfferConfig;
-use Spryker\Zed\ProductOffer\Business\ProductOfferFacadeInterface;
+use Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface;
 
 class ProductOfferCheckoutValidator implements ProductOfferCheckoutValidatorInterface
 {
@@ -21,16 +21,16 @@ class ProductOfferCheckoutValidator implements ProductOfferCheckoutValidatorInte
     protected const GLOSSARY_PARAM_SKU = '%sku%';
 
     /**
-     * @var \Spryker\Zed\ProductOffer\Business\ProductOfferFacadeInterface
+     * @var \Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface
      */
-    protected $productOfferFacade;
+    protected $productOfferRepository;
 
     /**
-     * @param \Spryker\Zed\ProductOffer\Business\ProductOfferFacadeInterface $productOfferFacade
+     * @param \Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface $productOfferRepository
      */
-    public function __construct(ProductOfferFacadeInterface $productOfferFacade)
+    public function __construct(ProductOfferRepositoryInterface $productOfferRepository)
     {
-        $this->productOfferFacade = $productOfferFacade;
+        $this->productOfferRepository = $productOfferRepository;
     }
 
     /**
@@ -47,7 +47,7 @@ class ProductOfferCheckoutValidator implements ProductOfferCheckoutValidatorInte
         $productOfferTransfersByProductOfferReference = $this->getProductOfferTransfersByProductOfferReference($quoteTransfer);
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getMerchantReference()) {
+            if (!$itemTransfer->getProductOfferReference()) {
                 continue;
             }
 
@@ -101,7 +101,7 @@ class ProductOfferCheckoutValidator implements ProductOfferCheckoutValidatorInte
                 $this->extractProductOfferReferences($quoteTransfer)
             );
 
-        return $this->productOfferFacade->find($productOfferCriteriaFilterTransfer);
+        return $this->productOfferRepository->find($productOfferCriteriaFilterTransfer);
     }
 
     /**

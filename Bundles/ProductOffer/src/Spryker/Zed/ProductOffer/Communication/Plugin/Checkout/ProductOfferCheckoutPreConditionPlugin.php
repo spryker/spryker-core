@@ -31,10 +31,13 @@ class ProductOfferCheckoutPreConditionPlugin extends AbstractPlugin implements C
      *
      * @return bool
      */
-    public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
-    {
-        return $this->getFactory()
-            ->createProductOfferCheckoutValidator()
-            ->checkCondition($quoteTransfer, $checkoutResponseTransfer);
+    public function checkCondition(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): bool {
+        return $this->getFacade()->validateCheckoutProductOffer(
+            $quoteTransfer,
+            $checkoutResponseTransfer
+        );
     }
 }

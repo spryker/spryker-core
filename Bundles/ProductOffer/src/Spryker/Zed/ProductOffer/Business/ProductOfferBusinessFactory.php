@@ -20,6 +20,8 @@ use Spryker\Zed\ProductOffer\Business\Reader\ProductOfferStatusReader;
 use Spryker\Zed\ProductOffer\Business\Reader\ProductOfferStatusReaderInterface;
 use Spryker\Zed\ProductOffer\Business\Writer\ProductOfferWriter;
 use Spryker\Zed\ProductOffer\Business\Writer\ProductOfferWriterInterface;
+use Spryker\Zed\ProductOffer\Communication\Plugin\Checkout\Validator\ProductOfferCheckoutValidator;
+use Spryker\Zed\ProductOffer\Communication\Plugin\Checkout\Validator\ProductOfferCheckoutValidatorInterface;
 use Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToMessengerFacadeInterface;
 use Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToStoreFacadeInterface;
 use Spryker\Zed\ProductOffer\ProductOfferDependencyProvider;
@@ -131,5 +133,13 @@ class ProductOfferBusinessFactory extends AbstractBusinessFactory
     public function getProductOfferExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ProductOfferDependencyProvider::PLUGINS_PRODUCT_OFFER_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOffer\Communication\Plugin\Checkout\Validator\ProductOfferCheckoutValidatorInterface
+     */
+    public function createProductOfferCheckoutValidator(): ProductOfferCheckoutValidatorInterface
+    {
+        return new ProductOfferCheckoutValidator($this->getRepository());
     }
 }

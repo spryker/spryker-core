@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductOffer\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferResponseTransfer;
@@ -115,4 +116,21 @@ interface ProductOfferFacadeInterface
      * @return string[]
      */
     public function getApplicableApprovalStatuses(string $currentStatus): array;
+
+    /**
+     * Specification:
+     * - Returns `false` response if at least one quote item transfer has items with inactive or not approved ProductOffer.
+     * - Sets error messages to checkout response, in case if items contain inactive or not approved ProductOffer items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function validateCheckoutProductOffer(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): bool;
 }
