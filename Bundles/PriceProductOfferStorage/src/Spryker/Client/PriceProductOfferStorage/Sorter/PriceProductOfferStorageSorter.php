@@ -20,7 +20,7 @@ class PriceProductOfferStorageSorter implements PriceProductOfferStorageSorterIn
      */
     public function sort(ProductOfferStorageCollectionTransfer $productOfferStorageCollectionTransfer): ProductOfferStorageCollectionTransfer
     {
-        $productOfferStorageTransfers = $productOfferStorageCollectionTransfer->getProductOffersStorage()->getArrayCopy();
+        $productOfferStorageTransfers = $productOfferStorageCollectionTransfer->getProductOffers()->getArrayCopy();
         usort($productOfferStorageTransfers, function (ProductOfferStorageTransfer $firstProductOfferStorageTransfer, ProductOfferStorageTransfer $secondProductOfferStorageTransfer) {
             if (!$firstProductOfferStorageTransfer->getPrice()) {
                 return -1;
@@ -33,6 +33,6 @@ class PriceProductOfferStorageSorter implements PriceProductOfferStorageSorterIn
             return $firstProductOfferStorageTransfer->getPrice()->getPrice() <=> $secondProductOfferStorageTransfer->getPrice()->getPrice();
         });
 
-        return $productOfferStorageCollectionTransfer->setProductOffersStorage(new ArrayObject($productOfferStorageTransfers));
+        return $productOfferStorageCollectionTransfer->setProductOffers(new ArrayObject($productOfferStorageTransfers));
     }
 }

@@ -72,6 +72,6 @@
     </transfer>
 
     <transfer name="ProductOfferStorageCollection">
-        <property name="productOffersStorage" type="ProductOfferStorage[]" singular="productOfferStorage"/>
+        <property name="productOffers" type="ProductOfferStorage[]" singular="productOfferStorage"/>
     </transfer>
 </transfers>

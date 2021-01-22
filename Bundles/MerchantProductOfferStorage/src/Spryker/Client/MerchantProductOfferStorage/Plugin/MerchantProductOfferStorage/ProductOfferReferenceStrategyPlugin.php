@@ -53,7 +53,7 @@ class ProductOfferReferenceStrategyPlugin extends AbstractPlugin implements Prod
                 (new ProductOfferStorageCriteriaTransfer())
                     ->setProductConcreteSkus($productOfferStorageCriteriaTransfer->getProductConcreteSkus())
             )
-            ->getProductOffersStorage()
+            ->getProductOffers()
             ->getArrayCopy();
 
         if (!$productOfferStorageTransfers) {
