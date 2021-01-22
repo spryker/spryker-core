@@ -97,6 +97,8 @@
 
     <transfer name="PriceType">
         <property name="idPrice" type="int"/>
+        <property name="idPriceType" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="Store">
@@ -120,4 +122,7 @@
         <property name="invalidValue" type="string"/>
     </transfer>
 
+    <transfer name="PriceProductFilterIdentifier">
+        <property name="productOfferReference" type="string"/>
+    </transfer>
 </transfers>
