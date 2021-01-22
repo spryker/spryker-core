@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductOffer\Business\Writer;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferErrorTransfer;
 use Generated\Shared\Transfer\ProductOfferResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
@@ -101,7 +101,7 @@ class ProductOfferWriter implements ProductOfferWriterInterface
     {
         if (
             !$productOfferTransfer->getIdProductOffer()
-            || !$this->productOfferRepository->findOne((new ProductOfferCriteriaFilterTransfer())->setIdProductOffer($productOfferTransfer->getIdProductOffer()))
+            || !$this->productOfferRepository->findOne((new ProductOfferCriteriaTransfer())->setIdProductOffer($productOfferTransfer->getIdProductOffer()))
         ) {
             return (new ProductOfferResponseTransfer())
                 ->setIsSuccessful(false)

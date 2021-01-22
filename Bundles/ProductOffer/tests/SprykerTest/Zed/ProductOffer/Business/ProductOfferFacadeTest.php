@@ -79,11 +79,11 @@ class ProductOfferFacadeTest extends Unit
         $storeTransfer2 = $this->tester->haveStore();
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer1);
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer2);
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setProductOfferReference($productOfferTransfer->getProductOfferReference());
 
         // Act
-        $productOfferTransfer = $this->tester->getFacade()->find($productOfferCriteriaFilterTransfer)->getProductOffers()[0];
+        $productOfferTransfer = $this->tester->getFacade()->find($productOfferCriteriaTransfer)->getProductOffers()[0];
 
         // Assert
         $this->assertCount(2, $productOfferTransfer->getStores());
@@ -97,11 +97,11 @@ class ProductOfferFacadeTest extends Unit
     {
         // Arrange
         $productOfferTransfer = $this->tester->haveProductOffer();
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setProductOfferReference($productOfferTransfer->getProductOfferReference());
 
         // Act
-        $productOfferTransfer = $this->tester->getFacade()->findOne($productOfferCriteriaFilterTransfer);
+        $productOfferTransfer = $this->tester->getFacade()->findOne($productOfferCriteriaTransfer);
 
         // Assert
         $this->assertNotEmpty($productOfferTransfer);
@@ -114,11 +114,11 @@ class ProductOfferFacadeTest extends Unit
     {
         // Arrange
         $productOfferTransfer = $this->tester->haveProductOffer();
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setIdProductOffer($productOfferTransfer->getIdProductOffer());
 
         // Act
-        $productOfferTransfer = $this->tester->getFacade()->findOne($productOfferCriteriaFilterTransfer);
+        $productOfferTransfer = $this->tester->getFacade()->findOne($productOfferCriteriaTransfer);
 
         // Assert
         $this->assertNotEmpty($productOfferTransfer);
@@ -135,11 +135,11 @@ class ProductOfferFacadeTest extends Unit
         $storeTransfer2 = $this->tester->haveStore();
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer1);
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer2);
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setProductOfferReference($productOfferTransfer->getProductOfferReference());
 
         // Act
-        $productOfferTransfer = $this->tester->getFacade()->findOne($productOfferCriteriaFilterTransfer);
+        $productOfferTransfer = $this->tester->getFacade()->findOne($productOfferCriteriaTransfer);
 
         // Assert
         $this->assertCount(2, $productOfferTransfer->getStores());
@@ -177,13 +177,13 @@ class ProductOfferFacadeTest extends Unit
         ]))->build();
         $productOfferTransfer->addStore($this->tester->haveStore());
         $productOfferTransfer->addStore($this->tester->haveStore());
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setIdProductOffer($productOfferTransfer->getIdProductOffer());
 
         // Act
         $productOfferTransfer = $this->tester->getFacade()->create($productOfferTransfer);
         $storeTransfers = $this->tester->getProductOfferRepository()
-            ->findOne($productOfferCriteriaFilterTransfer)
+            ->findOne($productOfferCriteriaTransfer)
             ->getStores();
 
         // Assert
@@ -363,13 +363,13 @@ class ProductOfferFacadeTest extends Unit
         $productOfferTransfer->addStore($storeTransfer);
         $productOfferTransfer->addStore($this->tester->haveStore());
         $productOfferTransfer->addStore($this->tester->haveStore());
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setIdProductOffer($productOfferTransfer->getIdProductOffer());
 
         // Act
         $this->tester->getFacade()->update($productOfferTransfer);
         $storeTransfers = $this->tester->getProductOfferRepository()
-            ->findOne($productOfferCriteriaFilterTransfer)
+            ->findOne($productOfferCriteriaTransfer)
             ->getStores();
 
         // Assert
@@ -389,13 +389,13 @@ class ProductOfferFacadeTest extends Unit
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer1);
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer2);
         $productOfferTransfer->addStore($storeTransfer1);
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setIdProductOffer($productOfferTransfer->getIdProductOffer());
 
         // Act
         $this->tester->getFacade()->update($productOfferTransfer);
         $storeTransfers = $this->tester->getProductOfferRepository()
-            ->findOne($productOfferCriteriaFilterTransfer)
+            ->findOne($productOfferCriteriaTransfer)
             ->getStores();
 
         // Assert

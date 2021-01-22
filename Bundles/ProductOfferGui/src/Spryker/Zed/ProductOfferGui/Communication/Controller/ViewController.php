@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferGui\Communication\Controller;
 
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ProductOfferGui\ProductOfferGuiConfig;
@@ -35,12 +35,12 @@ class ViewController extends AbstractController
             static::PARAM_ID_PRODUCT_OFFER
         ));
 
-        $productOfferCriteriaFilter = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteria = (new ProductOfferCriteriaTransfer())
             ->setIdProductOffer($idProductOffer);
 
         $productOfferTransfer = $this->getFactory()
             ->getProductOfferFacade()
-            ->findOne($productOfferCriteriaFilter);
+            ->findOne($productOfferCriteria);
 
         if (!$productOfferTransfer) {
             $this->addErrorMessage(static::MESSAGE_PRODUCT_OFFER_NOT_FOUND);
