@@ -13,7 +13,7 @@ use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteView
 use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderPluginInterface;
 
 /**
- * @method \Spryker\Client\ProductStorage\ProductStorageFactory getFactory()
+ * @method \Spryker\Client\ProductStorage\ProductStorageClientInterface getClient()
  */
 class ProductVariantProductViewExpanderPlugin extends AbstractPlugin implements ProductViewExpanderPluginInterface, ProductConcreteViewExpanderExcluderPluginInterface
 {
@@ -31,8 +31,7 @@ class ProductVariantProductViewExpanderPlugin extends AbstractPlugin implements 
      */
     public function expandProductViewTransfer(ProductViewTransfer $productViewTransfer, array $productData, $localeName)
     {
-        return $this->getFactory()
-            ->createVariantExpander()
+        return $this->getClient()
             ->expandProductViewWithProductVariant($productViewTransfer, $localeName);
     }
 }
