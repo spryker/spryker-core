@@ -8,6 +8,7 @@
 namespace Spryker\Client\SearchElasticsearch\Index\IndexNameResolver;
 
 use Spryker\Client\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
+use Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig;
 
 class IndexNameResolver implements IndexNameResolverInterface
 {
