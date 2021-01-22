@@ -9,5 +9,4 @@ import { OrderItemsTableComponent } from './order-items-table.component';
     declarations: [OrderItemsTableComponent],
     exports: [OrderItemsTableComponent],
 })
-export class OrderItemsTableModule {
-}
+export class OrderItemsTableModule {}

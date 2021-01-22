@@ -10,36 +10,32 @@ describe('ImageSliderComponent', () => {
     const mockedImages = [
         {
             src: 'mockSrc1',
-            alt: 'mockAlt1'
+            alt: 'mockAlt1',
         },
         {
             src: 'mockSrc2',
-            alt: 'mockAlt2'
+            alt: 'mockAlt2',
         },
         {
             src: 'mockSrc3',
-            alt: 'mockAlt3'
+            alt: 'mockAlt3',
         },
     ];
 
     @Component({
         // tslint:disable-next-line: component-selector
         selector: 'test',
-        template: `
-      <mp-image-slider [images]="images"></mp-image-slider>
-    `,
+        template: ` <mp-image-slider [images]="images"></mp-image-slider> `,
     })
-
     class TestComponent {
         images: any;
     }
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports:[ImageSliderModule],
-            declarations: [TestComponent]
-        })
-            .compileComponents();
+            imports: [ImageSliderModule],
+            declarations: [TestComponent],
+        }).compileComponents();
     }));
 
     beforeEach(() => {

@@ -5,13 +5,11 @@
 
 'use strict';
 
-$(document).ready(function() {
+$(document).ready(function () {
     var $confirmCheckboxElement = $('#delete_confirm');
 
-    $confirmCheckboxElement
-        .off('click')
-        .on('click', function() {
-            var checkboxIsChecked = $confirmCheckboxElement.prop('checked');
-            $('#submit_delete').prop('disabled', !checkboxIsChecked);
-        });
+    $confirmCheckboxElement.off('click').on('click', function () {
+        var checkboxIsChecked = $confirmCheckboxElement.prop('checked');
+        $('#submit_delete').prop('disabled', !checkboxIsChecked);
+    });
 });

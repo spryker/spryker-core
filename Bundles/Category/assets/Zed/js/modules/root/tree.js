@@ -12,17 +12,23 @@
  *
  * @return {void}
  */
-function load(idCategoryNode, targetElement, progressBar)
-{
+function load(idCategoryNode, targetElement, progressBar) {
     progressBar.show();
 
     var url = '/category/tree/?id-root-node=' + idCategoryNode;
 
     jQuery
-        .get(url, jQuery.proxy(function(targetElement, response) {
-            targetElement.html(response);
-        }, null, targetElement))
-        .always(function() {
+        .get(
+            url,
+            jQuery.proxy(
+                function (targetElement, response) {
+                    targetElement.html(response);
+                },
+                null,
+                targetElement,
+            ),
+        )
+        .always(function () {
             progressBar.hide();
         });
 }
@@ -30,12 +36,11 @@ function load(idCategoryNode, targetElement, progressBar)
 /**
  * @param {jQuery} targetElement
  */
-function reset(targetElement)
-{
+function reset(targetElement) {
     targetElement.html('');
 }
 
 module.exports = {
     load: load,
-    reset: reset
+    reset: reset,
 };

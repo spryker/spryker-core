@@ -1,38 +1,37 @@
 'use strict';
 
 function getLocale() {
-    var locale = document.documentElement.dataset.applicationLocale
-    if (typeof(locale) === 'string') {
-
+    var locale = document.documentElement.dataset.applicationLocale;
+    if (typeof locale === 'string') {
         return locale.split('_')[0].split('-')[0];
     }
     return 'en';
 }
 
 function getTranslation(locale) {
-    return require('./i18n/' + locale + '.json')
+    return require('./i18n/' + locale + '.json');
 }
 
-var locale = getLocale()
+var locale = getLocale();
 
 var defaultConfiguration = {
     scrollX: 'auto',
     autoWidth: false,
-    language: getTranslation(locale)
+    language: getTranslation(locale),
 };
 
 var noSearchConfiguration = {
     bFilter: false,
     bInfo: false,
     scrollX: 'auto',
-    autoWidth: false
+    autoWidth: false,
 };
 
 function setTableErrorMode(errorMode) {
     $.fn.dataTable.ext.errMode = errorMode || 'none';
 }
 
-function onTabChange (tabId) {
+function onTabChange(tabId) {
     var $tab = $(tabId);
     var $dataTables = $tab.find('.gui-table-data, .gui-table-data-no-search');
 
@@ -41,7 +40,7 @@ function onTabChange (tabId) {
     }
 }
 
-function onError (e, settings, techNote, message) {
+function onError(e, settings, techNote, message) {
     var debugMessage = '';
 
     if (DEV) {
@@ -50,9 +49,11 @@ function onError (e, settings, techNote, message) {
 
     window.sweetAlert({
         title: 'Error',
-        text: 'Something went wrong. Please <a href="javascript:window.location.reload()">refresh</a> the page or try again later.' + debugMessage,
+        text:
+            'Something went wrong. Please <a href="javascript:window.location.reload()">refresh</a> the page or try again later.' +
+            debugMessage,
         html: true,
-        type: 'error'
+        type: 'error',
     });
 }
 
@@ -61,5 +62,5 @@ module.exports = {
     noSearchConfiguration: noSearchConfiguration,
     setTableErrorMode: setTableErrorMode,
     onTabChange: onTabChange,
-    onError: onError
+    onError: onError,
 };

@@ -22,42 +22,42 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMer
 class ProductTableDataMapper
 {
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_SKU
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_SKU
      */
     protected const COL_KEY_SKU = 'sku';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_NAME
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_NAME
      */
     protected const COL_KEY_NAME = 'name';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_STATUS
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_STATUS
      */
     protected const COL_KEY_STATUS = 'status';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_IMAGE
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_IMAGE
      */
     protected const COL_KEY_IMAGE = 'image';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_OFFERS
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_OFFERS
      */
     protected const COL_KEY_OFFERS = 'offers';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_STORES
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_STORES
      */
     protected const COL_KEY_STORES = 'stores';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_VALID_FROM
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_VALID_FROM
      */
     protected const COL_KEY_VALID_FROM = 'validFrom';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_VALID_TO
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_VALID_TO
      */
     protected const COL_KEY_VALID_TO = 'validTo';
 
@@ -86,6 +86,8 @@ class ProductTableDataMapper
     }
 
     /**
+     * @phpstan-param array<mixed> $productTableDataArray
+     *
      * @param array $productTableDataArray
      * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
      *
@@ -116,6 +118,10 @@ class ProductTableDataMapper
     }
 
     /**
+     * @phpstan-param array<mixed> $productTableRowDataArray
+     *
+     * @phpstan-return array<mixed>
+     *
      * @param array $productTableRowDataArray
      *
      * @return array
@@ -136,6 +142,10 @@ class ProductTableDataMapper
     }
 
     /**
+     * @phpstan-param array<mixed> $productTableRowDataArray
+     *
+     * @phpstan-return array<mixed>
+     *
      * @param array $productTableRowDataArray
      *
      * @return array
@@ -165,6 +175,8 @@ class ProductTableDataMapper
     }
 
     /**
+     * @phpstan-param array<mixed> $productTableRowDataArray
+     *
      * @param array $productTableRowDataArray
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
