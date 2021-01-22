@@ -26,13 +26,19 @@ class UserDataHelper extends Module
      */
     public function haveUser(array $override = []): UserTransfer
     {
+        /** @var \Generated\Shared\Transfer\UserTransfer $userTransfer */
         $userTransfer = (new UserBuilder($override))->build();
         $userTransfer = $this->getUserFacade()->addUser(
             $userTransfer->getFirstName(),
             $userTransfer->getLastName(),
             $userTransfer->getUsername(),
-            $userTransfer->getPassword()
+            $userTransfer->getPassword(),
         );
+
+        if (isset($override[UserTransfer::STATUS])) {
+            $userTransfer->setStatus($override[UserTransfer::STATUS]);
+            $userTransfer = $this->getUserFacade()->updateUser($userTransfer);
+        }
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($userTransfer): void {
             $this->cleanupUser($userTransfer);
