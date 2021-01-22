@@ -3,42 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 47,
-            "line_to": 47,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CartCode/src/Spryker/Client/CartCode/CartCodeDependencyProvider.php",
-            "snippet": "            return new CartCodeToCalculationClientBridge($container->getLocator()->calculation()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CartCode/src/Spryker/Client/CartCode/CartCodeDependencyProvider.php",
-            "snippet": "            return new CartCodeToQuoteClientBridge($container->getLocator()->quote()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 98,
-            "line_to": 98,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CartCode/src/Spryker/Client/CartCode/CartCodeDependencyProvider.php",
-            "snippet": "                $container->getLocator()->zedRequest()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 63,
             "line_to": 63,
             "type": "PossiblyNullArgument",
@@ -228,30 +192,6 @@
             "selected_text": "$cartCode",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 48,
-            "line_to": 48,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CartCode/src/Spryker/Zed/CartCode/CartCodeDependencyProvider.php",
-            "snippet": "            return new CartCodeToCalculationFacadeBridge($container->getLocator()->calculation()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CartCode/src/Spryker/Zed/CartCode/CartCodeDependencyProvider.php",
-            "snippet": "            return new CartCodeToQuoteFacadeBridge($container->getLocator()->quote()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

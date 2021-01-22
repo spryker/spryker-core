@@ -11,45 +11,57 @@
             "selected_text": "$this->getStorageEntityData($productQuantityTransfer)",
             "error_level": 6,
             "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyProductQuantityStorageEntityTransfer>' for Spryker\\Zed\\ProductQuantityStorage\\Persistence\\ProductQuantityStorageRepository::findProductQuantityStorageEntitiesByProductIds",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductQuantityStorage/src/Spryker/Zed/ProductQuantityStorage/Persistence/ProductQuantityStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($query)->find();",
+            "selected_text": "$this->buildQueryFromCriteria($query)->find()",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyProductQuantityStorageEntityTransfer>' for Spryker\\Zed\\ProductQuantityStorage\\Persistence\\ProductQuantityStorageRepository::findAllProductQuantityStorageEntities",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductQuantityStorage/src/Spryker/Zed/ProductQuantityStorage/Persistence/ProductQuantityStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($query)->find();",
+            "selected_text": "$this->buildQueryFromCriteria($query)->find()",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 60,
+            "line_to": 60,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyProductQuantityStorageEntityTransfer>' for Spryker\\Zed\\ProductQuantityStorage\\Persistence\\ProductQuantityStorageRepository::findFilteredProductQuantityStorageEntities",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductQuantityStorage/src/Spryker/Zed/ProductQuantityStorage/Persistence/ProductQuantityStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();",
+            "selected_text": "$this->buildQueryFromCriteria($query, $filterTransfer)->find()",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 78,
+            "line_to": 78,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyProductQuantityEntityTransfer>' for Spryker\\Zed\\ProductQuantityStorage\\Persistence\\ProductQuantityStorageRepository::getProductQuantityEntityTransfersByProductIds",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductQuantityStorage/src/Spryker/Zed/ProductQuantityStorage/Persistence/ProductQuantityStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($query)->find();",
+            "selected_text": "$this->buildQueryFromCriteria($query)->find()",
+            "error_level": 6,
+            "shortcode": 128
         }
     ],
     "warning": [
-        {
-            "severity": "info",
-            "line_from": 45,
-            "line_to": 45,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductQuantityStorage/src/Spryker/Client/ProductQuantityStorage/ProductQuantityStorageDependencyProvider.php",
-            "snippet": "            return new ProductQuantityStorageToStorageClientBridge($container->getLocator()->storage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 59,
-            "line_to": 59,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductQuantityStorage/src/Spryker/Client/ProductQuantityStorage/ProductQuantityStorageDependencyProvider.php",
-            "snippet": "            return new ProductQuantityStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 73,
-            "line_to": 73,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductQuantityStorage/src/Spryker/Client/ProductQuantityStorage/ProductQuantityStorageDependencyProvider.php",
-            "snippet": "            return new ProductQuantityStorageToProductQuantityServiceBridge($container->getLocator()->productQuantity()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
         {
             "severity": "info",
             "line_from": 105,
@@ -220,6 +232,18 @@
         },
         {
             "severity": "info",
+            "line_from": 103,
+            "line_to": 103,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Client\\ProductQuantityStorage\\Resolver\\ProductQuantityResolverInterface::getNearestQuantity cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductQuantityStorage/src/Spryker/Client/ProductQuantityStorage/Validator/ProductQuantityItemValidator.php",
+            "snippet": "            $nearestQuantity = $this->productQuantityResolver->getNearestQuantity($itemTransfer->getId(), $quantity);",
+            "selected_text": "$quantity",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
             "line_from": 111,
             "line_to": 111,
             "type": "PossiblyNullReference",
@@ -280,6 +304,18 @@
         },
         {
             "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\ProductQuantityStorage\\Communication\\Plugin\\Event\\ProductQuantityEventResourceRepositoryPlugin::getData has the more specific type 'array<array-key, int>', expecting 'array<array-key, int|string>' as defined by Spryker\\Zed\\EventBehavior\\Dependency\\Plugin\\EventResourceRepositoryPluginInterface::getData",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductQuantityStorage/src/Spryker/Zed/ProductQuantityStorage/Communication/Plugin/Event/ProductQuantityEventResourceRepositoryPlugin.php",
+            "snippet": "    public function getData(array $ids = []): array",
+            "selected_text": "$ids",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
             "line_from": 30,
             "line_to": 30,
             "type": "PossiblyNullReference",
@@ -289,30 +325,6 @@
             "selected_text": "delete",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductQuantityStorage/src/Spryker/Zed/ProductQuantityStorage/ProductQuantityStorageDependencyProvider.php",
-            "snippet": "            return new ProductQuantityStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 75,
-            "line_to": 75,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductQuantityStorage/src/Spryker/Zed/ProductQuantityStorage/ProductQuantityStorageDependencyProvider.php",
-            "snippet": "            return new ProductQuantityStorageToProductQuantityFacadeBridge($container->getLocator()->productQuantity()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

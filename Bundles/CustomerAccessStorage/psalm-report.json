@@ -1,5 +1,18 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 62,
+            "line_to": 62,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyUnauthenticatedCustomerAccessStorageEntityTransfer>' for Spryker\\Zed\\CustomerAccessStorage\\Persistence\\CustomerAccessStorageRepository::findFilteredCustomerAccessStorageEntities",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerAccessStorage/src/Spryker/Zed/CustomerAccessStorage/Persistence/CustomerAccessStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();",
+            "selected_text": "$this->buildQueryFromCriteria($query, $filterTransfer)->find()",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -11,8 +24,7 @@
             "snippet": "            ->fillCustomerAccessTransferFromEntities($unauthenticatedCustomerAccess);",
             "selected_text": "$unauthenticatedCustomerAccess",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -24,8 +36,7 @@
             "snippet": "        return $entities->getArrayCopy();",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         }
     ],
     "deprecation": [
@@ -39,8 +50,7 @@
             "snippet": "class CustomerAccessSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface",
             "selected_text": "CustomerAccessSynchronizationDataPlugin",
             "error_level": 2,
-            "shortcode": 152,
-            "taint_trace": null
+            "shortcode": 152
         },
         {
             "severity": "info",
@@ -52,8 +62,7 @@
             "snippet": "        $customerAccessStorageEntities = $this->getRepository()->findAllCustomerAccessStorageEntities();",
             "selected_text": "findAllCustomerAccessStorageEntities",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         }
     ]
 }

@@ -52,6 +52,10 @@ use Symfony\Component\Security\Http\Authentication\DefaultAuthenticationSuccessH
 use Symfony\Component\Security\Http\EntryPoint\BasicAuthenticationEntryPoint;
 use Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint;
 use Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint;
+use Symfony\Component\Security\Http\Event\LogoutEvent;
+use Symfony\Component\Security\Http\EventListener\DefaultLogoutListener;
+use Symfony\Component\Security\Http\EventListener\RememberMeLogoutListener;
+use Symfony\Component\Security\Http\EventListener\SessionLogoutListener;
 use Symfony\Component\Security\Http\Firewall;
 use Symfony\Component\Security\Http\Firewall\AbstractAuthenticationListener;
 use Symfony\Component\Security\Http\Firewall\AccessListener;
@@ -569,8 +573,12 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                 if ($listener instanceof AbstractAuthenticationListener || $listener instanceof GuardAuthenticationListener) {
                     $listener->setRememberMeServices($container->get('security.remember_me.service.' . $firewallName));
                 }
-                if ($listener instanceof LogoutListener) {
+                if ($listener instanceof LogoutListener && !class_exists(LogoutEvent::class)) {
                     $listener->addHandler($container->get('security.remember_me.service.' . $firewallName));
+                }
+
+                if (class_exists(LogoutEvent::class)) {
+                    $this->getDispatcher($container)->addSubscriber(new RememberMeLogoutListener($container->get('security.remember_me.service.' . $firewallName)));
                 }
             }
 
@@ -722,7 +730,11 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     protected function addTrustResolver(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_TRUST_RESOLVER, function () {
-            return new AuthenticationTrustResolver(AnonymousToken::class, RememberMeToken::class);
+            if (method_exists(AuthenticationTrustResolver::class, '__construct')) {
+                return new AuthenticationTrustResolver(AnonymousToken::class, RememberMeToken::class);
+            }
+
+            return new AuthenticationTrustResolver();
         });
 
         return $container;
@@ -764,6 +776,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                 return null;
             }
 
+            /** @var \Symfony\Component\HttpFoundation\Session\SessionInterface $session */
             $session = $request->getSession();
 
             if ($session->has(Security::AUTHENTICATION_ERROR)) {
@@ -1112,17 +1125,28 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_LOGOUT_PROTO, $container->protect(function ($name, $options) use ($container) {
             return function () use ($container, $name, $options) {
                 $tmp = $options['logout_path'] ?? '/logout';
+                $targetUrl = $options['target_url'] ?? '/';
                 $this->addSecurityRoute('get', $tmp);
 
+                if (class_exists(LogoutEvent::class)) {
+                    $httpUtils = $container->get(static::SERVICE_SECURITY_HTTP_UTILS);
+                    $this->getDispatcher($container)->addSubscriber(new DefaultLogoutListener($httpUtils, $targetUrl));
+                    $this->getDispatcher($container)->addSubscriber(new SessionLogoutListener());
+                }
+
+                /** @var \Symfony\Contracts\EventDispatcher\EventDispatcherInterface $eventDispatcher */
+                $eventDispatcher = $this->getDispatcher($container);
                 $listener = new LogoutListener(
                     $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
                     $container->get(static::SERVICE_SECURITY_HTTP_UTILS),
-                    $this->getLogoutHandler($container, $name, $options),
+                    (class_exists(LogoutEvent::class)) ? $eventDispatcher : $this->getLogoutHandler($container, $name, $options),
                     $options,
                     $this->getCsrfTokenManager($container, $options)
                 );
 
-                $listener = $this->addSessionLogoutHandler($listener, $options);
+                if (!class_exists(LogoutEvent::class)) {
+                    $listener = $this->addSessionLogoutHandler($listener, $options);
+                }
 
                 return $listener;
             };
@@ -1258,8 +1282,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
 
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @throws \LogicException
      *
      * @return \Spryker\Service\Container\ContainerInterface
      */
@@ -1448,8 +1470,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @throws \LogicException
-     *
      * @return void
      */
     protected function addRouter(ContainerInterface $container): void
@@ -1470,7 +1490,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
 
                 $route->setDefault('_controller', $controller);
 
-                $routeCollection->add($name, $route);
+                $routeCollection->add($name, $route, 0);
             }
 
             return $routeCollection;

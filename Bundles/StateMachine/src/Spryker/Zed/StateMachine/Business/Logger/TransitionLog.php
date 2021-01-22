@@ -59,16 +59,16 @@ class TransitionLog implements TransitionLogInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItemTransfers
      *
      * @return void
      */
-    public function init(array $stateMachineItems)
+    public function init(array $stateMachineItemTransfers)
     {
         $this->logEntities = [];
-        foreach ($stateMachineItems as $stateMachineItem) {
-            $logEntity = $this->initEntity($stateMachineItem);
-            $this->logEntities[$stateMachineItem->getIdentifier()] = $logEntity;
+        foreach ($stateMachineItemTransfers as $stateMachineItemTransfer) {
+            $logEntity = $this->initEntity($stateMachineItemTransfer);
+            $this->logEntities[$stateMachineItemTransfer->getIdentifier()] = $logEntity;
         }
     }
 

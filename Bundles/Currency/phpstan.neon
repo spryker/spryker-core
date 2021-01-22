@@ -1,0 +1,9 @@
+parameters:
+    checkMissingIterableValueType: false
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        - "#'getCurrencyBundle' will always evaluate to false.#"
+        - '#Call to an undefined static method .+Intl::getCurrencyBundle\(\).#'
+        - '#Call to static method getSymbol\(\) on an unknown class Symfony\\Component\\Intl\\Currencies.#'
+        - '#Call to static method getName\(\) on an unknown class Symfony\\Component\\Intl\\Currencies.#'
+        - '#Call to static method getFractionDigits\(\) on an unknown class Symfony\\Component\\Intl\\Currencies.#'

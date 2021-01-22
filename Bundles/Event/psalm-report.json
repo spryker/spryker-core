@@ -328,6 +328,54 @@
         },
         {
             "severity": "info",
+            "line_from": 276,
+            "line_to": 276,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of class_exists cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Event/src/Spryker/Zed/Event/Business/Queue/Consumer/EventQueueConsumer.php",
+            "snippet": "        if (!class_exists($eventQueueSendMessageBodyTransfer->getListenerClassName())) {",
+            "selected_text": "$eventQueueSendMessageBodyTransfer->getListenerClassName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 280,
+            "line_to": 280,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Event/src/Spryker/Zed/Event/Business/Queue/Consumer/EventQueueConsumer.php",
+            "snippet": "                    $eventQueueSendMessageBodyTransfer->getListenerClassName()",
+            "selected_text": "$eventQueueSendMessageBodyTransfer->getListenerClassName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 287,
+            "line_to": 287,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of class_exists cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Event/src/Spryker/Zed/Event/Business/Queue/Consumer/EventQueueConsumer.php",
+            "snippet": "        if (!class_exists($eventQueueSendMessageBodyTransfer->getTransferClassName())) {",
+            "selected_text": "$eventQueueSendMessageBodyTransfer->getTransferClassName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 291,
+            "line_to": 291,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Event/src/Spryker/Zed/Event/Business/Queue/Consumer/EventQueueConsumer.php",
+            "snippet": "                    $eventQueueSendMessageBodyTransfer->getTransferClassName()",
+            "selected_text": "$eventQueueSendMessageBodyTransfer->getTransferClassName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
             "line_from": 319,
             "line_to": 319,
             "type": "MoreSpecificReturnType",
@@ -481,30 +529,6 @@
             "selected_text": "$this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options)",
             "error_level": 5,
             "shortcode": 139
-        },
-        {
-            "severity": "info",
-            "line_from": 96,
-            "line_to": 96,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Event/src/Spryker/Zed/Event/EventDependencyProvider.php",
-            "snippet": "            return new EventToQueueBridge($container->getLocator()->queue()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 110,
-            "line_to": 110,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Event/src/Spryker/Zed/Event/EventDependencyProvider.php",
-            "snippet": "            return new EventToUtilEncoding($container->getLocator()->utilEncoding()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

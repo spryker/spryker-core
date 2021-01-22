@@ -97,4 +97,79 @@ class ProductAlternativeFacadeTest extends Unit
         // Assert
         $this->assertCount(0, $productDiscontinuedResponseTransfer->getProductAlternatives());
     }
+
+    /**
+     * @return void
+     */
+    public function testDoAllConcreteProductsHaveAlternativesReturnsFalseWhenNotAllConcretesHaveAlternatives(): void
+    {
+        // Arrange
+        $productConcreteTransferWithAlternative = $this->tester->haveProduct();
+        $productConcreteTransferWithoutAlternative = $this->tester->haveProduct();
+        $alternativeProductConcreteTransfer = $this->tester->haveProduct();
+        $this->tester->haveProductAlternative($productConcreteTransferWithAlternative, $alternativeProductConcreteTransfer->getSku());
+
+        // Act
+        $result = $this->tester->getFacade()->doAllConcreteProductsHaveAlternatives([
+            $productConcreteTransferWithAlternative->getIdProductConcrete(),
+            $productConcreteTransferWithoutAlternative->getIdProductConcrete(),
+        ]);
+
+        // Assert
+        $this->assertFalse($result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDoAllConcreteProductsHaveAlternativesReturnsTrueWhenNotAllConcretesHaveAlternatives(): void
+    {
+        // Arrange
+        $productConcreteTransferWithAlternative1 = $this->tester->haveProduct();
+        $productConcreteTransferWithAlternative2 = $this->tester->haveProduct();
+        $alternativeProductConcreteTransfer = $this->tester->haveProduct();
+        $this->tester->haveProductAlternative($productConcreteTransferWithAlternative1, $alternativeProductConcreteTransfer->getSku());
+        $this->tester->haveProductAlternative($productConcreteTransferWithAlternative2, $alternativeProductConcreteTransfer->getSku());
+
+        // Act
+        $result = $this->tester->getFacade()->doAllConcreteProductsHaveAlternatives([
+            $productConcreteTransferWithAlternative1->getIdProductConcrete(),
+            $productConcreteTransferWithAlternative2->getIdProductConcrete(),
+        ]);
+
+        // Assert
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindProductAbstractIdsWhichConcreteHasAlternativeReturnsCorrectDataWhenProductWithoutAlternative(): void
+    {
+        // Arrange
+        $productConcreteTransferWithoutAlternative = $this->tester->haveProduct();
+
+        // Act
+        $productAbstractIds = $this->tester->getFacade()->findProductAbstractIdsWhichConcreteHasAlternative();
+
+        // Assert
+        $this->assertNotContains($productConcreteTransferWithoutAlternative->getFkProductAbstract(), $productAbstractIds);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindProductAbstractIdsWhichConcreteHasAlternativeReturnsCorrectDataWhenProductWithAlternative(): void
+    {
+        // Arrange
+        $productConcreteTransferWithAlternative = $this->tester->haveProduct();
+        $alternativeProductConcreteTransfer = $this->tester->haveProduct();
+        $this->tester->haveProductAlternative($productConcreteTransferWithAlternative, $alternativeProductConcreteTransfer->getSku());
+
+        // Act
+        $productAbstractIds = $this->tester->getFacade()->findProductAbstractIdsWhichConcreteHasAlternative();
+
+        // Assert
+        $this->assertContains($productConcreteTransferWithAlternative->getFkProductAbstract(), $productAbstractIds);
+    }
 }

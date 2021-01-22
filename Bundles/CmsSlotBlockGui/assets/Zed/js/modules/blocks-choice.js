@@ -24,17 +24,51 @@ var BlocksChoice = function (options) {
     };
 
     this.initSelect = function () {
-        _self.$blocksChoiceDropDown.select2();
+        _self.blocksTable.resetModifiedBlocks();
+        _self.$blocksChoiceDropDown.select2({
+            ajax: {
+                url: _self.baseUrl,
+                dataType: 'json',
+                data: function (params) {
+                    var paramsCollection = {};
+                    paramsCollection[_self.paramTerm] = params.term;
+                    paramsCollection[_self.paramPage] = params.page || 1;
+                    paramsCollection[_self.paramIdCmsSlotTemplate] = _self.blocksTable.idCmsSlotTemplate;
+                    paramsCollection[_self.paramIdCmsSlot] = _self.blocksTable.idCmsSlot;
+
+                    return paramsCollection;
+                },
+                processResults: function (data) {
+                    return {
+                        results: $.map(data.results, function (item) {
+                            item.disabled = item.disabled !== _self.blocksTable.isBlockModified(item.id);
+                            return item;
+                        }),
+                        pagination: data.pagination,
+                    };
+                },
+                delay: 250,
+                cache: true,
+            },
+            templateSelection: function (container) {
+                $(container.element)
+                    .data('is-active', container.isActive)
+                    .data('valid-from', container.validFrom)
+                    .data('valid-to', container.validFrom)
+                    .data('stores', container.stores);
+
+                return container.text;
+            },
+        });
     };
 
     this.resetSelect = function () {
-        _self.$blocksChoiceDropDown.val('').trigger('change').select2();
+        _self.$blocksChoiceDropDown.val('').trigger('change');
     };
 
     this.selectBlockChoice = function () {
         var isSelected = _self.$blocksChoiceDropDown.val() !== '';
-        $(_self.blocksChoiceAddSelector).toggleClass('btn-back', !isSelected)
-            .toggleClass('btn-primary', isSelected);
+        $(_self.blocksChoiceAddSelector).toggleClass('btn-back', !isSelected).toggleClass('btn-primary', isSelected);
     };
 
     this.addBlock = function (event) {
@@ -54,7 +88,6 @@ var BlocksChoice = function (options) {
         };
 
         _self.blocksTable.addRow(blockData);
-        $selectedBlock.prop('disabled', true);
         _self.resetSelect();
     };
 };

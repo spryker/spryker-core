@@ -11,81 +11,8 @@
             "selected_text": "SharedCartDataImportBusinessFactory",
             "error_level": 7,
             "shortcode": 42
-        },
-        {
-            "severity": "error",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "InvalidPropertyAssignmentValue",
-            "message": "$this->idCompanyUserCache with declared type 'array<array-key, int>' cannot be assigned type 'non-empty-array<array-key, Orm\\Zed\\CompanyUser\\Persistence\\SpyCompanyUser|int>'",
-            "file_name": "vendor/spryker/spryker/Bundles/SharedCartDataImport/src/Spryker/Zed/SharedCartDataImport/Business/SharedCartImportStep/CompanyUserKeyToIdCompanyUserStep.php",
-            "snippet": "            $this->idCompanyUserCache[$companyUserKey] = $idCompanyUser;",
-            "selected_text": "$this->idCompanyUserCache",
-            "error_level": 6,
-            "shortcode": 145
-        },
-        {
-            "severity": "error",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "InvalidPropertyAssignmentValue",
-            "message": "$this->idQuoteCache with declared type 'array<array-key, int>' cannot be assigned type 'non-empty-array<array-key, Orm\\Zed\\Quote\\Persistence\\SpyQuote|int>'",
-            "file_name": "vendor/spryker/spryker/Bundles/SharedCartDataImport/src/Spryker/Zed/SharedCartDataImport/Business/SharedCartImportStep/QuoteKeyToIdQuoteStep.php",
-            "snippet": "            $this->idQuoteCache[$quoteKey] = $idQuote;",
-            "selected_text": "$this->idQuoteCache",
-            "error_level": 6,
-            "shortcode": 145
-        },
-        {
-            "severity": "error",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "InvalidPropertyAssignmentValue",
-            "message": "$this->idPermissionGroupCache with declared type 'array<array-key, int>' cannot be assigned type 'non-empty-array<array-key, Orm\\Zed\\SharedCart\\Persistence\\SpyQuotePermissionGroup|int>'",
-            "file_name": "vendor/spryker/spryker/Bundles/SharedCartDataImport/src/Spryker/Zed/SharedCartDataImport/Business/SharedCartImportStep/QuotePermissionGroupNameToIdQuotePermissionGroupStep.php",
-            "snippet": "            $this->idPermissionGroupCache[$quotePermissionGroupName] = $idPermissionGroup;",
-            "selected_text": "$this->idPermissionGroupCache",
-            "error_level": 6,
-            "shortcode": 145
         }
     ],
-    "warning": [
-        {
-            "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::findonebykey does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SharedCartDataImport/src/Spryker/Zed/SharedCartDataImport/Business/SharedCartImportStep/CompanyUserKeyToIdCompanyUserStep.php",
-            "snippet": "                ->findOneByKey($companyUserKey);",
-            "selected_text": "findOneByKey",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::findonebykey does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SharedCartDataImport/src/Spryker/Zed/SharedCartDataImport/Business/SharedCartImportStep/QuoteKeyToIdQuoteStep.php",
-            "snippet": "                ->findOneByKey($quoteKey);",
-            "selected_text": "findOneByKey",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::findonebyname does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SharedCartDataImport/src/Spryker/Zed/SharedCartDataImport/Business/SharedCartImportStep/QuotePermissionGroupNameToIdQuotePermissionGroupStep.php",
-            "snippet": "                ->findOneByName($quotePermissionGroupName);",
-            "selected_text": "findOneByName",
-            "error_level": 4,
-            "shortcode": 219
-        }
-    ],
+    "warning": [],
     "deprecation": []
 }

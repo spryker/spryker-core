@@ -136,6 +136,18 @@
         },
         {
             "severity": "info",
+            "line_from": 198,
+            "line_to": 198,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCompanyBusinessUnits on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationship/src/Spryker/Zed/MerchantRelationship/Business/Model/MerchantRelationshipWriter.php",
+            "snippet": "        $companyBusinessUnits = $merchantRelationTransfer->getAssigneeCompanyBusinessUnits()->getCompanyBusinessUnits();",
+            "selected_text": "getCompanyBusinessUnits",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 219,
             "line_to": 219,
             "type": "PossiblyNullArgument",
@@ -160,10 +172,22 @@
         },
         {
             "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method setMerchantRelationships on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationship/src/Spryker/Zed/MerchantRelationship/Communication/Hydrator/MerchantRelationshipHydrator.php",
+            "snippet": "                ->setMerchantRelationships(new ArrayObject($merchantRelationships));",
+            "selected_text": "setMerchantRelationships",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 79,
             "line_to": 79,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\MerchantRelationship\\Persistence\\SpyMerchantRelationshipToCompanyBusinessUnit|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\MerchantRelationship\\Persistence\\SpyMerchantRelationshipToCompanyBusinessUnit> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationship/src/Spryker/Zed/MerchantRelationship/Persistence/MerchantRelationshipRepository.php",
             "snippet": "            ->toArray();",
             "selected_text": "toArray",
@@ -172,8 +196,8 @@
         },
         {
             "severity": "info",
-            "line_from": 132,
-            "line_to": 132,
+            "line_from": 135,
+            "line_to": 135,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Orm\\Zed\\MerchantRelationship\\Persistence\\SpyMerchantRelationship> variable $merchantRelationshipEntities",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationship/src/Spryker/Zed/MerchantRelationship/Persistence/MerchantRelationshipRepository.php",

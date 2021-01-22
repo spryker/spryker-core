@@ -18,6 +18,8 @@ interface CheckoutRestApiFacadeInterface
      * - Provides checkout data based on data passed in RestCheckoutRequestAttributesTransfer.
      * - Checkout data will include available shipping methods, available payment methods and available customer addresses.
      * - Recalculates quote.
+     * - Executes `ReadCheckoutDataValidatorPluginInterface` plugin stack.
+     * - Executes `CheckoutDataExpanderPluginInterface` plugin stack.
      *
      * @api
      *

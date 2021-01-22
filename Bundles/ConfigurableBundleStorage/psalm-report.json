@@ -1,18 +1,90 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 80,
+            "line_to": 80,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, int>' for Spryker\\Client\\ConfigurableBundleStorage\\Expander\\ConfigurableBundleTemplateImageStorageExpander::getConfigurableBundleTemplateIds is incorrect, got 'list<int|null>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleStorage/src/Spryker/Client/ConfigurableBundleStorage/Expander/ConfigurableBundleTemplateImageStorageExpander.php",
+            "snippet": "     * @return int[]",
+            "selected_text": "int[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 90,
+            "line_to": 90,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<int|null>' does not match the declared return type 'array<array-key, int>' for Spryker\\Client\\ConfigurableBundleStorage\\Expander\\ConfigurableBundleTemplateImageStorageExpander::getConfigurableBundleTemplateIds",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleStorage/src/Spryker/Client/ConfigurableBundleStorage/Expander/ConfigurableBundleTemplateImageStorageExpander.php",
+            "snippet": "        return $configurableBundleTemplateIds;",
+            "selected_text": "$configurableBundleTemplateIds",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 79,
+            "line_to": 81,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SynchronizationDataTransfer>' for Spryker\\Zed\\ConfigurableBundleStorage\\Persistence\\ConfigurableBundleStorageRepository::getFilteredConfigurableBundleTemplateStorageDataTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleStorage/src/Spryker/Zed/ConfigurableBundleStorage/Persistence/ConfigurableBundleStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($configurableBundleTemplateStoragePropelQuery, $filterTransfer)\n            ->setFormatter(SynchronizationDataTransferObjectFormatter::class)\n            ->find();",
+            "selected_text": "$this->buildQueryFromCriteria($configurableBundleTemplateStoragePropelQuery, $filterTransfer)\n            ->setFormatter(SynchronizationDataTransferObjectFormatter::class)\n            ->find()",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 99,
+            "line_to": 100,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyConfigurableBundleTemplateImageStorageEntityTransfer>' for Spryker\\Zed\\ConfigurableBundleStorage\\Persistence\\ConfigurableBundleStorageRepository::getFilteredConfigurableBundleTemplateImageStorageEntities",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleStorage/src/Spryker/Zed/ConfigurableBundleStorage/Persistence/ConfigurableBundleStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($configurableBundleTemplateImageStoragePropelQuery, $filterTransfer)\n            ->find();",
+            "selected_text": "$this->buildQueryFromCriteria($configurableBundleTemplateImageStoragePropelQuery, $filterTransfer)\n            ->find()",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
     "warning": [
         {
             "severity": "info",
-            "line_from": 143,
-            "line_to": 143,
+            "line_from": 39,
+            "line_to": 39,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Client\\ConfigurableBundleStorage\\Reader\\ConfigurableBundleTemplateImageStorageReaderInterface::findConfigurableBundleTemplateImageStorage cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleStorage/src/Spryker/Client/ConfigurableBundleStorage/Reader/ConfigurableBundleStorageReader.php",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleStorage/src/Spryker/Client/ConfigurableBundleStorage/Expander/ConfigurableBundleTemplateImageStorageExpander.php",
             "snippet": "            ->findConfigurableBundleTemplateImageStorage($configurableBundleTemplateStorageTransfer->getIdConfigurableBundleTemplate(), $localeName);",
             "selected_text": "$configurableBundleTemplateStorageTransfer->getIdConfigurableBundleTemplate()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 103,
+            "line_to": 103,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $mappedConfigurableBundleTemplateImageStorageTransfers[int|null] using possibly null offset int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleStorage/src/Spryker/Client/ConfigurableBundleStorage/Expander/ConfigurableBundleTemplateImageStorageExpander.php",
+            "snippet": "            $mappedConfigurableBundleTemplateImageStorageTransfers[$configurableBundleTemplateImageStorageTransfer->getIdConfigurableBundleTemplate()]",
+            "selected_text": "$mappedConfigurableBundleTemplateImageStorageTransfers",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 116,
+            "line_to": 116,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Client\\ConfigurableBundleStorage\\Expander\\ConfigurableBundleTemplateImageStorageExpanderInterface::expandConfigurableBundleTemplatesStorageWithImageSets cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleStorage/src/Spryker/Client/ConfigurableBundleStorage/Reader/ConfigurableBundleStorageReader.php",
+            "snippet": "            $configurableBundleTemplateStorageFilterTransfer->getLocaleName()",
+            "selected_text": "$configurableBundleTemplateStorageFilterTransfer->getLocaleName()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -24,8 +96,7 @@
             "snippet": "                ->setIdProductList($configurableBundleTemplateSlotTransfer->getProductList()->getIdProductList());",
             "selected_text": "getIdProductList",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -37,8 +108,7 @@
             "snippet": "            ->setFkConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())",
             "selected_text": "$configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -50,8 +120,7 @@
             "snippet": "            if (!$configurableBundleTemplateTransfer->getIsActive() || !$configurableBundleTemplateTransfer->getProductImageSets()->count()) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -63,8 +132,7 @@
             "snippet": "                $productImageSetTransfers->getArrayCopy(),",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -76,8 +144,7 @@
             "snippet": "                unset($localizedConfigurableBundleTemplateImageStorageEntityMap[$idConfigurableBundleTemplate][$localeName]);",
             "selected_text": "$localizedConfigurableBundleTemplateImageStorageEntityMap",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -89,8 +156,7 @@
             "snippet": "            ->setFkConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())",
             "selected_text": "$configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -102,8 +168,7 @@
             "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ProductImageTransfer[] $productImageTransfers",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ProductImageTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -115,8 +180,7 @@
             "snippet": "            ->getArrayCopy();",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -128,8 +192,7 @@
             "snippet": "            ->getArrayCopy();",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -141,8 +204,7 @@
             "snippet": "            ->getArrayCopy();",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -154,8 +216,7 @@
             "snippet": "            ->getArrayCopy();",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -167,8 +228,7 @@
             "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ProductImageSetTransfer[] $productImageSetTransfers",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ProductImageSetTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -180,8 +240,7 @@
             "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\ProductImageSetTransfer[]",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ProductImageSetTransfer[]",
             "error_level": 4,
-            "shortcode": 142,
-            "taint_trace": null
+            "shortcode": 142
         },
         {
             "severity": "info",
@@ -193,8 +252,7 @@
             "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ProductImageSetTransfer[] $productImageSetTransfers",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ProductImageSetTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -206,8 +264,7 @@
             "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\ProductImageSetTransfer[]",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ProductImageSetTransfer[]",
             "error_level": 4,
-            "shortcode": 142,
-            "taint_trace": null
+            "shortcode": 142
         }
     ],
     "deprecation": [
@@ -221,8 +278,7 @@
             "snippet": "            ->setIsSendingToQueue($this->configurableBundleStorageConfig->isSendingToQueue());",
             "selected_text": "setIsSendingToQueue",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -234,8 +290,7 @@
             "snippet": "            ->setIsSendingToQueue($this->configurableBundleStorageConfig->isSendingToQueue());",
             "selected_text": "isSendingToQueue",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -247,8 +302,7 @@
             "snippet": "            ->setIsSendingToQueue($this->configurableBundleStorageConfig->isSendingToQueue());",
             "selected_text": "setIsSendingToQueue",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -260,8 +314,7 @@
             "snippet": "            ->setIsSendingToQueue($this->configurableBundleStorageConfig->isSendingToQueue());",
             "selected_text": "isSendingToQueue",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         }
     ]
 }

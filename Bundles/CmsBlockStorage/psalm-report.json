@@ -28,42 +28,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockStorage/src/Spryker/Client/CmsBlockStorage/CmsBlockStorageDependencyProvider.php",
-            "snippet": "            return new CmsBlockStorageToStorageBridge($container->getLocator()->storage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 60,
-            "line_to": 60,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockStorage/src/Spryker/Client/CmsBlockStorage/CmsBlockStorageDependencyProvider.php",
-            "snippet": "            return new CmsBlockStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 75,
-            "line_to": 75,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockStorage/src/Spryker/Client/CmsBlockStorage/CmsBlockStorageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->utilEncoding()->service()",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 105,
             "line_to": 105,
             "type": "PossiblyNullArgument",
@@ -124,39 +88,15 @@
         },
         {
             "severity": "info",
-            "line_from": 60,
-            "line_to": 60,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockStorage/src/Spryker/Zed/CmsBlockStorage/CmsBlockStorageDependencyProvider.php",
-            "snippet": "            return new CmsBlockStorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 74,
-            "line_to": 74,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockStorage/src/Spryker/Zed/CmsBlockStorage/CmsBlockStorageDependencyProvider.php",
-            "snippet": "            return new CmsBlockStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 102,
-            "line_to": 102,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockStorage/src/Spryker/Zed/CmsBlockStorage/CmsBlockStorageDependencyProvider.php",
-            "snippet": "            return new CmsBlockStorageToStoreFacadeBridge($container->getLocator()->store()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
+            "line_from": 46,
+            "line_to": 46,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\CmsBlockStorage\\Communication\\Plugin\\Event\\CmsBlockEventResourceQueryContainerPlugin::queryData has the more specific type 'array<array-key, int>', expecting 'array<array-key, int|string>' as defined by Spryker\\Zed\\EventBehavior\\Dependency\\Plugin\\EventResourceQueryContainerPluginInterface::queryData",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockStorage/src/Spryker/Zed/CmsBlockStorage/Communication/Plugin/Event/CmsBlockEventResourceQueryContainerPlugin.php",
+            "snippet": "    public function queryData(array $ids = []): ?ModelCriteria",
+            "selected_text": "$ids",
+            "error_level": 5,
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -169,18 +109,6 @@
             "selected_text": "$this->getIdColumnName()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Orm\\Zed\\Glossary\\Persistence\\SpyGlossaryKeyQuery::joinwithspycmsblockstore does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockStorage/src/Spryker/Zed/CmsBlockStorage/Persistence/CmsBlockStorageQueryContainer.php",
-            "snippet": "            ->joinWithSpyCmsBlockStore()",
-            "selected_text": "joinWithSpyCmsBlockStore",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

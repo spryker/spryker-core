@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CmsSlotBlock\Business;
 
+use Generated\Shared\Transfer\CmsBlockCollectionTransfer;
+use Generated\Shared\Transfer\CmsBlockCriteriaTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
@@ -87,6 +89,8 @@ class CmsSlotBlockFacade extends AbstractFacade implements CmsSlotBlockFacadeInt
      *
      * @api
      *
+     * @deprecated Use {@link getPaginatedCmsBlocksWithSlotRelations()} instead.
+     *
      * @param string $twigPath
      *
      * @return string[]
@@ -96,5 +100,19 @@ class CmsSlotBlockFacade extends AbstractFacade implements CmsSlotBlockFacadeInt
         return $this->getFactory()
             ->createCmsSlotTemplateConditionReader()
             ->getTemplateConditionsByPath($twigPath);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockCollectionTransfer
+     */
+    public function getPaginatedCmsBlocksWithSlotRelations(CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer): CmsBlockCollectionTransfer
+    {
+        return $this->getRepository()->getPaginatedCmsBlocksWithSlotRelations($cmsBlockCriteriaTransfer);
     }
 }

@@ -71,33 +71,9 @@
             "selected_text": "$paymentSelections",
             "error_level": 6,
             "shortcode": 128
-        },
-        {
-            "severity": "error",
-            "line_from": 50,
-            "line_to": 62,
-            "type": "UndefinedDocblockClass",
-            "message": "Docblock-defined class or interface Orm\\Zed\\ProductMerchantConnector\\Persistence\\SpyProductAbstractMerchantQuery does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Payment/src/Spryker/Zed/Payment/Persistence/PaymentRepository.php",
-            "snippet": "        $paymentProviderEntities = $this->getFactory()\n            ->createPaymentProviderQuery()\n            ->joinWithSpyPaymentMethod()\n            ->useSpyPaymentMethodQuery()\n                ->joinWithSpyPaymentMethodStore()\n                ->filterByIsActive(true)\n                ->useSpyPaymentMethodStoreQuery()\n                    ->joinWithSpyStore()\n                    ->useSpyStoreQuery()\n                        ->filterByName($storeName)\n                    ->endUse()\n                ->endUse()\n            ->endUse()",
-            "selected_text": "$this->getFactory()\n            ->createPaymentProviderQuery()\n            ->joinWithSpyPaymentMethod()\n            ->useSpyPaymentMethodQuery()\n                ->joinWithSpyPaymentMethodStore()\n                ->filterByIsActive(true)\n                ->useSpyPaymentMethodStoreQuery()\n                    ->joinWithSpyStore()\n                    ->useSpyStoreQuery()\n                        ->filterByName($storeName)\n                    ->endUse()\n                ->endUse()\n            ->endUse()",
-            "error_level": -1,
-            "shortcode": 200
         }
     ],
     "warning": [
-        {
-            "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Payment/src/Spryker/Client/Payment/PaymentDependencyProvider.php",
-            "snippet": "            return new PaymentToZedRequestClientBridge($container->getLocator()->zedRequest()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
         {
             "severity": "info",
             "line_from": 25,
@@ -460,6 +436,18 @@
         },
         {
             "severity": "info",
+            "line_from": 68,
+            "line_to": 68,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getPaymentSelection on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/Payment/src/Spryker/Zed/Payment/Business/Method/PaymentMethodValidator.php",
+            "snippet": "            $paymentMethodsKeys[] = $quoteTransfer->getPayment()->getPaymentSelection();",
+            "selected_text": "getPaymentSelection",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 72,
             "line_to": 72,
             "type": "MismatchingDocblockParamType",
@@ -688,30 +676,6 @@
         },
         {
             "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Payment/src/Spryker/Zed/Payment/PaymentDependencyProvider.php",
-            "snippet": "                $container->getLocator()->store()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 63,
-            "line_to": 63,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Orm\\Zed\\Availability\\Persistence\\SpyAvailabilityAbstractQuery::groupbyidpaymentprovider does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Payment/src/Spryker/Zed/Payment/Persistence/PaymentRepository.php",
-            "snippet": "            ->groupByIdPaymentProvider()",
-            "selected_text": "groupByIdPaymentProvider",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 66,
             "line_to": 66,
             "type": "PossiblyInvalidMethodCall",
@@ -724,8 +688,8 @@
         },
         {
             "severity": "info",
-            "line_from": 109,
-            "line_to": 109,
+            "line_from": 108,
+            "line_to": 108,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Payment\\Persistence\\SpyPaymentMethod> variable $paymentMethodEntities",
             "file_name": "vendor/spryker/spryker/Bundles/Payment/src/Spryker/Zed/Payment/Persistence/PaymentRepository.php",

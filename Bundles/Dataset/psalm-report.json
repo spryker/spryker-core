@@ -11,8 +11,7 @@
             "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\DatasetRowColumnValueTransfer[]",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\DatasetRowColumnValueTransfer[]",
             "error_level": 4,
-            "shortcode": 142,
-            "taint_trace": null
+            "shortcode": 142
         },
         {
             "severity": "info",
@@ -24,8 +23,7 @@
             "snippet": "            $readerAdapter = $this->csvFactory->createCsvReader($filePathTransfer->getFilePath(), static::OPEN_MODE);",
             "selected_text": "$filePathTransfer->getFilePath()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -37,8 +35,7 @@
             "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\DatasetRowColumnValueTransfer[]",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\DatasetRowColumnValueTransfer[]",
             "error_level": 4,
-            "shortcode": 142,
-            "taint_trace": null
+            "shortcode": 142
         },
         {
             "severity": "info",
@@ -50,8 +47,7 @@
             "snippet": "        $filename = mb_ereg_replace(\"([^\\w\\s\\d\\-_~,;\\[\\]\\(\\).])\", '', $datasetFilenameTransfer->requireFilename()->getFilename());",
             "selected_text": "$datasetFilenameTransfer->requireFilename()->getFilename()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -63,8 +59,7 @@
             "snippet": "        if ($filePathTransfer !== null && file_exists($filePathTransfer->getFilePath())) {",
             "selected_text": "$filePathTransfer->getFilePath()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -76,8 +71,7 @@
             "snippet": "            if (!in_array($datasetColumn->getTitle(), $header)) {",
             "selected_text": "getTitle",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -89,8 +83,7 @@
             "snippet": "                array_push($header, $datasetColumn->getTitle());",
             "selected_text": "getTitle",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -102,8 +95,7 @@
             "snippet": "            $rowValues[$datasetRowColumnValue->getDatasetRow()->getTitle()][] = $datasetRowColumnValue->getValue();",
             "selected_text": "$rowValues",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -115,8 +107,7 @@
             "snippet": "            $rowValues[$datasetRowColumnValue->getDatasetRow()->getTitle()][] = $datasetRowColumnValue->getValue();",
             "selected_text": "getTitle",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -128,8 +119,7 @@
             "snippet": "        return $this->redirectResponse($redirectUrl);",
             "selected_text": "$redirectUrl",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -141,8 +131,7 @@
             "snippet": "        return $this->redirectResponse($referer);",
             "selected_text": "$referer",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -154,8 +143,7 @@
             "snippet": "        return $this->redirectResponse($redirectUrl);",
             "selected_text": "$redirectUrl",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -167,8 +155,7 @@
             "snippet": "        return $this->redirectResponse($referer);",
             "selected_text": "$referer",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -180,8 +167,7 @@
             "snippet": "        return $this->redirectResponse($referer);",
             "selected_text": "$referer",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -193,8 +179,7 @@
             "snippet": "            sprintf('%s.%s', $this->getFacade()->getFilenameByDatasetName(\n                (new DatasetFilenameTransfer())->setFilename($datasetTransfer->getName())\n            )\n                ->getFilename(), static::FILE_EXTENTION)",
             "selected_text": "$this->getFacade()->getFilenameByDatasetName(\n                (new DatasetFilenameTransfer())->setFilename($datasetTransfer->getName())\n            )\n                ->getFilename()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -206,8 +191,7 @@
             "snippet": "            ->toKeyIndex(static::FK_LOCALE_KEY);",
             "selected_text": "toKeyIndex",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -219,8 +203,7 @@
             "snippet": "            $fkLocale = $datasetLocalizedAttributeTransfer->getLocale()->getIdLocale();",
             "selected_text": "getIdLocale",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -232,8 +215,7 @@
             "snippet": "                static::OPTION_AVAILABLE_LOCALES => $options[static::OPTION_AVAILABLE_LOCALES],",
             "selected_text": "$options[static::OPTION_AVAILABLE_LOCALES]",
             "error_level": 3,
-            "shortcode": 79,
-            "taint_trace": null
+            "shortcode": 79
         },
         {
             "severity": "info",
@@ -245,8 +227,7 @@
             "snippet": "            $datasetEntity = $this->findDatasetById($datasetTransfer->requireIdDataset()->getIdDataset());",
             "selected_text": "$datasetTransfer->requireIdDataset()->getIdDataset()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -258,8 +239,7 @@
             "snippet": "            $datasetEntity->setIsActive($datasetTransfer->requireIsActive()->getIsActive());",
             "selected_text": "$datasetTransfer->requireIsActive()->getIsActive()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -271,8 +251,7 @@
             "snippet": "            $datasetEntity = $this->findDatasetById($datasetTransfer->requireIdDataset()->getIdDataset());",
             "selected_text": "$datasetTransfer->requireIdDataset()->getIdDataset()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -284,8 +263,7 @@
             "snippet": "        $datasetEntity = $this->findDatasetById($datasetTransfer->getIdDataset());",
             "selected_text": "$datasetTransfer->getIdDataset()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -297,8 +275,7 @@
             "snippet": "            if ($datasetTransfer->getDatasetRowColumnValues()->count()) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -310,8 +287,7 @@
             "snippet": "                $datasetRowColumnValueTransfer->getDatasetRow()",
             "selected_text": "$datasetRowColumnValueTransfer->getDatasetRow()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -323,8 +299,7 @@
             "snippet": "                $datasetRowColumnValueTransfer->getDatasetColumn()",
             "selected_text": "$datasetRowColumnValueTransfer->getDatasetColumn()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -336,8 +311,7 @@
             "snippet": "                $datasetRowColumnValueTransfer->getValue()",
             "selected_text": "$datasetRowColumnValueTransfer->getValue()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -349,8 +323,7 @@
             "snippet": "        $datasetEntity->getSpyDatasetRowColumnValues()->delete();",
             "selected_text": "delete",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -362,8 +335,7 @@
             "snippet": "        return $datasetEntity !== null;",
             "selected_text": "$datasetEntity !== null",
             "error_level": 4,
-            "shortcode": 122,
-            "taint_trace": null
+            "shortcode": 122
         },
         {
             "severity": "info",
@@ -375,8 +347,7 @@
             "snippet": "            ->toKeyIndex('fkLocale');",
             "selected_text": "toKeyIndex",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -388,8 +359,7 @@
             "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\DatasetLocalizedAttributeTransfer[] $localizedAttributesToSave",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\DatasetLocalizedAttributeTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -401,8 +371,7 @@
             "snippet": "            $idLocale = $localizedAttribute->getLocale()->getIdLocale();",
             "selected_text": "getIdLocale",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -414,8 +383,7 @@
             "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\DatasetLocalizedAttributeTransfer[] $localizedAttributesToSave",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\DatasetLocalizedAttributeTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -427,8 +395,7 @@
             "snippet": "            $localizedAttributeEntity->setFkLocale($localizedAttribute->getLocale()->getIdLocale());",
             "selected_text": "$localizedAttribute->getLocale()->getIdLocale()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -440,8 +407,7 @@
             "snippet": "            $localizedAttributeEntity->setFkLocale($localizedAttribute->getLocale()->getIdLocale());",
             "selected_text": "getIdLocale",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -453,8 +419,7 @@
             "snippet": "        )->find()->getFirst();",
             "selected_text": "getFirst",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -466,8 +431,7 @@
             "snippet": "        )->find()->getFirst();",
             "selected_text": "getFirst",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         }
     ],
     "deprecation": [
@@ -481,8 +445,7 @@
             "snippet": "    use DatabaseTransactionHandlerTrait;",
             "selected_text": "DatabaseTransactionHandlerTrait",
             "error_level": 2,
-            "shortcode": 171,
-            "taint_trace": null
+            "shortcode": 171
         }
     ]
 }

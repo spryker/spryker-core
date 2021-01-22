@@ -10,8 +10,7 @@
             "snippet": "        return array_filter($lookupPaths, 'glob');",
             "selected_text": "'glob'",
             "error_level": 6,
-            "shortcode": 4,
-            "taint_trace": null
+            "shortcode": 4
         },
         {
             "severity": "error",
@@ -23,8 +22,7 @@
             "snippet": "        return array_filter($twigFilePaths, 'glob');",
             "selected_text": "'glob'",
             "error_level": 6,
-            "shortcode": 4,
-            "taint_trace": null
+            "shortcode": 4
         },
         {
             "severity": "error",
@@ -36,8 +34,7 @@
             "snippet": "        $directories = array_filter($directories, function (string $directory) {\n            return glob($directory);\n        });",
             "selected_text": "function (string $directory) {\n            return glob($directory);\n        }",
             "error_level": 6,
-            "shortcode": 4,
-            "taint_trace": null
+            "shortcode": 4
         },
         {
             "severity": "error",
@@ -49,8 +46,7 @@
             "snippet": "            ->sort($this->getFilenameSortCallback());",
             "selected_text": "$this->getFilenameSortCallback()",
             "error_level": 6,
-            "shortcode": 4,
-            "taint_trace": null
+            "shortcode": 4
         },
         {
             "severity": "error",
@@ -62,8 +58,7 @@
             "snippet": "        $directories = array_filter($directories, 'glob');",
             "selected_text": "'glob'",
             "error_level": 6,
-            "shortcode": 4,
-            "taint_trace": null
+            "shortcode": 4
         },
         {
             "severity": "error",
@@ -75,8 +70,7 @@
             "snippet": "            ->sort($this->getFilenameSortCallback());",
             "selected_text": "$this->getFilenameSortCallback()",
             "error_level": 6,
-            "shortcode": 4,
-            "taint_trace": null
+            "shortcode": 4
         }
     ],
     "warning": [
@@ -90,8 +84,7 @@
             "snippet": "        usort($rules, $sortAlphabetically);",
             "selected_text": "$sortAlphabetically",
             "error_level": 4,
-            "shortcode": 12,
-            "taint_trace": null
+            "shortcode": 12
         },
         {
             "severity": "info",
@@ -103,8 +96,7 @@
             "snippet": "        $results = $this->xmlReader->fromString($output);",
             "selected_text": "$output",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -116,8 +108,7 @@
             "snippet": "            throw new Exception('Sniffer run was not successful: ' . $process->getExitCodeText());",
             "selected_text": "$process->getExitCodeText()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -129,8 +120,7 @@
             "snippet": "        $fileName = $bridgeBuilderDataTransfer->getModule() . 'To' . $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType() . 'Interface.php';",
             "selected_text": "$bridgeBuilderDataTransfer->getModule()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -142,8 +132,7 @@
             "snippet": "        $fileName = $bridgeBuilderDataTransfer->getModule() . 'To' . $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType() . 'Interface.php';",
             "selected_text": "$bridgeBuilderDataTransfer->getToModule()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -155,8 +144,7 @@
             "snippet": "        $fileName = $bridgeBuilderDataTransfer->getModule() . 'To' . $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType() . 'Interface.php';",
             "selected_text": "$bridgeBuilderDataTransfer->getToType()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -168,8 +156,7 @@
             "snippet": "                $bridgeBuilderDataTransfer->getVendor() . '\\\\' .",
             "selected_text": "$bridgeBuilderDataTransfer->getVendor()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -181,8 +168,7 @@
             "snippet": "                $bridgeBuilderDataTransfer->getVendor() . '\\\\' .\n                $bridgeBuilderDataTransfer->getApplication() . '\\\\' .\n                $bridgeBuilderDataTransfer->getModule() . '\\\\' .\n                'Dependency\\\\' .\n                $bridgeBuilderDataTransfer->getToType() . '\\\\' .\n                $bridgeBuilderDataTransfer->getModule() . 'To' . $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType() . 'Interface'",
             "selected_text": "$bridgeBuilderDataTransfer->getVendor() . '\\\\' .\n                $bridgeBuilderDataTransfer->getApplication() . '\\\\' .\n                $bridgeBuilderDataTransfer->getModule() . '\\\\' .\n                'Dependency\\\\' .\n                $bridgeBuilderDataTransfer->getToType() . '\\\\' .\n                $bridgeBuilderDataTransfer->getModule() . 'To' . $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType() . 'Interface'",
             "error_level": 3,
-            "shortcode": 193,
-            "taint_trace": null
+            "shortcode": 193
         },
         {
             "severity": "info",
@@ -194,8 +180,7 @@
             "snippet": "                $bridgeBuilderDataTransfer->getApplication() . '\\\\' .",
             "selected_text": "$bridgeBuilderDataTransfer->getApplication()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -207,8 +192,7 @@
             "snippet": "                $bridgeBuilderDataTransfer->getModule() . '\\\\' .",
             "selected_text": "$bridgeBuilderDataTransfer->getModule()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -220,8 +204,7 @@
             "snippet": "                $bridgeBuilderDataTransfer->getToType() . '\\\\' .",
             "selected_text": "$bridgeBuilderDataTransfer->getToType()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -233,8 +216,7 @@
             "snippet": "                $bridgeBuilderDataTransfer->getModule() . 'To' . $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType() . 'Interface'",
             "selected_text": "$bridgeBuilderDataTransfer->getModule()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -246,8 +228,7 @@
             "snippet": "                $bridgeBuilderDataTransfer->getModule() . 'To' . $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType() . 'Interface'",
             "selected_text": "$bridgeBuilderDataTransfer->getToModule()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -259,8 +240,7 @@
             "snippet": "                $bridgeBuilderDataTransfer->getModule() . 'To' . $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType() . 'Interface'",
             "selected_text": "$bridgeBuilderDataTransfer->getToType()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -272,8 +252,7 @@
             "snippet": "        $fileName = $bridgeBuilderDataTransfer->getModule() . 'To' . $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType() . 'Bridge.php';",
             "selected_text": "$bridgeBuilderDataTransfer->getModule()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -285,8 +264,7 @@
             "snippet": "        $fileName = $bridgeBuilderDataTransfer->getModule() . 'To' . $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType() . 'Bridge.php';",
             "selected_text": "$bridgeBuilderDataTransfer->getToModule()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -298,8 +276,7 @@
             "snippet": "        $fileName = $bridgeBuilderDataTransfer->getModule() . 'To' . $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType() . 'Bridge.php';",
             "selected_text": "$bridgeBuilderDataTransfer->getToType()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -311,8 +288,7 @@
             "snippet": "                $bridgeBuilderDataTransfer->getVendor() . '\\\\' .",
             "selected_text": "$bridgeBuilderDataTransfer->getVendor()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -324,8 +300,7 @@
             "snippet": "                $bridgeBuilderDataTransfer->getVendor() . '\\\\' .\n                $bridgeBuilderDataTransfer->getApplication() . '\\\\' .\n                $bridgeBuilderDataTransfer->getModule() . '\\\\' .\n                'Dependency\\\\' .\n                $bridgeBuilderDataTransfer->getToType() . '\\\\' .\n                $bridgeBuilderDataTransfer->getModule() . 'To' . $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType() . 'Bridge'",
             "selected_text": "$bridgeBuilderDataTransfer->getVendor() . '\\\\' .\n                $bridgeBuilderDataTransfer->getApplication() . '\\\\' .\n                $bridgeBuilderDataTransfer->getModule() . '\\\\' .\n                'Dependency\\\\' .\n                $bridgeBuilderDataTransfer->getToType() . '\\\\' .\n                $bridgeBuilderDataTransfer->getModule() . 'To' . $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType() . 'Bridge'",
             "error_level": 3,
-            "shortcode": 193,
-            "taint_trace": null
+            "shortcode": 193
         },
         {
             "severity": "info",
@@ -337,8 +312,7 @@
             "snippet": "                $bridgeBuilderDataTransfer->getApplication() . '\\\\' .",
             "selected_text": "$bridgeBuilderDataTransfer->getApplication()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -350,8 +324,7 @@
             "snippet": "                $bridgeBuilderDataTransfer->getModule() . '\\\\' .",
             "selected_text": "$bridgeBuilderDataTransfer->getModule()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -363,8 +336,7 @@
             "snippet": "                $bridgeBuilderDataTransfer->getToType() . '\\\\' .",
             "selected_text": "$bridgeBuilderDataTransfer->getToType()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -376,8 +348,7 @@
             "snippet": "                $bridgeBuilderDataTransfer->getModule() . 'To' . $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType() . 'Bridge'",
             "selected_text": "$bridgeBuilderDataTransfer->getModule()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -389,8 +360,7 @@
             "snippet": "                $bridgeBuilderDataTransfer->getModule() . 'To' . $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType() . 'Bridge'",
             "selected_text": "$bridgeBuilderDataTransfer->getToModule()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -402,8 +372,7 @@
             "snippet": "                $bridgeBuilderDataTransfer->getModule() . 'To' . $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType() . 'Bridge'",
             "selected_text": "$bridgeBuilderDataTransfer->getToType()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -415,8 +384,7 @@
             "snippet": "            '{toModuleVariable}' => lcfirst($bridgeBuilderDataTransfer->getToModule()),",
             "selected_text": "$bridgeBuilderDataTransfer->getToModule()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -428,8 +396,7 @@
             "snippet": "        if ($this->getModuleLayer($bridgeBuilderDataTransfer->getToType())) {",
             "selected_text": "$bridgeBuilderDataTransfer->getToType()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -441,8 +408,7 @@
             "snippet": "            $replacements['{toModuleLayer}'] = '\\\\' . $this->getModuleLayer($bridgeBuilderDataTransfer->getToType());",
             "selected_text": "$bridgeBuilderDataTransfer->getToType()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -454,8 +420,7 @@
             "snippet": "        $pathToInternalNamespace = $this->config->getPathToInternalNamespace($bridgeBuilderDataTransfer->getVendor());",
             "selected_text": "$bridgeBuilderDataTransfer->getVendor()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -467,8 +432,7 @@
             "snippet": "            return $pathToInternalNamespace . $bridgeBuilderDataTransfer->getModule();",
             "selected_text": "$bridgeBuilderDataTransfer->getModule()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -480,8 +444,7 @@
             "snippet": "        $vendorDirectory = $this->normalizeNameForSplit($bridgeBuilderDataTransfer->getVendor());",
             "selected_text": "$bridgeBuilderDataTransfer->getVendor()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -493,8 +456,7 @@
             "snippet": "        $moduleDirectory = $this->normalizeNameForSplit($bridgeBuilderDataTransfer->getModule());",
             "selected_text": "$bridgeBuilderDataTransfer->getModule()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -506,8 +468,7 @@
             "snippet": "        $pathToInternalNamespace = $this->config->getPathToInternalNamespace($bridgeBuilderDataTransfer->getToVendor());",
             "selected_text": "$bridgeBuilderDataTransfer->getToVendor()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -519,8 +480,7 @@
             "snippet": "            return $pathToInternalNamespace . $bridgeBuilderDataTransfer->getToModule();",
             "selected_text": "$bridgeBuilderDataTransfer->getToModule()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -532,8 +492,7 @@
             "snippet": "        $vendorDirectory = $this->normalizeNameForSplit($bridgeBuilderDataTransfer->getToVendor());",
             "selected_text": "$bridgeBuilderDataTransfer->getToVendor()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -545,8 +504,7 @@
             "snippet": "        $moduleDirectory = $this->normalizeNameForSplit($bridgeBuilderDataTransfer->getToModule());",
             "selected_text": "$bridgeBuilderDataTransfer->getToModule()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -558,8 +516,7 @@
             "snippet": "            $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType(),",
             "selected_text": "$bridgeBuilderDataTransfer->getToModule()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -571,8 +528,7 @@
             "snippet": "            $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType(),",
             "selected_text": "$bridgeBuilderDataTransfer->getToType()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -584,8 +540,7 @@
             "snippet": "            $bridgeBuilderDataTransfer->getToVendor() . '\\\\' .",
             "selected_text": "$bridgeBuilderDataTransfer->getToVendor()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -597,8 +552,7 @@
             "snippet": "            $bridgeBuilderDataTransfer->getToApplication() . '\\\\' .",
             "selected_text": "$bridgeBuilderDataTransfer->getToApplication()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -610,8 +564,19 @@
             "snippet": "            $bridgeBuilderDataTransfer->getToModule() . '\\\\';",
             "selected_text": "$bridgeBuilderDataTransfer->getToModule()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 458,
+            "line_to": 458,
+            "type": "PossiblyNullOperand",
+            "message": "Cannot concatenate with a possibly null null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/CodeBuilder/Bridge/BridgeBuilder.php",
+            "snippet": "            $path .= $bridgeBuilderDataTransfer->getToModuleLayer() . '\\\\';",
+            "selected_text": "$bridgeBuilderDataTransfer->getToModuleLayer()",
+            "error_level": 1,
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -623,8 +588,7 @@
             "snippet": "        $path .= $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType();",
             "selected_text": "$bridgeBuilderDataTransfer->getToModule()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -636,8 +600,7 @@
             "snippet": "        $path .= $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType();",
             "selected_text": "$bridgeBuilderDataTransfer->getToType()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -649,8 +612,7 @@
             "snippet": "        $targetBridgeClass = new ReflectionClass($path);",
             "selected_text": "$path",
             "error_level": 3,
-            "shortcode": 193,
-            "taint_trace": null
+            "shortcode": 193
         },
         {
             "severity": "info",
@@ -662,8 +624,7 @@
             "snippet": "            $bridgeBuilderDataTransfer->getToVendor() . '\\\\' .",
             "selected_text": "$bridgeBuilderDataTransfer->getToVendor()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -675,8 +636,7 @@
             "snippet": "            $bridgeBuilderDataTransfer->getToApplication() . '\\\\' .",
             "selected_text": "$bridgeBuilderDataTransfer->getToApplication()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -688,8 +648,19 @@
             "snippet": "            $bridgeBuilderDataTransfer->getToModule() . '\\\\';",
             "selected_text": "$bridgeBuilderDataTransfer->getToModule()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 487,
+            "line_to": 487,
+            "type": "PossiblyNullOperand",
+            "message": "Cannot concatenate with a possibly null null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/CodeBuilder/Bridge/BridgeBuilder.php",
+            "snippet": "            $path .= $bridgeBuilderDataTransfer->getToModuleLayer() . '\\\\';",
+            "selected_text": "$bridgeBuilderDataTransfer->getToModuleLayer()",
+            "error_level": 1,
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -701,8 +672,7 @@
             "snippet": "        $path .= $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType() . 'Interface';",
             "selected_text": "$bridgeBuilderDataTransfer->getToModule()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -714,8 +684,7 @@
             "snippet": "        $path .= $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType() . 'Interface';",
             "selected_text": "$bridgeBuilderDataTransfer->getToType()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -727,8 +696,7 @@
             "snippet": "        $targetBridgeInterface = new ReflectionClass($path);",
             "selected_text": "$path",
             "error_level": 3,
-            "shortcode": 193,
-            "taint_trace": null
+            "shortcode": 193
         },
         {
             "severity": "info",
@@ -740,8 +708,7 @@
             "snippet": "                $finalOutput .= $this->getClassNameFromFqcn($parameter->getType()->getName()) . ' ';",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -753,8 +720,7 @@
             "snippet": "            if ($parameter->hasType() && !$parameter->getType()->isBuiltin()) {",
             "selected_text": "isBuiltin",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -766,8 +732,7 @@
             "snippet": "                $type = $parameter->getType()->getName();",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -779,8 +744,7 @@
             "snippet": "        $module = strtolower($filter->filter($module));",
             "selected_text": "$filter->filter($module)",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -792,8 +756,7 @@
             "snippet": "        if (strpos($module, '.') !== false) {",
             "selected_text": "$module",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -805,8 +768,7 @@
             "snippet": "            [$namespace, $module] = explode('.', $module, 2);",
             "selected_text": "$module",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -818,8 +780,7 @@
             "snippet": "        $path = $this->resolvePath($module, $namespace, $pathOption);",
             "selected_text": "$module",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -831,8 +792,7 @@
             "snippet": "                return $this->getPathToCore($namespace, $path);",
             "selected_text": "$path",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -844,8 +804,7 @@
             "snippet": "            return $pathToRoot . $path;",
             "selected_text": "$path",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -857,8 +816,7 @@
             "snippet": "            return $this->buildPath($pathToInternalNamespace . $module . DIRECTORY_SEPARATOR, $pathSuffix);",
             "selected_text": "$pathSuffix",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -870,8 +828,7 @@
             "snippet": "        return $this->buildPath($path, $pathSuffix);",
             "selected_text": "$pathSuffix",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -883,8 +840,7 @@
             "snippet": "        return $process->getExitCode();",
             "selected_text": "$process->getExitCode()",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -896,8 +852,7 @@
             "snippet": "     * @return int",
             "selected_text": "int",
             "error_level": 5,
-            "shortcode": 144,
-            "taint_trace": null
+            "shortcode": 144
         },
         {
             "severity": "info",
@@ -909,8 +864,7 @@
             "snippet": "        return $process->getExitCode();",
             "selected_text": "$process->getExitCode()",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -922,8 +876,7 @@
             "snippet": "     * @return int",
             "selected_text": "int",
             "error_level": 5,
-            "shortcode": 144,
-            "taint_trace": null
+            "shortcode": 144
         },
         {
             "severity": "info",
@@ -935,8 +888,7 @@
             "snippet": "        return $process->getExitCode();",
             "selected_text": "$process->getExitCode()",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -948,8 +900,7 @@
             "snippet": "        if (!$this->hasComposerJson($moduleTransfer)) {",
             "selected_text": "$moduleTransfer",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -961,8 +912,7 @@
             "snippet": "        $composerJsonFilePath = sprintf('%s/composer.json', $moduleTransfer->getPath());",
             "selected_text": "$moduleTransfer->getPath()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -974,8 +924,7 @@
             "snippet": "            ->in($module->getPath())",
             "selected_text": "$module->getPath()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -987,8 +936,7 @@
             "snippet": "            $moduleKey = implode('.', [$moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName()]);",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -1000,8 +948,7 @@
             "snippet": "        uksort($composerJson, $callable);",
             "selected_text": "$callable",
             "error_level": 4,
-            "shortcode": 12,
-            "taint_trace": null
+            "shortcode": 12
         },
         {
             "severity": "info",
@@ -1013,112 +960,103 @@
             "snippet": "        $moduleName = mb_strtolower($filter->filter(basename($composerJsonFile->getPath())));",
             "selected_text": "$filter->filter(basename($composerJsonFile->getPath()))",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
-            "line_from": 73,
-            "line_to": 73,
+            "line_from": 78,
+            "line_to": 78,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/Composer/ComposerNameFinder.php",
             "snippet": "            return sprintf('%s/%s', $moduleTransfer->getOrganization()->getNameDashed(), $moduleTransfer->getNameDashed());",
             "selected_text": "$moduleTransfer->getOrganization()->getNameDashed()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 73,
-            "line_to": 73,
+            "line_from": 78,
+            "line_to": 78,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getNameDashed on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/Composer/ComposerNameFinder.php",
             "snippet": "            return sprintf('%s/%s', $moduleTransfer->getOrganization()->getNameDashed(), $moduleTransfer->getNameDashed());",
             "selected_text": "getNameDashed",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 73,
-            "line_to": 73,
+            "line_from": 78,
+            "line_to": 78,
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/Composer/ComposerNameFinder.php",
             "snippet": "            return sprintf('%s/%s', $moduleTransfer->getOrganization()->getNameDashed(), $moduleTransfer->getNameDashed());",
             "selected_text": "$moduleTransfer->getNameDashed()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 88,
-            "line_to": 88,
+            "line_from": 93,
+            "line_to": 93,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/Composer/ComposerNameFinder.php",
             "snippet": "        return sprintf('%s/%s', $moduleTransfer->getOrganization()->getNameDashed(), $moduleTransfer->getNameDashed());",
             "selected_text": "$moduleTransfer->getOrganization()->getNameDashed()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 88,
-            "line_to": 88,
+            "line_from": 93,
+            "line_to": 93,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getNameDashed on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/Composer/ComposerNameFinder.php",
             "snippet": "        return sprintf('%s/%s', $moduleTransfer->getOrganization()->getNameDashed(), $moduleTransfer->getNameDashed());",
             "selected_text": "getNameDashed",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 88,
-            "line_to": 88,
+            "line_from": 93,
+            "line_to": 93,
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/Composer/ComposerNameFinder.php",
             "snippet": "        return sprintf('%s/%s', $moduleTransfer->getOrganization()->getNameDashed(), $moduleTransfer->getNameDashed());",
             "selected_text": "$moduleTransfer->getNameDashed()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 154,
-            "line_to": 154,
+            "line_from": 159,
+            "line_to": 159,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $this->moduleTransferCollectionGroupedByModuleName[null|string] using possibly null offset null|string",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/Composer/ComposerNameFinder.php",
             "snippet": "            $this->moduleTransferCollectionGroupedByModuleName[$moduleTransfer->getName()][] = $moduleTransfer;",
             "selected_text": "$this->moduleTransferCollectionGroupedByModuleName",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
-            "line_from": 173,
-            "line_to": 173,
+            "line_from": 178,
+            "line_to": 178,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $this->packageTransferCollectionGroupedByPackageName[null|string] using possibly null offset null|string",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/Composer/ComposerNameFinder.php",
             "snippet": "            $this->packageTransferCollectionGroupedByPackageName[$packageTransfer->getPackageName()] = $packageTransfer;",
             "selected_text": "$this->packageTransferCollectionGroupedByPackageName",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -1130,8 +1068,7 @@
             "snippet": "            $dependentModule = strtolower($filter->filter($dependentModule));",
             "selected_text": "$filter->filter($dependentModule)",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -1143,60 +1080,67 @@
             "snippet": "        return (string)$filter->filter($moduleName);",
             "selected_text": "$filter->filter($moduleName)",
             "error_level": 3,
-            "shortcode": 190,
-            "taint_trace": null
+            "shortcode": 190
         },
         {
             "severity": "info",
-            "line_from": 107,
-            "line_to": 107,
+            "line_from": 50,
+            "line_to": 50,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of ReflectionClass::__construct expects class-string|object|trait-string, parent type string provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/Dependency/ComposerParser/ExternalDependencyParser.php",
+            "snippet": "            $reflectionClass = new ReflectionClass($className);",
+            "selected_text": "$className",
+            "error_level": 3,
+            "shortcode": 193
+        },
+        {
+            "severity": "info",
+            "line_from": 113,
+            "line_to": 113,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of strcmp cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/Dependency/DependencyContainer/DependencyContainer.php",
             "snippet": "            return strcmp($dependencyBundleTransferA->getModule(), $dependencyBundleTransferB->getModule());",
             "selected_text": "$dependencyBundleTransferA->getModule()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 107,
-            "line_to": 107,
+            "line_from": 113,
+            "line_to": 113,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of strcmp cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/Dependency/DependencyContainer/DependencyContainer.php",
             "snippet": "            return strcmp($dependencyBundleTransferA->getModule(), $dependencyBundleTransferB->getModule());",
             "selected_text": "$dependencyBundleTransferB->getModule()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 110,
-            "line_to": 110,
+            "line_from": 116,
+            "line_to": 116,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\DependencyModuleTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/Dependency/DependencyContainer/DependencyContainer.php",
             "snippet": "        $dependencyModules = $dependencyCollectionTransfer->getDependencyModules()->getArrayCopy();",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
-            "line_from": 134,
-            "line_to": 134,
+            "line_from": 140,
+            "line_to": 140,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of ucfirst expects string, possibly different type array<array-key, mixed>|string provided",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/Dependency/DependencyContainer/DependencyContainer.php",
             "snippet": "        return ucfirst($filter->filter($moduleName));",
             "selected_text": "$filter->filter($moduleName)",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -1208,8 +1152,7 @@
             "snippet": "        $moduleExtensionKey = sprintf('%s.%sExtension', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName());",
             "selected_text": "$moduleTransfer->getOrganization()->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1221,8 +1164,7 @@
             "snippet": "        $moduleExtensionKey = sprintf('%s.%sExtension', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName());",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -1234,8 +1176,7 @@
             "snippet": "        $moduleExtensionKey = sprintf('%s.%sExtension', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName());",
             "selected_text": "$moduleTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1247,8 +1188,7 @@
             "snippet": "            $composerName = $this->buildComposerName($moduleTransfer->getOrganization()->getName(), sprintf('%sExtension', $moduleTransfer->getName()));",
             "selected_text": "$moduleTransfer->getOrganization()->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1260,8 +1200,7 @@
             "snippet": "            $composerName = $this->buildComposerName($moduleTransfer->getOrganization()->getName(), sprintf('%sExtension', $moduleTransfer->getName()));",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -1273,21 +1212,19 @@
             "snippet": "            $composerName = $this->buildComposerName($moduleTransfer->getOrganization()->getName(), sprintf('%sExtension', $moduleTransfer->getName()));",
             "selected_text": "$moduleTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 171,
-            "line_to": 171,
+            "line_from": 237,
+            "line_to": 237,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of ucfirst expects string, possibly different type array<array-key, mixed>|string provided",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/Dependency/DependencyFinder/ExternalDependencyFinder.php",
             "snippet": "        return ucfirst($filter->filter($dependentModule));",
             "selected_text": "$filter->filter($dependentModule)",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -1299,8 +1236,7 @@
             "snippet": "        $composerNames = $this->getNamesFromUseStatements($useStatements, $context->getModule()->getName());",
             "selected_text": "$context->getModule()->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1312,8 +1248,7 @@
             "snippet": "            $dependentModule = $this->propelSchemaParser->getModuleNameByForeignReference($foreignIdColumnName, $context->getModule()->getName());",
             "selected_text": "$context->getModule()->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1325,8 +1260,7 @@
             "snippet": "        $modules = $this->getModuleNamesFromUseStatements($useStatements, $context->getModule()->getName());",
             "selected_text": "$context->getModule()->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1338,8 +1272,7 @@
             "snippet": "        return $this->addFindings($context->getModule()->getName(), $matches, $dependencyContainer);",
             "selected_text": "$context->getModule()->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1351,8 +1284,7 @@
             "snippet": "        return $this->addFindings($context->getModule()->getName(), $matches, $dependencyContainer);",
             "selected_text": "$context->getModule()->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1364,8 +1296,7 @@
             "snippet": "        return $this->addFindings($context->getModule()->getName(), $matches, $dependencyContainer);",
             "selected_text": "$context->getModule()->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1377,8 +1308,7 @@
             "snippet": "        return $this->addFindings($context->getModule()->getName(), $matches, $dependencyContainer);",
             "selected_text": "$context->getModule()->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1390,8 +1320,7 @@
             "snippet": "        return $this->addFindings($context->getModule()->getName(), $matches, $dependencyContainer);",
             "selected_text": "$context->getModule()->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1403,8 +1332,7 @@
             "snippet": "            $moduleTransfer->setNameDashed($this->dasherize($moduleTransfer->getName()));",
             "selected_text": "$moduleTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1416,8 +1344,7 @@
             "snippet": "     * @return array",
             "selected_text": "array",
             "error_level": 5,
-            "shortcode": 166,
-            "taint_trace": null
+            "shortcode": 166
         },
         {
             "severity": "info",
@@ -1429,8 +1356,7 @@
             "snippet": "     * @return \\Symfony\\Component\\Finder\\Finder|\\Symfony\\Component\\Finder\\SplFileInfo[]",
             "selected_text": "\\Symfony\\Component\\Finder\\Finder|\\Symfony\\Component\\Finder\\SplFileInfo[]",
             "error_level": 4,
-            "shortcode": 142,
-            "taint_trace": null
+            "shortcode": 142
         },
         {
             "severity": "info",
@@ -1442,8 +1368,7 @@
             "snippet": "     * @return \\Symfony\\Component\\Finder\\SplFileInfo[]|\\Symfony\\Component\\Finder\\Finder",
             "selected_text": "\\Symfony\\Component\\Finder\\SplFileInfo[]|\\Symfony\\Component\\Finder\\Finder",
             "error_level": 4,
-            "shortcode": 142,
-            "taint_trace": null
+            "shortcode": 142
         },
         {
             "severity": "info",
@@ -1455,8 +1380,7 @@
             "snippet": "     * @return \\Symfony\\Component\\Finder\\SplFileInfo[]|\\Symfony\\Component\\Finder\\Finder",
             "selected_text": "\\Symfony\\Component\\Finder\\SplFileInfo[]|\\Symfony\\Component\\Finder\\Finder",
             "error_level": 4,
-            "shortcode": 142,
-            "taint_trace": null
+            "shortcode": 142
         },
         {
             "severity": "info",
@@ -1468,8 +1392,7 @@
             "snippet": "            $dependencyValidationRequestTransfer->getModule(),",
             "selected_text": "$dependencyValidationRequestTransfer->getModule()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1481,151 +1404,79 @@
             "snippet": "            $composerName = $dependencyModuleTransfer->getComposerName() ?? $this->composerNameFinder->findComposerNameByModuleName($dependencyModuleTransfer->getModule());",
             "selected_text": "$dependencyModuleTransfer->getModule()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 52,
-            "line_to": 52,
+            "line_from": 58,
+            "line_to": 58,
             "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Zed\\Development\\Business\\DependencyTree\\ComposerDependencyParser::getParsedComposerDependenciesForBundle cannot be null, possibly null value provided",
+            "message": "Argument 1 of Spryker\\Zed\\Development\\Business\\DependencyTree\\ComposerDependencyParser::parseComposerJson cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DependencyTree/ComposerDependencyParser.php",
-            "snippet": "        $composerDependencyCollectionTransfer = $this->getParsedComposerDependenciesForBundle($dependencyCollectionTransfer->getModule());",
+            "snippet": "        $composerDependencyCollectionTransfer = $this->parseComposerJson($dependencyCollectionTransfer->getModule());",
             "selected_text": "$dependencyCollectionTransfer->getModule()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 67,
-            "line_to": 67,
+            "line_from": 68,
+            "line_to": 68,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DependencyTree/ComposerDependencyParser.php",
             "snippet": "        $currentComposerName = sprintf('%s/%s', $dependencyCollectionTransfer->getModule()->getOrganization()->getNameDashed(), $dependencyCollectionTransfer->getModule()->getNameDashed());",
             "selected_text": "$dependencyCollectionTransfer->getModule()->getOrganization()->getNameDashed()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 67,
-            "line_to": 67,
+            "line_from": 68,
+            "line_to": 68,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getOrganization on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DependencyTree/ComposerDependencyParser.php",
             "snippet": "        $currentComposerName = sprintf('%s/%s', $dependencyCollectionTransfer->getModule()->getOrganization()->getNameDashed(), $dependencyCollectionTransfer->getModule()->getNameDashed());",
             "selected_text": "getOrganization",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 67,
-            "line_to": 67,
+            "line_from": 68,
+            "line_to": 68,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getNameDashed on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DependencyTree/ComposerDependencyParser.php",
             "snippet": "        $currentComposerName = sprintf('%s/%s', $dependencyCollectionTransfer->getModule()->getOrganization()->getNameDashed(), $dependencyCollectionTransfer->getModule()->getNameDashed());",
             "selected_text": "getNameDashed",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 67,
-            "line_to": 67,
+            "line_from": 68,
+            "line_to": 68,
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DependencyTree/ComposerDependencyParser.php",
             "snippet": "        $currentComposerName = sprintf('%s/%s', $dependencyCollectionTransfer->getModule()->getOrganization()->getNameDashed(), $dependencyCollectionTransfer->getModule()->getNameDashed());",
             "selected_text": "$dependencyCollectionTransfer->getModule()->getNameDashed()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 67,
-            "line_to": 67,
+            "line_from": 68,
+            "line_to": 68,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getNameDashed on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DependencyTree/ComposerDependencyParser.php",
             "snippet": "        $currentComposerName = sprintf('%s/%s', $dependencyCollectionTransfer->getModule()->getOrganization()->getNameDashed(), $dependencyCollectionTransfer->getModule()->getNameDashed());",
             "selected_text": "getNameDashed",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 148,
-            "line_to": 148,
-            "type": "PossiblyNullArrayOffset",
-            "message": "Cannot access value on variable $composerNames[mixed|null|string] using possibly null offset mixed|null|string",
-            "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DependencyTree/ComposerDependencyParser.php",
-            "snippet": "            $composerNames[$moduleDependencyTransfer->getModule()] = $moduleDependencyTransfer->getComposerName();",
-            "selected_text": "$composerNames",
-            "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 165,
-            "line_to": 165,
-            "type": "PossiblyNullArrayOffset",
-            "message": "Cannot access value on variable $composerNames[mixed|null|string] using possibly null offset mixed|null|string",
-            "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DependencyTree/ComposerDependencyParser.php",
-            "snippet": "                    $composerNames[$moduleDependencyTransfer->getModule()] = $moduleDependencyTransfer->getComposerName();",
-            "selected_text": "$composerNames",
-            "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 184,
-            "line_to": 184,
-            "type": "PossiblyNullArrayOffset",
-            "message": "Cannot access value on variable $composerNames[mixed|null|string] using possibly null offset mixed|null|string",
-            "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DependencyTree/ComposerDependencyParser.php",
-            "snippet": "                    $composerNames[$moduleDependencyTransfer->getModule()] = $moduleDependencyTransfer->getComposerName();",
-            "selected_text": "$composerNames",
-            "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 205,
-            "line_to": 205,
-            "type": "PossiblyNullArrayOffset",
-            "message": "Cannot access value on variable $composerNames[mixed|null|string] using possibly null offset mixed|null|string",
-            "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DependencyTree/ComposerDependencyParser.php",
-            "snippet": "                $composerNames[$composerDependency->getModuleName()] = $composerDependency->getName();",
-            "selected_text": "$composerNames",
-            "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 223,
-            "line_to": 223,
-            "type": "PossiblyNullArrayOffset",
-            "message": "Cannot access value on variable $composerNames[mixed|null|string] using possibly null offset mixed|null|string",
-            "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DependencyTree/ComposerDependencyParser.php",
-            "snippet": "                $composerNames[$composerDependency->getModuleName()] = $composerDependency->getName();",
-            "selected_text": "$composerNames",
-            "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -1637,8 +1488,7 @@
             "snippet": "        $declaredDependencies = $this->parseDeclaredDependenciesForBundle($dependencyCollectionTransfer->getModule());",
             "selected_text": "$dependencyCollectionTransfer->getModule()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1650,8 +1500,7 @@
             "snippet": "        $dependencyJsonFilePath = sprintf('%s/dependency.json', $moduleTransfer->getPath());",
             "selected_text": "$moduleTransfer->getPath()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1663,60 +1512,55 @@
             "snippet": "        $composerJsonFilePath = sprintf('%s/composer.json', $moduleTransfer->getPath());",
             "selected_text": "$moduleTransfer->getPath()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 407,
-            "line_to": 407,
+            "line_from": 404,
+            "line_to": 404,
             "type": "PossiblyFalseOperand",
             "message": "Left operand cannot be falsable, got false|int",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DependencyTree/ComposerDependencyParser.php",
             "snippet": "        $name = substr($package, strpos($package, '/') + 1);",
             "selected_text": "strpos($package, '/')",
             "error_level": 3,
-            "shortcode": 162,
-            "taint_trace": null
+            "shortcode": 162
         },
         {
             "severity": "info",
-            "line_from": 409,
-            "line_to": 409,
+            "line_from": 406,
+            "line_to": 406,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of ucfirst expects string, possibly different type array<array-key, mixed>|string provided",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DependencyTree/ComposerDependencyParser.php",
             "snippet": "        $name = ucfirst($filter->filter($name));",
             "selected_text": "$filter->filter($name)",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
-            "line_from": 422,
-            "line_to": 422,
+            "line_from": 419,
+            "line_to": 419,
             "type": "PossiblyNullOperand",
             "message": "Cannot concatenate with a possibly null null|string",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DependencyTree/ComposerDependencyParser.php",
             "snippet": "        return $moduleName === $dependencyCollectionTransfer->getModule()->getName() . 'Extension';",
             "selected_text": "$dependencyCollectionTransfer->getModule()->getName()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
-            "line_from": 422,
-            "line_to": 422,
+            "line_from": 419,
+            "line_to": 419,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getName on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DependencyTree/ComposerDependencyParser.php",
             "snippet": "        return $moduleName === $dependencyCollectionTransfer->getModule()->getName() . 'Extension';",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -1728,8 +1572,7 @@
             "snippet": "                $classNameParts = array_slice($tokens, $pointer, $endOfNew - $foundPosition - 2);",
             "selected_text": "$endOfNew",
             "error_level": 3,
-            "shortcode": 162,
-            "taint_trace": null
+            "shortcode": 162
         },
         {
             "severity": "info",
@@ -1741,8 +1584,7 @@
             "snippet": "                $startOf = $file->findPrevious([T_OPEN_PARENTHESIS, T_WHITESPACE, T_OPEN_SQUARE_BRACKET], $foundPosition - 1) + 1;",
             "selected_text": "$file->findPrevious([T_OPEN_PARENTHESIS, T_WHITESPACE, T_OPEN_SQUARE_BRACKET], $foundPosition - 1)",
             "error_level": 3,
-            "shortcode": 162,
-            "taint_trace": null
+            "shortcode": 162
         },
         {
             "severity": "info",
@@ -1754,8 +1596,7 @@
             "snippet": "            $dependencyInformation[DependencyTree::META_FOREIGN_LAYER] = 'external';",
             "selected_text": "$dependencyInformation",
             "error_level": 3,
-            "shortcode": 18,
-            "taint_trace": null
+            "shortcode": 18
         },
         {
             "severity": "info",
@@ -1767,8 +1608,7 @@
             "snippet": "                return ucfirst($filter->filter($foreignBundle));",
             "selected_text": "$filter->filter($foreignBundle)",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -1780,8 +1620,7 @@
             "snippet": "                'url' => '/development/dependency/outgoing-graph?bundle=' . $incomingBundle->getName(),",
             "selected_text": "$incomingBundle->getName()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -1793,8 +1632,7 @@
             "snippet": "            $this->graph->addNode($incomingBundle->getName(), $attributes);",
             "selected_text": "$incomingBundle->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1806,8 +1644,7 @@
             "snippet": "            $this->graph->addEdge($incomingBundle->getName(), $this->bundleName);",
             "selected_text": "$incomingBundle->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1819,8 +1656,7 @@
             "snippet": "        return strtolower($filter->filter($classNameParts[0]));",
             "selected_text": "$filter->filter($classNameParts[0])",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -1832,8 +1668,7 @@
             "snippet": "     * @return array",
             "selected_text": "array",
             "error_level": 5,
-            "shortcode": 166,
-            "taint_trace": null
+            "shortcode": 166
         },
         {
             "severity": "info",
@@ -1845,8 +1680,7 @@
             "snippet": "        $basePath = rtrim($this->config->getPathToInternalNamespace(static::ORGANIZATION), '/');",
             "selected_text": "$this->config->getPathToInternalNamespace(static::ORGANIZATION)",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1858,8 +1692,7 @@
             "snippet": "        $basePath = rtrim($this->config->getPathToInternalNamespace(static::ORGANIZATION), '/');",
             "selected_text": "$this->config->getPathToInternalNamespace(static::ORGANIZATION)",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1871,8 +1704,7 @@
             "snippet": "        $basePath = rtrim($this->config->getPathToInternalNamespace(static::ORGANIZATION), '/');",
             "selected_text": "$this->config->getPathToInternalNamespace(static::ORGANIZATION)",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1884,8 +1716,7 @@
             "snippet": "    public function drawOutgoingDependencyTreeGraph($moduleToView, array $excludedModules = [], $showIncomingDependencies = false)",
             "selected_text": "$moduleToView",
             "error_level": 5,
-            "shortcode": 140,
-            "taint_trace": null
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -1897,8 +1728,7 @@
             "snippet": "                $bundleTransferCollection[$bundleTransfer->getName()] = $bundleTransfer;",
             "selected_text": "$bundleTransferCollection",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -1910,8 +1740,7 @@
             "snippet": "        if (!array_key_exists($bundleTransfer->getName(), $bundles)) {",
             "selected_text": "$bundleTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1923,8 +1752,7 @@
             "snippet": "        $existingBundleTransfer = $bundles[$bundleTransfer->getName()];",
             "selected_text": "$bundles",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -1936,8 +1764,7 @@
             "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\IdeAutoCompletionBundleMethodTransfer[] $existingMethodTransferCollection",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\IdeAutoCompletionBundleMethodTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -1949,8 +1776,7 @@
             "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\IdeAutoCompletionBundleMethodTransfer[] $methodTransferCollection",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\IdeAutoCompletionBundleMethodTransfer[]",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -1962,8 +1788,7 @@
             "snippet": "            $methodsByName[$methodTransfer->getName()] = $methodTransfer;",
             "selected_text": "$methodsByName",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -1975,8 +1800,7 @@
             "snippet": "            $methodsByName[$methodTransfer->getName()] = $methodTransfer;",
             "selected_text": "$methodsByName",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -1988,8 +1812,7 @@
             "snippet": "        $interfaceFileName = $this->getInterfaceFileName($bundleTransfer->getName());",
             "selected_text": "$bundleTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2001,8 +1824,7 @@
             "snippet": "        $classFileName = $this->getClassFileName($bundleTransfer->getName());",
             "selected_text": "$bundleTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2014,8 +1836,7 @@
             "snippet": "        return $this->namespaceExtractor->fromDirectory($directory, $bundleTransfer->getBaseDirectory());",
             "selected_text": "$bundleTransfer->getBaseDirectory()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2027,8 +1848,7 @@
             "snippet": "            $bundleTransfer->getDirectory(),",
             "selected_text": "$bundleTransfer->getDirectory()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2040,8 +1860,7 @@
             "snippet": "            $bundleTransfer->getName()",
             "selected_text": "$bundleTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2053,8 +1872,7 @@
             "snippet": "            $bundleTransfer->getDirectory(),",
             "selected_text": "$bundleTransfer->getDirectory()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2066,8 +1884,7 @@
             "snippet": "            $bundleTransfer->getName()",
             "selected_text": "$bundleTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2079,8 +1896,7 @@
             "snippet": "            $bundleTransfer->getDirectory(),",
             "selected_text": "$bundleTransfer->getDirectory()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2092,8 +1908,7 @@
             "snippet": "            $bundleTransfer->getName()",
             "selected_text": "$bundleTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2105,8 +1920,7 @@
             "snippet": "            $bundleTransfer->getDirectory(),",
             "selected_text": "$bundleTransfer->getDirectory()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2118,8 +1932,7 @@
             "snippet": "            $bundleTransfer->getName()",
             "selected_text": "$bundleTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2131,8 +1944,7 @@
             "snippet": "            $bundleTransfer->getDirectory(),",
             "selected_text": "$bundleTransfer->getDirectory()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2144,8 +1956,7 @@
             "snippet": "            $bundleTransfer->getName()",
             "selected_text": "$bundleTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2157,8 +1968,7 @@
             "snippet": "            if ($moduleTransfer->getMethods()->count() === 0) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -2170,8 +1980,7 @@
             "snippet": "            $fileName = sprintf('%s.php', $moduleTransfer->getName());",
             "selected_text": "$moduleTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2183,8 +1992,7 @@
             "snippet": "            $moduleTransfer->getPath(),",
             "selected_text": "$moduleTransfer->getPath()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2196,8 +2004,7 @@
             "snippet": "            $moduleTransfer->getOrganization()->getName(),",
             "selected_text": "$moduleTransfer->getOrganization()->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2209,8 +2016,7 @@
             "snippet": "            $moduleTransfer->getOrganization()->getName(),",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -2222,8 +2028,7 @@
             "snippet": "            $applicationTransfer->getName(),",
             "selected_text": "$applicationTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2235,8 +2040,7 @@
             "snippet": "            $moduleTransfer->getName()",
             "selected_text": "$moduleTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2248,8 +2052,7 @@
             "snippet": "     * @return \\Symfony\\Component\\Finder\\SplFileInfo[]|\\Symfony\\Component\\Finder\\Finder",
             "selected_text": "\\Symfony\\Component\\Finder\\SplFileInfo[]|\\Symfony\\Component\\Finder\\Finder",
             "error_level": 4,
-            "shortcode": 142,
-            "taint_trace": null
+            "shortcode": 142
         },
         {
             "severity": "info",
@@ -2261,8 +2064,7 @@
             "snippet": "        $dependencyProviderClassName = str_replace([$moduleTransfer->getPath() . 'src/', '.php', DIRECTORY_SEPARATOR], ['', '', '\\\\'], $splFileInfo->getPathname());",
             "selected_text": "$moduleTransfer->getPath()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -2274,8 +2076,7 @@
             "snippet": "     * @return \\Symfony\\Component\\Finder\\Finder|\\Symfony\\Component\\Finder\\SplFileInfo[]",
             "selected_text": "\\Symfony\\Component\\Finder\\Finder|\\Symfony\\Component\\Finder\\SplFileInfo[]",
             "error_level": 4,
-            "shortcode": 142,
-            "taint_trace": null
+            "shortcode": 142
         },
         {
             "severity": "info",
@@ -2287,8 +2088,7 @@
             "snippet": "     * @return \\Symfony\\Component\\Finder\\SplFileInfo[]|\\Symfony\\Component\\Finder\\Finder",
             "selected_text": "\\Symfony\\Component\\Finder\\SplFileInfo[]|\\Symfony\\Component\\Finder\\Finder",
             "error_level": 4,
-            "shortcode": 142,
-            "taint_trace": null
+            "shortcode": 142
         },
         {
             "severity": "info",
@@ -2300,8 +2100,7 @@
             "snippet": "        $composerJsonAsArray = $this->getComposerJsonAsArray($moduleTransfer->getPath());",
             "selected_text": "$moduleTransfer->getPath()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2313,8 +2112,7 @@
             "snippet": "     * @return \\Symfony\\Component\\Finder\\SplFileInfo[]|\\Symfony\\Component\\Finder\\Finder",
             "selected_text": "\\Symfony\\Component\\Finder\\SplFileInfo[]|\\Symfony\\Component\\Finder\\Finder",
             "error_level": 4,
-            "shortcode": 142,
-            "taint_trace": null
+            "shortcode": 142
         },
         {
             "severity": "info",
@@ -2326,8 +2124,7 @@
             "snippet": "        return sprintf('%s.%s', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName());",
             "selected_text": "$moduleTransfer->getOrganization()->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2339,8 +2136,7 @@
             "snippet": "        return sprintf('%s.%s', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName());",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -2352,8 +2148,7 @@
             "snippet": "        return sprintf('%s.%s', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName());",
             "selected_text": "$moduleTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2365,8 +2160,7 @@
             "snippet": "        $lookupDirectory = sprintf('%s/src/%s/', $moduleTransfer->getPath(), $moduleTransfer->getOrganization()->getName());",
             "selected_text": "$moduleTransfer->getPath()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2378,8 +2172,7 @@
             "snippet": "        $lookupDirectory = sprintf('%s/src/%s/', $moduleTransfer->getPath(), $moduleTransfer->getOrganization()->getName());",
             "selected_text": "$moduleTransfer->getOrganization()->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2391,8 +2184,7 @@
             "snippet": "        $lookupDirectory = sprintf('%s/src/%s/', $moduleTransfer->getPath(), $moduleTransfer->getOrganization()->getName());",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -2404,8 +2196,7 @@
             "snippet": "        $organizationName = $pathFragments[$vendorPosition + 1];",
             "selected_text": "$vendorPosition",
             "error_level": 3,
-            "shortcode": 162,
-            "taint_trace": null
+            "shortcode": 162
         },
         {
             "severity": "info",
@@ -2417,8 +2208,7 @@
             "snippet": "        $applicationName = $pathFragments[$vendorPosition + 2];",
             "selected_text": "$vendorPosition",
             "error_level": 3,
-            "shortcode": 162,
-            "taint_trace": null
+            "shortcode": 162
         },
         {
             "severity": "info",
@@ -2430,8 +2220,7 @@
             "snippet": "        if (!$this->matchesOrganization($moduleFilterTransfer, $moduleTransfer->getOrganization())) {",
             "selected_text": "$moduleTransfer->getOrganization()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2443,8 +2232,7 @@
             "snippet": "        return $this->match($moduleFilterTransfer->getOrganization()->getName(), $organizationTransfer->getName());",
             "selected_text": "$moduleFilterTransfer->getOrganization()->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2456,8 +2244,7 @@
             "snippet": "        return $this->match($moduleFilterTransfer->getOrganization()->getName(), $organizationTransfer->getName());",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -2469,8 +2256,7 @@
             "snippet": "        return $this->match($moduleFilterTransfer->getOrganization()->getName(), $organizationTransfer->getName());",
             "selected_text": "$organizationTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2482,8 +2268,7 @@
             "snippet": "            if ($this->match($moduleFilterTransfer->getApplication()->getName(), $applicationTransfer->getName())) {",
             "selected_text": "$moduleFilterTransfer->getApplication()->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2495,8 +2280,7 @@
             "snippet": "            if ($this->match($moduleFilterTransfer->getApplication()->getName(), $applicationTransfer->getName())) {",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -2508,8 +2292,7 @@
             "snippet": "            if ($this->match($moduleFilterTransfer->getApplication()->getName(), $applicationTransfer->getName())) {",
             "selected_text": "$applicationTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2521,8 +2304,7 @@
             "snippet": "        return $this->match($moduleFilterTransfer->getModule()->getName(), $moduleTransfer->getName());",
             "selected_text": "$moduleFilterTransfer->getModule()->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2534,8 +2316,7 @@
             "snippet": "        return $this->match($moduleFilterTransfer->getModule()->getName(), $moduleTransfer->getName());",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -2547,8 +2328,7 @@
             "snippet": "        return $this->match($moduleFilterTransfer->getModule()->getName(), $moduleTransfer->getName());",
             "selected_text": "$moduleTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2560,8 +2340,7 @@
             "snippet": "                $this->config->getPathToInternalNamespace(static::ORGANIZATION),",
             "selected_text": "$this->config->getPathToInternalNamespace(static::ORGANIZATION)",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2573,8 +2352,7 @@
             "snippet": "        return ($moduleTransfer->getOrganization()->getName() === static::ORGANIZATION);",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -2586,8 +2364,7 @@
             "snippet": "     * @return string",
             "selected_text": "string",
             "error_level": 5,
-            "shortcode": 144,
-            "taint_trace": null
+            "shortcode": 144
         },
         {
             "severity": "info",
@@ -2599,8 +2376,7 @@
             "snippet": "        return $moduleTransfer->getName();",
             "selected_text": "$moduleTransfer->getName()",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -2612,8 +2388,7 @@
             "snippet": "     * @return string",
             "selected_text": "string",
             "error_level": 5,
-            "shortcode": 144,
-            "taint_trace": null
+            "shortcode": 144
         },
         {
             "severity": "info",
@@ -2625,8 +2400,7 @@
             "snippet": "        return $moduleTransfer->getNameDashed();",
             "selected_text": "$moduleTransfer->getNameDashed()",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -2638,8 +2412,7 @@
             "snippet": "     * @return string",
             "selected_text": "string",
             "error_level": 5,
-            "shortcode": 144,
-            "taint_trace": null
+            "shortcode": 144
         },
         {
             "severity": "info",
@@ -2651,8 +2424,7 @@
             "snippet": "        return $moduleTransfer->getNameDashed();",
             "selected_text": "$moduleTransfer->getNameDashed()",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -2664,8 +2436,7 @@
             "snippet": "     * @return string",
             "selected_text": "string",
             "error_level": 5,
-            "shortcode": 144,
-            "taint_trace": null
+            "shortcode": 144
         },
         {
             "severity": "info",
@@ -2677,8 +2448,7 @@
             "snippet": "        return $moduleTransfer->getNameDashed();",
             "selected_text": "$moduleTransfer->getNameDashed()",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -2690,8 +2460,7 @@
             "snippet": "     * @return \\Symfony\\Component\\Finder\\SplFileInfo[]|\\Symfony\\Component\\Finder\\Finder",
             "selected_text": "\\Symfony\\Component\\Finder\\SplFileInfo[]|\\Symfony\\Component\\Finder\\Finder",
             "error_level": 4,
-            "shortcode": 142,
-            "taint_trace": null
+            "shortcode": 142
         },
         {
             "severity": "info",
@@ -2703,8 +2472,7 @@
             "snippet": "        $organizationName = $pathFragments[$srcPosition + 1];",
             "selected_text": "$srcPosition",
             "error_level": 3,
-            "shortcode": 162,
-            "taint_trace": null
+            "shortcode": 162
         },
         {
             "severity": "info",
@@ -2716,8 +2484,7 @@
             "snippet": "        $organizationName = $pathFragments[$srcPosition + 2];",
             "selected_text": "$srcPosition",
             "error_level": 3,
-            "shortcode": 162,
-            "taint_trace": null
+            "shortcode": 162
         },
         {
             "severity": "info",
@@ -2729,8 +2496,7 @@
             "snippet": "        return sprintf('%s.%s', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName());",
             "selected_text": "$moduleTransfer->getOrganization()->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2742,8 +2508,7 @@
             "snippet": "        return sprintf('%s.%s', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName());",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -2755,8 +2520,7 @@
             "snippet": "        return sprintf('%s.%s', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName());",
             "selected_text": "$moduleTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2768,8 +2532,7 @@
             "snippet": "            $packageCollectionKey = sprintf('%s.%s', $packageTransfer->getOrganizationName(), $packageTransfer->getPackageName());",
             "selected_text": "$packageTransfer->getOrganizationName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2781,8 +2544,7 @@
             "snippet": "            $packageCollectionKey = sprintf('%s.%s', $packageTransfer->getOrganizationName(), $packageTransfer->getPackageName());",
             "selected_text": "$packageTransfer->getPackageName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2794,8 +2556,7 @@
             "snippet": "     * @return \\Symfony\\Component\\Finder\\SplFileInfo[]|\\Symfony\\Component\\Finder\\Finder",
             "selected_text": "\\Symfony\\Component\\Finder\\SplFileInfo[]|\\Symfony\\Component\\Finder\\Finder",
             "error_level": 4,
-            "shortcode": 142,
-            "taint_trace": null
+            "shortcode": 142
         },
         {
             "severity": "info",
@@ -2807,8 +2568,7 @@
             "snippet": "        $composerJsonAsArray = $this->getComposerJsonAsArray($packageTransfer->getPath());",
             "selected_text": "$packageTransfer->getPath()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2820,8 +2580,7 @@
             "snippet": "        $path = $this->resolvePath($bundle);",
             "selected_text": "$bundle",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2833,8 +2592,7 @@
             "snippet": "        return ucfirst($filter->filter($value));",
             "selected_text": "$filter->filter($value)",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -2846,8 +2604,7 @@
             "snippet": "        return $process->getExitCode();",
             "selected_text": "$process->getExitCode()",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -2859,8 +2616,7 @@
             "snippet": "    public function apply(AbstractNode $node)",
             "selected_text": "$node",
             "error_level": 5,
-            "shortcode": 140,
-            "taint_trace": null
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -2872,8 +2628,7 @@
             "snippet": "    public function apply(AbstractNode $node)",
             "selected_text": "$node",
             "error_level": 5,
-            "shortcode": 140,
-            "taint_trace": null
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -2885,86 +2640,91 @@
             "snippet": "            $paths = $this->getPaths($module);",
             "selected_text": "$module",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
-            "line_from": 193,
-            "line_to": 193,
+            "line_from": 160,
+            "line_to": 160,
+            "type": "RedundantCondition",
+            "message": "Found a redundant condition when evaluating $progressBar and trying to reconcile type 'Symfony\\Component\\Console\\Helper\\ProgressBar' to object with method maxSecondsBetweenRedraws",
+            "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/Phpstan/PhpstanRunner.php",
+            "snippet": "        if (method_exists($progressBar, 'maxSecondsBetweenRedraws')) {",
+            "selected_text": "method_exists($progressBar, 'maxSecondsBetweenRedraws')",
+            "error_level": 4,
+            "shortcode": 122
+        },
+        {
+            "severity": "info",
+            "line_from": 195,
+            "line_to": 195,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 2 of preg_match expects string, possibly different type array<array-key, string>|bool|null|string provided",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/Phpstan/PhpstanRunner.php",
             "snippet": "        if (preg_match('/^([+])(\\d)$/', $level, $matches)) {",
             "selected_text": "$level",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
-            "line_from": 224,
-            "line_to": 224,
+            "line_from": 226,
+            "line_to": 226,
             "type": "NullableReturnStatement",
             "message": "The declared return type 'int' for Spryker\\Zed\\Development\\Business\\Phpstan\\PhpstanRunner::runCommand is not nullable, but the function returns 'int|null'",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/Phpstan/PhpstanRunner.php",
             "snippet": "        return $process->getExitCode();",
             "selected_text": "$process->getExitCode()",
             "error_level": 5,
-            "shortcode": 139,
-            "taint_trace": null
+            "shortcode": 139
         },
         {
             "severity": "info",
-            "line_from": 369,
-            "line_to": 369,
+            "line_from": 371,
+            "line_to": 371,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Development\\Business\\Phpstan\\PhpstanRunner::getVendorPathByNamespace cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/Phpstan/PhpstanRunner.php",
             "snippet": "        $vendorDirectoryPath = $this->getVendorPathByNamespace($namespace);",
             "selected_text": "$namespace",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 372,
-            "line_to": 372,
+            "line_from": 374,
+            "line_to": 374,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Development\\Business\\Phpstan\\Config\\PhpstanConfigFileFinderInterface::searchIn cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/Phpstan/PhpstanRunner.php",
             "snippet": "            ->searchIn($vendorDirectoryPath);",
             "selected_text": "$vendorDirectoryPath",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 377,
-            "line_to": 377,
+            "line_from": 379,
+            "line_to": 379,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\Development\\Business\\Phpstan\\Config\\PhpstanConfigFileManagerInterface::merge cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/Phpstan/PhpstanRunner.php",
             "snippet": "                $this->getConfigFilenameForMerge($moduleConfigFile)",
             "selected_text": "$this->getConfigFilenameForMerge($moduleConfigFile)",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 426,
-            "line_to": 426,
+            "line_from": 428,
+            "line_to": 428,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of dirname cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/Phpstan/PhpstanRunner.php",
             "snippet": "        return dirname($pathToModules) . DIRECTORY_SEPARATOR;",
             "selected_text": "$pathToModules",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2976,8 +2736,7 @@
             "snippet": "            $this->bundles[$currentBundleName]['out'][$outgoingBundleName] = $outgoingBundleName;",
             "selected_text": "$this->bundles[$currentBundleName]['out']",
             "error_level": 3,
-            "shortcode": 120,
-            "taint_trace": null
+            "shortcode": 120
         },
         {
             "severity": "info",
@@ -2989,8 +2748,7 @@
             "snippet": "            $this->bundles[$outgoingBundleName]['in'][$currentBundleName] = $currentBundleName;",
             "selected_text": "$this->bundles[$outgoingBundleName]['in']",
             "error_level": 3,
-            "shortcode": 120,
-            "taint_trace": null
+            "shortcode": 120
         },
         {
             "severity": "info",
@@ -3002,8 +2760,7 @@
             "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\ModuleDependencyTransfer[]",
             "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ModuleDependencyTransfer[]",
             "error_level": 4,
-            "shortcode": 142,
-            "taint_trace": null
+            "shortcode": 142
         },
         {
             "severity": "info",
@@ -3015,8 +2772,7 @@
             "snippet": "     * @param \\Generated\\Shared\\Transfer\\ModuleDependencyTransfer[]|\\ArrayObject $moduleDependencyTransferCollection",
             "selected_text": "\\Generated\\Shared\\Transfer\\ModuleDependencyTransfer[]|\\ArrayObject",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -3028,8 +2784,7 @@
             "snippet": "        if (strpos($moduleArgument, '.') === false) {",
             "selected_text": "$moduleArgument",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3041,8 +2796,7 @@
             "snippet": "            $moduleTransfer->setName($moduleArgument);",
             "selected_text": "$moduleArgument",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3054,8 +2808,7 @@
             "snippet": "        $this->addFilterDetails($moduleArgument, $moduleFilterTransfer);",
             "selected_text": "$moduleArgument",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3067,8 +2820,7 @@
             "snippet": "        return sprintf('%s.%s', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName());",
             "selected_text": "$moduleTransfer->getOrganization()->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -3080,8 +2832,7 @@
             "snippet": "        return sprintf('%s.%s', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName());",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -3093,8 +2844,7 @@
             "snippet": "        return sprintf('%s.%s', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName());",
             "selected_text": "$moduleTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -3106,8 +2856,7 @@
             "snippet": "        $isCore = strpos($module, '.') !== false;",
             "selected_text": "$module",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3119,8 +2868,7 @@
             "snippet": "            $module = $this->normalizeModuleName($module);",
             "selected_text": "$module",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3132,8 +2880,7 @@
             "snippet": "            $message .= ' (' . $path . ')';",
             "selected_text": "$path",
             "error_level": 3,
-            "shortcode": 163,
-            "taint_trace": null
+            "shortcode": 163
         },
         {
             "severity": "info",
@@ -3145,8 +2892,7 @@
             "snippet": "            $success = $this->runForCore($output, $module, $path);",
             "selected_text": "$module",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3158,8 +2904,7 @@
             "snippet": "            $success = $this->runForCore($output, $module, $path);",
             "selected_text": "$path",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3171,8 +2916,7 @@
             "snippet": "            $customPath = $this->getCustomPath($module, $path);",
             "selected_text": "$module",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3184,8 +2928,7 @@
             "snippet": "            $customPath = $this->getCustomPath($module, $path);",
             "selected_text": "$path",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3197,8 +2940,7 @@
             "snippet": "                $success = $this->runForProject($output, $module, $path);",
             "selected_text": "$module",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3210,8 +2952,7 @@
             "snippet": "                $success = $this->runForProject($output, $module, $path);",
             "selected_text": "$path",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3223,8 +2964,7 @@
             "snippet": "        return $this->buildPath($moduleTransfer->getPath(), $pathSuffix);",
             "selected_text": "$moduleTransfer->getPath()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -3236,8 +2976,7 @@
             "snippet": "        return rtrim($path . $suffix, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;",
             "selected_text": "$suffix",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -3249,8 +2988,7 @@
             "snippet": "        $normalized = ucfirst($normalized);",
             "selected_text": "$normalized",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3262,8 +3000,7 @@
             "snippet": "        $customPath = $pathToRoot . $path;",
             "selected_text": "$path",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -3275,8 +3012,7 @@
             "snippet": "        $this->displayRunInfo($module);",
             "selected_text": "$module",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3288,8 +3024,7 @@
             "snippet": "        return $this->getFacade()->runFixtures($module, $this->input->getOptions());",
             "selected_text": "$module",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3301,8 +3036,7 @@
             "snippet": "        return $this->getFacade()->runPhpMd($module, $this->input->getOptions());",
             "selected_text": "$module",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3314,8 +3048,7 @@
             "snippet": "        $this->info($this->buildMessage($module, $path));",
             "selected_text": "$module",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3327,8 +3060,7 @@
             "snippet": "        $this->info($this->buildMessage($module, $path));",
             "selected_text": "$path",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3340,8 +3072,7 @@
             "snippet": "        $exitCode = $this->getFacade()->checkCodeStyle($module, $this->input->getOptions() + [static::ARGUMENT_SUB_PATH => $path]);",
             "selected_text": "$module",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3353,8 +3084,7 @@
             "snippet": "        $isCore = strpos($module, '.') !== false;",
             "selected_text": "$module",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -3366,8 +3096,7 @@
             "snippet": "        $normalized = ucfirst($normalized);",
             "selected_text": "$normalized",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3379,8 +3108,7 @@
             "snippet": "        $this->displayRunInfo($input, $module);",
             "selected_text": "$module",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3392,8 +3120,7 @@
             "snippet": "            $module,",
             "selected_text": "$module",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3405,8 +3132,7 @@
             "snippet": "                    $this->input->getArgument(static::ARGUMENT_MODULE)",
             "selected_text": "$this->input->getArgument(static::ARGUMENT_MODULE)",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3418,8 +3144,7 @@
             "snippet": "        $processedModules = $this->getFacade()->updateComposerJsonInModules($modules, $isDryRun);",
             "selected_text": "$isDryRun",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3431,8 +3156,7 @@
             "snippet": "            $this->output->writeln($validationMessageTransfer->getMessage());",
             "selected_text": "$validationMessageTransfer->getMessage()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -3444,8 +3168,7 @@
             "snippet": "        $this->getFacade()->buildDependencyTree($module);",
             "selected_text": "$module",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3457,8 +3180,7 @@
             "snippet": "     * @param \\Generated\\Shared\\Transfer\\ModuleDependencyTransfer[]|\\ArrayObject $moduleDependencyTransferCollection",
             "selected_text": "\\Generated\\Shared\\Transfer\\ModuleDependencyTransfer[]|\\ArrayObject",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -3470,8 +3192,7 @@
             "snippet": "     * @param \\Generated\\Shared\\Transfer\\ModuleDependencyTransfer[]|\\ArrayObject $moduleDependencyTransferCollection",
             "selected_text": "\\Generated\\Shared\\Transfer\\ModuleDependencyTransfer[]|\\ArrayObject",
             "error_level": 4,
-            "shortcode": 141,
-            "taint_trace": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -3483,21 +3204,31 @@
             "snippet": "            'Composer name' => sprintf('<fg=%s>%s</>', $color, $composerName),",
             "selected_text": "$composerName",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 194,
-            "line_to": 194,
+            "line_from": 193,
+            "line_to": 193,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Development\\Communication\\Console\\DependencyViolationFinderConsole::getColoredYesOrNo cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Communication/Console/DependencyViolationFinderConsole.php",
             "snippet": "            'is valid' => $this->getColoredYesOrNo($moduleDependencyTransfer->getIsValid()),",
             "selected_text": "$moduleDependencyTransfer->getIsValid()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 194,
+            "line_to": 194,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Development\\Communication\\Console\\DependencyViolationFinderConsole::getYesOrNo cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Communication/Console/DependencyViolationFinderConsole.php",
+            "snippet": "            'src dependency' => $this->getYesOrNo($moduleDependencyTransfer->getIsSrcDependency()),",
+            "selected_text": "$moduleDependencyTransfer->getIsSrcDependency()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -3506,11 +3237,10 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Development\\Communication\\Console\\DependencyViolationFinderConsole::getYesOrNo cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Communication/Console/DependencyViolationFinderConsole.php",
-            "snippet": "            'src dependency' => $this->getYesOrNo($moduleDependencyTransfer->getIsSrcDependency()),",
-            "selected_text": "$moduleDependencyTransfer->getIsSrcDependency()",
+            "snippet": "            'test dependency' => $this->getYesOrNo($moduleDependencyTransfer->getIsTestDependency()),",
+            "selected_text": "$moduleDependencyTransfer->getIsTestDependency()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -3519,11 +3249,10 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Development\\Communication\\Console\\DependencyViolationFinderConsole::getYesOrNo cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Communication/Console/DependencyViolationFinderConsole.php",
-            "snippet": "            'test dependency' => $this->getYesOrNo($moduleDependencyTransfer->getIsTestDependency()),",
-            "selected_text": "$moduleDependencyTransfer->getIsTestDependency()",
+            "snippet": "            'in composer require' => $this->getYesOrNo($moduleDependencyTransfer->getIsInComposerRequire()),",
+            "selected_text": "$moduleDependencyTransfer->getIsInComposerRequire()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -3532,11 +3261,10 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Development\\Communication\\Console\\DependencyViolationFinderConsole::getYesOrNo cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Communication/Console/DependencyViolationFinderConsole.php",
-            "snippet": "            'in composer require' => $this->getYesOrNo($moduleDependencyTransfer->getIsInComposerRequire()),",
-            "selected_text": "$moduleDependencyTransfer->getIsInComposerRequire()",
+            "snippet": "            'in composer require-dev' => $this->getYesOrNo($moduleDependencyTransfer->getIsInComposerRequireDev()),",
+            "selected_text": "$moduleDependencyTransfer->getIsInComposerRequireDev()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -3545,11 +3273,10 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Development\\Communication\\Console\\DependencyViolationFinderConsole::getYesOrNo cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Communication/Console/DependencyViolationFinderConsole.php",
-            "snippet": "            'in composer require-dev' => $this->getYesOrNo($moduleDependencyTransfer->getIsInComposerRequireDev()),",
-            "selected_text": "$moduleDependencyTransfer->getIsInComposerRequireDev()",
+            "snippet": "            'in composer suggest' => $this->getYesOrNo($moduleDependencyTransfer->getIsSuggested()),",
+            "selected_text": "$moduleDependencyTransfer->getIsSuggested()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -3558,11 +3285,10 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Development\\Communication\\Console\\DependencyViolationFinderConsole::getYesOrNo cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Communication/Console/DependencyViolationFinderConsole.php",
-            "snippet": "            'in composer suggest' => $this->getYesOrNo($moduleDependencyTransfer->getIsSuggested()),",
-            "selected_text": "$moduleDependencyTransfer->getIsSuggested()",
+            "snippet": "            'is optional dependency' => $this->getYesOrNo($moduleDependencyTransfer->getIsOptionalDependency()),",
+            "selected_text": "$moduleDependencyTransfer->getIsOptionalDependency()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -3571,24 +3297,10 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Development\\Communication\\Console\\DependencyViolationFinderConsole::getYesOrNo cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Communication/Console/DependencyViolationFinderConsole.php",
-            "snippet": "            'is optional dependency' => $this->getYesOrNo($moduleDependencyTransfer->getIsOptionalDependency()),",
-            "selected_text": "$moduleDependencyTransfer->getIsOptionalDependency()",
-            "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 201,
-            "line_to": 201,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Zed\\Development\\Communication\\Console\\DependencyViolationFinderConsole::getYesOrNo cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Communication/Console/DependencyViolationFinderConsole.php",
             "snippet": "            'is own extension module' => $this->getYesOrNo($moduleDependencyTransfer->getIsOwnExtensionModule()),",
             "selected_text": "$moduleDependencyTransfer->getIsOwnExtensionModule()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -3600,8 +3312,7 @@
             "snippet": "            $this->output->writeln(sprintf('No dependency issues found in <fg=yellow>%s.%s</>', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName()));",
             "selected_text": "$moduleTransfer->getOrganization()->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -3613,8 +3324,7 @@
             "snippet": "            $this->output->writeln(sprintf('No dependency issues found in <fg=yellow>%s.%s</>', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName()));",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -3626,8 +3336,7 @@
             "snippet": "            $this->output->writeln(sprintf('No dependency issues found in <fg=yellow>%s.%s</>', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName()));",
             "selected_text": "$moduleTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -3639,8 +3348,7 @@
             "snippet": "            $composerNameToFix = $this->getFacade()->findComposerNameByModuleName($moduleDependencyTransfer->getModuleName());",
             "selected_text": "$moduleDependencyTransfer->getModuleName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -3652,8 +3360,7 @@
             "snippet": "                $this->output->writeln(sprintf('Could not get a composer name for \"%s\"', $moduleDependencyTransfer->getModuleName()));",
             "selected_text": "$moduleDependencyTransfer->getModuleName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -3665,8 +3372,7 @@
             "snippet": "                $this->output->writeln(sprintf('Please check the module <fg=yellow>%s.%s</> manually.', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName()));",
             "selected_text": "$moduleTransfer->getOrganization()->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -3678,8 +3384,7 @@
             "snippet": "                $this->output->writeln(sprintf('Please check the module <fg=yellow>%s.%s</> manually.', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName()));",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -3691,8 +3396,7 @@
             "snippet": "                $this->output->writeln(sprintf('Please check the module <fg=yellow>%s.%s</> manually.', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName()));",
             "selected_text": "$moduleTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -3704,8 +3408,7 @@
             "snippet": "        $this->output->writeln(sprintf('Fixed dependencies in <fg=yellow>%s.%s</>', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName()));",
             "selected_text": "$moduleTransfer->getOrganization()->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -3717,8 +3420,7 @@
             "snippet": "        $this->output->writeln(sprintf('Fixed dependencies in <fg=yellow>%s.%s</>', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName()));",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -3730,8 +3432,7 @@
             "snippet": "        $this->output->writeln(sprintf('Fixed dependencies in <fg=yellow>%s.%s</>', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName()));",
             "selected_text": "$moduleTransfer->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -3743,8 +3444,7 @@
             "snippet": "        $composerJsonFile = $moduleTransfer->getPath() . '/composer.json';",
             "selected_text": "$moduleTransfer->getPath()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -3756,8 +3456,7 @@
             "snippet": "        $composerJsonFile = $moduleTransfer->getPath() . '/composer.json';",
             "selected_text": "$moduleTransfer->getPath()",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -3769,8 +3468,7 @@
             "snippet": "        $methods = explode(',', $this->input->getOption(static::OPTION_METHODS));",
             "selected_text": "$this->input->getOption(static::OPTION_METHODS)",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3782,8 +3480,7 @@
             "snippet": "        $message = 'Create bridge in ' . $module;",
             "selected_text": "$module",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -3795,8 +3492,7 @@
             "snippet": "        $message = 'Create bridge in ' . $module;",
             "selected_text": "$module",
             "error_level": 3,
-            "shortcode": 163,
-            "taint_trace": null
+            "shortcode": 163
         },
         {
             "severity": "info",
@@ -3808,8 +3504,7 @@
             "snippet": "        $this->getFacade()->createBridge($module, $toModule, $methods);",
             "selected_text": "$module",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3821,8 +3516,7 @@
             "snippet": "        $this->getFacade()->createBridge($module, $toModule, $methods);",
             "selected_text": "$toModule",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3834,8 +3528,7 @@
             "snippet": "            $message = 'Create or update Spryker core module ' . $module;",
             "selected_text": "$module",
             "error_level": 1,
-            "shortcode": 80,
-            "taint_trace": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -3847,8 +3540,7 @@
             "snippet": "            $message = 'Create or update Spryker core module ' . $module;",
             "selected_text": "$module",
             "error_level": 3,
-            "shortcode": 163,
-            "taint_trace": null
+            "shortcode": 163
         },
         {
             "severity": "info",
@@ -3860,8 +3552,7 @@
             "snippet": "        $this->getFacade()->createModule($module, $options);",
             "selected_text": "$module",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3873,8 +3564,7 @@
             "snippet": "        if (strpos($moduleArgument, '.') === false) {",
             "selected_text": "$moduleArgument",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3886,8 +3576,7 @@
             "snippet": "            $moduleTransfer->setName($moduleArgument);",
             "selected_text": "$moduleArgument",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3899,8 +3588,7 @@
             "snippet": "        $this->addFilterDetails($moduleArgument, $moduleFilterTransfer);",
             "selected_text": "$moduleArgument",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3912,8 +3600,7 @@
             "snippet": "        $message = $this->buildMessage($module);",
             "selected_text": "$module",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3925,8 +3612,7 @@
             "snippet": "        $result = $this->getFacade()->runPropelAbstractValidation($output, $module);",
             "selected_text": "$module",
             "error_level": 3,
-            "shortcode": 92,
-            "taint_trace": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -3938,8 +3624,7 @@
             "snippet": "        $fileViolations = $this->getFacade()->runArchitectureSniffer($directory);",
             "selected_text": "$directory",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -3951,8 +3636,7 @@
             "snippet": "                        'organization' => $dependencyProviderTransfer->getModule()->getOrganization()->getName(),",
             "selected_text": "getOrganization",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -3964,8 +3648,7 @@
             "snippet": "                        'organization' => $dependencyProviderTransfer->getModule()->getOrganization()->getName(),",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -3977,8 +3660,7 @@
             "snippet": "                        'module' => $dependencyProviderTransfer->getModule()->getName(),",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         }
     ],
     "deprecation": [
@@ -3992,8 +3674,19 @@
             "snippet": "class AllBundleFinder implements AllBundleFinderInterface",
             "selected_text": "AllBundleFinder",
             "error_level": 2,
-            "shortcode": 152,
-            "taint_trace": null
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\Development\\Business\\Dependency\\DependencyContainer\\DependencyContainer::makeOptionalIfSilex has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/Dependency/DependencyContainer/DependencyContainer.php",
+            "snippet": "        $isOptional = $this->makeOptionalIfSilex($moduleName, $isOptional);",
+            "selected_text": "makeOptionalIfSilex",
+            "error_level": 2,
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -4005,333 +3698,307 @@
             "snippet": "class DependencyViolationChecker implements DependencyViolationCheckerInterface",
             "selected_text": "DependencyViolationChecker",
             "error_level": 2,
-            "shortcode": 152,
-            "taint_trace": null
+            "shortcode": 152
         },
         {
             "severity": "info",
-            "line_from": 836,
-            "line_to": 836,
+            "line_from": 857,
+            "line_to": 857,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Development\\Business\\Module\\ModuleFinder\\ModuleFinderInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DevelopmentBusinessFactory.php",
             "snippet": "     * @return \\Spryker\\Zed\\Development\\Business\\Module\\ModuleFinder\\ModuleFinderInterface",
             "selected_text": "\\Spryker\\Zed\\Development\\Business\\Module\\ModuleFinder\\ModuleFinderInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 838,
-            "line_to": 838,
+            "line_from": 859,
+            "line_to": 859,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Development\\Business\\Module\\ModuleFinder\\ModuleFinderInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DevelopmentBusinessFactory.php",
             "snippet": "    public function createModuleFinder(): ModuleFinderInterface",
             "selected_text": "ModuleFinderInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 840,
-            "line_to": 840,
+            "line_from": 861,
+            "line_to": 861,
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\Development\\Business\\Module\\ModuleFinder\\ModuleFinder is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DevelopmentBusinessFactory.php",
             "snippet": "        return new ModuleFinder($this->getConfig(), $this->createModuleMatcher());",
             "selected_text": "new ModuleFinder($this->getConfig(), $this->createModuleMatcher())",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 840,
-            "line_to": 840,
+            "line_from": 861,
+            "line_to": 861,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Development\\Business\\DevelopmentBusinessFactory::createModuleMatcher has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DevelopmentBusinessFactory.php",
             "snippet": "        return new ModuleFinder($this->getConfig(), $this->createModuleMatcher());",
             "selected_text": "createModuleMatcher",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
-            "line_from": 846,
-            "line_to": 846,
+            "line_from": 867,
+            "line_to": 867,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Development\\Business\\Module\\ModuleMatcher\\ModuleMatcherInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DevelopmentBusinessFactory.php",
             "snippet": "     * @return \\Spryker\\Zed\\Development\\Business\\Module\\ModuleMatcher\\ModuleMatcherInterface",
             "selected_text": "\\Spryker\\Zed\\Development\\Business\\Module\\ModuleMatcher\\ModuleMatcherInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 848,
-            "line_to": 848,
+            "line_from": 869,
+            "line_to": 869,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Development\\Business\\Module\\ModuleMatcher\\ModuleMatcherInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DevelopmentBusinessFactory.php",
             "snippet": "    public function createModuleMatcher(): ModuleMatcherInterface",
             "selected_text": "ModuleMatcherInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 850,
-            "line_to": 850,
+            "line_from": 871,
+            "line_to": 871,
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\Development\\Business\\Module\\ModuleMatcher\\ModuleMatcher is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DevelopmentBusinessFactory.php",
             "snippet": "        return new ModuleMatcher();",
             "selected_text": "new ModuleMatcher()",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 1287,
-            "line_to": 1287,
+            "line_from": 1308,
+            "line_to": 1308,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Development\\Business\\DependencyTree\\ViolationChecker\\DependencyViolationCheckerInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DevelopmentBusinessFactory.php",
             "snippet": "     * @return \\Spryker\\Zed\\Development\\Business\\DependencyTree\\ViolationChecker\\DependencyViolationCheckerInterface",
             "selected_text": "\\Spryker\\Zed\\Development\\Business\\DependencyTree\\ViolationChecker\\DependencyViolationCheckerInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 1291,
-            "line_to": 1295,
+            "line_from": 1312,
+            "line_to": 1316,
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\Development\\Business\\DependencyTree\\ViolationChecker\\DependencyViolationChecker is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DevelopmentBusinessFactory.php",
             "snippet": "        return new DependencyViolationChecker(\n            $this->createDependencyTreeReader(),\n            $this->createViolationFinder(),\n            $this->createDependencyViolationFilter()\n        );",
             "selected_text": "new DependencyViolationChecker(\n            $this->createDependencyTreeReader(),\n            $this->createViolationFinder(),\n            $this->createDependencyViolationFilter()\n        )",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 1293,
-            "line_to": 1293,
+            "line_from": 1314,
+            "line_to": 1314,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Development\\Business\\DevelopmentBusinessFactory::createViolationFinder has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DevelopmentBusinessFactory.php",
             "snippet": "            $this->createViolationFinder(),",
             "selected_text": "createViolationFinder",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
-            "line_from": 1294,
-            "line_to": 1294,
+            "line_from": 1315,
+            "line_to": 1315,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Development\\Business\\DevelopmentBusinessFactory::createDependencyViolationFilter has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DevelopmentBusinessFactory.php",
             "snippet": "            $this->createDependencyViolationFilter()",
             "selected_text": "createDependencyViolationFilter",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
-            "line_from": 1307,
-            "line_to": 1307,
+            "line_from": 1328,
+            "line_to": 1328,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Development\\Business\\DevelopmentBusinessFactory::createViolationFinderUseForeignConstants has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DevelopmentBusinessFactory.php",
             "snippet": "            ->addViolationFinder($this->createViolationFinderUseForeignConstants())",
             "selected_text": "createViolationFinderUseForeignConstants",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
-            "line_from": 1308,
-            "line_to": 1308,
+            "line_from": 1329,
+            "line_to": 1329,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Development\\Business\\DevelopmentBusinessFactory::createViolationFinderUseForeignException has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DevelopmentBusinessFactory.php",
             "snippet": "            ->addViolationFinder($this->createViolationFinderUseForeignException())",
             "selected_text": "createViolationFinderUseForeignException",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
-            "line_from": 1309,
-            "line_to": 1309,
+            "line_from": 1330,
+            "line_to": 1330,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Development\\Business\\DevelopmentBusinessFactory::createViolationFinderBundleUsesConnector has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DevelopmentBusinessFactory.php",
             "snippet": "            ->addViolationFinder($this->createViolationFinderBundleUsesConnector());",
             "selected_text": "createViolationFinderBundleUsesConnector",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
-            "line_from": 1323,
-            "line_to": 1323,
+            "line_from": 1344,
+            "line_to": 1344,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Development\\Business\\DevelopmentBusinessFactory::createDependencyTreeConstantsToForeignConstantsFilter has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DevelopmentBusinessFactory.php",
             "snippet": "            ->addFilter($this->createDependencyTreeConstantsToForeignConstantsFilter())",
             "selected_text": "createDependencyTreeConstantsToForeignConstantsFilter",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
-            "line_from": 1376,
-            "line_to": 1376,
+            "line_from": 1397,
+            "line_to": 1397,
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\Development\\Business\\DependencyTree\\ViolationFinder\\BundleUsesConnector is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DevelopmentBusinessFactory.php",
             "snippet": "        return new BundleUsesConnector();",
             "selected_text": "new BundleUsesConnector()",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 1951,
-            "line_to": 1951,
+            "line_from": 1972,
+            "line_to": 1972,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Development\\Business\\ArchitectureSniffer\\AllBundleFinderInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DevelopmentBusinessFactory.php",
             "snippet": "     * @return \\Spryker\\Zed\\Development\\Business\\ArchitectureSniffer\\AllBundleFinderInterface",
             "selected_text": "\\Spryker\\Zed\\Development\\Business\\ArchitectureSniffer\\AllBundleFinderInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 1955,
-            "line_to": 1960,
+            "line_from": 1976,
+            "line_to": 1981,
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\Development\\Business\\ArchitectureSniffer\\AllBundleFinder is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DevelopmentBusinessFactory.php",
             "snippet": "        return new AllBundleFinder(\n            $this->createFinder(),\n            $this->createCamelCaseToDashFilter(),\n            $this->getConfig()->getProjectNamespaces(),\n            $this->getConfig()->getCoreNamespaces()\n        );",
             "selected_text": "new AllBundleFinder(\n            $this->createFinder(),\n            $this->createCamelCaseToDashFilter(),\n            $this->getConfig()->getProjectNamespaces(),\n            $this->getConfig()->getCoreNamespaces()\n        )",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 1986,
-            "line_to": 1986,
+            "line_from": 2007,
+            "line_to": 2007,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Development\\Business\\Module\\ProjectModuleFinder\\ProjectModuleFinderInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DevelopmentBusinessFactory.php",
             "snippet": "     * @return \\Spryker\\Zed\\Development\\Business\\Module\\ProjectModuleFinder\\ProjectModuleFinderInterface",
             "selected_text": "\\Spryker\\Zed\\Development\\Business\\Module\\ProjectModuleFinder\\ProjectModuleFinderInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 1988,
-            "line_to": 1988,
+            "line_from": 2009,
+            "line_to": 2009,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Development\\Business\\Module\\ProjectModuleFinder\\ProjectModuleFinderInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DevelopmentBusinessFactory.php",
             "snippet": "    public function createProjectModuleFinder(): ProjectModuleFinderInterface",
             "selected_text": "ProjectModuleFinderInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 1990,
-            "line_to": 1990,
+            "line_from": 2011,
+            "line_to": 2011,
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\Development\\Business\\Module\\ProjectModuleFinder\\ProjectModuleFinder is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DevelopmentBusinessFactory.php",
             "snippet": "        return new ProjectModuleFinder($this->getConfig(), $this->createModuleMatcher());",
             "selected_text": "new ProjectModuleFinder($this->getConfig(), $this->createModuleMatcher())",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 1990,
-            "line_to": 1990,
+            "line_from": 2011,
+            "line_to": 2011,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Development\\Business\\DevelopmentBusinessFactory::createModuleMatcher has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DevelopmentBusinessFactory.php",
             "snippet": "        return new ProjectModuleFinder($this->getConfig(), $this->createModuleMatcher());",
             "selected_text": "createModuleMatcher",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
-            "line_from": 1996,
-            "line_to": 1996,
+            "line_from": 2017,
+            "line_to": 2017,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Development\\Business\\Package\\PackageFinder\\PackageFinderInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DevelopmentBusinessFactory.php",
             "snippet": "     * @return \\Spryker\\Zed\\Development\\Business\\Package\\PackageFinder\\PackageFinderInterface",
             "selected_text": "\\Spryker\\Zed\\Development\\Business\\Package\\PackageFinder\\PackageFinderInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 1998,
-            "line_to": 1998,
+            "line_from": 2019,
+            "line_to": 2019,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Development\\Business\\Package\\PackageFinder\\PackageFinderInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DevelopmentBusinessFactory.php",
             "snippet": "    public function createPackageFinder(): PackageFinderInterface",
             "selected_text": "PackageFinderInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 2000,
-            "line_to": 2000,
+            "line_from": 2021,
+            "line_to": 2021,
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\Development\\Business\\Package\\PackageFinder\\PackageFinder is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DevelopmentBusinessFactory.php",
             "snippet": "        return new PackageFinder($this->getConfig());",
             "selected_text": "new PackageFinder($this->getConfig())",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -4343,8 +4010,7 @@
             "snippet": "        return $this->getAllModules();",
             "selected_text": "getAllModules",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -4356,8 +4022,7 @@
             "snippet": "        return $this->getFactory()->createDependencyViolationChecker()->getDependencyViolations();",
             "selected_text": "createDependencyViolationChecker",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -4369,8 +4034,7 @@
             "snippet": "class ModuleFinder implements ModuleFinderInterface",
             "selected_text": "ModuleFinder",
             "error_level": 2,
-            "shortcode": 152,
-            "taint_trace": null
+            "shortcode": 152
         },
         {
             "severity": "info",
@@ -4382,8 +4046,7 @@
             "snippet": "     * @var \\Spryker\\Zed\\Development\\Business\\Module\\ModuleMatcher\\ModuleMatcherInterface",
             "selected_text": "\\Spryker\\Zed\\Development\\Business\\Module\\ModuleMatcher\\ModuleMatcherInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -4395,8 +4058,7 @@
             "snippet": "     * @param \\Spryker\\Zed\\Development\\Business\\Module\\ModuleMatcher\\ModuleMatcherInterface $moduleMatcher",
             "selected_text": "\\Spryker\\Zed\\Development\\Business\\Module\\ModuleMatcher\\ModuleMatcherInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -4408,8 +4070,7 @@
             "snippet": "class ModuleMatcher implements ModuleMatcherInterface",
             "selected_text": "ModuleMatcher",
             "error_level": 2,
-            "shortcode": 152,
-            "taint_trace": null
+            "shortcode": 152
         },
         {
             "severity": "info",
@@ -4421,8 +4082,7 @@
             "snippet": "class ProjectModuleFinder implements ProjectModuleFinderInterface",
             "selected_text": "ProjectModuleFinder",
             "error_level": 2,
-            "shortcode": 152,
-            "taint_trace": null
+            "shortcode": 152
         },
         {
             "severity": "info",
@@ -4434,8 +4094,7 @@
             "snippet": "     * @var \\Spryker\\Zed\\Development\\Business\\Module\\ModuleMatcher\\ModuleMatcherInterface",
             "selected_text": "\\Spryker\\Zed\\Development\\Business\\Module\\ModuleMatcher\\ModuleMatcherInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -4447,8 +4106,7 @@
             "snippet": "     * @param \\Spryker\\Zed\\Development\\Business\\Module\\ModuleMatcher\\ModuleMatcherInterface $moduleMatcher",
             "selected_text": "\\Spryker\\Zed\\Development\\Business\\Module\\ModuleMatcher\\ModuleMatcherInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -4460,8 +4118,7 @@
             "snippet": "class PackageFinder implements PackageFinderInterface",
             "selected_text": "PackageFinder",
             "error_level": 2,
-            "shortcode": 152,
-            "taint_trace": null
+            "shortcode": 152
         },
         {
             "severity": "info",
@@ -4473,8 +4130,7 @@
             "snippet": "            if (in_array($directoryInfo->getFilename(), $this->config->getInternalPackageDirectories())) {",
             "selected_text": "getInternalPackageDirectories",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -4486,8 +4142,7 @@
             "snippet": "                return $this->config->getPathToCore();",
             "selected_text": "getPathToCore",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -4499,8 +4154,7 @@
             "snippet": "        return $this->config->getPathToCore() . $bundle . DIRECTORY_SEPARATOR;",
             "selected_text": "getPathToCore",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -4512,8 +4166,7 @@
             "snippet": "        $this->getFacade()->createModule($module, $options);",
             "selected_text": "createModule",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -4525,8 +4178,7 @@
             "snippet": "            $this->getPathToCore() . '%1$s/src/Spryker/Zed/%1$s/Presentation/',",
             "selected_text": "getPathToCore",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -4538,8 +4190,7 @@
             "snippet": "            $this->getPathToCore() . '%1$s/src/Spryker/Yves/%1$s/Theme/',",
             "selected_text": "getPathToCore",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -4551,8 +4202,7 @@
             "snippet": "            $this->getPathToShop() . '%1$s/src/SprykerShop/Yves/%1$s/Theme/',",
             "selected_text": "getPathToShop",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -4564,8 +4214,7 @@
             "snippet": "        $path = $this->getConfig()->get(KernelConstants::SPRYKER_ROOT);",
             "selected_text": "KernelConstants::SPRYKER_ROOT",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
+            "shortcode": 170
         },
         {
             "severity": "info",
@@ -4577,8 +4226,7 @@
             "snippet": "            'Spryker' => $this->getPathToCore(),",
             "selected_text": "getPathToCore",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -4590,21 +4238,19 @@
             "snippet": "            'SprykerEco' => $this->getPathToEco(),",
             "selected_text": "getPathToEco",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
-            "line_from": 634,
-            "line_to": 634,
+            "line_from": 687,
+            "line_to": 687,
             "type": "DeprecatedConstant",
             "message": "Constant Spryker\\Shared\\Kernel\\KernelConstants::SPRYKER_ROOT is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/DevelopmentConfig.php",
             "snippet": "            $path = $this->getConfig()->get(KernelConstants::SPRYKER_ROOT);",
             "selected_text": "KernelConstants::SPRYKER_ROOT",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
+            "shortcode": 170
         }
     ]
 }

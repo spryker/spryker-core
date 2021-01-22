@@ -4,13 +4,13 @@
   "description": "Monitoring module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/event-dispatcher-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/locale": "^3.0.0",
     "spryker/monitoring-extension": "^1.0.0",
     "spryker/store": "^1.0.0",
-    "spryker/symfony": "^3.0.0",
+    "spryker/symfony": "^3.5.0",
     "spryker/util-network": "^1.0.0"
   },
   "require-dev": {

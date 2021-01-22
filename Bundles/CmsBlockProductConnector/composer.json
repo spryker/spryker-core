@@ -4,7 +4,7 @@
   "description": "CmsBlockProductConnector module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/cms-block": "^1.2.0 || ^2.0.0 || ^3.0.0",
     "spryker/cms-block-extension": "^1.0.0",
     "spryker/collector": "^5.0.0 || ^6.0.0",

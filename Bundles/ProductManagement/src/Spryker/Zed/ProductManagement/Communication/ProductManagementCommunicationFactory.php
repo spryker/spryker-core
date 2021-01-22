@@ -385,7 +385,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductQueryContainer(),
             $this->getLocaleFacade()->getCurrentLocale(),
             $this->createProductTypeHelper(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getProductTableDataExpanderPlugins()
         );
     }
 
@@ -546,6 +547,14 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     protected function getStoreFacade(): ProductManagementToStoreFacadeInterface
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableDataExpanderPluginInterface[]
+     */
+    protected function getProductTableDataExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_TABLE_DATA_EXPANDER);
     }
 
     /**

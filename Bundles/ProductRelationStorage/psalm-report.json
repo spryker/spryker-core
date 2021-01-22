@@ -50,54 +50,18 @@
         },
         {
             "severity": "error",
-            "line_from": 32,
-            "line_to": 42,
-            "type": "UndefinedDocblockClass",
-            "message": "Docblock-defined class or interface Orm\\Zed\\ProductMerchantConnector\\Persistence\\SpyProductAbstractMerchantQuery does not exist",
+            "line_from": 70,
+            "line_to": 72,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SynchronizationDataTransfer>' for Spryker\\Zed\\ProductRelationStorage\\Persistence\\ProductRelationStorageRepository::findProductRelationStorageDataTransferByIds",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/Persistence/ProductRelationStorageRepository.php",
-            "snippet": "        return $this->getFactory()\n            ->getProductRelationProductAbstractQuery()\n            ->filterByFkProductRelation_In($relationIds)\n            ->joinWithSpyProductRelation()\n            ->useSpyProductRelationQuery()\n                ->joinWithSpyProductRelationType()\n            ->endUse()\n            ->joinWithSpyProductAbstract()\n            ->useSpyProductAbstractQuery()\n                ->joinWithSpyProductAbstractLocalizedAttributes()\n            ->endUse()",
-            "selected_text": "$this->getFactory()\n            ->getProductRelationProductAbstractQuery()\n            ->filterByFkProductRelation_In($relationIds)\n            ->joinWithSpyProductRelation()\n            ->useSpyProductRelationQuery()\n                ->joinWithSpyProductRelationType()\n            ->endUse()\n            ->joinWithSpyProductAbstract()\n            ->useSpyProductAbstractQuery()\n                ->joinWithSpyProductAbstractLocalizedAttributes()\n            ->endUse()",
-            "error_level": -1,
-            "shortcode": 200
+            "snippet": "        return $this->buildQueryFromCriteria($query, $filterTransfer)\n            ->setFormatter(SynchronizationDataTransferObjectFormatter::class)\n            ->find();",
+            "selected_text": "$this->buildQueryFromCriteria($query, $filterTransfer)\n            ->setFormatter(SynchronizationDataTransferObjectFormatter::class)\n            ->find()",
+            "error_level": 6,
+            "shortcode": 128
         }
     ],
     "warning": [
-        {
-            "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Client/ProductRelationStorage/ProductRelationStorageDependencyProvider.php",
-            "snippet": "            return new ProductRelationStorageToStorageClientBridge($container->getLocator()->storage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 63,
-            "line_to": 63,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Client/ProductRelationStorage/ProductRelationStorageDependencyProvider.php",
-            "snippet": "            return new ProductRelationStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 77,
-            "line_to": 77,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Client/ProductRelationStorage/ProductRelationStorageDependencyProvider.php",
-            "snippet": "            return new ProductRelationStorageToProductStorageClientAdapter($container->getLocator()->productStorage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
         {
             "severity": "info",
             "line_from": 64,
@@ -169,18 +133,6 @@
             "selected_text": "$productAbstractIds",
             "error_level": 3,
             "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 78,
-            "line_to": 78,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Client/ProductRelationStorage/Storage/ProductAbstractRelationStorageReader.php",
-            "snippet": "            $productRelationClient = $clientLocatorClassName::getInstance()->productRelation()->client();",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         },
         {
             "severity": "info",
@@ -256,6 +208,18 @@
         },
         {
             "severity": "info",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\ProductRelationStorage\\Communication\\Plugin\\Event\\ProductRelationEventResourceQueryContainerPlugin::queryData has the more specific type 'array<array-key, int>', expecting 'array<array-key, int|string>' as defined by Spryker\\Zed\\EventBehavior\\Dependency\\Plugin\\EventResourceQueryContainerPluginInterface::queryData",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/Communication/Plugin/Event/ProductRelationEventResourceQueryContainerPlugin.php",
+            "snippet": "    public function queryData(array $ids = []): ?ModelCriteria",
+            "selected_text": "$ids",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
             "line_from": 58,
             "line_to": 58,
             "type": "PossiblyNullArgument",
@@ -292,39 +256,15 @@
         },
         {
             "severity": "info",
-            "line_from": 39,
-            "line_to": 39,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery::joinwithspyproductabstract does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/Persistence/ProductRelationStorageRepository.php",
-            "snippet": "            ->joinWithSpyProductAbstract()",
-            "selected_text": "joinWithSpyProductAbstract",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 51,
             "line_to": 51,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CmsBlockProductConnector\\Persistence\\SpyCmsBlockProductConnector|Orm\\Zed\\GiftCard\\Persistence\\SpyGiftCardProductAbstractConfigurationLink|Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationship|Orm\\Zed\\PriceProductSchedule\\Persistence\\SpyPriceProductSchedule|Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProduct|Orm\\Zed\\ProductAlternative\\Persistence\\SpyProductAlternative|Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategory|Orm\\Zed\\ProductCustomerPermission\\Persistence\\SpyProductCustomerPermission|Orm\\Zed\\ProductGroup\\Persistence\\SpyProductAbstractGroup|Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSet|Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelProductAbstract|Orm\\Zed\\ProductMeasurementUnit\\Persistence\\SpyProductMeasurementBaseUnit|Orm\\Zed\\ProductOption\\Persistence\\SpyProductAbstractProductOptionGroup|Orm\\Zed\\ProductRelation\\Persistence\\SpyProductRelation|Orm\\Zed\\ProductRelation\\Persistence\\SpyProductRelationProductAbstract|Orm\\Zed\\ProductReview\\Persistence\\SpyProductReview|Orm\\Zed\\ProductSet\\Persistence\\SpyProductAbstractSet|Orm\\Zed\\Product\\Persistence\\SpyProduct|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractLocalizedAttributes|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractStore|Orm\\Zed\\Tax\\Persistence\\SpyTaxSet|Orm\\Zed\\Url\\Persistence\\SpyUrl|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CmsBlockProductConnector\\Persistence\\SpyCmsBlockProductConnector|Orm\\Zed\\GiftCard\\Persistence\\SpyGiftCardProductAbstractConfigurationLink|Orm\\Zed\\MerchantProduct\\Persistence\\SpyMerchantProductAbstract|Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationship|Orm\\Zed\\PriceProductSchedule\\Persistence\\SpyPriceProductSchedule|Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProduct|Orm\\Zed\\ProductAlternative\\Persistence\\SpyProductAlternative|Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategory|Orm\\Zed\\ProductCustomerPermission\\Persistence\\SpyProductCustomerPermission|Orm\\Zed\\ProductGroup\\Persistence\\SpyProductAbstractGroup|Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSet|Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelProductAbstract|Orm\\Zed\\ProductMeasurementUnit\\Persistence\\SpyProductMeasurementBaseUnit|Orm\\Zed\\ProductOption\\Persistence\\SpyProductAbstractProductOptionGroup|Orm\\Zed\\ProductRelation\\Persistence\\SpyProductRelation|Orm\\Zed\\ProductRelation\\Persistence\\SpyProductRelationProductAbstract|Orm\\Zed\\ProductReview\\Persistence\\SpyProductReview|Orm\\Zed\\ProductSet\\Persistence\\SpyProductAbstractSet|Orm\\Zed\\Product\\Persistence\\SpyProduct|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractLocalizedAttributes|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractStore|Orm\\Zed\\Tax\\Persistence\\SpyTaxSet|Orm\\Zed\\Url\\Persistence\\SpyUrl> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/Persistence/ProductRelationStorageRepository.php",
             "snippet": "            ->getData();",
             "selected_text": "getData",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 87,
-            "line_to": 87,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::filterbyfkproductabstract does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/Persistence/ProductRelationStorageRepository.php",
-            "snippet": "            ->filterByFkProductAbstract($idProductAbstract)",
-            "selected_text": "filterByFkProductAbstract",
-            "error_level": 4,
-            "shortcode": 219
         },
         {
             "severity": "info",
@@ -337,54 +277,6 @@
             "selected_text": "getData",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 82,
-            "line_to": 82,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/ProductRelationStorageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->eventBehavior()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 98,
-            "line_to": 98,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/ProductRelationStorageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productRelation()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 127,
-            "line_to": 127,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/ProductRelationStorageDependencyProvider.php",
-            "snippet": "            return new ProductRelationStorageToProductQueryContainerBridge($container->getLocator()->product()->queryContainer());",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 141,
-            "line_to": 141,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/ProductRelationStorageDependencyProvider.php",
-            "snippet": "            return new ProductRelationStorageToProductRelationQueryContainerBridge($container->getLocator()->productRelation()->queryContainer());",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [
@@ -611,7 +503,7 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\ProductRelation\\Dependency\\ProductRelationEvents is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/Communication/Plugin/Event/Subscriber/ProductRelationStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::PRODUCT_ABSTRACT_RELATION_PUBLISH, new ProductRelationPublishStorageListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::PRODUCT_ABSTRACT_RELATION_PUBLISH, new ProductRelationPublishStorageListener(), 0, null, $this->getConfig()->getProductRelationEventQueueName());",
             "selected_text": "ProductRelationEvents::PRODUCT_ABSTRACT_RELATION_PUBLISH",
             "error_level": 2,
             "shortcode": 98
@@ -623,7 +515,7 @@
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\ProductRelationStorage\\Communication\\Plugin\\Event\\Listener\\ProductRelationPublishStorageListener is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/Communication/Plugin/Event/Subscriber/ProductRelationStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::PRODUCT_ABSTRACT_RELATION_PUBLISH, new ProductRelationPublishStorageListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::PRODUCT_ABSTRACT_RELATION_PUBLISH, new ProductRelationPublishStorageListener(), 0, null, $this->getConfig()->getProductRelationEventQueueName());",
             "selected_text": "new ProductRelationPublishStorageListener()",
             "error_level": 2,
             "shortcode": 98
@@ -635,7 +527,7 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\ProductRelation\\Dependency\\ProductRelationEvents is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/Communication/Plugin/Event/Subscriber/ProductRelationStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::PRODUCT_ABSTRACT_RELATION_UNPUBLISH, new ProductRelationPublishStorageListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::PRODUCT_ABSTRACT_RELATION_UNPUBLISH, new ProductRelationPublishStorageListener(), 0, null, $this->getConfig()->getProductRelationEventQueueName());",
             "selected_text": "ProductRelationEvents::PRODUCT_ABSTRACT_RELATION_UNPUBLISH",
             "error_level": 2,
             "shortcode": 98
@@ -647,7 +539,7 @@
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\ProductRelationStorage\\Communication\\Plugin\\Event\\Listener\\ProductRelationPublishStorageListener is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/Communication/Plugin/Event/Subscriber/ProductRelationStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::PRODUCT_ABSTRACT_RELATION_UNPUBLISH, new ProductRelationPublishStorageListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::PRODUCT_ABSTRACT_RELATION_UNPUBLISH, new ProductRelationPublishStorageListener(), 0, null, $this->getConfig()->getProductRelationEventQueueName());",
             "selected_text": "new ProductRelationPublishStorageListener()",
             "error_level": 2,
             "shortcode": 98
@@ -659,7 +551,7 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\ProductRelation\\Dependency\\ProductRelationEvents is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/Communication/Plugin/Event/Subscriber/ProductRelationStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_CREATE, new ProductRelationStorageListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_CREATE, new ProductRelationStorageListener(), 0, null, $this->getConfig()->getProductRelationEventQueueName());",
             "selected_text": "ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_CREATE",
             "error_level": 2,
             "shortcode": 98
@@ -671,7 +563,7 @@
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\ProductRelationStorage\\Communication\\Plugin\\Event\\Listener\\ProductRelationStorageListener is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/Communication/Plugin/Event/Subscriber/ProductRelationStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_CREATE, new ProductRelationStorageListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_CREATE, new ProductRelationStorageListener(), 0, null, $this->getConfig()->getProductRelationEventQueueName());",
             "selected_text": "new ProductRelationStorageListener()",
             "error_level": 2,
             "shortcode": 98
@@ -683,7 +575,7 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\ProductRelation\\Dependency\\ProductRelationEvents is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/Communication/Plugin/Event/Subscriber/ProductRelationStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_UPDATE, new ProductRelationStorageListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_UPDATE, new ProductRelationStorageListener(), 0, null, $this->getConfig()->getProductRelationEventQueueName());",
             "selected_text": "ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_UPDATE",
             "error_level": 2,
             "shortcode": 98
@@ -695,7 +587,7 @@
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\ProductRelationStorage\\Communication\\Plugin\\Event\\Listener\\ProductRelationStorageListener is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/Communication/Plugin/Event/Subscriber/ProductRelationStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_UPDATE, new ProductRelationStorageListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_UPDATE, new ProductRelationStorageListener(), 0, null, $this->getConfig()->getProductRelationEventQueueName());",
             "selected_text": "new ProductRelationStorageListener()",
             "error_level": 2,
             "shortcode": 98
@@ -707,7 +599,7 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\ProductRelation\\Dependency\\ProductRelationEvents is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/Communication/Plugin/Event/Subscriber/ProductRelationStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_DELETE, new ProductRelationStorageListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_DELETE, new ProductRelationStorageListener(), 0, null, $this->getConfig()->getProductRelationEventQueueName());",
             "selected_text": "ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_DELETE",
             "error_level": 2,
             "shortcode": 98
@@ -719,7 +611,7 @@
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\ProductRelationStorage\\Communication\\Plugin\\Event\\Listener\\ProductRelationStorageListener is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/Communication/Plugin/Event/Subscriber/ProductRelationStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_DELETE, new ProductRelationStorageListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_DELETE, new ProductRelationStorageListener(), 0, null, $this->getConfig()->getProductRelationEventQueueName());",
             "selected_text": "new ProductRelationStorageListener()",
             "error_level": 2,
             "shortcode": 98
@@ -731,7 +623,7 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\ProductRelation\\Dependency\\ProductRelationEvents is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/Communication/Plugin/Event/Subscriber/ProductRelationStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_CREATE, new ProductRelationProductAbstractStorageListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_CREATE, new ProductRelationProductAbstractStorageListener(), 0, null, $this->getConfig()->getProductRelationEventQueueName());",
             "selected_text": "ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_CREATE",
             "error_level": 2,
             "shortcode": 98
@@ -743,7 +635,7 @@
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\ProductRelationStorage\\Communication\\Plugin\\Event\\Listener\\ProductRelationProductAbstractStorageListener is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/Communication/Plugin/Event/Subscriber/ProductRelationStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_CREATE, new ProductRelationProductAbstractStorageListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_CREATE, new ProductRelationProductAbstractStorageListener(), 0, null, $this->getConfig()->getProductRelationEventQueueName());",
             "selected_text": "new ProductRelationProductAbstractStorageListener()",
             "error_level": 2,
             "shortcode": 98
@@ -755,7 +647,7 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\ProductRelation\\Dependency\\ProductRelationEvents is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/Communication/Plugin/Event/Subscriber/ProductRelationStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_UPDATE, new ProductRelationProductAbstractStorageListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_UPDATE, new ProductRelationProductAbstractStorageListener(), 0, null, $this->getConfig()->getProductRelationEventQueueName());",
             "selected_text": "ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_UPDATE",
             "error_level": 2,
             "shortcode": 98
@@ -767,7 +659,7 @@
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\ProductRelationStorage\\Communication\\Plugin\\Event\\Listener\\ProductRelationProductAbstractStorageListener is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/Communication/Plugin/Event/Subscriber/ProductRelationStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_UPDATE, new ProductRelationProductAbstractStorageListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_UPDATE, new ProductRelationProductAbstractStorageListener(), 0, null, $this->getConfig()->getProductRelationEventQueueName());",
             "selected_text": "new ProductRelationProductAbstractStorageListener()",
             "error_level": 2,
             "shortcode": 98
@@ -779,7 +671,7 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\ProductRelation\\Dependency\\ProductRelationEvents is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/Communication/Plugin/Event/Subscriber/ProductRelationStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_DELETE, new ProductRelationProductAbstractStorageListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_DELETE, new ProductRelationProductAbstractStorageListener(), 0, null, $this->getConfig()->getProductRelationEventQueueName());",
             "selected_text": "ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_DELETE",
             "error_level": 2,
             "shortcode": 98
@@ -791,7 +683,7 @@
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\ProductRelationStorage\\Communication\\Plugin\\Event\\Listener\\ProductRelationProductAbstractStorageListener is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/Communication/Plugin/Event/Subscriber/ProductRelationStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_DELETE, new ProductRelationProductAbstractStorageListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_DELETE, new ProductRelationProductAbstractStorageListener(), 0, null, $this->getConfig()->getProductRelationEventQueueName());",
             "selected_text": "new ProductRelationProductAbstractStorageListener()",
             "error_level": 2,
             "shortcode": 98

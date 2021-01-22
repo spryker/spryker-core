@@ -10,7 +10,7 @@ namespace Spryker\Zed\Glossary\Communication\Plugin;
 use Generated\Shared\Transfer\LocaleTransfer;
 use InvalidArgumentException;
 use Spryker\Zed\Twig\Communication\Plugin\AbstractTwigExtensionPlugin;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\TwigFilter;
 
 /**
@@ -63,25 +63,25 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
      *
      * @api
      *
-     * @param string $identifier
+     * @param string $id
      * @param array $parameters
      * @param string|null $domain
      * @param string|null $locale
      *
      * @return string
      */
-    public function trans($identifier, array $parameters = [], $domain = null, $locale = null)
+    public function trans($id, array $parameters = [], ?string $domain = null, ?string $locale = null)
     {
         if ($locale !== null) {
             $this->setLocale($locale);
         }
         $localeTransfer = $this->getLocaleTransfer();
 
-        if ($this->getFacade()->hasTranslation($identifier, $localeTransfer)) {
-            $identifier = $this->getFacade()->translate($identifier, $parameters, $localeTransfer);
+        if ($this->getFacade()->hasTranslation($id, $localeTransfer)) {
+            $id = $this->getFacade()->translate($id, $parameters, $localeTransfer);
         }
 
-        return $identifier;
+        return $id;
     }
 
     /**
@@ -101,7 +101,7 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
      *
      * @return string The translated string
      */
-    public function transChoice($identifier, $number, array $parameters = [], $domain = null, $locale = null)
+    public function transChoice($identifier, $number, array $parameters = [], ?string $domain = null, ?string $locale = null)
     {
         if ($locale !== null) {
             $this->setLocale($locale);

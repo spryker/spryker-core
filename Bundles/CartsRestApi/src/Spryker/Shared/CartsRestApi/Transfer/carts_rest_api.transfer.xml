@@ -162,6 +162,7 @@
     </transfer>
 
     <transfer name="Discount">
+        <property name="voucherCode" type="string"/>
     </transfer>
 
     <transfer name="TaxTotal">
@@ -182,6 +183,7 @@
         <property name="groupKey" type="string"/>
         <property name="sku" type="string"/>
         <property name="quantity" type="int"/>
+        <property name="relatedBundleItemIdentifier" type="string"/>
     </transfer>
 
     <transfer name="Store">

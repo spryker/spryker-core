@@ -21,14 +21,11 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 
 class ConfigHelper extends Module
 {
-    protected const CONFIG_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\%3$sConfig';
-    protected const SHARED_CONFIG_CLASS_NAME_PATTERN = '\%1$s\Shared\%2$s\%2$sConfig';
-    protected const MODULE_NAME_POSITION = 2;
+    use ClassResolverTrait;
 
-    protected const NON_STANDARD_NAMESPACE_PREFIXES = [
-        'SprykerShopTest',
-        'SprykerSdkTest',
-    ];
+    protected const CONFIG_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\%3$sConfig';
+    protected const SHARED_CONFIG_CLASS_NAME_PATTERN = '\%1$s\Shared\%3$s\%3$sConfig';
+    protected const MODULE_NAME_POSITION = 2;
 
     /**
      * @var array
@@ -117,7 +114,7 @@ class ConfigHelper extends Module
     public function mockConfigMethod(string $methodName, $return, ?string $moduleName = null): ?AbstractBundleConfig
     {
         $moduleName = $this->getModuleName($moduleName);
-        $className = $this->getConfigClassName($moduleName);
+        $className = $this->resolveClassName(static::CONFIG_CLASS_NAME_PATTERN, $moduleName);
 
         if (!method_exists($className, $methodName)) {
             throw new Exception(sprintf('You tried to mock a not existing method "%s". Available methods are "%s"', $methodName, implode(', ', get_class_methods($className))));
@@ -165,7 +162,7 @@ class ConfigHelper extends Module
     public function mockSharedConfigMethod(string $methodName, $return, ?string $moduleName = null): ?AbstractSharedConfig
     {
         $moduleName = $this->getModuleName($moduleName);
-        $className = $this->getSharedConfigClassName($moduleName);
+        $className = $this->resolveClassName(static::SHARED_CONFIG_CLASS_NAME_PATTERN, $moduleName);
 
         if (!method_exists($className, $methodName)) {
             throw new Exception(sprintf('You tried to mock a not existing method "%s". Available methods are "%s"', $methodName, implode(', ', get_class_methods($className))));
@@ -230,28 +227,9 @@ class ConfigHelper extends Module
      */
     protected function createConfig(string $moduleName)
     {
-        $moduleConfigClassName = $this->getConfigClassName($moduleName);
+        $moduleConfigClassName = $this->resolveClassName(static::CONFIG_CLASS_NAME_PATTERN, $moduleName);
 
         return new $moduleConfigClassName();
-    }
-
-    /**
-     * @param string $moduleName
-     *
-     * @return string
-     */
-    protected function getConfigClassName(string $moduleName): string
-    {
-        $config = Configuration::config();
-        $namespaceParts = explode('\\', $config['namespace']);
-
-        $classNameCandidate = sprintf(static::CONFIG_CLASS_NAME_PATTERN, 'Spryker', $namespaceParts[1], $moduleName);
-
-        if (in_array($namespaceParts[0], static::NON_STANDARD_NAMESPACE_PREFIXES, true) && class_exists($classNameCandidate)) {
-            return $classNameCandidate;
-        }
-
-        return sprintf(static::CONFIG_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $namespaceParts[1], $moduleName);
     }
 
     /**
@@ -297,31 +275,13 @@ class ConfigHelper extends Module
      */
     protected function createSharedConfig(string $moduleName): ?AbstractSharedConfig
     {
-        $sharedConfigClassName = $this->getSharedConfigClassName($moduleName);
+        $sharedConfigClassName = $this->resolveClassName(static::SHARED_CONFIG_CLASS_NAME_PATTERN, $moduleName);
+
         if (!class_exists($sharedConfigClassName)) {
             return null;
         }
 
         return new $sharedConfigClassName();
-    }
-
-    /**
-     * @param string $moduleName
-     *
-     * @return string
-     */
-    protected function getSharedConfigClassName(string $moduleName): string
-    {
-        $config = Configuration::config();
-        $namespaceParts = explode('\\', $config['namespace']);
-
-        $classNameCandidate = sprintf(static::SHARED_CONFIG_CLASS_NAME_PATTERN, 'Spryker', $moduleName);
-
-        if (in_array($namespaceParts[0], static::NON_STANDARD_NAMESPACE_PREFIXES, true) && class_exists($classNameCandidate)) {
-            return $classNameCandidate;
-        }
-
-        return sprintf(static::SHARED_CONFIG_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $moduleName);
     }
 
     /**

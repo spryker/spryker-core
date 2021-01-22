@@ -56,10 +56,6 @@ class SessionApplicationPlugin extends AbstractPlugin implements ApplicationPlug
      */
     public function boot(ContainerInterface $container): ContainerInterface
     {
-        if ($this->isCliOrPhpDbg()) {
-            return $container;
-        }
-
         $sessionClient = $this->getFactory()->getSessionClient();
         $sessionClient->setContainer($this->getSessionService($container));
 
@@ -99,7 +95,7 @@ class SessionApplicationPlugin extends AbstractPlugin implements ApplicationPlug
      */
     protected function createSessionStorage(ContainerInterface $container): SessionStorageInterface
     {
-        if ($this->isSessionTestEnabled($container)) {
+        if ($this->isSessionTestEnabled($container) || $this->isCliOrPhpDbg()) {
             return $this->getFactory()->createMockSessionStorage();
         }
 

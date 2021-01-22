@@ -4,14 +4,16 @@
   "description": "TranslatorExtension module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2"
+    "php": ">=7.3"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/symfony": "*",
     "spryker/translator": "*"
   },
   "suggest": {
-    "spryker/translator": "If you want to use TranslatorPlugin."
+    "spryker/symfony": "When you want to use the TranslatorPlugin.",
+    "spryker/translator": "When you want to use the TranslatorPlugin."
   },
   "autoload": {
     "psr-4": {

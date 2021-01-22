@@ -4,8 +4,8 @@
   "description": "OauthCompanyUser module",
   "license": "proprietary",
   "require": {
-    "league/oauth2-server": "^7.1 || ^8.0.0",
-    "php": ">=7.2",
+    "php": ">=7.3",
+    "psr/http-message": "^1.0.0",
     "spryker/company-user": "^2.11.0",
     "spryker/customer": "^7.0.0",
     "spryker/customer-extension": "^1.3.0",

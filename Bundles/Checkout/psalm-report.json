@@ -2,6 +2,18 @@
     "error": [
         {
             "severity": "error",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Shared\\Checkout\\Plugin\\Permission\\PlaceOrderWithAmountUpToPermissionPlugin::can has wrong name $centAmount, expecting $context as defined by Spryker\\Shared\\PermissionExtension\\Dependency\\Plugin\\ExecutablePermissionPluginInterface::can",
+            "file_name": "vendor/spryker/spryker/Bundles/Checkout/src/Spryker/Shared/Checkout/Plugin/Permission/PlaceOrderWithAmountUpToPermissionPlugin.php",
+            "snippet": "    public function can(array $configuration, $centAmount = null): bool",
+            "selected_text": "$centAmount",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
             "line_from": 161,
             "line_to": 161,
             "type": "InvalidArrayOffset",
@@ -28,18 +40,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 26,
-            "line_to": 26,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Checkout/src/Spryker/Client/Checkout/CheckoutDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->zedRequest()->client();",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 32,
             "line_to": 32,
             "type": "MoreSpecificImplementedParamType",
@@ -49,18 +49,6 @@
             "selected_text": "$centAmount",
             "error_level": 5,
             "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 116,
-            "line_to": 116,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Checkout/src/Spryker/Yves/Checkout/CheckoutDependencyProvider.php",
-            "snippet": "            return new CheckoutToQuoteBridge($container->getLocator()->quote()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         },
         {
             "severity": "info",
@@ -115,7 +103,7 @@
             "line_from": 145,
             "line_to": 145,
             "type": "PossiblyNullArrayOffset",
-            "message": "Cannot access value on variable $this->errorCodeToRouteMatching using possibly null offset int|mixed|null",
+            "message": "Cannot access value on variable $this->errorCodeToRouteMatching using possibly null offset int|mixed|null|string",
             "file_name": "vendor/spryker/spryker/Bundles/Checkout/src/Spryker/Yves/Checkout/Process/Steps/AbstractPlaceOrderStep.php",
             "snippet": "                $this->postConditionErrorRoute = $this->errorCodeToRouteMatching[$error->getErrorCode()];",
             "selected_text": "$this->errorCodeToRouteMatching",
@@ -145,18 +133,6 @@
             "selected_text": "$checkoutResponse->getSaveOrder()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Checkout/src/Spryker/Zed/Checkout/CheckoutDependencyProvider.php",
-            "snippet": "            return new CheckoutToOmsFacadeBridge($container->getLocator()->oms()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         },
         {
             "severity": "info",

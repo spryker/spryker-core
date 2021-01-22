@@ -10,8 +10,8 @@ namespace SprykerTest\Zed\SearchElasticsearch;
 use Codeception\Actor;
 use Generated\Shared\Transfer\ElasticsearchSearchContextTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
+use Laminas\Filter\Word\UnderscoreToCamelCase;
 use Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchBusinessFactory;
-use Zend\Filter\Word\UnderscoreToCamelCase;
 
 /**
  * @method void wantToTest($text)
@@ -57,8 +57,8 @@ class SearchElasticsearchZedTester extends Actor
     public function translateSourceIdentifierToIndexName(string $sourceIdentifier): string
     {
         return $this->getSearchElasticsearchBusinessFactory()
-            ->createIndexNameResolver()
-            ->resolve($sourceIdentifier);
+            ->createSourceIdentifier()
+            ->translateToIndexName($sourceIdentifier);
     }
 
     /**

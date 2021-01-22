@@ -1,7 +1,6 @@
 namespace: SprykerTest
 include:
     - tests/SprykerTest/Client/Search
-    - tests/SprykerTest/Shared/Search
     - tests/SprykerTest/Zed/Search
 paths:
     tests: tests
@@ -15,5 +14,5 @@ settings:
     memory_limit: 1024M
     log: true
 extensions:
-    enabled: [Codeception\Extension\Phantoman]
-    config: { Codeception\Extension\Phantoman: { suites: [Presentation] } }
+    enabled: [SprykerTest\Shared\Testify\Helper\WebDriverHelper]
+    config: { SprykerTest\Shared\Testify\Helper\WebDriverHelper: { suites: [Presentation] } }

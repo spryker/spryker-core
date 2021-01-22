@@ -336,6 +336,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement. Handling of user password reset mail implemented in UserPasswordReset module.
+     *
      * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
      * @return \Generated\Shared\Transfer\MailTransfer

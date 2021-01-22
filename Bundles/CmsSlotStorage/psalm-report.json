@@ -1,5 +1,18 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyCmsSlotStorageEntityTransfer>' for Spryker\\Zed\\CmsSlotStorage\\Persistence\\CmsSlotStorageRepository::getFilteredCmsSlotStorageEntities",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotStorage/src/Spryker/Zed/CmsSlotStorage/Persistence/CmsSlotStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($cmsSlotStorageQuery, $filterTransfer)->find();",
+            "selected_text": "$this->buildQueryFromCriteria($cmsSlotStorageQuery, $filterTransfer)->find()",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -11,8 +24,7 @@
             "snippet": "        $cmsSlotStorageEntity->setKey($cmsSlotStorageTransfer->getKey());",
             "selected_text": "$cmsSlotStorageTransfer->getKey()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         }
     ],
     "deprecation": []

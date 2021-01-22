@@ -77,7 +77,7 @@ class SalesFacadeExpandItemsTest extends Test
         $itemTransfers = $this->tester->getFacade()->expandOrderItemsWithCurrencyIsoCode($orderTransfer->getItems()->getArrayCopy());
 
         // Assert
-        $this->assertEquals($orderTransfer->getCurrencyIsoCode(), $itemTransfers[0]->getCurrencyIsoCode());
+        $this->assertSame($orderTransfer->getCurrencyIsoCode(), $itemTransfers[0]->getCurrencyIsoCode());
     }
 
     /**

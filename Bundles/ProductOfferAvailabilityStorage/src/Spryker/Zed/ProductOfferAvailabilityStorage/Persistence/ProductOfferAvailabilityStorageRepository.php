@@ -32,13 +32,13 @@ class ProductOfferAvailabilityStorageRepository extends AbstractRepository imple
     {
         $productOfferStockPropelQuery = $this->getFactory()
             ->getProductOfferStockPropelQuery()
+            ->filterByIdProductOfferStock_In($productOfferStockIds)
             ->joinSpyProductOffer()
             ->useStockQuery()
                 ->useStockStoreQuery()
                     ->joinStore()
                 ->endUse()
-            ->endUse()
-            ->filterByIdProductOfferStock_In($productOfferStockIds);
+            ->endUse();
 
         $productOfferAvailabilityRequestsData = $this->addProductOfferAvailabilityRequestSelectColumns($productOfferStockPropelQuery)
             ->find()
@@ -56,13 +56,13 @@ class ProductOfferAvailabilityStorageRepository extends AbstractRepository imple
     {
         $productOfferStockPropelQuery = $this->getFactory()
             ->getProductOfferStockPropelQuery()
+            ->filterByFkProductOffer_In($productOfferIds)
             ->joinSpyProductOffer()
             ->useStockQuery()
                 ->useStockStoreQuery()
                     ->joinStore()
                 ->endUse()
-            ->endUse()
-            ->filterByFkProductOffer_In($productOfferIds);
+            ->endUse();
 
         $productOfferAvailabilityRequestsData = $this->addProductOfferAvailabilityRequestSelectColumns($productOfferStockPropelQuery)
             ->find()
@@ -130,6 +130,8 @@ class ProductOfferAvailabilityStorageRepository extends AbstractRepository imple
     }
 
     /**
+     * @phpstan-param array<mixed> $productOfferAvailabilityRequestsData
+     *
      * @param array $productOfferAvailabilityRequestsData
      *
      * @return \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer[]
@@ -151,6 +153,10 @@ class ProductOfferAvailabilityStorageRepository extends AbstractRepository imple
     }
 
     /**
+     * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<mixed> $query
+     *
+     * @phpstan-return \Propel\Runtime\ActiveQuery\ModelCriteria<mixed>
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria

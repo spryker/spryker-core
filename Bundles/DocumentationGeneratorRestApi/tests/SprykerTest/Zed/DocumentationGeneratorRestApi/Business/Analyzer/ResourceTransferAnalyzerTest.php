@@ -115,7 +115,7 @@ class ResourceTransferAnalyzerTest extends Unit
         $schemaName = $this->resourceTransferAnalyzer->createRequestSchemaNameFromTransferClassName(RestTestAttributesTransfer::class);
 
         //Assert
-        $this->assertEquals(static::REQUEST_SCHEMA_NAME, $schemaName);
+        $this->assertSame(static::REQUEST_SCHEMA_NAME, $schemaName);
     }
 
     /**
@@ -127,7 +127,7 @@ class ResourceTransferAnalyzerTest extends Unit
         $schemaName = $this->resourceTransferAnalyzer->createRequestDataSchemaNameFromTransferClassName(RestTestAttributesTransfer::class);
 
         //Assert
-        $this->assertEquals(static::REQUEST_DATA_SCHEMA_NAME, $schemaName);
+        $this->assertSame(static::REQUEST_DATA_SCHEMA_NAME, $schemaName);
     }
 
     /**
@@ -139,7 +139,7 @@ class ResourceTransferAnalyzerTest extends Unit
         $schemaName = $this->resourceTransferAnalyzer->createRequestAttributesSchemaNameFromTransferClassName(RestTestAttributesTransfer::class);
 
         //Assert
-        $this->assertEquals(static::REQUEST_ATTRIBUTES_SCHEMA_NAME, $schemaName);
+        $this->assertSame(static::REQUEST_ATTRIBUTES_SCHEMA_NAME, $schemaName);
     }
 
     /**
@@ -151,7 +151,7 @@ class ResourceTransferAnalyzerTest extends Unit
         $schemaName = $this->resourceTransferAnalyzer->createResponseCollectionSchemaNameFromTransferClassName(RestTestAttributesTransfer::class);
 
         //Assert
-        $this->assertEquals(static::RESPONSE_COLLECTION_SCHEMA_NAME, $schemaName);
+        $this->assertSame(static::RESPONSE_COLLECTION_SCHEMA_NAME, $schemaName);
     }
 
     /**
@@ -163,7 +163,7 @@ class ResourceTransferAnalyzerTest extends Unit
         $schemaName = $this->resourceTransferAnalyzer->createResponseCollectionDataSchemaNameFromTransferClassName(RestTestAttributesTransfer::class);
 
         //Assert
-        $this->assertEquals(static::RESPONSE_COLLECTION_DATA_SCHEMA_NAME, $schemaName);
+        $this->assertSame(static::RESPONSE_COLLECTION_DATA_SCHEMA_NAME, $schemaName);
     }
 
     /**
@@ -175,7 +175,7 @@ class ResourceTransferAnalyzerTest extends Unit
         $schemaName = $this->resourceTransferAnalyzer->createResponseResourceSchemaNameFromTransferClassName(RestTestAttributesTransfer::class);
 
         //Assert
-        $this->assertEquals(static::RESPONSE_RESOURCE_SCHEMA_NAME, $schemaName);
+        $this->assertSame(static::RESPONSE_RESOURCE_SCHEMA_NAME, $schemaName);
     }
 
     /**
@@ -187,7 +187,7 @@ class ResourceTransferAnalyzerTest extends Unit
         $schemaName = $this->resourceTransferAnalyzer->createResponseResourceDataSchemaNameFromTransferClassName(RestTestAttributesTransfer::class);
 
         //Assert
-        $this->assertEquals(static::RESPONSE_RESOURCE_DATA_SCHEMA_NAME, $schemaName);
+        $this->assertSame(static::RESPONSE_RESOURCE_DATA_SCHEMA_NAME, $schemaName);
     }
 
     /**
@@ -198,7 +198,7 @@ class ResourceTransferAnalyzerTest extends Unit
         //Act
         $schemaName = $this->resourceTransferAnalyzer->createResponseAttributesSchemaNameFromTransferClassName(RestTestAttributesTransfer::class);
 
-        $this->assertEquals(static::RESPONSE_ATTRIBUTES_SCHEMA_NAME, $schemaName);
+        $this->assertSame(static::RESPONSE_ATTRIBUTES_SCHEMA_NAME, $schemaName);
     }
 
     /**
@@ -210,6 +210,6 @@ class ResourceTransferAnalyzerTest extends Unit
         $schemaName = $this->resourceTransferAnalyzer->createResourceRelationshipSchemaNameFromTransferClassName(RestTestAttributesTransfer::class);
 
         //Assert
-        $this->assertEquals(static::RESOURCE_RELATIONSHIP_SCHEMA_NAME, $schemaName);
+        $this->assertSame(static::RESOURCE_RELATIONSHIP_SCHEMA_NAME, $schemaName);
     }
 }

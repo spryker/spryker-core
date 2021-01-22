@@ -175,9 +175,10 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
     protected function buildMerchantOrderTableBaseQuery(
         MerchantOrderTableCriteriaTransfer $merchantOrderTableCriteriaTransfer
     ): SpyMerchantSalesOrderQuery {
+        /** @var int $idMerchant */
         $idMerchant = $merchantOrderTableCriteriaTransfer->requireIdMerchant()->getIdMerchant();
-
         $merchantSalesOrderQuery = $this->getFactory()->getMerchantSalesOrderPropelQuery();
+
         $merchantSalesOrderQuery = $this->filterMerchantSalesOrderQueryByIdMerchant($merchantSalesOrderQuery, $idMerchant);
         $merchantSalesOrderQuery->joinMerchantSalesOrderItem()
             ->joinMerchantSalesOrderTotal()

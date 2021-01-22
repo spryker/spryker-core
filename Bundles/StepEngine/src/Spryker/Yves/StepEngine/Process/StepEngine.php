@@ -73,52 +73,52 @@ class StepEngine implements StepEngineInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface|null $formCollection
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function runProcess(Request $request, AbstractTransfer $dataTransfer, ?FormCollectionHandlerInterface $formCollection = null)
+    protected function runProcess(Request $request, AbstractTransfer $quoteTransfer, ?FormCollectionHandlerInterface $formCollection = null)
     {
-        $currentStep = $this->stepCollection->getCurrentStep($request, $dataTransfer);
+        $currentStep = $this->stepCollection->getCurrentStep($request, $quoteTransfer);
 
-        if (!$currentStep->preCondition($dataTransfer)) {
+        if (!$currentStep->preCondition($quoteTransfer)) {
             return $this->createRedirectResponse($this->stepCollection->getEscapeUrl($currentStep));
         }
 
-        if (!$this->stepCollection->canAccessStep($currentStep, $request, $dataTransfer)) {
+        if (!$this->stepCollection->canAccessStep($currentStep, $request, $quoteTransfer)) {
             return $this->createRedirectResponse($this->stepCollection->getCurrentUrl($currentStep));
         }
 
-        if (!$currentStep->requireInput($dataTransfer)) {
-            $dataTransfer = $this->executeWithoutInput($currentStep, $request, $dataTransfer);
+        if (!$currentStep->requireInput($quoteTransfer)) {
+            $quoteTransfer = $this->executeWithoutInput($currentStep, $request, $quoteTransfer);
 
-            return $this->createRedirectResponse($this->stepCollection->getNextUrl($currentStep, $dataTransfer));
+            return $this->createRedirectResponse($this->stepCollection->getNextUrl($currentStep, $quoteTransfer));
         }
         if (!$this->isRequestedStep($request, $currentStep)) {
             return $this->createRedirectResponse($this->stepCollection->getCurrentUrl($currentStep));
         }
 
-        $dataTransfer = $this->executeStepEnginePreRenderPlugins($dataTransfer);
+        $quoteTransfer = $this->executeStepEnginePreRenderPlugins($quoteTransfer);
 
         if (!$formCollection) {
-            $dataTransfer = $this->executeWithoutInput($currentStep, $request, $dataTransfer);
+            $quoteTransfer = $this->executeWithoutInput($currentStep, $request, $quoteTransfer);
 
-            return $this->getTemplateVariables($currentStep, $dataTransfer);
+            return $this->getTemplateVariables($currentStep, $quoteTransfer);
         }
 
-        if ($formCollection->hasSubmittedForm($request, $dataTransfer)) {
-            $form = $formCollection->handleRequest($request, $dataTransfer);
+        if ($formCollection->hasSubmittedForm($request, $quoteTransfer)) {
+            $form = $formCollection->handleRequest($request, $quoteTransfer);
             if ($form->isSubmitted() && $form->isValid()) {
-                $dataTransfer = $this->executeWithFormInput($currentStep, $request, $dataTransfer, $form->getData());
+                $quoteTransfer = $this->executeWithFormInput($currentStep, $request, $quoteTransfer, $form->getData());
 
-                return $this->createRedirectResponse($this->stepCollection->getNextUrl($currentStep, $dataTransfer));
+                return $this->createRedirectResponse($this->stepCollection->getNextUrl($currentStep, $quoteTransfer));
             }
         } else {
-            $formCollection->provideDefaultFormData($dataTransfer);
+            $formCollection->provideDefaultFormData($quoteTransfer);
         }
 
-        return $this->getTemplateVariables($currentStep, $dataTransfer, $formCollection);
+        return $this->getTemplateVariables($currentStep, $quoteTransfer, $formCollection);
     }
 
     /**
@@ -135,23 +135,23 @@ class StepEngine implements StepEngineInterface
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function executeWithoutInput(StepInterface $currentStep, Request $request, AbstractTransfer $dataTransfer)
+    protected function executeWithoutInput(StepInterface $currentStep, Request $request, AbstractTransfer $quoteTransfer)
     {
-        $dataTransfer = $currentStep->execute($request, $dataTransfer);
+        $quoteTransfer = $currentStep->execute($request, $quoteTransfer);
 
-        $this->dataContainer->set($dataTransfer);
+        $this->dataContainer->set($quoteTransfer);
 
-        return $dataTransfer;
+        return $quoteTransfer;
     }
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $formTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -159,15 +159,15 @@ class StepEngine implements StepEngineInterface
     protected function executeWithFormInput(
         StepInterface $currentStep,
         Request $request,
-        AbstractTransfer $dataTransfer,
+        AbstractTransfer $quoteTransfer,
         AbstractTransfer $formTransfer
     ) {
-        $dataTransfer->fromArray($formTransfer->modifiedToArray());
-        $dataTransfer = $currentStep->execute($request, $formTransfer);
+        $quoteTransfer->fromArray($formTransfer->modifiedToArray());
+        $quoteTransfer = $currentStep->execute($request, $formTransfer);
 
-        $this->dataContainer->set($dataTransfer);
+        $this->dataContainer->set($quoteTransfer);
 
-        return $dataTransfer;
+        return $quoteTransfer;
     }
 
     /**
@@ -182,27 +182,27 @@ class StepEngine implements StepEngineInterface
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface|null $formCollection
      *
      * @return array
      */
-    protected function getTemplateVariables(StepInterface $currentStep, AbstractTransfer $dataTransfer, ?FormCollectionHandlerInterface $formCollection = null)
+    protected function getTemplateVariables(StepInterface $currentStep, AbstractTransfer $quoteTransfer, ?FormCollectionHandlerInterface $formCollection = null)
     {
         $templateVariables = [];
 
-        $templateVariables[self::TEMPLATE_VARIABLE_PREVIOUS_STEP_URL] = $this->stepCollection->getPreviousUrl($currentStep, $dataTransfer);
+        $templateVariables[self::TEMPLATE_VARIABLE_PREVIOUS_STEP_URL] = $this->stepCollection->getPreviousUrl($currentStep, $quoteTransfer);
         if ($this->stepBreadcrumbGenerator) {
             $templateVariables[self::TEMPLATE_VARIABLE_STEP_BREADCRUMBS] = $this->stepBreadcrumbGenerator->generateStepBreadcrumbs(
                 $this->stepCollection,
-                $dataTransfer,
+                $quoteTransfer,
                 $currentStep
             );
         }
-        $templateVariables = array_merge($templateVariables, $currentStep->getTemplateVariables($dataTransfer));
+        $templateVariables = array_merge($templateVariables, $currentStep->getTemplateVariables($quoteTransfer));
 
         if ($formCollection !== null) {
-            foreach ($formCollection->getForms($dataTransfer) as $form) {
+            foreach ($formCollection->getForms($quoteTransfer) as $form) {
                 $templateVariables[$form->getName()] = $form->createView();
             }
         }
@@ -211,16 +211,16 @@ class StepEngine implements StepEngineInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function executeStepEnginePreRenderPlugins(AbstractTransfer $dataTransfer): AbstractTransfer
+    protected function executeStepEnginePreRenderPlugins(AbstractTransfer $quoteTransfer): AbstractTransfer
     {
         foreach ($this->stepEnginePreRenderPlugins as $stepEnginePreRenderPlugin) {
-            $dataTransfer = $stepEnginePreRenderPlugin->execute($dataTransfer);
+            $quoteTransfer = $stepEnginePreRenderPlugin->execute($quoteTransfer);
         }
 
-        return $dataTransfer;
+        return $quoteTransfer;
     }
 }

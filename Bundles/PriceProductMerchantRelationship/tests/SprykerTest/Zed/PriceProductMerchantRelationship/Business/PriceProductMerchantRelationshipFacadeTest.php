@@ -47,7 +47,7 @@ class PriceProductMerchantRelationshipFacadeTest extends Unit
         $priceProductMerchantRelationshipQuery = $this->getPriceProductMerchantRelationshipQuery()
             ->filterByFkPriceProductStore($idPriceProductStore);
 
-        $this->assertEquals(0, $priceProductMerchantRelationshipQuery->count());
+        $this->assertSame(0, $priceProductMerchantRelationshipQuery->count());
     }
 
     /**

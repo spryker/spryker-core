@@ -12,7 +12,7 @@ class Foo
     /**
      * @var mixed|null
      */
-    private $data;
+    protected $data;
 
     /**
      * @param mixed|null $data

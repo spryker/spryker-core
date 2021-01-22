@@ -45,7 +45,6 @@ class NavigationCollectorFacade extends AbstractFacade implements NavigationColl
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     ) {
-
         $collector = $this->getFactory()->createStorageNavigationMenuCollector();
 
         $this->getFactory()->getCollectorFacade()->runCollector(

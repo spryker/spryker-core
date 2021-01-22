@@ -131,7 +131,7 @@ class PaymentFacadeTest extends Unit
         $storeRelationExist = SpyPaymentMethodStoreQuery::create()
             ->filterByFkPaymentMethod($paymentMethodTransfer->getIdPaymentMethod())
             ->exists();
-        $this->assertEquals('test1', $resultPaymentMethodEntity->getPaymentMethodKey(), 'Payment method name should match to the expected value');
+        $this->assertSame('test1', $resultPaymentMethodEntity->getPaymentMethodKey(), 'Payment method name should match to the expected value');
         $this->assertTrue($storeRelationExist, 'Payment method store relation should exists');
     }
 

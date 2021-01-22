@@ -11,8 +11,7 @@
             "snippet": "            ->findCompanyUnitAddressLabelsByAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress());",
             "selected_text": "$companyUnitAddressTransfer->getIdCompanyUnitAddress()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -24,8 +23,7 @@
             "snippet": "            $companyUnitAddress->getIdCompanyUnitAddress(),",
             "selected_text": "$companyUnitAddress->getIdCompanyUnitAddress()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -37,8 +35,19 @@
             "snippet": "        $labelTransfers = $companyUnitAddressTransfer->getLabelCollection()->getLabels();",
             "selected_text": "getLabels",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CompanyUnitAddressLabel\\Persistence\\CompanyUnitAddressLabelRepositoryInterface::findCompanyUnitAddressLabelsByAddress cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUnitAddressLabel/src/Spryker/Zed/CompanyUnitAddressLabel/Communication/Form/DataProvider/CompanyUnitAddressLabelFormDataProvider.php",
+            "snippet": "            ->findCompanyUnitAddressLabelsByAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress());",
+            "selected_text": "$companyUnitAddressTransfer->getIdCompanyUnitAddress()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -50,34 +59,31 @@
             "snippet": "            $result[$label->getName()] = $label->getIdCompanyUnitAddressLabel();",
             "selected_text": "$result",
             "error_level": 3,
-            "shortcode": 125,
-            "taint_trace": null
+            "shortcode": 125
         },
         {
             "severity": "info",
             "line_from": 63,
             "line_to": 63,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CompanyUnitAddressLabel\\Persistence\\SpyCompanyUnitAddressLabel|Orm\\Zed\\CompanyUnitAddress\\Persistence\\SpyCompanyUnitAddress|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CompanyUnitAddressLabel\\Persistence\\SpyCompanyUnitAddressLabel|Orm\\Zed\\CompanyUnitAddress\\Persistence\\SpyCompanyUnitAddress> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUnitAddressLabel/src/Spryker/Zed/CompanyUnitAddressLabel/Persistence/CompanyUnitAddressLabelRepository.php",
             "snippet": "            )->find()->getData();",
             "selected_text": "getData",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
             "line_from": 82,
             "line_to": 82,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CompanyUnitAddressLabel\\Persistence\\SpyCompanyUnitAddressLabelToCompanyUnitAddress|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CompanyUnitAddressLabel\\Persistence\\SpyCompanyUnitAddressLabelToCompanyUnitAddress> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUnitAddressLabel/src/Spryker/Zed/CompanyUnitAddressLabel/Persistence/CompanyUnitAddressLabelRepository.php",
             "snippet": "            )->find()->getData();",
             "selected_text": "getData",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         }
     ],
     "deprecation": []

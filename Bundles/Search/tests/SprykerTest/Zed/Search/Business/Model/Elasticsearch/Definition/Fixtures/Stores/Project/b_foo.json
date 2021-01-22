@@ -1,11 +1,11 @@
 {
-  "mappings": {
-    "page": {
-      "properties": {
-        "foo": {
-          "type": "integer"
+    "mappings": {
+        "page": {
+            "properties": {
+                "foo": {
+                    "type": "integer"
+                }
+            }
         }
-      }
     }
-  }
 }

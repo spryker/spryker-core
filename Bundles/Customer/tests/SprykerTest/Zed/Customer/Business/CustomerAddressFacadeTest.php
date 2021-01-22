@@ -31,12 +31,12 @@ use Spryker\Zed\Kernel\Container;
 class CustomerAddressFacadeTest extends Unit
 {
     protected const TESTER_EMAIL = 'tester@spryker.com';
-    protected const TESTER_PASSWORD = '$2tester';
+    protected const TESTER_PASSWORD = 'testpassworD1$';
     protected const TESTER_NAME = 'Tester';
     protected const TESTER_CITY = 'Testcity';
     protected const TESTER_ADDRESS1 = 'Testerstreet 23';
     protected const TESTER_ZIP_CODE = '42';
-    protected const TESTER_FK_COUNTRY_GERMANY = '60';
+    protected const TESTER_FK_COUNTRY_GERMANY = 60;
 
     /**
      * @var \SprykerTest\Zed\Customer\CustomerBusinessTester
@@ -77,7 +77,7 @@ class CustomerAddressFacadeTest extends Unit
         $addressTransfer = $addressesTransfer->getAddresses()[0];
 
         // Assert
-        $this->assertEquals(self::TESTER_FK_COUNTRY_GERMANY, $addressTransfer->getCountry()->getIdCountry());
+        $this->assertSame(static::TESTER_FK_COUNTRY_GERMANY, $addressTransfer->getCountry()->getIdCountry());
     }
 
     /**
@@ -205,7 +205,7 @@ class CustomerAddressFacadeTest extends Unit
         $addressTransfer->setFkCustomer($customerTransfer->getIdCustomer());
         $addressTransfer = $this->customerFacade->updateAddress($addressTransfer);
         $this->assertNotNull($addressTransfer);
-        $this->assertEquals(self::TESTER_CITY, $addressTransfer->getCity());
+        $this->assertSame(static::TESTER_CITY, $addressTransfer->getCity());
     }
 
     /**

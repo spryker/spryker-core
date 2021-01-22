@@ -50,7 +50,7 @@ interface RedisAdapterInterface
      *
      * @return bool
      */
-    public function eval(string $script, int $numKeys, $keysOrArgs): bool;
+    public function eval(string $script, int $numKeys, array $keysOrArgs): bool;
 
     /**
      * @return void
@@ -112,4 +112,11 @@ interface RedisAdapterInterface
      * @return void
      */
     public function flushDb(): void;
+
+    /**
+     * @param string $key
+     *
+     * @return int
+     */
+    public function incr(string $key): int;
 }

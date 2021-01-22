@@ -1,200 +1,210 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 86,
+            "line_to": 86,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\CustomersRestApi\\Business\\Validator\\CustomerAddressValidator::getCustomerShippingAddressUuids is incorrect, got 'list<mixed|null|string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Zed/CustomersRestApi/Business/Validator/CustomerAddressValidator.php",
+            "snippet": "     * @return string[]",
+            "selected_text": "string[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 100,
+            "line_to": 100,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<mixed|null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\CustomersRestApi\\Business\\Validator\\CustomerAddressValidator::getCustomerShippingAddressUuids",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Zed/CustomersRestApi/Business/Validator/CustomerAddressValidator.php",
+            "snippet": "        return $customerShippingAddressUuids;",
+            "selected_text": "$customerShippingAddressUuids",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
     "warning": [
         {
             "severity": "info",
-            "line_from": 99,
-            "line_to": 99,
+            "line_from": 98,
+            "line_to": 98,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Glue\\CustomersRestApi\\Processor\\Address\\AddressReader::getAllAddresses cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Processor/Address/AddressReader.php",
             "snippet": "            $this->getAllAddresses($customerResponseTransfer->getCustomerTransfer(), $restResponse);",
             "selected_text": "$customerResponseTransfer->getCustomerTransfer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 104,
-            "line_to": 104,
+            "line_from": 103,
+            "line_to": 103,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Glue\\CustomersRestApi\\Processor\\Address\\AddressReader::getAddressByCustomerTransfer cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Processor/Address/AddressReader.php",
             "snippet": "        return $this->getAddressByCustomerTransfer($customerResponseTransfer->getCustomerTransfer(), $restRequest->getResource()->getId(), $restResponse);",
             "selected_text": "$customerResponseTransfer->getCustomerTransfer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 104,
-            "line_to": 104,
+            "line_from": 103,
+            "line_to": 103,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Glue\\CustomersRestApi\\Processor\\Address\\AddressReader::getAddressByCustomerTransfer cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Processor/Address/AddressReader.php",
             "snippet": "        return $this->getAddressByCustomerTransfer($customerResponseTransfer->getCustomerTransfer(), $restRequest->getResource()->getId(), $restResponse);",
             "selected_text": "$restRequest->getResource()->getId()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 115,
-            "line_to": 115,
+            "line_from": 114,
+            "line_to": 114,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getSurrogateIdentifier on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Processor/Address/AddressReader.php",
             "snippet": "        $customerTransfer = (new CustomerTransfer())->setIdCustomer((int)$restRequest->getUser()->getSurrogateIdentifier());",
             "selected_text": "getSurrogateIdentifier",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 139,
-            "line_to": 139,
+            "line_from": 138,
+            "line_to": 138,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getAddresses on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Processor/Address/AddressReader.php",
             "snippet": "        foreach ($customerTransfer->getAddresses()->getAddresses() as $addressTransfer) {",
             "selected_text": "getAddresses",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 160,
-            "line_to": 160,
+            "line_from": 159,
+            "line_to": 159,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getAddresses on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Processor/Address/AddressReader.php",
             "snippet": "        foreach ($customerTransfer->getAddresses()->getAddresses() as $addressTransfer) {",
             "selected_text": "getAddresses",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 206,
-            "line_to": 206,
+            "line_from": 180,
+            "line_to": 180,
             "type": "PossiblyNullArgument",
-            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "message": "Argument 1 of Spryker\\Glue\\CustomersRestApi\\Processor\\RestResponseBuilder\\AddressRestResponseBuilderInterface::createAddressRestResource cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Processor/Address/AddressReader.php",
+            "snippet": "            $addressTransfer->getUuid(),",
+            "selected_text": "$addressTransfer->getUuid()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 181,
+            "line_to": 181,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\CustomersRestApi\\Processor\\RestResponseBuilder\\AddressRestResponseBuilderInterface::createAddressRestResource cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Processor/Address/AddressReader.php",
             "snippet": "            $customerTransfer->getCustomerReference(),",
             "selected_text": "$customerTransfer->getCustomerReference()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 208,
-            "line_to": 208,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 5 of sprintf cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Processor/Address/AddressReader.php",
-            "snippet": "            $addressTransfer->getUuid()",
-            "selected_text": "$addressTransfer->getUuid()",
-            "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 96,
-            "line_to": 96,
+            "line_from": 93,
+            "line_to": 93,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getSurrogateIdentifier on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Processor/Address/AddressWriter.php",
             "snippet": "        $addressTransfer->setFkCustomer((int)$restRequest->getUser()->getSurrogateIdentifier());",
             "selected_text": "getSurrogateIdentifier",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 99,
-            "line_to": 99,
+            "line_from": 96,
+            "line_to": 96,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Glue\\CustomersRestApi\\Processor\\Address\\AddressWriter::getLastAddedAddress cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Processor/Address/AddressWriter.php",
             "snippet": "        $lastAddedAddress = $this->getLastAddedAddress($customerTransfer->getAddresses());",
             "selected_text": "$customerTransfer->getAddresses()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 124,
-            "line_to": 124,
+            "line_from": 120,
+            "line_to": 120,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Glue\\CustomersRestApi\\Processor\\Address\\AddressReaderInterface::findAddressByUuid cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Processor/Address/AddressWriter.php",
             "snippet": "        $addressTransfer = $this->addressReader->findAddressByUuid($restRequest, $restRequest->getResource()->getId());",
             "selected_text": "$restRequest->getResource()->getId()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 155,
-            "line_to": 155,
+            "line_from": 150,
+            "line_to": 150,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Glue\\CustomersRestApi\\Processor\\Address\\AddressReaderInterface::findAddressByUuid cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Processor/Address/AddressWriter.php",
             "snippet": "        $addressTransfer = $this->addressReader->findAddressByUuid($restRequest, $restRequest->getResource()->getId());",
             "selected_text": "$restRequest->getResource()->getId()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 193,
-            "line_to": 193,
+            "line_from": 188,
+            "line_to": 188,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getAddresses on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Processor/Address/AddressWriter.php",
             "snippet": "        foreach ($customerTransfer->getAddresses()->getAddresses() as $addressTransfer) {",
             "selected_text": "getAddresses",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 257,
-            "line_to": 257,
+            "line_from": 211,
+            "line_to": 211,
             "type": "PossiblyNullArgument",
-            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "message": "Argument 1 of Spryker\\Glue\\CustomersRestApi\\Processor\\RestResponseBuilder\\AddressRestResponseBuilderInterface::createAddressRestResource cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Processor/Address/AddressWriter.php",
+            "snippet": "            $addressTransfer->getUuid(),",
+            "selected_text": "$addressTransfer->getUuid()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 212,
+            "line_to": 212,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\CustomersRestApi\\Processor\\RestResponseBuilder\\AddressRestResponseBuilderInterface::createAddressRestResource cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Processor/Address/AddressWriter.php",
             "snippet": "            $customerTransfer->getCustomerReference(),",
             "selected_text": "$customerTransfer->getCustomerReference()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 259,
-            "line_to": 259,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 5 of sprintf cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Processor/Address/AddressWriter.php",
-            "snippet": "            $addressTransfer->getUuid()",
-            "selected_text": "$addressTransfer->getUuid()",
-            "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -206,8 +216,7 @@
             "snippet": "                $customerResponseTransfer->getCustomerTransfer(),",
             "selected_text": "$customerResponseTransfer->getCustomerTransfer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -219,8 +228,7 @@
             "snippet": "            $customerResponseTransfer->getCustomerTransfer()->getCustomerReference(),",
             "selected_text": "getCustomerReference",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -232,8 +240,7 @@
             "snippet": "        $customerTransfer = (new CustomerTransfer())->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());",
             "selected_text": "getNaturalIdentifier",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -245,8 +252,7 @@
             "snippet": "        $customerTransfer = $this->executeCustomerPostCreatePlugins($restRequest, $customerTransfer);",
             "selected_text": "$customerTransfer",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -258,8 +264,7 @@
             "snippet": "            $customerResponseTransfer->getCustomerTransfer()->getCustomerReference(),",
             "selected_text": "getCustomerReference",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -271,8 +276,7 @@
             "snippet": "        $customerResponseTransfer->getCustomerTransfer()->fromArray(",
             "selected_text": "fromArray",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -284,8 +288,7 @@
             "snippet": "        $customerResponseTransfer = $this->customerClient->updateCustomer($customerResponseTransfer->getCustomerTransfer());",
             "selected_text": "$customerResponseTransfer->getCustomerTransfer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -297,8 +300,7 @@
             "snippet": "                $customerResponseTransfer->getCustomerTransfer(),",
             "selected_text": "$customerResponseTransfer->getCustomerTransfer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -310,8 +312,7 @@
             "snippet": "            $customerResponseTransfer->getCustomerTransfer()->getCustomerReference(),",
             "selected_text": "getCustomerReference",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -323,8 +324,7 @@
             "snippet": "        if ($resourceId && $resourceId !== $restRequest->getUser()->getNaturalIdentifier()) {",
             "selected_text": "getNaturalIdentifier",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -336,8 +336,7 @@
             "snippet": "        $customerTransfer->fromArray($passwordAttributesTransfer->toArray(), true);",
             "selected_text": "fromArray",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -349,8 +348,7 @@
             "snippet": "        if (!$customerResponseTransfer->getErrors()->count()) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "taint_trace": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -362,73 +360,79 @@
             "snippet": "        $this->customerClient->anonymizeCustomer($customerResponseTransfer->getCustomerTransfer());",
             "selected_text": "$customerResponseTransfer->getCustomerTransfer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 65,
-            "line_to": 65,
+            "line_from": 62,
+            "line_to": 62,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getAddresses on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Processor/CustomerAddress/CustomerAddressReader.php",
             "snippet": "        foreach ($customerResponseTransfer->getCustomerTransfer()->getAddresses()->getAddresses() as $addressTransfer) {",
             "selected_text": "getAddresses",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 65,
-            "line_to": 65,
+            "line_from": 62,
+            "line_to": 62,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getAddresses on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Processor/CustomerAddress/CustomerAddressReader.php",
             "snippet": "        foreach ($customerResponseTransfer->getCustomerTransfer()->getAddresses()->getAddresses() as $addressTransfer) {",
             "selected_text": "getAddresses",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 69,
-            "line_to": 69,
+            "line_from": 66,
+            "line_to": 66,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Glue\\CustomersRestApi\\Processor\\Mapper\\AddressResourceMapperInterface::mapAddressTransferToRestAddressAttributesTransfer cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Processor/CustomerAddress/CustomerAddressReader.php",
             "snippet": "                    $customerResponseTransfer->getCustomerTransfer()",
             "selected_text": "$customerResponseTransfer->getCustomerTransfer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 100,
-            "line_to": 100,
+            "line_from": 71,
+            "line_to": 71,
             "type": "PossiblyNullArgument",
-            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "message": "Argument 1 of Spryker\\Glue\\CustomersRestApi\\Processor\\RestResponseBuilder\\AddressRestResponseBuilderInterface::createAddressRestResource cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Processor/CustomerAddress/CustomerAddressReader.php",
-            "snippet": "            $customerTransfer->getCustomerReference(),",
-            "selected_text": "$customerTransfer->getCustomerReference()",
-            "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
-        },
-        {
-            "severity": "info",
-            "line_from": 102,
-            "line_to": 102,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 5 of sprintf cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Processor/CustomerAddress/CustomerAddressReader.php",
-            "snippet": "            $addressTransfer->getUuid()",
+            "snippet": "                    $addressTransfer->getUuid(),",
             "selected_text": "$addressTransfer->getUuid()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 72,
+            "line_to": 72,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\CustomersRestApi\\Processor\\RestResponseBuilder\\AddressRestResponseBuilderInterface::createAddressRestResource cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Processor/CustomerAddress/CustomerAddressReader.php",
+            "snippet": "                    $customerResponseTransfer->getCustomerTransfer()->getCustomerReference(),",
+            "selected_text": "$customerResponseTransfer->getCustomerTransfer()->getCustomerReference()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 72,
+            "line_to": 72,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCustomerReference on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Processor/CustomerAddress/CustomerAddressReader.php",
+            "snippet": "                    $customerResponseTransfer->getCustomerTransfer()->getCustomerReference(),",
+            "selected_text": "getCustomerReference",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -440,8 +444,7 @@
             "snippet": "            ->setCountry($addressTransfer->getCountry()->getName())",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -453,8 +456,7 @@
             "snippet": "            $customerTransfer,",
             "selected_text": "$customerTransfer",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -466,8 +468,43 @@
             "snippet": "            $customerTransfer->getCustomerReference(),",
             "selected_text": "$customerTransfer->getCustomerReference()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 101,
+            "line_to": 101,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCustomer on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Processor/Relationship/AddressByCheckoutDataResourceRelationshipExpander.php",
+            "snippet": "        return $payload->getQuote()->getCustomer();",
+            "selected_text": "getCustomer",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 118,
+            "line_to": 118,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\CustomersRestApi\\Processor\\RestResponseBuilder\\AddressRestResponseBuilderInterface::createAddressRestResource cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Processor/Relationship/AddressByCheckoutDataResourceRelationshipExpander.php",
+            "snippet": "            $addressTransfer->getUuid(),",
+            "selected_text": "$addressTransfer->getUuid()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 119,
+            "line_to": 119,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\CustomersRestApi\\Processor\\RestResponseBuilder\\AddressRestResponseBuilderInterface::createAddressRestResource cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Processor/Relationship/AddressByCheckoutDataResourceRelationshipExpander.php",
+            "snippet": "            $customerTransfer->getCustomerReference(),",
+            "selected_text": "$customerTransfer->getCustomerReference()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -479,8 +516,7 @@
             "snippet": "        return $restRequest->getUser()->getNaturalIdentifier() === $customerResource->getId();",
             "selected_text": "getNaturalIdentifier",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -492,8 +528,7 @@
             "snippet": "        return mb_strlen($passwordAttributesTransfer->getNewPassword()) > 1;",
             "selected_text": "$passwordAttributesTransfer->getNewPassword()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -505,8 +540,7 @@
             "snippet": "                $restCheckoutRequestAttributesTransfer->getBillingAddress(),",
             "selected_text": "$restCheckoutRequestAttributesTransfer->getBillingAddress()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -518,8 +552,7 @@
             "snippet": "                $restCheckoutRequestAttributesTransfer->getCustomer()",
             "selected_text": "$restCheckoutRequestAttributesTransfer->getCustomer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -531,8 +564,7 @@
             "snippet": "                $restCheckoutRequestAttributesTransfer->getShippingAddress(),",
             "selected_text": "$restCheckoutRequestAttributesTransfer->getShippingAddress()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -544,8 +576,7 @@
             "snippet": "                $restCheckoutRequestAttributesTransfer->getCustomer()",
             "selected_text": "$restCheckoutRequestAttributesTransfer->getCustomer()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -557,8 +588,19 @@
             "snippet": "            $itemTransfer->getShipment()->setShippingAddress($addressTransfer);",
             "selected_text": "setShippingAddress",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CustomersRestApi\\Dependency\\Facade\\CustomersRestApiToCustomerFacadeInterface::findCustomerByReference cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Zed/CustomersRestApi/Business/Mapper/CustomerQuoteMapper.php",
+            "snippet": "        $customerResponseTransfer = $this->customerFacade->findCustomerByReference($restCustomerTransfer->getCustomerReference());",
+            "selected_text": "$restCustomerTransfer->getCustomerReference()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -570,8 +612,79 @@
             "snippet": "            ->setCustomerReference($customerResponseTransfer->getCustomerTransfer()->getCustomerReference())",
             "selected_text": "getCustomerReference",
             "error_level": 3,
-            "shortcode": 83,
-            "taint_trace": null
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CustomersRestApi\\Dependency\\Facade\\CustomersRestApiToCustomerFacadeInterface::getAddresses cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Zed/CustomersRestApi/Business/Reader/CustomerAddressReader.php",
+            "snippet": "        $addressesTransfer = $this->customerFacade->getAddresses($quoteTransfer->getCustomer());",
+            "selected_text": "$quoteTransfer->getCustomer()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 79,
+            "line_to": 79,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCustomer on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Zed/CustomersRestApi/Business/Validator/CustomerAddressValidator.php",
+            "snippet": "            && $checkoutDataTransfer->getQuote()->getCustomer()",
+            "selected_text": "getCustomer",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 80,
+            "line_to": 80,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCustomer on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Zed/CustomersRestApi/Business/Validator/CustomerAddressValidator.php",
+            "snippet": "            && $checkoutDataTransfer->getQuote()->getCustomer()->getIdCustomer();",
+            "selected_text": "getCustomer",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 80,
+            "line_to": 80,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCustomer on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Zed/CustomersRestApi/Business/Validator/CustomerAddressValidator.php",
+            "snippet": "            && $checkoutDataTransfer->getQuote()->getCustomer()->getIdCustomer();",
+            "selected_text": "getIdCustomer",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 91,
+            "line_to": 91,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCustomer on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Zed/CustomersRestApi/Business/Validator/CustomerAddressValidator.php",
+            "snippet": "            ->setIdCustomer($checkoutDataTransfer->getQuote()->getCustomer()->getIdCustomer());",
+            "selected_text": "getCustomer",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 91,
+            "line_to": 91,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCustomer on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Zed/CustomersRestApi/Business/Validator/CustomerAddressValidator.php",
+            "snippet": "            ->setIdCustomer($checkoutDataTransfer->getQuote()->getCustomer()->getIdCustomer());",
+            "selected_text": "getIdCustomer",
+            "error_level": 3,
+            "shortcode": 83
         }
     ],
     "deprecation": [
@@ -585,8 +698,7 @@
             "snippet": "        $container = $this->addSessionClient($container);",
             "selected_text": "addSessionClient",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -598,8 +710,7 @@
             "snippet": "        $container->set(static::CLIENT_SESSION, function (Container $container) {",
             "selected_text": "static::CLIENT_SESSION",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
+            "shortcode": 170
         },
         {
             "severity": "info",
@@ -611,47 +722,43 @@
             "snippet": "            return new CustomersRestApiToSessionClientBridge($container->getLocator()->session()->client());",
             "selected_text": "new CustomersRestApiToSessionClientBridge($container->getLocator()->session()->client())",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 235,
-            "line_to": 235,
+            "line_from": 256,
+            "line_to": 256,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Glue\\CustomersRestApi\\Dependency\\Client\\CustomersRestApiToSessionClientInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/CustomersRestApiFactory.php",
             "snippet": "     * @return \\Spryker\\Glue\\CustomersRestApi\\Dependency\\Client\\CustomersRestApiToSessionClientInterface",
             "selected_text": "\\Spryker\\Glue\\CustomersRestApi\\Dependency\\Client\\CustomersRestApiToSessionClientInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 237,
-            "line_to": 237,
+            "line_from": 258,
+            "line_to": 258,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Glue\\CustomersRestApi\\Dependency\\Client\\CustomersRestApiToSessionClientInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/CustomersRestApiFactory.php",
             "snippet": "    public function getSessionClient(): CustomersRestApiToSessionClientInterface",
             "selected_text": "CustomersRestApiToSessionClientInterface",
             "error_level": 2,
-            "shortcode": 98,
-            "taint_trace": null
+            "shortcode": 98
         },
         {
             "severity": "info",
-            "line_from": 239,
-            "line_to": 239,
+            "line_from": 260,
+            "line_to": 260,
             "type": "DeprecatedConstant",
             "message": "Constant Spryker\\Glue\\CustomersRestApi\\CustomersRestApiDependencyProvider::CLIENT_SESSION is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/CustomersRestApiFactory.php",
             "snippet": "        return $this->getProvidedDependency(CustomersRestApiDependencyProvider::CLIENT_SESSION);",
             "selected_text": "CustomersRestApiDependencyProvider::CLIENT_SESSION",
             "error_level": 2,
-            "shortcode": 170,
-            "taint_trace": null
+            "shortcode": 170
         },
         {
             "severity": "info",
@@ -663,34 +770,31 @@
             "snippet": "class CustomersRestApiToSessionClientBridge implements CustomersRestApiToSessionClientInterface",
             "selected_text": "CustomersRestApiToSessionClientBridge",
             "error_level": 2,
-            "shortcode": 152,
-            "taint_trace": null
+            "shortcode": 152
         },
         {
             "severity": "info",
-            "line_from": 115,
-            "line_to": 115,
+            "line_from": 114,
+            "line_to": 114,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Glue\\GlueApplication\\Rest\\Request\\Data\\RestRequestInterface::getUser has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Processor/Address/AddressReader.php",
             "snippet": "        $customerTransfer = (new CustomerTransfer())->setIdCustomer((int)$restRequest->getUser()->getSurrogateIdentifier());",
             "selected_text": "getUser",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
-            "line_from": 96,
-            "line_to": 96,
+            "line_from": 93,
+            "line_to": 93,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Glue\\GlueApplication\\Rest\\Request\\Data\\RestRequestInterface::getUser has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Processor/Address/AddressWriter.php",
             "snippet": "        $addressTransfer->setFkCustomer((int)$restRequest->getUser()->getSurrogateIdentifier());",
             "selected_text": "getUser",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -702,8 +806,7 @@
             "snippet": "        if ($resourceId && $resourceId !== $restRequest->getUser()->getNaturalIdentifier()) {",
             "selected_text": "getUser",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -715,8 +818,7 @@
             "snippet": "        return $restRequest->getUser()->getNaturalIdentifier() === $customerResource->getId();",
             "selected_text": "getUser",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -728,8 +830,7 @@
             "snippet": "            $quoteTransfer->setShippingAddress($shippingAddress);",
             "selected_text": "setShippingAddress",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -741,8 +842,7 @@
             "snippet": "        $this->getFacade()->updateCustomerAddressUuid();",
             "selected_text": "updateCustomerAddressUuid",
             "error_level": 2,
-            "shortcode": 1,
-            "taint_trace": null
+            "shortcode": 1
         }
     ]
 }

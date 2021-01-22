@@ -86,7 +86,8 @@ class CheckoutRestApiFactory extends AbstractFactory
     {
         return new CheckoutRequestAttributesExpander(
             $this->createCustomerMapper(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getCheckoutRequestExpanderPlugins()
         );
     }
 
@@ -115,6 +116,7 @@ class CheckoutRestApiFactory extends AbstractFactory
     {
         return new CheckoutRequestValidator(
             $this->getCheckoutRequestAttributesValidatorPlugins(),
+            $this->getCheckoutRequestValidatorPlugins(),
             $this->getConfig()
         );
     }
@@ -155,6 +157,14 @@ class CheckoutRestApiFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestValidatorPluginInterface[]
+     */
+    public function getCheckoutRequestValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGINS_CHECKOUT_REQUEST_VALIDATOR);
+    }
+
+    /**
      * @return \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutResponseMapperPluginInterface[]
      */
     public function getCheckoutResponseMapperPlugins(): array
@@ -187,7 +197,7 @@ class CheckoutRestApiFactory extends AbstractFactory
      */
     public function createAddressCheckoutDataResponseMapper(): CheckoutDataResponseMapperInterface
     {
-        return new AddressCheckoutDataResponseMapper();
+        return new AddressCheckoutDataResponseMapper($this->getConfig());
     }
 
     /**
@@ -204,5 +214,13 @@ class CheckoutRestApiFactory extends AbstractFactory
     public function createShipmentMethodCheckoutDataResponseMapper(): CheckoutDataResponseMapperInterface
     {
         return new ShipmentMethodCheckoutDataResponseMapper($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestExpanderPluginInterface[]
+     */
+    public function getCheckoutRequestExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGINS_CHECKOUT_REQUEST_EXPANDER);
     }
 }

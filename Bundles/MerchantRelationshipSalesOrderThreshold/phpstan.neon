@@ -1,4 +1,3 @@
 parameters:
     checkMissingIterableValueType: false
     ignoreErrors:
-        - '#Parameter \#1 \$glossaryKey of method .+KeyTranslationTransfer::setGlossaryKey\(\) expects int\|null, string\|null given.#'

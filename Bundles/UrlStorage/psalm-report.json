@@ -2,10 +2,22 @@
     "error": [
         {
             "severity": "error",
+            "line_from": 71,
+            "line_to": 71,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'Orm\\Zed\\Url\\Persistence\\SpyUrlQuery' for Spryker\\Zed\\UrlStorage\\Persistence\\UrlStorageQueryContainer::queryUrlsByResourceTypeAndIds is incorrect, got 'Orm\\Zed\\AvailabilityNotification\\Persistence\\SpyAvailabilityNotificationSubscriptionQuery&static|Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImageSetQuery&static|Orm\\Zed\\Category\\Persistence\\SpyCategoryAttributeQuery&static|Orm\\Zed\\Cms\\Persistence\\SpyCmsPageLocalizedAttributesQuery&static|Orm\\Zed\\Content\\Persistence\\SpyContentLocalizedQuery&static|Orm\\Zed\\Customer\\Persistence\\SpyCustomerQuery&static|Orm\\Zed\\Dataset\\Persistence\\SpyDatasetLocalizedAttributesQuery&static|Orm\\Zed\\FileManager\\Persistence\\SpyFileDirectoryLocalizedAttributesQuery&static|Orm\\Zed\\FileManager\\Persistence\\SpyFileLocalizedAttributesQuery&static|Orm\\Zed\\Glossary\\Persistence\\SpyGlossaryTranslationQuery&static|Orm\\Zed\\Navigation\\Persistence\\SpyNavigationNodeLocalizedAttributesQuery&static|Orm\\Zed\\ProductAttribute\\Persistence\\SpyProductManagementAttributeValueTranslationQuery&static|Orm\\Zed\\ProductDiscontinued\\Persistence\\SpyProductDiscontinuedNoteQuery&static|Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSetQuery&static|Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelLocalizedAttributesQuery&static|Orm\\Zed\\ProductReview\\Persistence\\SpyProductReviewQuery&static|Orm\\Zed\\ProductSearch\\Persistence\\SpyProductSearchQuery&static|Orm\\Zed\\ProductSet\\Persistence\\SpyProductSetDataQuery&static|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractLocalizedAttributesQuery&static|Orm\\Zed\\Product\\Persistence\\SpyProductLocalizedAttributesQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderQuery&static|Orm\\Zed\\Touch\\Persistence\\SpyTouchSearchQuery&static|Orm\\Zed\\Touch\\Persistence\\SpyTouchStorageQuery&static|Orm\\Zed\\Url\\Persistence\\SpyUrlQuery&static|Orm\\Zed\\User\\Persistence\\SpyUserQuery&static'",
+            "file_name": "vendor/spryker/spryker/Bundles/UrlStorage/src/Spryker/Zed/UrlStorage/Persistence/UrlStorageQueryContainer.php",
+            "snippet": "     * @return \\Orm\\Zed\\Url\\Persistence\\SpyUrlQuery",
+            "selected_text": "\\Orm\\Zed\\Url\\Persistence\\SpyUrlQuery",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
             "line_from": 75,
             "line_to": 81,
             "type": "InvalidReturnStatement",
-            "message": "The inferred type 'Orm\\Zed\\AvailabilityNotification\\Persistence\\SpyAvailabilityNotificationSubscriptionQuery&static|Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImageSetQuery&static|Orm\\Zed\\Category\\Persistence\\SpyCategoryAttributeQuery&static|Orm\\Zed\\Cms\\Persistence\\SpyCmsPageLocalizedAttributesQuery&static|Orm\\Zed\\Content\\Persistence\\SpyContentLocalizedQuery&static|Orm\\Zed\\Customer\\Persistence\\SpyCustomerQuery&static|Orm\\Zed\\Dataset\\Persistence\\SpyDatasetLocalizedAttributesQuery&static|Orm\\Zed\\FileManager\\Persistence\\SpyFileDirectoryLocalizedAttributesQuery&static|Orm\\Zed\\FileManager\\Persistence\\SpyFileLocalizedAttributesQuery&static|Orm\\Zed\\Glossary\\Persistence\\SpyGlossaryTranslationQuery&static|Orm\\Zed\\Navigation\\Persistence\\SpyNavigationNodeLocalizedAttributesQuery&static|Orm\\Zed\\ProductAttribute\\Persistence\\SpyProductManagementAttributeValueTranslationQuery&static|Orm\\Zed\\ProductDiscontinued\\Persistence\\SpyProductDiscontinuedNoteQuery&static|Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSetQuery&static|Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelLocalizedAttributesQuery&static|Orm\\Zed\\ProductReview\\Persistence\\SpyProductReviewQuery&static|Orm\\Zed\\ProductSearch\\Persistence\\SpyProductSearchQuery&static|Orm\\Zed\\ProductSet\\Persistence\\SpyProductSetDataQuery&static|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractLocalizedAttributesQuery&static|Orm\\Zed\\Product\\Persistence\\SpyProductLocalizedAttributesQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderQuery&static|Orm\\Zed\\Touch\\Persistence\\SpyTouchSearchQuery&static|Orm\\Zed\\Touch\\Persistence\\SpyTouchStorageQuery&static|Orm\\Zed\\Url\\Persistence\\SpyUrlQuery&static|Orm\\Zed\\User\\Persistence\\SpyUserQuery&static|Propel\\Runtime\\ActiveQuery\\ModelCriteria' does not match the declared return type 'Orm\\Zed\\Url\\Persistence\\SpyUrlQuery' for Spryker\\Zed\\UrlStorage\\Persistence\\UrlStorageQueryContainer::queryUrlsByResourceTypeAndIds",
+            "message": "The inferred type 'Orm\\Zed\\AvailabilityNotification\\Persistence\\SpyAvailabilityNotificationSubscriptionQuery&static|Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImageSetQuery&static|Orm\\Zed\\Category\\Persistence\\SpyCategoryAttributeQuery&static|Orm\\Zed\\Cms\\Persistence\\SpyCmsPageLocalizedAttributesQuery&static|Orm\\Zed\\Content\\Persistence\\SpyContentLocalizedQuery&static|Orm\\Zed\\Customer\\Persistence\\SpyCustomerQuery&static|Orm\\Zed\\Dataset\\Persistence\\SpyDatasetLocalizedAttributesQuery&static|Orm\\Zed\\FileManager\\Persistence\\SpyFileDirectoryLocalizedAttributesQuery&static|Orm\\Zed\\FileManager\\Persistence\\SpyFileLocalizedAttributesQuery&static|Orm\\Zed\\Glossary\\Persistence\\SpyGlossaryTranslationQuery&static|Orm\\Zed\\Navigation\\Persistence\\SpyNavigationNodeLocalizedAttributesQuery&static|Orm\\Zed\\ProductAttribute\\Persistence\\SpyProductManagementAttributeValueTranslationQuery&static|Orm\\Zed\\ProductDiscontinued\\Persistence\\SpyProductDiscontinuedNoteQuery&static|Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSetQuery&static|Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelLocalizedAttributesQuery&static|Orm\\Zed\\ProductReview\\Persistence\\SpyProductReviewQuery&static|Orm\\Zed\\ProductSearch\\Persistence\\SpyProductSearchQuery&static|Orm\\Zed\\ProductSet\\Persistence\\SpyProductSetDataQuery&static|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractLocalizedAttributesQuery&static|Orm\\Zed\\Product\\Persistence\\SpyProductLocalizedAttributesQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderQuery&static|Orm\\Zed\\Touch\\Persistence\\SpyTouchSearchQuery&static|Orm\\Zed\\Touch\\Persistence\\SpyTouchStorageQuery&static|Orm\\Zed\\Url\\Persistence\\SpyUrlQuery&static|Orm\\Zed\\User\\Persistence\\SpyUserQuery&static' does not match the declared return type 'Orm\\Zed\\Url\\Persistence\\SpyUrlQuery' for Spryker\\Zed\\UrlStorage\\Persistence\\UrlStorageQueryContainer::queryUrlsByResourceTypeAndIds",
             "file_name": "vendor/spryker/spryker/Bundles/UrlStorage/src/Spryker/Zed/UrlStorage/Persistence/UrlStorageQueryContainer.php",
             "snippet": "        return $this->getFactory()\n            ->getUrlQueryContainer()\n            ->queryUrlsByResourceTypeAndIds($resourceType, $resourceIds)\n            ->useSpyLocaleQuery()\n                ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME, UrlStorageTransfer::LOCALE_NAME)\n            ->endUse()\n            ->setFormatter(ModelCriteria::FORMAT_ARRAY);",
             "selected_text": "$this->getFactory()\n            ->getUrlQueryContainer()\n            ->queryUrlsByResourceTypeAndIds($resourceType, $resourceIds)\n            ->useSpyLocaleQuery()\n                ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME, UrlStorageTransfer::LOCALE_NAME)\n            ->endUse()\n            ->setFormatter(ModelCriteria::FORMAT_ARRAY)",
@@ -76,18 +88,6 @@
         },
         {
             "severity": "info",
-            "line_from": 161,
-            "line_to": 161,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/UrlStorage/src/Spryker/Client/UrlStorage/Storage/UrlStorageReader.php",
-            "snippet": "        $urlClient = $clientLocatorClassName::getInstance()->url()->client();",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 171,
             "line_to": 171,
             "type": "PossiblyInvalidMethodCall",
@@ -97,66 +97,6 @@
             "selected_text": "getLocaleUrls",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 58,
-            "line_to": 58,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/UrlStorage/src/Spryker/Client/UrlStorage/UrlStorageDependencyProvider.php",
-            "snippet": "            return new UrlStorageToStorageBridge($container->getLocator()->storage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 72,
-            "line_to": 72,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/UrlStorage/src/Spryker/Client/UrlStorage/UrlStorageDependencyProvider.php",
-            "snippet": "            return new UrlStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 86,
-            "line_to": 86,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/UrlStorage/src/Spryker/Client/UrlStorage/UrlStorageDependencyProvider.php",
-            "snippet": "            return new UrlStorageToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 123,
-            "line_to": 123,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/UrlStorage/src/Spryker/Client/UrlStorage/UrlStorageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->store()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 139,
-            "line_to": 139,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/UrlStorage/src/Spryker/Client/UrlStorage/UrlStorageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->locale()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         },
         {
             "severity": "info",
@@ -196,8 +136,8 @@
         },
         {
             "severity": "info",
-            "line_from": 153,
-            "line_to": 153,
+            "line_from": 159,
+            "line_to": 159,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Orm\\Zed\\UrlStorage\\Persistence\\SpyUrlStorage::setUrl cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/UrlStorage/src/Spryker/Zed/UrlStorage/Business/Storage/UrlStorageWriter.php",
@@ -208,8 +148,8 @@
         },
         {
             "severity": "info",
-            "line_from": 154,
-            "line_to": 154,
+            "line_from": 160,
+            "line_to": 160,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Orm\\Zed\\UrlStorage\\Persistence\\SpyUrlStorage::setFkUrl cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/UrlStorage/src/Spryker/Zed/UrlStorage/Business/Storage/UrlStorageWriter.php",
@@ -217,6 +157,30 @@
             "selected_text": "$urlStorageTransfer->getIdUrl()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 186,
+            "line_to": 186,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method warning on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/UrlStorage/src/Spryker/Zed/UrlStorage/Business/Storage/UrlStorageWriter.php",
+            "snippet": "        $this->getLogger()->warning(sprintf(",
+            "selected_text": "warning",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\UrlStorage\\Communication\\Plugin\\Event\\RedirectEventResourceQueryContainerPlugin::queryData has the more specific type 'array<array-key, int>', expecting 'array<array-key, int|string>' as defined by Spryker\\Zed\\EventBehavior\\Dependency\\Plugin\\EventResourceQueryContainerPluginInterface::queryData",
+            "file_name": "vendor/spryker/spryker/Bundles/UrlStorage/src/Spryker/Zed/UrlStorage/Communication/Plugin/Event/RedirectEventResourceQueryContainerPlugin.php",
+            "snippet": "    public function queryData(array $ids = []): ?ModelCriteria",
+            "selected_text": "$ids",
+            "error_level": 5,
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -229,6 +193,18 @@
             "selected_text": "$this->getIdColumnName()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\UrlStorage\\Communication\\Plugin\\Event\\UrlEventResourceQueryContainerPlugin::queryData has the more specific type 'array<array-key, int>', expecting 'array<array-key, int|string>' as defined by Spryker\\Zed\\EventBehavior\\Dependency\\Plugin\\EventResourceQueryContainerPluginInterface::queryData",
+            "file_name": "vendor/spryker/spryker/Bundles/UrlStorage/src/Spryker/Zed/UrlStorage/Communication/Plugin/Event/UrlEventResourceQueryContainerPlugin.php",
+            "snippet": "    public function queryData(array $ids = []): ?ModelCriteria",
+            "selected_text": "$ids",
+            "error_level": 5,
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -253,42 +229,6 @@
             "selected_text": "$resourceIds",
             "error_level": 5,
             "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 71,
-            "line_to": 71,
-            "type": "MoreSpecificReturnType",
-            "message": "The declared return type 'Orm\\Zed\\Url\\Persistence\\SpyUrlQuery' for Spryker\\Zed\\UrlStorage\\Persistence\\UrlStorageQueryContainer::queryUrlsByResourceTypeAndIds is more specific than the inferred return type 'Propel\\Runtime\\ActiveQuery\\ModelCriteria'",
-            "file_name": "vendor/spryker/spryker/Bundles/UrlStorage/src/Spryker/Zed/UrlStorage/Persistence/UrlStorageQueryContainer.php",
-            "snippet": "     * @return \\Orm\\Zed\\Url\\Persistence\\SpyUrlQuery",
-            "selected_text": "\\Orm\\Zed\\Url\\Persistence\\SpyUrlQuery",
-            "error_level": 3,
-            "shortcode": 70
-        },
-        {
-            "severity": "info",
-            "line_from": 110,
-            "line_to": 110,
-            "type": "MoreSpecificReturnType",
-            "message": "The declared return type 'Orm\\Zed\\Url\\Persistence\\SpyUrlRedirectQuery' for Spryker\\Zed\\UrlStorage\\Persistence\\UrlStorageQueryContainer::queryRedirects is more specific than the inferred return type 'Propel\\Runtime\\ActiveQuery\\ModelCriteria'",
-            "file_name": "vendor/spryker/spryker/Bundles/UrlStorage/src/Spryker/Zed/UrlStorage/Persistence/UrlStorageQueryContainer.php",
-            "snippet": "     * @return \\Orm\\Zed\\Url\\Persistence\\SpyUrlRedirectQuery",
-            "selected_text": "\\Orm\\Zed\\Url\\Persistence\\SpyUrlRedirectQuery",
-            "error_level": 3,
-            "shortcode": 70
-        },
-        {
-            "severity": "info",
-            "line_from": 121,
-            "line_to": 121,
-            "type": "LessSpecificReturnStatement",
-            "message": "The type 'Orm\\Zed\\Url\\Persistence\\SpyUrlRedirectQuery&static|Propel\\Runtime\\ActiveQuery\\ModelCriteria' is more general than the declared return type 'Orm\\Zed\\Url\\Persistence\\SpyUrlRedirectQuery' for Spryker\\Zed\\UrlStorage\\Persistence\\UrlStorageQueryContainer::queryRedirects",
-            "file_name": "vendor/spryker/spryker/Bundles/UrlStorage/src/Spryker/Zed/UrlStorage/Persistence/UrlStorageQueryContainer.php",
-            "snippet": "        return $queryUrlRedirect;",
-            "selected_text": "$queryUrlRedirect",
-            "error_level": 3,
-            "shortcode": 129
         },
         {
             "severity": "info",
@@ -325,54 +265,6 @@
             "selected_text": "getData",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 77,
-            "line_to": 77,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/UrlStorage/src/Spryker/Zed/UrlStorage/UrlStorageDependencyProvider.php",
-            "snippet": "            return new UrlStorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 91,
-            "line_to": 91,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/UrlStorage/src/Spryker/Zed/UrlStorage/UrlStorageDependencyProvider.php",
-            "snippet": "            return new UrlStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 105,
-            "line_to": 105,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/UrlStorage/src/Spryker/Zed/UrlStorage/UrlStorageDependencyProvider.php",
-            "snippet": "            return new UrlStorageToUrlQueryContainerBridge($container->getLocator()->url()->queryContainer());",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 133,
-            "line_to": 133,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/UrlStorage/src/Spryker/Zed/UrlStorage/UrlStorageDependencyProvider.php",
-            "snippet": "            return new UrlStorageToStoreFacadeBridge($container->getLocator()->store()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [
@@ -402,8 +294,8 @@
         },
         {
             "severity": "info",
-            "line_from": 70,
-            "line_to": 70,
+            "line_from": 72,
+            "line_to": 72,
             "type": "DeprecatedProperty",
             "message": "Spryker\\Zed\\UrlStorage\\Business\\Storage\\UrlStorageWriter::$isSendingToQueue is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/UrlStorage/src/Spryker/Zed/UrlStorage/Business/Storage/UrlStorageWriter.php",
@@ -414,8 +306,8 @@
         },
         {
             "severity": "info",
-            "line_from": 156,
-            "line_to": 156,
+            "line_from": 162,
+            "line_to": 162,
             "type": "DeprecatedMethod",
             "message": "The method Orm\\Zed\\UrlStorage\\Persistence\\Base\\SpyUrlStorage::setIsSendingToQueue has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/UrlStorage/src/Spryker/Zed/UrlStorage/Business/Storage/UrlStorageWriter.php",
@@ -450,8 +342,8 @@
         },
         {
             "severity": "info",
-            "line_from": 25,
-            "line_to": 25,
+            "line_from": 26,
+            "line_to": 26,
             "type": "DeprecatedTrait",
             "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/UrlStorage/src/Spryker/Zed/UrlStorage/Communication/Plugin/Event/Listener/RedirectStorageListener.php",
@@ -486,8 +378,8 @@
         },
         {
             "severity": "info",
-            "line_from": 25,
-            "line_to": 25,
+            "line_from": 26,
+            "line_to": 26,
             "type": "DeprecatedTrait",
             "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/UrlStorage/src/Spryker/Zed/UrlStorage/Communication/Plugin/Event/Listener/UrlStorageListener.php",

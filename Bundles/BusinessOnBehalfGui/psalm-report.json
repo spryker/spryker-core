@@ -3,54 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 56,
-            "line_to": 56,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfGui/src/Spryker/Zed/BusinessOnBehalfGui/BusinessOnBehalfGuiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->company()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 72,
-            "line_to": 72,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfGui/src/Spryker/Zed/BusinessOnBehalfGui/BusinessOnBehalfGuiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->customer()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 88,
-            "line_to": 88,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfGui/src/Spryker/Zed/BusinessOnBehalfGui/BusinessOnBehalfGuiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->companyUser()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 104,
-            "line_to": 104,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfGui/src/Spryker/Zed/BusinessOnBehalfGui/BusinessOnBehalfGuiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->companyBusinessUnit()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 90,
             "line_to": 90,
             "type": "PossiblyNullReference",

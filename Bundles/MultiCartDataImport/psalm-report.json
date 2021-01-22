@@ -2,30 +2,6 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "InvalidPropertyAssignmentValue",
-            "message": "$this->customerReferenceCache with declared type 'array<array-key, int>' cannot be assigned type 'non-empty-array<array-key, Orm\\Zed\\Customer\\Persistence\\SpyCustomer|int>'",
-            "file_name": "vendor/spryker/spryker/Bundles/MultiCartDataImport/src/Spryker/Zed/MultiCartDataImport/Business/CartImportStep/CustomerReferenceValidationStep.php",
-            "snippet": "            $this->customerReferenceCache[$customerReference] = $idCustomer;",
-            "selected_text": "$this->customerReferenceCache",
-            "error_level": 6,
-            "shortcode": 145
-        },
-        {
-            "severity": "error",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "InvalidPropertyAssignmentValue",
-            "message": "$this->idStoreCache with declared type 'array<array-key, int>' cannot be assigned type 'non-empty-array<array-key, Orm\\Zed\\Store\\Persistence\\SpyStore|int>'",
-            "file_name": "vendor/spryker/spryker/Bundles/MultiCartDataImport/src/Spryker/Zed/MultiCartDataImport/Business/CartImportStep/StoreToIdStoreStep.php",
-            "snippet": "            $this->idStoreCache[$storeName] = $idStore;",
-            "selected_text": "$this->idStoreCache",
-            "error_level": 6,
-            "shortcode": 145
-        },
-        {
-            "severity": "error",
             "line_from": 22,
             "line_to": 22,
             "type": "MethodSignatureMismatch",
@@ -37,31 +13,6 @@
             "shortcode": 42
         }
     ],
-    "warning": [
-        {
-            "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::findonebycustomerreference does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MultiCartDataImport/src/Spryker/Zed/MultiCartDataImport/Business/CartImportStep/CustomerReferenceValidationStep.php",
-            "snippet": "                ->findOneByCustomerReference($customerReference);",
-            "selected_text": "findOneByCustomerReference",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::findonebyname does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MultiCartDataImport/src/Spryker/Zed/MultiCartDataImport/Business/CartImportStep/StoreToIdStoreStep.php",
-            "snippet": "                ->findOneByName($storeName);",
-            "selected_text": "findOneByName",
-            "error_level": 4,
-            "shortcode": 219
-        }
-    ],
+    "warning": [],
     "deprecation": []
 }

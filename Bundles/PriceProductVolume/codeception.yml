@@ -1,4 +1,6 @@
-namespace: SprykerTest
+namespace: PriceProductVolume
+include:
+    - tests/SprykerTest/Zed/PriceProductVolume
 paths:
     tests: tests
     log: tests/_output

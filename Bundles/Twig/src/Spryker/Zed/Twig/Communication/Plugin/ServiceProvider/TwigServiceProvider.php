@@ -15,7 +15,7 @@ use Spryker\Zed\Twig\Communication\RouteResolver\RouteResolver;
 use Symfony\Bridge\Twig\Extension\HttpKernelRuntime;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Twig\Environment;
@@ -35,7 +35,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
     /**
      * @var \Silex\Application|\Spryker\Shared\Kernel\Communication\Application
      */
-    private $app;
+    protected $app;
 
     /**
      * @param \Silex\Application $app
@@ -94,11 +94,11 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
     /**
      * Handles string responses.
      *
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent $event The event to handle
+     * @param \Symfony\Component\HttpKernel\Event\ViewEvent $event The event to handle
      *
      * @return void
      */
-    public function onKernelView(GetResponseForControllerResultEvent $event)
+    public function onKernelView(ViewEvent $event)
     {
         $response = $event->getControllerResult();
 

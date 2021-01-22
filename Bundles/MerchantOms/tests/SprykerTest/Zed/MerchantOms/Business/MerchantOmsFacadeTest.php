@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\StateMachineItemStateHistoryTransfer;
 use Generated\Shared\Transfer\StateMachineItemStateTransfer;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
@@ -236,9 +237,9 @@ class MerchantOmsFacadeTest extends Unit
         $stateMachineProcessTransfer = $this->tester->getFacade()->getMerchantOmsProcessByMerchant(new MerchantCriteriaTransfer());
 
         // Assert
-        $this->assertEquals(static::TEST_STATE_NAMES, $stateMachineProcessTransfer->getStateNames());
-        $this->assertEquals(static::TEST_PROCESS_NAME, $stateMachineProcessTransfer->getProcessName());
-        $this->assertEquals(static::TEST_STATE_MACHINE, $stateMachineProcessTransfer->getStateMachineName());
+        $this->assertSame(static::TEST_STATE_NAMES, $stateMachineProcessTransfer->getStateNames());
+        $this->assertSame(static::TEST_PROCESS_NAME, $stateMachineProcessTransfer->getProcessName());
+        $this->assertSame(static::TEST_STATE_MACHINE, $stateMachineProcessTransfer->getStateMachineName());
     }
 
     /**
@@ -256,9 +257,9 @@ class MerchantOmsFacadeTest extends Unit
         $stateMachineProcessTransfer = $this->tester->getFacade()->getMerchantOmsProcessByMerchant(new MerchantCriteriaTransfer());
 
         // Assert
-        $this->assertEquals(static::TEST_STATE_NAMES, $stateMachineProcessTransfer->getStateNames());
-        $this->assertEquals($merchantOmsConfig->getMerchantOmsDefaultProcessName(), $stateMachineProcessTransfer->getProcessName());
-        $this->assertEquals($merchantOmsConfig::MERCHANT_OMS_STATE_MACHINE_NAME, $stateMachineProcessTransfer->getStateMachineName());
+        $this->assertSame(static::TEST_STATE_NAMES, $stateMachineProcessTransfer->getStateNames());
+        $this->assertSame($merchantOmsConfig->getMerchantOmsDefaultProcessName(), $stateMachineProcessTransfer->getProcessName());
+        $this->assertSame($merchantOmsConfig::MERCHANT_OMS_STATE_MACHINE_NAME, $stateMachineProcessTransfer->getStateMachineName());
     }
 
     /**
@@ -377,28 +378,46 @@ class MerchantOmsFacadeTest extends Unit
         // Arrange
         $this->setStateMachineFacadeMockDependency([], null, static::TEST_MANUAL_EVENTS);
 
-        $merchantTransfer = $this->tester->haveMerchant();
-        $saveOrderTransfer = $this->tester->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
-        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
-        $itemTransfer = $saveOrderTransfer->getOrderItems()->offsetGet(0);
-        $merchantOrderTransfer = $this->tester->haveMerchantOrder([MerchantOrderTransfer::ID_ORDER => $saveOrderTransfer->getIdSalesOrder()]);
-
-        $stateMachineProcessEntity = $this->tester->haveStateMachineProcess();
-        $stateMachineProcessEntity = $this->tester->haveStateMachineItemState([
-            StateMachineItemStateTransfer::FK_STATE_MACHINE_PROCESS => $stateMachineProcessEntity->getIdStateMachineProcess(),
-        ]);
-
-        $merchantOrderItemTransfer = $this->tester->haveMerchantOrderItem([
-            MerchantOrderItemTransfer::FK_STATE_MACHINE_ITEM_STATE => $stateMachineProcessEntity->getIdStateMachineItemState(),
-            MerchantOrderItemTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
-            MerchantOrderItemTransfer::ID_ORDER_ITEM => $itemTransfer->getIdSalesOrderItem(),
-        ]);
-        $merchantOrderItemCollectionTransfer = (new MerchantOrderItemCollectionTransfer())->addMerchantOrderItem($merchantOrderItemTransfer);
+        $merchantOrderTransfer = $this->tester->createMerchantOrderWithItems();
+        $merchantOrderItemCollectionTransfer = (new MerchantOrderItemCollectionTransfer())
+            ->setMerchantOrderItems($merchantOrderTransfer->getMerchantOrderItems());
 
         // Act
         $expandedMerchantOrderItemCollectionTransfer = $this->tester->getFacade()->expandMerchantOrderItemsWithManualEvents($merchantOrderItemCollectionTransfer);
 
         // Assert
-        $this->assertEquals(static::TEST_MANUAL_EVENTS, $expandedMerchantOrderItemCollectionTransfer->getMerchantOrderItems()[0]->getManualEvents());
+        $this->assertSame(static::TEST_MANUAL_EVENTS, $expandedMerchantOrderItemCollectionTransfer->getMerchantOrderItems()[0]->getManualEvents());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetMerchantOrderItemsStateHistory(): void
+    {
+        // Arrange
+        $merchantOrderTransfer = $this->tester->createMerchantOrderWithItems();
+        $merchantOrderItemTransfer = $merchantOrderTransfer
+            ->getMerchantOrderItems()
+            ->getIterator()
+            ->current();
+
+        $this->tester->haveStateMachineItemStateHistory([
+            StateMachineItemStateHistoryTransfer::FK_STATE_MACHINE_ITEM_STATE => $merchantOrderItemTransfer->getFkStateMachineItemState(),
+            StateMachineItemStateHistoryTransfer::IDENTIFIER => $merchantOrderItemTransfer->getIdMerchantOrderItem(),
+        ]);
+
+        $merchantOrderItemIds = array_map(
+            function (MerchantOrderItemTransfer $merchantOrderItemTransfer) {
+                return $merchantOrderItemTransfer->getIdMerchantOrderItem();
+            },
+            $merchantOrderTransfer->getMerchantOrderItems()->getArrayCopy()
+        );
+
+        // Act
+        $stateMachineItemTransfers = $this->tester->getFacade()->getMerchantOrderItemsStateHistory($merchantOrderItemIds);
+
+        // Assert
+        $this->assertIsArray($stateMachineItemTransfers);
+        $this->assertCount(1, $stateMachineItemTransfers);
     }
 }

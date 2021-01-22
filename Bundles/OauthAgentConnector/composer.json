@@ -4,7 +4,8 @@
   "description": "OauthAgentConnector module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
+    "psr/http-message": "^1.0.0",
     "spryker/agent": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/oauth": "^2.0.0",

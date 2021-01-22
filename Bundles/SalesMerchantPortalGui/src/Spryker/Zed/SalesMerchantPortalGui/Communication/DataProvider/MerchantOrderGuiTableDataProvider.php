@@ -86,7 +86,8 @@ class MerchantOrderGuiTableDataProvider extends AbstractGuiTableDataProvider
         $guiTableDataResponseTransfer = new GuiTableDataResponseTransfer();
 
         foreach ($merchantOrderCollectionTransfer->getMerchantOrders() as $merchantOrderTransfer) {
-            $orderTransfer = $merchantOrderTransfer->getOrder();
+            /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
+            $orderTransfer = $merchantOrderTransfer->requireOrder()->getOrder();
 
             $responseData = [
                 MerchantOrderTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
@@ -104,12 +105,19 @@ class MerchantOrderGuiTableDataProvider extends AbstractGuiTableDataProvider
             $guiTableDataResponseTransfer->addRow((new GuiTableRowDataResponseTransfer())->setResponseData($responseData));
         }
 
-        $paginationTransfer = $merchantOrderCollectionTransfer->getPagination();
+        /** @var \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer */
+        $paginationTransfer = $merchantOrderCollectionTransfer->requirePagination()->getPagination();
+        /** @var int $page */
+        $page = $paginationTransfer->requirePage()->getPage();
+        /** @var int $maxPerPage */
+        $maxPerPage = $paginationTransfer->requireMaxPerPage()->getMaxPerPage();
+        /** @var int $total */
+        $total = $paginationTransfer->requireNbResults()->getNbResults();
 
         return $guiTableDataResponseTransfer
-            ->setPage($paginationTransfer->getPage())
-            ->setPageSize($paginationTransfer->getMaxPerPage())
-            ->setTotal($paginationTransfer->getNbResults());
+            ->setPage($page)
+            ->setPageSize($maxPerPage)
+            ->setTotal($total);
     }
 
     /**
@@ -134,9 +142,17 @@ class MerchantOrderGuiTableDataProvider extends AbstractGuiTableDataProvider
      */
     protected function getGrandTotalData(MerchantOrderTransfer $merchantOrderTransfer): string
     {
+        /** @var \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer */
+        $totalsTransfer = $merchantOrderTransfer->requireTotals()->getTotals();
+        /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
+        $orderTransfer = $merchantOrderTransfer->requireOrder()->getOrder();
+        /** @var string $isoCode */
+        $isoCode = $orderTransfer->requireCurrencyIsoCode()->getCurrencyIsoCode();
+        $currencyTransfer = $this->currencyFacade->fromIsoCode($isoCode);
+
         $moneyTransfer = (new MoneyTransfer())
-            ->setAmount((string)$merchantOrderTransfer->getTotals()->getGrandTotal())
-            ->setCurrency($this->currencyFacade->fromIsoCode($merchantOrderTransfer->getOrder()->getCurrencyIsoCode()));
+            ->setAmount((string)$totalsTransfer->getGrandTotal())
+            ->setCurrency($currencyTransfer);
 
         return $this->moneyFacade->formatWithSymbol($moneyTransfer);
     }

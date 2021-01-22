@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Finder\SchemaDefinitionFinderInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Loader\IndexDefinitionLoader;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Reader\IndexDefinitionReaderInterface;
+use Spryker\Zed\SearchElasticsearch\Business\SourceIdentifier\SourceIdentifierInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -55,7 +56,8 @@ class IndexDefinitionLoaderTest extends Unit
 
         $this->indexDefinitionLoader = new IndexDefinitionLoader(
             $this->createSchemaDefinitionFinderMock(),
-            $this->createIndexDefinitionReaderMock()
+            $this->createIndexDefinitionReaderMock(),
+            $this->createSourceIdentifierMock()
         );
     }
 
@@ -79,7 +81,7 @@ class IndexDefinitionLoaderTest extends Unit
 
         $this->assertArrayHasKey(static::INDEX_DEFINITION_KEY_NAME, $result[0]);
         $this->assertArrayHasKey(static::INDEX_DEFINITION_KEY_DEFINITION, $result[0]);
-        $this->assertEquals(static::SCHEMA_DEFINITION_FILE_NAME, $result[0][static::INDEX_DEFINITION_KEY_NAME]);
+        $this->assertSame(static::SCHEMA_DEFINITION_FILE_NAME, $result[0][static::INDEX_DEFINITION_KEY_NAME]);
     }
 
     /**
@@ -110,5 +112,18 @@ class IndexDefinitionLoaderTest extends Unit
     protected function createIndexDefinitionReaderMock(): IndexDefinitionReaderInterface
     {
         return $this->createMock(IndexDefinitionReaderInterface::class);
+    }
+
+    /**
+     * @return \Spryker\Zed\SearchElasticsearch\Business\SourceIdentifier\SourceIdentifierInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function createSourceIdentifierMock(): SourceIdentifierInterface
+    {
+        $sourceIdentifierMock = $this->createMock(SourceIdentifierInterface::class);
+        $sourceIdentifierMock->method('translateToIndexName')->willReturn(static::SCHEMA_DEFINITION_FILE_NAME);
+        $sourceIdentifierMock->method('isSupported')->willReturn(true);
+        $sourceIdentifierMock->method('isPrefixedWithStoreName')->willReturn(false);
+
+        return $sourceIdentifierMock;
     }
 }

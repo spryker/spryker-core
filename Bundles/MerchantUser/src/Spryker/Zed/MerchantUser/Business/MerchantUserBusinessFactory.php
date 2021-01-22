@@ -10,6 +10,8 @@ namespace Spryker\Zed\MerchantUser\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MerchantUser\Business\AclGroup\AclGroupAdder;
 use Spryker\Zed\MerchantUser\Business\AclGroup\AclGroupAdderInterface;
+use Spryker\Zed\MerchantUser\Business\Authenticator\MerchantUserAuthenticator;
+use Spryker\Zed\MerchantUser\Business\Authenticator\MerchantUserAuthenticatorInterface;
 use Spryker\Zed\MerchantUser\Business\Creator\MerchantUserCreator;
 use Spryker\Zed\MerchantUser\Business\Creator\MerchantUserCreatorInterface;
 use Spryker\Zed\MerchantUser\Business\Deleter\MerchantUserDeleter;
@@ -21,9 +23,9 @@ use Spryker\Zed\MerchantUser\Business\Reader\MerchantUserReaderInterface;
 use Spryker\Zed\MerchantUser\Business\Updater\MerchantUserUpdater;
 use Spryker\Zed\MerchantUser\Business\Updater\MerchantUserUpdaterInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAclFacadeInterface;
-use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToMerchantFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
+use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserPasswordResetFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Service\MerchantUserToUtilTextServiceInterface;
 use Spryker\Zed\MerchantUser\MerchantUserDependencyProvider;
 
@@ -64,7 +66,7 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantUserUpdater(
             $this->getUserFacade(),
-            $this->getAuthFacade(),
+            $this->getUserPasswordResetFacade(),
             $this->getRepository()
         );
     }
@@ -103,6 +105,14 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\MerchantUser\Business\Authenticator\MerchantUserAuthenticatorInterface
+     */
+    public function createMerchantUserAuthenticator(): MerchantUserAuthenticatorInterface
+    {
+        return new MerchantUserAuthenticator($this->getUserFacade());
+    }
+
+    /**
      * @return \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface
      */
     public function getUserFacade(): MerchantUserToUserFacadeInterface
@@ -127,11 +137,11 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface
+     * @return \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserPasswordResetFacadeInterface
      */
-    public function getAuthFacade(): MerchantUserToAuthFacadeInterface
+    public function getUserPasswordResetFacade(): MerchantUserToUserPasswordResetFacadeInterface
     {
-        return $this->getProvidedDependency(MerchantUserDependencyProvider::FACADE_AUTH);
+        return $this->getProvidedDependency(MerchantUserDependencyProvider::FACADE_USER_PASSWORD_RESET);
     }
 
     /**

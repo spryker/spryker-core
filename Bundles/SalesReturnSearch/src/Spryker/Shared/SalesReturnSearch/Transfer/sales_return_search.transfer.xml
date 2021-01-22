@@ -66,6 +66,8 @@
 
     <transfer name="SynchronizationData">
         <property name="data" type="string"/>
+        <property name="key" type="string"/>
+        <property name="locale" type="string"/>
     </transfer>
 
     <transfer name="PaginationConfig">

@@ -27,6 +27,18 @@
         },
         {
             "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\ProductReviewSearch\\Communication\\Plugin\\Event\\ProductReviewEventResourceQueryContainerPlugin::queryData has the more specific type 'array<array-key, int>', expecting 'array<array-key, int|string>' as defined by Spryker\\Zed\\EventBehavior\\Dependency\\Plugin\\EventResourceQueryContainerPluginInterface::queryData",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewSearch/src/Spryker/Zed/ProductReviewSearch/Communication/Plugin/Event/ProductReviewEventResourceQueryContainerPlugin.php",
+            "snippet": "    public function queryData(array $ids = []): ?ModelCriteria",
+            "selected_text": "$ids",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
             "line_from": 54,
             "line_to": 54,
             "type": "PossiblyNullArgument",
@@ -150,60 +162,12 @@
             "line_from": 40,
             "line_to": 40,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductReview\\Persistence\\SpyProductReview|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductReview\\Persistence\\SpyProductReview> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ProductReviewSearch/src/Spryker/Zed/ProductReviewSearch/Persistence/ProductReviewSearchRepository.php",
             "snippet": "            ->toArray(static::FIELD_FK_PRODUCT_ABSTRACT);",
             "selected_text": "toArray",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 39,
-            "line_to": 39,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewSearch/src/Spryker/Zed/ProductReviewSearch/ProductReviewSearchDependencyProvider.php",
-            "snippet": "            return new ProductReviewSearchToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewSearch/src/Spryker/Zed/ProductReviewSearch/ProductReviewSearchDependencyProvider.php",
-            "snippet": "            return new ProductReviewSearchToProductPageSearchFacadeBridge($container->getLocator()->productPageSearch()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 57,
-            "line_to": 57,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewSearch/src/Spryker/Zed/ProductReviewSearch/ProductReviewSearchDependencyProvider.php",
-            "snippet": "            return new ProductReviewSearchToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 75,
-            "line_to": 75,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewSearch/src/Spryker/Zed/ProductReviewSearch/ProductReviewSearchDependencyProvider.php",
-            "snippet": "            return new ProductReviewSearchToProductReviewQueryContainerBridge($container->getLocator()->productReview()->queryContainer());",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

@@ -3,30 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSearchConfigStorage/src/Spryker/Client/ProductSearchConfigStorage/ProductSearchConfigStorageDependencyProvider.php",
-            "snippet": "            return new ProductSearchConfigStorageToStorageClientBridge($container->getLocator()->storage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 57,
-            "line_to": 57,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSearchConfigStorage/src/Spryker/Client/ProductSearchConfigStorage/ProductSearchConfigStorageDependencyProvider.php",
-            "snippet": "            return new ProductSearchConfigStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 68,
             "line_to": 68,
             "type": "PossiblyNullArrayOffset",
@@ -51,27 +27,15 @@
         },
         {
             "severity": "info",
-            "line_from": 33,
-            "line_to": 33,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSearchConfigStorage/src/Spryker/Zed/ProductSearchConfigStorage/ProductSearchConfigStorageDependencyProvider.php",
-            "snippet": "            return new ProductSearchConfigStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 51,
-            "line_to": 51,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSearchConfigStorage/src/Spryker/Zed/ProductSearchConfigStorage/ProductSearchConfigStorageDependencyProvider.php",
-            "snippet": "            return new ProductSearchConfigStorageToProductSearchFacadeBridge($container->getLocator()->productSearch()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
+            "line_from": 45,
+            "line_to": 45,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\ProductSearchConfigStorage\\Communication\\Plugin\\Event\\ProductSearchConfigEventResourceQueryContainerPlugin::queryData has the more specific type 'array<array-key, int>', expecting 'array<array-key, int|string>' as defined by Spryker\\Zed\\EventBehavior\\Dependency\\Plugin\\EventResourceQueryContainerPluginInterface::queryData",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductSearchConfigStorage/src/Spryker/Zed/ProductSearchConfigStorage/Communication/Plugin/Event/ProductSearchConfigEventResourceQueryContainerPlugin.php",
+            "snippet": "    public function queryData(array $ids = []): ?ModelCriteria",
+            "selected_text": "$ids",
+            "error_level": 5,
+            "shortcode": 140
         }
     ],
     "deprecation": [
@@ -125,8 +89,8 @@
         },
         {
             "severity": "info",
-            "line_from": 26,
-            "line_to": 26,
+            "line_from": 27,
+            "line_to": 27,
             "type": "DeprecatedTrait",
             "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductSearchConfigStorage/src/Spryker/Zed/ProductSearchConfigStorage/Communication/Plugin/Event/Listener/ProductSearchConfigStorageListener.php",

@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\MerchantProduct\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
 
@@ -25,6 +27,10 @@ use Generated\Shared\Transfer\MerchantProductTransfer;
  */
 class MerchantProductFacadeTest extends Unit
 {
+    protected const TEST_SKU = 'test-sku';
+    protected const TEST_PRODUCT_OFFER_REFERENCE = 'test-product-offer-reference';
+    protected const TEST_MERCHANT_REFERENCE = 'test-merchant-reference';
+
     /**
      * @var \SprykerTest\Zed\MerchantProduct\MerchantProductBusinessTester
      */
@@ -50,8 +56,8 @@ class MerchantProductFacadeTest extends Unit
         );
 
         // Assert
-        $this->assertEquals($expectedMerchantTransfer->getIdMerchant(), $merchantTransfer->getIdMerchant());
-        $this->assertEquals($expectedMerchantTransfer->getName(), $merchantTransfer->getName());
+        $this->assertSame($expectedMerchantTransfer->getIdMerchant(), $merchantTransfer->getIdMerchant());
+        $this->assertSame($expectedMerchantTransfer->getName(), $merchantTransfer->getName());
     }
 
     /**
@@ -151,5 +157,99 @@ class MerchantProductFacadeTest extends Unit
 
         // Assert
         $this->assertCount(2, $merchantProductCollectionTransfer->getMerchantProducts());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateCartChangeIgnoresGenericProducts(): void
+    {
+        // Arrange
+        $cartChangeTransfer = (new CartChangeTransfer())
+            ->addItem(
+                (new ItemTransfer())
+                    ->setSku(static::TEST_SKU)
+            );
+
+        // Act
+        $cartPreCheckResponseTransfer = $this->tester->getFacade()->validateCartChange($cartChangeTransfer);
+
+        // Assert
+        $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
+        $this->assertEmpty($cartPreCheckResponseTransfer->getMessages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateCartChangeIgnoresItemsWithProductOfferReference(): void
+    {
+        // Arrange
+        $cartChangeTransfer = (new CartChangeTransfer())
+            ->addItem(
+                (new ItemTransfer())
+                    ->setSku(static::TEST_SKU)
+                    ->setProductOfferReference(static::TEST_PRODUCT_OFFER_REFERENCE)
+            );
+
+        // Act
+        $cartPreCheckResponseTransfer = $this->tester->getFacade()->validateCartChange($cartChangeTransfer);
+
+        // Assert
+        $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
+        $this->assertEmpty($cartPreCheckResponseTransfer->getMessages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateCartChangeFailsForInvalidMerchantProducts(): void
+    {
+        // Arrange
+        $cartChangeTransfer = (new CartChangeTransfer())
+            ->addItem(
+                (new ItemTransfer())
+                    ->setSku(static::TEST_SKU)
+                    ->setMerchantReference(static::TEST_MERCHANT_REFERENCE)
+            );
+
+        // Act
+        $cartPreCheckResponseTransfer = $this->tester->getFacade()->validateCartChange($cartChangeTransfer);
+
+        // Assert
+        $this->assertFalse($cartPreCheckResponseTransfer->getIsSuccess());
+        $this->assertNotEmpty($cartPreCheckResponseTransfer->getMessages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateCartChangeSuccessForValidMerchantProduct(): void
+    {
+        // Arrange
+        $this->tester->ensureMerchantProductAbstractTableIsEmpty();
+
+        $merchantTransfer = $this->tester->haveMerchant();
+        $concreteProductTransfer = $this->tester->haveProduct();
+
+        $this->tester->haveMerchantProduct([
+            MerchantProductTransfer::ID_MERCHANT => $merchantTransfer->getIdMerchant(),
+            MerchantProductTransfer::ID_PRODUCT_ABSTRACT => $concreteProductTransfer->getFkProductAbstract(),
+        ]);
+
+        $cartChangeTransfer = (new CartChangeTransfer())
+            ->addItem(
+                (new ItemTransfer())
+                    ->setAbstractSku($concreteProductTransfer->getAbstractSku())
+                    ->setMerchantReference($merchantTransfer->getMerchantReference())
+                    ->setSku($concreteProductTransfer->getSku())
+            );
+
+        // Act
+        $cartPreCheckResponseTransfer = $this->tester->getFacade()->validateCartChange($cartChangeTransfer);
+
+        // Assert
+        $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
+        $this->assertEmpty($cartPreCheckResponseTransfer->getMessages());
     }
 }

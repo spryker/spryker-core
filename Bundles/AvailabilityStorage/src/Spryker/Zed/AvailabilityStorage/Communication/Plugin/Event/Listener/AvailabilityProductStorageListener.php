@@ -29,12 +29,12 @@ class AvailabilityProductStorageListener extends AbstractPlugin implements Event
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
 
@@ -45,7 +45,7 @@ class AvailabilityProductStorageListener extends AbstractPlugin implements Event
             return;
         }
 
-        $spyAbstractProducts = $this->findProductAbstracts($eventTransfers);
+        $spyAbstractProducts = $this->findProductAbstracts($eventEntityTransfers);
         foreach ($spyAbstractProducts as $spyAbstractProduct) {
             if ($this->hasActiveProducts($spyAbstractProduct)) {
                 $abstractProductSkus[] = $spyAbstractProduct->getSku();

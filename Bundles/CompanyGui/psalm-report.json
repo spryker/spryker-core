@@ -11,8 +11,7 @@
             "snippet": "            return $this->redirectResponse($redirectUrl);",
             "selected_text": "$redirectUrl",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -24,8 +23,7 @@
             "snippet": "        return $this->redirectResponse($redirectUrl);",
             "selected_text": "$redirectUrl",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -37,8 +35,7 @@
             "snippet": "            return $this->redirectResponse($redirectUrl);",
             "selected_text": "$redirectUrl",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -50,8 +47,7 @@
             "snippet": "        return $this->redirectResponse($redirectUrl);",
             "selected_text": "$redirectUrl",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -63,8 +59,7 @@
             "snippet": "            return $this->redirectResponse($redirectUrl);",
             "selected_text": "$redirectUrl",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -76,8 +71,7 @@
             "snippet": "        return $this->redirectResponse($redirectUrl);",
             "selected_text": "$redirectUrl",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -89,8 +83,7 @@
             "snippet": "            return $this->redirectResponse($redirectUrl);",
             "selected_text": "$redirectUrl",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -102,8 +95,19 @@
             "snippet": "        return $this->redirectResponse($redirectUrl);",
             "selected_text": "$redirectUrl",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 161,
+            "line_to": 161,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CompanyGui\\Communication\\Table\\CompanyTable::generateButton cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyGui/src/Spryker/Zed/CompanyGui/Communication/Table/CompanyTable.php",
+            "snippet": "                $button->getUrl(),",
+            "selected_text": "$button->getUrl()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -115,8 +119,7 @@
             "snippet": "                $button->getTitle(),",
             "selected_text": "$button->getTitle()",
             "error_level": 3,
-            "shortcode": 78,
-            "taint_trace": null
+            "shortcode": 78
         }
     ],
     "deprecation": []

@@ -55,6 +55,7 @@ interface CountryFacadeInterface
     /**
      * Specification:
      * - Verifies if countries can be found by countryIso2Codes given in CheckoutDataTransfer.billingAddress and CheckoutDataTransfer.shippingAddress.
+     * - Verifies if countries can be found by countryIso2Codes given in CheckoutDataTransfer.shipments.shippingAddress.
      *
      * @api
      *

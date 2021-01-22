@@ -24,6 +24,58 @@ For more information on this topic, see
     {{- form_rest(form) -}}
 {%- endblock form_widget_compound -%}
 
+{%- block form_start -%}
+    {%- do form.setMethodRendered() -%}
+    {% set additionalAttributes = attr %}
+    {% set method = method|upper %}
+
+    {%- if method in ["GET", "POST"] -%}
+        {% set form_method = method %}
+    {%- else -%}
+        {% set form_method = "POST" %}
+    {%- endif -%}
+
+    {% if multipart %}
+        {% set additionalAttributes = attr | merge({
+            enctype: 'multipart/form-data',
+        }) %}
+    {%- endif -%}
+
+    {%- for attrname, attrvalue in attr -%}
+        {%- if attrname == 'title' -%}
+            {% set additionalAttributes = additionalAttributes | merge({
+                title: translation_domain is same as(false)
+                    ? attrvalue
+                    : attrvalue | trans(attr_translation_parameters, translation_domain),
+            }) %}
+        {%- endif -%}
+    {%- endfor -%}
+
+    {% if attr.excludeFormTag is not defined or not attr.excludeFormTag %}
+        <web-mp-form
+            method="{{ form_method | lower }}"
+            attrs="{{ additionalAttributes | json_encode }}"
+            {% if name != '' %} name="{{ name }}"{% endif %}
+            {% if action != '' %} action="{{ action }}"{% endif %}
+            {% if attr.withMonitor is defined and attr.withMonitor %} with-monitor{% endif %}
+        >
+    {% endif %}
+
+    {%- if form_method != method -%}
+        <input type="hidden" name="_method" value="{{ method }}" />
+    {%- endif -%}
+{%- endblock form_start -%}
+
+{%- block form_end -%}
+        {%- if not render_rest is defined or render_rest -%}
+            {{ form_rest(form) }}
+        {%- endif -%}
+
+    {% if attr.excludeFormTag is not defined or not attr.excludeFormTag %}
+        </web-mp-form>
+    {% endif %}
+{%- endblock form_end -%}
+
 {%- block form_errors -%}
     {%- if errors|length > 0 -%}
         {%- for error in errors -%}
@@ -40,7 +92,7 @@ For more information on this topic, see
         {%- set widget_attr = {attr: {'aria-describedby': id ~"_help"}} -%}
     {%- endif -%}
     {%- if not form.children -%}
-        {%- set row_attr = row_attr | merge({required: required}) -%}
+        {%- set row_attr = row_attr | default([]) | merge({required: required}) -%}
         <web-spy-form-item
             for="{{ form.vars.id }}" {% with {attr: row_attr} %}{{ block('attributes') }}{% endwith %}
             {% if form.vars.errors %}error="{{ form.vars.errors[0].message | default | trans }}"{% endif %}
@@ -62,12 +114,13 @@ For more information on this topic, see
     {%- if type == 'hidden' -%}
         <input type="{{ type }}" id="{{ id }}" name="{{ full_name }}" {{ block('attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
     {%- else -%}
-        <web-spy-input control type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} cloak/>
+        <web-spy-input control type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} cloak></web-spy-input>
     {%- endif -%}
 
 {%- endblock form_widget_simple -%}
 
 {%- block button_row -%}
+    {%- set row_attr = row_attr | default([]) -%}
     {%- if row_attr is not empty -%}
         <div{% with {attr: row_attr} %}{{ block('attributes') }}{% endwith %}>
     {%- endif -%}

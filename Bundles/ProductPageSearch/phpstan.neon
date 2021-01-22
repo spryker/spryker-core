@@ -1,5 +1,6 @@
 parameters:
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Cannot access offset .+ on .+SpyCategoryNode.#'
         - '#Parameter \#2 \$pageMapBuilder of method .+ProductConcretePageMapExpanderPluginInterface::expand\(\) expects .+ProductPageSearchExtension\\Dependency\\PageMapBuilderInterface, .+Search\\Business\\Model\\Elasticsearch\\DataMapper\\PageMapBuilderInterface given.#'
-        - '#Parameter \#1 \$data of method .+SynchronizationDataTransfer::setData\(\) expects string\|null, array given.#'

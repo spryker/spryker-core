@@ -218,7 +218,7 @@ class UrlHandlingTest extends FacadeTestAbstract
      */
     protected function assertProductUrl(ProductUrlTransfer $productUrl, LocalizedUrlTransfer $expectedUrl): void
     {
-        $this->assertEquals($productUrl->getAbstractSku(), $productUrl->getAbstractSku());
+        $this->assertSame($productUrl->getAbstractSku(), $productUrl->getAbstractSku());
 
         $urls = [];
         foreach ($productUrl->getUrls() as $actualUrlTransfer) {

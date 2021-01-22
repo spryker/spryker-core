@@ -23,7 +23,7 @@ class TypeAwareIndexAdapter implements IndexAdapterInterface
      * @var \Generated\Shared\Transfer\SearchCollectorConfigurationTransfer
      */
     protected $searchCollectorConfigurationTransfer;
-    
+
     /**
      * @param \Elastica\Client $elasticaClient
      * @param \Generated\Shared\Transfer\SearchCollectorConfigurationTransfer $searchCollectorConfigurationTransfer

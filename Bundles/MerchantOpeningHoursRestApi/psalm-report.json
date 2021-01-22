@@ -40,42 +40,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantOpeningHoursRestApi/src/Spryker/Glue/MerchantOpeningHoursRestApi/MerchantOpeningHoursRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->merchantOpeningHoursStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 65,
-            "line_to": 65,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Generated\\Glue\\Ide\\AutoCompletion::merchantStorage does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantOpeningHoursRestApi/src/Spryker/Glue/MerchantOpeningHoursRestApi/MerchantOpeningHoursRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->merchantStorage()->client()",
-            "selected_text": "merchantStorage",
-            "error_level": 3,
-            "shortcode": 108
-        },
-        {
-            "severity": "info",
-            "line_from": 81,
-            "line_to": 81,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantOpeningHoursRestApi/src/Spryker/Glue/MerchantOpeningHoursRestApi/MerchantOpeningHoursRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->glossaryStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 72,
             "line_to": 72,
             "type": "PossiblyNullArgument",

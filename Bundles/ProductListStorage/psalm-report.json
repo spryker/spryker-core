@@ -1,5 +1,30 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 190,
+            "line_to": 190,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyProductConcreteProductListStorageEntityTransfer>' for Spryker\\Zed\\ProductListStorage\\Persistence\\ProductListStorageRepository::findFilteredProductConcreteProductListStorageEntities",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductListStorage/src/Spryker/Zed/ProductListStorage/Persistence/ProductListStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();",
+            "selected_text": "$this->buildQueryFromCriteria($query, $filterTransfer)->find()",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 207,
+            "line_to": 207,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyProductAbstractProductListStorageEntityTransfer>' for Spryker\\Zed\\ProductListStorage\\Persistence\\ProductListStorageRepository::findFilteredProductAbstractProductListStorageEntities",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductListStorage/src/Spryker/Zed/ProductListStorage/Persistence/ProductListStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();",
+            "selected_text": "$this->buildQueryFromCriteria($query, $filterTransfer)->find()",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -48,42 +73,6 @@
             "selected_text": "getBlacklistIds",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 45,
-            "line_to": 45,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductListStorage/src/Spryker/Client/ProductListStorage/ProductListStorageDependencyProvider.php",
-            "snippet": "            return new ProductListStorageToStorageClientBridge($container->getLocator()->storage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 59,
-            "line_to": 59,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductListStorage/src/Spryker/Client/ProductListStorage/ProductListStorageDependencyProvider.php",
-            "snippet": "            return new ProductListStorageToCustomerClientBridge($container->getLocator()->customer()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 73,
-            "line_to": 73,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductListStorage/src/Spryker/Client/ProductListStorage/ProductListStorageDependencyProvider.php",
-            "snippet": "            return new ProductListStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
         },
         {
             "severity": "info",
@@ -222,7 +211,7 @@
             "line_from": 60,
             "line_to": 60,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProduct|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProduct> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ProductListStorage/src/Spryker/Zed/ProductListStorage/Persistence/ProductListStorageRepository.php",
             "snippet": "            ->toArray();",
             "selected_text": "toArray",
@@ -258,7 +247,7 @@
             "line_from": 152,
             "line_to": 152,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductList\\Persistence\\SpyProductListProductConcrete|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductList\\Persistence\\SpyProductListProductConcrete> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ProductListStorage/src/Spryker/Zed/ProductListStorage/Persistence/ProductListStorageRepository.php",
             "snippet": "            ->toArray();",
             "selected_text": "toArray",
@@ -270,36 +259,12 @@
             "line_from": 173,
             "line_to": 173,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategory|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategory> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ProductListStorage/src/Spryker/Zed/ProductListStorage/Persistence/ProductListStorageRepository.php",
             "snippet": "            ->toArray();",
             "selected_text": "toArray",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 80,
-            "line_to": 80,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductListStorage/src/Spryker/Zed/ProductListStorage/ProductListStorageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->eventBehavior()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 95,
-            "line_to": 95,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductListStorage/src/Spryker/Zed/ProductListStorage/ProductListStorageDependencyProvider.php",
-            "snippet": "            return new ProductListStorageToProductListFacadeBridge($container->getLocator()->productList()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

@@ -368,7 +368,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
      * @module Customer
      * @module Company
      *
-     * @param array $companyUserIds
+     * @param int[] $companyUserIds
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
      */

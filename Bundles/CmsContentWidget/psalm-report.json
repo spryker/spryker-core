@@ -88,30 +88,6 @@
         },
         {
             "severity": "info",
-            "line_from": 36,
-            "line_to": 36,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidget/src/Spryker/Zed/CmsContentWidget/CmsContentWidgetDependencyProvider.php",
-            "snippet": "            return new CmsContentWidgetToGlossaryBridge($container->getLocator()->glossary()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 50,
-            "line_to": 50,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidget/src/Spryker/Zed/CmsContentWidget/CmsContentWidgetDependencyProvider.php",
-            "snippet": "            return new CmsContentWidgetToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 57,
             "line_to": 57,
             "type": "PossiblyNullArrayOffset",
@@ -160,6 +136,18 @@
         }
     ],
     "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Yves\\Kernel\\Plugin\\Pimple is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidget/src/Spryker/Yves/CmsContentWidget/CmsContentWidgetDependencyProvider.php",
+            "snippet": "        $pimplePlugin = new Pimple();",
+            "selected_text": "new Pimple()",
+            "error_level": 2,
+            "shortcode": 98
+        },
         {
             "severity": "info",
             "line_from": 31,

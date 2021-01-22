@@ -2,6 +2,18 @@
     "error": [
         {
             "severity": "error",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Client\\PriceProductMerchantRelationshipStorage\\Storage\\PriceProductMerchantRelationshipAbstractReader::findProductAbstractPrices has wrong name $idCompanyBusinessUnit, expecting $idCompanyCompanyBusinessUnit as defined by Spryker\\Client\\PriceProductMerchantRelationshipStorage\\Storage\\PriceProductMerchantRelationshipAbstractReaderInterface::findProductAbstractPrices",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipStorage/src/Spryker/Client/PriceProductMerchantRelationshipStorage/Storage/PriceProductMerchantRelationshipAbstractReader.php",
+            "snippet": "    public function findProductAbstractPrices(int $idProductAbstract, int $idCompanyBusinessUnit): array",
+            "selected_text": "$idCompanyBusinessUnit",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
             "line_from": 49,
             "line_to": 49,
             "type": "InvalidArgument",
@@ -26,78 +38,30 @@
         },
         {
             "severity": "error",
-            "line_from": 305,
-            "line_to": 313,
-            "type": "UndefinedDocblockClass",
-            "message": "Docblock-defined class or interface Orm\\Zed\\ProductMerchantConnector\\Persistence\\SpyProductAbstractMerchantQuery does not exist",
+            "line_from": 385,
+            "line_to": 385,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyPriceProductConcreteMerchantRelationshipStorageEntityTransfer>' for Spryker\\Zed\\PriceProductMerchantRelationshipStorage\\Persistence\\PriceProductMerchantRelationshipStorageRepository::findFilteredPriceProductConcreteMerchantRelationshipStorageEntities",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipStorage/src/Spryker/Zed/PriceProductMerchantRelationshipStorage/Persistence/PriceProductMerchantRelationshipStorageRepository.php",
-            "snippet": "        return $this->getFactory()\n            ->getPropelPriceProductMerchantRelationshipQuery()\n            ->usePriceProductStoreQuery()\n                ->innerJoinStore()\n                ->innerJoinCurrency()\n                ->usePriceProductQuery()\n                    ->innerJoinPriceType()\n                ->endUse()\n            ->endUse()",
-            "selected_text": "$this->getFactory()\n            ->getPropelPriceProductMerchantRelationshipQuery()\n            ->usePriceProductStoreQuery()\n                ->innerJoinStore()\n                ->innerJoinCurrency()\n                ->usePriceProductQuery()\n                    ->innerJoinPriceType()\n                ->endUse()\n            ->endUse()",
-            "error_level": -1,
-            "shortcode": 200
+            "snippet": "        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();",
+            "selected_text": "$this->buildQueryFromCriteria($query, $filterTransfer)->find()",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 404,
+            "line_to": 404,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyPriceProductAbstractMerchantRelationshipStorageEntityTransfer>' for Spryker\\Zed\\PriceProductMerchantRelationshipStorage\\Persistence\\PriceProductMerchantRelationshipStorageRepository::findFilteredPriceProductAbstractMerchantRelationshipStorageEntities",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipStorage/src/Spryker/Zed/PriceProductMerchantRelationshipStorage/Persistence/PriceProductMerchantRelationshipStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();",
+            "selected_text": "$this->buildQueryFromCriteria($query, $filterTransfer)->find()",
+            "error_level": 6,
+            "shortcode": 128
         }
     ],
     "warning": [
-        {
-            "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipStorage/src/Spryker/Client/PriceProductMerchantRelationshipStorage/PriceProductMerchantRelationshipStorageDependencyProvider.php",
-            "snippet": "            return new PriceProductMerchantRelationshipStorageToStorageClientBridge($container->getLocator()->storage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 69,
-            "line_to": 69,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipStorage/src/Spryker/Client/PriceProductMerchantRelationshipStorage/PriceProductMerchantRelationshipStorageDependencyProvider.php",
-            "snippet": "            return new PriceProductMerchantRelationshipToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 83,
-            "line_to": 83,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipStorage/src/Spryker/Client/PriceProductMerchantRelationshipStorage/PriceProductMerchantRelationshipStorageDependencyProvider.php",
-            "snippet": "            return new PriceProductMerchantRelationshipStorageToStoreClientBridge($container->getLocator()->store()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 97,
-            "line_to": 97,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipStorage/src/Spryker/Client/PriceProductMerchantRelationshipStorage/PriceProductMerchantRelationshipStorageDependencyProvider.php",
-            "snippet": "            return new PriceProductMerchantRelationshipStorageToCustomerClientBridge($container->getLocator()->customer()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 111,
-            "line_to": 111,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipStorage/src/Spryker/Client/PriceProductMerchantRelationshipStorage/PriceProductMerchantRelationshipStorageDependencyProvider.php",
-            "snippet": "            return new PriceProductMerchantRelationshipStorageToPriceProductServiceBridge($container->getLocator()->priceProduct()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
         {
             "severity": "info",
             "line_from": 74,
@@ -448,25 +412,13 @@
         },
         {
             "severity": "info",
-            "line_from": 314,
-            "line_to": 314,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Orm\\Zed\\Currency\\Persistence\\SpyCurrencyQuery::usemerchantrelationshipquery does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipStorage/src/Spryker/Zed/PriceProductMerchantRelationshipStorage/Persistence/PriceProductMerchantRelationshipStorageRepository.php",
-            "snippet": "            ->useMerchantRelationshipQuery()",
-            "selected_text": "useMerchantRelationshipQuery",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 317,
-            "line_to": 317,
+            "line_from": 319,
+            "line_to": 319,
             "type": "PossiblyUndefinedMethod",
-            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::filterByFkCompanyBusinessUnit_In does not exist",
+            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::endUse does not exist",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipStorage/src/Spryker/Zed/PriceProductMerchantRelationshipStorage/Persistence/PriceProductMerchantRelationshipStorageRepository.php",
-            "snippet": "                        ->filterByFkCompanyBusinessUnit_In($filterByCompanyBusinessUnitIds)",
-            "selected_text": "filterByFkCompanyBusinessUnit_In",
+            "snippet": "                ->endUse()",
+            "selected_text": "endUse",
             "error_level": 3,
             "shortcode": 108
         },
@@ -475,7 +427,7 @@
             "line_from": 424,
             "line_to": 424,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable $priceProductMerchantRelationshipEntityTransfers",
+            "message": "Cannot call method on possible array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface> variable $priceProductMerchantRelationshipEntityTransfers",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipStorage/src/Spryker/Zed/PriceProductMerchantRelationshipStorage/Persistence/PriceProductMerchantRelationshipStorageRepository.php",
             "snippet": "                $priceProductMerchantRelationshipEntityTransfers->getData()",
             "selected_text": "getData",
@@ -487,24 +439,12 @@
             "line_from": 445,
             "line_to": 445,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable $priceProductMerchantRelationshipEntityTransfers",
+            "message": "Cannot call method on possible array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface> variable $priceProductMerchantRelationshipEntityTransfers",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipStorage/src/Spryker/Zed/PriceProductMerchantRelationshipStorage/Persistence/PriceProductMerchantRelationshipStorageRepository.php",
             "snippet": "                $priceProductMerchantRelationshipEntityTransfers->getData()",
             "selected_text": "getData",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 57,
-            "line_to": 57,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipStorage/src/Spryker/Zed/PriceProductMerchantRelationshipStorage/PriceProductMerchantRelationshipStorageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->eventBehavior()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

@@ -1,8 +1,9 @@
 {{ form_start(form) }}
     {% for field in form %}
         {% if field.vars.name != '_token' %}
-            <input type="hidden" name="{{ field.vars.name }}" value="{{ field.vars.data }}" />
-            {% do field.setRendered %}
+            {% if not field.isRendered %}
+                <input type="hidden" name="{{ field.vars.name }}" value="{{ field.vars.data }}" />
+            {% endif %}
         {% endif %}
     {% endfor %}
     {{ form_widget(form) }}

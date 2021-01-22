@@ -55,8 +55,7 @@
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */
-import 'zone.js/dist/zone';  // Included with Angular CLI.
-
+import 'zone.js/dist/zone'; // Included with Angular CLI.
 
 /***************************************************************************************************
  * APPLICATION IMPORTS
@@ -77,4 +76,5 @@ cssVars({
     watch: true,
 });
 
+import '@webcomponents/webcomponents-platform/webcomponents-platform';
 import '@webcomponents/webcomponentsjs/bundles/webcomponents-ce';

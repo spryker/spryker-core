@@ -66,7 +66,7 @@ class UpdateShipmentWithNewDataTest extends Test
         );
 
         $this->assertTrue($shipmentGroupResponseTransfer->getIsSuccessful(), 'Saving a shipment should have been successful.');
-        $this->assertEquals($shipmentTransfer->getIdSalesShipment(), $shipmentEntity->getIdSalesShipment(), 'The shipment should have been updated.');
+        $this->assertSame($shipmentTransfer->getIdSalesShipment(), $shipmentEntity->getIdSalesShipment(), 'The shipment should have been updated.');
         $this->assertNotNull($shipmentEntity->getFkSalesOrderAddress(), 'The sales shipment should have a sales order address.');
         $this->assertNotEquals($expectedIdSalesOrderAddress, $shipmentEntity->getFkSalesOrderAddress(), 'The sales shipment should have been a new sales order address assigned.');
     }
@@ -99,7 +99,7 @@ class UpdateShipmentWithNewDataTest extends Test
         );
 
         $this->assertTrue($shipmentGroupResponseTransfer->getIsSuccessful(), 'Saving a shipment should have been successful.');
-        $this->assertEquals($shipmentTransfer->getIdSalesShipment(), $shipmentEntity->getIdSalesShipment(), 'The shipment should have been updated.');
+        $this->assertSame($shipmentTransfer->getIdSalesShipment(), $shipmentEntity->getIdSalesShipment(), 'The shipment should have been updated.');
         $this->assertNotEquals(
             $expectedShipmentMethod,
             $shipmentEntity->getName(),
@@ -137,7 +137,7 @@ class UpdateShipmentWithNewDataTest extends Test
         );
 
         $this->assertTrue($shipmentGroupResponseTransfer->getIsSuccessful(), 'Saving a shipment should have been successful.');
-        $this->assertEquals($shipmentTransfer->getIdSalesShipment(), $shipmentEntity->getIdSalesShipment(), 'The shipment should have been updated.');
+        $this->assertSame($shipmentTransfer->getIdSalesShipment(), $shipmentEntity->getIdSalesShipment(), 'The shipment should have been updated.');
         $this->assertNotEquals($expectedDeliveryDate, $shipmentEntity->getRequestedDeliveryDate(), 'The shipment should have been updated with new delivery date.');
     }
 

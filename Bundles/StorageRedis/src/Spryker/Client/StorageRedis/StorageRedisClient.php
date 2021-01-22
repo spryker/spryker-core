@@ -20,7 +20,7 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
      * @var \Spryker\Client\StorageRedis\Redis\StorageRedisWrapperInterface
      */
     protected static $storageRedisWrapper;
-    
+
     /**
      * {@inheritDoc}
      *
@@ -243,7 +243,7 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
         if (static::$storageRedisWrapper === null) {
             static::$storageRedisWrapper = $this->getFactory()->createStorageRedisWrapper();
         }
-        
+
         return static::$storageRedisWrapper;
     }
 }
