@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { TableModule, TableConfig, TableDefaultConfig } from '@spryker/table';
+import { TableModule, TableConfig, TableDefaultConfig, TableDataRow } from '@spryker/table';
 import {
     TableFormOverlayActionHandlerModule,
     TableFormOverlayActionHandlerService,
@@ -13,17 +13,19 @@ import { TableColumnChipComponent, TableColumnChipModule } from '@spryker/table.
 import { TableColumnDateComponent, TableColumnDateModule } from '@spryker/table.column.date';
 import { TableColumnImageComponent, TableColumnImageModule } from '@spryker/table.column.image';
 import { TableColumnTextComponent, TableColumnTextModule } from '@spryker/table.column.text';
+import { TableColumnInputComponent, TableColumnInputModule } from '@spryker/table.column.input';
+import { TableColumnSelectComponent, TableColumnSelectModule } from '@spryker/table.column.select';
 import { TableDatasourceHttpService } from '@spryker/table.datasource.http';
 import { TableFiltersFeatureModule } from '@spryker/table.feature.filters';
 import { TableFilterDateRangeComponent, TableFilterDateRangeModule } from '@spryker/table.filter.date-range';
 import { TableFilterSelectComponent, TableFilterSelectModule } from '@spryker/table.filter.select';
 import { TableFilterTreeSelectComponent, TableFilterTreeSelectModule } from '@spryker/table.filter.tree-select';
 
-export class TableDefaultConfigData implements Partial<TableConfig> {
+class TableDefaultConfigData implements Partial<TableConfig> {
     total = {
         enabled: true,
     };
-    settings = {
+    columnConfigurator = {
         enabled: true,
     };
 }
@@ -42,14 +44,18 @@ export class TableDefaultConfigData implements Partial<TableConfig> {
                 import('@spryker/table.feature.selectable').then((m) => m.TableSelectableFeatureModule),
             batchActions: () =>
                 import('@spryker/table.feature.batch-actions').then((m) => m.TableBatchActionsFeatureModule),
-            settings: () => import('@spryker/table.feature.settings').then((m) => m.TableSettingsFeatureModule),
+            columnConfigurator: () =>
+                import('@spryker/table.feature.settings').then((m) => m.TableSettingsFeatureModule),
             title: () => import('@spryker/table.feature.title').then((m) => m.TableTitleFeatureModule),
+            editable: () => import('@spryker/table.feature.editable').then((m) => m.TableEditableFeatureModule),
         }),
         TableModule.withColumnComponents({
             text: TableColumnTextComponent,
             image: TableColumnImageComponent,
             date: TableColumnDateComponent,
             chip: TableColumnChipComponent,
+            input: TableColumnInputComponent,
+            select: TableColumnSelectComponent,
         } as any),
         TableFiltersFeatureModule.withFilterComponents({
             select: TableFilterSelectComponent,
@@ -70,6 +76,10 @@ export class TableDefaultConfigData implements Partial<TableConfig> {
         TableColumnTextModule,
         TableColumnImageModule,
         TableColumnDateModule,
+        TableColumnInputModule,
+        TableColumnSelectModule,
+
+        // Table Filter Modules
         TableFilterSelectModule,
         TableFilterDateRangeModule,
         TableFilterTreeSelectModule,
