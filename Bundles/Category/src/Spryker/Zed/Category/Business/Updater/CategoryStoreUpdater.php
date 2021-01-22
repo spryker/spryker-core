@@ -83,8 +83,6 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
      * @param \Generated\Shared\Transfer\StoreRelationTransfer $newStoreAssignment
      * @param \Generated\Shared\Transfer\StoreRelationTransfer|null $currentStoreAssignment
      *
-     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
-     *
      * @return void
      */
     protected function executeUpdateCategoryStoreRelationWithMainChildrenPropagationTransaction(
@@ -92,54 +90,34 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
         StoreRelationTransfer $newStoreAssignment,
         ?StoreRelationTransfer $currentStoreAssignment = null
     ): void {
-        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
-            ->setIdCategory($idCategory)
-            ->setIsMain(true)
-            ->setWithChildrenRecursively(true);
-        $categoryTransfer = $this->categoryReader->findCategory($categoryCriteriaTransfer);
-        if (!$categoryTransfer) {
-            throw new MissingCategoryException(sprintf('Could not find category for ID "%s"', $idCategory));
-        }
-
+        $categoryTransfer = $this->getCurrentCategoryTransfer($idCategory);
         if (!$currentStoreAssignment) {
             $currentStoreAssignment = $categoryTransfer->getStoreRelationOrFail();
         }
 
-        $storeIdsToAdd = $this->getStoreIdsToAdd($currentStoreAssignment, $newStoreAssignment);
-        $storeIdsToDelete = $this->getStoreIdsToDelete($currentStoreAssignment, $newStoreAssignment);
         if ($categoryTransfer->getParentCategoryNode()) {
             $parentStoreRelationTransfer = $this->categoryRepository->getCategoryStoreRelationByIdCategory(
                 $categoryTransfer->getParentCategoryNode()->getFkCategoryOrFail()
             );
-            $storeIdsToAdd = $this->filterOutStoreIdsMissingInParentCategoryStoreRelation(
-                $parentStoreRelationTransfer->getIdStores(),
-                $storeIdsToAdd
-            );
-            $missingParentCategoryStoreRelationIds = $this->getStoreIdsMissingInParentCategoryStoreRelation(
-                $parentStoreRelationTransfer->getIdStores(),
-                $currentStoreAssignment->getIdStores()
-            );
-            $storeIdsToDelete = array_unique(array_merge($storeIdsToDelete, $missingParentCategoryStoreRelationIds));
         }
+
+        $storeIdsToAdd = $this->getStoreIdsToAdd(
+            $currentStoreAssignment,
+            $newStoreAssignment,
+            $parentStoreRelationTransfer ?? null
+        );
+        $storeIdsToDelete = $this->getStoreIdsToDelete(
+            $currentStoreAssignment,
+            $newStoreAssignment,
+            $parentStoreRelationTransfer ?? null
+        );
 
         if ($storeIdsToAdd === [] && $storeIdsToDelete === []) {
             return;
         }
 
         $this->updateCategoryStoreRelations($idCategory, $storeIdsToAdd, $storeIdsToDelete);
-
-        if (!$categoryTransfer->getNodeCollection()) {
-            $this->triggerCategoryTreePublishEvent($idCategory);
-
-            return;
-        }
-
-        foreach ($categoryTransfer->getNodeCollection()->getNodes() as $nodeTransfer) {
-            if (!$nodeTransfer->getIsMain()) {
-                continue;
-            }
-            $this->updateMainChildCategoryStoreRelation($nodeTransfer->getChildrenNodes(), $storeIdsToAdd, $storeIdsToDelete);
-        }
+        $this->updateChildrenCategoryStoreRelations($categoryTransfer, $storeIdsToAdd, $storeIdsToDelete);
 
         $this->triggerCategoryTreePublishEvent($idCategory);
     }
@@ -147,27 +125,50 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
     /**
      * @param \Generated\Shared\Transfer\StoreRelationTransfer $existingStoreRelationTransfer
      * @param \Generated\Shared\Transfer\StoreRelationTransfer $newStoreRelationTransfer
-     *
-     * @return int[]
-     */
-    protected function getStoreIdsToDelete(
-        StoreRelationTransfer $existingStoreRelationTransfer,
-        StoreRelationTransfer $newStoreRelationTransfer
-    ): array {
-        return array_diff($existingStoreRelationTransfer->getIdStores(), $newStoreRelationTransfer->getIdStores());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer $existingStoreRelationTransfer
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer $newStoreRelationTransfer
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer|null $parentCategoryStoreRelationTransfer
      *
      * @return int[]
      */
     protected function getStoreIdsToAdd(
         StoreRelationTransfer $existingStoreRelationTransfer,
-        StoreRelationTransfer $newStoreRelationTransfer
+        StoreRelationTransfer $newStoreRelationTransfer,
+        ?StoreRelationTransfer $parentCategoryStoreRelationTransfer = null
     ): array {
-        return array_diff($newStoreRelationTransfer->getIdStores(), $existingStoreRelationTransfer->getIdStores());
+        $storeIdsToAdd = array_diff($newStoreRelationTransfer->getIdStores(), $existingStoreRelationTransfer->getIdStores());
+
+        if (!$parentCategoryStoreRelationTransfer) {
+            return $storeIdsToAdd;
+        }
+
+        return $this->filterOutStoreIdsMissingInParentCategoryStoreRelation(
+            $parentCategoryStoreRelationTransfer->getIdStores(),
+            $storeIdsToAdd
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $existingStoreRelationTransfer
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $newStoreRelationTransfer
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer|null $parentCategoryStoreRelationTransfer
+     *
+     * @return int[]
+     */
+    protected function getStoreIdsToDelete(
+        StoreRelationTransfer $existingStoreRelationTransfer,
+        StoreRelationTransfer $newStoreRelationTransfer,
+        ?StoreRelationTransfer $parentCategoryStoreRelationTransfer = null
+    ): array {
+        $storeIdsToDelete = array_diff($existingStoreRelationTransfer->getIdStores(), $newStoreRelationTransfer->getIdStores());
+        if (!$parentCategoryStoreRelationTransfer) {
+            return $storeIdsToDelete;
+        }
+
+        $missingParentCategoryStoreRelationIds = $this->getStoreIdsMissingInParentCategoryStoreRelation(
+            $parentCategoryStoreRelationTransfer->getIdStores(),
+            $existingStoreRelationTransfer->getIdStores()
+        );
+
+        return array_unique(array_merge($storeIdsToDelete, $missingParentCategoryStoreRelationIds));
     }
 
     /**
@@ -206,6 +207,62 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
     }
 
     /**
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    protected function triggerCategoryTreePublishEvent(int $idCategory): void
+    {
+        $this->eventFacade->trigger(
+            CategoryEvents::CATEGORY_TREE_PUBLISH,
+            (new CategoryTransfer())->setIdCategory($idCategory)
+        );
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    protected function getCurrentCategoryTransfer(int $idCategory): CategoryTransfer
+    {
+        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
+            ->setIdCategory($idCategory)
+            ->setIsMain(true)
+            ->setWithChildrenRecursively(true);
+        $categoryTransfer = $this->categoryReader->findCategory($categoryCriteriaTransfer);
+
+        if (!$categoryTransfer) {
+            throw new MissingCategoryException(sprintf('Could not find category for ID "%s"', $idCategory));
+        }
+
+        return $categoryTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param int[] $storeIdsToAdd
+     * @param int[] $storeIdsToDelete
+     *
+     * @return void
+     */
+    protected function updateChildrenCategoryStoreRelations(CategoryTransfer $categoryTransfer, array $storeIdsToAdd, array $storeIdsToDelete): void
+    {
+        if (!$categoryTransfer->getNodeCollection() || $categoryTransfer->getNodeCollection()->getNodes()->count() === 0) {
+            return;
+        }
+
+        foreach ($categoryTransfer->getNodeCollection()->getNodes() as $nodeTransfer) {
+            if (!$nodeTransfer->getIsMain()) {
+                continue;
+            }
+            $this->updateMainChildCategoryStoreRelation($nodeTransfer->getChildrenNodes(), $storeIdsToAdd, $storeIdsToDelete);
+        }
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
      * @param int[] $storeIdsToAdd
      * @param int[] $storeIdsToDelete
@@ -226,18 +283,5 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
 
             $this->updateMainChildCategoryStoreRelation($nodeTransfer->getChildrenNodes(), $storeIdsToAdd, $storeIdsToDelete);
         }
-    }
-
-    /**
-     * @param int $idCategory
-     *
-     * @return void
-     */
-    protected function triggerCategoryTreePublishEvent(int $idCategory): void
-    {
-        $this->eventFacade->trigger(
-            CategoryEvents::CATEGORY_TREE_PUBLISH,
-            (new CategoryTransfer())->setIdCategory($idCategory)
-        );
     }
 }
