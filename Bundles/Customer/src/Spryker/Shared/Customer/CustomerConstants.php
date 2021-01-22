@@ -37,5 +37,10 @@ interface CustomerConstants
     public const SHOP_MAIL_PASSWORD_RESTORED_CONFIRMATION_TOKEN = 'PASSWORD_RESTORED_CONFIRMATION_TOKEN';
     public const SHOP_MAIL_PASSWORD_RESTORED_CONFIRMATION_SUBJECT = 'PASSWORD_RESTORED_CONFIRMATION_SUBJECT';
 
-    public const REGISTRATION_CONFIRMATION_TOKEN_URL = 'CUSTOMER:REGISTRATION_CONFIRMATION_BASE_URL';
+    /**
+     * Specification:
+     * - Provides format of registration confirmation token url.
+     * - Should contain %s for the token.
+     */
+    public const REGISTRATION_CONFIRMATION_TOKEN_URL = 'CUSTOMER:REGISTRATION_CONFIRMATION_TOKEN_URL';
 }
