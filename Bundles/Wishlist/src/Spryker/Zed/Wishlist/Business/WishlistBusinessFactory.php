@@ -17,6 +17,7 @@ use Spryker\Zed\Wishlist\WishlistDependencyProvider;
  * @method \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Wishlist\WishlistConfig getConfig()
  * @method \Spryker\Zed\Wishlist\Persistence\WishlistRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Wishlist\Persistence\WishlistEntityManagerInterface getEntityManager()
  */
 class WishlistBusinessFactory extends AbstractBusinessFactory
 {
@@ -41,6 +42,7 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
         return new Writer(
             $this->getQueryContainer(),
             $this->createReader(),
+            $this->getEntityManager(),
             $this->getProductFacade(),
             $this->getAddItemPreCheckPlugins()
         );
