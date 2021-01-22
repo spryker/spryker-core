@@ -53,16 +53,17 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
         foreach ($productOfferTransfer->getStores() as $storeTransfer) {
             $productOfferStockRequestTransfer->setStore($storeTransfer);
 
-            $productOfferStockTransfer = $this->productOfferStockFacade
-                ->getProductOfferStock($productOfferStockRequestTransfer);
-
-            $productOfferStocks[] = [
-                'name' => $productOfferStockTransfer->getStock()->getName(),
-                'quantity' => $productOfferStockTransfer->getQuantity(),
-                'isNeverOutOfStock' => $productOfferStockTransfer->getIsNeverOutOfStock(),
-                'storeName' => $storeTransfer->getName(),
-                'additionalColumns' => $this->executeProductOfferStockTableExpanderPlugins($productOfferStockTransfer, $storeTransfer),
-            ];
+            $productOfferStockTransfers = $this->productOfferStockFacade
+                ->getProductOfferStocks($productOfferStockRequestTransfer);
+            foreach ($productOfferStockTransfers as $productOfferStockTransfer) {
+                $productOfferStocks[] = [
+                    'name' => $productOfferStockTransfer->getStock()->getName(),
+                    'quantity' => $productOfferStockTransfer->getQuantity(),
+                    'isNeverOutOfStock' => $productOfferStockTransfer->getIsNeverOutOfStock(),
+                    'storeName' => $storeTransfer->getName(),
+                    'additionalColumns' => $this->executeProductOfferStockTableExpanderPlugins($productOfferStockTransfer, $storeTransfer),
+                ];
+            }
         }
 
         return [

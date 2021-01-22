@@ -10,7 +10,8 @@
     "spryker/product-offer-extension": "^0.1.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/stock": "^7.0.0 || ^8.0.0",
-    "spryker/transfer": "^3.18.0"
+    "spryker/transfer": "^3.18.0",
+    "spryker/decimal-object": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
