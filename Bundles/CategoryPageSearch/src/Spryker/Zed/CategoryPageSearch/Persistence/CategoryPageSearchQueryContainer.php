@@ -26,28 +26,18 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
      *
      * @api
      *
-     * @param array $categoryNodeIds
-     * @param int $idLocale
+     * @param int[] $categoryIds
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function queryCategoryNodeTree(array $categoryNodeIds, $idLocale)
+    public function queryCategoryNodeIdsByCategoryIds(array $categoryIds)
     {
-        /** @var \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $query */
-        $query = $this->getFactory()
+        return $this->getFactory()
             ->getCategoryQueryContainer()
             ->queryAllCategoryNodes()
-            ->filterByIdCategoryNode_In($categoryNodeIds)
-            ->joinWithSpyUrl()
-            ->joinWithCategory()
-            ->joinWith('Category.Attribute')
-            ->joinWith('Category.CategoryTemplate')
-            ->where(SpyCategoryAttributeTableMap::COL_FK_LOCALE . ' = ?', $idLocale)
-            ->where(SpyUrlTableMap::COL_FK_LOCALE . ' = ?', $idLocale)
-            ->where(SpyCategoryTableMap::COL_IS_ACTIVE . ' = ?', true)
-            ->where(SpyCategoryTableMap::COL_IS_IN_MENU . ' = ?', true);
-
-        return $query;
+            ->filterByFkCategory_In($categoryIds)
+            ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, static::ID_CATEGORY_NODE)
+            ->select([static::ID_CATEGORY_NODE]);
     }
 
     /**
