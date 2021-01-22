@@ -7,16 +7,16 @@
 
 namespace Spryker\Zed\Kernel\Communication\Controller;
 
+use Laminas\Filter\Word\DashToCamelCase;
 use Spryker\Shared\Kernel\Communication\RouteNameResolverInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Zend\Filter\Word\DashToCamelCase;
 
 class RouteNameResolver implements RouteNameResolverInterface
 {
     /**
      * @var \Symfony\Component\HttpFoundation\Request
      */
-    private $request;
+    protected $request;
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

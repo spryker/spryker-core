@@ -8,20 +8,31 @@
 namespace Spryker\Zed\ProductOfferStock\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductOfferStock\Business\ProductOfferStock\ProductOfferStockReader;
-use Spryker\Zed\ProductOfferStock\Business\ProductOfferStock\ProductOfferStockReaderInterface;
+use Spryker\Zed\ProductOfferStock\Business\Expander\ProductOfferExpander;
+use Spryker\Zed\ProductOfferStock\Business\Expander\ProductOfferExpanderInterface;
+use Spryker\Zed\ProductOfferStock\Business\Reader\ProductOfferStockReader;
+use Spryker\Zed\ProductOfferStock\Business\Reader\ProductOfferStockReaderInterface;
 
 /**
  * @method \Spryker\Zed\ProductOfferStock\ProductOfferStockConfig getConfig()
+ * @method \Spryker\Zed\ProductOfferStock\Persistence\ProductOfferStockEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\ProductOfferStock\Persistence\ProductOfferStockRepositoryInterface getRepository()
  */
 class ProductOfferStockBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\ProductOfferStock\Business\ProductOfferStock\ProductOfferStockReaderInterface
+     * @return \Spryker\Zed\ProductOfferStock\Business\Reader\ProductOfferStockReaderInterface
      */
     public function createProductOfferStockReader(): ProductOfferStockReaderInterface
     {
         return new ProductOfferStockReader($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferStock\Business\Expander\ProductOfferExpanderInterface
+     */
+    public function createProductOfferExpander(): ProductOfferExpanderInterface
+    {
+        return new ProductOfferExpander($this->getRepository());
     }
 }

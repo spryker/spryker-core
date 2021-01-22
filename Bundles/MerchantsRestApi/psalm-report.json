@@ -3,30 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Generated\\Glue\\Ide\\AutoCompletion::merchantStorage does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantsRestApi/src/Spryker/Glue/MerchantsRestApi/MerchantsRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->merchantStorage()->client()",
-            "selected_text": "merchantStorage",
-            "error_level": 3,
-            "shortcode": 108
-        },
-        {
-            "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantsRestApi/src/Spryker/Glue/MerchantsRestApi/MerchantsRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->glossaryStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 17,
             "line_to": 17,
             "type": "MismatchingDocblockParamType",
@@ -120,6 +96,18 @@
             "selected_text": "$restRequest->getResource()->getId()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getAddressCollection on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantsRestApi/src/Spryker/Glue/MerchantsRestApi/Processor/RestResponseBuilder/MerchantAddressRestResponseBuilder.php",
+            "snippet": "                $merchantStorageTransfer->getMerchantProfile()->getAddressCollection(),",
+            "selected_text": "getAddressCollection",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",

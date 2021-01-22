@@ -38,7 +38,7 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
     protected const PLACEHOLDER_BANNER_URL_GLOSSARY = 'Provide a banner URL';
     protected const PLACEHOLDER_DELIVERY_TIME_GLOSSARY = 'Provide Average Delivery Time';
     protected const PLACEHOLDER_TERMS_CONDITIONS_GLOSSARY = 'Provide Terms & Conditions';
-    protected const PLACEHOLDER_CANCELLATION_POLICY_GLOSSARY = 'Provide Return Policy';
+    protected const PLACEHOLDER_CANCELLATION_POLICY_GLOSSARY = 'Provide Cancellation Policy';
     protected const PLACEHOLDER_IMPRINT_GLOSSARY = 'Provide Imprint';
     protected const PLACEHOLDER_DATA_PRIVACY_GLOSSARY = 'Provide Data Privacy';
 

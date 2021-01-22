@@ -1,3 +1,3 @@
 parameters:
-    ignoreErrors:
-        - '#Propel\\Runtime\\ActiveQuery\\ModelCriteria#'
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false

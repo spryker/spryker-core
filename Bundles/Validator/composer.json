@@ -4,11 +4,11 @@
   "description": "Validator module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/application-extension": "^1.0.0",
     "spryker/container": "^1.4.0",
     "spryker/form-extension": "^1.0.0",
-    "spryker/kernel": "^3.30.0",
+    "spryker/kernel": "^3.52.0",
     "spryker/symfony": "^3.2.2",
     "spryker/validator-extension": "^1.0.0"
   },
@@ -18,7 +18,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\Validator\\Helper\\": "tests/SprykerTest/Zed/Validator/_support/Helper/"
     }
   },
   "autoload-dev": {

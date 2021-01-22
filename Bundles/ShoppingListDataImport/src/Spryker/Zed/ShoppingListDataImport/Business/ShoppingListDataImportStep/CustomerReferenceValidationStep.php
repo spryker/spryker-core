@@ -33,6 +33,7 @@ class CustomerReferenceValidationStep implements DataImportStepInterface
         $customerReference = $dataSet[ShoppingListDataSetInterface::COLUMN_OWNER_CUSTOMER_REFERENCE];
         if (!isset($this->customerReferenceCache[$customerReference])) {
             $customerQuery = SpyCustomerQuery::create();
+            /** @var int|null $idCustomer */
             $idCustomer = $customerQuery
                 ->select(SpyCustomerTableMap::COL_ID_CUSTOMER)
                 ->findOneByCustomerReference($customerReference);

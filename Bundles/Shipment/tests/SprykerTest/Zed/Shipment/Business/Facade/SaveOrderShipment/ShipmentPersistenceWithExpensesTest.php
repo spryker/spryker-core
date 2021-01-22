@@ -65,7 +65,7 @@ class ShipmentPersistenceWithExpensesTest extends Test
         $salesExpenseEntity = $salesExpenseQuery->findOne();
 
         $this->assertNotNull($salesExpenseEntity, 'Shipment expense should have been saved.');
-        $this->assertEquals($salesShipmentEntity->getFkSalesExpense(), $salesExpenseEntity->getIdSalesExpense(), 'Shipment expense ID should have been connected to shipment entity.');
+        $this->assertSame($salesShipmentEntity->getFkSalesExpense(), $salesExpenseEntity->getIdSalesExpense(), 'Shipment expense ID should have been connected to shipment entity.');
     }
 
     /**

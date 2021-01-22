@@ -48,7 +48,7 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
      */
     public function findOne(ProductOfferCriteriaTransfer $productOfferCriteria): ?ProductOfferTransfer
     {
-        return $this->getRepository()->findOne($productOfferCriteria);
+        return $this->getFactory()->createProductOfferReader()->findOne($productOfferCriteria);
     }
 
     /**
@@ -62,7 +62,9 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
      */
     public function create(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
     {
-        return $this->getEntityManager()->createProductOffer($productOfferTransfer);
+        return $this->getFactory()
+            ->createProductOfferWriter()
+            ->create($productOfferTransfer);
     }
 
     /**
@@ -111,5 +113,19 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
         return $this->getFactory()
             ->createItemProductOfferChecker()
             ->checkItemProductOffer($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $currentStatus
+     *
+     * @return string[]
+     */
+    public function getApplicableApprovalStatuses(string $currentStatus): array
+    {
+        return $this->getFactory()->createProductOfferStatusReader()->getApplicableApprovalStatuses($currentStatus);
     }
 }

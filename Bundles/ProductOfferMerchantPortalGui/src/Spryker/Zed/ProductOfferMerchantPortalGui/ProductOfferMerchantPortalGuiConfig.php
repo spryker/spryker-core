@@ -14,21 +14,11 @@ class ProductOfferMerchantPortalGuiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string
+     * @return int
      */
-    public function getTableDefaultUiDateFormat(): string
+    public function getDashboardExpiringOffersDaysThreshold(): int
     {
-        return 'dd.MM.y';
-    }
-
-    /**
-     * @api
-     *
-     * @return int[]
-     */
-    public function getTableDefaultAvailablePageSizes(): array
-    {
-        return [10, 25, 50, 100];
+        return 5;
     }
 
     /**
@@ -36,18 +26,8 @@ class ProductOfferMerchantPortalGuiConfig extends AbstractBundleConfig
      *
      * @return int
      */
-    public function getTableDefaultPageSize(): int
+    public function getDashboardLowStockThreshold(): int
     {
-        return 10;
-    }
-
-    /**
-     * @api
-     *
-     * @return int
-     */
-    public function getTableDefaultPage(): int
-    {
-        return 1;
+        return 5;
     }
 }

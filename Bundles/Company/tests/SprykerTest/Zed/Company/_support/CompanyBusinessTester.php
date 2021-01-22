@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Company\Persistence\CompanyRepository;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -31,10 +29,6 @@ use Spryker\Zed\Company\Persistence\CompanyRepository;
 class CompanyBusinessTester extends Actor
 {
     use _generated\CompanyBusinessTesterActions;
-
-    /**
-     * Define custom actions here
-     */
 
     /**
      * @param int $idCompany

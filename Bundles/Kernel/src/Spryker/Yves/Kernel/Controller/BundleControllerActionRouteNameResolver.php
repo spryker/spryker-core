@@ -7,23 +7,23 @@
 
 namespace Spryker\Yves\Kernel\Controller;
 
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\StringToLower;
+use Laminas\Filter\Word\CamelCaseToDash;
 use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
 use Spryker\Shared\Kernel\Communication\RouteNameResolverInterface;
-use Zend\Filter\FilterChain;
-use Zend\Filter\StringToLower;
-use Zend\Filter\Word\CamelCaseToDash;
 
 class BundleControllerActionRouteNameResolver implements RouteNameResolverInterface
 {
     /**
      * @var \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface
      */
-    private $bundleControllerAction;
+    protected $bundleControllerAction;
 
     /**
-     * @var \Zend\Filter\FilterChain
+     * @var \Laminas\Filter\FilterChain
      */
-    private $filter;
+    protected $filter;
 
     /**
      * @param \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface $bundleControllerAction
@@ -56,7 +56,7 @@ class BundleControllerActionRouteNameResolver implements RouteNameResolverInterf
     }
 
     /**
-     * @return \Zend\Filter\FilterChain
+     * @return \Laminas\Filter\FilterChain
      */
     private function getFilter()
     {

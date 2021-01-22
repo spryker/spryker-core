@@ -168,7 +168,8 @@ class PriceManagerTest extends Unit
         return new PriceProductFilter(
             $priceProductCartToPriceBridge,
             $priceFacadeMock,
-            $this->createCurrencyFacadeBridgeMock()
+            $this->createCurrencyFacadeBridgeMock(),
+            []
         );
     }
 
@@ -202,7 +203,7 @@ class PriceManagerTest extends Unit
 
         $priceProductFilterMock = $this->createPriceProductFilterMock($priceProductCartToPriceAdapter, $priceFacadeMock);
 
-        return new PriceManager($priceProductCartToPriceAdapter, $priceFacadeMock, $priceProductFilterMock, $this->createPriceCartConnectorToPriceProductServiceBridge());
+        return new PriceManager($priceProductCartToPriceAdapter, $priceFacadeMock, $priceProductFilterMock, $this->createPriceCartConnectorToPriceProductServiceBridge(), []);
     }
 
     /**

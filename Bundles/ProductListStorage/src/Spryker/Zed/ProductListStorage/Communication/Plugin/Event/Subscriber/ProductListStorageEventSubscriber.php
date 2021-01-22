@@ -61,10 +61,10 @@ class ProductListStorageEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addProductConcreteStorageListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ProductEvents::PRODUCT_CONCRETE_PUBLISH, new ProductConcreteStorageListener());
-        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_CREATE, new ProductConcreteStorageListener());
-        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_UPDATE, new ProductConcreteStorageListener());
-        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_DELETE, new ProductConcreteStorageListener());
+        $eventCollection->addListenerQueued(ProductEvents::PRODUCT_CONCRETE_PUBLISH, new ProductConcreteStorageListener(), 0, null, $this->getConfig()->getProductConcreteProductListEventQueueName());
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_CREATE, new ProductConcreteStorageListener(), 0, null, $this->getConfig()->getProductConcreteProductListEventQueueName());
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_UPDATE, new ProductConcreteStorageListener(), 0, null, $this->getConfig()->getProductConcreteProductListEventQueueName());
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_DELETE, new ProductConcreteStorageListener(), 0, null, $this->getConfig()->getProductConcreteProductListEventQueueName());
     }
 
     /**
@@ -74,9 +74,9 @@ class ProductListStorageEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addProductCategoryConcreteStorageListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ProductCategoryEvents::ENTITY_SPY_PRODUCT_CATEGORY_CREATE, new ProductCategoryConcreteStorageListener());
-        $eventCollection->addListenerQueued(ProductCategoryEvents::ENTITY_SPY_PRODUCT_CATEGORY_UPDATE, new ProductCategoryConcreteStorageListener());
-        $eventCollection->addListenerQueued(ProductCategoryEvents::ENTITY_SPY_PRODUCT_CATEGORY_DELETE, new ProductCategoryConcreteStorageListener());
+        $eventCollection->addListenerQueued(ProductCategoryEvents::ENTITY_SPY_PRODUCT_CATEGORY_CREATE, new ProductCategoryConcreteStorageListener(), 0, null, $this->getConfig()->getProductConcreteProductListEventQueueName());
+        $eventCollection->addListenerQueued(ProductCategoryEvents::ENTITY_SPY_PRODUCT_CATEGORY_UPDATE, new ProductCategoryConcreteStorageListener(), 0, null, $this->getConfig()->getProductConcreteProductListEventQueueName());
+        $eventCollection->addListenerQueued(ProductCategoryEvents::ENTITY_SPY_PRODUCT_CATEGORY_DELETE, new ProductCategoryConcreteStorageListener(), 0, null, $this->getConfig()->getProductConcreteProductListEventQueueName());
     }
 
     /**
@@ -86,10 +86,10 @@ class ProductListStorageEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addProductListProductCategoryConcreteStorageListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ProductListEvents::PRODUCT_LIST_CATEGORY_PUBLISH, new ProductListProductCategoryConcreteStorageListener());
-        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_CATEGORY_CREATE, new ProductListProductCategoryConcreteStorageListener());
-        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_CATEGORY_UPDATE, new ProductListProductCategoryConcreteStorageListener());
-        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_CATEGORY_DELETE, new ProductListProductCategoryConcreteStorageListener());
+        $eventCollection->addListenerQueued(ProductListEvents::PRODUCT_LIST_CATEGORY_PUBLISH, new ProductListProductCategoryConcreteStorageListener(), 0, null, $this->getConfig()->getProductConcreteProductListEventQueueName());
+        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_CATEGORY_CREATE, new ProductListProductCategoryConcreteStorageListener(), 0, null, $this->getConfig()->getProductConcreteProductListEventQueueName());
+        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_CATEGORY_UPDATE, new ProductListProductCategoryConcreteStorageListener(), 0, null, $this->getConfig()->getProductConcreteProductListEventQueueName());
+        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_CATEGORY_DELETE, new ProductListProductCategoryConcreteStorageListener(), 0, null, $this->getConfig()->getProductConcreteProductListEventQueueName());
     }
 
     /**
@@ -99,10 +99,10 @@ class ProductListStorageEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addProductListProductConcreteStorageListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ProductListEvents::PRODUCT_LIST_PRODUCT_CONCRETE_PUBLISH, new ProductListProductConcreteStorageListener());
-        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_PRODUCT_CONCRETE_CREATE, new ProductListProductConcreteStorageListener());
-        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_PRODUCT_CONCRETE_UPDATE, new ProductListProductConcreteStorageListener());
-        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_PRODUCT_CONCRETE_DELETE, new ProductListProductConcreteStorageListener());
+        $eventCollection->addListenerQueued(ProductListEvents::PRODUCT_LIST_PRODUCT_CONCRETE_PUBLISH, new ProductListProductConcreteStorageListener(), 0, null, $this->getConfig()->getProductConcreteProductListEventQueueName());
+        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_PRODUCT_CONCRETE_CREATE, new ProductListProductConcreteStorageListener(), 0, null, $this->getConfig()->getProductConcreteProductListEventQueueName());
+        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_PRODUCT_CONCRETE_UPDATE, new ProductListProductConcreteStorageListener(), 0, null, $this->getConfig()->getProductConcreteProductListEventQueueName());
+        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_PRODUCT_CONCRETE_DELETE, new ProductListProductConcreteStorageListener(), 0, null, $this->getConfig()->getProductConcreteProductListEventQueueName());
     }
 
     /**
@@ -112,10 +112,10 @@ class ProductListStorageEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addProductListProductAbstractStorageListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ProductListEvents::PRODUCT_LIST_PRODUCT_CONCRETE_PUBLISH, new ProductListProductAbstractStorageListener());
-        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_PRODUCT_CONCRETE_CREATE, new ProductListProductAbstractStorageListener());
-        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_PRODUCT_CONCRETE_UPDATE, new ProductListProductAbstractStorageListener());
-        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_PRODUCT_CONCRETE_DELETE, new ProductListProductAbstractStorageListener());
+        $eventCollection->addListenerQueued(ProductListEvents::PRODUCT_LIST_PRODUCT_CONCRETE_PUBLISH, new ProductListProductAbstractStorageListener(), 0, null, $this->getConfig()->getProductAbstractProductListEventQueueName());
+        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_PRODUCT_CONCRETE_CREATE, new ProductListProductAbstractStorageListener(), 0, null, $this->getConfig()->getProductAbstractProductListEventQueueName());
+        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_PRODUCT_CONCRETE_UPDATE, new ProductListProductAbstractStorageListener(), 0, null, $this->getConfig()->getProductAbstractProductListEventQueueName());
+        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_PRODUCT_CONCRETE_DELETE, new ProductListProductAbstractStorageListener(), 0, null, $this->getConfig()->getProductAbstractProductListEventQueueName());
     }
 
     /**
@@ -125,10 +125,10 @@ class ProductListStorageEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addProductAbstractStorageListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ProductEvents::PRODUCT_CONCRETE_PUBLISH, new ProductAbstractStorageListener());
-        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_CREATE, new ProductAbstractStorageListener());
-        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_UPDATE, new ProductAbstractStorageListener());
-        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_DELETE, new ProductAbstractStorageListener());
+        $eventCollection->addListenerQueued(ProductEvents::PRODUCT_CONCRETE_PUBLISH, new ProductAbstractStorageListener(), 0, null, $this->getConfig()->getProductAbstractProductListEventQueueName());
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_CREATE, new ProductAbstractStorageListener(), 0, null, $this->getConfig()->getProductAbstractProductListEventQueueName());
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_UPDATE, new ProductAbstractStorageListener(), 0, null, $this->getConfig()->getProductAbstractProductListEventQueueName());
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_DELETE, new ProductAbstractStorageListener(), 0, null, $this->getConfig()->getProductAbstractProductListEventQueueName());
     }
 
     /**
@@ -138,10 +138,10 @@ class ProductListStorageEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addProductListProductCategoryAbstractStorageListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ProductListEvents::PRODUCT_LIST_CATEGORY_PUBLISH, new ProductListProductCategoryAbstractStorageListener());
-        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_CATEGORY_CREATE, new ProductListProductCategoryAbstractStorageListener());
-        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_CATEGORY_UPDATE, new ProductListProductCategoryAbstractStorageListener());
-        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_CATEGORY_DELETE, new ProductListProductCategoryAbstractStorageListener());
+        $eventCollection->addListenerQueued(ProductListEvents::PRODUCT_LIST_CATEGORY_PUBLISH, new ProductListProductCategoryAbstractStorageListener(), 0, null, $this->getConfig()->getProductAbstractProductListEventQueueName());
+        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_CATEGORY_CREATE, new ProductListProductCategoryAbstractStorageListener(), 0, null, $this->getConfig()->getProductAbstractProductListEventQueueName());
+        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_CATEGORY_UPDATE, new ProductListProductCategoryAbstractStorageListener(), 0, null, $this->getConfig()->getProductAbstractProductListEventQueueName());
+        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_CATEGORY_DELETE, new ProductListProductCategoryAbstractStorageListener(), 0, null, $this->getConfig()->getProductAbstractProductListEventQueueName());
     }
 
     /**
@@ -151,9 +151,9 @@ class ProductListStorageEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addProductCategoryAbstractStorageListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ProductCategoryEvents::ENTITY_SPY_PRODUCT_CATEGORY_CREATE, new ProductCategoryAbstractStorageListener());
-        $eventCollection->addListenerQueued(ProductCategoryEvents::ENTITY_SPY_PRODUCT_CATEGORY_UPDATE, new ProductCategoryAbstractStorageListener());
-        $eventCollection->addListenerQueued(ProductCategoryEvents::ENTITY_SPY_PRODUCT_CATEGORY_DELETE, new ProductCategoryAbstractStorageListener());
+        $eventCollection->addListenerQueued(ProductCategoryEvents::ENTITY_SPY_PRODUCT_CATEGORY_CREATE, new ProductCategoryAbstractStorageListener(), 0, null, $this->getConfig()->getProductAbstractProductListEventQueueName());
+        $eventCollection->addListenerQueued(ProductCategoryEvents::ENTITY_SPY_PRODUCT_CATEGORY_UPDATE, new ProductCategoryAbstractStorageListener(), 0, null, $this->getConfig()->getProductAbstractProductListEventQueueName());
+        $eventCollection->addListenerQueued(ProductCategoryEvents::ENTITY_SPY_PRODUCT_CATEGORY_DELETE, new ProductCategoryAbstractStorageListener(), 0, null, $this->getConfig()->getProductAbstractProductListEventQueueName());
     }
 
     /**
@@ -163,6 +163,6 @@ class ProductListStorageEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addProductListListenerUpdate(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_UPDATE, new ProductListStorageListener());
+        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_UPDATE, new ProductListStorageListener(), 0, null, $this->getConfig()->getProductAbstractProductListEventQueueName());
     }
 }

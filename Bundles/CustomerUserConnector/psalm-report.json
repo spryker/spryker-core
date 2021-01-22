@@ -1,0 +1,42 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method setFkUser on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerUserConnector/src/Spryker/Zed/CustomerUserConnector/Business/Model/CustomerUserConnectionUpdater.php",
+            "snippet": "            $customerEntity->setFkUser($customerUserConnectionUpdateTransfer->getIdUser());",
+            "selected_text": "setFkUser",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 68,
+            "line_to": 68,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method setFkUser on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerUserConnector/src/Spryker/Zed/CustomerUserConnector/Business/Model/CustomerUserConnectionUpdater.php",
+            "snippet": "            $customerEntity->setFkUser(null);",
+            "selected_text": "setFkUser",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CustomerUserConnector\\Dependency\\QueryContainer\\CustomerUserConnectorToUserQueryContainerInterface::queryUserById cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerUserConnector/src/Spryker/Zed/CustomerUserConnector/Communication/Plugin/CustomerTransferUsernameExpanderPlugin.php",
+            "snippet": "            ->queryUserById($customerTransfer->getFkUser())",
+            "selected_text": "$customerTransfer->getFkUser()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

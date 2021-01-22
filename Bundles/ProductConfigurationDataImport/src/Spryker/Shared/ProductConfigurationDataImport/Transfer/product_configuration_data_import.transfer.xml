@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ProductConfiguration">
+        <property name="idProductConfiguration" type="int"/>
+        <property name="fkProduct" type="int"/>
+        <property name="configuratorKey" type="string"/>
+        <property name="isComplete" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductConfigurationInstance">
+        <property name="configuration" type="string"/>
+        <property name="configuratorKey" type="string"/>
+        <property name="isComplete" type="bool"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
+    </transfer>
+
+    <transfer name="ProductConfigurationFilter">
+        <property name="productConfigurationIds" type="int[]" singular="productConfigurationId"/>
+        <property name="filter" type="Filter"/>
+    </transfer>
+
+    <transfer name="ProductConfigurationCollection">
+        <property name="productConfigurations" type="ProductConfiguration[]" singular="productConfiguration"/>
+    </transfer>
+
+    <transfer name="DataImporterConfiguration">
+    </transfer>
+
+    <transfer name="DataImporterReport">
+    </transfer>
+
+    <transfer name="Filter">
+    </transfer>
+</transfers>

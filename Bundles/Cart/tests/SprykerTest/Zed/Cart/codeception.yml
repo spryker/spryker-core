@@ -23,6 +23,9 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+                - \SprykerTest\Shared\PriceProduct\Helper\PriceProductDataHelper
 
     Communication:
         path: Communication
@@ -35,8 +38,4 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-                - \SprykerTest\Shared\Application\Helper\ZedHelper:
-                - \SprykerTest\Shared\Testify\Helper\ZedControllerTable:
-                    depends: \SprykerTest\Shared\Testify\Helper\ZedBootstrap
-                - \SprykerTest\Shared\Testify\Helper\ZedBootstrap:
-                    depends: \SprykerTest\Shared\Testify\Helper\BundleConfig
+                - \SprykerTest\Shared\Application\Helper\ZedHelper

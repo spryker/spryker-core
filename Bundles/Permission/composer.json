@@ -4,7 +4,7 @@
   "description": "Permission module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/kernel": "^3.30.0",
     "spryker/permission-extension": "^1.1.0",
     "spryker/zed-request": "^3.0.0"

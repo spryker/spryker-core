@@ -9,10 +9,12 @@ namespace Spryker\Zed\PriceProductOffer\Persistence;
 
 use Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOfferQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\PriceProductOffer\Persistence\Propel\Mapper\PriceProductOfferMapper;
 
 /**
  * @method \Spryker\Zed\PriceProductOffer\Persistence\PriceProductOfferRepositoryInterface getRepository()
  * @method \Spryker\Zed\PriceProductOffer\PriceProductOfferConfig getConfig()
+ * @method \Spryker\Zed\PriceProductOffer\Persistence\PriceProductOfferEntityManagerInterface getEntityManager()
  */
 class PriceProductOfferPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -22,5 +24,13 @@ class PriceProductOfferPersistenceFactory extends AbstractPersistenceFactory
     public function getPriceProductOfferPropelQuery(): SpyPriceProductOfferQuery
     {
         return SpyPriceProductOfferQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductOffer\Persistence\Propel\Mapper\PriceProductOfferMapper
+     */
+    public function createPriceProductOfferMapper(): PriceProductOfferMapper
+    {
+        return new PriceProductOfferMapper();
     }
 }

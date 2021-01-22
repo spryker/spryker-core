@@ -1,0 +1,55 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 86,
+            "line_to": 86,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<string, array<string, string>>' for Spryker\\Glue\\CmsPagesContentBannersResourceRelationship\\Processor\\Reader\\ContentBannerReader::getGroupedContentBannerKeys is incorrect, got 'array<int(0)|string, non-empty-mixed>'",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPagesContentBannersResourceRelationship/src/Spryker/Glue/CmsPagesContentBannersResourceRelationship/Processor/Reader/ContentBannerReader.php",
+            "snippet": "     * @phpstan-return array<string, array<string, string>>",
+            "selected_text": "array<string, array<string, string>>",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 104,
+            "line_to": 104,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'array<int(0)|string, non-empty-mixed>' does not match the declared return type 'array<string, array<string, string>>' for Spryker\\Glue\\CmsPagesContentBannersResourceRelationship\\Processor\\Reader\\ContentBannerReader::getGroupedContentBannerKeys",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPagesContentBannersResourceRelationship/src/Spryker/Glue/CmsPagesContentBannersResourceRelationship/Processor/Reader/ContentBannerReader.php",
+            "snippet": "        return $groupedContentBannerKeys;",
+            "selected_text": "$groupedContentBannerKeys",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 62,
+            "line_to": 62,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of Spryker\\Glue\\CmsPagesContentBannersResourceRelationship\\Dependency\\Client\\CmsPagesContentBannersResourceRelationshipToCmsStorageClientInterface::getCmsPageStorageByUuids cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPagesContentBannersResourceRelationship/src/Spryker/Glue/CmsPagesContentBannersResourceRelationship/Processor/Reader/ContentBannerReader.php",
+            "snippet": "            $this->storeClient->getCurrentStore()->getName()",
+            "selected_text": "$this->storeClient->getCurrentStore()->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 100,
+            "line_to": 100,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $groupedContentBannerKeys[null|string] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPagesContentBannersResourceRelationship/src/Spryker/Glue/CmsPagesContentBannersResourceRelationship/Processor/Reader/ContentBannerReader.php",
+            "snippet": "            $groupedContentBannerKeys[$cmsPageStorageTransfer->getUuid()]",
+            "selected_text": "$groupedContentBannerKeys",
+            "error_level": 3,
+            "shortcode": 125
+        }
+    ],
+    "deprecation": []
+}

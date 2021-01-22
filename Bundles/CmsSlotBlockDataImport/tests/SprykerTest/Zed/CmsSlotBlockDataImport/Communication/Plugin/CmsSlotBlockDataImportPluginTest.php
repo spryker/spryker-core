@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerTest\Zed\CmsSlotBlockDataImport\Communication\Plugin;
@@ -147,8 +147,8 @@ class CmsSlotBlockDataImportPluginTest extends Unit
 
         //Assert
         $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
-        $this->assertEquals($cmsSlotBlockTransferFromDb->getIdCmsBlock(), $cmsBlockTransfer->getIdCmsBlock());
-        $this->assertEquals($cmsSlotBlockTransferFromDb->getPosition(), 1);
+        $this->assertSame($cmsSlotBlockTransferFromDb->getIdCmsBlock(), $cmsBlockTransfer->getIdCmsBlock());
+        $this->assertSame(1, $cmsSlotBlockTransferFromDb->getPosition());
         $this->assertEquals($cmsSlotBlockConditions, $cmsSlotBlockTransferFromDb->getConditions());
     }
 

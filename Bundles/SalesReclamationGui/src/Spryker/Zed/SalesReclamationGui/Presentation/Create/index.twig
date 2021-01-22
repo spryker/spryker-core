@@ -5,8 +5,7 @@
 {% endblock %}
 
 {% block action %}
-    {{ backActionButton('/sales', '
-    Back to Orders' | trans) }}
+    {{ backActionButton('/sales', 'Back to Orders' | trans) }}
 {% endblock %}
 
 {% block content %}
@@ -19,7 +18,8 @@
             } -%}
         </div>
 
-        <input type="submit" value="Create Reclamation" class="btn btn-primary"/>
+        <input type="submit" value="{{ 'Create Reclamation' | trans }}" class="btn btn-primary"/>
+        <input type="hidden" name="_token" value="{{ csrf_token('reclamation_form_token') }}"/>
     </form>
 {% endblock %}
 

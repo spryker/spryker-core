@@ -21,7 +21,7 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\InstancePoolingTrait;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 
 /**
- * @deprecated Please switch to `Spryker\Zed\Testify\Bootstrap\ZedBootstrap`.
+ * @deprecated Please switch to {@link \Spryker\Zed\Testify\Bootstrap\ZedBootstrap}.
  */
 class SystemUnderTestBootstrap
 {
@@ -63,7 +63,7 @@ class SystemUnderTestBootstrap
     /**
      * @param string $application
      *
-     * @return \Spryker\Shared\Application\Application|null
+     * @return \Spryker\Shared\Application\ApplicationInterface|null
      */
     public function bootstrap($application = self::APPLICATION_ZED)
     {
@@ -129,7 +129,7 @@ class SystemUnderTestBootstrap
     }
 
     /**
-     * @return \Spryker\Shared\Application\Application
+     * @return \Spryker\Shared\Application\ApplicationInterface
      */
     protected function bootstrapYves()
     {

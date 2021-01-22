@@ -1,4 +1,5 @@
 parameters:
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false
     ignoreErrors:
-    - '#Call to an undefined method .+Criteria::.+\(\).#'
-    - '#Cannot access offset .+ on .+SpyProductOptionValue.#'
+        - '#Cannot access offset .+ on .+SpyProductOptionValue.#'

@@ -48,6 +48,7 @@ class ProductViewProductOfferExpanderPlugin extends AbstractPlugin implements Pr
             $productStorageCriteriaTransfer->modifiedToArray(),
             true
         );
+        $productOfferStorageCriteriaTransfer->fromArray($productViewTransfer->toArray(), true);
 
         $selectedAttributes = $productViewTransfer->getSelectedAttributes();
         if (isset($selectedAttributes[MerchantProductOfferStorageConfig::PRODUCT_OFFER_REFERENCE_ATTRIBUTE])) {

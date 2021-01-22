@@ -13,6 +13,8 @@ use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\CompanyUserGui\Communication\Form\DisableCompanyUserForm;
+use Spryker\Zed\CompanyUserGui\Communication\Form\EnableCompanyUserForm;
 use Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableExpanderPluginExecutorInterface;
 use Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig;
 use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableDeleteActionPluginInterface;
@@ -74,7 +76,7 @@ class CompanyUserTable extends AbstractTable
         $config->setHeader([
             CompanyUserGuiConfig::COL_ID_COMPANY_USER => 'User ID',
             static::COL_COMPANY_NAME => 'Company Name',
-            static::COL_COMPANY_USER_NAME => 'User Name',
+            static::COL_COMPANY_USER_NAME => 'Company User Name',
         ]);
 
         $config->setSearchable([
@@ -257,19 +259,25 @@ class CompanyUserTable extends AbstractTable
     protected function generateCompanyUserStatusChangeButton(array $companyUserDataItem): string
     {
         if ($companyUserDataItem[SpyCompanyUserTableMap::COL_IS_ACTIVE]) {
-            return $this->generateRemoveButton(
+            return $this->generateFormButton(
                 Url::generate(CompanyUserGuiConfig::URL_DISABLE_COMPANY_USER, [
                     CompanyUserGuiConfig::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
                 ]),
-                'Disable'
+                'Disable',
+                DisableCompanyUserForm::class,
+                [
+                    static::BUTTON_CLASS => 'btn-danger safe-submit',
+                    static::BUTTON_ICON => 'fa-trash',
+                ]
             );
         }
 
-        return $this->generateViewButton(
+        return $this->generateFormButton(
             Url::generate(CompanyUserGuiConfig::URL_ENABLE_COMPANY_USER, [
                 CompanyUserGuiConfig::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
             ]),
-            'Enable'
+            'Enable',
+            EnableCompanyUserForm::class
         );
     }
 

@@ -13,13 +13,13 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 interface SearchDelegatorInterface
 {
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $queryCriteria
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $query
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
      * @param array $requestParameters
      *
      * @return mixed
      */
-    public function search(QueryInterface $queryCriteria, array $resultFormatters = [], array $requestParameters = []);
+    public function search(QueryInterface $query, array $resultFormatters = [], array $requestParameters = []);
 
     /**
      * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer

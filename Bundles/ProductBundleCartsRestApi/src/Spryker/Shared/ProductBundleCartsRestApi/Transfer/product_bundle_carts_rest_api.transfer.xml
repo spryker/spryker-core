@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="RestItemsAttributes">
+        <property name="sku" type="string" restRequestParameter="required"/>
+        <property name="quantity" type="int" restRequestParameter="required"/>
+        <property name="groupKey" type="string"/>
+        <property name="abstractSku" type="string"/>
+        <property name="amount" type="int"/>
+        <property name="calculations" type="RestCartItemCalculations"/>
+    </transfer>
+
+    <transfer name="RestCartItemCalculations">
+        <property name="unitPrice" type="int"/>
+        <property name="sumPrice" type="int"/>
+
+        <property name="taxRate" type="int"/>
+
+        <property name="unitNetPrice" type="int"/>
+        <property name="sumNetPrice" type="int"/>
+
+        <property name="unitGrossPrice" type="int"/>
+        <property name="sumGrossPrice" type="int"/>
+
+        <property name="unitTaxAmountFullAggregation" type="int"/>
+        <property name="sumTaxAmountFullAggregation" type="int"/>
+
+        <property name="sumSubtotalAggregation" type="int"/>
+        <property name="unitSubtotalAggregation" type="int"/>
+
+        <property name="unitProductOptionPriceAggregation" type="int"/>
+        <property name="sumProductOptionPriceAggregation" type="int"/>
+
+        <property name="unitDiscountAmountAggregation" type="int"/>
+        <property name="sumDiscountAmountAggregation" type="int"/>
+
+        <property name="unitDiscountAmountFullAggregation" type="int"/>
+        <property name="sumDiscountAmountFullAggregation" type="int"/>
+
+        <property name="unitPriceToPayAggregation" type="int"/>
+        <property name="sumPriceToPayAggregation" type="int"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="uuid" type="string"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="bundleItems" type="Item[]" singular="bundleItem"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="groupKey" type="string"/>
+    </transfer>
+
+    <transfer name="CartItemRequest">
+        <property name="groupKey" type="string"/>
+    </transfer>
+
+</transfers>

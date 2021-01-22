@@ -15,7 +15,7 @@ use Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProduct
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProductOfferStorageToStorageClientInterface;
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Service\MerchantProductOfferStorageToUtilEncodingServiceInterface;
 use Spryker\Client\MerchantProductOfferStorage\Mapper\MerchantProductOfferMapperInterface;
-use Spryker\Client\MerchantProductOfferStorage\ProductConcreteDefaultProductOffer\ProductConcreteDefaultProductOfferInterface;
+use Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageCollectionSorterPluginInterface;
 
 class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
 {
@@ -55,9 +55,14 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     protected $productOfferStorageKeyGenerator;
 
     /**
-     * @var \Spryker\Client\MerchantProductOfferStorage\ProductConcreteDefaultProductOffer\ProductConcreteDefaultProductOfferInterface
+     * @var \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageExpanderPluginInterface[]
      */
-    protected $productConcreteDefaultProductOffer;
+    protected $productOfferStorageExpanderPlugins;
+
+    /**
+     * @var \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageCollectionSorterPluginInterface
+     */
+    protected $productOfferStorageCollectionSorterPlugin;
 
     /**
      * @param \Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProductOfferStorageToStorageClientInterface $storageClient
@@ -65,7 +70,8 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
      * @param \Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProductOfferStorageToMerchantStorageClientInterface $merchantStorageClient
      * @param \Spryker\Client\MerchantProductOfferStorage\Dependency\Service\MerchantProductOfferStorageToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Client\MerchantProductOfferStorage\Storage\ProductOfferStorageKeyGeneratorInterface $productOfferStorageKeyGenerator
-     * @param \Spryker\Client\MerchantProductOfferStorage\ProductConcreteDefaultProductOffer\ProductConcreteDefaultProductOfferInterface $productConcreteDefaultProductOffer
+     * @param \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageCollectionSorterPluginInterface $productOfferStorageCollectionSorterPlugin
+     * @param \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageExpanderPluginInterface[] $productOfferStorageExpanderPlugins
      */
     public function __construct(
         MerchantProductOfferStorageToStorageClientInterface $storageClient,
@@ -73,14 +79,16 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
         MerchantProductOfferStorageToMerchantStorageClientInterface $merchantStorageClient,
         MerchantProductOfferStorageToUtilEncodingServiceInterface $utilEncodingService,
         ProductOfferStorageKeyGeneratorInterface $productOfferStorageKeyGenerator,
-        ProductConcreteDefaultProductOfferInterface $productConcreteDefaultProductOffer
+        ProductOfferStorageCollectionSorterPluginInterface $productOfferStorageCollectionSorterPlugin,
+        array $productOfferStorageExpanderPlugins
     ) {
         $this->storageClient = $storageClient;
         $this->merchantProductOfferMapper = $merchantProductOfferMapper;
         $this->merchantStorageClient = $merchantStorageClient;
         $this->utilEncodingService = $utilEncodingService;
         $this->productOfferStorageKeyGenerator = $productOfferStorageKeyGenerator;
-        $this->productConcreteDefaultProductOffer = $productConcreteDefaultProductOffer;
+        $this->productOfferStorageCollectionSorterPlugin = $productOfferStorageCollectionSorterPlugin;
+        $this->productOfferStorageExpanderPlugins = $productOfferStorageExpanderPlugins;
     }
 
     /**
@@ -116,9 +124,13 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
         }
 
         $productOfferStorageTransfers = $this->expandProductOffersWithMerchants($productOfferStorageTransfers);
-        $productOfferStorageTransfers = $this->expandProductOffersWithDefaultProductOffer($productOfferStorageTransfers, $productOfferStorageCriteriaTransfer);
+        $productOfferStorageTransfers = $this->executeProductOfferStorageExpanderPlugins($productOfferStorageTransfers);
 
-        return $productOfferStorageCollectionTransfer->setProductOffers(new ArrayObject($productOfferStorageTransfers));
+        $productOfferStorageCollectionTransfer->setProductOffersStorage(new ArrayObject($productOfferStorageTransfers));
+        $productOfferStorageCollectionTransfer = $this->productOfferStorageCollectionSorterPlugin
+            ->sort($productOfferStorageCollectionTransfer);
+
+        return $this->expandProductOffersWithDefaultProductOffer($productOfferStorageCollectionTransfer);
     }
 
     /**
@@ -245,33 +257,39 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer[] $productOfferStorageTransfers
-     * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
      */
-    protected function expandProductOffersWithDefaultProductOffer(
-        array $productOfferStorageTransfers,
-        ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
-    ): array {
-        $defaultProductOffers = $this->productConcreteDefaultProductOffer->getProductOfferReferences(
-            $productOfferStorageTransfers,
-            $productOfferStorageCriteriaTransfer
-        );
-
-        foreach ($productOfferStorageTransfers as $productOfferStorageTransfer) {
-            if (
-                !isset($defaultProductOffers[$productOfferStorageTransfer->getProductConcreteSku()])
-                || $productOfferStorageTransfer->getProductOfferReference() !== $defaultProductOffers[$productOfferStorageTransfer->getProductConcreteSku()]
-            ) {
-                $productOfferStorageTransfer->setIsDefault(false);
-
-                continue;
+    protected function executeProductOfferStorageExpanderPlugins(array $productOfferStorageTransfers): array
+    {
+        foreach ($productOfferStorageTransfers as $key => $productOfferStorageTransfer) {
+            foreach ($this->productOfferStorageExpanderPlugins as $productOfferStorageExpanderPlugin) {
+                $productOfferStorageTransfers[$key] = $productOfferStorageExpanderPlugin->expand($productOfferStorageTransfer);
             }
-
-            $productOfferStorageTransfer->setIsDefault(true);
         }
 
         return $productOfferStorageTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer $productOfferStorageCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer
+     */
+    protected function expandProductOffersWithDefaultProductOffer(
+        ProductOfferStorageCollectionTransfer $productOfferStorageCollectionTransfer
+    ): ProductOfferStorageCollectionTransfer {
+        if ($productOfferStorageCollectionTransfer->getProductOffersStorage()->count() < 1) {
+            return $productOfferStorageCollectionTransfer;
+        }
+
+        $productOfferStorageTransfers = $productOfferStorageCollectionTransfer->getProductOffersStorage()->getArrayCopy();
+
+        foreach ($productOfferStorageTransfers as $key => $productOfferStorageTransfer) {
+            $productOfferStorageTransfers[$key] = $productOfferStorageTransfer->setIsDefault($key < 1);
+        }
+
+        return $productOfferStorageCollectionTransfer->setProductOffersStorage(new ArrayObject($productOfferStorageTransfers));
     }
 
     /**

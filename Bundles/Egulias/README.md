@@ -1,6 +1,6 @@
 # Egulias Module
 [![Build Status](https://travis-ci.org/spryker/egulias.svg)](https://travis-ci.org/spryker/egulias)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Egulias module is a 3rd party connector module for "egulias" vendor libraries.
 "egulias/email-validator" provides multiple commonly used email validation procedures.

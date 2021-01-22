@@ -7,10 +7,9 @@
 
 namespace Spryker\Glue\Kernel;
 
-use Spryker\Service\Container\Container as SprykerContainer;
-use Spryker\Shared\Kernel\ContainerInterface;
+use Spryker\Shared\Kernel\Container\AbstractApplicationContainer;
 
-class Container extends SprykerContainer implements ContainerInterface
+class Container extends AbstractApplicationContainer
 {
     /**
      * @return \Generated\Glue\Ide\AutoCompletion|\Spryker\Shared\Kernel\LocatorLocatorInterface

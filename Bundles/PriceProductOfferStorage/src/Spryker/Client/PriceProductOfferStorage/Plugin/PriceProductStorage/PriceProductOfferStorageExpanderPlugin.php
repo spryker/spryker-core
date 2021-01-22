@@ -8,33 +8,38 @@
 namespace Spryker\Client\PriceProductOfferStorage\Plugin\PriceProductStorage;
 
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
-use Generated\Shared\Transfer\ProductViewTransfer;
+use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductFilterExpanderPluginInterface;
+use Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageExpanderPluginInterface;
 
 /**
  * @method \Spryker\Client\PriceProductOfferStorage\PriceProductOfferStorageClientInterface getClient()
  * @method \Spryker\Client\PriceProductOfferStorage\PriceProductOfferStorageFactory getFactory()
  */
-class PriceProductOfferStorageExpanderPlugin extends AbstractPlugin implements PriceProductFilterExpanderPluginInterface
+class PriceProductOfferStorageExpanderPlugin extends AbstractPlugin implements ProductOfferStorageExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Expands ProductViewTransfer with product offer reference parameter.
+     * - Expands ProductOfferStorageTransfer with price.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer $productOfferStorageTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer
      */
-    public function expand(ProductViewTransfer $productViewTransfer, PriceProductFilterTransfer $priceProductFilterTransfer): PriceProductFilterTransfer
+    public function expand(ProductOfferStorageTransfer $productOfferStorageTransfer): ProductOfferStorageTransfer
     {
-        if ($productViewTransfer->getProductOfferReference()) {
-            $priceProductFilterTransfer->setProductOfferReference($productViewTransfer->getProductOfferReference());
-        }
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())
+            ->setIdProductAbstract($productOfferStorageTransfer->getIdProductAbstract())
+            ->setIdProduct($productOfferStorageTransfer->getIdProductConcrete())
+            ->setProductOfferReference($productOfferStorageTransfer->getProductOfferReference())
+            ->setQuantity(1);
 
-        return $priceProductFilterTransfer;
+        return $productOfferStorageTransfer->setPrice(
+            $this->getFactory()
+                ->getPriceProductStorageClient()
+                ->getResolvedCurrentProductPriceTransfer($priceProductFilterTransfer)
+        );
     }
 }

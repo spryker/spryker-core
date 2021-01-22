@@ -34,7 +34,15 @@ class VersionPageController extends AbstractController
     public function publishAction(Request $request)
     {
         $idCmsPage = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_PAGE));
-        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
+        $redirectUrl = $request->get(static::URL_PARAM_REDIRECT_URL);
+
+        $form = $this->getFactory()->createPublishVersionPageForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid.');
+
+            return $this->redirectResponseExternal($redirectUrl);
+        }
 
         try {
             $this->getFactory()
@@ -49,10 +57,10 @@ class VersionPageController extends AbstractController
         } catch (CannotActivatePageException $exception) {
             $this->addErrorMessage('Cannot publish the CMS page. Please fill in all placeholders for this page.');
 
-            return $this->redirectResponseExternal($request->headers->get('referer'));
+            return $this->redirectResponseExternal($redirectUrl);
         }
 
-        return $this->redirectResponse($redirectUrl);
+        return $this->redirectResponseExternal($redirectUrl);
     }
 
     /**
@@ -71,7 +79,7 @@ class VersionPageController extends AbstractController
 
         $this->addSuccessMessage('Draft data successfully discarded.');
 
-        return $this->redirectResponse($redirectUrl);
+        return $this->redirectResponseExternal($redirectUrl);
     }
 
     /**

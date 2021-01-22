@@ -1,5 +1,18 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 109,
+            "line_to": 109,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyShoppingListCustomerStorageEntityTransfer>' for Spryker\\Zed\\ShoppingListStorage\\Persistence\\ShoppingListStorageRepository::findFilteredShoppingListCustomerStorageEntities",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListStorage/src/Spryker/Zed/ShoppingListStorage/Persistence/ShoppingListStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();",
+            "selected_text": "$this->buildQueryFromCriteria($query, $filterTransfer)->find()",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -12,42 +25,6 @@
             "selected_text": "$customerTransfer->getCustomerReference()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 45,
-            "line_to": 45,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListStorage/src/Spryker/Client/ShoppingListStorage/ShoppingListStorageDependencyProvider.php",
-            "snippet": "            return new ShoppingListStorageToCustomerClientBridge($container->getLocator()->customer()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 59,
-            "line_to": 59,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListStorage/src/Spryker/Client/ShoppingListStorage/ShoppingListStorageDependencyProvider.php",
-            "snippet": "            return new ShoppingListStorageToStorageClientBridge($container->getLocator()->storage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 74,
-            "line_to": 74,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListStorage/src/Spryker/Client/ShoppingListStorage/ShoppingListStorageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->synchronization()->service()",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
         },
         {
             "severity": "info",
@@ -90,7 +67,7 @@
             "line_from": 45,
             "line_to": 45,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ShoppingList\\Persistence\\SpyShoppingList|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ShoppingList\\Persistence\\SpyShoppingList> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ShoppingListStorage/src/Spryker/Zed/ShoppingListStorage/Persistence/ShoppingListStorageRepository.php",
             "snippet": "            ->toArray();",
             "selected_text": "toArray",
@@ -168,42 +145,6 @@
             "selected_text": "\\Orm\\Zed\\ShoppingListStorage\\Persistence\\SpyShoppingListCustomerStorage[]|\\Propel\\Runtime\\Collection\\ObjectCollection",
             "error_level": 4,
             "shortcode": 142
-        },
-        {
-            "severity": "info",
-            "line_from": 66,
-            "line_to": 66,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListStorage/src/Spryker/Zed/ShoppingListStorage/ShoppingListStorageDependencyProvider.php",
-            "snippet": "            return new ShoppingListStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 80,
-            "line_to": 80,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListStorage/src/Spryker/Zed/ShoppingListStorage/ShoppingListStorageDependencyProvider.php",
-            "snippet": "            return new ShoppingListStorageToCompanyUserFacadeBridge($container->getLocator()->companyUser()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 94,
-            "line_to": 94,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListStorage/src/Spryker/Zed/ShoppingListStorage/ShoppingListStorageDependencyProvider.php",
-            "snippet": "            return new ShoppingListStorageToCompanyBusinessUnitFacadeBridge($container->getLocator()->companyBusinessUnit()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

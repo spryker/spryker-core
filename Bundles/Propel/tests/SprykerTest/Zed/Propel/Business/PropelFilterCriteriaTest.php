@@ -35,9 +35,9 @@ class PropelFilterCriteriaTest extends Unit
         $propelCriteria = $filterCriteria->toCriteria();
 
         $this->assertInstanceOf(Criteria::class, $propelCriteria);
-        $this->assertEquals(-1, $propelCriteria->getLimit());
-        $this->assertEquals(0, $propelCriteria->getOffset());
-        $this->assertEquals([], $propelCriteria->getOrderByColumns());
+        $this->assertSame(-1, $propelCriteria->getLimit());
+        $this->assertSame(0, $propelCriteria->getOffset());
+        $this->assertSame([], $propelCriteria->getOrderByColumns());
     }
 
     /**
@@ -55,8 +55,8 @@ class PropelFilterCriteriaTest extends Unit
         $propelCriteria = $filterCriteria->toCriteria();
 
         $this->assertInstanceOf(Criteria::class, $propelCriteria);
-        $this->assertEquals(10, $propelCriteria->getLimit());
-        $this->assertEquals(0, $propelCriteria->getOffset());
+        $this->assertSame(10, $propelCriteria->getLimit());
+        $this->assertSame(0, $propelCriteria->getOffset());
         $this->assertEquals(['foobar DESC'], $propelCriteria->getOrderByColumns());
     }
 }

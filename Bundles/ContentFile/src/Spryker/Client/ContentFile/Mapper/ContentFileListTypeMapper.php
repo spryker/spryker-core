@@ -49,11 +49,11 @@ class ContentFileListTypeMapper implements ContentFileListTypeMapperInterface
             return null;
         }
 
-        $term = $contentTypeContextTransfer->getTerm();
+        $term = (string)$contentTypeContextTransfer->getTerm();
 
         if (!isset($this->contentFileListTermExecutors[$term])) {
             throw new InvalidFileListTermException(
-                sprintf('There is no matching Term for FileListType when provided with term %s.', $term)
+                sprintf('There is no matching ContentFileListTermExecutor for FileListType when provided with term `%s`.', $term)
             );
         }
 

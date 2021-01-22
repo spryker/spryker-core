@@ -1,0 +1,115 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 27,
+            "line_to": 27,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\ContentFileGui\\Communication\\Form\\Constraints\\ContentFileListConstraintValidator::validate has wrong name $fileIds, expecting $value as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentFileGui/src/Spryker/Zed/ContentFileGui/Communication/Form/Constraints/ContentFileListConstraintValidator.php",
+            "snippet": "    public function validate($fileIds, Constraint $constraint): void",
+            "selected_text": "$fileIds",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ContentFileGui\\Communication\\ContentFileGuiCommunicationFactory::createContentFileListSelectedTable expects array<array-key, int>, possibly different type array<empty, empty>|non-empty-string provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentFileGui/src/Spryker/Zed/ContentFileGui/Communication/Controller/FileListController.php",
+            "snippet": "            $this->getFactory()->createContentFileListSelectedTable($fileIds)->fetchData()",
+            "selected_text": "$fileIds",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 27,
+            "line_to": 27,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\ContentFileGui\\Communication\\Form\\Constraints\\ContentFileListConstraintValidator::validate has the more specific type 'array<array-key, mixed>', expecting 'mixed' as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentFileGui/src/Spryker/Zed/ContentFileGui/Communication/Form/Constraints/ContentFileListConstraintValidator.php",
+            "snippet": "    public function validate($fileIds, Constraint $constraint): void",
+            "selected_text": "$fileIds",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 60,
+            "line_to": 60,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Symfony\\Component\\Validator\\Context\\ExecutionContextInterface::buildViolation cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentFileGui/src/Spryker/Zed/ContentFileGui/Communication/Form/Constraints/ContentFileListConstraintValidator.php",
+            "snippet": "                ->buildViolation($messageTransfer->getValue())",
+            "selected_text": "$messageTransfer->getValue()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getData on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentFileGui/src/Spryker/Zed/ContentFileGui/Communication/Form/FileListContentTermForm.php",
+            "snippet": "                $localizedContentTransfer = $form->getParent()->getData();",
+            "selected_text": "getData",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "PossiblyNullPropertyFetch",
+            "message": "Cannot get property on possibly null variable $view->parent of type Symfony\\Component\\Form\\FormView|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentFileGui/src/Spryker/Zed/ContentFileGui/Communication/Form/FileListContentTermForm.php",
+            "snippet": "            $view->parent->vars['name']",
+            "selected_text": "$view->parent->vars",
+            "error_level": 3,
+            "shortcode": 82
+        },
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "PossiblyNullArrayAccess",
+            "message": "Cannot access array value on possibly null variable $view->parent->vars of type mixed|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentFileGui/src/Spryker/Zed/ContentFileGui/Communication/Form/FileListContentTermForm.php",
+            "snippet": "            $view->parent->vars['name']",
+            "selected_text": "$view->parent->vars['name']",
+            "error_level": 3,
+            "shortcode": 79
+        },
+        {
+            "severity": "info",
+            "line_from": 74,
+            "line_to": 74,
+            "type": "PossiblyNullArrayAccess",
+            "message": "Cannot access array value on possibly null variable $view->parent->vars of type mixed|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentFileGui/src/Spryker/Zed/ContentFileGui/Communication/Form/FileListContentTermForm.php",
+            "snippet": "            $view->parent->vars['name']",
+            "selected_text": "$view->parent->vars['name']",
+            "error_level": 3,
+            "shortcode": 79
+        },
+        {
+            "severity": "info",
+            "line_from": 145,
+            "line_to": 145,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdFile on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentFileGui/src/Spryker/Zed/ContentFileGui/Communication/Form/FileListContentTermForm.php",
+            "snippet": "                    $fileIds[] = $fileManagerDataTransfer->getFile()->getIdFile();",
+            "selected_text": "getIdFile",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
+    "deprecation": []
+}

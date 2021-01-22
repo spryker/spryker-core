@@ -4,11 +4,11 @@
   "description": "Cms module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/category": "^3.0.0 || ^4.0.0",
     "spryker/cms-extension": "^1.1.0",
     "spryker/glossary": "^3.1.0",
-    "spryker/gui": "^3.0.0",
+    "spryker/gui": "^3.33.0",
     "spryker/kernel": "^3.30.0",
     "spryker/locale": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
@@ -23,8 +23,14 @@
   "require-dev": {
     "spryker/application": "*",
     "spryker/code-sniffer": "*",
+    "spryker/container": "*",
+    "spryker/event-dispatcher": "*",
+    "spryker/form": "*",
     "spryker/propel": "*",
+    "spryker/router": "*",
     "spryker/testify": "*",
+    "spryker/twig": "*",
+    "spryker/validator": "*",
     "spryker/zed-navigation": "*"
   },
   "suggest": {

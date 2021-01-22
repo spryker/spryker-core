@@ -104,6 +104,7 @@ class CatFaceTransfer extends AbstractTransfer
     protected $transferMetadata = [
         self::NAME => [
             'type' => 'string',
+            'type_shim' => null,
             'name_underscore' => 'name',
             'is_collection' => false,
             'is_transfer' => false,
@@ -114,6 +115,7 @@ class CatFaceTransfer extends AbstractTransfer
         ],
         self::ITEM => [
             'type' => 'Generated\Shared\Transfer\ItemTransfer',
+            'type_shim' => null,
             'name_underscore' => 'item',
             'is_collection' => false,
             'is_transfer' => true,
@@ -124,6 +126,7 @@ class CatFaceTransfer extends AbstractTransfer
         ],
         self::ITEMS => [
             'type' => 'Generated\Shared\Transfer\ItemTransfer',
+            'type_shim' => null,
             'name_underscore' => 'items',
             'is_collection' => true,
             'is_transfer' => true,
@@ -134,6 +137,7 @@ class CatFaceTransfer extends AbstractTransfer
         ],
         self::TYPED_ARRAY => [
             'type' => 'string[]',
+            'type_shim' => null,
             'name_underscore' => 'typed_array',
             'is_collection' => false,
             'is_transfer' => false,
@@ -144,6 +148,7 @@ class CatFaceTransfer extends AbstractTransfer
         ],
         self::TYPED_ASSOCIATIVE_STRING_ARRAY => [
             'type' => 'string[]',
+            'type_shim' => null,
             'name_underscore' => 'typed_associative_string_array',
             'is_collection' => false,
             'is_transfer' => false,
@@ -154,6 +159,7 @@ class CatFaceTransfer extends AbstractTransfer
         ],
         self::TYPED_ASSOCIATIVE_COLLECTION => [
             'type' => 'Generated\Shared\Transfer\ItemTransfer',
+            'type_shim' => null,
             'name_underscore' => 'typed_associative_collection',
             'is_collection' => true,
             'is_transfer' => true,
@@ -164,6 +170,7 @@ class CatFaceTransfer extends AbstractTransfer
         ],
         self::TYPED_NOT_ASSOCIATIVE_STRING_ARRAY => [
             'type' => 'string[]',
+            'type_shim' => null,
             'name_underscore' => 'typed_not_associative_string_array',
             'is_collection' => false,
             'is_transfer' => false,
@@ -174,6 +181,7 @@ class CatFaceTransfer extends AbstractTransfer
         ],
         self::TYPED_NOT_ASSOCIATIVE_ARRAY => [
             'type' => 'array',
+            'type_shim' => null,
             'name_underscore' => 'typed_not_associative_array',
             'is_collection' => false,
             'is_transfer' => false,
@@ -212,6 +220,20 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @module Test
      *
+     * @return string
+     */
+    public function getNameOrFail()
+    {
+        if ($this->name === null) {
+            $this->throwNullValueException(static::NAME);
+        }
+
+        return $this->name;
+    }
+
+    /**
+     * @module Test
+     *
      * @return $this
      */
     public function requireName()
@@ -243,6 +265,20 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function getItem()
     {
+        return $this->item;
+    }
+
+    /**
+     * @module Test
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    public function getItemOrFail()
+    {
+        if ($this->item === null) {
+            $this->throwNullValueException(static::ITEM);
+        }
+
         return $this->item;
     }
 
@@ -375,6 +411,10 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function setTypedAssociativeStringArray($typedAssociativeStringArray)
     {
+        if ($typedAssociativeStringArray === null) {
+            $typedAssociativeStringArray = [];
+        }
+
         $this->typedAssociativeStringArray = $typedAssociativeStringArray;
         $this->modifiedProperties[self::TYPED_ASSOCIATIVE_STRING_ARRAY] = true;
 
@@ -481,6 +521,10 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function setTypedNotAssociativeStringArray($typedNotAssociativeStringArray)
     {
+        if ($typedNotAssociativeStringArray === null) {
+            $typedNotAssociativeStringArray = [];
+        }
+
         $this->typedNotAssociativeStringArray = $typedNotAssociativeStringArray;
         $this->modifiedProperties[self::TYPED_NOT_ASSOCIATIVE_STRING_ARRAY] = true;
 
@@ -533,6 +577,10 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function setTypedNotAssociativeArray($typedNotAssociativeArray)
     {
+        if ($typedNotAssociativeArray === null) {
+            $typedNotAssociativeArray = [];
+        }
+
         $this->typedNotAssociativeArray = $typedNotAssociativeArray;
         $this->modifiedProperties[self::TYPED_NOT_ASSOCIATIVE_ARRAY] = true;
 

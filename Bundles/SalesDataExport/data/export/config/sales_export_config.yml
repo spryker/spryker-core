@@ -46,6 +46,7 @@ actions:
     - data_entity: order-item
       fields:
           - order_reference
+          - order_item_reference
           - product_name
           - product_sku
           - canceled_amount

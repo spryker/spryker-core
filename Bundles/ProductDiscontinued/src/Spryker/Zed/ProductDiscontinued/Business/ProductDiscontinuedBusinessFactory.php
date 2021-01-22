@@ -58,7 +58,8 @@ class ProductDiscontinuedBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductDiscontinuedPluginExecutor(
             $this->getPostProductDiscontinuePlugins(),
-            $this->getPostDeleteProductDiscontinuedPlugins()
+            $this->getPostDeleteProductDiscontinuedPlugins(),
+            $this->getPostDeleteBulkProductDiscontinuedPlugins()
         );
     }
 
@@ -147,6 +148,8 @@ class ProductDiscontinuedBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedBusinessFactory::getPostDeleteBulkProductDiscontinuedPlugins()} instead.
+     *
      * @return \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostDeleteProductDiscontinuedPluginInterface[]
      */
     public function getPostDeleteProductDiscontinuedPlugins(): array
@@ -160,5 +163,13 @@ class ProductDiscontinuedBusinessFactory extends AbstractBusinessFactory
     public function getProductDiscontinuedPreDeleteCheckPlugins(): array
     {
         return $this->getProvidedDependency(ProductDiscontinuedDependencyProvider::PLUGINS_PRODUCT_DISCONTINUED_PRE_DELETE_CHECK);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostDeleteBulkProductDiscontinuedPluginInterface[]
+     */
+    public function getPostDeleteBulkProductDiscontinuedPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductDiscontinuedDependencyProvider::PLUGINS_POST_DELETE_BULK_PRODUCT_DISCONTINUED);
     }
 }

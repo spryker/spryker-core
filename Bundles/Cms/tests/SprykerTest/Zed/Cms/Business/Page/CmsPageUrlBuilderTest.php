@@ -56,7 +56,7 @@ class CmsPageUrlBuilderTest extends CmsMocks
 
         $url = $cmsUrlBuilder->buildPageUrl($cmsPageAttributesTransfer);
 
-        $this->assertEquals($cmsPageAttributesTransfer->getUrlPrefix() . $cmsPageAttributesTransfer->getUrl(), $url);
+        $this->assertSame($cmsPageAttributesTransfer->getUrlPrefix() . $cmsPageAttributesTransfer->getUrl(), $url);
     }
 
     /**
@@ -70,7 +70,7 @@ class CmsPageUrlBuilderTest extends CmsMocks
         $cmsUrlBuilder = $this->createCmsUrlBuilder();
         $urlPrefix = $cmsUrlBuilder->getPageUrlPrefix($cmsPageAttributeTransfer);
 
-        $this->assertEquals('/en/', $urlPrefix);
+        $this->assertSame('/en/', $urlPrefix);
     }
 
     /**

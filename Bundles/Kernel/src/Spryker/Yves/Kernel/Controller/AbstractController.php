@@ -18,6 +18,7 @@ use Spryker\Yves\Kernel\View\View;
 use Symfony\Cmf\Component\Routing\ChainRouterInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -32,24 +33,34 @@ abstract class AbstractController
     protected const SERVICE_ROUTER = 'routers';
 
     /**
+     * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     */
+    protected const SERVICE_REQUEST_STACK = 'request_stack';
+
+    /**
      * @uses \Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
      */
     protected const SERVICE_TWIG = 'twig';
 
     /**
+     * @uses \Spryker\Yves\Kernel\Plugin\EventDispatcher\RedirectUrlValidationEventDispatcherPlugin::BC_REDIRECT_URL_VALIDATION_HANDLED
+     */
+    protected const BC_REDIRECT_URL_VALIDATION_HANDLED = 'BC_REDIRECT_URL_VALIDATION_HANDLED';
+
+    /**
      * @var \Spryker\Yves\Kernel\Application|\Spryker\Service\Container\ContainerInterface
      */
-    private $application;
+    protected $application;
 
     /**
      * @var \Spryker\Yves\Kernel\AbstractFactory
      */
-    private $factory;
+    protected $factory;
 
     /**
      * @var \Spryker\Client\Kernel\AbstractClient
      */
-    private $client;
+    protected $client;
 
     /**
      * @return void
@@ -91,6 +102,14 @@ abstract class AbstractController
     }
 
     /**
+     * @return \Symfony\Component\HttpFoundation\RequestStack
+     */
+    protected function getRequestStack(): RequestStack
+    {
+        return $this->getApplication()->get(static::SERVICE_REQUEST_STACK);
+    }
+
+    /**
      * @return \Spryker\Yves\Kernel\Application|\Spryker\Service\Container\ContainerInterface
      */
     protected function getApplication()
@@ -107,10 +126,39 @@ abstract class AbstractController
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Yves\Kernel\Plugin\EventDispatcher\RedirectUrlWhitelistValidationEventDispatcherPlugin}
+     * Checks redirect URL against whitelist domains before redirect if strict domain redirect is enabled.
      *
-     * @see \Spryker\Shared\Kernel\KernelConstants::STRICT_DOMAIN_REDIRECT For strict redirection check status.
-     * @see \Spryker\Shared\Kernel\KernelConstants::DOMAIN_WHITELIST For allowed list of external domains.
+     * @see {@link \Spryker\Yves\Kernel\Plugin\EventDispatcher\RedirectUrlValidationEventDispatcherPlugin}
+     * @see {@link \Spryker\Shared\Kernel\KernelConstants::STRICT_DOMAIN_REDIRECT} For strict redirection check status.
+     * @see {@link \Spryker\Shared\Kernel\KernelConstants::DOMAIN_WHITELIST} For allowed list of external domains.
+     *
+     * @param string $absoluteUrl
+     * @param int $code
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function redirectResponseExternal($absoluteUrl, $code = 302)
+    {
+        if (
+            $this->getApplication()->has(static::BC_REDIRECT_URL_VALIDATION_HANDLED) &&
+            $this->getApplication()->get(static::BC_REDIRECT_URL_VALIDATION_HANDLED)
+        ) {
+            return new RedirectResponse($absoluteUrl, $code);
+        }
+
+        trigger_error(
+            'Please add `RedirectUrlValidationEventDispatcherPlugin` to `Pyz\Yves\EventDispatcher\EventDispatcherDependencyProvider::getEventDispatcherPlugins()`.',
+            E_USER_DEPRECATED
+        );
+
+        return $this->deprecatedRedirectResponseExternal($absoluteUrl, $code);
+    }
+
+    /**
+     * @deprecated Use {@link redirectResponseExternal()} instead.
+     *
+     * @see {@link \Spryker\Shared\Kernel\KernelConstants::STRICT_DOMAIN_REDIRECT} For strict redirection check status.
+     * @see {@link \Spryker\Shared\Kernel\KernelConstants::DOMAIN_WHITELIST} For allowed list of external domains.
      *
      * @param string $absoluteUrl
      * @param int $code
@@ -119,7 +167,7 @@ abstract class AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function redirectResponseExternal($absoluteUrl, $code = 302)
+    protected function deprecatedRedirectResponseExternal(string $absoluteUrl, int $code = 302)
     {
         if (parse_url($absoluteUrl, PHP_URL_HOST) && !$this->isUrlDomainWhitelisted($absoluteUrl)) {
             throw new ForbiddenExternalRedirectException("This URL $absoluteUrl is not a part of a whitelisted domain");
@@ -297,6 +345,8 @@ abstract class AbstractController
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Yves\Kernel\Plugin\EventDispatcher\RedirectUrlValidationEventDispatcherPlugin} instead.
+     *
      * @param string $absoluteUrl
      *
      * @return bool
@@ -320,6 +370,8 @@ abstract class AbstractController
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $url
      *
      * @return string

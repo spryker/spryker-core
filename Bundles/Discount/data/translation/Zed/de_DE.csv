@@ -70,3 +70,27 @@ Value,Wert
 Voucher,Gutschein
 "Voucher Code",Gutscheincode
 Yes,Ja
+"Add code","Code hinzufügen"
+Active,Aktiv
+Inactive,Inaktiv
+"Create Discount","Rabatt erstellen"
+"Discount Type",Rabattart
+"Cart rules",Warenkorbregeln
+"Voucher codes",Gutscheincode
+"Calculator percentage",Prozentual
+"Calculator fixed",Fixbetrag
+"Discount application type","Art der Rabattanwendung"
+Delete,Löschen
+"Apply when","Anwenden wenn"
+"The discount can be applied if the query applies for at least X item(s).","Der Rabatt kann angewendet werden wenn die Abfrage für mindestens X Artikel gilt."
+"Discount successfully activated.","Rabatt wurde erfolgreich aktiviert."
+"Discount successfully deactivated.","Rabatt wurde erfolgreich deaktiviert."
+"Custom code","Benutzerdefinierter Code"
+Generate,Generieren
+"You must provide length or custom code values.","Sie müssen die Länge oder benutzerdefinierte Codewerte angeben."
+"No available codes to generate. Select higher code length.","Es können keine Codes generiert werden. Vergrößern Sie die Codelänge."
+"Edit Discount","Rabatt bearbeiten"
+"Voucher codes successfully generated.","Gutscheincodes erfolgreich generiert."
+"Voucher code successfully deleted.","Gutscheincode erfolgreich gelöscht."
+"Apply to","Anwenden auf"
+"CSRF token is not valid.","CSRF-Token ist ungültig."

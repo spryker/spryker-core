@@ -86,8 +86,8 @@ class MerchantProfileFacadeTest extends Unit
 
         // Assert
         $this->assertSame($expectedIdMerchantProfile, $updatedMerchantProfileTransfer->getIdMerchantProfile());
-        $this->assertEquals('Role two', $updatedMerchantProfileTransfer->getContactPersonRole());
-        $this->assertEquals('First Name Two', $updatedMerchantProfileTransfer->getContactPersonFirstName());
+        $this->assertSame('Role two', $updatedMerchantProfileTransfer->getContactPersonRole());
+        $this->assertSame('First Name Two', $updatedMerchantProfileTransfer->getContactPersonFirstName());
         $this->assertNotEmpty($updatedMerchantProfileTransfer->getAddressCollection());
     }
 
@@ -145,6 +145,6 @@ class MerchantProfileFacadeTest extends Unit
 
         // Assert
         $this->assertNotNull($merchantProfileTransfer);
-        $this->assertEquals($expectedMerchantProfileTransfer->getIdMerchantProfile(), $merchantProfileTransfer->getIdMerchantProfile());
+        $this->assertSame($expectedMerchantProfileTransfer->getIdMerchantProfile(), $merchantProfileTransfer->getIdMerchantProfile());
     }
 }

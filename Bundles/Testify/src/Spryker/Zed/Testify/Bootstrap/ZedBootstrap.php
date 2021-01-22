@@ -31,17 +31,17 @@ class ZedBootstrap
     /**
      * @var \Silex\ServiceProviderInterface[]
      */
-    private $additionalServiceProvider;
+    protected $additionalServiceProvider;
 
     /**
      * @var \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
      */
-    private $additionalApplicationPlugins;
+    protected $additionalApplicationPlugins;
 
     /**
      * @var \Spryker\Shared\Kernel\Communication\Application|null
      */
-    private $legacyApplication;
+    protected $legacyApplication;
 
     /**
      * @param \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[] $additionalApplicationPlugins
@@ -122,7 +122,7 @@ class ZedBootstrap
     }
 
     /**
-     * @deprecated Please switch to `Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface`.
+     * @deprecated Please switch to {@link \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface}.
      *
      * @param \Spryker\Shared\Kernel\Communication\Application $application
      *
@@ -178,7 +178,7 @@ class ZedBootstrap
     }
 
     /**
-     * @deprecated Please switch to `Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface`.
+     * @deprecated Please switch to {@link \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface}.
      *
      * @return array
      */
@@ -190,7 +190,7 @@ class ZedBootstrap
     }
 
     /**
-     * @deprecated Please switch to `Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface`.
+     * @deprecated Please switch to {@link \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface}.
      *
      * @return array
      */

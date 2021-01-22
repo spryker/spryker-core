@@ -17,11 +17,6 @@ use Symfony\Component\Routing\Route;
 class StoreDefaultPostAddRouteManipulatorPlugin extends AbstractPlugin implements PostAddRouteManipulatorPluginInterface
 {
     /**
-     * @var string
-     */
-    protected $allowedLocalesPattern;
-
-    /**
      * @param string $routeName
      * @param \Symfony\Component\Routing\Route $route
      *

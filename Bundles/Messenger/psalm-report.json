@@ -3,18 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Messenger/src/Spryker/Client/Messenger/MessengerDependencyProvider.php",
-            "snippet": "            return new MessengerToSessionClientBridge($container->getLocator()->session()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 42,
             "line_to": 42,
             "type": "PossiblyNullArgument",
@@ -108,6 +96,18 @@
             "selected_text": "getFlashBag",
             "error_level": 5,
             "shortcode": 181
+        },
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getSession on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/Messenger/src/Spryker/Zed/Messenger/MessengerDependencyProvider.php",
+            "snippet": "            return $requestStack->getCurrentRequest()->getSession();",
+            "selected_text": "getSession",
+            "error_level": 3,
+            "shortcode": 83
         }
     ],
     "deprecation": [
@@ -134,30 +134,6 @@
             "selected_text": "$app",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 65,
-            "line_to": 65,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\Translation\\TranslatorInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Messenger/src/Spryker/Zed/Messenger/Business/MessengerBusinessFactory.php",
-            "snippet": "     * @return \\Symfony\\Component\\Translation\\TranslatorInterface",
-            "selected_text": "\\Symfony\\Component\\Translation\\TranslatorInterface",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 67,
-            "line_to": 67,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\Translation\\TranslatorInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Messenger/src/Spryker/Zed/Messenger/Business/MessengerBusinessFactory.php",
-            "snippet": "    public function createSymfonyTranslator(): TranslatorInterface",
-            "selected_text": "TranslatorInterface",
-            "error_level": 2,
-            "shortcode": 98
         },
         {
             "severity": "info",
@@ -197,30 +173,6 @@
         },
         {
             "severity": "info",
-            "line_from": 15,
-            "line_to": 15,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\Translation\\TranslatorInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Messenger/src/Spryker/Zed/Messenger/Business/Model/MessageTranslator.php",
-            "snippet": "     * @var \\Symfony\\Component\\Translation\\TranslatorInterface",
-            "selected_text": "\\Symfony\\Component\\Translation\\TranslatorInterface",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 26,
-            "line_to": 26,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\Translation\\TranslatorInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Messenger/src/Spryker/Zed/Messenger/Business/Model/MessageTranslator.php",
-            "snippet": "     * @param \\Symfony\\Component\\Translation\\TranslatorInterface $fallbackTranslator",
-            "selected_text": "\\Symfony\\Component\\Translation\\TranslatorInterface",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
             "line_from": 29,
             "line_to": 29,
             "type": "DeprecatedMethod",
@@ -233,8 +185,8 @@
         },
         {
             "severity": "info",
-            "line_from": 35,
-            "line_to": 35,
+            "line_from": 40,
+            "line_to": 40,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Messenger\\MessengerDependencyProvider::addTranslationPlugin has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Messenger/src/Spryker/Zed/Messenger/MessengerDependencyProvider.php",
@@ -245,20 +197,8 @@
         },
         {
             "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Messenger/src/Spryker/Zed/Messenger/MessengerDependencyProvider.php",
-            "snippet": "            return (new Pimple())->getApplication()['request']->getSession();",
-            "selected_text": "(new Pimple())->getApplication()",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 64,
-            "line_to": 64,
+            "line_from": 72,
+            "line_to": 72,
             "type": "DeprecatedConstant",
             "message": "Constant Spryker\\Zed\\Messenger\\MessengerDependencyProvider::PLUGIN_TRANSLATION is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Messenger/src/Spryker/Zed/Messenger/MessengerDependencyProvider.php",

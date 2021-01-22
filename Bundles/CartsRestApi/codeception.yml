@@ -1,5 +1,6 @@
 namespace: CartsRestApi
 include:
+    - tests/SprykerTest/Glue/CartsRestApi
     - tests/SprykerTest/Zed/CartsRestApi
 paths:
     tests: tests
@@ -8,7 +9,6 @@ paths:
     support: tests/_support
     envs: tests/_envs
 settings:
-    bootstrap: _bootstrap.php
     suite_class: \PHPUnit\Framework\TestSuite
     colors: true
     memory_limit: 1024M

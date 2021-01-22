@@ -73,7 +73,7 @@ class Container implements ContainerInterface, ArrayAccess
     /**
      * This is a storage for services which should be extended, but at the point where extend was called the service was not found.
      *
-     * @var array
+     * @var \Closure[][]
      */
     protected $toBeExtended = [];
 
@@ -88,7 +88,7 @@ class Container implements ContainerInterface, ArrayAccess
     protected $currentExtendingHash;
 
     /**
-     * @var array
+     * @var bool[]
      */
     protected $sharedServiceHashes = [];
 
@@ -590,7 +590,7 @@ class Container implements ContainerInterface, ArrayAccess
     }
 
     /**
-     * @deprecated Please use `Spryker\Service\Container\ContainerInterface::has()` instead.
+     * @deprecated Use {@link \Spryker\Service\Container\ContainerInterface::has()} instead.
      *
      * @param mixed $offset
      *
@@ -598,13 +598,13 @@ class Container implements ContainerInterface, ArrayAccess
      */
     public function offsetExists($offset): bool
     {
-        $this->triggerError(sprintf('ArrayAccess the container in Spryker (e.g. isset($container[\'%s\'])) is no longer supported! Please use "ContainerInterface:has()" instead.', $offset));
+        $this->triggerError(sprintf('ArrayAccess for the container in Spryker (e.g. `isset($container[\'%s\'])`) is no longer supported! Please use `ContainerInterface:has()` instead.', $offset));
 
         return $this->has($offset);
     }
 
     /**
-     * @deprecated Please use `Spryker\Service\Container\ContainerInterface::get()` instead.
+     * @deprecated Use {@link \Spryker\Service\Container\ContainerInterface::get()} instead.
      *
      * @param mixed $offset
      *
@@ -612,13 +612,13 @@ class Container implements ContainerInterface, ArrayAccess
      */
     public function offsetGet($offset)
     {
-        $this->triggerError(sprintf('ArrayAccess the container in Spryker (e.g. $foo = $container[\'%s\']) is no longer supported! Please use "ContainerInterface:get()" instead.', $offset));
+        $this->triggerError(sprintf('ArrayAccess for the container in Spryker (e.g. `$foo = $container[\'%s\']`) is no longer supported! Please use `ContainerInterface:get()` instead.', $offset));
 
         return $this->get($offset);
     }
 
     /**
-     * @deprecated Please use `Spryker\Service\Container\ContainerInterface::set()` instead.
+     * @deprecated Use {@link \Spryker\Service\Container\ContainerInterface::set()} instead.
      *
      * @param mixed $offset
      * @param mixed $value
@@ -627,7 +627,7 @@ class Container implements ContainerInterface, ArrayAccess
      */
     public function offsetSet($offset, $value): void
     {
-        $this->triggerError(sprintf('ArrayAccess the container in Spryker (e.g. $container[\'%s\'] = $foo) is no longer supported! Please use "ContainerInterface:set()" instead.', $offset));
+        $this->triggerError(sprintf('ArrayAccess for the container in Spryker (e.g. `$container[\'%s\'] = $foo`) is no longer supported! Please use `ContainerInterface:set()` instead.', $offset));
 
         // When extend is called for a service which is not registered so far, we store the extension and wait for the service to be added.
         // For BC reasons code like `$container['service'] = $container->extend('service', callable)` is valid and still needs to be supported
@@ -638,7 +638,7 @@ class Container implements ContainerInterface, ArrayAccess
             return;
         }
 
-        if (method_exists($value, '__invoke') && !isset($this->sharedServiceHashes[spl_object_hash($value)])) {
+        if ($value && (is_string($value) || is_object($value)) && method_exists($value, '__invoke') && !isset($this->sharedServiceHashes[spl_object_hash($value)])) {
             $value = $this->factory($value);
         }
 
@@ -646,7 +646,7 @@ class Container implements ContainerInterface, ArrayAccess
     }
 
     /**
-     * @deprecated Please use `Spryker\Service\Container\ContainerInterface::remove()` instead.
+     * @deprecated Use {@link \Spryker\Service\Container\ContainerInterface::remove()} instead.
      *
      * @param mixed $offset
      *
@@ -654,7 +654,7 @@ class Container implements ContainerInterface, ArrayAccess
      */
     public function offsetUnset($offset): void
     {
-        $this->triggerError(sprintf('ArrayAccess the container in Spryker (e.g. unset($container[\'%s\'])) is no longer supported! Please use "ContainerInterface:remove()" instead.', $offset));
+        $this->triggerError(sprintf('ArrayAccess for the container in Spryker (e.g. `unset($container[\'%s\'])`) is no longer supported! Please use `ContainerInterface:remove()` instead.', $offset));
 
         $this->remove($offset);
     }

@@ -4,7 +4,7 @@
   "description": "Category module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/category-extension": "^1.0.0",
     "spryker/event": "^1.0.0 || ^2.0.0",
     "spryker/graph": "^3.0.0",
@@ -24,9 +24,14 @@
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/container": "*",
+    "spryker/event-dispatcher": "*",
+    "spryker/form": "*",
     "spryker/propel": "*",
+    "spryker/router": "*",
     "spryker/silex": "*",
     "spryker/testify": "*",
+    "spryker/twig": "*",
+    "spryker/validator": "*",
     "spryker/zed-navigation": "*"
   },
   "autoload": {
@@ -38,7 +43,6 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Testify\\Module\\": "vendor/spryker/Testify/tests/_support/Module/",
       "SprykerTest\\": "tests/SprykerTest/"
     }
   },

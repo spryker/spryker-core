@@ -10,8 +10,8 @@ namespace Spryker\Zed\UrlStorage\Business\Storage;
 use Generated\Shared\Transfer\UrlStorageTransfer;
 use Orm\Zed\Url\Persistence\SpyUrl;
 use Orm\Zed\UrlStorage\Persistence\SpyUrlStorage;
+use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\Url\Persistence\Propel\AbstractSpyUrl;
-use Spryker\Zed\UrlStorage\Business\Exception\MissingResourceException;
 use Spryker\Zed\UrlStorage\Dependency\Facade\UrlStorageToStoreFacadeInterface;
 use Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\UrlStorage\Persistence\UrlStorageEntityManagerInterface;
@@ -19,6 +19,8 @@ use Spryker\Zed\UrlStorage\Persistence\UrlStorageRepositoryInterface;
 
 class UrlStorageWriter implements UrlStorageWriterInterface
 {
+    use LoggerTrait;
+
     public const RESOURCE_TYPE = 'type';
     public const RESOURCE_VALUE = 'value';
 
@@ -149,6 +151,10 @@ class UrlStorageWriter implements UrlStorageWriterInterface
 
         $resource = $this->findResourceArguments($urlStorageTransfer->toArray());
 
+        if ($resource === null) {
+            return;
+        }
+
         $urlStorageEntity->setByName('fk_' . $resource[static::RESOURCE_TYPE], $resource[static::RESOURCE_VALUE]);
         $urlStorageEntity->setUrl($urlStorageTransfer->getUrl());
         $urlStorageEntity->setFkUrl($urlStorageTransfer->getIdUrl());
@@ -160,9 +166,7 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     /**
      * @param array $data
      *
-     * @throws \Spryker\Zed\UrlStorage\Business\Exception\MissingResourceException
-     *
-     * @return array
+     * @return array|null
      */
     protected function findResourceArguments(array $data)
     {
@@ -179,12 +183,12 @@ class UrlStorageWriter implements UrlStorageWriterInterface
             ];
         }
 
-        throw new MissingResourceException(
-            sprintf(
-                'Encountered a URL entity that is missing a resource: %s',
-                json_encode($data)
-            )
-        );
+        $this->getLogger()->warning(sprintf(
+            "The URL entity resource type could not be determined, URL won't be published: %s",
+            json_encode($data)
+        ));
+
+        return null;
     }
 
     /**

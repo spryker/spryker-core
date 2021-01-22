@@ -28,15 +28,23 @@ class OrderMapper implements OrderMapperInterface
     protected $orderShipmentMapper;
 
     /**
+     * @var \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderDetailsAttributesMapperPluginInterface[]
+     */
+    protected $restOrderDetailsAttributesMapperPlugins;
+
+    /**
      * @param \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderShipmentMapperInterface $orderShipmentMapper
      * @param \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderItemsAttributesMapperPluginInterface[] $restOrderItemsAttributesMapperPlugins
+     * @param \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderDetailsAttributesMapperPluginInterface[] $restOrderDetailsAttributesMapperPlugins
      */
     public function __construct(
         OrderShipmentMapperInterface $orderShipmentMapper,
-        array $restOrderItemsAttributesMapperPlugins
+        array $restOrderItemsAttributesMapperPlugins,
+        array $restOrderDetailsAttributesMapperPlugins
     ) {
         $this->orderShipmentMapper = $orderShipmentMapper;
         $this->restOrderItemsAttributesMapperPlugins = $restOrderItemsAttributesMapperPlugins;
+        $this->restOrderDetailsAttributesMapperPlugins = $restOrderDetailsAttributesMapperPlugins;
     }
 
     /**
@@ -73,6 +81,10 @@ class OrderMapper implements OrderMapperInterface
 
         $restOrderDetailsAttributesTransfer = $this->mapOrderShippingAddressTransferToRestOrderDetailsAttributesTransfer($orderTransfer, $restOrderDetailsAttributesTransfer);
 
+        $restOrderDetailsAttributesTransfer->setShipments(
+            $this->orderShipmentMapper->mapOrderTransferToRestOrderShipmentTransfers($orderTransfer, new ArrayObject())
+        );
+
         $restOrderItemsAttributesTransfers = [];
         foreach ($orderTransfer->getItems() as $itemTransfer) {
             $restOrderItemsAttributesTransfers[] = $this->mapItemTransferToRestOrderItemsAttributesTransfer(
@@ -83,7 +95,7 @@ class OrderMapper implements OrderMapperInterface
 
         $restOrderDetailsAttributesTransfer->setItems(new ArrayObject($restOrderItemsAttributesTransfers));
 
-        return $restOrderDetailsAttributesTransfer;
+        return $this->executeRestOrderDetailsAttributesMapperPlugins($orderTransfer, $restOrderDetailsAttributesTransfer);
     }
 
     /**
@@ -118,16 +130,16 @@ class OrderMapper implements OrderMapperInterface
         OrderTransfer $orderTransfer,
         RestOrderDetailsAttributesTransfer $restOrderDetailsAttributesTransfer
     ): RestOrderDetailsAttributesTransfer {
+        if (!$orderTransfer->getShippingAddress()) {
+            return $restOrderDetailsAttributesTransfer;
+        }
         $countryTransfer = $this->findItemLevelShippingAddressCountry($orderTransfer);
         $countryName = $countryTransfer ? $countryTransfer->getName() : null;
         $countryIso2Code = $countryTransfer ? $countryTransfer->getIso2Code() : null;
 
-        $restOrderDetailsAttributesTransfer->getShippingAddress()->setCountry($countryName);
-        $restOrderDetailsAttributesTransfer->getShippingAddress()->setIso2Code($countryIso2Code);
-
-        $restOrderDetailsAttributesTransfer->setShipments(
-            $this->orderShipmentMapper->mapOrderTransferToRestOrderShipmentTransfers($orderTransfer, new ArrayObject())
-        );
+        $restOrderDetailsAttributesTransfer->getShippingAddress()
+            ->setCountry($countryName)
+            ->setIso2Code($countryIso2Code);
 
         return $restOrderDetailsAttributesTransfer;
     }
@@ -155,5 +167,23 @@ class OrderMapper implements OrderMapperInterface
         return $firstItemTransfer->getShipment()
             ->getShippingAddress()
             ->getCountry();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\RestOrderDetailsAttributesTransfer $restOrderDetailsAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestOrderDetailsAttributesTransfer
+     */
+    protected function executeRestOrderDetailsAttributesMapperPlugins(
+        OrderTransfer $orderTransfer,
+        RestOrderDetailsAttributesTransfer $restOrderDetailsAttributesTransfer
+    ): RestOrderDetailsAttributesTransfer {
+        foreach ($this->restOrderDetailsAttributesMapperPlugins as $restOrderDetailsAttributesMapperPlugin) {
+            $restOrderDetailsAttributesTransfer = $restOrderDetailsAttributesMapperPlugin
+                ->mapOrderTransferToRestOrderDetailsAttributesTransfer($orderTransfer, $restOrderDetailsAttributesTransfer);
+        }
+
+        return $restOrderDetailsAttributesTransfer;
     }
 }

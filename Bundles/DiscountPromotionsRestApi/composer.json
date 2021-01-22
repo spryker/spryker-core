@@ -4,7 +4,7 @@
   "description": "DiscountPromotionsRestApi module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/cart-codes-rest-api-extension": "^1.0.0",
     "spryker/carts-rest-api-extension": "^1.5.0",
     "spryker/discount-promotion": "^4.1.0",

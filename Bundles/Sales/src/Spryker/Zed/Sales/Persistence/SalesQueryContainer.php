@@ -298,7 +298,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      *
      * @api
      *
-     * @deprecated Use SalesQueryContainerInterface::fillOrderItemsWithLatestStates() instead.
+     * @deprecated Use {@link fillOrderItemsWithLatestStates()} instead.
      *
      * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderItems
      *
@@ -345,6 +345,6 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
             ->withColumn('COUNT(*)', 'Count')
             ->select(['Count'])
             ->groupBySku()
-            ->orderByCount();
+            ->orderBy('Count');
     }
 }

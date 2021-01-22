@@ -22,7 +22,7 @@ class TooManyPublicMethods extends AbstractRule implements ClassAware
      *
      * @var string
      */
-    private $ignoreRegexp;
+    protected $ignoreRegexp;
 
     /**
      * This method checks the number of public methods with in a given class and checks
@@ -82,6 +82,6 @@ class TooManyPublicMethods extends AbstractRule implements ClassAware
      */
     private function isIgnorable(AbstractNode $node)
     {
-        return (preg_match('/(Client|Yves|Zed)\\\\(.*?)\\\\(.*?)Facade/', $node->getFullQualifiedName()) || preg_match('/(Factory)/', $node->getName()));
+        return (bool)preg_match('/(Client|Yves|Zed)\\\\(.*?)\\\\(.*?)Facade/', $node->getFullQualifiedName()) || preg_match('/(Factory)/', $node->getName());
     }
 }

@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\InstancePoolingTrait;
 use Spryker\Zed\ProductPageSearch\Business\Exception\PluginNotFoundException;
 use Spryker\Zed\ProductPageSearch\Business\Mapper\ProductPageSearchMapperInterface;
 use Spryker\Zed\ProductPageSearch\Business\Model\ProductPageSearchWriterInterface;
+use Spryker\Zed\ProductPageSearch\Business\Reader\AddToCartSkuReaderInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface;
 use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface;
 use Spryker\Zed\ProductPageSearch\ProductPageSearchConfig;
@@ -65,6 +66,11 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     protected $productPageSearchConfig;
 
     /**
+     * @var \Spryker\Zed\ProductPageSearch\Business\Reader\AddToCartSkuReaderInterface
+     */
+    protected $addToCartSkuReader;
+
+    /**
      * @param \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[] $pageDataExpanderPlugins
      * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoaderPluginInterface[] $productPageDataLoaderPlugins
@@ -72,6 +78,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      * @param \Spryker\Zed\ProductPageSearch\Business\Model\ProductPageSearchWriterInterface $productPageSearchWriter
      * @param \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig $productPageSearchConfig
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\ProductPageSearch\Business\Reader\AddToCartSkuReaderInterface $addToCartSkuReader
      */
     public function __construct(
         ProductPageSearchQueryContainerInterface $queryContainer,
@@ -80,7 +87,8 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         ProductPageSearchMapperInterface $productPageSearchMapper,
         ProductPageSearchWriterInterface $productPageSearchWriter,
         ProductPageSearchConfig $productPageSearchConfig,
-        ProductPageSearchToStoreFacadeInterface $storeFacade
+        ProductPageSearchToStoreFacadeInterface $storeFacade,
+        AddToCartSkuReaderInterface $addToCartSkuReader
     ) {
         $this->queryContainer = $queryContainer;
         $this->pageDataExpanderPlugins = $pageDataExpanderPlugins;
@@ -89,6 +97,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         $this->productPageSearchWriter = $productPageSearchWriter;
         $this->productPageSearchConfig = $productPageSearchConfig;
         $this->storeFacade = $storeFacade;
+        $this->addToCartSkuReader = $addToCartSkuReader;
     }
 
     /**
@@ -177,15 +186,27 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         $productCategories = $this->getProductCategoriesByProductAbstractIds($productAbstractIds);
         $productAbstractLocalizedEntities = $this->hydrateProductAbstractLocalizedEntitiesWithProductCategories($productCategories, $productAbstractLocalizedEntities);
 
-        $productAbstractPageSearchEntities = $this->findProductAbstractPageSearchEntities($productAbstractIds);
+        if ($this->productPageSearchConfig->isProductAbstractAddToCartEnabled()) {
+            $productAbstractLocalizedEntities = $this->hydrateProductAbstractLocalizedEntitiesWithProductAbstractAddToCartSku(
+                $productAbstractLocalizedEntities,
+                $productAbstractIds
+            );
+        }
 
+        $productAbstractPageSearchEntities = $this->findProductAbstractPageSearchEntities($productAbstractIds);
         if (!$productAbstractLocalizedEntities) {
             $this->deleteProductAbstractPageSearchEntities($productAbstractPageSearchEntities);
 
             return;
         }
 
-        $this->storeData($productAbstractLocalizedEntities, $productAbstractPageSearchEntities, $pageDataExpanderPlugins, $productPageLoadTransfer, $isRefresh);
+        $this->storeData(
+            $productAbstractLocalizedEntities,
+            $productAbstractPageSearchEntities,
+            $pageDataExpanderPlugins,
+            $productPageLoadTransfer,
+            $isRefresh
+        );
     }
 
     /**
@@ -212,6 +233,9 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
 
         foreach ($pairedEntities as $pairedEntity) {
             $productAbstractLocalizedEntity = $pairedEntity[static::PRODUCT_ABSTRACT_LOCALIZED_ENTITY];
+            /**
+             * @var \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch
+             */
             $productAbstractPageSearchEntity = $pairedEntity[static::PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY];
 
             if ($productAbstractLocalizedEntity === null || !$this->isActual($productAbstractLocalizedEntity)) {
@@ -517,7 +541,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
 
         foreach ($productConcreteEntities as $key => $productConcreteEntity) {
             $productConcreteId = (int)$productConcreteEntity['id_product'];
-            $productConcreteEntities[$key]['SpyProductSearches'] = $productSearchByProductConcreteId[$productConcreteId];
+            $productConcreteEntities[$key]['SpyProductSearches'] = $productSearchByProductConcreteId[$productConcreteId] ?? [];
         }
 
         return $productConcreteEntities;
@@ -539,7 +563,8 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
 
         foreach ($productAbstractLocalizedEntities as $key => $productAbstractLocalizedEntity) {
             $productAbstractId = (int)$productAbstractLocalizedEntity['fk_product_abstract'];
-            $productAbstractLocalizedEntities[$key]['SpyProductAbstract']['SpyProductCategories'] = $productCategoriesByProductAbstractId[$productAbstractId];
+            $productAbstractLocalizedEntities[$key]['SpyProductAbstract']['SpyProductCategories']
+                = $productCategoriesByProductAbstractId[$productAbstractId] ?? [];
         }
 
         return $productAbstractLocalizedEntities;
@@ -562,7 +587,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
 
         foreach ($productAbstractLocalizedEntities as $key => $productAbstractLocalizedEntity) {
             $productAbstractId = (int)$productAbstractLocalizedEntity['fk_product_abstract'];
-            $productAbstractLocalizedEntities[$key]['SpyProductAbstract']['SpyProducts'] = $productConcretesByProductAbstractId[$productAbstractId];
+            $productAbstractLocalizedEntities[$key]['SpyProductAbstract']['SpyProducts'] = $productConcretesByProductAbstractId[$productAbstractId] ?? [];
         }
 
         return $productAbstractLocalizedEntities;
@@ -662,5 +687,25 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         }
 
         return [$pairs, $mappedProductAbstractPageSearchEntities];
+    }
+
+    /**
+     * @param array $productAbstractLocalizedEntities
+     * @param int[] $productAbstractIds
+     *
+     * @return array
+     */
+    protected function hydrateProductAbstractLocalizedEntitiesWithProductAbstractAddToCartSku(
+        array $productAbstractLocalizedEntities,
+        array $productAbstractIds
+    ): array {
+        $productConcreteSkuMapByIdProductAbstract = $this->addToCartSkuReader->getProductAbstractAddToCartSkus($productAbstractIds);
+
+        foreach ($productAbstractLocalizedEntities as &$productAbstractLocalizedEntity) {
+            $productAbstractId = (int)$productAbstractLocalizedEntity['fk_product_abstract'];
+            $productAbstractLocalizedEntity[ProductPageSearchTransfer::ADD_TO_CART_SKU] = $productConcreteSkuMapByIdProductAbstract[$productAbstractId] ?? null;
+        }
+
+        return $productAbstractLocalizedEntities;
     }
 }

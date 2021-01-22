@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\CmsSlotBlockGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CmsBlockCollectionTransfer;
+use Generated\Shared\Transfer\CmsBlockCriteriaTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
-use Generated\Shared\Transfer\FilterTransfer;
 
 class CmsSlotBlockGuiToCmsSlotBlockFacadeBridge implements CmsSlotBlockGuiToCmsSlotBlockFacadeInterface
 {
@@ -58,16 +59,6 @@ class CmsSlotBlockGuiToCmsSlotBlockFacadeBridge implements CmsSlotBlockGuiToCmsS
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
-     */
-    public function getCmsBlocksWithSlotRelations(FilterTransfer $filterTransfer): array
-    {
-        return $this->cmsSlotBlockFacade->getCmsBlocksWithSlotRelations($filterTransfer);
-    }
-
-    /**
      * @param string $twigPath
      *
      * @return string[]
@@ -75,5 +66,15 @@ class CmsSlotBlockGuiToCmsSlotBlockFacadeBridge implements CmsSlotBlockGuiToCmsS
     public function getTemplateConditionsByPath(string $twigPath): array
     {
         return $this->cmsSlotBlockFacade->getTemplateConditionsByPath($twigPath);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockCollectionTransfer
+     */
+    public function getPaginatedCmsBlocksWithSlotRelations(CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer): CmsBlockCollectionTransfer
+    {
+        return $this->cmsSlotBlockFacade->getPaginatedCmsBlocksWithSlotRelations($cmsBlockCriteriaTransfer);
     }
 }

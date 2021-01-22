@@ -24,7 +24,7 @@ class StoreTest extends Unit
     /**
      * @var \Spryker\Shared\Kernel\Store
      */
-    private $Store;
+    protected $Store;
 
     /**
      * @return void
@@ -110,7 +110,7 @@ class StoreTest extends Unit
 
         $storeMock->initializeSetup('DE');
 
-        $this->assertEquals($mockConfig['DE']['currencyIsoCode'], $storeMock->getCurrencyIsoCode());
+        $this->assertSame($mockConfig['DE']['currencyIsoCode'], $storeMock->getCurrencyIsoCode());
     }
 
     /**

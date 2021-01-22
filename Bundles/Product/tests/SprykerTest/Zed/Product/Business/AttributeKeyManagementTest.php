@@ -113,7 +113,7 @@ class AttributeKeyManagementTest extends Unit
 
         $productAttributeKeyTransfer = $this->productFacade->updateProductAttributeKey($productAttributeKeyTransfer);
 
-        $this->assertEquals(self::CHANGED_UNIQUE_ATTRIBUTE_KEY_NOT_EXISTING_IN_DB, $productAttributeKeyTransfer->getKey());
+        $this->assertSame(self::CHANGED_UNIQUE_ATTRIBUTE_KEY_NOT_EXISTING_IN_DB, $productAttributeKeyTransfer->getKey());
     }
 
     /**

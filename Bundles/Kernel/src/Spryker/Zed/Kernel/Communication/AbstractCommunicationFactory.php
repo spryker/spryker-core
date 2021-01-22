@@ -20,7 +20,7 @@ abstract class AbstractCommunicationFactory extends AbstractFactory
     /**
      * @var \Spryker\Zed\Kernel\Business\AbstractFacade
      */
-    private $facade;
+    protected $facade;
 
     /**
      * @return \Spryker\Zed\Kernel\Business\AbstractFacade
@@ -85,6 +85,6 @@ abstract class AbstractCommunicationFactory extends AbstractFactory
     {
         $container = $this->createContainerWithProvidedDependencies();
 
-        return $container[self::FORM_FACTORY];
+        return $container->get(static::FORM_FACTORY);
     }
 }

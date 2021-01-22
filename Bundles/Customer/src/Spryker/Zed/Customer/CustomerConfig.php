@@ -13,15 +13,23 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\SequenceNumber\SequenceNumberConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
+/**
+ * @method \Spryker\Shared\Customer\CustomerConfig getSharedConfig()
+ */
 class CustomerConfig extends AbstractBundleConfig
 {
     public const ERROR_CODE_CUSTOMER_ALREADY_REGISTERED = 4001;
     public const ERROR_CODE_CUSTOMER_INVALID_EMAIL = 4002;
 
+    /**
+     * @uses \Spryker\Zed\Customer\Communication\Plugin\Mail\CustomerRegistrationMailTypePlugin::MAIL_TYPE
+     */
+    public const CUSTOMER_REGISTRATION_MAIL_TYPE = 'customer registration mail';
+    public const CUSTOMER_REGISTRATION_WITH_CONFIRMATION_MAIL_TYPE = 'customer registration confirmation mail';
     protected const MIN_LENGTH_CUSTOMER_PASSWORD = 1;
 
     /**
-     * @uses \Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder::MAX_PASSWORD_LENGTH
+     * @uses \Symfony\Component\Security\Core\Encoder\NativePasswordEncoder::MAX_PASSWORD_LENGTH
      *
      * @var int
      */
@@ -74,11 +82,24 @@ class CustomerConfig extends AbstractBundleConfig
 
         $sequenceNumberPrefixParts = [];
         $sequenceNumberPrefixParts[] = Store::getInstance()->getStoreName();
-        $sequenceNumberPrefixParts[] = $this->get(SequenceNumberConstants::ENVIRONMENT_PREFIX);
+        $sequenceNumberPrefixParts[] = $this->get(SequenceNumberConstants::ENVIRONMENT_PREFIX, '');
         $prefix = implode($this->getUniqueIdentifierSeparator(), $sequenceNumberPrefixParts) . $this->getUniqueIdentifierSeparator();
         $sequenceNumberSettingsTransfer->setPrefix($prefix);
 
         return $sequenceNumberSettingsTransfer;
+    }
+
+    /**
+     * Specification:
+     * - Provides regular expression for character set password validation.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getCustomerPasswordCharacterSet(): string
+    {
+        return '/^.*$/';
     }
 
     /**
@@ -117,6 +138,75 @@ class CustomerConfig extends AbstractBundleConfig
     public function getCustomerPasswordMaxLength(): int
     {
         return static::MAX_LENGTH_CUSTOMER_PASSWORD;
+    }
+
+    /**
+     * Specification:
+     * - Provides a list of strings that will be accepted as a password for customer bypassing any policy validations.
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getCustomerPasswordAllowList(): array
+    {
+        return [];
+    }
+
+    /**
+     * Specification:
+     * - A common list of insecure, invalid passwords.
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getCustomerPasswordDenyList(): array
+    {
+        return [];
+    }
+
+    /**
+     * Specification:
+     * - Provides a limit for character repeating if defined.
+     *
+     * Example
+     * - Limit=4, forbids to use "aaaa" in password, but allows "aaa"
+     *
+     * @api
+     *
+     * @return int|null
+     */
+    public function getCustomerPasswordSequenceLimit(): ?int
+    {
+        return null;
+    }
+
+    /**
+     * Specification:
+     * - Enables password check for CustomerFacade::restorePassword() method.
+     *
+     * @api
+     *
+     * @deprecated Method is introduced for BC reasons only and will be removed without replacement
+     *
+     * @return bool
+     */
+    public function isRestorePasswordValidationEnabled(): bool
+    {
+        return false;
+    }
+
+    /**
+     * @api
+     *
+     * @uses \Spryker\Shared\Customer\CustomerConfig::isDoubleOptInEnabled()
+     *
+     * @return bool
+     */
+    public function isDoubleOptInEnabled(): bool
+    {
+        return $this->getSharedConfig()->isDoubleOptInEnabled();
     }
 
     /**

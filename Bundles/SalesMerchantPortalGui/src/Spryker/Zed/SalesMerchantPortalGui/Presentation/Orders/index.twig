@@ -1,0 +1,20 @@
+{% extends '@ZedUi/Layout/merchant-layout-main.twig' %}
+
+{% block headTitle %}
+    {{ 'Orders' | trans }}
+{% endblock %}
+
+{% block content %}
+    <web-mp-sales-orders
+        cloak
+        table-id="web-mp-sales-orders"
+        table-config='{{ guiTableConfiguration(merchantOrderTableConfiguration) }}'>
+        <span title>{{ 'Orders' | trans }}</span>
+    </web-mp-sales-orders>
+{% endblock %}
+
+{% block footerJs %}
+    {{ parent() }}
+    <script src="{{ assetsPath('js/mp/spy/sales-merchant-portal-gui-es2015.js') }}" type="module"></script>
+    <script src="{{ assetsPath('js/mp/spy/sales-merchant-portal-gui-es5.js') }}" nomodule defer></script>
+{% endblock %}

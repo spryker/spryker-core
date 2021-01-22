@@ -17,6 +17,8 @@ use Spryker\Shared\Testify\TestifyConstants;
 class ZedHelper extends Module
 {
     protected const LOGOUT_LINK_SELECTOR = "(//a[contains(@href,'/auth/logout')])[2]";
+    protected const LOGIN_URL = '/security-gui/login';
+
     /**
      * @var bool
      */
@@ -68,7 +70,7 @@ class ZedHelper extends Module
             return;
         }
 
-        $tester->amOnPage('/auth/login');
+        $tester->amOnPage(static::LOGIN_URL);
 
         $tester->fillField('#auth_username', $username);
         $tester->fillField('#auth_password', $password);

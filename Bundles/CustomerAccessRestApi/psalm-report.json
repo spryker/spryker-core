@@ -1,0 +1,30 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 73,
+            "line_to": 73,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $customerAccessContentTypeResourceType using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerAccessRestApi/src/Spryker/Glue/CustomerAccessRestApi/Processor/CustomerAccess/CustomerAccessReader.php",
+            "snippet": "                unset($customerAccessContentTypeResourceType[$contentTypeAccessTransfer->getContentType()]);",
+            "selected_text": "$customerAccessContentTypeResourceType",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 90,
+            "line_to": 90,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of array_key_exists cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerAccessRestApi/src/Spryker/Glue/CustomerAccessRestApi/Processor/CustomerAccess/CustomerAccessReader.php",
+            "snippet": "        return !array_key_exists($contentTypeAccessTransfer->getContentType(), $customerAccessContentTypeResourceType) || !$contentTypeAccessTransfer->getIsRestricted();",
+            "selected_text": "$contentTypeAccessTransfer->getContentType()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

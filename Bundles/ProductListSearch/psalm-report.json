@@ -28,6 +28,18 @@
         },
         {
             "severity": "info",
+            "line_from": 89,
+            "line_to": 89,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of get_class expects object, possibly different type Elastica\\Query\\AbstractQuery|array<array-key, mixed> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductListSearch/src/Spryker/Client/ProductListSearch/Plugin/Search/ProductListQueryExpanderPlugin.php",
+            "snippet": "                get_class($boolQuery)",
+            "selected_text": "$boolQuery",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
             "line_from": 54,
             "line_to": 54,
             "type": "PossiblyNullArgument",
@@ -115,60 +127,12 @@
             "line_from": 92,
             "line_to": 92,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategory|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategory> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ProductListSearch/src/Spryker/Zed/ProductListSearch/Persistence/ProductListSearchRepository.php",
             "snippet": "            ->toArray();",
             "selected_text": "toArray",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 89,
-            "line_to": 89,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductListSearch/src/Spryker/Zed/ProductListSearch/ProductListSearchDependencyProvider.php",
-            "snippet": "            return new ProductListSearchToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 103,
-            "line_to": 103,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductListSearch/src/Spryker/Zed/ProductListSearch/ProductListSearchDependencyProvider.php",
-            "snippet": "            return new ProductListSearchToProductPageSearchFacadeBridge($container->getLocator()->productPageSearch()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 117,
-            "line_to": 117,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductListSearch/src/Spryker/Zed/ProductListSearch/ProductListSearchDependencyProvider.php",
-            "snippet": "            return new ProductListSearchToProductListFacadeBridge($container->getLocator()->productList()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 131,
-            "line_to": 131,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductListSearch/src/Spryker/Zed/ProductListSearch/ProductListSearchDependencyProvider.php",
-            "snippet": "            return new ProductListSearchToProductCategoryFacadeBridge($container->getLocator()->productCategory()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

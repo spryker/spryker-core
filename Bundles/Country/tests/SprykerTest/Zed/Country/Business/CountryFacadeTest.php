@@ -13,6 +13,8 @@ use Generated\Shared\DataBuilder\CountryCollectionBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
+use Generated\Shared\Transfer\RestAddressTransfer;
+use Generated\Shared\Transfer\RestShipmentsTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Country\Persistence\SpyRegion;
 use Psr\Log\LoggerInterface;
@@ -82,7 +84,7 @@ class CountryFacadeTest extends Unit
 
         $country->save();
 
-        $this->assertEquals($country->getIdCountry(), $this->countryFacade->getIdCountryByIso2Code(self::ISO2_CODE));
+        $this->assertSame($country->getIdCountry(), $this->countryFacade->getIdCountryByIso2Code(self::ISO2_CODE));
     }
 
     /**
@@ -99,7 +101,7 @@ class CountryFacadeTest extends Unit
         $result = $this->countryFacade->getCountryByIso2Code(self::ISO2_CODE);
 
         $this->assertInstanceOf(CountryTransfer::class, $result);
-        $this->assertEquals($country->getIdCountry(), $result->getIdCountry());
+        $this->assertSame($country->getIdCountry(), $result->getIdCountry());
     }
 
     /**
@@ -116,7 +118,7 @@ class CountryFacadeTest extends Unit
         $result = $this->countryFacade->getCountryByIso3Code(self::ISO3_CODE);
 
         $this->assertInstanceOf(CountryTransfer::class, $result);
-        $this->assertEquals($country->getIdCountry(), $result->getIdCountry());
+        $this->assertSame($country->getIdCountry(), $result->getIdCountry());
     }
 
     /**
@@ -158,7 +160,7 @@ class CountryFacadeTest extends Unit
 
         $countryTransfer = $this->countryFacade->findCountriesByIso2Codes($countryCollectionTransfer);
 
-        $this->assertEquals('TS', $countryTransfer->getCountries()[0]->getRegions()[0]->getIso2Code());
+        $this->assertSame('TS', $countryTransfer->getCountries()[0]->getRegions()[0]->getIso2Code());
     }
 
     /**
@@ -170,7 +172,29 @@ class CountryFacadeTest extends Unit
         $checkoutResponseTransfer = $this->countryFacade->validateCountryCheckoutData($checkoutDataTransfer);
 
         $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
-        $this->assertEquals(0, $checkoutResponseTransfer->getErrors()->count());
+        $this->assertSame(0, $checkoutResponseTransfer->getErrors()->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateCountryCheckoutDataValidatesMultiShipmentParameters(): void
+    {
+        $checkoutDataTransfer = $this->prepareCheckoutDataTransferWithIso2Codes()
+            ->setShippingAddress(null)
+            ->addShipment(
+                (new RestShipmentsTransfer())
+                    ->setShippingAddress((new RestAddressTransfer())->setIso2Code(static::ISO2_COUNTRY_DE))
+            )
+            ->addShipment(
+                (new RestShipmentsTransfer())
+                    ->setShippingAddress(new RestAddressTransfer())
+            );
+
+        $checkoutResponseTransfer = $this->countryFacade->validateCountryCheckoutData($checkoutDataTransfer);
+
+        $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
+        $this->assertSame(0, $checkoutResponseTransfer->getErrors()->count());
     }
 
     /**

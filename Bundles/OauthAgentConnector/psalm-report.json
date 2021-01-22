@@ -1,0 +1,139 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "UndefinedClass",
+            "message": "Class or interface Symfony\\Component\\Security\\Core\\Encoder\\BCryptPasswordEncoder does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthAgentConnector/src/Spryker/Zed/OauthAgentConnector/Business/Adapter/PasswordEncoderAdapter.php",
+            "snippet": "        return new BCryptPasswordEncoder(static::BCRYPT_FACTOR);",
+            "selected_text": "BCryptPasswordEncoder",
+            "error_level": -1,
+            "shortcode": 19
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $indexedOauthScopes[null|string] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthAgentConnector/src/Spryker/Zed/OauthAgentConnector/Business/Installer/AgentOauthScopeInstaller.php",
+            "snippet": "            $indexedOauthScopes[$oauthScopeTransfer->getIdentifier()] = $oauthScopeTransfer;",
+            "selected_text": "$indexedOauthScopes",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\OauthAgentConnector\\Business\\League\\Grant\\AgentCredentialsGrantType::validateScopes cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthAgentConnector/src/Spryker/Zed/OauthAgentConnector/Business/League/Grant/AgentCredentialsGrantType.php",
+            "snippet": "        $scopes = $this->validateScopes($this->getRequestParameter(static::REQUEST_PARAMETER_SCOPE, $request, $this->defaultScope));",
+            "selected_text": "$this->getRequestParameter(static::REQUEST_PARAMETER_SCOPE, $request, $this->defaultScope)",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 62,
+            "line_to": 62,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of League\\OAuth2\\Server\\ResponseTypes\\ResponseTypeInterface::setRefreshToken cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthAgentConnector/src/Spryker/Zed/OauthAgentConnector/Business/League/Grant/AgentCredentialsGrantType.php",
+            "snippet": "        $responseType->setRefreshToken($refreshToken);",
+            "selected_text": "$refreshToken",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 95,
+            "line_to": 95,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Oauth\\Business\\Model\\League\\Repositories\\UserRepositoryInterface::getUserEntityByRequest expects array<array-key, mixed>, possibly different type array<array-key, mixed>|null|object provided",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthAgentConnector/src/Spryker/Zed/OauthAgentConnector/Business/League/Grant/AgentCredentialsGrantType.php",
+            "snippet": "        $user = $this->userRepository->getUserEntityByRequest($request->getParsedBody(), $this->getIdentifier(), $clientEntity);",
+            "selected_text": "$request->getParsedBody()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\OauthAgentConnector\\Dependency\\Facade\\OauthAgentConnectorToAgentFacadeInterface::findAgentByUsername cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthAgentConnector/src/Spryker/Zed/OauthAgentConnector/Business/OauthUserProvider/AgentOauthUserProvider.php",
+            "snippet": "        $findAgentResponseTransfer = $this->agentFacade->findAgentByUsername($oauthUserTransfer->getUsername());",
+            "selected_text": "$oauthUserTransfer->getUsername()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\OauthAgentConnector\\Business\\Adapter\\PasswordEncoderAdapterInterface::isPasswordValid cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthAgentConnector/src/Spryker/Zed/OauthAgentConnector/Business/OauthUserProvider/AgentOauthUserProvider.php",
+            "snippet": "            $findAgentResponseTransfer->getAgent()->getPassword(),",
+            "selected_text": "$findAgentResponseTransfer->getAgent()->getPassword()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getPassword on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthAgentConnector/src/Spryker/Zed/OauthAgentConnector/Business/OauthUserProvider/AgentOauthUserProvider.php",
+            "snippet": "            $findAgentResponseTransfer->getAgent()->getPassword(),",
+            "selected_text": "getPassword",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 64,
+            "line_to": 64,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\OauthAgentConnector\\Business\\Adapter\\PasswordEncoderAdapterInterface::isPasswordValid cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthAgentConnector/src/Spryker/Zed/OauthAgentConnector/Business/OauthUserProvider/AgentOauthUserProvider.php",
+            "snippet": "            $oauthUserTransfer->getPassword(),",
+            "selected_text": "$oauthUserTransfer->getPassword()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 73,
+            "line_to": 73,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdUser on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthAgentConnector/src/Spryker/Zed/OauthAgentConnector/Business/OauthUserProvider/AgentOauthUserProvider.php",
+            "snippet": "            ->setIdAgent($findAgentResponseTransfer->getAgent()->getIdUser());",
+            "selected_text": "getIdUser",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\OauthScopeTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthAgentConnector/src/Spryker/Zed/OauthAgentConnector/Business/ScopeProvider/AgentScopeProvider.php",
+            "snippet": "        $scopes = $oauthScopeRequestTransfer->getDefaultScopes()->getArrayCopy();",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": []
+}

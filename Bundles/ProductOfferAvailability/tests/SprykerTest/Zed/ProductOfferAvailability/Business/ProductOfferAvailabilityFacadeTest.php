@@ -43,7 +43,9 @@ class ProductOfferAvailabilityFacadeTest extends Unit
         $expectedAvailability = $stockQuantity - $reservedQuantity;
 
         $storeTransfer = $this->tester->haveStore();
-        $productOfferStockTransfer = $this->tester->haveProductOfferStock([
+        $productOfferTransfer = $this->tester->haveProductOffer();
+        $this->tester->haveProductOfferStock([
+            ProductOfferStockTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOffer(),
             ProductOfferStockTransfer::QUANTITY => $stockQuantity,
             ProductOfferStockTransfer::STOCK => [
                 StockTransfer::STORE_RELATION => [
@@ -54,7 +56,6 @@ class ProductOfferAvailabilityFacadeTest extends Unit
             ],
         ]);
 
-        $productOfferTransfer = $productOfferStockTransfer->getProductOffer();
         $this->tester->haveOmsProductReservation([
             OmsProductReservationTransfer::SKU => $productOfferTransfer->getConcreteSku(),
             OmsProductReservationTransfer::RESERVATION_QUANTITY => $reservedQuantity,

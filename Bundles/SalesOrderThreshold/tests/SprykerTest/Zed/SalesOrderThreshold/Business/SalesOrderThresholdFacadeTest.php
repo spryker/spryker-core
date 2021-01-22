@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig;
 use Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThresholdFacadeInterface;
 use Spryker\Zed\SalesOrderThreshold\Business\Strategy\Exception\SalesOrderThresholdTypeNotFoundException;
+use Spryker\Zed\SalesOrderThreshold\Communication\Plugin\Strategy\HardMaximumThresholdStrategyPlugin;
 use Spryker\Zed\SalesOrderThreshold\Communication\Plugin\Strategy\HardMinimumThresholdStrategyPlugin;
 use Spryker\Zed\SalesOrderThreshold\Communication\Plugin\Strategy\SoftMinimumThresholdWithFixedFeeStrategyPlugin;
 use Spryker\Zed\SalesOrderThreshold\Communication\Plugin\Strategy\SoftMinimumThresholdWithFlexibleFeeStrategyPlugin;
@@ -73,8 +74,8 @@ class SalesOrderThresholdFacadeTest extends SalesOrderThresholdMocks
         $returnedTypeTransfer = $this->getFacade()->saveSalesOrderThresholdType($testType->toTransfer());
 
         // Assert
-        $this->assertEquals($testType->toTransfer()->getKey(), $returnedTypeTransfer->getKey());
-        $this->assertEquals($testType->toTransfer()->getThresholdGroup(), $returnedTypeTransfer->getThresholdGroup());
+        $this->assertSame($testType->toTransfer()->getKey(), $returnedTypeTransfer->getKey());
+        $this->assertSame($testType->toTransfer()->getThresholdGroup(), $returnedTypeTransfer->getThresholdGroup());
     }
 
     /**
@@ -87,6 +88,10 @@ class SalesOrderThresholdFacadeTest extends SalesOrderThresholdMocks
         // Arrange
         $salesOrderThresholdHardTypeTransfer = $this->findSalesOrderThresholdTypeTransferForGroup(
             SalesOrderThresholdConfig::GROUP_HARD
+        );
+
+        $salesOrderThresholdHardMaxTypeTransfer = $this->findSalesOrderThresholdTypeTransferForGroup(
+            SalesOrderThresholdConfig::GROUP_HARD_MAX
         );
 
         $salesOrderThresholdSoftStrategy = $this->findSalesOrderThresholdTypeTransferForGroup(
@@ -114,6 +119,15 @@ class SalesOrderThresholdFacadeTest extends SalesOrderThresholdMocks
                 $storeTransferDE,
                 $currencyTransferEUR,
                 20000
+            )
+        );
+
+        $hardMaxThreshold = $this->getFacade()->saveSalesOrderThreshold(
+            $this->createSalesOrderThresholdTransfer(
+                $salesOrderThresholdHardMaxTypeTransfer,
+                $storeTransferDE,
+                $currencyTransferEUR,
+                300000
             )
         );
 
@@ -145,7 +159,8 @@ class SalesOrderThresholdFacadeTest extends SalesOrderThresholdMocks
         );
 
         // Assert
-        $this->assertEquals($hardThreshold1->getIdSalesOrderThreshold(), $hardThreshold2->getIdSalesOrderThreshold());
+        $this->assertSame($hardThreshold1->getIdSalesOrderThreshold(), $hardThreshold2->getIdSalesOrderThreshold());
+        $this->assertNotNull($hardMaxThreshold->getIdSalesOrderThreshold());
         $this->assertNotEquals($hardThreshold1->getIdSalesOrderThreshold(), $softThreshold1->getIdSalesOrderThreshold());
         $this->assertNotEquals($softThreshold1->getIdSalesOrderThreshold(), $softThreshold2->getIdSalesOrderThreshold());
         $this->assertNotEquals($softThreshold1->getIdSalesOrderThreshold(), $softThreshold3->getIdSalesOrderThreshold());
@@ -297,6 +312,32 @@ class SalesOrderThresholdFacadeTest extends SalesOrderThresholdMocks
     }
 
     /**
+     * @return void
+     */
+    public function testHardMaximumThreshHoldStrategyIsApplicableTrue(): void
+    {
+        $salesOrderThresholdValueTransfer = (new SalesOrderThresholdValueTransfer())->setValue(300)
+        ->setThreshold(200)
+        ->setFee(50);
+
+        $hardMaximumThresholdStrategy = new HardMaximumThresholdStrategyPlugin();
+
+        $this->assertTrue($hardMaximumThresholdStrategy->isApplicable($salesOrderThresholdValueTransfer));
+    }
+
+    /**
+     * @return void
+     */
+    public function testHardMaximumThreshHoldStrategyIsValidTrue(): void
+    {
+        $salesOrderThresholdValueTransfer = (new SalesOrderThresholdValueTransfer())->setValue(2);
+
+        $hardMaximumThresholdStrategy = new HardMaximumThresholdStrategyPlugin();
+
+        $this->assertTrue($hardMaximumThresholdStrategy->isValid($salesOrderThresholdValueTransfer));
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer $salesOrderThresholdTypeTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
@@ -346,6 +387,7 @@ class SalesOrderThresholdFacadeTest extends SalesOrderThresholdMocks
     {
         $this->strategies = [
             new HardMinimumThresholdStrategyPlugin(),
+            new HardMaximumThresholdStrategyPlugin(),
             new SoftMinimumThresholdWithMessageStrategyPlugin(),
             new SoftMinimumThresholdWithFixedFeeStrategyPlugin(),
             new SoftMinimumThresholdWithFlexibleFeeStrategyPlugin(),

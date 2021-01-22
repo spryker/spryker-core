@@ -47,13 +47,13 @@ class QueueMessageHelperTest extends Unit
             static::TEST_ERROR_MESSAGE
         );
 
-        $this->assertEquals($resultQueueReceiveMessageTransfer->getAcknowledge(), false);
-        $this->assertEquals($resultQueueReceiveMessageTransfer->getReject(), true);
-        $this->assertEquals($resultQueueReceiveMessageTransfer->getHasError(), true);
-        $this->assertEquals($resultQueueReceiveMessageTransfer->getRoutingKey(), SynchronizationConfig::MESSAGE_ROUTING_KEY_ERROR);
+        $this->assertFalse($resultQueueReceiveMessageTransfer->getAcknowledge());
+        $this->assertTrue($resultQueueReceiveMessageTransfer->getReject());
+        $this->assertTrue($resultQueueReceiveMessageTransfer->getHasError());
+        $this->assertSame($resultQueueReceiveMessageTransfer->getRoutingKey(), SynchronizationConfig::MESSAGE_ROUTING_KEY_ERROR);
 
         $queueMessageBody = json_decode($resultQueueReceiveMessageTransfer->getQueueMessage()->getBody(), true);
-        $this->assertEquals($queueMessageBody['errorMessage'], static::TEST_ERROR_MESSAGE);
+        $this->assertSame(static::TEST_ERROR_MESSAGE, $queueMessageBody['errorMessage']);
     }
 
     /**

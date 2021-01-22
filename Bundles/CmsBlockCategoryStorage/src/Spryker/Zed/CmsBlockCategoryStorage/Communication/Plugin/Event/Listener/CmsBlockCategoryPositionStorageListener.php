@@ -22,15 +22,15 @@ class CmsBlockCategoryPositionStorageListener extends AbstractPlugin implements 
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
-        $idPosition = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+        $idPosition = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
         $idCategories = $this->getQueryContainer()->queryCategoryIdsByPositionIds($idPosition)->find()->getData();
 
         $this->getFacade()->publish($idCategories);

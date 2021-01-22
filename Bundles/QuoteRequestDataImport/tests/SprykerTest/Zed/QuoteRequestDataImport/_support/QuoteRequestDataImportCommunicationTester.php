@@ -18,8 +18,6 @@ use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestQuery;
 use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestVersionQuery;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -29,7 +27,7 @@ use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestVersionQuery;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\QuoteRequest\Business\QuoteRequestFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)

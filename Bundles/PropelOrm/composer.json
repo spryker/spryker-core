@@ -4,8 +4,8 @@
   "description": "PropelOrm module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
-    "propel/propel": "2.0.0-alpha8",
+    "php": ">=7.3",
+    "propel/propel": "2.0.0-alpha11",
     "spryker/config": "^3.0.0",
     "spryker/error-handler": "^2.0.0",
     "spryker/kernel": "^3.49.0",
@@ -18,7 +18,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\PropelOrm\\Helper\\": "tests/SprykerTest/Shared/PropelOrm/_support/Helper/"
     }
   },
   "autoload-dev": {

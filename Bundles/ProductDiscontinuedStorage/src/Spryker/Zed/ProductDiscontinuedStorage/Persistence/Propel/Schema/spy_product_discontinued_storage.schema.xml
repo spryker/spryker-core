@@ -9,7 +9,7 @@
         <column name="sku" type="VARCHAR" size="255" required="true"/>
         <column name="key" type="VARCHAR" size="255" required="true"/>
         <column name="data" type="LONGVARCHAR" required="false"/>
-        <column name="locale" type="VARCHAR" required="true"/>
+        <column name="locale" type="VARCHAR" size="5" required="true"/>
 
         <id-method-parameter value="id_product_discontinued_storage_pk_seq"/>
 

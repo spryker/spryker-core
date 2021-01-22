@@ -1,0 +1,18 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 60,
+            "line_to": 60,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getName on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferStockGui/src/Spryker/Zed/ProductOfferStockGui/Communication/Reader/ProductOfferStock/ProductOfferStockReader.php",
+            "snippet": "                'name' => $productOfferStockTransfer->getStock()->getName(),",
+            "selected_text": "getName",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
+    "deprecation": []
+}

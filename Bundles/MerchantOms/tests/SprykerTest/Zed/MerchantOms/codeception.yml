@@ -37,6 +37,7 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Zed\Oms\Helper\OmsHelper
@@ -45,3 +46,5 @@ suites:
                 - \SprykerTest\Zed\MerchantSalesOrder\Helper\MerchantSalesHelper
                 - \SprykerTest\Zed\StateMachine\Helper\StateMachineHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - SprykerTest\Shared\Customer\Helper\CustomerDataHelper
+                - SprykerTest\Shared\Store\Helper\StoreDataHelper

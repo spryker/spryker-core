@@ -14,6 +14,7 @@ use Spryker\Zed\BusinessOnBehalfGui\Communication\ButtonCreator\CustomerTableBut
 use Spryker\Zed\BusinessOnBehalfGui\Communication\ButtonCreator\CustomerTableButtonCreatorInterface;
 use Spryker\Zed\BusinessOnBehalfGui\Communication\Form\CustomerBusinessUnitAttachForm;
 use Spryker\Zed\BusinessOnBehalfGui\Communication\Form\DataProvider\CustomerBusinessUnitAttachFormDataProvider;
+use Spryker\Zed\BusinessOnBehalfGui\Communication\Form\DeleteCompanyUserForm;
 use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyBusinessUnitFacadeInterface;
 use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyFacadeInterface;
 use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyUserFacadeInterface;
@@ -113,5 +114,13 @@ class BusinessOnBehalfGuiCommunicationFactory extends AbstractCommunicationFacto
         return new CustomerTableButtonCreator(
             $this->getCompanyUserFacade()
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDeleteCompanyUserForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeleteCompanyUserForm::class);
     }
 }

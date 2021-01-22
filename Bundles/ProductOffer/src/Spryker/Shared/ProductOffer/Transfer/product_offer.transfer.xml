@@ -31,7 +31,7 @@
     <transfer name="ProductOfferResponse">
         <property name="productOffer" type="ProductOffer"/>
         <property name="errors" type="ProductOfferError[]" singular="error"/>
-        <property name="isSuccess" type="bool"/>
+        <property name="isSuccessful" type="bool"/>
     </transfer>
 
     <transfer name="ProductOfferError">

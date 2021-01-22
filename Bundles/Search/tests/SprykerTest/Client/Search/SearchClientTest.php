@@ -55,6 +55,8 @@ class SearchClientTest extends Unit
      */
     protected function setUp(): void
     {
+        $this->skipIfElasticsearch7();
+
         parent::setUp();
 
         $this->searchClient = new SearchClient();
@@ -484,5 +486,15 @@ class SearchClientTest extends Unit
             });
 
         return $searchContextExpanderPluginMock;
+    }
+
+    /**
+     * @return void
+     */
+    protected function skipIfElasticsearch7(): void
+    {
+        if (!class_exists('\Elastica\Type')) {
+            $this->markTestSkipped('This test is not suitable for Elasticsearch 7 or higher');
+        }
     }
 }

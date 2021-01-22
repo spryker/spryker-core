@@ -9,7 +9,15 @@
         <property name="abstractProducts" type="RestCatalogSearchAbstractProducts[]" singular="abstractProduct"/>
         <property name="valueFacets" type="RestFacetSearchResult[]" singular="valueFacet"/>
         <property name="rangeFacets" type="RestRangeSearchResult[]" singular="rangeFacet"/>
+        <property name="categoryTreeFilter" type="RestCategoryNodeSearchResultAttributes[]" singular="categoryTreeFilter"/>
         <property name="spellingSuggestion" type="string"/>
+    </transfer>
+
+    <transfer name="RestCategoryNodeSearchResultAttributes">
+        <property name="nodeId" type="int"/>
+        <property name="name" type="string"/>
+        <property name="docCount" type="int"/>
+        <property name="children" type="RestCategoryNodeSearchResultAttributes[]" singular="children"/>
     </transfer>
 
     <transfer name="RestCatalogSearchSort">
@@ -24,6 +32,14 @@
         <property name="currentPage" type="int"/>
         <property name="maxPage" type="int"/>
         <property name="currentItemsPerPage" type="int"/>
+        <property name="config" type="RestCatalogSearchPaginationConfig"/>
+    </transfer>
+
+    <transfer name="RestCatalogSearchPaginationConfig">
+        <property name="parameterName" type="string"/>
+        <property name="itemsPerPageParameterName" type="string"/>
+        <property name="defaultItemsPerPage" type="int"/>
+        <property name="validItemsPerPageOptions" type="array" singular="validItemsPerPageOptions"/>
     </transfer>
 
     <transfer name="RestCatalogSearchAbstractProducts">
@@ -62,8 +78,20 @@
     <transfer name="RestCatalogSearchSuggestionsAttributes">
         <property name="completion" type="string[]" singular="completion"/>
         <property name="abstractProducts" type="RestCatalogSearchSuggestionAbstractProducts[]" singular="abstractProduct"/>
-        <property name="categories" type="array" singular="categories"/>
-        <property name="cmsPages" type="array" singular="cmsPages"/>
+        <property name="categories" type="array" singular="categories" deprecated="Use categoryCollection instead."/>
+        <property name="cmsPages" type="array" singular="cmsPages" deprecated="Use cmsPageCollection instead."/>
+        <property name="categoryCollection" type="RestCatalogSearchSuggestionCategories[]" singular="category"/>
+        <property name="cmsPageCollection" type="RestCatalogSearchSuggestionCmsPages[]" singular="cmsPage"/>
+    </transfer>
+
+    <transfer name="RestCatalogSearchSuggestionCategories">
+        <property name="name" type="string"/>
+        <property name="url" type="string"/>
+    </transfer>
+
+    <transfer name="RestCatalogSearchSuggestionCmsPages">
+        <property name="name" type="string"/>
+        <property name="url" type="string"/>
     </transfer>
 
     <transfer name="RestCatalogSearchSuggestionAbstractProducts">

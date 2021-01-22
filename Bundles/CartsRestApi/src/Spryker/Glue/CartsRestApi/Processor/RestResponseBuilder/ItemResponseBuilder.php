@@ -8,6 +8,7 @@
 namespace Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\RestItemsAttributesTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
@@ -55,6 +56,7 @@ class ItemResponseBuilder implements ItemResponseBuilderInterface
             $itemTransfer->getGroupKey(),
             $this->cartItemMapper->mapItemTransferToRestItemsAttributesTransfer(
                 $itemTransfer,
+                (new RestItemsAttributesTransfer()),
                 $localeName
             )
         );
@@ -79,6 +81,7 @@ class ItemResponseBuilder implements ItemResponseBuilderInterface
             $itemTransfer->getGroupKey(),
             $this->cartItemMapper->mapItemTransferToRestItemsAttributesTransfer(
                 $itemTransfer,
+                (new RestItemsAttributesTransfer()),
                 $localeName
             )
         );

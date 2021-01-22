@@ -10,7 +10,5 @@ import { TableConfig } from '@spryker/table';
 })
 export class OffersListComponent {
     @Input() tableConfig: TableConfig;
-    @Input() title: string;
-    @Input() actionUrl: string;
-    @Input() actionTitle: string;
+    @Input() tableId?: string;
 }

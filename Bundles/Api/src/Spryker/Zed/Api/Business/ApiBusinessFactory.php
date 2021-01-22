@@ -36,7 +36,9 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\RestApiResource\ResourceParamet
 use Spryker\Zed\Api\Business\Model\Processor\Pre\RestApiResource\ResourcePreProcessor;
 use Spryker\Zed\Api\Business\Model\ResourceHandler;
 use Spryker\Zed\Api\Business\Model\Validator\ApiValidator;
+use Spryker\Zed\Api\Business\Router\ApiRouter;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * @method \Spryker\Zed\Api\ApiConfig getConfig()
@@ -354,5 +356,13 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     protected function getApiRequestTransferFilterPlugins()
     {
         return $this->getProvidedDependency(ApiDependencyProvider::PLUGINS_API_REQUEST_TRANSFER_FILTER);
+    }
+
+    /**
+     * @return \Symfony\Component\Routing\RouterInterface
+     */
+    public function createApiRouter(): RouterInterface
+    {
+        return new ApiRouter($this->getConfig());
     }
 }

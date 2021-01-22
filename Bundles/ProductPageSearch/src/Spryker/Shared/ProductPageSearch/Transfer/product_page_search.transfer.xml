@@ -27,6 +27,7 @@
         <property name="categoryNames" type="array" singular="categoryNames"/>
         <property name="sortedCategories" type="array" singular="sortedCategories"/>
         <property name="productImages" type="array" singular="productImages"/>
+        <property name="addToCartSku" type="string"/>
     </transfer>
 
     <transfer name="ProductPageLoad">
@@ -47,6 +48,7 @@
         <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>
         <property name="isActive" type="bool"/>
         <property name="fkProductAbstract" type="int"/>
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="ProductConcretePageSearch">

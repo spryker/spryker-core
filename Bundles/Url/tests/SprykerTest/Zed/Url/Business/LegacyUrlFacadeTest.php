@@ -122,12 +122,12 @@ class LegacyUrlFacadeTest extends Unit
 
         $url = $this->urlFacade->saveUrl($url);
 
-        $this->assertEquals($redirect1->getIdUrlRedirect(), $urlQuery->findOne()->getResourceId());
+        $this->assertSame($redirect1->getIdUrlRedirect(), $urlQuery->findOne()->getResourceId());
 
         $url->setResourceId($redirect2->getIdUrlRedirect());
         $this->urlFacade->saveUrl($url);
 
-        $this->assertEquals($redirect2->getIdUrlRedirect(), $urlQuery->findOne()->getResourceId());
+        $this->assertSame($redirect2->getIdUrlRedirect(), $urlQuery->findOne()->getResourceId());
     }
 
     /**
@@ -156,8 +156,8 @@ class LegacyUrlFacadeTest extends Unit
         $url = $this->urlFacade->getUrlByPath('/someOtherPageUrl');
         $this->assertNotNull($url);
 
-        $this->assertEquals('/someOtherPageUrl', $url->getUrl());
-        $this->assertEquals($locale->getIdLocale(), $url->getFkLocale());
+        $this->assertSame('/someOtherPageUrl', $url->getUrl());
+        $this->assertSame($locale->getIdLocale(), $url->getFkLocale());
     }
 
     /**
@@ -173,8 +173,8 @@ class LegacyUrlFacadeTest extends Unit
         $url = $this->urlFacade->getUrlById($id);
         $this->assertNotNull($url);
 
-        $this->assertEquals('/someOtherPageUrl2', $url->getUrl());
-        $this->assertEquals($locale->getIdLocale(), $url->getFkLocale());
+        $this->assertSame('/someOtherPageUrl2', $url->getUrl());
+        $this->assertSame($locale->getIdLocale(), $url->getFkLocale());
     }
 
     /**
@@ -189,13 +189,13 @@ class LegacyUrlFacadeTest extends Unit
 
         $touchQuery = $this->touchQueryContainer->queryTouchEntry('url', $idUrl);
         $touchQuery->setQueryKey('count');
-        $this->assertEquals(0, $touchQuery->count());
+        $this->assertSame(0, $touchQuery->count());
 
         $touchQuery->setQueryKey(TouchQueryContainer::TOUCH_ENTRY_QUERY_KEY);
         $this->urlFacade->touchUrlActive($idUrl);
 
         $touchQuery->setQueryKey('count');
-        $this->assertEquals(1, $touchQuery->count());
+        $this->assertSame(1, $touchQuery->count());
     }
 
     /**
@@ -247,11 +247,11 @@ class LegacyUrlFacadeTest extends Unit
 
         $redirectQuery = $this->urlQueryContainer->queryRedirectById($redirect->getIdUrlRedirect());
 
-        $this->assertEquals('/pageToUrl2', $redirectQuery->findOne()->getToUrl());
+        $this->assertSame('/pageToUrl2', $redirectQuery->findOne()->getToUrl());
 
         $redirect->setToUrl('/redirectingToUrl');
         $this->urlFacade->saveRedirect($redirect);
 
-        $this->assertEquals('/redirectingToUrl', $redirectQuery->findOne()->getToUrl());
+        $this->assertSame('/redirectingToUrl', $redirectQuery->findOne()->getToUrl());
     }
 }

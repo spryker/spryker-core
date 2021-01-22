@@ -52,7 +52,6 @@ class ProductRelationStorage implements ProductRelationStorageInterface
         $localeName,
         ProductRelationToPriceProductInterface $priceProductClient
     ) {
-
         $this->keyBuilder = $keyBuilder;
         $this->localeName = $localeName;
         $this->storage = $storage;

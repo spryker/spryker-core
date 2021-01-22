@@ -76,6 +76,7 @@ class SalesHelper extends Module
     protected function addOrderDetails(SpySalesOrder $salesOrderEntity): void
     {
         $salesOrderEntity->setOrderReference(random_int(0, 9999999));
+        $salesOrderEntity->setCurrencyIsoCode('EUR');
         $salesOrderEntity->setPriceMode(0);
         $salesOrderEntity->setIsTest(true);
         $salesOrderEntity->setSalutation(SpySalesOrderTableMap::COL_SALUTATION_MR);
@@ -145,9 +146,9 @@ class SalesHelper extends Module
      * @param int $idSalesOrder
      * @param array $salesOrderItem
      *
-     * @return int
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
-    public function createSalesOrderItemForOrder(int $idSalesOrder, array $salesOrderItem = []): int
+    public function createSalesOrderItemForOrder(int $idSalesOrder, array $salesOrderItem = []): SpySalesOrderItem
     {
         $salesOrderQuery = new SpySalesOrderQuery();
         $salesOrderEntity = $salesOrderQuery->findOneByIdSalesOrder($idSalesOrder);
@@ -156,7 +157,7 @@ class SalesHelper extends Module
         $salesOrderItem->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
         $salesOrderItem->save();
 
-        return $salesOrderItem->getIdSalesOrderItem();
+        return $salesOrderItem;
     }
 
     /**

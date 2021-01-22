@@ -51,6 +51,26 @@ class LocaleRepository extends AbstractRepository implements LocaleRepositoryInt
     }
 
     /**
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer|null
+     */
+    public function findLocaleByIdLocale(int $idLocale): ?LocaleTransfer
+    {
+        $localeEntity = $this->getFactory()->createLocaleQuery()
+            ->filterByIdLocale($idLocale)
+            ->findOne();
+
+        if (!$localeEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createLocaleMapper()
+            ->mapLocaleEntityToLocaleTransfer($localeEntity, new LocaleTransfer());
+    }
+
+    /**
      * @param \Orm\Zed\Locale\Persistence\SpyLocale[]|\Propel\Runtime\Collection\ObjectCollection $localeEntities
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer[]

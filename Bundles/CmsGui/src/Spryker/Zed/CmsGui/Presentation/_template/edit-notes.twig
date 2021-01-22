@@ -1,7 +1,7 @@
 <div class="alert alert-warning">
     <p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-        {% filter trans|raw %}
-            You are editing a <b>draft </b> page. To make your changes visible in Yves, publish the page. Publishing the page will create a new version for this page.
-        {% endfilter %}
+        {% apply trans|raw -%}
+            You are editing a <b>draft</b> page. To make your changes visible in the shop, publish the page. Publishing the page will create a new version for this page.
+        {%- endapply %}
     </p>
 </div>

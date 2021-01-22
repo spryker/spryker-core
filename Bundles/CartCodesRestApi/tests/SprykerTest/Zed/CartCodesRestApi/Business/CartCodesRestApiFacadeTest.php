@@ -84,7 +84,7 @@ class CartCodesRestApiFacadeTest extends Test
         );
 
         // Assert
-        $this->assertEquals(1, $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()->count());
+        $this->assertSame(1, $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()->count());
         $this->assertEquals(
             $this->tester::CODE,
             $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()[0]->getVoucherCode()

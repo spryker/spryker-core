@@ -35,6 +35,7 @@ interface ProductOfferFacadeInterface
      * Specification:
      * - Finds ProductOfferTransfer by provided ProductOfferCriteriaTransfer.
      * - Result might be filtered with concreteSku(s), productOfferReference(s) values.
+     * - Executes ProductOfferExpanderPluginInterface plugin stack.
      *
      * @api
      *
@@ -46,22 +47,27 @@ interface ProductOfferFacadeInterface
 
     /**
      * Specification:
+     * - Generates product offer reference and sets default approval status if they are not set.
      * - Creates a product offer.
+     * - Creates relations between a product offer and stores.
+     * - Executes ProductOfferPostCreatePluginInterface plugin stack.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferCriteria
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */
-    public function create(ProductOfferTransfer $productOfferCriteria): ProductOfferTransfer;
+    public function create(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer;
 
     /**
      * Specification:
-     * - Returns ProductOfferResponseTransfer.isSuccessful=false if $productOfferTransfer.idProductOffer is not given
-     * - Returns ProductOfferResponseTransfer.isSuccessful=false if no offer is found with $productOfferTransfer.idProductOffer
-     * - Persists product offer entity with modified fields from ProductOfferTransfer
-     * - Returns new product offer entity in ProductOfferResponseTransfer.productOffer and isSuccessful=true
+     * - Returns ProductOfferResponseTransfer.isSuccessful=false if $productOfferTransfer.idProductOffer is not given.
+     * - Returns ProductOfferResponseTransfer.isSuccessful=false if no offer is found with $productOfferTransfer.idProductOffer.
+     * - Persists product offer entity with modified fields from ProductOfferTransfer.
+     * - Returns new product offer entity in ProductOfferResponseTransfer.productOffer and isSuccessful=true.
+     * - Updates relations between a product offer and stores.
+     * - Executes ProductOfferPostUpdatePluginInterface plugin stack.
      *
      * @api
      *
@@ -96,4 +102,17 @@ interface ProductOfferFacadeInterface
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     public function checkItemProductOffer(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+
+    /**
+     * Specification:
+     * - Gets the available product offer statuses for the current product offer status.
+     * - Returns empty array if no available statuses exist.
+     *
+     * @api
+     *
+     * @param string $currentStatus
+     *
+     * @return string[]
+     */
+    public function getApplicableApprovalStatuses(string $currentStatus): array;
 }

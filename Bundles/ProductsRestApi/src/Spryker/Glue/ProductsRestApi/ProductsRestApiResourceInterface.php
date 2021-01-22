@@ -77,4 +77,33 @@ interface ProductsRestApiResourceInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
     public function findProductConcreteById(int $idProductConcrete, RestRequestInterface $restRequest): ?RestResourceInterface;
+
+    /**
+     * Specification:
+     * - Retrieves concrete product resources by given product concrete ids.
+     * - Executes a stack of `ConcreteProductsResourceExpanderPluginInterface` plugins that expand result.
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function getProductConcreteCollectionByIds(array $productConcreteIds, RestRequestInterface $restRequest): array;
+
+    /**
+     * Specification:
+     * - Retrieves multiple abstract product resource by ids.
+     * - Returned collection of rest resources is indexed by product abstract id.
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function getProductAbstractsByIds(array $productAbstractIds, string $localeName, string $storeName): array;
 }

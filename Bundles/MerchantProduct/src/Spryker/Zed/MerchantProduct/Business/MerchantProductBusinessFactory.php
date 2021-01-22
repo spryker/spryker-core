@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantProduct\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantProduct\Business\Validator\MerchantProductCartValidator;
+use Spryker\Zed\MerchantProduct\Business\Validator\MerchantProductCartValidatorInterface;
 
 /**
  * @method \Spryker\Zed\MerchantProduct\Persistence\MerchantProductRepositoryInterface getRepository()
@@ -15,4 +17,13 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class MerchantProductBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\MerchantProduct\Business\Validator\MerchantProductCartValidatorInterface
+     */
+    public function createMerchantProductCartValidator(): MerchantProductCartValidatorInterface
+    {
+        return new MerchantProductCartValidator(
+            $this->getRepository()
+        );
+    }
 }

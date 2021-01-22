@@ -28,7 +28,7 @@ class StockDataHelper extends Module
     use DataCleanupHelperTrait;
 
     /**
-     * @deprecated Use StockDataHelper::haveProductInStockForStore() instead.
+     * @deprecated Use {@link haveProductInStockForStore()} instead.
      *
      * @param array $seedData
      *
@@ -149,9 +149,19 @@ class StockDataHelper extends Module
     /**
      * @param array $seedData
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\StockProductTransfer
      */
-    protected function createStockProduct(array $seedData): void
+    public function haveStockProduct(array $seedData = []): StockProductTransfer
+    {
+        return $this->createStockProduct($seedData);
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\StockProductTransfer
+     */
+    protected function createStockProduct(array $seedData): StockProductTransfer
     {
         $stockFacade = $this->getStockFacade();
 
@@ -167,6 +177,8 @@ class StockDataHelper extends Module
         $this->getDataCleanupHelper()->_addCleanup(function () use ($idStockProduct) {
             $this->cleanUpStockProduct($idStockProduct);
         });
+
+        return $stockProductTransfer->setIdStockProduct($idStockProduct);
     }
 
     /**

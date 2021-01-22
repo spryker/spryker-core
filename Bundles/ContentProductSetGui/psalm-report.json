@@ -1,0 +1,78 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getData on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentProductSetGui/src/Spryker/Zed/ContentProductSetGui/Communication/Form/ProductSetContentTermForm.php",
+            "snippet": "                $localizedContentTransfer = $form->getParent()->getData();",
+            "selected_text": "getData",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 65,
+            "line_to": 65,
+            "type": "PossiblyNullPropertyFetch",
+            "message": "Cannot get property on possibly null variable $view->parent of type Symfony\\Component\\Form\\FormView|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentProductSetGui/src/Spryker/Zed/ContentProductSetGui/Communication/Form/ProductSetContentTermForm.php",
+            "snippet": "            $view->parent->vars['name']",
+            "selected_text": "$view->parent->vars",
+            "error_level": 3,
+            "shortcode": 82
+        },
+        {
+            "severity": "info",
+            "line_from": 65,
+            "line_to": 65,
+            "type": "PossiblyNullArrayAccess",
+            "message": "Cannot access array value on possibly null variable $view->parent->vars of type mixed|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentProductSetGui/src/Spryker/Zed/ContentProductSetGui/Communication/Form/ProductSetContentTermForm.php",
+            "snippet": "            $view->parent->vars['name']",
+            "selected_text": "$view->parent->vars['name']",
+            "error_level": 3,
+            "shortcode": 79
+        },
+        {
+            "severity": "info",
+            "line_from": 69,
+            "line_to": 69,
+            "type": "PossiblyNullArrayAccess",
+            "message": "Cannot access array value on possibly null variable $view->parent->vars of type mixed|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentProductSetGui/src/Spryker/Zed/ContentProductSetGui/Communication/Form/ProductSetContentTermForm.php",
+            "snippet": "            $view->parent->vars['name']",
+            "selected_text": "$view->parent->vars['name']",
+            "error_level": 3,
+            "shortcode": 79
+        },
+        {
+            "severity": "info",
+            "line_from": 91,
+            "line_to": 91,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentProductSetGui/src/Spryker/Zed/ContentProductSetGui/Communication/Table/ProductSetSelectedTable.php",
+            "snippet": "        $this->setTableIdentifier(sprintf('%s-%s', static::TABLE_IDENTIFIER, $this->identifierSuffix));",
+            "selected_text": "$this->identifierSuffix",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 75,
+            "line_to": 75,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentProductSetGui/src/Spryker/Zed/ContentProductSetGui/Communication/Table/ProductSetViewTable.php",
+            "snippet": "        $this->setTableIdentifier(sprintf('%s-%s', static::TABLE_IDENTIFIER, $this->identifierSuffix));",
+            "selected_text": "$this->identifierSuffix",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

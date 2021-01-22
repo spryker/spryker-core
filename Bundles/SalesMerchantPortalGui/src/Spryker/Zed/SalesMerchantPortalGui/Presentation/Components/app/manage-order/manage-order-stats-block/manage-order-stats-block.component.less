@@ -1,0 +1,24 @@
+@import '../manage-order.component.less';
+@import '~@spryker/styles/src/lib/themes/default/variables/index.less';
+
+@manage-order-stats-block-text-line-height: 1.8;
+
+.mp-manage-order-stats-block {
+    max-width: 50%;
+    padding: @manage-order-grid-default-padding;
+    flex-shrink: 0;
+
+
+    &__text {
+        font-size: @font-size-base;
+        font-weight: @font-weight-medium;
+        color: @ink;
+        line-height: @manage-order-stats-block-text-line-height;
+
+        &--name {
+            font-size: @font-size-sm;
+            color: @gray-darker;
+            text-transform: uppercase;
+        }
+    }
+}

@@ -48,30 +48,6 @@
             "selected_text": "$productConcrete->getIdProductConcrete()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 42,
-            "line_to": 42,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedGui/src/Spryker/Zed/ProductDiscontinuedGui/ProductDiscontinuedGuiDependencyProvider.php",
-            "snippet": "            return new ProductDiscontinuedGuiToProductDiscontinuedFacadeBridge($container->getLocator()->productDiscontinued()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 56,
-            "line_to": 56,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedGui/src/Spryker/Zed/ProductDiscontinuedGui/ProductDiscontinuedGuiDependencyProvider.php",
-            "snippet": "            return new ProductDiscontinuedGuiToLocaleFacadeBridge($container->getLocator()->locale()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

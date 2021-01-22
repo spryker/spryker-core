@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\ZedNavigation\Business\Strategy;
 
+use Laminas\Config\Config;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 use Spryker\Zed\ZedNavigation\ZedNavigationConfig;
-use Zend\Config\Config;
 
 class BreadcrumbNavigationMergeStrategy implements NavigationMergeStrategyInterface
 {
@@ -33,9 +33,9 @@ class BreadcrumbNavigationMergeStrategy implements NavigationMergeStrategyInterf
     }
 
     /**
-     * @param \Zend\Config\Config $navigationDefinition
-     * @param \Zend\Config\Config $rootDefinition
-     * @param \Zend\Config\Config $coreNavigationDefinition
+     * @param \Laminas\Config\Config $navigationDefinition
+     * @param \Laminas\Config\Config $rootDefinition
+     * @param \Laminas\Config\Config $coreNavigationDefinition
      *
      * @return array
      */

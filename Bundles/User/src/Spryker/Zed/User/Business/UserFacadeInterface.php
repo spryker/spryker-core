@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\User\Business;
 
+use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
@@ -205,4 +206,19 @@ interface UserFacadeInterface
      * @return bool
      */
     public function deactivateUser($idUser);
+
+    /**
+     * Specification:
+     * - Requires MailTransfer.recipients and MailTransfer.recipients.email to be set.
+     * - Expands the given mail transfer with an additional user data.
+     *
+     * @api
+     *
+     * @deprecated Will be removed without replacement. Handling of user password reset mail is implemented in UserPasswordReset module.
+     *
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
+     *
+     * @return \Generated\Shared\Transfer\MailTransfer
+     */
+    public function expandMailWithUserData(MailTransfer $mailTransfer): MailTransfer;
 }

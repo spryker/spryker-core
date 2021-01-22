@@ -17,7 +17,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\PositiveOrZero;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 
 /**
  * @method \Spryker\Zed\PriceProductScheduleGui\Communication\PriceProductScheduleGuiCommunicationFactory getFactory()
@@ -120,7 +120,7 @@ class MoneyValueSubForm extends AbstractType
             'label' => 'Net price',
             'required' => false,
             'constraints' => [
-                new PositiveOrZero(),
+                new GreaterThanOrEqual(['value' => 0]),
                 new IntegerMoneyConstraint(),
             ],
         ]);
@@ -142,7 +142,7 @@ class MoneyValueSubForm extends AbstractType
             'label' => 'Gross price',
             'required' => false,
             'constraints' => [
-                new PositiveOrZero(),
+                new GreaterThanOrEqual(['value' => 0]),
                 new IntegerMoneyConstraint(),
             ],
         ]);

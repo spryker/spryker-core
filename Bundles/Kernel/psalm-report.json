@@ -38,6 +38,18 @@
         },
         {
             "severity": "error",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Shared\\Kernel\\ClassResolver\\ClassNameCandidatesBuilder\\ClassNameCandidatesBuilder::buildClassNames has wrong name $moduleName, expecting $module as defined by Spryker\\Shared\\Kernel\\ClassResolver\\ClassNameCandidatesBuilder\\ClassNameCandidatesBuilderInterface::buildClassNames",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/ClassResolver/ClassNameCandidatesBuilder/ClassNameCandidatesBuilder.php",
+            "snippet": "    public function buildClassNames(string $moduleName, string $classNamePattern): array",
+            "selected_text": "$moduleName",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
             "line_from": 50,
             "line_to": 50,
             "type": "InvalidArgument",
@@ -95,6 +107,66 @@
             "selected_text": "$callable($factory($c), $c)",
             "error_level": 6,
             "shortcode": 64
+        },
+        {
+            "severity": "error",
+            "line_from": 19,
+            "line_to": 19,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'Spryker\\Shared\\Kernel\\ContainerInterface' for Spryker\\Shared\\Kernel\\ContainerMocker\\ContainerMocker::overwriteForTesting is incorrect, got 'Spryker\\Service\\Container\\ContainerInterface|Spryker\\Shared\\Kernel\\ContainerInterface'",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/ContainerMocker/ContainerMocker.php",
+            "snippet": "     * @return \\Spryker\\Shared\\Kernel\\ContainerInterface",
+            "selected_text": "\\Spryker\\Shared\\Kernel\\ContainerInterface",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Shared\\Kernel\\Transfer\\AbstractEntityTransfer::fromArray has wrong name $data, expecting $values as defined by Spryker\\Shared\\Kernel\\Transfer\\TransferInterface::fromArray",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/Transfer/AbstractEntityTransfer.php",
+            "snippet": "    public function fromArray(array $data, $acceptVirtualProperties = false)",
+            "selected_text": "$data",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Shared\\Kernel\\Transfer\\AbstractEntityTransfer::fromArray has wrong name $acceptVirtualProperties, expecting $fuzzyMatch as defined by Spryker\\Shared\\Kernel\\Transfer\\TransferInterface::fromArray",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/Transfer/AbstractEntityTransfer.php",
+            "snippet": "    public function fromArray(array $data, $acceptVirtualProperties = false)",
+            "selected_text": "$acceptVirtualProperties",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 153,
+            "line_to": 153,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Shared\\Kernel\\Transfer\\AbstractTransfer::fromArray has wrong name $data, expecting $values as defined by Spryker\\Shared\\Kernel\\Transfer\\TransferInterface::fromArray",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/Transfer/AbstractTransfer.php",
+            "snippet": "    public function fromArray(array $data, $ignoreMissingProperty = false)",
+            "selected_text": "$data",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 153,
+            "line_to": 153,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Shared\\Kernel\\Transfer\\AbstractTransfer::fromArray has wrong name $ignoreMissingProperty, expecting $fuzzyMatch as defined by Spryker\\Shared\\Kernel\\Transfer\\TransferInterface::fromArray",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/Transfer/AbstractTransfer.php",
+            "snippet": "    public function fromArray(array $data, $ignoreMissingProperty = false)",
+            "selected_text": "$ignoreMissingProperty",
+            "error_level": 7,
+            "shortcode": 230
         },
         {
             "severity": "error",
@@ -239,6 +311,18 @@
             "selected_text": "array_values($searchAndReplace)",
             "error_level": 6,
             "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 117,
+            "line_to": 120,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Spryker\\Shared\\Kernel\\Transfer\\EntityTransferInterface>' for Spryker\\Zed\\Kernel\\Persistence\\Repository\\RelationMapper::findRelations",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Persistence/Repository/RelationMapper.php",
+            "snippet": "        return $query\n            ->addUsingAlias($foreignKey, $primaryIds, Criteria::IN)\n            ->setFormatter(TransferObjectFormatter::class)\n            ->find();",
+            "selected_text": "$query\n            ->addUsingAlias($foreignKey, $primaryIds, Criteria::IN)\n            ->setFormatter(TransferObjectFormatter::class)\n            ->find()",
+            "error_level": 6,
+            "shortcode": 128
         }
     ],
     "warning": [
@@ -361,18 +445,6 @@
             "selected_text": "$resolved",
             "error_level": 3,
             "shortcode": 129
-        },
-        {
-            "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "UndefinedInterfaceMethod",
-            "message": "Method Spryker\\Service\\Container\\ContainerInterface::offsetGet does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Glue/Kernel/AbstractFactory.php",
-            "snippet": "        return (new Pimple())->getApplication()['resource_builder'];",
-            "selected_text": "(new Pimple())->getApplication()",
-            "error_level": 5,
-            "shortcode": 181
         },
         {
             "severity": "info",
@@ -664,8 +736,8 @@
         },
         {
             "severity": "info",
-            "line_from": 517,
-            "line_to": 517,
+            "line_from": 522,
+            "line_to": 522,
             "type": "TypeDoesNotContainType",
             "message": "Found a contradiction when evaluating $codeBucket and trying to reconcile type 'string()' to !string()",
             "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/ClassResolver/AbstractClassResolver.php",
@@ -784,8 +856,8 @@
         },
         {
             "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
+            "line_from": 56,
+            "line_to": 56,
             "type": "TypeDoesNotContainType",
             "message": "string(devtest) cannot be identical to string()",
             "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/ContainerMocker/ContainerMocker.php",
@@ -808,15 +880,15 @@
         },
         {
             "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
-            "type": "MoreSpecificReturnType",
-            "message": "The declared return type 'Spryker\\Shared\\Kernel\\KernelSharedFactory' for Spryker\\Shared\\Kernel\\SharedFactoryResolverAwareTrait::getSharedFactory is more specific than the inferred return type 'Spryker\\Shared\\Kernel\\AbstractSharedFactory'",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/SharedFactoryResolverAwareTrait.php",
-            "snippet": "     * @return \\Spryker\\Shared\\Kernel\\AbstractSharedFactory",
-            "selected_text": "\\Spryker\\Shared\\Kernel\\AbstractSharedFactory",
-            "error_level": 3,
-            "shortcode": 70
+            "line_from": 123,
+            "line_to": 123,
+            "type": "UnsafeInstantiation",
+            "message": "Cannot safely instantiate class Spryker\\Shared\\Kernel\\Store with \"new static\" as its constructor might change in child classes",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/Store.php",
+            "snippet": "            self::$instance = new static();",
+            "selected_text": "new static()",
+            "error_level": 2,
+            "shortcode": 229
         },
         {
             "severity": "info",
@@ -844,8 +916,8 @@
         },
         {
             "severity": "info",
-            "line_from": 357,
-            "line_to": 357,
+            "line_from": 334,
+            "line_to": 334,
             "type": "InvalidNullableReturnType",
             "message": "The declared return type 'string' for Spryker\\Shared\\Kernel\\Transfer\\AbstractTransfer::serialize is not nullable, but 'null|string' contains null",
             "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/Transfer/AbstractTransfer.php",
@@ -856,8 +928,8 @@
         },
         {
             "severity": "info",
-            "line_from": 363,
-            "line_to": 363,
+            "line_from": 340,
+            "line_to": 340,
             "type": "NullableReturnStatement",
             "message": "The declared return type 'string' for Spryker\\Shared\\Kernel\\Transfer\\AbstractTransfer::serialize is not nullable, but the function returns 'null|string'",
             "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/Transfer/AbstractTransfer.php",
@@ -868,8 +940,8 @@
         },
         {
             "severity": "info",
-            "line_from": 377,
-            "line_to": 377,
+            "line_from": 354,
+            "line_to": 354,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Shared\\Kernel\\Transfer\\AbstractTransfer::fromArray cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/Transfer/AbstractTransfer.php",
@@ -880,8 +952,8 @@
         },
         {
             "severity": "info",
-            "line_from": 386,
-            "line_to": 386,
+            "line_from": 363,
+            "line_to": 363,
             "type": "InvalidScalarArgument",
             "message": "Argument 2 of Spryker\\Shared\\Kernel\\Transfer\\Exception\\TransferUnserializationException::__construct expects int, int|string provided",
             "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/Transfer/AbstractTransfer.php",
@@ -1108,8 +1180,8 @@
         },
         {
             "severity": "info",
-            "line_from": 36,
-            "line_to": 36,
+            "line_from": 39,
+            "line_to": 39,
             "type": "LessSpecificImplementedReturnType",
             "message": "The inherited return type 'Spryker\\Zed\\Kernel\\Container' for Spryker\\Zed\\Kernel\\BundleDependencyProviderResolverAwareTrait::injectExternalDependencies is more specific than the implemented return type for Spryker\\Zed\\Kernel\\Business\\AbstractBusinessFactory::injectexternaldependencies 'Spryker\\Shared\\Kernel\\ContainerInterface'",
             "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Business/AbstractBusinessFactory.php",
@@ -1588,6 +1660,42 @@
         },
         {
             "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Propel\\Runtime\\ActiveQuery\\ModelCriteria::setLimit cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Persistence/Repository/CriteriaBuilder.php",
+            "snippet": "            $criteria->setLimit($filterTransfer->getLimit());",
+            "selected_text": "$filterTransfer->getLimit()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Propel\\Runtime\\ActiveQuery\\ModelCriteria::setOffset cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Persistence/Repository/CriteriaBuilder.php",
+            "snippet": "            $criteria->setOffset($filterTransfer->getOffset());",
+            "selected_text": "$filterTransfer->getOffset()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Propel\\Runtime\\ActiveQuery\\ModelCriteria::orderBy cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Persistence/Repository/CriteriaBuilder.php",
+            "snippet": "            $criteria->orderBy($filterTransfer->getOrderBy(), $filterTransfer->getOrderDirection() ?? Criteria::ASC);",
+            "selected_text": "$filterTransfer->getOrderBy()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
             "line_from": 28,
             "line_to": 28,
             "type": "ReferenceConstraintViolation",
@@ -1597,6 +1705,18 @@
             "selected_text": "$collection",
             "error_level": 2,
             "shortcode": 86
+        },
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Kernel\\Persistence\\Repository\\RelationMapper::getForeignPhpIdGetterName cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Persistence/Repository/RelationMapper.php",
+            "snippet": "        $foreignPhpIdName = $this->getForeignPhpIdGetterName($symRelationMap);",
+            "selected_text": "$symRelationMap",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1650,78 +1770,6 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 33,
-            "line_to": 33,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
-            "file_name": "vendor/spryker/silexphp/src/Silex/Application/TranslationTrait.php",
-            "snippet": "        return $this['translator']->trans($id, $parameters, $domain, $locale);",
-            "selected_text": "$this",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
-            "file_name": "vendor/spryker/silexphp/src/Silex/Application/TranslationTrait.php",
-            "snippet": "        return $this['translator']->transChoice($id, $number, $parameters, $domain, $locale);",
-            "selected_text": "$this",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 37,
-            "line_to": 37,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
-            "file_name": "vendor/spryker/silexphp/src/Silex/Application/TwigTrait.php",
-            "snippet": "        $twig = $this['twig'];",
-            "selected_text": "$this",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 63,
-            "line_to": 63,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
-            "file_name": "vendor/spryker/silexphp/src/Silex/Application/TwigTrait.php",
-            "snippet": "        return $this['twig']->render($view, $parameters);",
-            "selected_text": "$this",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 33,
-            "line_to": 33,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
-            "file_name": "vendor/spryker/silexphp/src/Silex/Application/UrlGeneratorTrait.php",
-            "snippet": "        return $this['url_generator']->generate($route, $parameters, UrlGeneratorInterface::ABSOLUTE_PATH);",
-            "selected_text": "$this",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
-            "file_name": "vendor/spryker/silexphp/src/Silex/Application/UrlGeneratorTrait.php",
-            "snippet": "        return $this['url_generator']->generate($route, $parameters, UrlGeneratorInterface::ABSOLUTE_URL);",
-            "selected_text": "$this",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 35,
             "line_to": 35,
             "type": "DeprecatedMethod",
@@ -1729,18 +1777,6 @@
             "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Client/Kernel/ClassResolver/AbstractClassResolver.php",
             "snippet": "            $this->getClassPattern()",
             "selected_text": "getClassPattern",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 35,
-            "line_to": 35,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Glue/Kernel/Application.php",
-            "snippet": "        unset($this['exception_handler']);",
-            "selected_text": "$this",
             "error_level": 2,
             "shortcode": 1
         },
@@ -1794,8 +1830,8 @@
         },
         {
             "severity": "info",
-            "line_from": 456,
-            "line_to": 456,
+            "line_from": 461,
+            "line_to": 461,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Shared\\Kernel\\ClassResolver\\ResolverCacheFactoryInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/ClassResolver/AbstractClassResolver.php",
@@ -1806,8 +1842,8 @@
         },
         {
             "severity": "info",
-            "line_from": 458,
-            "line_to": 458,
+            "line_from": 463,
+            "line_to": 463,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Shared\\Kernel\\ClassResolver\\ResolverCacheFactoryInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/ClassResolver/AbstractClassResolver.php",
@@ -1818,8 +1854,8 @@
         },
         {
             "severity": "info",
-            "line_from": 461,
-            "line_to": 461,
+            "line_from": 466,
+            "line_to": 466,
             "type": "DeprecatedClass",
             "message": "Spryker\\Shared\\Kernel\\ClassResolver\\ResolverCacheManager is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/ClassResolver/AbstractClassResolver.php",
@@ -1830,8 +1866,8 @@
         },
         {
             "severity": "info",
-            "line_from": 470,
-            "line_to": 470,
+            "line_from": 475,
+            "line_to": 475,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Shared\\Kernel\\ClassResolver\\ResolverCacheFactoryInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/ClassResolver/AbstractClassResolver.php",
@@ -1842,8 +1878,8 @@
         },
         {
             "severity": "info",
-            "line_from": 474,
-            "line_to": 474,
+            "line_from": 479,
+            "line_to": 479,
             "type": "DeprecatedClass",
             "message": "Spryker\\Shared\\Kernel\\ClassResolver\\ResolverCacheManager is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/ClassResolver/AbstractClassResolver.php",
@@ -1983,6 +2019,30 @@
             "selected_text": "File",
             "error_level": 2,
             "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "DeprecatedConstant",
+            "message": "Constant Spryker\\Shared\\Kernel\\KernelConstants::AUTO_LOADER_CACHE_FILE_NO_LOCK is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/ClassResolver/Cache/Storage/File.php",
+            "snippet": "            if (Config::get(KernelConstants::AUTO_LOADER_CACHE_FILE_NO_LOCK)) {",
+            "selected_text": "KernelConstants::AUTO_LOADER_CACHE_FILE_NO_LOCK",
+            "error_level": 2,
+            "shortcode": 170
+        },
+        {
+            "severity": "info",
+            "line_from": 83,
+            "line_to": 83,
+            "type": "DeprecatedConstant",
+            "message": "Constant Spryker\\Shared\\Kernel\\KernelConstants::AUTO_LOADER_CACHE_FILE_PATH is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/ClassResolver/Cache/Storage/File.php",
+            "snippet": "            $this->cacheFilePath = Config::get(KernelConstants::AUTO_LOADER_CACHE_FILE_PATH, $defaultPath);",
+            "selected_text": "KernelConstants::AUTO_LOADER_CACHE_FILE_PATH",
+            "error_level": 2,
+            "shortcode": 170
         },
         {
             "severity": "info",
@@ -2190,8 +2250,8 @@
         },
         {
             "severity": "info",
-            "line_from": 45,
-            "line_to": 45,
+            "line_from": 46,
+            "line_to": 46,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Shared\\Kernel\\ContainerMocker\\ContainerMocker::getOverwriteContainerForTestingDefaultValue has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/ContainerMocker/ContainerMocker.php",
@@ -2286,8 +2346,8 @@
         },
         {
             "severity": "info",
-            "line_from": 40,
-            "line_to": 40,
+            "line_from": 51,
+            "line_to": 51,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Yves\\Kernel\\Application is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Yves/Kernel/Controller/AbstractController.php",
@@ -2298,8 +2358,8 @@
         },
         {
             "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
+            "line_from": 73,
+            "line_to": 73,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Yves\\Kernel\\Application is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Yves/Kernel/Controller/AbstractController.php",
@@ -2310,8 +2370,8 @@
         },
         {
             "severity": "info",
-            "line_from": 94,
-            "line_to": 94,
+            "line_from": 113,
+            "line_to": 113,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Yves\\Kernel\\Application is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Yves/Kernel/Controller/AbstractController.php",
@@ -2319,6 +2379,42 @@
             "selected_text": "\\Spryker\\Yves\\Kernel\\Application|\\Spryker\\Service\\Container\\ContainerInterface",
             "error_level": 2,
             "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 154,
+            "line_to": 154,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Yves\\Kernel\\Controller\\AbstractController::deprecatedRedirectResponseExternal has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Yves/Kernel/Controller/AbstractController.php",
+            "snippet": "        return $this->deprecatedRedirectResponseExternal($absoluteUrl, $code);",
+            "selected_text": "deprecatedRedirectResponseExternal",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 172,
+            "line_to": 172,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Yves\\Kernel\\Controller\\AbstractController::isUrlDomainWhitelisted has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Yves/Kernel/Controller/AbstractController.php",
+            "snippet": "        if (parse_url($absoluteUrl, PHP_URL_HOST) && !$this->isUrlDomainWhitelisted($absoluteUrl)) {",
+            "selected_text": "isUrlDomainWhitelisted",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 364,
+            "line_to": 364,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Yves\\Kernel\\Controller\\AbstractController::extractDomainFromUrl has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Yves/Kernel/Controller/AbstractController.php",
+            "snippet": "            if ($this->extractDomainFromUrl($absoluteUrl) === $whitelistedDomain) {",
+            "selected_text": "extractDomainFromUrl",
+            "error_level": 2,
+            "shortcode": 1
         },
         {
             "severity": "info",
@@ -2334,37 +2430,13 @@
         },
         {
             "severity": "info",
-            "line_from": 36,
-            "line_to": 36,
+            "line_from": 136,
+            "line_to": 136,
             "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Yves/Kernel/Plugin/EventDispatcher/RedirectUrlValidationEventDispatcherPlugin.php",
-            "snippet": "        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event) {",
-            "selected_text": "FilterResponseEvent",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 21,
-            "line_to": 21,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Yves/Kernel/Validator/RedirectUrlValidator.php",
-            "snippet": "     * @param \\Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent $event",
-            "selected_text": "\\Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 15,
-            "line_to": 15,
-            "type": "DeprecatedClass",
-            "message": "Class Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Yves/Kernel/Validator/RedirectUrlValidatorInterface.php",
-            "snippet": "     * @param \\Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent $event",
-            "selected_text": "\\Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent",
+            "message": "Spryker\\Yves\\Kernel\\Plugin\\Pimple is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Yves/Kernel/Widget/AbstractWidget.php",
+            "snippet": "        return (new Pimple())->getApplication();",
+            "selected_text": "new Pimple()",
             "error_level": 2,
             "shortcode": 98
         },
@@ -2557,18 +2629,6 @@
             "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/ClassResolver/Repository/RepositoryResolver.php",
             "snippet": "            $this->getClassPattern()",
             "selected_text": "getClassPattern",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 88,
-            "line_to": 88,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Communication/AbstractCommunicationFactory.php",
-            "snippet": "        return $container[self::FORM_FACTORY];",
-            "selected_text": "$container",
             "error_level": 2,
             "shortcode": 1
         },

@@ -32,6 +32,5 @@ src/*/Zed/*/Persistence/Propel/Map/*
 
 # tests
 tests/**/_generated/
-tests/**/Generated/
 tests/_output/*
 !tests/_output/.gitkeep

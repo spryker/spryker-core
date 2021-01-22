@@ -1,26 +1,29 @@
-{% for group in groups if not group.groupItems[0].salesOrderConfiguredBundleItem | default %}
-    {% if group.isBundle %}
-        {% include '@Sales/Detail/boxes/order-item.twig' with {
-            orderItem: group.bundleItem,
-            isBundleProduct: true,
-            displayImage: true,
-            displayTotals: true,
-            order: order,
-        } %}
+{% for group in groups | default %}
+    {% if not group.groupItems[0].salesOrderConfiguredBundleItem %}
+        {% if group.isBundle %}
+            {% include '@Sales/Detail/boxes/order-item.twig' with {
+                orderItem: group.bundleItem,
+                isBundleProduct: true,
+                displayImage: true,
+                displayTotals: true,
+                order: order,
+                tableColumnCellsContent: tableColumnCellsContent,
+            } %}
 
-        {% include '@Sales/Detail/boxes/bundle-group.twig' with {
-            items: group.groupItems,
-            bundleItem: group.bundleItem,
-            changeStatusRedirectUrl: changeStatusRedirectUrl,
-            eventsGroupedByItem: eventsGroupedByItem,
-            order: order,
-        } %}
-    {% else %}
-        {% include '@Sales/Detail/boxes/single-item.twig' with {
-            item: group.groupItems | first,
-            changeStatusRedirectUrl: changeStatusRedirectUrl,
-            eventsGroupedByItem: eventsGroupedByItem,
-            order: order,
-        } %}
+            {% include '@Sales/Detail/boxes/bundle-group.twig' with {
+                items: group.groupItems,
+                bundleItem: group.bundleItem,
+                changeStatusRedirectUrl: changeStatusRedirectUrl,
+                eventsGroupedByItem: eventsGroupedByItem,
+                order: order,
+            } %}
+        {% else %}
+            {% include '@Sales/Detail/boxes/single-item.twig' with {
+                item: group.groupItems | first,
+                changeStatusRedirectUrl: changeStatusRedirectUrl,
+                eventsGroupedByItem: eventsGroupedByItem,
+                order: order,
+            } %}
+        {% endif %}
     {% endif %}
 {% endfor %}

@@ -1,12 +1,12 @@
 "Add Merchant","Händler hinzufügen"
 approved,Genehmigt
-approved_button,"Zugang gewähren"
+approved_button,Genehmigt
 "Back to Merchants","Zurück zu Händlern"
 "Contact person first name","Vorname des Ansprechpartners"
 "Contact person last name","Nachname des Ansprechpartners"
 "Contact person phone","Ansprechpartner Telefon"
 "Contact person title","Titel der Kontaktperson"
-denied,Verweigert
+denied,Abgelehnt
 denied_button,"Zugang verweigern"
 E-Mail,E-Mail
 "Edit Merchant","Händler bearbeiten"
@@ -36,3 +36,6 @@ Deactivate,Deaktivieren
 merchant.activated,"Händlerprofil erfolgreich aktiviert."
 merchant.deactivated,"Händlerprofil erfolgreich deaktiviert."
 Stores,Stores
+"Merchant Reference","Händler Referenz"
+"Merchant URL",Händler-URL
+"Create Merchant","Händler Erstellen"

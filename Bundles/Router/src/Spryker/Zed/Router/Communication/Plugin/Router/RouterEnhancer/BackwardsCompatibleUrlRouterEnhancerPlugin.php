@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Router\Communication\Plugin\Router\RouterEnhancer;
 
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\StringToLower;
+use Laminas\Filter\Word\CamelCaseToDash;
 use Symfony\Component\Routing\RequestContext;
-use Zend\Filter\FilterChain;
-use Zend\Filter\StringToLower;
-use Zend\Filter\Word\CamelCaseToDash;
 
 /**
  * @deprecated Will be removed without replacement. This plugin only exists to support a backwards compatibility to old camelCased URL's which are not supported anymore.
@@ -18,7 +18,7 @@ use Zend\Filter\Word\CamelCaseToDash;
 class BackwardsCompatibleUrlRouterEnhancerPlugin extends AbstractRouterEnhancerPlugin
 {
     /**
-     * @var \Zend\Filter\FilterChain|null
+     * @var \Laminas\Filter\FilterChain|null
      */
     protected $filter;
 
@@ -41,7 +41,7 @@ class BackwardsCompatibleUrlRouterEnhancerPlugin extends AbstractRouterEnhancerP
     }
 
     /**
-     * @return \Zend\Filter\FilterChain
+     * @return \Laminas\Filter\FilterChain
      */
     protected function getFilter(): FilterChain
     {

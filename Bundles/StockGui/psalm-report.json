@@ -24,18 +24,6 @@
             "selected_text": "$messageTransfer->getValue()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/StockGui/src/Spryker/Zed/StockGui/StockGuiDependencyProvider.php",
-            "snippet": "            return new StockGuiToStockFacadeBridge($container->getLocator()->stock()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

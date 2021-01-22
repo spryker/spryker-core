@@ -19,7 +19,7 @@ class FlysystemConfig extends AbstractBundleConfig
      */
     public function getFilesystemConfig()
     {
-        return $this->get(FlysystemConstants::FILESYSTEM_SERVICE);
+        return $this->get(FlysystemConstants::FILESYSTEM_SERVICE, []);
     }
 
     /**

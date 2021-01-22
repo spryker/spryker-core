@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\MerchantSalesOrder;
 
+use ArrayObject;
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -16,8 +17,6 @@ use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -39,7 +38,7 @@ class MerchantSalesOrderBusinessTester extends Actor
     /**
      * @param array $seedData
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractStorageTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     public function getItemTransfer(array $seedData = []): ItemTransfer
     {
@@ -108,5 +107,20 @@ class MerchantSalesOrderBusinessTester extends Actor
         $merchantOrderTransfer->setTotals($merchantOrderTotalsTransfer);
 
         return $merchantOrderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject $itemTransfers
+     *
+     * @return int
+     */
+    public function getUniqueProductCount(ArrayObject $itemTransfers): int
+    {
+        $itemSkus = [];
+        foreach ($itemTransfers as $itemTransfer) {
+            $itemSkus[] = $itemTransfer->getSku();
+        }
+
+        return count(array_unique($itemSkus));
     }
 }

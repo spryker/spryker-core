@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\User\Business;
 
+use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -328,5 +329,23 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     public function deactivateUser($idUser)
     {
         return $this->getFactory()->createUserModel()->deactivateUser($idUser);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated Will be removed without replacement. Handling of user password reset mail implemented in UserPasswordReset module.
+     *
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
+     *
+     * @return \Generated\Shared\Transfer\MailTransfer
+     */
+    public function expandMailWithUserData(MailTransfer $mailTransfer): MailTransfer
+    {
+        return $this->getFactory()
+            ->createMailExpander()
+            ->expandMailWithUserData($mailTransfer);
     }
 }

@@ -35,6 +35,14 @@ class MerchantStatusController extends AbstractController
      */
     public function indexAction(Request $request): RedirectResponse
     {
+        $form = $this->getFactory()->createMerchantStatusForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid');
+
+            return $this->redirectResponse($request->headers->get('referer', static::URL_REDIRECT_MERCHANT_LIST));
+        }
+
         $idMerchant = $request->query->getInt(static::PARAM_ID_MERCHANT);
         $newMerchantStatus = $request->query->get(static::PARAM_MERCHANT_STATUS);
 
@@ -59,7 +67,7 @@ class MerchantStatusController extends AbstractController
 
         $this->addSuccessMessage(static::MESSAGE_SUCCESS_MERCHANT_STATUS_UPDATE);
 
-        return $this->redirectResponseExternal($request->headers->get('referer', static::URL_REDIRECT_MERCHANT_LIST));
+        return $this->redirectResponse($request->headers->get('referer', static::URL_REDIRECT_MERCHANT_LIST));
     }
 
     /**
@@ -71,6 +79,6 @@ class MerchantStatusController extends AbstractController
     {
         $this->addErrorMessage(static::MESSAGE_ERROR_MERCHANT_WRONG_PARAMETERS);
 
-        return $this->redirectResponseExternal($request->headers->get('referer', static::URL_REDIRECT_MERCHANT_LIST));
+        return $this->redirectResponse($request->headers->get('referer', static::URL_REDIRECT_MERCHANT_LIST));
     }
 }

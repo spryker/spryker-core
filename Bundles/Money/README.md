@@ -13,5 +13,5 @@ composer require spryker/money
 [Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/utilities/money.html)
 
 [![Build Status](https://travis-ci.org/spryker/money.svg)](https://travis-ci.org/spryker/money)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 

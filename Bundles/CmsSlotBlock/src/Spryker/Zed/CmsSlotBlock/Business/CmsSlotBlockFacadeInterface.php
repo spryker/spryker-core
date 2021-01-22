@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CmsSlotBlock\Business;
 
+use Generated\Shared\Transfer\CmsBlockCollectionTransfer;
+use Generated\Shared\Transfer\CmsBlockCriteriaTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
@@ -72,9 +74,26 @@ interface CmsSlotBlockFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link getPaginatedCmsBlocksWithSlotRelations()} instead.
+     *
      * @param string $twigPath
      *
      * @return string[]
      */
     public function getTemplateConditionsByPath(string $twigPath): array;
+
+    /**
+     * Specification:
+     * - Searches for CMS Blocks based on criteria.
+     * - Paginates search results according to pagination transfer.
+     * - Returns a collection of CMS block transfers with CMS Slot relations and pagination.
+     * - CmsBlockCriteriaTransfer.Pagination, PaginationTransfer.Page, and PaginationTransfer.MaxPerPage must be set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockCollectionTransfer
+     */
+    public function getPaginatedCmsBlocksWithSlotRelations(CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer): CmsBlockCollectionTransfer;
 }

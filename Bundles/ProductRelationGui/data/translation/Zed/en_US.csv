@@ -27,7 +27,7 @@ Inactive,Inactive
 "Product relation key","Product relation key"
 "Product relation successfully created","Product relation successfully created"
 "Product relation successfully modified","Product relation successfully modified"
-"Product relation with id ""%d"" not found.","Product relation with id ""%d"" not found."
+"Product relation with id ""%id%"" not found.","Product relation with id ""%id%"" not found."
 "Product Relations","Product Relations"
 "Related products","Related products"
 related-products,"Related products"
@@ -38,7 +38,7 @@ related-products,"Related products"
 "Relation type","Relation type"
 "Relation type:","Relation type:"
 Save,Save
-Select,select
+Select,Select
 "Select product","Select product"
 "Select Stores","Select Stores"
 "Selected product","Selected product"
@@ -53,3 +53,16 @@ up-selling,Upselling
 "View in Shop","View in Shop"
 "View Product Relation: %s","View Product Relation: %s"
 "View relations","View relations"
+"Product Relation Key","Product Relation Key"
+"Abstract SKU","Abstract SKU"
+"Select a relation type","Select a relation type"
+select,select
+"Add rule","Add rule"
+"Add group","Add group"
+Delete,Delete
+"Edit Product Relation","Edit Product Relation"
+"Is active","Is active"
+"Yes, delete this product relation","Yes, delete this product relation"
+"Number of Products","Number of products"
+Store,Store
+"CSRF token is not valid.","CSRF token is not valid."

@@ -67,7 +67,6 @@ class StateUpdater implements StateUpdaterInterface
         array $processes,
         array $sourceStates
     ) {
-
         if (count($stateMachineItems) === 0) {
             return;
         }
@@ -91,7 +90,6 @@ class StateUpdater implements StateUpdaterInterface
         array $sourceStates,
         StateMachineItemTransfer $stateMachineItemTransfer
     ) {
-
         $this->assertStateMachineItemHaveRequiredData($stateMachineItemTransfer);
 
         $process = $processes[$stateMachineItemTransfer->getProcessName()];

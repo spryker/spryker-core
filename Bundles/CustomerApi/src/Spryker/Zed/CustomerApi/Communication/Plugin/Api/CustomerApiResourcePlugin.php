@@ -54,14 +54,14 @@ class CustomerApiResourcePlugin extends AbstractPlugin implements ApiResourcePlu
      *
      * @api
      *
-     * @param int $idCustomer
+     * @param int $id
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function update($idCustomer, ApiDataTransfer $apiDataTransfer)
+    public function update($id, ApiDataTransfer $apiDataTransfer)
     {
-        return $this->getFacade()->updateCustomer($idCustomer, $apiDataTransfer);
+        return $this->getFacade()->updateCustomer($id, $apiDataTransfer);
     }
 
     /**
@@ -69,13 +69,13 @@ class CustomerApiResourcePlugin extends AbstractPlugin implements ApiResourcePlu
      *
      * @api
      *
-     * @param int $idCustomer
+     * @param int $id
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function remove($idCustomer)
+    public function remove($id)
     {
-        return $this->getFacade()->removeCustomer($idCustomer);
+        return $this->getFacade()->removeCustomer($id);
     }
 
     /**

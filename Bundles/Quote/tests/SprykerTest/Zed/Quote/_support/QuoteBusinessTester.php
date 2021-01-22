@@ -14,8 +14,6 @@ use Orm\Zed\Quote\Persistence\SpyQuoteQuery;
 use Spryker\Shared\Quote\QuoteConstants;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -25,7 +23,7 @@ use Spryker\Shared\Quote\QuoteConstants;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\Quote\Business\QuoteFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
@@ -33,10 +31,6 @@ use Spryker\Shared\Quote\QuoteConstants;
 class QuoteBusinessTester extends Actor
 {
     use _generated\QuoteBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     protected const ANONYMOUS_CUSTOMER_REFERENCE = 'anonymous:123';
     protected const CONFIG_LIFETIME_ONE_SECOND = 'PT01S';

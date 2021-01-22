@@ -1,6 +1,6 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Tax Set deletion confirmation' %}
+{% set widget_title = 'Tax Set deletion confirmation' | trans %}
 
 {% block head_title widget_title %}
 {% block section_title widget_title %}
@@ -15,8 +15,12 @@
 
         {% block widget_content %}
 
-            <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'Back' | trans}}</a>
-            <a href="{{ url('/tax/delete-set/confirm', {'id-tax-set': idTaxSet}) }}" class="btn btn-danger safe-submit">{{ 'Delete Tax Set' | trans}}</a>
+            <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'Back' | trans }}</a>
+            {{ form_start(deleteForm, {
+                'action': url('/tax/delete-set/confirm', {'id-tax-set': idTaxSet})
+            }) }}
+            <input type="submit" class="btn btn-danger safe-submit" value="{{ 'Delete Tax Set' | trans }}">
+            {{ form_end(deleteForm) }}
 
         {% endblock %}
 

@@ -1,4 +1,6 @@
 parameters:
+    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Method .+UploadedFile::__construct\(\) invoked with 6 parameters, 2-5 required.#'
         - '#Parameter \#5 \$test of method .+UploadedFile::__construct\(\) expects bool, int\|null given.#'
+    reportUnmatchedIgnoredErrors: false

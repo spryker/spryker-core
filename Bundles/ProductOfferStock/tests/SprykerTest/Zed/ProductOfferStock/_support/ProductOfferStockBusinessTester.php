@@ -9,10 +9,10 @@ namespace SprykerTest\Zed\ProductOfferStock;
 
 use Codeception\Actor;
 use Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStockQuery;
+use Spryker\Zed\ProductOfferStock\Persistence\ProductOfferStockRepository;
+use Spryker\Zed\ProductOfferStock\Persistence\ProductOfferStockRepositoryInterface;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -31,10 +31,6 @@ class ProductOfferStockBusinessTester extends Actor
 {
     use _generated\ProductOfferStockBusinessTesterActions;
 
-   /**
-    * Define custom actions here
-    */
-
     /**
      * @return void
      */
@@ -51,5 +47,13 @@ class ProductOfferStockBusinessTester extends Actor
     public function getProductOfferStockQuery(): SpyProductOfferStockQuery
     {
         return SpyProductOfferStockQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferStock\Persistence\ProductOfferStockRepositoryInterface
+     */
+    public function getProductOfferStockRepository(): ProductOfferStockRepositoryInterface
+    {
+        return new ProductOfferStockRepository();
     }
 }

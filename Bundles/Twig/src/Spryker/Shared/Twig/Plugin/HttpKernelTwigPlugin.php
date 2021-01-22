@@ -42,7 +42,10 @@ class HttpKernelTwigPlugin implements TwigPluginInterface
         }
 
         $fragmentHandlerHinclude = $this->getFragmentRendererHinclude($container);
-        $fragmentHandlerHinclude->setTemplating($twig);
+
+        if (method_exists($fragmentHandlerHinclude, 'setTemplating')) {
+            $fragmentHandlerHinclude->setTemplating($twig);
+        }
 
         $twig->addExtension(new HttpKernelExtension());
 

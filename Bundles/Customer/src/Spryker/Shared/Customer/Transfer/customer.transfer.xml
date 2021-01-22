@@ -87,6 +87,7 @@
 
     <transfer name="CustomerError">
         <property name="message" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
     <transfer name="CustomerResponse">
@@ -185,5 +186,15 @@
     <transfer name="CustomerCriteriaFilter">
         <property name="restorePasswordKeyExists" type="bool"/>
         <property name="passwordExists" type="bool"/>
+    </transfer>
+
+    <transfer name="AddressCriteriaFilter">
+        <property name="idCustomerAddress" type="int"/>
+        <property name="fkCustomer" type="int"/>
+    </transfer>
+
+    <transfer name="CustomerCriteria">
+        <property name="customerReference" type="string"/>
+        <property name="withExpanders" type="bool"/>
     </transfer>
 </transfers>

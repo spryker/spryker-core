@@ -27,3 +27,18 @@ suites:
                 - \SprykerTest\Shared\Collector\Helper\CollectorDataHelper
                 - \SprykerTest\Zed\ProductLabel\Helper\ProductLabelDataHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+    Persistence:
+        path: Persistence
+        class_name: ProductLabelCollectorPersistenceTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Collector\Helper\CollectorDataHelper
+                - \SprykerTest\Zed\ProductLabel\Helper\ProductLabelDataHelper
+                - \SprykerTest\Shared\Product\Helper\ProductDataHelper

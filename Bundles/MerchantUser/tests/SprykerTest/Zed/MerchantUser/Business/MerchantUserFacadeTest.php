@@ -12,11 +12,13 @@ use Generated\Shared\DataBuilder\UserBuilder;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
+use Generated\Shared\Transfer\OauthUserRestrictionRequestTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\MerchantUser\Persistence\SpyMerchantUser;
-use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeInterface;
+use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
+use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserPasswordResetFacadeInterface;
 use Spryker\Zed\MerchantUser\MerchantUserDependencyProvider;
 
 /**
@@ -28,6 +30,7 @@ use Spryker\Zed\MerchantUser\MerchantUserDependencyProvider;
  * @group Business
  * @group Facade
  * @group MerchantUserFacadeTest
+ *
  * Add your own group annotations below this line
  */
 class MerchantUserFacadeTest extends Unit
@@ -43,14 +46,14 @@ class MerchantUserFacadeTest extends Unit
     protected $merchantUserTransfer;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeBridge
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\User\Business\UserFacadeInterface
      */
     protected $userFacadeMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAuthFacadeBridge
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\UserPasswordReset\Business\UserPasswordResetFacadeInterface
      */
-    protected $authFacadeMock;
+    protected $userPasswordResetFacadeMock;
 
     /**
      * @var \SprykerTest\Zed\MerchantUser\MerchantUserBusinessTester
@@ -64,7 +67,7 @@ class MerchantUserFacadeTest extends Unit
     {
         parent::setUp();
 
-        $this->authFacadeMock = $this->getMockBuilder(MerchantUserToAuthFacadeInterface::class)
+        $this->userPasswordResetFacadeMock = $this->getMockBuilder(MerchantUserToUserPasswordResetFacadeInterface::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['requestPasswordReset'])
             ->getMockForAbstractClass();
@@ -177,8 +180,6 @@ class MerchantUserFacadeTest extends Unit
             ->with($userTransfer)
             ->willReturn($userTransfer);
 
-        $this->authFacadeMock->expects($this->never())->method('requestPasswordReset');
-
         // Act
         $merchantUserResponseTransfer = $this->tester->getFacade()->updateMerchantUser($merchantUserTransfer);
 
@@ -212,7 +213,7 @@ class MerchantUserFacadeTest extends Unit
             ->with($userTransfer)
             ->willReturn($newUserTransfer->setStatus('active'));
 
-        $this->authFacadeMock->expects($this->once())->method('requestPasswordReset');
+        $this->userPasswordResetFacadeMock->expects($this->once())->method('requestPasswordReset');
 
         // Act
         $merchantUserResponseTransfer = $this->tester->getFacade()->updateMerchantUser($merchantUserTransfer);
@@ -247,7 +248,7 @@ class MerchantUserFacadeTest extends Unit
             ->with($userTransfer)
             ->willReturn($newUserTransfer->setStatus('active'));
 
-        $this->authFacadeMock->expects($this->once())->method('requestPasswordReset');
+        $this->userPasswordResetFacadeMock->expects($this->once())->method('requestPasswordReset');
 
         // Act
         $merchantUserResponseTransfer = $this->tester->getFacade()->updateMerchantUser($merchantUserTransfer);
@@ -386,10 +387,123 @@ class MerchantUserFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testAuthenticateMerchantUserMerchantUserCallUserFacade(): void
+    {
+        // Arrange
+        $this->initializeFacadeMocks();
+        $userTransfer = $this->tester->haveUser();
+        $merchantUserTransfer = $this->tester->haveMerchantUser(
+            $this->tester->haveMerchant(),
+            $userTransfer
+        );
+
+        // Assert
+        $this->userFacadeMock->expects($this->once())->method('setCurrentUser');
+        $this->userFacadeMock->expects($this->once())->method('updateUser');
+
+        // Act
+        $this->tester->getFacade()->authenticateMerchantUser($merchantUserTransfer->setUser($userTransfer));
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsOauthUserRestrictedMustRestrictMerchantUser(): void
+    {
+        // Arrange
+        $userTransfer = $this->tester->haveUser();
+        $this->tester->haveMerchantUser(
+            $this->tester->haveMerchant(),
+            $userTransfer
+        );
+
+        $oauthUserRestrictionRequestTransfer = (new OauthUserRestrictionRequestTransfer())->setUser($userTransfer);
+
+        // Act
+        $oauthUserRestrictionResponseTransfer = $this->tester
+            ->getFacade()
+            ->isOauthUserRestricted($oauthUserRestrictionRequestTransfer);
+
+        // Assert
+        $this->assertTrue(
+            $oauthUserRestrictionResponseTransfer->getIsRestricted(),
+            'Expected that merchant user is restricted.'
+        );
+
+        $this->assertCount(
+            1,
+            $oauthUserRestrictionResponseTransfer->getMessages(),
+            'Expected that error message provided.'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsOauthUserRestrictedMustNotRestrictUser(): void
+    {
+        // Arrange
+        $userTransfer = $this->tester->haveUser();
+        $oauthUserRestrictionRequestTransfer = (new OauthUserRestrictionRequestTransfer())->setUser($userTransfer);
+
+        // Act
+        $oauthUserRestrictionResponseTransfer = $this->tester
+            ->getFacade()
+            ->isOauthUserRestricted($oauthUserRestrictionRequestTransfer);
+
+        // Assert
+        $this->assertFalse(
+            $oauthUserRestrictionResponseTransfer->getIsRestricted(),
+            'Expected that user is not restricted.'
+        );
+
+        $this->assertEquals(
+            0,
+            $oauthUserRestrictionResponseTransfer->getMessages()->count(),
+            'Expected that no error message provided.'
+        );
+    }
+
+    /**
+     * @dataProvider isOauthUserRestrictedMustFailWhenNoRequireDataIsProvidedDataProvider
+     *
+     * @param \Generated\Shared\Transfer\OauthUserRestrictionRequestTransfer $oauthUserRestrictionRequestTransfer
+     *
+     * @return void
+     */
+    public function testIsOauthUserRestrictedMustFailWhenNoRequireDataIsProvided($oauthUserRestrictionRequestTransfer): void
+    {
+        // Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->tester->getFacade()->isOauthUserRestricted($oauthUserRestrictionRequestTransfer);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\OauthUserRestrictionRequestTransfer[][]
+     */
+    public function isOauthUserRestrictedMustFailWhenNoRequireDataIsProvidedDataProvider(): array
+    {
+        return [
+            [new OauthUserRestrictionRequestTransfer()],
+            [(new OauthUserRestrictionRequestTransfer())->setUser(new UserTransfer())],
+        ];
+    }
+
+    /**
+     * @return void
+     */
     protected function initializeFacadeMocks(): void
     {
-        $this->tester->setDependency(MerchantUserDependencyProvider::FACADE_AUTH, $this->authFacadeMock);
-        $this->tester->setDependency(MerchantUserDependencyProvider::FACADE_USER, $this->userFacadeMock);
+        $this->tester->setDependency(
+            MerchantUserDependencyProvider::FACADE_USER_PASSWORD_RESET,
+            $this->userPasswordResetFacadeMock
+        );
+        $this->tester->setDependency(
+            MerchantUserDependencyProvider::FACADE_USER,
+            $this->userFacadeMock
+        );
     }
 
     /**

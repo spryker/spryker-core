@@ -46,7 +46,7 @@ class AvailabilityClientTest extends Unit
         $actualProductAvailability = $this->createAvailabilityClient()->findProductAvailabilityByIdProductAbstract(static::ID_PRODUCT_ABSTRACT);
 
         // Assert
-        $this->assertEquals(StorageAvailabilityTransfer::class, get_class($actualProductAvailability));
+        $this->assertSame(StorageAvailabilityTransfer::class, get_class($actualProductAvailability));
     }
 
     /**
@@ -78,7 +78,7 @@ class AvailabilityClientTest extends Unit
         $actualProductAvailability = $this->createAvailabilityClient()->getProductAvailabilityByIdProductAbstract(static::ID_PRODUCT_ABSTRACT);
 
         // Assert
-        $this->assertEquals(StorageAvailabilityTransfer::class, get_class($actualProductAvailability));
+        $this->assertSame(StorageAvailabilityTransfer::class, get_class($actualProductAvailability));
     }
 
     /**

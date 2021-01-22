@@ -56,7 +56,7 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link getLocale()} instead
+     * @deprecated Use {@link \Spryker\Zed\Locale\Business\LocaleFacade::getLocale()} instead.
      *
      * @param string $localeCode
      *
@@ -81,7 +81,7 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     public function getLocaleById($idLocale)
     {
         return $this->getFactory()
-            ->createLocaleManager()
+            ->createLocaleReader()
             ->getLocaleById($idLocale);
     }
 

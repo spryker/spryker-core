@@ -44,3 +44,5 @@ Visible,Visible
 "Visible in the category tree:","Visible in the category tree:"
 yes,Yes
 "Yes, I am sure","Yes, I am sure"
+"View Category","View Category"
+"CSRF token is not valid.","CSRF token is not valid."

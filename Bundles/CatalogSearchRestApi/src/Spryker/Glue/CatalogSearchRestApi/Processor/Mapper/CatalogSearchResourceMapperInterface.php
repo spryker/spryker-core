@@ -13,11 +13,11 @@ use Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer;
 interface CatalogSearchResourceMapperInterface
 {
     /**
-     * @param array $restSearchResponse
+     * @param array $searchResult
      *
      * @return \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer
      */
-    public function mapSearchResultToRestAttributesTransfer(array $restSearchResponse): RestCatalogSearchAttributesTransfer;
+    public function mapSearchResultToRestAttributesTransfer(array $searchResult): RestCatalogSearchAttributesTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer

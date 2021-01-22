@@ -1,5 +1,30 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\DummyPayment\\Communication\\Plugin\\Oms\\Command\\PayPlugin::run has wrong name $salesOrderItems, expecting $orderItems as defined by Spryker\\Zed\\Oms\\Dependency\\Plugin\\Command\\CommandByOrderInterface::run",
+            "file_name": "vendor/spryker/spryker/Bundles/DummyPayment/src/Spryker/Zed/DummyPayment/Communication/Plugin/Oms/Command/PayPlugin.php",
+            "snippet": "    public function run(array $salesOrderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)",
+            "selected_text": "$salesOrderItems",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\DummyPayment\\Communication\\Plugin\\Oms\\Command\\RefundPlugin::run has wrong name $salesOrderItems, expecting $orderItems as defined by Spryker\\Zed\\Oms\\Dependency\\Plugin\\Command\\CommandByOrderInterface::run",
+            "file_name": "vendor/spryker/spryker/Bundles/DummyPayment/src/Spryker/Zed/DummyPayment/Communication/Plugin/Oms/Command/RefundPlugin.php",
+            "snippet": "    public function run(array $salesOrderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)",
+            "selected_text": "$salesOrderItems",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -75,18 +100,6 @@
         },
         {
             "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "InvalidScalarArgument",
-            "message": "Argument 1 of Generated\\Shared\\Transfer\\CheckoutErrorTransfer::setErrorCode expects int|null, string(payment failed) provided",
-            "file_name": "vendor/spryker/spryker/Bundles/DummyPayment/src/Spryker/Zed/DummyPayment/Communication/Plugin/Checkout/DummyPaymentPostCheckPlugin.php",
-            "snippet": "                ->setErrorCode(self::ERROR_CODE_PAYMENT_FAILED)",
-            "selected_text": "self::ERROR_CODE_PAYMENT_FAILED",
-            "error_level": 4,
-            "shortcode": 12
-        },
-        {
-            "severity": "info",
             "line_from": 61,
             "line_to": 61,
             "type": "PossiblyNullReference",
@@ -96,18 +109,6 @@
             "selected_text": "requireLastName",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/DummyPayment/src/Spryker/Zed/DummyPayment/DummyPaymentDependencyProvider.php",
-            "snippet": "            return new DummyPaymentToRefundBridge($container->getLocator()->refund()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

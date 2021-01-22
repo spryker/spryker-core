@@ -261,10 +261,10 @@ class RequestFormatterTest extends Unit
     {
         $this->assertCount(1, $restRequest->getFields());
         $this->assertCount(3, $restRequest->getFields()['items']->getAttributes());
-        $this->assertEquals('items', $restRequest->getFields()['items']->getResource());
+        $this->assertSame('items', $restRequest->getFields()['items']->getResource());
         $this->assertTrue($restRequest->hasField('items'));
         $this->assertCount(3, $restRequest->getField('items')->getAttributes());
-        $this->assertEquals('items', $restRequest->getField('items')->getResource());
+        $this->assertSame('items', $restRequest->getField('items')->getResource());
     }
 
     /**
@@ -275,9 +275,9 @@ class RequestFormatterTest extends Unit
     protected function assertFilters(RestRequestInterface $restRequest): void
     {
         $this->assertCount(1, $restRequest->getFilters());
-        $this->assertEquals('name', $restRequest->getFilters()['items'][0]->getField());
-        $this->assertEquals('items', $restRequest->getFilters()['items'][0]->getResource());
-        $this->assertEquals('item name', $restRequest->getFilters()['items'][0]->getValue());
+        $this->assertSame('name', $restRequest->getFilters()['items'][0]->getField());
+        $this->assertSame('items', $restRequest->getFilters()['items'][0]->getResource());
+        $this->assertSame('item name', $restRequest->getFilters()['items'][0]->getValue());
 
         $this->assertTrue($restRequest->hasFilters('items'));
         $this->assertCount(1, $restRequest->getFiltersByResource('items'));
@@ -290,12 +290,12 @@ class RequestFormatterTest extends Unit
      */
     protected function assertMetadata(RestRequestInterface $restRequest): void
     {
-        $this->assertEquals('json', $restRequest->getMetadata()->getAcceptFormat());
-        $this->assertEquals('json', $restRequest->getMetadata()->getContentTypeFormat());
-        $this->assertEquals('DE', $restRequest->getMetadata()->getLocale());
-        $this->assertEquals('GET', $restRequest->getMetadata()->getMethod());
-        $this->assertEquals(1, $restRequest->getMetadata()->getVersion()->getMajor());
-        $this->assertEquals(1, $restRequest->getMetadata()->getVersion()->getMinor());
+        $this->assertSame('json', $restRequest->getMetadata()->getAcceptFormat());
+        $this->assertSame('json', $restRequest->getMetadata()->getContentTypeFormat());
+        $this->assertSame('DE', $restRequest->getMetadata()->getLocale());
+        $this->assertSame('GET', $restRequest->getMetadata()->getMethod());
+        $this->assertSame(1, $restRequest->getMetadata()->getVersion()->getMajor());
+        $this->assertSame(1, $restRequest->getMetadata()->getVersion()->getMinor());
     }
 
     /**
@@ -305,8 +305,8 @@ class RequestFormatterTest extends Unit
      */
     protected function assertPage(RestRequestInterface $restRequest): void
     {
-        $this->assertEquals(1, $restRequest->getPage()->getLimit());
-        $this->assertEquals(10, $restRequest->getPage()->getOffset());
+        $this->assertSame(1, $restRequest->getPage()->getLimit());
+        $this->assertSame(10, $restRequest->getPage()->getOffset());
     }
 
     /**
@@ -317,10 +317,10 @@ class RequestFormatterTest extends Unit
     protected function assertSort(RestRequestInterface $restRequest): void
     {
         $this->assertCount(2, $restRequest->getSort());
-        $this->assertEquals('attr1', $restRequest->getSort()[0]->getField());
-        $this->assertEquals('ASC', $restRequest->getSort()[0]->getDirection());
-        $this->assertEquals('attr2', $restRequest->getSort()[1]->getField());
-        $this->assertEquals('DESC', $restRequest->getSort()[1]->getDirection());
+        $this->assertSame('attr1', $restRequest->getSort()[0]->getField());
+        $this->assertSame('ASC', $restRequest->getSort()[0]->getDirection());
+        $this->assertSame('attr2', $restRequest->getSort()[1]->getField());
+        $this->assertSame('DESC', $restRequest->getSort()[1]->getDirection());
     }
 
     /**
@@ -342,7 +342,7 @@ class RequestFormatterTest extends Unit
      */
     protected function assertResource(RestRequestInterface $restRequest): void
     {
-        $this->assertEquals('tests', $restRequest->getResource()->getType());
-        $this->assertEquals(1, $restRequest->getResource()->getId());
+        $this->assertSame('tests', $restRequest->getResource()->getType());
+        $this->assertSame('1', $restRequest->getResource()->getId());
     }
 }

@@ -60,6 +60,8 @@ class MerchantUserRepository extends AbstractRepository implements MerchantUserR
     }
 
     /**
+     * @module Merchant
+     *
      * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantUserTransfer[]
@@ -67,9 +69,10 @@ class MerchantUserRepository extends AbstractRepository implements MerchantUserR
     public function getMerchantUsers(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): array
     {
         $merchantUserQuery = $this->getFactory()->createMerchantUserPropelQuery();
+        $merchantUserQuery->joinWithSpyMerchant();
         $merchantUserQuery = $this->applyCriteria($merchantUserQuery, $merchantUserCriteriaTransfer);
 
-        $merchantUserEntities = $merchantUserQuery->find();
+        $merchantUserEntities = $merchantUserQuery->joinWithSpyMerchant()->find();
 
         return $this->getFactory()
             ->createMerchantUserMapper()
@@ -96,6 +99,12 @@ class MerchantUserRepository extends AbstractRepository implements MerchantUserR
 
         if ($merchantUserCriteriaTransfer->getIdMerchantUser() !== null) {
             $merchantUserQuery->filterByIdMerchantUser($merchantUserCriteriaTransfer->getIdMerchantUser());
+        }
+
+        if ($merchantUserCriteriaTransfer->getUsername()) {
+            $merchantUserQuery->useSpyUserQuery()
+                    ->filterByUsername($merchantUserCriteriaTransfer->getUsername())
+                ->endUse();
         }
 
         $merchantUserQuery->orderByIdMerchantUser();

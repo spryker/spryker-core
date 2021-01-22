@@ -32,6 +32,11 @@
         <property name="currency" type="Currency"/>
     </transfer>
 
+    <transfer name="Order">
+        <property name="currency" type="Currency"/>
+        <property name="currencyIsoCode" type="string"/>
+    </transfer>
+
     <transfer name="Store">
         <property name="name" type="string"/>
         <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode"/>

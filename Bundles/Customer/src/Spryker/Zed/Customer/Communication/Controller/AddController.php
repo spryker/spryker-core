@@ -42,7 +42,7 @@ class AddController extends AbstractController
                 array_merge(
                     $dataProvider->getOptions(),
                     [
-                        'action' => Url::generate('/customer/add', [static::REDIRECT_URL_KEY => $baseRedirectUrl]),
+                        'action' => (string)Url::generate('/customer/add', [static::REDIRECT_URL_KEY => $baseRedirectUrl]),
                     ]
                 )
             )

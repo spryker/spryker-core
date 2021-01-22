@@ -12,6 +12,9 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 use Spryker\Yves\Router\Generator\UrlGenerator;
 use Spryker\Yves\Router\UrlMatcher\CompiledUrlMatcher;
 
+/**
+ * @method \Spryker\Shared\Router\RouterConfig getSharedConfig()
+ */
 class RouterConfig extends AbstractBundleConfig
 {
     /**
@@ -30,7 +33,6 @@ class RouterConfig extends AbstractBundleConfig
             'cache_dir' => $this->getCachePathIfCacheEnabled(),
             'generator_class' => UrlGenerator::class,
             'matcher_class' => CompiledUrlMatcher::class,
-            'matcher_base_class' => CompiledUrlMatcher::class,
         ];
     }
 
@@ -59,9 +61,7 @@ class RouterConfig extends AbstractBundleConfig
     protected function getCachePathIfCacheEnabled(): ?string
     {
         if ($this->get(RouterConstants::YVES_IS_CACHE_ENABLED, true)) {
-            $defaultCachePath = sprintf('%s/data/cache/codeBucket%s/%s/routing', APPLICATION_ROOT_DIR, APPLICATION_CODE_BUCKET, APPLICATION);
-
-            return $this->get(RouterConstants::YVES_CACHE_PATH, $defaultCachePath);
+            return $this->get(RouterConstants::YVES_CACHE_PATH, $this->getSharedConfig()->getDefaultRouterCachePath());
         }
 
         return null;

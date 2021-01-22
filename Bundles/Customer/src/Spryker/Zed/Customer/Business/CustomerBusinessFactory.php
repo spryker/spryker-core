@@ -18,6 +18,13 @@ use Spryker\Zed\Customer\Business\Customer\CustomerReader;
 use Spryker\Zed\Customer\Business\Customer\CustomerReaderInterface;
 use Spryker\Zed\Customer\Business\Customer\EmailValidator;
 use Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpander;
+use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CharacterSetCustomerPasswordPolicy;
+use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface;
+use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyValidator;
+use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyValidatorInterface;
+use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\DenyListCustomerPasswordPolicy;
+use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\LengthCustomerPasswordPolicy;
+use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\SequenceCustomerPasswordPolicy;
 use Spryker\Zed\Customer\Business\Model\CustomerOrderSaver as ObsoleteCustomerOrderSaver;
 use Spryker\Zed\Customer\Business\Model\PreConditionChecker;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGenerator;
@@ -51,6 +58,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
             $this->getLocaleQueryContainer(),
             $this->getStore(),
             $this->createCustomerExpander(),
+            $this->createCustomerPasswordPolicyValidator(),
             $this->getPostCustomerRegistrationPlugins()
         );
 
@@ -65,8 +73,62 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
         return new CustomerReader(
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->createAddress()
+            $this->createAddress(),
+            $this->createCustomerExpander()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyValidatorInterface
+     */
+    public function createCustomerPasswordPolicyValidator(): CustomerPasswordPolicyValidatorInterface
+    {
+        return new CustomerPasswordPolicyValidator($this->getConfig(), $this->getCustomerPasswordPolicies());
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface[]
+     */
+    public function getCustomerPasswordPolicies(): array
+    {
+        return [
+            $this->createDenyListCustomerPasswordPolicy(),
+            $this->createLengthCustomerPasswordPolicy(),
+            $this->createSequenceCustomerPasswordPolicy(),
+            $this->createCharacterSetCustomerPasswordPolicy(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface
+     */
+    public function createDenyListCustomerPasswordPolicy(): CustomerPasswordPolicyInterface
+    {
+        return new DenyListCustomerPasswordPolicy($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface
+     */
+    public function createLengthCustomerPasswordPolicy(): CustomerPasswordPolicyInterface
+    {
+        return new LengthCustomerPasswordPolicy($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface
+     */
+    public function createSequenceCustomerPasswordPolicy(): CustomerPasswordPolicyInterface
+    {
+        return new SequenceCustomerPasswordPolicy($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface
+     */
+    public function createCharacterSetCustomerPasswordPolicy(): CustomerPasswordPolicyInterface
+    {
+        return new CharacterSetCustomerPasswordPolicy($this->getConfig());
     }
 
     /**

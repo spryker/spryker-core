@@ -13,8 +13,8 @@ use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPlu
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -66,7 +66,7 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
         EventDispatcherInterface $eventDispatcher,
         ContainerInterface $container
     ): EventDispatcherInterface {
-        $eventDispatcher->addListener(KernelEvents::REQUEST, function (GetResponseEvent $event) use ($container) {
+        $eventDispatcher->addListener(KernelEvents::REQUEST, function (RequestEvent $event) use ($container) {
             $event->getRequest()->setSession($this->getSession($container));
         }, static::EVENT_PRIORITY_EARLY_KERNEL_REQUEST);
 
@@ -83,7 +83,7 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
         EventDispatcherInterface $eventDispatcher,
         ContainerInterface $container
     ): EventDispatcherInterface {
-        $eventDispatcher->addListener(KernelEvents::REQUEST, function (GetResponseEvent $event) use ($container) {
+        $eventDispatcher->addListener(KernelEvents::REQUEST, function (RequestEvent $event) use ($container) {
             if (!$event->isMasterRequest()) {
                 return;
             }
@@ -111,7 +111,7 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
         EventDispatcherInterface $eventDispatcher,
         ContainerInterface $container
     ): EventDispatcherInterface {
-        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event) {
+        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (ResponseEvent $event) {
             if (!$event->isMasterRequest() || !$event->getRequest()->hasSession()) {
                 return;
             }
@@ -120,7 +120,9 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
             if ($session->isStarted()) {
                 $session->save();
 
-                $event->getResponse()->headers->setCookie($this->createSessionCookie($session->getName(), $session->getId(), session_get_cookie_params()));
+                if (!$this->isSessionCookieSet($session)) {
+                    $event->getResponse()->headers->setCookie($this->createSessionCookie($session->getName(), $session->getId(), session_get_cookie_params()));
+                }
             }
         }, static::EVENT_PRIORITY_KERNEL_RESPONSE);
 
@@ -171,5 +173,23 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
     protected function isSessionTestEnabled(ContainerInterface $container): bool
     {
         return $container->has(static::FLAG_SESSION_TEST) && $container->get(static::FLAG_SESSION_TEST);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
+     *
+     * @return bool
+     */
+    protected function isSessionCookieSet(SessionInterface $session): bool
+    {
+        $cookiePattern = $session->getName() . '=' . $session->getId();
+
+        foreach (headers_list() as $headerString) {
+            if (strpos($headerString, $cookiePattern) !== false) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -59,7 +59,10 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
             ->joinWithSpyProductOfferStore()
             ->useSpyProductOfferStoreQuery()
                 ->joinWithSpyStore()
-            ->endUse();
+            ->endUse()
+            ->addJoin(SpyProductOfferTableMap::COL_CONCRETE_SKU, SpyProductTableMap::COL_SKU, Criteria::INNER_JOIN)
+            ->withColumn(SpyProductTableMap::COL_ID_PRODUCT, ProductOfferTransfer::ID_PRODUCT_CONCRETE)
+            ->withColumn(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, ProductOfferTransfer::ID_PRODUCT_ABSTRACT);
 
         $productOfferPropelQuery = $this->applyFilters($productOfferPropelQuery, $productOfferCriteriaTransfer);
 

@@ -78,7 +78,7 @@ class StorageRedisWrapperTest extends Unit
 
         $result = $this->storageRedisWrapper->get(static::PLAIN_TEXT_KEY);
 
-        $this->assertEquals(static::PLAIN_TEXT_DATA, $result);
+        $this->assertSame(static::PLAIN_TEXT_DATA, $result);
     }
 
     /**
@@ -106,15 +106,15 @@ class StorageRedisWrapperTest extends Unit
     {
         $this->storageRedisWrapper->get(static::PLAIN_TEXT_KEY);
         $accessStats = $this->storageRedisWrapper->getAccessStats();
-        $this->assertEquals(0, $accessStats['count']['read']);
+        $this->assertSame(0, $accessStats['count']['read']);
         $this->assertEmpty($accessStats['keys']['read']);
 
         $this->storageRedisWrapper->setDebug(true);
 
         $this->storageRedisWrapper->get(static::PLAIN_TEXT_KEY);
         $accessStats = $this->storageRedisWrapper->getAccessStats();
-        $this->assertEquals(1, $accessStats['count']['read']);
-        $this->assertEquals(
+        $this->assertSame(1, $accessStats['count']['read']);
+        $this->assertSame(
             $this->addPrefixToKey(static::PLAIN_TEXT_KEY),
             array_pop($accessStats['keys']['read'])
         );
@@ -145,7 +145,7 @@ class StorageRedisWrapperTest extends Unit
         $prefixedKey = $this->addPrefixToKey(static::PLAIN_TEXT_KEY);
         $this->assertIsArray($result);
         $this->assertArrayHasKey($prefixedKey, $result);
-        $this->assertEquals(static::PLAIN_TEXT_DATA, $result[$prefixedKey]);
+        $this->assertSame(static::PLAIN_TEXT_DATA, $result[$prefixedKey]);
     }
 
     /**
@@ -192,7 +192,7 @@ class StorageRedisWrapperTest extends Unit
         $itemsCount = rand(1, 10);
         $this->redisClientMock->method('keys')->willReturn(range(1, $itemsCount));
 
-        $this->assertEquals($itemsCount, $this->storageRedisWrapper->getCountItems());
+        $this->assertSame($itemsCount, $this->storageRedisWrapper->getCountItems());
     }
 
     /**
@@ -256,15 +256,15 @@ class StorageRedisWrapperTest extends Unit
 
         $this->storageRedisWrapper->set(static::PLAIN_TEXT_KEY, static::PLAIN_TEXT_DATA);
         $accessStats = $this->storageRedisWrapper->getAccessStats();
-        $this->assertEquals(0, $accessStats['count']['write']);
+        $this->assertSame(0, $accessStats['count']['write']);
         $this->assertEmpty($accessStats['keys']['write']);
 
         $this->storageRedisWrapper->setDebug(true);
 
         $this->storageRedisWrapper->set(static::PLAIN_TEXT_KEY, static::PLAIN_TEXT_DATA);
         $accessStats = $this->storageRedisWrapper->getAccessStats();
-        $this->assertEquals(1, $accessStats['count']['write']);
-        $this->assertEquals(
+        $this->assertSame(1, $accessStats['count']['write']);
+        $this->assertSame(
             $this->addPrefixToKey(static::PLAIN_TEXT_KEY),
             array_pop($accessStats['keys']['write'])
         );

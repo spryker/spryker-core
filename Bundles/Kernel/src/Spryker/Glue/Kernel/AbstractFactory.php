@@ -9,7 +9,7 @@ namespace Spryker\Glue\Kernel;
 
 use Spryker\Glue\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
 use Spryker\Glue\Kernel\Exception\Container\ContainerKeyNotFoundException;
-use Spryker\Glue\Kernel\Plugin\Pimple;
+use Spryker\Shared\Kernel\Container\GlobalContainer;
 use Spryker\Shared\Kernel\ContainerGlobals;
 use Spryker\Shared\Kernel\ContainerMocker\ContainerMocker;
 
@@ -18,6 +18,11 @@ abstract class AbstractFactory
     use BundleConfigResolverAwareTrait;
     use ClientResolverAwareTrait;
     use ContainerMocker;
+
+    /**
+     * @uses \Spryker\Glue\GlueApplication\Plugin\Application\GlueApplicationApplicationPlugin::SERVICE_RESOURCE_BUILDER
+     */
+    protected const SERVICE_RESOURCE_BUILDER = 'resource_builder';
 
     /**
      * @var \Spryker\Glue\Kernel\Container[]
@@ -41,7 +46,7 @@ abstract class AbstractFactory
      */
     public function getResourceBuilder()
     {
-        return (new Pimple())->getApplication()['resource_builder'];
+        return (new GlobalContainer())->get(static::SERVICE_RESOURCE_BUILDER);
     }
 
     /**

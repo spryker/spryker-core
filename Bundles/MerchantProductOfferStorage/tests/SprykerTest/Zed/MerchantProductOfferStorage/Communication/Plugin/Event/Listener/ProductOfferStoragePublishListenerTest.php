@@ -38,9 +38,9 @@ use Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStor
 class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListenerTest
 {
     /**
-     * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_DECLINED
+     * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_DENIED
      */
-    protected const STATUS_DECLINED = 'declined';
+    protected const STATUS_DENIED = 'denied';
 
     /**
      * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_APPROVED
@@ -127,7 +127,7 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
         $expectedCount = 0;
         $productOfferTransfer = $this->tester->createProductOffer(
             $this->tester->getLocator()->store()->facade()->getCurrentStore(),
-            [ProductOfferTransfer::APPROVAL_STATUS => static::STATUS_DECLINED]
+            [ProductOfferTransfer::APPROVAL_STATUS => static::STATUS_DENIED]
         );
         $eventTransfers = [
             (new EventEntityTransfer())->setAdditionalValues([SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference()]),

@@ -7,30 +7,30 @@
 
 namespace Spryker\Zed\Kernel\Communication;
 
+use Laminas\Filter\Word\DashToCamelCase;
 use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
-use Zend\Filter\Word\DashToCamelCase;
 
 class BundleControllerAction implements BundleControllerActionInterface
 {
     /**
      * @var string
      */
-    private $bundle;
+    protected $bundle;
 
     /**
      * @var string
      */
-    private $controller;
+    protected $controller;
 
     /**
      * @var string
      */
-    private $action;
+    protected $action;
 
     /**
-     * @var \Zend\Filter\Word\DashToCamelCase
+     * @var \Laminas\Filter\Word\DashToCamelCase
      */
-    private $filter;
+    protected $filter;
 
     /**
      * @param string $bundle
@@ -55,7 +55,7 @@ class BundleControllerAction implements BundleControllerActionInterface
     }
 
     /**
-     * @return \Zend\Filter\Word\DashToCamelCase
+     * @return \Laminas\Filter\Word\DashToCamelCase
      */
     private function getFilter()
     {

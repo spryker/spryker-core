@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\Development\Business\Composer\Updater;
 
+use Laminas\Filter\Word\CamelCaseToDash;
+use Laminas\Filter\Word\DashToCamelCase;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Development\DevelopmentConstants;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 use Symfony\Component\Finder\SplFileInfo;
-use Zend\Filter\Word\CamelCaseToDash;
-use Zend\Filter\Word\DashToCamelCase;
 
 class RequireExternalUpdater implements UpdaterInterface
 {
@@ -131,7 +131,7 @@ class RequireExternalUpdater implements UpdaterInterface
     protected function mapExternalToInternal($composerName)
     {
         foreach ($this->externalToInternalMap as $external => $internal) {
-            if ($external[0] === '/') {
+            if (substr($external, 0, 1) === '/') {
                 if (preg_match($external, $composerName)) {
                     return $internal;
                 }

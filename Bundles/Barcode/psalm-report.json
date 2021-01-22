@@ -3,18 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Barcode/src/Spryker/Zed/Barcode/BarcodeDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->barcode()->service();",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 51,
             "line_to": 51,
             "type": "PossiblyNullArgument",

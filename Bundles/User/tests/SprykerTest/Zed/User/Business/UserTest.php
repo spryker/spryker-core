@@ -8,7 +8,10 @@
 namespace SprykerTest\Zed\User\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\MailBuilder;
 use Generated\Shared\DataBuilder\UserBuilder;
+use Generated\Shared\Transfer\MailRecipientTransfer;
+use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Client\Session\SessionClient;
@@ -92,9 +95,9 @@ class UserTest extends Unit
 
         $this->assertInstanceOf(UserTransfer::class, $user);
         $this->assertNotNull($user->getIdUser());
-        $this->assertEquals($data['firstName'], $user->getFirstName());
-        $this->assertEquals($data['lastName'], $user->getLastName());
-        $this->assertEquals($data['username'], $user->getUsername());
+        $this->assertSame($data['firstName'], $user->getFirstName());
+        $this->assertSame($data['lastName'], $user->getLastName());
+        $this->assertSame($data['username'], $user->getUsername());
         $this->assertNotEquals($data['password'], $user->getPassword());
     }
 
@@ -109,9 +112,9 @@ class UserTest extends Unit
 
         $this->assertInstanceOf(UserTransfer::class, $user);
         $this->assertNotNull($user->getIdUser());
-        $this->assertEquals($data->getFirstName(), $user->getFirstName());
-        $this->assertEquals($data->getLastName(), $user->getLastName());
-        $this->assertEquals($data->getUsername(), $user->getUsername());
+        $this->assertSame($data->getFirstName(), $user->getFirstName());
+        $this->assertSame($data->getLastName(), $user->getLastName());
+        $this->assertSame($data->getUsername(), $user->getUsername());
         $this->assertNotEquals($data->getPassword(), $user->getPassword());
     }
 
@@ -149,9 +152,9 @@ class UserTest extends Unit
         $user2 = $this->getUserFacade()->updateUser($user2);
 
         $this->assertInstanceOf(UserTransfer::class, $user2);
-        $this->assertEquals($data2['firstName'], $user2->getFirstName());
-        $this->assertEquals($data2['lastName'], $user2->getLastName());
-        $this->assertEquals($data2['username'], $user2->getUsername());
+        $this->assertSame($data2['firstName'], $user2->getFirstName());
+        $this->assertSame($data2['lastName'], $user2->getLastName());
+        $this->assertSame($data2['username'], $user2->getUsername());
         $this->assertNotEquals($user->getPassword(), $user2->getPassword());
 
         $this->assertTrue($this->getUserFacade()->isValidPassword($data['password'], $user2->getPassword()));
@@ -172,11 +175,11 @@ class UserTest extends Unit
 
         $hashedPassword = $user->getPassword();
         $newHashedPassword = $user2->getPassword();
-        $this->assertEquals($hashedPassword, $newHashedPassword);
+        $this->assertSame($hashedPassword, $newHashedPassword);
 
         $user2 = $this->getUserFacade()->updateUser($user2);
         $newHashedPassword = $user2->getPassword();
-        $this->assertEquals($hashedPassword, $newHashedPassword);
+        $this->assertSame($hashedPassword, $newHashedPassword);
     }
 
     /**
@@ -198,9 +201,9 @@ class UserTest extends Unit
         $finalUser = $this->getUserFacade()->updateUser($userTest);
 
         $this->assertInstanceOf(UserTransfer::class, $finalUser);
-        $this->assertEquals($user->getFirstName(), $finalUser->getFirstName());
-        $this->assertEquals($user->getLastName(), $finalUser->getLastName());
-        $this->assertEquals($user->getUsername(), $finalUser->getUsername());
+        $this->assertSame($user->getFirstName(), $finalUser->getFirstName());
+        $this->assertSame($user->getLastName(), $finalUser->getLastName());
+        $this->assertSame($user->getUsername(), $finalUser->getUsername());
         $this->assertNotEquals($user->getPassword(), $finalUser->getPassword());
 
         $this->assertTrue($this->getUserFacade()->isValidPassword($data2['password'], $finalUser->getPassword()));
@@ -244,11 +247,11 @@ class UserTest extends Unit
         $user = $this->getUserFacade()->getUserByUsername($data['username']);
 
         $this->assertInstanceOf(UserTransfer::class, $user);
-        $this->assertEquals($user->getIdUser(), $mock->getIdUser());
-        $this->assertEquals($user->getFirstName(), $mock->getFirstName());
-        $this->assertEquals($user->getLastName(), $mock->getLastName());
-        $this->assertEquals($user->getUsername(), $mock->getUsername());
-        $this->assertEquals($user->getPassword(), $mock->getPassword());
+        $this->assertSame($user->getIdUser(), $mock->getIdUser());
+        $this->assertSame($user->getFirstName(), $mock->getFirstName());
+        $this->assertSame($user->getLastName(), $mock->getLastName());
+        $this->assertSame($user->getUsername(), $mock->getUsername());
+        $this->assertSame($user->getPassword(), $mock->getPassword());
     }
 
     /**
@@ -262,11 +265,11 @@ class UserTest extends Unit
         $user = $this->getUserFacade()->getUserById($mock->getIdUser());
 
         $this->assertInstanceOf(UserTransfer::class, $user);
-        $this->assertEquals($user->getIdUser(), $mock->getIdUser());
-        $this->assertEquals($user->getFirstName(), $mock->getFirstName());
-        $this->assertEquals($user->getLastName(), $mock->getLastName());
-        $this->assertEquals($user->getUsername(), $mock->getUsername());
-        $this->assertEquals($user->getPassword(), $mock->getPassword());
+        $this->assertSame($user->getIdUser(), $mock->getIdUser());
+        $this->assertSame($user->getFirstName(), $mock->getFirstName());
+        $this->assertSame($user->getLastName(), $mock->getLastName());
+        $this->assertSame($user->getUsername(), $mock->getUsername());
+        $this->assertSame($user->getPassword(), $mock->getPassword());
     }
 
     /**
@@ -418,6 +421,58 @@ class UserTest extends Unit
 
         // Assert
         $this->assertNull($foundUserTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandMailWithUserDataReturnsUpdatedTransfer(): void
+    {
+        // Arrange
+        $userTransfer = $this->tester->haveUser([
+            UserTransfer::USERNAME => static::USERNAME,
+        ]);
+        $mailTransfer = $this->getMailTransfer($userTransfer->getUsername());
+
+        // Act
+        $expenseTransfer = $this->tester
+            ->getFacade()
+            ->expandMailWithUserData($mailTransfer);
+
+        // Assert
+        $this->assertSame($mailTransfer->getUser()->getIdUser(), $userTransfer->getIdUser());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandMailWithUserDataDoesNothingWithIncorrectData(): void
+    {
+        // Arrange
+        $mailTransfer = $this->getMailTransfer('nonexistent_email@mail.com');
+
+        // Act
+        $expenseTransfer = $this->tester
+            ->getFacade()
+            ->expandMailWithUserData($mailTransfer);
+
+        // Assert
+        $this->assertNull($mailTransfer->getUser());
+    }
+
+    /**
+     * @param string $recipientEmail
+     *
+     * @return \Generated\Shared\Transfer\MailTransfer
+     */
+    protected function getMailTransfer(string $recipientEmail): MailTransfer
+    {
+        return (new MailBuilder())
+            ->seed()
+            ->withRecipient([
+                MailRecipientTransfer::EMAIL => $recipientEmail,
+            ])
+            ->build();
     }
 
     /**

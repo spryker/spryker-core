@@ -1,0 +1,3 @@
+# PriceProductVolumesRestApi Changelog
+
+[Release Changelog](https://github.com/spryker/price-product-volumes-rest-api/releases)

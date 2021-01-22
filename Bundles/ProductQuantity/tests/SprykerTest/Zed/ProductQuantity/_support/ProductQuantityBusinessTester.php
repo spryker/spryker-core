@@ -17,8 +17,6 @@ use Generated\Shared\Transfer\ProductQuantityTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -28,17 +26,13 @@ use Generated\Shared\Transfer\QuoteTransfer;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  */
 class ProductQuantityBusinessTester extends Actor
 {
     use _generated\ProductQuantityBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
@@ -97,6 +91,7 @@ class ProductQuantityBusinessTester extends Actor
         $cartChangeTransfer->getQuote()->addItem(
             (new ItemTransfer())
                 ->setSku($sku)
+                ->setGroupKey($sku)
                 ->setQuantity($quantity)
         );
 

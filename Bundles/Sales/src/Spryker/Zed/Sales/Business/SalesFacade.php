@@ -285,16 +285,16 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressesTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      * @param int $idAddress
      *
      * @return bool
      */
-    public function updateOrderAddress(AddressTransfer $addressesTransfer, $idAddress)
+    public function updateOrderAddress(AddressTransfer $addressTransfer, $idAddress)
     {
         return $this->getFactory()
             ->createOrderAddressWriter()
-            ->update($addressesTransfer, $idAddress);
+            ->update($addressTransfer, $idAddress);
     }
 
     /**
@@ -302,15 +302,15 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressesTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    public function createOrderAddress(AddressTransfer $addressesTransfer): AddressTransfer
+    public function createOrderAddress(AddressTransfer $addressTransfer): AddressTransfer
     {
         return $this->getFactory()
             ->createOrderAddressWriter()
-            ->create($addressesTransfer);
+            ->create($addressTransfer);
     }
 
     /**
@@ -367,7 +367,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link getUniqueItemsFromOrder()} instead`.
+     * @deprecated Use {@link getUniqueItemsFromOrder()} instead.
      *
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *

@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Search\Business;
 
 use Codeception\Test\Unit;
+use Elastica\Index;
 use Elastica\Snapshot;
 use Psr\Log\NullLogger;
 use Spryker\Client\Search\Provider\SearchClientProvider;
@@ -27,7 +28,7 @@ use Spryker\Zed\Search\Business\SearchFacadeInterface;
  * @group SearchFacadeBCTest
  * Add your own group annotations below this line
  *
- * @deprecated Use `\SprykerTest\Zed\Search\Business\SearchFacadeTest` instead.
+ * @deprecated Only for BC check.
  */
 class SearchFacadeBCTest extends Unit
 {
@@ -45,6 +46,8 @@ class SearchFacadeBCTest extends Unit
      */
     protected function _setUp(): void
     {
+        $this->skipIfElasticsearch7();
+
         parent::_setUp();
     }
 
@@ -200,6 +203,16 @@ class SearchFacadeBCTest extends Unit
     {
         if (getenv('TRAVIS')) {
             $this->markTestSkipped('Travis not set up properly');
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function skipIfElasticsearch7(): void
+    {
+        if (!method_exists(Index::class, 'getType')) {
+            $this->markTestSkipped('This test is not suitable for Elasticsearch 7 or higher');
         }
     }
 }

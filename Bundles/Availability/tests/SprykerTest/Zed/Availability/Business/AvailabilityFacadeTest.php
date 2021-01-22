@@ -226,11 +226,11 @@ class AvailabilityFacadeTest extends Unit
         // Assert
         $availabilityEntity = SpyAvailabilityQuery::create()->findOneBySku(static::CONCRETE_SKU);
         $this->assertNotNull($availabilityEntity);
-        $this->assertEquals(50, (new Decimal($availabilityEntity->getQuantity()))->toString());
+        $this->assertSame(50, (new Decimal($availabilityEntity->getQuantity()))->toInt());
 
         $availabilityAbstractEntity = SpyAvailabilityAbstractQuery::create()->findOneByAbstractSku(static::ABSTRACT_SKU);
         $this->assertNotNull($availabilityAbstractEntity);
-        $this->assertEquals(50, (new Decimal($availabilityAbstractEntity->getQuantity()))->toString());
+        $this->assertSame(50, (new Decimal($availabilityAbstractEntity->getQuantity()))->toInt());
     }
 
     /**
@@ -253,7 +253,7 @@ class AvailabilityFacadeTest extends Unit
 
         // Assert
         $availabilityEntity = SpyAvailabilityQuery::create()->findOneBySku(static::CONCRETE_SKU);
-        $this->assertTrue((new Decimal($availabilityEntity->getQuantity()))->equals(50));
+        $this->assertSame(50, (new Decimal($availabilityEntity->getQuantity()))->toInt());
     }
 
     /**
@@ -276,10 +276,10 @@ class AvailabilityFacadeTest extends Unit
         // Assert
         $availabilityEntity = SpyAvailabilityQuery::create()->findOneBySku($productTransfer->getSku());
         $this->assertNotNull($availabilityEntity);
-        $this->assertEquals(0, (new Decimal($availabilityEntity->getQuantity()))->toString());
+        $this->assertSame(0, (new Decimal($availabilityEntity->getQuantity()))->toInt());
         $availabilityAbstractEntity = SpyAvailabilityAbstractQuery::create()->findOneByAbstractSku($productTransfer->getAbstractSku());
         $this->assertNotNull($availabilityAbstractEntity);
-        $this->assertEquals(0, (new Decimal($availabilityAbstractEntity->getQuantity()))->toString());
+        $this->assertSame(0, (new Decimal($availabilityAbstractEntity->getQuantity()))->toInt());
     }
 
     /**
@@ -301,7 +301,7 @@ class AvailabilityFacadeTest extends Unit
 
         // Assert
         $this->assertNotNull($productAbstractAvailabilityTransfer);
-        $this->assertEquals($productAbstractAvailabilityTransfer->getAvailability()->trim()->toString(), 2);
+        $this->assertSame(2, $productAbstractAvailabilityTransfer->getAvailability()->trim()->toInt());
     }
 
     /**
@@ -358,8 +358,8 @@ class AvailabilityFacadeTest extends Unit
 
         // Assert
         $this->assertNotNull($productAbstractAvailabilityTransfer);
-        $this->assertEquals(
-            $productAbstractAvailabilityTransfer->getAvailability()->trim()->toString(),
+        $this->assertSame(
+            $productAbstractAvailabilityTransfer->getAvailability()->trim()->toInt(),
             ($productQuantity1 + $productQuantity2)
         );
     }
@@ -384,7 +384,7 @@ class AvailabilityFacadeTest extends Unit
 
         // Assert
         $this->assertNotNull($productConcreteAvailabilityTransfer);
-        $this->assertEquals($productConcreteAvailabilityTransfer->getAvailability()->trim()->toString(), $productQuantity);
+        $this->assertSame($productQuantity, $productConcreteAvailabilityTransfer->getAvailability()->trim()->toInt());
     }
 
     /**
@@ -411,7 +411,7 @@ class AvailabilityFacadeTest extends Unit
 
         // Assert
         $this->assertNotNull($productConcreteAvailabilityTransfer);
-        $this->assertEquals($productQuantity, $productConcreteAvailabilityTransfer->getAvailability()->trim()->toString());
+        $this->assertSame($productQuantity, $productConcreteAvailabilityTransfer->getAvailability()->trim()->toInt());
     }
 
     /**
@@ -487,6 +487,124 @@ class AvailabilityFacadeTest extends Unit
         // Assert
         $this->assertTrue($productAvailable);
         $this->assertFalse($productAvailable2);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterAvailableProductsWithNeverOutOfStock(): void
+    {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveProduct([ProductConcreteTransfer::SKU => static::CONCRETE_SKU]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $this->createProductWithStock(
+            static::ABSTRACT_SKU,
+            static::CONCRETE_SKU,
+            ['is_never_out_of_stock' => true],
+            $storeTransfer
+        );
+
+        // Act
+        $productConcreteTransfers = $this->getAvailabilityFacade()
+            ->filterAvailableProducts([$productConcreteTransfer]);
+
+        // Assert
+        $this->assertCount(1, $productConcreteTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterAvailableProductsWithQuantity(): void
+    {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveProduct([ProductConcreteTransfer::SKU => static::CONCRETE_SKU]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $this->createProductWithStock(
+            static::ABSTRACT_SKU,
+            static::CONCRETE_SKU,
+            ['quantity' => 2],
+            $storeTransfer
+        );
+
+        // Act
+        $productConcreteTransfers = $this->getAvailabilityFacade()
+            ->filterAvailableProducts([$productConcreteTransfer]);
+
+        // Assert
+        $this->assertCount(1, $productConcreteTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterAvailableProductsWithZeroQuantity(): void
+    {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveProduct([ProductConcreteTransfer::SKU => static::CONCRETE_SKU]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $this->createProductWithStock(
+            static::ABSTRACT_SKU,
+            static::CONCRETE_SKU,
+            ['quantity' => 0],
+            $storeTransfer
+        );
+
+        // Act
+        $productConcreteTransfers = $this->getAvailabilityFacade()
+            ->filterAvailableProducts([$productConcreteTransfer]);
+
+        // Assert
+        $this->assertCount(0, $productConcreteTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterAvailableProductsWithoutStock(): void
+    {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveProduct([ProductConcreteTransfer::SKU => static::CONCRETE_SKU]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+
+        // Act
+        $productConcreteTransfers = $this->getAvailabilityFacade()
+            ->filterAvailableProducts([$productConcreteTransfer]);
+
+        // Assert
+        $this->assertCount(0, $productConcreteTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterAvailableProductsWithSeveralItems(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+
+        $firstProductConcreteTransfer = $this->tester->haveProduct();
+        $this->createProductWithStock(
+            $firstProductConcreteTransfer->getAbstractSku(),
+            $firstProductConcreteTransfer->getSku(),
+            ['quantity' => 0],
+            $storeTransfer
+        );
+
+        $secondProductConcreteTransfer = $this->tester->haveProduct();
+        $this->createProductWithStock(
+            $firstProductConcreteTransfer->getAbstractSku(),
+            $firstProductConcreteTransfer->getSku(),
+            ['quantity' => 2],
+            $storeTransfer
+        );
+
+        // Act
+        $productConcreteTransfers = $this->getAvailabilityFacade()
+            ->filterAvailableProducts([$firstProductConcreteTransfer, $secondProductConcreteTransfer]);
+
+        // Assert
+        $this->assertCount(1, $productConcreteTransfers);
     }
 
     /**

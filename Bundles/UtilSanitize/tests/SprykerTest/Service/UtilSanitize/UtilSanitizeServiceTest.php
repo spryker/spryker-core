@@ -30,7 +30,7 @@ class UtilSanitizeServiceTest extends Unit
 
         $escapedHtml = $utilSanitizeService->escapeHtml('<b></b>');
 
-        $this->assertEquals('&lt;b&gt;&lt;/b&gt;', $escapedHtml);
+        $this->assertSame('&lt;b&gt;&lt;/b&gt;', $escapedHtml);
     }
 
     /**

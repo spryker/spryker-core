@@ -51,7 +51,7 @@ class Cache implements CacheInterface
         $filesystem = new Filesystem();
         $routerConfiguration = $this->config->getRouterConfiguration();
 
-        if (isset($routerConfiguration['cache_dir'])) {
+        if (isset($routerConfiguration['cache_dir']) && is_dir($routerConfiguration['cache_dir'])) {
             $filesystem->remove($routerConfiguration['cache_dir']);
         }
     }

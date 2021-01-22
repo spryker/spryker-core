@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="MerchantProductStorage">
+        <property name="idProductAbstract" type="int"/>
+        <property name="idMerchant" type="int"/>
+        <property name="isShared" type="bool"/>
+        <property name="sku" type="string"/>
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantProduct">
+        <property name="idProductAbstract" type="int"/>
+        <property name="idMerchant" type="int"/>
+        <property name="sku" type="string"/>
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
+    <transfer name="ProductAbstractStorage">
+        <property name="merchantReference" type="string"/>
+        <property name="idProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="ProductView">
+        <property name="merchantReference" type="string"/>
+        <property name="selectedAttributes" type="array" singular="selectedAttribute"/>
+        <property name="idProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantProductCriteria">
+        <property name="merchantProductAbstractIds" type="int[]" singular="merchantProductAbstractId"/>
+        <property name="idProductAbstract" type="int"/>
+        <property name="merchantIds" type="int[]" singular="idMerchant"/>
+    </transfer>
+
+    <transfer name="ProductOfferStorageCriteria">
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
+    <transfer name="Merchant">
+        <property name="merchantReference" type="string"/>
+        <property name="isActive" type="bool"/>
+    </transfer>
+
+    <transfer name="MerchantProductCollection">
+        <property name="merchantProducts" type="MerchantProduct[]" singular="merchantProduct"/>
+    </transfer>
+</transfers>

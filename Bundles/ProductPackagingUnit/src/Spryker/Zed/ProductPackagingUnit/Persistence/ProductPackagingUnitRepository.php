@@ -28,6 +28,7 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class ProductPackagingUnitRepository extends AbstractRepository implements ProductPackagingUnitRepositoryInterface
 {
     protected const SKU = 'sku';
+    protected const COL_COUNT = 'count';
 
     /**
      * @param string $productPackagingUnitTypeName
@@ -381,14 +382,45 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
                 ->endUse();
         }
 
+        /** @var array $salesOrderItemAggregations */
+        $salesOrderItemAggregations = $salesOrderItemQuery->find();
+
         $salesAggregationTransfers = [];
-        foreach ($salesOrderItemQuery->find() as $salesOrderItemAggregation) {
+        foreach ($salesOrderItemAggregations as $salesOrderItemAggregation) {
             $salesAggregationTransfers[] = (new SalesOrderItemStateAggregationTransfer())
                 ->fromArray($salesOrderItemAggregation, true)
                 ->setSku($sku);
         }
 
         return $salesAggregationTransfers;
+    }
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return int[]
+     */
+    public function getProductPackagingUnitCountByProductConcreteIds(array $productConcreteIds): array
+    {
+        /** @var array $productPackagingUnitsData */
+        $productPackagingUnitsData = $this->getFactory()
+            ->createProductPackagingUnitQuery()
+            ->filterByFkProduct_In($productConcreteIds)
+            ->groupByFkProduct()
+            ->select(SpyProductPackagingUnitTableMap::COL_FK_PRODUCT)
+            ->withColumn('COUNT(*)', static::COL_COUNT)
+            ->find();
+
+        $productPackagingUnitCounts = [];
+
+        foreach ($productPackagingUnitsData as $productPackagingUnitData) {
+            $fkProduct = $productPackagingUnitData[SpyProductPackagingUnitTableMap::COL_FK_PRODUCT];
+            $count = $productPackagingUnitData[static::COL_COUNT];
+
+            $productPackagingUnitCounts[$fkProduct] = $count;
+        }
+
+        return $productPackagingUnitCounts;
     }
 
     /**

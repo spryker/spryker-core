@@ -132,4 +132,9 @@
         <property name="merchant" type="Merchant"/>
     </transfer>
 
+    <transfer name="Url">
+        <property name="fkLocale" type="int"/>
+        <property name="url" type="string"/>
+    </transfer>
+
 </transfers>

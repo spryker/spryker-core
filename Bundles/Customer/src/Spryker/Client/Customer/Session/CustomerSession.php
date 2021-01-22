@@ -18,7 +18,7 @@ class CustomerSession implements CustomerSessionInterface
     /**
      * @var \Spryker\Client\Session\SessionClientInterface
      */
-    private $sessionClient;
+    protected $sessionClient;
 
     /**
      * @var \Spryker\Client\Customer\Dependency\Plugin\CustomerSessionGetPluginInterface[]

@@ -4,11 +4,10 @@
   "description": "Assertion module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/kernel": "^3.30.0"
   },
   "require-dev": {
-    "spryker/application": "*",
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",

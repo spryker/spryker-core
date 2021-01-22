@@ -82,8 +82,11 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
                 ->endUse();
         }
 
+        /** @var array $salesOrderItemAggregations */
+        $salesOrderItemAggregations = $salesOrderItemQuery->find();
+
         $salesAggregationTransfers = [];
-        foreach ($salesOrderItemQuery->find() as $salesOrderItemAggregation) {
+        foreach ($salesOrderItemAggregations as $salesOrderItemAggregation) {
             $salesAggregationTransfers[] = (new SalesOrderItemStateAggregationTransfer())
                 ->fromArray($salesOrderItemAggregation, true);
         }
@@ -123,6 +126,7 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
             ->leftJoinWithState()
             ->leftJoinOrderItem()
             ->groupByFkSalesOrderItem()
+            ->groupByIdOmsOrderItemStateHistory()
             ->orderByIdOmsOrderItemStateHistory(Criteria::DESC);
 
         return $this->getFactory()
@@ -140,7 +144,8 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
     public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): array
     {
         $salesOrderItemQuery = $this->getFactory()
-            ->getSalesOrderItemPropelQuery()
+            ->getSalesQueryContainer()
+            ->querySalesOrderItem()
             ->joinWithState()
             ->joinWithProcess();
 
@@ -170,6 +175,13 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
 
         if ($orderItemFilterTransfer->getSalesOrderIds()) {
             $salesOrderItemQuery->filterByFkSalesOrder_In($orderItemFilterTransfer->getSalesOrderIds());
+        }
+
+        if ($orderItemFilterTransfer->getOrderReferences()) {
+            $salesOrderItemQuery
+                ->useOrderQuery()
+                    ->filterByOrderReference_In($orderItemFilterTransfer->getOrderReferences())
+                ->endUse();
         }
 
         return $salesOrderItemQuery;

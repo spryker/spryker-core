@@ -1,0 +1,21 @@
+@import '~@spryker/styles/src/lib/themes/default/variables/index.less';
+
+@dashboard-grid-default-padding: 5px;
+
+.mp-dashboard-card {
+    &__heading {
+        display: flex;
+        flex-wrap: wrap;
+        margin: -@dashboard-grid-default-padding;
+        align-items: center;
+
+        &-col {
+            padding: @dashboard-grid-default-padding;
+            line-height: 1;
+        }
+    }
+
+    .@{card-prefix-cls}-head {
+        font-size: @heading-3-font-size;
+    }
+}
