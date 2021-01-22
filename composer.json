@@ -628,6 +628,7 @@
     "spryker/quote-request-agent": "*",
     "spryker/quote-request-data-import": "*",
     "spryker/quote-request-extension": "*",
+    "spryker/quote-requests-rest-api": "*",
     "spryker/ramsey-uuid": "*",
     "spryker/redis": "*",
     "spryker/refund": "*",

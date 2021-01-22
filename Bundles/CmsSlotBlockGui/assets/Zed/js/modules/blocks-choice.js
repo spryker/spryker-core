@@ -41,10 +41,10 @@ var BlocksChoice = function (options) {
                 processResults: function (data) {
                     return {
                         results: $.map(data.results, function (item) {
-                            item.disabled = (item.disabled !== _self.blocksTable.isBlockModified(item.id));
+                            item.disabled = item.disabled !== _self.blocksTable.isBlockModified(item.id);
                             return item;
                         }),
-                        pagination: data.pagination
+                        pagination: data.pagination,
                     };
                 },
                 delay: 250,
@@ -55,7 +55,7 @@ var BlocksChoice = function (options) {
                     .data('is-active', container.isActive)
                     .data('valid-from', container.validFrom)
                     .data('valid-to', container.validFrom)
-                    .data('stores', container.stores)
+                    .data('stores', container.stores);
 
                 return container.text;
             },
@@ -68,8 +68,7 @@ var BlocksChoice = function (options) {
 
     this.selectBlockChoice = function () {
         var isSelected = _self.$blocksChoiceDropDown.val() !== '';
-        $(_self.blocksChoiceAddSelector).toggleClass('btn-back', !isSelected)
-            .toggleClass('btn-primary', isSelected);
+        $(_self.blocksChoiceAddSelector).toggleClass('btn-back', !isSelected).toggleClass('btn-primary', isSelected);
     };
 
     this.addBlock = function (event) {

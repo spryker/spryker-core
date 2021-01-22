@@ -16,7 +16,7 @@ $(document).ready(function () {
         '#productsToBeAssigned',
         '.available-product-concrete-table-all-products-checkbox',
         'a[href="#tab-content-assignment_product"]',
-        '#productListAggregate_productIdsToBeAssigned'
+        '#productListAggregate_productIdsToBeAssigned',
     );
 
     assignedProductsTable.init(
@@ -24,7 +24,7 @@ $(document).ready(function () {
         '#productsToBeDeassigned',
         '.assigned-product-concrete-table-all-products-checkbox',
         'a[href="#tab-content-deassignment_product"]',
-        '#productListAggregate_productIdsToBeDeAssigned'
+        '#productListAggregate_productIdsToBeDeAssigned',
     );
 });
 

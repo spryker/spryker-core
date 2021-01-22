@@ -32,9 +32,7 @@ function handleSuperAttributeCheckboxChange(e) {
         $dropdownInput = $($inputsGroup.find('.super-attribute-dropdown-input')[0]);
 
     $dropdownInput.prop('disabled', checkboxState);
-    checkboxState ?
-        $textInput.removeClass('hidden') :
-        $textInput.addClass('hidden');
+    checkboxState ? $textInput.removeClass('hidden') : $textInput.addClass('hidden');
 }
 
 function handleSkuAutogenerateCheckboxChange(e) {

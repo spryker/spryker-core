@@ -12,49 +12,62 @@ var inactiveFiltersContainer = $('#inactive-filters-container');
 var inactiveFilters = $('#inactive-filters-container ol');
 var removeAllButton = $('#remove-all-filters');
 
+$(document).ready(function () {
+    activeFiltersContainer
+        .nestable({
+            group: 1,
+            maxDepth: 1,
+        })
+        .on('change', function () {
+            filters.val(JSON.stringify(getAllFilters()));
 
-$(document).ready(function() {
-    activeFiltersContainer.nestable({
-        group: 1,
-        maxDepth: 1
-    }).on('change', function() {
-        filters.val(JSON.stringify(getAllFilters()));
-
-        if(inactiveFiltersContainer.find('li').length === 0) {
-            inactiveFiltersContainer.closest('.row').addClass('hidden');
-        } else {
-            inactiveFiltersContainer.closest('.row').removeClass('hidden');
-        }
-    });
+            if (inactiveFiltersContainer.find('li').length === 0) {
+                inactiveFiltersContainer.closest('.row').addClass('hidden');
+            } else {
+                inactiveFiltersContainer.closest('.row').removeClass('hidden');
+            }
+        });
 
     activeFiltersContainer.trigger('change');
 
-    activeFiltersContainer.on('click', '.remove-product-category-filter', function(e) {
+    activeFiltersContainer.on('click', '.remove-product-category-filter', function (e) {
         var filter = e.currentTarget.closest('.filter-item');
-        inactiveFilters.append(createInactiveFilter(filter.dataset['filterKey'], filter.dataset['filterLabel'], filter.classList.contains('non-filter-attribute')));
+        inactiveFilters.append(
+            createInactiveFilter(
+                filter.dataset['filterKey'],
+                filter.dataset['filterLabel'],
+                filter.classList.contains('non-filter-attribute'),
+            ),
+        );
 
         removeFilter(filter.dataset['filterKey'], true);
         activeFiltersContainer.trigger('change');
     });
 
-    inactiveFiltersContainer.on('click', '.re-add-product-category-filter', function(e) {
+    inactiveFiltersContainer.on('click', '.re-add-product-category-filter', function (e) {
         var filter = e.currentTarget.closest('.filter-item');
-        activeFilters.append(createActiveFilter(filter.dataset['filterKey'], filter.dataset['filterLabel'], filter.classList.contains('non-filter-attribute')));
+        activeFilters.append(
+            createActiveFilter(
+                filter.dataset['filterKey'],
+                filter.dataset['filterLabel'],
+                filter.classList.contains('non-filter-attribute'),
+            ),
+        );
 
         removeFilter(filter.dataset['filterKey'], false);
         activeFiltersContainer.trigger('change');
     });
 
-    removeAllButton.on('click', function() {
-        activeFiltersContainer.find('.remove-product-category-filter').each(function(index, el) {
-            el.click()
+    removeAllButton.on('click', function () {
+        activeFiltersContainer.find('.remove-product-category-filter').each(function (index, el) {
+            el.click();
         });
     });
 });
 
 function getAllFilters() {
     return {
-        filters: getFilters(activeFilters, true).concat(getFilters(inactiveFilters, false))
+        filters: getFilters(activeFilters, true).concat(getFilters(inactiveFilters, false)),
     };
 }
 
@@ -66,16 +79,13 @@ function getAllFilters() {
  */
 function getFilters(selector, isActive) {
     var filters = [];
-    selector.find('li')
-        .each(function(index, el) {
-            filters.push(
-                {
-                    key: el.dataset['filterKey'],
-                    label: el.dataset['filterLabel'],
-                    isActive: isActive
-                }
-            );
+    selector.find('li').each(function (index, el) {
+        filters.push({
+            key: el.dataset['filterKey'],
+            label: el.dataset['filterLabel'],
+            isActive: isActive,
         });
+    });
 
     return filters;
 }
@@ -91,22 +101,50 @@ function removeFromInactiveList(filterKey) {
 }
 
 function createActiveFilter(filterKey, filterLabel, nonFilterAttribute) {
-    return createFilter(filterKey, filterLabel, nonFilterAttribute, 'btn-danger remove-product-category-filter', 'Remove Filter', 'fa-trash');
+    return createFilter(
+        filterKey,
+        filterLabel,
+        nonFilterAttribute,
+        'btn-danger remove-product-category-filter',
+        'Remove Filter',
+        'fa-trash',
+    );
 }
 
 function createInactiveFilter(filterKey, filterLabel, nonFilterAttribute) {
-    return createFilter(filterKey, filterLabel, nonFilterAttribute, 'btn-info re-add-product-category-filter', 'Re-add Filter', 'fa-plus-circle');
+    return createFilter(
+        filterKey,
+        filterLabel,
+        nonFilterAttribute,
+        'btn-info re-add-product-category-filter',
+        'Re-add Filter',
+        'fa-plus-circle',
+    );
 }
 
 function createFilter(filterKey, filterLabel, nonFilterAttribute, anchorClass, anchorTitle, iconClass) {
-    return '<li data-filter-key="' + filterKey + '"  data-filter-label="' + filterLabel + '" class="filter-item dd-item ' + ((nonFilterAttribute)? 'non-filter-attribute': '') + '">\n' +
-        '    <a class="btn btn-xs btn-outline ' + anchorClass + '" title="' + anchorTitle + '">\n' +
-        '        <i class="fa fa-fw ' + iconClass + '"></i>\n' +
+    return (
+        '<li data-filter-key="' +
+        filterKey +
+        '"  data-filter-label="' +
+        filterLabel +
+        '" class="filter-item dd-item ' +
+        (nonFilterAttribute ? 'non-filter-attribute' : '') +
+        '">\n' +
+        '    <a class="btn btn-xs btn-outline ' +
+        anchorClass +
+        '" title="' +
+        anchorTitle +
+        '">\n' +
+        '        <i class="fa fa-fw ' +
+        iconClass +
+        '"></i>\n' +
         '    </a>\n' +
         '    <div class="dd-handle">\n' +
         filterLabel +
         '    </div>\n' +
-        '</li>';
+        '</li>'
+    );
 }
 
 function removeFilter(filterKey, active) {
@@ -115,8 +153,8 @@ function removeFilter(filterKey, active) {
         selector = inactiveFilters;
     }
 
-    selector.find('li').each(function(index, el) {
-        if(filterKey === el.dataset['filterKey']) {
+    selector.find('li').each(function (index, el) {
+        if (filterKey === el.dataset['filterKey']) {
             el.remove();
         }
     });
@@ -125,5 +163,5 @@ function removeFilter(filterKey, active) {
 module.exports = {
     getAllFilters: getAllFilters,
     addToActiveList: addToActiveList,
-    removeFromInactiveList: removeFromInactiveList
+    removeFromInactiveList: removeFromInactiveList,
 };

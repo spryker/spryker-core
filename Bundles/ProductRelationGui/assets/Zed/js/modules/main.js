@@ -10,14 +10,13 @@ require('../../sass/main.scss');
 var ProductSelector = require('./libs/product-selector');
 var SqlQueryBuilder = require('./libs/sql-query-builder');
 
-$(document).ready(function() {
-
+$(document).ready(function () {
     new ProductSelector({
         idProductAbstractElement: $('#product_relation_fkProductAbstract'),
         selectedProductContainer: $('#selected-product'),
         selectProductNotice: $('#select-product-notice'),
         productTable: $('#product-table'),
-        selectProductUrl: '/product-relation-gui/product-selector?id-product-abstract='
+        selectProductUrl: '/product-relation-gui/product-selector?id-product-abstract=',
     });
 
     new SqlQueryBuilder({
@@ -27,7 +26,6 @@ $(document).ready(function() {
         productRelationQuerySet: $('#product_relation_querySet'),
         productRelationForm: $('#form-product-relation'),
         productRelationFormSubmitBtn: $('#submit-relation'),
-        ruleQueryTable: $('#rule-query-table')
+        ruleQueryTable: $('#rule-query-table'),
     });
-
 });
