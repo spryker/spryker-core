@@ -27,7 +27,11 @@ class MerchantProfileAddressTransfersToMerchantProfileAddressTransferTransformer
      */
     public function transform($value): MerchantProfileAddressTransfer
     {
-        if ($value instanceof ArrayAccess && $value->offsetExists(0)) {
+        if (
+            $value instanceof ArrayAccess
+            && $value->offsetExists(0)
+            && $value->offsetGet(0) !== null
+        ) {
             return $value->offsetGet(0);
         }
 

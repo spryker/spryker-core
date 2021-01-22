@@ -39,8 +39,12 @@ class MerchantProfileEntityManager extends AbstractEntityManager implements Merc
     {
         $merchantProfileEntity = $this->getFactory()
             ->createMerchantProfileQuery()
-            ->filterByIdMerchantProfile($merchantProfileTransfer->getIdMerchantProfile())
+            ->filterByIdMerchantProfile($merchantProfileTransfer->getIdMerchantProfileOrFail())
             ->findOne();
+
+        if ($merchantProfileEntity === null) {
+            return $merchantProfileTransfer;
+        }
 
         $merchantProfileTransfer = $this->saveMerchantProfile($merchantProfileTransfer, $merchantProfileEntity);
 
