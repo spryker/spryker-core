@@ -126,7 +126,7 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
     }
 
     /**
-     * @module Pro
+     * @module Product
      *
      * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $productOfferQuery
      * @param \Generated\Shared\Transfer\ProductOfferCriteriaTransfer $productOfferCriteria
