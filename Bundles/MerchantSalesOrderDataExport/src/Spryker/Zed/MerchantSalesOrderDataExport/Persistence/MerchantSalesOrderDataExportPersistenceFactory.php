@@ -88,7 +88,7 @@ class MerchantSalesOrderDataExportPersistenceFactory extends AbstractPersistence
     }
 
     /**
-     * @phpstan-return \Orm\Zed\Sales\Persistence\Base\SpySalesOrderCommentQuery
+     * @phpstan-return \Orm\Zed\Sales\Persistence\Base\SpySalesOrderCommentQuery<\Orm\Zed\Sales\Persistence\SpySalesOrderComment>
      *
      * @return \Orm\Zed\Sales\Persistence\Base\SpySalesOrderCommentQuery
      */

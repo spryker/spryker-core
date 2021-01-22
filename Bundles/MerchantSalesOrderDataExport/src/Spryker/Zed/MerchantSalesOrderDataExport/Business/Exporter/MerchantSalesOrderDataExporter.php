@@ -57,6 +57,16 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
     protected $dataReader;
 
     /**
+     * @var string
+     */
+    protected $merchantName;
+
+    /**
+     * @var string
+     */
+    protected $storeName;
+
+    /**
      * @param \Spryker\Zed\MerchantSalesOrderDataExport\Dependency\Service\MerchantSalesOrderDataExportToDataExportServiceInterface $dataExportService
      * @param \Spryker\Zed\MerchantSalesOrderDataExport\MerchantSalesOrderDataExportConfig $merchantSalesOrderDataExportConfig
      * @param \Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\DataReaderInterface $dataReader
@@ -79,78 +89,99 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
     public function export(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportReportTransfer
     {
         $dataExportConfigurationTransfer = $this->resolveDataExportActionConfigurationTransfer($dataExportConfigurationTransfer);
-
-        $dataExportResultTransfer = $this->createDataExportResultTransfer($dataExportConfigurationTransfer);
-
         $extendedDataExportConfigurationTransfer = $this->extendDataExportConfigurationTransfer($dataExportConfigurationTransfer);
-        $extendedDataExportConfigurationTransfer
-            ->addFilterCriterion(static::FILTER_CRITERIA_KEY_OFFSET, 0)
-            ->addFilterCriterion(static::FILTER_CRITERIA_KEY_LIMIT, static::LIMIT_VALUE);
-        $dataExportBatchTransfer = $this->dataReader->readBatch($extendedDataExportConfigurationTransfer);
-        $dataExportBatchData = $dataExportBatchTransfer->getData();
+        $dataExportResultTransfer = $this->createDataExportResultTransfer($dataExportConfigurationTransfer);
+        do {
+            $dataExportBatchTransfer = $this->dataReader->readBatch($extendedDataExportConfigurationTransfer);
 
-        if (!$dataExportBatchData) {
-            return $this->createDataExportReportTransfer($dataExportResultTransfer);
-        }
-        $merchantName = $dataExportBatchData[0][static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_NAME];
-        $storeName = $dataExportBatchData[0][static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_ORDER_STORE];
-        $exportData = [];
-        $exportedRowsCount = 0;
-
-        while (!empty($dataExportBatchData)) :
-            foreach ($dataExportBatchData as $dataExportRow) {
-                $exportedRowsCount++;
-                if (
-                    $dataExportRow[static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_NAME] === $merchantName
-                    && $dataExportRow[static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_ORDER_STORE] === $storeName
-                ) {
-                    $exportData[] = $dataExportRow;
-
-                    continue;
-                }
-                $dataExportWriteResponseTransfer = $this->writeMerchantStoreData(
-                    $exportData,
-                    $dataExportConfigurationTransfer,
-                    $dataExportBatchTransfer
-                );
-
-                $merchantName = $dataExportRow[static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_NAME];
-                $storeName = $dataExportRow[static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_ORDER_STORE];
-                $exportData = [];
-                $exportData[] = $dataExportRow;
+            if (!($dataExportBatchTransfer->getData())) {
+                return $this->createDataExportReportTransfer($dataExportResultTransfer);
             }
+            $dataExportResultTransfer = $this->exportBatchData(
+                $dataExportBatchTransfer,
+                $dataExportConfigurationTransfer,
+                $dataExportResultTransfer
+            );
+
+            if (!$dataExportResultTransfer->getIsSuccessful()) {
+                return $this->createDataExportReportTransfer($dataExportResultTransfer);
+            }
+
             $extendedDataExportConfigurationTransfer->addFilterCriterion(
                 static::FILTER_CRITERIA_KEY_OFFSET,
-                $exportedRowsCount
+                $dataExportResultTransfer->getExportCount()
             );
-            $dataExportBatchTransfer = $this->dataReader->readBatch($extendedDataExportConfigurationTransfer);
-            $dataExportBatchData = $dataExportBatchTransfer->getData();
-        endwhile;
+        } while ($dataExportResultTransfer->getExportCount() === static::LIMIT_VALUE);
 
-        if (!empty($exportData)) {
+        return $this->createDataExportReportTransfer($dataExportResultTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DataExportBatchTransfer $dataExportBatchTransfer
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
+     * @param \Generated\Shared\Transfer\DataExportResultTransfer $dataExportResultTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataExportResultTransfer
+     */
+    protected function exportBatchData(
+        DataExportBatchTransfer $dataExportBatchTransfer,
+        DataExportConfigurationTransfer $dataExportConfigurationTransfer,
+        DataExportResultTransfer $dataExportResultTransfer
+    ): DataExportResultTransfer {
+        $dataExportBatchData = $dataExportBatchTransfer->getData();
+        $exportData = [];
+
+        if ($dataExportBatchTransfer->getOffset() === 0) {
+            $this->merchantName = $dataExportBatchData[0][static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_NAME];
+            $this->storeName = $dataExportBatchData[0][static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_ORDER_STORE];
+        }
+        $exportedRowsCount = $dataExportBatchTransfer->getOffset();
+
+        foreach ($dataExportBatchData as $dataExportRow) {
+            $exportedRowsCount++;
+            if (
+                $dataExportRow[static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_NAME] === $this->merchantName
+                && $dataExportRow[static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_ORDER_STORE] === $this->storeName
+            ) {
+                $exportData[] = $dataExportRow;
+
+                continue;
+            }
+
             $dataExportWriteResponseTransfer = $this->writeMerchantStoreData(
                 $exportData,
                 $dataExportConfigurationTransfer,
                 $dataExportBatchTransfer
             );
+
+            if (!$dataExportWriteResponseTransfer->getIsSuccessful()) {
+                return $dataExportResultTransfer
+                    ->fromArray($dataExportWriteResponseTransfer->toArray(), true)
+                    ->setExportCount($exportedRowsCount);
+            }
+
+            $this->merchantName = $dataExportRow[static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_NAME];
+            $this->storeName = $dataExportRow[static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_ORDER_STORE];
+            $exportData = [];
+            $exportData[] = $dataExportRow;
         }
 
-        if (isset($dataExportWriteResponseTransfer) && !$dataExportWriteResponseTransfer->getIsSuccessful()) {
-            $dataExportResultTransfer
+        $dataExportWriteResponseTransfer = $this->writeMerchantStoreData(
+            $exportData,
+            $dataExportConfigurationTransfer,
+            $dataExportBatchTransfer
+        );
+
+        if (!$dataExportWriteResponseTransfer->getIsSuccessful()) {
+            return $dataExportResultTransfer
                 ->fromArray($dataExportWriteResponseTransfer->toArray(), true)
                 ->setExportCount($exportedRowsCount);
-
-            return $this->createDataExportReportTransfer($dataExportResultTransfer);
         }
 
-        if (isset($dataExportWriteResponseTransfer)) {
-            $dataExportResultTransfer
-                ->setIsSuccessful(true)
-                ->setExportCount($exportedRowsCount)
-                ->setFileName($dataExportWriteResponseTransfer->getFileName());
-        }
-
-        return $this->createDataExportReportTransfer($dataExportResultTransfer);
+        return $dataExportResultTransfer
+            ->setIsSuccessful(true)
+            ->setExportCount($exportedRowsCount)
+            ->setFileName($dataExportWriteResponseTransfer->getFileName());
     }
 
     /**
@@ -175,7 +206,6 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
         );
 
         $dataExportBatchTransfer->setData($exportData);
-        $dataExportBatchTransfer->setOffset(0);
         $dataExportBatchTransfer = $this->removeConfigurationFields($dataExportBatchTransfer, $dataExportConfigurationTransfer->getDataEntity());
 
         return $this->dataExportService->write(
@@ -269,6 +299,8 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
         $extendedDataExportConfigurationTransfer = clone $dataExportConfigurationTransfer;
 
         return $extendedDataExportConfigurationTransfer
+            ->addFilterCriterion(static::FILTER_CRITERIA_KEY_OFFSET, 0)
+            ->addFilterCriterion(static::FILTER_CRITERIA_KEY_LIMIT, static::LIMIT_VALUE)
             ->addField(static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_NAME)
             ->addField(static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_ORDER_STORE);
     }

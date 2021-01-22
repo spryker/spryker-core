@@ -57,6 +57,7 @@ class MerchantSalesOrderDataExportDependencyProvider extends AbstractBundleDepen
         $container = $this->addMerchantPropelQuery($container);
         $container = $this->addMerchantSalesOrderPropelQuery($container);
         $container = $this->addMerchantSalesOrderItemPropelQuery($container);
+        $container = $this->addSalesOrderCommentPropelQuery($container);
         $container = $this->addUtilEncodingService($container);
 
         return $container;

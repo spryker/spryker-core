@@ -141,11 +141,10 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
             $filterCriteria[static::FILTER_CRITERIA_PARAM_LIMIT]
         );
 
-        $merchantSalesOrderQuery = $this->applyFilterCriteriaToMerchantSalesOrderQuery(
+        $merchantSalesOrderItemQuery = $this->applyFilterCriteriaToMerchantSalesOrderItemQuery(
             $dataExportConfigurationTransfer->getFilterCriteria(),
-            $merchantSalesOrderItemQuery->useMerchantSalesOrderQuery()
+            $merchantSalesOrderItemQuery
         );
-        $merchantSalesOrderItemQuery = $merchantSalesOrderQuery->useMerchantSalesOrderItemQuery();
 
         foreach ($selectedColumns as $selectedField => $selectedColumn) {
             $merchantSalesOrderItemQuery->addAsColumn(sprintf('"%s"', $selectedColumn), $selectedColumn);
@@ -218,9 +217,9 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
 
     /**
      * @param mixed[] $filterCriteria
-     * @param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery $merchantSalesOrderQuery
+     * @param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder> $merchantSalesOrderQuery
      *
-     * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery
+     * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder>
      */
     protected function applyFilterCriteriaToMerchantSalesOrderQuery(
         array $filterCriteria,
@@ -251,9 +250,9 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
 
     /**
      * @param mixed[] $filterCriteria
-     * @param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery $merchantSalesOrderItemQuery
+     * @param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem> $merchantSalesOrderItemQuery
      *
-     * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery
+     * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem>
      */
     protected function applyFilterCriteriaToMerchantSalesOrderItemQuery(
         array $filterCriteria,
@@ -291,16 +290,17 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
     }
 
     /**
-     * @phpstan-return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery
+     * @phpstan-return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder>
      *
      * @param int $offset
      * @param int $limit
      *
-     * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery
+     * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder>
      */
     protected function buildMerchantSalesOrderBaseQuery(int $offset, int $limit): SpyMerchantSalesOrderQuery
     {
-        return $this->getFactory()
+        /** @var \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder> $spyMerchantSalesOrderQuery */
+        $spyMerchantSalesOrderQuery = $this->getFactory()
             ->getMerchantSalesOrderPropelQuery()
             ->orderByMerchantReference()
             ->addJoin(
@@ -309,7 +309,6 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
                 Criteria::LEFT_JOIN
             )
             ->leftJoinMerchantSalesOrderTotal()
-            ->joinOrder()
             ->useOrderQuery()
                 ->orderByStore()
                 ->joinLocale()
@@ -321,38 +320,38 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
             ->endUse()
             ->offset($offset)
             ->limit($limit);
+
+        return $spyMerchantSalesOrderQuery;
     }
 
     /**
-     * @phpstan-return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery
+     * @phpstan-return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem>
      *
      * @param int $offset
      * @param int $limit
      *
-     * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery
+     * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem>
      */
     protected function buildMerchantSalesOrderItemBaseQuery(int $offset, int $limit): SpyMerchantSalesOrderItemQuery
     {
-        return $this->getFactory()
+        /** @var \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem> $spyMerchantSalesOrderItemQuery */
+        $spyMerchantSalesOrderItemQuery = $this->getFactory()
             ->getMerchantSalesOrderItemPropelQuery()
-            ->innerJoinMerchantSalesOrder()
-            ->useMerchantSalesOrderQuery()
-                ->addJoin(
-                    SpyMerchantSalesOrderTableMap::COL_MERCHANT_REFERENCE,
-                    SpyMerchantTableMap::COL_MERCHANT_REFERENCE,
-                    Criteria::LEFT_JOIN
-                )
-                ->orderByMerchantReference()
-                ->innerJoinOrder()
-                ->useOrderQuery()
-                    ->orderByStore()
-                ->endUse()
-            ->endUse()
             ->leftJoinStateMachineItemState()
             ->useStateMachineItemStateQuery()
                 ->leftJoinProcess()
             ->endUse()
-            ->joinSalesOrderItem()
+            ->useMerchantSalesOrderQuery()
+                ->addJoin(
+                    SpyMerchantSalesOrderTableMap::COL_MERCHANT_REFERENCE,
+                    SpyMerchantTableMap::COL_MERCHANT_REFERENCE,
+                    Criteria::INNER_JOIN
+                )
+                ->orderByMerchantReference()
+                ->useOrderQuery()
+                    ->orderByStore()
+                ->endUse()
+            ->endUse()
             ->useSalesOrderItemQuery()
                 ->leftJoinSalesOrderItemBundle()
                 ->leftJoinSpySalesShipment()
@@ -366,6 +365,8 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
             ->endUse()
             ->offset($offset)
             ->limit($limit);
+
+        return $spyMerchantSalesOrderItemQuery;
     }
 
     /**
@@ -374,29 +375,31 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
      * @param int $offset
      * @param int $limit
      *
-     * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery
+     * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder>
      */
     protected function buildMerchantSalesOrderWithExpenseBaseQuery(int $offset, int $limit): SpyMerchantSalesOrderQuery
     {
-        return $merchantSalesOrderQuery = $this->getFactory()
-            ->getMerchantSalesOrderPropelQuery()
-            ->addJoin(
-                SpyMerchantSalesOrderTableMap::COL_MERCHANT_REFERENCE,
-                SpyMerchantTableMap::COL_MERCHANT_REFERENCE,
-                Criteria::LEFT_JOIN
-            )
-            ->innerJoinOrder()
-            ->useOrderQuery()
-                ->leftJoinExpense()
-                ->where(SpySalesExpenseTableMap::COL_MERCHANT_REFERENCE . '=' . SpyMerchantSalesOrderTableMap::COL_MERCHANT_REFERENCE)
-                ->useExpenseQuery()
-                    ->leftJoinSpySalesShipment()
-                ->endUse()
-                ->orderByStore()
-            ->endUse()
-            ->orderByMerchantReference()
-            ->offset($offset)
-            ->limit($limit);
+        /** @var \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder> $spyMerchantSalesOrderQuery */
+         $spyMerchantSalesOrderQuery = $this->getFactory()
+             ->getMerchantSalesOrderPropelQuery()
+             ->orderByMerchantReference()
+             ->addJoin(
+                 SpyMerchantSalesOrderTableMap::COL_MERCHANT_REFERENCE,
+                 SpyMerchantTableMap::COL_MERCHANT_REFERENCE,
+                 Criteria::LEFT_JOIN
+             )
+             ->useOrderQuery()
+                 ->orderByStore()
+                 ->leftJoinExpense()
+                 ->where(SpySalesExpenseTableMap::COL_MERCHANT_REFERENCE . '=' . SpyMerchantSalesOrderTableMap::COL_MERCHANT_REFERENCE)
+                 ->useExpenseQuery()
+                     ->leftJoinSpySalesShipment()
+                 ->endUse()
+             ->endUse()
+             ->offset($offset)
+             ->limit($limit);
+
+         return $spyMerchantSalesOrderQuery;
     }
 
     /**
@@ -454,7 +457,7 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
      */
     public function getCommentsByOrderIds(array $salesOrderIds): array
     {
-        $salesOrderCommentEntities =  $this->getFactory()
+        $salesOrderCommentEntities = $this->getFactory()
             ->getSalesOrderCommentPropelQuery()
             ->filterByFkSalesOrder_In($salesOrderIds)
             ->find();
