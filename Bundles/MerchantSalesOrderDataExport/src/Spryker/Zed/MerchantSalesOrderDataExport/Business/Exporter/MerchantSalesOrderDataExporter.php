@@ -135,7 +135,7 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
             $this->merchantName = $dataExportBatchData[0][static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_NAME];
             $this->storeName = $dataExportBatchData[0][static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_ORDER_STORE];
         }
-        $exportedRowsCount = $dataExportBatchTransfer->getOffset();
+        $exportedRowsCount = $dataExportBatchTransfer->getOffset() ? $dataExportBatchTransfer->getOffset() : 0;
 
         foreach ($dataExportBatchData as $dataExportRow) {
             $exportedRowsCount++;
