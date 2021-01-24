@@ -41,6 +41,7 @@ class TaxProductAbstractFormExpanderPlugin extends AbstractPlugin implements Pro
             'placeholder' => 'Select tax set',
             'required' => false,
             'choices' => $this->getFactory()->createTaxProductAbstractFormDataProvider()->getTaxChoices(),
+            'empty_data' => (string)$builder->getData()->getIdTaxSet(),
         ]);
 
         return $builder;

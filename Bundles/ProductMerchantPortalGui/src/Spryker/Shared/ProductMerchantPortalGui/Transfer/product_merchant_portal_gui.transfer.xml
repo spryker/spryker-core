@@ -220,4 +220,8 @@
         <property name="idPriceProductDefault" type="int"/>
     </transfer>
 
+    <transfer name="GuiTableEditableButton">
+        <property name="title" type="string"/>
+    </transfer>
+
 </transfers>

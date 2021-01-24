@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider;
 
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
+use Generated\Shared\Transfer\GuiTableEditableButtonTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductAbstractTableViewTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
@@ -126,7 +127,9 @@ class PriceProductAbstractGuiTableConfigurationProvider implements PriceProductA
     ): GuiTableConfigurationBuilderInterface {
         $formInputName = sprintf('%s[%s]', ProductAbstractForm::BLOCK_PREFIX, ProductAbstractTransfer::PRICES);
 
-        $guiTableConfigurationBuilder->enableAddingNewRows($formInputName, $initialData);
+        $guiTableConfigurationBuilder->enableAddingNewRows($formInputName, $initialData, [
+            GuiTableEditableButtonTransfer::TITLE => 'Add',
+        ]);
         $guiTableConfigurationBuilder = $this->addEditableColumns($guiTableConfigurationBuilder);
         $guiTableConfigurationBuilder->enableInlineDataEditing($this->getSavePricesUrl(), 'POST');
 
