@@ -426,6 +426,9 @@ interface DevelopmentFacadeInterface
     public function listAllModules();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use {@link listAllModules()} instead.

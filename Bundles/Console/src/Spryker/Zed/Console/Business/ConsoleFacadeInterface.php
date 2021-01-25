@@ -55,7 +55,7 @@ interface ConsoleFacadeInterface
     public function getServiceProviders();
 
     /**
-     * Specification
+     * Specification:
      * - Executes pre-run plugins which provided in ConsoleDependencyProvider.
      *
      * @api
@@ -68,7 +68,7 @@ interface ConsoleFacadeInterface
     public function preRun(InputInterface $input, OutputInterface $output);
 
     /**
-     * Specification
+     * Specification:
      * - Executes pos-run plugins which provided in ConsoleDependencyProvider.
      *
      * @api

@@ -22,7 +22,7 @@ interface CacheFacadeInterface
     public function deleteAllFiles();
 
     /**
-     * Specification
+     * Specification:
      * - Empties configured cache directory
      *
      * @api
