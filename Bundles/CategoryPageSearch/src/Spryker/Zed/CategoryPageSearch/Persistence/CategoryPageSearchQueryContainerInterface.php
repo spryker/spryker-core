@@ -59,6 +59,8 @@ interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterf
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release.
+     *
      * @param int[] $categoryIds
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery|\Propel\Runtime\ActiveQuery\ModelCriteria

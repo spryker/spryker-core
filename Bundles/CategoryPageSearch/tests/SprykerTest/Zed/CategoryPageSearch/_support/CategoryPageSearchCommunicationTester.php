@@ -8,9 +8,6 @@
 namespace SprykerTest\Zed\CategoryPageSearch;
 
 use Codeception\Actor;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
-use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 
 /**
  * @method void wantToTest($text)
@@ -29,26 +26,4 @@ use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 class CategoryPageSearchCommunicationTester extends Actor
 {
     use _generated\CategoryPageSearchCommunicationTesterActions;
-
-    public function getCategoryNodeTree(array $categoryNodeIds, int $idLocale): array
-    {
-        /** @var \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $query */
-        $query = $this->getFactory()
-            ->getCategoryQueryContainer()
-            ->queryAllCategoryNodes()
-            ->filterByIdCategoryNode_In($categoryNodeIds)
-            ->joinWithSpyUrl()
-            ->joinWithCategory()
-            ->joinWith('Category.Attribute')
-            ->joinWith('Category.CategoryTemplate')
-            ->where(SpyCategoryAttributeTableMap::COL_FK_LOCALE . ' = ?', $idLocale)
-            ->where(SpyUrlTableMap::COL_FK_LOCALE . ' = ?', $idLocale)
-            ->where(SpyCategoryTableMap::COL_IS_ACTIVE . ' = ?', true)
-            ->where(SpyCategoryTableMap::COL_IS_IN_MENU . ' = ?', true)
-            ->orderByIdCategoryNode()
-            ->find()
-            ->getFirst();
-
-        return $query;
-    }
 }
