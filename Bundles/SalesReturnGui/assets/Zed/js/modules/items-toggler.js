@@ -13,26 +13,26 @@ function ItemsToggler(options) {
     this.$item = this.$table.find(this.itemSelector);
     this.$submitButton = $(this.submitButtonSelector);
 
-    this.init = function() {
+    this.init = function () {
         this.toggleSubmitDisabledAttribute();
         this.mapEvents();
     };
 
-    this.mapEvents = function() {
+    this.mapEvents = function () {
         var self = this;
 
-        this.$item.on('change', function() {
+        this.$item.on('change', function () {
             self.toggleAllItemsCheckbox();
             self.toggleSubmitDisabledAttribute();
         });
 
-        this.$allItems.on('change', function() {
+        this.$allItems.on('change', function () {
             self.toggleItemCheckbox($(this));
             self.toggleSubmitDisabledAttribute();
         });
     };
 
-    this.toggleAllItemsCheckbox = function() {
+    this.toggleAllItemsCheckbox = function () {
         var checkedItems = this.$table.find(this.checkedItemSelector).length;
 
         if (this.$item.length === checkedItems) {
@@ -44,11 +44,11 @@ function ItemsToggler(options) {
         this.$allItems.prop('checked', false);
     };
 
-    this.toggleItemCheckbox = function($item) {
+    this.toggleItemCheckbox = function ($item) {
         this.$item.not(':disabled').prop('checked', $item.prop('checked'));
     };
 
-    this.toggleSubmitDisabledAttribute = function() {
+    this.toggleSubmitDisabledAttribute = function () {
         if (!this.$submitButton) {
             return;
         }

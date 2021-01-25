@@ -1,64 +1,64 @@
 /**
- * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved. 
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file. 
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 'use strict';
 
-var showLoaderBar = function(){
+var showLoaderBar = function () {
     $('#category-loader').removeClass('hidden');
 };
 
-var closeLoaderBar = function(){
+var closeLoaderBar = function () {
     $('#category-loader').addClass('hidden');
 };
 
-SprykerAjax.getCategoryTreeByIdCategoryNode = function(idCategoryNode) {
+SprykerAjax.getCategoryTreeByIdCategoryNode = function (idCategoryNode) {
     var options = {
-        'id-category-node': idCategoryNode
+        'id-category-node': idCategoryNode,
     };
-    this
-        .setUrl('/category/index/node')
-        .setDataType('html')
-        .ajaxSubmit(options, 'displayCategoryNodesTree');
+    this.setUrl('/category/index/node').setDataType('html').ajaxSubmit(options, 'displayCategoryNodesTree');
 };
 
-SprykerAjax.updateCategoryNodesOrder = function(serializedCategoryNodes){
+SprykerAjax.updateCategoryNodesOrder = function (serializedCategoryNodes) {
     showLoaderBar();
-    this.setUrl('/category/node/reorder').ajaxSubmit({
-        'nodes': serializedCategoryNodes
-    }, 'updateCategoryNodesOrder');
+    this.setUrl('/category/node/reorder').ajaxSubmit(
+        {
+            nodes: serializedCategoryNodes,
+        },
+        'updateCategoryNodesOrder',
+    );
 };
 
 /*
  * @param ajaxResponse
  * @returns string
  */
-SprykerAjaxCallbacks.displayCategoryNodesTree = function(ajaxResponse){
+SprykerAjaxCallbacks.displayCategoryNodesTree = function (ajaxResponse) {
     $('#category-node-tree').removeClass('hidden');
     $('#categories-list').html(ajaxResponse);
     closeLoaderBar();
 };
 
-SprykerAjaxCallbacks.updateCategoryNodesOrder = function(ajaxResponse){
+SprykerAjaxCallbacks.updateCategoryNodesOrder = function (ajaxResponse) {
     closeLoaderBar();
     if (ajaxResponse.code === this.codeSuccess) {
         swal({
-            title: "Success",
+            title: 'Success',
             text: ajaxResponse.message,
-            type: "success"
+            type: 'success',
         });
         return true;
     }
 
     swal({
-        title: "Error",
+        title: 'Error',
         text: ajaxResponse.message,
-        type: "error"
+        type: 'error',
     });
 };
 
 module.exports = {
     showLoaderBar: showLoaderBar,
-    closeLoaderBar: closeLoaderBar
+    closeLoaderBar: closeLoaderBar,
 };

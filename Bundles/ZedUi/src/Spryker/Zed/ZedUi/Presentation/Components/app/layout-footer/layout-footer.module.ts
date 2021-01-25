@@ -7,5 +7,4 @@ import { LayoutFooterComponent } from './layout-footer.component';
     exports: [LayoutFooterComponent],
     declarations: [LayoutFooterComponent],
 })
-export class LayoutFooterModule {
-}
+export class LayoutFooterModule {}

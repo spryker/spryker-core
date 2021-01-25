@@ -17,6 +17,6 @@ $(document).ready(function () {
         hoverBoundingBox: true,
         paneContainer: zoomContainer,
         inlinePane: 900,
-        inlineOffsetY: -85
+        inlineOffsetY: -85,
     });
 });

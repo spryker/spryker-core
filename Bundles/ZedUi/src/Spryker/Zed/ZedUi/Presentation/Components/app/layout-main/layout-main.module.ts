@@ -9,12 +9,7 @@ import { ApplyContextsModule } from '@spryker/utils';
 import { CustomElementBoundaryModule } from '@spryker/web-components';
 
 import { LayoutMainComponent } from './layout-main.component';
-import {
-    IconDashboardModule,
-    IconProfileModule,
-    IconOffersModule,
-    IconOrdersModule,
-} from '../../icons';
+import { IconDashboardModule, IconProfileModule, IconOffersModule, IconOrdersModule } from '../../icons';
 
 @NgModule({
     imports: [
@@ -27,7 +22,7 @@ import {
         ApplyContextsModule,
         CustomElementBoundaryModule,
         IconDashboardModule,
-	    IconProfileModule,
+        IconProfileModule,
         IconOrdersModule,
         IconOffersModule,
     ],

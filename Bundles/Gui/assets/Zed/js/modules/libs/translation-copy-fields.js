@@ -16,17 +16,19 @@ function TranslationCopyFields() {
 /**
  * Add copy buttons for fields that has the necessary data attribute
  */
-TranslationCopyFields.prototype.addCopyButtons = function() {
+TranslationCopyFields.prototype.addCopyButtons = function () {
     var self = this;
 
-    $('input[' + this.translationDataAttributeName + ']').each(function(i, field) {
-        var copyButton = $('<button type="button" class="btn btn-primary" data-style="zoom-in" title="Copy to other languages"><span class="fa fa-copy"></span></button>');
+    $('input[' + this.translationDataAttributeName + ']').each(function (i, field) {
+        var copyButton = $(
+            '<button type="button" class="btn btn-primary" data-style="zoom-in" title="Copy to other languages"><span class="fa fa-copy"></span></button>',
+        );
 
         if ($(field).parent().hasClass('input-group')) {
             return;
         }
 
-        copyButton.on('click', function() {
+        copyButton.on('click', function () {
             self.copy($(this), field);
         });
 
@@ -42,20 +44,17 @@ TranslationCopyFields.prototype.addCopyButtons = function() {
  * @param button
  * @param field
  */
-TranslationCopyFields.prototype.copy = function(button, field) {
+TranslationCopyFields.prototype.copy = function (button, field) {
     var self = this;
-    var selector = 'input[' + self.translationDataAttributeName + '="' + $(field).data(self.translationDataAttribute) + '"]';
+    var selector =
+        'input[' + self.translationDataAttributeName + '="' + $(field).data(self.translationDataAttribute) + '"]';
 
     $(selector).val(field.value);
 
-    button.find('span')
-        .removeClass('fa-copy')
-        .addClass('fa-check');
+    button.find('span').removeClass('fa-copy').addClass('fa-check');
 
-    setTimeout(function() {
-        button.find('span')
-            .addClass('fa-copy')
-            .removeClass('fa-check');
+    setTimeout(function () {
+        button.find('span').addClass('fa-copy').removeClass('fa-check');
     }, 1000);
 };
 

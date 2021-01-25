@@ -15,8 +15,8 @@ use Elastica\Request;
 use Elastica\Response;
 use Generated\Shared\Transfer\ElasticsearchSearchContextTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
-use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Index\Index;
+use Spryker\Zed\SearchElasticsearch\Business\SourceIdentifier\SourceIdentifierInterface;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig;
 
 /**
@@ -47,9 +47,9 @@ class IndexTest extends Unit
     protected $clusterMock;
 
     /**
-     * @var \Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Spryker\Shared\SearchElasticsearch\Index\SourceIdentifierInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $indexNameResolverMock;
+    protected $sourceIdentifier;
 
     /**
      * @var \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig|\PHPUnit\Framework\MockObject\MockObject
@@ -70,12 +70,12 @@ class IndexTest extends Unit
 
         $this->clusterMock = $this->createMock(Cluster::class);
         $this->elasticaClientMock = $this->createElasticaClientMock();
-        $this->indexNameResolverMock = $this->createMock(IndexNameResolverInterface::class);
+        $this->sourceIdentifier = $this->createMock(SourceIdentifierInterface::class);
         $this->configMock = $this->createMock(SearchElasticsearchConfig::class);
 
         $this->index = new Index(
             $this->elasticaClientMock,
-            $this->indexNameResolverMock,
+            $this->sourceIdentifier,
             $this->configMock
         );
     }
@@ -93,8 +93,8 @@ class IndexTest extends Unit
         $this->clusterMock
             ->method('getIndexNames')
             ->willReturn($supportedIndexNames);
-        $this->indexNameResolverMock
-            ->method('resolve')
+        $this->sourceIdentifier
+            ->method('translateToIndexName')
             ->willReturnCallback(function (string $sourceIdentifier) {
                 return sprintf('%s_%s', static::STORE, $sourceIdentifier);
             });

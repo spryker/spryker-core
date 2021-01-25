@@ -9,7 +9,7 @@ var datePicker = require('./date-picker');
 var availableProductTable = require('./available-product-table');
 var assignedProductTable = require('./assigned-product-table');
 
-$(document).ready(function() {
+$(document).ready(function () {
     datePicker.initialize('.js-valid-from-date-picker', '.js-valid-to-date-picker');
     availableProductTable.initialize();
     assignedProductTable.initialize();
