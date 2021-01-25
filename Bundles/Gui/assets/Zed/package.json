@@ -23,8 +23,8 @@
         "jstree": "~3.3.3",
         "metismenu": "~2.0.2",
         "nestable": "https://github.com/ilmente/Nestable.git#v1.1.1",
-        "pace": "https://github.com/hubspot/pace.git#v1.0.2",
-        "select2": "https://github.com/select2/select2.git#4.0.2",
+        "pace": "npm:pace-js@~1.0.2",
+        "select2": "~4.0.13",
         "summernote": "^0.8.11",
         "sweetalert": "~1.1.3"
     }
