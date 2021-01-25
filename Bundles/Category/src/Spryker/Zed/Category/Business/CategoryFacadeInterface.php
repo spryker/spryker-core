@@ -113,7 +113,7 @@ interface CategoryFacadeInterface
     public function updateCategoryStoreRelationWithMainChildrenPropagation(
         int $idCategory,
         StoreRelationTransfer $newStoreAssignment,
-        ?StoreRelationtransfer $currentStoreAssignment = null
+        ?StoreRelationTransfer $currentStoreAssignment = null
     ): void;
 
     /**

@@ -144,6 +144,7 @@ interface CategoryRepositoryInterface
 
     /**
      * @param int $idCategory
+     * @param int $idStore
      *
      * @return bool
      */

@@ -10,6 +10,9 @@ namespace Spryker\Zed\Category\Dependency\Plugin;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\CategoryGuiExtension\Dependency\Plugin\CategoryRelationReadPluginInterface} instead.
+ */
 interface CategoryRelationReadPluginInterface
 {
     /**

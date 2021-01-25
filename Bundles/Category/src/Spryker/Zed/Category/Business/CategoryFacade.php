@@ -99,7 +99,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     public function updateCategoryStoreRelationWithMainChildrenPropagation(
         int $idCategory,
         StoreRelationTransfer $newStoreAssignment,
-        ?StoreRelationtransfer $currentStoreAssignment = null
+        ?StoreRelationTransfer $currentStoreAssignment = null
     ): void {
         $this->getFactory()
             ->createCategoryStoreUpdater()

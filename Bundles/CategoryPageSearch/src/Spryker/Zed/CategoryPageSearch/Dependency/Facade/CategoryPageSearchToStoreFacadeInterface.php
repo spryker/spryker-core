@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\CategoryPageSearch\Dependency\Facade;
 
-use Generated\Shared\Transfer\StoreTransfer;
-
 interface CategoryPageSearchToStoreFacadeInterface
 {
     /**

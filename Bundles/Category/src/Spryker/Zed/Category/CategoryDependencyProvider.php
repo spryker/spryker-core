@@ -195,6 +195,11 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addCategoryStoreAssignerPlugin(Container $container): Container
     {
         $container->set(static::PLUGIN_CATEGORY_STORE_ASSIGNER, function () {
@@ -237,6 +242,8 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryStoreAssignerPluginException
+     *
      * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryStoreAssignerPluginInterface
      */
     protected function getCategoryStoreAssignerPlugin(): CategoryStoreAssignerPluginInterface
