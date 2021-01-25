@@ -45,6 +45,8 @@ abstract class AbstractLocatorLocator implements LocatorLocatorInterface
 
     /**
      * Should be private, because this class uses `Singleton` pattern.
+     *
+     * @return void
      */
     private function __clone()
     {
