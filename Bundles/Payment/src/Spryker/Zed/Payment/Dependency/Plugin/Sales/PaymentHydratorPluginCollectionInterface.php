@@ -10,6 +10,9 @@ namespace Spryker\Zed\Payment\Dependency\Plugin\Sales;
 interface PaymentHydratorPluginCollectionInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginInterface $plugin
@@ -20,6 +23,9 @@ interface PaymentHydratorPluginCollectionInterface
     public function add(PaymentHydratorPluginInterface $plugin, $provider);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $provider
@@ -29,6 +35,9 @@ interface PaymentHydratorPluginCollectionInterface
     public function has($provider);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $provider

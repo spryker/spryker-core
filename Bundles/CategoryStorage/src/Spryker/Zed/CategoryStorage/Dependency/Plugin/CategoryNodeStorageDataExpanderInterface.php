@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
 interface CategoryNodeStorageDataExpanderInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer $categoryNodeStorageTransfer

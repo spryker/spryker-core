@@ -10,6 +10,9 @@ namespace Spryker\Zed\ProductCategoryFilter\Persistence;
 interface ProductCategoryFilterQueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCategory
@@ -19,6 +22,9 @@ interface ProductCategoryFilterQueryContainerInterface
     public function queryProductCategoryFilterByCategoryId($idCategory);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilterQuery

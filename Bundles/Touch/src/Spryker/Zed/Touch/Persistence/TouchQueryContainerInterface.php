@@ -15,6 +15,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface TouchQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $itemType
@@ -24,6 +27,9 @@ interface TouchQueryContainerInterface extends QueryContainerInterface
     public function queryTouchListByItemType($itemType);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $itemType
@@ -34,6 +40,9 @@ interface TouchQueryContainerInterface extends QueryContainerInterface
     public function queryTouchEntry($itemType, $itemId);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $itemType
@@ -48,6 +57,9 @@ interface TouchQueryContainerInterface extends QueryContainerInterface
      * Specification:
      *  - return all items with given `$itemType` and `$itemId` whether they are active, inactive or deleted
      *
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $itemType
@@ -58,6 +70,9 @@ interface TouchQueryContainerInterface extends QueryContainerInterface
     public function queryTouchEntriesByItemTypeAndItemIds($itemType, array $itemIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $itemType
@@ -69,6 +84,9 @@ interface TouchQueryContainerInterface extends QueryContainerInterface
     public function queryTouchDeleteStorageAndSearch($itemType, $idStore, $idLocale = null);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
@@ -76,6 +94,9 @@ interface TouchQueryContainerInterface extends QueryContainerInterface
     public function queryExportTypes();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $itemType
@@ -87,6 +108,9 @@ interface TouchQueryContainerInterface extends QueryContainerInterface
     public function createBasicExportableQuery($itemType, LocaleTransfer $locale, DateTime $lastTouchedAt);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $itemEvent
@@ -96,6 +120,9 @@ interface TouchQueryContainerInterface extends QueryContainerInterface
     public function queryTouchListByItemEvent($itemEvent);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[]|int $touchIds
@@ -105,6 +132,9 @@ interface TouchQueryContainerInterface extends QueryContainerInterface
     public function queryTouchSearchByTouchIds($touchIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[]|int $touchIds
@@ -116,6 +146,9 @@ interface TouchQueryContainerInterface extends QueryContainerInterface
     /**
      * Specification:
      * - Filters `SpyTouchQuery` by item type, item event and array of item ids and returns query object.
+     *
+     * Specification:
+     * - TODO: Add method specification.
      *
      * @api
      *
@@ -132,6 +165,9 @@ interface TouchQueryContainerInterface extends QueryContainerInterface
      * - Filters `spy_touch` entries by item type, item ids and with the same item event.
      * - If there are no records with same item event, returns a record if there are only one record with provided item type and item id.
      *
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $itemType
@@ -145,6 +181,9 @@ interface TouchQueryContainerInterface extends QueryContainerInterface
     /**
      * Specification:
      * - Filters `spy_touch` entries by array of touch ids.
+     *
+     * Specification:
+     * - TODO: Add method specification.
      *
      * @api
      *

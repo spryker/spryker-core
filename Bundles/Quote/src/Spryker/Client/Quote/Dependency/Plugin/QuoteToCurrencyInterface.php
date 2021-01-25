@@ -10,6 +10,9 @@ namespace Spryker\Client\Quote\Dependency\Plugin;
 interface QuoteToCurrencyInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
