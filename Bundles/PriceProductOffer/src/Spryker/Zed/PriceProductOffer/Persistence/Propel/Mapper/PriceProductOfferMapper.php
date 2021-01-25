@@ -93,7 +93,8 @@ class PriceProductOfferMapper
         SpyPriceProductStore $priceProductStoreEntity,
         PriceProductTransfer $priceProductTransfer
     ): PriceProductTransfer {
-        $priceProductTransfer->setIdPriceProduct($priceProductStoreEntity->getFkPriceProduct());
+        $priceProductTransfer->setIdPriceProduct($priceProductStoreEntity->getFkPriceProduct())
+            ->setIdProduct($priceProductStoreEntity->getPriceProduct()->getFkProduct());
         $priceProductTransfer = $priceProductTransfer->setMoneyValue(
             $this->mapPriceProductStoreEntityToMoneyValueTransfer(
                 $priceProductStoreEntity,

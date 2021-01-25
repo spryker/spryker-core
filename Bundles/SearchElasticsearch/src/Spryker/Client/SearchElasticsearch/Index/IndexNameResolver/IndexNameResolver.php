@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\SearchElasticsearch\Index;
+namespace Spryker\Client\SearchElasticsearch\Index\IndexNameResolver;
 
-use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
+use Spryker\Client\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
 
 class IndexNameResolver implements IndexNameResolverInterface
 {
     /**
-     * @var \Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface
+     * @var \Spryker\Client\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface
      */
     protected $storeClient;
 
@@ -22,7 +22,7 @@ class IndexNameResolver implements IndexNameResolverInterface
     protected static $storeName;
 
     /**
-     * @param \Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface $storeClient
+     * @param \Spryker\Client\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface $storeClient
      */
     public function __construct(SearchElasticsearchToStoreClientInterface $storeClient)
     {

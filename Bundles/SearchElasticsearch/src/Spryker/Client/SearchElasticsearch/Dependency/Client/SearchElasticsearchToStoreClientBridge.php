@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\SearchElasticsearch\Dependency\Client;
+namespace Spryker\Client\SearchElasticsearch\Dependency\Client;
 
 class SearchElasticsearchToStoreClientBridge implements SearchElasticsearchToStoreClientInterface
 {
