@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantProfile\Business\MerchantProfile;
 
 use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\MerchantProfile\Business\Exception\MerchantProfileNotFoundException;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfileAddress\MerchantProfileAddressWriterInterface;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfileGlossary\MerchantProfileGlossaryWriterInterface;
 use Spryker\Zed\MerchantProfile\Persistence\MerchantProfileEntityManagerInterface;
@@ -97,7 +98,10 @@ class MerchantProfileWriter implements MerchantProfileWriterInterface
     protected function executeUpdateTransaction(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
     {
         $merchantProfileTransfer = $this->merchantProfileGlossaryWriter->saveMerchantProfileGlossaryAttributes($merchantProfileTransfer);
-        $merchantProfileTransfer = $this->merchantProfileEntityManager->update($merchantProfileTransfer);
+        try {
+            $merchantProfileTransfer = $this->merchantProfileEntityManager->update($merchantProfileTransfer);
+        } catch (MerchantProfileNotFoundException $exception) {
+        }
         $merchantProfileTransfer = $this->saveMerchantProfileAddress($merchantProfileTransfer);
 
         return $merchantProfileTransfer;

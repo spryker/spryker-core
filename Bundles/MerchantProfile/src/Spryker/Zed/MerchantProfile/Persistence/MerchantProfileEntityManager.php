@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfile;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
+use Spryker\Zed\MerchantProfile\Business\Exception\MerchantProfileNotFoundException;
 
 /**
  * @method \Spryker\Zed\MerchantProfile\Persistence\MerchantProfilePersistenceFactory getFactory()
@@ -33,6 +34,8 @@ class MerchantProfileEntityManager extends AbstractEntityManager implements Merc
     /**
      * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
      *
+     * @throws \Spryker\Zed\MerchantProfile\Business\Exception\MerchantProfileNotFoundException
+     *
      * @return \Generated\Shared\Transfer\MerchantProfileTransfer
      */
     public function update(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
@@ -43,7 +46,12 @@ class MerchantProfileEntityManager extends AbstractEntityManager implements Merc
             ->findOne();
 
         if ($merchantProfileEntity === null) {
-            return $merchantProfileTransfer;
+            throw new MerchantProfileNotFoundException(
+                sprintf(
+                    'Merchant profile entity could not be found by given id %s',
+                    $merchantProfileTransfer->getIdMerchantProfile()
+                )
+            );
         }
 
         $merchantProfileTransfer = $this->saveMerchantProfile($merchantProfileTransfer, $merchantProfileEntity);
