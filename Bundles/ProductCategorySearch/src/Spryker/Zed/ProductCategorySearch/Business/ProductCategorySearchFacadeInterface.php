@@ -26,7 +26,7 @@ interface ProductCategorySearchFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
      */
-    public function expandProductPageDataTransfer(ProductPageLoadTransfer $productPageLoadTransfer): ProductPageLoadTransfer;
+    public function expandProductPageWithCategories(ProductPageLoadTransfer $productPageLoadTransfer): ProductPageLoadTransfer;
 
     /**
      * Specification:
@@ -64,5 +64,5 @@ interface ProductCategorySearchFacadeInterface
      *
      * @return void
      */
-    public function expandProductPageData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer): void;
+    public function expandProductPageDataWithCategoryData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer): void;
 }

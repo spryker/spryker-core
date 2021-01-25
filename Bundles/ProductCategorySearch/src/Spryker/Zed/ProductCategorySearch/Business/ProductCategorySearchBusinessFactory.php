@@ -8,10 +8,12 @@
 namespace Spryker\Zed\ProductCategorySearch\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductCategorySearch\Business\Builder\ProductCategoryTreeBuilder;
+use Spryker\Zed\ProductCategorySearch\Business\Builder\ProductCategoryTreeBuilderInterface;
+use Spryker\Zed\ProductCategorySearch\Business\Expander\ProductPageCategoryExpander;
+use Spryker\Zed\ProductCategorySearch\Business\Expander\ProductPageCategoryExpanderInterface;
 use Spryker\Zed\ProductCategorySearch\Business\Expander\ProductPageDataExpander;
 use Spryker\Zed\ProductCategorySearch\Business\Expander\ProductPageDataExpanderInterface;
-use Spryker\Zed\ProductCategorySearch\Business\Expander\ProductPageLoadExpander;
-use Spryker\Zed\ProductCategorySearch\Business\Expander\ProductPageLoadExpanderInterface;
 use Spryker\Zed\ProductCategorySearch\Business\Expander\ProductPageMapCategoryExpander;
 use Spryker\Zed\ProductCategorySearch\Business\Expander\ProductPageMapCategoryExpanderInterface;
 
@@ -22,11 +24,11 @@ use Spryker\Zed\ProductCategorySearch\Business\Expander\ProductPageMapCategoryEx
 class ProductCategorySearchBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\ProductCategorySearch\Business\Expander\ProductPageLoadExpanderInterface
+     * @return \Spryker\Zed\ProductCategorySearch\Business\Expander\ProductPageCategoryExpanderInterface
      */
-    public function createProductPageLoadExpander(): ProductPageLoadExpanderInterface
+    public function createProductPageCategoryExpander(): ProductPageCategoryExpanderInterface
     {
-        return new ProductPageLoadExpander(
+        return new ProductPageCategoryExpander(
             $this->getRepository()
         );
     }
@@ -37,7 +39,7 @@ class ProductCategorySearchBusinessFactory extends AbstractBusinessFactory
     public function createProductPageDataExpander(): ProductPageDataExpanderInterface
     {
         return new ProductPageDataExpander(
-            $this->getRepository()
+            $this->createProductCategoryTreeBuilder()
         );
     }
 
@@ -47,5 +49,15 @@ class ProductCategorySearchBusinessFactory extends AbstractBusinessFactory
     public function createProductPageMapCategoryExpander(): ProductPageMapCategoryExpanderInterface
     {
         return new ProductPageMapCategoryExpander();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategorySearch\Business\Builder\ProductCategoryTreeBuilderInterface
+     */
+    public function createProductCategoryTreeBuilder(): ProductCategoryTreeBuilderInterface
+    {
+        return new ProductCategoryTreeBuilder(
+            $this->getRepository()
+        );
     }
 }

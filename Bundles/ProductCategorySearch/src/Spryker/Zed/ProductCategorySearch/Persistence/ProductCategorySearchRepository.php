@@ -64,9 +64,9 @@ class ProductCategorySearchRepository extends AbstractRepository implements Prod
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]
+     * @return int[]
      */
-    public function getCategoryNodesByLocale(LocaleTransfer $localeTransfer): array
+    public function getCategoryNodeIdsByLocale(LocaleTransfer $localeTransfer): array
     {
         return $this->getFactory()
             ->getCategoryNodePropelQuery()
@@ -76,7 +76,9 @@ class ProductCategorySearchRepository extends AbstractRepository implements Prod
                 ->endUse()
             ->endUse()
             ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, static::COLUMN_ID_CATEGORY_NODE)
-            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, static::COLUMN_CATEGORY_NAME)
+            ->select([
+                static::COLUMN_ID_CATEGORY_NODE,
+            ])
             ->find()
             ->getData();
     }
@@ -116,18 +118,30 @@ class ProductCategorySearchRepository extends AbstractRepository implements Prod
     }
 
     /**
+     * @param int[] $categoryIds
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttribute[]
+     * @return array
      */
-    public function getCategoryAttributesByLocale(LocaleTransfer $localeTransfer): array
+    public function getCategoryAttributesByLocale(array $categoryIds, LocaleTransfer $localeTransfer): array
     {
+        if ($categoryIds === []) {
+            return [];
+        }
+
         return $this->getFactory()
             ->getCategoryAttributePropelQuery()
+            ->filterByFkCategory_In($categoryIds)
             ->filterByFkLocale($localeTransfer->getIdLocale())
             ->useCategoryQuery()
                 ->filterByIsSearchable(true)
             ->endUse()
+            ->withColumn(SpyCategoryAttributeTableMap::COL_FK_CATEGORY, static::COLUMN_FK_CATEGORY)
+            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, static::COLUMN_CATEGORY_NAME)
+            ->select([
+                static::COLUMN_FK_CATEGORY,
+                static::COLUMN_CATEGORY_NAME,
+            ])
             ->find()
             ->getData();
     }

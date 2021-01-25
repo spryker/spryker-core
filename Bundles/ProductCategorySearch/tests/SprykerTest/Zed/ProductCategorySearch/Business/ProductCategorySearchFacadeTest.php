@@ -95,7 +95,7 @@ class ProductCategorySearchFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandProductPageDataTransfer(): void
+    public function testExpandProductPageWithCategories(): void
     {
         //Arrange
         $productPageLoadTransfer = (new ProductPageLoadTransfer())
@@ -103,7 +103,7 @@ class ProductCategorySearchFacadeTest extends Unit
             ->setProductAbstractIds([$this->productConcreteTransfer->getFkProductAbstract()]);
 
         //Act
-        $productPageLoadTransfer = $this->tester->getFacade()->expandProductPageDataTransfer($productPageLoadTransfer);
+        $productPageLoadTransfer = $this->tester->getFacade()->expandProductPageWithCategories($productPageLoadTransfer);
 
         //Assert
         $this->assertNotEmpty($productPageLoadTransfer->getPayloadTransfers()[0]->getCategories());
@@ -112,7 +112,7 @@ class ProductCategorySearchFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandProductPageDataTransferForFakeAbstractProduct(): void
+    public function testExpandProductPageWithCategoriesForFakeAbstractProduct(): void
     {
         //Arrange
         $productPageLoadTransfer = (new ProductPageLoadTransfer())
@@ -120,7 +120,7 @@ class ProductCategorySearchFacadeTest extends Unit
             ->setProductAbstractIds([static::FAKE_ID_PRODUCT_ABSTRACT]);
 
         //Act
-        $productPageLoadTransfer = $this->tester->getFacade()->expandProductPageDataTransfer($productPageLoadTransfer);
+        $productPageLoadTransfer = $this->tester->getFacade()->expandProductPageWithCategories($productPageLoadTransfer);
 
         //Assert
         $this->assertEmpty($productPageLoadTransfer->getPayloadTransfers()[0]->getCategories());
@@ -153,7 +153,7 @@ class ProductCategorySearchFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandProductPageData(): void
+    public function testExpandProductPageDataWithCategoryData(): void
     {
         //Arrange
         $productCategoryEntities = $this->tester->getMappedProductCategoriesByIdProductAbstractAndStore([
@@ -171,7 +171,7 @@ class ProductCategorySearchFacadeTest extends Unit
             ->setCategoryNodeIds([$this->categoryTransfer->getIdCategory()]);
 
         //Act
-        $this->tester->getFacade()->expandProductPageData(
+        $this->tester->getFacade()->expandProductPageDataWithCategoryData(
             $productData,
             $productPageSearchTransfer
         );
@@ -185,7 +185,7 @@ class ProductCategorySearchFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandProductPageDataWithoutStore(): void
+    public function testExpandProductPageDataWithCategoryDataWithoutStore(): void
     {
         //Arrange
         $productCategoryEntities = $this->tester->getMappedProductCategoriesByIdProductAbstractAndStore([
@@ -203,7 +203,7 @@ class ProductCategorySearchFacadeTest extends Unit
             ->setCategoryNodeIds([$this->categoryTransfer->getIdCategory()]);
 
         //Act
-        $this->tester->getFacade()->expandProductPageData(
+        $this->tester->getFacade()->expandProductPageDataWithCategoryData(
             $productData,
             $productPageSearchTransfer
         );
@@ -221,12 +221,8 @@ class ProductCategorySearchFacadeTest extends Unit
     {
         $reflectedClass = new ReflectionClass(ProductPageDataExpander::class);
 
-        $propertyCategoryTree = $reflectedClass->getProperty('categoryTree');
+        $propertyCategoryTree = $reflectedClass->getProperty('categoryTreeIds');
         $propertyCategoryTree->setAccessible(true);
         $propertyCategoryTree->setValue(null);
-
-        $propertyCategoryNames = $reflectedClass->getProperty('categoryNames');
-        $propertyCategoryNames->setAccessible(true);
-        $propertyCategoryNames->setValue(null);
     }
 }

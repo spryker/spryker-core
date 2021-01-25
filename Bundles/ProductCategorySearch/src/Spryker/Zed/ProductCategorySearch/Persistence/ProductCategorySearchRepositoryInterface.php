@@ -21,9 +21,9 @@ interface ProductCategorySearchRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]
+     * @return int[]
      */
-    public function getCategoryNodesByLocale(LocaleTransfer $localeTransfer): array;
+    public function getCategoryNodeIdsByLocale(LocaleTransfer $localeTransfer): array;
 
     /**
      * @return array
@@ -31,9 +31,10 @@ interface ProductCategorySearchRepositoryInterface
     public function getAllCategoriesWithAttributesAndOrderByDescendant(): array;
 
     /**
+     * @param int[] $categoryIds
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttribute[]
+     * @return array
      */
-    public function getCategoryAttributesByLocale(LocaleTransfer $localeTransfer): array;
+    public function getCategoryAttributesByLocale(array $categoryIds, LocaleTransfer $localeTransfer): array;
 }

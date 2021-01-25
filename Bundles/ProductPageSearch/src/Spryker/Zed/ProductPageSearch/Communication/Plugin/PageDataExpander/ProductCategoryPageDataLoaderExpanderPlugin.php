@@ -16,7 +16,7 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInter
 
 /**
  *
- * @deprecated Use {@link \Spryker\Zed\ProductCategorySearch\Communication\Plugin\PageDataExpander\ProductCategoryPageDataLoaderExpanderPlugin} instead.
+ * @deprecated Use {@link \Spryker\Zed\ProductCategorySearch\Communication\Plugin\PageDataExpander\ProductCategoryPageDataExpanderPlugin} instead.
  *
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()

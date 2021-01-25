@@ -61,9 +61,7 @@ class CategoryTreeBuilder implements CategoryTreeBuilderInterface
         $categoryTree[$idCategoryNode] = [];
 
         foreach ($categoryNodeAggregationTransfers as $categoryNodeAggregationTransfer) {
-            if (!in_array($categoryNodeAggregationTransfer->getIdCategoryNode(), $categoryTree[$idCategoryNode])) {
-                $categoryTree[$idCategoryNode][] = $categoryNodeAggregationTransfer;
-            }
+            $categoryTree[$idCategoryNode][] = $categoryNodeAggregationTransfer;
         }
 
         return $categoryTree;

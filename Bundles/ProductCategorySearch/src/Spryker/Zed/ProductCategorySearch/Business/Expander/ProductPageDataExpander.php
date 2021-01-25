@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductCategorySearch\Business\Expander;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
-use Spryker\Zed\ProductCategorySearch\Persistence\ProductCategorySearchRepositoryInterface;
+use Spryker\Zed\ProductCategorySearch\Business\Builder\ProductCategoryTreeBuilderInterface;
 
 class ProductPageDataExpander implements ProductPageDataExpanderInterface
 {
@@ -19,30 +19,28 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
     protected const PRODUCT_ABSTRACT_PAGE_LOAD_DATA = 'PRODUCT_ABSTRACT_PAGE_LOAD_DATA';
 
     protected const COLUMN_ID_CATEGORY_NODE = 'id_category_node';
-    protected const COLUMN_FK_CATEGORY_NODE_DESCENDANT = 'fk_category_node_descendant';
-    protected const COLUMN_FK_LOCALE = 'fk_locale';
+    protected const COLUMN_PRODUCT_ORDER = 'product_order';
+    protected const COLUMN_ALL_NODE_PARENTS = 'all_node_parents';
+
+    protected const RELATION_LOCALE = 'Locale';
+    protected const ID_LOCALE = 'id_locale';
 
     /**
-     * @var array
+     * @var int[][]
      */
-    protected static $categoryTree;
+    protected static $categoryTreeIds;
 
     /**
-     * @var array
+     * @var \Spryker\Zed\ProductCategorySearch\Business\Builder\ProductCategoryTreeBuilderInterface
      */
-    protected static $categoryNames = [];
+    protected $productCategoryTreeBuilder;
 
     /**
-     * @var \Spryker\Zed\ProductCategorySearch\Persistence\ProductCategorySearchRepositoryInterface
+     * @param \Spryker\Zed\ProductCategorySearch\Business\Builder\ProductCategoryTreeBuilderInterface $productCategoryTreeBuilder
      */
-    protected $productCategorySearchRepository;
-
-    /**
-     * @param \Spryker\Zed\ProductCategorySearch\Persistence\ProductCategorySearchRepositoryInterface $productCategorySearchRepository
-     */
-    public function __construct(ProductCategorySearchRepositoryInterface $productCategorySearchRepository)
+    public function __construct(ProductCategoryTreeBuilderInterface $productCategoryTreeBuilder)
     {
-        $this->productCategorySearchRepository = $productCategorySearchRepository;
+        $this->productCategoryTreeBuilder = $productCategoryTreeBuilder;
     }
 
     /**
@@ -51,14 +49,14 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
      *
      * @return void
      */
-    public function expandProductPageData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer): void
+    public function expandProductPageDataWithCategoryData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer): void
     {
         $allParentCategoryIds = [];
         $productCategoryEntities = $productData[static::PRODUCT_ABSTRACT_PAGE_LOAD_DATA]->getCategories();
-        $localeTransfer = (new LocaleTransfer())->setIdLocale($productData['Locale']['id_locale']);
+        $localeTransfer = (new LocaleTransfer())->setIdLocale($productData[static::RELATION_LOCALE][static::ID_LOCALE]);
 
         foreach ($productAbstractPageSearchTransfer->getCategoryNodeIds() as $idCategory) {
-            $allParentCategoryIds[] = $this->getAllParents($idCategory, $localeTransfer);
+            $allParentCategoryIds[] = $this->getCategoryParentIds($idCategory, $localeTransfer);
         }
 
         $allParentCategoryIds = array_merge(...$allParentCategoryIds);
@@ -66,7 +64,7 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
 
         $productAbstractPageSearchTransfer->setAllParentCategoryIds($allParentCategoryIds);
 
-        $this->setCategoryNames(
+        $this->setNames(
             $allParentCategoryIds,
             $productAbstractPageSearchTransfer->getCategoryNodeIds(),
             $localeTransfer,
@@ -82,56 +80,45 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
     }
 
     /**
-     * @param int $idCategoryNode
+     * @param int[] $allParentCategories
+     * @param int[] $directParentCategories
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return array
-     */
-    protected function getAllParents(int $idCategoryNode, LocaleTransfer $localeTransfer): array
-    {
-        if (static::$categoryTree === null) {
-            $this->loadTree($localeTransfer);
-        }
-
-        return static::$categoryTree[$idCategoryNode];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
      *
      * @return void
      */
-    protected function loadTree(LocaleTransfer $localeTransfer): void
-    {
-        static::$categoryTree = [];
+    protected function setNames(
+        array $allParentCategories,
+        array $directParentCategories,
+        LocaleTransfer $localeTransfer,
+        ProductPageSearchTransfer $productAbstractPageSearchTransfer
+    ): void {
+        $categoryTreeNames = $this->productCategoryTreeBuilder->buildProductCategoryTreeNames(
+            $allParentCategories + $directParentCategories,
+            $localeTransfer
+        );
 
-        $categoryNodeEntities = $this->productCategorySearchRepository->getCategoryNodesByLocale($localeTransfer);
-        $categoryEntities = $this->productCategorySearchRepository->getAllCategoriesWithAttributesAndOrderByDescendant();
-        $formattedCategoriesByLocaleAndNodeIds = $this->formatCategoriesWithLocaleAndNodIds($categoryEntities);
-
-        foreach ($categoryNodeEntities as $categoryNodeEntity) {
-            $pathData = [];
-
-            if (isset($formattedCategoriesByLocaleAndNodeIds[$localeTransfer->getIdLocale()][$categoryNodeEntity->getIdCategoryNode()])) {
-                $pathData = $formattedCategoriesByLocaleAndNodeIds[$localeTransfer->getIdLocale()][$categoryNodeEntity->getIdCategoryNode()];
-            }
-
-            static::$categoryTree[$categoryNodeEntity->getIdCategoryNode()] = [];
-
-            foreach ($pathData as $path) {
-                $idCategory = (int)$path[static::COLUMN_ID_CATEGORY_NODE];
-                if (!in_array($idCategory, static::$categoryTree[$categoryNodeEntity->getIdCategoryNode()])) {
-                    static::$categoryTree[$categoryNodeEntity->getIdCategoryNode()][] = $idCategory;
-                }
-            }
-        }
+        $this->setBoostedCategoryNames(
+            $directParentCategories,
+            $localeTransfer,
+            $productAbstractPageSearchTransfer,
+            $categoryTreeNames
+        );
+        $this->setCategoryNames(
+            $allParentCategories,
+            $directParentCategories,
+            $localeTransfer,
+            $productAbstractPageSearchTransfer,
+            $categoryTreeNames
+        );
     }
 
     /**
-     * @param array $allParentCategories
-     * @param array $directParentCategories
+     * @param int[] $allParentCategories
+     * @param int[] $directParentCategories
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
+     * @param string[][] $categoryTreeNames
      *
      * @return void
      */
@@ -139,27 +126,17 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
         array $allParentCategories,
         array $directParentCategories,
         LocaleTransfer $localeTransfer,
-        ProductPageSearchTransfer $productAbstractPageSearchTransfer
+        ProductPageSearchTransfer $productAbstractPageSearchTransfer,
+        array $categoryTreeNames
     ): void {
-        $boostedCategoryNames = [];
-
-        foreach ($directParentCategories as $idCategory) {
-            $boostedName = $this->getName($idCategory, $localeTransfer);
-
-            if ($boostedName !== null) {
-                $boostedCategoryNames[$idCategory] = $boostedName;
-            }
-        }
-
         $categoryNames = [];
-        $productAbstractPageSearchTransfer->setBoostedCategoryNames($boostedCategoryNames);
 
         foreach ($allParentCategories as $idCategory) {
             if (in_array($idCategory, $directParentCategories)) {
                 continue;
             }
 
-            $categoryName = $this->getName($idCategory, $localeTransfer);
+            $categoryName = $categoryTreeNames[$localeTransfer->getIdLocale()][$idCategory] ?? null;
 
             if ($categoryName !== null) {
                 $categoryNames[$idCategory] = $categoryName;
@@ -170,37 +147,30 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
     }
 
     /**
-     * @param int $idCategory
+     * @param int[] $directParentCategories
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return string|null
-     */
-    protected function getName(int $idCategory, LocaleTransfer $localeTransfer): ?string
-    {
-        $idLocale = $localeTransfer->getIdLocale();
-
-        if (!isset(static::$categoryNames[$idLocale])) {
-            $this->loadNames($localeTransfer);
-        }
-
-        return static::$categoryNames[$idLocale][$idCategory] ?? null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
+     * @param string[][] $categoryTreeNames
      *
      * @return void
      */
-    protected function loadNames(LocaleTransfer $localeTransfer): void
-    {
-        $categoryAttributeEntities = $this->productCategorySearchRepository
-            ->getCategoryAttributesByLocale($localeTransfer);
+    protected function setBoostedCategoryNames(
+        array $directParentCategories,
+        LocaleTransfer $localeTransfer,
+        ProductPageSearchTransfer $productAbstractPageSearchTransfer,
+        array $categoryTreeNames
+    ): void {
+        $boostedCategoryNames = [];
 
-        static::$categoryNames[$localeTransfer->getIdLocale()] = [];
+        foreach ($directParentCategories as $idCategory) {
+            $boostedName = $categoryTreeNames[$localeTransfer->getIdLocale()][$idCategory] ?? null;
 
-        foreach ($categoryAttributeEntities as $categoryAttributeEntity) {
-            static::$categoryNames[$localeTransfer->getIdLocale()][$categoryAttributeEntity->getFkCategory()] = $categoryAttributeEntity->getName();
+            if ($boostedName !== null) {
+                $boostedCategoryNames[$idCategory] = $boostedName;
+            }
         }
+
+        $productAbstractPageSearchTransfer->setBoostedCategoryNames($boostedCategoryNames);
     }
 
     /**
@@ -247,27 +217,26 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
             $idCategoryNode = $productCategoryEntity->getVirtualColumn(static::COLUMN_ID_CATEGORY_NODE);
 
             $productOrder = (int)$productCategoryEntity->getProductOrder() ?: $maxProductOrder;
-            $sortedCategories[$idCategoryNode]['product_order'] = $productOrder;
-            $allNodeParents = $this->getAllParents($idCategoryNode, $localeTransfer);
-            $sortedCategories[$idCategoryNode]['all_node_parents'] = $allNodeParents;
+            $sortedCategories[$idCategoryNode][static::COLUMN_PRODUCT_ORDER] = $productOrder;
+            $allNodeParents = $this->getCategoryParentIds($idCategoryNode, $localeTransfer);
+            $sortedCategories[$idCategoryNode][static::COLUMN_ALL_NODE_PARENTS] = $allNodeParents;
         }
 
         return $sortedCategories;
     }
 
     /**
-     * @param array $categoryEntities
+     * @param int $idCategoryNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return array
+     * @return int[]
      */
-    protected function formatCategoriesWithLocaleAndNodIds(array $categoryEntities): array
+    protected function getCategoryParentIds(int $idCategoryNode, LocaleTransfer $localeTransfer): array
     {
-        $categories = [];
-
-        foreach ($categoryEntities as $categoryEntity) {
-            $categories[$categoryEntity[static::COLUMN_FK_LOCALE]][$categoryEntity[static::COLUMN_FK_CATEGORY_NODE_DESCENDANT]][] = $categoryEntity;
+        if (static::$categoryTreeIds === null) {
+            static::$categoryTreeIds = $this->productCategoryTreeBuilder->buildProductCategoryTree($localeTransfer);
         }
 
-        return $categories;
+        return static::$categoryTreeIds[$idCategoryNode];
     }
 }

@@ -16,7 +16,7 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInter
  * @method \Spryker\Zed\ProductCategorySearch\Business\ProductCategorySearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductCategorySearch\ProductCategorySearchConfig getConfig()
  */
-class ProductCategoryPageDataLoaderExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
+class ProductCategoryPageDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {
     /**
      * {@inheritDoc}
@@ -33,6 +33,6 @@ class ProductCategoryPageDataLoaderExpanderPlugin extends AbstractPlugin impleme
      */
     public function expandProductPageData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer)
     {
-        $this->getFacade()->expandProductPageData($productData, $productAbstractPageSearchTransfer);
+        $this->getFacade()->expandProductPageDataWithCategoryData($productData, $productAbstractPageSearchTransfer);
     }
 }

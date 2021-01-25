@@ -17,5 +17,5 @@ interface ProductPageDataExpanderInterface
      *
      * @return void
      */
-    public function expandProductPageData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer): void;
+    public function expandProductPageDataWithCategoryData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer): void;
 }

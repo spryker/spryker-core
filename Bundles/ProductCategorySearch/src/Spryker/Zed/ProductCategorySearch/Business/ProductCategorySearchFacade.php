@@ -29,11 +29,11 @@ class ProductCategorySearchFacade extends AbstractFacade implements ProductCateg
      *
      * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
      */
-    public function expandProductPageDataTransfer(ProductPageLoadTransfer $productPageLoadTransfer): ProductPageLoadTransfer
+    public function expandProductPageWithCategories(ProductPageLoadTransfer $productPageLoadTransfer): ProductPageLoadTransfer
     {
         return $this->getFactory()
-            ->createProductPageLoadExpander()
-            ->expandProductPageDataTransfer($productPageLoadTransfer);
+            ->createProductPageCategoryExpander()
+            ->expandProductPageWithCategories($productPageLoadTransfer);
     }
 
     /**
@@ -69,10 +69,10 @@ class ProductCategorySearchFacade extends AbstractFacade implements ProductCateg
      *
      * @return void
      */
-    public function expandProductPageData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer): void
+    public function expandProductPageDataWithCategoryData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer): void
     {
         $this->getFactory()
             ->createProductPageDataExpander()
-            ->expandProductPageData($productData, $productAbstractPageSearchTransfer);
+            ->expandProductPageDataWithCategoryData($productData, $productAbstractPageSearchTransfer);
     }
 }

@@ -9,12 +9,12 @@ namespace Spryker\Zed\ProductCategorySearch\Business\Expander;
 
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
 
-interface ProductPageLoadExpanderInterface
+interface ProductPageCategoryExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
      */
-    public function expandProductPageDataTransfer(ProductPageLoadTransfer $productPageLoadTransfer): ProductPageLoadTransfer;
+    public function expandProductPageWithCategories(ProductPageLoadTransfer $productPageLoadTransfer): ProductPageLoadTransfer;
 }

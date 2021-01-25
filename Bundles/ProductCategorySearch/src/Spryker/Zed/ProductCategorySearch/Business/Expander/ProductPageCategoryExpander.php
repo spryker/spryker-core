@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductCategorySearch\Business\Expander;
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
 use Spryker\Zed\ProductCategorySearch\Persistence\ProductCategorySearchRepositoryInterface;
 
-class ProductPageLoadExpander implements ProductPageLoadExpanderInterface
+class ProductPageCategoryExpander implements ProductPageCategoryExpanderInterface
 {
     /**
      * @var \Spryker\Zed\ProductCategorySearch\Persistence\ProductCategorySearchRepositoryInterface
@@ -30,7 +30,7 @@ class ProductPageLoadExpander implements ProductPageLoadExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
      */
-    public function expandProductPageDataTransfer(ProductPageLoadTransfer $productPageLoadTransfer): ProductPageLoadTransfer
+    public function expandProductPageWithCategories(ProductPageLoadTransfer $productPageLoadTransfer): ProductPageLoadTransfer
     {
         $payloadTransfers = $this->setProductCategories(
             $productPageLoadTransfer->getProductAbstractIds(),
@@ -46,7 +46,7 @@ class ProductPageLoadExpander implements ProductPageLoadExpanderInterface
      * @param int[] $productAbstractIds
      * @param \Generated\Shared\Transfer\ProductPayloadTransfer[] $payloadTransfers
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductPayloadTransfer[]
      */
     protected function setProductCategories(array $productAbstractIds, array $payloadTransfers): array
     {
