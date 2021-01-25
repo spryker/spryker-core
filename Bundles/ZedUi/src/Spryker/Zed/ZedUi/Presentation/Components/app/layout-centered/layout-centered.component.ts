@@ -5,7 +5,6 @@ import { Component, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/
     templateUrl: './layout-centered.component.html',
     styleUrls: ['./layout-centered.component.less'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
 })
-export class LayoutCenteredComponent {
-}
+export class LayoutCenteredComponent {}

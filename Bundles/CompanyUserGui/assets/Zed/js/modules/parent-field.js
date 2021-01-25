@@ -12,7 +12,6 @@
 const customerDateOfBirthFieldPath = '#company-user_customer_date_of_birth';
 
 function initialize() {
-
     let dateOfBirth = $(customerDateOfBirthFieldPath);
 
     dateOfBirth.datepicker({
@@ -23,7 +22,7 @@ function initialize() {
         defaultData: 0,
         onClose: function (selectedDate) {
             dateOfBirth.datepicker('option', 'minDate', selectedDate);
-        }
+        },
     });
 }
 

@@ -2,20 +2,20 @@
     <div class="mp-manage-order__heading">
         <div class="mp-manage-order__heading-col mp-manage-order__heading-col--actions">
             <ng-content select="[state-transitions]"></ng-content>
-            
+
             <div class="mp-manage-order__transitions-message">
                 <spy-icon
                     *ngIf="stateTransitionMessage.innerHTML.trim()"
                     [name]="transitionMaessgaeIcon"
                     class="mp-manage-order__transitions-icon"
                 ></spy-icon>
-    
+
                 <div #stateTransitionMessage>
                     <ng-content select="[state-transitions-meessage]"></ng-content>
                 </div>
             </div>
         </div>
-    
+
         <div class="mp-manage-order__heading-col">
             <span class="mp-manage-order__title">{{ orderDetails?.title }}</span>
             <span class="mp-manage-order__reference">
@@ -24,7 +24,7 @@
             </span>
         </div>
     </div>
-    
+
     <div class="mp-manage-order__states">
         <div class="mp-manage-order__states-col mp-manage-order__states-col--title">
             <ng-content select="[items-states-title]"></ng-content>
