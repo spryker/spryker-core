@@ -22,33 +22,38 @@ let config = {
         alias: {
             ZedGui: `${guiFolder}/assets/Zed/js/modules/commons`,
             ZedGuiEditorConfiguration: `${guiFolder}/assets/Zed/js/modules/editor`,
-            ZedGuiModules: `${guiFolder}/assets/Zed/js/modules`
-        }
+            ZedGuiModules: `${guiFolder}/assets/Zed/js/modules`,
+        },
     },
     resolveLoader: {
-        root: antelope.paths.loaders
+        root: antelope.paths.loaders,
     },
     output: {
         path: path.join(cwd, './public/Zed'),
-        filename: 'assets/js/[name].js'
+        filename: 'assets/js/[name].js',
     },
     module: {
-        loaders: [{
-            test: /\.css\??(\d*\w*=?\.?)+$/i,
-            loader: ExtractTextPlugin.extract('style', 'css')
-        }, {
-            test: /\.scss$/i,
-            loader: ExtractTextPlugin.extract('style', 'css!resolve-url!sass?sourceMap')
-        }, {
-            test: /\.(ttf|woff2?|eot)\??(\d*\w*=?\.?)+$/i,
-            loader: 'file?name=/assets/fonts/[name].[ext]'
-        }, {
-            test: /\.(jpe?g|png|gif|svg)\??(\d*\w*=?\.?)+$/i,
-            loader: 'file?name=/assets/img/[name].[ext]'
-        }]
+        loaders: [
+            {
+                test: /\.css\??(\d*\w*=?\.?)+$/i,
+                loader: ExtractTextPlugin.extract('style', 'css'),
+            },
+            {
+                test: /\.scss$/i,
+                loader: ExtractTextPlugin.extract('style', 'css!resolve-url!sass?sourceMap'),
+            },
+            {
+                test: /\.(ttf|woff2?|eot)\??(\d*\w*=?\.?)+$/i,
+                loader: 'file?name=/assets/fonts/[name].[ext]',
+            },
+            {
+                test: /\.(jpe?g|png|gif|svg)\??(\d*\w*=?\.?)+$/i,
+                loader: 'file?name=/assets/img/[name].[ext]',
+            },
+        ],
     },
     sassLoader: {
-        includePaths: antelope.paths.loaders
+        includePaths: antelope.paths.loaders,
     },
     plugins: [
         new webpack.optimize.CommonsChunkPlugin('spryker-zed-gui-commons', 'assets/js/spryker-zed-gui-commons.js'),
@@ -59,27 +64,27 @@ let config = {
             // legacy provider
             SprykerAjax: `${guiFolder}/assets/Zed/js/modules/legacy/SprykerAjax`,
             SprykerAjaxCallbacks: `${guiFolder}/assets/Zed/js/modules/legacy/SprykerAjaxCallbacks`,
-            SprykerAlert: `${guiFolder}/assets/Zed/js/modules/legacy/SprykerAlert`
+            SprykerAlert: `${guiFolder}/assets/Zed/js/modules/legacy/SprykerAlert`,
         }),
         new ExtractTextPlugin('assets/css/[name].css', {
-            allChunks: true
+            allChunks: true,
         }),
         new webpack.DefinePlugin({
             PRODUCTION: antelope.options.production,
             DEV: !antelope.options.production,
             WATCH: antelope.options.watch,
-            'require.specified': 'require.resolve'
-        })
+            'require.specified': 'require.resolve',
+        }),
     ],
     watchOptions: {
         aggregateTimeout: 300,
-        poll: 1000
+        poll: 1000,
     },
     progress: true,
     failOnError: false,
     devtool: 'sourceMap',
     debug: antelope.options.debug,
-    watch: antelope.options.watch
+    watch: antelope.options.watch,
 };
 
 if (antelope.options.production) {
@@ -88,12 +93,12 @@ if (antelope.options.production) {
             comments: false,
             sourceMap: false,
             compress: {
-                warnings: false
+                warnings: false,
             },
             mangle: {
-                except: ['$', 'exports', 'require']
-            }
-        })
+                except: ['$', 'exports', 'require'],
+            },
+        }),
     ]);
 }
 

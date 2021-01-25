@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Persistence;
 
 use Generated\Shared\Transfer\MerchantProductOfferCountsTransfer;
+use Generated\Shared\Transfer\PriceProductOfferTableCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductOfferTableViewCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
@@ -37,4 +39,13 @@ interface ProductOfferMerchantPortalGuiRepositoryInterface
      * @return \Generated\Shared\Transfer\MerchantProductOfferCountsTransfer
      */
     public function getOffersDashboardCardCounts(int $idMerchant): MerchantProductOfferCountsTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductOfferTableCriteriaTransfer $productOfferPriceTableCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductOfferTableViewCollectionTransfer
+     */
+    public function getProductOfferPriceTableData(
+        PriceProductOfferTableCriteriaTransfer $productOfferPriceTableCriteriaTransfer
+    ): PriceProductOfferTableViewCollectionTransfer;
 }

@@ -12,6 +12,9 @@ use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery;
 interface CompanyUnitAddressQueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery
@@ -19,6 +22,9 @@ interface CompanyUnitAddressQueryContainerInterface
     public function queryCompanyUnitAddress(): SpyCompanyUnitAddressQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery
@@ -26,6 +32,9 @@ interface CompanyUnitAddressQueryContainerInterface
     public function queryCompanyUnitAddressWithCompanyAndCountry(): SpyCompanyUnitAddressQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCompanyUnitAddress
@@ -35,6 +44,9 @@ interface CompanyUnitAddressQueryContainerInterface
     public function queryCompanyUnitAddressWithCountryById(int $idCompanyUnitAddress): SpyCompanyUnitAddressQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCompanyUnitAddress
@@ -44,6 +56,9 @@ interface CompanyUnitAddressQueryContainerInterface
     public function queryCompanyUnitAddressWithCompanyById(int $idCompanyUnitAddress): SpyCompanyUnitAddressQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCompanyUnitAddress

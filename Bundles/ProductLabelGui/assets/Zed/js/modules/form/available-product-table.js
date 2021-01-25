@@ -28,7 +28,7 @@ function initialize() {
         $(destinationTabLabelSelector).text(),
         destinationTabLabelSelector,
         'js-abstract-products-to-assign-ids-csv-field',
-        onRemove
+        onRemove,
     );
 
     $(sourceTabSelector + ' .js-select-all-button a').on('click', tableHandler.selectAll);
@@ -53,5 +53,5 @@ function onRemove() {
 }
 
 module.exports = {
-    initialize: initialize
+    initialize: initialize,
 };

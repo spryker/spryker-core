@@ -11,7 +11,7 @@ var ItemsCounter = require('./items-counter');
 var ItemsToggler = require('./items-toggler');
 var ReasonMessageToggler = require('./reason-message-toggler');
 
-$(document).ready(function() {
+$(document).ready(function () {
     new FormAction({
         tableSelector: '.js-return-items-table',
         itemSelector: '.js-check-item',

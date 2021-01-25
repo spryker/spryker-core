@@ -58,7 +58,7 @@ describe('FormComponent', () => {
 
     it('should bind @Input(attrs) to `spyApplyAttrs` of `form` component', () => {
         const mockAttrs = {
-            mock: 'mockValue'
+            mock: 'mockValue',
         };
         const formComponent = fixture.debugElement.query(By.css('form'));
 

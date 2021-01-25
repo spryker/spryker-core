@@ -12,6 +12,9 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 interface NopaymentQueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem

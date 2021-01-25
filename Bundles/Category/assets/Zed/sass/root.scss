@@ -1,7 +1,7 @@
 // This is a copy from Gui/assets/Zed/sass/_action-buttons.scss
 // Unfortunately we cannot include asset resources from other bundles since the split
 // uses lower-case bundle folder-names as opposed to capitalized folder-names in development
-@mixin coloredButton($backgroundColor, $color, $hoverColor:'') {
+@mixin coloredButton($backgroundColor, $color, $hoverColor: '') {
     background-color: $backgroundColor;
     border-color: $backgroundColor;
     color: $color;
@@ -26,7 +26,7 @@
     tbody {
         tr {
             &.selected {
-                background-color: rgba(#0088cc, .2);
+                background-color: rgba(#0088cc, 0.2);
                 color: inherit;
 
                 a.btn-view {

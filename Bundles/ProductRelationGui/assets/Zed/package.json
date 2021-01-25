@@ -1,11 +1,11 @@
 {
-  "private": true,
-  "name": "spryker-zed-productrelations",
-  "version": "1.0.0",
-  "dependencies": {
-    "fs": "~0.0.2",
-    "jquery-extendext": "https://github.com/mistic100/jQuery.extendext.git#0.1.1",
-    "jquery-query-builder": "https://github.com/spryker/jquery-query-builder.git",
-    "sql-parser": "https://github.com/spryker/spryker-sql-parser.git"
-  }
+    "private": true,
+    "name": "spryker-zed-productrelations",
+    "version": "1.0.0",
+    "dependencies": {
+        "fs": "~0.0.2",
+        "jquery-extendext": "https://github.com/mistic100/jQuery.extendext.git#0.1.1",
+        "jquery-query-builder": "https://github.com/spryker/jquery-query-builder.git",
+        "sql-parser": "https://github.com/spryker/spryker-sql-parser.git"
+    }
 }

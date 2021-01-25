@@ -37,6 +37,7 @@ interface PriceProductStorageFacadeInterface
     public function unpublishPriceProductConcrete(array $productConcreteIds);
 
     /**
+     * Specification:
      * - Queries all priceProduct with the given productAbstractIds
      * - Stores data as json encoded to storage table
      * - Sends a copy of data to queue based on module config

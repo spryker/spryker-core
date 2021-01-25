@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface ProductRelationStorageQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $productAbstractIds
@@ -21,6 +24,9 @@ interface ProductRelationStorageQueryContainerInterface extends QueryContainerIn
     public function queryProductAbstractRelationStorageByIds(array $productAbstractIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $productAbstractIds
@@ -30,6 +36,9 @@ interface ProductRelationStorageQueryContainerInterface extends QueryContainerIn
     public function queryProductAbstractLocalizedByIds(array $productAbstractIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductRelation
@@ -40,6 +49,9 @@ interface ProductRelationStorageQueryContainerInterface extends QueryContainerIn
     public function queryProductRelationWithProductAbstractByIdRelationAndLocale($idProductRelation, $idLocale);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $productAbstractIds
@@ -49,6 +61,9 @@ interface ProductRelationStorageQueryContainerInterface extends QueryContainerIn
     public function queryProductRelations(array $productAbstractIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $productRelationIds

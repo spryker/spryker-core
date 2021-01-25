@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 interface DefaultAddressChangePluginInterface
 {
     /**
-     * Specification
+     * Specification:
      *  - executes plugin process after create or update customer address
      *
      * @api

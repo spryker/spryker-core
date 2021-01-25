@@ -15,7 +15,7 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 interface StepEnginePreRenderPluginInterface
 {
     /**
-     * Specifications:
+     * Specification:
      * - Prepares data for each step of process, before template rendering.
      *
      * @api
