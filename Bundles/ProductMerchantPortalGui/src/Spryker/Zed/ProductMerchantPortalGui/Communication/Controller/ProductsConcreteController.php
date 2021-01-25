@@ -59,18 +59,31 @@ class ProductsConcreteController extends AbstractController
         $productConcreteBulkForm = $this->getFactory()->createProductConcreteBulkForm();
         $productConcreteBulkForm->handleRequest($request);
 
+        $responseData = [];
+
         if ($productConcreteBulkForm->isSubmitted() && $productConcreteBulkForm->isValid()) {
             $this->saveConcreteProducts($request, $productConcreteBulkForm, $productConcreteCollectionTransfer);
+
+            $responseData['postActions'] = [
+                [
+                    'type' => 'close_overlay',
+                ],
+                [
+                    'type' => 'refresh_table',
+                ],
+            ];
+            $responseData['notifications'] = [[
+                'type' => 'success',
+                'message' => sprintf('%s Variants are updated', $productConcreteCollectionTransfer->getProducts()->count()),
+            ]];
         }
 
-        $responseData = [
-            'form' => $this->renderView('@ProductMerchantPortalGui/Partials/product_concrete_bulk_form.twig', [
-                'productConcreteBulkForm' => $productConcreteBulkForm->createView(),
-                'variantsNumber' => $productConcreteCollectionTransfer->getProducts()->count(),
-                'activationNameStatus' => static::PARAM_ACTIVATION_NAME_STATUS,
-                'activationNameValidity' => static::PARAM_ACTIVATION_NAME_VALIDITY,
-            ])->getContent(),
-        ];
+        $responseData['form'] = $this->renderView('@ProductMerchantPortalGui/Partials/product_concrete_bulk_form.twig', [
+            'productConcreteBulkForm' => $productConcreteBulkForm->createView(),
+            'variantsNumber' => $productConcreteCollectionTransfer->getProducts()->count(),
+            'activationNameStatus' => static::PARAM_ACTIVATION_NAME_STATUS,
+            'activationNameValidity' => static::PARAM_ACTIVATION_NAME_VALIDITY,
+        ])->getContent();
 
         return new JsonResponse($responseData);
     }

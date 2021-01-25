@@ -1,4 +1,7 @@
 {% block body %}
+    {% set validityErrors = productConcreteBulkForm.children.validFrom.vars.errors | merge(
+        productConcreteBulkForm.children.validTo.vars.errors
+    ) %}
     {% set bulkSections = {
         status: {
             title: 'Status' | trans,
@@ -6,7 +9,7 @@
             name: productConcreteBulkForm.children.isActive.vars.full_name,
             placeholder: productConcreteBulkForm.children.isActive.vars.label | trans,
             value: false,
-            error: '',
+            error: productConcreteBulkForm.children.isActive.vars.errors[0].message | default | trans,
         },
         validity: {
             title: 'Validity Dates & Time' | trans,
@@ -20,10 +23,10 @@
                 to: productConcreteBulkForm.children.validTo.vars.label | trans,
             },
             value: {
-                from: '',
-                to: '',
+                from: productConcreteBulkForm.children.validFrom.vars.value,
+                to: productConcreteBulkForm.children.validTo.vars.value,
             },
-            error: '',
+            error: validityErrors[0].message | default | trans,
         }
     } %}
 
