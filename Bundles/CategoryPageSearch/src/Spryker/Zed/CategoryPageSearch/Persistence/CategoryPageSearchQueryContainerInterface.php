@@ -26,6 +26,8 @@ interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterf
     /**
      * @api
      *
+     * @deprecated Will be removed with next major release.
+     *
      * @param array $categoryNodeIds
      * @param int $idLocale
      *
