@@ -6,17 +6,8 @@ import { OffersListComponent } from './offers-list.component';
 import { OffersListTableModule } from '../offers-list-table/offers-list-table.module';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        OffersListTableModule,
-        HeadlineModule,
-    ],
-    declarations: [
-        OffersListComponent,
-    ],
-    exports: [
-        OffersListComponent,
-    ],
+    imports: [CommonModule, OffersListTableModule, HeadlineModule],
+    declarations: [OffersListComponent],
+    exports: [OffersListComponent],
 })
-export class OffersListModule {
-}
+export class OffersListModule {}

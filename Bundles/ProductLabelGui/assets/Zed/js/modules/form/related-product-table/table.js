@@ -18,9 +18,16 @@ var TableHandler = require('./table-handler');
  *
  * @return {TableHandler}
  */
-function create(sourceTableSelector, destinationTableSelector, checkboxSelector, labelCaption, labelId, formFieldId, onRemoveCallback)
-{
-    $(destinationTableSelector).DataTable({destroy: true});
+function create(
+    sourceTableSelector,
+    destinationTableSelector,
+    checkboxSelector,
+    labelCaption,
+    labelId,
+    formFieldId,
+    onRemoveCallback,
+) {
+    $(destinationTableSelector).DataTable({ destroy: true });
 
     var tableHandler = TableHandler.create(
         $(sourceTableSelector),
@@ -28,32 +35,34 @@ function create(sourceTableSelector, destinationTableSelector, checkboxSelector,
         labelCaption,
         labelId,
         formFieldId,
-        onRemoveCallback
+        onRemoveCallback,
     );
 
-    $(sourceTableSelector).DataTable().on('draw', function(event, settings) {
-        $(checkboxSelector, $(sourceTableSelector)).off('change');
-        $(checkboxSelector, $(sourceTableSelector)).on('change', function() {
-            var $checkbox = $(this);
-            var info = $.parseJSON($checkbox.attr('data-info'));
+    $(sourceTableSelector)
+        .DataTable()
+        .on('draw', function (event, settings) {
+            $(checkboxSelector, $(sourceTableSelector)).off('change');
+            $(checkboxSelector, $(sourceTableSelector)).on('change', function () {
+                var $checkbox = $(this);
+                var info = $.parseJSON($checkbox.attr('data-info'));
 
-            if (tableHandler.isCheckboxActive($checkbox)) {
-                tableHandler.addSelectedProduct(info.id, info.sku, info.name);
-            } else {
-                tableHandler.removeSelectedProduct(info.id);
+                if (tableHandler.isCheckboxActive($checkbox)) {
+                    tableHandler.addSelectedProduct(info.id, info.sku, info.name);
+                } else {
+                    tableHandler.removeSelectedProduct(info.id);
+                }
+            });
+
+            for (var i = 0; i < settings.json.data.length; i++) {
+                var product = settings.json.data[i];
+                var idProduct = parseInt(product[1], 10);
+
+                var selector = tableHandler.getSelector();
+                if (selector.isProductSelected(idProduct)) {
+                    tableHandler.checkCheckbox($('input[value="' + idProduct + '"]', $(sourceTableSelector)));
+                }
             }
         });
-
-        for (var i = 0; i < settings.json.data.length; i++) {
-            var product = settings.json.data[i];
-            var idProduct = parseInt(product[1], 10);
-
-            var selector = tableHandler.getSelector();
-            if (selector.isProductSelected(idProduct)) {
-                tableHandler.checkCheckbox($('input[value="' + idProduct + '"]', $(sourceTableSelector)));
-            }
-        }
-    });
 
     return tableHandler;
 }
@@ -61,5 +70,5 @@ function create(sourceTableSelector, destinationTableSelector, checkboxSelector,
 module.exports = {
     create: create,
     CHECKBOX_CHECKED_STATE_CHECKED: TableHandler.CHECKBOX_CHECKED_STATE_CHECKED,
-    CHECKBOX_CHECKED_STATE_UN_CHECKED: TableHandler.CHECKBOX_CHECKED_STATE_UN_CHECKED
+    CHECKBOX_CHECKED_STATE_UN_CHECKED: TableHandler.CHECKBOX_CHECKED_STATE_UN_CHECKED,
 };

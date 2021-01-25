@@ -16,6 +16,8 @@ interface GuiTableConfigurationBuilderInterface
     public const COLUMN_TYPE_DATE = 'date';
     public const COLUMN_TYPE_CHIP = 'chip';
     public const COLUMN_TYPE_LIST = 'list';
+    public const COLUMN_TYPE_SELECT = 'select';
+    public const COLUMN_TYPE_INPUT = 'input';
 
     public const FILTER_TYPE_SELECT = 'select';
     public const FILTER_TYPE_TREE_SELECT = 'tree-select';
@@ -318,6 +320,24 @@ interface GuiTableConfigurationBuilderInterface
     public function setDefaultPageSize(int $defaultPageSize);
 
     /**
+     * @api
+     *
+     * @param bool $isEnabled
+     *
+     * @return $this
+     */
+    public function isSearchEnabled(bool $isEnabled = true);
+
+    /**
+     * @api
+     *
+     * @param bool $isEnabled
+     *
+     * @return $this
+     */
+    public function isColumnConfiguratorEnabled(bool $isEnabled = true);
+
+    /**
      * Sets a placeholders for a search field.
      *
      * @api
@@ -352,4 +372,78 @@ interface GuiTableConfigurationBuilderInterface
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
     public function createConfiguration(): GuiTableConfigurationTransfer;
+
+    /**
+     * @api
+     *
+     * @phpstan-param array<mixed> $initialData
+     * @phpstan-param array<mixed> $addButton
+     * @phpstan-param array<mixed> $cancelButton
+     *
+     * @param string $formInputName
+     * @param array|null $initialData
+     * @param array|null $addButton
+     * @param array|null $cancelButton
+     *
+     * @return $this
+     */
+    public function enableAddingNewRows(
+        string $formInputName,
+        array $initialData = [],
+        ?array $addButton = null,
+        ?array $cancelButton = null
+    );
+
+    /**
+     * @api
+     *
+     * @phpstan-param array<mixed> $saveButton
+     * @phpstan-param array<mixed> $cancelButton
+     *
+     * @param string $url
+     * @param string|null $method
+     * @param array|null $saveButton
+     * @param array|null $cancelButton
+     *
+     * @return $this
+     */
+    public function enableInlineDataEditing(
+        string $url,
+        ?string $method = 'POST',
+        ?array $saveButton = null,
+        ?array $cancelButton = null
+    );
+
+    /**
+     * @api
+     *
+     * @phpstan-param array<string, mixed> $options
+     *
+     * @param string $id
+     * @param string $title
+     * @param string $inputType
+     * @param array|null $options
+     *
+     * @return $this
+     */
+    public function addEditableColumnInput(string $id, string $title, string $inputType = 'text', ?array $options = []);
+
+    /**
+     * @api
+     *
+     * @phpstan-param array<mixed> $options
+     *
+     * @param string $id
+     * @param string $title
+     * @param bool $isMultiselect
+     * @param array $options
+     *
+     * @return $this
+     */
+    public function addEditableColumnSelect(
+        string $id,
+        string $title,
+        bool $isMultiselect,
+        array $options
+    );
 }
