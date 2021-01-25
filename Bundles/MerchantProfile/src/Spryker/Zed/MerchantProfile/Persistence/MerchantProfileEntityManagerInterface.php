@@ -22,7 +22,7 @@ interface MerchantProfileEntityManagerInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
      *
-     * @throws \Spryker\Zed\MerchantProfile\Business\Exception\MerchantProfileNotFoundException
+     * @throws \Spryker\Zed\MerchantProfile\Persistence\Exception\MerchantProfileNotFoundException
      *
      * @return \Generated\Shared\Transfer\MerchantProfileTransfer
      */

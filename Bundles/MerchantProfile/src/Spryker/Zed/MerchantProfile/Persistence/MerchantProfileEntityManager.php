@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfile;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
-use Spryker\Zed\MerchantProfile\Business\Exception\MerchantProfileNotFoundException;
+use Spryker\Zed\MerchantProfile\Persistence\Exception\MerchantProfileNotFoundException;
 
 /**
  * @method \Spryker\Zed\MerchantProfile\Persistence\MerchantProfilePersistenceFactory getFactory()
@@ -34,7 +34,7 @@ class MerchantProfileEntityManager extends AbstractEntityManager implements Merc
     /**
      * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
      *
-     * @throws \Spryker\Zed\MerchantProfile\Business\Exception\MerchantProfileNotFoundException
+     * @throws \Spryker\Zed\MerchantProfile\Persistence\Exception\MerchantProfileNotFoundException
      *
      * @return \Generated\Shared\Transfer\MerchantProfileTransfer
      */
