@@ -26,7 +26,7 @@ if (false) {
          * Specification:
          * - TODO: Add method specification.
          *
-          * @api
+         * @api
          *
          * @return string
          */
