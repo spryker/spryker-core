@@ -12,16 +12,18 @@ interface ProductsCategoriesResourceRelationshipToProductCategoryStorageClientIn
     /**
      * @param int $idProductAbstract
      * @param string $locale
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer|null
      */
-    public function findProductAbstractCategory($idProductAbstract, $locale);
+    public function findProductAbstractCategory($idProductAbstract, $locale, ?string $storeName = null);
 
     /**
      * @param int[] $productAbstractIds
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[]
      */
-    public function findBulkProductAbstractCategory(array $productAbstractIds, string $localeName): array;
+    public function findBulkProductAbstractCategory(array $productAbstractIds, string $localeName, ?string $storeName = null): array;
 }

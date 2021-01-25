@@ -10,6 +10,7 @@ namespace Spryker\Glue\ProductsCategoriesResourceRelationship;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\Client\ProductsCategoriesResourceRelationshipToProductCategoryStorageClientInterface;
 use Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\Client\ProductsCategoriesResourceRelationshipToProductStorageClientInterface;
+use Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\Client\ProductsCategoriesResourceRelationshipToStoreClientInterface;
 use Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\RestResource\ProductsCategoriesResourceRelationToCategoriesRestApiResourceInterface;
 use Spryker\Glue\ProductsCategoriesResourceRelationship\Processor\Expander\CategoriesResourceRelationshipExpander;
 use Spryker\Glue\ProductsCategoriesResourceRelationship\Processor\Expander\CategoriesResourceRelationshipExpanderInterface;
@@ -54,10 +55,22 @@ class ProductsCategoriesResourceRelationshipFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\Client\ProductsCategoriesResourceRelationshipToStoreClientInterface
+     */
+    public function getStoreClient(): ProductsCategoriesResourceRelationshipToStoreClientInterface
+    {
+        return $this->getProvidedDependency(ProductsCategoriesResourceRelationshipDependencyProvider::CLIENT_STORE);
+    }
+
+    /**
      * @return \Spryker\Glue\ProductsCategoriesResourceRelationship\Processor\Reader\AbstractProductsCategoriesReaderInterface
      */
     public function createAbstractProductsCategoriesReader(): AbstractProductsCategoriesReaderInterface
     {
-        return new AbstractProductsCategoriesReader($this->getProductStorageClient(), $this->getProductCategoryStorageClient());
+        return new AbstractProductsCategoriesReader(
+            $this->getProductStorageClient(),
+            $this->getProductCategoryStorageClient(),
+            $this->getStoreClient()
+        );
     }
 }
